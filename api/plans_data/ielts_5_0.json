@@ -12693,6 +12693,3903 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 25,
+   "title": "Reading: Matching Information",
+   "grammar_topic": "Matching information — ma'lumot qaysi xatboshida? (+ table completion)",
+   "vocab_topic": "O'qish, kitob va o'rganish",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matnlari (Speed reading, #28 Graphic novels) va mualliflik matnlari.",
+   "objectives": [
+    "\"Which paragraph contains the following information?\" savolida ma'lumotni xatboshidan topish.",
+    "Matching headings va matching information farqini tushunish: sarlavha — asosiy g'oya; ma'lumot — xatboshi ichidagi bitta detal.",
+    "Savoldagi ma'lumot turini aniqlash: definition, example, reason, number, comparison, description.",
+    "\"NB You may use any letter more than once\" qoidasidan foydalanish.",
+    "Table completion bilan birgalikda ishlash (ikki savol turi bitta matnda)."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Matching information — xatboshilar A–H harf bilan belgilangan. Savol: \"Which paragraph contains the following information?\" Siz har ma'lumot qaysi xatboshida ekanini topasiz.",
+     "Bu savol turi NEVER guruhida: savollar matn tartibida KELMAYDI. Shuning uchun uni odatda oxirida, boshqa savollardan keyin ishlagan ma'qul — matn allaqachon tanish bo'ladi.",
+     "Headings bilan farqi: heading butun xatboshining asosiy g'oyasini beradi; information esa xatboshi ichidagi bitta kichik detalni so'raydi (raqam, misol, sabab, ta'rif).",
+     "Savoldagi birinchi so'zlar ma'lumot TURINI aytadi: \"a definition of\" — ta'rif; \"the types of people\" — misollar ro'yxati; \"why\" — sabab; \"the fastest reading speeds\" — raqam. Shu turdagi gapni qidiring.",
+     "NB You may use any letter more than once — bitta xatboshi ikki savolga javob bo'lishi mumkin (Speed reading: 2 va 5 — ikkalasi A). Ba'zi xatboshilar esa umuman ishlatilmaydi.",
+     "Paraphrase juda kuchli: \"the types of people who need to read more quickly\" = \"Professional workers ... students\". Aynan so'z kutmang."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Savollarni o'qing, turini belgilang",
+      "definition / reason / number",
+      "Nimani qidiraman?"
+     ],
+     [
+      "2-bosqich",
+      "Boshqa savollarni avval ishlang",
+      "table / summary",
+      "Matn tanish bo'ladi"
+     ],
+     [
+      "3-bosqich",
+      "Har xatboshini o'qing",
+      "bir-ikki gapda mazmuni",
+      "Chetiga yozing"
+     ],
+     [
+      "4-bosqich",
+      "Savolni xatboshi bilan solishtiring",
+      "paraphrase",
+      "Aynan so'z emas"
+     ],
+     [
+      "5-bosqich",
+      "Detalni isbotlang",
+      "matndan gap",
+      "Asosiy g'oya emas, detal"
+     ],
+     [
+      "6-bosqich",
+      "Qolganlarini tekshiring",
+      "harf takrorlanishi mumkin",
+      "NB qoidasi"
+     ]
+    ],
+    "presentation": [
+     [
+      "Savollar tartibdami?",
+      "Yo'q (NEVER). Shuning uchun uni oxirida ishlang."
+     ],
+     [
+      "Bitta harf ikki marta bo'ladimi?",
+      "Ha, agar \"NB You may use any letter more than once\" yozilgan bo'lsa."
+     ],
+     [
+      "Headingdan farqi nima?",
+      "Heading — asosiy g'oya; information — xatboshi ichidagi bir detal."
+     ],
+     [
+      "Savoldagi so'z bir necha xatboshida bor.",
+      "Ma'lumot TURINI tekshiring: savol ta'rifmi, sababmi, raqammi?"
+     ],
+     [
+      "Vaqt ko'p ketyapti.",
+      "Har xatboshi uchun 3–4 so'zlik qisqa izoh yozing — keyin qidirish oson."
+     ],
+     [
+      "Ba'zi xatboshilar javob bo'lmaydimi?",
+      "Ha, bo'lmasligi mumkin."
+     ]
+    ],
+    "notes": [
+     "Speed reading matni — o'quv matni: u o'qish tezligi haqida, va dars davomida o'quvchilar \"chunking\" usulini o'zlari sinab ko'radi.",
+     "Graphic novels matnida 4 va 7-savol ikkalasi B — \"any letter more than once\" ning eng yaxshi misoli.",
+     "Graphic novels jadvali asl faylda \"Questions 7–13\" deb raqamlangan edi, lekin matching ham 1–7. Takrorlanmasligi uchun jadval 8–14 qilib qayta raqamlandi."
+    ],
+    "mistakes": [
+     [
+      "Tartib bo'yicha qidirish",
+      "Butun matndan qidirish",
+      "Matching info — NEVER guruhi"
+     ],
+     [
+      "Asosiy g'oyani tanlash",
+      "Detalni tanlash",
+      "Bu headings emas"
+     ],
+     [
+      "So'z mosligi bo'yicha tanlash",
+      "Ma'lumot turini tekshirish",
+      "\"speed\" so'zi hamma joyda bor"
+     ],
+     [
+      "Harf takrorlanmaydi deb o'ylash",
+      "NB qoidasini o'qish",
+      "Bir harf ikki marta bo'lishi mumkin"
+     ],
+     [
+      "Birinchi o'qishdayoq boshlash",
+      "Avval boshqa savollarni ishlash",
+      "Matn tanish bo'lgach tezroq"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Ma'lumot turini ayting",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ustoz savolni o'qiydi; o'quvchi qanday gap qidirish kerakligini aytadi.",
+     "items": [
+      "a definition of speed reading",
+      "the fastest reading speeds",
+      "the types of people who need to read more quickly",
+      "why reading material should be interesting",
+      "how a reader can become confused"
+     ],
+     "answers": [
+      "ta'rif (\"is ... / means ...\")",
+      "raqam",
+      "odamlar ro'yxati",
+      "sabab (\"because / if ... then\")",
+      "jarayon / natija"
+     ],
+     "why": [
+      "\"Speed reading is not just about reading fast...\"",
+      "\"1,000 and 2,000 words a minute\".",
+      "\"Professional workers ... students\".",
+      "\"If you enjoy what you are reading, you will make quicker progress\".",
+      "\"Skip back often ... muddling their understanding\"."
+     ],
+     "note": "Tur aniqlangach, o'quvchilar matnda aynan shu turdagi gapni qidiradi.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Speed reading",
+     "qtype": "Matching information (1–6) + Table completion (7–13)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "What is speed reading, and why do we need it?",
+      "A. _Speed reading is not just about reading fast._ It is also about how much information you can remember when you have finished reading. The World Championship Speed-Reading Competition says that its _top competitors average between 1,000 and 2,000 words a minute_. But they must remember at least 50 percent of this in order to qualify for the competition.",
+      "B. Nowadays, speed reading has become an essential skill in any environment where people have to master a large volume of information. _Professional workers_ need reading skills to help them get through many documents every day, while _students_ under pressure to deal with assignments may feel they have to read more and read faster all the time.",
+      "C. Although there are various methods to increase reading speed, _the trick is deciding what information you want first_. For example, if you only want a rough outline of an issue, then you can skim the material quickly and extract the key facts. However, if you need to understand every detail in a document, then you must read it slowly enough to understand this.",
+      "D. Even when you know how to ignore irrelevant detail, there are other improvements you can make to your reading style which will increase your speed. For example, most people can read much faster if they read silently. Reading each word aloud takes time for the information to make a complete circuit in your brain before being pronounced. Some researchers believe that as long as the first and last letters are in place, the brain can still understand the arrangement of the other letters in the word because it logically puts each piece into place.",
+      "E. Chunking is another important method. Most people learn to read either letter by letter or word by word. As you improve, this changes. You will probably find that you are fixing your eyes on a block of words, then moving your eyes to the next block of words, and so on. You are reading blocks of words at a time, not individual words one by one. You may also notice that you do not always go from one block to the next: sometimes you may move back to a previous block if you are unsure about something.",
+      "F. A skilled reader will read _a lot of words_ in each block. He or she will only look at each block for an instant and will then move on. _Only rarely_ will the reader's eyes skip back to a previous block of words. This reduces the amount of work that the reader's _eyes_ have to do. It also increases _the volume of information_ that can be taken in over a given period of time.",
+      "G. On the other hand, a _slow reader_ will spend a lot of time reading small blocks of words. He or she will _skip back often_, losing the flow and structure of the text, and _muddling their overall understanding_ of the subject. This irregular eye movement quickly makes the reader _tired_. Poor readers tend to dislike reading because they feel it is difficult to _concentrate_ and comprehend written information.",
+      "H. The best tip anyone can have to improve their reading speed is to practise. In order to do this effectively, a person must be _engaged in the material_ and want to know more. If you find yourself constantly having to re-read the same paragraph, you may want to switch to reading material that grabs your attention. _If you enjoy what you are reading, you will make quicker progress._"
+     ],
+     "paraphrases": [
+      [
+       "the types of people",
+       "professional workers ... students"
+      ],
+      [
+       "the fastest reading speeds",
+       "top competitors average 1,000–2,000 words a minute"
+      ],
+      [
+       "become confused",
+       "muddling their overall understanding"
+      ],
+      [
+       "interesting",
+       "grabs your attention / you enjoy"
+      ],
+      [
+       "a definition of speed reading",
+       "speed reading is not just about reading fast"
+      ],
+      [
+       "consider before you start",
+       "deciding what information you want first"
+      ],
+      [
+       "hardly ever goes back",
+       "only rarely ... skip back"
+      ],
+      [
+       "more information is processed",
+       "increases the volume of information taken in"
+      ],
+      [
+       "goes back often",
+       "skip back often"
+      ]
+     ],
+     "glossary": [
+      "competitor — ishtirokchi",
+      "qualify — saralashdan o'tmoq",
+      "assignment — topshiriq",
+      "skim — ko'z yugurtirib o'qimoq",
+      "irrelevant — keraksiz",
+      "chunking — bo'laklab o'qish",
+      "muddle — chalkashtirmoq",
+      "comprehend — tushunmoq"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6: Which paragraph contains the following information?",
+       "type": "Matching information (A–H)",
+       "instr": "NB You may use any letter more than once. Savollar matn tartibida EMAS.",
+       "items": [
+        "1 the types of people who need to read more quickly",
+        "2 the fastest reading speeds",
+        "3 how a reader can become confused",
+        "4 why reading material should be interesting",
+        "5 a definition of speed reading",
+        "6 what you should consider before you start reading"
+       ],
+       "answers": [
+        "B",
+        "A",
+        "G",
+        "H",
+        "A",
+        "C"
+       ],
+       "why": [
+        "\"Professional workers ... while students under pressure...\" — odamlar turlari.",
+        "\"Top competitors average between 1,000 and 2,000 words a minute\".",
+        "\"Skip back often, losing the flow ... and muddling their overall understanding\". Muddle = confuse.",
+        "\"A person must be engaged in the material ... If you enjoy what you are reading, you will make quicker progress\".",
+        "\"Speed reading is not just about reading fast. It is also about how much information you can remember\". A ikkinchi marta — NB qoidasi.",
+        "\"The trick is deciding what information you want first\"."
+       ],
+       "note": "A harfi ikki marta (2 va 5). D, E, F xatboshilari 1–6 savollarda ishlatilmadi — bu normal holat.",
+       "layout": "match"
+      },
+      {
+       "title": "Questions 7–13: Complete the table — Chunking",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "Jadval USUALLY tartibda: F xatboshi, keyin G.",
+       "items": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+       ],
+       "answers": [
+        "words",
+        "eyes",
+        "information",
+        "slow reader",
+        "often",
+        "tired",
+        "concentrate"
+       ],
+       "why": [
+        "\"A skilled reader will read a lot of words in each block\".",
+        "\"Reduces the amount of work that the reader's eyes have to do\".",
+        "\"Increases the volume of information that can be taken in\". Processed = taken in.",
+        "\"On the other hand, a slow reader will spend a lot of time reading small blocks\".",
+        "\"He or she will skip back often\".",
+        "\"This irregular eye movement quickly makes the reader tired\".",
+        "\"Difficult to concentrate and comprehend written information\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "Type of reader",
+        "Reading method",
+        "Effect of method on reader"
+       ],
+       "rows": [
+        [
+         "skilled reader",
+         "many (7) in a block ;; reader hardly ever goes back",
+         "reader's (8) do less work ;; more (9) is processed"
+        ],
+        [
+         "(10)",
+         "small blocks ;; reader (11) goes back",
+         "reader easily gets (12) ;; finds it hard to (13) on passage"
+        ]
+       ]
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Savol/jadvaldagi so'zning matndagi juftini toping.",
+       "items": [
+        "become confused (3)",
+        "hardly ever goes back (jadval)",
+        "is processed (9)",
+        "consider before you start (6)"
+       ],
+       "answers": [
+        "muddling their understanding",
+        "only rarely ... skip back",
+        "can be taken in",
+        "deciding what information you want first"
+       ],
+       "why": [
+        "G.",
+        "F.",
+        "F.",
+        "C."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #28. Graphic novels",
+     "qtype": "Matching information (1–7) + Table completion (8–14) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "People who think graphic novels are just comics with a different name should think again",
+      "A. Graphic novels, as the name suggests, are books written and illustrated in the style of a comic book. The term graphic novel was first used in 1978 by author and artist Will Eisner to distinguish a comic novel he had written and illustrated from newspaper comic strips. He described graphic novels as consisting of 'sequential art' — a series of illustrations which, when viewed in order, tell a story.",
+      "B. Although today's graphic novels are a recent phenomenon, this basic way of telling stories has been used in various forms _for centuries. Early cave drawings, hieroglyphics and medieval tapestries_ are examples of this. _The term graphic novel is now generally used to describe_ any book in a comic format that resembles a novel in length and narrative development.",
+      "C. _Many adults feel that graphic novels are not the type of reading material that will help young people become good readers._ They believe that graphic novels are somehow a bad influence that prevent 'real' reading. In other words, they think that they are not 'real' books.",
+      "D. However, many quality graphic novels are now being seen as _a method of storytelling on the same level as novels, films or audio books_. From originally appealing to a small following of enthusiasts, they are now being accepted by librarians and teachers as proper literature for children and young adults. The main advantages are that they promote literacy, and attract and motivate young people to read.",
+      "E. How do we know this? In the last few years, teachers and school libraries have reported outstanding success getting children to read with graphic novels. Many have mentioned the motivational factor of the graphic novel. This has been especially true with children who are usually _reluctant_ to read, especially boys. The _colourful pictures_ attract them, and then encourage them to find out what the _story_ is about. Providing young people of all abilities with a wide range of reading materials, including graphic novels, can help them become lifelong readers.",
+      "F. Furthermore, one of the main benefits of a graphic novel is that it can help students who are learning a foreign _language_, and who are having problems improving their _reading skills_. This is because _the pictures provide clues to the meaning of the words_. Language learners are therefore more motivated by graphic novels, and will acquire new _vocabulary_ more quickly.",
+      "G. Many teachers have reported great success when they have used graphic novels with their students, especially _in the areas of English, social studies and art_. They have discovered that, just like traditional forms of literature, they can be useful tools for helping students examine aspects of history, science, literature and art.",
+      "H. The idea that graphic novels are too simple to be regarded as serious reading is no longer valid. The excellent graphic novels available today demand many of the same skills that are needed to understand traditional works of fiction. Often they actually contain _more sophisticated vocabulary_ than traditional books. Reading them can help students develop the skills that are necessary to read more challenging works."
+     ],
+     "paraphrases": [
+      [
+       "negative attitudes",
+       "not the type of reading material that will help / a bad influence"
+      ],
+      [
+       "a variety of school subjects",
+       "English, social studies and art"
+      ],
+      [
+       "visual element",
+       "the pictures"
+      ],
+      [
+       "speeds up learning",
+       "acquire new vocabulary more quickly"
+      ],
+      [
+       "a modern definition",
+       "the term is now generally used to describe"
+      ],
+      [
+       "as good as any other method",
+       "on the same level as novels, films or audio books"
+      ],
+      [
+       "advanced words",
+       "more sophisticated vocabulary"
+      ],
+      [
+       "historical use of pictures",
+       "for centuries ... cave drawings, hieroglyphics, tapestries"
+      ],
+      [
+       "provide motivation",
+       "motivate / the motivational factor"
+      ],
+      [
+       "visual clues",
+       "the pictures provide clues"
+      ]
+     ],
+     "glossary": [
+      "illustrate — rasm bilan bezamoq",
+      "sequential — ketma-ket",
+      "phenomenon — hodisa",
+      "tapestry — gilam-rasm",
+      "narrative — hikoya",
+      "enthusiast — ishqiboz",
+      "literacy — savodxonlik",
+      "reluctant — istamaydigan",
+      "sophisticated — murakkab"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–7: Which paragraph contains the following information?",
+       "type": "Matching information (A–H)",
+       "instr": "NB You may use any letter more than once. Avval kalit so'zlarni belgilang.",
+       "items": [
+        "1 people with negative attitudes towards graphic novels",
+        "2 a variety of school subjects where graphic novels can play an important role",
+        "3 why a graphic novel's visual element speeds up learning",
+        "4 a modern definition of graphic novels",
+        "5 graphic novels are as good as any other method of telling a story",
+        "6 graphic novels sometimes use advanced words",
+        "7 the historical use of pictures as a method of storytelling"
+       ],
+       "answers": [
+        "C",
+        "G",
+        "F",
+        "B",
+        "D",
+        "H",
+        "B"
+       ],
+       "why": [
+        "\"Many adults feel that graphic novels are not the type of reading material that will help ... a bad influence\".",
+        "\"Especially in the areas of English, social studies and art\".",
+        "\"The pictures provide clues to the meaning of the words ... will acquire new vocabulary more quickly\". Tuzoq: E ham rasmlar haqida, lekin u o'qishga QIZIQTIRISH haqida, tezroq o'rganish emas.",
+        "\"The term graphic novel is now generally used to describe any book in a comic format...\". Tuzoq: A da 1978-yilgi BIRINCHI ta'rif — zamonaviy emas.",
+        "\"A method of storytelling on the same level as novels, films or audio books\".",
+        "\"Often they actually contain more sophisticated vocabulary\". Sophisticated = advanced.",
+        "\"Used in various forms for centuries. Early cave drawings, hieroglyphics and medieval tapestries\"."
+       ],
+       "note": "B ikki marta (4 va 7). Javoblar ustoz tomonidan berilmagan edi — Jony Academy tomonidan yechildi va har biri matn bilan isbotlandi.",
+       "layout": "match"
+      },
+      {
+       "title": "Questions 8–14: Complete the table — The advantages of graphic novels",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "Asl faylda 7–13 deb raqamlangan.",
+       "items": [
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14"
+       ],
+       "answers": [
+        "reluctant",
+        "colourful pictures",
+        "story",
+        "reading skills",
+        "language",
+        "clues",
+        "vocabulary"
+       ],
+       "why": [
+        "\"Children who are usually reluctant to read\".",
+        "\"The colourful pictures attract them\". Attracted by = attract.",
+        "\"Encourage them to find out what the story is about\".",
+        "\"Having problems improving their reading skills\".",
+        "\"Language learners are therefore more motivated\". \"Foreign language\" ham 2 so'z ichida, lekin gapda \"learners\" bor — \"language\" yetarli.",
+        "\"The pictures provide clues to the meaning of the words\".",
+        "\"Will acquire new vocabulary more quickly\". Develops a larger = acquire new."
+       ],
+       "layout": "grid",
+       "head": [
+        "Advantages",
+        "Who benefits?",
+        "How it works"
+       ],
+       "rows": [
+        [
+         "They provide motivation to read",
+         "(8) readers",
+         "They are attracted by (9) ;; This encourages them to find out what happens in the (10)"
+        ],
+        [
+         "They help improve a student's (11)",
+         "(12) learners",
+         "The pictures act as visual (13) ;; The student develops a larger (14)"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "The long story of the umbrella",
+     "qtype": "Matching information (1–6)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "A. The first umbrellas were not made to keep people dry. Four thousand years ago, in Egypt, China and Assyria, they were used as protection from the sun, and only kings, nobles and priests were allowed to stand under them. The word \"umbrella\" itself comes from the Latin word umbra, meaning shade.",
+      "B. It was the Chinese who first made umbrellas waterproof, covering paper shades with wax and oil. From China the idea spread slowly westwards, but for centuries in Europe umbrellas were seen as objects for women only. A man carrying one risked being laughed at in the street.",
+      "C. That changed in London in the 1750s thanks to a traveller called Jonas Hanway. Having seen umbrellas used in Persia, he carried one through the rainy streets of London for about thirty years. At first people shouted at him, and coach drivers, who earned money from people escaping the rain, even tried to run him down. By the time he died, however, the umbrella had become an ordinary item for men as well.",
+      "D. Early European umbrellas were heavy, with frames made of wood or whalebone, and they became difficult to open when wet. In 1852, Samuel Fox, an Englishman, designed a frame with light steel ribs. His design was so successful that the basic shape of the umbrella has hardly changed since then.",
+      "E. Today, around a billion umbrellas are sold around the world every year, and most of them are cheap enough to be lost without much worry. Lost-property offices in large cities report that umbrellas are the item most often left behind on buses and trains."
+     ],
+     "paraphrases": [
+      [
+       "protection from the sun",
+       "shade"
+      ],
+      [
+       "waterproof",
+       "kept the rain out"
+      ],
+      [
+       "laughed at",
+       "made fun of"
+      ],
+      [
+       "ordinary",
+       "normal, common"
+      ],
+      [
+       "difficult to open",
+       "hard to open"
+      ],
+      [
+       "hardly changed",
+       "stayed almost the same"
+      ],
+      [
+       "left behind",
+       "forgotten"
+      ]
+     ],
+     "glossary": [
+      "noble — zodagon",
+      "priest — ruhoniy",
+      "wax — mum",
+      "coach — ot arava",
+      "whalebone — kit suyagi",
+      "rib — sim (soyabon qobirg'asi)",
+      "lost-property office — topilmalar bo'limi"
+     ],
+     "tasks": [
+      {
+       "title": "Which paragraph contains the following information?",
+       "type": "Matching information (A–E)",
+       "instr": "NB You may use any letter more than once.",
+       "items": [
+        "1 the origin of the word \"umbrella\"",
+        "2 an improvement that made umbrellas lighter",
+        "3 people who tried to hurt a man with an umbrella",
+        "4 how umbrellas were first protected from rain",
+        "5 a common problem in public transport",
+        "6 a group of people who were allowed to use umbrellas"
+       ],
+       "answers": [
+        "A",
+        "D",
+        "C",
+        "B",
+        "E",
+        "A"
+       ],
+       "why": [
+        "\"Comes from the Latin word umbra, meaning shade\".",
+        "\"A frame with light steel ribs\".",
+        "\"Coach drivers ... even tried to run him down\".",
+        "\"Covering paper shades with wax and oil\".",
+        "\"The item most often left behind on buses and trains\".",
+        "\"Only kings, nobles and priests were allowed\". A ikki marta."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Ma'lumot turi",
+       "type": "Tahlil",
+       "instr": "Har savol qanday ma'lumot turini so'raydi?",
+       "items": [
+        "1-savol",
+        "2-savol",
+        "3-savol",
+        "5-savol"
+       ],
+       "answers": [
+        "kelib chiqish / ta'rif",
+        "yaxshilanish",
+        "odamlar harakati",
+        "muammo"
+       ],
+       "why": [
+        "\"comes from ... meaning\".",
+        "\"light steel ribs\".",
+        "\"tried to run him down\".",
+        "\"most often left behind\"."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Why we forget",
+     "qtype": "Matching information (1–6)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "A. In 1885, the German psychologist Hermann Ebbinghaus published one of the first scientific studies of memory. Using himself as the only subject, he learnt long lists of nonsense syllables such as \"WID\" and \"ZOF\", and then tested how many he could remember after different periods of time.",
+      "B. His results produced what is now called the \"forgetting curve\". Most forgetting happened very quickly: within an hour he had lost more than half of a new list, and after a day around two thirds. After that, the rate of forgetting slowed down, and what remained was kept for a long time.",
+      "C. Ebbinghaus also discovered a way to fight the curve. Each time he reviewed a list, he forgot it more slowly than before. Reviewing at increasing intervals — after one day, then three days, then a week — was far more effective than studying the same list many times in one evening. Today this method, known as spaced repetition, is used by many language-learning apps.",
+      "D. Later researchers found that forgetting is not always a failure. The brain receives far more information than it can store, and forgetting unimportant details makes it easier to find the information that matters. People who remember everything, a rare condition, often say that their memories make it hard to think clearly.",
+      "E. Sleep also plays a part. Studies show that people who sleep after learning remember more than those who stay awake for the same period, because the brain seems to strengthen new memories during the night. For students, this means that staying up all night before an exam may be the worst possible strategy."
+     ],
+     "paraphrases": [
+      [
+       "nonsense syllables",
+       "meaningless sounds"
+      ],
+      [
+       "within an hour",
+       "in less than sixty minutes"
+      ],
+      [
+       "slowed down",
+       "became slower"
+      ],
+      [
+       "reviewed",
+       "studied again"
+      ],
+      [
+       "at increasing intervals",
+       "with longer gaps each time"
+      ],
+      [
+       "failure",
+       "something going wrong"
+      ],
+      [
+       "rare condition",
+       "unusual situation"
+      ],
+      [
+       "strengthen",
+       "make stronger"
+      ]
+     ],
+     "glossary": [
+      "psychologist — psixolog",
+      "subject — tajriba ishtirokchisi",
+      "syllable — bo'g'in",
+      "curve — egri chiziq",
+      "interval — oraliq",
+      "spaced repetition — oraliqli takrorlash",
+      "strategy — strategiya"
+     ],
+     "tasks": [
+      {
+       "title": "Which paragraph contains the following information?",
+       "type": "Matching information (A–E)",
+       "instr": "NB You may use any letter more than once.",
+       "items": [
+        "1 a reason why forgetting can be useful",
+        "2 figures showing how quickly people forget",
+        "3 a description of the materials used in an experiment",
+        "4 advice for students before exams",
+        "5 a modern use of an old discovery",
+        "6 people with an unusual memory ability"
+       ],
+       "answers": [
+        "D",
+        "B",
+        "A",
+        "E",
+        "C",
+        "D"
+       ],
+       "why": [
+        "\"Forgetting unimportant details makes it easier to find the information that matters\".",
+        "\"Within an hour ... more than half ... after a day around two thirds\".",
+        "\"Long lists of nonsense syllables such as 'WID' and 'ZOF'\".",
+        "\"Staying up all night before an exam may be the worst possible strategy\".",
+        "\"Spaced repetition, is used by many language-learning apps\".",
+        "\"People who remember everything, a rare condition\". D ikki marta."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Savoldagi so'zning matndagi juftini toping.",
+       "items": [
+        "useful (1)",
+        "unusual ability (6)",
+        "modern use (5)"
+       ],
+       "answers": [
+        "makes it easier",
+        "a rare condition",
+        "is used by many apps"
+       ],
+       "why": [
+        "D.",
+        "D.",
+        "C."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "How the bicycle was invented",
+     "qtype": "Matching information (1–6)",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "A. The first machine that looked like a bicycle was built in 1817 by Karl Drais, a German inventor. It had two wheels and a seat, but no pedals: riders sat on it and pushed themselves along the ground with their feet. Drais hoped it would replace horses, which were expensive to feed after a series of poor harvests.",
+      "B. Pedals arrived in the 1860s in France, where they were attached directly to the front wheel. These machines, called velocipedes, were faster, but they had iron wheels and wooden frames, and riding one on the stony roads of the time was so uncomfortable that the English nicknamed them \"boneshakers\".",
+      "C. To go faster, makers of the 1870s simply made the front wheel bigger, sometimes up to one and a half metres high. This design, later known as the \"penny-farthing\", was popular with young men, but it was dangerous: a small stone could throw the rider over the handlebars, head first.",
+      "D. The solution came in 1885, when John Kemp Starley in England built the \"safety bicycle\". Its two wheels were the same size, and a chain connected the pedals to the back wheel. Three years later, John Dunlop added air-filled rubber tyres, and cycling suddenly became comfortable.",
+      "E. The safety bicycle changed society. It was cheap enough for working people, and it gave women a new freedom to travel alone. The American campaigner Susan B. Anthony said in 1896 that the bicycle had done more to free women than anything else in the world."
+     ],
+     "paraphrases": [
+      [
+       "pushed themselves along",
+       "moved by using their feet"
+      ],
+      [
+       "attached directly",
+       "fixed straight onto"
+      ],
+      [
+       "uncomfortable",
+       "not pleasant to sit on"
+      ],
+      [
+       "nicknamed",
+       "gave an informal name"
+      ],
+      [
+       "dangerous",
+       "not safe"
+      ],
+      [
+       "connected",
+       "joined"
+      ],
+      [
+       "cheap enough",
+       "affordable"
+      ],
+      [
+       "freedom to travel alone",
+       "independence"
+      ]
+     ],
+     "glossary": [
+      "pedal — pedal",
+      "harvest — hosil",
+      "frame — rama",
+      "stony — toshloq",
+      "handlebars — rul",
+      "chain — zanjir",
+      "tyre — shina",
+      "campaigner — kurashchi, faol"
+     ],
+     "tasks": [
+      {
+       "title": "Which paragraph contains the following information?",
+       "type": "Matching information (A–E)",
+       "instr": "Uyda 10 daqiqada bajaring. NB You may use any letter more than once.",
+       "items": [
+        "1 the reason a bicycle got an unpleasant nickname",
+        "2 a machine that had no pedals",
+        "3 how the bicycle affected women",
+        "4 an invention that improved comfort",
+        "5 a risk of injury for riders",
+        "6 the problem that the first inventor wanted to solve"
+       ],
+       "answers": [
+        "B",
+        "A",
+        "E",
+        "D",
+        "C",
+        "A"
+       ],
+       "why": [
+        "\"So uncomfortable that the English nicknamed them 'boneshakers'\".",
+        "\"It had two wheels and a seat, but no pedals\".",
+        "\"Gave women a new freedom to travel alone\".",
+        "\"Air-filled rubber tyres, and cycling suddenly became comfortable\".",
+        "\"Could throw the rider over the handlebars, head first\".",
+        "\"Hoped it would replace horses, which were expensive to feed\". A ikki marta."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Ma'lumot turi daftari",
+       "type": "Yozma",
+       "instr": "Har savol turini yozing.",
+       "items": [
+        "1-savol",
+        "5-savol",
+        "6-savol"
+       ],
+       "answers": [
+        "sabab",
+        "xavf",
+        "muammo / maqsad"
+       ],
+       "why": [
+        "\"so uncomfortable that\".",
+        "\"throw the rider\".",
+        "\"hoped it would replace horses\"."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-matn: \"How the bicycle was invented\"",
+     "type": "Reading",
+     "instr": "10 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
+     "answers": "Ustoz har javob uchun isbot gapini so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Xatboshi izohlari",
+     "type": "Yozma",
+     "instr": "Graphic novels matnining har xatboshisi (A–H) uchun 4–5 so'zlik qisqa izoh yozing — matching information uchun \"xarita\".",
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
+    },
+    {
+     "title": "Ma'lumot turi",
+     "type": "Yozma",
+     "instr": "Bugungi 5 matndan 10 ta savolni oling va har biri qaysi ma'lumot turini so'rashini yozing: ta'rif, raqam, sabab, misol, muammo, natija.",
+     "answers": "10 qator, turi bilan.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Matching information (uyga)",
+     "6 javobdan 5 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Xatboshi izohlari",
+     "8 ta izoh",
+     "2 coin"
+    ],
+    [
+     "Ma'lumot turi",
+     "10 qatordan 9 tasi",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 26,
+   "title": "Reading: Matching People (Matching Features)",
+   "grammar_topic": "Matching people — fikrni aytgan odam bilan moslash (+ summary completion)",
+   "vocab_topic": "Sayohat, turizm va jamiyat",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matnlari (#29 Here today, gone tomorrow; #30 Holidays with a difference) va mualliflik matnlari.",
+   "objectives": [
+    "Matnda odamlar ismlarini tez topish (skanerlash) va har bir ismning atrofidagi fikrni ajratish.",
+    "Gap (statement) va odam aytgan fikr o'rtasidagi paraphraseni tanish.",
+    "Odam aytgan gap bilan muallifning gapini farqlash: \"says\", \"explains\", \"acknowledges\" dan keyin kelgan gap — odamniki.",
+    "Bir odam bir necha marta javob bo'lishi mumkinligini (NB) hisobga olish.",
+    "Summary completion bilan birgalikda ishlash (bitta matnda ikki savol turi)."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Matching people (matching features) — ro'yxatda odamlar (A–D) beriladi, har gap (statement) ulardan biri aytgan fikrga mos keladi.",
+     "Savollar matn tartibida KELMAYDI (NEVER guruhi). Lekin odamlar matnda odatda bir-bir marta chiqadi, shuning uchun ismlar joyini oldindan belgilab olish vaqtni tejaydi.",
+     "1-qadam: matndan barcha ismlarni topib, doira ichiga oling. Har ism yonida 2–3 so'zda nima deganini yozing: \"Downie — risks, climate change\".",
+     "2-qadam: har gapni o'qing va kalit g'oyani ayting: xavf? foyda? kechiktirmaslik? Keyin shu g'oyani ism yonidagi izohlardan qidiring.",
+     "Tuzoq: bir odamning gapi ichida boshqa odam haqida gap bo'lishi mumkin. Jorgensen gapida Hillary Clinton tilga olinadi, lekin fikr — Jorgensenniki.",
+     "NB You may use any letter more than once — bitta odam ikki gapga javob bo'lishi mumkin (Polar: Jorgensen — 10 va 12; Tribal: Waterhouse — 9 va 11). Ba'zi odamlar esa umuman javob bo'lmasligi mumkin."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Ismlarni matndan toping",
+      "doira ichiga oling",
+      "Skanerlash, 1 daqiqa"
+     ],
+     [
+      "2-bosqich",
+      "Har ism yoniga izoh",
+      "\"risks\", \"do it now\"",
+      "2–3 so'z"
+     ],
+     [
+      "3-bosqich",
+      "Gapning asosiy g'oyasini ayting",
+      "xavf / foyda / maslahat",
+      "O'z so'zingiz bilan"
+     ],
+     [
+      "4-bosqich",
+      "Izohlar bilan solishtiring",
+      "paraphrase",
+      "Aynan so'z kutmang"
+     ],
+     [
+      "5-bosqich",
+      "Isbot gapini o'qing",
+      "odam aytgan gap",
+      "Muallif gapi emas"
+     ],
+     [
+      "6-bosqich",
+      "Harfni yozing",
+      "D",
+      "Harf takrorlanishi mumkin"
+     ]
+    ],
+    "presentation": [
+     [
+      "Ismlar matnda bir necha marta bo'lsa?",
+      "Har joyini belgilang — fikrlar turli joyda bo'lishi mumkin."
+     ],
+     [
+      "Gap odamnikimi, muallifnikimi?",
+      "\"says / explains / according to\" belgilari va qo'shtirnoq odam gapini ko'rsatadi."
+     ],
+     [
+      "Bir odam ikki marta javob bo'ladimi?",
+      "Ha, NB yozilgan bo'lsa."
+     ],
+     [
+      "Savollar tartibdami?",
+      "Yo'q. Shuning uchun ismlarni oldindan belgilash kerak."
+     ],
+     [
+      "Gapdagi so'z bir odamda, ma'no boshqasida.",
+      "Ma'noga qarang. So'z mosligi — tuzoq."
+     ],
+     [
+      "Ro'yxatda ism emas, sana yoki joy bo'lsa?",
+      "Usul bir xil: matching features — har qanday belgi (olim, davr, shahar) bilan moslash."
+     ]
+    ],
+    "notes": [
+     "Ikkala ustoz matnida ham avval summary completion (tartibda), keyin matching people (tartibsiz) keladi. Summary birinchi ishlanadi — matn tanish bo'ladi.",
+     "Polar tourism summaryda javoblar 1–7 ustoz tomonidan berilmagan edi; Tribal tourism matnida esa hech qanday kalit yo'q edi. Barcha javoblar Jony Academy tomonidan yechildi va matn bilan isbotlandi.",
+     "Asl matndagi imlo xatolari tuzatildi: \"tourism is. becoming\" → \"is becoming\", \"whether it hell\" → \"helps\", \"7,000 People\" → \"people\", \"for me was\" → \"for me it was\"."
+    ],
+    "mistakes": [
+     [
+      "Ismni ko'rib darhol tanlash",
+      "Ism atrofidagi fikrni o'qish",
+      "Ism bor — fikr boshqa bo'lishi mumkin"
+     ],
+     [
+      "Gap ichidagi boshqa ismni olish (Hillary Clinton)",
+      "Gapni aytgan odam — Jorgensen",
+      "Kim GAPIRYAPTI?"
+     ],
+     [
+      "Muallif fikrini odamga berish",
+      "\"says\" belgisini tekshirish",
+      "Muallif ro'yxatda yo'q"
+     ],
+     [
+      "Harf takrorlanmaydi deb o'ylash",
+      "NB ni o'qish",
+      "Bir odam — ikki javob"
+     ],
+     [
+      "Tartib bilan qidirish",
+      "Ismlar xaritasi",
+      "Matching — NEVER guruhi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Kim nima dedi?",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ustoz ism aytadi; o'quvchi Polar tourism matnidan uning fikrini 3–4 so'zda aytadi.",
+     "items": [
+      "Louisa Richardson",
+      "Rod Downie",
+      "Frigg Jorgensen",
+      "Prisca Campbell",
+      "Hillary Clinton"
+     ],
+     "answers": [
+      "25% ikkinchi marta boradi",
+      "iqlim o'zgarishi, xavf",
+      "shoshilish isboti yo'q; mashhurlar ta'siri",
+      "\"do it now\"",
+      "ro'yxatda yo'q, u gapirmaydi"
+     ],
+     "why": [
+      "\"Roughly 25 percent go for a second time\".",
+      "\"Tourism in Antarctica is not without its risks\".",
+      "\"No surveys confirm ...\"; \"Hillary Clinton ... Svalbard\".",
+      "\"There's an element of 'do it now'\".",
+      "Uni Jorgensen tilga oladi."
+     ],
+     "note": "Doskada ismlar xaritasi qoladi va 8–12 savollar shu xarita orqali ishlanadi.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Reading #29. Here today, gone tomorrow",
+     "qtype": "Summary completion (1–7) + Matching people (8–12)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "The Arctic and Antarctica are now within reach of the modern tourist, with many going to see these icy wildernesses before it's too late. Christian Amodeo reports on the growth of polar tourism.",
+      "Travel at the North and South Poles has become an expensive leisure activity, suitable for tourists of all ages. The poles may be inhospitable places, but they are seeing increasing numbers of visitors.",
+      "Annual figures for the Arctic, where tourism has existed _since the 19th century_, have increased from about a million in the early 1990s to _more than 1.5 million_ today. This is partly because of the _lengthening summer season_ brought about by climate change.",
+      "Most visitors arrive by ship. In 2007, 370,000 cruise passengers visited Norway, twice the number that arrived in 2000. Iceland, a country where tourism is the second-largest industry, has enjoyed an annual growth rate of nine percent since 1990. Meanwhile, Alaska received some 1,029,800 passengers, a rise of 7.3 percent from 2006. _Greenland has seen the most rapid growth_ in marine tourism, with a sharp increase in cruise-ship arrivals of 250 percent since 2004.",
+      "The global economic downturn may have affected the annual 20.6 percent rate of increase in visitors to the Antarctic - last season saw _a drop of 17 percent_ to 38,200 - but there has been a 760 percent rise in land-based tourism there since 1997. More people than ever are landing at fragile sites, with _light aircraft, helicopters_ and all-terrain vehicles increasingly used for greater access, while in the past two seasons, 'fly-sail' operations have begun. These deliver tourists by air to ships, so far more groups can enjoy a cruise in a season; large cruise ships capable of carrying _up to 800 passengers_ are not uncommon.",
+      "In addition, it seems that a high number of visitors return to the poles. 'Looking at six years' worth of data, of the people who have been to the polar regions, _roughly 25 percent go for a second time_,' says Louisa Richardson, a senior marketing executive at tour operator Exodus.",
+      "In the same period that tourism has exploded, the 'health' of the poles has 'deteriorated'. 'The biggest changes taking place in the Antarctic are related to climate change,' says Rod Downie, Environmental Manager with the British Antarctic Survey (BAS). Large numbers of visitors increase these problems.",
+      "Although polar tourism is widely accepted, there have been few regulations up until recently. At the meeting of the Antarctic Treaty in Baltimore, the 28 member-nations adopted proposals for limits to tourist numbers. These included safety codes for tourist vessels in Antarctic waters, and improved environmental protection for the continent. They agreed to prevent ships with more than 500 passengers from landing in Antarctica, as well as limit the number of passengers going ashore to a maximum of 100 at any one time, with a minimum of one guide for every 20 tourists. _'Tourism in Antarctica is not without its risks,'_ says Downie. 'After all, Antarctica doesn't have a coastguard rescue service.'",
+      "_'So far, no surveys confirm that people are going quickly to see polar regions before they change,'_ says Frigg Jorgensen, General Secretary of the Association of Arctic Expedition Cruise Operators (AECO). 'However, _Hillary Clinton and many other big names have been to Svalbard_ in the northernmost part of Norway _to see the effects of climate change_. The associated media coverage could influence others to do the same.'",
+      "These days, rarely a week passes without a negative headline in the newspapers. The suffering polar bear has become a symbol of a warming world, its plight a warning that the clock is ticking. It would seem that this ticking clock is a small but growing factor for some tourists. _'There's an element of \"do it now\",'_ acknowledges Prisca Campbell, Marketing director of Quark Expeditions, which takes 7,000 people to the poles annually. Leaving the trip until later, it seems, may mean leaving it too late."
+     ],
+     "paraphrases": [
+      [
+       "began in the 19th century",
+       "has existed since the 19th century"
+      ],
+      [
+       "over 1.5 million",
+       "more than 1.5 million"
+      ],
+      [
+       "the greatest increase",
+       "the most rapid growth"
+      ],
+      [
+       "lasts longer",
+       "lengthening summer season"
+      ],
+      [
+       "fallen by 17 percent",
+       "a drop of 17 percent"
+      ],
+      [
+       "small planes",
+       "light aircraft"
+      ],
+      [
+       "hold as many as 800",
+       "capable of carrying up to 800"
+      ],
+      [
+       "should not delay",
+       "\"do it now\""
+      ],
+      [
+       "some dangers",
+       "not without its risks"
+      ],
+      [
+       "famous people",
+       "big names"
+      ],
+      [
+       "impacts of global warming",
+       "effects of climate change"
+      ],
+      [
+       "more than one trip",
+       "go for a second time"
+      ],
+      [
+       "no evidence",
+       "no surveys confirm"
+      ],
+      [
+       "hurrying",
+       "going quickly"
+      ]
+     ],
+     "glossary": [
+      "wilderness — yovvoyi hudud",
+      "inhospitable — yashash uchun noqulay",
+      "cruise — dengiz sayohati",
+      "downturn — pasayish",
+      "fragile — nozik, oson buziladigan",
+      "deteriorate — yomonlashmoq",
+      "treaty — shartnoma",
+      "vessel — kema",
+      "ashore — qirg'oqqa",
+      "plight — og'ir ahvol"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–7: Complete the summary — Polar tourism: the figures",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Summary USUALLY tartibda. Raqamlarni matndan aynan ko'chiring.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+       ],
+       "answers": [
+        "19th century",
+        "1.5 million",
+        "Greenland",
+        "summer season",
+        "17 percent",
+        "helicopters",
+        "800"
+       ],
+       "why": [
+        "\"Where tourism has existed since the 19th century\". Raqam + so'z — chegara ichida.",
+        "\"More than 1.5 million today\". Over = more than.",
+        "\"Greenland has seen the most rapid growth\". Greatest increase = most rapid growth. Tuzoq: Norway (2 baravar) va Iceland (9%) — kamroq.",
+        "\"The lengthening summer season brought about by climate change\". Lasts longer = lengthening.",
+        "\"Last season saw a drop of 17 percent\". Tuzoq: 20.6 percent — oldingi o'sish sur'ati.",
+        "\"Light aircraft, helicopters and all-terrain vehicles\". Small planes = light aircraft; keyingi so'z — helicopters. All-terrain vehicles — 2 so'zdan ko'p va muzga \"qo'nish\" uchun emas.",
+        "\"Large cruise ships capable of carrying up to 800 passengers\". Tuzoq: 500 — qoida bo'yicha qo'nishi mumkin bo'lgan chegara."
+       ],
+       "note": "1–7 javoblari ustoz kalitida yo'q edi — Jony Academy tomonidan yechildi.",
+       "layout": "grid",
+       "head": [
+        "Polar tourism - the figures"
+       ],
+       "rows": [
+        [
+         "Tourism in the Arctic began in the (1) and visitor numbers have risen since that time. These days, over (2) people travel there, mostly by ship. The country with the greatest increase in visitors is (3). Tourism has expanded in the Arctic because the (4) lasts longer than it used to. Travel to the Antarctic has fallen by (5) over the past year. However, many more people are using small planes and (6) to land on the ice. Aircraft are also taking visitors to huge ships that hold as many as (7) tourists."
+        ]
+       ]
+      },
+      {
+       "title": "Questions 8–12: Match each statement with the correct person, A–D",
+       "type": "Matching people",
+       "instr": "NB You may use any letter more than once. Avval ismlar xaritasini tuzing.",
+       "items": [
+        "8 Some tourists believe they should not delay their trip to the poles.",
+        "9 There are some dangers to travelling in Antarctica.",
+        "10 Some famous people have travelled to polar regions to look at the impacts of global warming.",
+        "11 Some tourists make more than one trip to the poles.",
+        "12 There is no evidence that visitors are hurrying to the poles."
+       ],
+       "answers": [
+        "D",
+        "B",
+        "C",
+        "A",
+        "C"
+       ],
+       "why": [
+        "\"There's an element of 'do it now'\". Should not delay = do it now.",
+        "\"Tourism in Antarctica is not without its risks\". Dangers = risks.",
+        "\"Hillary Clinton and many other big names have been to Svalbard ... to see the effects of climate change\". Tuzoq: Clinton ro'yxatda yo'q — gapni Jorgensen aytgan.",
+        "\"Roughly 25 percent go for a second time\".",
+        "\"So far, no surveys confirm that people are going quickly to see polar regions\". C ikki marta (10 va 12)."
+       ],
+       "box": [
+        "A Louisa Richardson",
+        "B Rod Downie",
+        "C Frigg Jorgensen",
+        "D Prisca Campbell"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Gapdagi so'zning matndagi juftini toping.",
+       "items": [
+        "should not delay (8)",
+        "dangers (9)",
+        "famous people (10)",
+        "no evidence (12)"
+       ],
+       "answers": [
+        "do it now",
+        "not without its risks",
+        "big names",
+        "no surveys confirm"
+       ],
+       "why": [
+        "Campbell.",
+        "Downie.",
+        "Jorgensen.",
+        "Jorgensen."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #30. Holidays with a difference",
+     "qtype": "Summary completion (1–8) + Matching people (9–13) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "Tribal tourism is becoming more popular. But at what cost to the locals?",
+      "Tribal tourism is a relatively new type of tourism. It involves travellers going to _remote destinations_, staying with local people and _learning about their culture and way of life_. They stay in local accommodation, share facilities with local people, and join in with meals and celebrations. At the moment, _less than one percent_ of holidays are tribal tourism holidays, but this is set to change.",
+      "Tribal tourism is often compared with foreign exchange visits. However, a foreign exchange involves staying with people who often _share the same values_. Tribal tourism takes visitors to places where the _lifestyle_ is very different from that in their home location. Those who have been on a tribal holiday explain that experiencing this lifestyle is _the main attraction_. They say that it offers them the chance to live in a way they never have before.",
+      "Not everyone is convinced that tribal tourism is a good thing, and opinions are divided. The argument is about whether or not it helps _the local population_, or whether it exploits them. The main problem is that, because tribal tourism is relatively new, the long-term effects on local populations have not been studied in much detail. _Where studies have been carried out, the effects have been found to be negative._",
+      "Travel writer Ian Coleman recalls a recent trip to Guatemala, where he saw an example of this. 'There is a village with a statue of a man called Maximon, who has a special spiritual meaning for the local tribe,' he explains. 'The statue is kept indoors, and once a year the locals bring him out and carry him around the village. However, _visitors now pay money for them to bring the statue out_ and carry it around, while they take photographs. As a result, Maximon has lost his original meaning, and is now just another tourist attraction.'",
+      "So, is it possible to experience an exotic culture without harming it in some way? 'With a bit of thought, we can maximise the positive impacts and minimise the negative,' says travel company director Hilary Waterhouse. 'Remember that you are there not only to experience a different culture, but to help it in some way. _Tourists bring money to the community, which the community can invest in local projects._ However, _this does not mean you can act the way you might do back home._ The most important thing is to show respect, learn about, and be aware of, local customs and traditions. Always remember you're a guest.'",
+      "Dawn Baker, manager of travel company Footprints, runs tours to tribal areas in Peru. 'Good companies specialising in tribal tours are very careful about who they allow on their tours,' she says. 'They won't take anyone they feel is unsuitable.' Baker offers reading recommendations so that visitors can read about the country and its cultures. _'The rewards of a trip to this country are priceless, and the more you know in advance, the more priceless they are.'_",
+      "Tribal tourism travellers are often surprised at how basic their facilities are when they get there. _'It's not for everyone,_ but for me it was all part of the experience,' says Jamie White, who has recently returned from a trip to Borneo. 'We stayed in the same huts that everyone was living in, with no running water and no electricity. It was basic, but it was an ethical way to travel. Being comfortable means you use more local resources and so have more of an environmental impact.'"
+     ],
+     "paraphrases": [
+      [
+       "places that are remote",
+       "remote destinations"
+      ],
+      [
+       "find out about",
+       "learning about"
+      ],
+      [
+       "have different values",
+       "(not) share the same values"
+      ],
+      [
+       "not familiar with",
+       "very different from ... home"
+      ],
+      [
+       "its main attraction",
+       "the main attraction"
+      ],
+      [
+       "do not benefit",
+       "whether or not it helps / exploits"
+      ],
+      [
+       "studies show",
+       "where studies have been carried out"
+      ],
+      [
+       "change the way they behave",
+       "not act the way you might do back home"
+      ],
+      [
+       "would not enjoy",
+       "it's not for everyone"
+      ],
+      [
+       "benefits for local people",
+       "bring money ... invest in local projects"
+      ],
+      [
+       "make local people do things",
+       "visitors pay money for them to bring the statue out"
+      ],
+      [
+       "learning before you go",
+       "the more you know in advance"
+      ],
+      [
+       "much more satisfying",
+       "the more priceless they are"
+      ]
+     ],
+     "glossary": [
+      "tribal — qabilaviy",
+      "remote — chekka, uzoq",
+      "accommodation — turar joy",
+      "exchange visit — almashinuv safari",
+      "exploit — ekspluatatsiya qilmoq",
+      "spiritual — ma'naviy",
+      "statue — haykal",
+      "exotic — ekzotik",
+      "ethical — axloqiy",
+      "hut — kulba"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–8: Complete the summary — Tribal tourism",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Summary USUALLY tartibda.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+       ],
+       "answers": [
+        "remote",
+        "culture",
+        "one percent",
+        "values",
+        "lifestyle",
+        "main attraction",
+        "local population",
+        "studies"
+       ],
+       "why": [
+        "\"Travellers going to remote destinations\". \"Places that are ___\" — sifat.",
+        "\"Learning about their culture and way of life\". \"How people live\" = \"way of life\", shuning uchun bo'sh joy — culture.",
+        "\"Less than one percent of holidays\". \"1 percent\" ham to'g'ri.",
+        "Almashinuvda odamlar \"often share the same values\"; qabila turizmida esa qadriyatlar har xil.",
+        "\"Places where the lifestyle is very different from that in their home location\". Not familiar with = very different from home.",
+        "\"Experiencing this lifestyle is the main attraction\". \"Its\" gapda bor — artikl kerak emas.",
+        "\"Whether or not it helps the local population, or whether it exploits them\".",
+        "\"Where studies have been carried out, the effects have been found to be negative\". Not good = negative."
+       ],
+       "note": "Bu matn uchun ustoz javob kaliti yo'q edi — barcha javoblar Jony Academy tomonidan yechildi.",
+       "layout": "grid",
+       "head": [
+        "Tribal tourism"
+       ],
+       "rows": [
+        [
+         "People who take a tribal tourism holiday visit places that are (1). When they are there, they find out about the local (2) and how people live. Currently, tribal tourism accounts for less than (3) of the tourism industry. Tribal tourism holidays are different from foreign exchange visits because the travellers and the people they meet have different (4). Tribal tourism travellers experience a (5) that they are not familiar with. For them, this is its (6). However, some people argue that (7) do not benefit from this kind of tourism. (8) show that the effects of tribal tourism are not good."
+        ]
+       ]
+      },
+      {
+       "title": "Questions 9–13: Match each statement with the correct person, A–D",
+       "type": "Matching people",
+       "instr": "NB You may use any letter more than once.",
+       "items": [
+        "9 Travellers may need to change the way they behave.",
+        "10 Some travellers would not enjoy living the way that the local people do.",
+        "11 Tribal tourism can have benefits for local people.",
+        "12 Some travellers make local people do things that they would not normally do.",
+        "13 Learning about a place before you go there makes your trip much more satisfying."
+       ],
+       "answers": [
+        "B",
+        "D",
+        "B",
+        "A",
+        "C"
+       ],
+       "why": [
+        "\"This does not mean you can act the way you might do back home ... show respect\".",
+        "\"It's not for everyone\" — oddiy kulbalar, suv va elektr yo'q.",
+        "\"Tourists bring money to the community, which the community can invest in local projects\". B ikki marta (9 va 11).",
+        "Haykal yiliga bir marta chiqariladi, endi esa \"visitors now pay money for them to bring the statue out\".",
+        "\"The more you know in advance, the more priceless they are\". Satisfying = rewards / priceless."
+       ],
+       "box": [
+        "A Ian Coleman",
+        "B Hilary Waterhouse",
+        "C Dawn Baker",
+        "D Jamie White"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Tuzoq tahlili",
+       "type": "Tahlil",
+       "instr": "Nega bu odam javob emas?",
+       "items": [
+        "10-savol B (Waterhouse)",
+        "12-savol C (Baker)",
+        "13-savol B"
+       ],
+       "answers": [
+        "boshqa fikr",
+        "boshqa fikr",
+        "qisman"
+       ],
+       "why": [
+        "U hurmat haqida gapiradi, qiyin sharoit haqida emas.",
+        "Kompaniyalar kimni olishini tanlashi haqida.",
+        "\"Learn about local customs\" — safar DAVOMIDA hurmat, oldindan o'qish emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Working from home: four views",
+     "qtype": "Matching people (1–6)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Since 2020, millions of office workers around the world have spent at least part of the week working from home. Four people who have tried it describe their experience.",
+      "Aziza, a graphic designer, says she will never go back to full-time office work. \"I used to spend nearly two hours a day travelling. Now I use that time to exercise and cook proper meals. My work hasn't suffered either — I finish projects faster because nobody interrupts me.\"",
+      "Tom, who manages a sales team of twelve, has mixed feelings. \"My team is just as productive at home, and the numbers prove it. But I've noticed that new staff learn much more slowly. In the office, they could hear how experienced colleagues spoke to customers. At home, they only learn what we remember to tell them.\"",
+      "Dilnoza, a researcher, found the first months difficult. \"My flat is small, and I was working at the kitchen table. By evening I couldn't separate work from rest. What helped was a simple rule: at six o'clock I close the laptop and put it in a cupboard, so I can't see it.\"",
+      "Mark, a secondary school teacher, taught online for a year. \"Some quiet students actually participated more, because they could type questions in the chat instead of speaking in front of the class. But the practical subjects were almost impossible. You can't do a science experiment through a screen.\""
+     ],
+     "paraphrases": [
+      [
+       "never go back",
+       "not return"
+      ],
+      [
+       "travelling",
+       "commuting"
+      ],
+      [
+       "interrupts",
+       "disturbs"
+      ],
+      [
+       "mixed feelings",
+       "both positive and negative views"
+      ],
+      [
+       "productive",
+       "doing a lot of work"
+      ],
+      [
+       "separate work from rest",
+       "keep work and free time apart"
+      ],
+      [
+       "participated more",
+       "took part more actively"
+      ],
+      [
+       "almost impossible",
+       "very hard to do"
+      ]
+     ],
+     "glossary": [
+      "graphic designer — grafik dizayner",
+      "interrupt — xalal bermoq",
+      "productive — samarali",
+      "colleague — hamkasb",
+      "cupboard — shkaf",
+      "participate — qatnashmoq",
+      "practical subject — amaliy fan"
+     ],
+     "tasks": [
+      {
+       "title": "Match each statement with the correct person, A–D",
+       "type": "Matching people",
+       "instr": "NB You may use any letter more than once.",
+       "items": [
+        "1 Working from home helped some people who are usually shy.",
+        "2 A lack of space caused problems at first.",
+        "3 Time that used to be lost is now spent on healthy activities.",
+        "4 Inexperienced workers miss chances to learn by listening.",
+        "5 A clear routine made it easier to stop working.",
+        "6 Some types of work cannot be done well from home."
+       ],
+       "answers": [
+        "D",
+        "C",
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "why": [
+        "\"Some quiet students actually participated more\". Shy = quiet.",
+        "\"My flat is small, and I was working at the kitchen table\".",
+        "\"Nearly two hours a day travelling. Now I use that time to exercise and cook proper meals\".",
+        "\"New staff learn much more slowly. In the office, they could hear how experienced colleagues spoke\".",
+        "\"At six o'clock I close the laptop and put it in a cupboard\". C ikki marta.",
+        "\"The practical subjects were almost impossible\". D ikki marta."
+       ],
+       "box": [
+        "A Aziza",
+        "B Tom",
+        "C Dilnoza",
+        "D Mark"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Gapdagi so'zning matndagi juftini toping.",
+       "items": [
+        "shy (1)",
+        "lack of space (2)",
+        "inexperienced workers (4)"
+       ],
+       "answers": [
+        "quiet",
+        "my flat is small",
+        "new staff"
+       ],
+       "why": [
+        "Mark.",
+        "Dilnoza.",
+        "Tom."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Should children get homework?",
+     "qtype": "Matching people (1–6)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Few school topics cause as much argument between parents and teachers as homework. We asked four people with different experiences for their opinions.",
+      "Gulnora has taught mathematics for twenty years. \"I give short tasks, never more than twenty minutes. Maths is like sport: if you only practise in the lesson, you forget the technique by the next week. What I don't do is give homework on something we haven't covered in class — that only makes children feel stupid.\"",
+      "James is the father of three primary-school children. \"In our house, homework often ends in tears, and usually mine. I think younger children learn more by playing outside or helping to cook dinner than by filling in worksheets. Secondary school is different; by then, homework prepares them for exams.\"",
+      "Professor Rana Malik studies education. \"The research is clearer than people think. For teenagers, a moderate amount of homework is linked to better results. For children under about eleven, the effect is very small. The problem is that schools often give the same amount to every age.\"",
+      "Otabek, aged sixteen, has his final exams next year. \"Homework itself isn't the problem. The problem is when five teachers all give a big task on the same night. If teachers talked to each other and planned it together, we could do all of it properly.\""
+     ],
+     "paraphrases": [
+      [
+       "short tasks",
+       "small amount of work"
+      ],
+      [
+       "forget the technique",
+       "lose the skill"
+      ],
+      [
+       "haven't covered in class",
+       "have not studied yet"
+      ],
+      [
+       "ends in tears",
+       "causes crying and stress"
+      ],
+      [
+       "prepares them for exams",
+       "helps them get ready for tests"
+      ],
+      [
+       "moderate amount",
+       "not too much and not too little"
+      ],
+      [
+       "linked to",
+       "connected with"
+      ],
+      [
+       "planned it together",
+       "coordinated"
+      ]
+     ],
+     "glossary": [
+      "argument — bahs",
+      "technique — usul, texnika",
+      "worksheet — mashq varag'i",
+      "primary school — boshlang'ich maktab",
+      "secondary school — o'rta maktab",
+      "moderate — o'rtacha",
+      "coordinate — muvofiqlashtirmoq"
+     ],
+     "tasks": [
+      {
+       "title": "Match each statement with the correct person, A–D",
+       "type": "Matching people",
+       "instr": "NB You may use any letter more than once.",
+       "items": [
+        "1 Research shows homework is more useful for older children than for younger ones.",
+        "2 Teachers should coordinate the homework they give.",
+        "3 Homework can be stressful for the whole family.",
+        "4 Regular practice prevents students from losing a skill.",
+        "5 Homework should only cover material that has already been taught.",
+        "6 Everyday activities at home can be as educational as homework."
+       ],
+       "answers": [
+        "C",
+        "D",
+        "B",
+        "A",
+        "A",
+        "B"
+       ],
+       "why": [
+        "\"For teenagers ... linked to better results. For children under about eleven, the effect is very small\". B tuzoq: James ham yosh bolalar haqida gapiradi, lekin tadqiqotga emas, o'z oilasiga tayanadi.",
+        "\"If teachers talked to each other and planned it together\".",
+        "\"Homework often ends in tears, and usually mine\".",
+        "\"If you only practise in the lesson, you forget the technique\".",
+        "\"I don't ... give homework on something we haven't covered in class\". A ikki marta.",
+        "\"Younger children learn more by playing outside or helping to cook dinner\". B ikki marta."
+       ],
+       "box": [
+        "A Gulnora",
+        "B James",
+        "C Rana Malik",
+        "D Otabek"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Tuzoq tahlili",
+       "type": "Tahlil",
+       "instr": "Nega bu odam javob emas?",
+       "items": [
+        "1-savol B (James)",
+        "2-savol A (Gulnora)"
+       ],
+       "answers": [
+        "qisman",
+        "boshqa fikr"
+       ],
+       "why": [
+        "U shaxsiy tajribadan gapiradi; \"research shows\" — Malik.",
+        "U vazifa hajmi haqida, o'qituvchilar kelishuvi haqida emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Living in a big city",
+     "qtype": "Matching people (1–6)",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "More than half of the world's population now lives in cities, and the number is still rising. Four people who moved to a large city in the last few years talk about what surprised them.",
+      "Bekzod moved to the capital from a small town to study. \"What surprised me most was how lonely you can feel with millions of people around you. At home everybody knew me. Here I can go a whole week without a proper conversation, unless I make the effort to join a club.\"",
+      "Sofia, a nurse, came for a better salary. \"The salary is higher, yes, but half of it goes on rent. I share a flat with two other nurses. On the other hand, I've learnt more in two years at a big hospital than I would have learnt in ten years back home.\"",
+      "Rustam runs a small café. \"The competition is enormous — there are five cafés on my street alone. But there are also far more customers, and people here are willing to try new things. My most popular dish is one I would never have dared to sell in my home town.\"",
+      "Laura, a retired teacher, moved to be near her grandchildren. \"People think big cities are for the young, but I have never been busier. There are free concerts, lectures and museums. The only thing I really miss is silence. It is never completely quiet here, even at three in the morning.\""
+     ],
+     "paraphrases": [
+      [
+       "lonely",
+       "alone and sad"
+      ],
+      [
+       "make the effort",
+       "try hard"
+      ],
+      [
+       "goes on rent",
+       "is spent on housing"
+      ],
+      [
+       "learnt more",
+       "gained more experience"
+      ],
+      [
+       "competition is enormous",
+       "there are many rivals"
+      ],
+      [
+       "willing to try new things",
+       "open to new ideas"
+      ],
+      [
+       "never been busier",
+       "always have things to do"
+      ],
+      [
+       "miss",
+       "feel sad because something is not there"
+      ]
+     ],
+     "glossary": [
+      "capital — poytaxt",
+      "conversation — suhbat",
+      "salary — maosh",
+      "rent — ijara haqi",
+      "competition — raqobat",
+      "dare — jur'at qilmoq",
+      "retired — nafaqadagi",
+      "lecture — ma'ruza"
+     ],
+     "tasks": [
+      {
+       "title": "Match each statement with the correct person, A–D",
+       "type": "Matching people",
+       "instr": "Uyda 10 daqiqada bajaring. NB You may use any letter more than once.",
+       "items": [
+        "1 City life offers many activities that cost nothing.",
+        "2 Living costs take away much of the benefit of a higher income.",
+        "3 It is possible to feel isolated in a crowded place.",
+        "4 City residents are open to new experiences.",
+        "5 A big city can speed up professional development.",
+        "6 City noise continues all night."
+       ],
+       "answers": [
+        "D",
+        "B",
+        "A",
+        "C",
+        "B",
+        "D"
+       ],
+       "why": [
+        "\"There are free concerts, lectures and museums\".",
+        "\"The salary is higher, yes, but half of it goes on rent\".",
+        "\"How lonely you can feel with millions of people around you\".",
+        "\"People here are willing to try new things\".",
+        "\"I've learnt more in two years at a big hospital than ... in ten years back home\". B ikki marta.",
+        "\"It is never completely quiet here, even at three in the morning\". D ikki marta."
+       ],
+       "box": [
+        "A Bekzod",
+        "B Sofia",
+        "C Rustam",
+        "D Laura"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Paraphrase daftari",
+       "type": "Yozma",
+       "instr": "Gapdagi so'zning matndagi juftini yozing.",
+       "items": [
+        "isolated (3)",
+        "cost nothing (1)",
+        "open to new experiences (4)"
+       ],
+       "answers": [
+        "lonely",
+        "free",
+        "willing to try new things"
+       ],
+       "why": [
+        "Bekzod.",
+        "Laura.",
+        "Rustam."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-matn: \"Living in a big city\"",
+     "type": "Reading",
+     "instr": "10 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
+     "answers": "Ustoz har javob uchun odam aytgan gapni so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Ismlar xaritasi",
+     "type": "Yozma",
+     "instr": "Holidays with a difference matni uchun ismlar xaritasini tuzing: har odam yoniga 5–6 so'zda uning fikri.",
+     "answers": "4 ism, har biri izoh bilan.",
+     "layout": "list"
+    },
+    {
+     "title": "Summary daftari",
+     "type": "Yozma",
+     "instr": "Polar tourism summarysidagi 7 bo'sh joy uchun matndagi paraphrase juftini yozing (masalan: lasts longer — lengthening).",
+     "answers": "Reading bo'limidagi paraphrase jadvali bilan solishtiriladi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Matching people (uyga)",
+     "6 javobdan 5 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Ismlar xaritasi",
+     "4 ism, to'liq",
+     "2 coin"
+    ],
+    [
+     "Summary daftari",
+     "7 juftdan 6 tasi",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 28,
+   "title": "Reading: Passage 2 (Combination)",
+   "grammar_topic": "Passage 2 — aralash savollar: Matching headings + Sentence completion + Pick from a list",
+   "vocab_topic": "Suv, ob-havo va texnologiya",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matnlari (#31 The burden of thirst, #32 The rain makers) va mualliflik matnlari.",
+   "objectives": [
+    "Bitta matnda 3 xil savol turini ketma-ket ishlash va vaqtni to'g'ri taqsimlash (Passage 2 — 20 daqiqa).",
+    "Qaysi savol turini birinchi ishlashni tanlash: headings — xarita beradi; tartibli turlar — keyin.",
+    "Oldingi darslardagi strategiyalarni birlashtirish: headings (10-dars), sentence completion (15-dars), pick from a list (18-dars).",
+    "So'z chegarasini har bo'limda qayta o'qish: \"ONE WORD AND/OR A NUMBER\" — \"TWO WORDS\" emas.",
+    "5 ta matnda ishlash: ustozning 2 matni + 3 ta Jony Academy matni."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "IELTS Reading Passage 2 odatda 13–14 savoldan iborat va 2–3 xil savol turini aralashtiradi. Har tur o'z qoidasi bilan ishlanadi — ularni aralashtirmang.",
+     "Tavsiya etilgan tartib: 1) Matching headings — har xatboshini qisqa o'qib sarlavha berasiz, shu bilan butun matnning \"xaritasi\" paydo bo'ladi. 2) Sentence completion — tartibli (ALWAYS), xaritadan foydalanib tez topiladi. 3) Pick from a list — odatda bitta xatboshiga tegishli.",
+     "Headings bo'yicha eslatma: sarlavha — xatboshining ASOSIY g'oyasi. Birinchi va oxirgi gaplarga alohida e'tibor bering. Ro'yxatda ortiqcha sarlavhalar bor.",
+     "Sentence completion: ko'rsatmani QAYTA o'qing. Bu darsdagi ikkala ustoz matnida \"NO MORE THAN ONE WORD AND/OR A NUMBER\" — ya'ni bitta so'z yoki raqam. \"3.3 million\" — raqam, ruxsat etiladi.",
+     "Pick from a list: ikkala harf ham matndan isbotlanishi kerak. Kim bajargani (villagers of Orbesho) va nima haqida (cloud seeding) ekanini tekshiring.",
+     "Vaqt: headings — 7 daqiqa, sentence completion — 8 daqiqa, pick from a list — 3 daqiqa, tekshirish — 2 daqiqa."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Barcha savol turlarini ko'rib chiqing",
+      "3 tur, so'z chegaralari",
+      "1 daqiqa"
+     ],
+     [
+      "2-bosqich",
+      "Headingsni ishlang",
+      "har xatboshi — asosiy g'oya",
+      "Xarita paydo bo'ladi"
+     ],
+     [
+      "3-bosqich",
+      "Sentence completionni ishlang",
+      "tartib bo'yicha",
+      "Chegarani tekshiring"
+     ],
+     [
+      "4-bosqich",
+      "Pick from a listni ishlang",
+      "tegishli xatboshi",
+      "Ikkala harfni isbotlang"
+     ],
+     [
+      "5-bosqich",
+      "Qolgan bo'sh joylarga qayting",
+      "taxmin ham ball beradi",
+      "Bo'sh qoldirmang"
+     ],
+     [
+      "6-bosqich",
+      "Javob varag'ini tekshiring",
+      "raqamlar to'g'rimi",
+      "20 daqiqa ichida"
+     ]
+    ],
+    "presentation": [
+     [
+      "Qaysi turni birinchi ishlayman?",
+      "Odatda headings: u matn xaritasini beradi va boshqa savollarni tezlashtiradi."
+     ],
+     [
+      "Headings qiyin bo'lsa-chi?",
+      "Uni oxirga qoldiring va avval tartibli turlarni ishlang — matn tanish bo'lgach sarlavha osonlashadi."
+     ],
+     [
+      "\"ONE WORD AND/OR A NUMBER\" da \"40 countries\" yozsam bo'ladimi?",
+      "Ha: bitta raqam + bitta so'z."
+     ],
+     [
+      "Pick from a list ham tartibdami?",
+      "Odatda bitta joyga tegishli, lekin tartib kafolatlanmagan."
+     ],
+     [
+      "Bir xatboshiga ikki sarlavha mos kelsa?",
+      "Ikkalasini ham xatboshining birinchi va oxirgi gapi bilan solishtiring; asosiy g'oyani tanlang."
+     ],
+     [
+      "Vaqt yetmasa?",
+      "Har tur uchun vaqt chegarasi qo'ying; bitta savolga 2 daqiqadan ko'p vaqt sarflamang."
+     ]
+    ],
+    "notes": [
+     "Bu dars — takrorlash va birlashtirish darsi. Ustoz har bo'limdan oldin o'quvchilardan shu turning qoidasini so'raydi (10, 15, 18-darslar).",
+     "#31 matnida 1–6 (headings) kaliti ustozniki; 7–13 javoblari va #32 matnining barcha javoblari Jony Academy tomonidan yechildi.",
+     "#31 dagi 12–13-savol diqqat talab qiladi: Orbesho aholisi yo'l qurgan; beton va tosh yig'ish esa \"those villages\" (tog'ning narigi tomonidagi qishloqlar) aholisiga tegishli. Savol mualliflari bu ikki guruhni bir deb hisoblagan — javob A, C."
+    ],
+    "mistakes": [
+     [
+      "Har bo'limda bir xil so'z chegarasi deb o'ylash",
+      "Har ko'rsatmani o'qish",
+      "ONE WORD ≠ TWO WORDS"
+     ],
+     [
+      "Headingsni detal bo'yicha tanlash",
+      "Asosiy g'oya",
+      "Detal — matching information uchun"
+     ],
+     [
+      "Bitta turga ko'p vaqt sarflash",
+      "Vaqt rejasi",
+      "20 daqiqa — 3 tur"
+     ],
+     [
+      "Pick from listda kimligini tekshirmaslik",
+      "Guruhni aniqlash",
+      "Boshqa odamlar qilgan ish — tuzoq"
+     ],
+     [
+      "Savol raqamlarini aralashtirish",
+      "Javob varag'ini tekshirish",
+      "Aralash turlarda xato ko'p"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Qoidani eslang",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ustoz savol turini aytadi; o'quvchi uning asosiy qoidasini aytadi.",
+     "items": [
+      "Matching headings",
+      "Sentence completion",
+      "Pick from a list",
+      "Summary completion",
+      "Yes / No / Not Given"
+     ],
+     "answers": [
+      "asosiy g'oya; tartibsiz (NEVER); ortiqcha sarlavhalar bor",
+      "matndan aynan; tartibli (ALWAYS); so'z chegarasi",
+      "ikkita harf, har biri alohida ball; ikkalasini isbotlang",
+      "USUALLY tartibda; box yoki matndan",
+      "muallif fikri; tartibli"
+     ],
+     "why": [
+      "10-dars.",
+      "15-dars.",
+      "18-dars.",
+      "14 va 20-darslar.",
+      "19-dars."
+     ],
+     "note": "Qoidalar doskada qoladi; har bo'limga o'tishda ustoz shu ro'yxatga ishora qiladi.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Reading #31. The burden of thirst",
+     "qtype": "Passage 2: Headings (1–6) + Sentence completion (7–11) + Pick from a list (12–13)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "Millions of women carry water long distances. If they had a tap by their door, whole societies would be transformed.",
+      "A. Aylito Binayo's feet know the mountain. Even at four in the morning, she can run down the rocks to the river by starlight alone and climb the steep mountain back up to her village with a container of water on her back. _She has made this journey three times a day since she was a small child._ So has every other woman in her village of Foro, in the Konso district of south-western Ethiopia in Africa. Binayo left school when she was eight years old, in part because she had to help her mother fetch water from the Toiro River. The water is unsafe to drink; every year that the _drought_ continues, the river carries less water, and its flow is reduced. But it is the only water Foro has ever had.",
+      "B. In developed parts of the world, people turn on a tap and out pours abundant, clean water. Yet _nearly 900 million people_ in the world have no access to clean water. Furthermore, _2.5 billion people_ have no safe way to get rid of human waste. Polluted water and lack of proper hygiene cause disease and _kill 3.3 million people_ around the world annually, most of them children. In southern Ethiopia and in northern Kenya, a lack of rain over the past few years has made even dirty water hard to find. But soon, for the first time, things are going to change.",
+      "C. Bringing clean water close to villagers' homes is the key to the problem. _Communities where clean water becomes accessible and plentiful are transformed._ All the hours previously spent hauling water can be used to cultivate more _crops_, raise more animals or even start a business. Families spend less time sick or caring for family members who are unwell. Most important, not having to collect water means girls can go to school and get jobs. The need to fetch water for the family, or to take care of younger siblings while their mother goes, usually prevents them ever having this experience.",
+      "D. But the challenges of bringing water to remote villages like those in Konso are overwhelming. Locating water underground and then reaching it by means of deep _wells_ requires _geological expertise and expensive, heavy machines_. Abandoned wells and water projects litter the villages of Konso. In similar villages around the developing world, _the biggest problem with water schemes is that about half of them break down_ soon after the groups that built them move on. Sometimes technology is used that can't be repaired locally, or spare parts are available only in the capital.",
+      "E. Today, a UK-based international non-profit organisation called WaterAid is tackling the job of bringing water to the most remote villages of Konso. Their approach combines technologies proven to last - such as building a _sand_ dam to capture and filter rainwater that would otherwise drain away. But _the real innovation_ is that WaterAid believes technology is only part of the solution. Just as important is _involving the local community in designing, building and maintaining_ new water projects. Before beginning any project, WaterAid asks the community to create a WASH (water, sanitation, hygiene) committee of seven people. The committee works with WaterAid to plan projects and involve the village in construction. Then it maintains and runs the project.",
+      "F. The people of Konso, who grow their crops on terraces they have dug into the sides of mountains, are famous for hard work. In the village of Orbesho, _residents even constructed a road themselves_ so that drilling machinery could come in. Last summer, their pump, installed by the river, was being motorised to push its water to a newly built reservoir on top of a nearby mountain. From there, gravity will carry it down in pipes to villages on the other side of the mountain. Residents of those villages have each given some money to help fund the project. They have _made concrete and collected stones_ for the structures. Now they are digging trenches to lay pipes. _If all goes well_, Aylito Binayo will have a tap with safe water just a three-minute walk from her front door."
+     ],
+     "paraphrases": [
+      [
+       "a regular trip",
+       "three times a day since she was a small child"
+      ],
+      [
+       "some relevant statistics",
+       "900 million ... 2.5 billion ... 3.3 million"
+      ],
+      [
+       "change people's lives",
+       "communities ... are transformed"
+      ],
+      [
+       "why some plans have failed",
+       "about half of them break down"
+      ],
+      [
+       "a new management style",
+       "the real innovation ... involving the local community"
+      ],
+      [
+       "a possible success",
+       "if all goes well"
+      ],
+      [
+       "falling water levels",
+       "the river carries less water"
+      ],
+      [
+       "die each year",
+       "kill ... annually"
+      ],
+      [
+       "specialist knowledge and equipment",
+       "geological expertise and expensive, heavy machines"
+      ],
+      [
+       "capture rainwater",
+       "capture and filter rainwater"
+      ],
+      [
+       "building a transport route",
+       "constructed a road"
+      ],
+      [
+       "gathering building materials",
+       "made concrete and collected stones"
+      ]
+     ],
+     "glossary": [
+      "burden — yuk, og'irlik",
+      "drought — qurg'oqchilik",
+      "abundant — mo'l",
+      "hygiene — gigiyena",
+      "haul — tashimoq",
+      "sibling — aka-uka, opa-singil",
+      "overwhelming — juda katta, bosib ketadigan",
+      "expertise — mutaxassislik bilimi",
+      "well — quduq",
+      "terrace — zinapoya-dala",
+      "trench — ariq, xandaq"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6: Choose the correct heading for each paragraph",
+       "type": "Matching headings",
+       "instr": "Ro'yxatda 2 ta ortiqcha sarlavha bor. Avval xatboshining asosiy g'oyasini o'z so'zingiz bilan ayting.",
+       "items": [
+        "Paragraph A",
+        "Paragraph B",
+        "Paragraph C",
+        "Paragraph D",
+        "Paragraph E",
+        "Paragraph F"
+       ],
+       "answers": [
+        "vi A regular trip for some people",
+        "v Some relevant statistics",
+        "viii How water can change people's lives",
+        "i Why some plans have failed",
+        "iv Explaining a new management style",
+        "iii A possible success"
+       ],
+       "why": [
+        "\"She has made this journey three times a day since she was a small child. So has every other woman in her village\".",
+        "\"Nearly 900 million ... 2.5 billion ... kill 3.3 million people\". Xatboshi raqamlarga qurilgan. Tuzoq: vii — kasallik tilga olingan, lekin davolash haqida emas.",
+        "\"Communities where clean water becomes accessible and plentiful are transformed\".",
+        "\"The biggest problem with water schemes is that about half of them break down\".",
+        "\"The real innovation ... involving the local community in designing, building and maintaining\". WASH qo'mitasi — yangi boshqaruv usuli.",
+        "\"If all goes well, Aylito Binayo will have a tap\". \"Possible\" = \"if all goes well\"."
+       ],
+       "note": "Ishlatilmagan sarlavhalar: ii \"A rural and urban problem\" (shahar haqida gap yo'q) va vii \"Treating people for disease\" (B dagi tuzoq).",
+       "box": [
+        "i Why some plans have failed",
+        "ii A rural and urban problem",
+        "iii A possible success",
+        "iv Explaining a new management style",
+        "v Some relevant statistics",
+        "vi A regular trip for some people",
+        "vii Treating people for disease",
+        "viii How water can change people's lives"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Questions 7–11: Complete the sentences",
+       "type": "NO MORE THAN ONE WORD AND/OR A NUMBER from the passage",
+       "instr": "Gaplar matn tartibida (ALWAYS). Bitta so'z yoki raqam!",
+       "items": [
+        "The water levels in the Toiro River are falling because of ___.",
+        "Globally, the number of people who die each year as a result of using dirty water is ___.",
+        "When families have clean water, they can spend more time growing ___.",
+        "Specialist knowledge and equipment are needed to dig ___.",
+        "WaterAid uses a dam made of ___ to capture rainwater."
+       ],
+       "answers": [
+        "drought",
+        "3.3 million",
+        "crops",
+        "wells",
+        "sand"
+       ],
+       "why": [
+        "\"Every year that the drought continues, the river carries less water\".",
+        "\"Kill 3.3 million people around the world annually\". Tuzoq: 900 million — toza suvsiz odamlar, o'lganlar emas.",
+        "\"Can be used to cultivate more crops\". Growing = cultivate.",
+        "\"Reaching it by means of deep wells requires geological expertise and expensive, heavy machines\".",
+        "\"Building a sand dam to capture and filter rainwater\"."
+       ],
+       "layout": "list"
+      },
+      {
+       "title": "Questions 12–13: Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Which TWO of these activities were performed by the villagers of Orbesho?",
+       "items": [
+        "12–13 Which TWO of these activities were performed by the villagers? A) building a transport route B) digging a reservoir C) gathering building materials D) making pipes E) fitting taps"
+       ],
+       "answers": [
+        "A, C"
+       ],
+       "why": [
+        "\"Residents even constructed a road themselves\" (A) va \"they have made concrete and collected stones for the structures\" (C). B tuzoq: suv ombori qurilgan, lekin kim qazigani aytilmagan. D tuzoq: ular quvur YASAMAYDI, quvur uchun ariq qazishadi. E — kran hali yo'q (\"will have a tap\")."
+       ],
+       "note": "Diqqat: matnda yo'lni Orbesho aholisi qurgan, beton va toshni esa tog'ning narigi tomonidagi qishloqlar (\"those villages\") aholisi tayyorlagan. Savol ularni bitta guruh deb hisoblaydi — javob A, C.",
+       "layout": "mcq"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Savoldagi so'zning matndagi juftini toping.",
+       "items": [
+        "die each year (8)",
+        "growing (9)",
+        "specialist knowledge and equipment (10)",
+        "building a transport route (12)",
+        "gathering building materials (13)"
+       ],
+       "answers": [
+        "kill ... annually",
+        "cultivate",
+        "geological expertise and expensive, heavy machines",
+        "constructed a road",
+        "made concrete and collected stones"
+       ],
+       "why": [
+        "B.",
+        "C.",
+        "D.",
+        "F.",
+        "F."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #32. The rain makers",
+     "qtype": "Passage 2: Headings (1–6) + Sentence completion (7–12) + Pick from a list (13–14) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "Science and technology work with nature to bring rain when and where it is needed",
+      "A. Wheat farmer Gang Liu is a worried man. The annual rains have not arrived, and there is a danger that unless there is substantial rainfall soon, his annual wheat crop will fail. As he looks anxiously at the clouds which promise rain but are failing to deliver it, there is a sudden loud roar, and from fields for miles around, hundreds of small rockets are fired into the clouds. _Within twenty minutes, the farms around the eastern Chinese city of Luohe are experiencing their first rain for many weeks._ Gang Liu's valuable wheat has been saved, thanks to a technique known as 'cloud seeding', in which the chemical silver iodide (AgI) is introduced into clouds. This causes the tiny drops of moisture in the clouds to turn to ice. These tiny ice particles join until they become heavy enough to fall from the sky, turning into rain as they melt.",
+      "B. But did cloud seeding really cause the rain in Luohe to fall, or was it just a coincidence? Experts often question whether cloud seeding actually works. It is hard to tell how _effective_ cloud seeding actually is, they say, as it might have rained anyway, without human intervention. But this has not stopped many governments and organisations from trying. _There are currently 150 weather-modifying projects taking place in more than 40 countries._ Not all of them are aimed at creating rain. The Eastlund Scientific Enterprises Corporation in the USA, for example, is experimenting with firing microwaves into clouds to prevent the tornadoes which cause enormous damage to the country every year. In Russia, experiments have been carried out to make sure the sun shines during important national events.",
+      "C. However, it is rainmaking that dominates the research programmes. In many of these, researchers are using trials in which some clouds are 'seeded' while others are not, and both groups are monitored. Arlen Huggins of the Desert Research Institute is leading a research project in Australia. Weather-monitoring _technology_ is so good nowadays, he says, that we can measure clouds much more effectively, even from the inside. As a result, we now know much more about the effect humans can have on the weather. _What Huggins' team has discovered so far is promising._ They believe that cloud seeding does work, although there are still two _years_ of the six-year project left to go.",
+      "D. _In China, where the majority of cloud-seeding operations take place_, weather-modification authorities use _army rockets_ to fire silver-iodide particles into the clouds. 39,000 staff working for the China Meteorological Administration (CMA) are equipped with 7,113 army cannons which, in 2006, were used to fire a million silver-iodide rockets into the atmosphere. This costs over $100 million a year, although the CMA claims the results are worth the expense. Between 1999 and 2006, they say, cloud seeding produced 250 billion metric tonnes of rain and prevented thousands of _farmers_ from losing their crops.",
+      "E. \"We want to understand what makes clouds rain,\" says Philip Brown of the UK Meteorological office, explaining why so much time, effort and money are being invested. \"But there is a more powerful economic reason. A lot of countries around the world are at risk from drought, and governments will try anything to make sure that doesn't happen, even if the scientific evidence is weak. _The potential economic value is greater than the scientific value._ Making it rain might allow you to keep agriculture going where, without human intervention, it might fail.\"",
+      "F. Some people are concerned, however, that altering the weather can have negative consequences. Leonard Barrie, director of the research department at the World Meteorological Organisation in Geneva, explains why. \"All areas of weather modification are still very controversial. Some people think that diverting water for irrigation benefits some people, but is a disadvantage to others. _Someone in one area will get more water, but as a result, someone somewhere else could get less._\" His fears may be justified. Recently, the town of Zhoukou in China's Henan province accused neighbouring town Pingdingshang of 'stealing' rain from clouds that were due to pass over its own farms, prompting what may be the world's very first documented incident of 'rain rage'."
+     ],
+     "paraphrases": [
+      [
+       "a period of drought comes to an end",
+       "first rain for many weeks"
+      ],
+      [
+       "global attempts",
+       "150 projects in more than 40 countries"
+      ],
+      [
+       "tests provide encouraging results",
+       "what Huggins' team has discovered so far is promising"
+      ],
+      [
+       "military weapon",
+       "army rockets / army cannons"
+      ],
+      [
+       "what is prompting this research",
+       "why so much time, effort and money are being invested"
+      ],
+      [
+       "winners and losers",
+       "someone will get more water ... someone else could get less"
+      ],
+      [
+       "unsure if it is effective",
+       "hard to tell how effective"
+      ],
+      [
+       "modern technology",
+       "weather-monitoring technology"
+      ],
+      [
+       "gets equipment from the army",
+       "equipped with army cannons"
+      ],
+      [
+       "more than anywhere else",
+       "the majority of operations take place"
+      ],
+      [
+       "affect the distribution of rainfall",
+       "one area gets more, another gets less"
+      ]
+     ],
+     "glossary": [
+      "substantial — ko'p, katta",
+      "anxiously — xavotir bilan",
+      "silver iodide — kumush yodid",
+      "moisture — namlik",
+      "coincidence — tasodif",
+      "intervention — aralashuv",
+      "tornado — tornado",
+      "monitor — kuzatmoq",
+      "atmosphere — atmosfera",
+      "irrigation — sug'orish",
+      "controversial — munozarali"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6: Choose the correct heading for each paragraph",
+       "type": "Matching headings",
+       "instr": "Ro'yxatda 3 ta ortiqcha sarlavha bor.",
+       "items": [
+        "Paragraph A",
+        "Paragraph B",
+        "Paragraph C",
+        "Paragraph D",
+        "Paragraph E",
+        "Paragraph F"
+       ],
+       "answers": [
+        "iv A period of drought comes to an end",
+        "ix Global attempts to change the weather",
+        "vii Tests provide encouraging results",
+        "i Making peaceful use of a military weapon",
+        "iii What is prompting this research?",
+        "vi Winners and losers"
+       ],
+       "why": [
+        "Yomg'ir kelmagan, keyin \"within twenty minutes ... their first rain for many weeks\".",
+        "\"150 weather-modifying projects taking place in more than 40 countries\" + AQSh va Rossiya misollari. Tuzoq: ii — dunyoni O'ZGARTIRGANI aytilmagan, faqat urinishlar.",
+        "\"Trials ... What Huggins' team has discovered so far is promising\". Promising = encouraging.",
+        "\"Use army rockets ... 7,113 army cannons\" — dehqonlarga yordam uchun. Tuzoq: viii — xarajat bor, lekin CMA \"worth the expense\" deydi.",
+        "\"Explaining why so much time, effort and money are being invested ... a more powerful economic reason\".",
+        "\"Someone in one area will get more water, but ... someone somewhere else could get less\"."
+       ],
+       "note": "Ishlatilmagan sarlavhalar: ii (o'zgarish emas, urinish), v (eski yechim haqida gap yo'q), viii (CMA natijani xarajatga arziydi deydi).",
+       "box": [
+        "i Making peaceful use of a military weapon",
+        "ii How modifying the weather has changed the world",
+        "iii What is prompting this research?",
+        "iv A period of drought comes to an end",
+        "v An old solution to a new problem",
+        "vi Winners and losers",
+        "vii Tests provide encouraging results",
+        "viii A waste of money",
+        "ix Global attempts to change the weather"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Questions 7–12: Complete the sentences",
+       "type": "NO MORE THAN ONE WORD AND/OR A NUMBER from the passage",
+       "instr": "Gaplar matn tartibida (ALWAYS).",
+       "items": [
+        "Experts are unsure if cloud seeding is ___ or not.",
+        "At the moment, there are over ___ where projects are being carried out to modify the weather.",
+        "Thanks to modern ___, it is now possible to get better results when clouds are monitored.",
+        "The Desert Research Institute project will finish in a couple of ___.",
+        "The CMA gets the equipment they need from the ___.",
+        "A large number of ___ benefited from cloud seeding carried out by the CMA."
+       ],
+       "answers": [
+        "effective",
+        "40 countries",
+        "technology",
+        "years",
+        "army",
+        "farmers"
+       ],
+       "why": [
+        "\"It is hard to tell how effective cloud seeding actually is\".",
+        "\"150 weather-modifying projects taking place in more than 40 countries\". Raqam + bitta so'z — ruxsat. Tuzoq: 150 — loyihalar soni, \"where\" esa joyni so'raydi.",
+        "\"Weather-monitoring technology is so good nowadays ... we can measure clouds much more effectively\".",
+        "\"There are still two years of the six-year project left to go\". A couple of = two.",
+        "\"Army rockets ... equipped with 7,113 army cannons\".",
+        "\"Prevented thousands of farmers from losing their crops\"."
+       ],
+       "layout": "list"
+      },
+      {
+       "title": "Questions 13–14: Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Which TWO of these sentences are true about cloud seeding, according to the passage?",
+       "items": [
+        "13–14 Which TWO sentences are true about cloud seeding, according to the passage? A) China carries out more cloud seeding than anywhere else. B) Cloud seeding is too expensive for most countries. C) Cloud seeding is mostly done for scientific rather than economic reasons. D) Cloud seeding helps turn dry areas of land into agricultural areas. E) Cloud seeding may affect the distribution of rainfall."
+       ],
+       "answers": [
+        "A, E"
+       ],
+       "why": [
+        "\"In China, where the majority of cloud-seeding operations take place\" (A) va \"someone in one area will get more water ... someone somewhere else could get less\" (E). C teskari: \"the potential economic value is greater than the scientific value\". D tuzoq: matn qishloq xo'jaligini SAQLAB QOLISH haqida (\"keep agriculture going\"), quruq yerni yangi dalaga aylantirish haqida emas. B aytilmagan."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Tuzoq tahlili",
+       "type": "Tahlil",
+       "instr": "Nega bu javob noto'g'ri?",
+       "items": [
+        "8-savol: 150",
+        "13–14 C",
+        "13–14 D"
+       ],
+       "answers": [
+        "boshqa raqam",
+        "teskari",
+        "aniqlik buzilgan"
+       ],
+       "why": [
+        "Loyihalar soni; savol joy (countries) so'raydi.",
+        "Iqtisodiy qiymat kattaroq.",
+        "\"Keep agriculture going\", yangisini yaratish emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "The return of the tram",
+     "qtype": "Passage 2: Headings (A–D) + Sentence completion + True / False / Not Given",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "A. A hundred years ago, almost every large city in Europe and North America had trams. By the 1960s, most of them had disappeared. Cars and buses were seen as modern and flexible, while trams were considered slow, noisy and old-fashioned, and their rails were taken up or simply covered with tarmac.",
+      "B. Since the 1980s, however, the tram has made a remarkable comeback. The French city of Nantes opened a new line in 1985, and Strasbourg followed in 1994 with a system that became a model for others. Today more than twenty French cities have trams again, and new lines have opened across Europe, Asia and Africa.",
+      "C. There are several reasons for this return. A modern tram line costs far less to build than an underground metro, yet it can carry many more passengers than a bus. Modern trams have low floors, so that people in wheelchairs or with pushchairs can get on easily. They also produce no exhaust fumes in the street, which matters in cities worried about air quality. City planners often use a new tram line to improve the whole street, adding trees, wider pavements and cycle paths.",
+      "D. Trams are not a perfect solution. Building a line can close streets for two or three years, which is hard on local shops. And critics point out that modern electric buses can offer many of the same benefits at a much lower cost, without the need for rails. The debate is likely to continue, but for now, in many cities, the sound of the tram bell has come back."
+     ],
+     "paraphrases": [
+      [
+       "disappeared",
+       "were removed"
+      ],
+      [
+       "old-fashioned",
+       "out of date"
+      ],
+      [
+       "comeback",
+       "return"
+      ],
+      [
+       "model",
+       "example to copy"
+      ],
+      [
+       "costs far less",
+       "is much cheaper"
+      ],
+      [
+       "get on easily",
+       "enter without difficulty"
+      ],
+      [
+       "exhaust fumes",
+       "gases from engines"
+      ],
+      [
+       "critics point out",
+       "people who disagree say"
+      ]
+     ],
+     "glossary": [
+      "tram — tramvay",
+      "rail — rels",
+      "tarmac — asfalt",
+      "wheelchair — nogironlar aravachasi",
+      "pushchair — bolalar aravachasi",
+      "exhaust fumes — chiqindi gazlar",
+      "pavement — piyodalar yo'lagi"
+     ],
+     "tasks": [
+      {
+       "title": "Choose the correct heading for each paragraph",
+       "type": "Matching headings",
+       "instr": "Ro'yxatda 2 ta ortiqcha sarlavha bor.",
+       "items": [
+        "Paragraph A",
+        "Paragraph B",
+        "Paragraph C",
+        "Paragraph D"
+       ],
+       "answers": [
+        "iii The decline of an old form of transport",
+        "vi A surprising return",
+        "i Advantages of the modern tram",
+        "iv Some remaining disadvantages"
+       ],
+       "why": [
+        "\"By the 1960s, most of them had disappeared\".",
+        "\"The tram has made a remarkable comeback\". Remarkable = surprising.",
+        "Arzonroq, ko'proq yo'lovchi, past pol, gaz yo'q.",
+        "\"Trams are not a perfect solution\"."
+       ],
+       "note": "Ortiqcha sarlavhalar: ii (mashina narxi haqida gap yo'q), v (har shahar uchun emas — D bahsni ko'rsatadi).",
+       "box": [
+        "i Advantages of the modern tram",
+        "ii Why cars became more expensive",
+        "iii The decline of an old form of transport",
+        "iv Some remaining disadvantages",
+        "v A tram for every city",
+        "vi A surprising return"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Complete the sentences",
+       "type": "NO MORE THAN ONE WORD from the passage",
+       "instr": "Gaplar matn tartibida.",
+       "items": [
+        "In the past, tram rails were often hidden under ___.",
+        "The tram system in ___ was copied by other cities.",
+        "Trams are easier to use for people in wheelchairs because of their low ___.",
+        "Building a tram line can be difficult for local ___."
+       ],
+       "answers": [
+        "tarmac",
+        "Strasbourg",
+        "floors",
+        "shops"
+       ],
+       "why": [
+        "\"Simply covered with tarmac\".",
+        "\"Strasbourg ... a system that became a model for others\".",
+        "\"Modern trams have low floors\".",
+        "\"Close streets for two or three years, which is hard on local shops\"."
+       ],
+       "layout": "list"
+      },
+      {
+       "title": "TRUE, FALSE or NOT GIVEN",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "Matn tartibida.",
+       "items": [
+        "Nantes was the first French city to build a new tram line.",
+        "A tram line is cheaper to build than a metro.",
+        "Electric buses need rails."
+       ],
+       "answers": [
+        "NOT GIVEN",
+        "TRUE",
+        "FALSE"
+       ],
+       "why": [
+        "Nantes 1985-yilda liniya ochgan, lekin \"birinchi\" ekani aytilmagan.",
+        "\"Costs far less to build than an underground metro\".",
+        "\"Without the need for rails\"."
+       ],
+       "layout": "tfng"
+      }
+     ]
+    },
+    {
+     "title": "Farms without fields",
+     "qtype": "Passage 2: Headings (A–D) + Sentence completion + Pick from a list",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "A. In a warehouse on the edge of a city, lettuce is growing in towers ten layers high. There is no soil and no sunlight. The plants' roots hang in water containing nutrients, and pink-purple LED lights shine on the leaves eighteen hours a day. This is vertical farming, and supporters believe it could change the way cities are fed.",
+      "B. The benefits are impressive. Because the water is recycled, vertical farms can use up to ninety-five percent less water than traditional fields. The plants are grown indoors, so no pesticides are needed, and harvests continue all year round regardless of the weather. Food can be grown close to the people who eat it, which reduces transport and keeps vegetables fresh.",
+      "C. The problem is energy. Sunlight is free; LED lights are not. Lighting, heating and cooling a building full of plants requires huge amounts of electricity, and when energy prices rose sharply in 2022, several well-known vertical-farming companies in Europe and the United States closed down.",
+      "D. For now, vertical farms grow mostly leafy vegetables and herbs, which grow quickly and sell for a good price. Crops such as wheat or rice would need far too much light to be profitable. Many experts therefore see vertical farming not as a replacement for traditional agriculture, but as one useful addition to it, especially in cities where land is expensive and water is scarce."
+     ],
+     "paraphrases": [
+      [
+       "nutrients",
+       "food for plants"
+      ],
+      [
+       "impressive",
+       "very good"
+      ],
+      [
+       "recycled",
+       "used again"
+      ],
+      [
+       "all year round",
+       "in every season"
+      ],
+      [
+       "regardless of",
+       "not depending on"
+      ],
+      [
+       "rose sharply",
+       "increased quickly"
+      ],
+      [
+       "profitable",
+       "making money"
+      ],
+      [
+       "scarce",
+       "rare, not enough"
+      ]
+     ],
+     "glossary": [
+      "warehouse — ombor",
+      "lettuce — salat bargi",
+      "nutrient — ozuqa modda",
+      "pesticide — zararkunandaga qarshi dori",
+      "harvest — hosil",
+      "herb — ziravor o'simlik",
+      "replacement — o'rnini bosuvchi"
+     ],
+     "tasks": [
+      {
+       "title": "Choose the correct heading for each paragraph",
+       "type": "Matching headings",
+       "instr": "Ro'yxatda 2 ta ortiqcha sarlavha bor.",
+       "items": [
+        "Paragraph A",
+        "Paragraph B",
+        "Paragraph C",
+        "Paragraph D"
+       ],
+       "answers": [
+        "ii A new way of growing food",
+        "iv Good for the environment and for shoppers",
+        "i The main weakness",
+        "v A limited but useful role"
+       ],
+       "why": [
+        "Tuproqsiz, quyoshsiz, qatlamli ferma tavsifi.",
+        "Kam suv, pestitsid yo'q (tabiat), yangi sabzavot (xaridor).",
+        "\"The problem is energy\".",
+        "\"Not as a replacement ... but as one useful addition\". Tuzoq: iii — bug'doy va guruch yetishtirib bo'lmaydi."
+       ],
+       "box": [
+        "i The main weakness",
+        "ii A new way of growing food",
+        "iii Crops of the future",
+        "iv Good for the environment and for shoppers",
+        "v A limited but useful role",
+        "vi Why farmers are moving to cities"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Complete the sentences",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Gaplar matn tartibida.",
+       "items": [
+        "In vertical farms, plant roots hang in water instead of ___.",
+        "The lights are on for ___ a day.",
+        "Vertical farms may use ___ less water than normal farms.",
+        "Several companies closed after energy prices rose in ___."
+       ],
+       "answers": [
+        "soil",
+        "eighteen hours",
+        "ninety-five percent",
+        "2022"
+       ],
+       "why": [
+        "\"There is no soil ... roots hang in water\".",
+        "\"Eighteen hours a day\".",
+        "\"Up to ninety-five percent less water\".",
+        "\"When energy prices rose sharply in 2022\"."
+       ],
+       "layout": "list"
+      },
+      {
+       "title": "Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Which TWO things does the writer say about vertical farms?",
+       "items": [
+        "1–2 Which TWO things does the writer say about vertical farms? A) They do not need chemicals to kill insects. B) They are cheaper to run than normal farms. C) They are suitable for growing rice. D) Their vegetables travel shorter distances. E) They produce more food per worker."
+       ],
+       "answers": [
+        "A, D"
+       ],
+       "why": [
+        "\"No pesticides are needed\" (A) va \"grown close to the people who eat it, which reduces transport\" (D). B teskari (energiya qimmat), C teskari (guruch uchun juda ko'p yorug'lik kerak), E aytilmagan."
+       ],
+       "layout": "mcq"
+      }
+     ]
+    },
+    {
+     "title": "The Great Green Wall",
+     "qtype": "Passage 2: Headings (A–D) + Sentence completion + True / False / Not Given",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "A. The Sahel is a long strip of dry land that crosses Africa just south of the Sahara Desert. For decades, its soil has been getting poorer, partly because of drought and partly because of overgrazing and the cutting of trees for fuel. As the land dries, millions of people who depend on farming lose their income.",
+      "B. In 2007, the African Union launched an ambitious plan to fight this process: the Great Green Wall. The original idea was a line of trees about 8,000 kilometres long, running from Senegal in the west to Djibouti in the east. The goal was to restore 100 million hectares of damaged land by 2030.",
+      "C. Progress has been slower than hoped. A report published in 2020 found that less than a fifth of the target had been reached. Many young trees died because they were planted in the wrong places or were not looked after. Money promised by international donors often arrived late, and conflict in parts of the region made work dangerous.",
+      "D. The project has also changed its shape. Instead of a single line of trees, it is now seen as a mosaic of different activities: planting, protecting trees that grow naturally, building small walls of stone to hold rainwater, and helping farmers manage their land. In Niger, farmers who simply protected young trees growing from old roots have brought back millions of hectares of green land — at very low cost."
+     ],
+     "paraphrases": [
+      [
+       "getting poorer",
+       "becoming less fertile"
+      ],
+      [
+       "depend on",
+       "need"
+      ],
+      [
+       "launched",
+       "started"
+      ],
+      [
+       "ambitious",
+       "very big and difficult"
+      ],
+      [
+       "restore",
+       "bring back to a good condition"
+      ],
+      [
+       "slower than hoped",
+       "not as fast as expected"
+      ],
+      [
+       "looked after",
+       "cared for"
+      ],
+      [
+       "at very low cost",
+       "cheaply"
+      ]
+     ],
+     "glossary": [
+      "strip — tasma, yo'lak",
+      "overgrazing — haddan tashqari o'tlatish",
+      "fuel — yoqilg'i",
+      "hectare — gektar",
+      "donor — homiy",
+      "conflict — mojaro",
+      "mosaic — rang-baranglik"
+     ],
+     "tasks": [
+      {
+       "title": "Choose the correct heading for each paragraph",
+       "type": "Matching headings",
+       "instr": "Uyda bajaring. 2 ta ortiqcha sarlavha bor.",
+       "items": [
+        "Paragraph A",
+        "Paragraph B",
+        "Paragraph C",
+        "Paragraph D"
+       ],
+       "answers": [
+        "ii The causes of a growing problem",
+        "iv A big idea",
+        "v Problems along the way",
+        "i A plan with a new form"
+       ],
+       "why": [
+        "Qurg'oqchilik, ortiqcha o'tlatish, daraxt kesish.",
+        "\"An ambitious plan ... 8,000 kilometres ... 100 million hectares\".",
+        "\"Progress has been slower than hoped\" + sabablari.",
+        "\"The project has also changed its shape\". Tuzoq: vi — tosh devorlar faqat bir detal."
+       ],
+       "box": [
+        "i A plan with a new form",
+        "ii The causes of a growing problem",
+        "iii Why the desert is moving north",
+        "iv A big idea",
+        "v Problems along the way",
+        "vi A wall of stone"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Complete the sentences",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Matn tartibida.",
+       "items": [
+        "The Sahel lies to the south of the ___.",
+        "The plan was launched by the ___.",
+        "By 2030, the project aimed to restore 100 million ___ of land."
+       ],
+       "answers": [
+        "Sahara Desert",
+        "African Union",
+        "hectares"
+       ],
+       "why": [
+        "\"Just south of the Sahara Desert\".",
+        "\"The African Union launched an ambitious plan\".",
+        "\"Restore 100 million hectares of damaged land\"."
+       ],
+       "layout": "list"
+      },
+      {
+       "title": "TRUE, FALSE or NOT GIVEN",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "Matn tartibida.",
+       "items": [
+        "By 2020, most of the target had been reached.",
+        "Some trees died because nobody cared for them.",
+        "Farmers in Niger were paid by the government to protect trees."
+       ],
+       "answers": [
+        "FALSE",
+        "TRUE",
+        "NOT GIVEN"
+       ],
+       "why": [
+        "\"Less than a fifth of the target had been reached\".",
+        "\"Were not looked after\".",
+        "To'lov haqida hech narsa yo'q; faqat \"at very low cost\"."
+       ],
+       "layout": "tfng"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-matn: \"The Great Green Wall\"",
+     "type": "Reading",
+     "instr": "15 daqiqada bajaring (Passage 2 vaqt rejasi bilan); javoblar Reading bo'limida.",
+     "answers": "Ustoz har bo'lim uchun sarflangan vaqtni so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Qoidalar kartasi",
+     "type": "Yozma",
+     "instr": "5 ta savol turi (headings, sentence completion, pick from a list, summary, Y/N/NG) uchun bittadan kartochka: qoida, tartib (ALWAYS/USUALLY/NEVER), eng katta tuzoq.",
+     "answers": "5 kartochka.",
+     "layout": "list"
+    },
+    {
+     "title": "Headings xaritasi",
+     "type": "Yozma",
+     "instr": "The rain makers matnining har xatboshisi uchun o'z sarlavhangizni yozing (4–6 so'z), keyin ro'yxatdagi sarlavha bilan solishtiring.",
+     "answers": "6 sarlavha, solishtirish bilan.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Passage 2 (uyga)",
+     "10 javobdan 8 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Qoidalar kartasi",
+     "5 kartochka",
+     "2 coin"
+    ],
+    [
+     "Headings xaritasi",
+     "6 sarlavha",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 29,
+   "title": "Reading: Passage 3 (Combination)",
+   "grammar_topic": "Passage 3 — aralash savollar: Multiple choice + Matching sentence endings + Yes / No / Not Given",
+   "vocab_topic": "Arxitektura va shahar",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matnlari (#33 The Pompidou Centre, #34 The man who tried to destroy Paris) va mualliflik matnlari.",
+   "objectives": [
+    "Passage 3 ning eng qiyin uch turini bitta matnda ishlash: MCQ (muallif maqsadi), sentence endings, Yes/No/Not Given.",
+    "\"What is the writer's main purpose in paragraph X?\" savolini yechish: xatboshi NIMA QILADI — tushuntiradimi, tanqid qiladimi, taqqoslaydimi?",
+    "Matching sentence endings da grammatika + ma'no bo'yicha variantlarni o'chirish.",
+    "Muallif fikrini (views) baho so'zlaridan topish: \"fortunately\", \"justifiably\", \"hideous\", \"an enormous achievement\".",
+    "Passage 3 vaqt rejasi: 20 daqiqa, 14 savol."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Passage 3 — eng uzun va eng qiyin matn. Ko'pincha muallif fikri va maqsadi so'raladi, faktlar kamroq.",
+     "MCQ \"about the Xth paragraph\" — savol qaysi xatboshini aytsa, faqat shu xatboshini o'qing. Javob tartibda (ALWAYS).",
+     "\"Main purpose\" savoli: xatboshining vazifasini aniqlang. Masalan, xatboshi \"critics swiftly changed their tune\" bilan tugasa — maqsad: fikr nega o'zgarganini ko'rsatish. Faqat bir detalni aytgan variant — tuzoq.",
+     "Matching sentence endings: gap boshi va A–F oxirlari. Avval GRAMMATIKA: \"The escalators and lifts ...\" (ko'plik) → \"were ...\" oxiri; keyin MA'NO. Ro'yxatda 2 ta ortiqcha oxir bor. Tartib odatda matn bo'yicha (USUALLY).",
+     "Yes / No / Not Given (19-dars): muallif fikri. \"It is hard to call it a building\" → \"building so'zi yaxshiroq mos keladi\" — NO.",
+     "Tavsiya etilgan tartib: MCQ (tartibli) → sentence endings → Y/N/NG. MCQ matnning birinchi yarmini \"o'qitib\" beradi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Barcha savol turlarini ko'rib chiqing",
+      "MCQ / endings / YNNG",
+      "1 daqiqa"
+     ],
+     [
+      "2-bosqich",
+      "MCQ: ko'rsatilgan xatboshini o'qing",
+      "\"in the second paragraph\"",
+      "Faqat shu joy"
+     ],
+     [
+      "3-bosqich",
+      "\"Purpose\" savolida xatboshi vazifasini ayting",
+      "tushuntirish / tanqid / sabab",
+      "O'z so'zingiz bilan"
+     ],
+     [
+      "4-bosqich",
+      "Sentence endings: grammatika filtri",
+      "birlik/ko'plik, zamon",
+      "Keyin ma'no"
+     ],
+     [
+      "5-bosqich",
+      "Y/N/NG: baho so'zlarini toping",
+      "fortunately, hideous",
+      "Muallif fikri"
+     ],
+     [
+      "6-bosqich",
+      "Tekshiring",
+      "20 daqiqa",
+      "Bo'sh qoldirmang"
+     ]
+    ],
+    "presentation": [
+     [
+      "\"Main purpose\" savolida nima qilaman?",
+      "Xatboshi oxirgi gapiga qarang — u odatda xulosa va maqsadni ko'rsatadi."
+     ],
+     [
+      "Sentence endingsda ikki oxir mos kelsa?",
+      "Gap boshining aniq mavzusini matndan toping va o'sha gap bilan solishtiring."
+     ],
+     [
+      "Endings tartibdami?",
+      "Odatda (USUALLY) ha."
+     ],
+     [
+      "Muallif boshqa odam fikrini aytsa?",
+      "\"Traditionalists regarded it as ugly\" — bu ular fikri; muallif esa \"an enormous achievement\" deydi."
+     ],
+     [
+      "Passage 3 ga necha daqiqa?",
+      "20 daqiqa: MCQ 7, endings 5, YNNG 6, tekshirish 2."
+     ],
+     [
+      "Matn juda qiyin bo'lsa?",
+      "Savollarni o'qing — ular matnning qaysi qismini o'qish kerakligini aytadi. Hamma so'zni tushunish shart emas."
+     ]
+    ],
+    "notes": [
+     "Ikkala ustoz matni (Pompidou va Le Corbusier) bir xil tuzilishga ega: MCQ 1–4, endings 5–8, YNNG 9–14. Ikkinchi matnda o'quvchilar birinchisidagi usulni mustaqil qo'llaydi.",
+     "Bu matnlar uchun javob kaliti berilmagan edi — barcha 28 ta javob Jony Academy tomonidan yechildi va har biri matn bilan isbotlandi.",
+     "Asl matndagi xatolar tuzatildi: \"most outstanding now building\" → \"new building\", \"a James Bond 1 film\" → \"a James Bond film\", \"enabled wider audience\" → \"a wider audience\", \"Europe s\" → \"Europe's\".",
+     "Le Corbusier 14-savoli munozarali: matn \"modern houses that look like they are much older\" deydi — \"old houses\" emas, shuning uchun NO. Ba'zi o'quvchilar NOT GIVEN deyishi mumkin — ikki variantni solishtirib muhokama qiling."
+    ],
+    "mistakes": [
+     [
+      "Butun matnda MCQ javobini qidirish",
+      "Ko'rsatilgan xatboshini o'qish",
+      "\"in the third paragraph\""
+     ],
+     [
+      "Purpose savolida detalni tanlash",
+      "Xatboshi vazifasini tanlash",
+      "Detal ≠ maqsad"
+     ],
+     [
+      "Endingsda faqat ma'noga qarash",
+      "Avval grammatika",
+      "Birlik/ko'plik tez filtrlaydi"
+     ],
+     [
+      "Boshqalar fikrini muallifniki deb olish",
+      "\"regarded / critics say\" belgisi",
+      "Kimning fikri?"
+     ],
+     [
+      "NO va NOT GIVEN ni aralashtirish",
+      "Qarama-qarshi gap bormi?",
+      "19-dars qoidasi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Xatboshi nima qiladi?",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ustoz Pompidou matnidan xatboshining birinchi va oxirgi gapini o'qiydi; o'quvchi uning vazifasini bir so'z bilan aytadi.",
+     "items": [
+      "\"Rogers was only 38 ...\" / \"... it had finally been done.\"",
+      "\"Yet the opening was a downbeat moment.\" / \"... the critics swiftly changed their tune.\"",
+      "\"The architects had been driven by the desire for ultimate flexibility ...\" / \"... their dream had become a reality.\"",
+      "\"Nevertheless, as a model for urban planning, it has proved immensely influential.\""
+     ],
+     "answers": [
+      "qiyinchiliklarni tasvirlash",
+      "fikr o'zgarishini tushuntirish",
+      "g'oyani tushuntirish",
+      "ta'sirni baholash"
+     ],
+     "why": [
+      "Qurilish tarixi, shoshilinch tugatish.",
+      "Muvaffaqiyat → tanqidchilar fikri o'zgardi.",
+      "Moslashuvchan bino.",
+      "Muallif fikri — Y/N/NG uchun muhim."
+     ],
+     "note": "Vazifa so'zlari doskada: tasvirlash, tushuntirish, taqqoslash, tanqid, baholash, misol keltirish.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Reading #33. The Pompidou Centre",
+     "qtype": "Passage 3: MCQ (1–4) + Sentence endings (5–8) + Yes/No/Not Given (9–14)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "More than three decades after it was built, the Pompidou Centre in Paris has survived its moment at the edge of architectural fashion and proved itself to be one of the most remarkable buildings of the 20th century.",
+      "It was the most outstanding new building constructed in Paris for two generations. It looked like an explosion of brightly coloured service pipes in the calm of the city centre. However, when in 1977 the architects Richard Rogers and Renzo Piano stood among a large crowd of 5,000 at the opening of the Centre Culturel d'Art Georges Pompidou (known as the Pompidou), _no one was really aware of the significance of this unusual building_.",
+      "Rogers was only 38 when he and Piano won the competition to design a new cultural centre for Paris in the old market site. Young, unknown architects, they had been chosen from a field of nearly 700 to design one of the most prestigious buildings of its day. After six difficult years, with 25,000 drawings, seven lawsuits, battles over budgets, and _a desperate last-minute scramble to finish the building_, it had finally been done.",
+      "Yet the opening was a downbeat moment. The Pompidou Centre had been rubbished by the critics while it was being built, there was no more work in prospect for the architects, and their partnership had effectively broken down. But this was just a passing crisis. The Centre, which combined the national museum of modern art, exhibition space, a public library and a centre for modern music, proved an enormous success. It attracted six million visitors in its first year, and _with its success, the critics swiftly changed their tune_.",
+      "The architects had been driven by the desire for ultimate flexibility, for _a building that would not limit the movement of its users_. All the different parts were approached through the same enormous entrance hall and served by the same escalator, which was free to anyone to ride, whether they wanted to visit an exhibition or just admire the view. With all the services at one end of the building, _escalators and lifts at the other_, and the floors hung on giant steel beams providing uninterrupted space the size of two football pitches, their dream had become a reality.",
+      "The image of the Pompidou pervaded popular culture in the 1970s, making appearances everywhere - _on record-album covers and a table lamp_, and even acting as the set for a James Bond film. This did much to overcome the secretive nature of the architectural culture of its time, as it enabled a wider audience to appreciate the style and content of the building and so moved away from the strictly professional view.",
+      "The following year, Rogers was commissioned to design a new headquarters for Lloyd's Bank in London and went on to create one of Britain's most dynamic architectural practices. Piano is now among the world's most respected architects. But what of their shared creation?",
+      "It was certainly like no previous museum, with its plans for a flexible interior that not only had movable walls but _floors that could also be adjusted up or down_. _This second feature did not in the end survive_ when the competition drawings were turned into a real building. In other ways, however, the finished building demonstrated a remarkable degree of refinement - of craftsmanship even - in the way the original diagram was transformed into a superbly detailed structure. It was this quality which, according to some critics, suggested that the Pompidou should be seen as _closer to the 19th-century engineering tradition_ than the space age.",
+      "Nevertheless, as a model for urban planning, _it has proved immensely influential_. The Guggenheim in Bilbao and the many other major landmark projects that were built in the belief that innovatively designed cultural buildings can bring about urban renewal are all following the lead of the Pompidou Centre.",
+      "Other buildings may now challenge it for the title of Europe's most outlandish work of architecture. However, more than a quarter of a century later, this construction - _it is hard to call it a building_ when there is no façade, just a lattice of steel beams and pipes and a long external escalator snaking up the outside - still seems extreme.",
+      "Today, the Pompidou Centre itself _still looks much as it did when it opened_. _The shock value of its colour-coded plumbing and its structure has not faded with the years._ But while traditionalists regarded it as an ugly attack on Paris when it was built, _they now see it for what it is - an enormous achievement_, technically and conceptually."
+     ],
+     "paraphrases": [
+      [
+       "did not realise its importance",
+       "no one was really aware of the significance"
+      ],
+      [
+       "there was a hurry to complete it",
+       "a desperate last-minute scramble to finish"
+      ],
+      [
+       "opinions quickly altered",
+       "the critics swiftly changed their tune"
+      ],
+      [
+       "allow visitors to use it freely",
+       "would not limit the movement of its users"
+      ],
+      [
+       "situated on one side",
+       "at the other end"
+      ],
+      [
+       "decorate everyday objects",
+       "record-album covers and a table lamp"
+      ],
+      [
+       "changed during construction",
+       "did not in the end survive"
+      ],
+      [
+       "reminded people of past building styles",
+       "closer to the 19th-century engineering tradition"
+      ],
+      [
+       "influenced the way cities are designed",
+       "immensely influential as a model for urban planning"
+      ],
+      [
+       "fails to shock",
+       "(opposite of) shock value has not faded"
+      ],
+      [
+       "has changed considerably",
+       "(opposite of) still looks much as it did"
+      ]
+     ],
+     "glossary": [
+      "significance — ahamiyat",
+      "prestigious — nufuzli",
+      "lawsuit — sud da'vosi",
+      "scramble — shoshilinch harakat",
+      "downbeat — tushkun",
+      "rubbish (v) — qattiq tanqid qilmoq",
+      "flexibility — moslashuvchanlik",
+      "pervade — hamma joyga tarqalmoq",
+      "refinement — nafislik",
+      "urban renewal — shaharni yangilash",
+      "outlandish — g'alati",
+      "façade — old devor",
+      "lattice — panjara"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–4: Choose the correct letter, A, B, C or D",
+       "type": "Multiple choice",
+       "instr": "Har savol ko'rsatgan xatboshini o'qing. Javoblar tartibda.",
+       "items": [
+        "1 What does the writer say in the first paragraph about the opening of the Pompidou Centre? A) The elderly did not like it. B) The architects were not present. C) The atmosphere was very noisy. D) The people did not realise its importance.",
+        "2 What does the writer say in the second paragraph about the construction of the Pompidou? A) There was a hurry to complete it. B) It cost less than expected. C) Other experts helped draw the plans. D) The market location was criticised.",
+        "3 What is the writer's main purpose in the third paragraph? A) to explain the multi-functional role of the centre B) to praise the architects for their design ideas C) to say why some people's opinions quickly altered D) to show how the media benefited from its success",
+        "4 What was the architects' 'dream', referred to in the fourth paragraph? A) to become famous B) to provide entertainment C) to allow visitors to use it freely D) to build the biggest museum in the world"
+       ],
+       "answers": [
+        "D",
+        "A",
+        "C",
+        "C"
+       ],
+       "why": [
+        "\"No one was really aware of the significance of this unusual building\". B teskari: arxitektorlar olomon ichida turgan.",
+        "\"A desperate last-minute scramble to finish the building\". B tuzoq: \"battles over budgets\" — arzon bo'lgani aytilmagan.",
+        "Xatboshi tushkun ochilishdan boshlanib, \"with its success, the critics swiftly changed their tune\" bilan tugaydi. A tuzoq: markazning vazifalari faqat detal sifatida tilga olingan.",
+        "\"Ultimate flexibility ... a building that would not limit the movement of its users\"; eskalator \"free to anyone to ride\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Questions 5–8: Complete each sentence with the correct ending, A–F",
+       "type": "Matching sentence endings",
+       "instr": "Avval grammatika, keyin ma'no. 2 ta ortiqcha oxir bor.",
+       "items": [
+        "5 The escalators and lifts inside the Pompidou",
+        "6 In the 1970s, pictures of the Pompidou",
+        "7 The original plans for the floors of the Pompidou",
+        "8 The detailed structure of the finished building"
+       ],
+       "answers": [
+        "D",
+        "B",
+        "F",
+        "A"
+       ],
+       "why": [
+        "\"All the services at one end of the building, escalators and lifts at the other\".",
+        "\"Making appearances everywhere - on record-album covers and a table lamp\".",
+        "\"Floors that could also be adjusted up or down. This second feature did not in the end survive\".",
+        "\"Closer to the 19th-century engineering tradition than the space age\". Past building styles = 19th-century tradition."
+       ],
+       "note": "Ortiqcha oxirlar: C (matn aksincha — bino shahar sokinligida \"portlash\"dek ko'ringan) va E (aytilmagan). 8-savolda grammatika yordam beradi: \"structure\" birlik — \"reminded\" (A) mos, \"were ...\" oxirlari emas.",
+       "box": [
+        "A reminded some people of past building styles.",
+        "B were used to decorate everyday objects.",
+        "C fitted in well with the external surroundings.",
+        "D were situated on one side of the building.",
+        "E showed people which area to visit.",
+        "F were changed during the construction process."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Questions 9–14: YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Muallif fikri bilan solishtiring.",
+       "items": [
+        "The Pompidou has influenced the way cities are designed.",
+        "The Guggenheim has been more popular than the Pompidou.",
+        "The word building fits the Pompidou better than the word construction.",
+        "The Pompidou's appearance has changed considerably since it opened.",
+        "Nowadays, the design of the Pompidou fails to shock people.",
+        "The traditionalist view of the Pompidou has changed over the years."
+       ],
+       "answers": [
+        "YES",
+        "NOT GIVEN",
+        "NO",
+        "NO",
+        "NO",
+        "YES"
+       ],
+       "why": [
+        "\"As a model for urban planning, it has proved immensely influential\".",
+        "Guggenheim Pompidouga ergashgani aytilgan, lekin mashhurlik taqqoslanmagan.",
+        "\"This construction - it is hard to call it a building\".",
+        "\"Still looks much as it did when it opened\".",
+        "\"The shock value ... has not faded with the years\".",
+        "\"Traditionalists regarded it as an ugly attack ... they now see it for what it is - an enormous achievement\"."
+       ],
+       "layout": "tfng"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Savoldagi so'zning matndagi juftini toping.",
+       "items": [
+        "did not realise its importance (1)",
+        "opinions quickly altered (3)",
+        "use it freely (4)",
+        "past building styles (8)"
+       ],
+       "answers": [
+        "no one was really aware of the significance",
+        "swiftly changed their tune",
+        "not limit the movement of its users",
+        "the 19th-century engineering tradition"
+       ],
+       "why": [
+        "1-xatboshi.",
+        "3-xatboshi.",
+        "4-xatboshi.",
+        "8-xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #34. The man who tried to destroy Paris",
+     "qtype": "Passage 3: MCQ (1–4) + Sentence endings (5–8) + Yes/No/Not Given (9–14) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "Le Corbusier was one of the most influential architects of the 20th century. But many may wish he had never built anything",
+      "Born Charles-Edouard Jeanneret in Switzerland in 1887, the architect Le Corbusier used his grandfather's name when he went to Paris at the age of 29. As Jeanneret, he had been a fairly successful small-town architect; as Le Corbusier, he had bigger ideas. He disliked the architectural styles that were popular at the time, and considered them to be out of date in an industrial age. _He believed that the 20th century deserved a brand-new style of architecture. \"We must start again from zero,\"_ he said.",
+      "The new style of architecture was called the International Style, and _it attracted many followers in the architectural world_. However, _nobody was as enthusiastic about it as Le Corbusier at the beginning_. He worked hard to promote his ideas at exhibitions, at talks, in books and in his own magazine. He loved machines, and believed that, like a machine, a building should have a function. He is famous for saying: \"A house is a machine for living in.\"",
+      "The machines he admired the most were ships, and his early buildings tried to capture the spirit of the sea with their white walls, exposed rooms, shining glass and flat roofs. He called this style of architecture 'purism'. The first building to embrace this style was the Villa Savoye in France. Le Corbusier believed that it was one of the best, most functional houses ever built. _Unfortunately, this turned out to be an exaggeration._ The flat roof was a particular problem, as water poured in every time it rained, and it needed constant repairs. Nevertheless, _its design was revolutionary, and it should be considered a significant piece_ of early 20th-century architecture.",
+      "In 1935, Le Corbusier visited New York City. He loved the city, and especially its tall buildings. He had only one reservation, which he explained to a journalist for the Herald Tribune newspaper. American skyscrapers were the biggest, tallest buildings in the world at that time, but Le Corbusier was a man who always thought big, and as far as he was concerned, they were \"just too small\". Le Corbusier had always admired tall buildings. _Now, inspired by his visit, he abandoned purism._ _It is doubtful that he could have created anything as grand_ as the skyscrapers he had seen in the city, but from now on Le Corbusier started designing buildings that sent out a more powerful message.",
+      "He first started using bright colours, and then experimented with concrete. _Le Corbusier loved the look and flexibility of concrete_, and found it hard to hide it behind brick or paint, _preferring to leave it on full view_. At a time when concrete was seen as modern and exciting, his designs made him world famous, and he was asked to design several important buildings around the world. Altogether, he designed about 60 major buildings worldwide, in a style that became known as 'modernism'.",
+      "However, while _many admired and copied his new style of architecture, many more hated it_. They turned against him, and tried to block his plans. Buildings should inspire people and make them feel good, they said, and Le Corbusier's ugly, depressing buildings often had the opposite effect. In this respect, the people of Paris had a lucky escape. Early in his career, Le Corbusier had wanted to knock down the centre of Paris and replace the old buildings with huge towers. _Fortunately, his plan was rejected._ Justifiably, in view of his plans to transform one of the world's most beautiful cities into _a hideous concrete jungle_, Le Corbusier is still known as 'the man who tried to destroy Paris'.",
+      "Despite the criticism, he had an enormous effect on the world of architecture, and _attracted a large number of followers. As a result, many places were subjected to his style._ In the Paris suburbs of Bobigny, for example, huge towers were built to house some of the city's poorer inhabitants. Other European cities such as London, Berlin and Dublin also felt his influence.",
+      "Apart from the buildings that were directly influenced by Le Corbusier, something else happened that the architect never planned: there was a return to older styles of architecture. Today, many people live in _modern houses that look like they are much older_. This look may represent a return to traditional tastes and values. More likely, however, it represents a reaction against modernist architecture."
+     ],
+     "paraphrases": [
+      [
+       "something different from everyone else",
+       "a brand-new style ... start again from zero"
+      ],
+      [
+       "a lot of other architects liked it",
+       "attracted many followers in the architectural world"
+      ],
+      [
+       "nobody had built anything like it",
+       "revolutionary"
+      ],
+      [
+       "not as good as he claimed",
+       "turned out to be an exaggeration"
+      ],
+      [
+       "changed his style",
+       "abandoned purism"
+      ],
+      [
+       "left exposed",
+       "preferring to leave it on full view"
+      ],
+      [
+       "friends and enemies",
+       "many admired ... many more hated"
+      ],
+      [
+       "copied the style",
+       "attracted followers ... places were subjected to his style"
+      ],
+      [
+       "an important building",
+       "a significant piece of architecture"
+      ],
+      [
+       "would have ruined the city",
+       "a hideous concrete jungle / fortunately rejected"
+      ]
+     ],
+     "glossary": [
+      "out of date — eskirgan",
+      "enthusiastic — ishtiyoqli",
+      "promote — targ'ib qilmoq",
+      "purism — purizm (sof uslub)",
+      "exaggeration — mubolag'a",
+      "reservation — e'tiroz",
+      "abandon — voz kechmoq",
+      "concrete — beton",
+      "hideous — xunuk",
+      "suburb — shahar chekkasi",
+      "subject to — duchor qilmoq"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–4: Choose the correct letter, A, B, C or D",
+       "type": "Multiple choice",
+       "instr": "Ko'rsatilgan xatboshini o'qing.",
+       "items": [
+        "1 What does the writer say about Le Corbusier in the first paragraph? A) He had a relative who was also an architect. B) He became successful when he went to Paris. C) He thought that there were too many industrial buildings. D) He wanted to do something different from everyone else.",
+        "2 What does the writer say about the International Style in the second paragraph? A) A lot of other architects liked it. B) At first, people did not like it very much. C) It took a lot of hard work to get people to accept it. D) The buildings looked like machines.",
+        "3 Why does the writer describe the Villa Savoye as 'revolutionary' in the third paragraph? A) It looked more like a ship than a building. B) Nobody had built anything like it before. C) It looked nice, but had too many faults. D) It was more functional than any other building of the time.",
+        "4 What is the writer's main purpose in the fourth paragraph? A) to explain why Le Corbusier visited New York B) to show that Le Corbusier was not impressed by New York's skyscrapers C) to describe Le Corbusier's reaction to New York D) to explain why Le Corbusier changed his style of architecture"
+       ],
+       "answers": [
+        "D",
+        "A",
+        "B",
+        "D"
+       ],
+       "why": [
+        "\"The 20th century deserved a brand-new style ... We must start again from zero\". A tuzoq: bobosining ISMINI olgan, bobosi arxitekt bo'lgani aytilmagan. C tuzoq: \"industrial age\" — sanoat binolari soni haqida emas.",
+        "\"It attracted many followers in the architectural world\". B tuzoq: boshqalar Le Corbusierchalik ishtiyoqli emasdi — bu \"yoqtirmagan\" degani emas. D: bino mashinaday VAZIFALI bo'lishi kerak, mashinaga o'xshashi emas.",
+        "\"Revolutionary\" — butunlay yangi; \"the first building to embrace this style\". D teskari: \"turned out to be an exaggeration\". C — kamchiliklar bor, lekin \"revolutionary\" sababi emas.",
+        "Xatboshining asosiy nuqtasi: \"Now, inspired by his visit, he abandoned purism ... started designing buildings that sent out a more powerful message\". C tuzoq: reaksiya tasvirlangan, lekin u uslub o'zgarishiga olib boruvchi detal."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Questions 5–8: Complete each sentence with the correct ending, A–F",
+       "type": "Matching sentence endings",
+       "instr": "2 ta ortiqcha oxir bor.",
+       "items": [
+        "5 Le Corbusier's Villa Savoye",
+        "6 The concrete in Le Corbusier's later buildings",
+        "7 Le Corbusier's style of architecture",
+        "8 Le Corbusier had a large following which"
+       ],
+       "answers": [
+        "D",
+        "F",
+        "C",
+        "A"
+       ],
+       "why": [
+        "\"He believed that it was one of the best ... Unfortunately, this turned out to be an exaggeration\". B tuzoq: Villa Savoye — purizm, modernizm emas.",
+        "\"Found it hard to hide it behind brick or paint, preferring to leave it on full view\". E tuzoq: beton bo'yoq bilan yashirilmagan.",
+        "\"While many admired and copied his new style ... many more hated it\".",
+        "\"Attracted a large number of followers. As a result, many places were subjected to his style\". \"Which\" — \"following\" (izdoshlar guruhi) — nusxa ko'chirgan."
+       ],
+       "box": [
+        "A copied the style that he had invented.",
+        "B is a classic example of modernist architecture.",
+        "C made him friends and enemies.",
+        "D was not as good as he claimed.",
+        "E was covered in bright colours.",
+        "F was left exposed so that people could see it."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Questions 9–14: YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Muallif fikrini baho so'zlaridan toping.",
+       "items": [
+        "At first, people were not as enthusiastic about the International Style as Le Corbusier was.",
+        "The Villa Savoye is an important building.",
+        "Le Corbusier could have designed buildings that were as big and as impressive as those in New York.",
+        "Le Corbusier found concrete a difficult material to work with.",
+        "Le Corbusier's plans for Paris would have ruined the city.",
+        "Many people show they reject Le Corbusier's style of architecture by living in old houses."
+       ],
+       "answers": [
+        "YES",
+        "YES",
+        "NO",
+        "NO",
+        "YES",
+        "NO"
+       ],
+       "why": [
+        "\"Nobody was as enthusiastic about it as Le Corbusier at the beginning\".",
+        "\"It should be considered a significant piece of early 20th-century architecture\". Significant = important.",
+        "\"It is doubtful that he could have created anything as grand as the skyscrapers\".",
+        "\"Le Corbusier loved the look and flexibility of concrete\". Flexibility — ishlash oson.",
+        "\"Fortunately, his plan was rejected ... transform one of the world's most beautiful cities into a hideous concrete jungle\".",
+        "Muallif \"modern houses that look like they are much older\" deydi — eski uylar emas, eski ko'rinishdagi YANGI uylar. Reaksiya bor, lekin \"old houses\" matnga qarshi."
+       ],
+       "note": "14-savol munozarali: ba'zi o'quvchilar NOT GIVEN deyishi mumkin. Asosiy dalil: matnda uylar aniq \"modern\" deb atalgan — bu savoldagi \"old houses\" ga qarama-qarshi, shuning uchun NO.",
+       "layout": "tfng"
+      },
+      {
+       "title": "Tuzoq tahlili",
+       "type": "Tahlil",
+       "instr": "Nega bu javob noto'g'ri?",
+       "items": [
+        "1-savol A",
+        "2-savol B",
+        "5-savol B",
+        "12-savol"
+       ],
+       "answers": [
+        "noto'g'ri xulosa",
+        "kuchaytirilgan",
+        "boshqa uslub",
+        "teskari"
+       ],
+       "why": [
+        "Bobosining ismi ≠ bobosi arxitekt.",
+        "\"Less enthusiastic\" ≠ \"did not like\".",
+        "Villa Savoye — purizm.",
+        "\"Loved ... flexibility\"."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "The Sydney Opera House",
+     "qtype": "Passage 3: MCQ + Sentence endings + Yes/No/Not Given",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Few buildings are as instantly recognisable as the Sydney Opera House, with its white roofs rising above the harbour like the sails of a ship. Yet the story of how it was built is one of conflict, delay and enormous cost, and the architect who designed it never saw it finished.",
+      "In 1957, a young Danish architect, Jørn Utzon, won an international competition with a design that was little more than a set of bold sketches. The judges admired its imagination, but nobody, including Utzon himself, knew exactly how the curved roofs could be built. Construction began in 1959, before the engineering problems had been solved, a decision that caused many of the troubles that followed.",
+      "It took years of experiments before Utzon found the answer: every roof shell would be cut from the surface of the same imaginary sphere, so that the pieces could be produced in a standard way. It was a brilliant solution, but by then the project was already far behind schedule.",
+      "Costs rose far beyond the original estimate of seven million Australian dollars. A new state government, elected in 1965, began to question every payment, and in 1966 Utzon resigned and left Australia, never to return. The interiors were completed by a team of local architects, and the building finally opened in 1973 — ten years late and at a cost of 102 million dollars.",
+      "Today it is hard to imagine Sydney without it. In 2007 it became a UNESCO World Heritage Site, one of very few buildings to receive this honour while its architect was still alive. In my view, the story is a reminder that great buildings are rarely easy ones: the problems are soon forgotten, but the achievement remains."
+     ],
+     "paraphrases": [
+      [
+       "instantly recognisable",
+       "known at once"
+      ],
+      [
+       "bold sketches",
+       "brave, simple drawings"
+      ],
+      [
+       "admired",
+       "liked and respected"
+      ],
+      [
+       "solved",
+       "found an answer to"
+      ],
+      [
+       "behind schedule",
+       "late"
+      ],
+      [
+       "estimate",
+       "expected cost"
+      ],
+      [
+       "resigned",
+       "left his job"
+      ],
+      [
+       "honour",
+       "special recognition"
+      ]
+     ],
+     "glossary": [
+      "harbour — port, bandargoh",
+      "sail — yelkan",
+      "sketch — chizgi",
+      "shell — qobiq",
+      "sphere — shar",
+      "schedule — jadval",
+      "estimate — taxminiy narx",
+      "interior — ichki qism",
+      "heritage — meros"
+     ],
+     "tasks": [
+      {
+       "title": "Choose the correct letter, A, B, C or D",
+       "type": "Multiple choice",
+       "instr": "Ko'rsatilgan xatboshini o'qing.",
+       "items": [
+        "1 What does the writer say in the second paragraph about Utzon's winning design? A) It was very detailed. B) Its roofs were easy to build. C) Nobody knew how to build its roofs. D) The judges did not like it.",
+        "2 What is the writer's main purpose in the third paragraph? A) to describe how a technical problem was solved B) to criticise the engineers C) to explain why costs increased D) to compare the Opera House with other buildings"
+       ],
+       "answers": [
+        "C",
+        "A"
+       ],
+       "why": [
+        "\"Nobody, including Utzon himself, knew exactly how the curved roofs could be built\". A teskari: \"little more than a set of bold sketches\".",
+        "\"Years of experiments ... every roof shell would be cut from the surface of the same imaginary sphere\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Complete each sentence with the correct ending, A–E",
+       "type": "Matching sentence endings",
+       "instr": "1 ta ortiqcha oxir bor.",
+       "items": [
+        "1 Utzon's design",
+        "2 The construction work",
+        "3 The final building",
+        "4 The inside of the Opera House"
+       ],
+       "answers": [
+        "B",
+        "C",
+        "E",
+        "A"
+       ],
+       "why": [
+        "\"Won an international competition with a design\".",
+        "\"Construction began in 1959, before the engineering problems had been solved\".",
+        "\"Seven million ... at a cost of 102 million dollars\".",
+        "\"The interiors were completed by a team of local architects\"."
+       ],
+       "note": "Ortiqcha oxir: D (UNESCO faqat meros maqomini bergan, pul emas).",
+       "box": [
+        "A was finished by other architects.",
+        "B was chosen through a competition.",
+        "C began before important problems were solved.",
+        "D was paid for by UNESCO.",
+        "E was much more expensive than planned."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Muallif fikri.",
+       "items": [
+        "Starting construction early was a mistake.",
+        "Utzon later returned to Sydney to see the building.",
+        "The new government chose the local architects.",
+        "Great buildings are usually built without difficulty."
+       ],
+       "answers": [
+        "YES",
+        "NO",
+        "NOT GIVEN",
+        "NO"
+       ],
+       "why": [
+        "\"A decision that caused many of the troubles that followed\".",
+        "\"Left Australia, never to return\".",
+        "Mahalliy arxitektorlarni kim tanlagani aytilmagan.",
+        "\"Great buildings are rarely easy ones\"."
+       ],
+       "layout": "tfng"
+      }
+     ]
+    },
+    {
+     "title": "The Eiffel Tower: from eyesore to icon",
+     "qtype": "Passage 3: MCQ + Sentence endings + Yes/No/Not Given",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Today the Eiffel Tower is the symbol of Paris and one of the most visited monuments in the world. It is easy to forget that when it was built, many Parisians hated it.",
+      "The tower was designed for the World's Fair of 1889, which celebrated the hundredth anniversary of the French Revolution. Gustave Eiffel's company, which had already built bridges and railway stations, won the competition with a plan for an iron tower 300 metres high — by far the tallest structure in the world at that time. It was built in just over two years, a remarkable speed for such a project.",
+      "Even before construction began, a group of well-known artists and writers published a letter of protest in a Paris newspaper. They called the tower \"useless and monstrous\" and claimed it would dominate and spoil the beautiful city. Some of them later changed their minds; others never did.",
+      "The tower was only meant to stand for twenty years, after which it was to be taken down. Eiffel, determined to save it, encouraged scientists to use it for experiments, and in the early 1900s it proved valuable as a giant radio aerial. During the First World War, it was used to intercept enemy messages. Its usefulness saved it, and the permit was extended.",
+      "It remained the tallest building in the world until 1930. Today around six million people visit it every year. In my opinion, the story of the tower shows that a city's taste can change completely within a single lifetime, and that the buildings we hate today may become the ones we love tomorrow."
+     ],
+     "paraphrases": [
+      [
+       "symbol",
+       "sign that represents"
+      ],
+      [
+       "anniversary",
+       "a date remembered every year"
+      ],
+      [
+       "remarkable",
+       "surprising, impressive"
+      ],
+      [
+       "protest",
+       "strong disagreement"
+      ],
+      [
+       "spoil",
+       "make worse"
+      ],
+      [
+       "determined",
+       "having decided firmly"
+      ],
+      [
+       "intercept",
+       "catch before it arrives"
+      ],
+      [
+       "extended",
+       "made longer"
+      ]
+     ],
+     "glossary": [
+      "eyesore — ko'zga xunuk narsa",
+      "icon — ramz",
+      "monument — yodgorlik",
+      "anniversary — yubiley",
+      "iron — temir",
+      "monstrous — dahshatli",
+      "aerial — antenna",
+      "permit — ruxsatnoma"
+     ],
+     "tasks": [
+      {
+       "title": "Choose the correct letter, A, B, C or D",
+       "type": "Multiple choice",
+       "instr": "Ko'rsatilgan xatboshini o'qing.",
+       "items": [
+        "1 What does the writer say about Eiffel's company in the second paragraph? A) It had never built anything before. B) It had experience of large engineering projects. C) It took ten years to build the tower. D) It lost the competition.",
+        "2 Why was the tower not taken down? A) Artists asked for it to stay. B) It was too expensive to remove. C) It was useful for science and communication. D) The government forgot about it."
+       ],
+       "answers": [
+        "B",
+        "C"
+       ],
+       "why": [
+        "\"Had already built bridges and railway stations\".",
+        "\"Valuable as a giant radio aerial ... intercept enemy messages. Its usefulness saved it\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Complete each sentence with the correct ending, A–E",
+       "type": "Matching sentence endings",
+       "instr": "1 ta ortiqcha oxir bor.",
+       "items": [
+        "1 The tower",
+        "2 A group of artists and writers",
+        "3 The permission to keep the tower",
+        "4 Today the monument"
+       ],
+       "answers": [
+        "A",
+        "B",
+        "C",
+        "E"
+       ],
+       "why": [
+        "\"Built in just over two years, a remarkable speed\".",
+        "\"Even before construction began ... published a letter of protest\".",
+        "\"Only meant to stand for twenty years\".",
+        "\"Around six million people visit it every year\"."
+       ],
+       "note": "Ortiqcha oxir: D (minorani muhandis Eiffel kompaniyasi loyihalagan, rassom emas).",
+       "box": [
+        "A was built very quickly.",
+        "B protested before the work started.",
+        "C was only supposed to be temporary.",
+        "D was designed by an artist.",
+        "E attracts millions of visitors a year."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Muallif fikri.",
+       "items": [
+        "All the artists who protested later accepted the tower.",
+        "Eiffel wanted the tower to be kept.",
+        "The tower was more expensive than planned.",
+        "People's opinions about buildings can change within one lifetime."
+       ],
+       "answers": [
+        "NO",
+        "YES",
+        "NOT GIVEN",
+        "YES"
+       ],
+       "why": [
+        "\"Some of them later changed their minds; others never did\".",
+        "\"Eiffel, determined to save it\".",
+        "Narx haqida hech narsa yo'q.",
+        "\"A city's taste can change completely within a single lifetime\"."
+       ],
+       "layout": "tfng"
+      }
+     ]
+    },
+    {
+     "title": "Learning to love concrete",
+     "qtype": "Passage 3: MCQ + Sentence endings + Yes/No/Not Given",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "For decades, the large concrete buildings of the 1950s, 60s and 70s were among the least loved buildings in Europe. The style, known as brutalism, took its name from the French phrase béton brut, meaning \"raw concrete\", and many people felt the name suited buildings that looked heavy, grey and unfriendly.",
+      "Many of these buildings were built after the Second World War, when cities needed large numbers of homes, schools and hospitals quickly and cheaply. Concrete was ideal: it was strong, inexpensive and could be shaped into almost any form. Architects also believed that honest, undecorated materials expressed a modern, democratic spirit.",
+      "By the 1980s, however, public opinion had turned. Some housing estates had become associated with crime and poverty, and poor maintenance left concrete stained and cracked. Local governments demolished many brutalist buildings, often with public support.",
+      "In the last twenty years, something unexpected has happened. A new generation, too young to remember the problems, has begun to admire the bold shapes of these buildings. Photographs of brutalist towers are popular on social media, and flats in well-kept examples, such as the Barbican in London, are now expensive and highly desired.",
+      "I believe this change is welcome, but it should not make us forget why people once hated these buildings. The best brutalist architecture was imaginative and well built; the worst was cheap and badly managed. The lesson is not about concrete itself, but about the care a building receives after it is finished."
+     ],
+     "paraphrases": [
+      [
+       "least loved",
+       "most disliked"
+      ],
+      [
+       "raw",
+       "not finished"
+      ],
+      [
+       "suited",
+       "matched"
+      ],
+      [
+       "ideal",
+       "perfect for the purpose"
+      ],
+      [
+       "undecorated",
+       "plain"
+      ],
+      [
+       "demolished",
+       "knocked down"
+      ],
+      [
+       "unexpected",
+       "surprising"
+      ],
+      [
+       "highly desired",
+       "wanted by many people"
+      ]
+     ],
+     "glossary": [
+      "brutalism — brutalizm (arxitektura uslubi)",
+      "concrete — beton",
+      "democratic — demokratik",
+      "housing estate — turar joy massivi",
+      "maintenance — ta'mirlash va parvarish",
+      "stained — dog' tushgan",
+      "demolish — buzib tashlamoq"
+     ],
+     "tasks": [
+      {
+       "title": "Choose the correct letter, A, B, C or D",
+       "type": "Multiple choice",
+       "instr": "Uyda bajaring.",
+       "items": [
+        "1 Why was concrete used after the Second World War? A) It was fashionable in France. B) It was quick, cheap and strong. C) It was easy to decorate. D) People preferred grey buildings.",
+        "2 What is the writer's main purpose in the fourth paragraph? A) to describe a change in attitudes B) to explain why flats are expensive C) to criticise social media D) to describe the Barbican"
+       ],
+       "answers": [
+        "B",
+        "A"
+       ],
+       "why": [
+        "\"Needed large numbers of homes ... quickly and cheaply. Concrete was ideal: it was strong, inexpensive\".",
+        "\"Something unexpected has happened. A new generation ... has begun to admire\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Complete each sentence with the correct ending, A–E",
+       "type": "Matching sentence endings",
+       "instr": "1 ta ortiqcha oxir bor.",
+       "items": [
+        "1 The brutalist style",
+        "2 Some housing estates",
+        "3 Many brutalist buildings",
+        "4 Flats in well-kept brutalist buildings"
+       ],
+       "answers": [
+        "B",
+        "E",
+        "A",
+        "C"
+       ],
+       "why": [
+        "\"Took its name from the French phrase béton brut\".",
+        "\"Had become associated with crime and poverty\".",
+        "\"Demolished many brutalist buildings, often with public support\".",
+        "\"Are now expensive and highly desired\"."
+       ],
+       "box": [
+        "A were knocked down with public approval.",
+        "B took its name from a French phrase.",
+        "C are now expensive to buy.",
+        "D were built without any concrete.",
+        "E became linked with crime."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Muallif fikri.",
+       "items": [
+        "The writer is pleased that attitudes to brutalism have changed.",
+        "All brutalist buildings were badly built.",
+        "The Barbican was designed by a French architect.",
+        "The quality of a building depends partly on how it is looked after."
+       ],
+       "answers": [
+        "YES",
+        "NO",
+        "NOT GIVEN",
+        "YES"
+       ],
+       "why": [
+        "\"I believe this change is welcome\".",
+        "\"The best brutalist architecture was imaginative and well built\".",
+        "Barbican arxitektori aytilmagan.",
+        "\"The lesson is ... about the care a building receives after it is finished\"."
+       ],
+       "layout": "tfng"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-matn: \"Learning to love concrete\"",
+     "type": "Reading",
+     "instr": "15 daqiqada bajaring; javoblar Reading bo'limida.",
+     "answers": "Ustoz MCQ 2 (\"purpose\") savolining isbotini so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Xatboshi vazifalari",
+     "type": "Yozma",
+     "instr": "Le Corbusier matnining 8 xatboshisi uchun vazifa so'zini yozing: tasvirlash, tushuntirish, taqqoslash, tanqid, baholash, misol.",
+     "answers": "8 qator.",
+     "layout": "list"
+    },
+    {
+     "title": "Muallif fikri daftari",
+     "type": "Yozma",
+     "instr": "Pompidou va Le Corbusier matnlaridan muallif fikrini bildirgan 10 ta so'z/iborani yozing (masalan: fortunately, hideous, an enormous achievement).",
+     "answers": "10 ta ibora, qaysi xatboshidan ekani bilan.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Passage 3 (uyga)",
+     "10 javobdan 8 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Xatboshi vazifalari",
+     "8 qator",
+     "2 coin"
+    ],
+    [
+     "Muallif fikri daftari",
+     "10 ibora",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

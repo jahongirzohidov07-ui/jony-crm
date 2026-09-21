@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Headphones, FileText, Download } from "lucide-react";
 import { api, getToken } from "../lib/api";
+import brandIconSrc from "../assets/brand-icon.png";
 
 /**
  * DARS REJALARI (2026-09-18, Jahongir: "saytgayam qoy ... kahoot
@@ -19,7 +20,9 @@ type Level = { course: string; title: string; cefr: string; ready: boolean;
 type LiveGroup = { id: number; name: string; students: { id: number; name: string }[] };
 
 type Ex = { title: string; type?: string; instr?: string; items?: string[];
-  answers?: string[] | string; note?: string; box?: string[]; why?: string[] };
+  answers?: string[] | string; note?: string; box?: string[]; why?: string[];
+  layout?: "grid" | "pairs" | "flow" | "mcq" | "tfng" | "match" | "qa" | "list";
+  head?: string[]; rows?: string[][] };
 /** IELTS 5.0 (Introduction): bitta darsda bir nechta reading/listening,
  * har birida savol turi, paraphrase ro'yxati, javob izohi va transkript
  * (2026-09-20, Jahongir so'rovi). */
@@ -437,6 +440,227 @@ function fillBlank(item: string, answer: string): React.ReactNode {
   );
 }
 
+/* ---- Topshiriq ko'rinishlari (2026-09-21, Jahongir: "Tableni ham chiroyliq
+   qilib tushunarli qilib qoy ... quruq sozlar gaplar bolmasin"). Savol turi
+   o'z shaklida chiqadi: jadval, forma/qaydlar, jarayon sxemasi, variantlar,
+   T/F/NG jadvali, sarlavhalar mosligi. Bo'sh joylar raqamli katak bo'lib
+   turadi; "Javobni ko'rsat" bosilganda javob shu katakning o'zida chiqadi. */
+const GAP_RE = /\((\d+)\)|_{3,}/g;
+
+function Gap({ n, ans }: { n: number; ans?: string }) {
+  if (ans !== undefined) {
+    return <span className="mx-0.5 px-1.5 rounded bg-emerald-50 text-emerald-700 font-semibold border-b-2 border-emerald-500">{ans}</span>;
+  }
+  return (
+    <span className="mx-0.5 inline-flex items-center gap-1 align-baseline">
+      <span className="text-[11px] font-bold text-white bg-brand-600 rounded px-1">{n}</span>
+      <span className="inline-block w-20 border-b-2 border-dotted border-slate-400">&nbsp;</span>
+    </span>
+  );
+}
+
+/** Matndagi "(3)" yoki "___" ni raqamli katakka aylantiradi. */
+function withGaps(text: string, fallbackNo: number, answers: string[] | undefined, show: boolean) {
+  const out: React.ReactNode[] = [];
+  let last = 0; let k = 0;
+  text.replace(GAP_RE, (m, num, idx: number) => {
+    out.push(text.slice(last, idx));
+    const n = num ? Number(num) : fallbackNo;
+    out.push(<Gap key={k++} n={n} ans={show && answers ? answers[n - 1] : undefined} />);
+    last = idx + m.length;
+    return m;
+  });
+  out.push(text.slice(last));
+  return out;
+}
+
+function splitPair(item: string): [string, string] {
+  const dash = item.lastIndexOf(" — ");
+  if (dash > 0) return [item.slice(0, dash), item.slice(dash + 3)];
+  const colon = item.indexOf(": ");
+  if (colon > 0) return [item.slice(0, colon), item.slice(colon + 2)];
+  return ["", item];
+}
+
+function Why({ text }: { text?: string }) {
+  if (!text) return null;
+  return <div className="text-xs text-slate-500 mt-1">Nega: {text}</div>;
+}
+
+function Cell({ text, answers, show }: { text: string; answers?: string[]; show: boolean }) {
+  const lines = text.split(/\s*;;\s*/);
+  if (lines.length > 1) {
+    return <ul className="list-disc pl-4 space-y-0.5">{lines.map((l, i) => <li key={i}>{withGaps(l, 0, answers, show)}</li>)}</ul>;
+  }
+  return <>{withGaps(text, 0, answers, show)}</>;
+}
+const TH = "text-left bg-brand-50 text-brand-800 border border-slate-200 px-3 py-2 font-semibold text-xs uppercase tracking-wide";
+const TD = "border border-slate-200 px-3 py-2 align-top text-slate-800";
+
+function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
+  const items = ex.items ?? [];
+  const answers = Array.isArray(ex.answers) ? ex.answers : undefined;
+  const why = ex.why ?? [];
+  const lay = ex.layout;
+
+  if (lay === "grid" && ex.head && ex.rows) {
+    return (
+      <>
+        <div className="overflow-x-auto mt-3">
+          <table className="w-full text-sm border-collapse">
+            <thead><tr>{ex.head.map((h, i) => <th key={i} className={TH}>{h}</th>)}</tr></thead>
+            <tbody>{ex.rows.map((r, i) => (
+              <tr key={i} className={i % 2 ? "bg-slate-50/60" : ""}>
+                {r.map((c, j) => <td key={j} className={`${TD} ${j === 0 ? "font-semibold" : ""}`}><Cell text={c} answers={answers} show={show} /></td>)}
+              </tr>
+            ))}</tbody>
+          </table>
+        </div>
+        {show && items.length > 0 && (
+          <div className="mt-3 bg-emerald-50/40 rounded-lg p-3">
+            <div className="text-xs font-semibold text-emerald-800 mb-1">Javoblar va izoh</div>
+            <ol className="space-y-1.5">{items.map((_, j) => (
+              <li key={j} className="text-sm"><span className="font-bold text-brand-700 mr-1">{j + 1}.</span>
+                <span className="font-semibold text-emerald-700">{answers?.[j]}</span><Why text={why[j]} /></li>
+            ))}</ol>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  if (lay === "pairs" && !items.some((it) => /_{3,}|\(\d+\)/.test(it))) {
+    // Bo'sh joysiz juftlar (paraphrase moslash): so'z | javob
+    return (
+      <div className="overflow-x-auto mt-3">
+        <table className="w-full text-sm border-collapse">
+          <thead><tr><th className={`${TH} w-10`}>#</th><th className={TH}>So'z / ibora</th><th className={TH}>Javob</th></tr></thead>
+          <tbody>{items.map((it, j) => (
+            <tr key={j} className={j % 2 ? "bg-slate-50/60" : ""}>
+              <td className={`${TD} text-center font-bold text-brand-700`}>{j + 1}</td>
+              <td className={`${TD} font-medium`}>{it}</td>
+              <td className={TD}>{show
+                ? <><span className="font-semibold text-emerald-700">{answers?.[j]}</span><Why text={why[j]} /></>
+                : <span className="inline-block w-28 border-b-2 border-dotted border-slate-400">&nbsp;</span>}</td>
+            </tr>
+          ))}</tbody>
+        </table>
+      </div>
+    );
+  }
+
+  if (lay === "pairs") {
+    return (
+      <div className="overflow-x-auto mt-3">
+        <table className="w-full text-sm border-collapse">
+          <tbody>{items.map((it, j) => {
+            const [l, r] = splitPair(it);
+            return (
+              <tr key={j} className={j % 2 ? "bg-slate-50/60" : ""}>
+                <td className={`${TD} w-10 text-center font-bold text-brand-700`}>{j + 1}</td>
+                {l && <td className={`${TD} font-medium text-slate-600 w-2/5`}>{l}</td>}
+                <td className={TD} colSpan={l ? 1 : 2}>{withGaps(r, j + 1, answers, show)}<Why text={show ? why[j] : undefined} /></td>
+              </tr>
+            );
+          })}</tbody>
+        </table>
+      </div>
+    );
+  }
+
+  if (lay === "flow") {
+    return (
+      <div className="mt-3 flex flex-col items-stretch max-w-xl">
+        {items.map((it, j) => (
+          <div key={j}>
+            <div className="border-2 border-brand-200 bg-white rounded-lg px-3 py-2 text-sm">
+              <span className="text-[11px] font-bold text-brand-600 mr-2">{j + 1}-bosqich</span>
+              {withGaps(it.replace(/\s*→\s*/g, " → "), j + 1, answers, show)}
+              <Why text={show ? why[j] : undefined} />
+            </div>
+            {j < items.length - 1 && <div className="text-center text-brand-400 text-lg leading-none py-0.5">↓</div>}
+          </div>
+        ))}
+      </div>
+    );
+  }
+  if (lay === "mcq") {
+    return (
+      <div className="mt-3 space-y-3">
+        {items.map((it, j) => {
+          const parts = it.split(/\s+(?=[A-D]\)\s)/);
+          const q = parts[0].replace(/^\d+\s+/, "");
+          const opts = parts.slice(1);
+          const correct = (answers?.[j] ?? "").trim().charAt(0);
+          return (
+            <div key={j} className="rounded-lg border border-slate-200 p-3">
+              <div className="text-sm font-medium text-slate-800"><span className="font-bold text-brand-700 mr-1">{j + 1}.</span>{q}</div>
+              <div className="grid sm:grid-cols-2 gap-1.5 mt-2">
+                {opts.map((o, k) => {
+                  const letter = o.charAt(0);
+                  const ok = show && letter === correct;
+                  return (
+                    <div key={k} className={`text-sm rounded-md px-2.5 py-1.5 border ${ok ? "border-emerald-500 bg-emerald-50 text-emerald-800 font-semibold" : "border-slate-200 bg-slate-50 text-slate-700"}`}>
+                      <span className="font-bold mr-1">{letter}</span>{o.slice(2).trim()}
+                    </div>
+                  );
+                })}
+              </div>
+              <Why text={show ? why[j] : undefined} />
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (lay === "tfng" || lay === "match" || lay === "qa") {
+    const colA = lay === "tfng" ? "Gap (statement)" : lay === "match" ? "Savol / so'z" : "Savol / holat";
+    const colB = lay === "tfng" ? "Javob" : lay === "match" ? "Mos variant" : "Javob";
+    return (
+      <>
+        {ex.box && ex.box.length > 0 && (
+          <div className="mt-3 rounded-lg border border-brand-200 bg-brand-50/50 p-3">
+            <div className="text-xs font-semibold text-brand-800 mb-1">Variantlar ro'yxati</div>
+            <ul className="text-sm text-slate-800 space-y-0.5">{ex.box.map((b, k) => <li key={k}>{b}</li>)}</ul>
+          </div>
+        )}
+        <div className="overflow-x-auto mt-3">
+          <table className="w-full text-sm border-collapse">
+            <thead><tr><th className={`${TH} w-10`}>#</th><th className={TH}>{colA}</th><th className={`${TH} w-40`}>{colB}</th></tr></thead>
+            <tbody>{items.map((it, j) => (
+              <tr key={j} className={j % 2 ? "bg-slate-50/60" : ""}>
+                <td className={`${TD} text-center font-bold text-brand-700`}>{j + 1}</td>
+                <td className={TD}>{it.replace(/^\d+\s+/, "")}<Why text={show ? why[j] : undefined} /></td>
+                <td className={TD}>{show
+                  ? <span className="font-semibold text-emerald-700">{answers?.[j]}</span>
+                  : <span className="inline-block w-24 border-b-2 border-dotted border-slate-400">&nbsp;</span>}</td>
+              </tr>
+            ))}</tbody>
+          </table>
+        </div>
+      </>
+    );
+  }
+
+  // Oddiy ro'yxat (savollar, gap to'ldirish): raqamli, bo'sh joy katak bilan
+  return (
+    <ol className="mt-3 space-y-2">
+      {items.map((it, j) => (
+        <li key={j} className="text-sm text-slate-800 flex gap-2">
+          <span className="font-bold text-brand-700 w-6 shrink-0 text-right">{j + 1}.</span>
+          <div className="flex-1">
+            {/_{3,}|\(\d+\)/.test(it)
+              ? withGaps(it, j + 1, answers, show)
+              : <>{it}{show && answers?.[j] && <span className="ml-2 font-semibold text-emerald-700">→ {answers[j]}</span>}</>}
+            <Why text={show ? why[j] : undefined} />
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function ExList({ list }: { list: Ex[] }) {
   const [show, setShow] = useState<Record<number, boolean>>({});
   return (
@@ -454,8 +678,9 @@ function ExList({ list }: { list: Ex[] }) {
             )}
           </div>
           {ex.instr && <p className="text-sm text-slate-700 mt-2">{ex.instr}</p>}
-          {ex.box && <div className="text-xs bg-slate-50 rounded px-2 py-1 mt-2 text-slate-600">{ex.box.join(" · ")}</div>}
-          {ex.items && (
+          {ex.box && ex.layout !== "match" && ex.layout !== "tfng" && <div className="text-xs bg-slate-50 rounded px-2 py-1 mt-2 text-slate-600">{ex.box.join(" · ")}</div>}
+          {ex.layout && <ExBody ex={ex} show={!!show[i]} />}
+          {!ex.layout && ex.items && (
             <ol className="list-decimal pl-5 text-sm text-slate-800 mt-2 space-y-0.5">
               {ex.items.map((it, j) => {
                 const ans = show[i] && Array.isArray(ex.answers) ? ex.answers[j] : undefined;
@@ -481,10 +706,18 @@ function ExList({ list }: { list: Ex[] }) {
   );
 }
 
+/** Matndagi _so'z_ belgisi — tagiga chizilgan (paraphrase) so'z. */
+function renderRich(t: string): React.ReactNode {
+  const parts = t.split(/(_[^_]+_)/g);
+  return parts.map((p, i) => p.length > 2 && p.startsWith("_") && p.endsWith("_")
+    ? <span key={i} className="underline decoration-brand-500 decoration-2 underline-offset-2 font-medium">{p.slice(1, -1)}</span>
+    : <span key={i}>{p}</span>);
+}
+
 function Paraphrases({ rows }: { rows: [string, string][] }) {
   return (
-    <Section title="Paraphrase — matndagi va savoldagi so'zlar">
-      <Table head={["Matnda (passage)", "Savolda / javobda"]} rows={rows} />
+    <Section title="Paraphrase — ma'nosi bir xil so'zlar">
+      <Table head={["So'z", "Paraphrase (ma'nosi bir xil)"]} rows={rows} />
     </Section>
   );
 }
@@ -532,7 +765,14 @@ function ReadingBlock({ R, idx }: { R: Reading; idx: number }) {
           {(R.text ?? []).length > 0 && (
             <Section title="Matn">
               <div className="flex items-center gap-1 text-xs text-slate-400 mb-2"><FileText size={13} /> Sinfda o'qish uchun</div>
-              {R.text!.map((t, i) => <p key={i} className="text-sm text-slate-800 mb-2 leading-relaxed">{t}</p>)}
+              <div className="relative">
+                <img src={brandIconSrc} alt="" aria-hidden="true"
+                     className="pointer-events-none select-none absolute inset-0 m-auto w-2/3 max-w-sm opacity-[0.07]" />
+                <div className="relative">
+                  {R.text!.map((t, i) => <p key={i} className="text-[15px] text-slate-800 mb-3 leading-relaxed">{renderRich(t)}</p>)}
+                </div>
+                <div className="relative text-right text-[11px] font-semibold tracking-widest text-brand-700/60 mt-1">JONY ACADEMY</div>
+              </div>
               {(R.glossary ?? []).length > 0 && (
                 <div className="text-xs text-slate-600 bg-slate-50 rounded px-3 py-2 mt-2">{R.glossary!.join(" · ")}</div>
               )}

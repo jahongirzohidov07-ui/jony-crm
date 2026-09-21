@@ -224,15 +224,21 @@
       "Miqdor paraphrase.",
       "Rasmiy sinonim.",
       "Ravish sinonimi."
-     ]
+     ],
+     "layout": "qa"
     }
    ],
    "readings": [
     {
      "title": "The World's Friendliest City",
-     "qtype": "Table completion (Questions 1–5)",
+     "qtype": "Table completion — Questions 1–5",
      "source": "Jony Academy materiali — asosiy matn",
-     "image": "ielts5_01_friendliest_city.jpg",
+     "text": [
+      "A team of social psychologists from California has spent six years studying the reactions of people in cities around the world to different situations. The results show that cities where people _have less_ money generally have friendlier _populations_. Rio de Janeiro in Brazil, which is often _known for_ its crime, comes out top, and the capital of Malawi, Lilongwe, comes third.",
+      "But what makes one city friendlier than another? The psychologists from California State University say it has got more to do with environment than culture or nationality.",
+      "They carried out a study into the way locals treated strangers in 23 cities around the world. The team conducted their research through a series of tests, where they dropped pens or pretended they were blind and needed help crossing the street.",
+      "The study concludes that people are more helpful in cities with a more relaxed _way of life_ such as Rio. While they were there, researchers received help in 93 percent of cases, and the percentage in Lilongwe was only a little lower. However, richer cities such as Amsterdam and New York are considered the least friendly. Inhabitants of Amsterdam helped the researchers in 53 percent of cases and in New York just 44 percent. The psychologists found that, in these cities, people tend to _be short of_ time, so they hurry and often _ignore_ strangers."
+     ],
      "paraphrases": [
       [
        "famous",
@@ -289,15 +295,15 @@
      ],
      "tasks": [
       {
-       "title": "Questions 1–5: Table completion",
-       "type": "ONE WORD ONLY",
-       "instr": "Jadvalni matndan olingan BITTA so'z bilan to'ldiring.",
+       "title": "Questions 1–5",
+       "type": "Complete the table below. Choose ONE WORD from the passage for each answer.",
+       "instr": "Jadvaldagi tagiga chizilgan so'zlarning matndagi paraphraseini toping — javob o'sha joyda turadi.",
        "items": [
-        "Rio de Janeiro, positive aspects: more 1 ___ lifestyle",
-        "Rio de Janeiro, negative aspects: people don't have so much 2 ___",
-        "Rio de Janeiro, negative aspects: has reputation for 3 ___",
-        "Amsterdam and New York: people have little 4 ___",
-        "Amsterdam and New York: people don't pay attention to 5 ___"
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
        ],
        "answers": [
         "relaxed",
@@ -307,18 +313,39 @@
         "strangers"
        ],
        "why": [
-        "Jadvalda \"lifestyle\", matnda \"way of life\" — paraphrase. Matn \"a more relaxed way of life\" deydi, shuning uchun bo'sh joyga sifat \"relaxed\" tushadi.",
-        "Jadvaldagi \"don't have so much\" matndagi \"have less\" ning paraphrasei. Matnda \"have less money\" — javob \"money\".",
-        "\"Has reputation for\" = \"known for\". Matnda Rio \"known for its crime\" deyilgan.",
-        "\"Have little\" = \"be short of\". Matnda odamlar \"short of time\" — javob \"time\".",
-        "\"Don't pay attention to\" = \"ignore\". Matnda \"ignore strangers\" — javob \"strangers\"."
+        "Jadvalda \"lifestyle\", matnda \"way of life\" — paraphrase. Matn \"a more relaxed way of life\" deydi, shuning uchun bo'sh joyga \"relaxed\" tushadi.",
+        "\"Don't have so much\" = \"have less\". Matnda \"people have less money\".",
+        "\"Has reputation for\" = \"known for\". Matnda Rio \"known for its crime\".",
+        "\"Have little\" = \"be short of\". Matnda \"short of time\".",
+        "\"Don't pay attention to\" = \"ignore\". Matnda \"ignore strangers\"."
        ],
-       "note": "Har javobdan keyin o'quvchidan paraphrase juftini so'rang: \"jadvalda qaysi so'z — matnda qaysi so'z?\". Javobni topib, juftni ayta olmasa — yarim ish."
+       "note": "Har javobdan keyin so'rang: \"jadvalda qaysi so'z — matnda qaysi so'z?\" Javobni topib, juftni ayta olmasa — yarim ish.",
+       "layout": "grid",
+       "head": [
+        "City",
+        "Positive aspects",
+        "Negative aspects",
+        "% of help received"
+       ],
+       "rows": [
+        [
+         "Rio de Janeiro",
+         "friendly inhabitants ;; more (1) lifestyle",
+         "people don't have so much (2) ;; has reputation for (3)",
+         "93%"
+        ],
+        [
+         "Amsterdam and New York",
+         "richer",
+         "people have little (4) ;; don't pay attention to (5)",
+         "Amsterdam: 53% ;; New York: 44%"
+        ]
+       ]
       },
       {
        "title": "Tagiga chizilgan so'zlar",
        "type": "Paraphrase moslash",
-       "instr": "Matnda tagiga chizilgan so'zni jadvaldagi paraphrasei bilan juftlang.",
+       "instr": "Matnda tagiga chizilgan so'zning jadvaldagi juftini ayting.",
        "items": [
         "have less",
         "populations",
@@ -340,31 +367,154 @@
         "Ot sinonimi: shahar aholisi.",
         "Fe'l birikmasi ot birikmasiga aylangan.",
         "Uch so'zli ibora bitta so'zga teng.",
-        "Ikkalasi ham \"kam\" degan ma'no.",
+        "Ikkalasi ham \"kam\" ma'nosida.",
         "Bitta fe'l uzun inkor birikmaga teng."
-       ]
-      },
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "The Best Cities in the World",
+     "qtype": "Table completion — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "In a recent internet survey, tourists and business travellers were asked to rate 50 cities around the world, from the best to the worst. Of the top three cities, two were in Europe and one was in Australia.",
+      "In third place was London, scoring highly mainly because it was the most _famous_ city on the list of 50 surveyed. It was also seen as a very _good place_ to do business, and was an important cultural centre. However, it lost points because people believed it was an _extremely_ expensive place to live.",
+      "Sydney was also a very popular destination, achieving second place on the list because people believed it had the friendliest _inhabitants_, as well as the best _standard of living_ and the _nicest_ climate. It failed to make the top spot, however, because people thought there were _very few_ things to see there, and many also thought it was too far away from other business and cultural centres.",
+      "At the top of the list was Paris. Despite problems such as the _large amount of_ traffic, it beat other cities to first place because people considered it to be the most interesting city, with more museums, art galleries and places of interest than anywhere else. People also thought it was the best city to take a holiday in."
+     ],
+     "paraphrases": [
+      [
+       "well-known",
+       "famous"
+      ],
+      [
+       "excellent",
+       "very good"
+      ],
+      [
+       "very",
+       "extremely"
+      ],
+      [
+       "residents",
+       "inhabitants"
+      ],
+      [
+       "quality of life",
+       "standard of living"
+      ],
+      [
+       "most pleasant",
+       "nicest"
+      ],
+      [
+       "not many",
+       "very few"
+      ],
+      [
+       "a lot of",
+       "large amount of"
+      ]
+     ],
+     "tasks": [
       {
-       "title": "Raqam va ismlar — langar",
-       "type": "Tahlil",
-       "instr": "Nega raqam va shahar nomlari eng tez topiladi?",
+       "title": "Find words or phrases in the passage",
+       "type": "Paraphrase moslash",
+       "instr": "Jadvaldagi so'zga matndan ma'nosi bir xil so'z yoki ibora toping.",
        "items": [
-        "93%",
-        "53%",
-        "44%",
-        "Lilongwe"
+        "well-known",
+        "excellent",
+        "very",
+        "residents",
+        "quality of life",
+        "most pleasant",
+        "not many",
+        "a lot"
        ],
        "answers": [
-        "Rio de Janeiro",
-        "Amsterdam",
-        "New York",
-        "Rio'dan keyin, \"a little lower\""
+        "famous",
+        "very good",
+        "extremely",
+        "inhabitants",
+        "standard of living",
+        "nicest",
+        "very few",
+        "large amount of"
        ],
        "why": [
-        "Raqam paraphrase qilinmaydi — matnda ham, jadvalda ham bir xil.",
-        "Ism va raqam birga keladi — joyni darhol topasiz.",
-        "Jadval tartibi matn tartibiga mos.",
-        "Jadvalda yo'q, lekin matnda chalg'itmasligi kerak — savol faqat Rio va Amsterdam/Nyu-York haqida."
+        "Namuna: \"the most famous city on the list\".",
+        "\"A very good place to do business\" — jadvalda \"excellent opportunities\".",
+        "\"An extremely expensive place to live\".",
+        "\"It had the friendliest inhabitants\".",
+        "\"The best standard of living\". Javoblar kalitida \"standard of life\" yozilgan, lekin matnda \"standard of living\".",
+        "\"The nicest climate\".",
+        "\"Very few things to see there\".",
+        "\"The large amount of traffic\"."
+       ],
+       "layout": "pairs"
+      },
+      {
+       "title": "Now complete the table",
+       "type": "Choose ONE word from the passage for each answer.",
+       "instr": "Jadvalni to'ldiring; tagiga chizilgan so'zlar yordam beradi.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+       ],
+       "answers": [
+        "third",
+        "business",
+        "expensive",
+        "friendliest",
+        "climate",
+        "first",
+        "interesting",
+        "traffic"
+       ],
+       "why": [
+        "\"In third place was London\". Bitta so'z — \"third\".",
+        "\"Excellent\" = \"very good\": \"a very good place to do business\".",
+        "\"Very\" = \"extremely\": \"an extremely expensive place to live\".",
+        "\"Residents\" = \"inhabitants\": \"the friendliest inhabitants\". Javoblar kalitida \"friendlier\" yozilgan, lekin javob matndan olinadi — matnda \"friendliest\".",
+        "\"Most pleasant\" = \"nicest\": \"the nicest climate\".",
+        "\"At the top of the list was Paris ... to first place\".",
+        "\"Considered it to be the most interesting city\". Jadvalda \"more ___ than other cities\" — ma'no bir.",
+        "\"A lot of\" = \"large amount of\": \"the large amount of traffic\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "City",
+        "Overall position in survey",
+        "Perceived advantages",
+        "Perceived disadvantages"
+       ],
+       "rows": [
+        [
+         "London",
+         "(1)",
+         "is more well-known than the other cities ;; has excellent (2) opportunities",
+         "is very (3)"
+        ],
+        [
+         "Sydney",
+         "Second",
+         "residents are the (4) ;; has the best quality of life ;; has the most pleasant (5)",
+         "not many things to see"
+        ],
+        [
+         "Paris",
+         "(6)",
+         "is more (7) than other cities",
+         "has a lot of (8)"
+        ]
        ]
       }
      ]
@@ -453,7 +603,8 @@
         "\"Gives free land to anyone who builds a house\". Bir so'z — land.",
         "\"Plus 3,000 more for every baby born there\". \"Every baby\" = \"each baby\".",
         "\"About a third of the new arrivals left again\". Bitta so'z kerak — third."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Paraphrase topish",
@@ -479,7 +630,8 @@
         "\"Officials say the aim is not tourism but population\".",
         "To'rtinchi xatboshining boshi.",
         "Oxirgi xatboshi."
-       ]
+       ],
+       "layout": "pairs"
       }
      ]
     },
@@ -566,7 +718,8 @@
         "\"Carbon dioxide emissions dropped by two thirds\" — ikki so'z.",
         "\"About seven out of ten children walk to school without an adult\".",
         "\"The population of the centre has grown by 12,000\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Nega bu javob emas?",
@@ -589,7 +742,8 @@
         "Jadvalda \"___ kilometres an hour\" allaqachon yozilgan, faqat raqam kerak: 30.",
         "\"People\" so'zi jadvalda bor; ortiqcha so'z qo'shilsa, so'z chegarasi buziladi.",
         "1999 — hokim saylangan yil, natijalar keyin kelgan."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -679,7 +833,8 @@
         "\"Most of it comes from car horns\" — ikki so'z.",
         "\"The noise fell by only 5 per cent\".",
         "\"Trees along a road cut noise by up to 10 decibels\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Paraphrase daftari",
@@ -705,7 +860,8 @@
         "Inkor birikma bitta fe'lga teng.",
         "Fe'l sinonimi.",
         "Umumlashtirish."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -717,19 +873,22 @@
      "title": "3-matn: \"The quietest city in the world\"",
      "type": "Reading",
      "instr": "Uyda 8 daqiqada bajaring, keyin javoblarni izoh bilan tekshiring (yuqorida).",
-     "answers": "Javoblar darsning Reading bo'limida."
+     "answers": "Javoblar darsning Reading bo'limida.",
+     "layout": "list"
     },
     {
      "title": "Paraphrase daftari",
      "type": "Yozma",
      "instr": "20 juft: chap ustun — savolda bo'lishi mumkin bo'lgan so'z, o'ng ustun — matndagi so'z. Bugungi 3 matndan oling.",
-     "answers": "Ustoz tekshiradi: juftlar haqiqatan matndan bo'lishi kerak."
+     "answers": "Ustoz tekshiradi: juftlar haqiqatan matndan bo'lishi kerak.",
+     "layout": "list"
     },
     {
      "title": "Kichik yozma test",
      "type": "10 savol",
      "instr": "Ustoz bergan 10 ta so'zning sinonimini yozing (dars oxirida berilgan ro'yxat).",
-     "answers": "Keyingi darsda 5 daqiqada tekshiriladi."
+     "answers": "Keyingi darsda 5 daqiqada tekshiriladi.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -815,11 +974,13 @@
    ],
    "grammar": {
     "intro": [
-     "\"Parosat usuli\" — javobni topishdan OLDIN uni bashorat qilish. Ko'z matnni qidirganda miya nimani izlayotganini bilishi kerak.",
-     "Har bo'sh joyda uch savolga javob bering: 1) So'z turkumi qanday (ot, sifat, fe'l, raqam)? 2) Ma'no turi qanday (yil, miqdor, joy, odam)? 3) Ko'plikmi yoki birlik?",
-     "Misol: \"Tool library opened in ___\" — javob faqat YIL bo'ladi (2013). \"Number of cities: more than ___\" — faqat RAQAM (500). Bu ikkalasi matndan eng tez topiladi.",
-     "Grammatika yordam beradi: \"the ___ of the population\" — \"the\" va \"of\" orasida OT turadi. Sifat yoki fe'l bo'lishi mumkin emas.",
-     "Bashorat noto'g'ri chiqsa ham foyda: siz qidirayotgan narsani aniq bilasiz, shuning uchun matnni tez skanerlaysiz."
+     "NEGA \"PAROSAT USULI\": IELTS readingda ba'zi savollarga matnni to'liq o'qimasdan, farosat va mantiq bilan javob topish mumkin. Bu dars aynan shuni o'rgatadi.",
+     "Misol: izohda \"Year started: ___\" — yil so'ralyapti. Matnga ko'z yugurtirsangiz, unda faqat BITTA yil bor (2008). Demak javob shu — butun matnni o'qish shart emas.",
+     "Keyingi savol: \"Number of countries: ___\" — son so'ralyapti. Matnda bitta katta son bor (143). Yana matnni o'qimasdan topildi.",
+     "Qoida: avval savol nimani so'rayotganini aniqlang — yilmi, sonmi, ismmi, joymi. Keyin matndan faqat SHU turdagi narsani qidiring. Agar matnda o'sha turdan bittagina bo'lsa, javob tayyor.",
+     "Parosat yetmagan joyda paraphrase ishlaydi: izohdagi so'z matnda boshqacha aytiladi (effect = impact, uses = consumes). Bu turdagi test matnga diqqat bilan qarab aniq ma'lumotni topish qobiliyatini tekshiradi.",
+     "Shuning uchun ish tartibi: 1) oson savollar — parosat bilan (yil, son, ism); 2) qolganlari — paraphrase bilan.",
+     "Javob matndagi so'z bilan yoziladi va so'z chegarasidan oshmaydi (ONE WORD OR A NUMBER)."
     ],
     "formulas": [
      [
@@ -955,10 +1116,268 @@
       "\"per cent\" oldida son.",
       "Yana foiz — raqam kutiladi."
      ],
-     "note": "Bashorat yozilgach, matn ochiladi va har javob \"kutgan turim to'g'ri keldimi?\" savoli bilan tekshiriladi."
+     "note": "Bashorat yozilgach, matn ochiladi va har javob \"kutgan turim to'g'ri keldimi?\" savoli bilan tekshiriladi.",
+     "layout": "list"
     }
    ],
    "readings": [
+    {
+     "title": "Reading #3. The happiest country in the world",
+     "qtype": "Note completion — parosat usuli",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "Children growing up in Costa Rica are surrounded by some of the most beautiful and diverse landscapes in the world. Preserving tropical rainforests isn't Costa Rica's only success, because the government also makes sure everyone has access to health-care and education. So when the New Economics Foundation released its second Happy Planet Index, Costa Rica came out number one. The index is a ranking of countries based on their _impact_ on the environment and the health and happiness of their _citizens_.",
+      "According to Mariano Rojas, a Costa Rican economics professor, Costa Rica is a mid-income country where citizens have plenty of time for themselves and for their relationships with others. 'A mid-income level allows most citizens to satisfy their basic needs. The government makes sure that all Costa Ricans have access to education, health and nutrition services.' Costa Ricans, he believes, are not interested in status or spending money to show how successful they are.",
+      "_Created_ in 2008, the Happy Planet Index examines happiness on a national level and _ranks_ 143 countries according to three measurements: their citizens' happiness, how long they live (which reflects their health), and _how much_ of the planet's resources each country _consumes_. According to researcher Saamah Abdallah, the Index also measures the outcomes that are most important, and those are happy, healthy lives for everyone."
+     ],
+     "paraphrases": [
+      [
+       "started",
+       "created"
+      ],
+      [
+       "lists",
+       "ranks"
+      ],
+      [
+       "effect",
+       "impact"
+      ],
+      [
+       "the quantity",
+       "how much"
+      ],
+      [
+       "uses",
+       "consumes"
+      ],
+      [
+       "population",
+       "citizens"
+      ],
+      [
+       "the Earth's",
+       "the planet's"
+      ],
+      [
+       "how long people live",
+       "how long they live (reflects their health)"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Complete the following note",
+       "type": "ONE WORD OR A NUMBER from the passage",
+       "instr": "Avval PAROSAT bilan: qaysi javobni matnni to'liq o'qimasdan topish mumkin?",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+       ],
+       "answers": [
+        "2008",
+        "143",
+        "environment",
+        "resources",
+        "health",
+        "citizens"
+       ],
+       "why": [
+        "PAROSAT: \"Year started\" — yil so'ralyapti. Matnda faqat BITTA yil bor: 2008. Butun matnni o'qish shart emas. Paraphrase: started = created (\"Created in 2008\").",
+        "PAROSAT: \"Number of countries\" — son so'ralyapti. Matnda bitta katta son bor: 143. Paraphrase: lists = ranks (\"ranks 143 countries\").",
+        "\"Effect\" = \"impact\": \"their impact on the environment\". Bu yerda parosat yetmaydi — paraphrase kerak.",
+        "\"The quantity\" = \"how much\", \"the Earth's\" = \"the planet's\", \"uses\" = \"consumes\": \"how much of the planet's resources each country consumes\".",
+        "Qavsdagi izoh yordam beradi: \"how long people live\" = \"how long they live (which reflects their health)\".",
+        "\"Population\" o'rnida matnda \"citizens\": \"their citizens' happiness\"."
+       ],
+       "note": "Darsni shu savoldan boshlang: \"1 va 2-savolga matnni o'qimasdan javob bera olasizmi?\" O'quvchilar matnni ko'z bilan skanerlab, bitta yil va bitta katta sonni topadi — bu parosat usuli.",
+       "layout": "grid",
+       "head": [
+        "The Happy Planet Index"
+       ],
+       "rows": [
+        [
+         "Year started: (1)"
+        ],
+        [
+         "Number of countries in lists: (2)"
+        ],
+        [
+         "Measures each country's happiness according to: ;; its effect on the (3) (i.e. the quantity of the Earth's (4) that it uses) ;; the (5) of the population (i.e. how long people live) ;; how happy its (6) are"
+        ]
+       ]
+      },
+      {
+       "title": "Find words in the passage that have the same meaning",
+       "type": "Paraphrase moslash",
+       "instr": "Matndan ma'nosi bir xil so'zni toping va bo'sh joyni to'ldiring.",
+       "items": [
+        "Started (v)",
+        "Lists (v)",
+        "Effect (n)",
+        "the quantity (n)",
+        "uses (v)",
+        "population (n)"
+       ],
+       "answers": [
+        "created",
+        "ranks",
+        "impact",
+        "how much",
+        "consumes",
+        "citizens"
+       ],
+       "why": [
+        "\"Created in 2008\" — fe'l, o'tgan zamon shaklida.",
+        "\"Ranks 143 countries\".",
+        "\"Their impact on the environment\".",
+        "\"How much of the planet's resources\" — ot o'rnida ibora.",
+        "\"Each country consumes\".",
+        "\"Their citizens' happiness\"."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #4. A city survey with a difference",
+     "qtype": "Note completion + paraphrase moslash",
+     "source": "Jony Academy materiali",
+     "text": [
+      "There are many websites on the Internet which provide lists of the world's best cities to visit, live or work in. These lists usually grade the cities in order, from 'best' to 'worst', and are based on facts and figures provided by local or national organisations.",
+      "The City Brands Index (CBI) also provides a list of best and worst cities. However, unlike other surveys, it is based on the idea that cities are _similar to_ products in shops. It asks ordinary people in other countries to grade cities in the same way that they would grade a product, like a soft drink or a car. What is particularly different about the CBI is that the people who take part in the survey may not have ever visited the cities. Instead, they are asked to say what they think the cities are like, basing their opinions on things like news stories, magazine articles or television programmes they have heard or seen.",
+      "_Each_ year, about 10,000 people in 20 countries take part in the CBI survey, and they grade a _total_ of 50 cities. They do this by filling in an online questionnaire. There are _several_ categories in the survey. These include things like the economy, education, the environment, local culture, climate and what the city's residents are like.",
+      "The CBI list is _useful_ because it helps people choose a good place to live, _find work_ or take a holiday. It also helps _regional_ governments to understand why people and businesses are, or are not, coming to their cities, and so shows them areas which they could develop or improve."
+     ],
+     "paraphrases": [
+      [
+       "similar to",
+       "like"
+      ],
+      [
+       "each",
+       "every"
+      ],
+      [
+       "total",
+       "maximum"
+      ],
+      [
+       "several",
+       "a number of"
+      ],
+      [
+       "useful",
+       "helpful"
+      ],
+      [
+       "find work",
+       "get a job"
+      ],
+      [
+       "regional",
+       "local"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Match the words from the passage (1–7) with their meanings (a–g)",
+       "type": "Matching",
+       "instr": "Tagiga chizilgan so'zni ma'nosi bir xil variant bilan juftlang.",
+       "items": [
+        "1 similar to",
+        "2 each",
+        "3 total",
+        "4 several",
+        "5 useful",
+        "6 find work",
+        "7 regional"
+       ],
+       "answers": [
+        "e like",
+        "b every",
+        "g maximum",
+        "a a number of",
+        "d helpful",
+        "c get a job",
+        "f local"
+       ],
+       "why": [
+        "Namuna: \"similar to\" = \"like\" — o'xshash.",
+        "\"Each year\" = \"every year\".",
+        "\"A total of 50 cities\" — izohda \"a maximum of 50 cities\".",
+        "\"Several categories\" = \"a number of categories\".",
+        "\"The CBI list is useful\" = \"helpful\".",
+        "\"Find work\" = \"get a job\".",
+        "\"Regional governments\" = \"local governments\"."
+       ],
+       "box": [
+        "a a number of",
+        "b every",
+        "c get a job",
+        "d helpful",
+        "e like",
+        "f local",
+        "g maximum"
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Now complete the notes below",
+       "type": "Choose ONE WORD OR A NUMBER from the passage for each answer.",
+       "instr": "Avval parosat: qaysi javob son? qaysisi yil/muddat? Keyin paraphrase bilan qolganlarini toping.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+       ],
+       "answers": [
+        "products",
+        "year",
+        "50",
+        "categories",
+        "live",
+        "holiday",
+        "governments"
+       ],
+       "why": [
+        "\"Cities are similar to products in shops\" — \"like\" = \"similar to\".",
+        "PAROSAT: \"every ___\" — vaqt davri. Matnda \"Each year\" — \"each\" = \"every\".",
+        "PAROSAT: son so'ralyapti. \"A total of 50 cities\" — \"total\" = \"maximum\". Diqqat: 10,000 va 20 ham bor, lekin ular odamlar va mamlakatlar soni.",
+        "\"There are several categories\" — \"several\" = \"a number of\".",
+        "\"Choose a good place to live, find work...\" — \"get a job\" = \"find work\", undan oldingi so'z \"live\".",
+        "\"Or take a holiday\" — \"a good ___ destination\" = dam olish joyi.",
+        "\"Regional governments\" — \"local\" = \"regional\"."
+       ],
+       "note": "Javoblar kalitida 7-savol \"Governments\" katta harf bilan yozilgan; IELTSda katta-kichik harf farq qilmaydi, lekin matndagidek \"governments\" yozish odat bo'lsin.",
+       "layout": "grid",
+       "head": [
+        "The City Brands Index"
+       ],
+       "rows": [
+        [
+         "The CBI believes that cities are like (1) which people can buy when they go shopping."
+        ],
+        [
+         "Surveys take place every (2). A maximum of (3) cities are included in the survey."
+        ],
+        [
+         "A number of different (4) are included in the survey."
+        ],
+        [
+         "The CBI list is helpful for: ;; people who are trying to decide where to (5) or get a job ;; people who are looking for a good (6) destination ;; local (7) who want to make their city a better place"
+        ]
+       ]
+      }
+     ]
+    },
     {
      "title": "The country that measures happiness instead of money",
      "qtype": "Note completion",
@@ -1046,7 +1465,8 @@
         "\"Covers thirty-three indicators\".",
         "\"At least 60 per cent of the land must stay under forest\".",
         "\"Unemployment among graduates reached 29 per cent in 2022\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Bashorat tekshiruvi",
@@ -1069,7 +1489,8 @@
         "\"the ... in\" orasida ot; javob constitution.",
         "\"hours\" oldida son turadi; javob three.",
         "\"per cent\" oldida son; javob 60. Diqqat: matnda 71 ham bor, lekin u hozirgi holat, talab emas."
-       ]
+       ],
+       "layout": "list"
       }
      ]
     },
@@ -1160,7 +1581,8 @@
         "\"Similar libraries have opened in more than 500 cities worldwide\".",
         "\"The most popular item almost everywhere is the pressure washer\" — ikki so'z.",
         "\"Repairs take up a quarter of the budget\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Tuzoqlar",
@@ -1183,7 +1605,8 @@
         "Bo'sh joydan keyin \"dollars\" allaqachon bor; faqat raqam kerak.",
         "Matnda \"pressure washer\"; ikkala so'z ham kerak, chegara ruxsat beradi.",
         "\"Half\" — kurslardan keladigan daromad ulushi, ta'mirlash emas."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -1274,7 +1697,8 @@
         "\"Fresh reeds must be added every two weeks in the rainy season\".",
         "\"Today around 2,000 people live on the islands\".",
         "\"Nearly 200,000 visitors arrive each year\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Paraphrase daftari",
@@ -1300,7 +1724,8 @@
         "Ot birikmasi fe'l birikmasiga aylanadi.",
         "Uzun ibora bitta fe'lga teng.",
         "Rasmiy fe'l sinonimi."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -1312,19 +1737,22 @@
      "title": "3-matn: \"Living on a floating island\"",
      "type": "Reading",
      "instr": "Uyda 8 daqiqada; javoblar Reading bo'limida izoh bilan.",
-     "answers": "Ustoz keyingi darsda paraphrase juftlarini so'raydi."
+     "answers": "Ustoz keyingi darsda paraphrase juftlarini so'raydi.",
+     "layout": "list"
     },
     {
      "title": "Bashorat mashqi",
      "type": "Yozma",
      "instr": "12 ta bo'sh joy berilgan (ustoz beradi): matnsiz, faqat javob TURINI yozing.",
-     "answers": "12 dan 10 tasi to'g'ri bo'lsa — bajarilgan."
+     "answers": "12 dan 10 tasi to'g'ri bo'lsa — bajarilgan.",
+     "layout": "list"
     },
     {
      "title": "Xatolar daftari",
      "type": "Yozma",
      "instr": "Bugungi 3 matndan xato qilgan har javobni yozing: savol, xato javob, to'g'ri javob, sabab.",
-     "answers": "Ustoz ko'radi; xato sababi yozilmagan qator qabul qilinmaydi."
+     "answers": "Ustoz ko'radi; xato sababi yozilmagan qator qabul qilinmaydi.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -1555,7 +1983,8 @@
       "Urg'u: FIFteen — boshida, fifTY — oxirida.",
       "Sana ikki xil yozilishi mumkin — ikkalasi qabul qilinadi."
      ],
-     "note": "Har xato harfni daftarga alohida yozing — keyingi darsda aynan shular takrorlanadi."
+     "note": "Har xato harfni daftarga alohida yozing — keyingi darsda aynan shular takrorlanadi.",
+     "layout": "qa"
     }
    ],
    "readings": [],
@@ -1643,7 +2072,8 @@
         "\"Somewhere close to the library\".",
         "\"I have a bicycle, so somewhere to keep it\".",
         "\"07-double 4-9 3-1-5-2-6\" — double 4 = 44."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Signal so'zlar",
@@ -1666,7 +2096,8 @@
         "Xodim raqamni takrorlaydi — tekshirish imkoni.",
         "400 — boshlanish narxi, talabaning budjeti emas.",
         "Savolda mamlakat so'ralgan."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -1751,7 +2182,8 @@
         "Xodim \"I'll put friend\" deydi; radio reklama — qo'shimcha.",
         "\"My sister, Karen\".",
         "\"0-7-8-double 3-1-4-2-9\" — double 3 = 33."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Xato ovi",
@@ -1774,7 +2206,8 @@
         "Xodim yozgan javob \"friend\"; radio keyin aytilgan qo'shimcha.",
         "Formada \"March 1996\" bor; kun kerak — 12th.",
         "\"One four two nine\" — 1429. Takrorlashni tinglash kerak."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -1853,7 +2286,8 @@
         "Avval karta aytildi, keyin tuzatildi: \"cash is easier\".",
         "\"H-A-double D-A-D\" — double D = DD.",
         "\"07-9-double 6-2-0-1-3-4\" — double 6 = 66."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Raqam va tuzatish",
@@ -1876,7 +2310,8 @@
         "\"Actually no\" — tuzatish signali.",
         "Tanlangan mashina turiga bog'liq.",
         "Ismlarda ham \"double\" ishlatiladi."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -1887,19 +2322,22 @@
      "title": "3-skript: \"Taxi booking for the airport\"",
      "type": "Listening",
      "instr": "Uyda bir marta tinglang/o'qitib eshiting, formani to'ldiring, keyin transkript bilan tekshiring.",
-     "answers": "Javoblar Listening bo'limida izoh bilan."
+     "answers": "Javoblar Listening bo'limida izoh bilan.",
+     "layout": "list"
     },
     {
      "title": "Imlo mashqi",
      "type": "Yozma",
      "instr": "20 ta ism va ko'cha nomini harflab yozib, o'zingizni tekshiring (juftlik bilan telefon orqali).",
-     "answers": "Har xato harf alohida yoziladi."
+     "answers": "Har xato harf alohida yoziladi.",
+     "layout": "list"
     },
     {
      "title": "Raqam diktanti",
      "type": "Yozma",
      "instr": "15 ta telefon raqami va narx (ustoz o'qiydi yoki audio): \"double\", \"oh\", 13/30, 15/50 juftlari.",
-     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan."
+     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -2132,7 +2570,8 @@
       "Ismlar matn bo'ylab sochilgan.",
       "Guruhlar bo'yicha qidiriladi."
      ],
-     "note": "O'quvchi daftariga ikki ustun qilib ko'chirsin — bu jadval keyingi darslarda ham kerak bo'ladi."
+     "note": "O'quvchi daftariga ikki ustun qilib ko'chirsin — bu jadval keyingi darslarda ham kerak bo'ladi.",
+     "layout": "qa"
     }
    ],
    "readings": [
@@ -2221,7 +2660,8 @@
         "\"Pressed into long thin strings and baked in an oven\".",
         "\"A second slat is glued on top\".",
         "\"Painted with up to eight layers of paint\"."
-       ]
+       ],
+       "layout": "flow"
       },
       {
        "title": "Short answer questions",
@@ -2250,7 +2690,8 @@
         "\"Baked in an oven at about 800 degrees\".",
         "\"More graphite makes a softer, darker one\".",
         "\"Held in place by a small metal ring\"."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -2342,7 +2783,8 @@
         "\"Turns them into a thick liquid, cocoa mass\".",
         "\"Stirred for up to three days in a process called conching\".",
         "\"A careful pattern known as tempering\"."
-       ]
+       ],
+       "layout": "flow"
       },
       {
        "title": "Short answer questions",
@@ -2371,7 +2813,8 @@
         "\"Fermentation is the stage that creates the taste\".",
         "\"Reduces their weight by half\".",
         "\"A machine called a winnower\"."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -2462,7 +2905,8 @@
         "\"Heated until they melt\".",
         "\"A metal plate with hundreds of tiny holes\".",
         "\"Wound onto large reels\"."
-       ]
+       ],
+       "layout": "flow"
       },
       {
        "title": "Short answer questions",
@@ -2491,7 +2935,8 @@
         "\"Exactly like a shower head\".",
         "\"Brushed to raise a soft surface\".",
         "\"Around 60 per cent less energy\"."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -2503,19 +2948,22 @@
      "title": "3-matn: \"How a plastic bottle becomes a jacket\"",
      "type": "Reading",
      "instr": "8 daqiqada bajaring; javoblar Reading bo'limida izoh bilan.",
-     "answers": "Ustoz jarayonni og'zaki aytib berishni so'raydi."
+     "answers": "Ustoz jarayonni og'zaki aytib berishni so'raydi.",
+     "layout": "list"
     },
     {
      "title": "Tartib jadvali",
      "type": "Yozma",
      "instr": "Ikki ustun: \"tartib bor\" va \"tartib yo'q\" — 10 savol turini joylashtiring va nega shundayligini bir gapda yozing.",
-     "answers": "Ustoz tekshiradi."
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
     },
     {
      "title": "Jarayon yozish",
      "type": "Yozma",
      "instr": "O'zingiz biladigan bir jarayonni (choy damlash, non yopish) 6 bosqichda, ketma-ketlik so'zlari bilan yozing.",
-     "answers": "Kamida 5 ta ketma-ketlik so'zi bo'lishi kerak."
+     "answers": "Kamida 5 ta ketma-ketlik so'zi bo'lishi kerak.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -2740,7 +3188,8 @@
       "\"For this course\" — aniqlashtirish.",
       "\"Sorry\" — tuzatish."
      ],
-     "note": "Har javobdan keyin signal so'zni ayting: but, though, actually, sorry, in fact."
+     "note": "Har javobdan keyin signal so'zni ayting: but, though, actually, sorry, in fact.",
+     "layout": "qa"
     }
    ],
    "readings": [],
@@ -2826,7 +3275,8 @@
         "Harflab aytilgan: B-E-A-U-M-O-N-T.",
         "\"The nearest station is Hollow Park\".",
         "\"Open evenings every Thursday at seven\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Paraphrase va chalg'ituvchilar",
@@ -2849,7 +3299,8 @@
         "Bu erta to'lov chegirmasi, to'liq narx emas.",
         "\"Average\" — maksimum emas.",
         "Talab va taqiq bir gapda keladi."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -2928,7 +3379,8 @@
         "\"They need a one-pound coin\".",
         "\"Except in the temporary exhibition\".",
         "\"A deposit of 50 pounds within two weeks\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Tuzoqlar",
@@ -2951,7 +3403,8 @@
         "To'rt o'qituvchi + bitta ota-ona = besh.",
         "Variant sifatida aytilgan, tanlangani — Science Gallery.",
         "50 — oldindan to'lov (deposit); xona bepul."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -3026,7 +3479,8 @@
         "\"A helmet is compulsory\".",
         "\"Your first two rides are free\".",
         "\"Around 180 now\". 60 — besh yil oldingi son."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Signal so'zlar",
@@ -3049,7 +3503,8 @@
         "Standart narx 45.",
         "Javob majburiysi: helmet.",
         "Hozirgi son 180."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -3060,19 +3515,22 @@
      "title": "3-skript: \"Cycling club information\"",
      "type": "Listening",
      "instr": "Uyda bir marta tinglang, qaydlarni to'ldiring, keyin transkript bilan tekshiring.",
-     "answers": "Javoblar Listening bo'limida izoh bilan."
+     "answers": "Javoblar Listening bo'limida izoh bilan.",
+     "layout": "list"
     },
     {
      "title": "Chalg'ituvchi daftari",
      "type": "Yozma",
      "instr": "Bugungi 3 skriptdan 10 ta chalg'ituvchi javobni yozing va nega noto'g'ri ekanini tushuntiring.",
-     "answers": "Har qatorda signal so'z ko'rsatilishi kerak (but, though, sorry, average)."
+     "answers": "Har qatorda signal so'z ko'rsatilishi kerak (but, though, sorry, average).",
+     "layout": "list"
     },
     {
      "title": "Raqam va vaqt diktanti",
      "type": "Yozma",
      "instr": "15 ta narx, vaqt va masofa (ustoz o'qiydi): 13/30, 15/50, 7.30/7.13 juftlari.",
-     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan."
+     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -3301,7 +3759,8 @@
       "\"Weekends\" shanba yoki yakshanba bo'lishi mumkin; aniq aytilmagan.",
       "\"First\" shu ma'noni beradi."
      ],
-     "note": "Har javobdan keyin \"qaysi so'z shunday deyishga majbur qildi?\" deb so'rang."
+     "note": "Har javobdan keyin \"qaysi so'z shunday deyishga majbur qildi?\" deb so'rang.",
+     "layout": "qa"
     }
    ],
    "readings": [
@@ -3392,7 +3851,8 @@
         "\"By 1975 microwaves were selling faster than gas cookers\".",
         "Matnda \"American homes\" deyilgan, butun dunyo emas.",
         "\"Received no extra payment ... beyond the company's standard bonus of two dollars\"."
-       ]
+       ],
+       "layout": "tfng"
       },
       {
        "title": "Xato turini ayting",
@@ -3415,7 +3875,8 @@
         "NOT GIVEN.",
         "Matn \"some parts\" deydi.",
         "American homes ≠ worldwide."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -3506,7 +3967,8 @@
         "\"Only after the same valley appeared in recordings of underwater earthquakes\".",
         "Sotuv haqida ma'lumot yo'q.",
         "\"In 1996, at the age of seventy-six\"."
-       ]
+       ],
+       "layout": "tfng"
       },
       {
        "title": "Isbot qatori",
@@ -3529,7 +3991,8 @@
         "\"Working by hand\".",
         "\"For almost a year he refused to publish it\".",
         "\"in 1996, at the age of seventy-six\"."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -3620,7 +4083,8 @@
         "\"A faster process ... which needed only a few minutes\".",
         "\"Rediscovered in a London storeroom in 1952\".",
         "\"It is now kept in Texas\"."
-       ]
+       ],
+       "layout": "tfng"
       },
       {
        "title": "NOT GIVEN daftari",
@@ -3643,7 +4107,8 @@
         "Matn aytmagan narsalar ro'yxati NOT GIVEN mashqi uchun foydali.",
         "Aytilmagan.",
         "Hukumat sotib olgani bor, summa yo'q."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -3655,19 +4120,22 @@
      "title": "3-matn: \"The first photograph\"",
      "type": "Reading",
      "instr": "10 daqiqada bajaring; javoblar va isbotlar Reading bo'limida.",
-     "answers": "Ustoz har javob uchun matndagi qatorni so'raydi."
+     "answers": "Ustoz har javob uchun matndagi qatorni so'raydi.",
+     "layout": "list"
     },
     {
      "title": "FALSE va NOT GIVEN ro'yxati",
      "type": "Yozma",
      "instr": "Bugungi 3 matndan 8 ta FALSE/NOT GIVEN javobni yozing: savol, javob, sabab.",
-     "answers": "Sababsiz qator qabul qilinmaydi."
+     "answers": "Sababsiz qator qabul qilinmaydi.",
+     "layout": "list"
     },
     {
      "title": "Cheklovchi so'zlar",
      "type": "Yozma",
      "instr": "10 ta savol yozing: har birida all, only, never, most, first so'zlaridan biri bo'lsin; keyin matnga qarab javob bering.",
-     "answers": "Ustoz tekshiradi."
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -3894,7 +4362,8 @@
       "Ostida.",
       "Ikki yonida."
      ],
-     "note": "Har gapni o'quvchi chizmani ko'rsatib aytsin — so'z va rasm bog'lanadi."
+     "note": "Har gapni o'quvchi chizmani ko'rsatib aytsin — so'z va rasm bog'lanadi.",
+     "layout": "list"
     }
    ],
    "readings": [
@@ -3991,7 +4460,8 @@
         "\"Drives the generator, where movement becomes electricity\".",
         "\"A motor called the yaw drive turns the whole nacelle\".",
         "\"Cables ... to a transformer at the base, which raises the voltage\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Joylashuv izohi",
@@ -4014,7 +4484,8 @@
         "\"Attached to the front\".",
         "\"Behind the generator, at the back\".",
         "\"A transformer at the base\"."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -4102,7 +4573,8 @@
         "\"The outer case ... protects the fragile bottle\".",
         "\"A tight stopper ... closes the neck\".",
         "\"Many modern flasks add a cup, which screws over the stopper\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Uch yo'l",
@@ -4125,7 +4597,8 @@
         "\"Reflects heat back into the liquid. This stops radiation\".",
         "\"This prevents convection, the movement of warm air upwards\".",
         "Korpus mo'rt shishani himoya qiladi."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -4222,7 +4695,8 @@
         "\"The upper one, the runner stone, turns just above it\".",
         "\"From a wooden box called the hopper\".",
         "\"Slides down a wooden chute into sacks\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Ikki tur g'ildirak",
@@ -4245,7 +4719,8 @@
         "Suv pastdan turtadi.",
         "\"Less power is produced\" undershot haqida aytilgan.",
         "Qog'ozdan ingichka."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -4257,19 +4732,22 @@
      "title": "3-matn: \"The parts of a traditional water mill\"",
      "type": "Reading",
      "instr": "10 daqiqada bajaring; javoblar Reading bo'limida izoh bilan.",
-     "answers": "Ustoz har javob uchun predlog/joylashuvni so'raydi."
+     "answers": "Ustoz har javob uchun predlog/joylashuvni so'raydi.",
+     "layout": "list"
     },
     {
      "title": "O'z chizmangiz",
      "type": "Yozma",
      "instr": "Uydagi bir qurilmani (choynak, velosiped, fen) chizing va 8 qismini ingliz tilida belgilang; har biriga joylashuv gapini yozing.",
-     "answers": "Kamida 6 ta joy predlogi ishlatilsin."
+     "answers": "Kamida 6 ta joy predlogi ishlatilsin.",
+     "layout": "list"
     },
     {
      "title": "Predlog testi",
      "type": "Yozma",
      "instr": "15 ta gapdagi bo'sh joyga predlog qo'ying: above, below, inside, through, between, at the top of, at the base of.",
-     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan."
+     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -4496,7 +4974,8 @@
       "Ikki narsa orasida.",
       "Uzunasiga joylashgan."
      ],
-     "note": "Har iborani o'quvchi chizmada barmog'i bilan ko'rsatsin — so'z va joy bog'lanadi."
+     "note": "Har iborani o'quvchi chizmada barmog'i bilan ko'rsatsin — so'z va joy bog'lanadi.",
+     "layout": "qa"
     }
    ],
    "readings": [],
@@ -4555,7 +5034,8 @@
         "\"In the middle of the building ... the mixing hall\".",
         "\"In the top left corner, is the moulding section\".",
         "\"Next to the shop, there's the packing area\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Signal iboralar",
@@ -4578,7 +5058,8 @@
         "Ikki bosqichli ko'rsatma.",
         "Eski joy (upstairs) — chalg'ituvchi.",
         "Burchak nomi aniq beriladi."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -4636,7 +5117,8 @@
         "\"The pump sits ... in our diagram it's outside, in the small chamber on the right\".",
         "\"Near the top of the tank there's an overflow\".",
         "\"There's a backflow valve, which makes sure rainwater can never enter the drinking water pipes\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Vazifa va joy",
@@ -4659,7 +5141,8 @@
         "\"They are sent away and not stored\".",
         "\"Slows the water so that the dirt ... is not stirred up\".",
         "\"Near the top of the tank\"."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -4716,7 +5199,8 @@
         "\"The whole front half is the reading hall\".",
         "\"Behind it, on the right, is the computer room\".",
         "\"In the far left corner ... is the local history collection\"."
-       ]
+       ],
+       "layout": "pairs"
       },
       {
        "title": "Chalg'ituvchilar",
@@ -4739,7 +5223,8 @@
         "O'rtada lift; zinapoya uning chap tomonida.",
         "Kafe gazeta burchagidan keyin, o'ng tomonda.",
         "Uning bog'dan alohida kirishi bor."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -4750,19 +5235,22 @@
      "title": "3-skript: \"The new library building\"",
      "type": "Listening",
      "instr": "Uyda bir marta tinglang (yoki o'qitib eshiting), rejani to'ldiring, keyin transkript bilan tekshiring.",
-     "answers": "Javoblar Listening bo'limida izoh bilan."
+     "answers": "Javoblar Listening bo'limida izoh bilan.",
+     "layout": "list"
     },
     {
      "title": "Joy iboralari lug'ati",
      "type": "Yozma",
      "instr": "20 ta joy iborasini tarjimasi bilan yozing: opposite, next to, beyond, along, at the far end, in the corner, behind, in front of, between, above.",
-     "answers": "Har ibora uchun o'z gapingiz bo'lsin."
+     "answers": "Har ibora uchun o'z gapingiz bo'lsin.",
+     "layout": "list"
     },
     {
      "title": "O'z rejangiz",
      "type": "Og'zaki yozuv",
      "instr": "Uyingiz yoki maktabingiz rejasini chizing va 1 daqiqada ingliz tilida tasvirlang (kamida 8 joy iborasi).",
-     "answers": "Ovozli yozuv ustozga yuboriladi."
+     "answers": "Ovozli yozuv ustozga yuboriladi.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -4991,7 +5479,8 @@
       "Javob — vaqt.",
       "\"Hamma\" emas."
      ],
-     "note": "Har misolda \"signal so'z\" ni ayting: but, though, in the end, only, not ... it's."
+     "note": "Har misolda \"signal so'z\" ni ayting: but, though, in the end, only, not ... it's.",
+     "layout": "qa"
     }
    ],
    "readings": [],
@@ -5046,7 +5535,8 @@
         "\"They rotate Saturdays, so I'd work two Saturdays a month\".",
         "\"The other staff said she's fair\". Tartibsizlik — Mayaning menejeri.",
         "\"A staff discount — thirty per cent on books\"."
-       ]
+       ],
+       "layout": "mcq"
       },
       {
        "title": "Chalg'ituvchi izohi",
@@ -5069,7 +5559,8 @@
         "Boshqa odam haqida.",
         "\"I work every Saturday\" deb u aytdi.",
         "Boshqa odamning fikri."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -5117,7 +5608,8 @@
         "\"Which is better than we expected\".",
         "\"Hygiene rules make it difficult\".",
         "\"The largest group is people aged between thirty and forty-five\"."
-       ]
+       ],
+       "layout": "mcq"
       },
       {
        "title": "Chalg'ituvchi izohi",
@@ -5140,7 +5632,8 @@
         "\"Not price, though\".",
         "Sabab — gigiyena.",
         "\"Students actually prefer walking\"."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -5198,7 +5691,8 @@
         "\"Four thousand words\". 6,000 — ball yo'qotadiganlar; 2 bet — reja.",
         "\"There's an outline due much earlier — the 3rd of March\".",
         "\"You can share the data collection, but the writing must be completely separate\"."
-       ]
+       ],
+       "layout": "mcq"
       },
       {
        "title": "Signal so'zlar",
@@ -5221,7 +5715,8 @@
         "Sabab aytiladi.",
         "Qarama-qarshi qo'yish.",
         "Muddat va majburiylik."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -5232,19 +5727,22 @@
      "title": "3-skript: \"Tutorial: choosing a project topic\"",
      "type": "Listening",
      "instr": "Uyda bir marta tinglang, javoblarni belgilang, keyin transkript bilan tekshiring.",
-     "answers": "Javoblar Listening bo'limida izoh bilan."
+     "answers": "Javoblar Listening bo'limida izoh bilan.",
+     "layout": "list"
     },
     {
      "title": "Chalg'ituvchi daftari",
      "type": "Yozma",
      "instr": "Bugungi 3 skriptdan 12 ta chalg'ituvchini yozing va turini belgilang: eski ma'lumot / boshqa odam / qisman to'g'ri.",
-     "answers": "Tur ko'rsatilmagan qator qabul qilinmaydi."
+     "answers": "Tur ko'rsatilmagan qator qabul qilinmaydi.",
+     "layout": "list"
     },
     {
      "title": "Tez o'qish mashqi",
      "type": "Yozma",
      "instr": "10 ta savol va variant berilgan: 45 soniyada kalit so'zlarni belgilang va variantlarni bitta so'z bilan qisqartiring.",
-     "answers": "Ustoz sekundomer bilan tekshiradi."
+     "answers": "Ustoz sekundomer bilan tekshiradi.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -5472,7 +5970,8 @@
       "Ta'sir haqida umumiy xulosa.",
       "Bitta voqea."
      ],
-     "note": "Har javobdan keyin \"nega?\" deb so'rang — o'quvchi umumiylik darajasini tushunsin."
+     "note": "Har javobdan keyin \"nega?\" deb so'rang — o'quvchi umumiylik darajasini tushunsin.",
+     "layout": "qa"
     }
    ],
    "readings": [
@@ -5561,7 +6060,19 @@
         "Ba'zi turlar moslasha oladi, ba'zilari yo'qoladi.",
         "Shaharlarning javobi: daraxt va yo'l qoplamasi."
        ],
-       "note": "Ishlatilmagan sarlavhalar (masalan \"iv The history of birdwatching\", \"vii Birds in danger of extinction\", \"ix Teaching birds to sing\") — tuzoq."
+       "note": "Ishlatilmagan sarlavhalar (masalan \"iv The history of birdwatching\", \"vii Birds in danger of extinction\", \"ix Teaching birds to sing\") — tuzoq.",
+       "box": [
+        "i How traffic changes a song",
+        "ii Winners and losers",
+        "iii A widespread discovery",
+        "iv The history of birdwatching",
+        "v Making the city quieter",
+        "vi An unexpected cost",
+        "vii Birds in danger of extinction",
+        "viii Singing at the wrong time",
+        "ix Teaching birds to sing"
+       ],
+       "layout": "match"
       },
       {
        "title": "Tuzoq izohi",
@@ -5584,7 +6095,8 @@
         "Matn tadqiqot natijasi haqida, tarix emas.",
         "Hech bir xatboshi bunday demaydi.",
         "Bu B xatboshining g'oyasi."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -5672,7 +6184,19 @@
         "Panjara va qo'riqchi it, narx muammosi.",
         "Ikki tomon ham qisman haq; pul va o'qitish tavsiya qilinadi."
        ],
-       "note": "Ishlatilmagan sarlavhalar: \"iii Wolves in mythology\", \"vi How wolves hunt\", \"ix A ban that failed\" — tuzoq."
+       "note": "Ishlatilmagan sarlavhalar: \"iii Wolves in mythology\", \"vi How wolves hunt\", \"ix A ban that failed\" — tuzoq.",
+       "box": [
+        "i Why the numbers grew again",
+        "ii The farmers' view",
+        "iii Wolves in mythology",
+        "iv A century of decline",
+        "v Tools that reduce attacks",
+        "vi How wolves hunt",
+        "vii Effects on a whole landscape",
+        "viii No easy answer",
+        "ix A ban that failed"
+       ],
+       "layout": "match"
       },
       {
        "title": "Tuzoq izohi",
@@ -5695,7 +6219,8 @@
         "Matn ov usuli haqida emas, ta'sir haqida.",
         "Hech bir xatboshi afsona haqida emas.",
         "E — himoya vositalari haqida, fermer nuqtai nazari D da."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -5782,7 +6307,19 @@
         "Tajriba va natijalar, keyin eski jadvalga qaytish.",
         "Arzon va oddiy tavsiyalar."
        ],
-       "note": "Ishlatilmagan sarlavhalar: \"iii How melatonin was discovered\", \"vi Teenagers and exercise\", \"ix Why exams should be abolished\"."
+       "note": "Ishlatilmagan sarlavhalar: \"iii How melatonin was discovered\", \"vi Teenagers and exercise\", \"ix Why exams should be abolished\".",
+       "box": [
+        "i The real problem with phones",
+        "ii Not simply bad behaviour",
+        "iii How melatonin was discovered",
+        "iv Advice for families",
+        "v The body's own timing",
+        "vi Teenagers and exercise",
+        "vii What happens without enough sleep",
+        "viii A school that changed its hours",
+        "ix Why exams should be abolished"
+       ],
+       "layout": "match"
       },
       {
        "title": "O'z gapingiz",
@@ -5811,7 +6348,8 @@
         "Ko'k nur emas, kontent.",
         "Natija va qiyinchilik.",
         "Uchta tavsiya."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -5823,19 +6361,22 @@
      "title": "3-matn: \"Sleep and the teenage brain\"",
      "type": "Reading",
      "instr": "10 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
-     "answers": "Ustoz \"o'z gapingiz\" yozuvlarini tekshiradi."
+     "answers": "Ustoz \"o'z gapingiz\" yozuvlarini tekshiradi.",
+     "layout": "list"
     },
     {
      "title": "Asosiy g'oya mashqi",
      "type": "Yozma",
      "instr": "Har qanday gazeta maqolasidan 6 xatboshi oling va har biriga o'z sarlavhangizni yozing (4 so'zdan oshmasin).",
-     "answers": "Sarlavha butun xatboshiga mos bo'lishi kerak."
+     "answers": "Sarlavha butun xatboshiga mos bo'lishi kerak.",
+     "layout": "list"
     },
     {
      "title": "Tuzoq daftari",
      "type": "Yozma",
      "instr": "Bugungi 3 matndan 9 ta ishlatilmagan sarlavhani yozing va nega mos emasligini tushuntiring.",
-     "answers": "Sababsiz qator qabul qilinmaydi."
+     "answers": "Sababsiz qator qabul qilinmaydi.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -6059,7 +6600,8 @@
       "Ikkinchi qism farq qiladi.",
       "Fikr va tavsif farqi."
      ],
-     "note": "Farqli so'z topilgach, faqat o'shani matndan tekshirish kifoya."
+     "note": "Farqli so'z topilgach, faqat o'shani matndan tekshirish kifoya.",
+     "layout": "qa"
     }
    ],
    "readings": [
@@ -6147,7 +6689,8 @@
         "\"Confidence is no guide to accuracy\".",
         "\"Comparing faces encourages the brain to choose the 'best match'\".",
         "\"The solution is not to trust less but to check more: write things down, keep records\"."
-       ]
+       ],
+       "layout": "mcq"
       },
       {
        "title": "Rad etish sabablari",
@@ -6170,7 +6713,8 @@
         "\"This does not mean that people were lying\".",
         "Ishonch aniqlikni ko'rsatmaydi.",
         "Matn \"useless emas\" deydi, faqat ehtiyot bo'lishni maslahat beradi."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -6258,7 +6802,8 @@
         "\"Six months is too short a period to be certain\".",
         "\"One limited meetings to fifteen minutes unless a longer time was agreed\".",
         "\"Somebody must be present every day; they used staggered days off\"."
-       ]
+       ],
+       "layout": "mcq"
       },
       {
        "title": "Rad etish sabablari",
@@ -6281,7 +6826,8 @@
         "Raqamlarni almashtirish tuzog'i.",
         "\"Researchers warned\" — isbot emas.",
         "Mijozlar shikoyati haqida hech narsa yo'q."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -6369,7 +6915,8 @@
         "\"Although they lost the skill when the classes stopped\".",
         "\"Counting marks on bones from at least 20,000 years ago, but writing systems for numbers are much younger\".",
         "\"A reply that says as much about economics as about language\"."
-       ]
+       ],
+       "layout": "mcq"
       },
       {
        "title": "Tuzoq turlari",
@@ -6392,7 +6939,8 @@
         "Bu birinchi olimlar qarashi.",
         "Ko'nikma yo'qolgan.",
         "Belgilar qadimiy, yozuv keyinroq."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     }
@@ -6404,19 +6952,22 @@
      "title": "3-matn: \"The language that has no numbers\"",
      "type": "Reading",
      "instr": "12 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
-     "answers": "Ustoz rad etish sabablarini so'raydi."
+     "answers": "Ustoz rad etish sabablarini so'raydi.",
+     "layout": "list"
     },
     {
      "title": "Farqli so'z mashqi",
      "type": "Yozma",
      "instr": "10 juft variant berilgan: har juftda farqli so'zni belgilang va qanday tekshirishni yozing.",
-     "answers": "Ustoz tekshiradi."
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
     },
     {
      "title": "Tuzoq daftari",
      "type": "Yozma",
      "instr": "Bugungi 3 matndan 12 ta noto'g'ri variantni yozing va turini belgilang: matn qarshi / aytilmagan / qisman to'g'ri / juda kuchli.",
-     "answers": "Tur ko'rsatilmagan qator qabul qilinmaydi."
+     "answers": "Tur ko'rsatilmagan qator qabul qilinmaydi.",
+     "layout": "list"
     }
    ],
    "normativ": [
@@ -6644,7 +7195,8 @@
       "\"Than\" solishtiruvni bildiradi.",
       "\"Up to ... books\"."
      ],
-     "note": "Bashorat qilingach, audioda faqat o'sha turdagi so'zni kutasiz."
+     "note": "Bashorat qilingach, audioda faqat o'sha turdagi so'zni kutasiz.",
+     "layout": "list"
     }
    ],
    "readings": [],
@@ -6706,7 +7258,8 @@
         "\"You'll need a two-pound coin\".",
         "\"The restaurant serves hot food until three o'clock\".",
         "\"Adopt an animal for thirty pounds a year\"."
-       ]
+       ],
+       "layout": "list"
       },
       {
        "title": "Paraphrase va grammatika",
@@ -6729,7 +7282,8 @@
         "Son kutiladi.",
         "Poyezd chiptaga kiritilgan.",
         "Hozirgi son 400 dan ortiq."
-       ]
+       ],
+       "layout": "list"
       }
      ]
     },
@@ -6795,7 +7349,8 @@
         "\"There will be thirty stalls this year\".",
         "\"The acoustic tent continues until one\".",
         "\"Glass bottles are not allowed\"."
-       ]
+       ],
+       "layout": "list"
       },
       {
        "title": "Chalg'ituvchilar",
@@ -6818,7 +7373,8 @@
         "Hafta oxiri passi — 25.",
         "Asosiy sahna 11 da yopiladi.",
         "Bu yil 30, ya'ni ikki barobar."
-       ]
+       ],
+       "layout": "qa"
       }
      ]
     },
@@ -6879,7 +7435,8 @@
         "\"Six in the morning until ten at night on weekdays\".",
         "\"Please bring a towel to the fitness room\".",
         "\"Anything left is given to charity after a month\"."
-       ]
+       ],
+       "layout": "list"
       },
       {
        "title": "Grammatika tekshiruvi",
@@ -6902,7 +7459,8 @@
         "\"A towel\" — \"towels\" xato bo'lardi.",
         "\"Four million\" — ikki so'z, chegara ruxsat beradi.",
         "Raqam bilan yozish tez va xavfsiz."
-       ]
+       ],
+       "layout": "list"
       }
      ]
     }
@@ -6913,19 +7471,22 @@
      "title": "3-skript: \"Introduction to the sports hall\"",
      "type": "Listening",
      "instr": "Uyda bir marta tinglang, gaplarni to'ldiring, keyin transkript bilan tekshiring.",
-     "answers": "Javoblar Listening bo'limida izoh bilan."
+     "answers": "Javoblar Listening bo'limida izoh bilan.",
+     "layout": "list"
     },
     {
      "title": "Bashorat mashqi",
      "type": "Yozma",
      "instr": "15 ta gap berilgan: audiosiz, faqat bo'sh joy turini (ot/fe'l/son/sifat) yozing.",
-     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan."
+     "answers": "15 dan 13 tasi to'g'ri bo'lsa — bajarilgan.",
+     "layout": "list"
     },
     {
      "title": "Xato tahlili",
      "type": "Yozma",
      "instr": "Bugungi 3 skriptdagi xatolaringizni uch turga ajrating: eshitish, grammatika, so'z chegarasi.",
-     "answers": "Har tur uchun kamida bitta misol."
+     "answers": "Har tur uchun kamida bitta misol.",
+     "layout": "list"
     }
    ],
    "normativ": [

@@ -3700,7 +3700,7 @@
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy materiali — ustoz bergan audio (Track 11 Expedition candidate) va 3 ta mualliflik skripti.",
+   "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 11 Expedition candidate, Track 07 Magazine interview) va 3 ta mualliflik skripti.",
    "objectives": [
     "Qaydlar (notes) formatini o'qib, har bo'sh joyga kerakli so'z turini oldindan aniqlash.",
     "Eshitishda kalit so'zni emas, PARAPHRASE ni kutish: qaydda bir so'z, audioda boshqa so'z.",
@@ -4044,6 +4044,165 @@
         "Aniq javob keyin keladi: \"he's 27\".",
         "Aytilmagan narsani yozmang.",
         "Qaydlardagi so'z audioda boshqacha aytiladi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Track 07. Magazine interview",
+     "qtype": "Note completion (Section 1) — qo'shimcha mashq",
+     "audios": "Ustoz bergan audio (Track 07)",
+     "intro": [
+      "Bridget kollej jurnali uchun Eddiega intervyu topshirig'ini bermoqda; Eddie qaydlar yozadi. Avval qaydlarni o'qing va har bo'sh joy turini ayting (familiya, kasb, son, sana, telefon, manzil). Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer. Audio fayli keyinroq biriktiriladi; hozircha ustoz skriptni o'qishi mumkin."
+     ],
+     "transcript": [
+      "BRIDGET: Hello, Eddie? It's Bridget.",
+      "EDDIE: Oh hi, Bridget.",
+      "BRIDGET: Listen, Eddie, are you still free to do an article for the college magazine?",
+      "EDDIE: Sure, is there anything in particular you'd like me to write about?",
+      "BRIDGET: Well, the next issue is about people's lives, you know, people who have done something interesting or exciting. Anyway, I've got someone lined up, and I was wondering if you could interview them and then write the article.",
+      "EDDIE: All right, that's fine with me.",
+      "BRIDGET: Great. Have you got a pen?",
+      "EDDIE: Yes.",
+      "BRIDGET: OK, take this down. His name is Tom Coogan.",
+      "EDDIE: Tom ...?",
+      "BRIDGET: Coogan. That's C-O-O-G-A-N. Got that?",
+      "EDDIE: Sure, and what does he do?",
+      "BRIDGET: He's a travel writer.",
+      "EDDIE: I don't think I've heard of him. What else can you tell me about him? How old is he? What's he written? That sort of thing.",
+      "BRIDGET: OK, he's 42 years old, er, and he's written ten or twelve books. Let me just check that. Uh huh, twelve books, including his latest. Oh, and he also presents a travel programme on TV.",
+      "EDDIE: All right.",
+      "BRIDGET: Now, his latest book is about a journey he made across the Gobi desert on horseback. It took him six months, apparently. Anyway, I think he'd like to talk about that, so make sure you ask lots of questions.",
+      "EDDIE: Fine, I'd better look at a copy. What's it called?",
+      "BRIDGET: It's called Has Anyone Seen My Horse? I've got a copy here which I can lend you.",
+      "EDDIE: OK, and why does he want to talk about that book in particular?",
+      "BRIDGET: It's just won him an award.",
+      "EDDIE: Really? What kind?",
+      "BRIDGET: Travel Book of the Year.",
+      "EDDIE: Oh, wow, that's pretty impressive.",
+      "BRIDGET: Exactly, so like I say, ask lots of questions about it. Now, I've arranged for you to meet him on 21st October. That's two weeks on Friday, is that OK?",
+      "EDDIE: It should be. Have you got a time for that?",
+      "BRIDGET: Not yet, he wants you to call him beforehand to arrange that. I'll give you his contact number. It's 0722, no, hang on, it's 0772 9214490.",
+      "EDDIE: 0772 9214490. And where am I supposed to meet him?",
+      "BRIDGET: He's suggested his place, which is good as it's not far from the college. It's 138 Lonsdale Avenue, Summertown. Lonsdale is L-O-N-S-D-A-L-E.",
+      "EDDIE: Yeah, I think I know where Lonsdale Avenue is. You did say 138, didn't you?",
+      "BRIDGET: Right. Oh, and I suggest that you take a look at his website as well. It's got loads of information, so you might want to ask him about some of his other trips. It's at www.tomcooganbooks.com.",
+      "EDDIE: All right. Thanks for that. I'll let you know how I get on.",
+      "BRIDGET: Great. Thanks, Eddie. Good luck."
+     ],
+     "tasks": [
+      {
+       "title": "Magazine interview — complete the notes (1–10)",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Qaydlar suhbat tartibida (ALWAYS).",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+       ],
+       "answers": [
+        "Coogan",
+        "travel writer",
+        "12 / twelve books",
+        "6 / six months",
+        "My Horse",
+        "the Year",
+        "21st October",
+        "0772 9214490",
+        "138 Lonsdale Avenue",
+        "website"
+       ],
+       "why": [
+        "Harflab aytilgan: C-O-O-G-A-N. Ikki \"O\" ga e'tibor.",
+        "\"He's a travel writer\". Tuzoq: \"presents a travel programme on TV\" — qo'shimcha ish, asosiy kasb emas.",
+        "Avval \"ten or twelve\" — keyin tekshirib aniqlaydi: \"Uh huh, twelve books\". Tuzatishdan keyingi javob yoziladi.",
+        "\"It took him six months\". Tuzoq: \"on horseback\" — qanday usulda, vaqt emas.",
+        "Kitob nomi: \"Has Anyone Seen My Horse?\" — ikki so'z, bosh harflar bilan.",
+        "\"Travel Book of the Year\". Formada \"Travel Book of\" bor — qolgan qismi \"the Year\".",
+        "\"I've arranged for you to meet him on 21st October\". Tuzoq: \"two weeks on Friday\" — \"Friday\" formada bor, sana so'ralgan.",
+        "Tuzatish tuzog'i: \"It's 0722, no, hang on, it's 0772 9214490\". Oxirgi raqam yoziladi.",
+        "\"138 Lonsdale Avenue ... L-O-N-S-D-A-L-E\". Raqam + ikki so'z — kitob kaliti qabul qiladi. \"Summertown\" formada bor.",
+        "\"I suggest that you take a look at his website\". Tuzoq: www.tomcooganbooks.com — manzilni yozish shart emas; forma \"his ___\" deydi."
+       ],
+       "note": "Kitob kaliti: 1 Coogan 2 travel writer 3 12/twelve books 4 6/six months 5 My Horse 6 the Year 7 21st October 8 0772 9214490 9 138 Lonsdale Avenue 10 website.",
+       "layout": "grid",
+       "head": [
+        "Magazine interview",
+        ""
+       ],
+       "rows": [
+        [
+         "Name:",
+         "Tom (1)"
+        ],
+        [
+         "Occupation:",
+         "(2)"
+        ],
+        [
+         "Has written:",
+         "(3)"
+        ],
+        [
+         "Crossed Gobi desert in:",
+         "(4)"
+        ],
+        [
+         "Title of latest book:",
+         "'Has Anyone Seen (5)?'"
+        ],
+        [
+         "Has won award:",
+         "'Travel Book of (6)'"
+        ],
+        [
+         "Date of interview:",
+         "Friday (7)"
+        ],
+        [
+         "Contact number:",
+         "(8) (call to arrange time)"
+        ],
+        [
+         "Place of interview:",
+         "(9), Summertown"
+        ],
+        [
+         "See his:",
+         "(10) for more information"
+        ]
+       ]
+      },
+      {
+       "title": "Tuzoqlar va signal so'zlar",
+       "type": "Tahlil",
+       "instr": "Javobdan oldin qanday belgi bor edi?",
+       "items": [
+        "Tuzatish (raqam)",
+        "Aniqlashtirish",
+        "Chalg'ituvchi sana",
+        "Tasdiqlash"
+       ],
+       "answers": [
+        "\"It's 0722, no, hang on, it's 0772...\"",
+        "\"ten or twelve books. Let me just check that ... twelve\"",
+        "\"two weeks on Friday\"",
+        "\"You did say 138, didn't you?\" — \"Right.\""
+       ],
+       "why": [
+        "\"No, hang on\" — tuzatish signali; ikkinchi raqam yoziladi.",
+        "Noaniq javobdan keyin aniq javob keladi.",
+        "Aniq sana — \"21st October\".",
+        "Takrorlash — tekshirish imkoni."
        ],
        "layout": "qa"
       }

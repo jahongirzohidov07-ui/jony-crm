@@ -6194,7 +6194,7 @@
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
+   "book_ref": "Jony Academy materiali — ustoz bergan audio va chizma (Track 17 Ferry facilities) va 3 ta mualliflik skripti.",
    "objectives": [
     "Eshitib turib chizmadagi qismlarni belgilash: nom, joylashuv, vazifa.",
     "Ketma-ketlik va joy so'zlarini eshitishda kuzatish: first, next, on the left, at the top, in the middle.",
@@ -6399,6 +6399,83 @@
    ],
    "readings": [],
    "listenings": [
+    {
+     "title": "Track 17. Ferry facilities — Pride of Poole",
+     "qtype": "Diagram labelling (Questions 1–5) — asosiy",
+     "audios": "Ustoz bergan audio (Track 17)",
+     "audio": "ielts5_08_ferry.mp3",
+     "image": "ielts5_08_ferry.png",
+     "intro": [
+      "Kemadagi yo'lovchilar uchun e'lon. Avval chizmani 1 daqiqa o'rganing: \"Reception: you are here\" — boshlanish nuqtasi. A, B, C Deck qayerda ekanini toping va har bo'sh joy turini ayting.",
+      "Ko'rsatma: Write ONE WORD ONLY for each answer. Diagramma javoblari USUALLY tartibda keladi — e'lon sizni kema bo'ylab \"yurgizadi\"."
+     ],
+     "transcript": [
+      "Good evening and welcome aboard the Pride of Poole. In this recorded announcement, we'll give you details of some of the facilities available on board this ship.",
+      "You're currently standing in the reception area in the centre of B Deck. If you're feeling hungry after a long day's travelling, go up the stairs to A Deck, where you'll find the restaurant. The restaurant caters for all appetites, with anything from a light snack to a full three-course meal. The restaurant will be open from the moment the ship leaves port to half an hour before arrival.",
+      "Next to the restaurant on A Deck in the lounge, there are reclining seats with music headphones if you want to relax. The headphones are free, but people using this area are encouraged to keep noise to a minimum so that other passengers can enjoy themselves and sleep or read if they wish.",
+      "For those of you who'd like some entertainment, just next door to us on this deck is a 40-seat cinema showing the latest full-length feature films. The cinema programme is available here at reception, but you'll have to buy the tickets themselves at the cinema entrance just before you go in.",
+      "Just next to the cinema is the staircase leading down to the cabins on C Deck. To access your cabin, just show your boarding pass to a steward, who will give you the key.",
+      "On this deck, that is B Deck, you'll also find an area where you can either play games in our special electronic games arcade or do your shopping.",
+      "Just beyond that on the same level, people who want a bit of fresh air or just want to see the sea can go out onto the viewing deck, which is in the open air. Make sure you wear a jacket or coat, as it can be quite cold and windy."
+     ],
+     "tasks": [
+      {
+       "title": "Ferry facilities — label the diagram (1–5)",
+       "type": "ONE WORD ONLY",
+       "instr": "Chizmaga qarab bo'sh joylarni to'ldiring. Faqat BIR so'z!",
+       "items": [
+        "1 Restaurant for a ___ or meal",
+        "2 Cinema – tickets available at ___",
+        "3 Cabins: obtain ___ from steward",
+        "4 ___ and games area",
+        "5 Open-air ___ deck"
+       ],
+       "answers": [
+        "snack",
+        "entrance",
+        "key",
+        "shopping",
+        "viewing"
+       ],
+       "why": [
+        "\"Anything from a light snack to a full three-course meal\". Chizmada \"or meal\" bor — javob: snack. \"Light snack\" — 2 so'z, ONE WORD chegarasidan oshadi.",
+        "\"You'll have to buy the tickets ... at the cinema entrance\". Tuzoq: \"The cinema programme is available here at reception\" — reception'da DASTUR bor, chipta emas.",
+        "\"Show your boarding pass to a steward, who will give you the key\". Obtain = give you. Tuzoq: \"boarding pass\" — siz ko'rsatasiz, olmaysiz.",
+        "\"Play games in our special electronic games arcade or do your shopping\". Chizmada \"and games area\" bor — javob: shopping.",
+        "\"Go out onto the viewing deck, which is in the open air\". \"Open-air\" chizmada bor."
+       ],
+       "note": "Kitob chizmasida belgilangan javoblar: 1 snack, 2 entrance, 3 keys, 4 shopping, 5 viewing. 3-savol: audioda \"the key\" (birlik) deyiladi; ko'plik \"keys\" ham qabul qilinadi. Asosiy tuzoq — 2-savol: reception'da dastur, chipta esa kinoteatr kirishida.",
+       "layout": "pairs"
+      },
+      {
+       "title": "Yo'nalish so'zlari",
+       "type": "Tahlil",
+       "instr": "Diagramma savollarida joyni ko'rsatuvchi iboralar.",
+       "items": [
+        "up the stairs to A Deck",
+        "next to the restaurant",
+        "just next door to us on this deck",
+        "leading down to the cabins on C Deck",
+        "just beyond that on the same level"
+       ],
+       "answers": [
+        "bir qavat yuqoriga",
+        "yonida",
+        "shu qavatda, qo'shni",
+        "pastga",
+        "shu qavatda, undan narida"
+       ],
+       "why": [
+        "Restoran A Deck'da.",
+        "Lounge restoranning yonida.",
+        "Kinoteatr B Deck'da, reception yonida.",
+        "Kabinalar C Deck'da.",
+        "Viewing deck."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
     {
      "title": "Guided tour of a small factory",
      "qtype": "Diagram labelling",

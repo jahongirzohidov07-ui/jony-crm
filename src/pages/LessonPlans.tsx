@@ -28,7 +28,7 @@ type Ex = { title: string; type?: string; instr?: string; items?: string[];
  * (2026-09-20, Jahongir so'rovi). */
 type Reading = { title: string; qtype?: string; source?: string; book_ref?: string;
   image?: string; text?: string[]; paraphrases?: [string, string][]; glossary?: string[]; tasks?: Ex[] };
-type Listen = { title: string; qtype?: string; audios?: string; audio?: string; intro?: string[];
+type Listen = { title: string; qtype?: string; audios?: string; audio?: string; image?: string; intro?: string[];
   transcript?: string[]; tasks?: Ex[] };
 type Lesson = {
   no: number; title: string; grammar_topic: string; vocab_topic: string; duration: number;
@@ -889,6 +889,11 @@ function ListenBlock({ S, idx }: { S: Listen; idx: number }) {
             </div>
           )}
           {(S.intro ?? []).map((t, i) => <p key={i} className="text-sm text-slate-700 mb-2">{t}</p>)}
+          {S.image && (
+            <Section title="Chizma">
+              <AuthImage name={S.image} alt={S.title} />
+            </Section>
+          )}
           <ExList list={S.tasks ?? []} />
           {(S.transcript ?? []).length > 0 && (
             <div className="bg-white rounded-xl border border-slate-200 p-4">

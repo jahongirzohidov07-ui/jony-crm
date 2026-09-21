@@ -621,12 +621,13 @@ function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
       <div className="mt-3 space-y-3">
         {items.map((it, j) => {
           const parts = it.split(/\s+(?=[A-D]\)\s)/);
+          const qn = parts[0].match(/^(\d+)\s+/)?.[1];
           const q = parts[0].replace(/^\d+\s+/, "");
           const opts = parts.slice(1);
           const correct = (answers?.[j] ?? "").trim().charAt(0);
           return (
             <div key={j} className="rounded-lg border border-slate-200 p-3">
-              <div className="text-sm font-medium text-slate-800"><span className="font-bold text-brand-700 mr-1">{j + 1}.</span>{q}</div>
+              <div className="text-sm font-medium text-slate-800"><span className="font-bold text-brand-700 mr-1">{qn ?? j + 1}.</span>{q}</div>
               <div className="grid sm:grid-cols-2 gap-1.5 mt-2">
                 {opts.map((o, k) => {
                   const letter = o.charAt(0);

@@ -7677,6 +7677,224 @@
    ],
    "readings": [
     {
+     "title": "Reading #15. Air conditioning",
+     "qtype": "Multiple choice (1–5)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "The history of an invention that makes life more pleasant",
+      "Willis Carrier designed the first air-conditioning unit in 1902, just a year after graduating from Cornell University with a Masters in Engineering.",
+      "At a Brooklyn printing plant, _fluctuations in heat and moisture_ were causing the size of the printing paper to keep changing slightly, making it hard to align different colours. Carrier's invention made it possible to control temperature and humidity levels and so align the colours. The invention also allowed industries such as film, processed food, textiles and pharmaceuticals to improve the quality of their products.",
+      "In 1914, the first air-conditioning device was installed in a private house. However, its size, similar to that of an early computer, meant it _took up too much space_ to come into widespread use, and later models, such as the Weathermaker, which Carrier brought out in the 1920s, _cost too much_ for most people. Cooling for human comfort, rather than industrial need, really took off when three air conditioners were installed in the J.L. Hudson Department Store in Detroit, Michigan. People crowded into the shop to experience the new invention. The fashion spread from department stores to cinemas, whose income rose steeply as a result of the comfort they provided.",
+      "To start with, money-conscious employers regarded air conditioning as a luxury. They considered that if they were paying people to work, they should not be paying for them to be comfortable as well. So in the 1940s and '50s, the industry started _putting out a different message_ about its product: according to their research, installing air conditioning _increased productivity_ amongst employees. They found that typists increased their output by 24% when transferred from a regular office to a cooled one. Another study into office working conditions, which was carried out in the late '50s, showed that the majority of companies cited air conditioning as the single most important contributor to efficiency in offices.",
+      "However, air conditioning has its critics. Jed Brown, an environmentalist, complains that air conditioning is _a factor in global warming_. Unfortunately, he adds, because air conditioning leads to higher temperatures, people have to use it even more. However, he admits that it provides _a healthier environment_ for many people in the heat of summer."
+     ],
+     "paraphrases": [
+      [
+       "fluctuations",
+       "changes"
+      ],
+      [
+       "moisture",
+       "humidity"
+      ],
+      [
+       "took up too much space",
+       "was too big"
+      ],
+      [
+       "cost too much",
+       "was too expensive"
+      ],
+      [
+       "took off",
+       "became popular"
+      ],
+      [
+       "putting out a different message",
+       "trying to persuade"
+      ],
+      [
+       "increased productivity",
+       "made workers produce more"
+      ],
+      [
+       "a factor in global warming",
+       "bad for the environment"
+      ],
+      [
+       "a healthier environment",
+       "good for people"
+      ]
+     ],
+     "glossary": [
+      "align — to'g'rilab joylashtirmoq",
+      "humidity — namlik",
+      "pharmaceuticals — dori-darmon sanoati",
+      "luxury — hashamat",
+      "productivity — unumdorlik",
+      "critic — tanqidchi"
+     ],
+     "tasks": [
+      {
+       "title": "Multiple choice (1–5)",
+       "type": "A, B, C yoki D",
+       "instr": "Javoblar matn tartibida. Har rad etilgan variantga sabab ayting.",
+       "items": [
+        "1 When did Willis Carrier design the first air-conditioning unit? A) while he was studying at Cornell B) ten years after graduating C) in 1914 D) a year after finishing university",
+        "2 What problem did the Brooklyn printing plant have? A) Changes in heat and moisture changed the size of the paper. B) The colours of the ink were too dark. C) The machines were too hot for workers. D) The paper was too expensive.",
+        "3 Why did early air conditioners not come into widespread use in homes? A) People did not like the noise. B) There was not enough electricity. C) They were too big and later too expensive. D) Department stores bought them all.",
+        "4 What was the purpose of the research done in the 1940s and '50s? A) to make office workers produce more B) to compare different types of air conditioner C) to persuade businesses to buy air conditioners D) to encourage employees to change offices",
+        "5 What does Jed Brown say about air conditioning? A) In future, everyone will need it. B) Turning it off will not reduce global warming. C) It can seriously damage people's health. D) It is good for people, but bad for the environment."
+       ],
+       "answers": [
+        "D",
+        "A",
+        "C",
+        "C",
+        "D"
+       ],
+       "why": [
+        "\"Just a year after graduating from Cornell University\". C tuzoq: 1914 — uyga birinchi o'rnatilgan yil.",
+        "\"Fluctuations in heat and moisture were causing the size of the printing paper to keep changing\". Fluctuations = changes.",
+        "\"Took up too much space\" (juda katta) va \"cost too much for most people\" (juda qimmat). Ikkala sabab ham C da bor.",
+        "Ish beruvchilar AC ni \"luxury\" deb bilardi, shuning uchun sanoat \"putting out a different message\" — ya'ni sotib olishga ko'ndirish. A tuzoq: unumdorlik oshgani — tadqiqot NATIJASI, maqsadi emas.",
+        "\"A factor in global warming\" (atrof-muhitga zarar) + \"provides a healthier environment for many people\" (odamlarga foyda). C teskari: u sog'liqqa foydali deydi."
+       ],
+       "note": "1–3-savollar asl faylda yo'q edi (javob kalitida 1D 2A 3C bor). Ular vaqtincha Jony Academy tomonidan kalitga mos tuzildi — asl savollar yuborilsa almashtiriladi.",
+       "layout": "mcq"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Savoldagi so'zning matndagi juftini toping.",
+       "items": [
+        "to persuade businesses to buy (4)",
+        "bad for the environment (5)",
+        "good for people (5)",
+        "too big (3)"
+       ],
+       "answers": [
+        "putting out a different message",
+        "a factor in global warming",
+        "provides a healthier environment",
+        "took up too much space"
+       ],
+       "why": [
+        "Ish beruvchilarning fikrini o'zgartirish.",
+        "Jed Brownning tanqidi.",
+        "\"However, he admits...\"",
+        "Kompyuter kattaligida."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #16. The ballpoint pen",
+     "qtype": "Multiple choice (1–5) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "Most of us have at least one, but how did this popular item evolve?",
+      "One morning in 1945, a crowd of 5,000 people jammed the entrance of Gimbels Department Store in New York. The day before, Gimbels had placed _a full-page advertisement_ in the New York Times for a wonderful new invention, the ballpoint pen. The advertisement described the pen as _'fantastic' and 'miraculous'_. Although they were expensive, $12.50 each, all 10,000 pens in stock were sold on the first day.",
+      "In fact, this 'new' pen was not new at all. In 1888, John Loud, a leather manufacturer, had invented a pen with a reservoir of ink and a rolling ball. However, his pen was _never produced_, and efforts by other people to produce a commercially successful one failed too. The main problem was with the ink. If it was too thin, the ink _leaked out_ of the pen. If it was too thick, it _didn't come out of the pen at all_.",
+      "Almost fifty years later, in 1935, a newspaper editor in Hungary thought he spent too much time filling his pens with ink. He decided to invent a better kind of pen. With the help of his brother, who was a chemist, he produced a ballpoint pen that _didn't leak when the pen wasn't being used_. The editor was called Ladislas Biro, and it was his name that people would associate more than any other with the ballpoint pen.",
+      "By chance, Biro met Augustine Justo, the Argentinian president. Justo was so impressed with Biro's invention that he invited him to set up a factory in Argentina. In 1943, the first Biro pens were produced.",
+      "Unfortunately, they were not popular, since the pen _needed to be held in a vertical position_ for the ink to come out. Biro redesigned the pen with a better ball, and in 1944 the new product was on sale throughout Argentina.",
+      "It was a North American, Milton Reynolds, who introduced the ballpoint pen to the USA. Copying Biro's design, he produced the version that sold so well at Gimbels. Another American, Patrick Frawley, _improved the design_ and in 1950 began producing a pen he called the Papermate. It was _an immediate success_, and within a few years, Papermates were selling in their millions _around the world_."
+     ],
+     "paraphrases": [
+      [
+       "they had been told how good the pens were",
+       "a full-page advertisement ... 'fantastic' and 'miraculous'"
+      ],
+      [
+       "not produced commercially",
+       "never produced / failed"
+      ],
+      [
+       "didn't work properly",
+       "leaked out / didn't come out at all"
+      ],
+      [
+       "the ink stayed in the pen",
+       "didn't leak when the pen wasn't being used"
+      ],
+      [
+       "only worked if used in a certain way",
+       "needed to be held in a vertical position"
+      ],
+      [
+       "a better version of an earlier model",
+       "improved the design"
+      ],
+      [
+       "evolve",
+       "develop over time"
+      ]
+     ],
+     "glossary": [
+      "jam — tiqilib qolmoq",
+      "reservoir — idish, zaxira",
+      "leak — oqib chiqmoq",
+      "chemist — kimyogar",
+      "vertical — tik",
+      "redesign — qayta loyihalamoq"
+     ],
+     "tasks": [
+      {
+       "title": "Multiple choice (1–5)",
+       "type": "A, B, C yoki D",
+       "instr": "Javoblar matn tartibida. Har rad etilgan variantga sabab ayting.",
+       "items": [
+        "1 People went to Gimbels to buy a ballpoint pen because A) they couldn't get them anywhere else. B) they had been told how good the pens were. C) they had never seen a ballpoint pen before. D) they thought the price was good.",
+        "2 Why were early ballpoint pens not produced commercially? A) Nobody wanted to buy one. B) It cost too much to produce them. C) They used too much ink. D) They didn't work properly.",
+        "3 Why was Ladislas Biro's pen better than earlier models? A) It didn't need to be filled with ink as often. B) It was designed by a chemist. C) The ink stayed in the pen until it was needed. D) It was easier to use.",
+        "4 Biro's first commercially-produced pen A) was produced in a factory owned by the Argentinian president. B) only worked if used in a certain way. C) was a major success. D) went on sale in 1944.",
+        "5 Patrick Frawley's pen A) was a better version of an earlier model. B) took time to become successful. C) was the USA's first commercially successful ballpoint pen. D) was only successful in the USA."
+       ],
+       "answers": [
+        "B",
+        "D",
+        "C",
+        "B",
+        "A"
+       ],
+       "why": [
+        "Oldingi kuni gazetada reklama chiqqan: \"fantastic\" va \"miraculous\". D teskari: \"Although they were expensive\". A va C aytilmagan.",
+        "\"The main problem was with the ink\": siyoh oqib chiqardi yoki umuman chiqmasdi — ya'ni ishlamasdi. C tuzoq: \"ink\" so'zi bor, lekin muammo miqdorda emas.",
+        "\"A ballpoint pen that didn't leak when the pen wasn't being used\". A tuzoq: bu Bironing SABABI edi, natija emas. B noto'g'ri: kimyogar — uning akasi, yordam bergan.",
+        "\"The pen needed to be held in a vertical position for the ink to come out\". D tuzoq: 1944 — qayta loyihalangan YANGI model. C teskari: \"they were not popular\".",
+        "\"Patrick Frawley improved the design\". B teskari: \"an immediate success\". C — Reynolds versiyasi birinchi sotilgan. D teskari: \"around the world\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Rad etish sabablari",
+       "type": "Tahlil",
+       "instr": "Nega bu variantlar noto'g'ri?",
+       "items": [
+        "1-savol D varianti",
+        "3-savol B varianti",
+        "4-savol D varianti",
+        "5-savol B varianti"
+       ],
+       "answers": [
+        "matn qarshi",
+        "boshqa odam",
+        "boshqa model",
+        "teskari"
+       ],
+       "why": [
+        "\"Although they were expensive, $12.50 each\".",
+        "Kimyogar — Bironing akasi.",
+        "1944 — yaxshilangan pen.",
+        "\"An immediate success\"."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
      "title": "Why we believe things that are not true",
      "qtype": "Multiple choice",
      "source": "Jony Academy matni (Band 4–5)",

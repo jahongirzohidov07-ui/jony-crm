@@ -76,16 +76,21 @@ ck("faqat o'z guruhi", [x["group"] for x in it], ["IELTS A1"])
 ck("reja bog'lanmagan", it[0]["plan"], None)
 ck("uy vazifasini bajarmagan", it[0]["homework_missing"], ["Aziz Karimov"])
 ck("yordam kerak (past baho)", [h["name"] for h in it[0]["help_needed"]], ["Bobur Aliyev"])
-ck("kurslar ro'yxati (faqat tayyor)", [x["course"] for x in r.json()["courses"]], ["ielts_1_0", "ielts_2_0", "ielts_3_0", "ielts_4_0"])
+ck("kurslar ro'yxati (faqat tayyor)", [x["course"] for x in r.json()["courses"]], ["ielts_1_0", "ielts_2_0", "ielts_3_0", "ielts_4_0", "ielts_5_0"])
 ck("rejasiz boshlab bo'lmaydi", c.post(f"/api/lessons/{CUR}/run", headers=T).status_code, 400)
 
 # --- guruhni rejaga bog'lash
-ck("tayyor bo'lmagan daraja", c.put(f"/api/groups/{G1}/plan", json={"course": "ielts_5_0"}, headers=T).status_code, 400)
+ck("tayyor bo'lmagan daraja", c.put(f"/api/groups/{G1}/plan", json={"course": "ielts_6_0"}, headers=T).status_code, 400)
 ck("boshqa ustoz guruhi", c.put(f"/api/groups/{G2}/plan", json={"course": "ielts_1_0"}, headers=T).status_code, 403)
 r = c.put(f"/api/groups/{G1}/plan", json={"course": "ielts_1_0", "next_lesson_no": 7}, headers=T)
 ck("bog'landi 7-dars", (r.status_code, r.json()["next_lesson_no"], "PRESENT CONTINUOUS" in r.json()["next_title"]), (200, 7, True))
 it = c.get("/api/teacher/plan-today", headers=T).json()["items"]
 ck("oynada reja ko'rinadi", it[0]["plan"]["next_lesson_no"], 7)
+# Noto'g'ri bog'langan rejani o'zgartirish (2026-09-21)
+_re = c.put(f"/api/groups/{G1}/plan", json={"course": "ielts_2_0", "next_lesson_no": 3}, headers=T)
+ck("reja o'zgartiriladi", (_re.status_code, _re.json().get("course"), _re.json().get("next_lesson_no")), (200, "ielts_2_0", 3))
+_back = c.put(f"/api/groups/{G1}/plan", json={"course": "ielts_1_0", "next_lesson_no": 7}, headers=T)
+ck("reja qaytariladi", (_back.status_code, _back.json().get("course")), (200, "ielts_1_0"))
 
 # --- darsni boshlash
 r = c.post(f"/api/lessons/{CUR}/run", headers=T)

@@ -266,30 +266,40 @@ function PlanBlock({ item, courses, groupId, lessonId, onChanged }: {
   item?: PlanItem; courses: { course: string; title: string; total: number }[];
   groupId: number; lessonId: number; onChanged: () => void;
 }) {
-  const [course, setCourse] = useState(courses[0]?.course ?? "");
-  const [no, setNo] = useState(1);
+  const [course, setCourse] = useState(item?.plan?.course ?? courses[0]?.course ?? "");
+  const [no, setNo] = useState(item?.plan?.next_lesson_no ?? 1);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  // Noto'g'ri bog'langan rejani o'zgartirish (2026-09-21, Jahongir:
+  // "notogri biriktirib qoysa ozgartirish funksiyasini ham qosh").
+  const [editing, setEditing] = useState(false);
   const bind = async () => {
     if (!course) return;
+    if (item?.plan && course !== item.plan.course &&
+        !window.confirm("Daraja o'zgaradi va oldingi darsdan ko'chgan qismlar tozalanadi. Davom etasizmi?")) return;
     setBusy(true); setErr("");
-    try { await api.put(`/groups/${groupId}/plan`, { course, next_lesson_no: no }); onChanged(); }
+    try { await api.put(`/groups/${groupId}/plan`, { course, next_lesson_no: no }); setEditing(false); onChanged(); }
     catch (e) { setErr((e as Error).message); }
     finally { setBusy(false); }
   };
   if (!item) return null;
-  if (!item.plan) {
+  if (!item.plan || editing) {
     return (
       <div className="bg-white rounded-b-xl border border-t-0 border-slate-200 px-4 py-3 -mt-1">
-        <p className="text-sm font-medium text-slate-800">1-qadam: guruhni rejaga bog'lang</p>
-        <p className="text-xs text-slate-500 mb-2">Daraja va qaysi darsdan boshlashni tanlang — bir marta.</p>
+        <p className="text-sm font-medium text-slate-800">{editing ? "Rejani o'zgartirish" : "1-qadam: guruhni rejaga bog'lang"}</p>
+        <p className="text-xs text-slate-500 mb-2">{editing
+          ? "To'g'ri darajani va keyingi dars raqamini tanlang."
+          : "Daraja va qaysi darsdan boshlashni tanlang. Keyin o'zgartirish mumkin."}</p>
         <div className="flex gap-2">
           <select value={course} onChange={(e) => setCourse(e.target.value)} className="flex-1 text-sm border border-slate-200 rounded-lg px-2 py-1.5 bg-white">
             {courses.map((c) => <option key={c.course} value={c.course}>{c.title}</option>)}
           </select>
           <input type="number" min={1} value={no} onChange={(e) => setNo(Number(e.target.value))} className="w-16 text-sm border border-slate-200 rounded-lg px-2 py-1.5" title="Qaysi darsdan" />
-          <button onClick={bind} disabled={busy || !course} className="text-sm bg-brand-600 text-white rounded-lg px-3">Bog'lash</button>
+          <button onClick={bind} disabled={busy || !course} className="text-sm bg-brand-600 text-white rounded-lg px-3">{editing ? "Saqlash" : "Bog'lash"}</button>
         </div>
+        {editing && (
+          <button onClick={() => { setEditing(false); setErr(""); }} className="text-xs text-slate-500 mt-2">Bekor qilish</button>
+        )}
         {err && <p className="text-xs text-rose-600 mt-1">{err}</p>}
       </div>
     );
@@ -302,7 +312,11 @@ function PlanBlock({ item, courses, groupId, lessonId, onChanged }: {
     <div className="bg-white rounded-b-xl border border-t-0 border-slate-200 px-4 pt-3 pb-4 -mt-1">
       <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1">
         <span>{p.course_title}</span>
-        <span>{p.next_lesson_no - 1}/{p.total} o'tildi</span>
+        <span className="flex items-center gap-2">
+          {p.next_lesson_no - 1}/{p.total} o'tildi
+          <button onClick={() => { setCourse(p.course); setNo(p.next_lesson_no); setEditing(true); }}
+                  className="text-brand-600 font-medium">O'zgartirish</button>
+        </span>
       </div>
       <div className="h-1 bg-slate-100 rounded-full mb-2"><div className="h-full bg-brand-500 rounded-full" style={{ width: `${pct}%` }} /></div>
       <p className="text-xs text-slate-500">Bugungi mavzu</p>

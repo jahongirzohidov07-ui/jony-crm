@@ -14,6 +14,28 @@ import sys
 # import yo'liga qo'shmasa, yonidagi modullar (audit, models...) topilmaydi.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# =====================================================================
+#  BU FAYL IKKI MARTA BAJARILMASIN (2026-09-21 — AVARIYA)
+#
+#  Vercel entry.py ni O'ZI qo'ygan modul nomi bilan yuklaydi (masalan
+#  "vc_handler"), "entry" nomi bilan emas. Keyinroq, so'rov paytida
+#  finance.py ichidagi `import entry as _E` ishga tushsa, Python uni
+#  sys.modules da TOPOLMAYDI va butun faylni IKKINCHI marta
+#  bajaradi — o'sha bitta `app` ustiga hamma route qayta o'raladi.
+#
+#  Natijasi bugun ko'rindi: /api/groups/{id}/attendance ikki qavat
+#  o'ralib qoldi. Tashqi qavat ichkisini chaqiradi, ichkisi esa
+#  oddiy dict qaytaradi (Pydantic model emas) — va yo'qlama
+#  sahifasi hamma guruhda 500 bera boshladi. Ustozlar yo'qlama
+#  qo'ya olmadi.
+#
+#  Yechim: modulni O'ZI "entry" nomi bilan ham ro'yxatga qo'yadi.
+#  Shunda keyingi `import entry` tayyor nusxani oladi va fayl
+#  qayta bajarilmaydi. Agar Python allaqachon "entry" deb yuklagan
+#  bo'lsa, setdefault hech narsani o'zgartirmaydi.
+# =====================================================================
+sys.modules.setdefault("entry", sys.modules[__name__])
+
 from datetime import date
 
 from fastapi import Body, Depends, HTTPException
@@ -2225,9 +2247,17 @@ if _orig_att_grid is not None:
                                *roles.ATTENDANCE_VIEW))):
         result = _orig_att_grid(group_id=group_id, year=year, month=month,
                                 db=db, user=user)
-        try:
+        # Ichki chaqiruv Pydantic model ham, oddiy dict ham qaytarishi
+        # mumkin. 2026-09-21 da aynan shu yerda 500 chiqqan edi:
+        # entry.py ikki marta bajarilib, bu funksiya o'z-o'zini
+        # o'rab qolgan va ichkisi dict qaytargan. Ildiz sabab
+        # yuqorida (sys.modules) tuzatildi; bu yer esa har ehtimolga
+        # qarshi ikkala turni ham qabul qiladi.
+        if isinstance(result, dict):
+            data = dict(result)
+        elif hasattr(result, "model_dump"):
             data = result.model_dump()
-        except AttributeError:
+        else:
             data = result.dict()
         # 2026-08-11 (Jahongir): muzlatilganning ESKI davomat tarixi
         # rahbariyatga ko'rinsin - "ertaga bizga u kerak bo'ladi".

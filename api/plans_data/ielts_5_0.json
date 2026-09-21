@@ -4297,6 +4297,109 @@
      ]
     },
     {
+     "title": "Reading #9. Sylvia Earle, underwater hero",
+     "qtype": "Short answer + True / False / Not Given",
+     "source": "Jony Academy materiali — qo'shimcha mashq",
+     "text": [
+      "She has spent her working life studying the world's oceans. Sylvia Earle is an underwater explorer and marine biologist who was born in the USA in 1935. She became interested in the world's oceans from an early age. As a child, she liked to stand on the beach for hours and look at the sea, wondering what it must be like under the surface.",
+      "When she was 16, she finally got a chance to make her first dive. It was this dive that inspired her to become an underwater explorer. Since then, she has spent more than 6,500 hours under water, and has led more than seventy expeditions worldwide. She has also made the deepest dive ever, reaching a record-breaking depth of 381 metres.",
+      "In 1970, she became famous around the world when she became the captain of the first all-female team to live under water. The team spent two weeks in an underwater 'house'. The research they carried out showed the damage that pollution was causing to marine life, and especially to coral reefs. Her team also studied the problem of over-fishing. Fishing methods meant that people were catching too many fish, Earle warned, and many species were in danger of becoming extinct.",
+      "Since then she has written several books and magazine articles in which she suggests ways of reducing the damage that is being done to the world's oceans. One way, she believes, is to rely on fish farms for seafood, and reduce the amount of fishing that is done out at sea. Although she no longer eats seafood herself, she realises the importance it plays in our diets. It would be wrong to tell people they should stop eating fish from the sea, she says. However, they need to reduce the impact they are having on the ocean's supplies."
+     ],
+     "paraphrases": [
+      [
+       "decide to follow a career",
+       "inspired her to become"
+      ],
+      [
+       "how far under water",
+       "depth"
+      ],
+      [
+       "break a world record",
+       "record-breaking"
+      ],
+      [
+       "causing harm to",
+       "the damage ... was causing to"
+      ],
+      [
+       "everything living in the sea",
+       "marine life"
+      ],
+      [
+       "get our fish from",
+       "rely on ... for seafood"
+      ],
+      [
+       "worried about",
+       "warned"
+      ],
+      [
+       "offer solutions",
+       "suggests ways of reducing"
+      ],
+      [
+       "avoid eating seafood",
+       "stop eating fish"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Short answer questions (1–4)",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Savollar matn tartibida (ALWAYS).",
+       "items": [
+        "What career did Sylvia decide to follow after her first dive?",
+        "How far under water did she go in order to break a world record?",
+        "What was causing harm to everything living in the sea?",
+        "Where does Sylvia think we should get our fish from?"
+       ],
+       "answers": [
+        "underwater explorer",
+        "381 metres",
+        "pollution",
+        "fish farms"
+       ],
+       "why": [
+        "\"It was this dive that inspired her to become an underwater explorer\". \"Decide to follow a career\" = \"inspired her to become\".",
+        "\"The deepest dive ever, reaching a record-breaking depth of 381 metres\". Kalitda \"381 metre\", matnda \"metres\" — matndagidek yozing.",
+        "\"The damage that pollution was causing to marine life\". \"Harm\" = \"damage\", \"everything living in the sea\" = \"marine life\".",
+        "\"One way, she believes, is to rely on fish farms for seafood\". \"Think\" = \"believes\"."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "TRUE, FALSE or NOT GIVEN (1–5)",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "Har javob uchun matndagi gapni ko'rsating.",
+       "items": [
+        "Sylvia Earle lives in the USA.",
+        "Until 1970, nobody had lived underwater before.",
+        "Sylvia Earle was worried about the amount of fish that were being caught.",
+        "Her books offer some solutions to marine problems.",
+        "She thinks people should avoid eating seafood."
+       ],
+       "answers": [
+        "NOT GIVEN",
+        "NOT GIVEN",
+        "TRUE",
+        "TRUE",
+        "FALSE"
+       ],
+       "why": [
+        "Matnda u AQShda TUG'ILGANI aytilgan (\"born in the USA\"), hozir qayerda yashashi aytilmagan. Tug'ilgan joy ≠ yashash joyi.",
+        "Matnda \"the first ALL-FEMALE team to live under water\" deyilgan — birinchi ayollar jamoasi. Undan oldin erkaklar yashaganmi-yo'qmi, aytilmagan. Cheklovchi so'zga e'tibor bering.",
+        "\"People were catching too many fish, Earle warned\". \"Worried\" = \"warned\", \"amount\" = \"too many\".",
+        "\"Books ... in which she suggests ways of reducing the damage\". \"Offer solutions\" = \"suggests ways\".",
+        "\"It would be wrong to tell people they should stop eating fish from the sea\". O'zi dengiz mahsuloti yemaydi, lekin boshqalarga buni tavsiya qilmaydi — tuzoq."
+       ],
+       "note": "2 va 5-savollar eng yaxshi tuzoq misoli. 2-savolda \"all-female\" so'zi, 5-savolda uning o'zi va boshqalar farqi javobni belgilaydi.",
+       "layout": "tfng"
+      }
+     ]
+    },
+    {
      "title": "The accident that gave us the microwave",
      "qtype": "True / False / Not Given",
      "source": "Jony Academy matni (Band 4–5)",

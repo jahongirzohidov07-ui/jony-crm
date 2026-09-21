@@ -17666,7 +17666,7 @@
     "notes": [
      "Bu dars — birinchi to'liq Reading testi. Maqsad ball emas, balki vaqtni boshqarish tajribasi va zaif savol turlarini aniqlash.",
      "Test paytida ustoz har 20 daqiqada vaqtni e'lon qiladi: \"Passage 2 ga o'ting\".",
-     "Ustoz kaliti yuborilmagan — barcha 40 javob Jony Academy tomonidan yechildi va matn bilan isbotlandi. Munozarali javoblar: 6 va 32 (NOT GIVEN), 24 (summer — ski season tuzoq), 26 (glaciers / melting glaciers).",
+     "Javoblar ustoz bergan kitob kaliti bilan tekshirildi. Eng qiyin savollar: 6 (FALSE — NOT GIVEN emas), 24 (summer — ski season tuzoq), 32 (NOT GIVEN).",
      "Tahlil bosqichida o'quvchi xatolarini savol turi bo'yicha jadvalga yozadi: masalan, \"T/F/NG — 2 xato, matching info — 1 xato\". Eng ko'p xato qilingan tur 34-darsgacha takrorlanadi.",
      "Qo'shimcha matn berilmaydi: dars to'liq test + tahlildan iborat (60 + 40 daqiqa)."
     ],
@@ -17856,15 +17856,15 @@
        "answers": [
         "(basic) physics",
         "(small) model",
-        "scrap yards",
-        "bath pipe",
+        "scrap yards / scrapyards",
+        "(bath) pipe",
         "tractor fan"
        ],
        "why": [
         "\"He taught himself basic physics\". Learned = taught himself. \"Physics\" yoki \"basic physics\" — ikkalasi ham chegarada.",
         "\"He started by constructing a small model\". First = started by. Artikl \"a\" gapda bor.",
         "\"With the help of a cousin and friend, he spent many weeks searching scrap yards\". Relative = cousin.",
-        "\"William cut some bath pipe in two lengthwise\". Tuzoq: \"plastic pipe\" — materiallar ro'yxatida, lekin parrak aynan \"bath pipe\" dan.",
+        "\"William cut some bath pipe in two lengthwise\". \"Pipe\" yoki \"bath pipe\" — ikkalasi ham qabul qilinadi. Tuzoq: \"plastic pipe\" — materiallar ro'yxatida, lekin parrak aynan \"bath pipe\" dan.",
         "\"He attached the blades to a tractor fan ... and then to the back axle of a bicycle\". Fixed = attached."
        ],
        "layout": "flow",
@@ -17901,20 +17901,20 @@
         "The health of the villagers has improved since the windmill was built."
        ],
        "answers": [
-        "NOT GIVEN",
+        "FALSE",
         "FALSE",
         "NOT GIVEN",
         "TRUE",
         "TRUE"
        ],
        "why": [
-        "Elektr \"powered four lights\" va keyin bog'ni sug'organ; transport haqida hech narsa yo'q.",
+        "Elektr uyiga borgan: \"sent a current through wire to his house\" va \"powered four lights\". Matn elektr nimaga ishlatilganini aniq aytadi (uyidagi chiroqlar, keyin bog'ni sug'orish) — bu qishloq transporti degan gapga ZID. Tuzoq: NOT GIVEN deb o'ylash oson, lekin matn aniq maqsadni ko'rsatgan bo'lsa — FALSE.",
         "\"The windmill brought William Kamkwamba instant local fame\".",
         "\"Brought journalists to the farm\" — qaysi davlatdan ekani aytilmagan. Tuzoq: \"spread beyond Malawi\" — bu yangilik haqida, jurnalistlar haqida emas.",
         "\"With the donation, he also drilled a borehole for a well and water pump in his village\".",
         "\"The windmills have also brought big lifestyle and health changes ... there is less disease\"."
        ],
-       "note": "6 va 8-savollar NOT GIVEN ning ikki turi: 6 — mavzu umuman yo'q; 8 — jurnalistlar bor, lekin \"other countries\" detali yo'q.",
+       "note": "6 va 8-savollarni solishtiring: 6 — matn elektr qayerga ishlatilganini aniq aytgan (uy, chiroqlar), shuning uchun \"transport\" unga zid → FALSE. 8 — jurnalistlar kelgan, lekin qaysi davlatdan ekani haqida hech qanday ma'lumot yo'q → NOT GIVEN.",
        "layout": "tfng"
       },
       {
@@ -17927,7 +17927,7 @@
         "What school subject has become more popular in William's village?"
        ],
        "answers": [
-        "39 (feet)",
+        "39 feet",
         "kerosene",
         "science"
        ],
@@ -18107,7 +18107,7 @@
        ],
        "answers": [
         "explorers",
-        "summer",
+        "summer (season)",
         "ice rink",
         "(melting) glaciers"
        ],

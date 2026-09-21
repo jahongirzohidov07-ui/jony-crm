@@ -197,7 +197,29 @@ gg = db.query(models.Group).get(GID)
 gg.lesson_price = 40000
 gg.standard_lessons_per_month = 12
 db.commit()
-sept = date(2026, 9, 15)
+# 2026-09-21 TUZATILDI — SANA TO'QNASHUVI.
+#
+# Bu yerda ilgari `date(2026, 9, 15)` qattiq yozilgan edi. Test
+# avgustda yozilgan, o'shanda joriy oy 2026-08 edi va sentabr
+# "boshqa oy" hisoblanardi — 12-bo'lim toza boshlanardi.
+#
+# Sentabr kelgach ikkalasi USTMA-UST tushdi: 9-10-bo'limlar
+# JORIY oyni (endi 2026-09) allaqachon hisoblab, guruhni
+# "bajarildi" deb belgilab qo'yadi. Shu sababli 12-bo'lim hech
+# narsa yoza olmay 0 qaytardi va to'rtta tekshiruv qizil bo'ldi.
+#
+# Bu PUL xatosi EMAS edi: qo'sh hisob yo'q, aksincha har
+# o'quvchida roppa-rosa bittadan qator bor. Shunchaki test
+# kalendarga bog'lanib qolgan edi.
+#
+# Endi davr JORIY oydan ikki oy keyin olinadi — ya'ni:
+#   - har doim sentabr 2026 dan keyin (mcf qoidasi shart bajariladi);
+#   - hech qachon joriy oy bilan to'qnashmaydi.
+_mm = date.today().month + 2
+_yy = date.today().year + (_mm - 1) // 12
+_mm = (_mm - 1) % 12 + 1
+sept = date(_yy, _mm, 15)
+_sept_period = f"{_yy:04d}-{_mm:02d}"
 # byudjet allaqachon tugagan: birorta guruh ishlanmaydi
 n, ok = E._mc_charge_full(db, sept, deadline=-1)
 ck("byudjet tugagan: 0 yozuv", n, 0)
@@ -211,9 +233,20 @@ ck("tugallandi", ok2, True)
 n3, ok3 = E._mc_charge_full(db, sept, deadline=_t.monotonic() + 30)
 ck("takrorda 0 yozuv", n3, 0)
 tot = db.query(models.Payment).filter(
-    models.Payment.period == "2026-09",
+    models.Payment.period == _sept_period,
     models.Payment.kind == "charge").count()
-ck("sentyabr uchun har o'quvchida 1 tadan", tot, n2)
+ck("o'sha oy uchun har o'quvchida 1 tadan", tot, n2)
+# QO'SH HISOB BO'LMASLIGI — asosiy pul kafolati. Yuqoridagi
+# tenglik "jami = bir marta yozilgani" deydi; bu yerda esa
+# har bir o'quvchi alohida sanaladi, ya'ni birontasida ikkita
+# qator paydo bo'lib qolmaganiga ishonch hosil qilamiz.
+from collections import Counter as _Cnt
+_per_student = _Cnt(
+    p.student_id for p in db.query(models.Payment).filter(
+        models.Payment.period == _sept_period,
+        models.Payment.kind == "charge").all())
+ck("birorta o'quvchida qo'sh hisob yo'q",
+   [s for s, c in _per_student.items() if c > 1], [])
 db.close()
 
 print("\n=== 13. Guruhlar bitta so'rovda olinadi (N+1 yo'q) ===")

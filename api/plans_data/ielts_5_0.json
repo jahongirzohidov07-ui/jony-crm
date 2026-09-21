@@ -9199,7 +9199,7 @@
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
+   "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 22 Electronics exhibition, Track 10 Joe) va 3 ta mualliflik skripti.",
    "objectives": [
     "Section 2 (bitta so'zlovchi, monolog) formatiga ko'nikish.",
     "Bo'sh joyni grammatik jihatdan to'g'ri to'ldirish: ot, fe'l, son yoki sifat.",
@@ -9405,6 +9405,176 @@
    ],
    "readings": [],
    "listenings": [
+    {
+     "title": "Track 22. Electronics exhibition — ticket options",
+     "qtype": "Sentence completion (1–6) — asosiy",
+     "audios": "Ustoz bergan audio (Track 22)",
+     "audio": "ielts5_12_exhibition.mp3",
+     "intro": [
+      "Irina elektronika ko'rgazmasida chipta haqida so'rayapti; xodim bo'limlarni tushuntiradi. Avval 6 ta gapni o'qing va har bo'sh joyga qanday so'z kerakligini ayting (fe'l? ot?). Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write ONE WORD ONLY for each answer. Gaplar bo'limlar tartibida: 1–2 — birinchi bo'lim, 3–5 — ikkinchi, 6 — uchinchi."
+     ],
+     "transcript": [
+      "IRINA: Good morning. Can you tell me about the ticket options, please?",
+      "MAN: Certainly, we've got various options, depending on whether you want to just visit parts of the exhibition or all of it. It's organised into various different sections, and because it's so large, you may not be interested in everything or have time for everything. You can buy tickets just for the sections you want to visit, and that makes it a lot cheaper.",
+      "IRINA: Well, um, I've really come here to see things to do with electronics.",
+      "MAN: Right. Then I think you'll find the first part of the exhibition as you go in is quite relevant. It's all about electronics and how we can use them to protect the world around us – you know, the environment and what we can do to avoid damaging it further.",
+      "IRINA: Protecting the environment. That sounds interesting. Anything I should specially look out for there?",
+      "MAN: There are lots of new devices. One which fascinated me when I went round was a new instrument for measuring how the temperature of the ocean changes at different levels, and this can be done from a ship on the surface right down to the bottom.",
+      "IRINA: Great, I'll look out for that.",
+      "MAN: OK, and I see you've got your son with you, which is nice because the subject of the next section is all about different things for keeping an eye on your children and looking after their safety. It contains a range of things, from electronic instruments used in medicine to children's electronic games and even a number of new devices to prevent children from having an accident when they're at home.",
+      "IRINA: That sounds useful.",
+      "MAN: Yes, there's even an invention for older children – you'll see a demonstration of it while you're there – which helps parents to make sure their kids are going to school. Really useful in families where both parents work. It sort of electronically tells parents about their kids' attendance and sends them a signal via the Internet.",
+      "IRINA: Very convenient. But my son is a bit young to worry about that yet. Are there any other sections which feature electronics?",
+      "MAN: Sure. There's another section – it's the third you come to, I think – which should interest everyone. It contains lots of new electronic instruments or devices for looking after and working with money – you know, like that thing you must have heard of which counts what you're putting into your supermarket trolley and adds up the bill as you go around.",
+      "IRINA: Right, money – that sounds interesting, too. Well, thanks for the information. I'd like tickets for myself and my son for those three sections, then, please."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6: Electronics exhibition — complete the sentences",
+       "type": "ONE WORD ONLY",
+       "instr": "Gaplar audio tartibida (ALWAYS). Javob gapga grammatik mos kelishi shart.",
+       "items": [
+        "The first section deals with electronics designed to ___ the environment.",
+        "One new device is for checking ___ temperatures at different levels.",
+        "The theme of the second section is children and their ___.",
+        "There are a number of inventions to avoid an ___ in the home.",
+        "They demonstrate a device for checking if older children are at ___.",
+        "The third section contains devices for dealing with ___."
+       ],
+       "answers": [
+        "protect",
+        "ocean",
+        "safety",
+        "accident",
+        "school",
+        "money"
+       ],
+       "why": [
+        "\"How we can use them to protect the world around us – you know, the environment\". \"Designed to ___\" — fe'l (asos shakl). Tuzoq: \"protecting\" — gapga mos emas.",
+        "\"Measuring how the temperature of the ocean changes at different levels\". Checking = measuring. Tuzoq: \"ship\", \"surface\" — o'lchanadigan narsa emas.",
+        "\"Keeping an eye on your children and looking after their safety\". \"Their ___\" — ot.",
+        "\"Devices to prevent children from having an accident when they're at home\". Avoid = prevent. \"An\" — unli bilan boshlanadigan ot.",
+        "\"Helps parents to make sure their kids are going to school\". Checking = make sure. Tuzoq: \"Internet\" — signal yuborish yo'li, joy emas.",
+        "\"Devices for looking after and working with money\". Dealing with = working with."
+       ],
+       "note": "Ustoz kaliti yuborilmagan — javoblar skript bo'yicha Jony Academy tomonidan yechildi: 1 protect 2 ocean 3 safety 4 accident 5 school 6 money. Ko'rsatma kitobda ko'rinmagan; barcha javoblar bitta so'z.",
+       "layout": "list"
+      },
+      {
+       "title": "Paraphrase juftlari",
+       "type": "Tahlil",
+       "instr": "Gapdagi so'z — audiodagi so'z.",
+       "items": [
+        "deals with",
+        "checking",
+        "avoid",
+        "dealing with"
+       ],
+       "answers": [
+        "is all about",
+        "measuring / make sure",
+        "prevent",
+        "looking after and working with"
+       ],
+       "why": [
+        "1-bo'lim.",
+        "2 va 5-savollar.",
+        "4-savol.",
+        "6-savol."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Track 10. Joe — buying electronics",
+     "qtype": "Sentence completion (1–6) — qo'shimcha mashq",
+     "audios": "Ustoz bergan audio (Track 10)",
+     "audio": "ielts5_12_joe_habits.mp3",
+     "intro": [
+      "Kompaniya xodimi Joedan elektronika sotib olish odatlari haqida so'raydi. Avval gaplarni o'qing, bo'sh joy turini bashorat qiling, keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write ONE WORD for each answer. Transkript audiodan yozib olingan (kitob skripti yuborilmagan)."
+     ],
+     "transcript": [
+      "WOMAN: Hello, Joe, good to see you again.",
+      "JOE: Hi, you too.",
+      "WOMAN: So, how did you get on with the devices we asked you to test for us?",
+      "JOE: Oh, fine. Well, mostly.",
+      "WOMAN: OK, well, we'll come back to those in a minute. First of all, I was wondering if I could ask you a few questions about your attitude to new electrical products. This will help us with future marketing. Is that OK?",
+      "JOE: Sure.",
+      "WOMAN: OK. First of all, how much do you spend on electronic items a month?",
+      "JOE: Hmm, let me see. I don't earn a lot, so I don't have much left after I've paid for things like rent, bills, food and so on. Anything else is a luxury. So I'd guess about five percent, maybe ten percent of my monthly salary.",
+      "WOMAN: All right, and what influences you in your choice of product? Say you wanted a new mobile phone, how would you decide which one to buy?",
+      "JOE: Well, first I look at reviews on the Internet, you know, what other customers think about them. Then I'll ask my friends what they think. In fact, their opinions are probably more important than anything.",
+      "WOMAN: How much does advertising help you choose a product?",
+      "JOE: I think that depends on how the product is advertised and who is advertising it.",
+      "WOMAN: For example?",
+      "JOE: Well, if it's someone I respect, you know, like a famous sportsman or actor, that can certainly make a difference. I know it shouldn't really, but it does.",
+      "WOMAN: And where do you buy most of these products? The high street, the Internet?",
+      "JOE: Most people seem to avoid shops these days, don't they, for things like that? They think they can get things cheaper on the Internet.",
+      "WOMAN: Right.",
+      "JOE: But I find that if you say to a shop assistant that you can get a new camera, for example, for a hundred pounds on the Internet, they'll often match the price. So that's where I go.",
+      "WOMAN: Any other advantages?",
+      "JOE: Well, you get personal service, and you don't have to wait for the product to be delivered. Ordering online means you have to wait, sometimes for ages, to get the things you've just bought. I hate that. I guess I'm just very impatient.",
+      "WOMAN: OK, one final question. Do you ever see a product and think, I've absolutely got to get one of those?",
+      "JOE: Oh, all the time, especially if I'm walking past a shop and I see a new electronic item in the window. Especially if it's unusual, you know, something I've never seen before. It takes a lot of willpower."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6: Complete the sentences",
+       "type": "ONE WORD",
+       "instr": "Gaplar audio tartibida (ALWAYS).",
+       "items": [
+        "Joe's low ___ doesn't allow him to buy many electronic goods.",
+        "He's often influenced by his ___ when he buys electronic items.",
+        "Advertisements featuring somebody ___ sometimes help him decide which product to buy.",
+        "Joe prefers to get new products from ___.",
+        "He doesn't like waiting for a long time after ___ something.",
+        "He finds it hard to resist buying electronic products if they are new and ___."
+       ],
+       "answers": [
+        "salary",
+        "friends",
+        "famous",
+        "shops",
+        "ordering",
+        "unusual"
+       ],
+       "why": [
+        "\"I don't earn a lot ... about five percent, maybe ten percent of my monthly salary\". \"Low ___\" — ot. \"Income\" ham ma'noga mos, lekin audioda \"salary\" eshitiladi.",
+        "\"I'll ask my friends ... their opinions are probably more important than anything\". Tuzoq: \"reviews on the Internet\" — birinchi qadam, lekin eng muhimi do'stlar.",
+        "\"Someone I respect, you know, like a famous sportsman or actor\". \"Somebody ___\" — sifat.",
+        "\"Most people seem to avoid shops ... So that's where I go\". Tuzoq: \"the Internet\" — boshqalar tanlovi.",
+        "\"Ordering online means you have to wait, sometimes for ages ... I hate that\". \"After ___ something\" — -ing shakl. \"Buying\" ham ma'noga mos keladi.",
+        "\"Especially if it's unusual, you know, something I've never seen before. It takes a lot of willpower\". Hard to resist = takes a lot of willpower."
+       ],
+       "note": "Ustoz kaliti va kitob skripti yuborilmagan — transkript audiodan yozib olindi, javoblar Jony Academy tomonidan yechildi: 1 salary 2 friends 3 famous 4 shops 5 ordering (buying) 6 unusual. Kitob kaliti bo'lsa, solishtirib tekshiring.",
+       "layout": "list"
+      },
+      {
+       "title": "Grammatika tekshiruvi",
+       "type": "Tahlil",
+       "instr": "Nega aynan shu shakl?",
+       "items": [
+        "3-savol: famous",
+        "5-savol: ordering",
+        "4-savol: shops"
+       ],
+       "answers": [
+        "sifat",
+        "-ing",
+        "ko'plik ot"
+       ],
+       "why": [
+        "\"somebody + sifat\" (somebody famous).",
+        "\"after + -ing\" (after ordering).",
+        "\"from shops\" — umumiy ma'no."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
     {
      "title": "Welcome talk at a wildlife park",
      "qtype": "Sentence completion",
@@ -9707,6 +9877,582 @@
     [
      "Xato tahlili",
      "uch tur, misollar bilan",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 13,
+   "title": "Listening: Pick from a List (Section 2-3)",
+   "grammar_topic": "Pick from a list (listening) — ro'yxatdan ikki (yoki uch) javob tanlash",
+   "vocab_topic": "Elektronika, texnologiya va turmush",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 23 Irina survey, Track 11 Joe devices) va 3 ta mualliflik skripti.",
+   "objectives": [
+    "\"Choose TWO letters\" listening savolida ikkala javobni ham eshitib topish.",
+    "Savol va 5 ta variantni (A–E) tinglashdan OLDIN o'qib, kalit so'zlarni belgilash.",
+    "Chalg'ituvchi variantlarni ajratish: audioda tilga olinadi, lekin inkor qilinadi yoki boshqa narsa haqida.",
+    "Har javob alohida ball olishini bilish — bittasini eshitib qolsangiz ham yozing.",
+    "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Listening pick from a list — savol va 5 ta variant (A–E) beriladi, ulardan IKKITASI to'g'ri. Ba'zan Section 3 da uchtasi.",
+     "Ikkala harf ham alohida ball: 7–8-savol = 2 ball. Tartib muhim emas: \"B, C\" = \"C, B\".",
+     "Eng muhim qoida: variantlarni tinglashdan OLDIN o'qing. Audioda vaqt kam — kalit so'zlarni oldindan bilsangiz, tez ilg'aysiz.",
+     "Barcha 5 variant audioda biror shaklda tilga olinadi. \"Eshitildi\" degani \"javob\" degani emas — variant TASDIQLANDIMI yoki INKOR qilindimi, shuni tinglang.",
+     "Chalg'ituvchining ikki turi: 1) variant aytiladi, keyin rad etiladi (\"I was thinking of buying a calculator, but I decided it wasn't necessary\"); 2) variant boshqa kishi/narsa haqida.",
+     "Section 2 — monolog (bitta so'zlovchi); Section 3 — suhbat (2–4 kishi). Kim gapirayotganini kuzating."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Savol va 5 variantni o'qing",
+      "tinglashdan oldin",
+      "Kalit so'zni belgilang"
+     ],
+     [
+      "2-bosqich",
+      "Nechta javob kerakligini ayting",
+      "Choose TWO",
+      "2 ta harf"
+     ],
+     [
+      "3-bosqich",
+      "Audioni tinglang",
+      "har variantni kuting",
+      "Tasdiq yoki inkor?"
+     ],
+     [
+      "4-bosqich",
+      "Belgilab boring",
+      "tasdiq / inkor",
+      "Ikkovini ham"
+     ],
+     [
+      "5-bosqich",
+      "Ikki harfni yozing",
+      "istalgan tartibda",
+      "Bo'sh qoldirmang"
+     ],
+     [
+      "6-bosqich",
+      "Chalg'ituvchini tekshiring",
+      "nega u emas?",
+      "Rad etildimi?"
+     ]
+    ],
+    "presentation": [
+     [
+      "Faqat bittasini eshitib qoldim.",
+      "Yozing — har javob alohida ball. Ikkinchisiga eng ehtimollisini tanlang."
+     ],
+     [
+      "Javoblar tartibi muhimmi?",
+      "Yo'q. \"A, C\" va \"C, A\" bir xil."
+     ],
+     [
+      "Barcha variant eshitildi. Qaysi biri?",
+      "Tasdiqlangan ikkitasini oling; qolganlari rad etilgan yoki boshqa narsa haqida."
+     ],
+     [
+      "Section 2 va 3 farqi?",
+      "2 — monolog; 3 — suhbat. Usul bir xil."
+     ],
+     [
+      "Variantni o'qishga ulgurmadim.",
+      "Keyingi savol boshlanishidan oldingi pauzada o'qing; audio to'xtamaydi."
+     ],
+     [
+      "Uchta to'g'ridek tuyuldi.",
+      "Uchinchisini qayta o'ylang: u aniq tasdiqlandimi yoki faqat tilga olindimi?"
+     ]
+    ],
+    "notes": [
+     "Track 23 (Irina) va Track 11 (Joe) — 12-darsdagi Irina va Joe suhbatlarining davomi. Bir mavzu ikki savol turi bilan.",
+     "Ustoz kaliti yuborilmagan — javoblar transkriptdan Jony Academy tomonidan yechildi. Kitob kaliti bo'lsa, solishtirib tekshiring.",
+     "Har javobdan keyin so'rang: \"qaysi so'z tasdiqladi? qaysi variant nega rad etildi?\"",
+     "Chalg'ituvchi tahlili — darsning asosiy ishi: har rad etilgan variant audioda qanday eshitilgani yozdiriladi."
+    ],
+    "mistakes": [
+     [
+      "Variantni tinglashdan keyin o'qish",
+      "Oldin o'qish",
+      "Audio kutmaydi"
+     ],
+     [
+      "\"Eshitildi\" — \"javob\" deb o'ylash",
+      "Tasdiq/inkorni tinglash",
+      "Barcha variant tilga olinadi"
+     ],
+     [
+      "Faqat bitta harf yozish",
+      "Ikkovini yozish",
+      "Bo'sh — 0 ball"
+     ],
+     [
+      "Rad etilgan variantni olish",
+      "\"but\", \"not\", \"decided not\" ni kutish",
+      "Inkor signali"
+     ],
+     [
+      "Kim gapiryaptini aralashtirish",
+      "So'zlovchini kuzatish",
+      "Section 3 da bir necha kishi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Tasdiq yoki inkor?",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ustoz gap o'qiydi; o'quvchi \"javob (tasdiq)\" yoki \"chalg'ituvchi (inkor)\" deydi.",
+     "items": [
+      "\"I was thinking of buying a calculator, but I decided it wasn't necessary.\"",
+      "\"I got a new laptop recently.\"",
+      "\"The audio quality was crisp and clear — ten out of ten.\"",
+      "\"The choice of radio stations seemed very limited.\"",
+      "\"I always feel I'm going to get stuck in one.\" (revolving doors)"
+     ],
+     "answers": [
+      "inkor",
+      "tasdiq",
+      "inkor (muammo emas)",
+      "tasdiq (muammo)",
+      "inkor (yoqtirmaydi)"
+     ],
+     "why": [
+      "\"but ... wasn't necessary\".",
+      "Sotib olgan.",
+      "Radio ovozi yaxshi.",
+      "Kam stansiya.",
+      "\"not so keen on\"."
+     ],
+     "note": "Signal so'zlar doskada: but, however, not, decided not, I'm not keen on (inkor); really like, that's great, definitely (tasdiq).",
+     "layout": "qa"
+    }
+   ],
+   "readings": [],
+   "listenings": [
+    {
+     "title": "Track 23. Irina at the electronics exhibition — a survey",
+     "qtype": "Pick from a list (7–10) — asosiy",
+     "audios": "Ustoz bergan audio (Track 23)",
+     "audio": "ielts5_13_irina_survey.mp3",
+     "intro": [
+      "So'rovnoma o'tkazuvchi ayol Irina bilan gaplashmoqda (12-darsdagi Track 22 dan keyin). Avval 7–10-savollar va A–E variantlarni o'qing, kalit so'zlarni belgilang. Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Choose TWO letters, A–E for each question. Har savolda IKKI javob."
+     ],
+     "transcript": [
+      "WOMAN: Excuse me.",
+      "IRINA: Yes?",
+      "WOMAN: Before you go through, I wonder if you could help us by answering a few questions for a survey. It won't take long.",
+      "IRINA: No problem. We're not in any hurry.",
+      "WOMAN: Fine, thanks. Now, er, let's look at the questions. First one. Why are you visiting the exhibition?",
+      "IRINA: Well, I want to keep up with the latest developments in electronics, you know – I was recommended by a friend to come here and see what new devices and inventions are coming out and learn a bit. I mean, I don't generally go shopping for new electronics – I'm not the sort of person who goes out and buys all the latest gadgets – the prices are too high when they're new. But it interests me, and I thought also there would be things which would interest my son and he'd enjoy it as well, so that's why we're here.",
+      "WOMAN: OK ... and here's a question to find out what sort of consumer you are. Have you bought any electronics recently?",
+      "IRINA: Recently? Sure. I was thinking of buying a new calculator for the office, but I decided it wasn't really necessary because I can do all the calculations just as easily on a computer. Anyway, I got a new laptop recently, you know, they have so many applications and they don't take up much space either. Better to have lots of things on the same device, I think. The other thing I bought was a present for my husband's birthday. I thought it would be nice to have a record of our holidays, so I bought him a camera, and I'm hoping to get him more interested in photography.",
+      "WOMAN: Right ... and here's a question about this building. I know you haven't had a chance to look around a lot yet, but at first sight, what do you think of it?",
+      "IRINA: Oh, it looks pretty good to me. It's got lots of natural light, so you don't have to put up with lots of electric lighting, which is quite tiring on the eyes. It feels very large and spacious, which is great because although it's full of activity and quite noisy, it doesn't feel too crowded. Also, when you look up at the ceiling near the entrance, with the design of stars and planets on it, that's something I really like. I'm not so keen on those revolving doors, though. I always feel I'm going to get stuck in one.",
+      "WOMAN: Did you have any difficulties getting to the exhibition?",
+      "IRINA: Well, coming at this time of day the roads weren't too busy, so that was all right, and there were plenty of signposts, so the car park was easy to find. The only problem was it was full when I arrived – I guess I should have come earlier – so I had to find another one quite a long walk away, which was a pity. Then we had to stand outside for quite a long time queuing to get in – this exhibition is pretty popular. That was a bit of a problem, because my son gets impatient, but fortunately it wasn't raining, otherwise we might have gone home."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 7–10: Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Har savolda ikki javob. Har variant uchun tasdiq/inkorni belgilang.",
+       "items": [
+        "7 Which TWO reasons does Irina give for visiting the exhibition? A) to meet a friend B) to improve her knowledge C) to buy something D) to check prices E) to entertain her child",
+        "8 Which TWO devices has Irina bought recently? A) a calculator B) a computer C) a camera D) a phone E) a digital recorder",
+        "9 What TWO things does Irina like about the building? A) the electric lights B) the space C) the activity D) the ceiling E) the entrance",
+        "10 Which TWO problems did Irina have coming to the exhibition? A) driving in heavy traffic B) finding the car park C) parking the car D) waiting to enter E) standing outside in the rain"
+       ],
+       "answers": [
+        "B, E",
+        "B, C",
+        "B, D",
+        "C, D"
+       ],
+       "why": [
+        "\"Keep up with the latest developments ... learn a bit\" (B) va \"things which would interest my son and he'd enjoy it\" (E). A tuzoq: do'st TAVSIYA qilgan, uchrashish uchun emas. C teskari: \"I don't generally go shopping\". D — narx yuqori, lekin tekshirish maqsad emas.",
+        "\"I got a new laptop recently\" (B — computer) va \"I bought him a camera\" (C). A tuzoq: kalkulyator — \"decided it wasn't really necessary\", sotib olmagan.",
+        "\"It feels very large and spacious\" (B) va \"the ceiling near the entrance ... that's something I really like\" (D). A tuzoq: tabiiy yorug'lik yoqadi, elektr yorug'lik \"tiring on the eyes\". E tuzoq: shift kirish yonida, lekin u SHIFTni yaxshi ko'radi.",
+        "To'xtash joyi to'lgan, boshqa joy topgan (C) va \"stand outside ... queuing to get in\" (D). A teskari: \"roads weren't too busy\". B teskari: \"car park was easy to find\". E teskari: \"it wasn't raining\"."
+       ],
+       "note": "Jony Academy javoblari (transkript bo'yicha): 7 B,E · 8 B,C · 9 B,D · 10 C,D. Kitob kaliti bo'lsa solishtiring.",
+       "layout": "mcq"
+      },
+      {
+       "title": "Chalg'ituvchi tahlili",
+       "type": "Tahlil",
+       "instr": "Har rad etilgan variant audioda qanday eshitildi?",
+       "items": [
+        "8 A (calculator)",
+        "9 A (electric lights)",
+        "10 B (finding car park)",
+        "10 E (rain)"
+       ],
+       "answers": [
+        "\"decided it wasn't really necessary\"",
+        "\"you don't have to put up with lots of electric lighting\"",
+        "\"the car park was easy to find\"",
+        "\"fortunately it wasn't raining\""
+       ],
+       "why": [
+        "Sotib olmagan.",
+        "Tabiiy yorug'lik yaxshi.",
+        "Muammo — to'lgani.",
+        "Yomg'ir yo'q edi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Track 11. Joe tests three devices",
+     "qtype": "Pick from a list (1–4) — qo'shimcha mashq",
+     "audios": "Ustoz bergan audio (Track 11)",
+     "audio": "ielts5_13_joe_devices.mp3",
+     "intro": [
+      "Joe uchta qurilmani sinab ko'rgan: mobil telefon, radio va noutbuk. Avval savollarni va variantlarni o'qing. Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Choose TWO letters, A–E for each question."
+     ],
+     "transcript": [
+      "WOMAN: Right, Joe. Let's move on. Now, we gave you three items to test for us. Let's start with the mobile phone.",
+      "JOE: OK. Well, it has its good points and its bad points. The purple and silver make it quite eye-catching, you know, modern, exciting.",
+      "WOMAN: Right. Anything else?",
+      "JOE: Well, it's very small, isn't it? I know people say small is good, but in this case, I think you might have gone too far.",
+      "WOMAN: In what way?",
+      "JOE: It can be a bit difficult to use, especially if you've got big hands like mine. You press one key and you end up pressing another at the same time. On the other hand, thanks to the oval design, it does fit comfortably in your hand. Mobiles are usually sort of rectangular, aren't they? I think this is much better.",
+      "WOMAN: OK. What else?",
+      "JOE: When I was sending text messages, I had real problems seeing what I was writing. It's not that the screen was too small, just that it was a bit dark. If you're outside, you can hardly see anything on it.",
+      "WOMAN: We added a few things that you don't get on other mobiles. What did you think about those?",
+      "JOE: Ah, right. Well, that noise it makes if you move away from it? That's really annoying. It's basically a good idea, but I think that after a while, it would drive me mad.",
+      "WOMAN: So you probably wouldn't buy it?",
+      "JOE: Probably not. When I buy a mobile phone, I don't want one that's going to be difficult to operate. There's no point having a phone that looks good if you have to spend ages trying to make a call or send a text message. It's funny, but I find that more expensive mobile phones are more difficult to use than cheaper ones. It should be the other way round. So keep it simple. And I want a phone that doesn't have problems picking up a signal or doesn't cut you off halfway through a call. And all those games and other things you get on a mobile, I really can't see the point in those.",
+      "WOMAN: Fair point. Next, the digital radio. What did you think?",
+      "JOE: The audio quality was crisp and clear. Even if you turned it up really loud, some sound systems can sound a bit distorted at higher volumes, but not on this one. So ten out of ten for that.",
+      "WOMAN: Great.",
+      "JOE: The thing is, I'm not sure if it's the area I live in, but the choice of radio stations seemed very limited. It didn't make any difference what I did with the aerial or where I put the radio, high up on a shelf, low down on the floor. And there seemed to be a delay when you turned up the volume.",
+      "WOMAN: What do you mean?",
+      "JOE: Well, when you press the volume control, for example, nothing seems to happen for a few seconds. And the same thing happens when you want to change radio stations.",
+      "WOMAN: Hmm, OK. The third item was the laptop computer. What's your opinion on that?",
+      "JOE: Oh, I really liked it. It's so small, so compact, but easy to use at the same time. I don't think you could make it smaller if you tried. But at 900 pounds, I'm not sure you'd get many customers. That's a lot of money for a laptop. Bring that down to, say, 400 pounds and things might be different.",
+      "WOMAN: Any other changes you'd make, like adding more memory, for example?",
+      "JOE: Oh, I think that's fine as it is. 300 gigabytes of memory is probably more than enough for most people. Oh, and incidentally, the way the keyboard folds out so that it's like a full-sized one, that's really clever. But the computer doesn't have anywhere you can play CD-ROMs. And I'd include a light in the keyboard so you can use it when it's dark."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–4: Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Har savolda ikki javob.",
+       "items": [
+        "1 What TWO things did Joe like about the mobile phone? A) its colour B) its size C) its shape D) its screen E) its unique features",
+        "2 What TWO things does Joe usually look for when he buys a mobile phone? A) It should be easy to use. B) It should look good. C) It should be cheap. D) It should be reliable. E) It should have a variety of games.",
+        "3 Which TWO problems did Joe have with the radio? A) It didn't sound good. B) It wasn't loud enough. C) It didn't pick up many radio stations. D) He couldn't find anywhere to put it. E) The control features didn't work properly.",
+        "4 What TWO things does Joe think would improve the computer? A) making it smaller B) reducing the price C) increasing the memory D) increasing the size of the keyboard E) adding more features"
+       ],
+       "answers": [
+        "A, C",
+        "A, D",
+        "C, E",
+        "B, E"
+       ],
+       "why": [
+        "\"The purple and silver make it quite eye-catching\" (A) va \"thanks to the oval design, it does fit comfortably ... much better\" (C). B teskari: \"gone too far\" (juda kichik). D teskari: ekran qorong'i. E teskari: shovqin \"really annoying\".",
+        "\"I don't want one that's going to be difficult to operate\" (A) va \"doesn't have problems picking up a signal or ... cut you off\" (D). B teskari: \"no point having a phone that looks good if...\". E teskari: \"games ... can't see the point\".",
+        "\"The choice of radio stations seemed very limited\" (C) va \"delay when you turned up the volume ... change radio stations\" (E). A teskari: \"crisp and clear, ten out of ten\". B teskari: \"turned it up really loud\". D tuzoq: joyni sinagan, lekin bu qabul haqida.",
+        "\"at 900 pounds ... bring that down to, say, 400 pounds\" (B) va \"doesn't have anywhere you can play CD-ROMs ... include a light in the keyboard\" (E). A teskari: \"couldn't make it smaller\". C teskari: \"more than enough\". D tuzoq: klaviatura allaqachon to'liq o'lchamda ochiladi."
+       ],
+       "note": "Jony Academy javoblari (transkript bo'yicha): 1 A,C · 2 A,D · 3 C,E · 4 B,E. Har savolda 5 xususiyat ham tilga olinadi, faqat 2 tasi ijobiy/muammo.",
+       "layout": "mcq"
+      },
+      {
+       "title": "Chalg'ituvchi tahlili",
+       "type": "Tahlil",
+       "instr": "Har rad etilgan variant qanday eshitildi?",
+       "items": [
+        "1 B (size)",
+        "2 B (look good)",
+        "3 A (sound)",
+        "4 C (memory)"
+       ],
+       "answers": [
+        "\"gone too far\"",
+        "\"no point ... if you have to spend ages\"",
+        "\"ten out of ten\"",
+        "\"more than enough\""
+       ],
+       "why": [
+        "Juda kichik — kamchilik.",
+        "Ko'rinish yetarli emas.",
+        "Ovoz a'lo.",
+        "Xotira yetarli."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "The photography club — evening talk",
+     "qtype": "Pick from a list (1–4)",
+     "audios": "Jony Academy skripti (Band 4–5)",
+     "intro": [
+      "Foto klub rahbari yangi a'zolarga so'zlamoqda (Section 2 monolog). Avval savollarni o'qing, keyin skriptni bir marta tinglang (ustoz o'qiydi)."
+     ],
+     "transcript": [
+      "Good evening, everyone, and welcome to the Riverside Photography Club. Let me tell you a bit about what we do.",
+      "First, why do people join us? Some come because they've just bought their first proper camera and want to learn how to use it. Others already know the technical side but want to meet people who share the same hobby — that's actually the most common reason. A few hope to sell their photos one day, though I have to say that's quite rare. And some simply want a reason to get out of the house on a cold evening.",
+      "Now, our meetings. We meet every Tuesday. On the first Tuesday of the month, we have a guest speaker — usually a professional photographer. On the second, we go out together to take photos, weather permitting. The third Tuesday is for editing on the computer, and on the last one, members show their best work and we discuss it.",
+      "What equipment do you need? Well, obviously a camera, though it doesn't have to be expensive — some of our best work is done on phones. You'll also find a tripod useful for evening shots. You don't need editing software of your own, as we have computers here. And please don't bring a printer — we have a professional one at the club.",
+      "Finally, the trips. This year we're planning a day at the coast in spring, a weekend in the mountains in summer, and a visit to a city at night to practise with lights. We had hoped to organise a trip abroad, but unfortunately it proved too expensive this year."
+     ],
+     "tasks": [
+      {
+       "title": "Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Har savolda ikki javob.",
+       "items": [
+        "1–2 What TWO reasons does the speaker give for people joining the club? A) to learn to use a new camera B) to meet people with the same hobby C) to become professional photographers D) to sell their photographs E) to earn extra money",
+        "3–4 Which TWO items does the speaker say members do NOT need to bring? A) a camera B) a tripod C) editing software D) a printer E) a phone"
+       ],
+       "answers": [
+        "A, B",
+        "C, D"
+       ],
+       "why": [
+        "\"Learn how to use it\" (A) va \"meet people who share the same hobby — the most common reason\" (B). D tuzoq: \"sell their photos ... quite rare\". C, E aniq sabab sifatida aytilmagan.",
+        "\"You don't need editing software ... we have computers\" (C) va \"please don't bring a printer\" (D). A, B kerak; E — telefon bilan olish mumkin, lekin \"keltirmang\" deyilmagan."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Chalg'ituvchi tahlili",
+       "type": "Tahlil",
+       "instr": "Rad etilgan variantni tushuntiring.",
+       "items": [
+        "1–2 D (sell photos)",
+        "3–4 A (camera)"
+       ],
+       "answers": [
+        "\"quite rare\"",
+        "kerak"
+       ],
+       "why": [
+        "Kam uchraydigan sabab.",
+        "Asosiy jihoz."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Volunteer open day — introduction",
+     "qtype": "Pick from a list (1–4)",
+     "audios": "Jony Academy skripti (Band 4–5)",
+     "intro": [
+      "Ko'ngillilar tashkiloti muvofiqlashtiruvchisi (Section 2). Avval savollarni o'qing, keyin bir marta tinglang."
+     ],
+     "transcript": [
+      "Hello and thank you all for coming to our volunteer open day. I'll explain how you can help and what we can offer you.",
+      "There are several ways to get involved. Some volunteers work in our charity shop, sorting and selling donated items. Others prefer to be outdoors, helping to plant trees and clean up the river. We also need people to answer the phones in the office, and a few volunteers visit elderly people at home. What we no longer do, by the way, is door-to-door collection — we stopped that last year.",
+      "Now, what do we ask of you? We ask for at least three hours a week, though many people do more. You don't need any experience, as we provide full training. You do, however, need to be over sixteen, and for the home visits only, you'll need a background check, which we arrange and pay for.",
+      "What do you get in return? Well, we can't pay you, of course, but we do cover your travel costs. You also get a free lunch on the days you work, and after six months, we give you a certificate that many people find useful for job applications. Some volunteers say the best thing, though, is simply the friends they make."
+     ],
+     "tasks": [
+      {
+       "title": "Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Har savolda ikki javob.",
+       "items": [
+        "1–2 Which TWO tasks can volunteers do? A) sell items in a shop B) collect money door to door C) plant trees D) manage the office E) teach children",
+        "3–4 What TWO things does the organisation give volunteers? A) a small wage B) travel costs C) a free lunch D) a uniform E) experience only"
+       ],
+       "answers": [
+        "A, C",
+        "B, C"
+       ],
+       "why": [
+        "\"Work in our charity shop, sorting and selling\" (A) va \"helping to plant trees\" (C). B tuzoq: \"we stopped that last year\". D — telefonga javob berish, boshqarish emas.",
+        "\"we do cover your travel costs\" (B) va \"a free lunch on the days you work\" (C). A teskari: \"we can't pay you\". D aytilmagan."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Chalg'ituvchi tahlili",
+       "type": "Tahlil",
+       "instr": "Rad etilgan variantni tushuntiring.",
+       "items": [
+        "1–2 B (door to door)",
+        "3–4 A (wage)"
+       ],
+       "answers": [
+        "\"we stopped that last year\"",
+        "\"we can't pay you\""
+       ],
+       "why": [
+        "Endi qilinmaydi.",
+        "Maosh yo'q."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Student union — tutorial about a group project",
+     "qtype": "Pick from a list (1–4)",
+     "audios": "Jony Academy skripti (Band 4–5) — uyga vazifa",
+     "intro": [
+      "Talaba (Maya) va o'qituvchi (Dr Reed) guruh loyihasi haqida gaplashmoqda (Section 3 suhbat). Uyda bir marta tinglang."
+     ],
+     "transcript": [
+      "DR REED: Come in, Maya. So, how's the group project going?",
+      "MAYA: Quite well, thanks, though we've had a few problems.",
+      "DR REED: Tell me about them.",
+      "MAYA: Well, at first we couldn't agree on a topic. Everyone had a different idea. And then, once we chose one, we found it hard to divide the work fairly — some people ended up doing much more than others. The good news is we sorted that out in the end.",
+      "DR REED: That's common in group work. Anything else?",
+      "MAYA: The biggest issue now is meeting up. We all have different timetables, so finding a time when everyone is free is almost impossible. We tried meeting online, but the connection was often poor.",
+      "DR REED: Have you thought about sharing documents online instead of always meeting?",
+      "MAYA: Yes, that's worked really well, actually. We use a shared folder, so everyone can add their part whenever they're free. And we keep a list of who's doing what, which stops arguments.",
+      "DR REED: Good. Now, for the presentation, what do you still need help with?",
+      "MAYA: Two things, really. First, none of us is confident about speaking in front of the class, so any tips would be welcome. And second, we're not sure how much detail to include on the slides.",
+      "DR REED: I can help with both. What I wouldn't worry about is the length — twenty minutes is plenty, and you clearly have enough material."
+     ],
+     "tasks": [
+      {
+       "title": "Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Uyda bir marta tinglang.",
+       "items": [
+        "1–2 What TWO problems did the group solve? A) choosing a topic B) dividing the work C) meeting up D) a poor internet connection E) arguments about marks",
+        "3–4 What TWO things does Maya ask for help with? A) speaking to the class B) choosing software C) making the slides D) the length of the talk E) finding more material"
+       ],
+       "answers": [
+        "A, B",
+        "A, C"
+       ],
+       "why": [
+        "\"At first we couldn't agree on a topic ... sorted that out\" (A) va \"hard to divide the work fairly ... we sorted that out in the end\" (B). C tuzoq: uchrashish — \"the biggest issue now\", hal bo'lmagan. D — hal qilinmagan.",
+        "\"None of us is confident about speaking in front of the class\" (A) va \"not sure how much detail to include on the slides\" (C). D teskari: Dr Reed \"wouldn't worry about the length\". E teskari: \"you clearly have enough material\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Chalg'ituvchi tahlili",
+       "type": "Yozma",
+       "instr": "Rad etilgan variantni tushuntiring.",
+       "items": [
+        "1–2 C (meeting up)",
+        "3–4 D (length)"
+       ],
+       "answers": [
+        "\"the biggest issue now\"",
+        "\"twenty minutes is plenty\""
+       ],
+       "why": [
+        "Hali hal bo'lmagan.",
+        "Muammo emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-skript: \"Student union — group project tutorial\"",
+     "type": "Listening",
+     "instr": "Uyda bir marta tinglang (yoki o'qitib eshiting), javoblarni belgilang, keyin transkript bilan tekshiring.",
+     "answers": "Javoblar Listening bo'limida.",
+     "layout": "list"
+    },
+    {
+     "title": "Chalg'ituvchi daftari",
+     "type": "Yozma",
+     "instr": "Track 23 (Irina) va Track 11 (Joe) dan 8 ta rad etilgan variantni yozing va har biri audioda qaysi so'z bilan rad etilganini belgilang (but / not / decided not / more than enough).",
+     "answers": "Har qatorda inkor signali bo'lishi shart.",
+     "layout": "list"
+    },
+    {
+     "title": "Ikki javob mashqi",
+     "type": "Yozma",
+     "instr": "Bugungi 5 mashqdan 10 ta savolni oling va har biriga ikkala harfni yozing; bittasini eshitmasangiz ham eng ehtimolini belgilang.",
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Pick from a list (uyga)",
+     "4 savoldan 3 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Chalg'ituvchi daftari",
+     "8 qator, signal bilan",
+     "2 coin"
+    ],
+    [
+     "Ikki javob mashqi",
+     "10 savol, to'liq",
      "1 coin"
     ]
    ]

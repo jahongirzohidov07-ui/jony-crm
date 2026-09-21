@@ -2150,9 +2150,10 @@
      "title": "Track 4. Good Moves Accommodation Agency",
      "qtype": "Form completion (Section 1) — qo'shimcha mashq",
      "audios": "Ustoz bergan audio (Track 4)",
+     "audio": "ielts5_03_good_moves.mp3",
      "intro": [
       "Clarice ijaraga kvartira qidirib agentlikka qo'ng'iroq qilmoqda. Avval formani o'qing, keyin BIR MARTA tinglang.",
-      "Ko'rsatma: Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer. Audio fayli keyinroq biriktiriladi; hozircha ustoz skriptni o'qishi mumkin."
+      "Ko'rsatma: Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer."
      ],
      "transcript": [
       "MAN: Hello, Good Moves Accommodation Agency. Ben speaking. How can I help?",
@@ -3699,7 +3700,7 @@
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
+   "book_ref": "Jony Academy materiali — ustoz bergan audio (Track 11 Expedition candidate) va 3 ta mualliflik skripti.",
    "objectives": [
     "Qaydlar (notes) formatini o'qib, har bo'sh joyga kerakli so'z turini oldindan aniqlash.",
     "Eshitishda kalit so'zni emas, PARAPHRASE ni kutish: qaydda bir so'z, audioda boshqa so'z.",
@@ -3902,6 +3903,152 @@
    ],
    "readings": [],
    "listenings": [
+    {
+     "title": "Track 11. A new member for the expedition",
+     "qtype": "Note completion (Section 1) — asosiy",
+     "audios": "Ustoz bergan audio (Track 11)",
+     "intro": [
+      "Clive va Debbie ekspeditsiyaga yangi nomzod — Sanjay haqida gaplashmoqda. Debbie qaydlar yozadi. Avval 1 daqiqa qaydlarni o'qing va har bo'sh joy turini ayting (familiya, yosh, kasb, joy, fan...). Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer. Audio fayli keyinroq biriktiriladi; hozircha ustoz skriptni o'qishi mumkin."
+     ],
+     "transcript": [
+      "CLIVE: Hello?",
+      "DEBBIE: Hi, Clive, is that you?",
+      "CLIVE: Yes, hi, Debbie.",
+      "DEBBIE: Did you manage to see those candidates for our expedition?",
+      "CLIVE: Yes, I did, and there was an extra one who was quite a surprise. You know, he hadn't applied and he just turned up out of the blue, so we haven't got any details for him.",
+      "DEBBIE: Really? Tell me about him.",
+      "CLIVE: OK, and you can take some notes. Then we'll see what we think.",
+      "DEBBIE: Fine.",
+      "CLIVE: First, he's called Sanjay Dubashi.",
+      "DEBBIE: OK. Sanjay is spelled S-A-N-J-A-Y, right?",
+      "CLIVE: Correct. And Dubashi is D-U-B-A-S-H-I.",
+      "DEBBIE: D-U-B-A-S-H-I, fine, thanks, I'm just getting that down. And did you find out how old he is?",
+      "CLIVE: Sure, he's round about our age, you know – well, a couple of years older, he's 27, quite a big man, quite muscular, impressive, with a big moustache.",
+      "DEBBIE: And what does he do?",
+      "CLIVE: Well, actually, he just says he's an office worker, you know, just one of those people with quite a routine job in an office.",
+      "DEBBIE: Mm, doesn't sound like he finds his job very interesting. Has he got any experience, do you know, of going off to remote places on foot?",
+      "CLIVE: Yes, he's been all over the place. He was telling me all about a trip he made in a Land Rover across Central Africa from one side to the other, which sounded pretty exciting. And dangerous.",
+      "DEBBIE: Great! I think it would be really interesting to cross Central Africa. I'd love to do that. Anything physical? I mean, where he actually had to walk instead of driving – you know, being so muscular, as you say?",
+      "CLIVE: Mm, I was coming to that. Last year, he went to Russia with some friends in their summer holidays and they went up a mountain. Let's see, um, Mount Elbrus, it's called.",
+      "DEBBIE: Wow, now that's really quite something. By the way, Elbrus is spelled E-L-B-R-O-S, isn't it?",
+      "CLIVE: Not quite, it's U-S.",
+      "DEBBIE: Ah, OK ... What qualifications does he have which would interest us? Has he done any sort of specialist training, for example?",
+      "CLIVE: Well, he's done a course in first aid, which may be pretty useful. If any of us get injured, he should know what to do.",
+      "DEBBIE: Good. It might be useful to have someone who knows how to do first aid in case someone has an accident. Can he swim?",
+      "CLIVE: I didn't ask, now you mention it. I forgot. But he did tell me he can hold conversations in five languages. He's not fluent in all of them, but he can get by. He grew up in India, and I suppose that helps, you know, for learning languages, though now he lives over here.",
+      "DEBBIE: Right. What else? Has he been to university, for instance?",
+      "CLIVE: Yes, he graduated in media studies, though he says he's never worked in the media.",
+      "DEBBIE: OK, and when he's not off on expeditions to remote places, what does he like doing in his spare time?",
+      "CLIVE: He seems to do all sorts of things. One thing he told me which could be useful is that he likes fishing.",
+      "DEBBIE: Yes, we'd better tell him to bring his fishing rod – that is, if we choose him.",
+      "CLIVE: And he seems to spend a lot of time at the gym – he says he really likes to keep fit. And when you meet him, you'll believe it's true.",
+      "DEBBIE: Great, another fitness fanatic, like you. Well, sounds like I should meet him, doesn't it? When can you fix that up?"
+     ],
+     "tasks": [
+      {
+       "title": "Expedition candidate — complete the notes (1–10)",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Qaydlar suhbat tartibida (ALWAYS). Sarlavhalar (Other expeditions, Special skills...) qaysi qism kelayotganini ko'rsatadi.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+       ],
+       "answers": [
+        "Dubashi",
+        "27 / twenty-seven",
+        "office worker",
+        "Central Africa",
+        "Elbrus",
+        "first(-)aid",
+        "five languages",
+        "media studies",
+        "fishing",
+        "fit"
+       ],
+       "why": [
+        "Harflab aytilgan: D-U-B-A-S-H-I. Debbie takrorlaydi — tekshirish imkoni.",
+        "\"A couple of years older, he's 27\". Tuzoq: \"round about our age\" — aniq raqam emas; aniq raqamni kuting.",
+        "\"He just says he's an office worker\". Ikki so'z — chegarada.",
+        "\"A trip he made in a Land Rover across Central Africa\". Crossed = across ... from one side to the other. Tuzoq: \"Land Rover\" — transport, joy emas.",
+        "Tuzatish tuzog'i: Debbie \"E-L-B-R-O-S\" deydi, Clive tuzatadi: \"Not quite, it's U-S\". To'g'ri imlo — ELBRUS. \"Russia\" — mamlakat, tog' nomi emas.",
+        "\"He's done a course in first aid\". \"A ___ course\" — \"first aid course\".",
+        "\"He can hold conversations in five languages\". Can speak = hold conversations. Tuzoq: \"India\" — u yerda o'sgan, til nomi emas.",
+        "\"He graduated in media studies\". Degree in = graduated in.",
+        "\"He likes fishing\". Tuzoq: \"swim\" — Clive so'ramagan (\"I didn't ask\").",
+        "\"He really likes to keep fit\". \"Keeping ___\" — formada \"keeping\" bor, javob — \"fit\". Tuzoq: \"gym\" — joy, faoliyat emas."
+       ],
+       "note": "Kitob kaliti: 1 Dubashi 2 27/twenty-seven 3 office worker 4 Central Africa 5 Elbrus 6 first(-)aid 7 five languages 8 media studies 9 fishing 10 fit.",
+       "layout": "grid",
+       "head": [
+        "Candidate notes",
+        ""
+       ],
+       "rows": [
+        [
+         "Name:",
+         "Sanjay (1)"
+        ],
+        [
+         "Age:",
+         "(2)"
+        ],
+        [
+         "Occupation:",
+         "(3)"
+        ],
+        [
+         "Other expeditions:",
+         "has crossed (4) ;; has climbed Mount (5)"
+        ],
+        [
+         "Special skills:",
+         "has done a (6) course ;; can speak (7)"
+        ],
+        [
+         "Qualifications:",
+         "degree in (8)"
+        ],
+        [
+         "Free-time activities:",
+         "(9) ;; keeping (10)"
+        ]
+       ]
+      },
+      {
+       "title": "Tuzoqlar va signal so'zlar",
+       "type": "Tahlil",
+       "instr": "Javobdan oldin qanday belgi bor edi?",
+       "items": [
+        "Tuzatish",
+        "Taxminiy ma'lumot",
+        "Javob bo'lmagan savol",
+        "Paraphrase"
+       ],
+       "answers": [
+        "\"Elbrus is spelled E-L-B-R-O-S, isn't it?\" — \"Not quite, it's U-S.\"",
+        "\"round about our age\"",
+        "\"Can he swim?\" — \"I didn't ask\"",
+        "\"degree in\" = \"graduated in\"; \"can speak\" = \"hold conversations in\""
+       ],
+       "why": [
+        "Oxirgi, tuzatilgan variant yoziladi: ELBRUS.",
+        "Aniq javob keyin keladi: \"he's 27\".",
+        "Aytilmagan narsani yozmang.",
+        "Qaydlardagi so'z audioda boshqacha aytiladi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
     {
      "title": "Language school enrolment",
      "qtype": "Note completion (Section 1)",

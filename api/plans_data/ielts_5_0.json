@@ -16590,6 +16590,942 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 31,
+   "title": "Reading: Matching Sentence Endings",
+   "grammar_topic": "Matching sentence endings — gap boshini to'g'ri oxiri bilan ulash",
+   "vocab_topic": "Kashfiyotlar va tarix",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — 5 ta mualliflik matni (osondan qiyinga). Takrorlash uchun: 29-dars, Pompidou 5–8 va Le Corbusier 5–8.",
+   "objectives": [
+    "Matching sentence endings savol turining tuzilishini tushunish: gap boshi (1, 2, 3...) + oxirlar ro'yxati (A–G), ortiqcha oxirlar bor.",
+    "3 bosqichli filtrdan foydalanish: 1) GRAMMATIKA, 2) MATNDAN JOY, 3) MA'NO.",
+    "Gap boshidagi kalit so'zni matndan topish va javoblar tartibda kelishidan (USUALLY) foydalanish.",
+    "Asosiy tuzoqni tanish: oxir matnga ko'ra TO'G'RI, lekin boshqa gap boshiga tegishli.",
+    "5 ta matnda bosqichma-bosqich ishlash: Band 4 → Band 5.5."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Matching sentence endings — sizga gapning faqat BOSHI beriladi (masalan, \"Women who milked cows\"). Pastda A–G oxirlar ro'yxati bor. Har boshni bitta oxir bilan ulab, matnga mos TO'LIQ gap hosil qilasiz. Javob — harf.",
+     "Oxirlar ko'proq bo'ladi: 5 ta bosh — 7 ta oxir. Demak 2 ta oxir ortiqcha va ular ataylab \"to'g'ridek\" yozilgan.",
+     "1-FILTR — GRAMMATIKA (matnni o'qimasdan!). Bosh qanday tugaydi? \"Women who milked cows\" (ko'plik) → \"rarely caught...\" yoki \"were...\"; \"The ship\" (birlik) → \"was...\", \"were\" emas; \"...realised\" → \"that + gap\"; \"...hoped\" → \"to + fe'l\". Bu filtr ba'zi variantlarni darhol chiqarib tashlaydi.",
+     "2-FILTR — MATNDAN JOY. Gap boshidagi kalit so'zni (ism, sana, noyob so'z) matndan toping. Javoblar odatda (USUALLY) matn tartibida keladi: 3-savol javobi 2-savoldan keyinroq turadi.",
+     "3-FILTR — MA'NO. Qolgan 2–3 oxirni o'sha joy bilan solishtiring. Oxir matnda boshqa so'zlar bilan aytilgan bo'ladi (paraphrase).",
+     "ENG KATTA TUZOQ: oxir matnga ko'ra to'g'ri, lekin BOSHQA narsa, BOSHQA odam yoki BOSHQA vaqt haqida. Shuning uchun faqat \"to'g'rimi?\" emas, \"AYNAN SHU bosh haqidami?\" deb so'rang.",
+     "Tugagach butun gapni ovoz chiqarib o'qing: grammatik va mantiqiy jihatdan silliq bo'lishi kerak."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Boshlarni o'qing, kalit so'zni belgilang",
+      "milkmaids, the ship, Deep Blue",
+      "Matnda qidirasiz"
+     ],
+     [
+      "2-bosqich",
+      "Grammatika filtri",
+      "birlik/ko'plik, that, to, fe'l shakli",
+      "Matnsiz, 1 daqiqa"
+     ],
+     [
+      "3-bosqich",
+      "Har bosh yoniga mos oxirlarni yozing",
+      "1: B, D, F",
+      "2–3 ta nomzod"
+     ],
+     [
+      "4-bosqich",
+      "Matndan joyni toping",
+      "tartib bo'yicha (USUALLY)",
+      "Oldingi javobdan keyin"
+     ],
+     [
+      "5-bosqich",
+      "Ma'no filtri",
+      "paraphrase",
+      "\"Aynan shu bosh haqidami?\""
+     ],
+     [
+      "6-bosqich",
+      "Butun gapni o'qing",
+      "silliq va to'g'rimi",
+      "Ishlatilgan harfni o'chiring"
+     ]
+    ],
+    "presentation": [
+     [
+      "Bitta oxirni ikki marta ishlatsa bo'ladimi?",
+      "Odatda yo'q. Har oxir bir marta; ortiqchalari ishlatilmaydi."
+     ],
+     [
+      "Grammatika bo'yicha ikki oxir mos kelsa?",
+      "Normal holat. Endi matndan joyni topib, ma'no bo'yicha tanlang."
+     ],
+     [
+      "Javoblar matn tartibidami?",
+      "Odatda (USUALLY) ha. Topilmasa, butun matnda kalit so'zni qidiring."
+     ],
+     [
+      "Oxirdagi so'z matnda aynan bor. Shumi?",
+      "Ehtiyot bo'ling — aynan so'z ko'pincha tuzoq. Ma'noni va kim haqida ekanini tekshiring."
+     ],
+     [
+      "Summary completion bilan farqi nima?",
+      "Summaryda bitta matn va bo'sh joylar; bu yerda har gap alohida va oxir butun ibora bo'ladi."
+     ],
+     [
+      "Vaqt qancha?",
+      "Har gapga 1–1.5 daqiqa. Grammatika filtri vaqtni ancha tejaydi."
+     ]
+    ],
+    "notes": [
+     "Dars 5 ta matn bilan osondan qiyinga boradi: 1–2-matn Band 4 (qisqa matn, grammatika ko'p yordam beradi), 3–4-matn Band 4.5–5 (grammatika deyarli bir xil, \"kim haqida?\" hal qiladi), 5-matn Band 5.5 — uyga vazifa.",
+     "Birinchi matnni ustoz doskada \"ovoz chiqarib o'ylash\" usulida birga yechadi: har boshda uch filtrni navbat bilan aytadi.",
+     "Dars oxirida 29-darsdagi Pompidou 5–8 savollariga qaytib, o'quvchilar uch filtrni mustaqil qo'llaydi (5 daqiqa).",
+     "Har javobdan keyin eng muhim savol: \"Bu oxir nega BOSHQA boshga to'g'ri kelmaydi?\""
+    ],
+    "mistakes": [
+     [
+      "Matnni o'qishdan boshlash",
+      "Avval grammatika filtri",
+      "Variantlar kamayadi"
+     ],
+     [
+      "Aynan so'z mosligi bo'yicha tanlash",
+      "Ma'noni solishtirish",
+      "Aynan so'z — ko'pincha tuzoq"
+     ],
+     [
+      "To'g'ri, lekin boshqa odam haqidagi oxirni olish",
+      "\"Aynan shu bosh haqidami?\"",
+      "Deep Blue ↔ AlphaZero"
+     ],
+     [
+      "Birlik/ko'plikni tekshirmaslik (The ship ... were)",
+      "The ship ... was",
+      "Grammatika xatosi — noto'g'ri javob"
+     ],
+     [
+      "Bitta oxirni ikki marta ishlatish",
+      "Ishlatilganini o'chirish",
+      "Har oxir bir marta"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Faqat grammatika bilan ulang",
+     "type": "Og'zaki, 7 daqiqa",
+     "instr": "Matn yo'q! Faqat grammatika bo'yicha qaysi oxir mos kelishini ayting. Oxirlar: A to find a cure. B was built in 1912. C that the plan had failed. D were too expensive. E carefully.",
+     "items": [
+      "The scientists hoped",
+      "The first lifeboats",
+      "The ship",
+      "Everyone soon realised",
+      "The doctor examined the child"
+     ],
+     "answers": [
+      "A (to + fe'l)",
+      "D (ko'plik + were)",
+      "B (birlik + was)",
+      "C (that + gap)",
+      "E (ravish)"
+     ],
+     "why": [
+      "\"hoped\" dan keyin \"to find\". C ham grammatik bo'lishi mumkin (\"hoped that...\") — bunday holda matn hal qiladi.",
+      "\"lifeboats\" ko'plik — \"were\". B (\"was\") birlik uchun.",
+      "\"The ship was built\". D (\"were\") ko'plik uchun.",
+      "\"realised that the plan had failed\".",
+      "Gap to'liq; faqat qanday qilib — ravish."
+     ],
+     "note": "Xulosa: grammatika ko'pincha javobni to'liq bermaydi, lekin variantlarni kamaytiradi. Keyin matn va ma'no hal qiladi.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "The milkmaids and the first vaccine",
+     "qtype": "Matching sentence endings (1–5) — 1-bosqich, oson",
+     "source": "Jony Academy matni (Band 4)",
+     "text": [
+      "In the 18th century, smallpox was one of the most feared diseases in the world. It killed around a third of the people who caught it, and many survivors were left with deep marks on their faces.",
+      "Edward Jenner, a country doctor in England, heard a story that was common among farmers: milkmaids, the women who milked cows, rarely caught smallpox. Many of them had earlier caught cowpox, a mild disease that cows passed to humans, which caused only a few spots on the hands.",
+      "In 1796, Jenner decided to test the idea. He took material from a cowpox spot on the hand of a milkmaid called Sarah Nelmes and put it into a small cut on the arm of James Phipps, the eight-year-old son of his gardener. The boy became slightly ill for a few days and then recovered. Six weeks later, Jenner exposed him to smallpox. The boy did not become ill.",
+      "Other doctors were doubtful at first, and some newspapers laughed at the idea of putting material from cows into people. However, the method worked, and it spread quickly across Europe and America. Jenner called it \"vaccination\", from vacca, the Latin word for cow.",
+      "Almost two hundred years later, after a worldwide vaccination campaign, the World Health Organization declared in 1980 that smallpox had been completely eradicated. It remains the only human disease that has been wiped out in this way."
+     ],
+     "paraphrases": [
+      [
+       "rarely caught",
+       "almost never got"
+      ],
+      [
+       "mild",
+       "not serious"
+      ],
+      [
+       "recovered",
+       "became well again"
+      ],
+      [
+       "exposed him to",
+       "put him in contact with"
+      ],
+      [
+       "doubtful",
+       "not sure it was true"
+      ],
+      [
+       "laughed at",
+       "made fun of"
+      ],
+      [
+       "declared",
+       "officially announced"
+      ],
+      [
+       "eradicated",
+       "wiped out completely"
+      ]
+     ],
+     "glossary": [
+      "smallpox — chechak",
+      "survivor — tirik qolgan",
+      "milkmaid — sog'uvchi ayol",
+      "cowpox — sigir chechagi",
+      "spot — dog', toshma",
+      "vaccination — emlash",
+      "campaign — kampaniya",
+      "eradicate — butunlay yo'q qilmoq"
+     ],
+     "tasks": [
+      {
+       "title": "Complete each sentence with the correct ending, A–G",
+       "type": "Matching sentence endings",
+       "instr": "Uch filtr: grammatika → matndan joy → ma'no. 2 ta ortiqcha oxir bor.",
+       "items": [
+        "1 In the 18th century, smallpox",
+        "2 Women who milked cows",
+        "3 The person Jenner tested his idea on",
+        "4 Some newspapers",
+        "5 The word \"vaccination\""
+       ],
+       "answers": [
+        "A",
+        "B",
+        "D",
+        "E",
+        "F"
+       ],
+       "why": [
+        "Matn: \"It killed around a third of the people who caught it\". A third = one in three. Tuzoq: G ham chechak haqida, lekin 1980-yil — 18-asr emas.",
+        "Matn: \"milkmaids ... rarely caught smallpox\". Tuzoq: C \"became ill with smallpox\" — teskari.",
+        "\"James Phipps, the eight-year-old son of his gardener\". Young boy = eight-year-old son. Tuzoq: C — bola chechak bilan kasallanmagan.",
+        "\"Some newspapers laughed at the idea\". Laughed at = made fun of.",
+        "\"From vacca, the Latin word for cow\". Grammatika: \"comes\" — birlik (\"the word\")."
+       ],
+       "note": "Ortiqcha oxirlar: C (teskari — hech kim chechak bilan kasallanmagan) va G (to'g'ri fakt, lekin 1-boshdagi \"In the 18th century\" boshqa vaqtni ko'rsatadi). G — darsning asosiy tuzoq turi: to'g'ri, lekin boshqa vaqt haqida.",
+       "box": [
+        "A killed about one in three people who had it.",
+        "B rarely caught smallpox.",
+        "C became ill with smallpox.",
+        "D was a young boy.",
+        "E made fun of Jenner's idea.",
+        "F comes from the Latin word for cow.",
+        "G was declared finished in 1980."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Nega bu oxir emas?",
+       "type": "Tahlil",
+       "instr": "Har tuzoqni tushuntiring.",
+       "items": [
+        "1-savol G",
+        "2-savol C",
+        "3-savol C"
+       ],
+       "answers": [
+        "boshqa vaqt",
+        "teskari",
+        "teskari"
+       ],
+       "why": [
+        "1980 — 18-asr emas.",
+        "Sog'uvchilar deyarli kasallanmagan.",
+        "\"The boy did not become ill\"."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Oxirdagi so'zning matndagi juftini toping.",
+       "items": [
+        "one in three (A)",
+        "made fun of (E)",
+        "a young boy (D)"
+       ],
+       "answers": [
+        "a third",
+        "laughed at",
+        "the eight-year-old son"
+       ],
+       "why": [
+        "1-xatboshi.",
+        "4-xatboshi.",
+        "3-xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Why the Titanic sank so quickly",
+     "qtype": "Matching sentence endings (1–5) — 1-bosqich, oson",
+     "source": "Jony Academy matni (Band 4)",
+     "text": [
+      "On the night of 14 April 1912, the Titanic, the largest passenger ship in the world, hit an iceberg in the North Atlantic on its first voyage from England to New York. Less than three hours later, it was at the bottom of the sea.",
+      "The ship had been described as \"practically unsinkable\". It was divided into sixteen watertight compartments, and it could stay afloat if up to four of them were flooded. However, the iceberg damaged the side of the ship along a length of about ninety metres, and water entered five or six compartments. From that moment, the ship could not be saved.",
+      "There were other problems. The crew had received several warnings about ice from other ships that day, but the Titanic continued at high speed. When the lookouts finally saw the iceberg, it was too close to avoid.",
+      "The most serious problem was the lifeboats. The Titanic carried twenty lifeboats, enough for fewer than 1,200 people, although more than 2,200 were on board. The rules of the time were based on the size of a ship, not on the number of passengers, so the ship was not breaking the law. More than 1,500 people died.",
+      "The disaster led to important changes. In 1914, an international agreement required ships to carry enough lifeboats for everyone on board, and ships had to keep a radio watch for twenty-four hours a day."
+     ],
+     "paraphrases": [
+      [
+       "practically unsinkable",
+       "almost impossible to sink"
+      ],
+      [
+       "stay afloat",
+       "not go down"
+      ],
+      [
+       "flooded",
+       "filled with water"
+      ],
+      [
+       "warnings",
+       "messages about danger"
+      ],
+      [
+       "too close to avoid",
+       "could not be missed"
+      ],
+      [
+       "enough for",
+       "able to hold"
+      ],
+      [
+       "based on",
+       "decided by"
+      ],
+      [
+       "led to",
+       "caused"
+      ]
+     ],
+     "glossary": [
+      "iceberg — aysberg",
+      "voyage — dengiz safari",
+      "watertight — suv o'tkazmaydigan",
+      "compartment — bo'lim",
+      "crew — ekipaj",
+      "lookout — kuzatuvchi",
+      "lifeboat — qutqaruv qayig'i",
+      "on board — kemada"
+     ],
+     "tasks": [
+      {
+       "title": "Complete each sentence with the correct ending, A–G",
+       "type": "Matching sentence endings",
+       "instr": "Avval grammatika filtri — har bosh yoniga mumkin bo'lgan harflarni yozing. 2 ta ortiqcha oxir bor.",
+       "items": [
+        "1 Before the voyage, the Titanic",
+        "2 Five or six of the ship's compartments",
+        "3 Warnings about ice",
+        "4 The ship's lifeboats",
+        "5 The agreement made in 1914"
+       ],
+       "answers": [
+        "B",
+        "A",
+        "C",
+        "D",
+        "F"
+       ],
+       "why": [
+        "Grammatika: birlik — A va C (\"were\") chiqadi. Matn: \"described as 'practically unsinkable'\". E teskari: \"the ship was not breaking the law\".",
+        "Grammatika: ko'plik → faqat A yoki C (\"were\"). Matn: \"water entered five or six compartments\".",
+        "Grammatika: ko'plik → A yoki C. Matn: \"had received several warnings ... but the Titanic continued at high speed\" — e'tibor berilmagan.",
+        "\"Twenty lifeboats, enough for fewer than 1,200 people, although more than 2,200 were on board\". Less than half = 2,200 ning yarmidan kam.",
+        "\"Required ships to carry enough lifeboats for everyone on board\"."
+       ],
+       "note": "Ortiqcha oxirlar: E (teskari — qonun buzilmagan) va G (kuzatuvchilar kech ko'rgan, lekin hech bir bosh \"lookouts\" bilan boshlanmaydi). 2 va 3-savollarda grammatika filtri 7 variantdan faqat 2 tasini (A, C) qoldiradi — buni o'quvchilarga doskada ko'rsating.",
+       "box": [
+        "A were flooded after the ship hit the iceberg.",
+        "B was considered almost impossible to sink.",
+        "C were ignored by the ship.",
+        "D could hold less than half of the people on board.",
+        "E broke the law of the time.",
+        "F required enough lifeboats for everybody.",
+        "G saw the iceberg too late."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Grammatika filtri natijasi",
+       "type": "Tahlil",
+       "instr": "Har boshga grammatik jihatdan qaysi oxirlar mos?",
+       "items": [
+        "1 The Titanic (birlik)",
+        "2 compartments (ko'plik)",
+        "3 Warnings (ko'plik)"
+       ],
+       "answers": [
+        "B, D, E, F, G",
+        "A, C",
+        "A, C"
+       ],
+       "why": [
+        "A va C (\"were\") chiqadi; qolganini matn hal qiladi.",
+        "\"were\" bilan boshlanganlar.",
+        "Ma'no hal qiladi: C."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Oxirdagi so'zning matndagi juftini toping.",
+       "items": [
+        "almost impossible to sink (B)",
+        "ignored (C)",
+        "less than half (D)"
+       ],
+       "answers": [
+        "practically unsinkable",
+        "continued at high speed",
+        "fewer than 1,200 ... more than 2,200"
+       ],
+       "why": [
+        "2-xatboshi.",
+        "3-xatboshi.",
+        "4-xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "How computers learnt to play chess",
+     "qtype": "Matching sentence endings (1–6) — 2-bosqich, o'rta",
+     "source": "Jony Academy matni (Band 4.5)",
+     "text": [
+      "For centuries, chess was seen as the ultimate test of human intelligence. When the first computer programs appeared in the 1950s, many scientists believed that a machine able to beat the world champion would prove that computers could really think.",
+      "Early programs were weak. They could calculate quickly, but they had no sense of which moves were important, and good amateur players beat them easily. Progress came slowly, mainly through faster computers that could examine more positions every second.",
+      "In 1996, IBM's computer Deep Blue played a six-game match against the world champion, Garry Kasparov. Deep Blue won the first game, but Kasparov won the match. A year later, after its engineers had improved it, Deep Blue won a rematch. Kasparov was angry and suggested that humans had helped the machine during the games, but IBM denied this and refused his request for a third match.",
+      "Deep Blue did not \"understand\" chess. It simply examined around 200 million positions per second and used rules written by human experts. In 2017, a program called AlphaZero took a completely different approach. It was given only the rules of the game and then played millions of games against itself. Within a day, it was stronger than any previous program, and experts described its style as creative and surprisingly human.",
+      "Today, the best programs are far stronger than any person. Yet chess has not died. More people play it than ever before, and top players use computers not as opponents but as training partners."
+     ],
+     "paraphrases": [
+      [
+       "ultimate",
+       "the highest, final"
+      ],
+      [
+       "weak",
+       "not good"
+      ],
+      [
+       "amateur",
+       "not professional"
+      ],
+      [
+       "rematch",
+       "second match"
+      ],
+      [
+       "denied",
+       "said it was not true"
+      ],
+      [
+       "refused",
+       "said no to"
+      ],
+      [
+       "approach",
+       "way of doing something"
+      ],
+      [
+       "opponents",
+       "people you play against"
+      ]
+     ],
+     "glossary": [
+      "intelligence — aql, intellekt",
+      "calculate — hisoblamoq",
+      "position — holat (shaxmatda)",
+      "world champion — jahon chempioni",
+      "engineer — muhandis",
+      "request — so'rov",
+      "creative — ijodiy",
+      "training partner — mashg'ulot sherigi"
+     ],
+     "tasks": [
+      {
+       "title": "Complete each sentence with the correct ending, A–H",
+       "type": "Matching sentence endings",
+       "instr": "Bu matnda grammatika kam yordam beradi — ma'no va \"kim haqida?\" savoli hal qiladi. 2 ta ortiqcha oxir bor.",
+       "items": [
+        "1 Many early scientists believed that beating the world champion",
+        "2 The first chess programs",
+        "3 After being improved, Deep Blue",
+        "4 Kasparov",
+        "5 AlphaZero",
+        "6 Top players today"
+       ],
+       "answers": [
+        "F",
+        "C",
+        "A",
+        "D",
+        "B",
+        "G"
+       ],
+       "why": [
+        "\"A machine able to beat the world champion would prove that computers could really think\". Would show = would prove.",
+        "\"Good amateur players beat them easily\". Grammatika: ko'plik → \"were\".",
+        "\"A year later, after its engineers had improved it, Deep Blue won a rematch\". Tuzoq: E ham Deep Blue haqida to'g'ri — lekin boshdagi \"after being improved\" aynan rematchga ishora qiladi.",
+        "\"Suggested that humans had helped the machine\". Tuzoq: H — rad etgan IBM (uchinchi o'yin so'rovini), Kasparov emas.",
+        "\"Played millions of games against itself\". Tuzoq: E — bu Deep Blue (\"rules written by human experts\"); AlphaZero faqat qoidalarni olgan.",
+        "\"Use computers not as opponents but as training partners\". Help them practise = training partners."
+       ],
+       "note": "Ortiqcha oxirlar: E (to'g'ri — lekin Deep Blue haqida, u esa 3-savolda allaqachon A bilan) va H (hech kim kompyuter bilan o'ynashdan bosh tortmagan; IBM uchinchi o'yindan bosh tortgan). 3 va 5-savol — \"to'g'ri, lekin boshqa kompyuter haqida\" tuzog'ining eng yaxshi misoli.",
+       "box": [
+        "A beat Kasparov in a second match.",
+        "B learnt by playing against itself.",
+        "C were easily beaten by good amateur players.",
+        "D claimed that people had helped the computer.",
+        "E used rules written by chess experts.",
+        "F would show that machines could think.",
+        "G use computers to help them practise.",
+        "H refused to play against computers."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Nega bu oxir emas?",
+       "type": "Tahlil",
+       "instr": "Har tuzoqni tushuntiring.",
+       "items": [
+        "3-savol E",
+        "4-savol H",
+        "5-savol E"
+       ],
+       "answers": [
+        "ikkinchi to'g'ri fakt",
+        "boshqa odam",
+        "boshqa kompyuter"
+       ],
+       "why": [
+        "Deep Blue haqida to'g'ri, lekin boshdagi \"after being improved\" rematchni so'raydi.",
+        "Rad etgan — IBM.",
+        "Mutaxassislar qoidalari — Deep Blue."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Oxirdagi so'zning matndagi juftini toping.",
+       "items": [
+        "would show (F)",
+        "in a second match (A)",
+        "claimed (D)",
+        "help them practise (G)"
+       ],
+       "answers": [
+        "would prove",
+        "a rematch",
+        "suggested",
+        "training partners"
+       ],
+       "why": [
+        "1-xatboshi.",
+        "3-xatboshi.",
+        "3-xatboshi.",
+        "Oxirgi xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "The mould that changed medicine",
+     "qtype": "Matching sentence endings (1–6) — 2-bosqich, o'rta",
+     "source": "Jony Academy matni (Band 5)",
+     "text": [
+      "In September 1928, the Scottish scientist Alexander Fleming returned to his laboratory in London after a summer holiday. Among the untidy piles of glass dishes on his bench, he noticed something strange: on one dish of bacteria, a blue-green mould had grown, and around it the bacteria had disappeared.",
+      "Fleming realised that the mould was producing a substance that killed bacteria, and he named it penicillin. He published his results in 1929, but he could not produce the substance in large amounts or in a pure form, and after a few years he moved on to other research. For almost a decade, his discovery attracted little attention.",
+      "The story continued at Oxford University, where Howard Florey and Ernst Chain began to study penicillin in 1939. Their team found a way to purify it, and in 1940 they showed that it could protect mice from deadly infections. The first human patient, a policeman, was treated in 1941. He began to recover, but the supply ran out and he died — which showed how much more of the drug was needed.",
+      "Mass production began in the United States, where companies learnt to grow the mould in huge tanks. By 1944, there was enough penicillin to treat the soldiers injured on D-Day. In 1945, Fleming, Florey and Chain shared the Nobel Prize in Medicine.",
+      "In his Nobel speech, Fleming gave a warning: if people used too little penicillin, or used it when it was not needed, bacteria could become resistant. Today, antibiotic resistance is one of the most serious problems in medicine, exactly as he predicted."
+     ],
+     "paraphrases": [
+      [
+       "untidy",
+       "not organised"
+      ],
+      [
+       "disappeared",
+       "were no longer there"
+      ],
+      [
+       "substance",
+       "material"
+      ],
+      [
+       "pure",
+       "not mixed with anything else"
+      ],
+      [
+       "attracted little attention",
+       "few people were interested"
+      ],
+      [
+       "purify",
+       "make clean and pure"
+      ],
+      [
+       "ran out",
+       "was all used"
+      ],
+      [
+       "resistant",
+       "not affected by"
+      ]
+     ],
+     "glossary": [
+      "mould — mog'or",
+      "bacteria — bakteriyalar",
+      "bench — laboratoriya stoli",
+      "infection — infeksiya",
+      "mass production — ommaviy ishlab chiqarish",
+      "tank — katta idish",
+      "antibiotic — antibiotik",
+      "resistance — chidamlilik"
+     ],
+     "tasks": [
+      {
+       "title": "Complete each sentence with the correct ending, A–H",
+       "type": "Matching sentence endings",
+       "instr": "Bu matnda uch olim bor — har oxir KIM va QACHON haqida ekanini tekshiring. 2 ta ortiqcha oxir bor.",
+       "items": [
+        "1 In 1929, Fleming",
+        "2 The Oxford team",
+        "3 The first human patient",
+        "4 Huge tanks in the United States",
+        "5 By 1944, penicillin",
+        "6 In his Nobel speech, Fleming"
+       ],
+       "answers": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "H",
+        "F"
+       ],
+       "why": [
+        "\"He could not produce the substance in large amounts or in a pure form\". Tuzoq: E ham Fleming haqida to'g'ri, lekin 1928-yil voqeasi; boshdagi \"In 1929\" — maqola va muammo davri.",
+        "\"Their team found a way to purify it\". Purify = make pure.",
+        "\"The supply ran out and he died\".",
+        "\"Companies learnt to grow the mould in huge tanks\". Grammatika: \"tanks\" ko'plik → \"were used\".",
+        "\"Enough penicillin to treat the soldiers injured on D-Day\".",
+        "\"He gave a warning ... bacteria could become resistant\". Tuzoq: G — mukofot uch kishiga bo'lingan (\"shared\")."
+       ],
+       "note": "Ortiqcha oxirlar: E (to'g'ri fakt, lekin 1-savoldagi \"In 1929\" boshqa vaqtni ko'rsatadi) va G (teskari — \"shared the Nobel Prize\"). Bu matnda sana va odam — ikki asosiy filtr.",
+       "box": [
+        "A was not able to make penicillin in large quantities.",
+        "B found a way to make penicillin pure.",
+        "C died because there was not enough of the drug.",
+        "D were used to grow the mould in large amounts.",
+        "E was the first to notice the effect of the mould.",
+        "F predicted that bacteria could become resistant.",
+        "G received the Nobel Prize alone.",
+        "H was used to treat injured soldiers."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Nega bu oxir emas?",
+       "type": "Tahlil",
+       "instr": "Har tuzoqni tushuntiring.",
+       "items": [
+        "1-savol E",
+        "2-savol A",
+        "6-savol G"
+       ],
+       "answers": [
+        "boshqa vaqt",
+        "boshqa odam",
+        "teskari"
+       ],
+       "why": [
+        "Mog'orni ko'rish — 1928; savol 1929.",
+        "Katta miqdorda ishlab chiqara olmagan — Fleming.",
+        "\"Shared\"."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Oxirdagi so'zning matndagi juftini toping.",
+       "items": [
+        "in large quantities (A)",
+        "make pure (B)",
+        "not enough of the drug (C)",
+        "predicted (F)"
+       ],
+       "answers": [
+        "in large amounts",
+        "purify",
+        "the supply ran out",
+        "gave a warning"
+       ],
+       "why": [
+        "2-xatboshi.",
+        "3-xatboshi.",
+        "3-xatboshi.",
+        "Oxirgi xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "The Silk Road: more than a road",
+     "qtype": "Matching sentence endings (1–6) — 3-bosqich, qiyin",
+     "source": "Jony Academy matni (Band 5.5) — uyga vazifa",
+     "text": [
+      "The name \"Silk Road\" suggests a single highway along which camels carried silk from China to Europe. In reality, it was a changing network of routes, by land and by sea, that connected East Asia, Central Asia, the Middle East and the Mediterranean for more than 1,500 years. The name itself is surprisingly modern: it was introduced in 1877 by the German geographer Ferdinand von Richthofen.",
+      "Very few merchants travelled the whole distance. Goods usually moved in stages, passing from one trader to the next, and each city along the way took its profit. Cities such as Samarkand and Bukhara grew rich not only by selling goods but by providing markets, water and places to rest for the caravans that passed through them.",
+      "Silk was the most famous product, but it was far from the only one. Horses, spices, glass, paper, precious metals and medicines all travelled along the routes, in both directions. In many periods, the most valuable things that moved were not goods at all but ideas. Religions such as Buddhism and later Islam spread along the trade routes, and so did technologies: the knowledge of how to make paper reached Samarkand from China in the 8th century and later spread to the Middle East and Europe.",
+      "The exchange was not always positive. Diseases travelled with the merchants, and many historians believe that the plague which killed millions of people in the 14th century reached Europe partly through these trade networks.",
+      "In 2014, part of the network — the routes of the Chang'an-Tianshan corridor — became a UNESCO World Heritage Site. For the people of Uzbekistan, whose cities stood at the centre of the network, the Silk Road is not only a subject of history but a source of national pride."
+     ],
+     "paraphrases": [
+      [
+       "suggests",
+       "makes people think of"
+      ],
+      [
+       "in reality",
+       "in fact"
+      ],
+      [
+       "network",
+       "system of connected routes"
+      ],
+      [
+       "introduced",
+       "first used"
+      ],
+      [
+       "in stages",
+       "step by step"
+      ],
+      [
+       "took its profit",
+       "earned money"
+      ],
+      [
+       "far from the only one",
+       "one of many"
+      ],
+      [
+       "travelled with",
+       "were carried by"
+      ]
+     ],
+     "glossary": [
+      "highway — katta yo'l",
+      "route — yo'nalish",
+      "merchant — savdogar",
+      "caravan — karvon",
+      "spice — ziravor",
+      "precious metal — qimmatbaho metall",
+      "plague — o'lat",
+      "corridor — yo'lak",
+      "national pride — milliy g'urur"
+     ],
+     "tasks": [
+      {
+       "title": "Complete each sentence with the correct ending, A–H",
+       "type": "Matching sentence endings",
+       "instr": "Uyda 12 daqiqada bajaring. 2 ta ortiqcha oxir bor. Uch filtrni yozma belgilang.",
+       "items": [
+        "1 The name \"Silk Road\"",
+        "2 Most merchants",
+        "3 Cities such as Samarkand and Bukhara",
+        "4 The technology of paper-making",
+        "5 The 14th-century plague",
+        "6 Part of the trade network"
+       ],
+       "answers": [
+        "A",
+        "C",
+        "B",
+        "E",
+        "F",
+        "G"
+       ],
+       "why": [
+        "\"Introduced in 1877\" — 19-asr. Tuzoq: H — ism BITTA yo'lni eslatadi, lekin yo'l bitta bo'lmagan.",
+        "\"Very few merchants travelled the whole distance\". Rarely = very few.",
+        "\"Grew rich ... by providing markets, water and places to rest for the caravans\". Tuzoq: E da ham Samarqand bor, lekin u qog'oz haqida.",
+        "\"Reached Samarkand from China in the 8th century and later spread to the Middle East and Europe\".",
+        "\"Reached Europe partly through these trade networks\". \"May have\" = \"many historians believe\" (aniq emas).",
+        "\"Became a UNESCO World Heritage Site\". International organisation = UNESCO."
+       ],
+       "note": "Ortiqcha oxirlar: D (teskari — \"far from the only one\") va H (teskari — \"a changing network\"). 3 va 4-savol: ikkala oxirda ham Samarqand — faqat ma'no hal qiladi. 5-savoldagi \"may have\" — matndagi \"historians believe\" noaniqligining paraphrase'i.",
+       "box": [
+        "A was first used in the 19th century.",
+        "B made money by serving travelling traders.",
+        "C rarely made the whole journey.",
+        "D was the only important product.",
+        "E reached Samarkand before Europe.",
+        "F may have been carried to Europe by traders.",
+        "G was recognised by an international organisation.",
+        "H was built as a single road."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Uch filtr daftari",
+       "type": "Yozma",
+       "instr": "Har savol uchun uch filtrni yozing.",
+       "items": [
+        "1-savol",
+        "3-savol",
+        "5-savol"
+       ],
+       "answers": [
+        "grammatika: birlik (\"was\" oxirlari mos) → matn: 1-xatboshi → ma'no: 1877 = 19-asr",
+        "grammatika: ko'plik (\"Cities\") → fe'l bilan boshlangan oxirlar → matn: 2-xatboshi → ma'no: karvonlarga xizmat",
+        "grammatika: birlik → matn: 4-xatboshi → ma'no: \"may have\" = \"believe\""
+       ],
+       "why": [
+        "A.",
+        "B.",
+        "F."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-matn: \"The Silk Road: more than a road\"",
+     "type": "Reading",
+     "instr": "12 daqiqada bajaring; har savol uchun uch filtrni yozing (grammatika → joy → ma'no).",
+     "answers": "Javoblar va izohlar Reading bo'limida.",
+     "layout": "list"
+    },
+    {
+     "title": "Tuzoq ovchisi",
+     "type": "Yozma",
+     "instr": "Bugungi 5 matndagi 10 ta ortiqcha oxirni yozing va har birining turini belgilang: teskari / boshqa odam / boshqa vaqt / boshqa narsa haqida.",
+     "answers": "10 qator, turi bilan.",
+     "layout": "list"
+    },
+    {
+     "title": "O'z mashqingizni tuzing",
+     "type": "Yozma",
+     "instr": "29-darsdagi Pompidou matnidan 3 ta gap boshi va 5 ta oxir (2 tasi ortiqcha, tuzoq) yozing. Keyingi darsda sherigingiz yechadi.",
+     "answers": "Ustoz tuzoqlar sifatini baholaydi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Sentence endings (uyga)",
+     "6 javobdan 5 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Tuzoq ovchisi",
+     "10 qator, turi bilan",
+     "2 coin"
+    ],
+    [
+     "O'z mashqingiz",
+     "3 bosh + 5 oxir, ishlaydigan",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

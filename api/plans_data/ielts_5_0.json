@@ -6774,7 +6774,7 @@
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
+   "book_ref": "Jony Academy materiali — ustoz bergan audio (Track 18 Ferry — further details) va 3 ta mualliflik skripti.",
    "objectives": [
     "Savol va uchta variantni audio boshlanishidan oldin o'qib ulgurish.",
     "Uchala variant ham audioda eshitilishini bilish: eshitilgani emas, MOS kelgani tanlanadi.",
@@ -6981,6 +6981,77 @@
    ],
    "readings": [],
    "listenings": [
+    {
+     "title": "Track 18. Ferry — further details",
+     "qtype": "Multiple choice (Questions 6–10) — asosiy",
+     "audios": "Ustoz bergan audio (Track 18)",
+     "audio": "ielts5_09_ferry_details.mp3",
+     "intro": [
+      "8-darsdagi \"Pride of Poole\" kemasi e'lonining davomi. Avval savollarni o'qing va har savolda kalit so'zni belgilang (what time, children, reduced price, lounge, special event). Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Choose the correct letter, A, B or C. MCQ da uchala variant ham audioda tilga olinadi — faqat bittasi savolga aniq javob."
+     ],
+     "transcript": [
+      "Now for some further details. This voyage is an overnight trip. The ship leaves port at 7 p.m. and the journey takes just over 12 hours and 45 minutes, reaching our destination at about eight tomorrow morning. This is for the convenience of those wishing to catch the nine o'clock train, which leaves from the ferry terminal.",
+      "Passengers with children in their party are informed that there is a special section in the restaurant with kids' food and a play area. People with children are encouraged to turn up early to get a place, as the section is very popular.",
+      "Make this a trip to remember. Here at the information desk, you can obtain a souvenir ship's key ring for four euros fifty; you can upgrade from a tourist-class cabin to a first-class cabin; and you can get your train tickets here, which will save you time queuing in the station tomorrow morning. If you buy them on the ship, you can get them for 20 percent off.",
+      "For those using the lounge and wishing to check their email, there's a wireless connection, but you'll have to bring your own laptop. You can also watch the latest TV programmes there or in the coffee bar next to the restaurant.",
+      "Finally, a unique feature on this crossing only: anyone who buys a fashion item from our wonderful range of men's and women's clothes in the shopping area has the chance to win a free holiday. All you have to do is complete a sentence starting 'I like Sealand Ferries because ...' and the best sentence wins the prize of a holiday in Switzerland with tickets to a three-day music festival included. Talk to any member of staff for more details."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 6–10: Choose the correct letter, A, B or C",
+       "type": "Multiple choice",
+       "instr": "Savollar audio tartibida (ALWAYS). Uchala variant ham eshitiladi — \"qaysi biri SAVOLGA javob?\" deb so'rang.",
+       "items": [
+        "6 At approximately what time will the ship arrive? A) at 7 a.m. B) at 8 a.m. C) at 9 a.m.",
+        "7 Which of these can children have in the restaurant? A) a children's menu B) earlier mealtimes C) a children's party",
+        "8 What are available at a reduced price? A) souvenirs of the ship B) first-class cabins C) train tickets",
+        "9 Which of these is situated in the lounge? A) a computer B) a coffee machine C) a television",
+        "10 What special event will happen during the voyage? A) a fashion show B) a concert C) a competition"
+       ],
+       "answers": [
+        "B",
+        "A",
+        "C",
+        "C",
+        "C"
+       ],
+       "why": [
+        "\"Reaching our destination at about eight tomorrow morning\". A tuzoq: \"7 p.m.\" — jo'nash vaqti (kechqurun). C tuzoq: \"the nine o'clock train\" — poyezd vaqti, kema emas.",
+        "\"A special section in the restaurant with kids' food\". Kids' food = children's menu. B tuzoq: \"turn up early to get a place\" — joy olish uchun erta kelish, ovqat vaqti erta emas. C — \"play area\" bor, bayram yo'q.",
+        "\"If you buy them on the ship, you can get them for 20 percent off\" — them = train tickets. Reduced price = 20 percent off. A tuzoq: key ring narxi aytilgan (4.50), lekin chegirma yo'q. B — upgrade qilish mumkin, arzonroq emas.",
+        "\"You can also watch the latest TV programmes there\" — there = the lounge. A tuzoq: wireless bor, lekin \"bring your own laptop\" — kompyuter yo'q. B tuzoq: \"coffee bar next to the restaurant\" — boshqa joy.",
+        "\"Complete a sentence ... the best sentence wins the prize\" — bu tanlov (competition). A tuzoq: \"fashion item\" — kiyim sotib olish sharti, ko'rgazma emas. B tuzoq: \"a three-day music festival\" — sovrin ichida, kemada emas."
+       ],
+       "note": "Ustoz kaliti: 6 B, 7 A, 8 C, 9 C, 10 C. Bu mashq Listening MCQ ning asosiy qonunini ko'rsatadi: har savolda UCHALA variant ham audioda tilga olinadi — 7 p.m./8/9 o'clock; kids' food/early/play; souvenir/first-class/tickets; laptop/coffee bar/TV; fashion/festival/sentence.",
+       "layout": "mcq"
+      },
+      {
+       "title": "Nega boshqa variantlar emas?",
+       "type": "Tahlil",
+       "instr": "Har tuzoq variant audioda qanday eshitildi?",
+       "items": [
+        "6-savol A (7 a.m.)",
+        "8-savol A (souvenirs)",
+        "9-savol B (coffee machine)",
+        "10-savol B (concert)"
+       ],
+       "answers": [
+        "\"leaves port at 7 p.m.\"",
+        "\"key ring for four euros fifty\"",
+        "\"coffee bar next to the restaurant\"",
+        "\"tickets to a three-day music festival\""
+       ],
+       "why": [
+        "Soat to'g'ri, lekin p.m. va jo'nash — savol kelish vaqtini so'raydi.",
+        "Narx aytildi, chegirma emas.",
+        "Joy boshqa.",
+        "Sovrin — kemadagi voqea emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
     {
      "title": "Choosing a part-time job",
      "qtype": "Multiple choice",

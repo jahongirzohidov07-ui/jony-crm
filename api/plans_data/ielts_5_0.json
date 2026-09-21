@@ -9523,6 +9523,1547 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 15,
+   "title": "Reading: Sentence Completion",
+   "grammar_topic": "Sentence completion — gapni matndagi so'z bilan to'ldirish",
+   "vocab_topic": "Hayvonlar va tabiat",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matni (#20) va mualliflik matnlari.",
+   "objectives": [
+    "Gapni to'ldirishda so'z chegarasini (NO MORE THAN TWO WORDS) aniq saqlash.",
+    "Bo'sh joy oldidagi va keyingi so'zlarga qarab kerakli so'z turini topish (parosat usuli).",
+    "Gapdagi kalit so'zning matndagi paraphraseini topib, javobni o'sha joydan olish.",
+    "Javobni gapga qo'yib qayta o'qish: grammatika va ma'no to'g'rimi?",
+    "4 ta matnda (ustoz matni + 3 ta Jony Academy matni) ishlash va har javobni isbotlash."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Sentence completion — gapning bir qismi beriladi, bo'sh joyni matndagi so'z bilan to'ldirasiz. Javob matndan AYNAN olinadi, o'zgartirilmaydi.",
+     "Ko'rsatmani birinchi o'qing: \"NO MORE THAN TWO WORDS\" — bir yoki ikki so'z. Uch so'z yozsangiz, to'g'ri bo'lsa ham 0 ball.",
+     "Gaplar matn tartibida keladi (ALWAYS). 3-javob 2-javobdan keyingi joyda turadi.",
+     "Parosat: bo'sh joydan oldingi so'zga qarang. \"will attack ___\" — ot (kimni?); \"make it ___\" — sifat; \"by their ___\" — ot; \"have a ___ with\" — ot.",
+     "Gapdagi so'zlar matnda boshqacha aytiladi: \"protect themselves\" = \"if it thinks the human will attack or harm it\". Kalit so'zning paraphraseini qidiring.",
+     "Tuzoq: matnda javob uch so'zli bo'lishi mumkin (\"sense of smell\"). Unda gapga mos keladigan va chegaraga sig'adigan qismini yozing (\"smell\").",
+     "Javobni yozgach gapni to'liq o'qing. Grammatika buzilsa (birlik/ko'plik, sifat/ot) — javob noto'g'ri."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Ko'rsatmani o'qing",
+      "NO MORE THAN TWO WORDS",
+      "So'z chegarasini belgilang"
+     ],
+     [
+      "2-bosqich",
+      "Gapdagi kalit so'zni belgilang",
+      "ism, raqam, noyob so'z",
+      "Matnda tez topiladi"
+     ],
+     [
+      "3-bosqich",
+      "Bo'sh joy turini aniqlang",
+      "ot / sifat / fe'l",
+      "Parosat usuli"
+     ],
+     [
+      "4-bosqich",
+      "Matndan paraphraseni toping",
+      "\"protect themselves\" = \"harm it\"",
+      "Tartib bo'yicha"
+     ],
+     [
+      "5-bosqich",
+      "So'zni matndan ko'chiring",
+      "o'zgartirmasdan",
+      "Imlo muhim"
+     ],
+     [
+      "6-bosqich",
+      "Gapni qayta o'qing",
+      "grammatika + ma'no",
+      "Chegarani qayta tekshiring"
+     ]
+    ],
+    "presentation": [
+     [
+      "Javobni o'z so'zim bilan yozsam bo'ladimi?",
+      "Yo'q. Faqat matndagi so'z, o'zgartirmasdan."
+     ],
+     [
+      "Matnda javob uch so'z bo'lsa-chi?",
+      "Gapga mos va chegaraga sig'adigan qismini yozing. Masalan \"sense of smell\" emas, \"smell\"."
+     ],
+     [
+      "Artikl (a/the) yozishim kerakmi?",
+      "Odatda yo'q — artikl gapda allaqachon bor bo'ladi."
+     ],
+     [
+      "Katta-kichik harf muhimmi?",
+      "Yo'q, lekin imlo muhim."
+     ],
+     [
+      "Javoblar tartibdami?",
+      "Ha, sentence completion javoblari matn tartibida keladi."
+     ],
+     [
+      "Ikki javob ham to'g'ridek tuyulsa?",
+      "Gapning qolgan qismini matn bilan solishtiring — faqat bittasi ma'noga to'liq mos keladi."
+     ]
+    ],
+    "notes": [
+     "Bu dars 2-dars (parosat) va 14-dars (summary completion) ko'nikmalariga tayanadi. Farqi: bu yerda har gap alohida.",
+     "Har javobdan keyin so'rang: \"gapdagi qaysi so'z matndagi qaysi iboraga teng?\"",
+     "Ustoz matnining 6-savoli (sense of smell) so'z chegarasi haqida eng yaxshi misol — doskada alohida tahlil qiling."
+    ],
+    "mistakes": [
+     [
+      "Uch so'z yozish (\"sense of smell\")",
+      "smell",
+      "Chegara buzilsa — 0 ball"
+     ],
+     [
+      "So'z shaklini o'zgartirish (recognise)",
+      "recognisable",
+      "Gap sifat talab qiladi"
+     ],
+     [
+      "Artikl qo'shish (\"the humans\")",
+      "humans",
+      "Artikl kerak emas"
+     ],
+     [
+      "Gapga mos kelmagan so'zni olish",
+      "Gapni qayta o'qish",
+      "Ma'no va grammatika tekshiriladi"
+     ],
+     [
+      "Imlo xatosi (agressive)",
+      "aggressive",
+      "Noto'g'ri imlo — noto'g'ri javob"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Parosat: bo'sh joy turi",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Matnga qaramasdan har bo'sh joy uchun qanday so'z kerakligini ayting.",
+     "items": [
+      "fearless, ___ and tough",
+      "will attack ___ if they need to protect themselves",
+      "make it ___",
+      "meat-based and ___",
+      "___ form the biggest part",
+      "by their ___"
+     ],
+     "answers": [
+      "sifat",
+      "ot (kimni?)",
+      "sifat",
+      "sifat",
+      "ko'plik ot",
+      "ot"
+     ],
+     "why": [
+      "Ikki sifat orasida — sifat.",
+      "\"attack\" dan keyin to'ldiruvchi ot.",
+      "\"make it + sifat\".",
+      "\"and\" bilan bog'langan ikkinchi sifat.",
+      "\"form\" ko'plik fe'l — ko'plik ot.",
+      "\"their\" dan keyin ot."
+     ],
+     "note": "Bashorat yozilgach matn ochiladi va har javob \"kutgan turim to'g'ri keldimi?\" bilan tekshiriladi.",
+     "layout": "list"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Reading #20. The honey badger",
+     "qtype": "Sentence completion (1–8)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "It looks harmless and vulnerable. But the honey badger is afraid of nothing... and will attack and eat almost anything",
+      "The honey badger (Mellivora capensis) is an African and south-Asian mammal that has a reputation for being one of the world's most fearless animals, _despite its small size_. And in spite of its gentle-sounding name, it is also one of its most _aggressive_. Honey badgers have been known to attack lions, buffalo, and snakes three times their size. Even _humans_ are not safe from a honey badger _if it thinks the human will attack or harm it_. They are also extremely tough creatures, and can recover quickly from injuries that would kill most other animals.",
+      "At first glance, honey badgers look like the common European badger. They are usually between 75cm and 1 metre long, although males are about twice the size of females. They are instantly _recognisable_ by grey and white stripes that extend from the top of the head to the tail. Closer inspection, which is probably not a wise thing to do, reveals pointed teeth, and sharp front claws which can be four centimetres in length.",
+      "Honey badgers are _meat-eating_ animals with an extremely _varied_ diet. They _mainly eat_ a range of _small creatures_ like beetles, lizards and birds, but will also catch larger reptiles like snakes and small crocodiles. Some mammals, such as foxes, antelope and wild cats also form part of their diet.",
+      "The badgers _locate their prey_ mainly using their excellent sense of _smell_, and catch most of their prey through digging. During a 24-hour period, they may dig as many as fifty holes, and travel more than 40 kilometres. They are also good climbers, and can easily climb very tall trees to steal eggs from birds' nests, or catch other tree-dwelling creatures.",
+      "As their name suggests, honey badgers have always been associated with honey, although they do not actually eat it. It is the highly nutritious bee eggs (called 'brood') that they prefer, and they will do anything to find it. They usually cause a lot of damage to the hive in the process, and for this reason, humans are one of their main predators. Bee-keepers will often set _special traps_ for honey badgers, to protect their hives.",
+      "One of the most fascinating aspects of the honey badger is its _working relationship_ with a bird called the greater honeyguide (Indicator indicator). This bird deliberately guides the badger to beehives, then waits while the badger breaks into the hive and extracts the brood. The two creatures, bird and mammal, then share the brood between them."
+     ],
+     "paraphrases": [
+      [
+       "not big",
+       "small size"
+      ],
+      [
+       "protect themselves",
+       "if it thinks the human will attack or harm it"
+      ],
+      [
+       "the pattern and colours on its back",
+       "grey and white stripes"
+      ],
+      [
+       "meat-based",
+       "meat-eating"
+      ],
+      [
+       "form the biggest part",
+       "mainly eat"
+      ],
+      [
+       "find the creatures they eat",
+       "locate their prey"
+      ],
+      [
+       "catch",
+       "set traps"
+      ],
+      [
+       "attack beehives",
+       "cause damage to the hive"
+      ],
+      [
+       "one particular type of food",
+       "the brood"
+      ],
+      [
+       "another creature",
+       "a bird called the greater honeyguide"
+      ]
+     ],
+     "glossary": [
+      "vulnerable — himoyasiz",
+      "reputation — obro', nom",
+      "claw — tirnoq, changal",
+      "reptile — sudralib yuruvchi",
+      "prey — o'lja",
+      "hive — ari uyasi",
+      "brood — ari tuxumlari va lichinkalari"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–8: Complete the sentences",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "Gaplar matn tartibida (ALWAYS). Javobni gapga qo'yib qayta o'qing.",
+       "items": [
+        "Although they are not big animals, honey badgers are fearless, ___ and tough.",
+        "Honey badgers will attack ___ if they need to protect themselves.",
+        "The pattern and colours on the honey badger's back make it ___.",
+        "The food they eat is meat-based and ___.",
+        "___ form the biggest part of a honey badger's diet.",
+        "Honey badgers find the creatures they eat by their ___.",
+        "___ are often used to catch honey badgers which attack beehives.",
+        "For one particular type of food, the honey badger has a ___ with another creature."
+       ],
+       "answers": [
+        "aggressive",
+        "humans",
+        "recognisable",
+        "varied",
+        "small creatures",
+        "smell",
+        "special traps",
+        "working relationship"
+       ],
+       "why": [
+        "\"One of its most aggressive\". \"Not big\" = \"small size\". Ikki sifat orasida — sifat kerak.",
+        "\"Even humans are not safe ... if it thinks the human will attack or harm it\". Tuzoq: lions/buffalo — ular himoya uchun emas, umuman hujum qilinadigan hayvonlar.",
+        "\"Instantly recognisable by grey and white stripes\". \"Make it + sifat\": \"recognise\" (fe'l) emas.",
+        "\"Meat-eating animals with an extremely varied diet\". \"Meat-based\" = \"meat-eating\".",
+        "\"They mainly eat a range of small creatures\". \"Mainly eat\" = \"form the biggest part\". Ko'plik ot kerak (\"form\").",
+        "\"Locate their prey mainly using their excellent sense of smell\". \"Sense of smell\" — 3 so'z, chegaradan oshadi; \"smell\" yetarli va gapga mos.",
+        "\"Bee-keepers will often set special traps for honey badgers\". Ko'plik (\"are\").",
+        "\"Its working relationship with a bird called the greater honeyguide\". Food = brood, another creature = bird."
+       ],
+       "note": "6-savol eng muhim misol: matndagi to'liq ibora \"sense of smell\" 3 so'z. Javob — \"smell\". \"Sense of smell\" deb yozgan o'quvchi IELTSda 0 ball oladi.",
+       "layout": "list"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Gapdagi so'zning matndagi juftini toping.",
+       "items": [
+        "not big (1)",
+        "meat-based (4)",
+        "form the biggest part (5)",
+        "find the creatures they eat (6)",
+        "another creature (8)"
+       ],
+       "answers": [
+        "small size",
+        "meat-eating",
+        "mainly eat",
+        "locate their prey",
+        "a bird called the greater honeyguide"
+       ],
+       "why": [
+        "\"Despite its small size\".",
+        "\"Meat-eating animals\".",
+        "\"They mainly eat\".",
+        "\"The badgers locate their prey\".",
+        "Oxirgi xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "The octopus: a clever escape artist",
+     "qtype": "Sentence completion (1–7)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "In April 2016, staff at the National Aquarium of New Zealand arrived at work to find that one of their animals had disappeared. Inky, a male octopus, had pushed his way through a small gap at the top of his tank, travelled across the floor, and escaped down a drainpipe that led directly to the sea. The only evidence of his journey was a wet trail on the floor.",
+      "Stories like this are not unusual, because octopuses are among the most intelligent animals without a backbone. An octopus has around 500 million nerve cells, a number similar to that of a dog, but about two thirds of them are found not in its head but in its eight arms. As a result, each arm can taste, touch and even make simple decisions on its own.",
+      "The octopus is also a master of disguise. Special cells in its skin allow it to change colour in less than a second, so that it can hide against rocks or sand. Some species can even change the texture of their skin to look like coral. When this does not work, an octopus can release a cloud of dark ink, which confuses an attacker and gives the octopus time to swim away.",
+      "Its body is unusual in other ways too. An octopus has three hearts and blue blood, and because it has no bones, it can squeeze through any hole larger than its beak — the only hard part of its body.",
+      "Sadly, this remarkable life is short. Most species live for only one or two years, and a female usually dies soon after her eggs hatch, having stopped eating while she guarded them."
+     ],
+     "paraphrases": [
+      [
+       "disappeared",
+       "escaped"
+      ],
+      [
+       "gap",
+       "small opening"
+      ],
+      [
+       "evidence",
+       "sign"
+      ],
+      [
+       "intelligent",
+       "clever"
+      ],
+      [
+       "on its own",
+       "independently"
+      ],
+      [
+       "master of disguise",
+       "very good at hiding"
+      ],
+      [
+       "confuses",
+       "makes someone unsure"
+      ],
+      [
+       "squeeze through",
+       "push through a small space"
+      ]
+     ],
+     "glossary": [
+      "aquarium — akvarium",
+      "drainpipe — suv oqadigan quvur",
+      "backbone — umurtqa pog'onasi",
+      "nerve cell — nerv hujayrasi",
+      "texture — sirt tuzilishi",
+      "beak — tumshuq",
+      "hatch — tuxumdan chiqmoq"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the sentences",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "Gaplar matn tartibida. Javobni gapga qo'yib o'qing.",
+       "items": [
+        "Inky left his tank through a small ___ at the top.",
+        "A ___ on the floor showed where Inky had gone.",
+        "Most of an octopus's nerve cells are in its ___.",
+        "An octopus can hide by changing its ___ very quickly.",
+        "If hiding fails, an octopus may use a cloud of ___ to escape.",
+        "The ___ is the only hard part of an octopus's body.",
+        "A female octopus stops eating while she is guarding her ___."
+       ],
+       "answers": [
+        "gap",
+        "wet trail",
+        "(eight) arms",
+        "colour",
+        "dark ink",
+        "beak",
+        "eggs"
+       ],
+       "why": [
+        "\"Pushed his way through a small gap at the top of his tank\".",
+        "\"The only evidence of his journey was a wet trail on the floor\". Evidence = showed.",
+        "\"About two thirds of them are found ... in its eight arms\". \"Arms\" yoki \"eight arms\" — ikkalasi ham 2 so'z ichida.",
+        "\"Change colour in less than a second\". Very quickly = less than a second.",
+        "\"Release a cloud of dark ink\".",
+        "\"Its beak — the only hard part of its body\". Artikl gapda bor.",
+        "\"Having stopped eating while she guarded them\" — them = eggs."
+       ],
+       "layout": "list"
+      },
+      {
+       "title": "So'z chegarasi",
+       "type": "Tahlil",
+       "instr": "Nega bu javoblar noto'g'ri?",
+       "items": [
+        "2-savol: \"a wet trail\"",
+        "3-savol: \"its eight arms\"",
+        "4-savol: \"colours\"",
+        "6-savol: \"hard beak\""
+       ],
+       "answers": [
+        "artikl ortiqcha",
+        "so'z ortiqcha",
+        "shakl o'zgargan",
+        "matnda yo'q birikma"
+       ],
+       "why": [
+        "Gapda \"A\" allaqachon bor.",
+        "\"its\" gapda bor, 3 so'z bo'lib qoladi.",
+        "Matnda \"colour\" — birlikda.",
+        "Javob matndan aynan olinadi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "How camels survive the desert",
+     "qtype": "Sentence completion (1–7)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Many people believe that a camel stores water in its hump. In fact, the hump is made mostly of fat. When food is scarce, the camel's body breaks down this fat for energy, and the hump becomes smaller and may even fall to one side. A well-fed camel has a firm, upright hump.",
+      "The real secret of the camel's survival lies in how it uses water. A camel can lose up to a quarter of its body weight through water loss and still survive, while most mammals would die after losing half that amount. When it finally finds water, it can drink more than 100 litres in about ten minutes.",
+      "Its blood is also unusual. The red blood cells of a camel are oval rather than round, which allows them to keep flowing even when the blood becomes thick because the animal is short of water.",
+      "Camels also save water by not sweating very much. Their body temperature can rise by around six degrees during a hot day before they begin to sweat, and the heat stored in their body is released during the cold desert night.",
+      "Finally, a camel is well protected from sand. It has two rows of long eyelashes, and it can close its nostrils completely during a sandstorm. Wide, soft feet stop it from sinking into the sand, which is why camels are sometimes called \"ships of the desert\". For thousands of years, these features have made them the most reliable form of transport for people living in dry regions."
+     ],
+     "paraphrases": [
+      [
+       "stores",
+       "keeps"
+      ],
+      [
+       "scarce",
+       "difficult to find"
+      ],
+      [
+       "breaks down",
+       "uses"
+      ],
+      [
+       "a quarter",
+       "25 per cent"
+      ],
+      [
+       "short of water",
+       "dehydrated"
+      ],
+      [
+       "released",
+       "lost"
+      ],
+      [
+       "sinking into",
+       "going down into"
+      ],
+      [
+       "reliable",
+       "can be trusted"
+      ]
+     ],
+     "glossary": [
+      "hump — o'rkach",
+      "fat — yog'",
+      "oval — tuxumsimon",
+      "sweat — terlamoq",
+      "eyelash — kiprik",
+      "nostril — burun teshigi",
+      "sandstorm — qum bo'roni"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the sentences",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Gaplar matn tartibida.",
+       "items": [
+        "A camel's hump contains mainly ___, not water.",
+        "A camel that has eaten well has a firm, ___ hump.",
+        "A camel can survive losing about ___ of its weight in water.",
+        "After a long time without water, a camel can drink over ___ very quickly.",
+        "Because they are ___, a camel's red blood cells can keep moving through thick blood.",
+        "Camels lose the heat from their bodies during the ___.",
+        "Camels can shut their ___ when there is a sandstorm."
+       ],
+       "answers": [
+        "fat",
+        "upright",
+        "a quarter",
+        "100 litres",
+        "oval",
+        "(cold) night",
+        "nostrils"
+       ],
+       "why": [
+        "\"The hump is made mostly of fat\". Mainly = mostly.",
+        "\"A well-fed camel has a firm, upright hump\". Eaten well = well-fed.",
+        "\"Lose up to a quarter of its body weight\".",
+        "\"More than 100 litres in about ten minutes\". Over = more than.",
+        "\"Oval rather than round, which allows them to keep flowing\". \"Because they are + sifat\" — tuzoq: \"round\" teskari.",
+        "\"The heat stored in their body is released during the cold desert night\". Released = lose.",
+        "\"It can close its nostrils completely during a sandstorm\". Shut = close."
+       ],
+       "layout": "list"
+      },
+      {
+       "title": "Parosat tekshiruvi",
+       "type": "Tahlil",
+       "instr": "Bo'sh joy turi va javob mosligini ayting.",
+       "items": [
+        "1-savol",
+        "3-savol",
+        "4-savol",
+        "5-savol",
+        "7-savol"
+       ],
+       "answers": [
+        "ot",
+        "miqdor",
+        "raqam + ot",
+        "sifat",
+        "ko'plik ot"
+       ],
+       "why": [
+        "\"contains mainly + ot\" — fat.",
+        "\"about ___ of\" — a quarter.",
+        "\"over ___\" — 100 litres.",
+        "\"they are + sifat\" — oval.",
+        "\"their ___\" — nostrils."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "The return of the wolves",
+     "qtype": "Sentence completion (1–7)",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "By the 1920s, grey wolves had disappeared from Yellowstone, the oldest national park in the United States. Farmers and hunters had killed them to protect their animals, and for the next seventy years the park had no large predator at the top of its food chain.",
+      "Without wolves, the number of elk, a large kind of deer, grew quickly. The elk spent long periods feeding beside rivers, where they ate young willow and aspen trees before they could grow. Scientists noticed that very few new trees were appearing along the riverbanks.",
+      "In 1995 and 1996, thirty-one wolves were caught in Canada and released in the park. Their numbers rose steadily, and within ten years there were more than a hundred. The wolves hunted elk, but they also changed the way elk behaved: the deer began to avoid open river valleys where they could easily be attacked.",
+      "In several areas, willow trees started to recover. Beavers, which use willow for food and for building dams, returned in larger numbers, and their dams created pools where fish and birds could live.",
+      "However, researchers warn against telling this as a simple story. Hard winters, human hunting and the return of bears also reduced elk numbers, and in some places the trees have not come back at all. Most scientists now agree that the wolves played an important part in the changes, but not the only one — and that nature rarely has a single cause."
+     ],
+     "paraphrases": [
+      [
+       "disappeared",
+       "were no longer found"
+      ],
+      [
+       "protect",
+       "keep safe"
+      ],
+      [
+       "grew quickly",
+       "rose rapidly"
+      ],
+      [
+       "released",
+       "set free"
+      ],
+      [
+       "avoid",
+       "stay away from"
+      ],
+      [
+       "recover",
+       "grow again"
+      ],
+      [
+       "reduced",
+       "made smaller"
+      ],
+      [
+       "rarely",
+       "not often"
+      ]
+     ],
+     "glossary": [
+      "predator — yirtqich",
+      "food chain — oziq zanjiri",
+      "elk — bug'u",
+      "willow — tol",
+      "aspen — terak turi",
+      "riverbank — daryo qirg'og'i",
+      "dam — to'g'on"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the sentences",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Uyda 10 daqiqada bajaring.",
+       "items": [
+        "Wolves were killed by farmers and ___.",
+        "Without wolves, the elk population ___.",
+        "Elk ate young trees beside the ___.",
+        "The wolves brought to the park in the 1990s came from ___.",
+        "Elk started to stay away from open ___.",
+        "Beavers use willow for food and for building ___.",
+        "Researchers say the changes did not have a ___."
+       ],
+       "answers": [
+        "hunters",
+        "grew quickly",
+        "rivers",
+        "Canada",
+        "river valleys",
+        "dams",
+        "single cause"
+       ],
+       "why": [
+        "\"Farmers and hunters had killed them\".",
+        "\"The number of elk ... grew quickly\".",
+        "\"Feeding beside rivers\". \"Riverbanks\" ham to'g'ri.",
+        "\"Thirty-one wolves were caught in Canada\".",
+        "\"Avoid open river valleys\". Stay away from = avoid.",
+        "\"For food and for building dams\".",
+        "\"Nature rarely has a single cause\"."
+       ],
+       "layout": "list"
+      },
+      {
+       "title": "Paraphrase daftari",
+       "type": "Yozma",
+       "instr": "Har gapdagi paraphraseni matndagi juftiga yozing.",
+       "items": [
+        "stay away from (5)",
+        "population (2)",
+        "came from (4)"
+       ],
+       "answers": [
+        "avoid",
+        "the number of",
+        "were caught in"
+       ],
+       "why": [
+        "3-xatboshi.",
+        "2-xatboshi.",
+        "3-xatboshi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "4-matn: \"The return of the wolves\"",
+     "type": "Reading",
+     "instr": "10 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
+     "answers": "Ustoz so'z chegarasi va imloni tekshiradi.",
+     "layout": "list"
+    },
+    {
+     "title": "So'z chegarasi daftari",
+     "type": "Yozma",
+     "instr": "Bugungi 4 matndan 6 ta javobni oling va har biri uchun \"noto'g'ri variant\" yozing (3 so'z, artikl bilan, shakli o'zgargan) — nega 0 ball ekanini tushuntiring.",
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
+    },
+    {
+     "title": "Paraphrase juftlari",
+     "type": "Yozma",
+     "instr": "Honey badger matnidan 8 ta paraphrase juftini yozing: gapdagi so'z — matndagi ibora.",
+     "answers": "Reading bo'limidagi paraphrase jadvali bilan solishtiriladi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Sentence completion (uyga)",
+     "7 javobdan 6 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "So'z chegarasi daftari",
+     "6 javob, izoh bilan",
+     "2 coin"
+    ],
+    [
+     "Paraphrase juftlari",
+     "8 tadan 7 tasi",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 18,
+   "title": "Reading: Pick from a List (Choose TWO)",
+   "grammar_topic": "Pick from a list — ro'yxatdan ikki (yoki uch) javob tanlash",
+   "vocab_topic": "Hayvonlar hayoti va tadqiqotlar",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matnlari (#21, #22) va mualliflik matnlari.",
+   "objectives": [
+    "\"Choose TWO letters\" savolida ikkala javobni ham matndan isbotlash.",
+    "Savol qaysi mavzuni so'rayotganini aniqlab, matnning tegishli qismini tez topish.",
+    "Har bir variantni alohida tekshirish: matnda bormi? savolga javobmi? aynan shundaymi?",
+    "Tuzoqlarni ajratish: matnda bor, lekin boshqa narsa haqida; qisman to'g'ri; teskari.",
+    "5 ta matnda ishlash: ustozning 2 matni + 3 ta Jony Academy matni."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Pick from a list — savol va 5 ta variant (A–E) beriladi. Ulardan IKKITASI to'g'ri (ba'zan uchtasi). Ko'rsatmada \"Choose TWO letters\" yoziladi.",
+     "Ikkala javob ham alohida ball oladi: 1–2-savol = 2 ball. Birini topsangiz ham 1 ball olasiz, shuning uchun bo'sh qoldirmang.",
+     "Javoblarni istalgan tartibda yozish mumkin: \"B, C\" yoki \"C, B\" — ikkalasi ham to'g'ri.",
+     "Bu savollar ko'pincha matnning BIR xatboshisiga tegishli. Savoldagi kalit so'zni (whale near Brazil, male badgers) matndan toping va o'sha qismni diqqat bilan o'qing.",
+     "Har variant uchun uchta savol: 1) matnda bormi? 2) savolda so'ralgan narsa haqidami? 3) aynan shundaymi yoki kuchliroq/teskari?",
+     "Asosiy tuzoq: variant matnda bor, lekin boshqa odam, boshqa vaqt yoki boshqa guruh haqida. Masalan: \"female badgers never socialised WITH EACH OTHER\" — bu \"erkaklar bilan aralashmaydi\" degani emas.",
+     "Variantlar matnda boshqa so'zlar bilan aytiladi: \"took a picture\" = \"photographed\"; \"lost her way\" = \"did not know where she was going\"."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Ko'rsatmani o'qing",
+      "Choose TWO / THREE",
+      "Nechta javob kerak?"
+     ],
+     [
+      "2-bosqich",
+      "Savol kalit so'zini belgilang",
+      "near Brazil, male badgers",
+      "Matnda qidirasiz"
+     ],
+     [
+      "3-bosqich",
+      "Matndagi qismni toping",
+      "odatda bir xatboshi",
+      "Shu qismni diqqat bilan o'qing"
+     ],
+     [
+      "4-bosqich",
+      "Har variantni tekshiring",
+      "bor? savolga? aynan?",
+      "A dan E gacha"
+     ],
+     [
+      "5-bosqich",
+      "Tuzoqlarni o'chiring",
+      "boshqa guruh / teskari / aytilmagan",
+      "Sababini yozing"
+     ],
+     [
+      "6-bosqich",
+      "Ikki harfni yozing",
+      "B, C",
+      "Bo'sh qoldirmang"
+     ]
+    ],
+    "presentation": [
+     [
+      "Faqat bitta javobni aniq bilsam-chi?",
+      "Uni yozing va ikkinchisiga eng ehtimollisini tanlang — har biri alohida ball."
+     ],
+     [
+      "Javoblar tartibi muhimmi?",
+      "Yo'q. \"B, C\" va \"C, B\" bir xil."
+     ],
+     [
+      "Uchta variant to'g'ridek tuyulsa?",
+      "Uchinchisini qayta tekshiring: u savolga javobmi yoki matnda boshqa narsa haqida aytilganmi?"
+     ],
+     [
+      "Variantdagi so'z matnda yo'q.",
+      "Paraphrase qidiring: \"took a picture\" = \"photographed\"."
+     ],
+     [
+      "Savollar matn tartibidami?",
+      "Odatda ha, lekin bitta savol bir nechta xatboshini qamrashi mumkin."
+     ],
+     [
+      "Ikki javob qanday yoziladi?",
+      "Javob varag'ida ikki qator — har biriga bitta harf."
+     ]
+    ],
+    "notes": [
+     "Ustoz har variant uchun \"bor / savolga emas / teskari / aytilmagan\" belgisini qo'ydiradi — bu darsning asosiy ishi.",
+     "Humpback whale matnidagi 9–10-savolni doskada tahlil qiling: matn janub haqida gapiradi (\"hostile\", \"hard to get to\"), javob esa shimol haqida — teskari fikrlash kerak.",
+     "Honey badger matnida 3-savol E varianti eng yaxshi tuzoq misoli."
+    ],
+    "mistakes": [
+     [
+      "Faqat bitta harf yozish",
+      "Ikkala harfni yozish",
+      "Bo'sh joy — 0 ball"
+     ],
+     [
+      "Matnda bor so'z uchun tanlash",
+      "Savolga javobmi — tekshirish",
+      "So'z bor, lekin boshqa narsa haqida"
+     ],
+     [
+      "Guruhni aralashtirish (females with each other)",
+      "Kim haqida ekanini aniqlash",
+      "Boshqa guruh tuzog'i"
+     ],
+     [
+      "Teskari fikrlashni unutish (janub qiyin → shimol oson)",
+      "Matn mantiqini kuzatish",
+      "Javob bilvosita beriladi"
+     ],
+     [
+      "Paraphraseni tanimaslik (photographed)",
+      "took a picture",
+      "Variantlar boshqa so'z bilan beriladi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Bormi? Savolga javobmi?",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ustoz matndan bir gap va bir variant o'qiydi; o'quvchi \"to'g'ri / boshqa narsa haqida / teskari / aytilmagan\" deydi.",
+     "items": [
+      "Gap: \"Female badgers never socialised with each other.\" Variant: Female badgers do not mix with male badgers.",
+      "Gap: \"They're actually quite sociable creatures around humans.\" Variant: They do not enjoy human company.",
+      "Gap: \"Photographed its tail fluke.\" Variant: They took a picture.",
+      "Gap: \"Photographed its tail fluke.\" Variant: They marked its tail.",
+      "Gap: \"Fortunately this is rare, but it does happen.\" Variant: It is common for them to attack people."
+     ],
+     "answers": [
+      "boshqa narsa haqida",
+      "teskari",
+      "to'g'ri",
+      "boshqa narsa",
+      "teskari"
+     ],
+     "why": [
+      "Matn urg'ochilar O'ZARO aralashmasligini aytadi, erkaklar haqida emas.",
+      "Sociable = ular odamlar bilan yaxshi.",
+      "Photographed = took a picture.",
+      "Dumi suratga olingan, belgilanmagan.",
+      "Rare ≠ common."
+     ],
+     "note": "To'rt javob turi doskada yozib qo'yiladi va butun dars davomida ishlatiladi.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Reading #21. Humpback whale breaks migration record",
+     "qtype": "Pick from a list (1–14)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "A whale surprises researchers with her journey.",
+      "A lone humpback whale travelled more than 9,800 kilometres from breeding areas in Brazil to those in Madagascar, setting a record for the longest mammal migration ever documented.",
+      "Humpback whales (Megaptera novaeangliae) are known to have some of the longest migration distances of all mammals, and this huge journey is about 400 kilometres _farther_ than the previous humpback record. The finding was made by Peter Stevick, a biologist at the College of the Atlantic in Bar Harbor, Maine.",
+      "The whale's journey was unusual not only for its _length_, but also because it travelled across almost 90 degrees of longitude _from west to east_. Typically, humpbacks move in a north-south direction between _cold feeding areas_ and _warm breeding grounds_ - and the longest journeys which have been recorded until now have been between breeding and feeding sites.",
+      "The whale, a female, was first spotted off the coast of Brazil, where researchers _photographed_ its tail fluke and _took skin samples_ for chromosome testing to determine the animal's sex. Two years later, a tourist on a whale-watching boat snapped a photo of the humpback near Madagascar.",
+      "To match the two sightings, Stevick's team used an extensive international catalogue of photographs of the undersides of tail flukes, which have distinctive markings. Researchers routinely _compare the markings_ in each new photograph to those in the archive.",
+      "The scientists then estimated the animal's shortest possible route: an arc _skirting the southern tip of South Africa_ and heading north-east towards Madagascar. The minimum distance is 9,800 kilometres, says Stevick, but this is likely to be an underestimate, because the whale probably took a detour to feed on krill in the Southern Ocean _near Antarctica_ before reaching its destination.",
+      "Most humpback-whale researchers focus their efforts on the Northern Hemisphere because the Southern Ocean near the Antarctic is _a hostile environment_ and it is _hard to get to_, explains Rochelle Constantine, who studies the ecology of humpback whales at the University of Auckland in New Zealand. But, for whales, oceans in the Southern Hemisphere are wider and easier to travel across, says Constantine. Scientists will probably observe more long-distance migrations in the Southern Hemisphere as _satellite tracking_ becomes increasingly common, she adds.",
+      "Daniel Palacios, an oceanographer at the University of Hawaii at Manoa, says that the record-breaking journey could indicate that migration patterns are shifting as populations begin to recover from near-extinction and the population increases. But the reasons why the whale did not follow the usual migration routes remain a mystery. She could have been _exploring new habitats_, or simply have _lost her way_. 'We generally think of humpback whales as very well studied, but then they surprise us with things like this,' Palacios says. 'Undoubtedly there are a lot of things we still don't know about whale migration.'"
+     ],
+     "paraphrases": [
+      [
+       "the distance",
+       "its length / farther"
+      ],
+      [
+       "the direction",
+       "from west to east"
+      ],
+      [
+       "to eat",
+       "cold feeding areas"
+      ],
+      [
+       "to produce young",
+       "warm breeding grounds"
+      ],
+      [
+       "took a picture",
+       "photographed / snapped a photo"
+      ],
+      [
+       "analysed part of the whale's body",
+       "took skin samples for chromosome testing"
+      ],
+      [
+       "passed close to South Africa",
+       "skirting the southern tip of South Africa"
+      ],
+      [
+       "friendlier surroundings",
+       "(not) a hostile environment"
+      ],
+      [
+       "easier to reach",
+       "(not) hard to get to"
+      ],
+      [
+       "did not know where she was going",
+       "lost her way"
+      ],
+      [
+       "a new place to live",
+       "new habitats"
+      ],
+      [
+       "following their movements from space",
+       "satellite tracking"
+      ]
+     ],
+     "glossary": [
+      "migration — ko'chish",
+      "breeding — ko'payish",
+      "longitude — uzunlik (geografik)",
+      "fluke — kit dumining qanoti",
+      "chromosome — xromosoma",
+      "detour — aylanma yo'l",
+      "krill — mayda dengiz qisqichbaqasimonlari",
+      "hostile — noqulay, xavfli"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–14: Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Har savolda ikkita javob. Har variant uchun \"bor / savolga emas / teskari / aytilmagan\" deb belgilang.",
+       "items": [
+        "1–2 What TWO aspects of the whale's journey surprised researchers? A) the destination B) the direction C) the distance D) the reason E) the season",
+        "3–4 The passage mentions reasons why whales generally migrate. What TWO reasons are given? A) to avoid humans B) to be safe C) to eat D) to keep warm E) to produce young",
+        "5–6 What TWO methods did researchers use to record the identity of the whale near Brazil? A) They analysed part of the whale's body. B) They marked its tail. C) They made notes of its behaviour. D) They recorded the sounds it made. E) They took a picture.",
+        "7–8 Which TWO places may the whale have passed close to on its journey? A) Antarctica B) Hawaii C) Maine D) New Zealand E) South Africa",
+        "9–10 The passage says that more research is done in the Northern Hemisphere. Which TWO reasons are given for this? A) It contains more whales. B) It has friendlier surroundings. C) There are more samples available. D) It is easier to reach. E) It contains smaller whales.",
+        "11–12 The passage suggests why the whale made a different journey from usual. Which TWO reasons does it suggest? A) She did not know where she was going. B) She did not want to breed. C) She wanted to escape a danger. D) She was looking for a new place to live. E) She was recovering from an illness.",
+        "13–14 Which TWO methods of finding out where whales migrate are mentioned in the passage? A) attaching radio transmitters B) comparing pictures taken in different places C) following them in boats D) placing cameras in key positions E) following their movements from space"
+       ],
+       "answers": [
+        "B, C",
+        "C, E",
+        "A, E",
+        "A, E",
+        "B, D",
+        "A, D",
+        "B, E"
+       ],
+       "why": [
+        "\"Unusual not only for its length (C), but also because it travelled ... from west to east (B)\". D — sabab noma'lum (\"remain a mystery\"), lekin bu hayratlantirgan jihat sifatida aytilmagan. E — mavsum aytilmagan.",
+        "\"Between cold feeding areas (C) and warm breeding grounds (E)\". D tuzoq: \"warm\" so'zi bor, lekin issiq joy — ko'payish uchun, isinish uchun emas.",
+        "\"Photographed its tail fluke (E) and took skin samples for chromosome testing (A)\". B tuzoq: dum SURATGA olingan, belgilanmagan.",
+        "\"Skirting the southern tip of South Africa (E)\" va \"a detour ... near Antarctica (A)\". B, C, D — olimlar ishlaydigan joylar (Hawaii, Maine, Auckland), kit yo'li emas.",
+        "Matn JANUB haqida: \"a hostile environment (→ shimol friendlier, B) and it is hard to get to (→ shimol easier to reach, D)\". Teskari fikrlash kerak.",
+        "\"Exploring new habitats (D), or simply have lost her way (A)\". E tuzoq: \"recover\" so'zi bor, lekin populyatsiya tiklanishi haqida, kasallik emas.",
+        "\"Compare the markings in each new photograph to those in the archive (B)\" va \"satellite tracking (E)\". C tuzoq: qayiq bor (whale-watching boat), lekin u kuzatish usuli emas — turist tasodifan surat olgan."
+       ],
+       "note": "9–10-savol darsning eng muhim misoli: javob to'g'ridan-to'g'ri emas, teskari yo'l bilan topiladi (janub noqulay → shimol qulayroq).",
+       "layout": "mcq"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Variantdagi so'zning matndagi juftini toping.",
+       "items": [
+        "took a picture (5–6)",
+        "analysed part of the body (5–6)",
+        "friendlier surroundings (9–10)",
+        "did not know where she was going (11–12)",
+        "from space (13–14)"
+       ],
+       "answers": [
+        "photographed",
+        "took skin samples",
+        "not a hostile environment",
+        "lost her way",
+        "satellite tracking"
+       ],
+       "why": [
+        "\"Photographed its tail fluke\".",
+        "\"For chromosome testing\".",
+        "Teskari paraphrase.",
+        "Oxirgi xatboshi.",
+        "Constantine so'zlari."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Reading #22. On the trail of the honey badger",
+     "qtype": "Pick from a list (1–5) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "Researchers learn more about this fearless African predator",
+      "On a recent field trip to the Kalahari Desert, a team of researchers learnt a lot more about honey badgers. They were rewarded with a detailed insight into how these fascinating creatures live and hunt.",
+      "The team employed a local wildlife expert, Kitso Khama, to help them locate and follow the badgers across the desert. Their main aim was _to study the badgers' movements and behaviour_ as discreetly as possible, without frightening them away or causing them to change their natural behaviour. They also planned _to trap a few and study them close up before releasing them_. In view of the animal's reputation, this was something that even Khama was reluctant to do.",
+      "'The problem with honey badgers is they are naturally _curious_ animals, especially when they see _something new_,' he says. 'That, combined with their _unpredictable_ nature, can be a dangerous mixture. If they sense you have food, for example, they won't be shy about coming right up to you for something to eat. They're actually quite sociable creatures around humans, but as soon as they feel they might be in danger, they can become extremely vicious. Fortunately this is _rare_, but it does happen.'",
+      "The research confirmed many things that were already known. As expected, honey badgers ate any creatures they could catch and kill. Even poisonous snakes, feared and avoided by most other animals, were not safe from them. The researchers were surprised, however, by the animal's fondness for local _melons_, probably because of their _high water content_. Previously researchers thought that the animal got all of its liquid requirements from its prey. The team also learnt that, contrary to previous research findings, the badgers occasionally formed _loose family groups_. They were also able to confirm certain results from previous research, including the fact that female badgers never socialised _with each other_.",
+      "Following some of the male badgers was a challenge, since they can cover large distances in a short space of time. Some hunting territories cover _more than 500 square kilometres_. Although they seem happy to share these territories with other males, there are _occasional fights_ over an important food source, and male badgers can be as aggressive towards each other as they are towards other species.",
+      "As the badgers became accustomed to the presence of people, it gave the team the chance to get up close to them _without being the subject of the animals' curiosity_ - or their sudden aggression. The badgers' eating patterns, which had been disrupted, returned to normal. It also allowed the team to observe more closely some of the other creatures that form working associations with the honey badger, as these seemed to _adopt the badgers' relaxed attitude_ when near humans."
+     ],
+     "paraphrases": [
+      [
+       "observe how they behave",
+       "study the badgers' movements and behaviour"
+      ],
+      [
+       "temporarily catch",
+       "trap a few ... before releasing them"
+      ],
+      [
+       "show interest in",
+       "curious"
+      ],
+      [
+       "things they are not familiar with",
+       "something new"
+      ],
+      [
+       "hard to tell how they will behave",
+       "unpredictable"
+      ],
+      [
+       "get water from fruit",
+       "fondness for melons ... high water content"
+      ],
+      [
+       "do not always live alone",
+       "occasionally formed loose family groups"
+      ],
+      [
+       "hunt over a very large area",
+       "territories cover more than 500 square kilometres"
+      ],
+      [
+       "sometimes fight each other",
+       "occasional fights"
+      ],
+      [
+       "lost interest in people",
+       "without being the subject of the animals' curiosity"
+      ],
+      [
+       "became more relaxed",
+       "adopt the badgers' relaxed attitude"
+      ]
+     ],
+     "glossary": [
+      "discreetly — sezdirmasdan",
+      "reluctant — istamay",
+      "unpredictable — oldindan bilib bo'lmaydigan",
+      "vicious — shafqatsiz",
+      "fondness — yaxshi ko'rish",
+      "territory — hudud",
+      "accustomed to — ko'nikkan",
+      "disrupted — buzilgan"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Har savolda ikkita javob. Rad etilgan variantga sabab ayting.",
+       "items": [
+        "1 Why did the wildlife experts visit the Kalahari desert? A) To find where honey badgers live. B) To observe how honey badgers behave. C) To try to change the way honey badgers behave. D) To temporarily catch some honey badgers. E) To find out why honey badgers have such a bad reputation.",
+        "2 What TWO things does Kitso Khama say about honey badgers? A) They show interest in things they are not familiar with. B) It's hard to tell how they will behave. C) They are always looking for food. D) They do not enjoy human company. E) It is common for them to attack people.",
+        "3 What TWO things did the team find out about honey badgers? A) There are some creatures they will not eat. B) They were afraid of poisonous creatures. C) They may get some of the water they need from fruit. D) They do not always live alone. E) Female badgers do not mix with male badgers.",
+        "4 Which TWO features are typical of male badgers? A) They don't run very quickly. B) They hunt over a very large area. C) They defend their territory from other badgers. D) They sometimes fight each other. E) They are more aggressive than females.",
+        "5 What TWO things happened when the honey badgers got used to humans being around them? A) The badgers lost interest in people. B) The badgers became less aggressive towards other creatures. C) The badgers started eating more. D) Other animals started working with the badgers. E) Other animals near them became more relaxed."
+       ],
+       "answers": [
+        "B, D",
+        "A, B",
+        "C, D",
+        "B, D",
+        "A, E"
+       ],
+       "why": [
+        "\"Main aim was to study the badgers' movements and behaviour (B)\" va \"trap a few and study them close up before releasing them (D)\". C teskari: \"without ... causing them to change their natural behaviour\".",
+        "\"Curious ... especially when they see something new (A)\" va \"unpredictable nature (B)\". D teskari: \"quite sociable creatures around humans\". E teskari: \"this is rare\".",
+        "\"Fondness for local melons ... high water content (C)\" va \"occasionally formed loose family groups (D)\". E tuzoq: urg'ochilar O'ZARO aralashmaydi (\"with each other\"), erkaklar haqida aytilmagan; bundan tashqari bu yangi topilma emas, tasdiqlangan eski natija.",
+        "\"Territories cover more than 500 square kilometres (B)\" va \"occasional fights over an important food source (D)\". C teskari: \"happy to share these territories\". E — urg'ochilar bilan solishtirilmagan.",
+        "\"Without being the subject of the animals' curiosity (A)\" va \"adopt the badgers' relaxed attitude (E)\". C tuzoq: ovqatlanish \"returned to normal\" — ko'paymadi. D tuzoq: hamkorlik avval ham bor edi."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Tuzoq turlari",
+       "type": "Tahlil",
+       "instr": "Har noto'g'ri variant turini ayting.",
+       "items": [
+        "1-savol C",
+        "2-savol E",
+        "3-savol E",
+        "4-savol C",
+        "5-savol C"
+       ],
+       "answers": [
+        "teskari",
+        "teskari",
+        "boshqa guruh",
+        "teskari",
+        "aniqlik buzilgan"
+       ],
+       "why": [
+        "Maqsad xulqni o'zgartirmaslik edi.",
+        "\"Rare\".",
+        "\"With each other\".",
+        "\"Happy to share\".",
+        "\"Returned to normal\", ko'paymagan."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Why birds fly in a V",
+     "qtype": "Pick from a list (1–6)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "Anyone who has watched geese crossing an autumn sky has noticed their V-shaped formation. For a long time, scientists suspected that the shape helped birds save energy, but it was very difficult to prove, because it is hard to measure what a bird is doing in the air.",
+      "In 2014, a team from the Royal Veterinary College in London found a solution. They attached tiny data recorders to a group of northern bald ibises, rare birds that had been trained to follow a light aircraft on their migration. The recorders measured the position of each bird and every beat of its wings.",
+      "The results were surprising. Each bird flew in exactly the place where the air pushed up by the wings of the bird in front could help lift it. The birds also timed their wing beats to match the bird ahead, so that they always met rising air rather than falling air. Earlier research on pelicans had shown that birds flying in formation have lower heart rates than those flying alone.",
+      "Flying at the front is the hardest job, and no single bird does it all the time. The ibises regularly changed places, and each bird spent roughly as long leading as it did following — a kind of fair sharing that researchers had not expected.",
+      "Energy is not the only reason for the shape. A V also allows every bird to see the others clearly, which helps the group stay together and avoid collisions. Young birds on their first migration can follow experienced adults who know the route."
+     ],
+     "paraphrases": [
+      [
+       "suspected",
+       "thought but could not prove"
+      ],
+      [
+       "attached",
+       "fixed"
+      ],
+      [
+       "tiny",
+       "very small"
+      ],
+      [
+       "timed",
+       "matched"
+      ],
+      [
+       "lower heart rates",
+       "hearts beat more slowly"
+      ],
+      [
+       "regularly changed places",
+       "took turns"
+      ],
+      [
+       "collisions",
+       "crashing into each other"
+      ],
+      [
+       "experienced",
+       "having done it before"
+      ]
+     ],
+     "glossary": [
+      "formation — tartib, saf",
+      "goose (geese) — g'oz",
+      "data recorder — ma'lumot yozuvchi qurilma",
+      "ibis — laylakka o'xshash qush",
+      "wing beat — qanot qoqishi",
+      "pelican — birqozon qush"
+     ],
+     "tasks": [
+      {
+       "title": "Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Har savolda ikkita javob.",
+       "items": [
+        "1–2 Which TWO things did the recorders measure? A) the speed of the aircraft B) where each bird was C) the birds' heart rates D) each movement of the wings E) the temperature of the air",
+        "3–4 What TWO things did the ibises do to save energy? A) They flew more slowly. B) They chose a position where rising air helped them. C) They flew close to the aircraft. D) They matched their wing beats to the bird in front. E) They stopped flapping for long periods.",
+        "5–6 According to the passage, which TWO other advantages does the V shape have? A) Birds can see each other well. B) Birds can find food more easily. C) Young birds can follow adults who know the way. D) Birds are safer from attackers. E) Birds can fly higher."
+       ],
+       "answers": [
+        "B, D",
+        "B, D",
+        "A, C"
+       ],
+       "why": [
+        "\"Measured the position of each bird (B) and every beat of its wings (D)\". C tuzoq: yurak urishi — boshqa tadqiqot (pelikanlar).",
+        "\"Flew in exactly the place where the air pushed up ... could help lift it (B)\" va \"timed their wing beats to match the bird ahead (D)\".",
+        "\"Allows every bird to see the others clearly (A)\" va \"young birds ... can follow experienced adults who know the route (C)\". D aytilmagan — \"collisions\" bir-biriga urilish, dushman emas."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Variantdagi so'zning matndagi juftini toping.",
+       "items": [
+        "where each bird was",
+        "matched their wing beats",
+        "know the way"
+       ],
+       "answers": [
+        "the position of each bird",
+        "timed their wing beats",
+        "know the route"
+       ],
+       "why": [
+        "2-xatboshi.",
+        "3-xatboshi.",
+        "Oxirgi xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "The dance of the honeybee",
+     "qtype": "Pick from a list (1–6)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "When a honeybee discovers a good source of food, it returns to the hive and performs a dance. For centuries, beekeepers noticed this strange movement, but it was the Austrian scientist Karl von Frisch who first explained what it meant. His work on bee communication won him a share of the Nobel Prize in 1973.",
+      "Von Frisch found that bees use two main dances. If the flowers are close to the hive, a bee performs a \"round dance\", running in small circles. This tells the other bees that food is nearby, but not the exact direction. For food further away, the bee performs a \"waggle dance\": it runs forward in a straight line while shaking its body from side to side, then circles back and repeats the movement.",
+      "The waggle dance contains surprisingly precise information. The angle of the straight run compared with a vertical line on the honeycomb shows the direction of the food compared with the position of the sun. The length of time the bee spends waggling shows how far away the food is: the longer the waggle, the greater the distance.",
+      "The dancer also shares other clues. Other bees touch it with their antennae and learn the smell of the flowers it has visited, and they may taste samples of nectar it brings back. Because the sun moves across the sky during the day, bees also adjust the angle of their dance as time passes.",
+      "Not every scientist accepted von Frisch's ideas at first. Some believed that bees found food only by smell, and it took several decades of experiments before the dance language was widely accepted."
+     ],
+     "paraphrases": [
+      [
+       "discovers",
+       "finds"
+      ],
+      [
+       "explained",
+       "showed the meaning of"
+      ],
+      [
+       "nearby",
+       "close"
+      ],
+      [
+       "precise",
+       "exact"
+      ],
+      [
+       "compared with",
+       "in relation to"
+      ],
+      [
+       "clues",
+       "information"
+      ],
+      [
+       "adjust",
+       "change a little"
+      ],
+      [
+       "widely accepted",
+       "believed by most people"
+      ]
+     ],
+     "glossary": [
+      "hive — ari uyasi",
+      "beekeeper — asalarichi",
+      "waggle — likillatmoq",
+      "honeycomb — ari kataklari",
+      "antenna (antennae) — mo'ylov",
+      "nectar — gul shirasi",
+      "decade — o'n yil"
+     ],
+     "tasks": [
+      {
+       "title": "Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Har savolda ikkita javob.",
+       "items": [
+        "1–2 Which TWO statements about the round dance are correct? A) It shows the exact direction of the food. B) It is used when food is close to the hive. C) It is used when food is far away. D) The bee moves in small circles. E) The bee shakes its body from side to side.",
+        "3–4 What TWO pieces of information are shown by the waggle dance? A) how far away the food is B) how much food there is C) the direction of the food D) how many bees are needed E) the time of day",
+        "5–6 Apart from the dance, what TWO ways do bees learn about the food? A) They follow the dancer to the flowers. B) They smell the dancer. C) They listen to sounds the dancer makes. D) They taste what the dancer brings back. E) They look at the colour of pollen."
+       ],
+       "answers": [
+        "B, D",
+        "A, C",
+        "B, D"
+       ],
+       "why": [
+        "\"If the flowers are close to the hive (B), a bee performs a 'round dance', running in small circles (D)\". A teskari: \"but not the exact direction\". E — bu waggle dance.",
+        "\"The angle ... shows the direction of the food (C)\" va \"the length of time ... shows how far away the food is (A)\". E tuzoq: vaqt o'tishi bilan burchak o'zgaradi, lekin raqs vaqtni bildirmaydi.",
+        "\"Learn the smell of the flowers it has visited (B)\" va \"taste samples of nectar it brings back (D)\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Tuzoq turlari",
+       "type": "Tahlil",
+       "instr": "Har noto'g'ri variant turini ayting.",
+       "items": [
+        "1–2 E",
+        "3–4 E",
+        "5–6 A"
+       ],
+       "answers": [
+        "boshqa narsa haqida",
+        "boshqa narsa haqida",
+        "aytilmagan"
+       ],
+       "why": [
+        "Tanani silkitish — waggle dance.",
+        "Raqs burchagi vaqt bilan o'zgaradi, lekin vaqtni ko'rsatmaydi.",
+        "Ergashish haqida gap yo'q."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "How animals sleep",
+     "qtype": "Pick from a list (1–6)",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "All animals with a brain seem to need some form of sleep, but the way they sleep varies enormously. Some of the most unusual examples come from animals that cannot simply lie down and close their eyes.",
+      "Dolphins, for example, must come to the surface to breathe, so they can never become fully unconscious. Instead, they rest one half of the brain at a time, while the other half stays awake to control breathing and watch for danger. During this kind of sleep, a dolphin often keeps one eye open.",
+      "Frigatebirds, which fly over the ocean for weeks without landing, use a similar method. In 2016, scientists fitted small devices to their heads and discovered that the birds slept in the air, sometimes with one half of the brain and sometimes with both. However, they slept for only about forty minutes a day in flight, compared with more than twelve hours on land.",
+      "At the other extreme, some bats sleep for up to twenty hours a day. Scientists believe this saves energy and keeps them away from danger at times when the insects they eat are not active.",
+      "Large grazing animals sleep much less. Giraffes and elephants in the wild may sleep for only two to four hours, often in short periods, because they need to spend a long time eating and must stay alert to predators. Why sleep is so necessary is still not fully understood, but its loss causes serious problems in every animal that has been studied."
+     ],
+     "paraphrases": [
+      [
+       "varies enormously",
+       "is very different"
+      ],
+      [
+       "unconscious",
+       "completely asleep"
+      ],
+      [
+       "at a time",
+       "one after the other"
+      ],
+      [
+       "fitted",
+       "attached"
+      ],
+      [
+       "at the other extreme",
+       "on the opposite side"
+      ],
+      [
+       "alert",
+       "ready to react"
+      ],
+      [
+       "not fully understood",
+       "not completely known"
+      ],
+      [
+       "loss",
+       "not having enough"
+      ]
+     ],
+     "glossary": [
+      "unconscious — hushsiz",
+      "surface — yuza",
+      "frigatebird — fregat qushi",
+      "device — qurilma",
+      "bat — ko'rshapalak",
+      "grazing — o't yeydigan",
+      "predator — yirtqich"
+     ],
+     "tasks": [
+      {
+       "title": "Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Uyda 12 daqiqada bajaring.",
+       "items": [
+        "1–2 What TWO things are true about how dolphins sleep? A) They sleep on the sea floor. B) Half of the brain stays awake. C) They often have one eye open. D) They sleep only at night. E) They stop breathing for a short time.",
+        "3–4 What TWO things did the 2016 study find about frigatebirds? A) They sleep while flying. B) They never sleep over the ocean. C) They sleep much less in the air than on land. D) They sleep with both eyes closed. E) They land on the water to rest.",
+        "5–6 Why do giraffes and elephants sleep so little? A) They need a lot of time to eat. B) They are too large to lie down. C) They must watch out for animals that hunt them. D) They sleep only in groups. E) They are active only at night."
+       ],
+       "answers": [
+        "B, C",
+        "A, C",
+        "A, C"
+       ],
+       "why": [
+        "\"The other half stays awake (B)\" va \"a dolphin often keeps one eye open (C)\". E teskari: uyg'oq yarim nafasni boshqaradi.",
+        "\"The birds slept in the air (A)\" va \"forty minutes a day in flight, compared with more than twelve hours on land (C)\". E teskari: \"without landing\".",
+        "\"Need to spend a long time eating (A) and must stay alert to predators (C)\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Paraphrase daftari",
+       "type": "Yozma",
+       "instr": "Variantdagi so'zning matndagi juftini yozing.",
+       "items": [
+        "watch out for animals that hunt them",
+        "sleep while flying",
+        "half of the brain stays awake"
+       ],
+       "answers": [
+        "stay alert to predators",
+        "slept in the air",
+        "the other half stays awake"
+       ],
+       "why": [
+        "Oxirgi xatboshi.",
+        "3-xatboshi.",
+        "2-xatboshi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-matn: \"How animals sleep\"",
+     "type": "Reading",
+     "instr": "12 daqiqada bajaring; javoblar va izohlar Reading bo'limida.",
+     "answers": "Ustoz har rad etilgan variant sababini so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Tuzoq jadvali",
+     "type": "Yozma",
+     "instr": "Humpback whale matnidagi 7 ta savol uchun rad etilgan variantlardan bittadan tanlang va turini yozing: aytilmagan / teskari / boshqa guruh / boshqa narsa haqida.",
+     "answers": "Tur ko'rsatilmagan qator qabul qilinmaydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Paraphrase juftlari",
+     "type": "Yozma",
+     "instr": "Honey badger trail matnidan 8 ta variant — matn juftini yozing (masalan: show interest in — curious).",
+     "answers": "Reading bo'limidagi paraphrase jadvali bilan solishtiriladi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Pick from a list (uyga)",
+     "6 javobdan 5 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Tuzoq jadvali",
+     "7 qator, turi bilan",
+     "2 coin"
+    ],
+    [
+     "Paraphrase juftlari",
+     "8 tadan 7 tasi",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

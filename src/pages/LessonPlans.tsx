@@ -620,18 +620,20 @@ function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
     return (
       <div className="mt-3 space-y-3">
         {items.map((it, j) => {
-          const parts = it.split(/\s+(?=[A-D]\)\s)/);
-          const qn = parts[0].match(/^(\d+)\s+/)?.[1];
-          const q = parts[0].replace(/^\d+\s+/, "");
+          // A–E va "Choose TWO" (javob "B, C"), raqam "1–2" ham bo'lishi mumkin
+          const parts = it.split(/\s+(?=[A-E]\)\s)/);
+          const qn = parts[0].match(/^(\d+(?:[–-]\d+)?)\s+/)?.[1];
+          const q = parts[0].replace(/^\d+(?:[–-]\d+)?\s+/, "");
           const opts = parts.slice(1);
-          const correct = (answers?.[j] ?? "").trim().charAt(0);
+          const lead = (answers?.[j] ?? "").trim().match(/^[A-E](?:\s*,\s*[A-E])*(?![a-z])/)?.[0] ?? "";
+          const correct = new Set(lead.match(/[A-E]/g) ?? []);
           return (
             <div key={j} className="rounded-lg border border-slate-200 p-3">
               <div className="text-sm font-medium text-slate-800"><span className="font-bold text-brand-700 mr-1">{qn ?? j + 1}.</span>{q}</div>
               <div className="grid sm:grid-cols-2 gap-1.5 mt-2">
                 {opts.map((o, k) => {
                   const letter = o.charAt(0);
-                  const ok = show && letter === correct;
+                  const ok = show && correct.has(letter);
                   return (
                     <div key={k} className={`text-sm rounded-md px-2.5 py-1.5 border ${ok ? "border-emerald-500 bg-emerald-50 text-emerald-800 font-semibold" : "border-slate-200 bg-slate-50 text-slate-700"}`}>
                       <span className="font-bold mr-1">{letter}</span>{o.slice(2).trim()}

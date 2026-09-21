@@ -502,6 +502,10 @@ function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
   const answers = Array.isArray(ex.answers) ? ex.answers : undefined;
   const why = ex.why ?? [];
   const lay = ex.layout;
+  // Jadval/sxemada bo'sh joy raqami (7, 8...) savol raqamiga bog'lanadi
+  const labelOf = (j: number) => { const n = parseInt(items[j] ?? "", 10); return Number.isNaN(n) ? j + 1 : n; };
+  const byNo: string[] = [];
+  if (answers) items.forEach((_, j) => { byNo[labelOf(j) - 1] = answers[j]; });
 
   if (lay === "grid" && ex.head && ex.rows) {
     return (
@@ -511,7 +515,7 @@ function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
             <thead><tr>{ex.head.map((h, i) => <th key={i} className={TH}>{h}</th>)}</tr></thead>
             <tbody>{ex.rows.map((r, i) => (
               <tr key={i} className={i % 2 ? "bg-slate-50/60" : ""}>
-                {r.map((c, j) => <td key={j} className={`${TD} ${j === 0 ? "font-semibold" : ""}`}><Cell text={c} answers={answers} show={show} /></td>)}
+                {r.map((c, j) => <td key={j} className={`${TD} ${j === 0 ? "font-semibold" : ""}`}><Cell text={c} answers={byNo} show={show} /></td>)}
               </tr>
             ))}</tbody>
           </table>
@@ -520,7 +524,7 @@ function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
           <div className="mt-3 bg-emerald-50/40 rounded-lg p-3">
             <div className="text-xs font-semibold text-emerald-800 mb-1">Javoblar va izoh</div>
             <ol className="space-y-1.5">{items.map((_, j) => (
-              <li key={j} className="text-sm"><span className="font-bold text-brand-700 mr-1">{j + 1}.</span>
+              <li key={j} className="text-sm"><span className="font-bold text-brand-700 mr-1">{labelOf(j)}.</span>
                 <span className="font-semibold text-emerald-700">{answers?.[j]}</span><Why text={why[j]} /></li>
             ))}</ol>
           </div>
@@ -565,6 +569,34 @@ function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
           })}</tbody>
         </table>
       </div>
+    );
+  }
+
+  if (lay === "flow" && ex.rows && ex.rows.length) {
+    // Qutilar alohida (row), javoblar alohida (items) — ustoz sxemasi
+    const boxes = ex.rows.map((r) => r[0]);
+    return (
+      <>
+        <div className="mt-3 flex flex-col items-center">
+          {boxes.map((b, j) => (
+            <div key={j} className="w-full max-w-md flex flex-col items-center">
+              <div className="w-full text-center border-2 border-brand-200 bg-white rounded-lg px-3 py-2 text-sm shadow-sm">
+                {withGaps(b, 0, byNo, show)}
+              </div>
+              {j < boxes.length - 1 && <div className="text-brand-400 text-lg leading-none py-0.5">↓</div>}
+            </div>
+          ))}
+        </div>
+        {show && items.length > 0 && (
+          <div className="mt-3 bg-emerald-50/40 rounded-lg p-3">
+            <div className="text-xs font-semibold text-emerald-800 mb-1">Javoblar va izoh</div>
+            <ol className="space-y-1.5">{items.map((_, j) => (
+              <li key={j} className="text-sm"><span className="font-bold text-brand-700 mr-1">{labelOf(j)}.</span>
+                <span className="font-semibold text-emerald-700">{answers?.[j]}</span><Why text={why[j]} /></li>
+            ))}</ol>
+          </div>
+        )}
+      </>
     );
   }
 

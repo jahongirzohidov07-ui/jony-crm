@@ -140,7 +140,7 @@
      ],
      [
       "Matnni boshidan oxirigacha o'qiymanmi?",
-      "Yo'q. Table completion javoblari matnda TARTIB bilan keladi — savol tartibida qidiring."
+      "Yo'q. Table completion javoblari odatda (USUALLY) matn tartibida keladi — savol tartibida qidiring, topilmasa sarlavhaga qayting."
      ]
     ],
     "notes": [
@@ -2423,8 +2423,10 @@
    ],
    "grammar": {
     "intro": [
-     "TARTIB qoidasi: table, note, sentence, summary, flow chart, short answer va T/F/NG savollari odatda matn tartibida keladi. Matching headings, matching features va classification esa tartibsiz bo'ladi.",
-     "Shuning uchun 3-savolning javobi 2-savol javobidan KEYIN turadi. Agar 4-savolni topsangiz, 3-savolni undan oldingi qismdan qidiring.",
+     "QUESTION ORDER qoidasi — uch guruh. ALWAYS (doim tartibda): True/False/Not Given, Yes/No/Not Given, Short answer, Sentence completion, Multiple choice, Matching sentence endings.",
+     "USUALLY (odatda tartibda): Note, Table, Flow-chart completion, Diagram labelling, Summary completion. Ko'pincha tartibda, lekin kafolat yo'q — topilmasa sarlavha va kalit so'zga qayting.",
+     "NEVER (tartibda emas): Matching headings, Matching information, Matching features, Global understanding, Classification. Har savol butun matndan alohida qidiriladi.",
+     "ALWAYS guruhida 3-savolning javobi 2-savol javobidan KEYIN turadi. Agar 4-savolni topsangiz, 3-savolni undan oldingi qismdan qidiring.",
      "Flow chart — jarayon: har quti bitta bosqich. Bosqichlar ketma-ketlik so'zlari bilan bog'lanadi: first, then, next, after that, finally, once, as soon as.",
      "Flow chart javobi ko'pincha fe'l yoki ot bo'ladi: \"___ the mixture\" (fe'l), \"put it in a ___\" (ot).",
      "Short answer: savol so'roq so'zi bilan boshlanadi. Javob to'liq gap emas, 1–3 so'z: \"Who invented it? — Marie Curie\", \"How long does it take? — six weeks\".",
@@ -2472,7 +2474,7 @@
     "presentation": [
      [
       "3-savolni topolmadim, 4-ni topdim. Nima qilay?",
-      "3-savol javobi 4-savol javobidan OLDIN turadi — o'sha oraliqni o'qing."
+      "ALWAYS guruhida 3-savol javobi 4-savol javobidan OLDIN turadi — o'sha oraliqni o'qing."
      ],
      [
       "Flow chartda qaysi so'zlar yordam beradi?",
@@ -2491,8 +2493,12 @@
       "Odatda yo'q. \"a factory\" o'rniga \"factory\" yetarli, agar chegara qisqa bo'lsa."
      ],
      [
+      "Flow chart doim tartibdami?",
+      "Odatda (USUALLY). Ko'pincha tartibda, lekin kafolat yo'q."
+     ],
+     [
       "Matching headings ham tartibdami?",
-      "Yo'q. U tartibsiz — har xatboshini alohida ko'rasiz."
+      "Yo'q, NEVER guruhida — har xatboshini alohida ko'rasiz."
      ]
     ],
     "notes": [
@@ -2537,44 +2543,433 @@
    },
    "class_ex": [
     {
-     "title": "Tartib bor / tartib yo'q",
-     "type": "Tasniflash, doskada",
-     "instr": "Savol turini to'g'ri ustunga joylashtiring.",
+     "title": "Question order — savollar tartibi jadvali",
+     "type": "Jony Academy qoidasi",
+     "instr": "Savol tartibi matndagi ma'lumot tartibiga mos keladimi? Uch guruh — doim, odatda, hech qachon.",
+     "note": "Jadvalni o'quvchilar daftariga ko'chirsin. Har yangi savol turini o'rganganda, avval shu jadvaldan uning guruhini aytishsin.",
+     "layout": "grid",
+     "head": [
+      "ALWAYS — doim tartibda",
+      "USUALLY — odatda tartibda",
+      "NEVER — tartibda emas"
+     ],
+     "rows": [
+      [
+       "Identifying information (True / False / Not Given)",
+       "Note, Table, Flow-chart completion",
+       "Matching Headings"
+      ],
+      [
+       "Identifying the writer's views and claims (Yes / No / Not Given)",
+       "Diagram Labelling",
+       "Matching Information (Which paragraph contains the following information?)"
+      ],
+      [
+       "Short Answer Questions",
+       "Summary Completion (2 types)",
+       "Matching Features"
+      ],
+      [
+       "Sentence Completion",
+       "",
+       "Global Understanding"
+      ],
+      [
+       "Multiple choice (3 types)",
+       "",
+       "Classification"
+      ],
+      [
+       "Matching Sentence Endings",
+       "",
+       ""
+      ]
+     ]
+    },
+    {
+     "title": "Guruhini toping",
+     "type": "Tasniflash",
+     "instr": "Savol turi qaysi guruhga kiradi: ALWAYS, USUALLY yoki NEVER?",
      "items": [
-      "Table completion",
-      "Note completion",
-      "Flow chart completion",
-      "Short answer questions",
       "True / False / Not Given",
-      "Matching headings",
-      "Matching features (kim nima degan)",
+      "Yes / No / Not Given",
+      "Short Answer Questions",
+      "Sentence Completion",
+      "Multiple choice",
+      "Matching Sentence Endings",
+      "Table / Note / Flow-chart completion",
+      "Diagram Labelling",
+      "Summary Completion",
+      "Matching Headings",
+      "Matching Information",
+      "Matching Features",
+      "Global Understanding",
       "Classification"
      ],
      "answers": [
-      "tartib bor",
-      "odatda tartib bor",
-      "tartib bor",
-      "tartib bor",
-      "tartib bor",
-      "tartib yo'q",
-      "tartib yo'q",
-      "tartib yo'q"
+      "ALWAYS",
+      "ALWAYS",
+      "ALWAYS",
+      "ALWAYS",
+      "ALWAYS",
+      "ALWAYS",
+      "USUALLY",
+      "USUALLY",
+      "USUALLY",
+      "NEVER",
+      "NEVER",
+      "NEVER",
+      "NEVER",
+      "NEVER"
      ],
      "why": [
-      "Javoblar matn bo'ylab ketma-ket joylashadi.",
-      "Lekin sarlavhaga qarab bo'lim almashishi mumkin.",
-      "Jarayon o'z ketma-ketligida bayon qilinadi.",
-      "Savollar matn tartibida beriladi.",
-      "Har savol keyingi qismdan keladi.",
-      "Har xatboshi alohida; sarlavhalar aralash.",
-      "Ismlar matn bo'ylab sochilgan.",
-      "Guruhlar bo'yicha qidiriladi."
+      "Har savol matnning keyingi qismidan keladi — 3-savol 2 va 4 orasida.",
+      "Muallif fikri ham matn tartibida so'raladi.",
+      "Topilgan javobdan keyingi qismni o'qing.",
+      "Gaplar matn tartibida beriladi.",
+      "Uchala turi ham tartibda.",
+      "Gap boshlari matn tartibida keladi.",
+      "Ko'pincha tartibda, lekin jadval ustunlari yoki qayd bo'limlari almashishi mumkin — sarlavhaga qarang.",
+      "Chizma bo'ylab yuriladi, lekin raqamlar matn tartibiga to'liq mos kelmasligi mumkin.",
+      "Xulosa odatda matn tartibida, lekin ba'zan faqat bir qismini qamraydi.",
+      "Har xatboshi alohida; sarlavhalar aralash beriladi.",
+      "\"Qaysi xatboshida bor?\" — ma'lumot istalgan joyda bo'lishi mumkin.",
+      "Ismlar va fikrlar matn bo'ylab sochilgan.",
+      "Butun matnga tegishli savol — bitta joyda emas.",
+      "Guruhlar bo'yicha qidiriladi, tartib bo'yicha emas."
      ],
-     "note": "O'quvchi daftariga ikki ustun qilib ko'chirsin — bu jadval keyingi darslarda ham kerak bo'ladi.",
+     "note": "Amaliy xulosa: ALWAYS — ketma-ket qidiring, oldingi javob keyingisining boshlanish nuqtasi. USUALLY — tartibda qidiring, lekin topilmasa sarlavha va kalit so'zga qayting. NEVER — har savolni butun matndan alohida qidiring.",
      "layout": "qa"
     }
    ],
    "readings": [
+    {
+     "title": "Reading #5. Freya Stark, explorer and writer",
+     "qtype": "Flow chart + Short answer",
+     "source": "Jony Academy materiali — asosiy matn (Unit 2)",
+     "text": [
+      "Freya Stark travelled to many areas of the Middle East, often alone.",
+      "Freya Stark was an explorer who lived during a time when explorers were regarded as heroes. She travelled to distant areas of the Middle East, where few Europeans - especially women - had travelled before. She also travelled extensively in Turkey, Greece, Italy, Nepal and Afghanistan.",
+      "Stark was born in Paris in 1893. Although she had no formal education as a child, she moved about with her artist parents and learned French, German and Italian. She entered London University in 1912, but at the start of World War I, she joined the nurse corps and was sent to Italy. After the war, she returned to London and attended the School of Oriental Studies. Her studies there led to extensive travel in the Middle East, enabling her to eventually become fluent in Persian, Russian and Turkish.",
+      "Stark became well known as a traveler and explorer in the Middle East. She travelled to the Lebanon in 1927 at the age of 33 when she had saved enough money, and while there, she studied Arabic.",
+      "In 1928, she travelled by donkey to the Jebel Druze, a mountainous area in Syria. During another trip, she went to a distant region of the Elburz, a mountain range in Iran, where she made a map. She was searching for information about an ancient Muslim sect known as the Assassins, which she wrote about in Valley of the Assassins (1934), a classic for which she was awarded a Gold Medal by the Royal Geographic Society. For the next 12 years, she continued her career as a traveler and writer, establishing a style which combined an account of her journeys with personal commentary on the people, places, customs, history and politics of the Middle East."
+     ],
+     "paraphrases": [
+      [
+       "entered",
+       "started (first formal education)"
+      ],
+      [
+       "joined the nurse corps",
+       "worked as a nurse"
+      ],
+      [
+       "studied",
+       "learned"
+      ],
+      [
+       "mountainous area in Syria",
+       "Syrian mountains"
+      ],
+      [
+       "travelled by donkey",
+       "made a journey on a donkey"
+      ],
+      [
+       "was awarded",
+       "won"
+      ],
+      [
+       "for the next 12 years",
+       "a further 12 years"
+      ],
+      [
+       "were regarded as",
+       "people used the word"
+      ],
+      [
+       "at the start of World War I",
+       "historical event interrupted"
+      ],
+      [
+       "was searching for information about",
+       "did research on"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Complete the flow chart",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Bosqichlar matn tartibida (USUALLY). Har qutidagi kalit so'zni matndan paraphrase bilan toping.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+       ],
+       "answers": [
+        "London University",
+        "nurse",
+        "Arabic",
+        "donkey",
+        "Gold Medal",
+        "12 years"
+       ],
+       "why": [
+        "\"She had no formal education as a child ... She entered London University in 1912\". Birinchi rasmiy ta'lim — universitet. Ikki so'z, chegarada.",
+        "\"She joined the nurse corps and was sent to Italy\". \"Worked as a\" dan keyin kasb keladi.",
+        "\"She travelled to the Lebanon ... and while there, she studied Arabic\". \"Learned\" = \"studied\".",
+        "\"She travelled by donkey to the Jebel Druze, a mountainous area in Syria\". \"Syrian mountains\" = \"mountainous area in Syria\".",
+        "\"A classic for which she was awarded a Gold Medal\". \"Won\" = \"was awarded\"; kitob — Valley of the Assassins (1934).",
+        "\"For the next 12 years, she continued her career\". \"A further\" = \"the next\"."
+       ],
+       "note": "Flow chart — USUALLY guruhi: bosqichlar odatda matn tartibida. 1-javobni topgach, 2-javobni undan keyingi gaplardan qidiring.",
+       "layout": "flow",
+       "rows": [
+        [
+         "Born in Paris in 1893"
+        ],
+        [
+         "First formal education at (1)"
+        ],
+        [
+         "Worked as a (2) in Italy"
+        ],
+        [
+         "Studied at School of Oriental Studies"
+        ],
+        [
+         "Travelled to the Lebanon, where she learned (3)"
+        ],
+        [
+         "Made a journey to the Syrian mountains on a (4)"
+        ],
+        [
+         "In 1934, won a (5) for a book"
+        ],
+        [
+         "Spent a further (6) in the Middle East"
+        ]
+       ]
+      },
+      {
+       "title": "Short answer questions",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Savoldagi kalit g'oyani tagiga chizing, keyin matndan javob toping. Short answer — ALWAYS guruhi: savollar matn tartibida.",
+       "items": [
+        "What word did people use to describe explorers when Stark was alive?",
+        "What historical event interrupted Stark's university education?",
+        "What did Stark produce while travelling in Iran, in addition to a book?",
+        "What group of people did Stark research in Iran?"
+       ],
+       "answers": [
+        "heroes",
+        "World War I",
+        "a map",
+        "the Assassins"
+       ],
+       "why": [
+        "\"Explorers were regarded as heroes\". \"People used the word\" = \"were regarded as\".",
+        "\"She entered London University in 1912, but at the start of World War I, she joined the nurse corps\".",
+        "\"A mountain range in Iran, where she made a map\". \"Produce\" = \"made\".",
+        "\"Searching for information about an ancient Muslim sect known as the Assassins\". \"Group of people\" = \"sect\"."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Reading #7. Patrick Malone (Part 1)",
+     "qtype": "Flow chart — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "Patrick Malone is a traveller, writer and broadcaster. He was born in 1968 in Basel, Switzerland, where his British parents were working for a pharmaceutical company. His family left Switzerland when he was twelve, and returned to their home in Britain. For the next six years, Malone attended the local secondary school. He then went to Leeds University to do a course in Human Geography. He wanted to become a town planner. However, the only work he could find was as a teacher at a local school.",
+      "During his holidays and free time, he went walking, often covering very long distances very quickly. On one occasion he walked the entire length of Britain, a distance of over 1,400 kilometres, in less than a month. He enjoyed the experience and the challenge so much that he started walking in different parts of the world, usually in fairly remote areas away from major population centres. The people he met and the experiences he had on these trips provided him with some excellent material for his classes.",
+      "It was during one trip that he met his old university tutor, Don Perkins. At the time, Perkins was putting together a team of geographers and biologists for a research trip to the Amazon, and asked Malone if he would like to go with them. The expedition was for a whole year, and so he had to give up his job at the school, but Malone did not hesitate to accept Perkins' offer. He sold his car to make some money, bought an airline ticket for Brazil and set off."
+     ],
+     "paraphrases": [
+      [
+       "returned to their home in Britain",
+       "moved to Britain"
+      ],
+      [
+       "do a course in",
+       "studied"
+      ],
+      [
+       "the only work he could find",
+       "got a job as"
+      ],
+      [
+       "walked a distance of over",
+       "travelled more than ... on foot"
+      ],
+      [
+       "on one occasion",
+       "on a single trip"
+      ],
+      [
+       "fairly remote areas",
+       "places that were quite remote"
+      ],
+      [
+       "research trip",
+       "expedition"
+      ],
+      [
+       "accept the offer",
+       "joined"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Complete the flow chart",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Patrick Malone hayoti bosqichlari (1–6).",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+       ],
+       "answers": [
+        "Britain",
+        "Human Geography",
+        "teacher",
+        "1,400 kilometres",
+        "remote",
+        "expedition"
+       ],
+       "why": [
+        "\"His family left Switzerland when he was twelve, and returned to their home in Britain\". \"Moved to\" = \"returned to\".",
+        "\"He then went to Leeds University to do a course in Human Geography\". \"Studied\" = \"do a course in\".",
+        "\"The only work he could find was as a teacher\". \"Got a job as\" = \"work he could find\".",
+        "\"A distance of over 1,400 kilometres\". \"More than\" = \"over\"; \"on foot\" = \"walked\".",
+        "\"Usually in fairly remote areas\". \"Quite\" = \"fairly\".",
+        "\"A research trip to the Amazon ... The expedition was for a whole year\". PAROSAT: \"an\" artikli javob unli harf bilan boshlanishini ko'rsatadi."
+       ],
+       "layout": "flow",
+       "rows": [
+        [
+         "Born in Switzerland in 1968."
+        ],
+        [
+         "Moved to (1) when he was twelve."
+        ],
+        [
+         "Studied (2) at university."
+        ],
+        [
+         "Got a job as a (3)."
+        ],
+        [
+         "Once travelled more than (4) on foot on a single trip."
+        ],
+        [
+         "Often went walking in places that were quite (5)."
+        ],
+        [
+         "Joined an (6) to the Amazon."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Reading #8. Patrick Malone (Part 2)",
+     "qtype": "Flow chart — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "The Amazon expedition, which took six months and covered a distance of almost 2,500 kilometres, was a great success. The group discovered some new plant and insect species, as well as a forest tribe which people had never heard of. Malone enjoyed the trip so much that he decided to become a full-time explorer. He earned money by writing travel articles for magazines and newspapers, which he illustrated with his own photographs.",
+      "In 1996, he married Margaret Logan, an American doctor he had met while travelling around Africa. In 1998 they had Adam, the first of three children (twins Amelia and Jennifer were born a year later). Many families at this stage would settle down, but Margaret and Patrick decided to keep travelling, spending two years walking around India and another twelve months exploring the islands of Indonesia.",
+      "When they returned home, they wrote a magazine article about travelling with small children. It was so popular that they were asked to write several more articles on the same subject. This was followed by an offer from a television company to present a TV series about travelling with children. The series ran for 12 years, and won several television awards. Today they still make the most of every opportunity to travel, and have recently returned from the South Pacific."
+     ],
+     "paraphrases": [
+      [
+       "a tribe that nobody knew existed",
+       "a forest tribe which people had never heard of"
+      ],
+      [
+       "someone he met on a trip",
+       "a doctor he had met while travelling"
+      ],
+      [
+       "explored for",
+       "spent twelve months exploring"
+      ],
+      [
+       "a successful TV series",
+       "the series ran for 12 years and won awards"
+      ],
+      [
+       "still likes to",
+       "still make the most of every opportunity to"
+      ],
+      [
+       "whenever possible",
+       "every opportunity"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Complete the flow chart",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "1-qismning davomi (7–12).",
+       "items": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+       ],
+       "answers": [
+        "Discovered",
+        "Married",
+        "three / 3 children",
+        "twelve / 12 months",
+        "television / TV series",
+        "travel"
+       ],
+       "why": [
+        "\"The group discovered ... a forest tribe which people had never heard of\". PAROSAT: bo'sh joy gap boshida — fe'l kerak.",
+        "\"In 1996, he married Margaret Logan, an American doctor he had met while travelling around Africa\".",
+        "\"Adam, the first of three children (twins Amelia and Jennifer...)\". Ikkala javob ham qabul qilinadi.",
+        "\"Another twelve months exploring the islands of Indonesia\". Diqqat: \"two years\" — Hindiston uchun, chalg'ituvchi.",
+        "\"An offer ... to present a TV series ... won several television awards\".",
+        "\"Today they still make the most of every opportunity to travel\". \"Whenever possible\" = \"every opportunity\"."
+       ],
+       "layout": "flow",
+       "rows": [
+        [
+         "Travelled 2,500 kilometres through the Amazon."
+        ],
+        [
+         "(7) a tribe that nobody knew existed."
+        ],
+        [
+         "(8) someone he met on a trip."
+        ],
+        [
+         "They had (9): Adam, Amelia and Jennifer."
+        ],
+        [
+         "Explored the Indonesian islands for (10)."
+        ],
+        [
+         "Made a successful (11)."
+        ],
+        [
+         "Still likes to (12) whenever possible."
+        ]
+       ]
+      }
+     ]
+    },
     {
      "title": "How a pencil is made",
      "qtype": "Flow chart completion + Short answer",
@@ -4167,7 +4562,7 @@
    "objectives": [
     "Chizmadagi belgini matndagi tavsif bilan bog'lash: qism nomi, joylashuvi, vazifasi.",
     "Joy va yo'nalish predloglarini o'qish: above, below, beneath, at the top, on either side, through, into.",
-    "Diagram labelling javoblari ham matn tartibida kelishini bilish va shu tartibdan foydalanish.",
+    "Diagram labelling javoblari odatda (USUALLY) matn tartibida kelishini bilish va shundan foydalanish.",
     "Chizma turini farqlash: qurilma sxemasi, jarayon sxemasi, joy rejasi.",
     "3 ta Band 4–5 matnda mustaqil ishlash va har javobni izohlash."
    ],
@@ -4227,7 +4622,7 @@
      "Joy predloglari eng muhim: above (ustida), below/beneath (ostida), inside (ichida), on either side (ikki yonida), at the base (tagida), through (orqali).",
      "Yo'nalish so'zlari jarayon sxemasida keladi: enters, passes, flows into, is carried to, comes out of.",
      "Javob so'z chegarasidan oshmasin: \"ONE WORD ONLY\" bo'lsa, \"metal ring\" emas, \"ring\".",
-     "Diagram labelling savollari matn tartibida joylashadi, shuning uchun topilgan javobdan keyin qidiring."
+     "Diagram labelling savollari odatda (USUALLY) matn tartibida joylashadi: topilgan javobdan keyin qidiring, topilmasa nomlangan qismlarga qayting."
     ],
     "formulas": [
      [
@@ -4317,7 +4712,7 @@
      [
       "Tartibni e'tiborsiz qoldirish",
       "ketma-ket qidirish",
-      "Diagram savollari tartibda keladi"
+      "Diagram savollari odatda tartibda keladi"
      ],
      [
       "Umumiy bilim bilan to'ldirish",

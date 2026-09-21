@@ -1780,7 +1780,7 @@
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
+   "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 3 Dubai Palm Apartments, Track 4 Good Moves) va 3 ta mualliflik skripti.",
    "objectives": [
     "Section 1 dagi formani to'ldirishda javob turini oldindan aniqlash (ism, raqam, sana, narx).",
     "Harflab aytilgan ism va familiyani (spelling) va telefon raqamini xatosiz yozish.",
@@ -1989,6 +1989,319 @@
    ],
    "readings": [],
    "listenings": [
+    {
+     "title": "Track 3. Dubai Palm Apartments",
+     "qtype": "Form completion (Section 1) — asosiy",
+     "audios": "Ustoz bergan audio (Track 3)",
+     "audio": "ielts5_03_dubai_palm.mp3",
+     "intro": [
+      "Leo Dubaydagi dam olish kvartirasi haqida qo'ng'iroq qilmoqda. Avval 1 daqiqa formani o'qing va har bo'sh joy turini ayting (ism, raqam, sana, narx). Keyin audioni BIR MARTA tinglang.",
+      "Ko'rsatma: Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer."
+     ],
+     "transcript": [
+      "AMANDA: Dubai Palm Apartments, Amanda speaking. How can I help you?",
+      "LEO: Oh hi, Amanda. I'm ringing to enquire about a holiday apartment for the month after next.",
+      "AMANDA: OK, no problem. Let me get your details first, then I'll tell you what we've got. Is that all right?",
+      "LEO: Fine, go ahead.",
+      "AMANDA: OK. Can I have your name first, please?",
+      "LEO: Yes, it's Leo Blucher, that's L-E-O – that's my first name – and my surname is B-L-U-C-H-E-R.",
+      "AMANDA: OK, I've got that. Where are you from, just out of interest, Leo?",
+      "LEO: I'm Austrian.",
+      "AMANDA: Right, OK, and what's your address?",
+      "LEO: It's number 37 Blumengasse in Vienna.",
+      "AMANDA: Right. Could you just spell Blumengasse for me, please, Leo? My German's not too good.",
+      "LEO: Sure, it's B-L-U-M-E-N-G-A-double S-E.",
+      "AMANDA: Great, thanks, and what's the weather like in Vienna at the moment?",
+      "LEO: It's pretty grey and rainy, I'm afraid. Hope it's better in Dubai.",
+      "AMANDA: Yes, it's lovely at the moment. Sunny and warm, but not too hot. Now, can you give me your phone number?",
+      "LEO: Yes, it's 4312 11057.",
+      "AMANDA: Great. So, you're looking for a holiday apartment, Leo. How many people is it for, just yourself?",
+      "LEO: No, there'll be four of us, two adults and two children.",
+      "AMANDA: Fine, and when would you like it from?",
+      "LEO: Ideally from the 1st of January.",
+      "AMANDA: January the 1st. OK. I'll have a look and see what we've got. How long would you like to stay?",
+      "LEO: Well, it depends a little bit on the price, but I think that about nine days would be perfect.",
+      "AMANDA: Fine. And, talking of prices, what would be your maximum, do you think?",
+      "LEO: Well, I've looked on the Internet, but I don't know if I'm being realistic if I say 200 euros per day. Things seem to range from 150 to well over 400.",
+      "AMANDA: Well, it depends where, of course, but I think we could probably find something for you at that price.",
+      "LEO: Great. There are various other things, though. Our children are quite small, and we don't want to take them to restaurants all the time, so one thing we'd really appreciate is a fully equipped kitchen so we can do some cooking.",
+      "AMANDA: Yes, I completely understand. Do you have any other special requirements?",
+      "LEO: Yes, we live in the city centre hundreds of miles from the sea, so we'd really like be able to see it from our apartment.",
+      "AMANDA: OK, I'll note that down. All our apartments come with air conditioning and central heating, by the way.",
+      "LEO: Oh dear. One thing I don't like is the noise of air conditioning in the background. Can you make sure it's as quiet as possible?",
+      "AMANDA: Yes, I'll look into that. Anything else?",
+      "LEO: Yes, just one more thing. We'd like to hire a car while we're in Dubai, so we'll need to have a parking space, I think – we don't want to have to walk a long way from the car to the apartment.",
+      "AMANDA: I think you're quite right. I'll look into all these things and make a list of possible apartments. Do you have an email address, so I can send them to you?",
+      "(Skript davomi kitobning keyingi betida — barcha 10 ta javob yuqoridagi qismda.)"
+     ],
+     "tasks": [
+      {
+       "title": "Dubai Palm Apartments — complete the form (1–10)",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Forma tartibi = suhbat tartibi (ALWAYS).",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+       ],
+       "answers": [
+        "Leo Blucher",
+        "Blumengasse",
+        "4312 11057",
+        "1st / 1",
+        "nine days / 9 days",
+        "two hundred / 200",
+        "kitchen",
+        "(the) sea",
+        "quiet",
+        "parking space / parking / space"
+       ],
+       "why": [
+        "Ism va familiya harflab aytiladi: L-E-O, B-L-U-C-H-E-R. Imlo xatosi — 0 ball.",
+        "\"B-L-U-M-E-N-G-A-double S-E\". \"Double S\" = ss. Tuzoq: \"Austrian\" va \"Vienna\" — boshqa qatorlar.",
+        "Raqamlar guruhlab aytiladi — eshitganday yozing. Ob-havo haqidagi gap (grey and rainy) — chalg'ituvchi, javob emas.",
+        "\"Ideally from the 1st of January\" — xodim \"January the 1st\" deb tasdiqlaydi.",
+        "\"About nine days would be perfect\". Birlik (days) bilan yozing — bo'sh joyda \"days\" yo'q.",
+        "\"200 euros per day\". Tuzoq: 150 va 400 — internetdagi narxlar oralig'i, Leoning chegarasi emas.",
+        "\"A fully equipped kitchen so we can do some cooking\". \"Fully equipped\" formada bor.",
+        "\"We'd really like to be able to see it\" — it = the sea. Paraphrase: view of = see.",
+        "\"Can you make sure it's as quiet as possible?\" Tuzoq: \"central heating\" — bu javob emas.",
+        "\"We'll need to have a parking space\". \"For car\" = \"hire a car\"."
+       ],
+       "note": "Kitob kaliti: 1 Leo Blucher 2 Blumengasse 3 4312 11057 4 1st 5 nine/9 days 6 two hundred/200 7 kitchen 8 (the) sea 9 quiet 10 parking space/parking/space.",
+       "layout": "grid",
+       "head": [
+        "Dubai Palm Apartments",
+        ""
+       ],
+       "rows": [
+        [
+         "Enquiry taken by:",
+         "Amanda"
+        ],
+        [
+         "Name:",
+         "(1)"
+        ],
+        [
+         "Address:",
+         "37 (2), Vienna"
+        ],
+        [
+         "Telephone number:",
+         "(3)"
+        ],
+        [
+         "Number of people:",
+         "four"
+        ],
+        [
+         "Starting date:",
+         "(4) January"
+        ],
+        [
+         "Length of stay:",
+         "(5)"
+        ],
+        [
+         "Price per day:",
+         "maximum (6) euros"
+        ],
+        [
+         "Other requirements:",
+         "fully equipped (7) ;; view of (8) ;; air conditioning must be (9) ;; (10) for car"
+        ]
+       ]
+      },
+      {
+       "title": "Signal so'zlar va tuzoqlar",
+       "type": "Tahlil",
+       "instr": "Javobdan oldin qanday belgi bor edi?",
+       "items": [
+        "Harflab aytish",
+        "Chalg'ituvchi raqamlar",
+        "Ortiqcha ma'lumot",
+        "Paraphrase"
+       ],
+       "answers": [
+        "\"that's L-E-O ... B-L-U-C-H-E-R\"",
+        "\"from 150 to well over 400\"",
+        "\"I'm Austrian\", \"grey and rainy\"",
+        "\"view of the sea\" = \"be able to see it\""
+       ],
+       "why": [
+        "Ism va ko'cha nomi deyarli har doim harflanadi.",
+        "Diapazon — javob emas; javob — \"200 euros\".",
+        "Formada yo'q — e'tibor bermang.",
+        "Formadagi so'z audioda boshqacha aytiladi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Track 4. Good Moves Accommodation Agency",
+     "qtype": "Form completion (Section 1) — qo'shimcha mashq",
+     "audios": "Ustoz bergan audio (Track 4)",
+     "intro": [
+      "Clarice ijaraga kvartira qidirib agentlikka qo'ng'iroq qilmoqda. Avval formani o'qing, keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer. Audio fayli keyinroq biriktiriladi; hozircha ustoz skriptni o'qishi mumkin."
+     ],
+     "transcript": [
+      "MAN: Hello, Good Moves Accommodation Agency. Ben speaking. How can I help?",
+      "WOMAN: Good morning. I'm calling about an apartment on your website, and was wondering if I could have some more information.",
+      "MAN: Certainly. Can I take your details before we get started?",
+      "WOMAN: Sure.",
+      "MAN: Right, what's your name, please?",
+      "WOMAN: OK, my name is Clarice Willard. Clarice is C-L-A-R-I-C-E. And Willard, W-I-L-L-A-R-D.",
+      "MAN: And have you got a contact number?",
+      "WOMAN: Yes, I'll give you my mobile, which is 0192 8734566.",
+      "MAN: That's great, thanks. And can I ask how you found us?",
+      "WOMAN: Of course. A family member used you last year and recommended you. So, I had a look at your website and, well, that's why I'm calling now.",
+      "MAN: OK, so, which property are you interested in?",
+      "WOMAN: The apartment on Statham Street, the one on the 3rd floor.",
+      "MAN: Let me see. Ah, I'm afraid that flat's no longer available.",
+      "WOMAN: No?",
+      "MAN: No, it went this morning. It's in a really popular part of town. We do have a house on the same street, if you're interested. It's £950 a month.",
+      "WOMAN: Er, no, I think that's much too expensive. I think an apartment is all we can afford.",
+      "MAN: Oh, so it's not just for you?",
+      "WOMAN: No, me and a friend. We're both starting work in the town next month.",
+      "MAN: Oh right, so it's two of you. So, let's see. Do you have any preferences in terms of location?",
+      "WOMAN: Both our jobs are in the town centre, so it would be good to be within walking distance of that, or perhaps a short bus journey away. Neither of us have a car, so we'd be relying on public transport.",
+      "MAN: And what's your budget?",
+      "WOMAN: I'm sorry?",
+      "MAN: How much can you pay a month?",
+      "WOMAN: Let me see, er, £700 a month is probably our limit.",
+      "MAN: Each?",
+      "WOMAN: No, that would be for the both of us. We wouldn't be able to pay more than £350 each. Oh, and that would have to include bills. Not phone bills, obviously, but things like electricity, gas and water.",
+      "MAN: Hmm, OK, well, we do have a place in the Bampton district, which is about ten minutes by bus from town. It's a two-bedroom apartment, and it's less than your budget, at £600 a month. Bills would be extra, unfortunately, but that should still work out at less than £700. Although remember that electricity and gas prices are going up all the time, so I can't guarantee that.",
+      "WOMAN: Do you have an address?",
+      "MAN: I do. The apartment number is 3, and it's at 57 Thorney Leys Road ...",
+      "WOMAN: Hang on, let me just make a note of that. 57 ...",
+      "MAN: Thorney Leys Road. Thorney is T-H-O-R-N-E-Y and Leys is L-E-Y-S. And the district is called Bampton. Do you have an email address?",
+      "WOMAN: Yes.",
+      "MAN: In that case, I can send you the details, and then you can think about it. And if you're interested, I could arrange for a visit so you see the place for yourself. How does that sound?",
+      "WOMAN: Oh, that would be really helpful. It's clarice_willard@... [fade]"
+     ],
+     "tasks": [
+      {
+       "title": "Good Moves Accommodation Agency — complete the form (1–10)",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Forma tartibi = suhbat tartibi.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+       ],
+       "answers": [
+        "Clarice Willard",
+        "0192 8734566",
+        "family member",
+        "flat / apartment",
+        "2 / two",
+        "town centre",
+        "350",
+        "bills",
+        "57 Thorney Leys",
+        "email / e-mail"
+       ],
+       "why": [
+        "Harflab aytilgan: C-L-A-R-I-C-E, W-I-L-L-A-R-D. Ikki \"L\" ga e'tibor.",
+        "\"My mobile, which is 0192 8734566\".",
+        "\"A family member used you last year and recommended you\". Tuzoq: \"website\" — u keyin saytga kirgan, lekin agentlik haqida birinchi bo'lib oila a'zosidan eshitgan.",
+        "\"I think an apartment is all we can afford\". Tuzoq: \"house\" — £950, juda qimmat, rad etilgan.",
+        "\"Me and a friend ... so it's two of you\".",
+        "\"Both our jobs are in the town centre, so it would be good to be within walking distance\".",
+        "\"We wouldn't be able to pay more than £350 each\". Tuzoq: £700 — ikkalasi uchun jami; formada \"per person\".",
+        "\"That would have to include bills\". Tuzoq: £600 lik kvartirada bills alohida — lekin forma mijoz talabini so'raydi.",
+        "\"57 Thorney Leys Road. Thorney is T-H-O-R-N-E-Y and Leys is L-E-Y-S\". \"Road\" formada bor. Diqqat: \"57\" raqam + ikki so'z — kitob kaliti shunday qabul qiladi.",
+        "\"Do you have an email address? ... I can send you the details\"."
+       ],
+       "note": "Kitob kaliti: 1 Clarice Willard 2 0192 8734566 3 family member 4 flat/apartment 5 2/two 6 town centre 7 350 8 bills 9 57 Thorney Leys 10 email/e-mail. 7-savol — eng yaxshi tuzoq: jami summa (700) va kishi boshiga (350).",
+       "layout": "grid",
+       "head": [
+        "Good Moves Accommodation Agency",
+        ""
+       ],
+       "rows": [
+        [
+         "Call taken by:",
+         "Ben"
+        ],
+        [
+         "Name:",
+         "(1)"
+        ],
+        [
+         "Telephone:",
+         "(2)"
+        ],
+        [
+         "Heard about us from:",
+         "(3)"
+        ],
+        [
+         "Type of accommodation preferred:",
+         "(4)"
+        ],
+        [
+         "Number of people:",
+         "(5)"
+        ],
+        [
+         "Preferred location:",
+         "Wants to be close to (6)"
+        ],
+        [
+         "Price:",
+         "maximum £ (7) per person (including (8))"
+        ],
+        [
+         "Additional notes:",
+         "I suggested Flat 3 at (9) Road in Bampton. ;; I will send further details to customer by (10)."
+        ]
+       ]
+      },
+      {
+       "title": "Tuzoq tahlili",
+       "type": "Tahlil",
+       "instr": "Nega bu javob noto'g'ri?",
+       "items": [
+        "3-savol: website",
+        "4-savol: house",
+        "7-savol: 700",
+        "7-savol: 600"
+       ],
+       "answers": [
+        "ketma-ketlik",
+        "rad etilgan variant",
+        "jami summa",
+        "agent taklifi"
+       ],
+       "why": [
+        "Avval oila a'zosi tavsiya qilgan, sayt keyin.",
+        "\"Much too expensive\".",
+        "Formada \"per person\" — 350.",
+        "Mijozning chegarasi emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
     {
      "title": "Student accommodation office",
      "qtype": "Form completion (Section 1)",

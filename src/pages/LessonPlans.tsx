@@ -28,7 +28,7 @@ type Ex = { title: string; type?: string; instr?: string; items?: string[];
  * (2026-09-20, Jahongir so'rovi). */
 type Reading = { title: string; qtype?: string; source?: string; book_ref?: string;
   image?: string; text?: string[]; paraphrases?: [string, string][]; glossary?: string[]; tasks?: Ex[] };
-type Listen = { title: string; qtype?: string; audios?: string; intro?: string[];
+type Listen = { title: string; qtype?: string; audios?: string; audio?: string; intro?: string[];
   transcript?: string[]; tasks?: Ex[] };
 type Lesson = {
   no: number; title: string; grammar_topic: string; vocab_topic: string; duration: number;
@@ -776,6 +776,24 @@ function AuthImage({ name, alt }: { name: string; alt: string }) {
   return <img src={url} alt={alt} className="w-full max-w-3xl rounded-lg border border-slate-200" />;
 }
 
+/** Ustoz bergan listening audiosi: AuthImage kabi token bilan yuklanadi. */
+function AuthAudio({ name }: { name: string }) {
+  const [url, setUrl] = useState<string | null>(null);
+  const [bad, setBad] = useState(false);
+  useEffect(() => {
+    let u: string | null = null;
+    const token = getToken();
+    fetch(`/api/plan-media/${name}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+      .then((r) => { if (!r.ok) throw new Error(); return r.blob(); })
+      .then((b) => { u = URL.createObjectURL(b); setUrl(u); })
+      .catch(() => setBad(true));
+    return () => { if (u) URL.revokeObjectURL(u); };
+  }, [name]);
+  if (bad) return <p className="text-xs text-rose-600">Audioni yuklab bo'lmadi.</p>;
+  if (!url) return <p className="text-xs text-slate-400">Audio yuklanmoqda…</p>;
+  return <audio controls preload="metadata" src={url} className="w-full max-w-xl" controlsList="nodownload" />;
+}
+
 function ReadingBlock({ R, idx }: { R: Reading; idx: number }) {
   const [open, setOpen] = useState(idx === 0);
   return (
@@ -862,6 +880,14 @@ function ListenBlock({ S, idx }: { S: Listen; idx: number }) {
       </button>
       {open && (
         <div className="mt-3">
+          {S.audio && (
+            <div className="bg-white rounded-xl border border-slate-200 p-3 mb-3">
+              <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 mb-2">
+                <Headphones size={15} className="text-brand-600" /> Audio
+              </div>
+              <AuthAudio name={S.audio} />
+            </div>
+          )}
           {(S.intro ?? []).map((t, i) => <p key={i} className="text-sm text-slate-700 mb-2">{t}</p>)}
           <ExList list={S.tasks ?? []} />
           {(S.transcript ?? []).length > 0 && (

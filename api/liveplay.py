@@ -149,12 +149,15 @@ def plan_media(name: str, db: Session = Depends(get_db),
     hujjati rasmi va h.k., 2026-09-21). Faqat tizimga kirgan va dars
     rejalariga ruxsati bor xodimga beriladi — ochiq havola emas."""
     from fastapi.responses import FileResponse
-    if not re.fullmatch(r"[a-z0-9_]+\.(jpg|png|pdf)", name or ""):
+    if not re.fullmatch(r"[a-z0-9_]+\.(jpg|png|pdf|mp3)", name or ""):
         raise HTTPException(404, "Topilmadi")
     path = os.path.join(_MEDIA_DIR, name)
     if not os.path.exists(path):
         raise HTTPException(404, "Topilmadi")
-    kind = {"jpg": "image/jpeg", "png": "image/png", "pdf": "application/pdf"}[name.rsplit(".", 1)[1]]
+    # mp3 — ustoz bergan listening audiosi (2026-09-21); 4.5 MB javob
+    # chegarasi uchun mono 48 kbps ga siqib saqlanadi
+    kind = {"jpg": "image/jpeg", "png": "image/png", "pdf": "application/pdf",
+            "mp3": "audio/mpeg"}[name.rsplit(".", 1)[1]]
     return FileResponse(path, media_type=kind,
                         headers={"Cache-Control": "private, max-age=86400"})
 

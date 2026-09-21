@@ -127,6 +127,12 @@ ck("5.0 material rasmi ustozga ochiladi", (_m.status_code, _m.headers.get("conte
 ck("material rasmi tokensiz yopiq", c.get("/api/plan-media/ielts5_01_friendliest_city.jpg").status_code in (401, 403), True)
 ck("material nomi tekshiriladi", c.get("/api/plan-media/..%2Fielts_1_0.json", headers=T).status_code, 404)
 ck("supportga material yopiq", c.get("/api/plan-media/ielts5_01_friendliest_city.jpg", headers=tok("sup")).status_code, 403)
+# Listening audiosi (2026-09-21): ustozga ochiq, tokensiz va supportga yopiq,
+# Vercel 4.5 MB javob chegarasidan kichik
+_a = c.get("/api/plan-media/ielts5_03_dubai_palm.mp3", headers=T)
+ck("5.0 listening audiosi ustozga ochiladi", (_a.status_code, _a.headers.get("content-type"), len(_a.content) < 4_400_000), (200, "audio/mpeg", True))
+ck("audio tokensiz yopiq", c.get("/api/plan-media/ielts5_03_dubai_palm.mp3").status_code in (401, 403), True)
+ck("supportga audio yopiq", c.get("/api/plan-media/ielts5_03_dubai_palm.mp3", headers=tok("sup")).status_code, 403)
 for _u in ("sup", "exam", "adm"):
     ck(f"{_u}: dars rejalari yopiq", c.get("/api/plans", headers=tok(_u)).status_code, 403)
 ck("me: ingliz ustozi bayrog'i", c.get("/api/me", headers=T).json().get("english_teacher"), True)

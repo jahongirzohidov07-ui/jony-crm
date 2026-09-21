@@ -8577,6 +8577,734 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 14,
+   "title": "Reading: Summary Completion (Passage 2)",
+   "grammar_topic": "Summary completion — xulosani to'ldirish (2 turi: matndan so'z / ro'yxatdan tanlash)",
+   "vocab_topic": "Ixtirolar va ularning muvaffaqiyati",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz matnlari va mualliflik matnlari.",
+   "objectives": [
+    "Summary (xulosa) matnning qaysi qismini qamrab olishini topish: butun matnmi yoki bir-ikki xatboshimi.",
+    "Ikki turni farqlash: 1) javob MATNDAN olinadi (so'z chegarasi bilan); 2) javob tayyor RO'YXATDAN (box) tanlanadi.",
+    "Bo'sh joy grammatikasidan foydalanish: ot, fe'l, sifat, ko'plik (parosat usuli).",
+    "Xulosadagi paraphraseni matndagi asl ibora bilan bog'lash.",
+    "Javoblar odatda (USUALLY) matn tartibida kelishini bilib, shundan foydalanish."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Summary completion — matnning qisqa mazmuni beriladi, ichida bo'sh joylar bor. Xulosa matnni boshqa so'zlar bilan qayta aytadi, shuning uchun bu tur 1-darsdagi paraphrase ko'nikmasiga tayanadi.",
+     "1-TUR (matndan): \"Choose NO MORE THAN TWO WORDS from the passage\". Javob matndagi so'z bilan, o'zgartirmasdan yoziladi.",
+     "2-TUR (box): so'zlar ro'yxati beriladi, ulardan tanlanadi. Ro'yxatdagi so'zlar matnda BOSHQA shaklda bo'lishi mumkin — ma'noga qarang. Ro'yxatda ortiqcha so'zlar bor.",
+     "Birinchi qadam: xulosaning sarlavhasi va birinchi gapini o'qing, matnning qaysi qismi ekanini toping. Ba'zan xulosa faqat 1–2 xatboshini qamraydi.",
+     "Ikkinchi qadam — parosat: bo'sh joydan oldingi va keyingi so'zga qarab turini aniqlang. \"the ___ of\" — ot; \"to ___ a pen\" — fe'l; \"a ___ pen\" — sifat yoki ot.",
+     "Xulosa odatda (USUALLY) matn tartibida boradi: 3-javob 2-javobdan keyin turadi.",
+     "Javobni yozgach, butun gapni o'qing: grammatika va ma'no to'g'rimi? \"the ___ are identical\" — ko'plik ot emas, sifat kerak ekanini ko'rasiz."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Xulosa sarlavhasini o'qing",
+      "\"Rubik's Cube\"",
+      "Matndagi qismni topasiz"
+     ],
+     [
+      "2-bosqich",
+      "Turini aniqlang",
+      "matndanmi, box'danmi?",
+      "Ko'rsatma qatorida yozilgan"
+     ],
+     [
+      "3-bosqich",
+      "Har bo'sh joy turini belgilang",
+      "ot / fe'l / sifat",
+      "Parosat usuli"
+     ],
+     [
+      "4-bosqich",
+      "Matndan paraphraseni toping",
+      "\"organised in\" = \"made up of\"",
+      "Xulosa boshqa so'z ishlatadi"
+     ],
+     [
+      "5-bosqich",
+      "Javobni yozing",
+      "matndagi so'z / box'dagi so'z",
+      "Chegarani tekshiring"
+     ],
+     [
+      "6-bosqich",
+      "Gapni qayta o'qing",
+      "grammatika va ma'no",
+      "Mantiqiy xato darrov seziladi"
+     ]
+    ],
+    "presentation": [
+     [
+      "Summary butun matnnimi qamraydi?",
+      "Har doim emas. Sarlavha va birinchi gap qaysi qism ekanini aytadi."
+     ],
+     [
+      "Javobni o'z so'zim bilan yozsam bo'ladimi?",
+      "Yo'q. 1-turda matndagi so'z, 2-turda ro'yxatdagi so'z yoziladi."
+     ],
+     [
+      "Box'dagi so'z matnda yo'q, nima qilaman?",
+      "Ma'nosini qidiring — box so'zi matndagi so'zning paraphrasei bo'lishi mumkin."
+     ],
+     [
+      "\"a ___ ballpoint pen\" — qanday so'z?",
+      "Sifat yoki ot birikmasi: masalan \"commercially successful\"."
+     ],
+     [
+      "Javoblar tartibdami?",
+      "Odatda (USUALLY) ha. Topilmasa, kalit so'zga qayting."
+     ],
+     [
+      "Ikki so'zli javob yozsam bo'ladimi?",
+      "Ko'rsatma \"NO MORE THAN TWO WORDS\" bo'lsa, ha."
+     ]
+    ],
+    "notes": [
+     "Summary completion — Passage 2 da ko'p uchraydi. Bu dars 1-dars (paraphrase) va 2-dars (parosat) ko'nikmalarini birlashtiradi.",
+     "Har javobdan keyin so'rang: \"xulosadagi qaysi so'z matndagi qaysi iboraga teng?\"",
+     "2-tur (box) uchun ortiqcha so'zlarni o'chirib borish odatini shakllantiring."
+    ],
+    "mistakes": [
+     [
+      "Matnni boshidan oxirigacha o'qish",
+      "Sarlavha bo'yicha qismni topish",
+      "Xulosa ko'pincha bir qismni qamraydi"
+     ],
+     [
+      "Grammatikani tekshirmaslik (\"the colours are identity\")",
+      "identical",
+      "Bo'sh joy sifat talab qiladi"
+     ],
+     [
+      "Box'dan so'zni shakl bo'yicha tanlash",
+      "Ma'no bo'yicha tanlash",
+      "Box so'zi matnda boshqa shaklda bo'ladi"
+     ],
+     [
+      "So'z chegarasini buzish",
+      "Ikki so'zdan oshirmaslik",
+      "Uch so'z — 0 ball"
+     ],
+     [
+      "Artikl qo'shish (\"the inventor\")",
+      "inventor",
+      "Bo'sh joy oldida artikl allaqachon bor"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Parosat: bo'sh joy turi",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Matnga qaramasdan har bo'sh joy uchun qanday so'z kerakligini ayting.",
+     "items": [
+      "Originally named the ___",
+      "organised in ___",
+      "though not ___",
+      "The Cube's ___ is shaped",
+      "the colours ... are ___",
+      "most people are able to ___ a pen"
+     ],
+     "answers": [
+      "nom (ot, bosh harf bilan)",
+      "ko'plik ot",
+      "ravish",
+      "birlik ot",
+      "sifat",
+      "fe'l (asos shakl)"
+     ],
+     "why": [
+      "\"named the\" dan keyin nom keladi.",
+      "\"organised in\" — nimalar ichida joylashgan.",
+      "\"twisted ... though not ___\" — qanday qilib, ravish.",
+      "\"is\" birlik fe'l — birlikdagi ot.",
+      "\"are\" dan keyin holat — sifat.",
+      "\"to\" dan keyin fe'l."
+     ],
+     "note": "Bashorat yozilgach matn ochiladi va har javob \"kutgan turim to'g'ri keldimi?\" savoli bilan tekshiriladi.",
+     "layout": "list"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Reading #17. Rubik's Cube - How the puzzle achieved success",
+     "qtype": "Summary completion (1–7)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "Erno Rubik first studied sculpture and then later architecture in Budapest, where he went on to become a teacher of interior design. It was while he was working as a teacher that he began the preliminary work on an invention that he called the 'Magic Cube'.",
+      "Rubik was inspired by geometric puzzles such as the Chinese tangram, a puzzle consisting of various triangles, a square and a parallelogram which can be combined to create different shapes and figures. However, unlike the tangram, which is two-dimensional, Rubik was more interested in investigating how three-dimensional forms, such as the cube, could be moved and combined to produce other forms.",
+      "His design consisted of a cube made up of layers of individual smaller cubes, and each smaller cube could be turned in any direction except diagonally. To ensure that the cubes could move independently, without falling apart, Rubik first attempted to join them together using elastic bands. However, this proved to be impossible, so Rubik then solved the problem by assembling them using a rounded interior. This permitted them to move smoothly and easily. He experimented with different ways of marking the smaller cubes, but ended up with the simple solution of giving a different colour to each side. The object was to twist the layers of small cubes so that each side of the large cube was an identical colour.",
+      "Rubik took out a patent for the Cube in 1977 and started manufacturing it in the same year. The Cube came to the attention of a Hungarian businessman, Tibor Laczi, who then demonstrated it at the Nuremberg Toy Fair. When British toy expert Tom Kremer saw it, he thought it was amazing and he persuaded a manufacturer, Ideal Toys, to produce 1 million of them in 1979. Ideal Toys renamed the Cube after the toy's inventor, and in 1980, Rubik's Cube was shown at toy fairs all over the world. It won that year's prize in Germany for Best Puzzle. Rubik's Cube is believed to be the world's best-selling puzzle; since its invention, more than 300 million Cubes have been sold worldwide."
+     ],
+     "paraphrases": [
+      [
+       "originally named",
+       "he called the"
+      ],
+      [
+       "consists of",
+       "made up of"
+      ],
+      [
+       "organised in layers",
+       "layers of individual smaller cubes"
+      ],
+      [
+       "can be twisted in almost any way",
+       "could be turned in any direction"
+      ],
+      [
+       "though not",
+       "except"
+      ],
+      [
+       "allows ... to move smoothly",
+       "permitted them to move smoothly"
+      ],
+      [
+       "the aim of the puzzle",
+       "the object was"
+      ],
+      [
+       "changed the name",
+       "renamed"
+      ],
+      [
+       "has sold more than any other",
+       "the world's best-selling"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–7: Complete the summary",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "1-tur: javob matndan olinadi. Xulosa matn tartibida boradi (USUALLY).",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+       ],
+       "answers": [
+        "Magic Cube",
+        "layers",
+        "diagonally",
+        "interior",
+        "identical",
+        "inventor",
+        "puzzle"
+       ],
+       "why": [
+        "\"An invention that he called the 'Magic Cube'\". \"Originally named\" = \"he called\". Ikki so'z, bosh harf bilan.",
+        "\"A cube made up of layers of individual smaller cubes\". \"Organised in\" = \"made up of\".",
+        "\"Could be turned in any direction except diagonally\". \"Though not\" = \"except\". Parosat: \"twisted ... though not ___\" — ravish kerak.",
+        "\"Assembling them using a rounded interior. This permitted them to move smoothly\". \"Allows\" = \"permitted\".",
+        "\"So that each side of the large cube was an identical colour\". \"Are ___\" — sifat kerak (identity emas).",
+        "\"Ideal Toys renamed the Cube after the toy's inventor\". \"Changed the name\" = \"renamed\". \"its\" dan keyin artikl kerak emas.",
+        "\"The world's best-selling puzzle\". \"Sold more than any other\" = \"best-selling\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "Rubik's Cube"
+       ],
+       "rows": [
+        [
+         "Originally named the (1), Rubik's Cube consists of a number of smaller cubes organised in (2). The smaller cubes can be twisted in almost any way, though not (3). The Cube's (4) is shaped in a way that allows the smaller cubes to move smoothly. Each side of the smaller cubes has a different colour, and the aim of the puzzle is to organise the cubes so that the colours on the sides of the large cube are (5). The manufacturers of the puzzle changed the name of the Cube to the name of its (6). It has now sold more than any other (7) in the world."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Reading #18. Marcel Bich",
+     "qtype": "Summary completion (1–7) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "The man who turned a luxury item into an everyday object",
+      "Marcel Bich, a French manufacturer of traditional ink pens, was the man who turned the ballpoint pen into an item that today almost anyone can afford. Bich was appalled at the poor quality of the ballpoint pens that were available, and was also shocked at their high cost. However, he recognised that the ballpoint was a firmly established invention, and he decided to design a cheap pen that worked well and would be commercially successful.",
+      "Bich went to the Biro brothers and asked them if he could use the design of their original invention in one of his own pens. In return, he offered to pay them every time he sold a pen. Then, for two years, Bich studied the detailed construction of every ballpoint pen that was being sold, often working with a microscope.",
+      "By 1950, he was ready to introduce his new wonder: a plastic pen with a clear barrel that wrote smoothly, did not leak and only cost a few cents. He called it the 'Bic Cristal'. The ballpoint pen had finally become a practical writing instrument. The public liked it immediately, and today it is as common as the pencil. In Britain, they are still called Biros, and many Bic models also say 'Biro' on the side of the pen, to remind people of their original inventors.",
+      "Bich became extremely wealthy thanks to his invention, which had worldwide appeal. Over the next 60 years his company, Societe Bic, opened factories all over the world and expanded its range of inexpensive products. Today, Bic is as famous for its lighters and razors as it is for its pens, and you can even buy a Bic mobile phone."
+     ],
+     "paraphrases": [
+      [
+       "most people are able to afford",
+       "almost anyone can afford"
+      ],
+      [
+       "bad quality",
+       "poor quality"
+      ],
+      [
+       "inspired him",
+       "he decided"
+      ],
+      [
+       "inexpensive and reliable",
+       "cheap ... worked well"
+      ],
+      [
+       "getting permission",
+       "asked them if he could use"
+      ],
+      [
+       "base his pen on",
+       "use the design of"
+      ],
+      [
+       "carefully studied",
+       "studied the detailed construction"
+      ],
+      [
+       "popular with the public",
+       "the public liked it"
+      ],
+      [
+       "very rich",
+       "extremely wealthy"
+      ],
+      [
+       "a variety of cheap products",
+       "range of inexpensive products"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–7: Complete the summary",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "Har bo'sh joy uchun avval turini ayting (parosat), keyin matndan paraphraseni toping.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+       ],
+       "answers": [
+        "afford",
+        "high cost",
+        "commercially successful",
+        "(original) invention",
+        "studied",
+        "public",
+        "products"
+       ],
+       "why": [
+        "\"An item that today almost anyone can afford\". \"Are able to\" dan keyin fe'l — parosat.",
+        "\"Was also shocked at their high cost\". \"Bad quality and ___\" — \"poor quality\" bilan birga keladigan ikkinchi sabab.",
+        "\"Design a cheap pen that worked well and would be commercially successful\". Ikki so'z, chegarada.",
+        "\"Use the design of their original invention\". \"Base his pen on\" = \"use the design of\". \"Invention\" yoki \"original invention\".",
+        "\"Bich studied the detailed construction of every ballpoint pen\". \"Carefully\" = \"detailed\". O'tgan zamon — matndagidek.",
+        "\"The public liked it immediately\". \"Popular with\" = \"liked\".",
+        "\"Expanded its range of inexpensive products\". \"A variety of cheap\" = \"range of inexpensive\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "Marcel Bich"
+       ],
+       "rows": [
+        [
+         "It is thanks to Marcel Bich that most people today are able to (1) a ballpoint pen. It was the bad quality and (2) of the pens which were available at the time that inspired him to design a (3) ballpoint pen that would be both inexpensive and reliable. After getting permission from the Biro brothers to base his pen on their (4), he carefully (5) other ballpoints that were sold in the shops, and in 1950 introduced his own version, the 'Bic Cristal'. It was popular with the (6), and Bich became very rich. His company, Bic, now makes a variety of cheap (7), such as lighters and razors."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "The sticky note that nobody wanted",
+     "qtype": "Summary completion (1–6)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "In 1968 Spencer Silver, a chemist at the American company 3M, was trying to develop a very strong glue for aircraft. Instead, he made the opposite: an adhesive so weak that it could be pulled off a surface without leaving a mark. Silver believed the glue must be useful for something, and for five years he gave talks about it inside the company. Nobody could think of a practical use.",
+      "The solution came from a colleague, Art Fry, who sang in a church choir. Every Sunday the paper bookmarks in his hymn book fell out. Fry remembered Silver's glue and put a little on the edge of a bookmark. It stayed in place, and it could be removed without damaging the pages.",
+      "The company was not impressed. Managers thought people would never pay for small pieces of paper when free scrap paper was everywhere. A first test in four cities in 1977 failed, because shoppers did not understand what the product was for. The next year, 3M tried a different approach: in the city of Boise, Idaho, it gave free samples to offices. Ninety percent of the people who tried them said they would buy them.",
+      "Post-it Notes went on sale across the United States in 1980 and in Europe a year later. Today they are sold in more than 150 countries, and the original yellow colour was chosen by accident — it was the only scrap paper available in the laboratory next door."
+     ],
+     "paraphrases": [
+      [
+       "very strong",
+       "super-strong"
+      ],
+      [
+       "weak",
+       "not sticky enough"
+      ],
+      [
+       "without leaving a mark",
+       "without damaging"
+      ],
+      [
+       "nobody could think of a use",
+       "no practical use"
+      ],
+      [
+       "was not impressed",
+       "did not like the idea"
+      ],
+      [
+       "failed",
+       "was not successful"
+      ],
+      [
+       "free samples",
+       "products given without charge"
+      ],
+      [
+       "by accident",
+       "not planned"
+      ]
+     ],
+     "glossary": [
+      "adhesive — yelim",
+      "choir — xor",
+      "hymn book — qo'shiqlar kitobi",
+      "bookmark — xatcho'p",
+      "scrap paper — qoralama qog'oz",
+      "sample — namuna"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the summary",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "1-tur: javob matndan.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+       ],
+       "answers": [
+        "glue",
+        "five years",
+        "(paper) bookmarks",
+        "scrap paper",
+        "free samples",
+        "by accident"
+       ],
+       "why": [
+        "\"Trying to develop a very strong glue for aircraft\". \"Make\" = \"develop\".",
+        "\"For five years he gave talks about it inside the company\". \"Tried to interest colleagues\" = \"gave talks\".",
+        "\"The paper bookmarks in his hymn book fell out\". Ko'plik — \"stop the ___ falling out\".",
+        "\"When free scrap paper was everywhere\". \"Easy to find\" = \"everywhere\".",
+        "\"It gave free samples to offices\". Ikki so'z.",
+        "\"The original yellow colour was chosen by accident\". Tuzoq: \"in the end\" gapda bor, lekin javob — \"by accident\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "How the Post-it Note began"
+       ],
+       "rows": [
+        [
+         "While trying to make a strong (1) for aircraft, Spencer Silver produced a weak adhesive. For (2) he tried to interest his colleagues in it. Art Fry used it to stop the (3) in his hymn book falling out. Managers doubted people would pay when free (4) was easy to find. After a failed test, the company gave (5) to offices in Boise, and in the end, the yellow colour was chosen (6)."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "The invention of the bar code",
+     "qtype": "Summary completion with a box (1–6)",
+     "source": "Jony Academy matni (Band 4–5)",
+     "text": [
+      "In 1948 a supermarket owner in Philadelphia visited a local university and asked whether there was a way to record product information automatically at the checkout. A graduate student, Bernard Silver, overheard the conversation and told his friend Joseph Woodland, a teacher of mechanical engineering.",
+      "Woodland left his job and moved to his grandfather's flat in Florida to think about the problem. Sitting on the beach one day, he pushed his fingers into the sand and pulled them towards him, making four lines. He realised that lines of different widths could be used like the dots and dashes of Morse code. His first design, however, was circular, like a target, so that it could be read from any direction.",
+      "The two men received a patent in 1952, but the technology to read the codes did not yet exist. The scanners of the time were enormous and expensive, and the idea was ignored for twenty years. Only when cheap lasers and computers appeared in the early 1970s did supermarkets become interested. A committee chose a rectangular design, which was easier to print than a circle.",
+      "The first product ever scanned was a packet of chewing gum, in Ohio, on 26 June 1974. The packet is now kept in a museum in Washington. Today about six billion bar codes are scanned every day, and Woodland, who earned almost nothing from the patent, was given a national medal for technology in 1992."
+     ],
+     "paraphrases": [
+      [
+       "record automatically",
+       "read without a person writing it"
+      ],
+      [
+       "overheard",
+       "heard by chance"
+      ],
+      [
+       "lines of different widths",
+       "thick and thin lines"
+      ],
+      [
+       "circular",
+       "round"
+      ],
+      [
+       "did not yet exist",
+       "was not available"
+      ],
+      [
+       "enormous and expensive",
+       "too big and costly"
+      ],
+      [
+       "ignored",
+       "not used"
+      ],
+      [
+       "rectangular",
+       "with four straight sides"
+      ]
+     ],
+     "glossary": [
+      "checkout — kassa",
+      "overhear — tasodifan eshitmoq",
+      "Morse code — Morze alifbosi",
+      "target — nishon",
+      "committee — qo'mita",
+      "chewing gum — saqich"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the summary using the list of words A–J",
+       "type": "Summary completion — box",
+       "instr": "2-tur: so'zlarni ro'yxatdan tanlang. Ro'yxatda ortiqcha so'zlar bor; so'z matnda boshqa shaklda bo'lishi mumkin.",
+       "items": [
+        "The idea for the code came to Woodland while he was on a ___.",
+        "The lines worked like the ___ and dashes of Morse code.",
+        "His first design was ___.",
+        "At first the scanners were big and ___.",
+        "For twenty years the invention was ___.",
+        "Supermarkets chose a ___ shape because it was easier to print."
+       ],
+       "answers": [
+        "C beach",
+        "I dots",
+        "A round",
+        "D costly",
+        "E ignored",
+        "G rectangular"
+       ],
+       "why": [
+        "\"Sitting on the beach one day, he pushed his fingers into the sand\".",
+        "\"Like the dots and dashes of Morse code\".",
+        "\"His first design, however, was circular\". \"Circular\" = \"round\" — box so'zi matnda boshqa shaklda.",
+        "\"Enormous and expensive\". \"Expensive\" = \"costly\". Tuzoq: B \"cheap\" — 1970-yillardagi lazerlar haqida.",
+        "\"The idea was ignored for twenty years\".",
+        "\"A committee chose a rectangular design, which was easier to print\"."
+       ],
+       "note": "Ortiqcha so'zlar: F laboratory, H popular, J museum (muzey matnda bor, lekin boshqa gapga tegishli), B cheap (lazerlar haqida).",
+       "box": [
+        "A round",
+        "B cheap",
+        "C beach",
+        "D costly",
+        "E ignored",
+        "F laboratory",
+        "G rectangular",
+        "H popular",
+        "I dots",
+        "J museum"
+       ],
+       "layout": "match"
+      }
+     ]
+    },
+    {
+     "title": "The man who made the world wear jeans",
+     "qtype": "Summary completion (1–6)",
+     "source": "Jony Academy matni (Band 4–5) — uyga vazifa",
+     "text": [
+      "In 1853 a young German immigrant, Levi Strauss, opened a shop in San Francisco selling cloth, blankets and clothing to the gold miners of California. The miners' trousers wore out quickly, and customers often complained that the pockets tore when they filled them with tools and pieces of gold.",
+      "One of Strauss's regular customers was a tailor in Nevada called Jacob Davis. A woman had asked Davis to make strong trousers for her husband, and Davis had the idea of putting small metal pins, called rivets, at the corners of the pockets, the points which usually tore first. The trousers were so successful that other workers soon wanted a pair.",
+      "Davis did not have the money to register a patent, which cost 68 dollars, so he wrote to Strauss and offered to share it if Strauss paid. In 1873 the two men received the patent together, and Strauss brought Davis to San Francisco to manage production.",
+      "The first \"waist overalls\", as they were called, were made from a heavy blue cotton cloth called denim. For almost eighty years jeans were working clothes for farmers, miners and factory workers. Only in the 1950s, when film stars wore them on screen, did young people begin to see jeans as fashionable. Today more than two billion pairs are sold every year."
+     ],
+     "paraphrases": [
+      [
+       "wore out",
+       "became old and damaged"
+      ],
+      [
+       "complained",
+       "said they were unhappy"
+      ],
+      [
+       "tore",
+       "were ripped"
+      ],
+      [
+       "regular customer",
+       "person who often bought from him"
+      ],
+      [
+       "register a patent",
+       "officially protect the invention"
+      ],
+      [
+       "share it",
+       "divide the rights"
+      ],
+      [
+       "manage production",
+       "be in charge of making the product"
+      ],
+      [
+       "fashionable",
+       "in style"
+      ]
+     ],
+     "glossary": [
+      "immigrant — muhojir",
+      "miner — konchi",
+      "tailor — tikuvchi",
+      "rivet — parchin mix",
+      "patent — patent",
+      "denim — jinsi mato"
+     ],
+     "tasks": [
+      {
+       "title": "Complete the summary",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Uyda 8 daqiqada bajaring.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+       ],
+       "answers": [
+        "miners",
+        "pockets",
+        "rivets",
+        "68",
+        "denim",
+        "1950s"
+       ],
+       "why": [
+        "\"Clothing to the gold miners of California\".",
+        "\"The pockets tore when they filled them with tools\". \"Weak\" = \"tore\".",
+        "\"Small metal pins, called rivets\". \"Metal ___\" — ot, ko'plik.",
+        "\"Register a patent, which cost 68 dollars\". Parosat: \"___ dollars\" — son.",
+        "\"A heavy blue cotton cloth called denim\".",
+        "\"Only in the 1950s, when film stars wore them\". Parosat: \"in the ___\" — davr."
+       ],
+       "layout": "grid",
+       "head": [
+        "The story of jeans"
+       ],
+       "rows": [
+        [
+         "Strauss's shop sold clothing to gold (1). Their trousers had weak (2), so Jacob Davis added metal (3) to strengthen them. Davis could not pay the (4) dollars needed for a patent, so the two men shared it. The first jeans were made of a cloth called (5). They became fashionable only in the (6), after film stars wore them."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "3-matn: \"The man who made the world wear jeans\"",
+     "type": "Reading",
+     "instr": "Uyda 8 daqiqada bajaring; javoblar Reading bo'limida izoh bilan.",
+     "answers": "Ustoz har javob uchun paraphrase juftini so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Paraphrase daftari",
+     "type": "Yozma",
+     "instr": "Bugungi readinglardan 15 juft yozing: xulosadagi ibora — matndagi ibora.",
+     "answers": "Juftlar haqiqatan matndan olingan bo'lishi kerak.",
+     "layout": "list"
+    },
+    {
+     "title": "Box mashqi",
+     "type": "Yozma",
+     "instr": "\"The invention of the bar code\" dagi ortiqcha 4 so'z nega mos emasligini bir gapda yozing.",
+     "answers": "Ustoz tekshiradi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Summary completion (uyga)",
+     "6 javobdan 5 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Paraphrase daftari",
+     "15 juft to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Parosat (bo'sh joy turi)",
+     "6 bo'sh joydan 6 tasi",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

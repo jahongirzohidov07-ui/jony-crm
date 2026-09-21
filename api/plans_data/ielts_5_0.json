@@ -7,10 +7,10 @@
    "no": 1,
    "title": "Reading: Paraphrases",
    "grammar_topic": "Paraphrase — savoldagi so'z matnda boshqacha aytiladi",
-   "vocab_topic": "Great places to be (shaharlar) — Unit 1",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 1 \"Great places to be\", Reading 1 (Table completion), 8–9-betlar. Workbook: Unit 1, Reading 1 (Table completion), 6-bet. Kitob matnlari mualliflik huquqi bilan himoyalangan — bu yerda faqat topshiriq havolasi, javoblar va izoh beriladi; matnni kitobdan o'qing.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "IELTS Readingda javob deyarli hech qachon savoldagi so'z bilan yozilmasligini tushunish: matn boshqa so'z bilan aytadi (paraphrase).",
     "Savoldagi kalit so'zni (key word) topib, uning matndagi sinonimini izlashni o'rganish.",
@@ -19,7 +19,6 @@
     "Band 4–5 darajadagi 3 ta matnda mustaqil ishlash va har javobni \"nega shunday\" deb izohlay olish."
    ],
    "materials": [
-    "Coursebook 8–9-betlar (Reading 1) va Workbook 6-bet (Reading 1) — har o'quvchida",
     "Bu rejadagi 3 ta qo'shimcha matn (chop etiladi yoki ekranda)",
     "Xatolar daftari: \"savoldagi so'z — matndagi so'z\" ustunlari",
     "Sekundomer (har matnga 8 daqiqa)"
@@ -37,8 +36,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -62,8 +61,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -74,70 +73,70 @@
    "grammar": {
     "intro": [
      "IELTS Reading matnni ko'chirib yozishni emas, MA'NONI tanishni tekshiradi. Shuning uchun savolda bir so'z, matnda esa uning sinonimi turadi. Bu — paraphrase.",
-     "Misol: savolda \"friendly inhabitants\", matnda \"friendlier populations\". \"Inhabitants\" va \"populations\" — bir ma'no, boshqa so'z.",
+     "Misol: savolda \"people who live there\", matnda \"residents\". Ma'no bir xil, so'z boshqa.",
      "Qoida: SAVOLNI o'zgartirmang, MATNNI qidiring. Avval savoldan kalit so'zni belgilang (ot, fe'l, raqam, ism), keyin matndan o'sha ma'noni qidiring.",
      "Javobni yozganda esa aksincha: javob MATNDAGI so'z bilan yoziladi. O'zingizning sinonimingiz — noto'g'ri javob.",
-     "4 xil paraphrase: 1) sinonim (money — cash); 2) so'z turkumi o'zgaradi (relaxed lifestyle — a relaxed way of life); 3) antonim + inkor (have less money — don't have so much money); 4) umumiy so'z (Rio, Lilongwe — cities).",
+     "4 xil paraphrase: 1) sinonim (money — cash); 2) so'z turkumi o'zgaradi (costs less — is cheaper); 3) antonim + inkor (shallow — not deep); 4) umumiy so'z (Candela, Ponga — small villages).",
      "Ism, raqam, sana va joy nomlari paraphrase qilinmaydi — ular matnda xuddi o'sha holda turadi. Shuning uchun ular eng tez topiladigan \"langar\" (anchor) hisoblanadi."
     ],
     "formulas": [
      [
       "1-bosqich",
       "Savolni o'qing, kalit so'zni belgilang",
-      "\"People don't have so much ___\" — kalit: don't have so much",
+      "\"Payment to a single person — ___ euros\" — kalit: single person",
       "Bo'sh joydan oldingi va keyingi so'zga qarang"
      ],
      [
       "2-bosqich",
       "Kalit so'zning sinonimini o'ylang",
-      "don't have so much = have less",
+      "newcomers = people who move in",
       "Bir nechta variant o'ylang"
      ],
      [
       "3-bosqich",
       "Matndan langar so'zni toping",
-      "Rio de Janeiro, 93 percent — ism va raqam o'zgarmaydi",
+      "Candela, 2019, 2,700 — ism va raqam o'zgarmaydi",
       "Skanerlab qidiring, o'qimang"
      ],
      [
       "4-bosqich",
       "Gapni to'liq o'qing",
-      "\"cities where people have less money\"",
+      "\"A single person received 800 euros\"",
       "Faqat bir so'zni emas, butun gapni"
      ],
      [
       "5-bosqich",
       "Javobni matndagi so'z bilan yozing",
-      "money",
+      "800",
       "So'z shaklini o'zgartirmang"
      ],
      [
       "6-bosqich",
       "So'z chegarasini tekshiring",
-      "ONE WORD = bitta so'z",
-      "\"Two words\" yozsangiz — 0 ball"
+      "ONE WORD OR A NUMBER",
+      "Ortiqcha so'z — 0 ball"
      ]
     ],
     "presentation": [
      [
-      "Savolda \"friendly inhabitants\" bor, matnda bu so'z yo'q. Nima qilaman?",
-      "Sinonimini qidiraman: \"friendlier populations\". Inhabitants = populations."
+      "Savolda \"people who live there\" bor, matnda bu ibora yo'q. Nima qilaman?",
+      "Sinonimini qidiraman: \"residents\". Ma'no bir xil."
      ],
      [
       "Javobni o'z so'zim bilan yozsam bo'ladimi?",
       "Yo'q. Table completion javobi matndagi so'z bilan, xuddi o'sha shaklda yoziladi."
      ],
      [
-      "Matnda \"relaxed way of life\", savolda \"relaxed ___ lifestyle\" — qaysi biri javob?",
-      "Javob — matndagi so'z: bu yerda savolga \"lifestyle\" mos keladi, chunki \"way of life\" = lifestyle."
+      "Matnda \"is cheaper than\", savolda \"costs less than\" — bu bir narsami?",
+      "Ha, bu paraphrase: so'z turkumi o'zgargan, ma'no bir."
      ],
      [
       "Ism va raqamlarni ham paraphrase qilishadimi?",
-      "Yo'q. Rio, Amsterdam, 93% — o'zgarmaydi. Shuning uchun ulardan boshlab qidiring."
+      "Yo'q. Candela, 2019, 800 — o'zgarmaydi. Shuning uchun ulardan boshlab qidiring."
      ],
      [
-      "Bir so'z so'ralganda \"a lot of money\" deb yozsam?",
-      "Noto'g'ri. ONE WORD ONLY — faqat \"money\"."
+      "Bir so'z so'ralganda \"about a third\" deb yozsam?",
+      "Noto'g'ri. ONE WORD bo'lsa — faqat \"third\"."
      ],
      [
       "Matnni boshidan oxirigacha o'qiymanmi?",
@@ -157,8 +156,8 @@
       "Table completion javobi matndan ko'chiriladi"
      ],
      [
-      "So'z chegarasini buzish (\"so much money\" — 2 so'z)",
-      "money",
+      "So'z chegarasini buzish (\"about a third\" — 3 so'z)",
+      "third",
       "ONE WORD ONLY yozuvi savol ustida turadi"
      ],
      [
@@ -172,8 +171,8 @@
       "Matn deyarli har doim boshqa so'z ishlatadi"
      ],
      [
-      "Grammatikani o'zgartirish (matnda \"inhabitants\", javobda \"inhabitant\")",
-      "inhabitants",
+      "Grammatikani o'zgartirish (matnda \"residents\", javobda \"resident\")",
+      "residents",
       "Ko'plik/birlik matndagidek qoladi"
      ]
     ]
@@ -186,86 +185,6 @@
     "normativ": []
    },
    "class_ex": [
-    {
-     "title": "Kitob: Reading 1, \"The world's friendliest city\" (Table completion)",
-     "type": "Coursebook 8–9-bet, 5–6-mashq",
-     "instr": "Kitobdagi jadvalni to'ldiring. Bu yerda faqat javob va izoh — matn kitobda.",
-     "items": [
-      "1 more ___ lifestyle (Rio, ijobiy tomoni)",
-      "2 People don't have so much ___ (Rio, salbiy tomoni)",
-      "3 Has reputation for ___ (Rio)",
-      "4 People have little ___ (Amsterdam va Nyu-York)",
-      "5 don't pay attention to ___"
-     ],
-     "answers": [
-      "relaxed",
-      "money",
-      "crime",
-      "time",
-      "strangers"
-     ],
-     "why": [
-      "Matnda \"a more relaxed way of life\" bor. \"Way of life\" = lifestyle, shuning uchun bo'sh joyga sifat — relaxed — tushadi.",
-      "Matnda \"cities where people have less money\". \"Have less\" = \"don't have so much\" — antonim + inkor orqali paraphrase.",
-      "Matnda \"often known for its crime\". \"Be known for\" = \"have a reputation for\".",
-      "Matnda \"people tend to be short of time\". \"Be short of\" = \"have little\".",
-      "Matnda \"ignore strangers\". \"Ignore\" = \"don't pay attention to\"."
-     ],
-     "note": "Har javobdan keyin o'quvchidan matndagi ANIQ so'zni ko'rsatishni so'rang. Javobni topgan bo'lsa ham, paraphrase juftini ayta olmasa — yarim ish."
-    },
-    {
-     "title": "Kitobdagi paraphrase juftlari (5-mashq)",
-     "type": "Coursebook 9-bet",
-     "instr": "Jadvaldagi kursiv so'zlarni matndagi kursiv so'zlar bilan moslang.",
-     "items": [
-      "inhabitants",
-      "don't have so much money",
-      "has reputation for",
-      "lifestyle",
-      "have little time",
-      "don't pay attention to"
-     ],
-     "answers": [
-      "populations",
-      "have less money",
-      "is often known for",
-      "way of life",
-      "be short of time",
-      "ignore"
-     ],
-     "why": [
-      "Ikkalasi ham \"shahar aholisi\". Ot–ot sinonimi.",
-      "Inkor + \"so much\" = \"less\". Ma'no bir xil.",
-      "Ot birikmasi fe'l birikmasiga aylanadi (so'z turkumi o'zgaradi).",
-      "Bitta so'z uch so'zli birikmaga teng.",
-      "\"Little\" = \"short of\" — kamlikni bildiradi.",
-      "Uzun inkor birikma bitta fe'lga teng."
-     ]
-    },
-    {
-     "title": "Workbook: Unit 1, Reading 1 (Table completion)",
-     "type": "Workbook 6-bet",
-     "instr": "Shahar hayoti haqidagi matn: jadvalni to'ldiring. Javoblar va izohlar quyida, matn kitobda.",
-     "items": [
-      "Ishlash tartibi: avval jadvaldagi bo'sh joy oldidagi so'zni belgilang",
-      "Keyin matndan langar so'zni toping",
-      "Javob yozilgach, so'z sonini sanang",
-      "Tekshirishda har javob uchun paraphrase juftini ayting"
-     ],
-     "answers": [
-      "kalit so'z",
-      "ism, raqam, joy nomi",
-      "1 yoki 2 so'z",
-      "\"savolda X — matnda Y\""
-     ],
-     "why": [
-      "Bo'sh joydan oldingi so'z javobning so'z turkumini aytadi (ot? sifat?).",
-      "Bular paraphrase qilinmaydi, shuning uchun tez topiladi.",
-      "Ko'rsatma \"NO MORE THAN TWO WORDS\" bo'lsa, 3 so'z — 0 ball.",
-      "Ustoz shu javobni qabul qiladi."
-     ],
-     "note": "Workbook javoblari kitobning o'z kalitida bor. Ustoz o'quvchiga javobni emas, \"qaysi so'z qaysi so'zga teng\" savolini beradi."
-    },
     {
      "title": "Paraphrase mashqi: 10 juft",
      "type": "Og'zaki, juftlikda",
@@ -660,12 +579,6 @@
      "answers": "Javoblar darsning Reading bo'limida."
     },
     {
-     "title": "Kitob: Workbook Unit 1, Reading 2 (Note completion)",
-     "type": "Workbook 7-bet",
-     "instr": "Matnni o'qib, note completion topshirig'ini bajaring va har javob uchun paraphrase juftini yozing.",
-     "answers": "Kitob kaliti bilan tekshiriladi; ustoz paraphrase juftlarini so'raydi."
-    },
-    {
      "title": "Paraphrase daftari",
      "type": "Yozma",
      "instr": "20 juft: chap ustun — savolda bo'lishi mumkin bo'lgan so'z, o'ng ustun — matndagi so'z. Bugungi 3 matndan oling.",
@@ -700,10 +613,10 @@
    "no": 2,
    "title": "Reading: Parosat usuli (javobni oldindan bashorat qilish)",
    "grammar_topic": "Note completion + javobni oldindan aytish (prediction)",
-   "vocab_topic": "Great places to be — baxt va turmush darajasi (Unit 1)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 1, Reading 2 (Note completion), \"The happiest country in the world\", 11-bet. Workbook: Unit 1, Reading 2 (Note completion), 7-bet. Matnlar kitobda — bu yerda topshiriq havolasi, javoblar va izoh.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Matnga qaramasdan turib, bo'sh joyga QANDAY javob kerakligini aytish: raqammi, sanami, otmi, sifatmi.",
     "Bo'sh joy atrofidagi grammatikadan foydalanib, noto'g'ri javoblarni chiqarib tashlash.",
@@ -725,8 +638,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -750,8 +663,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -763,16 +676,15 @@
     "intro": [
      "\"Parosat usuli\" — javobni topishdan OLDIN uni bashorat qilish. Ko'z matnni qidirganda miya nimani izlayotganini bilishi kerak.",
      "Har bo'sh joyda uch savolga javob bering: 1) So'z turkumi qanday (ot, sifat, fe'l, raqam)? 2) Ma'no turi qanday (yil, miqdor, joy, odam)? 3) Ko'plikmi yoki birlik?",
-     "Misol: \"Year started: ___\" — javob faqat YIL bo'ladi (2008). \"Number of countries: ___\" — faqat RAQAM (143). Bu ikkalasi matndan eng tez topiladi.",
+     "Misol: \"Tool library opened in ___\" — javob faqat YIL bo'ladi (2013). \"Number of cities: more than ___\" — faqat RAQAM (500). Bu ikkalasi matndan eng tez topiladi.",
      "Grammatika yordam beradi: \"the ___ of the population\" — \"the\" va \"of\" orasida OT turadi. Sifat yoki fe'l bo'lishi mumkin emas.",
-     "Bashorat noto'g'ri chiqsa ham foyda: siz qidirayotgan narsani aniq bilasiz, shuning uchun matnni tez skanerlaysiz.",
-     "Note completion'da javoblar matn tartibida bo'lmasligi mumkin (kitobning o'z eslatmasi shuni aytadi) — shuning uchun sarlavha va kalit so'z bilan joyni topish kerak."
+     "Bashorat noto'g'ri chiqsa ham foyda: siz qidirayotgan narsani aniq bilasiz, shuning uchun matnni tez skanerlaysiz."
     ],
     "formulas": [
      [
       "1-bosqich",
       "Sarlavhani o'qing",
-      "\"The Happy Planet Index\"",
+      "\"The Toronto Tool Library\"",
       "Sarlavha matndagi qaysi qismga borishni aytadi"
      ],
      [
@@ -790,13 +702,13 @@
      [
       "4-bosqich",
       "Langar so'zni matndan toping",
-      "Index, 2008, 143",
+      "Toronto, 2013, 150",
       "Raqam va ism o'zgarmaydi"
      ],
      [
       "5-bosqich",
       "Bashoratni tekshiring",
-      "kutganim yil — topganim 2008",
+      "kutganim yil — topganim 2013",
       "Mos kelsa, javob to'g'ri bo'lishi ehtimoli yuqori"
      ],
      [
@@ -808,12 +720,12 @@
     ],
     "presentation": [
      [
-      "\"Year started: ___\" — javob qanday bo'ladi?",
-      "Faqat yil: 2008. Boshqa hech narsa kerak emas."
+      "\"Opened in ___\" — javob qanday bo'ladi?",
+      "Faqat yil: 2013. Boshqa hech narsa kerak emas."
      ],
      [
-      "\"the ___ of the population\" — qanday so'z?",
-      "Ot. Chunki \"the\" bilan \"of\" orasida ot turadi."
+      "\"the ___ of the budget\" — qanday so'z?",
+      "Ot yoki kasr so'zi. Chunki \"the\" bilan \"of\" orasida ot turadi."
      ],
      [
       "Bashoratim noto'g'ri chiqsa-chi?",
@@ -824,12 +736,12 @@
       "Har doim emas. Shuning uchun sarlavha va kalit so'zga qarab joyni topasiz."
      ],
      [
-      "Matnda \"consumes\", savolda \"uses\" bor. Bu xatomi?",
+      "Matnda \"take up\", savolda \"spent on\" bor. Bu xatomi?",
       "Yo'q, bu paraphrase. Ma'no bir xil."
      ],
      [
-      "Javobga \"the environment\" deb yozsam bo'ladimi?",
-      "ONE WORD bo'lsa, \"environment\" yoziladi. \"The\" ortiqcha so'z."
+      "Javobga \"the pressure washer\" deb yozsam bo'ladimi?",
+      "Chegara ikki so'z bo'lsa \"pressure washer\" yoziladi; \"the\" ortiqcha."
      ]
     ],
     "notes": [
@@ -875,89 +787,34 @@
    },
    "class_ex": [
     {
-     "title": "Bashorat mashqi (matnsiz)",
+     "title": "Bashorat mashqi (matnga qaramasdan)",
      "type": "Og'zaki, 5 daqiqa",
-     "instr": "Kitobdagi izohlarga (11-bet) qaramasdan har bo'sh joy uchun javob TURINI ayting.",
+     "instr": "1-qo'shimcha matndagi izohlarga qarang va har bo'sh joy uchun javob TURINI ayting.",
      "items": [
-      "Year started: ___",
-      "Number of countries it lists: ___",
-      "its effect on the ___",
-      "the quantity of the Earth's ___ that it uses",
-      "the ___ of the population",
-      "how happy its ___ are"
+      "Population of Bhutan: about ___",
+      "Gross National Happiness used since ___",
+      "Idea added to the ___ in 2008",
+      "Length of the survey per household: about ___ hours",
+      "Minimum forest cover required: ___ per cent",
+      "Graduate unemployment in 2022: ___ per cent"
      ],
      "answers": [
-      "yil (4 raqamli son)",
       "son",
+      "yil",
       "ot",
-      "ot (ko'plik bo'lishi mumkin)",
-      "ot",
-      "ot (ko'plik)"
+      "son",
+      "son",
+      "son"
      ],
      "why": [
-      "\"Year\" so'zi javob turini to'g'ridan-to'g'ri aytadi.",
-      "\"Number of\" — miqdor so'raladi.",
-      "\"on the\" dan keyin ot keladi.",
-      "\"the Earth's\" — egalik, keyin ot.",
-      "\"the ... of\" orasida ot turadi.",
-      "\"are\" fe'li ko'plik otni talab qiladi."
-     ]
-    },
-    {
-     "title": "Kitob: Reading 2, \"The happiest country in the world\" (Note completion)",
-     "type": "Coursebook 11-bet, 3–4-mashq",
-     "instr": "Javoblar va nega shundayligi. Matn kitobda.",
-     "items": [
-      "1 Year started",
-      "2 Number of countries it lists",
-      "3 its effect on the ___",
-      "4 the quantity of the Earth's ___ that it uses",
-      "5 the ___ of the population",
-      "6 how happy its ___ are"
+      "\"Population\" miqdor so'raydi.",
+      "\"Since\" dan keyin vaqt nuqtasi.",
+      "\"the ... in\" orasida ot turadi.",
+      "\"hours\" oldida son.",
+      "\"per cent\" oldida son.",
+      "Yana foiz — raqam kutiladi."
      ],
-     "answers": [
-      "2008",
-      "143",
-      "environment",
-      "resources",
-      "health",
-      "citizens"
-     ],
-     "why": [
-      "Matnda \"Created in 2008, the Happy Planet Index...\". \"Started\" = \"created\" — paraphrase.",
-      "\"ranks 143 countries\". \"Lists\" = \"ranks\".",
-      "\"their impact on the environment\". \"Effect\" = \"impact\".",
-      "\"how much of the planet's resources each country consumes\". \"Quantity\" = \"how much\", \"Earth's\" = \"planet's\", \"uses\" = \"consumes\".",
-      "\"how long they live (which reflects their health)\". Izohdagi \"how long people live\" sog'liqqa ishora qiladi.",
-      "\"their citizens' happiness\". Ko'plik shakl saqlanadi."
-     ],
-     "note": "Har javobda o'quvchidan ikki narsani so'rang: bashorat turi to'g'ri keldimi va matndagi paraphrase qaysi."
-    },
-    {
-     "title": "Workbook: Unit 1, Reading 2 (Note completion)",
-     "type": "Workbook 7-bet",
-     "instr": "Shahar so'rovnomasi haqidagi matn. Quyida ishlash tartibi va tekshirish mezonlari.",
-     "items": [
-      "Avval notes sarlavhasini o'qing",
-      "Har bo'sh joy turini chetiga yozing",
-      "Javobni topgach, matndagi so'zni ko'chiring",
-      "So'z sonini tekshiring",
-      "Tekshirishda paraphrase juftini ayting"
-     ],
-     "answers": [
-      "matnning qaysi qismi kerakligini aniqlang",
-      "raqam / ot / sifat",
-      "o'z so'zingizni emas",
-      "ONE WORD ONLY bo'lsa bitta",
-      "\"savolda X — matnda Y\""
-     ],
-     "why": [
-      "Sarlavha — qidiruv xaritasi.",
-      "Bashorat bosqichi.",
-      "Note completion — matndan ko'chirish.",
-      "Ko'rsatmaga qarang.",
-      "Ustozning qabul mezoni."
-     ]
+     "note": "Bashorat yozilgach, matn ochiladi va har javob \"kutgan turim to'g'ri keldimi?\" savoli bilan tekshiriladi."
     }
    ],
    "readings": [
@@ -1317,12 +1174,6 @@
      "answers": "Ustoz keyingi darsda paraphrase juftlarini so'raydi."
     },
     {
-     "title": "Kitob: Workbook Unit 1, Reading 2 (Note completion)",
-     "type": "Workbook 7-bet",
-     "instr": "Bajaring va har javob uchun bashorat turini (raqam/ot/sifat) chetiga yozing.",
-     "answers": "Workbook kaliti bilan tekshiriladi."
-    },
-    {
      "title": "Bashorat mashqi",
      "type": "Yozma",
      "instr": "12 ta bo'sh joy berilgan (ustoz beradi): matnsiz, faqat javob TURINI yozing.",
@@ -1357,10 +1208,10 @@
    "no": 3,
    "title": "Listening: Form Completion (Section 1)",
    "grammar_topic": "Form completion — ariza/blank to'ldirish (1-bo'lim)",
-   "vocab_topic": "Turar joy, ro'yxatdan o'tish, buyurtma (Unit 1)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 1, Listening (Form completion), 10-bet, 1–5-mashqlar, Audio 01–03 (\"Dubai Palm Apartments\"). Workbook: Unit 1, Listening (Form completion), 8-bet. Kitob audiosi va skripti kitobda — bu yerda uchta mustaqil skript to'liq transkripti bilan berilgan.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Section 1 dagi formani to'ldirishda javob turini oldindan aniqlash (ism, raqam, sana, narx).",
     "Harflab aytilgan ism va familiyani (spelling) va telefon raqamini xatosiz yozish.",
@@ -1369,7 +1220,6 @@
     "So'z chegarasini bajarish: NO MORE THAN TWO WORDS AND/OR A NUMBER."
    ],
    "materials": [
-    "Coursebook 10-bet (Listening 1–5) va Workbook 8-bet",
     "Bu rejadagi 3 ta skript: ustoz o'qiydi yoki audio qo'yiladi",
     "Har o'quvchida forma nusxasi va qalam",
     "Harflar jadvali: shunga o'xshash tovushlar (B/P, M/N, S/F, G/J, I/E)"
@@ -1387,8 +1237,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -1412,8 +1262,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -1447,7 +1297,7 @@
      [
       "3-bosqich",
       "Namunaga qarang",
-      "Enquiry taken by: Amanda",
+      "Example: Name — Daniela",
       "Namuna javob formatni ko'rsatadi"
      ],
      [
@@ -1483,8 +1333,8 @@
       "9 January, 9th January yoki January 9 — hammasi qabul qilinadi."
      ],
      [
-      "Narx \"maximum 60 euros\" bo'lsa, javobga nima yoziladi?",
-      "Formada \"euros\" bo'lsa, faqat 60. Aks holda \"60 euros\"."
+      "Formada \"___ pounds\" yozilgan bo'lsa, javobga nima yoziladi?",
+      "Faqat son (masalan 550). \"Pounds\" formada allaqachon bor."
      ],
      [
       "Javobni eshitib ulgurmadim, nima qilay?",
@@ -1496,7 +1346,6 @@
      ]
     ],
     "notes": [
-     "Kitob audiosi (01–03) bo'lsa — avval o'sha, keyin bu yerdagi skriptlar. Audio bo'lmasa, ustoz skriptni tabiiy tezlikda BIR MARTA o'qiydi.",
      "Ustoz o'qiyotganda transkriptni o'quvchilarga ko'rsatmaydi; tekshiruvdan keyin ochiladi.",
      "Har skriptdan keyin: \"qaysi so'z javobga olib keldi?\" — signal so'zni toping (so, that's, let me repeat).",
      "Imlo xatosi = 0 ball. Shuning uchun harflab yozish mashqi har darsda 2 daqiqa takrorlanadi."
@@ -1518,8 +1367,8 @@
       "Ism har doim bosh harf bilan"
      ],
      [
-      "Formadagi mavjud so'zni takrorlash (\"60 euros\" bo'lsa \"euros\" yozish)",
-      "Faqat 60",
+      "Formadagi mavjud so'zni takrorlash (\"550 pounds\" deb yozish, formada \"pounds\" bor)",
+      "Faqat 550",
       "Ortiqcha so'z chegarani buzadi"
      ],
      [
@@ -1538,78 +1387,34 @@
    },
    "class_ex": [
     {
-     "title": "Kitob: Listening 1–2 (harf va raqam)",
-     "type": "Coursebook 10-bet, Audio 01–02",
-     "instr": "Ismlar to'g'ri yozilganmi (✓/✗), keyin juftlikda harflab ayting.",
+     "title": "Harflab yozish va raqam mashqi",
+     "type": "Juftlikda, 8 daqiqa",
+     "instr": "Sherigingiz aytadi, siz yozasiz; keyin almashasiz.",
      "items": [
-      "Ishlash tartibi: har ismni eshitib, yozilganiga solishtiring",
-      "Raqamlarda \"double\" va \"oh\" ni belgilang",
-      "Juftlikda o'z ismingizni harflab ayting"
+      "V-A-U-G-H-A-N",
+      "B-E-A-U-M-O-N-T",
+      "H-A-double D-A-D",
+      "\"Oh seven double four nine\"",
+      "\"Fifteen\" va \"fifty\"",
+      "\"Thirteenth of May\""
      ],
      "answers": [
-      "farqni harf darajasida belgilang",
-      "0726 05791 kabi",
-      "sherigingiz yozadi"
+      "Vaughan",
+      "Beaumont",
+      "Haddad",
+      "07449",
+      "15 / 50",
+      "13th May / 13 May"
      ],
      "why": [
-      "Xato ko'pincha bitta harfda bo'ladi (Bragg/Brag).",
-      "Telefon raqami guruh-guruh aytiladi.",
-      "Keyin almashasiz."
+      "G va H ketma-ket keladi — eng ko'p adashtiriladigan joy.",
+      "\"EAU\" birikmasi o'qilishidan farq qiladi.",
+      "\"Double D\" = DD.",
+      "\"Oh\" = 0, \"double four\" = 44.",
+      "Urg'u: FIFteen — boshida, fifTY — oxirida.",
+      "Sana ikki xil yozilishi mumkin — ikkalasi qabul qilinadi."
      ],
-     "note": "Bu mashqning maqsadi — javob topish emas, IMLO. Har xato harf alohida yoziladi."
-    },
-    {
-     "title": "Kitob: Listening 4 (bashorat)",
-     "type": "Coursebook 10-bet",
-     "instr": "Formaga qarab, qaysi bo'sh joyga raqam, qaysisiga so'z kerakligini ayting.",
-     "items": [
-      "Name: ___",
-      "Address: 37 ___ , Vienna",
-      "Telephone number: ___",
-      "Starting date: ___ January",
-      "Length of stay: ___",
-      "Price per day: maximum ___ euros",
-      "Other requirements: fully equipped ___ / view of ___ / air conditioning must be ___ / ___ for car"
-     ],
-     "answers": [
-      "harflab aytiladigan ism",
-      "ko'cha nomi",
-      "raqamlar ketma-ketligi",
-      "sana (son)",
-      "muddat (masalan, two weeks)",
-      "son",
-      "ot yoki sifat"
-     ],
-     "why": [
-      "Section 1 da ism deyarli har doim harflab aytiladi.",
-      "Raqam allaqachon bor, demak so'z kerak.",
-      "\"Double\" so'zini kuting.",
-      "Oy allaqachon yozilgan.",
-      "Son + davr so'zi.",
-      "\"Euros\" formada bor — faqat son.",
-      "Har biri qisqa: kitchen, sea, included, parking kabi."
-     ],
-     "note": "Bashoratni yozmasdan audioni qo'ymang — bu darsning asosiy ko'nikmasi."
-    },
-    {
-     "title": "Kitob: Listening 5 (forma) va Workbook 8-bet",
-     "type": "Coursebook 10-bet Audio 03; Workbook 8-bet",
-     "instr": "To'ldiring, keyin javoblarni kitob kaliti bilan tekshiring.",
-     "items": [
-      "Tekshirishda har javob uchun signal so'zni ayting",
-      "Xato javoblarni turga ajrating",
-      "Workbook formasida \"Call taken by\" namunasi bor"
-     ],
-     "answers": [
-      "\"so that's...\", \"let me repeat\"",
-      "imlo / raqam / tuzatish / chegara",
-      "namuna format beradi"
-     ],
-     "why": [
-      "Signal so'z javobdan oldin keladi.",
-      "Xato turi keyingi mashqni belgilaydi.",
-      "Namunaga qarab javob uzunligini tushunasiz."
-     ]
+     "note": "Har xato harfni daftarga alohida yozing — keyingi darsda aynan shular takrorlanadi."
     }
    ],
    "readings": [],
@@ -1944,12 +1749,6 @@
      "answers": "Javoblar Listening bo'limida izoh bilan."
     },
     {
-     "title": "Kitob: Workbook Unit 1 Listening (Form completion)",
-     "type": "Workbook 8-bet",
-     "instr": "Bajaring va xato turini yozing: imlo, raqam, tuzatish yoki so'z chegarasi.",
-     "answers": "Workbook kaliti bilan tekshiriladi."
-    },
-    {
      "title": "Imlo mashqi",
      "type": "Yozma",
      "instr": "20 ta ism va ko'cha nomini harflab yozib, o'zingizni tekshiring (juftlik bilan telefon orqali).",
@@ -1984,10 +1783,10 @@
    "no": 4,
    "title": "Reading: Savollar tartibi, Flow chart completion va Short answer",
    "grammar_topic": "Flow chart completion + Short answer questions + savollar tartibi qoidasi",
-   "vocab_topic": "People's lives — kasb, ixtiro, jarayon (Unit 2)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 2 \"People's lives\" reading topshiriqlari. Workbook (IELTS Reading Formula / MAXIMISER): Short answer questions 39–41-betlar, Flow chart completion 48–50-betlar, \"Tip 7: Answers do not always come in order\" 46-bet. Matnlar kitobda; bu yerda tushuntirish, javob izohlari va 3 ta mustaqil matn.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Qaysi savol turida javoblar matn TARTIBIDA kelishini va qaysisida kelmasligini bilish.",
     "Flow chart (jarayon sxemasi) topshirig'ida bosqichlarni ketma-ketlik so'zlari bilan kuzatish.",
@@ -2009,8 +1808,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -2034,8 +1833,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -2118,7 +1917,6 @@
      ]
     ],
     "notes": [
-     "MAXIMISER 46-betdagi \"Tip 7: Answers do not always come in order\" — shu darsning asosiy g'oyasi: qaysi turda tartib bor, qaysida yo'q.",
      "Ustoz doskaga ikki ustun chizadi: \"TARTIB BOR\" va \"TARTIB YO'Q\" — o'quvchilar savol turlarini joylashtiradi.",
      "Flow chart mashqida o'quvchilar avval jarayonni o'z tilida aytib berishsin, keyin bo'sh joy to'ldirilsin.",
      "Short answer javoblarini doskaga yozishda artiklni qizil bilan o'chirib ko'rsating."
@@ -2193,53 +1991,7 @@
       "Ismlar matn bo'ylab sochilgan.",
       "Guruhlar bo'yicha qidiriladi."
      ],
-     "note": "MAXIMISER 46-bet, Tip 7 shu qoidani beradi. O'quvchi daftariga ikki ustun qilib ko'chirsin."
-    },
-    {
-     "title": "Workbook (MAXIMISER): Short answer questions",
-     "type": "39–41-betlar, Example 1–2",
-     "instr": "Namunani bajaring, keyin har javobni izohlang.",
-     "items": [
-      "Avval so'roq so'zini belgilang",
-      "Savoldagi kalit so'zni matndan paraphrase bilan qidiring",
-      "Javobni matndagi so'z bilan yozing",
-      "Javoblar tartibda ekanini tekshiring"
-     ],
-     "answers": [
-      "who / what / how many / when",
-      "masalan \"advantages\" — \"hidden advantages\"",
-      "artiklsiz, 3 so'zdan oshmasin",
-      "18, 19, 20, 21 ketma-ket"
-     ],
-     "why": [
-      "Javob turi shundan chiqadi.",
-      "Kalit so'z matnda boshqa shaklda bo'lishi mumkin.",
-      "Ko'rsatmadagi chegara.",
-      "Topilgan javob o'rnidan keyingisini qidiring."
-     ]
-    },
-    {
-     "title": "Workbook (MAXIMISER): Flow chart completion",
-     "type": "48–50-betlar, Example 5 va 7",
-     "instr": "Sxemani to'ldiring va bosqichlarni o'z so'zingiz bilan aytib bering.",
-     "items": [
-      "Sarlavhani o'qing",
-      "Ketma-ketlik so'zlarini belgilang",
-      "Har qutida yetishmayotgan so'z turini yozing",
-      "Javobni topgach, sxemani ovoz chiqarib o'qing"
-     ],
-     "answers": [
-      "jarayon nomi",
-      "first, then, after that, finally",
-      "fe'l yoki ot",
-      "\"First they ... then they ...\""
-     ],
-     "why": [
-      "Matndagi joyni topish uchun.",
-      "Bosqich chegaralari.",
-      "Bashorat bosqichi (2-darsdan).",
-      "Mantiqiy xato darrov seziladi."
-     ]
+     "note": "O'quvchi daftariga ikki ustun qilib ko'chirsin — bu jadval keyingi darslarda ham kerak bo'ladi."
     }
    ],
    "readings": [
@@ -2613,12 +2365,6 @@
      "answers": "Ustoz jarayonni og'zaki aytib berishni so'raydi."
     },
     {
-     "title": "Workbook (MAXIMISER): Short answer va Flow chart",
-     "type": "39–41 va 48–50-betlar",
-     "instr": "Qolgan misollarni bajaring, har javob uchun so'roq so'zi yoki ketma-ketlik so'zini yozing.",
-     "answers": "Kitob kaliti bilan."
-    },
-    {
      "title": "Tartib jadvali",
      "type": "Yozma",
      "instr": "Ikki ustun: \"tartib bor\" va \"tartib yo'q\" — 10 savol turini joylashtiring va nega shundayligini bir gapda yozing.",
@@ -2653,10 +2399,10 @@
    "no": 5,
    "title": "Listening: Note Completion (Section 1)",
    "grammar_topic": "Note completion — qayd (eslatma) to'ldirish, 1-bo'lim",
-   "vocab_topic": "Kurslar, ekskursiya, ro'yxatdan o'tish (Unit 2)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 2 Listening (note completion) topshirig'i va audiosi. Workbook (MAXIMISER): Note-taking bo'limi. Kitob audiosi kitobda; bu yerda 3 ta mustaqil skript to'liq transkripti bilan.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Qaydlar (notes) formatini o'qib, har bo'sh joyga kerakli so'z turini oldindan aniqlash.",
     "Eshitishda kalit so'zni emas, PARAPHRASE ni kutish: qaydda bir so'z, audioda boshqa so'z.",
@@ -2678,8 +2424,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -2703,8 +2449,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -2829,29 +2575,6 @@
    },
    "class_ex": [
     {
-     "title": "Kitob: Unit 2 Listening (Note completion)",
-     "type": "Coursebook, Unit 2 listening topshirig'i va audiosi",
-     "instr": "Qaydlarni to'ldiring; quyida ishlash tartibi va tekshirish mezoni.",
-     "items": [
-      "Avval qaydlar sarlavhasini o'qing",
-      "Har bo'sh joy turini chetiga yozing",
-      "Paraphrase kutayotganingizni yozing",
-      "Eshitgach, javobni ko'chiring va ko'plikni tekshiring"
-     ],
-     "answers": [
-      "mavzu va bo'lim aniqlanadi",
-      "son / joy / ot / vaqt",
-      "cost → price/charge",
-      "tickets, days"
-     ],
-     "why": [
-      "Sarlavha nima haqida eshitishingizni aytadi.",
-      "Bashorat bosqichi.",
-      "Audio boshqa so'z ishlatadi.",
-      "Grammatik shakl muhim."
-     ]
-    },
-    {
      "title": "Chalg'ituvchilar mashqi",
      "type": "Og'zaki",
      "instr": "Ustoz o'qiydi, o'quvchi to'g'ri sonni aytadi.",
@@ -2877,29 +2600,6 @@
       "\"Sorry\" — tuzatish."
      ],
      "note": "Har javobdan keyin signal so'zni ayting: but, though, actually, sorry, in fact."
-    },
-    {
-     "title": "Workbook (MAXIMISER): Note-taking",
-     "type": "Note-taking bo'limi",
-     "instr": "Namunalarni bajaring va qisqartma yozuv (abbreviation) qoidalarini mashq qiling.",
-     "items": [
-      "Qisqartma yozing: \"information\"",
-      "Raqamni belgi bilan: \"per cent\"",
-      "Vaqtni: \"half past seven\"",
-      "Javobni ko'chirishda to'liq yozing"
-     ],
-     "answers": [
-      "info",
-      "%",
-      "7.30",
-      "info emas, information"
-     ],
-     "why": [
-      "Eshitayotganda tez yozish uchun.",
-      "Keyin to'liq yoziladi.",
-      "Tez va aniq.",
-      "Javob varaqasiga qisqartma yozilmaydi."
-     ]
     }
    ],
    "readings": [],
@@ -3222,12 +2922,6 @@
      "answers": "Javoblar Listening bo'limida izoh bilan."
     },
     {
-     "title": "Kitob: Unit 2 Listening (note completion)",
-     "type": "Coursebook",
-     "instr": "Qayta tinglang va har javob uchun paraphrase juftini yozing: qaydda — audioda.",
-     "answers": "Kitob kaliti bilan."
-    },
-    {
      "title": "Chalg'ituvchi daftari",
      "type": "Yozma",
      "instr": "Bugungi 3 skriptdan 10 ta chalg'ituvchi javobni yozing va nega noto'g'ri ekanini tushuntiring.",
@@ -3262,10 +2956,10 @@
    "no": 6,
    "title": "Reading: True / False / Not Given",
    "grammar_topic": "True / False / Not Given (fakt savollari)",
-   "vocab_topic": "People's lives / It was all new once — kashfiyot va tarix (Unit 2–3)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 3 \"It was all new once\" reading topshirig'i (True/False/Not Given). Workbook (MAXIMISER): True/False/Not Given bo'limi va Tip 7 (46-bet). Matnlar kitobda; bu yerda qoida, javob izohlari va 3 ta mustaqil matn.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "TRUE, FALSE va NOT GIVEN orasidagi farqni aniq ajratish.",
     "FALSE (matn boshqacha aytadi) va NOT GIVEN (matn umuman aytmaydi) farqini isbot bilan ko'rsatish.",
@@ -3287,8 +2981,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -3312,8 +3006,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -3467,49 +3161,6 @@
       "\"First\" shu ma'noni beradi."
      ],
      "note": "Har javobdan keyin \"qaysi so'z shunday deyishga majbur qildi?\" deb so'rang."
-    },
-    {
-     "title": "Kitob: Unit 3 reading (True/False/Not Given)",
-     "type": "Coursebook, Unit 3",
-     "instr": "Topshiriqni bajaring; quyida ishlash va tekshirish tartibi.",
-     "items": [
-      "Savoldagi kalit so'z va cheklovchi so'zni belgilang",
-      "Matndan tartib bo'yicha joyni toping",
-      "Gapni to'liq o'qing va uchta savolga javob bering",
-      "Javob yoniga isbotni yozing"
-     ],
-     "answers": [
-      "only, all, first",
-      "1, 2, 3 ketma-ket",
-      "bir xilmi / qarshimi / yo'qmi",
-      "xatboshi va qator"
-     ],
-     "why": [
-      "Ular javobni ko'pincha FALSE qiladi.",
-      "T/F/NG tartibda keladi.",
-      "Shu tartibda hukm chiqariladi.",
-      "Ustoz isbotsiz javobni qabul qilmaydi."
-     ]
-    },
-    {
-     "title": "Workbook (MAXIMISER): True/False/Not Given",
-     "type": "Tegishli bo'lim va Tip 7 (46-bet)",
-     "instr": "Namunalarni bajaring, NOT GIVEN javoblarini alohida ro'yxat qiling.",
-     "items": [
-      "Har NOT GIVEN uchun \"matn nimani aytmagan\" ni yozing",
-      "Har FALSE uchun matndagi qarshi so'zni ko'chiring",
-      "Har TRUE uchun paraphrase juftini yozing"
-     ],
-     "answers": [
-      "masalan: sabab aytilmagan",
-      "masalan: \"rarely\" ↔ \"often\"",
-      "savolda X — matnda Y"
-     ],
-     "why": [
-      "Shu odat xatoni kamaytiradi.",
-      "Qarshi juftlik ko'rinadi.",
-      "1-darsdagi ko'nikma."
-     ]
     }
    ],
    "readings": [
@@ -3866,12 +3517,6 @@
      "answers": "Ustoz har javob uchun matndagi qatorni so'raydi."
     },
     {
-     "title": "Kitob: Unit 3 reading (T/F/NG)",
-     "type": "Coursebook",
-     "instr": "Qolgan savollarni bajaring va har javob yoniga isbot qatorini yozing.",
-     "answers": "Kitob kaliti bilan."
-    },
-    {
      "title": "FALSE va NOT GIVEN ro'yxati",
      "type": "Yozma",
      "instr": "Bugungi 3 matndan 8 ta FALSE/NOT GIVEN javobni yozing: savol, javob, sabab.",
@@ -3906,10 +3551,10 @@
    "no": 7,
    "title": "Reading: Diagram Labelling",
    "grammar_topic": "Diagram labelling — chizma va rasmni belgilash",
-   "vocab_topic": "It was all new once — mexanizm va qurilma (Unit 3)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 3 reading (diagram labelling) topshirig'i. Workbook (MAXIMISER): Labelling a diagram, 45–47-betlar (Example 8) va Tip 7. Matnlar kitobda; bu yerda qoida, izohlar va 3 ta mustaqil matn.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Chizmadagi belgini matndagi tavsif bilan bog'lash: qism nomi, joylashuvi, vazifasi.",
     "Joy va yo'nalish predloglarini o'qish: above, below, beneath, at the top, on either side, through, into.",
@@ -3931,8 +3576,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -3956,8 +3601,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -4041,7 +3686,6 @@
     ],
     "notes": [
      "Ustoz doskaga oddiy chizma chizadi (masalan, velosiped) va o'quvchilar qismlarni ingliz tilida aytadi — predloglar bilan.",
-     "MAXIMISER 45–47-betlardagi namuna (Example 8) sinfda birga bajariladi.",
      "Har javobdan keyin predlogni so'rang: \"bu qism qayerda turadi?\" — javob matndan ko'chiriladi.",
      "Kuchsiz o'quvchilarga: avval faqat nomlangan qismlarni matndan topish mashqi."
     ],
@@ -4110,49 +3754,6 @@
       "Ikki yonida."
      ],
      "note": "Har gapni o'quvchi chizmani ko'rsatib aytsin — so'z va rasm bog'lanadi."
-    },
-    {
-     "title": "Kitob: Unit 3 reading (Diagram labelling)",
-     "type": "Coursebook, Unit 3",
-     "instr": "Chizmani to'ldiring; quyida ishlash tartibi.",
-     "items": [
-      "Chizmadagi nomlangan qismlarni belgilang",
-      "Har bo'sh belgi uchun \"bu qism qayerda?\" deb yozing",
-      "Matndan tartib bo'yicha qidiring",
-      "Javobni ko'chirib, chegarani tekshiring"
-     ],
-     "answers": [
-      "langar so'zlar",
-      "ustida / ichida / tagida",
-      "1, 2, 3",
-      "ONE WORD bo'lsa bitta"
-     ],
-     "why": [
-      "Matndan joyni tez topasiz.",
-      "Predlog javobni tasdiqlaydi.",
-      "Diagram savollari tartibda.",
-      "Ortiqcha so'z 0 ball."
-     ]
-    },
-    {
-     "title": "Workbook (MAXIMISER): Labelling a diagram",
-     "type": "45–47-betlar, Example 8",
-     "instr": "Namunani bajaring va predloglarni belgilang.",
-     "items": [
-      "Namunadagi chizmani o'z daftaringizga ko'chiring",
-      "Har javob yoniga predlogni yozing",
-      "Tip 7 ni eslang"
-     ],
-     "answers": [
-      "qo'l bilan",
-      "\"at the top of\", \"inside\"",
-      "javoblar har doim tartibda emas"
-     ],
-     "why": [
-      "Chizish esda qolishni oshiradi.",
-      "Bog'lanish ko'rinadi.",
-      "Boshqa turlarda tartib buzilishi mumkin."
-     ]
     }
    ],
    "readings": [
@@ -4518,12 +4119,6 @@
      "answers": "Ustoz har javob uchun predlog/joylashuvni so'raydi."
     },
     {
-     "title": "Workbook (MAXIMISER): Labelling a diagram",
-     "type": "45–47-betlar",
-     "instr": "Qolgan namunalarni bajaring va har javob yoniga predlogni yozing.",
-     "answers": "Kitob kaliti bilan."
-    },
-    {
      "title": "O'z chizmangiz",
      "type": "Yozma",
      "instr": "Uydagi bir qurilmani (choynak, velosiped, fen) chizing va 8 qismini ingliz tilida belgilang; har biriga joylashuv gapini yozing.",
@@ -4558,10 +4153,10 @@
    "no": 8,
    "title": "Listening: Diagram Labelling",
    "grammar_topic": "Diagram labelling (listening) — chizma va sxemani eshitib belgilash",
-   "vocab_topic": "Qurilma tavsifi, ekskursiya, jarayon (Unit 3–4)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 3/4 listening (diagram labelling) topshirig'i va audiosi. Workbook (MAXIMISER): Labelling a diagram bo'limi (o'xshash mantiq). Kitob audiosi kitobda; bu yerda 3 ta mustaqil skript to'liq transkripti bilan.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Eshitib turib chizmadagi qismlarni belgilash: nom, joylashuv, vazifa.",
     "Ketma-ketlik va joy so'zlarini eshitishda kuzatish: first, next, on the left, at the top, in the middle.",
@@ -4583,8 +4178,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -4608,8 +4203,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -4761,29 +4356,6 @@
       "Uzunasiga joylashgan."
      ],
      "note": "Har iborani o'quvchi chizmada barmog'i bilan ko'rsatsin — so'z va joy bog'lanadi."
-    },
-    {
-     "title": "Kitob: Unit 3/4 listening (Diagram labelling)",
-     "type": "Coursebook, tegishli topshiriq va audio",
-     "instr": "Chizmani to'ldiring; quyida ishlash tartibi.",
-     "items": [
-      "Chizmani 30 soniyada o'qing va nomlangan qismlarni belgilang",
-      "So'zlovchi yo'nalishini taxmin qiling",
-      "Eshitayotganda qisqa belgi qo'ying",
-      "Oxirida to'liq yozing va imloni tekshiring"
-     ],
-     "answers": [
-      "langarlar",
-      "yuqoridan pastga / chapdan o'ngga",
-      "bosh harf yoki 2 harf",
-      "nom otlari"
-     ],
-     "why": [
-      "Ular yo'l ko'rsatadi.",
-      "Tartib javob topishni osonlashtiradi.",
-      "Tez yozish uchun.",
-      "Imlo xatosi ball yo'qotadi."
-     ]
     }
    ],
    "readings": [],
@@ -5040,12 +4612,6 @@
      "answers": "Javoblar Listening bo'limida izoh bilan."
     },
     {
-     "title": "Kitob: Unit 3/4 listening (diagram labelling)",
-     "type": "Coursebook",
-     "instr": "Qayta tinglang va har javob uchun joy iborasini yozing.",
-     "answers": "Kitob kaliti bilan."
-    },
-    {
      "title": "Joy iboralari lug'ati",
      "type": "Yozma",
      "instr": "20 ta joy iborasini tarjimasi bilan yozing: opposite, next to, beyond, along, at the far end, in the corner, behind, in front of, between, above.",
@@ -5080,10 +4646,10 @@
    "no": 9,
    "title": "Listening: Multiple Choice",
    "grammar_topic": "Multiple choice — uch variantdan bittasini tanlash",
-   "vocab_topic": "Kundalik suhbat va ma'ruza (Unit 4)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 4 listening (multiple choice) topshirig'i va audiosi. Kitob audiosi kitobda; bu yerda 3 ta mustaqil skript to'liq transkripti bilan.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Savol va uchta variantni audio boshlanishidan oldin o'qib ulgurish.",
     "Uchala variant ham audioda eshitilishini bilish: eshitilgani emas, MOS kelgani tanlanadi.",
@@ -5105,8 +4671,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -5130,8 +4696,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -5285,29 +4851,6 @@
       "\"Hamma\" emas."
      ],
      "note": "Har misolda \"signal so'z\" ni ayting: but, though, in the end, only, not ... it's."
-    },
-    {
-     "title": "Kitob: Unit 4 listening (Multiple choice)",
-     "type": "Coursebook, Unit 4",
-     "instr": "Topshiriqni bajaring; quyida ishlash tartibi.",
-     "items": [
-      "Savol va variantlarni 45 soniyada o'qing",
-      "Variantlarni bitta so'z bilan qisqartiring",
-      "Eshitayotganda o'chirib boring",
-      "Tekshirishda har chalg'ituvchi uchun izoh ayting"
-     ],
-     "answers": [
-      "kalit so'zlarni belgilang",
-      "A tez / B arzon / C yaqin",
-      "A ✗, B ✗",
-      "nega noto'g'ri"
-     ],
-     "why": [
-      "Vaqt cheklangan.",
-      "Tez qamrab olish uchun.",
-      "Qolgan variant javob bo'ladi.",
-      "Ustozning talabi."
-     ]
     }
    ],
    "readings": [],
@@ -5551,12 +5094,6 @@
      "answers": "Javoblar Listening bo'limida izoh bilan."
     },
     {
-     "title": "Kitob: Unit 4 listening (multiple choice)",
-     "type": "Coursebook",
-     "instr": "Qayta tinglang va har noto'g'ri variant uchun \"nega noto'g'ri\" izohini yozing.",
-     "answers": "Kitob kaliti bilan."
-    },
-    {
      "title": "Chalg'ituvchi daftari",
      "type": "Yozma",
      "instr": "Bugungi 3 skriptdan 12 ta chalg'ituvchini yozing va turini belgilang: eski ma'lumot / boshqa odam / qisman to'g'ri.",
@@ -5591,10 +5128,10 @@
    "no": 10,
    "title": "Reading: Matching Headings",
    "grammar_topic": "Matching headings — xatboshiga sarlavha tanlash",
-   "vocab_topic": "Animal world / Being human (Unit 5–6)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 5 \"Animal world\" reading (matching headings) topshirig'i. Workbook (MAXIMISER): Paragraph headings, 63–66-betlar (Example 1–2) va Tip 7 (46-bet). Matnlar kitobda; bu yerda qoida, izohlar va 3 ta mustaqil matn.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Xatboshining ASOSIY g'oyasini bir gapda aytish va unga mos sarlavhani tanlash.",
     "Asosiy g'oya va tafsilot farqini ajratish: sarlavha butun xatboshiga tegishli bo'lishi kerak.",
@@ -5616,8 +5153,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -5641,8 +5178,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -5728,7 +5265,6 @@
     "notes": [
      "Bu tur o'quvchilarni eng ko'p qiynaydi: ustoz har xatboshi uchun \"bir gapda nima haqida?\" savolini majburiy qilsin.",
      "Doskada ikki ustun: \"asosiy g'oya\" va \"tafsilot\" — o'quvchilar gaplarni ajratadi.",
-     "MAXIMISER 63–66-betlardagi namunalar sinfda birga bajariladi.",
      "Vaqt: har xatboshiga 1.5 daqiqa; 6 xatboshi — 9 daqiqa."
     ],
     "mistakes": [
@@ -5796,49 +5332,6 @@
       "Bitta voqea."
      ],
      "note": "Har javobdan keyin \"nega?\" deb so'rang — o'quvchi umumiylik darajasini tushunsin."
-    },
-    {
-     "title": "Kitob: Unit 5 reading (Matching headings)",
-     "type": "Coursebook, Unit 5",
-     "instr": "Topshiriqni bajaring; quyida ishlash tartibi.",
-     "items": [
-      "Har xatboshini o'qib, o'z gapingizni chetiga yozing",
-      "Keyin ro'yxatdan mos sarlavhani toping",
-      "O'xshash sarlavhalarni yonma-yon qo'ying",
-      "Ishlatilgan sarlavhani o'chiring"
-     ],
-     "answers": [
-      "\"bu xatboshi ... haqida\"",
-      "faqat shundan keyin",
-      "farqli so'zni belgilang",
-      "takror bo'lmasin"
-     ],
-     "why": [
-      "Sarlavhaga qaramasdan.",
-      "Tuzoqdan saqlaydi.",
-      "problems / solutions.",
-      "Har sarlavha bir marta."
-     ]
-    },
-    {
-     "title": "Workbook (MAXIMISER): Paragraph headings",
-     "type": "63–66-betlar, Example 1–2",
-     "instr": "Namunalarni bajaring, keyin tuzoqlarni ajrating.",
-     "items": [
-      "Har noto'g'ri sarlavha uchun sababni yozing",
-      "Tip 7 ni eslang",
-      "Vaqt bilan ishlang"
-     ],
-     "answers": [
-      "tafsilot / boshqa xatboshi / umuman yo'q",
-      "bu turda tartib yo'q",
-      "har xatboshiga 1.5 daqiqa"
-     ],
-     "why": [
-      "Uch xil tuzoq.",
-      "Har xatboshi mustaqil.",
-      "IELTS tezligi."
-     ]
     }
    ],
    "readings": [
@@ -6192,12 +5685,6 @@
      "answers": "Ustoz \"o'z gapingiz\" yozuvlarini tekshiradi."
     },
     {
-     "title": "Workbook (MAXIMISER): Paragraph headings",
-     "type": "63–66-betlar",
-     "instr": "Qolgan namunalarni bajaring; har noto'g'ri sarlavha uchun tuzoq turini yozing.",
-     "answers": "Kitob kaliti bilan."
-    },
-    {
      "title": "Asosiy g'oya mashqi",
      "type": "Yozma",
      "instr": "Har qanday gazeta maqolasidan 6 xatboshi oling va har biriga o'z sarlavhangizni yozing (4 so'zdan oshmasin).",
@@ -6232,10 +5719,10 @@
    "no": 11,
    "title": "Reading: Multiple Choice (Passage 3)",
    "grammar_topic": "Multiple choice (reading) — to'rt variantdan bittasi",
-   "vocab_topic": "Being human — ilm-fan va jamiyat (Unit 6)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 6 \"Being human\" reading (multiple choice) topshirig'i. Workbook (MAXIMISER): MCQs, 75-betdan boshlab (Example 6). Matnlar kitobda; bu yerda qoida, izohlar va 3 ta mustaqil matn.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Savol va to'rt variantdagi farqli so'zni topib, matndan tekshirish.",
     "Variantlarni o'chirib borish (elimination) usulini qo'llash va har rad etishga sabab aytish.",
@@ -6257,8 +5744,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -6282,8 +5769,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -6368,7 +5855,6 @@
     "notes": [
      "Ustoz har savolda \"nega qolgan uchtasi noto'g'ri?\" deb so'raydi — bu darsning asosiy ishi.",
      "Variantlarni doskada yonma-yon yozib, farqli so'zni marker bilan belgilash foydali.",
-     "MAXIMISER 75-betdan boshlangan MCQ namunalari sinfda birga bajariladi.",
      "Kuchli o'quvchilarga: matnni o'qimasdan avval savollarni ko'rib, mavzuni taxmin qilish mashqi."
     ],
     "mistakes": [
@@ -6433,29 +5919,6 @@
       "Fikr va tavsif farqi."
      ],
      "note": "Farqli so'z topilgach, faqat o'shani matndan tekshirish kifoya."
-    },
-    {
-     "title": "Kitob: Unit 6 reading (Multiple choice)",
-     "type": "Coursebook, Unit 6",
-     "instr": "Bajaring; quyida ishlash tartibi.",
-     "items": [
-      "Savolni bir gapda qayta ayting",
-      "Variantlar farqini belgilang",
-      "Matndan tartib bo'yicha joyni toping",
-      "Har rad etilgan variant yoniga sabab yozing"
-     ],
-     "answers": [
-      "\"sabab so'ralyapti\"",
-      "farqli so'zlar",
-      "oldingi javobdan keyin",
-      "\"matn qarshi\" / \"aytilmagan\""
-     ],
-     "why": [
-      "Savolni tushunmasdan variantga qaramang.",
-      "Ko'pincha bitta so'z.",
-      "MCQ tartibda.",
-      "Ustozning talabi."
-     ]
     }
    ],
    "readings": [
@@ -6803,12 +6266,6 @@
      "answers": "Ustoz rad etish sabablarini so'raydi."
     },
     {
-     "title": "Workbook (MAXIMISER): MCQs",
-     "type": "75-betdan",
-     "instr": "Namunalarni bajaring; har rad etilgan variant yoniga sabab yozing.",
-     "answers": "Kitob kaliti bilan."
-    },
-    {
      "title": "Farqli so'z mashqi",
      "type": "Yozma",
      "instr": "10 juft variant berilgan: har juftda farqli so'zni belgilang va qanday tekshirishni yozing.",
@@ -6843,10 +6300,10 @@
    "no": 12,
    "title": "Listening: Sentence Completion (Section 2)",
    "grammar_topic": "Sentence completion — gapni to'ldirish (2-bo'lim, monolog)",
-   "vocab_topic": "Shahar, tadbir, xizmat haqida ma'lumot (Unit 5–6)",
+   "vocab_topic": "",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Coursebook: Unit 5/6 listening (sentence completion) topshirig'i va audiosi. Kitob audiosi kitobda; bu yerda 3 ta mustaqil skript to'liq transkripti bilan.",
+   "book_ref": "Jony Academy materiali — mualliflik matnlari, skriptlar va mashqlar.",
    "objectives": [
     "Section 2 (bitta so'zlovchi, monolog) formatiga ko'nikish.",
     "Bo'sh joyni grammatik jihatdan to'g'ri to'ldirish: ot, fe'l, son yoki sifat.",
@@ -6868,8 +6325,8 @@
     ],
     [
      15,
-     "Kitob bilan namuna",
-     "Kitobdagi topshiriq birga bajariladi, har javob izohlanadi"
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      10,
@@ -6893,8 +6350,8 @@
     ],
     [
      15,
-     "Workbook mashqi",
-     "Qo'shimcha mashq va javob izohlari"
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
     [
      10,
@@ -7047,29 +6504,6 @@
       "\"Up to ... books\"."
      ],
      "note": "Bashorat qilingach, audioda faqat o'sha turdagi so'zni kutasiz."
-    },
-    {
-     "title": "Kitob: Unit 5/6 listening (Sentence completion)",
-     "type": "Coursebook",
-     "instr": "Bajaring; quyida ishlash tartibi.",
-     "items": [
-      "Gaplarni 45 soniyada o'qing va so'z turkumini belgilang",
-      "Kalit so'zlarni belgilang",
-      "Javobni yozib, gapni qayta o'qing",
-      "Xato turini yozing"
-     ],
-     "answers": [
-      "ot / fe'l / son",
-      "joy nomi, raqam",
-      "grammatika to'g'rimi",
-      "eshitish / grammatika / chegara"
-     ],
-     "why": [
-      "Bashorat.",
-      "Audioda langar.",
-      "Tekshiruv.",
-      "Keyingi mashq shunga qarab tanlanadi."
-     ]
     }
    ],
    "readings": [],
@@ -7339,12 +6773,6 @@
      "type": "Listening",
      "instr": "Uyda bir marta tinglang, gaplarni to'ldiring, keyin transkript bilan tekshiring.",
      "answers": "Javoblar Listening bo'limida izoh bilan."
-    },
-    {
-     "title": "Kitob: Unit 5/6 listening (sentence completion)",
-     "type": "Coursebook",
-     "instr": "Qayta tinglang va har javob uchun grammatik asosni yozing.",
-     "answers": "Kitob kaliti bilan."
     },
     {
      "title": "Bashorat mashqi",

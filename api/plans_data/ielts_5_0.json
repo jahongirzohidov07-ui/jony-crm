@@ -17526,6 +17526,824 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 33,
+   "title": "Reading: Full Reading Test (Passage 1–3)",
+   "grammar_topic": "To'liq Reading testi — 3 passage, 40 savol, 60 daqiqa",
+   "vocab_topic": "Imtihon sharoitida to'liq test",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz bergan Full Practice Reading (William Kamkwamba; White mountain, green tourism; Reading in a whole new way).",
+   "objectives": [
+    "To'liq IELTS Reading testini imtihon sharoitida 60 daqiqada bajarish (javob varag'iga ko'chirish uchun qo'shimcha vaqt YO'Q).",
+    "Vaqtni passage bo'yicha taqsimlash: P1 — 17–18 daqiqa, P2 — 20 daqiqa, P3 — 22 daqiqa.",
+    "1–31-darslarda o'rganilgan savol turlarini bitta testda qo'llash.",
+    "Natijani band ballga o'girish va o'z xatolarini savol turi bo'yicha tahlil qilish.",
+    "Keyingi mock testlar (34–35-darslar) uchun shaxsiy \"zaif savol turlari\" ro'yxatini tuzish."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Reading testi 60 daqiqa davom etadi va Listening'dan farqli ravishda javobni ko'chirish uchun qo'shimcha vaqt berilmaydi. Javoblarni to'g'ridan-to'g'ri javob varag'iga yozing.",
+     "Passage'lar qiyinlashib boradi: P1 — eng oson (faktlar), P2 — o'rta (matching, pick from list), P3 — eng qiyin (muallif fikri, MCQ, sentence endings). Shuning uchun P1 ni tezroq ishlab, P3 ga ko'proq vaqt qoldiring.",
+     "Bu testdagi savol turlari: flow chart (4-dars), T/F/NG (6-dars), short answer (4-dars), matching information (25-dars), pick from a list (18-dars), sentence completion (15-dars), MCQ (11-dars), Y/N/NG (19-dars), sentence endings (31-dars).",
+     "Har passage boshida 1 daqiqa: sarlavha, qism sarlavhasi va savol turlarini ko'rib chiqing, so'z chegaralarini belgilang (TWO WORDS / ONE WORD and/or a NUMBER).",
+     "Bitta savolga 2 daqiqadan ortiq vaqt sarflamang. Belgilab qo'ying va oxirida qayting. Bo'sh joy qoldirmang — noto'g'ri javob uchun ball olinmaydi.",
+     "Test tugagach ustoz javoblarni o'qiydi; har o'quvchi to'g'ri javoblar sonini sanaydi va jadval bo'yicha band ballni topadi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Test qoidalari va vaqt",
+      "60 daqiqa, ko'chirish vaqti yo'q",
+      "5 daqiqa"
+     ],
+     [
+      "2-bosqich",
+      "Passage 1",
+      "savollar 1–13",
+      "17–18 daqiqa"
+     ],
+     [
+      "3-bosqich",
+      "Passage 2",
+      "savollar 14–26",
+      "20 daqiqa"
+     ],
+     [
+      "4-bosqich",
+      "Passage 3",
+      "savollar 27–40",
+      "22 daqiqa"
+     ],
+     [
+      "5-bosqich",
+      "Tekshirish va band ball",
+      "javoblar + jadval",
+      "15 daqiqa"
+     ],
+     [
+      "6-bosqich",
+      "Xato tahlili",
+      "savol turi bo'yicha",
+      "25 daqiqa"
+     ]
+    ],
+    "presentation": [
+     [
+      "Javob varag'iga qachon yozaman?",
+      "Darhol. Reading'da ko'chirish uchun qo'shimcha vaqt yo'q."
+     ],
+     [
+      "Savollarni qaysi tartibda ishlayman?",
+      "Passage tartibida. Passage ichida — avval tartibli turlar, keyin matching (NEVER guruhi)."
+     ],
+     [
+      "Vaqt tugab qolsa?",
+      "Qolgan savollarga taxminiy javob yozing — bo'sh joy aniq 0 ball."
+     ],
+     [
+      "Katta-kichik harf muhimmi?",
+      "Yo'q. Lekin imlo muhim."
+     ],
+     [
+      "\"39 feet\" yoki \"39\"?",
+      "Ikkalasi ham to'g'ri: ko'rsatma \"ONE WORD and/or a NUMBER\"."
+     ],
+     [
+      "Qancha to'g'ri javob — qaysi band?",
+      "Pastdagi jadvalga qarang: 23–26 = 6.0, 30–32 = 7.0."
+     ]
+    ],
+    "notes": [
+     "Bu dars — birinchi to'liq Reading testi. Maqsad ball emas, balki vaqtni boshqarish tajribasi va zaif savol turlarini aniqlash.",
+     "Test paytida ustoz har 20 daqiqada vaqtni e'lon qiladi: \"Passage 2 ga o'ting\".",
+     "Ustoz kaliti yuborilmagan — barcha 40 javob Jony Academy tomonidan yechildi va matn bilan isbotlandi. Munozarali javoblar: 6 va 32 (NOT GIVEN), 24 (summer — ski season tuzoq), 26 (glaciers / melting glaciers).",
+     "Tahlil bosqichida o'quvchi xatolarini savol turi bo'yicha jadvalga yozadi: masalan, \"T/F/NG — 2 xato, matching info — 1 xato\". Eng ko'p xato qilingan tur 34-darsgacha takrorlanadi.",
+     "Qo'shimcha matn berilmaydi: dars to'liq test + tahlildan iborat (60 + 40 daqiqa)."
+    ],
+    "mistakes": [
+     [
+      "Javobni keyin ko'chiraman deb o'ylash",
+      "Darhol varaqqa yozish",
+      "Reading'da ko'chirish vaqti yo'q"
+     ],
+     [
+      "P1 ga 25 daqiqa sarflash",
+      "17–18 daqiqa",
+      "P3 ga vaqt qolmaydi"
+     ],
+     [
+      "So'z chegarasini tekshirmaslik",
+      "Har bo'limda qayta o'qish",
+      "TWO WORDS ≠ ONE WORD"
+     ],
+     [
+      "Bo'sh joy qoldirish",
+      "Taxminiy javob",
+      "Noto'g'ri javob uchun jarima yo'q"
+     ],
+     [
+      "Xatoni faqat sanash",
+      "Savol turi bo'yicha tahlil",
+      "Zaif turni aniqlash — asosiy maqsad"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "To'g'ri javoblar → band ball",
+     "type": "Jadval",
+     "instr": "Academic Reading uchun taxminiy moslik (40 savoldan).",
+     "note": "5.0 kursining maqsadi — shu testda kamida 15–18 ta to'g'ri javob (Band 5.0). 23+ — Band 6 darajasi.",
+     "layout": "grid",
+     "head": [
+      "To'g'ri javoblar",
+      "Band",
+      "To'g'ri javoblar",
+      "Band"
+     ],
+     "rows": [
+      [
+       "39–40",
+       "9.0",
+       "23–26",
+       "6.0"
+      ],
+      [
+       "37–38",
+       "8.5",
+       "19–22",
+       "5.5"
+      ],
+      [
+       "35–36",
+       "8.0",
+       "15–18",
+       "5.0"
+      ],
+      [
+       "33–34",
+       "7.5",
+       "13–14",
+       "4.5"
+      ],
+      [
+       "30–32",
+       "7.0",
+       "10–12",
+       "4.0"
+      ],
+      [
+       "27–29",
+       "6.5",
+       "6–9",
+       "3.5"
+      ]
+     ]
+    }
+   ],
+   "readings": [
+    {
+     "title": "Passage 1. William Kamkwamba",
+     "qtype": "Flow chart (1–5) + T/F/NG (6–10) + Short answer (11–13)",
+     "source": "Jony Academy materiali — Full Practice Reading",
+     "text": [
+      "At only 14 years old, William Kamkwamba built a series of windmills that could generate electricity in his African village, Masitala, in Malawi, south-eastern Africa.",
+      "In 2002, William Kamkwamba had to drop out of school, as his father, a maize and tobacco farmer, could no longer afford his school fees. But despite this setback, William was determined to get his education. He began visiting a local library that had just opened in his old primary school, where he discovered a tattered science book. With only a rudimentary grasp of English, he _taught himself basic physics_ – mainly by studying photos and diagrams. Another book he found there featured windmills on the cover and inspired him to try and build his own.",
+      "He started by constructing a _small model_. Then, with the help of a cousin and friend, he spent many weeks searching _scrap yards_ and found old tractor fans, shock absorbers, plastic pipe and bicycle parts, which he used to build the real thing.",
+      "For windmill blades, William cut some _bath pipe_ in two lengthwise, then heated the pieces over hot coals to press the curled edges flat. To bore holes into the blades, he stuck a nail through half a corncob, heated the metal red and twisted it through the blades. It took three hours to repeatedly heat the nail and bore the holes. He attached the blades to a _tractor fan_ using proper nuts and bolts and then to the back axle of a bicycle. Electricity was generated through the bicycle dynamo. When the wind blew the blades, the bike chain spun the bike wheel, which charged the dynamo and sent a current through wire to his house.",
+      "What he had built was a crude machine that produced 12 volts and _powered four lights_. When it was all done, the windmill's wingspan measured more than eight feet and sat on top of a rickety tower 15 feet tall that swayed violently in strong gales. He eventually replaced the tower with a sturdier one that stands _39 feet_, and built a second machine that watered a family garden.",
+      "The windmill brought William Kamkwamba _instant local fame_, but despite his accomplishment, he was still unable to return to school. However, news of his magetsi a mphepo – electric wind – spread beyond Malawi, and eventually things began to change. An education official, who had heard news of the windmill, came to visit his village and was amazed to learn that William had been out of school for five years. He arranged for him to attend secondary school at the government's expense and _brought journalists to the farm_ to see the windmill. Then a story published in the Malawi Daily Mail caught the attention of bloggers, which in turn caught the attention of organisers for the Technology Entertainment and Design conference.",
+      "In 2007, William spoke at the TED Global conference in Tanzania and got a standing ovation. Businessmen stepped forward with offers to fund his education and projects, and with money donated by them, he was able to put his cousin and several friends back into school and pay for some medical needs of his family. With the donation, he also _drilled a borehole for a well and water pump_ in his village and installed drip irrigation in his father's fields.",
+      "The water pump has allowed his family to expand its crops. They have abandoned tobacco and now grow maize, beans, soybeans, potatoes and peanuts. The windmills have also brought big lifestyle and health changes to the other villagers. 'The village has changed a lot,' William says. 'Now, the time that they would have spent going to fetch water, they are using for doing other things. And also the water they are drinking is clean water, so _there is less disease_.' The villagers have also _stopped using kerosene_ and can use the money previously spent on fuel to buy other things.",
+      "William Kamkwamba's example has inspired other children in the village to _pursue science_. William says they now see that if they put their mind to something, they can achieve it. 'It has changed the way people think,' he says."
+     ],
+     "paraphrases": [
+      [
+       "learned",
+       "taught himself"
+      ],
+      [
+       "first",
+       "started by"
+      ],
+      [
+       "collected materials",
+       "searching ... found"
+      ],
+      [
+       "with a relative",
+       "with the help of a cousin"
+      ],
+      [
+       "made ... from pieces of",
+       "cut ... in two"
+      ],
+      [
+       "fixed the blades to",
+       "attached the blades to"
+      ],
+      [
+       "raised the blades on a tower",
+       "sat on top of a tower"
+      ],
+      [
+       "ignored by local people",
+       "(opposite) instant local fame"
+      ],
+      [
+       "improve water supplies",
+       "drilled a borehole for a well and water pump"
+      ],
+      [
+       "health has improved",
+       "there is less disease"
+      ],
+      [
+       "final tower",
+       "replaced ... with a sturdier one"
+      ],
+      [
+       "more popular",
+       "inspired other children to pursue science"
+      ]
+     ],
+     "glossary": [
+      "drop out — o'qishni tashlamoq",
+      "afford — puli yetmoq",
+      "setback — to'siq, muvaffaqiyatsizlik",
+      "tattered — titilib ketgan",
+      "rudimentary — boshlang'ich",
+      "scrap yard — temir-tersak ombori",
+      "blade — parrak",
+      "bore — teshmoq",
+      "dynamo — dinamo",
+      "rickety — omonat",
+      "sway — chayqalmoq",
+      "gale — kuchli shamol",
+      "standing ovation — olqishlar",
+      "borehole — burg'u qudug'i",
+      "kerosene — kerosin"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Complete the flow chart — Building the Windmill",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "Flow chart USUALLY tartibda: 1–4-xatboshilar.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+       ],
+       "answers": [
+        "(basic) physics",
+        "(small) model",
+        "scrap yards",
+        "bath pipe",
+        "tractor fan"
+       ],
+       "why": [
+        "\"He taught himself basic physics\". Learned = taught himself. \"Physics\" yoki \"basic physics\" — ikkalasi ham chegarada.",
+        "\"He started by constructing a small model\". First = started by. Artikl \"a\" gapda bor.",
+        "\"With the help of a cousin and friend, he spent many weeks searching scrap yards\". Relative = cousin.",
+        "\"William cut some bath pipe in two lengthwise\". Tuzoq: \"plastic pipe\" — materiallar ro'yxatida, lekin parrak aynan \"bath pipe\" dan.",
+        "\"He attached the blades to a tractor fan ... and then to the back axle of a bicycle\". Fixed = attached."
+       ],
+       "layout": "flow",
+       "rows": [
+        [
+         "William learned some (1) from a library book."
+        ],
+        [
+         "First, he built a (2) of the windmill."
+        ],
+        [
+         "Then he collected materials from (3) with a relative."
+        ],
+        [
+         "He made the windmill blades from pieces of (4)."
+        ],
+        [
+         "He fixed the blades to a (5) and then to part of a bicycle."
+        ],
+        [
+         "He raised the blades on a tower."
+        ]
+       ]
+      },
+      {
+       "title": "Questions 6–10: TRUE, FALSE or NOT GIVEN",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "Matn tartibida (ALWAYS).",
+       "items": [
+        "William used the electricity he created for village transport.",
+        "At first, William's achievement was ignored by local people.",
+        "Journalists from other countries visited William's farm.",
+        "William used money he received to improve water supplies in his village.",
+        "The health of the villagers has improved since the windmill was built."
+       ],
+       "answers": [
+        "NOT GIVEN",
+        "FALSE",
+        "NOT GIVEN",
+        "TRUE",
+        "TRUE"
+       ],
+       "why": [
+        "Elektr \"powered four lights\" va keyin bog'ni sug'organ; transport haqida hech narsa yo'q.",
+        "\"The windmill brought William Kamkwamba instant local fame\".",
+        "\"Brought journalists to the farm\" — qaysi davlatdan ekani aytilmagan. Tuzoq: \"spread beyond Malawi\" — bu yangilik haqida, jurnalistlar haqida emas.",
+        "\"With the donation, he also drilled a borehole for a well and water pump in his village\".",
+        "\"The windmills have also brought big lifestyle and health changes ... there is less disease\"."
+       ],
+       "note": "6 va 8-savollar NOT GIVEN ning ikki turi: 6 — mavzu umuman yo'q; 8 — jurnalistlar bor, lekin \"other countries\" detali yo'q.",
+       "layout": "tfng"
+      },
+      {
+       "title": "Questions 11–13: Answer the questions",
+       "type": "NO MORE THAN ONE WORD and/or a NUMBER from the passage",
+       "instr": "Short answer — ALWAYS tartibda.",
+       "items": [
+        "How tall was the final tower that William built?",
+        "What did the villagers use for fuel before the windmill was built?",
+        "What school subject has become more popular in William's village?"
+       ],
+       "answers": [
+        "39 (feet)",
+        "kerosene",
+        "science"
+       ],
+       "why": [
+        "\"Replaced the tower with a sturdier one that stands 39 feet\". Tuzoq: 15 feet — birinchi minora.",
+        "\"Stopped using kerosene and can use the money previously spent on fuel\".",
+        "\"Inspired other children in the village to pursue science\"."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "Find the paraphrases",
+       "type": "Paraphrase moslash",
+       "instr": "Savoldagi so'zning matndagi juftini toping.",
+       "items": [
+        "learned (1)",
+        "a relative (3)",
+        "ignored by local people (7)",
+        "improve water supplies (9)"
+       ],
+       "answers": [
+        "taught himself",
+        "a cousin",
+        "instant local fame (teskari)",
+        "a borehole for a well and water pump"
+       ],
+       "why": [
+        "1-xatboshi.",
+        "2-xatboshi.",
+        "5-xatboshi.",
+        "6-xatboshi."
+       ],
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "Passage 2. White mountain, green tourism",
+     "qtype": "Matching information (14–18) + Pick from a list (19–22) + Sentence completion (23–26)",
+     "source": "Jony Academy materiali — Full Practice Reading",
+     "text": [
+      "The French Alpine town of Chamonix has been a magnet for tourists since the 18th century. But today, tourism and climate change are putting pressure on the surrounding environment. Marc Grainger reports.",
+      "A. The town of Chamonix-Mont-Blanc sits in a valley at 1,035 metres above sea level in the Haute-Savoie department in south-eastern France. To the north-west are the red peaks of the Aiguilles Rouges massif; to the south-east are the permanently white peaks of Mont Blanc, which at 4,810 metres is the highest mountain in the Alps. It's a typical Alpine environment, but one that is under increasing strain from the hustle and bustle of human activity.",
+      "B. Tourism is Chamonix's lifeblood. Visitors have been encouraged to visit the valley ever since it was discovered by _explorers_ in 1741. Over 40 years later, in 1786, Mont Blanc's summit was finally reached by a French doctor and his guide, and this gave birth to the sport of alpinism, with Chamonix at its centre. In 1924, it hosted the first Winter Olympics, and the cable cars and lifts that were built in the years that followed gave everyone access to the ski slopes.",
+      "C. Today, Chamonix is a modern town, connected to the outside world via the Mont Blanc Road Tunnel and a busy highway network. It receives up to 60,000 visitors at a time during the ski season, and _climbers, hikers and extreme-sports enthusiasts_ swarm there in the _summer in even greater numbers_, swelling the town's population to 100,000. It is the third most visited natural site in the world, according to Chamonix's Tourism Office and, last year, it had 5.2 million visitor bed nights – all this in a town with fewer than 10,000 permanent inhabitants.",
+      "D. This influx of tourists has put the local environment under severe pressure, and the authorities in the valley have decided to take action. Educating visitors is vital. _Tourists are warned not to drop rubbish_, and there are now recycling points dotted all around the valley, from the town centre to halfway up the mountains. _An internet blog reports environmental news_ in the town, and the 'green' message is delivered with all the tourist office's activities.",
+      "E. Low-carbon initiatives are also important for the region. _France is committed to reducing its carbon emissions by a factor of four by 2050._ Central to achieving this aim is a strategy that encourages communities to identify their carbon emissions on a local level and make plans to reduce them. Studies have identified that accommodation accounts for half of all carbon emissions in the Chamonix valley. Hotels are known to be inefficient operations, but those around Chamonix are now cleaning up their act. Some are using low-energy lighting, restricting water use and _making recycling bins available for guests_; others have invested in huge projects such as furnishing and decorating using locally sourced materials, using geothermal energy for heating and _installing solar panels_.",
+      "F. Chamonix's council is encouraging the use of renewable energy in private properties too, by making funds available for green renovations and new constructions. At the same time, public-sector buildings have also undergone improvements to make them more energy efficient and less wasteful. For example, _the local ice rink has reduced its annual water consumption_ from 140,000 cubic metres to 10,000 cubic metres in the space of three years.",
+      "G. Improving public transport is another feature of the new policy, as 80 percent of carbon emissions from transport used to come from private vehicles. While the Mont Blanc Express is an ideal way to travel within the valley – and see some incredible scenery along the route – it is much more difficult to arrive in Chamonix from outside by rail. There is no direct line from the closest airport in Geneva, so tourists arriving by air normally transfer by car or bus. However, at a cost of 3.3 million euros a year, Chamonix has introduced _a free shuttle service in order to get people out of their cars_ and into buses fitted with particle filters.",
+      "H. If the valley's visitors and residents want to know why they need to reduce their environmental impact, they just have to look up; the effects of climate change are there for everyone to see in _the melting glaciers_ that cling to the mountains. The fragility of the Alpine environment has long been a concern among local people. Today, 70 percent of the 805 square kilometres that comprise Chamonix-Mont-Blanc is protected in some way. But now, the impact of tourism has led the authorities to recognise that more must be done if the valley is to remain prosperous: that they must not only protect the natural environment better, but also _manage the numbers of visitors better_, so that its residents can happily remain there."
+     ],
+     "paraphrases": [
+      [
+       "type of people who enjoy going",
+       "climbers, hikers and extreme-sports enthusiasts"
+      ],
+      [
+       "a system changing the way visitors reach Chamonix",
+       "a free shuttle service"
+      ],
+      [
+       "geographical location",
+       "in a valley at 1,035 metres ... in south-eastern France"
+      ],
+      [
+       "control the large tourist population",
+       "manage the numbers of visitors better"
+      ],
+      [
+       "a national environmental target",
+       "France is committed to reducing its carbon emissions"
+      ],
+      [
+       "giving instructions about litter",
+       "tourists are warned not to drop rubbish"
+      ],
+      [
+       "a web-based information service",
+       "an internet blog"
+      ],
+      [
+       "providing places for rubbish",
+       "making recycling bins available"
+      ],
+      [
+       "harnessing energy from the sun",
+       "installing solar panels"
+      ],
+      [
+       "the first people to discover",
+       "discovered by explorers"
+      ],
+      [
+       "busiest tourist season",
+       "in the summer in even greater numbers"
+      ],
+      [
+       "using fewer resources",
+       "reduced its annual water consumption"
+      ],
+      [
+       "visual evidence of global warming",
+       "the effects of climate change are there for everyone to see"
+      ]
+     ],
+     "glossary": [
+      "magnet — magnit (o'ziga tortuvchi joy)",
+      "massif — tog' massivi",
+      "strain — bosim",
+      "lifeblood — hayot manbai",
+      "summit — cho'qqi",
+      "swarm — to'da bo'lib kelmoq",
+      "influx — oqim",
+      "emissions — chiqindilar",
+      "geothermal — geotermal",
+      "renovation — ta'mirlash",
+      "shuttle — qatnov avtobusi",
+      "glacier — muzlik",
+      "fragility — nozik holat",
+      "prosperous — farovon"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 14–18: Which paragraph contains the following information?",
+       "type": "Matching information (A–H)",
+       "instr": "You may use any letter more than once. NEVER tartibda — oxirida ishlang.",
+       "items": [
+        "14 a list of the type of people who enjoy going to Chamonix",
+        "15 reference to a system that is changing the way visitors reach Chamonix",
+        "16 the geographical location of Chamonix",
+        "17 mention of the need to control the large tourist population in Chamonix",
+        "18 reference to a national environmental target"
+       ],
+       "answers": [
+        "C",
+        "G",
+        "A",
+        "H",
+        "E"
+       ],
+       "why": [
+        "\"Climbers, hikers and extreme-sports enthusiasts swarm there in the summer\".",
+        "\"Chamonix has introduced a free shuttle service in order to get people out of their cars\". Tuzoq: C da tunnel va yo'llar bor, lekin ular \"o'zgarayotgan\" tizim emas.",
+        "\"Sits in a valley at 1,035 metres above sea level ... in south-eastern France\".",
+        "\"Must ... also manage the numbers of visitors better\". Control = manage.",
+        "\"France is committed to reducing its carbon emissions by a factor of four by 2050\". National = France."
+       ],
+       "layout": "match"
+      },
+      {
+       "title": "Questions 19–22: Choose TWO letters, A–E",
+       "type": "Pick from a list",
+       "instr": "Ikkala savol bloki — D va E xatboshilarida.",
+       "items": [
+        "19–20 Which TWO ways that the authorities aim to educate tourists are mentioned? A) giving instructions about litter B) imposing fines on people who drop litter C) handing out leaflets in the town D) operating a web-based information service E) having a paper-free tourist office",
+        "21–22 Which TWO ways that hotels are reducing their carbon emissions are mentioned? A) using natural cleaning materials B) recycling water C) limiting guest numbers D) providing places for rubbish E) harnessing energy from the sun"
+       ],
+       "answers": [
+        "A, D",
+        "D, E"
+       ],
+       "why": [
+        "\"Tourists are warned not to drop rubbish\" (A) va \"An internet blog reports environmental news\" (D). B tuzoq: ogohlantirish bor, jarima yo'q. E tuzoq: \"the 'green' message is delivered with all the tourist office's activities\" — qog'ozsiz ofis emas.",
+        "\"Making recycling bins available for guests\" (D) va \"installing solar panels\" (E). B tuzoq: \"restricting water use\" — suvni cheklash, qayta ishlash emas. A tuzoq: \"cleaning up their act\" — ibora, tozalash vositalari emas."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Questions 23–26: Complete the sentences",
+       "type": "NO MORE THAN TWO WORDS from the passage",
+       "instr": "Gaplar matn tartibida (ALWAYS).",
+       "items": [
+        "The first people to discover the Chamonix valley were ___.",
+        "Chamonix's busiest tourist season is the ___.",
+        "Public areas, such as the ___ in Chamonix, are using fewer resources.",
+        "The ___ on the mountains around Chamonix provide visual evidence of global warming."
+       ],
+       "answers": [
+        "explorers",
+        "summer",
+        "ice rink",
+        "(melting) glaciers"
+       ],
+       "why": [
+        "\"Ever since it was discovered by explorers in 1741\". Tuzoq: \"a French doctor\" — cho'qqini zabt etgan, vodiyni kashf etmagan.",
+        "Qishda \"up to 60,000 visitors at a time during the ski season\", yozda esa \"in the summer in even greater numbers, swelling the town's population to 100,000\". Eng gavjum — yoz. Tuzoq: \"ski season\" — birinchi ko'rinadi, lekin raqam kichikroq.",
+        "\"The local ice rink has reduced its annual water consumption\". Public areas = public-sector buildings.",
+        "\"The effects of climate change are there for everyone to see in the melting glaciers that cling to the mountains\". \"Glaciers\" yoki \"melting glaciers\"."
+       ],
+       "note": "24-savol testning eng yaxshi tuzog'i: matnda avval \"ski season\" keladi, lekin \"even greater numbers\" — yozda. Taqqoslovchi so'zlarni (greater, more, busiest) diqqat bilan o'qing.",
+       "layout": "list"
+      }
+     ]
+    },
+    {
+     "title": "Passage 3. Reading in a whole new way",
+     "qtype": "MCQ (27–31) + Yes/No/Not Given (32–36) + Sentence endings (37–40)",
+     "source": "Jony Academy materiali — Full Practice Reading",
+     "text": [
+      "As technology improves, how does the act of reading change?",
+      "Reading and writing, like all technologies, are constantly changing. In ancient times, authors often dictated their books. Dictation sounded like an uninterrupted series of words, so _scribes wrote these down in one long continuous string_, justastheyoccurinspeech. For this reason, text was written without spaces between words until the 11th century. This continuous script made books hard to read, so only a few people were accomplished at reading them aloud to others. Being able to read silently to yourself was considered an amazing talent; writing was an even rarer skill. In fact, in 15th-century Europe, only one in 20 adult males could write.",
+      "After Gutenberg's invention of the printing press in about 1440, mass-produced books changed the way people read and wrote. The technology of printing increased the number of words available, and more types of media, such as newspapers and magazines, _broadened what was written about_. Authors no longer had to produce scholarly works, as was common until then, but could write, for example, inexpensive, heart-rending love stories or publish autobiographies, even if they were unknown.",
+      "In time, _the power of the written word gave birth to the idea of authority and expertise_. Laws were compiled into official documents, contracts were written down and nothing was valid unless it was in this form. Painting, music, architecture, dance were all important, but the heartbeat of many cultures was the turning pages of a book. By the early 19th century, public libraries had been built in many cities.",
+      "Today, words are migrating from paper to computers, phones, laptops and game consoles. Some 4.5 billion digital screens illuminate our lives. Letters are no longer fixed in black ink on paper, but flitter on a glass surface in a rainbow of colors as fast as our eyes can blink. _Screens fill our pockets, briefcases, cars, living-room walls and the sides of buildings._ They sit in front of us when we work – regardless of what we do. And of course, these newly ubiquitous screens have changed how we read and write.",
+      "The first screens that overtook culture, several decades ago – the big, fat, warm tubes of television – reduced the time we spent reading to such an extent that it seemed as if reading and writing were over. Educators and parents worried deeply that the TV generation would be unable to write. But _the interconnected, cool, thin displays of computer screens launched an epidemic of writing_ that continues to swell. As a consequence, _the amount of time people spend reading has almost tripled since 1980_. By 2008, the World Wide Web contained more than a trillion pages, and that total grows rapidly every day.",
+      "But it is not book reading or newspaper reading, it is screen reading. Screens are always on, and, unlike books, we never stop staring at them. This new platform is very visual, and it is gradually merging words with moving images. You might think of this new medium as books we watch, or television we read. We also use screens to present data, and this encourages numeracy: _visualising data and reading charts, looking at pictures and symbols are all part of this new literacy_.",
+      "_Screens engage our bodies, too._ The most we may do while reading a book is to flip the pages or turn over a corner, but when we use a screen, we interact with what we see. In the futuristic movie Minority Report, _the main character stands in front of a screen and hunts through huge amounts of information as if conducting an orchestra_. Just as it seemed strange five centuries ago to see someone read silently, in the future it will seem strange to read without moving your body.",
+      "In addition, screens encourage more utilitarian (practical) thinking. A new idea or unfamiliar fact will cause a reflex to do something: to research a word, to question your screen 'friends' for their opinions or to find alternative views. _Book reading strengthened our analytical skills_, encouraging us to think carefully about how we feel. _Screen reading, on the other hand, encourages quick responses_, associating this idea with another, equipping us to deal with the thousands of new thoughts expressed every day. For example, _we review a movie for our friends while we watch it_; we read the owner's manual of a device we see in a shop before we purchase it, rather than after we get home and discover that it can't do what we need it to do.",
+      "Screens provoke action instead of persuasion. _Propaganda is less effective, and false information is hard to deliver in a world of screens_ because while misinformation travels fast, corrections do, too. On a screen, it is often easier to correct a falsehood than to tell one in the first place. _Wikipedia works so well because it removes an error in a single click._ In books, we find a revealed truth; on the screen, we assemble our own truth from pieces. What is more, a screen can reveal the inner nature of things. Waving the camera eye of a smartphone over the bar code of a manufactured product reveals its price, origins and even relevant comments by other owners. _It is as if the screen displays the object's intangible essence._ A popular children's toy (Webkinz) instills stuffed animals with a virtual character that is 'hidden' inside; a screen enables children to play with this inner character online in a virtual world.",
+      "In the near future, screens will be the first place we'll look for answers, for friends, for news, for meaning, for our sense of who we are and who we can be."
+     ],
+     "paraphrases": [
+      [
+       "affected the way people wrote",
+       "scribes wrote these down in one long continuous string"
+      ],
+      [
+       "a wider choice of topics",
+       "broadened what was written about"
+      ],
+      [
+       "growing status of the written word",
+       "the power of the written word gave birth to the idea of authority"
+      ],
+      [
+       "can be found everywhere",
+       "screens fill our pockets, briefcases, cars ... / ubiquitous"
+      ],
+      [
+       "encourage more reading",
+       "launched an epidemic of writing ... time spent reading has almost tripled"
+      ],
+      [
+       "a wider range of visual skills",
+       "visualising data, reading charts, pictures and symbols"
+      ],
+      [
+       "more active",
+       "screens engage our bodies / we interact"
+      ],
+      [
+       "similar thought patterns",
+       "(opposite) analytical skills vs quick responses"
+      ],
+      [
+       "easily persuaded to believe lies",
+       "(opposite) false information is hard to deliver"
+      ],
+      [
+       "how people behave physically",
+       "hunts through information as if conducting an orchestra"
+      ],
+      [
+       "how rapidly opinions can be communicated",
+       "we review a movie for our friends while we watch it"
+      ],
+      [
+       "the accuracy of its information",
+       "removes an error in a single click"
+      ],
+      [
+       "make an object seem real",
+       "displays the object's intangible essence"
+      ]
+     ],
+     "glossary": [
+      "dictate — aytib yozdirmoq",
+      "scribe — kotib",
+      "continuous — uzluksiz",
+      "accomplished — mohir",
+      "scholarly — ilmiy",
+      "heart-rending — yurakni ezadigan",
+      "expertise — mutaxassislik",
+      "valid — haqiqiy, kuchga ega",
+      "ubiquitous — hamma joyda bor",
+      "epidemic — keng tarqalish",
+      "numeracy — hisob savodxonligi",
+      "utilitarian — amaliy",
+      "propaganda — targ'ibot",
+      "intangible — ushlab bo'lmaydigan",
+      "essence — mohiyat"
+     ],
+     "tasks": [
+      {
+       "title": "Questions 27–31: Choose the correct letter, A, B, C or D",
+       "type": "Multiple choice",
+       "instr": "Javoblar matn tartibida. \"In the third paragraph\" — faqat shu xatboshini o'qing.",
+       "items": [
+        "27 What does the writer say about dictation? A) It helped people learn to read. B) It affected the way people wrote. C) It was not used until the 11th century. D) It was used mainly for correspondence.",
+        "28 According to the writer, what changed after the invention of the printing press? A) Romance became more popular than serious fiction. B) Newspapers became more popular than books. C) Readers asked for more autobiographies. D) Authors had a wider choice of topics.",
+        "29 In the third paragraph, the writer focuses on the A) legal concerns of authors. B) rapid changes in public libraries. C) growing status of the written word. D) recognition of the book as an art form.",
+        "30 What does the writer say about screens in the fourth paragraph? A) They are hard to read. B) They are bad for our health. C) They can improve our work. D) They can be found everywhere.",
+        "31 According to the writer, computers differ from television because they A) encourage more reading. B) attract more criticism. C) take up more of our leisure time. D) include more educational content."
+       ],
+       "answers": [
+        "B",
+        "D",
+        "C",
+        "D",
+        "A"
+       ],
+       "why": [
+        "\"Dictation sounded like an uninterrupted series of words, so scribes wrote these down in one long continuous string\". C tuzoq: 11-asr — bo'sh joylar paydo bo'lgan vaqt, diktovka boshlanishi emas. A teskari: kitoblarni o'qish qiyinlashgan.",
+        "\"Broadened what was written about. Authors no longer had to produce scholarly works\". A, B, C — solishtirish va o'quvchi talabi aytilmagan; love stories va autobiographies faqat misol.",
+        "\"The power of the written word gave birth to the idea of authority and expertise ... nothing was valid unless it was in this form\". A tuzoq: qonunlar misol, mualliflarning muammosi emas.",
+        "\"Screens fill our pockets, briefcases, cars, living-room walls and the sides of buildings\" + \"ubiquitous\". C tuzoq: ish paytida oldimizda turadi, lekin ishni yaxshilashi aytilmagan.",
+        "Televizor o'qish vaqtini kamaytirgan, kompyuter esa \"launched an epidemic of writing ... the amount of time people spend reading has almost tripled\"."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Questions 32–36: YES, NO or NOT GIVEN",
+       "type": "YES / NO / NOT GIVEN",
+       "instr": "Muallif fikri bilan solishtiring (19-dars).",
+       "items": [
+        "Screen reading has reduced the number of books and newspapers people read.",
+        "Screen literacy requires a wider range of visual skills than book-based literacy.",
+        "Screen reading is more active than book reading.",
+        "Screens and books produce similar thought patterns in their readers.",
+        "People are easily persuaded to believe lies on the screen."
+       ],
+       "answers": [
+        "NOT GIVEN",
+        "YES",
+        "YES",
+        "NO",
+        "NO"
+       ],
+       "why": [
+        "Muallif \"it is not book reading or newspaper reading, it is screen reading\" deydi — bu farq, lekin kitob/gazeta o'qish kamaygani haqida fikr yo'q.",
+        "\"Visualising data and reading charts, looking at pictures and symbols are all part of this new literacy\". Kitobda esa faqat so'z.",
+        "\"The most we may do while reading a book is to flip the pages ... when we use a screen, we interact with what we see\".",
+        "\"Book reading strengthened our analytical skills ... Screen reading, on the other hand, encourages quick responses\".",
+        "\"Propaganda is less effective, and false information is hard to deliver in a world of screens\"."
+       ],
+       "note": "32-savol — eng qiyin NOT GIVEN: muallif ekran va kitob o'qishini FARQLAYDI, lekin kitob o'qish KAMAYDI demaydi. Farq ≠ kamayish.",
+       "layout": "tfng"
+      },
+      {
+       "title": "Questions 37–40: Complete each sentence with the correct ending, A–F",
+       "type": "Matching sentence endings",
+       "instr": "31-darsdagi uch filtr: grammatika → joy → ma'no. 2 ta ortiqcha oxir bor.",
+       "items": [
+        "37 The film Minority Report illustrates",
+        "38 Our behaviour when we watch a film shows",
+        "39 Wikipedia's success relies on",
+        "40 Webkinz is an example of"
+       ],
+       "answers": [
+        "D",
+        "F",
+        "A",
+        "E"
+       ],
+       "why": [
+        "\"Screens engage our bodies, too ... the main character stands in front of a screen and hunts through huge amounts of information as if conducting an orchestra\".",
+        "\"Screen reading ... encourages quick responses ... For example, we review a movie for our friends while we watch it\".",
+        "\"Wikipedia works so well because it removes an error in a single click\" — ma'lumot aniqligi.",
+        "\"It is as if the screen displays the object's intangible essence. A popular children's toy (Webkinz) instills stuffed animals with a virtual character\"."
+       ],
+       "note": "Ortiqcha oxirlar: B (diqqatni jamlash haqida gap yo'q) va C (Internetning global ishlatilishi — trillion sahifa tilga olingan, lekin hech bir boshga mos emas).",
+       "box": [
+        "A the accuracy of its information.",
+        "B people's ability to concentrate.",
+        "C the global use of the Internet.",
+        "D how people behave physically when they read screens.",
+        "E the screen's ability to make an object seem real.",
+        "F how rapidly opinions can be communicated."
+       ],
+       "layout": "match"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "Xato tahlili jadvali",
+     "type": "Yozma",
+     "instr": "Testdagi har xatoingizni jadvalga yozing: savol raqami — savol turi — mening javobim — to'g'ri javob — xato sababi (paraphrase / so'z chegarasi / tuzoq / vaqt).",
+     "answers": "Ustoz jadval asosida har o'quvchiga 2 ta zaif savol turini belgilaydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Zaif tur takrori",
+     "type": "Reading",
+     "instr": "Eng ko'p xato qilgan savol turingiz bo'yicha oldingi darsdan (masalan, 6, 19, 25 yoki 31-dars) uyga vazifa matnini qayta bajaring.",
+     "answers": "Javoblar o'sha darsning Reading bo'limida.",
+     "layout": "list"
+    },
+    {
+     "title": "Passage 3 qayta o'qish",
+     "type": "Reading",
+     "instr": "\"Reading in a whole new way\" matnini vaqtsiz qayta o'qing va 10 ta paraphrase juftini yozing (savoldagi so'z — matndagi ibora).",
+     "answers": "Reading bo'limidagi paraphrase jadvali bilan solishtiriladi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Full Reading testi",
+     "15+ to'g'ri javob (Band 5.0)",
+     "3 coin"
+    ],
+    [
+     "Xato tahlili jadvali",
+     "barcha xatolar, sababi bilan",
+     "2 coin"
+    ],
+    [
+     "Paraphrase juftlari",
+     "10 tadan 8 tasi",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

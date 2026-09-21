@@ -789,7 +789,7 @@ function ReadingBlock({ R, idx }: { R: Reading; idx: number }) {
       {open && (
         <div className="mt-3">
           {R.book_ref && <p className="text-xs text-slate-500 mb-2">{R.book_ref}</p>}
-          {R.image && (
+          {R.image && !(R.text ?? []).length && (
             <Section title="Matn (Jony Academy hujjati)">
               <AuthImage name={R.image} alt={R.title} />
             </Section>
@@ -808,6 +808,11 @@ function ReadingBlock({ R, idx }: { R: Reading; idx: number }) {
               {(R.glossary ?? []).length > 0 && (
                 <div className="text-xs text-slate-600 bg-slate-50 rounded px-3 py-2 mt-2">{R.glossary!.join(" · ")}</div>
               )}
+            </Section>
+          )}
+          {R.image && (R.text ?? []).length > 0 && (
+            <Section title="Chizma">
+              <AuthImage name={R.image} alt={R.title} />
             </Section>
           )}
           {(R.paraphrases ?? []).length > 0 && <Paraphrases rows={R.paraphrases!} />}

@@ -5003,6 +5003,90 @@
    ],
    "readings": [
     {
+     "title": "Reading #10. The electric revolution",
+     "qtype": "Diagram labelling (1–6)",
+     "source": "Jony Academy materiali — asosiy matn (Unit 3)",
+     "image": "ielts5_07_electric_car.jpg",
+     "text": [
+      "Your next car may be electric. We look at the technologies that will bring the revolution.",
+      "The main reasons why electric cars are not more popular at present are their price and their relatively small range. Existing battery systems only allow electric cars to travel a distance of between 100 and 160 km. However, this distance may not be a problem for urban drivers. A recent Sydney study reported that 20 percent of journeys were 30 km or less, and recent data from the US suggests that ?? percent of trips taken there are 48 km or less.",
+      "An innovative company called Better Place is aiming to make electric cars an option for all drivers. It wants to see existing vehicles replaced by electric vehicles which, it says, offer a number of benefits. Firstly, they can be powered by renewable energy which produces zero emissions. What is more, electric motors are more efficient and can convert more than 90 percent of power into movement, whereas the efficiency of diesel or petrol engines is less than 20 percent. To achieve its aim, Better Place plans to use technology which is already available.",
+      "The plan is simple but revolutionary. It starts with the installation of a home charge point, and through this, the vehicle will be plugged into the electricity grid whenever it is in the garage, typically at night. In the morning, with a fully charged battery, the car is capable of as much as 160 km in urban motoring conditions. In addition to the home charge point, the battery can be topped up by charge points at work and at supermarkets.",
+      "The battery is linked to a control centre by smart technology inside the vehicle. Better Place can then ensure that the car is charged with electricity from renewable sources at the cheapest price. For longer trips, a navigation system directs the driver to the nearest switch station, where the depleted battery can be replaced with a charged one by a robot within a couple of minutes."
+     ],
+     "paraphrases": [
+      [
+       "connects to",
+       "is plugged into"
+      ],
+      [
+       "allows travel of up to",
+       "is capable of as much as"
+      ],
+      [
+       "in cities",
+       "in urban motoring conditions"
+      ],
+      [
+       "recharged",
+       "topped up"
+      ],
+      [
+       "shops",
+       "supermarkets"
+      ],
+      [
+       "communication with",
+       "is linked to"
+      ],
+      [
+       "lowest",
+       "cheapest"
+      ],
+      [
+       "locates",
+       "directs the driver to"
+      ],
+      [
+       "change batteries",
+       "the depleted battery can be replaced"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Complete labels (1–6) on the diagram",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Chizma belgilari odatda matn tartibida (USUALLY). Chizmadagi so'zning matndagi paraphraseini toping.",
+       "items": [
+        "Car connects to ___ through home charge point.",
+        "Battery allows travel of up to ___ in cities.",
+        "Battery can be recharged at ___ or shops.",
+        "Car communication with control center to receive power lowest ___.",
+        "___ inside car locates switch stations.",
+        "___ at switch centre will change batteries."
+       ],
+       "answers": [
+        "electricity grid",
+        "160 km",
+        "work",
+        "price",
+        "navigation system",
+        "robot"
+       ],
+       "why": [
+        "\"The vehicle will be plugged into the electricity grid\". \"Connects to\" = \"plugged into\".",
+        "\"Capable of as much as 160 km in urban motoring conditions\". \"Up to\" = \"as much as\", \"in cities\" = \"urban\".",
+        "\"Topped up by charge points at work and at supermarkets\". \"Recharged\" = \"topped up\", \"shops\" = \"supermarkets\".",
+        "\"Linked to a control centre ... at the cheapest price\". \"Lowest\" = \"cheapest\".",
+        "\"A navigation system directs the driver to the nearest switch station\". \"Locates\" = \"directs to\".",
+        "\"The depleted battery can be replaced with a charged one by a robot\". \"Change\" = \"replaced\"."
+       ],
+       "note": "Diqqat: 160 km matnda ikki marta bor — birinchisi mavjud batareyalar masofasi (100–160 km), ikkinchisi to'liq quvvatlangan mashina shaharda. Chizmadagi \"in cities\" ikkinchisiga mos.",
+       "layout": "list"
+      }
+     ]
+    },
+    {
      "title": "Inside a wind turbine",
      "qtype": "Diagram labelling",
      "source": "Jony Academy matni (Band 4–5)",
@@ -5356,6 +5440,85 @@
         "Qog'ozdan ingichka."
        ],
        "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Reading #11. The Boeing 787",
+     "qtype": "Diagram labelling (1–7) — eng qiyin mashq",
+     "source": "Jony Academy materiali — qo'shimcha mashq",
+     "image": "ielts5_07_boeing_787.jpg",
+     "text": [
+      "The Boeing 787 'Dreamliner' has been described as the airliner of the future. We look at the technology that makes it different.",
+      "Until now, airliner fuselages have been made of aluminium sheets. Large aircraft can have 1,500 of these sheets with between 40,000 and 50,000 metal fasteners. The 787 is the first airliner to be built with a one-piece fuselage made from a special material called 'composite'. Not only does this make the airliner quicker and easier to build, but it also makes it a lot lighter.",
+      "The advantage of this weight reduction is that the 787 uses 20 percent less fuel than other airliners of a similar size, which makes it much more environmentally friendly. The reduced weight also means that the Boeing 787 can fly further than many other airliners of a similar size, carrying 210 passengers or more up to 15,200 kilometres before refuelling.",
+      "Sometimes an airliner needs to change from one type of engine to another. This is a difficult and time-consuming process. The 787 has a revolutionary engine attachment on the wing which means that the engines can be changed in a much shorter time. The case containing the engine is also different from those on other airliners. It has been designed to cut down the noise from the engine, making it less noisy for passengers in the cabin as well as for people on the ground.",
+      "In addition to a quieter cabin, passengers will also benefit from windows which are 65 percent larger than those on other airliners, giving them a much better view of the world passing by below them. The windows also have a unique facility which allows passengers or cabin crew to control the amount of light that enters them. This is thanks to a liquid in the window which reacts to an electric current. When a passenger or cabin crew member presses a button, the current causes a chemical reaction in the window which darkens the liquid."
+     ],
+     "paraphrases": [
+      [
+       "much lighter",
+       "a lot lighter"
+      ],
+      [
+       "reduces the amount of fuel",
+       "uses 20 percent less fuel"
+      ],
+      [
+       "can accommodate at least",
+       "carrying ... or more"
+      ],
+      [
+       "fit a new engine",
+       "the engines can be changed"
+      ],
+      [
+       "reduces",
+       "cut down"
+      ],
+      [
+       "the size has increased by",
+       "larger"
+      ],
+      [
+       "made darker",
+       "darkens"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Complete labels (1–7) on the diagram",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage",
+       "instr": "Eng qiyin mashq: belgilar uzun, paraphrase ko'p. Har belgida kalit so'zni tagiga chizing.",
+       "items": [
+        "Composite fuselage material is much ___ than traditional aluminium sheets.",
+        "Composite fuselage material reduces the amount of ___ that the airliner needs.",
+        "Airliner can accommodate at least ___.",
+        "Engineers can fit a new engine in a ___ than it takes on other airliners.",
+        "A special engine case reduces ___.",
+        "The size of the windows has increased by ___.",
+        "Window glass can be made darker by passing an ___ through them."
+       ],
+       "answers": [
+        "lighter",
+        "fuel",
+        "210 passengers",
+        "shorter time",
+        "(engine) noise",
+        "65 percent",
+        "electric current"
+       ],
+       "why": [
+        "\"It also makes it a lot lighter\". \"Much\" = \"a lot\"; \"than\" dan oldin qiyosiy daraja keladi.",
+        "\"The 787 uses 20 percent less fuel\". \"Reduces the amount\" = \"uses less\".",
+        "\"Carrying 210 passengers or more\". \"At least\" = \"or more\", \"accommodate\" = \"carrying\".",
+        "\"The engines can be changed in a much shorter time\". \"Fit a new engine\" = \"engines can be changed\".",
+        "\"Designed to cut down the noise from the engine\". \"Reduces\" = \"cut down\". \"Noise\" yoki \"engine noise\" — ikkalasi to'g'ri.",
+        "\"Windows which are 65 percent larger\". \"Increased by\" = \"larger\".",
+        "\"A liquid in the window which reacts to an electric current ... darkens the liquid\". PAROSAT: \"an\" artikli unli harf bilan boshlanadigan so'zni ko'rsatadi."
+       ],
+       "note": "Matnda ikkita foiz bor: 20 percent (yoqilg'i) va 65 percent (derazalar). 6-belgi derazalar haqida — shuning uchun 65.",
+       "layout": "list"
       }
      ]
     }

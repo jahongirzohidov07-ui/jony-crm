@@ -89,8 +89,25 @@ r = c.get(f"/api/groups/{GID}/attendance?year={today.year}"
 names = {x["full_name"]: x["status"] for x in r["students"]}
 ck("faol bola ODATIY qator", names.get("Faol Bola"), "active")
 ck("izsiz arxiv UMUMAN chiqmaydi", "Arxiv Bola" in names, False)
-ck("izli arxiv FAQAT O'QISH uchun qator",
-   names.get("Arxiv Izli"), "transferred")
+
+# 2026-08-20 (Jahongir): "pastiga ketganlar va muzaltilganlarni
+# daovmatini korsatish degan tugmani qoysak bosganda korinsin
+# muzlatilganlar va ketganlarniki ham".
+#
+# Ya'ni odatiy jadval TOZA bo'ladi — faqat faollar. Ketganlar
+# tugma bosilganda (others=1) qo'shiladi. Bu test o'sha tugma
+# qo'shilishidan oldin yozilgan va eski holatni kutib qolgan edi
+# (2026-09-21 da tuzatildi).
+ck("tugmasiz izli arxiv ham chiqmaydi", "Arxiv Izli" in names, False)
+
+r2 = c.get(f"/api/groups/{GID}/attendance?year={today.year}"
+           f"&month={today.month}&others=1", headers=AS).json()
+names2 = {x["full_name"]: x["status"] for x in r2["students"]}
+ck("tugma bosilganda izli arxiv chiqadi",
+   names2.get("Arxiv Izli"), "transferred")
+ck("tugma bosilganda ham izsiz arxiv yo'q",
+   "Arxiv Bola" in names2, False)
+ck("faol bola tugmada ham joyida", names2.get("Faol Bola"), "active")
 
 # Admin (rahbariyat emas deb emas — u ham ko'radi, lekin ustozda test
 # qilish uchun teacher kerak emas; asosiy talab bajarildi)

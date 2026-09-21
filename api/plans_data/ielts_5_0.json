@@ -6774,6 +6774,279 @@
    ],
    "readings": [
     {
+     "title": "Reading #12. Traffic Jams — No End in Sight",
+     "qtype": "Matching headings (1–5)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "text": [
+      "A. There are no easy answers to the problems of traffic congestion. Traffic congestion affects people throughout the world. Traffic jams cause smog in dozens of cities across both the developed and developing world. In the U.S., commuters spend an average of a full work week each year sitting in traffic, according to the Texas Transportation Institute. While alternative ways of getting around are available, most people still choose their cars because they are looking for convenience, comfort and privacy.",
+      "B. The most promising technique for reducing city traffic is called congestion pricing, whereby cities charge a toll to enter certain parts of town at certain times of day. In theory, if the toll is high enough, some drivers will cancel their trips or go by bus or train. And in practice it seems to work: Singapore, London and Stockholm have reduced traffic and pollution in city centers thanks to congestion pricing.",
+      "C. Another way to reduce rush hour traffic is for employers to implement flexitime, which lets employees travel to and from work at off-peak traffic times to avoid the rush hour. Those who have to travel during busy times can do their part by sharing cars. Employers can also allow more staff to telecommute (work from home) so as to keep more cars off the road altogether.",
+      "D. Some urban planners still believe that the best way to ease traffic congestion is to build more roads, especially roads that can take drivers around or over crowded city streets. But such techniques do not really keep cars off the road; they only accommodate more of them.",
+      "E. Other, more forward-thinking, planners know that more and more drivers and cars are taking to the roads every day, and they are unwilling to encourage more private automobiles when public transport is so much better both for people and the environment. For this reason, the American government has decided to spend some $7 billion on helping to increase capacity on public transport systems and upgrade them with more efficient technologies. But environmentalists complain that such funding is tiny compared with the $50 billion being spent on roads and bridges."
+     ],
+     "paraphrases": [
+      [
+       "a global problem",
+       "affects people throughout the world"
+      ],
+      [
+       "paying to get in",
+       "charge a toll to enter"
+      ],
+      [
+       "changing working practices",
+       "flexitime, sharing cars, telecommute"
+      ],
+      [
+       "a solution which is no solution",
+       "do not really keep cars off the road"
+      ],
+      [
+       "not doing enough",
+       "such funding is tiny compared with"
+      ],
+      [
+       "global",
+       "across both the developed and developing world"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Choose the correct heading for each paragraph",
+       "type": "Matching headings",
+       "instr": "Har xatboshini alohida o'qing (NEVER guruhi — tartib yo'q). Avval asosiy g'oyani o'z so'zingiz bilan ayting, keyin ro'yxatga qarang.",
+       "items": [
+        "Paragraph A",
+        "Paragraph B",
+        "Paragraph C",
+        "Paragraph D",
+        "Paragraph E"
+       ],
+       "answers": [
+        "vii A global problem",
+        "vi Paying to get in",
+        "ii Changing working practices",
+        "i A solution which is no solution",
+        "v Not doing enough"
+       ],
+       "why": [
+        "\"Traffic congestion affects people throughout the world ... across both the developed and developing world\". \"Global\" = \"throughout the world\". Asosiy g'oya — muammo hamma joyda.",
+        "\"Charge a toll to enter certain parts of town\". \"Paying\" = \"charge a toll\", \"get in\" = \"enter\". Tuzoq: iii \"Closing city centres\" — markaz yopilmaydi, faqat pullik bo'ladi.",
+        "Flexitime, mashinani birga ishlatish, uydan ishlash — hammasi ish tartibini o'zgartirish. \"Employers\" so'zi uch marta.",
+        "Ko'proq yo'l qurish yechim deb o'ylanadi, lekin \"do not really keep cars off the road; they only accommodate more of them\".",
+        "Hukumat 7 mlrd sarflaydi, lekin \"such funding is tiny compared with the $50 billion\" — yetarli emas."
+       ],
+       "note": "Ishlatilmagan sarlavhalar: iii \"Closing city centres to traffic\" (B dagi tuzoq — pullik kirish, yopish emas) va iv \"Making cars more environmentally friendly\" (matnda mashinani ekologik qilish haqida gap yo'q, E da jamoat transporti haqida).",
+       "box": [
+        "i A solution which is no solution",
+        "ii Changing working practices",
+        "iii Closing city centres to traffic",
+        "iv Making cars more environmentally friendly",
+        "v Not doing enough",
+        "vi Paying to get in",
+        "vii A global problem"
+       ],
+       "layout": "match"
+      }
+     ]
+    },
+    {
+     "title": "Reading #13. Pedestrians only",
+     "qtype": "Matching headings (A–E) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "How traffic-free shopping streets developed",
+      "A. The concept of traffic-free shopping areas goes back a long time. During the Middle Ages, traffic-free shopping areas known as souks were built in Middle Eastern countries to allow people to shop in comfort and, more importantly, safety. As far back as 2,000 years ago, road traffic was banned from central Rome during the day to allow for the free movement of pedestrians, and was only allowed in at night when shops and markets had closed for the day. In most other cities, however, pedestrians were forced to share the streets with horses, coaches and, later, with cars and other motorised vehicles.",
+      "B. The modern, traffic-free shopping street was born in Europe in the 1960s, when both city populations and car ownership increased rapidly. Dirty exhaust fumes from cars and the risks involved in crossing the road were beginning to make shopping an unpleasant and dangerous experience. Many believed the time was right for experimenting with car-free streets, and shopping areas seemed the best place to start.",
+      "C. At first, there was resistance from shopkeepers. They believed that such a move would be bad for business. They argued that people would avoid streets if they were unable to get to them in their cars. When the first streets in Europe were closed to traffic, there were even noisy demonstrations, as many shopkeepers predicted they would lose customers.",
+      "D. However, research carried out afterwards in several European cities revealed some unexpected statistics. In Munich, Cologne and Hamburg, visitors to shopping areas increased by 50 percent. On Copenhagen's main shopping street, shopkeepers reported sales increases of 25-40 percent. Shopkeepers in Minneapolis, USA, were so impressed when they learnt this that they even offered to pay for the construction and maintenance costs of their own traffic-free streets.",
+      "E. With the arrival of the traffic-free shopping street, many shops, especially those selling things like clothes, food and smaller luxury items, prospered. Unfortunately, it wasn't good news for everyone, as shops selling furniture and larger electrical appliances actually saw their sales drop. Many of these were forced to move elsewhere, away from the city centre. Today they are a common feature on the outskirts of towns and cities, often situated in out-of-town retail zones with their own car parks and other local facilities."
+     ],
+     "paraphrases": [
+      [
+       "an idea from ancient history",
+       "goes back a long time / 2,000 years ago"
+      ],
+      [
+       "a need for change",
+       "the time was right for experimenting"
+      ],
+      [
+       "facing local opposition",
+       "resistance from shopkeepers"
+      ],
+      [
+       "some reasons for success",
+       "visitors increased / sales increases"
+      ],
+      [
+       "winners and losers",
+       "prospered / saw their sales drop"
+      ],
+      [
+       "opposition",
+       "demonstrations"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Match the headings i–vii with paragraphs A–E",
+       "type": "Matching headings — ikkita sarlavha ortiqcha",
+       "instr": "Har xatboshining asosiy g'oyasini bir gapda ayting, keyin mos sarlavhani tanlang.",
+       "items": [
+        "Paragraph A",
+        "Paragraph B",
+        "Paragraph C",
+        "Paragraph D",
+        "Paragraph E"
+       ],
+       "answers": [
+        "vi An idea from ancient history",
+        "iv A need for change",
+        "i Facing local opposition",
+        "ii Some reasons for success",
+        "iii Winners and losers"
+       ],
+       "why": [
+        "\"Goes back a long time ... Middle Ages ... 2,000 years ago ... central Rome\". \"Ancient history\" = \"2,000 years ago\".",
+        "Aholi va mashina ko'paydi, xarid qilish \"unpleasant and dangerous\" bo'ldi — \"the time was right\" = o'zgarish kerak edi.",
+        "\"Resistance from shopkeepers ... noisy demonstrations\". \"Opposition\" = \"resistance\", \"local\" = shahar do'kondorlari.",
+        "Tashrif 50% ga, savdo 25–40% ga oshdi — muvaffaqiyat dalillari. Tuzoq: vii \"North America learns from Europe\" — Minneapolis faqat oxirgi gapdagi tafsilot, butun xatboshi emas.",
+        "Kiyim va oziq-ovqat do'konlari \"prospered\" (g'oliblar), mebel va katta texnika do'konlari \"saw their sales drop\" (yutqazganlar)."
+       ],
+       "note": "Ortiqcha sarlavhalar: v \"An experiment that went wrong\" (tajriba muvaffaqiyatli bo'ldi — teskari ma'no) va vii \"North America learns from Europe\" (D dagi bitta gapga mos, butun xatboshiga emas — tafsilot tuzog'i).",
+       "box": [
+        "i Facing local opposition",
+        "ii Some reasons for success",
+        "iii Winners and losers",
+        "iv A need for change",
+        "v An experiment that went wrong",
+        "vi An idea from ancient history",
+        "vii North America learns from Europe"
+       ],
+       "layout": "match"
+      }
+     ]
+    },
+    {
+     "title": "Reading #14. Future of money: a currency that helps people make friends",
+     "qtype": "Matching headings (A–E) — qo'shimcha mashq",
+     "source": "Jony Academy materiali",
+     "text": [
+      "A. In one of America's poorest cities, a new use of technology has been attracting attention. The 92,000 people who live in Macon, Georgia, USA know each other a little better than they did, thanks to an online computer game. Since October, the locals - college students and elderly people alike - have been playing Macon Money, a 'social impact game' that uses 'virtual money' to bring people from different economic backgrounds closer together by encouraging them to meet.",
+      "B. In the game, winning players receive 'bonds', which they can then exchange for bank notes of Macon Money. These notes can be spent at local shops and businesses. But the game is not as simple as it sounds. Each person receives just half a bond and must find the person with the other half so that they can spend it. People often find their other half by searching for them on the social networking sites Facebook and Twitter. Matching players then meet in person to redeem the bond and get their Macon Money. The bonds range in value from $10 to $100.",
+      "C. Pairs might spend their money separately, or do something together like share a meal or give the money to someone who needs it more, says Beverly Blake of the John S. and James L. Knight Foundation, the non-profit group based in Miami, Florida, that funded the game. 'These are meetings and conversations that might not happen naturally at all,' she said. The game's designers are hoping Macon Money will bring members of the community together who wouldn't normally meet each other.",
+      "D. Although Macon Money is quite a new innovation, early signs are positive. The first round of the game has seen $65,000-worth of bonds given out and 2,688 participants so far spending $48,000 in Macon Money. Recently, Macon Money's Executive Producer Kati London accepted the 2011 FutureEverything Award for outstanding innovation in art, society and technology in Manchester, UK. It isn't just technology for technology's sake, London said in an interview with FutureEverything after receiving the award, 'It's about putting those tools, that craft, to work in the community.'",
+      "E. Whether such a game can bring lasting economic growth remains to be seen, however. An independent research firm will now evaluate how much economic activity the game has caused, with results due later this year."
+     ],
+     "paraphrases": [
+      [
+       "new game with a social purpose",
+       "a 'social impact game' ... to bring people closer together"
+      ],
+      [
+       "the way the game works",
+       "winning players receive 'bonds' ... must find the person with the other half"
+      ],
+      [
+       "unusual partnerships",
+       "members of the community who wouldn't normally meet each other"
+      ],
+      [
+       "success at an early stage",
+       "quite a new innovation, early signs are positive"
+      ],
+      [
+       "investigation",
+       "an independent research firm will evaluate"
+      ],
+      [
+       "financial benefits",
+       "economic activity / economic growth"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Underline the most important words in each heading",
+       "type": "Kalit so'zlar",
+       "instr": "Har sarlavhaning eng muhim so'zini ayting — shu so'z sarlavhalarni bir-biridan farqlaydi.",
+       "items": [
+        "i A game that makes money",
+        "ii Investigation of financial benefits",
+        "iii The creation of unusual partnerships",
+        "iv New game with a social purpose",
+        "v Success at an early stage of the project",
+        "vi The way the game works",
+        "vii Strategies for using social networking sites",
+        "viii Charities that benefit from the project",
+        "ix Success at a late stage of the project"
+       ],
+       "answers": [
+        "makes money",
+        "investigation, financial benefits",
+        "unusual partnerships",
+        "social purpose",
+        "early stage",
+        "the way ... works",
+        "social networking sites",
+        "charities",
+        "late stage"
+       ],
+       "why": [
+        "Pul ishlab topish — matnda o'yin pul topmaydi, pul almashadi.",
+        "Tadqiqot + iqtisodiy foyda.",
+        "Odatda uchrashmaydigan odamlar.",
+        "Ijtimoiy maqsad.",
+        "\"Early\" — ix bilan farqi shu so'zda.",
+        "O'yin qoidalari.",
+        "Tuzoq so'zi — B da bor, lekin tafsilot.",
+        "Tuzoq — C da \"give the money to someone\" bor, lekin xayriya tashkilotlari haqida emas.",
+        "Tuzoq — v bilan faqat bitta so'zda farq qiladi."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "Match the headings with paragraphs A–E",
+       "type": "Matching headings — to'rtta sarlavha ortiqcha",
+       "instr": "Kalit so'zlarni belgilagach, har xatboshiga sarlavha tanlang.",
+       "items": [
+        "Paragraph A",
+        "Paragraph B",
+        "Paragraph C",
+        "Paragraph D",
+        "Paragraph E"
+       ],
+       "answers": [
+        "iv New game with a social purpose",
+        "vi The way the game works",
+        "iii The creation of unusual partnerships",
+        "v Success at an early stage of the project",
+        "ii Investigation of financial benefits"
+       ],
+       "why": [
+        "\"A 'social impact game' ... to bring people from different economic backgrounds closer together\". Matn osti sarlavhasi ham shu.",
+        "Bondlar, yarim bond, sherikni topish, uchrashib pul olish — butun xatboshi o'yin qoidalari. Tuzoq: vii — Facebook/Twitter faqat bitta gap.",
+        "\"Meetings and conversations that might not happen naturally ... who wouldn't normally meet each other\". Tuzoq: viii — \"give the money to someone\" xayriya tashkiloti emas.",
+        "\"Quite a new innovation, early signs are positive\" + mukofot. Tuzoq: ix — \"late\" emas, \"early\".",
+        "\"An independent research firm will now evaluate how much economic activity the game has caused\". \"Investigation\" = \"evaluate\", \"financial benefits\" = \"economic activity\"."
+       ],
+       "note": "Ortiqcha sarlavhalar: i (o'yin pul ishlab topmaydi), vii (B dagi tafsilot), viii (C dagi tafsilot), ix (v ning teskarisi — \"late\").",
+       "box": [
+        "i A game that makes money",
+        "ii Investigation of financial benefits",
+        "iii The creation of unusual partnerships",
+        "iv New game with a social purpose",
+        "v Success at an early stage of the project",
+        "vi The way the game works",
+        "vii Strategies for using social networking sites",
+        "viii Charities that benefit from the project",
+        "ix Success at a late stage of the project"
+       ],
+       "layout": "match"
+      }
+     ]
+    },
+    {
      "title": "Why city birds sing differently",
      "qtype": "Matching headings",
      "source": "Jony Academy matni (Band 4–5)",

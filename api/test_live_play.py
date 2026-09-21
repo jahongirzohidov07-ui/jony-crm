@@ -122,6 +122,11 @@ ck("lug'at PDF HR ga yopiq", c.get("/api/plans/ielts_1_0/23/vocab.pdf", headers=
 # Faqat ingliz tili ustozlariga (Jahongir: "barcha ingliz til ustozlariga
 # chiqsin boshqa ustozlarga chiqmasin")
 ck("rus tili ustoziga ham reja ochiq (2026-09-18)", c.get("/api/plans", headers=tok("rus")).status_code, 200)
+_m = c.get("/api/plan-media/ielts5_01_friendliest_city.jpg", headers=T)
+ck("5.0 material rasmi ustozga ochiladi", (_m.status_code, _m.headers.get("content-type")), (200, "image/jpeg"))
+ck("material rasmi tokensiz yopiq", c.get("/api/plan-media/ielts5_01_friendliest_city.jpg").status_code in (401, 403), True)
+ck("material nomi tekshiriladi", c.get("/api/plan-media/..%2Fielts_1_0.json", headers=T).status_code, 404)
+ck("supportga material yopiq", c.get("/api/plan-media/ielts5_01_friendliest_city.jpg", headers=tok("sup")).status_code, 403)
 for _u in ("sup", "exam", "adm"):
     ck(f"{_u}: dars rejalari yopiq", c.get("/api/plans", headers=tok(_u)).status_code, 403)
 ck("me: ingliz ustozi bayrog'i", c.get("/api/me", headers=T).json().get("english_teacher"), True)

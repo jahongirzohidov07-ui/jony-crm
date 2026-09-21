@@ -139,6 +139,26 @@ def list_plans(db: Session = Depends(get_db),
     return [_level(c, t, cefr) for c, t, cefr in LEVELS]
 
 
+_MEDIA_DIR = os.path.join(_PLANS_DIR, "media")
+
+
+@router.get("/api/plan-media/{name}")
+def plan_media(name: str, db: Session = Depends(get_db),
+               user=Depends(require_role(*roles.PLANS_ACCESS))):
+    """Dars rejasiga biriktirilgan material (ustoz bergan reading
+    hujjati rasmi va h.k., 2026-09-21). Faqat tizimga kirgan va dars
+    rejalariga ruxsati bor xodimga beriladi — ochiq havola emas."""
+    from fastapi.responses import FileResponse
+    if not re.fullmatch(r"[a-z0-9_]+\.(jpg|png|pdf)", name or ""):
+        raise HTTPException(404, "Topilmadi")
+    path = os.path.join(_MEDIA_DIR, name)
+    if not os.path.exists(path):
+        raise HTTPException(404, "Topilmadi")
+    kind = {"jpg": "image/jpeg", "png": "image/png", "pdf": "application/pdf"}[name.rsplit(".", 1)[1]]
+    return FileResponse(path, media_type=kind,
+                        headers={"Cache-Control": "private, max-age=86400"})
+
+
 @router.get("/api/plans/{course}/{no}")
 def get_plan(course: str, no: int, db: Session = Depends(get_db),
              user=Depends(require_role(*roles.PLANS_ACCESS))):

@@ -229,6 +229,147 @@
    ],
    "readings": [
     {
+     "title": "The World's Friendliest City",
+     "qtype": "Table completion (Questions 1–5)",
+     "source": "Jony Academy materiali — asosiy matn",
+     "image": "ielts5_01_friendliest_city.jpg",
+     "paraphrases": [
+      [
+       "famous",
+       "well-known"
+      ],
+      [
+       "inhabitants",
+       "populations"
+      ],
+      [
+       "lifestyle",
+       "way of life"
+      ],
+      [
+       "don't have so much",
+       "have less"
+      ],
+      [
+       "has reputation for",
+       "known for"
+      ],
+      [
+       "have little",
+       "be short of"
+      ],
+      [
+       "don't pay attention to",
+       "ignore"
+      ],
+      [
+       "excellent",
+       "very good"
+      ],
+      [
+       "very",
+       "extremely"
+      ],
+      [
+       "residents",
+       "inhabitants"
+      ],
+      [
+       "quality of life",
+       "standard of living"
+      ],
+      [
+       "most pleasant",
+       "nicest"
+      ],
+      [
+       "not many",
+       "very few"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Table completion",
+       "type": "ONE WORD ONLY",
+       "instr": "Jadvalni matndan olingan BITTA so'z bilan to'ldiring.",
+       "items": [
+        "Rio de Janeiro, positive aspects: more 1 ___ lifestyle",
+        "Rio de Janeiro, negative aspects: people don't have so much 2 ___",
+        "Rio de Janeiro, negative aspects: has reputation for 3 ___",
+        "Amsterdam and New York: people have little 4 ___",
+        "Amsterdam and New York: people don't pay attention to 5 ___"
+       ],
+       "answers": [
+        "relaxed",
+        "money",
+        "crime",
+        "time",
+        "strangers"
+       ],
+       "why": [
+        "Jadvalda \"lifestyle\", matnda \"way of life\" — paraphrase. Matn \"a more relaxed way of life\" deydi, shuning uchun bo'sh joyga sifat \"relaxed\" tushadi.",
+        "Jadvaldagi \"don't have so much\" matndagi \"have less\" ning paraphrasei. Matnda \"have less money\" — javob \"money\".",
+        "\"Has reputation for\" = \"known for\". Matnda Rio \"known for its crime\" deyilgan.",
+        "\"Have little\" = \"be short of\". Matnda odamlar \"short of time\" — javob \"time\".",
+        "\"Don't pay attention to\" = \"ignore\". Matnda \"ignore strangers\" — javob \"strangers\"."
+       ],
+       "note": "Har javobdan keyin o'quvchidan paraphrase juftini so'rang: \"jadvalda qaysi so'z — matnda qaysi so'z?\". Javobni topib, juftni ayta olmasa — yarim ish."
+      },
+      {
+       "title": "Tagiga chizilgan so'zlar",
+       "type": "Paraphrase moslash",
+       "instr": "Matnda tagiga chizilgan so'zni jadvaldagi paraphrasei bilan juftlang.",
+       "items": [
+        "have less",
+        "populations",
+        "known for",
+        "way of life",
+        "be short of",
+        "ignore"
+       ],
+       "answers": [
+        "don't have so much",
+        "inhabitants",
+        "has reputation for",
+        "lifestyle",
+        "have little",
+        "don't pay attention to"
+       ],
+       "why": [
+        "Antonim + inkor: \"less\" = \"not so much\".",
+        "Ot sinonimi: shahar aholisi.",
+        "Fe'l birikmasi ot birikmasiga aylangan.",
+        "Uch so'zli ibora bitta so'zga teng.",
+        "Ikkalasi ham \"kam\" degan ma'no.",
+        "Bitta fe'l uzun inkor birikmaga teng."
+       ]
+      },
+      {
+       "title": "Raqam va ismlar — langar",
+       "type": "Tahlil",
+       "instr": "Nega raqam va shahar nomlari eng tez topiladi?",
+       "items": [
+        "93%",
+        "53%",
+        "44%",
+        "Lilongwe"
+       ],
+       "answers": [
+        "Rio de Janeiro",
+        "Amsterdam",
+        "New York",
+        "Rio'dan keyin, \"a little lower\""
+       ],
+       "why": [
+        "Raqam paraphrase qilinmaydi — matnda ham, jadvalda ham bir xil.",
+        "Ism va raqam birga keladi — joyni darhol topasiz.",
+        "Jadval tartibi matn tartibiga mos.",
+        "Jadvalda yo'q, lekin matnda chalg'itmasligi kerak — savol faqat Rio va Amsterdam/Nyu-York haqida."
+       ]
+      }
+     ]
+    },
+    {
      "title": "The city that pays you to live there",
      "qtype": "Table completion",
      "source": "Jony Academy matni (Band 4–5)",

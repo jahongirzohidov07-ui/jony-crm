@@ -24,7 +24,7 @@ type Ex = { title: string; type?: string; instr?: string; items?: string[];
  * har birida savol turi, paraphrase ro'yxati, javob izohi va transkript
  * (2026-09-20, Jahongir so'rovi). */
 type Reading = { title: string; qtype?: string; source?: string; book_ref?: string;
-  text?: string[]; paraphrases?: [string, string][]; glossary?: string[]; tasks?: Ex[] };
+  image?: string; text?: string[]; paraphrases?: [string, string][]; glossary?: string[]; tasks?: Ex[] };
 type Listen = { title: string; qtype?: string; audios?: string; intro?: string[];
   transcript?: string[]; tasks?: Ex[] };
 type Lesson = {
@@ -489,6 +489,25 @@ function Paraphrases({ rows }: { rows: [string, string][] }) {
   );
 }
 
+/** Himoyalangan material rasmi: token bilan yuklab, blob sifatida
+ * ko'rsatiladi (ochiq havola yo'q). */
+function AuthImage({ name, alt }: { name: string; alt: string }) {
+  const [url, setUrl] = useState<string | null>(null);
+  const [bad, setBad] = useState(false);
+  useEffect(() => {
+    let u: string | null = null;
+    const token = getToken();
+    fetch(`/api/plan-media/${name}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+      .then((r) => { if (!r.ok) throw new Error(); return r.blob(); })
+      .then((b) => { u = URL.createObjectURL(b); setUrl(u); })
+      .catch(() => setBad(true));
+    return () => { if (u) URL.revokeObjectURL(u); };
+  }, [name]);
+  if (bad) return <p className="text-xs text-rose-600">Materialni yuklab bo'lmadi.</p>;
+  if (!url) return <p className="text-xs text-slate-400">Yuklanmoqda…</p>;
+  return <img src={url} alt={alt} className="w-full max-w-3xl rounded-lg border border-slate-200" />;
+}
+
 function ReadingBlock({ R, idx }: { R: Reading; idx: number }) {
   const [open, setOpen] = useState(idx === 0);
   return (
@@ -505,6 +524,11 @@ function ReadingBlock({ R, idx }: { R: Reading; idx: number }) {
       {open && (
         <div className="mt-3">
           {R.book_ref && <p className="text-xs text-slate-500 mb-2">{R.book_ref}</p>}
+          {R.image && (
+            <Section title="Matn (Jony Academy hujjati)">
+              <AuthImage name={R.image} alt={R.title} />
+            </Section>
+          )}
           {(R.text ?? []).length > 0 && (
             <Section title="Matn">
               <div className="flex items-center gap-1 text-xs text-slate-400 mb-2"><FileText size={13} /> Sinfda o'qish uchun</div>

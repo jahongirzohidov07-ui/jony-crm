@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { NavLink, Outlet, Navigate } from "react-router-dom";
-import { CalendarDays, Home, LayoutGrid, User } from "lucide-react";
+import { BookOpen, CalendarDays, Home, LayoutGrid, User } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
 import { AutoTranslate } from "../../components/AutoTranslate";
 
 const TABS = [
   { to: "/teacher", end: true, icon: Home, label: "Bugun" },
   { to: "/teacher/week", end: false, icon: CalendarDays, label: "Jadval" },
+  // Dars rejalari (2026-09-21) — ustozga pastki panelda doim ko'rinsin
+  { to: "/plans", end: false, icon: BookOpen, label: "Rejalar", teacherOnly: true },
   { to: "/teacher/more", end: false, icon: LayoutGrid, label: "Bo'limlar" },
   { to: "/teacher/profile", end: false, icon: User, label: "Profil" },
 ];
@@ -49,6 +51,7 @@ export default function TeacherLayout() {
 
   if (!user) return <Navigate to="/login" replace />;
   if (!ALLOWED.includes(user.role)) return <Navigate to="/" replace />;
+  const tabs = TABS.filter((t) => !(t.teacherOnly && user.role !== "teacher"));
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -57,8 +60,8 @@ export default function TeacherLayout() {
       <Outlet />
 
       <nav className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t border-slate-200 z-40 pb-safe">
-        <div className="max-w-md mx-auto grid grid-cols-4">
-          {TABS.map((t) => (
+        <div className={`max-w-md mx-auto grid ${tabs.length === 5 ? "grid-cols-5" : "grid-cols-4"}`}>
+          {tabs.map((t) => (
             <NavLink
               key={t.to}
               to={t.to}

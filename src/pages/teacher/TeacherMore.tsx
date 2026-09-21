@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import {
-  BookMarked, CalendarDays, ChevronRight, ClipboardCheck, ClipboardList,
+  BookMarked, BookOpen, CalendarDays, ChevronRight, ClipboardCheck, ClipboardList,
   Layers, MessageSquareWarning, PieChart, Timer, TrendingUp, Trophy, Wallet,
   Users,
 } from "lucide-react";
@@ -25,9 +25,14 @@ const SECTIONS = [
   {
     title: "Kundalik ish",
     items: [
+      // DARS REJALARI (2026-09-21, Jahongir: "dars rejasi ustozlarga
+      // umuman korinmayabdi") — ustoz ilovasida yo'q edi, faqat to'liq
+      // paneldagi yon menyuda bor edi. Supportlarga ko'rsatilmaydi.
+      { to: "/plans", label: "Dars rejalari", icon: BookOpen,
+        hint: "IELTS darajalari: har darsning to'liq rejasi", teacherOnly: true },
       { to: "/teacher/check", label: "Tekshirish", icon: ClipboardList,
         hint: "Writing, speaking — kutayotgan ishlar" },
-      { to: "/learning", label: "O'zlashtirish xaritasi", icon: BookMarked,
+      { to: "/learning", label: "O'quvchilar o'zlashtirishi", icon: BookMarked,
         hint: "Kim nimani o'zlashtirdi, kimga mashq kerak" },
       { to: "/my-groups", label: "Guruhlarim", icon: Layers,
         hint: "Davomat, baholash, imtihonlar" },
@@ -107,7 +112,9 @@ export default function TeacherMore() {
             (i) =>
               !(isSupport && SUPPORT_HIDDEN.includes(i.to)) &&
               // supportOnly bo'limlar faqat support teacherga
-              !(!isSupport && (i as { supportOnly?: boolean }).supportOnly),
+              !(!isSupport && (i as { supportOnly?: boolean }).supportOnly) &&
+              // teacherOnly bo'limlar supportga ko'rinmaydi
+              !(isSupport && (i as { teacherOnly?: boolean }).teacherOnly),
           );
           if (items.length === 0) return null;
           return (

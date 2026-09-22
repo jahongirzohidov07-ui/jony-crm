@@ -17,7 +17,7 @@ import tempfile
 from pathlib import Path
 _temp = tempfile.TemporaryDirectory(prefix="jony-speaking-")
 os.environ["DATABASE_URL"] = "sqlite:///" + str(Path(_temp.name) / "test.db").replace("\\", "/")
-for key in ("OPENAI_API_KEY", "GEMINI_API_KEY", "JonyTeacher", "JONYTEACHER"):
+for key in ("GROQ_API_KEY", "OPENAI_API_KEY", "GEMINI_API_KEY", "JonyTeacher", "JONYTEACHER"):
     os.environ.pop(key, None)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fastapi.testclient import TestClient          # noqa: E402
@@ -81,7 +81,8 @@ def fake_ai(system, messages):
     return "Nice! What is your favourite lesson at school?"
 
 
-student_app._ai_reply = fake_ai
+import speaking_ai
+speaking_ai.speaking_reply = fake_ai
 
 r = c.post("/api/student/speaking", headers=ST,
            json={"topic": "School", "messages": []})

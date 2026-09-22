@@ -275,7 +275,7 @@ export default function StudentSpeaking() {
               </span>
             </p>
           </div>
-          <button onClick={() => setVoiceOn(!voiceOn)}
+          <button aria-label={voiceOn ? "Ovozni o‘chirish" : "Ovozni yoqish"} onClick={() => setVoiceOn(!voiceOn)}
             className="p-2 rounded-lg bg-white/10">
             {voiceOn ? <Volume2 size={17} /> : <VolumeX size={17} />}
           </button>
@@ -353,12 +353,12 @@ export default function StudentSpeaking() {
                 ● Tinglayapti
               </span>
               <span className="block text-[10px] text-slate-500">
-                Teacher sizni tinglayapti
+                Mikrofon yoqilganda
               </span>
             </p>
             <p className="text-center border-x" style={{ borderColor: "#35538c" }}>
               <span className="text-[12px] font-bold text-violet-300">
-                ıılı Talaffuz tahlili
+                ıılı Gap tahlili
               </span>
               <span className="block text-[10px] text-slate-500">
                 Javobingiz tahlil qilinadi

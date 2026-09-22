@@ -11914,6 +11914,1339 @@
    ]
   },
   {
+   "no": 16,
+   "title": "Listening: Table Completion",
+   "grammar_topic": "Table completion (listening) — jadvalni to'ldirish",
+   "vocab_topic": "Tadbirlar, jadvallar va e'lonlar",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 27 Animal World, Track 12 Natural History day) va 3 ta mualliflik skripti.",
+   "objectives": [
+    "Jadvalni to'ldirishda ustun sarlavhalaridan foydalanib \"qanday so'z kerak\" ekanini oldindan aniqlash.",
+    "Jadval bo'ylab qatorma-qator, chapdan o'ngga yurishni bilish (audio shu tartibda boradi).",
+    "To'liq bo'lgan kataklardan \"langar\" sifatida foydalanish: to'ldirilgan katak keyingi bo'sh katakni topishga yordam beradi.",
+    "So'z chegarasini saqlash va tuzatilgan (o'zgartirilgan) javobni yozish.",
+    "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Table completion — jadval beriladi, ba'zi kataklar bo'sh. Har ustunning sarlavhasi (name, location, time, type) bo'sh katakka qanday so'z tushishini aytadi.",
+     "Jadval odatda qatorma-qator to'ldiriladi: audio birinchi qator (chapdan o'ngga), keyin ikkinchi qator tartibida boradi.",
+     "To'ldirilgan kataklar — langar. Masalan, \"The World of Ants ... 11 a.m.\" to'liq bo'lsa, siz ular orasidagi bo'sh kataklarni (location, type) shu voqea haqida gapirilganda tinglaysiz.",
+     "Ustun turi so'z turkumini beradi: \"location\" — joy nomi; \"time\" — soat; \"type of event\" — lecture / film / workshop kabi ot.",
+     "Paraphrase: jadvalda \"location\", audioda \"in the Insect House\" yoki \"held in Room 27\".",
+     "Tuzatish tuzog'i: \"the lecture room, no, sorry, correct that — the main hall\". Oxirgi javob yoziladi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Ustun sarlavhalarini o'qing",
+      "name / location / time",
+      "Har bo'sh katakka tur"
+     ],
+     [
+      "2-bosqich",
+      "To'liq kataklarni langar qiling",
+      "\"11 a.m.\", \"film\"",
+      "Qayerdaligingizni bilasiz"
+     ],
+     [
+      "3-bosqich",
+      "Qatorma-qator tinglang",
+      "chapdan o'ngga",
+      "Audio shu tartibda"
+     ],
+     [
+      "4-bosqich",
+      "Paraphrase kuting",
+      "location = \"in the ...\"",
+      "Boshqa so'z bilan"
+     ],
+     [
+      "5-bosqich",
+      "Tuzatishni kuting",
+      "\"no, sorry, ...\"",
+      "Oxirgi javob"
+     ],
+     [
+      "6-bosqich",
+      "So'z chegarasi va imlo",
+      "TWO WORDS",
+      "Tekshiring"
+     ]
+    ],
+    "presentation": [
+     [
+      "Qaysi tartibda tinglayman?",
+      "Qatorma-qator, chapdan o'ngga. Audio jadval tartibida boradi."
+     ],
+     [
+      "Bir katakni o'tkazib yubordim.",
+      "To'liq kataklarga qarang — ular sizni keyingi bo'sh katakka olib boradi."
+     ],
+     [
+      "Ustun sarlavhasi nimaga kerak?",
+      "So'z turini aytadi: location → joy, time → soat, type → tadbir turi."
+     ],
+     [
+      "\"Room 27\" yoki \"27\"?",
+      "Ustun \"location\" bo'lsa \"Room 27\" (joy nomi); ko'rsatmani tekshiring."
+     ],
+     [
+      "Javob tuzatildi. Qaysi biri?",
+      "Oxirgi, tuzatilgan variant: \"no, sorry, ...\"."
+     ],
+     [
+      "Katta harf muhimmi?",
+      "Yo'q, lekin nomlar (Insect House, Theatre C) katta harf bilan tabiiy ko'rinadi."
+     ]
+    ],
+    "notes": [
+     "Ikkala ustoz audiosi ham hayvonlar/tabiat mavzusida tadbirlar jadvali — bir xil format, o'quvchi ikkinchisida mustaqil ishlaydi.",
+     "Ustoz kaliti yuborilgan va javoblarga kiritildi (Track 27 va Track 12).",
+     "Har javobdan keyin so'rang: \"jadvaldagi qaysi ustun edi? audioda qaysi so'z bilan aytildi?\"",
+     "Tuzatish tuzoqlari (main hall, correct that) doskada alohida ko'rsatiladi."
+    ],
+    "mistakes": [
+     [
+      "Ustun turini o'ylamaslik",
+      "Sarlavhaga qarash",
+      "location → joy, time → soat"
+     ],
+     [
+      "Tartibni buzish",
+      "Qatorma-qator",
+      "Audio jadval tartibida"
+     ],
+     [
+      "Tuzatishdan oldingi javobni yozish",
+      "\"no, sorry\" ni kutish",
+      "Oxirgi variant"
+     ],
+     [
+      "So'z chegarasini buzish",
+      "TWO WORDS",
+      "3 so'z — 0 ball"
+     ],
+     [
+      "Langarni ishlatmaslik",
+      "To'liq katakka qarash",
+      "Keyingi bo'shni topadi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Qanday so'z kerak?",
+     "type": "Og'zaki",
+     "instr": "Ustoz ustun sarlavhasini aytadi; o'quvchi bo'sh katakka qanday so'z kerakligini aytadi.",
+     "items": [
+      "location",
+      "time",
+      "type of event",
+      "name of event",
+      "theme or topic"
+     ],
+     "answers": [
+      "joy nomi",
+      "soat",
+      "ot (tadbir)",
+      "nom (bosh harf)",
+      "ot / gap"
+     ],
+     "why": [
+      "\"the Insect House\", \"Room 27\".",
+      "\"11 a.m.\", \"3.45\".",
+      "lecture, film, workshop, demonstration.",
+      "\"The Great Migration\".",
+      "\"evolution\", \"reptiles\"."
+     ],
+     "note": "Ustun turi aniqlangach, audioda faqat o'sha turdagi so'zni kutasiz.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [],
+   "listenings": [
+    {
+     "title": "Track 27. Animal World — today's events",
+     "qtype": "Table completion (1–7) — asosiy",
+     "audios": "Ustoz bergan audio (Track 27)",
+     "audio": "ielts5_16_animal_world.mp3",
+     "intro": [
+      "Animal World markazidagi bugungi tadbirlar e'loni. Avval jadvalni o'rganing: har ustun (location, type of event, time) qanday so'z kerakligini aytadi. To'liq kataklar (11 a.m., film, demonstration) — langar. Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write NO MORE THAN TWO WORDS OR A NUMBER for each answer."
+     ],
+     "transcript": [
+      "Hi there, everybody, and welcome to Animal World. Before you start your visit, I'd just like to tell you about a few special events happening here today. They're all free, and I'd really encourage you to go to as many of them as you can, as I think you'll learn a lot.",
+      "The first event is called The World of Ants, and it's happening this morning quite soon, in the Insect House, which is just a short walk from here. The well-known entomologist Dr David Crocker, who many of you will have seen on television, is giving a lecture all about ants – the different types of ants, how they organise themselves, what they eat, their behaviour and so on. It's actually a fascinating subject. So, The World of Ants, a lecture by Dr Crocker, in the Insect House, and it starts at 11 o'clock and lasts for 60 minutes.",
+      "At midday, that's 12 o'clock, there's a film which is just as fascinating and it's called The Great Migration. This is all about birds and how they migrate across continents and oceans using the Sun, the stars and the Earth's magnetic field. As I said, it's a film – an absolutely spectacular film – which all the family will enjoy, some fabulous photography, and it's on in Theatre C, which you can see just behind me – so bear that in mind for 12 o'clock.",
+      "The next event is a demonstration taking place in the Exhibition Room and given by Monica Chaddha. It's called Encouraging Garden Wildlife. Monica will be showing you ways of encouraging animals, birds and other wildlife to visit and live in your garden, how to place boxes for nests, what food to put out for them and all sorts of practical advice. That's at 2.30, so just after lunch.",
+      "The final free event for today is Birds of Prey. Tasha, their keeper, will be giving a display of some of our most magnificent birds and how they fly, and I thoroughly recommend this event. The display includes eagles, vultures and owls and will be starting at 3.45 on the lawn outside. It's an unforgettable experience, so remember, on the front lawn at 3.45 to see the birds flying."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–7: Complete the table — Animal World, today's events",
+       "type": "NO MORE THAN TWO WORDS OR A NUMBER",
+       "instr": "Qatorma-qator, chapdan o'ngga. Ustun turini eslang.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+       ],
+       "answers": [
+        "Insect House",
+        "(a) lecture",
+        "Great Migration",
+        "Theatre C",
+        "Garden Wildlife",
+        "(a) (bird) display",
+        "3.45"
+       ],
+       "why": [
+        "\"in the Insect House, which is just a short walk from here\". Ustun — location. \"The\" jadvalda bor.",
+        "\"a lecture all about ants ... a lecture by Dr Crocker\". Ustun — type of event.",
+        "\"it's called The Great Migration\". \"The\" jadvalda bor. Ustun — name of event.",
+        "\"it's on in Theatre C\". Ustun — location. Tuzoq: \"behind me\" — joy nomi emas.",
+        "\"It's called Encouraging Garden Wildlife\". Ustun — name (davomi).",
+        "\"will be giving a display of ... birds\". Ustun — type of event. \"Display\" yoki \"bird display\".",
+        "\"starting at 3.45 on the lawn\". Ustun — time."
+       ],
+       "note": "Kitob kaliti: 1 Insect House · 2 (a) lecture · 3 Great Migration · 4 Theatre C · 5 Garden Wildlife · 6 (a) (bird) display · 7 3.45.",
+       "layout": "grid",
+       "head": [
+        "name of event",
+        "location",
+        "type of event",
+        "time"
+       ],
+       "rows": [
+        [
+         "The World of Ants",
+         "the (1)",
+         "(2)",
+         "11 a.m."
+        ],
+        [
+         "The (3)",
+         "(4)",
+         "film",
+         "12 noon"
+        ],
+        [
+         "Encouraging (5)",
+         "Exhibition Room",
+         "demonstration",
+         "2.30 p.m."
+        ],
+        [
+         "Birds of Prey",
+         "the lawn",
+         "(6)",
+         "(7) p.m."
+        ]
+       ]
+      },
+      {
+       "title": "Langar va paraphrase",
+       "type": "Tahlil",
+       "instr": "To'liq katak keyingi bo'shni qanday topadi?",
+       "items": [
+        "\"11 a.m.\" langari",
+        "\"film\" langari",
+        "location = \"in the ...\"",
+        "type = \"a lecture / a display\""
+       ],
+       "answers": [
+        "The World of Ants qatori",
+        "The Great Migration qatori",
+        "Insect House, Theatre C",
+        "2, 6"
+       ],
+       "why": [
+        "1, 2 shu voqea gapida.",
+        "3, 4 shu voqea gapida.",
+        "Paraphrase.",
+        "Tadbir turi oti."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Track 12. College Natural History day — morning events",
+     "qtype": "Table completion (1–8) — qo'shimcha mashq",
+     "audios": "Ustoz bergan audio (Track 12)",
+     "audio": "ielts5_16_natural_history.mp3",
+     "intro": [
+      "Kollej direktori talabalarga ertalabki tadbirlar haqida aytmoqda. Har talaba bittasini tanlashi kerak. Avval jadvalni o'qing, keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write NO MORE THAN TWO WORDS OR A NUMBER for each answer."
+     ],
+     "transcript": [
+      "Hello, everyone, and welcome to our college Natural History day. You've all got your programme for the day, but let me just give you a bit of information about your options for this morning's sessions, which begin at half past nine. Remember, you need to attend one of these three sessions.",
+      "All right, your first choice is called 'Dogs might fly', which will take place in Room 27. Professor Keenan, who you may remember ran a workshop last year on how dinosaurs became extinct, will be giving a lecture on the evolution of animals. In particular, she'll be looking at how they may evolve in the future, and this will be followed by a group discussion where you'll get a chance to ask her questions and offer your own thoughts and opinions on this. So, if the evolution of animals is something you're interested in, head for Room 27.",
+      "We all know that animals communicate with each other, but what about flowers? Your second choice is a video presentation called 'Flowers talk'. This considers the possibility that plants and flowers do actually communicate with each other. The video is presented by Patrick Bell, who has just written a book on how plants adapt to their natural environment, so it should be very interesting. That will take place in the lecture room, no, sorry, correct that, here in the main hall. We've had to move it because the lecture room is being renovated.",
+      "The third choice is ideal for those of you who want to get a bit of fresh air. We've called it 'A world in your garden', which we thought was appropriate as it looks at the sort of things you can find just by stepping out of your front door. Anyway, for those of you interested in getting away from the classroom, Doctor Watkins will be taking you on a nature walk through the local park, and she'll be telling you about some of the fascinating animals and plants that live and grow nearby. And it's a lovely day for a walk!",
+      "The final option, well, you might want to avoid this one if you're frightened of things like snakes, as this is a hands-on workshop where you'll actually get a chance to handle these exotic creatures. It won't just be snakes, however. I believe Tom Howard, our resident reptile expert, has brought some other reptiles along for you to meet, including his pet tortoise, Reggie, who is over 100 years old, and a pet lizard he calls Arthur. So, if you want to meet Reggie and his other reptile friends, head on over to the Biology lab at 9.30."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–8: Complete the table — Natural History day: morning events",
+       "type": "NO MORE THAN TWO WORDS OR A NUMBER",
+       "instr": "Barcha tadbirlar 9.30 da boshlanadi; bittasini tanlaysiz.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+       ],
+       "answers": [
+        "evolution",
+        "group discussion",
+        "communicate",
+        "Main hall",
+        "garden",
+        "Nature walk",
+        "reptiles",
+        "Biology"
+       ],
+       "why": [
+        "\"a lecture on the evolution of animals\". Theme — ot.",
+        "\"followed by a group discussion\". \"Lecture and ___\" — type.",
+        "\"plants and flowers do actually communicate with each other\". \"How plants might ___\" — fe'l.",
+        "\"the lecture room, no, sorry, correct that, here in the main hall\". Tuzatish tuzog'i: birinchi \"lecture room\", tuzatilgani — main hall. Location.",
+        "\"A world in your garden\". Name (davomi).",
+        "\"taking you on a nature walk through the local park\". Type of event.",
+        "\"snakes and other reptiles ... reptile expert\". Theme — ot (ko'plik).",
+        "\"head on over to the Biology lab\". \"___ lab\" — location."
+       ],
+       "note": "Kitob kaliti: 1 evolution · 2 group discussion · 3 communicate · 4 Main hall · 5 garden · 6 Nature walk · 7 reptiles · 8 Biology. 4-savol eng yaxshi tuzatish tuzog'i: \"lecture room, no, sorry ... the main hall\".",
+       "layout": "grid",
+       "head": [
+        "Name of event",
+        "Theme or topic",
+        "Type of event",
+        "Location"
+       ],
+       "rows": [
+        [
+         "Dogs might fly",
+         "Animal (1)",
+         "Lecture and (2)",
+         "Room 27"
+        ],
+        [
+         "Flowers talk",
+         "How plants might (3)",
+         "Video presentation",
+         "(4)"
+        ],
+        [
+         "A world in your (5)",
+         "Local animal and plant life",
+         "(6)",
+         "Local park"
+        ],
+        [
+         "I'm not touching that",
+         "Snakes and other (7)",
+         "Workshop",
+         "(8) lab"
+        ]
+       ]
+      },
+      {
+       "title": "Tuzatish tuzog'i",
+       "type": "Tahlil",
+       "instr": "Birinchi va oxirgi javobni ayting.",
+       "items": [
+        "4-savol",
+        "Sabab"
+       ],
+       "answers": [
+        "\"lecture room\" → \"main hall\"",
+        "\"the lecture room is being renovated\""
+       ],
+       "why": [
+        "\"no, sorry, correct that\".",
+        "Ta'mir tufayli ko'chirilgan."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Community centre — weekly classes",
+     "qtype": "Table completion (1–6)",
+     "audios": "Jony Academy skripti (Band 4–5)",
+     "intro": [
+      "Jamoa markazi xodimi haftalik darslar jadvalini aytmoqda. Avval jadvalni o'qing, keyin bir marta tinglang."
+     ],
+     "transcript": [
+      "Welcome to the Greenfield Community Centre. Let me run through our weekly classes so you can decide which suit you.",
+      "On Monday evenings we have a cookery class. It's held in the kitchen, of course, and it costs eight pounds a session. It's very popular, so please book ahead.",
+      "On Wednesdays there's a painting class in the art room. It runs from six to eight, and you should bring your own brushes, although we provide the paint.",
+      "Thursday is our busiest day. In the afternoon there's a yoga class in the main hall, which is free for members. And in the evening, the same hall is used for a dance class, which costs five pounds.",
+      "Finally, on Saturday mornings we run a photography class. This one meets in the computer room rather than a studio, because most of the work is editing pictures. It's suitable for beginners, and the teacher is a professional photographer."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6: Complete the table — Weekly classes",
+       "type": "NO MORE THAN TWO WORDS OR A NUMBER",
+       "instr": "Qatorma-qator.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+       ],
+       "answers": [
+        "kitchen",
+        "eight / 8",
+        "art room",
+        "dance",
+        "five / 5",
+        "computer room"
+       ],
+       "why": [
+        "\"held in the kitchen\". Location.",
+        "\"costs eight pounds a session\".",
+        "\"a painting class in the art room\". Location.",
+        "\"the same hall is used for a dance class\". Class. Tuzoq: yoga — kunduzi, kechqurun emas.",
+        "\"a dance class, which costs five pounds\".",
+        "\"meets in the computer room rather than a studio\". Tuzoq: \"studio\" — inkor qilingan."
+       ],
+       "layout": "grid",
+       "head": [
+        "Day",
+        "Class",
+        "Location",
+        "Price"
+       ],
+       "rows": [
+        [
+         "Monday",
+         "cookery",
+         "the (1)",
+         "(2) pounds"
+        ],
+        [
+         "Wednesday",
+         "painting",
+         "the (3)",
+         "bring your own brushes"
+        ],
+        [
+         "Thursday evening",
+         "(4)",
+         "main hall",
+         "(5) pounds"
+        ],
+        [
+         "Saturday",
+         "photography",
+         "the (6)",
+         "suitable for beginners"
+        ]
+       ]
+      },
+      {
+       "title": "Chalg'ituvchi",
+       "type": "Tahlil",
+       "instr": "Rad etilgan variantni tushuntiring.",
+       "items": [
+        "4-savol: yoga",
+        "6-savol: studio"
+       ],
+       "answers": [
+        "kunduzi",
+        "\"rather than a studio\""
+       ],
+       "why": [
+        "Kechqurun — dance.",
+        "Kompyuter xonasi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Museum floor guide",
+     "qtype": "Table completion (1–6)",
+     "audios": "Jony Academy skripti (Band 4–5)",
+     "intro": [
+      "Muzey gidi qavatlarni tushuntirmoqda. Avval jadvalni o'qing, keyin bir marta tinglang."
+     ],
+     "transcript": [
+      "Good morning and welcome to the City Museum. Let me explain what you'll find on each floor.",
+      "On the ground floor is the ticket desk and, next to it, the gift shop. There's also a café here if you'd like a drink before you start.",
+      "The first floor is all about ancient history. The main attraction is a collection of Egyptian objects, including a very famous statue. Photography is allowed, but without flash.",
+      "On the second floor you'll find the art gallery. This month there's a special exhibition of paintings by local artists, which is free with your ticket.",
+      "The third floor is our science area, which is especially popular with children because everything is hands-on. There's a new display about space that opened last week.",
+      "Finally, the top floor is a roof garden, open only in summer, with a wonderful view over the city."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6: Complete the table — Museum floor guide",
+       "type": "NO MORE THAN TWO WORDS OR A NUMBER",
+       "instr": "Qatorma-qator.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+       ],
+       "answers": [
+        "gift shop",
+        "objects",
+        "statue",
+        "special",
+        "science",
+        "summer"
+       ],
+       "why": [
+        "\"next to it, the gift shop\".",
+        "\"a collection of Egyptian objects\".",
+        "\"a very famous statue\".",
+        "\"a special exhibition of paintings\".",
+        "\"our science area\".",
+        "\"open only in summer\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "Floor",
+        "Main content",
+        "Note"
+       ],
+       "rows": [
+        [
+         "Ground floor",
+         "ticket desk and (1)",
+         "café for drinks"
+        ],
+        [
+         "First floor",
+         "ancient history: Egyptian (2)",
+         "a famous (3)"
+        ],
+        [
+         "Second floor",
+         "art gallery",
+         "(4) exhibition, free"
+        ],
+        [
+         "Third floor",
+         "(5) area",
+         "hands-on for children"
+        ],
+        [
+         "Top floor",
+         "roof garden",
+         "open only in (6)"
+        ]
+       ]
+      },
+      {
+       "title": "Ustun turi",
+       "type": "Tahlil",
+       "instr": "Har javob qaysi turkumga kiradi?",
+       "items": [
+        "1, 3, 5",
+        "4",
+        "6"
+       ],
+       "answers": [
+        "ot",
+        "sifat",
+        "fasl"
+       ],
+       "why": [
+        "gift shop, statue, science.",
+        "special.",
+        "summer."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "University open day — tour schedule",
+     "qtype": "Table completion (1–6)",
+     "audios": "Jony Academy skripti (Band 4–5) — uyga vazifa",
+     "intro": [
+      "Universitet ochiq eshiklar kunidagi ekskursiyalar jadvali. Uyda bir marta tinglang."
+     ],
+     "transcript": [
+      "Hello and welcome to our university open day. Here's the schedule of guided tours, so you can plan your morning.",
+      "The first tour is of the library. It leaves at nine o'clock from the main entrance and lasts about thirty minutes. The guide is a current student.",
+      "At ten there's a tour of the science laboratories. Please note that you must wear closed shoes for this one, for safety reasons. It starts from outside the chemistry building.",
+      "At eleven we offer a tour of the sports centre, which includes the swimming pool and the gym. This is led by a member of staff, and you're welcome to try the equipment.",
+      "The last tour, at twelve, is of the student accommodation. It's the most popular tour, so please arrive early. It finishes at the dining hall, where a free lunch is provided."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6: Complete the table — Guided tours",
+       "type": "NO MORE THAN TWO WORDS OR A NUMBER",
+       "instr": "Uyda bajaring.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+       ],
+       "answers": [
+        "library",
+        "thirty / 30",
+        "laboratories",
+        "closed shoes",
+        "staff",
+        "lunch"
+       ],
+       "why": [
+        "\"The first tour is of the library\".",
+        "\"lasts about thirty minutes\".",
+        "\"a tour of the science laboratories\".",
+        "\"you must wear closed shoes\".",
+        "\"led by a member of staff\".",
+        "\"a free lunch is provided\". Tuzoq: \"dining hall\" — joy, taom emas."
+       ],
+       "layout": "grid",
+       "head": [
+        "Time",
+        "Tour of",
+        "Note",
+        "Led by"
+       ],
+       "rows": [
+        [
+         "9.00",
+         "the (1)",
+         "lasts about (2) minutes",
+         "a current student"
+        ],
+        [
+         "10.00",
+         "the science (3)",
+         "must wear (4)",
+         "—"
+        ],
+        [
+         "11.00",
+         "the sports centre",
+         "can try the equipment",
+         "a member of (5)"
+        ],
+        [
+         "12.00",
+         "student accommodation",
+         "finishes with a free (6)",
+         "—"
+        ]
+       ]
+      },
+      {
+       "title": "So'z chegarasi",
+       "type": "Yozma",
+       "instr": "Har javobda nechta so'z?",
+       "items": [
+        "4-savol: closed shoes",
+        "6-savol: lunch"
+       ],
+       "answers": [
+        "2 so'z",
+        "1 so'z"
+       ],
+       "why": [
+        "Chegarada.",
+        "\"dining hall\" emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "5-skript: \"University open day — tour schedule\"",
+     "type": "Listening",
+     "instr": "Uyda bir marta tinglang (yoki o'qitib eshiting), jadvalni to'ldiring, keyin transkript bilan tekshiring.",
+     "answers": "Javoblar Listening bo'limida.",
+     "layout": "list"
+    },
+    {
+     "title": "Ustun turi daftari",
+     "type": "Yozma",
+     "instr": "Track 27 va Track 12 jadvallaridan 8 ta bo'sh katak oling va har biriga ustun turini yozing (location / time / type / theme) hamda qanday so'z kutilganini.",
+     "answers": "8 qator.",
+     "layout": "list"
+    },
+    {
+     "title": "Tuzatish tuzoqlari",
+     "type": "Yozma",
+     "instr": "Bugungi 5 mashqdan tuzatilgan yoki inkor qilingan 4 ta javobni yozing (main hall, computer room rather than a studio va h.k.) va oxirgi to'g'ri javobni belgilang.",
+     "answers": "Har qatorda tuzatish signali bo'lishi shart.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Table completion (uyga)",
+     "6 javobdan 5 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Ustun turi daftari",
+     "8 qator",
+     "2 coin"
+    ],
+    [
+     "Tuzatish tuzoqlari",
+     "4 javob, signal bilan",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 17,
+   "title": "Listening: Map / Plan Labelling",
+   "grammar_topic": "Map labelling — xarita yoki reja bo'yicha joyni harf bilan belgilash",
+   "vocab_topic": "Yo'l ko'rsatish va joylashuv",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 28 zoo map; Track 13 college plan — eng qiyin, oxirida) va 3 ta mualliflik skripti. Xaritalar kitobdagi joylashuv bo'yicha qayta chizilgan.",
+   "objectives": [
+    "Yo'l ko'rsatish so'zlari va joylashuv predloglarini tinglab tanish: turn left/right, go past, cross, opposite, next to, between, at the corner.",
+    "Tinglashdan oldin xaritada \"You are here\" nuqtasini, yo'llarni va belgilangan joylarni topish.",
+    "So'zlovchi bilan birga xarita bo'ylab \"yurish\" — har yo'nalishdan keyin qayerda ekanini kuzatish.",
+    "\"Chap / o'ng\" ni so'zlovchi qaysi tomonga qarab yurganiga qarab aniqlash (xaritaga qarab emas).",
+    "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash; eng qiyini — oxirida."
+   ],
+   "materials": [],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish, o'tgan darsdagi savol turini 3 savolda eslatish"
+    ],
+    [
+     10,
+     "Savol turi",
+     "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+    ],
+    [
+     10,
+     "Paraphrase mashqi",
+     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+    ],
+    [
+     20,
+     "1-qo'shimcha reading",
+     "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
+    ],
+    [
+     15,
+     "Listening",
+     "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
+    ],
+    [
+     20,
+     "2-qo'shimcha reading",
+     "Vaqt bilan (IELTS tezligi), keyin tahlil"
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar daftari: har xato javob sababi bilan yoziladi"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "3-qo'shimcha reading uyga; xatolar daftari to'ldiriladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Map labelling — xarita yoki bino rejasi beriladi, joylar harflar (A–G) bilan belgilangan. Siz har nom (gift shop, café) qaysi harfga to'g'ri kelishini yozasiz.",
+     "BIRINCHI qadam: \"You are here\" yoki \"entrance\" ni toping. So'zlovchi har doim shu nuqtadan boshlaydi.",
+     "So'zlovchi xarita bo'ylab tartib bilan \"yuradi\". Savollar ham odatda (USUALLY) shu tartibda keladi. Qalam bilan yo'lni kuzating.",
+     "ENG MUHIM: \"on your left / on your right\" — yurayotgan odamning chap-o'ngi. Agar u xaritada pastga qarab yursa, uning o'ngi sizning chapingiz bo'ladi. Xaritani aylantirib qarash ham mumkin.",
+     "Yo'nalish so'zlari: turn left / turn right, go straight ahead, go past, cross, take the first right, at the crossroads / junction / roundabout.",
+     "Joylashuv so'zlari: opposite (qarshisida), next to (yonida), between (orasida), at the corner of (burchagida), just beyond / just over (sal narida), at the end of (oxirida).",
+     "Tuzoq: bir necha joy tilga olinadi, lekin faqat savoldagisi javob. \"Don't go too far, or you'll come to the aquarium\" — akvarium savolda yo'q, u faqat chegara."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "\"You are here\" ni toping",
+      "kirish, asosiy bino",
+      "Boshlanish nuqtasi"
+     ],
+     [
+      "2-bosqich",
+      "Yo'llar va belgilarni ko'rib chiqing",
+      "lake, penguins, reception",
+      "Langarlar"
+     ],
+     [
+      "3-bosqich",
+      "Savoldagi nomlarni o'qing",
+      "gift shop, restaurant",
+      "Nimani qidiraman"
+     ],
+     [
+      "4-bosqich",
+      "So'zlovchi bilan yuring",
+      "qalam bilan kuzatish",
+      "Yo'nalishni yo'qotmang"
+     ],
+     [
+      "5-bosqich",
+      "Chap/o'ngni tekshiring",
+      "yuruvchining tomoni",
+      "Xaritani aylantiring"
+     ],
+     [
+      "6-bosqich",
+      "Harfni yozing",
+      "A–G",
+      "Bitta harf"
+     ]
+    ],
+    "presentation": [
+     [
+      "\"On your left\" — xaritaning chapimi?",
+      "Yo'q! Yurayotgan odamning chapi. Pastga yursa — teskari bo'ladi."
+     ],
+     [
+      "Yo'lni yo'qotib qo'ydim.",
+      "Keyingi langarni kuting (lake, reception, crossroad) va o'sha joydan davom eting."
+     ],
+     [
+      "Bir harf ikki marta ishlatiladimi?",
+      "Odatda yo'q. Ba'zi harflar umuman ishlatilmaydi."
+     ],
+     [
+      "\"Opposite\" nima degani?",
+      "Yo'lning qarama-qarshi tomonida, to'g'ri qarshisida."
+     ],
+     [
+      "Savollar tartibdami?",
+      "Odatda ha — so'zlovchi yurgan tartibda."
+     ],
+     [
+      "Harfni emas, nomni yozsam-chi?",
+      "Ko'rsatmada \"letter\" deyilgan — faqat harf yozing."
+     ]
+    ],
+    "notes": [
+     "Darsni yo'nalish so'zlari bilan boshlang: doskada strelkalar chizib, turn left / right, go past, cross, opposite, next to, between, at the corner of, T-junction, Y-junction, crossroads, roundabout, traffic lights, zebra crossing so'zlarini ko'rsating.",
+     "Track 28 (hayvonot bog'i) — oson: bitta yo'l, aniq langarlar (lake, penguins). Track 13 (kollej rejasi) — eng qiyin: ko'p xona, eshiklar va koridorlar. Shuning uchun u darsning OXIRIDA.",
+     "Track 28 uchun ustoz kaliti yuborilmagan — javoblar skript bo'yicha yechildi. Track 13 kaliti ustozniki (1 D, 2 E, 3 K, 4 C, 5 B).",
+     "Xaritalar asl kitob rasmidagi joylashuv bo'yicha Jony Academy tomonidan qayta chizilgan."
+    ],
+    "mistakes": [
+     [
+      "Xaritaning chap-o'ngini olish",
+      "Yuruvchining chap-o'ngi",
+      "Pastga yursa — teskari"
+     ],
+     [
+      "\"You are here\" ni topmaslik",
+      "Birinchi uni topish",
+      "Boshlanish nuqtasi"
+     ],
+     [
+      "Tilga olingan har joyni javob deb o'ylash",
+      "Faqat savoldagi nom",
+      "Akvarium — chegara, javob emas"
+     ],
+     [
+      "Yo'lni kuzatmaslik",
+      "Qalam bilan yurish",
+      "Keyingi joyni yo'qotasiz"
+     ],
+     [
+      "\"Opposite\" va \"next to\" ni aralashtirish",
+      "Qarshisida ≠ yonida",
+      "Predlogni aniq eshiting"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Yo'nalish so'zlari",
+     "type": "Og'zaki, 7 daqiqa",
+     "instr": "Ustoz ibora aytadi; o'quvchi doskadagi strelka yoki rasmni ko'rsatadi va o'zbekchasini aytadi.",
+     "items": [
+      "turn left / turn right",
+      "go straight ahead / go past ...",
+      "cross",
+      "opposite / across from",
+      "next to / between / at the corner of",
+      "T-junction / Y-junction / crossroads / roundabout",
+      "just beyond / just over / at the end of"
+     ],
+     "answers": [
+      "chapga / o'ngga buriling",
+      "to'g'ri yuring / ... yonidan o'ting",
+      "kesib o'ting",
+      "qarshisida",
+      "yonida / orasida / burchagida",
+      "T va Y ayrilish / chorraha / aylanma",
+      "sal narida / oshib o'tgach / oxirida"
+     ],
+     "why": [
+      "Chorrahada yoki yo'l ayrilganda.",
+      "\"Go past the penguins\".",
+      "\"Cross the road / the bridge\".",
+      "Yo'lning narigi tomonida.",
+      "\"Between the bank and the café\".",
+      "\"The path divides\" = Y-junction.",
+      "\"Just over the crossroad\"."
+     ],
+     "note": "So'zlar doskada qoladi. Har mashqdan keyin o'quvchi qaysi so'z javobga olib borganini aytadi.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [],
+   "listenings": [
+    {
+     "title": "Track 28. Zoo — directions from the main building",
+     "qtype": "Map labelling (1–3) — asosiy",
+     "audios": "Ustoz bergan audio (Track 28)",
+     "audio": "ielts5_17_zoo.mp3",
+     "image": "ielts5_17_zoo_map.png",
+     "intro": [
+      "Hayvonot bog'ida xodim tashrif buyuruvchilarga yo'l ko'rsatmoqda. Avval xaritada \"You are here\" va \"main building\" ni toping. Yo'l qayerda ikkiga ayriladi? Lake va penguins qayerda? Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write the correct letter, A–G, next to questions 1–3."
+     ],
+     "transcript": [
+      "Now, I'll just give you a few directions before you leave, especially for those of you who are feeling a bit hungry. When you leave the main building, you come to an area where the path divides. If you take the right-hand path, you'll see the lake on your right, and exactly opposite the lake on your left is the gift shop. Apart from selling gifts, it sells snacks, sandwiches and light drinks. If you walk on past the lake, on your right you'll also see the penguins. Go past the penguins and you'll come to the restaurant, also on your right. Don't go too far, or you'll come to the aquarium. The aquarium is on your right at the crossroad, and just over the crossroad, also on your right, is the lion enclosure.",
+      "If you're thinking of having a picnic, the best place to go is the picnic area, and for this you need to turn left at the crossroad and walk along a few metres. At the end of the path, you'll find the picnic area on your left.",
+      "Now, if you have any questions, I'd be happy to answer them and, once again, I really hope you enjoy your visit. Thank you."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–3: Write the correct letter, A–G",
+       "type": "Map labelling",
+       "instr": "So'zlovchi bilan xarita bo'ylab yuring. Chap/o'ng — yuruvchiniki.",
+       "items": [
+        "1 gift shop",
+        "2 restaurant",
+        "3 picnic area"
+       ],
+       "answers": [
+        "F",
+        "E",
+        "A"
+       ],
+       "why": [
+        "\"The path divides ... take the right-hand path ... the lake on your right, and exactly opposite the lake on your left is the gift shop\". O'ng yo'lda yuqoriga yursangiz, ko'l o'ngda, uning qarshisida chapda — F.",
+        "\"Walk on past the lake ... on your right ... the penguins. Go past the penguins and you'll come to the restaurant, also on your right\". Penguinsdan keyingi o'ngdagi joy — E. Tuzoq: D — akvarium (\"on your right at the crossroad\"), C — sher qo'rasi (\"just over the crossroad\").",
+        "\"Turn left at the crossroad and walk along a few metres. At the end of the path ... on your left\". Chapga burilgach (g'arbga), chap tomon — janub; yo'l oxirida — A. Tuzoq: B — yo'l boshida, oxirida emas."
+       ],
+       "note": "Ustoz kaliti yuborilmagan — javoblar skript va xarita bo'yicha Jony Academy tomonidan yechildi: 1 F · 2 E · 3 A. Kitob kaliti bo'lsa solishtiring.",
+       "layout": "pairs"
+      },
+      {
+       "title": "Yo'nalish zanjiri",
+       "type": "Tahlil",
+       "instr": "Har javobga qaysi so'zlar olib bordi?",
+       "items": [
+        "path divides + right-hand path",
+        "opposite the lake on your left",
+        "go past the penguins ... also on your right",
+        "turn left at the crossroad ... at the end of the path",
+        "Don't go too far (aquarium)"
+       ],
+       "answers": [
+        "Y ayrilish, o'ngga",
+        "F",
+        "E",
+        "A",
+        "chegara"
+       ],
+       "why": [
+        "Birinchi yo'nalish.",
+        "Opposite + left.",
+        "Go past + right.",
+        "Turn left + at the end.",
+        "D, C — javob emas."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Riverside Park — welcome at the gate",
+     "qtype": "Map labelling (1–3)",
+     "audios": "Jony Academy skripti (Band 4–5)",
+     "image": "ielts5_17_park.png",
+     "intro": [
+      "Park xodimi darvoza oldida tashrif buyuruvchilarga yo'l ko'rsatmoqda. Avval \"main gate\" ni toping. Skriptni ustoz bir marta o'qiydi."
+     ],
+     "transcript": [
+      "Welcome to Riverside Park. You're standing at the main gate, so let me tell you where everything is.",
+      "As soon as you come in, you'll see the café straight away on your right. It's a good place for a hot drink on a cold day. The toilets are just opposite, on your left.",
+      "If you walk straight up the main path, just before you reach the crossroads, you'll see the pond on your right. That's where you can hire a boat — the boat hire hut is right next to the pond, on your right.",
+      "For those of you with children, the playground is a little further. When you get to the crossroads, turn left, and at the end of that path, on your right, you'll find the playground."
+     ],
+     "tasks": [
+      {
+       "title": "Write the correct letter, A–F",
+       "type": "Map labelling",
+       "instr": "Chap/o'ng — kirgan odamniki (yuqoriga qarab).",
+       "items": [
+        "1 café",
+        "2 boat hire",
+        "3 playground"
+       ],
+       "answers": [
+        "B",
+        "D",
+        "E"
+       ],
+       "why": [
+        "\"As soon as you come in ... straight away on your right\". Tuzoq: A — \"just opposite, on your left\" — hojatxona.",
+        "\"Just before you reach the crossroads ... the pond on your right ... right next to the pond\". Tuzoq: C — chapda.",
+        "\"Turn left, and at the end of that path, on your right\". G'arbga yursangiz, o'ng tomon — shimol; yo'l oxiri — E."
+       ],
+       "layout": "pairs"
+      },
+      {
+       "title": "Chap yoki o'ng?",
+       "type": "Tahlil",
+       "instr": "Yuruvchi qaysi tomonga qarab turibdi?",
+       "items": [
+        "Kirishda (shimolga qarab)",
+        "Chapga burilgach (g'arbga)"
+       ],
+       "answers": [
+        "o'ng = sharq",
+        "o'ng = shimol"
+       ],
+       "why": [
+        "B.",
+        "E."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Westgate Shopping Centre — ground floor",
+     "qtype": "Map labelling (1–3)",
+     "audios": "Jony Academy skripti (Band 4–5)",
+     "image": "ielts5_17_shopping.png",
+     "intro": [
+      "Savdo markazi ma'lumot xodimi (Section 2). Avval \"West entrance\" va koridorni toping. Skriptni bir marta tinglang."
+     ],
+     "transcript": [
+      "Good morning and welcome to Westgate Shopping Centre. If you've come in through the west entrance, you're at the start of our main corridor.",
+      "The first shop on your left is a sports shop, and the second shop on your left is the bookshop, which has a small café inside.",
+      "Directly opposite the bookshop, on your right, is the bank, where you'll also find cash machines.",
+      "If you're here to see a film, the cinema is at the very end of the corridor, on your right, next to the bank.",
+      "The pharmacy, by the way, is the first shop on your right as you come in."
+     ],
+     "tasks": [
+      {
+       "title": "Write the correct letter, A–F",
+       "type": "Map labelling",
+       "instr": "Sharqqa qarab yuring: chap — shimol (A B C), o'ng — janub (D E F).",
+       "items": [
+        "1 bookshop",
+        "2 bank",
+        "3 cinema"
+       ],
+       "answers": [
+        "B",
+        "E",
+        "F"
+       ],
+       "why": [
+        "\"The second shop on your left\". Birinchisi A (sports shop), ikkinchisi — B.",
+        "\"Directly opposite the bookshop, on your right\". B ning qarshisi — E.",
+        "\"At the very end of the corridor, on your right, next to the bank\". Tuzoq: D — dorixona (\"first shop on your right\")."
+       ],
+       "layout": "pairs"
+      },
+      {
+       "title": "Tartib so'zlari",
+       "type": "Tahlil",
+       "instr": "first / second / at the very end.",
+       "items": [
+        "first on your left",
+        "second on your left",
+        "first on your right"
+       ],
+       "answers": [
+        "A (sports shop)",
+        "B",
+        "D (pharmacy)"
+       ],
+       "why": [
+        "Savolda yo'q.",
+        "Bookshop.",
+        "Oxirida aytilgan — tartibni buzadi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Getting around the town centre",
+     "qtype": "Map labelling (1–3)",
+     "audios": "Jony Academy skripti (Band 4–5) — uyga vazifa",
+     "image": "ielts5_17_town.png",
+     "intro": [
+      "Turistik ma'lumot xodimi vokzaldan chiqqanlarga yo'l ko'rsatmoqda. Uyda bir marta tinglang."
+     ],
+     "transcript": [
+      "Welcome to Kingsford. When you leave the station, walk straight ahead up the main road.",
+      "The first building you'll pass on your left is the post office, and opposite it, on your right, is a small supermarket.",
+      "At the top of the road there's a T-junction. The building directly opposite you is the town museum, which is free to enter.",
+      "To get to the hotel, turn right at the junction and it's the first building on your left, just past the museum.",
+      "If you need the bus station, it's also on this road, but on your right, across from the hotel."
+     ],
+     "tasks": [
+      {
+       "title": "Write the correct letter, A–F",
+       "type": "Map labelling",
+       "instr": "Uyda bajaring.",
+       "items": [
+        "1 post office",
+        "2 museum",
+        "3 hotel"
+       ],
+       "answers": [
+        "A",
+        "D",
+        "E"
+       ],
+       "why": [
+        "\"The first building you'll pass on your left\". Tuzoq: B — \"opposite it, on your right\" — supermarket.",
+        "\"At the T-junction ... directly opposite you\". Junction qarshisi — D.",
+        "\"Turn right at the junction ... the first building on your left, just past the museum\". Sharqqa yursangiz, chap — shimol; D dan keyin — E. Tuzoq: F — avtobus bekati (\"on your right, across from the hotel\")."
+       ],
+       "layout": "pairs"
+      },
+      {
+       "title": "Yo'nalish zanjiri",
+       "type": "Yozma",
+       "instr": "Har javobga qaysi so'zlar olib bordi?",
+       "items": [
+        "walk straight ahead + first on your left",
+        "T-junction + directly opposite",
+        "turn right + first on your left, just past"
+       ],
+       "answers": [
+        "A",
+        "D",
+        "E"
+       ],
+       "why": [
+        "Post office.",
+        "Museum.",
+        "Hotel."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Track 13. College plan — for visiting students",
+     "qtype": "Plan labelling (1–5) — eng qiyin, oxirgi mashq",
+     "audios": "Ustoz bergan audio (Track 13)",
+     "audio": "ielts5_17_college.mp3",
+     "image": "ielts5_17_college_plan.png",
+     "intro": [
+      "Kollejga kelgan talabalarga bino rejasi tushuntirilmoqda. Bu eng qiyin mashq: ko'p xona, koridorlar va eshiklar. Avval rejada \"College entrance\", \"Reception\", \"Sports Hall\" va \"Parking area for bicycles\" ni toping. Keyin BIR MARTA tinglang.",
+      "Ko'rsatma: Write the correct letter, A–K, next to questions 1–5."
+     ],
+     "transcript": [
+      "OK, now, we've got some students here from Bardwell College who have joined us for today's events. Hello to you all, and welcome.",
+      "Now, before our day begins, you'll need to get a guest badge, which you'll have to wear while you're on the college premises. You can get these from the administration office. To get there from the main hall, leave the hall by the door opposite reception, turn left, and just follow the corridor to the end. The administration office is on your right. Don't go any further, or you'll be in the sports hall. If you show your guest badge in the café, by the way, you'll get a 20% discount on drinks and sandwiches.",
+      "To get there from the main hall, walk along the corridor between the main hall and reception and turn right. The café is through the first door on your left. Directly opposite the café, on the same corridor, is the student common room, where you can go to relax and perhaps meet some of our own students.",
+      "If you have any valuables that you don't want to carry around with you, I suggest you put these in a locker. These are next to the sports hall, opposite the administration office. You can get a key for a locker when you get your guest badge from the administration office.",
+      "And if you want to use our library, leave the main hall by the door opposite the one you came in – that's the door by the bicycle parking area – and walk to the end of the corridor. The library is through the door straight ahead of you."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Write the correct letter, A–K",
+       "type": "Plan labelling",
+       "instr": "Eng qiyin mashq: har yo'nalishdan keyin qayerdaligingizni qalam bilan belgilang.",
+       "items": [
+        "1 Administration office",
+        "2 Café",
+        "3 Student common room",
+        "4 Lockers",
+        "5 Library"
+       ],
+       "answers": [
+        "D",
+        "E",
+        "K",
+        "C",
+        "B"
+       ],
+       "why": [
+        "\"Leave the hall by the door opposite reception, turn left, and just follow the corridor to the end. The administration office is on your right. Don't go any further, or you'll be in the sports hall\". Koridor oxirida, sport zali oldida o'ngda — D.",
+        "\"Walk along the corridor between the main hall and reception and turn right. The café is through the first door on your left\". O'ngga burilgach, chap tomondagi birinchi eshik — E.",
+        "\"Directly opposite the café, on the same corridor\". E ning qarshisi — K.",
+        "\"Next to the sports hall, opposite the administration office\". D ning qarshisi, sport zali yonida — C.",
+        "\"Leave the main hall by the door ... by the bicycle parking area – and walk to the end of the corridor. The library is through the door straight ahead of you\". Koridor oxirida to'g'ri oldinda — B."
+       ],
+       "note": "Ustoz kaliti: 1 D · 2 E · 3 K · 4 C · 5 B. Bu mashq qiyin, chunki 3 va 4-savol boshqa joyga NISBATAN beriladi (opposite the café, opposite the administration office) — oldingi javob xato bo'lsa, keyingisi ham xato bo'ladi.",
+       "layout": "pairs"
+      },
+      {
+       "title": "Nisbiy joylashuv zanjiri",
+       "type": "Tahlil",
+       "instr": "Qaysi javob qaysi javobga tayanadi?",
+       "items": [
+        "3 (common room)",
+        "4 (lockers)",
+        "Chegara so'zi"
+       ],
+       "answers": [
+        "2 (café) ga tayanadi",
+        "1 (admin office) ga tayanadi",
+        "\"Don't go any further, or you'll be in the sports hall\""
+       ],
+       "why": [
+        "\"Directly opposite the café\" — E qarshisi K.",
+        "\"Opposite the administration office\" — D qarshisi C.",
+        "D ni tasdiqlaydi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "4-skript: \"Getting around the town centre\"",
+     "type": "Listening",
+     "instr": "Uyda bir marta tinglang (yoki o'qitib eshiting), xaritada harflarni yozing, keyin transkript bilan tekshiring.",
+     "answers": "Javoblar Listening bo'limida.",
+     "layout": "list"
+    },
+    {
+     "title": "Yo'nalish lug'ati",
+     "type": "Yozma",
+     "instr": "Darsdagi 14 ta yo'nalish/joylashuv so'zini (turn left, go past, cross, opposite, next to, between, at the corner of, T-junction, crossroads, roundabout, traffic lights, zebra crossing, just beyond, at the end of) o'zbekcha tarjimasi va bittadan gap bilan yozing.",
+     "answers": "14 qator, gap bilan.",
+     "layout": "list"
+    },
+    {
+     "title": "O'z xaritangiz",
+     "type": "Yozma",
+     "instr": "Uyingizdan maktabgacha oddiy xarita chizing (A–F harflar bilan) va 5 gaplik yo'l ko'rsatish matnini yozing. Keyingi darsda sherigingiz tinglab harflarni topadi.",
+     "answers": "Ustoz yo'nalish so'zlari to'g'ri ishlatilganini tekshiradi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Map labelling (uyga)",
+     "3 javobdan 3 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Yo'nalish lug'ati",
+     "14 so'z, gap bilan",
+     "2 coin"
+    ],
+    [
+     "O'z xaritangiz",
+     "xarita + 5 gap",
+     "1 coin"
+    ]
+   ]
+  },
+  {
    "no": 18,
    "title": "Reading: Pick from a List (Choose TWO)",
    "grammar_topic": "Pick from a list — ro'yxatdan ikki (yoki uch) javob tanlash",

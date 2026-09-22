@@ -24883,6 +24883,848 @@
    ]
   },
   {
+   "no": 32,
+   "title": "Listening: Full Listening Test (Section 1–4)",
+   "grammar_topic": "To'liq Listening testi — 4 section, 40 savol, audio bir marta + 10 daqiqa ko'chirish",
+   "vocab_topic": "Imtihon sharoitida to'liq test",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ustoz bergan Full Practice Listening (CD2 Track 31 Atlas Hotel, Track 32 Orana Wildlife Park, Track 33 Study-skills course, Track 34 Airport design). Savol varag'i va to'liq transkript — ustozdagi kitob nusxasida.",
+   "objectives": [
+    "To'liq IELTS Listening testini imtihon sharoitida bajarish: 4 section, 40 savol, audio faqat BIR MARTA.",
+    "Har section oldidagi pauzada keyingi savollarni o'qish va bo'sh joy turini (ism, raqam, ot, harf) oldindan belgilash.",
+    "3–31-darslarda o'rganilgan listening savol turlarini bitta testda qo'llash: form, notes, map, MCQ, chart tanlash, sentence completion, Section 4 ma'ruza.",
+    "Javoblarni 10 daqiqada javob varag'iga xatosiz ko'chirish: imlo, so'z chegarasi, raqamlar.",
+    "Natijani band ballga o'girish va xatolarni savol turi bo'yicha tahlil qilish (34–35-darslar uchun zaif turlar ro'yxati)."
+   ],
+   "materials": [
+    "Savol varag'i: Practice Test, Listening 1–40 (har o'quvchiga nusxa; 16–20 uchun xarita, 26–27 uchun chartlar).",
+    "Audio: 4 fayl (Section 1–4) — Listening bo'limida, ketma-ket qo'yiladi.",
+    "Javob varag'i (1–40) va band ball jadvali.",
+    "To'liq transkript — kitobning Audio script qismi (CD2 Track 31–34), tahlil bosqichi uchun."
+   ],
+   "timeline": [
+    [
+     10,
+     "Test qoidalari",
+     "Javob varag'i tarqatiladi, audio bir marta; \"Ko'chirish qoidalari\" sinf mashqi"
+    ],
+    [
+     15,
+     "Section 1–2",
+     "Atlas Hotel (1–10), Orana Wildlife Park (11–20) — audio to'xtatilmaydi"
+    ],
+    [
+     15,
+     "Section 3–4",
+     "Study-skills course (21–30), Airport design (31–40) — S4 pauzasiz"
+    ],
+    [
+     10,
+     "Ko'chirish",
+     "Javoblar javob varag'iga ko'chiriladi: imlo, so'z chegarasi, raqamlar"
+    ],
+    [
+     15,
+     "Tekshirish",
+     "Ustoz kalitni o'qiydi; har o'quvchi band ballni jadvaldan topadi"
+    ],
+    [
+     45,
+     "Xato tahlili",
+     "Har section kitob transkripti bilan qayta tinglanadi; tuzoq va paraphrase tahlili"
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "Zaif savol turlari ro'yxati; uyga vazifa"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Listening testi taxminan 30 daqiqa: 4 section, har birida 10 savol. Audio BIR MARTA eshittiriladi. Qog'oz imtihonda oxirida javoblarni varaqqa ko'chirish uchun 10 daqiqa beriladi (kompyuterda — 2 daqiqa tekshirish).",
+     "Section'lar qiyinlashib boradi: S1 — kundalik suhbat (mehmonxona), S2 — monolog (hayvonot parki), S3 — o'quv suhbati (talabalar va o'qituvchi), S4 — akademik ma'ruza, PAUZASIZ.",
+     "Har section oldidan va S1–S3 ichidagi pauzalarda savollarni o'qishga vaqt beriladi. Bu vaqtni keyingi qismni o'qishga sarflang, o'tgan javobni o'ylashga emas.",
+     "S1 boshida namuna (Example) bor: \"Arrival date — 23rd August\". Namuna eshittirilgach, audio boshidan qayta boshlanadi — ovozlarga ko'nikish uchun.",
+     "Bu testdagi savol turlari: form completion (3, 23-dars), note completion (5-dars), map/plan labelling (17-dars), multiple choice (9, 24-dars), chart/graph tanlash (MCQ ning rasmli ko'rinishi), sentence completion (12-dars), Section 4 notes (30-dars).",
+     "Chart/graph savolida (26–27) so'zlarni emas, NISBATLARNI tinglang: \"kichik foiz\", \"yarmidan ko'pi\", \"birinchi o'rinda\", \"eng kam foydali\".",
+     "Test tugagach ustoz javoblarni o'qiydi; har o'quvchi to'g'ri javoblar sonini sanaydi va jadval bo'yicha band ballni topadi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Test qoidalari va ko'chirish mashqi",
+      "audio bir marta; sinf mashqi",
+      "10 daqiqa"
+     ],
+     [
+      "2-bosqich",
+      "Section 1–2 (1–20)",
+      "Atlas Hotel; Orana Wildlife Park",
+      "~15 daqiqa"
+     ],
+     [
+      "3-bosqich",
+      "Section 3–4 (21–40)",
+      "Study-skills course; Airport design",
+      "~15 daqiqa"
+     ],
+     [
+      "4-bosqich",
+      "Javob varag'iga ko'chirish",
+      "imlo, so'z chegarasi, raqamlar",
+      "10 daqiqa"
+     ],
+     [
+      "5-bosqich",
+      "Tekshirish va band ball",
+      "kalit + jadval",
+      "15 daqiqa"
+     ],
+     [
+      "6-bosqich",
+      "Xato tahlili",
+      "kitob transkripti bilan qayta tinglash",
+      "45 daqiqa"
+     ],
+     [
+      "7-bosqich",
+      "Xulosa va vazifa",
+      "zaif turlar ro'yxati",
+      "10 daqiqa"
+     ]
+    ],
+    "presentation": [
+     [
+      "Audio necha marta eshittiriladi?",
+      "Bir marta. Test paytida to'xtatilmaydi va qayta qo'yilmaydi."
+     ],
+     [
+      "Javobni qayerga yozaman?",
+      "Test paytida savol varag'iga, oxirgi 10 daqiqada javob varag'iga ko'chiring."
+     ],
+     [
+      "Javobni o'tkazib yubordim.",
+      "To'xtamang, keyingi savolga o'ting. Oxirida taxminiy javob yozing — bo'sh joy aniq 0 ball."
+     ],
+     [
+      "Katta-kichik harf muhimmi?",
+      "Yo'q. \"SCOTLAND\" ham, \"Scotland\" ham to'g'ri. Imlo esa muhim."
+     ],
+     [
+      "\"2 weeks\" yoki \"two weeks\"?",
+      "Ikkalasi ham to'g'ri: raqamni raqam yoki so'z bilan yozish mumkin."
+     ],
+     [
+      "Kalitdagi qavs nimani anglatadi?",
+      "\"(very) clean\" — \"clean\" ham, \"very clean\" ham qabul qilinadi."
+     ],
+     [
+      "Qancha to'g'ri javob — qaysi band?",
+      "Pastdagi jadvalga qarang: 16–17 = 5.0, 23–25 = 6.0, 30–31 = 7.0."
+     ]
+    ],
+    "notes": [
+     "Bu dars — birinchi to'liq Listening testi. Maqsad — imtihon ritmini his qilish va zaif savol turlarini aniqlash.",
+     "Audio 4 faylga bo'lingan. Imtihon sharoiti uchun ketma-ket qo'ying, oralarida to'xtatmang — section ichidagi o'qish pauzalari audioning o'zida bor.",
+     "Kalit ustoz yuborgan kitob kaliti bilan tekshirildi (40/40 mos). Qabul qilinadigan variantlar: 1 two / 2 weeks · 5 0131 99 46 5723 (\"double 9\") · 6 (enjoy) swimming · 7 (very) clean · 10 bikes / bicycles · 13 (hand-)feed · 14 farm(-)yard / farmyard · 30 (wide) margin · 35 (first) impression · 36 (open) areas · 39 (shaded) garden(s) · 40 energy (use).",
+     "Eng qiyin savollar: 5 (\"double 9\"), 12 (uch xil raqam: gektar, hayvon, tur), 17 va 19 (xaritada yo'nalish), 22 (sabab — tezroq), 24 (economics tuzog'i), 26–27 (nisbatlar).",
+     "Tahlilda har xato bitta sababga yoziladi: eshitmadim / paraphrase'ni tanimadim / tuzoqqa tushdim / imlo / so'z chegarasi. Eng ko'p uchragan sabab 34-darsgacha ishlanadi.",
+     "Listening bo'limidagi \"Transkript\" oynasida audio mazmuni o'zbekcha qisqacha berilgan; to'liq transkript kitobda."
+    ],
+    "mistakes": [
+     [
+      "Pauzada o'tgan javobni o'ylash",
+      "Keyingi qismni o'qish",
+      "S4 da pauza yo'q"
+     ],
+     [
+      "Birinchi eshitilgan raqamni yozish",
+      "Savolga mos raqamni kutish",
+      "12: gektar, hayvonlar, turlar"
+     ],
+     [
+      "\"Double 9\" ni bitta 9 deb yozish",
+      "double = raqam ikki marta",
+      "0131 99 46 5723"
+     ],
+     [
+      "Ko'chirishda imloni buzish",
+      "Harflab aytilgan ismni tekshirish",
+      "3: S-H-R-I-V-E-R"
+     ],
+     [
+      "So'z chegarasini buzish",
+      "NO MORE THAN TWO WORDS",
+      "\"a family room\" — 3 so'z"
+     ],
+     [
+      "Chartda nisbatni eshitmaslik",
+      "\"kichik foiz\", \"yarmidan ko'pi\"",
+      "26–27"
+     ],
+     [
+      "Xatoni faqat sanash",
+      "Savol turi bo'yicha tahlil",
+      "Zaif turni aniqlash — asosiy maqsad"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "To'g'ri javoblar → band ball",
+     "type": "Jadval",
+     "instr": "IELTS Listening uchun taxminiy moslik (40 savoldan; Academic va General Training uchun bir xil).",
+     "note": "5.0 kursining maqsadi — shu testda kamida 16–17 ta to'g'ri javob (Band 5.0). 23+ — Band 6 darajasi.",
+     "layout": "grid",
+     "head": [
+      "To'g'ri javoblar",
+      "Band",
+      "To'g'ri javoblar",
+      "Band"
+     ],
+     "rows": [
+      [
+       "39–40",
+       "9.0",
+       "23–25",
+       "6.0"
+      ],
+      [
+       "37–38",
+       "8.5",
+       "18–22",
+       "5.5"
+      ],
+      [
+       "35–36",
+       "8.0",
+       "16–17",
+       "5.0"
+      ],
+      [
+       "32–34",
+       "7.5",
+       "13–15",
+       "4.5"
+      ],
+      [
+       "30–31",
+       "7.0",
+       "10–12",
+       "4.0"
+      ],
+      [
+       "26–29",
+       "6.5",
+       "8–9",
+       "3.5"
+      ]
+     ]
+    },
+    {
+     "title": "Ko'chirish qoidalari — to'g'rimi?",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "Ko'rsatma: NO MORE THAN TWO WORDS AND/OR A NUMBER. Ustoz javobni aytadi; o'quvchi \"to'g'ri\" yoki \"noto'g'ri\" deydi va sababini tushuntiradi.",
+     "items": [
+      "\"the city centre\"",
+      "\"14 days\" / \"fourteen days\"",
+      "\"LIBRARY\"",
+      "\"accomodation\"",
+      "\"two ticket\" (audioda \"two tickets\")",
+      "\"well-known\"",
+      "\"oh-two-double three\""
+     ],
+     "answers": [
+      "noto'g'ri",
+      "ikkalasi to'g'ri",
+      "to'g'ri",
+      "noto'g'ri",
+      "noto'g'ri",
+      "to'g'ri, 1 so'z",
+      "0233"
+     ],
+     "why": [
+      "3 so'z — artikl ham so'z hisoblanadi. \"city centre\" — to'g'ri.",
+      "Raqamni raqam yoki so'z bilan yozish mumkin.",
+      "Katta-kichik harf ahamiyatsiz.",
+      "Imlo: accommodation (ikki c, ikki m). Noto'g'ri imlo — 0 ball.",
+      "Ko'plik -s tushib qolsa, javob noto'g'ri.",
+      "Chiziqcha bilan yozilgan so'z bitta so'z hisoblanadi.",
+      "\"Double\" — raqam ikki marta."
+     ],
+     "note": "Misollar test javoblarini oshkor qilmaydi — ular boshqa mavzudan. Shu qoidalar 10 daqiqalik ko'chirish vaqtida tekshiriladi.",
+     "layout": "qa"
+    }
+   ],
+   "readings": [],
+   "listenings": [
+    {
+     "title": "Section 1. CD2 Track 31. Atlas Hotel — booking and tourist survey",
+     "qtype": "Form completion (1–10)",
+     "audios": "Ustoz bergan audio (CD2 Track 31)",
+     "audio": "ielts5_32_s1.mp3",
+     "intro": [
+      "Ayol mehmonxonaga qo'ng'iroq qilib xona bron qiladi (1–5), keyin turizm boshqarmasi uchun qisqa so'rovnomaga javob beradi (6–10). Avval namuna eshittiriladi, keyin audio boshidan qayta boshlanadi.",
+      "Savol varag'i: Section 1 — ikki forma (Hotel Booking Form; Tourist Board — Questions for holidaymakers). Ko'rsatma: NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer."
+     ],
+     "transcript": [
+      "To'liq transkript — kitobning Audio script qismida (CD2 Track 31). Bu yerda — qisqacha mazmun va javoblar joyi.",
+      "Namuna. Ayol do'stining tavsiyasi bilan qo'ng'iroq qiladi; ular 23-avgustga chipta olishgan. Shu joyda namuna tugaydi va audio boshidan qayta boshlanadi.",
+      "1–5. Xodim o'tgan hafta ikki bron bekor qilingani uchun xona borligini aytadi. Oila o'tgan yili bir hafta qolgan va bu yetarli bo'lmagan — bu safar ikki hafta (1). Ikki bola uchun yonma-yon xona yo'q, xodim oilaviy xonani taklif qiladi (2). Familiya harflab aytiladi (3). Xodim \"Angliyami?\" deb so'raydi — ayol tuzatadi: Shotlandiya, Dunbar shahri (4). Telefon raqamida \"double 9\" bor (5). Safar maqsadi — dam olish (formada berilgan).",
+      "6–10. Oila avval kelgani uchun xodim turizm boshqarmasi so'rovnomasini o'tkazadi. Ayolga xarid va sayr yoqadi, lekin oila bo'lib eng ko'p suzishni yoqtirishadi (6). Plyajlar biroz gavjum, lekin asosiysi — juda toza (7). Sotuvchilar ba'zan haddan tashqari yordam berishga urinadi — suvenir sotishga (8). Ovqat mazali, ofitsiantlar xushmuomala va tez (9). Taklif: mahalliy avtobuslar bor, lekin ijaraga velosiped yo'q (10)."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5: Hotel — Booking Form",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Forma suhbat tartibida (ALWAYS).",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+       ],
+       "answers": [
+        "two weeks / 2 weeks",
+        "family room",
+        "Shriver",
+        "Scotland",
+        "0131 99 46 5723"
+       ],
+       "why": [
+        "O'tgan yili bir hafta qolishgan va yetarli bo'lmagan, bu safar ikki hafta so'rashadi. Tuzoq: \"a week\" — o'tgan yilgi muddat.",
+        "Yonma-yon ikki xona yo'q; o'rniga ikki katta va ikki bolaga mo'ljallangan katta oilaviy xona — ayol rozi bo'ladi. Tuzoq: \"double room\" — faqat solishtirish uchun aytiladi.",
+        "Familiya harflab aytiladi: S-H-R-I-V-E-R. Imlo xato bo'lsa — 0 ball.",
+        "Xodim \"England?\" deb so'raydi — \"No, Scotland\". Tuzatilgan javob yoziladi. Dunbar formada bor.",
+        "Raqamda \"double 9\" — 9 ikki marta. Xodim oxirgi raqamlarni (7-2-3) takrorlaydi."
+       ],
+       "note": "Kitob kaliti: 1 two/2 weeks · 2 family room · 3 Shriver · 4 Scotland · 5 0131 99/double 9 46 5723.",
+       "layout": "grid",
+       "head": [
+        "Hotel — Booking Form",
+        ""
+       ],
+       "rows": [
+        [
+         "Arrival date (namuna):",
+         "23rd August"
+        ],
+        [
+         "Length of stay:",
+         "(1)"
+        ],
+        [
+         "Type of accommodation:",
+         "(2)"
+        ],
+        [
+         "Name:",
+         "Mr and Mrs (3) and children"
+        ],
+        [
+         "Address:",
+         "29 Tower Heights, Dunbar, (4)"
+        ],
+        [
+         "Postcode:",
+         "EH41 2GK"
+        ],
+        [
+         "Contact telephone:",
+         "(5)"
+        ],
+        [
+         "Purpose of trip:",
+         "holiday"
+        ]
+       ]
+      },
+      {
+       "title": "Questions 6–10: Tourist Board — questions for holidaymakers",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Pauzadan keyin; savollar suhbat tartibida.",
+       "items": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+       ],
+       "answers": [
+        "(enjoy) swimming",
+        "(very) clean",
+        "too helpful",
+        "polite",
+        "bikes / bicycles"
+       ],
+       "why": [
+        "Xarid va sayr ham yoqadi, lekin oila bo'lib eng ko'p suzishni yoqtirishadi. Tuzoq: shopping, sightseeing.",
+        "\"Gavjum\" — formadagi \"busy\". Asosiysi — juda toza, shuning uchun qaytib kelishadi.",
+        "Sotuvchilar haddan tashqari yordam berishga urinadi — suvenir sotishga. Ayol o'zi tanlashni afzal ko'radi.",
+        "Ofitsiantlar xushmuomala va juda tez. Tuzoq: qo'pol ofitsiantlar haqidagi gap — umumiy fikr, javob emas.",
+        "Avtobuslar bor, lekin velosiped yo'q; ijaraga olib, sekin yurib manzarani ko'rish yaxshi bo'lardi. Tuzoq: buses, cars."
+       ],
+       "note": "Kitob kaliti: 6 (enjoy) swimming · 7 (very) clean · 8 too helpful · 9 polite · 10 bikes/bicycles.",
+       "layout": "grid",
+       "head": [
+        "Tourist Board — Questions for holidaymakers",
+        ""
+       ],
+       "rows": [
+        [
+         "Favourite activity:",
+         "(6)"
+        ],
+        [
+         "Beaches:",
+         "busy but (7)"
+        ],
+        [
+         "Shop staff:",
+         "are sometimes (8)"
+        ],
+        [
+         "Waiters:",
+         "(9) and quick"
+        ],
+        [
+         "Suggestions:",
+         "need some (10) for hire"
+        ]
+       ]
+      },
+      {
+       "title": "Tuzoq va tuzatishlar",
+       "type": "Tahlil",
+       "instr": "Qaysi ma'lumot rad etildi yoki o'zgardi?",
+       "items": [
+        "1",
+        "2",
+        "4",
+        "5",
+        "7",
+        "10"
+       ],
+       "answers": [
+        "bir hafta (o'tgan yil) / ikki hafta (bu safar)",
+        "yonma-yon xonalar (imkonsiz) / family room (taklif, qabul qilindi)",
+        "England? — No, Scotland",
+        "\"double 9\" = 99",
+        "gavjum (formada \"busy\") / juda toza (javob)",
+        "avtobus (bor) / velosiped (yo'q — taklif)"
+       ],
+       "why": [
+        "Vaqt belgisi: o'tgan yil ↔ bu safar.",
+        "Rad → taklif.",
+        "Tuzatish.",
+        "Raqam ikki marta.",
+        "\"But\" dan keyingi qism javob.",
+        "Taklif — yo'q narsa haqida."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Section 2. CD2 Track 32. Orana Wildlife Park",
+     "qtype": "Note completion (11–15) + Map labelling (16–20)",
+     "audios": "Ustoz bergan audio (CD2 Track 32)",
+     "audio": "ielts5_32_s2.mp3",
+     "image": "ielts5_32_orana_map.jpg",
+     "intro": [
+      "Park xodimi tashrif buyuruvchilarga Orana Wildlife Park haqida gapiradi (11–15), keyin xarita bo'yicha yo'l ko'rsatadi (16–20). Xaritada avval \"Main Entrance\", ma'lumot markazi (I) va kompasni toping: shimol — tepada, sharq — o'ngda.",
+      "Savol varag'i: Section 2 — notes (11–15) va plan (16–20, harflar A–I). Ko'rsatma: NO MORE THAN TWO WORDS AND/OR A NUMBER (11–15); Write the correct letter, A–I (16–20)."
+     ],
+     "transcript": [
+      "To'liq transkript — kitobning Audio script qismida (CD2 Track 32). Bu yerda — qisqacha mazmun va javoblar joyi.",
+      "11–15. Xodim \"Orana\" so'zi mahalliy maori tilida \"xush kelibsiz\" degani ekanini aytadi (11). Parkni xayriya tashkiloti boshqaradi. U uchta raqam aytadi: maydon — 80 gektar, hayvonlar — 400 ta, turlar — 70 ta (12). Hayvonlar asosan Yangi Zelandiya, Avstraliya, Afrika va Janubiy Amerikadan. Uch shoxli Rothschild jirafalarini soat 12 va 3 da qo'l bilan boqish mumkin (13). Sigir va echkilarni silash mumkin bo'lgan joy kun bo'yi ochiq — bolalar uchun (14). Gepardlar har kuni 3.40 da soatiga 70 km gacha tezlikda \"mashq yugurishi\"ni bajaradi (15).",
+      "16–20. (Pauzadan keyin) Xodim va tinglovchilar asosiy kirishda turibdi, ma'lumot markazi o'ngda. Ertalabki sayr 10.45 da meerkatlar qo'rasidan boshlanadi: bolalar maydonchasi yonidan o'tadi, birinchi qo'rada — otters, keyingi qo'rada — Yangi Zelandiya qushlari (16), keyin sudralib yuruvchilar va yo'lbarslar. Afrika qishlog'i: kirishdan o'ngga buriling, birinchi avtobus bekatidan o'ting — Afrika yovvoyi itlari qo'rasidan oldin (17). Piknik joyi — parkning eng sharqida, bir tomonda tuyaqushlar, boshqa tomonda buffalo (18). Tushdan keyingi sayr: g'arbdagi sherlar maskaniga (Conservation Centre yonida) boring, ikki avtobus bekatidan o'ting, ikkinchisidan keyin taxminan yarim km — uchrashuv joyi; zebradan o'tib ketsangiz — uzoqlab ketgansiz (19). Safari avtobusining birinchi bekati — Jomo's Café: to'g'ri qarshida, jirafalar oldida (20)."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 11–15: Orana Wildlife Park — complete the notes",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Qaydlar audio tartibida (ALWAYS).",
+       "items": [
+        "11",
+        "12",
+        "13",
+        "14",
+        "15"
+       ],
+       "answers": [
+        "welcome",
+        "70 species",
+        "(hand-)feed",
+        "farmyard / farm yard",
+        "exercise run"
+       ],
+       "why": [
+        "Maori tilida \"xush kelibsiz\". Qaydda qo'shtirnoq ichida — bitta so'z.",
+        "Uch raqam aytiladi: 80 gektar (maydon), 400 hayvon (soni), 70 tur. \"From a total of ___\" — turlar soni. Tuzoq: 80 hectares, 400 animals.",
+        "Jirafalarni qo'l bilan boqish mumkin. \"Hand-feed\" chiziqcha bilan — bitta so'z.",
+        "Sigir va echkilarni silash mumkin; bolalarning hayvonlarga qiziqishini oshirish uchun.",
+        "Gepardlar tezligini ko'rsatadigan mashq yugurishi. Tuzoq: 70 km/h — tezlik; 3.40 qaydda bor."
+       ],
+       "note": "Kitob kaliti: 11 welcome · 12 70 species · 13 (hand-)feed · 14 farm(-)yard / farmyard · 15 exercise run.",
+       "layout": "grid",
+       "head": [
+        "Orana Wildlife Park — qaydlar mazmuni",
+        ""
+       ],
+       "rows": [
+        [
+         "Park haqida",
+         "\"Orana\" ma'nosi: (11) ;; park hayvonlari jami (12) dan ;; hayvonlar dunyoning ko'p joylaridan keltirilgan"
+        ],
+        [
+         "Parkda nima qilish mumkin",
+         "soat 12 yoki 3 da jirafalarni (13) ;; (14) da hayvonlarni silash (bolalar uchun yaxshi) ;; 3.40 da gepardlarning (15) ini tomosha qilish"
+        ]
+       ]
+      },
+      {
+       "title": "Questions 16–20: Label the plan — write the correct letter, A–I",
+       "type": "Map labelling",
+       "instr": "So'zlovchi bilan xarita bo'ylab yuring. Boshlanish — asosiy kirish (Main Entrance).",
+       "items": [
+        "16 New Zealand birds",
+        "17 African village",
+        "18 Picnic area",
+        "19 Afternoon walkabout meeting place",
+        "20 Jomo's Café"
+       ],
+       "answers": [
+        "B",
+        "G",
+        "E",
+        "C",
+        "H"
+       ],
+       "why": [
+        "Sayr meerkatlar qo'rasidan boshlanadi → bolalar maydonchasi (adventure playground) → birinchi qo'ra — otters (A) → KEYINGI qo'ra — Yangi Zelandiya qushlari (B) → keyin reptiles va tigers. Tuzoq: A — birinchi qo'ra (otters).",
+        "Kirishdan o'ngga (ma'lumot markazi I yonidan), birinchi avtobus bekatidan o'ting — yo'lakdagi keyingi joy G. Tuzoq: I — ma'lumot markazi; F — yo'lning davomi, bekatdan uzoq.",
+        "Parkning eng sharqiy (o'ng) chekkasi; bir tomonda ostriches, boshqa tomonda buffalo — ular orasidagi E.",
+        "G'arbdagi African lion habitat (Conservation Centre yonida) → yo'lak bo'ylab ikki BUS bekatidan o'ting → ikkinchisidan keyin — C. Tuzoq: D — zebralardan o'tib ketgan joy (\"juda uzoq\").",
+        "Safari avtobusining birinchi bekati: kirishning to'g'ri qarshisida, jirafalar oldida — H. Tuzoq: I — kirishning o'ng tomonida."
+       ],
+       "note": "Kitob kaliti: 16 B · 17 G · 18 E · 19 C · 20 H. Yo'nalish so'zlari: turn to your right, walk past, just before, on the far eastern side, directly opposite, go straight ahead.",
+       "layout": "pairs"
+      },
+      {
+       "title": "Raqamlar va yo'nalishlar",
+       "type": "Tahlil",
+       "instr": "Qaysi raqam javob? Qaysi so'z harfga olib bordi?",
+       "items": [
+        "12",
+        "15",
+        "16",
+        "19",
+        "20"
+       ],
+       "answers": [
+        "80 gektar / 400 hayvon / 70 tur",
+        "70 km/soat (tezlik) / 3.40 (vaqt, qaydda) / exercise run",
+        "meerkats → playground → otters (A) → NZ birds (B)",
+        "lion habitat → 2 bekat → yarim km → C",
+        "\"directly opposite\" + \"straight ahead\" => H"
+       ],
+       "why": [
+        "\"From a total of ___\" — tur.",
+        "Faoliyat nomi.",
+        "\"next enclosure\".",
+        "Zebradan o'tsa — D, juda uzoq.",
+        "Kirishning qarshisi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Section 3. CD2 Track 33. Study-skills course — survey results",
+     "qtype": "Multiple choice (21–25) + Chart/graph (26–27) + Sentence completion (28–30)",
+     "audios": "Ustoz bergan audio (CD2 Track 33)",
+     "audio": "ielts5_32_s3.mp3",
+     "image": "ielts5_32_charts.jpg",
+     "intro": [
+      "Ikki talaba — Sylvie va Daniel — o'qituvchi Mr Driver oldida o'tgan semestrdagi study-skills kursi bo'yicha so'rovnoma natijalarini taqdim qiladi. 26-savol — doiraviy diagramma (A–C), 27-savol — ustunli grafik (A–C): rasmga qarang.",
+      "Savol varag'i: Section 3 — MCQ 21–25, chartlar 26–27, gaplar 28–30. Ko'rsatma: Choose the correct letter A, B or C (21–27); NO MORE THAN TWO WORDS (28–30)."
+     ],
+     "transcript": [
+      "To'liq transkript — kitobning Audio script qismida (CD2 Track 33). Bu yerda — qisqacha mazmun va javoblar joyi.",
+      "21–25. Kurs ixtiyoriy bo'lgan: imtihon kursining majburiy qismi emas va imtihon uchun kerak ham emas, lekin Mr Driver boshqa darslarga yordam beradi deb tavsiya qilgan (21). Talabalar yuzma-yuz intervyu o'rniga email orqali so'rovnoma yuborishgan, chunki boshqa ishlar ko'p edi va bu tezroq bo'lardi (22); javob berganlar ulushi 70% atrofida. Kursda 33 talaba, 12 mashg'ulot — har dushanba ertalab (23). Daniel endi qiyin matnlar (masalan, iqtisodiyot matnlari) bilan ishlashga o'zini qodirroq his qiladi; boshqa talabalar esa ko'proq kitob o'qiy boshlagan (24). O'qituvchi Jenny ko'p uy vazifasi bergani uchun emas, qiziqarli maqolalar va g'oyalar bergani uchun yoqqan (25).",
+      "26–30. Umumiy baho: faqat kichik foiz foydasiz degan, qolganlari ijobiy; yarmidan ko'pi — taxminan 60% — \"juda foydali\" (26). Qismlar: speed reading — birinchi o'rinda, giving talks — eng kam foydali, note-taking — ancha foydali (27). Izohlar: qayd yozish ma'ruzalarda diqqatni jamlashga yordam bergan (28); qachon diagramma yordamida qayd yozish haqidagi ko'rsatma yoqqan (29); qog'oz chetidagi keng hoshiya o'tkazib yuborilgan fikrlarni qo'shishga va qaydni keyin o'qishga qulay (30)."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 21–27: Choose the correct letter, A, B or C",
+       "type": "Multiple choice",
+       "instr": "Savollar audio tartibida. 26–27 — rasmdagi chartlar.",
+       "items": [
+        "21 Talabalar study-skills kursiga nega qatnashgan? A) o'quv dasturining majburiy qismi bo'lgani uchun B) imtihonga tayyorlanish uchun kerak bo'lgani uchun C) tutor tavsiya qilgani uchun",
+        "22 Sylvie va Daniel nega so'rovnomadan foydalangan? A) boshqa talabalar shu usulni afzal ko'rgan B) tayyorgarlik vaqtini qisqartirgan C) ko'proq ma'lumot olish mumkin bo'lgan",
+        "23 Talabalar kurs uchun sinfda qanchalik tez-tez uchrashgan? A) haftada bir marta B) haftada ikki marta C) har ish kuni",
+        "24 Danielga kurs nega yoqqan? A) o'ziga ishonchini oshirgan B) iqtisodiyot maqolalariga qaratilgan C) ko'proq kitob o'qishga undagan",
+        "25 Talabalarga Jennyning nimasi yoqqan? A) uy vazifalari B) tanlagan o'quv materiallari C) o'qitish uslubi",
+        "26 Qaysi doiraviy diagramma kursning umumiy foydasini ko'rsatadi? A) juda foydali ~60%, foydasiz ~25% B) juda foydali ~45%, foydali ~50% C) juda foydali ~60%, foydali ~30%, foydasiz ~10%",
+        "27 Qaysi grafik kurs qismlarining foydasini ko'rsatadi? A) speed reading > giving talks > note-taking B) speed reading > note-taking > giving talks C) note-taking > speed reading > giving talks"
+       ],
+       "answers": [
+        "C",
+        "B",
+        "A",
+        "A",
+        "B",
+        "C",
+        "B"
+       ],
+       "why": [
+        "Kurs ixtiyoriy bo'lgan, lekin Mr Driver foydali deb tavsiya qilgan. A tuzoq: \"compulsory\" so'zi aytiladi, lekin inkor bilan. B tuzoq: imtihon uchun kerak emasligi aytiladi.",
+        "Intervyu o'rniga email orqali so'rovnoma — boshqa ishlar ko'p edi va bu tezroq edi. A — aytilmagan. C tuzoq: javob foizi (70%) yaxshi bo'lgan, lekin bu sabab emas, natija.",
+        "12 mashg'ulot, har dushanba ertalab. C tuzoq: haftaning qolgan kunlari — o'rganganini amalda qo'llash, dars emas.",
+        "Daniel endi qiyin matnlar bilan ishlashga o'zini qodirroq his qiladi. B tuzoq: iqtisodiyot — faqat qiyin matnlarga misol. C tuzoq: bu BOSHQA talabalarning fikri.",
+        "Ko'p uy vazifasi bergani uchun emas — qiziqarli maqolalar va g'oyalar bergani uchun. A tuzoq: to'g'ridan-to'g'ri rad etiladi. C — uslub haqida aniq gap yo'q.",
+        "Faqat kichik foiz foydasiz deb hisoblagan; yarmidan ko'pi (taxminan 60%) — juda foydali. A: foydasiz ulushi katta. B: \"juda foydali\" yarmidan kam.",
+        "Speed reading birinchi o'rinda, giving talks eng kam foydali, note-taking ancha foydali — o'rtada. A: note-taking eng past. C: note-taking eng baland."
+       ],
+       "note": "Kitob kaliti: 21 C · 22 B · 23 A · 24 A · 25 B · 26 C · 27 B. Chart savolida uch belgi yetarli: \"kichik foiz\" (sariq), \"yarmidan ko'pi — 60%\" (ko'k), \"birinchi / eng kam\" (tartib).",
+       "layout": "mcq"
+      },
+      {
+       "title": "Questions 28–30: Complete the sentences",
+       "type": "NO MORE THAN TWO WORDS",
+       "instr": "Gaplar audio tartibida (ALWAYS).",
+       "items": [
+        "28",
+        "29",
+        "30"
+       ],
+       "answers": [
+        "lectures",
+        "diagram",
+        "(wide) margin"
+       ],
+       "why": [
+        "Qayd yozish texnikalari ma'ruzalarda diqqatni jamlashga yordam bergan: xayol surish kamaygan, diqqat uzoqroq saqlangan. Concentration = focus.",
+        "Qachon diagramma yordamida qayd yozish haqidagi ko'rsatma yoqqan. Savol varag'idagi gapda \"a ___\" — birlik.",
+        "Qog'oz chetidagi keng hoshiya o'tkazib yuborilgan fikrlarni qo'shish uchun joy beradi va qaydni keyin o'qishni osonlashtiradi. \"Wide margin\" — 2 so'z."
+       ],
+       "note": "Kitob kaliti: 28 lectures · 29 diagram · 30 (wide) margin.",
+       "layout": "grid",
+       "head": [
+        "Savol",
+        "Gap mazmuni"
+       ],
+       "rows": [
+        [
+         "28",
+         "Yaxshi qayd yozish (28) paytida diqqatni oshiradi."
+        ],
+        [
+         "29",
+         "(29) yordamida qayd yozish foydali."
+        ],
+        [
+         "30",
+         "Qog'ozda (30) bo'lsa, qaydni o'qish osonlashadi."
+        ]
+       ]
+      },
+      {
+       "title": "Kimning fikri va nisbatlar",
+       "type": "Tahlil",
+       "instr": "Rad etilgan variant qayerda eshitildi?",
+       "items": [
+        "21",
+        "24",
+        "25",
+        "26",
+        "27"
+       ],
+       "answers": [
+        "majburiy emas (A, B rad) / Mr Driver tavsiyasi (C)",
+        "iqtisodiyot — misol; boshqa talabalar — C; Daniel — A",
+        "uy vazifasi — rad / maqolalar — B",
+        "\"kichik foiz\" + \"taxminan 60%\" => C",
+        "birinchi / eng kam / ancha foydali => B"
+       ],
+       "why": [
+        "Inkor + tavsiya.",
+        "Kimning fikri?",
+        "\"not because ...\"",
+        "Ikki belgi.",
+        "Tartib."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
+    {
+     "title": "Section 4. CD2 Track 34. Airport design — lecture",
+     "qtype": "Note completion (31–40)",
+     "audios": "Ustoz bergan audio (CD2 Track 34)",
+     "audio": "ielts5_32_s4.mp3",
+     "intro": [
+      "Arxitektura ma'ruzasi: aeroport dizayni yillar davomida qanday o'zgargani. PAUZA YO'Q — boshida barcha qaydlarni o'qing va sarlavhalarni belgilang: Reasons for changes (33–35), Inside the building (36–37), The exterior of the building (38–40).",
+      "Savol varag'i: Section 4 — Airport Design notes. Ko'rsatma: NO MORE THAN TWO WORDS for each answer."
+     ],
+     "transcript": [
+      "To'liq transkript — kitobning Audio script qismida (CD2 Track 34). Bu yerda — qisqacha mazmun va javoblar joyi.",
+      "31–32. 1960–70-yillarda aeroportlar kam va juda oddiy bo'lgan — avtovokzalga o'xshagan (31): asosiy e'tibor reyslarga qaratilgan, yo'lovchilarga emas. Hozir katta aeroport kichik shaharga (\"mini city\") o'xshaydi — transport markazi va do'konlar birlashgan (32).",
+      "33–35. O'zgarishning ikki sababi. Birinchisi — yo'lovchilar sonining keskin o'sishi: ommaviy turizm (arzon paket turlar, arzon aviakompaniyalar, mehmonxonalar) (33) va uchrashuvlar uchun safar qiladigan xalqaro biznesning o'sishi (34). Ikkinchisi — aeroport mamlakatni birinchi ko'radigan joy, u mamlakat haqida birinchi taassurotni yaratadi (35); shuning uchun aeroportlar \"gateways\" deb ataladi.",
+      "36–40. Ichki dizayn: qorong'i, yopiq aeroportlar o'rniga atrofga qaragan katta, ochiq maydonlar — masalan, Pekin aeroporti, ko'p joy va yorug'lik (36). Poyezdlar dizaynga kiritilgan, yo'laklar keng, odamlar o'zini xotirjam his qiladi — zamonaviy sayohat stressi kamaygan (37). Tashqi ko'rinish atrofga moslashtirilgan: Norvegiyadagi Arctic Circle aeroportining tomi tog'lar shaklida (38); Tailand va Hindistondagi aeroportlar atrofida soyali bog'lar (39). Oxirida: maxsus shisha kunduzgi yorug'likni oshiradi va energiya sarfini kamaytiradi, zamonaviy texnologiya xarajatlarni ham qisqartiradi (40)."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 31–40: Airport Design — complete the notes",
+       "type": "NO MORE THAN TWO WORDS",
+       "instr": "Qaydlar ma'ruza tartibida, pauzasiz.",
+       "items": [
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40"
+       ],
+       "answers": [
+        "bus station",
+        "city",
+        "mass tourism",
+        "international business",
+        "(first) impression",
+        "(open) areas",
+        "stress",
+        "roof",
+        "(shaded) garden(s)",
+        "energy (use)"
+       ],
+       "why": [
+        "1960–70-yillardagi aeroportlar juda oddiy — avtovokzalga o'xshagan.",
+        "Ma'ruzada \"mini city\". \"Small\" qaydda bor — faqat \"city\" yoziladi.",
+        "Ommaviy turizm: arzon paket turlar, arzon aviakompaniyalar, ko'p qavatli mehmonxonalar.",
+        "Odamlar uchrashuvlar uchun bir mamlakatdan boshqasiga tez-tez uchadi — xalqaro biznesning o'sishi.",
+        "Aeroport — mamlakatda birinchi ko'riladigan joy; u birinchi taassurotni yaratadi, shu sababli \"gateways\".",
+        "Qorong'i, yopiq aeroportlar o'rniga katta, ochiq maydonlar. \"Big\" = large.",
+        "Keng yo'laklar, xotirjamlik — zamonaviy sayohat stressi minimal. Reduces = minimised.",
+        "Tom tog'lar shaklida: tepada cho'qqilar, yon tomonlari yerga tushadi.",
+        "Aeroportlar atrofidagi soyali bog'lar mamlakat manzarasini aks ettiradi.",
+        "Maxsus shisha kunduzgi yorug'likni oshiradi va energiya sarfini kamaytiradi. Reduces = cut down on."
+       ],
+       "note": "Kitob kaliti: 31 bus station · 32 city · 33 mass tourism · 34 international business · 35 (first) impression · 36 (open) areas · 37 stress · 38 roof · 39 (shaded) garden(s) · 40 energy (use).",
+       "layout": "grid",
+       "head": [
+        "Airport Design — qaydlar mazmuni",
+        ""
+       ],
+       "rows": [
+        [
+         "Taqqoslash",
+         "o'tmishdagi aeroport ≈ (31) ;; hozirgi aeroport ≈ kichik (32)"
+        ],
+        [
+         "Reasons for changes",
+         "yo'lovchilar ko'payishi: (33) (masalan, paket turlar) ;; (34) (masalan, uchrashuvlar) ;; mamlakat haqida yaxshi (35) yaratish — aeroportlar \"gateways\""
+        ],
+        [
+         "Inside the building",
+         "ko'p katta (36) joy va yorug'lik beradi (masalan, Pekin) ;; xotirjam muhit va erkin harakat yo'lovchilar (37) ini kamaytiradi"
+        ],
+        [
+         "The exterior of the building",
+         "atrofga moslashgan: Arctic Circle aeroporti (Norvegiya) (38) ining shakli ;; Hindiston va Tailanddagi aeroportlar tashqarisidagi (39) ;; konstruktiv dizayn (40) va xarajatlarni kamaytiradi"
+        ]
+       ]
+      },
+      {
+       "title": "Paraphrase va bo'lim signallari",
+       "type": "Tahlil",
+       "instr": "Qayd — ma'ruza.",
+       "items": [
+        "32 small city",
+        "34 e.g. meetings",
+        "35 \"The second reason\"",
+        "36 \"Now, what are the changes\"",
+        "38 \"Outside, the buildings have changed\"",
+        "40 reduces"
+       ],
+       "answers": [
+        "\"mini city\"",
+        "xalqaro biznes safarlari",
+        "Reasons for changes — ikkinchi sabab",
+        "Types of change — Inside",
+        "The exterior",
+        "cut down on"
+       ],
+       "why": [
+        "Small = mini.",
+        "Misol → toifa.",
+        "Bo'lim ichidagi signal.",
+        "Yangi bo'lim.",
+        "Yangi bo'lim.",
+        "Paraphrase."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "Xato tahlili jadvali",
+     "type": "Yozma",
+     "instr": "Testdagi har xatoingizni jadvalga yozing: savol raqami — savol turi — mening javobim — to'g'ri javob — sabab (eshitmadim / paraphrase / tuzoq / imlo / so'z chegarasi).",
+     "answers": "Ustoz jadval asosida har o'quvchiga 2 ta zaif savol turini belgilaydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Section 3 ni qayta tinglash",
+     "type": "Listening",
+     "instr": "3-audioni (CD2 Track 33) kitobdagi transkript bilan qayta tinglang. 21–27 savollarning har birida rad etilgan variantlar qayerda tilga olinganini transkriptda belgilang.",
+     "answers": "Listening bo'limidagi \"Kimning fikri va nisbatlar\" tahlili bilan solishtiriladi.",
+     "layout": "list"
+    },
+    {
+     "title": "Zaif tur takrori",
+     "type": "Listening",
+     "instr": "Eng ko'p xato qilgan savol turingiz bo'yicha oldingi darsdan bitta skriptni qayta bajaring: form — 3/23-dars, map — 17-dars, MCQ — 9/24-dars, Section 4 — 30-dars.",
+     "answers": "Javoblar o'sha darsning Listening bo'limida.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Full Listening testi",
+     "16+ to'g'ri javob (Band 5.0)",
+     "3 coin"
+    ],
+    [
+     "Xato tahlili jadvali",
+     "barcha xatolar, sababi bilan",
+     "2 coin"
+    ],
+    [
+     "Section 3 tuzoqlari",
+     "7 savol, rad etilgan variantlar bilan",
+     "1 coin"
+    ]
+   ]
+  },
+  {
    "no": 33,
    "title": "Reading: Full Reading Test (Passage 1–3)",
    "grammar_topic": "To'liq Reading testi — 3 passage, 40 savol, 60 daqiqa",

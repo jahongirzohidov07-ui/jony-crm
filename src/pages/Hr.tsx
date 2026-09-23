@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { formatPhone } from "../components/PhoneInput";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -48,7 +48,7 @@ type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacanci
   | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
   | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps"
-  | "penalty" | "blacklist";
+  | "penalty" | "blacklist" | "solo";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
@@ -69,6 +69,8 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "library", label: "Kutubxona" },
   // 2026-08-20, Jahongir: "hamma xodimga xar xilda onboarding"
   { key: "onbsteps", label: "Onboarding" },
+  // 2026-09-23, Jahongir: "hr qo'sha olsin u o'quvchilarni"
+  { key: "solo", label: "Yakka support" },
   // 2026-09-16, Jahongir: examiner va supportlardan jarima ball ayirish
   { key: "penalty", label: "Jarima ballari" },
   // 2026-09-16, Jahongir: "o'quv markaz qora ro'yxatini shakllantir"
@@ -1435,6 +1437,7 @@ export default function Hr() {
       {activeTab === "nps" && <NpsTab />}
       {activeTab === "library" && <LibraryTab />}
       {activeTab === "onbsteps" && <OnboardingStepsTab />}
+      {activeTab === "solo" && <SoloSupportTab />}
       {activeTab === "penalty" && <PenaltyPointsTab />}
       {activeTab === "blacklist" && <HrBlacklistTab />}
     </div>
@@ -2183,5 +2186,296 @@ function RolePicker({ all, value, onSave, onClose }: {
         </button>
       </div>
     </>
+  );
+}
+
+/** YAKKA SUPPORT (2026-09-23, Jahongir: "hr qo'sha olsin u
+ *  o'quvchilarni faqat").
+ *
+ *  HR o'quvchi kartasini ochmaydi — bu yerda faqat ism, guruh va
+ *  biriktirma ko'rinadi. To'lov, davomat, imtihon ma'lumotlari HR ga
+ *  berilmaydi. Ustoz ham o'z guruhidagi o'quvchini karta orqali
+ *  biriktiraveradi — ikkalasi bitta ro'yxatga tushadi. */
+const SOLO_DAYS: [string, string][] = [
+  ["mon", "Du"], ["tue", "Se"], ["wed", "Ch"], ["thu", "Pa"],
+  ["fri", "Ju"], ["sat", "Sh"], ["sun", "Ya"],
+];
+
+type SoloAssign = {
+  id: number;
+  student_id: number;
+  student: string;
+  group: string | null;
+  support: string | null;
+  days: string | null;
+  start: string | null;
+  end: string | null;
+  note: string | null;
+  created_by: string | null;
+  done: number;
+};
+
+function SoloSupportTab() {
+  const [d, setD] = useState<{
+    rows: SoloAssign[];
+    supports: { id: number; name: string }[];
+    hint: string;
+  } | null>(null);
+  const [open, setOpen] = useState(false);
+  const [q, setQ] = useState("");
+  const [found, setFound] = useState<
+    { id: number; name: string; group: string | null }[]
+  >([]);
+  const [pick, setPick] = useState<{ id: number; name: string } | null>(null);
+  const [f, setF] = useState({
+    user_id: "", days: [] as string[], start: "14:00", end: "15:00",
+    note: "",
+  });
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const load = useCallback(() => {
+    api.fresh<typeof d>("/support/solo").then(setD);
+  }, []);
+  useEffect(load, [load]);
+
+  useEffect(() => {
+    if (q.trim().length < 2) {
+      setFound([]);
+      return;
+    }
+    const t = setTimeout(() => {
+      api
+        .get<{ rows: { id: number; name: string; group: string | null }[] }>(
+          `/support/solo/students?q=${encodeURIComponent(q.trim())}`
+        )
+        .then((r) => setFound(r.rows))
+        .catch(() => setFound([]));
+    }, 300);
+    return () => clearTimeout(t);
+  }, [q]);
+
+  if (!d) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+
+  const save = async () => {
+    if (!pick) return;
+    setBusy(true);
+    setErr("");
+    try {
+      await api.post(`/students/${pick.id}/support`, {
+        user_id: Number(f.user_id),
+        days: f.days.join(","),
+        start: f.start,
+        end: f.end,
+        note: f.note,
+      });
+      setOpen(false);
+      setPick(null);
+      setQ("");
+      setF({ ...f, note: "", days: [] });
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Saqlanmadi");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex items-start gap-3 mb-4">
+        <p className="text-sm text-slate-500 flex-1">{d.hint}</p>
+        {!open && (
+          <button
+            onClick={() => setOpen(true)}
+            className="rounded-lg bg-brand-600 text-white text-sm px-4 py-2 whitespace-nowrap"
+          >
+            O'quvchi biriktirish
+          </button>
+        )}
+      </div>
+
+      {open && (
+        <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4 space-y-3">
+          {pick ? (
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-slate-900">
+                {pick.name}
+              </span>
+              <button
+                onClick={() => setPick(null)}
+                className="text-xs text-slate-500 underline decoration-dotted"
+              >
+                boshqasi
+              </button>
+            </div>
+          ) : (
+            <div>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="O'quvchi ismini yozing"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              />
+              {found.length > 0 && (
+                <div className="border border-slate-200 rounded-lg mt-1 max-h-56 overflow-y-auto">
+                  {found.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => setPick({ id: s.id, name: s.name })}
+                      className="w-full text-left px-3 py-2 text-sm hover:bg-slate-50"
+                    >
+                      {s.name}
+                      <span className="text-slate-400"> · {s.group || "guruhsiz"}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          <select
+            value={f.user_id}
+            onChange={(e) => setF({ ...f, user_id: e.target.value })}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          >
+            <option value="">Support tanlang</option>
+            {d.supports.map((s) => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </select>
+
+          <div className="flex flex-wrap gap-1.5">
+            {SOLO_DAYS.map(([k, lbl]) => (
+              <button
+                key={k}
+                onClick={() =>
+                  setF({
+                    ...f,
+                    days: f.days.includes(k)
+                      ? f.days.filter((x) => x !== k)
+                      : [...f.days, k],
+                  })
+                }
+                className={`px-3 py-1.5 rounded-lg text-sm border ${
+                  f.days.includes(k)
+                    ? "bg-brand-600 text-white border-brand-600"
+                    : "bg-white text-slate-600 border-slate-300"
+                }`}
+              >
+                {lbl}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="time" value={f.start}
+              onChange={(e) => setF({ ...f, start: e.target.value })}
+              className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+            />
+            <span className="text-slate-400">—</span>
+            <input
+              type="time" value={f.end}
+              onChange={(e) => setF({ ...f, end: e.target.value })}
+              className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+            />
+          </div>
+
+          <textarea
+            value={f.note}
+            onChange={(e) => setF({ ...f, note: e.target.value })}
+            rows={2}
+            placeholder="Nega orqada qolgan? Masalan: Unit 5 dan 40%, grammatikasi zaif"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          />
+
+          {err && <p className="text-sm text-rose-600">{err}</p>}
+
+          <div className="flex gap-2">
+            <button
+              disabled={busy || !pick || !f.user_id || !f.note.trim()}
+              onClick={save}
+              className="rounded-lg bg-brand-600 text-white text-sm px-4 py-2 disabled:opacity-50"
+            >
+              Biriktirish
+            </button>
+            <button
+              onClick={() => { setOpen(false); setErr(""); }}
+              className="rounded-lg border border-slate-300 text-sm px-4 py-2"
+            >
+              Bekor
+            </button>
+          </div>
+        </div>
+      )}
+
+      {d.rows.length === 0 ? (
+        <p className="text-sm text-slate-400 py-8 text-center">
+          Hozircha yakka biriktirma yo'q.
+        </p>
+      ) : (
+        <div className="bg-white border border-slate-200 rounded-xl overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-slate-500 text-xs">
+              <tr>
+                <th className="text-left px-4 py-2.5 font-medium">O'quvchi</th>
+                <th className="text-left px-3 py-2.5 font-medium">Guruh</th>
+                <th className="text-left px-3 py-2.5 font-medium">Support</th>
+                <th className="text-left px-3 py-2.5 font-medium">Kun</th>
+                <th className="text-right px-3 py-2.5 font-medium">Shu oy</th>
+                <th className="px-3 py-2.5"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {d.rows.map((r) => (
+                <tr key={r.id}>
+                  <td className="px-4 py-2.5 text-slate-800">
+                    {r.student}
+                    {r.note && (
+                      <span className="block text-xs text-slate-500">
+                        {r.note}
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-3 py-2.5 text-slate-600">
+                    {r.group || "—"}
+                  </td>
+                  <td className="px-3 py-2.5 text-slate-600">
+                    {r.support || "—"}
+                  </td>
+                  <td className="px-3 py-2.5 text-slate-500 text-xs">
+                    {(r.days || "")
+                      .split(",")
+                      .filter(Boolean)
+                      .map((x) => SOLO_DAYS.find((w) => w[0] === x)?.[1] || x)
+                      .join(", ") || "—"}
+                    {r.start && r.end ? ` ${r.start}-${r.end}` : ""}
+                  </td>
+                  <td className="px-3 py-2.5 text-right text-slate-700">
+                    {r.done} ta
+                  </td>
+                  <td className="px-3 py-2.5 text-right">
+                    <button
+                      onClick={async () => {
+                        if (!confirm(`${r.student} biriktirmasi olib tashlansinmi?`))
+                          return;
+                        await api.delete(
+                          `/students/${r.student_id}/support/${r.id}`
+                        );
+                        load();
+                      }}
+                      className="text-xs text-rose-600 underline decoration-dotted"
+                    >
+                      Olib tashlash
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
   );
 }

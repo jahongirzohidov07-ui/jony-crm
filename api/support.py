@@ -93,8 +93,14 @@ def delete_assignment(
 #  Yo'qlama guruhnikidan ALOHIDA yoziladi (support_attendance) -
 #  ustoz oyligiga ham, o'quvchi hisobiga ham tegmaydi.
 # =====================================================================
+# HR ham biriktira oladi (2026-09-23, Jahongir: "hr qo'sha olsin").
+# HR o'quvchi kartasini ochmaydi - uning uchun HR bo'limida alohida
+# ro'yxat bor, shuning uchun o'quvchining to'lovi, davomati va
+# imtihonlari HR ga ochilmaydi.
 SOLO_ASSIGN = list(dict.fromkeys(
-    list(roles.ACADEMIC_ACCESS) + [roles.TEACHER]))
+    list(roles.ACADEMIC_ACCESS) + [roles.TEACHER, roles.HR_MANAGER]))
+SOLO_VIEW = list(dict.fromkeys(
+    list(roles.TEACHING_ACCESS) + list(SOLO_ASSIGN)))
 
 
 def _solo_can_touch(db: Session, user, student) -> bool:
@@ -119,7 +125,7 @@ def _solo_out(db: Session, a) -> dict:
 
 @router.get("/api/students/{sid}/support")
 def student_support_get(sid: int, db: Session = Depends(get_db),
-                        user=Depends(require_role(*roles.TEACHING_ACCESS))):
+                        user=Depends(require_role(*SOLO_VIEW))):
     """O'quvchiga yakka biriktirilgan support(lar)."""
     s = _get_student_in_scope(db, sid, user)
     rows = (db.query(models.SupportAssignment)
@@ -199,6 +205,74 @@ def student_support_del(sid: int, aid: int, db: Session = Depends(get_db),
               old_value="olib tashlandi", branch_id=s.branch_id,
               commit=True)
     return {"ok": True}
+
+
+@router.get("/api/support/solo")
+def solo_list(db: Session = Depends(get_db),
+              user=Depends(require_role(*SOLO_ASSIGN))):
+    """Barcha yakka biriktirmalar — HR bo'limidagi ro'yxat uchun."""
+    today = roles.local_today()
+    start, end = billing.month_bounds(today.year, today.month)
+    rows = (db.query(models.SupportAssignment)
+            .filter(models.SupportAssignment.student_id.isnot(None)).all())
+    out = []
+    for a in rows:
+        st = db.query(models.Student).get(a.student_id)
+        if not st or not _in_user_branches(db, user, st.branch_id):
+            continue
+        g = db.query(models.Group).get(st.group_id) if st.group_id else None
+        u = db.query(models.User).get(a.user_id) if a.user_id else None
+        done = (db.query(models.SupportSession)
+                .filter(models.SupportSession.student_id == st.id,
+                        models.SupportSession.date >= start,
+                        models.SupportSession.date <= end).count())
+        out.append({
+            "id": a.id, "student_id": st.id, "student": st.full_name,
+            "status": st.status,
+            "group": g.name if g else None,
+            "user_id": a.user_id, "support": u.full_name if u else None,
+            "days": a.days, "start": a.start, "end": a.end,
+            "note": a.note, "created_by": a.created_by,
+            "done": done,
+        })
+    out.sort(key=lambda r: r["student"])
+    sups = [{"id": u.id, "name": u.full_name}
+            for u in db.query(models.User)
+            .filter(models.User.role == roles.SUPPORT_TEACHER,
+                    models.User.is_active == 1)
+            .order_by(models.User.full_name).all()]
+    return {
+        "rows": out, "supports": sups,
+        "period": f"{today.year:04d}-{today.month:02d}",
+        "hint": ("Yakka dars o'quvchiga pulsiz. Supportga esa bu dars "
+                 "3 ta o'quvchilik darsdek hisoblanadi."),
+    }
+
+
+@router.get("/api/support/solo/students")
+def solo_student_search(q: str = "", db: Session = Depends(get_db),
+                        user=Depends(require_role(*SOLO_ASSIGN))):
+    """O'quvchini ism bo'yicha qidirish — faqat biriktirish uchun.
+
+    Bu yerda o'quvchi haqida ism, guruh va filialdan boshqa hech narsa
+    berilmaydi: HR ga o'quvchining to'lovi va boshqa ma'lumoti kerak
+    emas."""
+    term = (q or "").strip()
+    if len(term) < 2:
+        return {"rows": []}
+    qq = (db.query(models.Student)
+          .filter(models.Student.status == "active",
+                  models.Student.full_name.ilike(f"%{term}%")))
+    rows = []
+    for s in qq.order_by(models.Student.full_name).limit(40).all():
+        if not _in_user_branches(db, user, s.branch_id):
+            continue
+        g = db.query(models.Group).get(s.group_id) if s.group_id else None
+        rows.append({"id": s.id, "name": s.full_name,
+                     "group": g.name if g else None})
+        if len(rows) >= 20:
+            break
+    return {"rows": rows}
 
 
 def _student_attendance_stats(db: Session, sid: int, since: date) -> dict:

@@ -64,7 +64,10 @@ users = {}
 for un, nm, role in [("asos", "Asoschi", roles.FOUNDER),
                      ("sup", "Support Aziza", roles.SUPPORT_TEACHER),
                      ("ust", "Ustoz Anvar", roles.TEACHER),
-                     ("ust2", "Ustoz Botir", roles.TEACHER)]:
+                     ("ust2", "Ustoz Botir", roles.TEACHER),
+                     ("hr", "HR Nodira", roles.HR_MANAGER),
+                     ("sot", "Sotuvchi Sardor",
+                      roles.SALES_MANAGER)]:
     u = models.User(username=un, full_name=nm,
                     password_hash=hash_password("Parol123!"),
                     role=role, branch_id=BID, is_active=1)
@@ -132,6 +135,40 @@ d = client.get(f"/api/students/{SID}/support", headers=HT).json()
 ck("kartada ko'rinadi", d["rows"][0]["support"], "Support Aziza")
 ck("kun va vaqti saqlandi",
    (d["rows"][0]["days"], d["rows"][0]["start"]), ("24", "14:00"))
+
+print("\n=== A2. HR BIRIKTIRADI, ORTIQCHASINI KO'RMAYDI ===")
+HH = tok("hr")
+HX = tok("sot")
+ck("HR ro'yxatni ko'radi",
+   client.get("/api/support/solo", headers=HH).json()["rows"][0]["student"],
+   "Aliyev Ali")
+ck("HR o'quvchini ismidan qidiradi",
+   [x["name"] for x in client.get("/api/support/solo/students?q=bobo",
+                                  headers=HH).json()["rows"]],
+   ["Boboyev Bobur"])
+ck("qidiruvda faqat ism va guruh beriladi",
+   sorted(client.get("/api/support/solo/students?q=bobo",
+                     headers=HH).json()["rows"][0].keys()),
+   ["group", "id", "name"])
+r = client.post(f"/api/students/{SID2}/support", headers=HH,
+                json={"user_id": users["sup"], "days": "tue,thu",
+                      "start": "16:00", "end": "17:00",
+                      "note": "Mid-course 45% - reading zaif"})
+ck("HR boshqa guruhdagi o'quvchini ham biriktiradi", r.status_code, 200)
+# DIQQAT: /api/students/{id} hamma kirgan foydalanuvchiga ochiq
+# (get_current_user) - bu shu ishdan OLDIN ham shunday edi, HR ham
+# o'qiy olardi. Yangi panel ma'lumotni kengaytirmaydi: qidiruv faqat
+# ism va guruhni beradi, HR menyusida o'quvchilar bo'limi yo'q.
+ck("sotuvchi bu ro'yxatga kira olmaydi",
+   client.get("/api/support/solo", headers=HX).status_code, 403)
+ck("sotuvchi biriktira olmaydi",
+   client.post(f"/api/students/{SID}/support", headers=HX,
+               json={"user_id": users["sup"], "note": "x"}).status_code, 403)
+_hr_rows = client.get("/api/support/solo", headers=HH).json()["rows"]
+_aid = [x for x in _hr_rows if x["student_id"] == SID2][0]["id"]
+ck("HR olib ham tashlaydi",
+   client.delete(f"/api/students/{SID2}/support/{_aid}",
+                 headers=HH).status_code, 200)
 
 print("\n=== B. SUPPORT DARSNI YOZADI ===")
 d = client.get("/api/me/support-solo", headers=HS).json()

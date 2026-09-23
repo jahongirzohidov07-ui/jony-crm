@@ -2470,11 +2470,21 @@ def my_examiner_salary(year: int | None = None, month: int | None = None,
                        user=Depends(require_role(
                            roles.EXAMINER, roles.HEAD_EXAMINER))):
     """Examinerning o'z oyligi — imtihonlari kesimida, avtomat."""
-    if _is_volunteer(db, user):
-        return {"volunteer": True, "hint": _VOLUNTEER_HINT}
     today = roles.local_today()
-    return _examiner_month(db, user.id, year or today.year,
-                           month or today.month)
+    out = _examiner_month(db, user.id, year or today.year,
+                          month or today.month)
+    # VOLONTYORGA OYLIK HISOBLANMAYDI (2026-09-23, Jahongir: supportdan
+    # keyin "examinerlarga ham"). Imtihonlari va ballari ko'rinib
+    # turadi - u ish qilgani va daraja ko'tarish shu yerdan ko'rinadi,
+    # faqat pul hisobi 0 bo'ladi.
+    if _is_volunteer(db, user):
+        out["volunteer"] = True
+        out["salary"] = 0
+        out["raw"] = 0
+        out["clamped_min"] = False
+        out["clamped_max"] = False
+        out["volunteer_hint"] = _VOLUNTEER_HINT
+    return out
 
 @router.get("/api/me/junior-path")
 def my_junior_path(db: Session = Depends(get_db),

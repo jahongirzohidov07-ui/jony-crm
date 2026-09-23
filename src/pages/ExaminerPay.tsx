@@ -22,13 +22,27 @@ function SalaryCard({ d }: { d: Any }) {
       <div className="flex items-center gap-2 mb-3">
         <Wallet size={15} className="text-slate-400" />
         <p className="text-sm font-medium text-slate-700">
-          Shu oygi oylik — avtomat ({d.period})
+          {d.volunteer
+            ? `Shu oygi ishim (${d.period})`
+            : `Shu oygi oylik — avtomat (${d.period})`}
         </p>
       </div>
-      <p className="text-3xl font-semibold text-slate-900 mb-1">
-        {fmt(d.salary)}{" "}
-        <span className="text-base font-normal text-slate-400">so'm</span>
-      </p>
+      {/* Volontyorga oylik hisoblanmaydi (2026-09-23, Jahongir) */}
+      {d.volunteer ? (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 mb-1">
+          <p className="text-sm font-medium text-amber-900">
+            Volontyor bosqichi — oylik hisoblanmaydi
+          </p>
+          {d.volunteer_hint && (
+            <p className="text-xs text-amber-800 mt-1">{d.volunteer_hint}</p>
+          )}
+        </div>
+      ) : (
+        <p className="text-3xl font-semibold text-slate-900 mb-1">
+          {fmt(d.salary)}{" "}
+          <span className="text-base font-normal text-slate-400">so'm</span>
+        </p>
+      )}
       {d.clamped_min && (
         <p className="text-xs text-amber-600 mb-1">
           Hisob {fmt(d.raw)} chiqdi — eng kam oylik {fmt(d.min)} to'lanadi.
@@ -61,7 +75,9 @@ function SalaryCard({ d }: { d: Any }) {
         <div className="rounded-lg border border-slate-200 p-3">
           <p className="text-xs text-slate-500">Sof ball</p>
           <p className="text-lg font-semibold text-slate-900">{d.points}</p>
-          <p className="text-xs text-slate-400">x 1 000 so'm</p>
+          {!d.volunteer && (
+            <p className="text-xs text-slate-400">x 1 000 so'm</p>
+          )}
         </div>
       </div>
     </div>
@@ -219,12 +235,6 @@ export function ExaminerPayTab() {
   if (err)
     return <p className="text-sm text-slate-500 py-10 text-center">{err}</p>;
   if (!d) return <p className="text-sm text-slate-400 py-10">Yuklanmoqda…</p>;
-  if (d.volunteer)
-    return (
-      <p className="text-sm text-slate-500 py-10 text-center max-w-md mx-auto">
-        {d.hint}
-      </p>
-    );
   return (
     <div>
       <SalaryCard d={d} />
@@ -233,7 +243,7 @@ export function ExaminerPayTab() {
       <RateTable d={d} />
       <p className="text-xs text-slate-500 mt-4 flex items-start gap-1.5">
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
-        {d.hint}
+        {d.volunteer ? d.volunteer_hint : d.hint}
       </p>
     </div>
   );

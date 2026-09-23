@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jony Imtihon</string>
+    <string name="intro_hint">Examiner bergan test havolasini shu yerga
+        qo\'ying. Odatda havolani Telegramda bosishning o\'zi kifoya —
+        test shu ilovada ochiladi.</string>
+    <string name="link_hint">https://…/t/…</string>
+    <string name="open_exam">Testni ochish</string>
+</resources>

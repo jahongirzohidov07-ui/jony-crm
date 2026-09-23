@@ -200,6 +200,19 @@ export default function ExamTake() {
     if (state === "countdown" && startsIn !== null && startsIn <= 0) load();
   }, [state, startsIn, load]);
 
+  // ANDROID ILOVASI BILAN ALOQA (2026-09-23). Test "Jony Imtihon"
+  // ilovasida ochilgan bo'lsa, savollar chiqqanda ekran qulflanadi
+  // (boshqa ilovaga o'tib bo'lmaydi), test tugagach qo'yib yuboriladi.
+  // Brauzerda JonyApp bo'lmaydi — u yerda hammasi eskicha ishlayveradi.
+  useEffect(() => {
+    const app = (window as unknown as {
+      JonyApp?: { examStarted?: () => void; examFinished?: () => void };
+    }).JonyApp;
+    if (!app) return;
+    if (state === "running" && !done && !expelled) app.examStarted?.();
+    else app.examFinished?.();
+  }, [state, done, expelled]);
+
   // Test ketyapti: 20 soniyada bir holatni yangilaymiz (examiner
   // muddatidan oldin tugatishi mumkin)
   useEffect(() => {

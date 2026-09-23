@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Kameradan olingan rasm shu yerga tushadi va sahifaga uzatiladi -->
+    <cache-path name="photos" path="photos/" />
+</paths>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC">
+
+    <WebView
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <!-- Havola qo'yish ekrani: o'quvchi Telegramdagi havolani bosса
+         bu ekran umuman ko'rinmaydi, test to'g'ridan-to'g'ri ochiladi -->
+    <LinearLayout
+        android:id="@+id/intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#0F172A"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/intro_hint"
+            android:textColor="#64748B"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/link_hint"
+            android:inputType="textUri"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/open_exam" />
+
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textColor="#B91C1C"
+            android:textSize="13sp"
+            android:visibility="gone" />
+    </LinearLayout>
+</FrameLayout>

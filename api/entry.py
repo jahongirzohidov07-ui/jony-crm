@@ -400,9 +400,13 @@ def my_support_session_add(payload: schemas.SupportSessionIn,
                      f"seansi asosiy darsdan alohida vaqtda bo'ladi — "
                      f"vaqtni tekshirib qayta kiriting.")
 
+    # Yakka darslar bu qoidaga kirmaydi (2026-09-23): shu guruhdagi
+    # bitta o'quvchi bilan alohida shug'ullanish guruh seansini
+    # yozishga to'sqinlik qilmasligi kerak.
     dup = (db.query(models.SupportSession)
            .filter(models.SupportSession.teacher_id == t.id,
                    models.SupportSession.group_id == g.id,
+                   models.SupportSession.student_id.is_(None),
                    models.SupportSession.date == d).first())
     if dup:
         raise HTTPException(400, "Bu kunga bu guruh uchun seans "

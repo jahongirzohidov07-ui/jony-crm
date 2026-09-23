@@ -6049,6 +6049,8 @@ def _support_session_out(db: Session, r: models.SupportSession) -> dict:
         "minutes": r.minutes,
         "hours": round((r.minutes or 0) / 60, 2),
         "students_count": r.students_count,
+        "student_id": r.student_id,
+        "solo": bool(r.student_id),
         "note": r.note,
     }
 
@@ -6095,13 +6097,29 @@ def _support_month(db: Session, teacher_id: int, year: int,
                 .order_by(models.SupportAdjustment.date,
                           models.SupportAdjustment.id).all())
     adj_total = round(sum(a.points or 0 for a in adjs), 2)
-    calc = roles.support_salary(hours, students, pct, minus=adj_total)
+    # Soat ballari HAR SEANS uchun alohida: yakka (1-3 o'quvchi)
+    # darsda soat ikki barobar turadi (2026-09-23).
+    h_points = round(sum(
+        roles.support_hours_points((r.minutes or 0) / 60, r.students_count)
+        for r in rows), 2)
+    solo_hours = round(sum((r.minutes or 0) / 60 for r in rows
+                           if (r.students_count or 0)
+                           <= roles.SUPPORT_SMALL_MAX), 2)
+    calc = roles.support_salary(hours, students, pct, minus=adj_total,
+                                hours_points=h_points)
     gnames = {g.id: g.name for g in db.query(models.Group)
               .filter(models.Group.id.in_(gids or [-1])).all()}
-    formula = (f"({calc['hours']} soat x "
-               f"{roles.SUPPORT_HOURS_W} + {calc['students']} "
-               f"o'quvchi x {roles.SUPPORT_STUDENTS_W} + "
-               f"koef {calc['coef']} x {roles.SUPPORT_RESULT_W}")
+    if solo_hours:
+        formula = (f"({round(hours - solo_hours, 2)} soat x "
+                   f"{roles.SUPPORT_HOURS_W} + {solo_hours} yakka soat x "
+                   f"{roles.SUPPORT_HOURS_W_SMALL} + {calc['students']} "
+                   f"o'quvchi x {roles.SUPPORT_STUDENTS_W} + "
+                   f"koef {calc['coef']} x {roles.SUPPORT_RESULT_W}")
+    else:
+        formula = (f"({calc['hours']} soat x "
+                   f"{roles.SUPPORT_HOURS_W} + {calc['students']} "
+                   f"o'quvchi x {roles.SUPPORT_STUDENTS_W} + "
+                   f"koef {calc['coef']} x {roles.SUPPORT_RESULT_W}")
     if adj_total:
         formula += f" − {adj_total} jarima"
     formula += f") x {roles.SUPPORT_PAY_UNIT:,}"
@@ -6116,6 +6134,8 @@ def _support_month(db: Session, teacher_id: int, year: int,
              "reason": a.reason, "created_by": a.created_by}
             for a in adjs],
         "formula": formula.replace(",", " "),
+        "solo_hours": solo_hours,
+        "solo_count": sum(1 for r in rows if r.student_id),
         "min": roles.SUPPORT_PAY_MIN,
         "max": roles.SUPPORT_PAY_MAX,
     }

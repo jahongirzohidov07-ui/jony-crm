@@ -5357,6 +5357,14 @@ SUPPORT_PAY_MIN = 400_000
 SUPPORT_PAY_MAX = 1_500_000
 SUPPORT_PAY_UNIT = 10_000
 SUPPORT_HOURS_W = 0.30
+# YAKKA ISH (2026-09-23, Jahongir). Orqada qolgan o'quvchi bilan
+# bittalab ishlash guruh bilan ishlashdan to'rt barobar kam pul
+# berardi (1 soat, 1 o'quvchi = 5 000 so'm), shuning uchun support
+# bunday ishni olishdan manfaatdor emas edi. Endi 1-3 o'quvchili
+# seansda soat ikki barobar ball beradi. Hisob HAR SEANS uchun
+# alohida yuritiladi: oy yakunidagi jami o'quvchi soniga qarab emas.
+SUPPORT_SMALL_MAX = 3
+SUPPORT_HOURS_W_SMALL = 0.60
 SUPPORT_STUDENTS_W = 0.20
 SUPPORT_RESULT_W = 0.50
 
@@ -5398,15 +5406,26 @@ def support_result_coef(percent) -> float:
         else SUPPORT_RESULT_BANDS[-1][2]
 
 
+def support_hours_points(hours: float, students: int) -> float:
+    """Bitta seansning soat ballari. 1-3 o'quvchi bo'lsa ikki barobar."""
+    w = (SUPPORT_HOURS_W_SMALL
+         if 0 < (students or 0) <= SUPPORT_SMALL_MAX else SUPPORT_HOURS_W)
+    return round(float(hours or 0) * w, 2)
+
+
 def support_salary(hours: float, students: int, percent,
-                   minus: float = 0.0) -> dict:
+                   minus: float = 0.0,
+                   hours_points: float | None = None) -> dict:
     """Formula bitta joyda — kartada ham, ro'yxatda ham, testda ham
     aynan shu hisob.
 
     minus — HR ayirgan jarima ballari (SupportAdjustment). Ball
     oylikka aylantirilishidan OLDIN ayiriladi, examinerdagi kabi."""
     coef = support_result_coef(percent)
-    h_part = round(hours * SUPPORT_HOURS_W, 2)
+    # hours_points berilsa — u seanslar bo'yicha alohida hisoblangan
+    # (yakka darslar qimmatroq). Berilmasa — eski, oddiy hisob.
+    h_part = (round(hours * SUPPORT_HOURS_W, 2) if hours_points is None
+              else round(float(hours_points), 2))
     s_part = round(students * SUPPORT_STUDENTS_W, 2)
     r_part = round(coef * SUPPORT_RESULT_W, 2)
     gross = round(h_part + s_part + r_part, 2)

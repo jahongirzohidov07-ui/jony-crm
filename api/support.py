@@ -7,7 +7,7 @@ import bisect
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
+from fastapi import APIRouter, Body, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy import func, or_, text
 from sqlalchemy.orm import Session
@@ -78,6 +78,128 @@ def delete_assignment(
         raise HTTPException(404, "Topilmadi")
     db.delete(a); db.commit()
     return {"ok": True}
+
+# =====================================================================
+#  ORQADA QOLGAN O'QUVCHINI SUPPORTGA BIRIKTIRISH (2026-09-23)
+#
+#  Jahongir: "o'zlashtirishi orqada qolgan o'quvchini ustoz biriktirib
+#  bersa yo'qlamani qanday qo'yadi, u o'quvchiga qanaqa pul oladi".
+#
+#  Qaror: o'quvchi qo'shimcha pul TO'LAMAYDI (orqada qolgan o'quvchi -
+#  ketib qolish arafasidagi o'quvchi, undan pul so'rash uni butunlay
+#  yo'qotadi). Support esa bekorga ishlamasin: yakka darsda soat ikki
+#  barobar ball beradi (roles.SUPPORT_HOURS_W_SMALL).
+#
+#  Yo'qlama guruhnikidan ALOHIDA yoziladi (support_attendance) -
+#  ustoz oyligiga ham, o'quvchi hisobiga ham tegmaydi.
+# =====================================================================
+SOLO_ASSIGN = list(dict.fromkeys(
+    list(roles.ACADEMIC_ACCESS) + [roles.TEACHER]))
+
+
+def _solo_can_touch(db: Session, user, student) -> bool:
+    """Ustoz faqat O'Z guruhidagi o'quvchini biriktira oladi."""
+    if user.role != roles.TEACHER:
+        return True
+    g = (db.query(models.Group).get(student.group_id)
+         if student.group_id else None)
+    t = _teacher_of_user(db, user)
+    return bool(g and t and g.teacher_id == t.id)
+
+
+def _solo_out(db: Session, a) -> dict:
+    u = db.query(models.User).get(a.user_id) if a.user_id else None
+    return {
+        "id": a.id, "user_id": a.user_id,
+        "support": u.full_name if u else None,
+        "days": a.days, "start": a.start, "end": a.end,
+        "note": a.note, "created_by": a.created_by,
+    }
+
+
+@router.get("/api/students/{sid}/support")
+def student_support_get(sid: int, db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.TEACHING_ACCESS))):
+    """O'quvchiga yakka biriktirilgan support(lar)."""
+    s = _get_student_in_scope(db, sid, user)
+    rows = (db.query(models.SupportAssignment)
+            .filter(models.SupportAssignment.student_id == s.id).all())
+    sups = [{"id": u.id, "name": u.full_name}
+            for u in db.query(models.User)
+            .filter(models.User.role == roles.SUPPORT_TEACHER,
+                    models.User.is_active == 1)
+            .order_by(models.User.full_name).all()]
+    return {
+        "rows": [_solo_out(db, a) for a in rows],
+        "supports": sups,
+        "can_edit": (user.role in tuple(SOLO_ASSIGN)
+                     and _solo_can_touch(db, user, s)),
+        "hint": ("Yakka dars o'quvchiga qo'shimcha pul solmaydi. "
+                 "Support belgilangan kunda alohida shug'ullanadi, "
+                 "yo'qlamasi guruh yo'qlamasidan alohida yuritiladi."),
+    }
+
+
+@router.post("/api/students/{sid}/support")
+def student_support_add(sid: int, payload: dict = Body(...),
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*SOLO_ASSIGN))):
+    """Ustoz orqada qolgan o'quvchisini supportga biriktiradi."""
+    s = _get_student_in_scope(db, sid, user)
+    if not _solo_can_touch(db, user, s):
+        raise HTTPException(403, "Faqat o'z guruhingizdagi o'quvchini "
+                                 "biriktira olasiz")
+    if s.status != "active":
+        raise HTTPException(400, "Faqat faol o'quvchi biriktiriladi")
+    u = db.query(models.User).get(payload.get("user_id") or 0)
+    if not u or u.role != roles.SUPPORT_TEACHER or not u.is_active:
+        raise HTTPException(404, "Support teacher topilmadi")
+    if not (payload.get("note") or "").strip():
+        raise HTTPException(400, "Sababini yozing — nega orqada qolgan")
+    days = (payload.get("days") or "").strip()
+    start = (payload.get("start") or "").strip()
+    end = (payload.get("end") or "").strip()
+    if start and end and roles.hhmm_minutes(start) is not None \
+            and roles.hhmm_minutes(end) is not None \
+            and roles.hhmm_minutes(end) <= roles.hhmm_minutes(start):
+        raise HTTPException(400, "Tugash vaqti boshlanishdan keyin bo'lsin")
+    dup = (db.query(models.SupportAssignment)
+           .filter(models.SupportAssignment.student_id == s.id,
+                   models.SupportAssignment.user_id == u.id).first())
+    if dup:
+        raise HTTPException(400, "Bu o'quvchi shu supportga allaqachon "
+                                 "biriktirilgan")
+    a = models.SupportAssignment(
+        user_id=u.id, student_id=s.id, days=days or None,
+        start=start or None, end=end or None,
+        note=payload.get("note"), created_by=user.full_name)
+    db.add(a)
+    db.commit()
+    db.refresh(a)
+    audit.log(db, user, entity="student", action="update", entity_id=s.id,
+              entity_label=s.full_name, field="Yakka support",
+              new_value=u.full_name, note=payload.get("note"),
+              branch_id=s.branch_id, commit=True)
+    return _solo_out(db, a)
+
+
+@router.delete("/api/students/{sid}/support/{aid}")
+def student_support_del(sid: int, aid: int, db: Session = Depends(get_db),
+                        user=Depends(require_role(*SOLO_ASSIGN))):
+    s = _get_student_in_scope(db, sid, user)
+    if not _solo_can_touch(db, user, s):
+        raise HTTPException(403, "Faqat o'z guruhingizdagi o'quvchi")
+    a = db.query(models.SupportAssignment).get(aid)
+    if not a or a.student_id != s.id:
+        raise HTTPException(404, "Biriktirish topilmadi")
+    db.delete(a)
+    db.commit()
+    audit.log(db, user, entity="student", action="update", entity_id=s.id,
+              entity_label=s.full_name, field="Yakka support",
+              old_value="olib tashlandi", branch_id=s.branch_id,
+              commit=True)
+    return {"ok": True}
+
 
 def _student_attendance_stats(db: Session, sid: int, since: date) -> dict:
     rows = (db.query(models.Attendance, models.Lesson)

@@ -7,7 +7,7 @@ import bisect
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
+from fastapi import APIRouter, Body, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy import func, or_, text
 from sqlalchemy.orm import Session
@@ -2421,9 +2421,13 @@ def my_support_session_add(payload: schemas.SupportSessionIn,
 
     # Bir kunda bitta guruhga ikki marta kiritilmaydi — oylik
     # ikkilanmasin
+    # Yakka darslar bu qoidaga kirmaydi (2026-09-23): o'sha guruhdagi
+    # bitta o'quvchi bilan alohida shug'ullanish guruh darsini
+    # yozishga to'sqinlik qilmasligi kerak.
     dup = db.query(models.SupportSession).filter(
         models.SupportSession.teacher_id == t.id,
         models.SupportSession.group_id == g.id,
+        models.SupportSession.student_id.is_(None),
         models.SupportSession.date == d).first()
     if dup:
         raise HTTPException(400, "Bu guruh uchun bugun seans allaqachon "
@@ -2443,6 +2447,172 @@ def my_support_session_add(payload: schemas.SupportSessionIn,
                         f"{payload.students_count} o'quvchi",
               commit=True)
     return _support_session_out(db, r)
+
+# =====================================================================
+#  YAKKA DARSLAR (2026-09-23)
+#
+#  Ustoz orqada qolgan o'quvchisini supportga biriktiradi. Support shu
+#  yerda o'sha o'quvchilarni ko'radi va bitta tugma bilan darsni
+#  yozadi: yo'qlama belgisi HAM, seans HAM bir vaqtda tushadi -
+#  shunda yo'qlama va pul hisobi bir-biridan ajralib qolmaydi.
+#
+#  O'quvchidan qo'shimcha pul olinmaydi. Supportga esa yakka dars
+#  soati ikki barobar ball beradi (roles.SUPPORT_HOURS_W_SMALL).
+# =====================================================================
+def _solo_month_rows(db: Session, teacher_id: int, sid: int,
+                     y: int, m: int) -> list:
+    start, end = billing.month_bounds(y, m)
+    ses = {r.date: r for r in db.query(models.SupportSession)
+           .filter(models.SupportSession.teacher_id == teacher_id,
+                   models.SupportSession.student_id == sid,
+                   models.SupportSession.date >= start,
+                   models.SupportSession.date <= end).all()}
+    _SA = models.SupportAttendance
+    marks = (db.query(_SA)
+             .filter(_SA.student_id == sid, _SA.date >= start,
+                     _SA.date <= end)
+             .order_by(_SA.date).all())
+    out = []
+    for a in marks:
+        r = ses.get(a.date)
+        out.append({
+            "date": a.date.isoformat(),
+            "present": bool(a.present),
+            "hours": round((r.minutes or 0) / 60, 2) if r else 0,
+            "session_id": r.id if r else None,
+        })
+    return out
+
+
+@router.get("/api/me/support-solo")
+def my_solo_students(year: int | None = None, month: int | None = None,
+                     db: Session = Depends(get_db),
+                     user=Depends(require_role(
+                         roles.SUPPORT_TEACHER, *roles.ACADEMIC_ACCESS))):
+    """Supportga yakka biriktirilgan o'quvchilar va shu oygi darslari."""
+    t = _teacher_of_user(db, user)
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    q = (db.query(models.SupportAssignment)
+         .filter(models.SupportAssignment.student_id.isnot(None)))
+    if user.role == roles.SUPPORT_TEACHER:
+        q = q.filter(models.SupportAssignment.user_id == user.id)
+    rows = []
+    for a in q.all():
+        st = db.query(models.Student).get(a.student_id)
+        if not st or st.status != "active":
+            continue
+        g = db.query(models.Group).get(st.group_id) if st.group_id else None
+        lessons = (_solo_month_rows(db, t.id, st.id, y, m)
+                   if t else [])
+        rows.append({
+            "assignment_id": a.id,
+            "student_id": st.id,
+            "name": st.full_name,
+            "group_id": st.group_id,
+            "group": g.name if g else None,
+            "days": a.days, "start": a.start, "end": a.end,
+            "note": a.note,
+            "lessons": lessons,
+            "done": sum(1 for x in lessons if x["present"]),
+            "missed": sum(1 for x in lessons if not x["present"]),
+            "today_done": any(x["date"] == today.isoformat()
+                              for x in lessons),
+        })
+    rows.sort(key=lambda r: r["name"])
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "rows": rows,
+        "hour_steps": roles.SUPPORT_SESSION_HOUR_STEPS,
+        "hint": ("Yakka dars o'quvchiga pulsiz. Sizga esa bu soat ikki "
+                 "barobar ball beradi — guruh darsi 0.30, yakka dars "
+                 "0.60."),
+    }
+
+
+@router.post("/api/me/support-solo/{sid}/lesson")
+def my_solo_lesson(sid: int, payload: dict = Body(...),
+                   db: Session = Depends(get_db),
+                   user=Depends(require_role(
+                       roles.SUPPORT_TEACHER, *roles.PAST_ATTENDANCE))):
+    """Yakka darsni yozish: keldi (seans + yo'qlama) yoki kelmadi
+    (faqat yo'qlama, pul yozilmaydi)."""
+    t = _my_teacher_or_404(db, user) if user.role == roles.SUPPORT_TEACHER \
+        else _teacher_of_user(db, user)
+    if not t:
+        raise HTTPException(404, "Ustoz kartasi topilmadi")
+    st = db.query(models.Student).get(sid)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    a = (db.query(models.SupportAssignment)
+         .filter(models.SupportAssignment.student_id == sid,
+                 models.SupportAssignment.user_id == (
+                     user.id if user.role == roles.SUPPORT_TEACHER
+                     else models.SupportAssignment.user_id)).first())
+    if not a:
+        raise HTTPException(403, "Bu o'quvchi sizga biriktirilmagan")
+
+    today = roles.local_today()
+    d = payload.get("date")
+    d = date.fromisoformat(d) if d else today
+    if d > today:
+        raise HTTPException(400, "Hali kelmagan kunga dars yozilmaydi")
+    if d < today and user.role not in tuple(roles.PAST_ATTENDANCE):
+        raise HTTPException(403, "O'tib ketgan kunga faqat asoschi va "
+                                 "o'quv bo'limi rahbari kirita oladi")
+
+    _SA = models.SupportAttendance
+    dup = (db.query(_SA).filter(_SA.student_id == sid, _SA.date == d)
+           .first())
+    if dup and db.query(models.SupportSession).filter(
+            models.SupportSession.teacher_id == t.id,
+            models.SupportSession.student_id == sid,
+            models.SupportSession.date == d).first():
+        raise HTTPException(400, "Bu kunga dars allaqachon yozilgan")
+
+    present = bool(payload.get("present", True))
+    if dup:
+        dup.present = 1 if present else 0
+    else:
+        db.add(_SA(group_id=st.group_id or 0, student_id=sid, date=d,
+                   present=1 if present else 0,
+                   note="Yakka dars", created_by=user.full_name))
+
+    out_hours = 0.0
+    if present:
+        hours = payload.get("hours")
+        if hours is None and a.start and a.end:
+            s_min = roles.hhmm_minutes(a.start)
+            e_min = roles.hhmm_minutes(a.end)
+            if s_min is not None and e_min is not None and e_min > s_min:
+                hours = round((e_min - s_min) / 60, 2)
+        hours = float(hours or 1)
+        if not (0 < hours <= roles.SUPPORT_SESSION_MAX_HOURS):
+            raise HTTPException(
+                400, f"Dars 0 dan {roles.SUPPORT_SESSION_MAX_HOURS} "
+                     f"soatgacha bo'lsin")
+        start = a.start or "00:00"
+        s_min = roles.hhmm_minutes(start) or 0
+        minutes = int(round(hours * 60))
+        e_min = s_min + minutes
+        g = db.query(models.Group).get(st.group_id) if st.group_id else None
+        r = models.SupportSession(
+            teacher_id=t.id, group_id=st.group_id, student_id=sid,
+            branch_id=(g.branch_id if g else st.branch_id), date=d,
+            start_time=start,
+            end_time=f"{(e_min // 60) % 24:02d}:{e_min % 60:02d}",
+            minutes=minutes, students_count=1,
+            note=f"Yakka dars: {st.full_name}", created_by=user.id)
+        db.add(r)
+        out_hours = hours
+    db.commit()
+    audit.log(db, user, entity="support_session", action="create",
+              entity_label=st.full_name, field="Yakka dars",
+              new_value=("keldi" if present else "kelmadi"),
+              branch_id=st.branch_id, commit=True)
+    return {"ok": True, "present": present, "hours": out_hours,
+            "date": d.isoformat()}
+
 
 @router.delete("/api/me/support-sessions/{sid}")
 def my_support_session_delete(sid: int, db: Session = Depends(get_db),

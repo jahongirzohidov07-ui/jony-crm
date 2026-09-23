@@ -3226,6 +3226,9 @@ class SupportSession(Base):
     group_id = Column(Integer, ForeignKey("groups.id"), index=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
 
+    # Yakka dars bo'lsa - kimga (2026-09-23). Guruh darsida bo'sh.
+    student_id = Column(Integer, ForeignKey("students.id"), index=True)
+
     date = Column(Date, nullable=False, index=True)
     start_time = Column(String, nullable=False)   # "14:00"
     end_time = Column(String, nullable=False)     # "15:30"

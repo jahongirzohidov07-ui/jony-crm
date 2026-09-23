@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Timer, Info, Trash2, Wallet, GraduationCap, Check, X as XIcon } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Timer, Info, Trash2, Wallet, GraduationCap, Check, Users, X as XIcon } from "lucide-react";
 import { api } from "../lib/api";
 import { Time24Input } from "../components/Time24Input";
 
@@ -292,6 +292,8 @@ export default function MySessions() {
         )}
       </div>
 
+      <SoloStudents />
+
       {/* ---- Junior teacher yo'li ---- */}
       {jp && (
         <div className="bg-white border border-slate-200 rounded-xl p-5 mb-4">
@@ -432,6 +434,121 @@ export default function MySessions() {
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
         {d.hint}
       </p>
+    </div>
+  );
+}
+
+/** YAKKA O'QUVCHILAR (2026-09-23). Ustoz orqada qolgan o'quvchini
+ *  supportga biriktiradi. Bu yerda bitta tugma bilan dars yoziladi:
+ *  yo'qlama ham, seans ham birga tushadi — shunda pul hisobi va
+ *  yo'qlama bir-biridan ajralib qolmaydi. */
+type SoloStudent = {
+  student_id: number;
+  name: string;
+  group: string | null;
+  days: string | null;
+  start: string | null;
+  end: string | null;
+  note: string | null;
+  done: number;
+  missed: number;
+  today_done: boolean;
+};
+
+const DAY_UZ: Record<string, string> = {
+  mon: "Du", tue: "Se", wed: "Ch", thu: "Pa", fri: "Ju", sat: "Sh",
+  sun: "Ya",
+};
+
+function SoloStudents() {
+  const [d, setD] = useState<{ rows: SoloStudent[]; hint: string } | null>(
+    null
+  );
+  const [busy, setBusy] = useState(0);
+
+  const load = useCallback(() => {
+    api
+      .fresh<{ rows: SoloStudent[]; hint: string }>("/me/support-solo")
+      .then(setD)
+      .catch(() => setD({ rows: [], hint: "" }));
+  }, []);
+  useEffect(load, [load]);
+
+  if (!d || d.rows.length === 0) return null;
+
+  const mark = async (sid: number, present: boolean) => {
+    setBusy(sid);
+    try {
+      await api.post(`/me/support-solo/${sid}/lesson`, { present });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Yozilmadi");
+    } finally {
+      setBusy(0);
+    }
+  };
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl p-5 mb-4">
+      <div className="flex items-center gap-2 mb-1">
+        <Users size={15} className="text-slate-400" />
+        <p className="text-sm font-medium text-slate-700">
+          Yakka o'quvchilar
+        </p>
+      </div>
+      <p className="text-xs text-slate-500 mb-3">{d.hint}</p>
+
+      {d.rows.map((r) => (
+        <div key={r.student_id}
+             className="border-t border-slate-100 py-3 first:border-t-0">
+          <div className="flex items-start gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-slate-900">{r.name}</p>
+              <p className="text-xs text-slate-500">
+                {r.group}
+                {r.days
+                  ? " · " +
+                    r.days
+                      .split(",")
+                      .filter(Boolean)
+                      .map((x) => DAY_UZ[x] || x)
+                      .join(", ")
+                  : ""}
+                {r.start && r.end ? ` ${r.start}-${r.end}` : ""}
+              </p>
+              {r.note && (
+                <p className="text-xs text-slate-600 mt-1">{r.note}</p>
+              )}
+              <p className="text-xs text-slate-400 mt-1">
+                Shu oy: {r.done} ta dars
+                {r.missed ? ` · ${r.missed} marta kelmadi` : ""}
+              </p>
+            </div>
+            {r.today_done ? (
+              <span className="text-xs text-emerald-600 whitespace-nowrap">
+                Bugun yozilgan
+              </span>
+            ) : (
+              <div className="flex gap-1.5 shrink-0">
+                <button
+                  disabled={busy === r.student_id}
+                  onClick={() => mark(r.student_id, true)}
+                  className="rounded-lg bg-brand-600 text-white text-xs px-3 py-1.5 disabled:opacity-50"
+                >
+                  Dars o'tdim
+                </button>
+                <button
+                  disabled={busy === r.student_id}
+                  onClick={() => mark(r.student_id, false)}
+                  className="rounded-lg border border-slate-300 text-slate-600 text-xs px-3 py-1.5 disabled:opacity-50"
+                >
+                  Kelmadi
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

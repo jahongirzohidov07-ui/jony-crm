@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PurchasesTab, RemindersTab } from "../components/StudentExtras";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Coins, Phone, X, Check, Award, MessageCircle, Pencil, Printer } from "lucide-react";
@@ -58,13 +58,14 @@ const STATUS_LABEL: Record<string, string> = {
 type Tab =
   | "groups" | "payments" | "price" | "attendance" | "exams"
   | "history" | "gamification" | "coins" | "note"
-  | "purchases" | "reminders";
+  | "purchases" | "reminders" | "support";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "groups", label: "Guruhlar" },
   { key: "payments", label: "To'lovlar" },
   { key: "price", label: "Narx va chegirma" },
   { key: "attendance", label: "Davomat" },
+  { key: "support", label: "Support" },
   { key: "exams", label: "Imtihonlar" },
   { key: "history", label: "Tarix" },
   { key: "purchases", label: "Xaridlar" },
@@ -1084,6 +1085,207 @@ function PaymentsTab({
 }
 
 // --------------------------------------------------------------- Davomat
+/** YAKKA SUPPORT (2026-09-23). Ustoz o'zlashtirishi orqada qolgan
+ *  o'quvchisini supportga biriktiradi: support belgilangan kunda u
+ *  bilan alohida shug'ullanadi. O'quvchi qo'shimcha pul to'lamaydi. */
+const WDAYS: [string, string][] = [
+  ["mon", "Du"], ["tue", "Se"], ["wed", "Ch"], ["thu", "Pa"],
+  ["fri", "Ju"], ["sat", "Sh"], ["sun", "Ya"],
+];
+
+type SoloRow = {
+  id: number;
+  support: string | null;
+  user_id: number;
+  days: string | null;
+  start: string | null;
+  end: string | null;
+  note: string | null;
+  created_by: string | null;
+};
+
+function SupportTab({ studentId }: { studentId: number }) {
+  const [d, setD] = useState<{
+    rows: SoloRow[];
+    supports: { id: number; name: string }[];
+    can_edit: boolean;
+    hint: string;
+  } | null>(null);
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState({
+    user_id: "", days: [] as string[], start: "14:00", end: "15:00",
+    note: "",
+  });
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const load = useCallback(() => {
+    api.fresh<typeof d>(`/students/${studentId}/support`).then(setD);
+  }, [studentId]);
+  useEffect(load, [load]);
+
+  if (!d) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+
+  const save = async () => {
+    setBusy(true);
+    setErr("");
+    try {
+      await api.post(`/students/${studentId}/support`, {
+        user_id: Number(f.user_id),
+        days: f.days.join(","),
+        start: f.start,
+        end: f.end,
+        note: f.note,
+      });
+      setOpen(false);
+      setF({ ...f, note: "", days: [] });
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Saqlanmadi");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div>
+      {d.rows.length === 0 && !open && (
+        <p className="text-sm text-slate-500 mb-4">
+          Bu o'quvchi hech kimga yakka biriktirilmagan.
+        </p>
+      )}
+
+      {d.rows.map((r) => (
+        <div key={r.id}
+             className="bg-white border border-slate-200 rounded-xl p-4 mb-3">
+          <div className="flex items-start gap-3">
+            <div className="flex-1">
+              <p className="font-medium text-slate-900">{r.support}</p>
+              <p className="text-xs text-slate-500 mt-0.5">
+                {(r.days || "")
+                  .split(",")
+                  .filter(Boolean)
+                  .map((x) => WDAYS.find((w) => w[0] === x)?.[1] || x)
+                  .join(", ") || "kun belgilanmagan"}
+                {r.start && r.end ? ` · ${r.start}-${r.end}` : ""}
+              </p>
+              {r.note && (
+                <p className="text-sm text-slate-600 mt-2">{r.note}</p>
+              )}
+              {r.created_by && (
+                <p className="text-[11px] text-slate-400 mt-1">
+                  Biriktirdi: {r.created_by}
+                </p>
+              )}
+            </div>
+            {d.can_edit && (
+              <button
+                onClick={async () => {
+                  if (!confirm("Biriktirish olib tashlansinmi?")) return;
+                  await api.delete(`/students/${studentId}/support/${r.id}`);
+                  load();
+                }}
+                className="text-xs text-rose-600 underline decoration-dotted"
+              >
+                Olib tashlash
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+
+      {d.can_edit && !open && (
+        <button
+          onClick={() => setOpen(true)}
+          className="rounded-lg bg-brand-600 text-white text-sm px-4 py-2"
+        >
+          Supportga biriktirish
+        </button>
+      )}
+
+      {open && (
+        <div className="bg-white border border-slate-200 rounded-xl p-4 space-y-3">
+          <select
+            value={f.user_id}
+            onChange={(e) => setF({ ...f, user_id: e.target.value })}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          >
+            <option value="">Support tanlang</option>
+            {d.supports.map((s) => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </select>
+
+          <div className="flex flex-wrap gap-1.5">
+            {WDAYS.map(([k, lbl]) => (
+              <button
+                key={k}
+                onClick={() =>
+                  setF({
+                    ...f,
+                    days: f.days.includes(k)
+                      ? f.days.filter((x) => x !== k)
+                      : [...f.days, k],
+                  })
+                }
+                className={`px-3 py-1.5 rounded-lg text-sm border ${
+                  f.days.includes(k)
+                    ? "bg-brand-600 text-white border-brand-600"
+                    : "bg-white text-slate-600 border-slate-300"
+                }`}
+              >
+                {lbl}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="time" value={f.start}
+              onChange={(e) => setF({ ...f, start: e.target.value })}
+              className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+            />
+            <span className="text-slate-400">—</span>
+            <input
+              type="time" value={f.end}
+              onChange={(e) => setF({ ...f, end: e.target.value })}
+              className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+            />
+          </div>
+
+          <textarea
+            value={f.note}
+            onChange={(e) => setF({ ...f, note: e.target.value })}
+            rows={2}
+            placeholder="Nega orqada qolgan? Masalan: Unit 5 dan 40%, grammatikasi zaif"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          />
+
+          {err && <p className="text-sm text-rose-600">{err}</p>}
+
+          <div className="flex gap-2">
+            <button
+              disabled={busy || !f.user_id || !f.note.trim()}
+              onClick={save}
+              className="rounded-lg bg-brand-600 text-white text-sm px-4 py-2 disabled:opacity-50"
+            >
+              Biriktirish
+            </button>
+            <button
+              onClick={() => setOpen(false)}
+              className="rounded-lg border border-slate-300 text-sm px-4 py-2"
+            >
+              Bekor
+            </button>
+          </div>
+        </div>
+      )}
+
+      <p className="text-xs text-slate-500 mt-4">{d.hint}</p>
+    </div>
+  );
+}
+
 function AttendanceTab({ studentId }: { studentId: number }) {
   const [data, setData] = useState<StudentAttendance | null>(null);
   const [loading, setLoading] = useState(true);
@@ -1486,6 +1688,7 @@ export default function StudentDetail() {
           )}
           {tab === "payments" && <PaymentsTab student={student} onChanged={load} />}
           {tab === "attendance" && <AttendanceTab studentId={student.id} />}
+          {tab === "support" && <SupportTab studentId={student.id} />}
           {tab === "exams" && <ExamsTab studentId={student.id} />}
           {tab === "price" && <PriceTab studentId={student.id} />}
           {tab === "history" && (

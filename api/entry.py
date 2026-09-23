@@ -5193,6 +5193,33 @@ if _cur_su_sal is not None:
         return data
 
 
+# Ustozlar ro'yxatidagi support oyligi ham darajaga bo'ysunadi
+# (2026-09-23, Jahongir: volontyorga oylik hisoblanmasin). Bu yerda
+# qatorlarda faqat teacher_id bor - avval user_id topiladi.
+_cur_su_list = _find_endpoint("/api/support-teachers/salaries", "GET")
+
+if _cur_su_list is not None:
+    _drop_route("/api/support-teachers/salaries", "GET")
+
+    @app.get("/api/support-teachers/salaries")
+    def support_teacher_salaries_v2(year: int | None = None,
+                                    month: int | None = None,
+                                    db: Session = Depends(get_db),
+                                    user=Depends(require_role(
+                                        *roles.FULL_ACCESS,
+                                        roles.ACADEMIC_HEAD,
+                                        roles.HEAD_SUPPORT,
+                                        roles.HR_MANAGER,
+                                        roles.FINANCE_DIRECTOR))):
+        data = _cur_su_list(year=year, month=month, db=db, user=user)
+        rows = data.get("rows") or []
+        for r in rows:
+            t = db.query(models.Teacher).get(r.get("teacher_id"))
+            r["user_id"] = t.user_id if t else None
+        data["rows"] = _apply_grade(db, rows, "user_id")
+        return data
+
+
 # =====================================================================
 #  HR KUTUBXONASI (onboarding)
 #

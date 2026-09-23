@@ -190,7 +190,7 @@ export default function MySessions() {
       <div className="flex items-center gap-2 mb-1">
         <Timer size={18} className="text-slate-400" />
         <h1 className="text-xl font-semibold text-slate-900">
-          Darslarim va oyligim
+          {d.volunteer ? "Darslarim" : "Darslarim va oyligim"}
         </h1>
       </div>
       <p className="text-sm text-slate-500 mb-5">{d.period}</p>
@@ -202,21 +202,35 @@ export default function MySessions() {
         <div className="flex items-center gap-2 mb-3">
           <Wallet size={15} className="text-slate-400" />
           <p className="text-sm font-medium text-slate-700">
-            Shu oygi oylik — avtomat
+            {d.volunteer ? "Shu oygi ishim" : "Shu oygi oylik — avtomat"}
           </p>
         </div>
+        {/* Volontyorga oylik hisoblanmaydi (2026-09-23, Jahongir) */}
+        {d.volunteer ? (
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 mb-1">
+            <p className="text-sm font-medium text-amber-900">
+              Volontyor bosqichi — oylik hisoblanmaydi
+            </p>
+            {d.volunteer_hint && (
+              <p className="text-xs text-amber-800 mt-1">
+                {d.volunteer_hint}
+              </p>
+            )}
+          </div>
+        ) : (
         <p className="text-3xl font-semibold text-slate-900 mb-1">
           {Number(d.salary).toLocaleString().replace(/,/g, " ")}{" "}
           <span className="text-base font-normal text-slate-400">so'm</span>
         </p>
-        {d.clamped_min && (
+        )}
+        {!d.volunteer && d.clamped_min && (
           <p className="text-xs text-amber-600 mb-2">
             Hisob {Number(d.raw).toLocaleString().replace(/,/g, " ")} chiqdi —
             eng kam oylik {Number(d.min).toLocaleString().replace(/,/g, " ")}{" "}
             to'lanadi.
           </p>
         )}
-        {d.clamped_max && (
+        {!d.volunteer && d.clamped_max && (
           <p className="text-xs text-amber-600 mb-2">
             Hisob yuqori chegaradan oshdi — {" "}
             {Number(d.max).toLocaleString().replace(/,/g, " ")} to'lanadi.
@@ -227,30 +241,40 @@ export default function MySessions() {
           <div className="rounded-lg border border-slate-200 p-3">
             <p className="text-xs text-slate-500">Soatlar</p>
             <p className="text-lg font-semibold text-slate-900">{d.hours}</p>
-            <p className="text-xs text-slate-400">x 0.30 = {d.hours_part}</p>
+            {!d.volunteer && (
+              <p className="text-xs text-slate-400">
+                x 0.30 = {d.hours_part}
+              </p>
+            )}
           </div>
           <div className="rounded-lg border border-slate-200 p-3">
             <p className="text-xs text-slate-500">O'quvchilar</p>
             <p className="text-lg font-semibold text-slate-900">
               {d.students}
             </p>
-            <p className="text-xs text-slate-400">
-              x 0.20 = {d.students_part}
-            </p>
+            {!d.volunteer && (
+              <p className="text-xs text-slate-400">
+                x 0.20 = {d.students_part}
+              </p>
+            )}
           </div>
           <div className="rounded-lg border border-slate-200 p-3">
             <p className="text-xs text-slate-500">Test natijasi</p>
             <p className="text-lg font-semibold text-slate-900">
               {d.avg_percent != null ? `${d.avg_percent}%` : "—"}
             </p>
-            <p className="text-xs text-slate-400">
-              koef {d.coef} x 0.50 = {d.result_part}
-            </p>
+            {!d.volunteer && (
+              <p className="text-xs text-slate-400">
+                koef {d.coef} x 0.50 = {d.result_part}
+              </p>
+            )}
           </div>
         </div>
-        <p className="text-xs text-slate-400 mt-2">
-          {d.formula} = {Number(d.raw).toLocaleString().replace(/,/g, " ")}
-        </p>
+        {!d.volunteer && (
+          <p className="text-xs text-slate-400 mt-2">
+            {d.formula} = {Number(d.raw).toLocaleString().replace(/,/g, " ")}
+          </p>
+        )}
         {/* HR ayirgan jarima ballari (2026-09-16) */}
         {d.adjustments?.length > 0 && (
           <div className="mt-3 border-t border-slate-100 pt-2">

@@ -451,21 +451,24 @@ export default function Teachers() {
   const isSupportTab = tab === "support";
   // Supportlarning shu oy oyligi — ro'yxatda summa ko'rinadi
   const [supSalaries, setSupSalaries] = useState<
-    Record<number, { salary: number; session_count: number }>
+    Record<number, { salary: number; session_count: number;
+                     grade_note?: string }>
   >({});
   useEffect(() => {
     if (!isSupportTab || !canSeeSalary) return;
     api
       .get<{ rows: { teacher_id: number; salary: number;
-                     session_count: number }[] }>(
+                     session_count: number;
+                     grade_note?: string }[] }>(
         "/support-teachers/salaries?x=1")
       .then((r) => {
-        const m: Record<number, { salary: number; session_count: number }> =
-          {};
+        const m: Record<number, { salary: number; session_count: number;
+                                  grade_note?: string }> = {};
         for (const row of r.rows)
           m[row.teacher_id] = {
             salary: row.salary,
             session_count: row.session_count,
+            grade_note: row.grade_note,
           };
         setSupSalaries(m);
       })
@@ -726,9 +729,16 @@ export default function Teachers() {
                       <td className="px-4 py-3 text-right">
                         {supSalaries[t.id] ? (
                           <span className="font-medium text-slate-800">
-                            {formatSom(supSalaries[t.id].salary)}
+                            {supSalaries[t.id].grade_note ? (
+                              <span className="text-amber-700">Volontyor</span>
+                            ) : (
+                              formatSom(supSalaries[t.id].salary)
+                            )}
                             <span className="block text-[11px] font-normal text-slate-400">
                               {supSalaries[t.id].session_count} ta seans
+                              {supSalaries[t.id].grade_note
+                                ? " · oylik yo'q"
+                                : ""}
                             </span>
                           </span>
                         ) : (

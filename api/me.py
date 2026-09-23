@@ -2356,6 +2356,22 @@ def my_support_sessions(year: int | None = None, month: int | None = None,
         "vaqti, o'quvchilar soni. Oylik avtomat hisoblanadi: "
         "(soat x 0.30 + o'quvchi x 0.20 + test koeffitsiyenti x 0.50) "
         "x 10 000. Kamida 400 000, ko'pi bilan 1 500 000.")
+    # VOLONTYORGA OYLIK HISOBLANMAYDI (2026-09-23, Jahongir:
+    # "valantyor supportlar uchun oylik hisoblanmasligi kerak").
+    # Seanslar baribir yoziladi - ular tajriba va daraja ko'tarish
+    # uchun kerak, faqat pul hisobi 0 bo'ladi.
+    if _is_volunteer(db, user):
+        out["volunteer"] = True
+        out["salary"] = 0
+        out["raw"] = 0
+        out["clamped_min"] = False
+        out["clamped_max"] = False
+        out["hint"] = (
+            "Har darsni o'sha kuni kiriting: guruh, boshlanish-tugash "
+            "vaqti, o'quvchilar soni. Volontyor bosqichida oylik "
+            "hisoblanmaydi - seanslaringiz tajriba va keyingi "
+            "darajaga o'tish uchun yoziladi.")
+        out["volunteer_hint"] = _VOLUNTEER_HINT
     return out
 
 @router.post("/api/me/support-sessions")

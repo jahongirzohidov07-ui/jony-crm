@@ -118,6 +118,12 @@ r = c.post("/api/me/support-sessions", headers=H,
 ck("yarim soatlik oraliq ham RAD ETILADI", r.status_code, 400)
 
 print("\n=== OYLIK ALOHIDA HISOBLANADI ===")
+# Volontyor darajasida oylik umuman hisoblanmaydi (2026-09-23) —
+# bu test soat qoidasi haqida, shuning uchun support Junior qilinadi.
+_d = SessionLocal()
+_d.add(models.StaffGrade(user_id=u.id, grade="junior"))
+_d.commit()
+_d.close()
 r = c.get("/api/me/support-sessions", headers=H)
 ck("seanslar ro'yxati 200", r.status_code, 200)
 d = r.json()

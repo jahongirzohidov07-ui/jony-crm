@@ -27,6 +27,9 @@ export type OnlineSubmission = {
   paper_score: number | null;
   submitted_at: string | null;
   placed_by: string | null;
+  /** Test paytida sahifadan chiqib ketgani (2026-09-23) */
+  away_count: number;
+  away_sec: number;
   photo: string | null;
   detail: {
     id: string;
@@ -67,6 +70,8 @@ export type OnlineData = {
     ends_at: string | null;
     duration_min: number | null;
     in_progress: number;
+    /** Hozir yechayotganlar va ularning chiqib ketishlari */
+    live: { name: string; away_count: number; away_sec: number }[];
   } | null;
   group_level: string | null;
   can_manage: boolean;
@@ -178,6 +183,12 @@ export function AnswerSheetButton({
                 <p className="text-xs text-slate-500">
                   {s.online_score} / {s.online_max} · {wrong} ta xato ·{" "}
                   {when(s.submitted_at)}
+                  {s.away_count ? (
+                    <>
+                      {" · "}
+                      <AwayBadge n={s.away_count} sec={s.away_sec} />
+                    </>
+                  ) : null}
                   {s.typed_name && s.student_name && s.typed_name !== s.student_name
                     ? ` · o'zi yozgan ism: ${s.typed_name}`
                     : ""}
@@ -253,6 +264,19 @@ export function AnswerSheetButton({
   );
 }
 
+/** "2 marta chiqdi · 1:20" — test paytida boshqa ilovaga o'tgani. */
+export function AwayBadge({ n, sec, className = "" }: { n: number; sec: number; className?: string }) {
+  if (!n) return null;
+  return (
+    <span
+      title="Test paytida sahifadan chiqib ketgan (boshqa ilova yoki ekran). Skrinshotning o'zi sezilmaydi."
+      className={`text-[11px] font-medium bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded ${className}`}
+    >
+      ⚠ {n} marta chiqdi{sec ? ` · ${mmss(sec)}` : ""}
+    </span>
+  );
+}
+
 function mmss(sec: number) {
   const s = Math.max(0, Math.ceil(sec));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
@@ -299,6 +323,15 @@ function TimerControls({
         </span>
         {data.in_progress ? (
           <span className="text-xs text-sky-700">yechmoqda: {data.in_progress}</span>
+        ) : null}
+        {data.live?.some((x) => x.away_count) ? (
+          <span className="w-full text-xs text-amber-700">
+            Sahifadan chiqqanlar:{" "}
+            {data.live
+              .filter((x) => x.away_count)
+              .map((x) => `${x.name} (${x.away_count})`)
+              .join(", ")}
+          </span>
         ) : null}
         {canManage && (
           <button
@@ -746,6 +779,7 @@ export function OnlineBelow({
                     <p className="text-sm font-medium text-slate-800">
                       {s.typed_name || s.student_name || "—"}
                     </p>
+                    <AwayBadge n={s.away_count} sec={s.away_sec} className="mb-0.5 inline-block" />
                     <p className="text-xs text-slate-500">
                       {s.status === "duplicate"
                         ? `${s.student_name} qayta topshirgan`

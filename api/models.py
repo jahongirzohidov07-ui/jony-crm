@@ -4315,6 +4315,10 @@ class ExamSubmission(Base):
     # in_progress — o'quvchi kirgan, test hali topshirilmagan; sub_key —
     # uning brauzeridagi kalit (javoblarni oraliqda saqlash uchun)
     sub_key = Column(String, nullable=True, index=True)
+    # SAHIFADAN CHIQISH (2026-09-23, Jahongir): o'quvchi test paytida
+    # boshqa ilovaga o'tsa — necha marta va jami necha soniya.
+    away_count = Column(Integer, nullable=False, default=0)
+    away_sec = Column(Integer, nullable=False, default=0)
     ip = Column(String, nullable=True)
     submitted_at = Column(DateTime, default=datetime.utcnow)
     placed_by = Column(String, nullable=True)

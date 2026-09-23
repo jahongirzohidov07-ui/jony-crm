@@ -243,6 +243,29 @@ export default function ExamTake() {
     return () => clearInterval(t);
   }, [done, key, state, answers, api]);
 
+  // SAHIFADAN CHIQISH QAYDI (2026-09-23, Jahongir). O'quvchi boshqa
+  // ilovaga o'tsa — necha marta va qancha vaqtga chiqqani yoziladi.
+  useEffect(() => {
+    if (done || !key || state !== "running") return;
+    let left = 0;
+    const onChange = () => {
+      if (document.visibilityState === "hidden") {
+        left = Date.now();
+        return;
+      }
+      if (!left) return;
+      const sec = Math.round((Date.now() - left) / 1000);
+      left = 0;
+      fetch(`${api}/away`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, seconds: sec }),
+      }).catch(() => {});
+    };
+    document.addEventListener("visibilitychange", onChange);
+    return () => document.removeEventListener("visibilitychange", onChange);
+  }, [done, key, state, api]);
+
   // Vaqt tugadi — belgilanganlari bilan avtomatik topshiriladi
   useEffect(() => {
     if (done || !key) return;

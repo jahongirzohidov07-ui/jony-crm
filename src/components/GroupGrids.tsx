@@ -20,7 +20,7 @@ import {
 import { formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { Time24Input } from "./Time24Input";
-import { useExamOnline, OnlineLinkCard, OnlineBelow, Photo, AnswerSheetButton } from "./ExamOnline";
+import { useExamOnline, OnlineLinkCard, OnlineBelow, Photo, AnswerSheetButton, AwayBadge } from "./ExamOnline";
 
 /** Sana ustuni sarlavhasi: "01 iyul" ko'rinishida qisqa. */
 const SHORT_MONTHS = [
@@ -1352,6 +1352,13 @@ function ExamSheet({
                           : ""}
                       </AnswerSheetButton>
                     )}
+                    {onlineBy[s.id]?.away_count ? (
+                      <AwayBadge
+                        n={onlineBy[s.id].away_count}
+                        sec={onlineBy[s.id].away_sec}
+                        className="ml-2"
+                      />
+                    ) : null}
                     {r && r.counted === 0 && (
                       <span
                         className="ml-2 text-[10px] font-medium bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded"

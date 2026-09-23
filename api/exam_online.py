@@ -487,6 +487,8 @@ def _sub_out(s: models.ExamSubmission, names: dict,
         "paper_score": s.paper_score,
         "submitted_at": s.submitted_at.isoformat() if s.submitted_at else None,
         "placed_by": s.placed_by,
+        "away_count": s.away_count or 0,
+        "away_sec": s.away_sec or 0,
         "photo": s.photo,
         "detail": _answer_sheet(_load(s.detail), qmap or {}),
     }
@@ -549,6 +551,11 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
             "ends_at": _iso(o.ends_at),
             "duration_min": o.duration_min,
             "in_progress": sum(1 for s in subs if s.status == "in_progress"),
+            "live": [
+                {"name": s.typed_name or names.get(s.student_id) or "—",
+                 "away_count": s.away_count or 0, "away_sec": s.away_sec or 0}
+                for s in subs if s.status == "in_progress"
+            ],
         }
     return {"online": online, "group_level": lvl,
             "can_manage": user.role in RESULT_ROLES,
@@ -863,6 +870,11 @@ class SaveIn(BaseModel):
     answers: dict
 
 
+class AwayIn(BaseModel):
+    key: str
+    seconds: int = 0
+
+
 class SubmitIn(BaseModel):
     # Yangi tartib: begin'dan olingan kalit bilan
     key: Optional[str] = None
@@ -1019,6 +1031,21 @@ def public_save(token: str, payload: SaveIn, db: Session = Depends(get_db)):
                            ensure_ascii=False)[:20000]
     db.commit()
     return {"ok": True}
+
+
+@router.post("/api/public/exam/{token}/away")
+def public_away(token: str, payload: AwayIn, db: Session = Depends(get_db)):
+    """O'quvchi test sahifasidan chiqib qaytdi — qayd qilinadi.
+    (2026-09-23, Jahongir: skrinshotning o'zini sezib bo'lmaydi, lekin
+    savolni boshqa ilovaga olib chiqish shu yerda ko'rinadi.)"""
+    o, exam = _public(db, token)
+    s = _sub_by_key(db, exam, payload.key)
+    if s.status != "in_progress" or not _can_answer(o):
+        return {"ok": True}
+    s.away_count = (s.away_count or 0) + 1
+    s.away_sec = (s.away_sec or 0) + max(0, min(3600, int(payload.seconds or 0)))
+    db.commit()
+    return {"ok": True, "away_count": s.away_count}
 
 
 @router.post("/api/public/exam/{token}/submit")

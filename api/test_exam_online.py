@@ -511,6 +511,14 @@ d.close()
 w = client.get(f"/api/public/exam/{TOK3}").json()
 ck("test ochildi — 30 savol", (w["state"], sum(len(p["questions"]) for p in w["parts"])),
    ("running", 30))
+# Sahifadan chiqish qaydi (skrinshotning o'zi sezilmaydi, lekin
+# savolni boshqa ilovaga olib chiqish ko'rinadi)
+client.post(f"/api/public/exam/{TOK3}/away", json={"key": KEY1, "seconds": 45})
+client.post(f"/api/public/exam/{TOK3}/away", json={"key": KEY1, "seconds": 15})
+on = client.get(f"/api/exams/{EID3}/online", headers=HE).json()
+live = {x["name"]: x for x in on["online"]["live"]}
+ck("examiner jonli ko'radi: 2 marta, 60 soniya",
+   (live["Aliyev Ali"]["away_count"], live["Aliyev Ali"]["away_sec"]), (2, 60))
 ck("javob saqlandi",
    client.post(f"/api/public/exam/{TOK3}/save",
                json={"key": KEY1, "answers": correct_answers(20)}).json()["ok"], True)
@@ -538,6 +546,10 @@ ck("topshirmagan avtomatik yakunlandi — saqlangan 20 ta",
    ("placed", 20.0))
 ck("qo'lda topshirgan — 12", byname["Karimova Kamola"]["online_score"], 12.0)
 ck("hech kim kutmayapti", on["online"]["in_progress"], 0)
+ck("javob varag'ida ham qoladi", byname["Aliyev Ali"]["away_count"], 2)
+ck("tugagandan keyin qayd qilinmaydi",
+   client.post(f"/api/public/exam/{TOK3}/away",
+               json={"key": KEY1, "seconds": 30}).json().get("away_count"), None)
 ck("tugagandan keyin kirib bo'lmaydi",
    client.post(f"/api/public/exam/{TOK3}/begin",
                json={"student_id": S["Valiyev Vali"], "photo": PHOTO}).status_code, 410)

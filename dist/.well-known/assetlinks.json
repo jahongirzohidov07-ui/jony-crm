@@ -9,5 +9,15 @@
         "8B:A0:A0:46:F6:FC:F0:CA:C3:07:BB:EB:D1:A1:6C:5D:68:99:1E:E8:CA:BD:8B:12:8B:D3:9A:FE:DF:09:F0:8B"
       ]
     }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "uz.jonyacademy.exam",
+      "sha256_cert_fingerprints": [
+        "4A:82:E9:78:FC:BB:88:8B:6C:8E:55:32:01:9E:33:B4:9F:B4:55:E4:CF:18:72:0D:6B:3E:B3:F8:89:A9:79:84"
+      ]
+    }
   }
 ]

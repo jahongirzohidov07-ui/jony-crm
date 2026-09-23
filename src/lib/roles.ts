@@ -428,6 +428,9 @@ export const PLAN_VIEW = [
 export const FREEZE_ROLES = [
   FOUNDER, SALES_MANAGER, ACADEMIC_HEAD, BRANCH_MANAGER,
 ];
+// Boshqa guruhga (shu jumladan boshqa FILIALDAGI guruhga) o'tkazish —
+// administrator ham (2026-09-23). Serverda: roles.STUDENT_TRANSFER.
+export const STUDENT_TRANSFER = [...FREEZE_ROLES, ADMINISTRATOR];
 // Support teacherni guruhga biriktirish
 export const SUPPORT_ASSIGN = [FOUNDER, HEAD_SUPPORT, ACADEMIC_HEAD, HR_MANAGER];
 

@@ -5,12 +5,39 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
-import { FREEZE_ROLES, CASH_ACCESS, FOUNDER, can } from "../lib/roles";
+import { FREEZE_ROLES, STUDENT_TRANSFER, CASH_ACCESS, FOUNDER, can }
+  from "../lib/roles";
 import { api, ApiError, type Student, type Group, type CheckProblem }
   from "../lib/api";
 import { ScheduleProblems } from "./ScheduleProblems";
 import { StudentPayModal } from "./QuickPayment";
 import { MergeStudents } from "./MergeStudents";
+
+/** O'tkazish uchun guruh (boshqa filialdagilari ham) — 2026-09-23. */
+interface XbGroup {
+  id: number;
+  name: string;
+  branch_id: number | null;
+  branch: string | null;
+  same_branch: boolean;
+  teacher: string | null;
+  lesson_days: string | null;
+  lesson_time: string | null;
+  lesson_price: number;
+  students: number;
+  capacity: number | null;
+}
+
+/** move-group javobi: filial almashgan bo'lsa pul qayta hisoblanadi. */
+interface MoveResult {
+  group?: string;
+  branch?: string | null;
+  branch_changed?: boolean;
+  task_for?: string | null;
+  recharge?: {
+    old: number; new: number; old_lessons: number; new_lessons: number;
+  } | null;
+}
 
 /** Faollashtirishdan oldin: shu sanadan qancha pul yechilishi. */
 interface ActivatePreview {
@@ -43,6 +70,9 @@ export function StudentRowMenu({
   const { user } = useAuth();
   const navigate = useNavigate();
   const canManage = can(user?.role, FREEZE_ROLES);
+  // O'tkazish — administratorga ham ochiq (2026-09-23). Qolgan
+  // amallar (muzlatish, faollashtirish, o'chirish) avvalgidek.
+  const canTransfer = can(user?.role, STUDENT_TRANSFER);
   const canCash = can(user?.role, CASH_ACCESS);
   const isFounder = can(user?.role, [FOUNDER]);
   const [open, setOpen] = useState(false);
@@ -109,6 +139,9 @@ export function StudentRowMenu({
       setBNote("");
       setProblems([]);
       setPendingGroup(null);
+      // Guruh/filial o'zgargan bo'lishi mumkin — o'tkazish ro'yxati
+      // eskirmasin, keyingi ochilishda qaytadan olinadi (2026-09-23).
+      setXbRows(null);
       onChanged();
     } catch (e) {
       if (e instanceof ApiError && e.problems.length) {
@@ -206,12 +239,40 @@ export function StudentRowMenu({
   const moveTo = (groupId: number, force = false) => {
     setPendingGroup(groupId);
     if (!force) setProblems([]);
-    return run(() =>
-      api.post(
+    return run(async () => {
+      const r = await api.post<MoveResult>(
         `/students/${student.id}/move-group${force ? "?force=true" : ""}`,
         { group_id: groupId }
-      )
-    );
+      );
+      // Filial almashgan bo'lsa — nima bo'lganini aytib qo'yamiz:
+      // pul qayta hisoblanadi va qabul qiluvchi filialga vazifa
+      // tushadi (2026-09-23).
+      if (r && r.branch_changed) {
+        const lines = [`Ko'chirildi: ${r.group} — ${r.branch}`];
+        if (r.recharge) {
+          lines.push(
+            `Shu oy hisobi: ${som(r.recharge.old)} → ` +
+            `${som(r.recharge.new)} so'm ` +
+            `(${r.recharge.old_lessons} dars eski guruhda, ` +
+            `${r.recharge.new_lessons} dars yangisida)`);
+        }
+        if (r.task_for) {
+          lines.push(`${r.task_for}ga "o'quvchini kutib oling" vazifasi ` +
+            `yuborildi`);
+        }
+        alert(lines.join("\n"));
+      }
+    });
+  };
+
+  /** Boshqa filial guruhi — avval nima bo'lishini aytamiz. */
+  const moveToOtherBranch = (g: XbGroup) => {
+    const ok = confirm(
+      `${g.name} — ${g.branch} filialida.\n\n` +
+      "O'quvchi shu filialga o'tadi. Shu oyning hisobi qayta " +
+      "hisoblanadi: eski guruhda o'tgan darslar eski narxda, yangi " +
+      "guruhda qolgan darslar yangi narxda.\n\nDavom etamizmi?");
+    if (ok) moveTo(g.id);
   };
 
   // KETISH SABABI — MAJBURIY (2026-08-24, Jahongir: "ketish
@@ -299,9 +360,20 @@ export function StudentRowMenu({
     });
   };
 
-  // Guruh almashtirishda faqat O'SHA FILIAL guruhlari chiqadi —
-  // boshqa filialga o'tkazish alohida amal, u yerda vazifa ham
-  // yaratiladi.
+  // O'TKAZISH RO'YXATI (2026-09-23). Ilgari bu yerda faqat O'SHA
+  // FILIAL guruhlari chiqardi va boshqa filial alohida amal edi.
+  // Endi ro'yxat serverdan keladi: o'z filiali guruhlari tepada,
+  // boshqa filiallarniki pastda alohida bo'limda. /groups
+  // serverda filial bo'yicha cheklangani uchun administrator
+  // boshqa filial guruhini umuman ko'ra olmasdi.
+  const [xbRows, setXbRows] = useState<XbGroup[] | null>(null);
+  useEffect(() => {
+    if (!moving || xbRows) return;
+    api.get<{ rows: XbGroup[] }>(`/students/${student.id}/transfer-groups`)
+      .then((d) => setXbRows(d.rows || []))
+      .catch(() => setXbRows([]));   // kelmasa — pastdagi zaxira ro'yxat
+  }, [moving, xbRows, student.id]);
+
   const myBranch = student.branch?.id ?? student.group?.branch_id ?? null;
   const others = groups.filter(
     (g) =>
@@ -311,6 +383,19 @@ export function StudentRowMenu({
   const otherBranchGroups = groups.filter(
     (g) => g.branch_id && myBranch && g.branch_id !== myBranch
   );
+  // Ro'yxat serverdan kelmasa (eski server, tarmoq xatosi) — eskicha
+  // o'z filiali guruhlari ko'rsatiladi, ya'ni hech narsa yo'qolmaydi.
+  const xbList: XbGroup[] = (xbRows && xbRows.length)
+    ? xbRows
+    : others.map((g) => ({
+        id: g.id, name: g.name, branch_id: g.branch_id ?? null,
+        branch: g.branch?.name ?? null, same_branch: true,
+        teacher: g.teacher?.full_name ?? null,
+        lesson_days: null, lesson_time: null,
+        lesson_price: 0, students: 0, capacity: null,
+      }));
+  const xbSame = xbList.filter((g) => g.same_branch);
+  const xbOther = xbList.filter((g) => !g.same_branch);
   const branchOptions = Array.from(
     new Map(
       otherBranchGroups
@@ -319,7 +404,7 @@ export function StudentRowMenu({
     ).values()
   );
 
-  if (!canManage) return null;
+  if (!canManage && !canTransfer) return null;
 
   return (
     <div className="relative" ref={ref}>
@@ -655,6 +740,11 @@ export function StudentRowMenu({
                 <Wallet size={15} className="text-emerald-600" />
                 To'lov qabul qilish
               </button>
+              {/* Faollashtirish/muzlatish/qaytarish — avvalgi rollar.
+                  Administratorda menyu endi ochiladi (o'tkazish
+                  uchun), lekin bu amallar unga ko'rinmaydi. */}
+              {canManage && (
+              <>
               <button
                 onClick={() => { setActivating(true); setErr(""); }}
                 disabled={busy || student.status === "active"}
@@ -692,6 +782,8 @@ export function StudentRowMenu({
                   Lid bo'limiga qaytarish
                 </button>
               )}
+              </>
+              )}
               <button
                 data-guide="student-menu-move"
                 onClick={() => setMoving(true)}
@@ -722,15 +814,17 @@ export function StudentRowMenu({
                   Dublikatni qo'shish
                 </button>
               )}
-              <button
-                data-guide="student-menu-remove"
-                onClick={removeFromGroup}
-                disabled={busy}
-                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
-              >
-                <Trash2 size={15} />
-                O'chirish
-              </button>
+              {canManage && (
+                <button
+                  data-guide="student-menu-remove"
+                  onClick={removeFromGroup}
+                  disabled={busy}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                >
+                  <Trash2 size={15} />
+                  O'chirish
+                </button>
+              )}
             </>
           ) : (
             <>
@@ -745,27 +839,61 @@ export function StudentRowMenu({
                   <X size={13} />
                 </button>
               </div>
-              <div className="max-h-56 overflow-y-auto">
-                {others.length === 0 ? (
+              <div className="max-h-64 overflow-y-auto">
+                {xbList.length === 0 ? (
                   <p className="text-xs text-slate-400 px-3 py-2">
-                    Boshqa guruh yo'q
+                    {xbRows === null ? "Yuklanmoqda…" : "Boshqa guruh yo'q"}
                   </p>
                 ) : (
-                  others.map((g) => (
-                    <button
-                      key={g.id}
-                      onClick={() => moveTo(g.id)}
-                      disabled={busy}
-                      className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
-                    >
-                      {g.name}
-                      {g.teacher?.full_name && (
-                        <span className="block text-xs text-slate-400">
-                          {g.teacher.full_name}
-                        </span>
-                      )}
-                    </button>
-                  ))
+                  <>
+                    {xbSame.map((g) => (
+                      <button
+                        key={g.id}
+                        onClick={() => moveTo(g.id)}
+                        disabled={busy}
+                        className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                      >
+                        {g.name}
+                        {(g.teacher || g.lesson_time) && (
+                          <span className="block text-xs text-slate-400">
+                            {[g.teacher, g.lesson_time]
+                              .filter(Boolean).join(" · ")}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                    {/* BOSHQA FILIALLAR (2026-09-23). Tanlansa filial
+                        ham almashadi va shu oyning hisobi qayta
+                        bo'linadi — shuning uchun avval so'raladi. */}
+                    {xbOther.length > 0 && (
+                      <>
+                        <div className="sticky top-0 px-3 pt-2 pb-1 text-[11px] font-semibold text-violet-700 bg-violet-50">
+                          Boshqa filiallar
+                        </div>
+                        {xbOther.map((g) => (
+                          <button
+                            key={g.id}
+                            onClick={() => moveToOtherBranch(g)}
+                            disabled={busy}
+                            className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-violet-50/60"
+                          >
+                            <span className="flex items-center gap-1.5">
+                              <Building2 size={13}
+                                className="text-violet-500 shrink-0" />
+                              {g.name}
+                            </span>
+                            <span className="block text-xs text-slate-400 pl-[18px]">
+                              {[g.branch, g.teacher, g.lesson_time]
+                                .filter(Boolean).join(" · ")}
+                              {g.lesson_price
+                                ? ` · ${som(g.lesson_price)} so'm/dars`
+                                : ""}
+                            </span>
+                          </button>
+                        ))}
+                      </>
+                    )}
+                  </>
                 )}
               </div>
             </>

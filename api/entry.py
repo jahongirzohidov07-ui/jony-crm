@@ -10138,6 +10138,390 @@ except Exception:
 
 
 # =====================================================================
+#  BOSHQA FILIALDAGI GURUHGA O'TKAZISH (2026-09-23)
+#
+#  Jahongir: "boshqa filialga otkizish funksiyasi bor edi oldin
+#  guruhdan guruhga otkizish funksiyasi tagida shuni qoshib qoy
+#  boshqa guruhga otkiza olish kerak boshqa filialdagi, tolovlari
+#  ham togri bolib o'tkizilishi kerak".
+#
+#  Ilgari ikkita alohida amal bor edi va ikkalasi ham yarim edi:
+#    * "Boshqa guruhga o'tkazish" — pulni to'g'ri qayta hisoblaydi
+#      (ko'chgan kungacha eski guruh narxida, keyin yangi guruh
+#      narxida), lekin boshqa filial guruhini 400 bilan rad etardi;
+#    * "Boshqa filialga o'tkazish" — filialni almashtiradi, ammo
+#      PULGA UMUMAN TEGMAYDI, eski guruh bog'lanishini yopmaydi
+#      (o'quvchi eski guruh ro'yxatida ko'rinib turardi — bu aynan
+#      2026-09-03 da guruh ko'chirishda tuzatilgan xato) va narx
+#      qulfini tekshirmaydi.
+#
+#  Endi ikkala amal ham BITTA yo'ldan — _xb_move() — o'tadi.
+#
+#  PUL TARIXI. To'lov qatorida filial saqlanmaydi, hisobotlar
+#  o'quvchining HOZIRGI filialiga qaraydi. Demak o'tkazilgandan keyin
+#  o'tgan oylarning puli ham yangi filial hisobida ko'rinadi.
+#  2026-09-23 da Jahongir buni ataylab shunday qoldirdi ("hozircha
+#  shundoq qolsin"). To'lovga filial ustuni qo'shilsa — shu izoh,
+#  bu yer va moliya hisobotlari birga qayta ko'riladi.
+# =====================================================================
+_XB_ROLES = tuple(roles.STUDENT_TRANSFER)
+
+
+def _xb_closed_branches(db, user) -> list:
+    """Bu xodim uchun YOPIQ filiallar: hamkor markaz (boshqa biznes)
+    va test filiali. Ro'yxatda ham ko'rinmaydi, o'tkazib ham
+    bo'lmaydi (2026-09-23 ko'rigi)."""
+    out = set()
+    for fn in ("blocked_branch_ids", "hidden_branch_ids"):
+        try:
+            out |= set(getattr(_CM, fn)(db, user) or [])
+        except Exception:
+            pass
+    return list(out)
+
+
+# DIQQAT: entry.py dagi `M` — bu `main`, `common` emas. main faqat bir
+# qism yordamchini qayta eksport qiladi; bog'lanish va qayta hisoblash
+# funksiyalari faqat common'da. Modul sifatida olamiz — shunda ular
+# keyin almashtirilsa (monkey-patch) ham yangisi ishlaydi.
+import common as _CM  # noqa: E402
+
+
+@app.get("/api/students/{student_id}/transfer-groups")
+def student_transfer_groups(student_id: int,
+                            db: Session = Depends(get_db),
+                            user=Depends(require_role(*_XB_ROLES))):
+    """O'tkazish uchun guruhlar ro'yxati — BARCHA filiallardan.
+
+    Filialga bog'langan xodim odatda faqat o'z filialini ko'radi
+    (scope_to_branch). Aynan shuning uchun "Boshqa filialga
+    o'tkazish" tugmasi administrator va filial rahbarida umuman
+    chiqmasdi: ro'yxatda boshqa filial guruhi bo'lmagach, tugma ham
+    yo'q edi. Bu ro'yxat ataylab filialdan tashqari, lekin ichida
+    FAQAT guruh tanlash uchun kerak bo'lgan ma'lumot bor: nomi,
+    filiali, ustozi, kuni/vaqti, bir dars narxi va band joylar.
+    Boshqa filialning pul hisoboti yoki o'quvchilari ko'rinmaydi."""
+    s = M._get_student_in_scope(db, student_id, user)
+    today = roles.local_today()
+    # YOPIQ FILIALLAR bu yerda ham amal qiladi: hamkor markaz (Stech)
+    # boshqa biznes, test filiali esa soxta ma'lumot. Ularning
+    # guruhlari boshqa hech qayerda ko'rinmaydi — bu ro'yxatda ham
+    # ko'rinmasligi kerak (2026-09-23 ko'rigi).
+    hide = set(_xb_closed_branches(db, user))
+    rows = (db.query(models.Group)
+            .order_by(models.Group.branch_id, models.Group.name).all())
+    branches = {b.id: b for b in db.query(models.Branch).all()}
+    teachers = {t.id: t for t in db.query(models.Teacher).all()}
+    rooms = {r.id: r for r in db.query(models.Room).all()}
+    out = []
+    for g in rows:
+        if s.group_id and g.id == s.group_id:
+            continue
+        if g.end_date and g.end_date < today:
+            continue                       # tugagan guruh — tanlanmaydi
+        if g.branch_id and g.branch_id in hide:
+            continue                       # hamkor markaz / test filiali
+        br = branches.get(g.branch_id)
+        t = teachers.get(g.teacher_id)
+        try:
+            busy = _CM._active_student_count(db, g.id, exclude_student_id=s.id)
+            cap = _CM._group_capacity(g, rooms)
+        except Exception:
+            busy, cap = 0, None
+        out.append({
+            "id": g.id, "name": g.name,
+            "branch_id": g.branch_id,
+            "branch": br.name if br else None,
+            # Filialsiz guruhga o'tkazilganda filial o'zgarmaydi —
+            # demak u "boshqa filial" emas (2026-09-23 ko'rigi).
+            "same_branch": bool(not g.branch_id or not s.branch_id
+                                or g.branch_id == s.branch_id),
+            "teacher": t.full_name if t else None,
+            "subject": g.subject, "level": g.level,
+            "lesson_days": g.lesson_days, "lesson_time": g.lesson_time,
+            "lesson_price": float(g.lesson_price or 0),
+            "students": busy, "capacity": cap,
+        })
+    return {"rows": out, "branch_id": s.branch_id,
+            "branch": s.branch.name if s.branch else None}
+
+
+def _xb_move(db: Session, s, g, user, note: str = None,
+             force: bool = False) -> dict:
+    """Guruhga ko'chirish; guruh boshqa filialda bo'lsa filial ham.
+
+    Guruh ko'chirishning to'liq tartibi (students.move_student_group)
+    shu yerda takrorlanadi, chunki u yerdagi `_get_group_in_scope`
+    boshqa filial guruhini o'tkazmaydi:
+      1) sig'im/daraja tekshiruvi (force bilan o'tkazib yuborish),
+      2) narx qulfi qayta ko'riladi,
+      3) yangi bog'lanish ochiladi, eskisi YOPILADI (o'chirilmaydi),
+      4) shu oyning hisobi qayta bo'linadi,
+      5) filial almashsa — qabul qiluvchi filialga vazifa tushadi.
+    """
+    # MANZIL FILIALI: hamkor markaz (boshqa biznes) va test filiali
+    # yopiq — o'quvchi (va uning to'lov tarixi) u yerga o'tmaydi
+    # (2026-09-23 ko'rigi).
+    if g.branch_id and g.branch_id in set(_xb_closed_branches(db, user)):
+        raise HTTPException(
+            403, "Bu filialga o'tkazib bo'lmaydi — alohida markaz")
+    M._raise_if_blocked(M._check_enrolment(db, s, g), force=force)
+    old_group = s.group
+    old_branch_name = s.branch.name if s.branch else "—"
+    old_group_name = old_group.name if old_group else None
+    cross = bool(g.branch_id and s.branch_id and g.branch_id != s.branch_id)
+
+    if not s.level:
+        s.subject = s.subject or g.subject
+        s.level = g.level
+
+    # NARX QULFI (2026-09-06 auditidagi qoida): qulflangan narx faqat
+    # yangi guruh narxiga teng bo'lsagina qoladi.
+    try:
+        _lock = getattr(s, "locked_lesson_price", None)
+        _newp = float(g.lesson_price or 0)
+        if _lock is not None and _newp and abs(float(_lock) - _newp) > 0.5:
+            audit.log(db, user, entity="student", action="update",
+                      entity_id=s.id, entity_label=s.full_name,
+                      field="locked_lesson_price", old_value=_lock,
+                      new_value=None, branch_id=s.branch_id,
+                      note=f"Guruh almashdi ({g.name}) — narx qulfi olib "
+                           f"tashlandi, yangi guruh narxi ishlaydi")
+            s.locked_lesson_price = None
+    except Exception:
+        pass
+
+    audit.log(db, user, entity="student", action="group_move",
+              entity_id=s.id, entity_label=s.full_name, field="group",
+              old_value=old_group_name, new_value=g.name,
+              branch_id=s.branch_id, note=note or None)
+
+    s.group_id = g.id
+    if g.branch_id:
+        s.branch_id = g.branch_id
+
+    # BOG'LANISH: avval yangisi qo'shiladi, keyin eskisi yopiladi —
+    # teskarisi qilinsa sync_primary_group() group_id ni eski guruhga
+    # qaytarib yuborishi mumkin (2026-09-03).
+    link = _CM.attach_group(db, s, g.id, user)
+    if old_group is not None and old_group.id != g.id:
+        _CM.detach_group(db, s, old_group.id)
+    # FILIAL ALMASHSA — ESKI FILIALDAGI HAMMA GURUHDAN chiqadi
+    # (2026-09-23 ko'rigi). Ilgari faqat asosiy guruh yopilardi:
+    # ikki guruhli o'quvchi yangi filialga o'tsa ham eski filial
+    # ro'yxatlarida, davomatida va ustoz oyligida qolib ketardi.
+    if cross:
+        for lk in (db.query(models.StudentGroupLink)
+                   .filter(models.StudentGroupLink.student_id == s.id,
+                           models.StudentGroupLink.group_id != g.id,
+                           models.StudentGroupLink.active == 1).all()):
+            og = db.query(models.Group).get(lk.group_id)
+            if og is None or og.branch_id != g.branch_id:
+                _CM.detach_group(db, s, lk.group_id)
+    if link is not None:
+        for other in (db.query(models.StudentGroupLink)
+                      .filter(models.StudentGroupLink.student_id == s.id,
+                              models.StudentGroupLink.group_id != g.id)
+                      .all()):
+            other.is_primary = 0
+        link.is_primary = 1
+    s.group_id = g.id
+    db.commit()
+
+    # MOLIYA: oy o'rtasida ko'chsa shu oyning yagona hisob qatori
+    # eski/yangi guruh darslariga bo'linib qayta yoziladi.
+    recharge = None
+    try:
+        recharge = _CM._recharge_after_move(db, s, old_group, g, user=user)
+        db.commit()
+    except Exception:
+        db.rollback()
+
+    task_for = None
+    if cross:
+        admin = _branch_admin(db, g.branch_id)
+        try:
+            bal = M.student_balance(db, s.id)
+        except Exception:
+            bal = 0
+        lines = [f"O'quvchi: {s.full_name}",
+                 f"Qayerdan: {old_branch_name}"
+                 + (f" · {old_group_name}" if old_group_name else ""),
+                 f"Guruh: {g.name}",
+                 f"Balans: {bal:,.0f} so'm".replace(",", " ")]
+        if recharge:
+            lines.append(
+                ("Shu oy hisobi qayta hisoblandi: "
+                 f"{recharge.get('old', 0):,.0f} → "
+                 f"{recharge.get('new', 0):,.0f} so'm").replace(",", " "))
+        if note:
+            lines.append(f"Izoh: {note}")
+        lines.append("")
+        lines.append("Kerak: o'quvchini kutib oling, dars jadvalini "
+                     "tasdiqlang, ota-onasiga xabar bering.")
+        task = models.Task(
+            title=f"Yangi o'quvchi keldi: {s.full_name} "
+                  f"({old_branch_name}dan)",
+            description="\n".join(lines),
+            assignee_id=admin.id if admin else None,
+            branch_id=g.branch_id,
+            deadline=roles.local_today() + _CM.timedelta(days=2),
+            priority="high", source="manual",
+            created_by=(user.full_name if user else "avtomat"))
+        db.add(task)
+        db.flush()
+        try:
+            M._ensure_public_id(db, "task", task)
+        except Exception:
+            pass
+        audit.log(db, user, entity="student", action="group_move",
+                  entity_id=s.id, entity_label=s.full_name, field="branch",
+                  old_value=old_branch_name,
+                  new_value=(s.branch.name if s.branch else None),
+                  branch_id=s.branch_id, note=note or None)
+        db.commit()
+        task_for = admin.full_name if admin else None
+
+    return {"ok": True, "group_id": g.id, "group": g.name,
+            "branch_id": s.branch_id,
+            "branch": s.branch.name if s.branch else None,
+            "branch_changed": cross, "recharge": recharge,
+            "task_for": task_for}
+
+
+_xb_prev_move_group = _find_endpoint("/api/students/{student_id}/move-group",
+                                     "POST")
+_drop_route("/api/students/{student_id}/move-group", "POST")
+
+
+@app.post("/api/students/{student_id}/move-group")
+def move_student_group_v3(student_id: int, payload: schemas.StudentGroupMove,
+                          force: bool = False,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(*_XB_ROLES))):
+    """Boshqa guruhga o'tkazish — endi boshqa FILIALDAGI guruhga ham.
+
+    Shu filialdagi guruh bo'lsa eski yo'l ishlaydi (hech narsa
+    o'zgarmadi). Boshqa filial guruhi tanlansa — _xb_move(): filial
+    almashadi, pul qayta hisoblanadi, qabul qiluvchi filialga vazifa
+    tushadi."""
+    s = M._get_student_in_scope(db, student_id, user)
+    if not payload.group_id:
+        raise HTTPException(
+            400, "Guruhdan chiqarish uchun sabab ko'rsatilishi shart — "
+                 "'Guruhdan chiqarish' amalidan foydalaning")
+    g = db.query(models.Group).get(int(payload.group_id))
+    if not g:
+        raise HTTPException(404, "Guruh topilmadi")
+    if g.id == s.group_id:
+        raise HTTPException(400, "O'quvchi allaqachon shu guruhda")
+    same = not (g.branch_id and s.branch_id and g.branch_id != s.branch_id)
+    if same and _xb_prev_move_group is not None:
+        return _xb_prev_move_group(student_id=student_id, payload=payload,
+                                   force=force, db=db, user=user)
+    return _xb_move(db, s, g, user,
+                    note=getattr(payload, "note", None), force=force)
+
+
+_drop_route("/api/students/{student_id}/move-branch", "POST")
+
+
+@app.post("/api/students/{student_id}/move-branch")
+def move_student_branch_v2(student_id: int, payload: dict,
+                           force: bool = False,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(*_XB_ROLES))):
+    """O'quvchini boshqa filialga o'tkazadi.
+
+    Guruh tanlansa — guruh ko'chirish bilan BIR XIL yo'ldan o'tadi
+    (pul qayta hisoblanadi, eski guruh bog'lanishi yopiladi).
+    Tanlanmasa — filial almashadi, eski guruhdan chiqariladi va
+    yangi filial administratori guruh tanlaydi."""
+    # 2026-09-23: manba filiali ham tekshiriladi. Ilgari bu yerda
+    # oddiy .get() turardi — filial rahbari BOSHQA filial
+    # o'quvchisini ham ko'chira olardi.
+    s = M._get_student_in_scope(db, student_id, user)
+
+    bid = payload.get("branch_id")
+    if not bid:
+        raise HTTPException(400, "Filial tanlanmadi")
+    br = db.query(models.Branch).get(int(bid))
+    if not br:
+        raise HTTPException(404, "Filial topilmadi")
+    if s.branch_id == br.id:
+        raise HTTPException(400, "O'quvchi allaqachon shu filialda")
+    note = str(payload.get("note") or "").strip() or None
+
+    gid = payload.get("group_id")
+    if gid:
+        g = db.query(models.Group).get(int(gid))
+        if not g:
+            raise HTTPException(404, "Guruh topilmadi")
+        if g.branch_id != br.id:
+            raise HTTPException(400, "Bu guruh tanlangan filialda emas")
+        return _xb_move(db, s, g, user, note=note, force=force)
+
+    if br.id in set(_xb_closed_branches(db, user)):
+        raise HTTPException(
+            403, "Bu filialga o'tkazib bo'lmaydi — alohida markaz")
+
+    old_branch_name = s.branch.name if s.branch else "—"
+    old_group = s.group
+    s.branch_id = br.id
+    # AVVAL guruhlardan chiqaramiz, KEYIN group_id ni bo'shatamiz.
+    # Teskarisi qilinsa detach_group() ichidagi sync_primary_group()
+    # o'quvchini eski filialdagi ikkinchi guruhga qaytarib qo'yadi
+    # va "guruhsiz o'tkazdim" degani yolg'on bo'lib qoladi
+    # (2026-09-23 ko'rigi).
+    for lk in (db.query(models.StudentGroupLink)
+               .filter(models.StudentGroupLink.student_id == s.id,
+                       models.StudentGroupLink.active == 1).all()):
+        try:
+            _CM.detach_group(db, s, lk.group_id)
+        except Exception:
+            pass
+    s.group_id = None
+
+    admin = _branch_admin(db, br.id)
+    try:
+        bal = M.student_balance(db, s.id)
+    except Exception:
+        bal = 0
+    lines = [f"O'quvchi: {s.full_name}",
+             f"Qayerdan: {old_branch_name}"
+             + (f" · {old_group.name}" if old_group is not None else ""),
+             "Guruh: hali tanlanmagan — guruh tanlang",
+             f"Balans: {bal:,.0f} so'm".replace(",", " ")]
+    if note:
+        lines.append(f"Izoh: {note}")
+    lines.append("")
+    lines.append("Kerak: o'quvchini kutib oling, guruhini va dars "
+                 "jadvalini tasdiqlang, ota-onasiga xabar bering.")
+    task = models.Task(
+        title=f"Yangi o'quvchi keldi: {s.full_name} ({old_branch_name}dan)",
+        description="\n".join(lines),
+        assignee_id=admin.id if admin else None,
+        branch_id=br.id,
+        deadline=roles.local_today() + _CM.timedelta(days=2),
+        priority="high", source="manual",
+        created_by=user.full_name)
+    db.add(task)
+    db.flush()
+    try:
+        M._ensure_public_id(db, "task", task)
+    except Exception:
+        pass
+    audit.log(db, user, entity="student", action="group_move",
+              entity_id=s.id, entity_label=s.full_name, field="branch",
+              old_value=old_branch_name, new_value=br.name,
+              branch_id=br.id, note=note)
+    db.commit()
+    return {"ok": True, "branch_id": br.id, "branch": br.name,
+            "group_id": None, "group": None,
+            "task_for": admin.full_name if admin else None}
+
+
+# =====================================================================
 #  SXEMA MUHRI — ENG OXIRIDA (2026-09-11)
 #
 #  Shu qatorga yetib kelganda entry.py o'zining HAMMA jadvalini

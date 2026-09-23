@@ -1081,6 +1081,9 @@ class SocialManual(BaseModel):
 class StudentGroupMove(BaseModel):
     """Boshqa guruhga o'tkazish. group_id None bo'lsa - guruhdan chiqariladi."""
     group_id: Optional[int] = None
+    # Boshqa FILIALDAGI guruhga o'tkazilganda qabul qiluvchi filial
+    # administratoriga tushadigan vazifaga yoziladi (2026-09-23).
+    note: Optional[str] = None
 
 
 # ---------- Ota-ona ----------

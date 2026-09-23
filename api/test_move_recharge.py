@@ -106,8 +106,13 @@ rows = db.query(models.Payment).filter(
 note = rows[0].note if rows else ""
 db.close()
 ck("bitta qator", len(rows), 1)
-ck("izohda eski guruh va summasi", "Qimmat guruh: 4 dars" in note, True)
-ck("izohda yangi guruh va summasi", "Arzon guruh: 6 dars" in note, True)
+# Dars soni SANAGA bog'liq: oy oxirida rejadagi kunlarning bir qismi
+# keyingi oyga tushadi. Shuning uchun qo'lda "6 dars" deb yozib
+# bo'lmaydi — tepada hisoblangan ro'yxat uzunligi olinadi (2026-09-23).
+ck("izohda eski guruh va summasi",
+   f"Qimmat guruh: {len(old_days)} dars" in note, True)
+ck("izohda yangi guruh va summasi",
+   f"Arzon guruh: {len(new_days)} dars" in note, True)
 print("   izoh:", note)
 ck("izohda darslar soni", f"[dars:{len(old_days)+len(new_days)}]" in note, True)
 

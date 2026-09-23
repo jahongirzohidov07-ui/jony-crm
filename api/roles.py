@@ -5706,6 +5706,11 @@ FREEZE_ROLES = [FOUNDER, SALES_MANAGER, ACADEMIC_HEAD, BRANCH_MANAGER]
 # Jahongir: "Arxivdagi o'quvchilarni qayta tiklashni administratorlarga
 # ochib ber"). Faqat o'z filialidagini.
 STUDENT_RESTORE = FREEZE_ROLES + [ADMINISTRATOR]
+# O'quvchini boshqa guruhga (shu jumladan BOSHQA FILIALDAGI guruhga)
+# o'tkazish — administrator ham (2026-09-23, Jahongir: "boshqa guruhga
+# otkiza olish kerak boshqa filialdagi"). Faqat O'Z filialidagi
+# o'quvchini: manba _get_student_in_scope orqali tekshiriladi.
+STUDENT_TRANSFER = FREEZE_ROLES + [ADMINISTRATOR]
 # Yangi o'quvchi FAQAT liddan qo'shiladi (2026-09-16, Jahongir:
 # "oquvchini qoshish mumkin bolmasin faqat liddan qoshish mumkin
 # bo'lsin"). To'g'ridan-to'g'ri qo'shish — faqat asoschi (favqulodda).

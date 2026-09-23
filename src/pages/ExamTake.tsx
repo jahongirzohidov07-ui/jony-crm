@@ -377,6 +377,19 @@ export default function ExamTake() {
     submit(false);
   }
 
+  // "ILOVADA OCHISH" (2026-09-23). Telegram havolani o'z ichki
+  // brauzerida ochib yuboradi — u yerda skrinshotni to'sib bo'lmaydi.
+  // Androidda shu tugma ilovani to'g'ridan-to'g'ri ochadi; ilova
+  // o'rnatilmagan bo'lsa sahifaning o'zi qolaveradi.
+  const androidLink =
+    typeof navigator !== "undefined" &&
+    /Android/i.test(navigator.userAgent) &&
+    !(window as unknown as { JonyApp?: unknown }).JonyApp
+      ? `intent://${window.location.host}/t/${token}#Intent;scheme=https;` +
+        `package=uz.jonyacademy.exam;S.browser_fallback_url=` +
+        `${encodeURIComponent(window.location.href)};end`
+      : null;
+
   const shell = (body: React.ReactNode) => (
     <div className="min-h-screen bg-gradient-to-br from-brand-700 to-brand-500 py-6 px-4">
       <div className="max-w-2xl mx-auto">
@@ -393,6 +406,14 @@ export default function ExamTake() {
             )}
           </div>
         </div>
+        {androidLink && !done && (
+          <a
+            href={androidLink}
+            className="flex items-center justify-center gap-2 mb-3 rounded-xl bg-white/15 border border-white/30 px-4 py-2.5 text-sm font-medium text-white"
+          >
+            📱 Jony Imtihon ilovasida ochish
+          </a>
+        )}
         {body}
       </div>
     </div>

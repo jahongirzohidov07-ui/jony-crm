@@ -30,8 +30,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Telegramdagi test havolasi shu ilovada ochiladi -->
-            <intent-filter>
+            <!-- Telegramdagi test havolasi shu ilovada ochiladi.
+                 autoVerify: sayt /.well-known/assetlinks.json bilan
+                 ilovani tasdiqlaydi, shunda Android so'ramasdan
+                 to'g'ridan-to'g'ri ilovani ochadi. -->
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />

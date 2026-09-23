@@ -4290,6 +4290,10 @@ class ExamOnline(Base):
     duration_min = Column(Integer, nullable=True)
     started_at = Column(DateTime, nullable=True)
     ends_at = Column(DateTime, nullable=True)
+    # Sahifadan necha marta chiqishga ruxsat (2026-09-23, Jahongir:
+    # "5tami nechtadir son ... shundan oshsa testdan chiqarib yuborsin").
+    # Shu songacha uzrli (internet uzilishi va h.k.).
+    away_limit = Column(Integer, nullable=True)
 
 
 class ExamSubmission(Base):
@@ -4319,6 +4323,8 @@ class ExamSubmission(Base):
     # boshqa ilovaga o'tsa — necha marta va jami necha soniya.
     away_count = Column(Integer, nullable=False, default=0)
     away_sec = Column(Integer, nullable=False, default=0)
+    # Chetlatish sababi (chegaradan oshdi yoki examiner chetlatdi)
+    note = Column(String, nullable=True)
     ip = Column(String, nullable=True)
     submitted_at = Column(DateTime, default=datetime.utcnow)
     placed_by = Column(String, nullable=True)

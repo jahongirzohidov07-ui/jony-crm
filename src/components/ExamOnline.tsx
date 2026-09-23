@@ -70,8 +70,11 @@ export type OnlineData = {
     ends_at: string | null;
     duration_min: number | null;
     in_progress: number;
+    /** Sahifadan chiqishga ruxsat (undan oshsa — chetlatish) */
+    away_limit: number | null;
     /** Hozir yechayotganlar va ularning chiqib ketishlari */
-    live: { name: string; away_count: number; away_sec: number }[];
+    live: { id: number; name: string; away_count: number; away_sec: number }[];
+    expelled: { id: number; name: string; note: string | null }[];
   } | null;
   group_level: string | null;
   can_manage: boolean;
@@ -299,6 +302,7 @@ function TimerControls({
   busy: boolean;
 }) {
   const [minutes, setMinutes] = useState(String(data.duration_min || 40));
+  const [limit, setLimit] = useState(String(data.away_limit ?? 5));
   const [now, setNow] = useState(Date.now());
   const offset = Date.parse(data.server_now) - Date.now();
   useEffect(() => {
@@ -324,13 +328,36 @@ function TimerControls({
         {data.in_progress ? (
           <span className="text-xs text-sky-700">yechmoqda: {data.in_progress}</span>
         ) : null}
-        {data.live?.some((x) => x.away_count) ? (
-          <span className="w-full text-xs text-amber-700">
-            Sahifadan chiqqanlar:{" "}
-            {data.live
-              .filter((x) => x.away_count)
-              .map((x) => `${x.name} (${x.away_count})`)
-              .join(", ")}
+        {data.live?.length ? (
+          <div className="w-full mt-1 space-y-1">
+            {data.live.map((x) => (
+              <div key={x.id} className="flex items-center gap-2 text-xs">
+                <span className="text-slate-700">{x.name}</span>
+                {x.away_count ? (
+                  <span className="text-amber-700">
+                    ⚠ {x.away_count} marta chiqdi
+                    {data.away_limit ? ` / ${data.away_limit}` : ""}
+                  </span>
+                ) : null}
+                {canManage && (
+                  <button
+                    disabled={busy}
+                    onClick={() => {
+                      if (confirm(`${x.name} testdan chetlatilsinmi? Uning testi yopiladi va natijasi hisobga olinmaydi.`))
+                        run(() => api.post<OnlineData>(`/exam-submissions/${x.id}/expel`, {}));
+                    }}
+                    className="ml-auto text-rose-600 hover:text-rose-700 underline decoration-dotted"
+                  >
+                    Chetlatish
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : null}
+        {data.expelled?.length ? (
+          <span className="w-full text-xs text-rose-700">
+            Chetlatilganlar: {data.expelled.map((x) => x.name).join(", ")}
           </span>
         ) : null}
         {canManage && (
@@ -367,6 +394,16 @@ function TimerControls({
             title="Test vaqti, daqiqa"
           />
           <span className="text-xs text-slate-500">daqiqa</span>
+          <input
+            type="number"
+            min={0}
+            max={50}
+            value={limit}
+            onChange={(e) => setLimit(e.target.value)}
+            className="w-16 rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+            title="Sahifadan necha marta chiqishga ruxsat (undan oshsa chetlatiladi). 0 — chegarasiz"
+          />
+          <span className="text-xs text-slate-500">marta chiqishga ruxsat</span>
           <button
             disabled={busy || !Number(minutes)}
             onClick={() => {
@@ -378,6 +415,7 @@ function TimerControls({
               run(() =>
                 api.post<OnlineData>(`/exams/${examId}/online/start`, {
                   minutes: Number(minutes),
+                  away_limit: Number(limit || 0),
                 })
               );
             }}

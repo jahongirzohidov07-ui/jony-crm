@@ -140,6 +140,17 @@ export default function ExamTake() {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<Done | null>(() => store(`exam:${token}:done`));
+  // Testdan chetlatilgan (chiqishlar chegarasidan oshdi yoki examiner
+  // chetlatdi) — 2026-09-23
+  const [expelled, setExpelled] = useState<boolean>(
+    () => !!store(`exam:${token}:expelled`)
+  );
+  const kickOut = useCallback(() => {
+    store(`exam:${token}:expelled`, true);
+    setExpelled(true);
+    window.scrollTo(0, 0);
+  }, [token]);
+  const [awayLeft, setAwayLeft] = useState<number | null>(null);
   const savedRef = useRef<string>("");
   const submittingRef = useRef(false);
 
@@ -211,6 +222,11 @@ export default function ExamTake() {
         });
         const j = await r.json().catch(() => ({}));
         if (!r.ok) throw new Error(j.detail || "Yuborib bo'lmadi");
+        if (j.expelled) {
+          store(`exam:${token}:expelled`, true);
+          setExpelled(true);
+          return;
+        }
         const d: Done = { paper_max: j.paper_max, pending: j.pending, auto };
         store(`exam:${token}:done`, d);
         setDone(d);
@@ -236,9 +252,14 @@ export default function ExamTake() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key, answers }),
-      }).catch(() => {
-        savedRef.current = "";
-      });
+      })
+        .then((r) => r.json())
+        .then((j) => {
+          if (j?.expelled) kickOut();
+        })
+        .catch(() => {
+          savedRef.current = "";
+        });
     }, 15000);
     return () => clearInterval(t);
   }, [done, key, state, answers, api]);
@@ -260,7 +281,14 @@ export default function ExamTake() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key, seconds: sec }),
-      }).catch(() => {});
+      })
+        .then((r) => r.json())
+        .then((j) => {
+          if (j?.expelled) kickOut();
+          else if (j?.left != null)
+            setAwayLeft(j.left as number);
+        })
+        .catch(() => {});
     };
     document.addEventListener("visibilitychange", onChange);
     return () => document.removeEventListener("visibilitychange", onChange);
@@ -268,7 +296,7 @@ export default function ExamTake() {
 
   // Vaqt tugadi — belgilanganlari bilan avtomatik topshiriladi
   useEffect(() => {
-    if (done || !key) return;
+    if (done || expelled || !key) return;
     const timeUp =
       (state === "running" && endsIn !== null && endsIn <= 0) || state === "finished";
     if (timeUp) submit(true);
@@ -366,6 +394,21 @@ export default function ExamTake() {
       </div>
     );
   if (!exam) return shell(<div className={`${card} text-slate-400 text-sm`}>Yuklanmoqda...</div>);
+
+  if (expelled)
+    return shell(
+      <div className={`${card} text-center`}>
+        <p className="text-4xl mb-2">🚫</p>
+        <h1 className="text-lg font-bold text-slate-900 mb-1">
+          Siz testdan chetlatildingiz
+        </h1>
+        <p className="text-sm text-slate-600">
+          Test sahifasidan ruxsat etilganidan ko'p marta chiqib ketdingiz yoki
+          examiner sizni chetlatdi. Bu test hisobga olinmaydi — examinerga
+          murojaat qiling.
+        </p>
+      </div>
+    );
 
   if (done)
     return shell(
@@ -641,6 +684,13 @@ export default function ExamTake() {
           <span className="text-sm text-slate-500 whitespace-nowrap">
             {answered} / {exam.q_count}
           </span>
+          {awayLeft != null && awayLeft <= 2 && (
+            <span className="text-[11px] text-amber-700 whitespace-nowrap">
+              {awayLeft > 0
+                ? `Yana ${awayLeft} marta chiqsangiz — chetlatilasiz`
+                : "Yana chiqsangiz — chetlatilasiz"}
+            </span>
+          )}
           {error && <span className="text-xs text-red-600 flex-1 truncate">{error}</span>}
           <button
             onClick={manualSubmit}

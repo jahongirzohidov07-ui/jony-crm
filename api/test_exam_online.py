@@ -484,6 +484,13 @@ d.commit()
 d.close()
 r = client.post(f"/api/exams/{EID3}/online", headers=HE, json={"template_id": TID})
 TOK3 = r.json()["online"]["token"]
+
+
+def result3(sid):
+    d = client.get(f"/api/exams/{EID3}", headers=H).json()
+    return {x["student_id"]: x for x in d["results"]}.get(sid)
+
+
 b1 = client.post(f"/api/public/exam/{TOK3}/begin", json={
     "student_id": S["Aliyev Ali"], "photo": PHOTO})
 ck("kutishda kirish mumkin", b1.status_code, 200)
@@ -496,7 +503,8 @@ ck("examiner: 2 kishi kutmoqda", on["online"]["in_progress"], 2)
 ck("kutishda saqlab bo'lmaydi",
    client.post(f"/api/public/exam/{TOK3}/save",
                json={"key": KEY1, "answers": {"x": 1}}).json()["ok"], False)
-r = client.post(f"/api/exams/{EID3}/online/start", headers=HE, json={"minutes": 30})
+r = client.post(f"/api/exams/{EID3}/online/start", headers=HE,
+                json={"minutes": 30, "away_limit": 2})
 ck("sanoq boshlandi", r.json()["online"]["state"], "countdown")
 w = client.get(f"/api/public/exam/{TOK3}").json()
 ck("sanoqda savollar hali yo'q", (w["state"], len(w["parts"])), ("countdown", 0))
@@ -524,6 +532,49 @@ ck("javob saqlandi",
                json={"key": KEY1, "answers": correct_answers(20)}).json()["ok"], True)
 client.post(f"/api/public/exam/{TOK3}/save",
             json={"key": KEY2, "answers": correct_answers(10)})
+# CHIQISHLAR CHEGARASI: 2 martagacha uzrli, uchinchisida chetlatiladi
+bv = client.post(f"/api/public/exam/{TOK3}/begin", json={
+    "student_id": S["Valiyev Vali"], "photo": PHOTO})
+KEYV = bv.json()["key"]
+client.post(f"/api/public/exam/{TOK3}/save",
+            json={"key": KEYV, "answers": correct_answers(30)})
+ck("ruxsat qolgani ko'rinadi",
+   client.post(f"/api/public/exam/{TOK3}/away",
+               json={"key": KEYV, "seconds": 5}).json()["left"], 1)
+r = client.post(f"/api/public/exam/{TOK3}/away", json={"key": KEYV, "seconds": 5})
+ck("chegarada hali chetlatilmaydi", r.json().get("expelled"), None)
+r = client.post(f"/api/public/exam/{TOK3}/away", json={"key": KEYV, "seconds": 5})
+ck("chegaradan oshdi — chetlatildi", r.json().get("expelled"), True)
+ck("chetlatilganning sahifasi yopiladi",
+   client.post(f"/api/public/exam/{TOK3}/save",
+               json={"key": KEYV, "answers": correct_answers(30)}).json(),
+   {"ok": False, "expelled": True})
+ck("chetlatilgan topshira olmaydi",
+   client.post(f"/api/public/exam/{TOK3}/submit",
+               json={"key": KEYV, "answers": correct_answers(30)}).json()["expelled"],
+   True)
+on = client.get(f"/api/exams/{EID3}/online", headers=HE).json()
+ck("examiner ro'yxatida chetlatilgan",
+   [x["name"] for x in on["online"]["expelled"]], ["Valiyev Vali"])
+ck("natijasi yozilmadi (30/30 belgilagan bo'lsa ham)",
+   result3(S["Valiyev Vali"]), None)
+# Karimova o'rniga boshqa o'quvchi kirib, qo'lda chetlatiladi
+b3 = client.post(f"/api/public/exam/{TOK3}/begin", json={
+    "student_id": S["Boboyev Bobur"], "photo": PHOTO})
+KEY3 = b3.json()["key"]
+client.post(f"/api/public/exam/{TOK3}/save",
+            json={"key": KEY3, "answers": correct_answers(30)})
+sid3 = [x["id"] for x in client.get(f"/api/exams/{EID3}/online", headers=HE)
+        .json()["online"]["live"] if x["name"] == "Boboyev Bobur"][0]
+ck("ustoz chetlata olmaydi",
+   client.post(f"/api/exam-submissions/{sid3}/expel", headers=HT).status_code, 403)
+r = client.post(f"/api/exam-submissions/{sid3}/expel", headers=HE)
+ck("examiner chetlatdi", r.status_code, 200)
+ck("uning testi ham yopildi",
+   client.post(f"/api/public/exam/{TOK3}/save",
+               json={"key": KEY3, "answers": {}}).json()["expelled"], True)
+ck("qayta chetlatib bo'lmaydi",
+   client.post(f"/api/exam-submissions/{sid3}/expel", headers=HE).status_code, 400)
 ck("begona kalit rad",
    client.post(f"/api/public/exam/{TOK3}/save",
                json={"key": "xxxxxxxxxxxxxx", "answers": {}}).status_code, 400)

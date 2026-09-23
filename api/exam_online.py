@@ -57,6 +57,7 @@ PHOTO_MAX_CHARS = 400_000          # ~300KB rasm (frontend 480px ga kichraytirad
 _HITS: dict = {}
 _MAX_PER_HOUR = 300                # bitta sinf bitta Wi-Fi (bitta IP) dan kiradi
 COUNTDOWN_SEC = 10                 # "Start"dan keyin teskari sanoq
+AWAY_LIMIT_DEFAULT = 5             # sahifadan chiqishga ruxsat (undan keyin chetlatiladi)
 GRACE_SEC = 90                     # vaqt tugagach avtomatik topshirish muhlati
 
 
@@ -489,6 +490,7 @@ def _sub_out(s: models.ExamSubmission, names: dict,
         "placed_by": s.placed_by,
         "away_count": s.away_count or 0,
         "away_sec": s.away_sec or 0,
+        "note": s.note,
         "photo": s.photo,
         "detail": _answer_sheet(_load(s.detail), qmap or {}),
     }
@@ -551,10 +553,18 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
             "ends_at": _iso(o.ends_at),
             "duration_min": o.duration_min,
             "in_progress": sum(1 for s in subs if s.status == "in_progress"),
+            "away_limit": o.away_limit,
             "live": [
-                {"name": s.typed_name or names.get(s.student_id) or "—",
+                {"id": s.id,
+                 "name": s.typed_name or names.get(s.student_id) or "—",
                  "away_count": s.away_count or 0, "away_sec": s.away_sec or 0}
                 for s in subs if s.status == "in_progress"
+            ],
+            "expelled": [
+                {"id": s.id,
+                 "name": s.typed_name or names.get(s.student_id) or "—",
+                 "note": s.note}
+                for s in subs if s.status == "expelled"
             ],
         }
     return {"online": online, "group_level": lvl,
@@ -626,6 +636,7 @@ def toggle_online(exam_id: int, payload: OnlineToggle,
 class StartIn(BaseModel):
     minutes: int
     countdown: Optional[int] = None
+    away_limit: Optional[int] = None
 
 
 @router.post("/api/exams/{exam_id}/online/start")
@@ -647,6 +658,10 @@ def start_online(exam_id: int, payload: StartIn, db: Session = Depends(get_db),
     cd = COUNTDOWN_SEC if payload.countdown is None else max(0, min(60, payload.countdown))
     now = datetime.utcnow()
     o.duration_min = payload.minutes
+    if payload.away_limit is not None:
+        o.away_limit = max(0, min(50, payload.away_limit))
+    elif o.away_limit is None:
+        o.away_limit = AWAY_LIMIT_DEFAULT
     o.started_at = now + timedelta(seconds=cd)
     o.ends_at = o.started_at + timedelta(minutes=payload.minutes)
     o.is_open = 1
@@ -716,6 +731,22 @@ def assign_submission(sid: int, payload: AssignIn,
               field="online_assign",
               old_value=s.typed_name or "", new_value=payload.student_id,
               commit=True)
+    return get_online(exam.id, db, user)
+
+
+@router.post("/api/exam-submissions/{sid}/expel")
+def expel_submission(sid: int, db: Session = Depends(get_db),
+                     user=Depends(require_role(*RESULT_ROLES))):
+    """Examiner o'quvchini testdan chetlatadi — test o'sha zahoti
+    yopiladi, natijasi hisobga olinmaydi."""
+    s, exam, o = _sub_in_scope(db, sid, user)
+    if s.status == "expelled":
+        raise HTTPException(400, "Allaqachon chetlatilgan")
+    expel(db, exam, s, f"Examiner chetlatdi ({user.full_name})")
+    audit.log(db, user, entity="exam", action="update", entity_id=exam.id,
+              entity_label=exam.title or roles.exam_title(exam.kind, exam.unit_no),
+              field="online_expel",
+              new_value=s.typed_name or s.student_id, commit=True)
     return get_online(exam.id, db, user)
 
 
@@ -970,6 +1001,21 @@ def _load_dict(txt) -> dict:
         return {}
 
 
+def expel(db: Session, exam, sub, why: str):
+    """O'quvchini testdan chetlatish: uning testi yopiladi va natijasi
+    umuman hisobga olinmaydi (2026-09-23, Jahongir)."""
+    if sub.status == "placed" and sub.student_id:
+        # Allaqachon yozilgan natija olib tashlanadi (coin ham qaytadi)
+        for r in (db.query(models.ExamResult)
+                  .filter(models.ExamResult.exam_id == exam.id,
+                          models.ExamResult.student_id == sub.student_id).all()):
+            _drop_coin_entry(db, "exam", r.id)
+            db.delete(r)
+    sub.status = "expelled"
+    sub.note = why
+    db.commit()
+
+
 def _sub_by_key(db: Session, exam, key: str):
     if not key or len(key) < 10:
         raise HTTPException(400, "Qaytadan kiring")
@@ -1023,6 +1069,8 @@ def public_save(token: str, payload: SaveIn, db: Session = Depends(get_db)):
     """Javoblarni oraliqda saqlash — telefon o'chib qolsa ham yo'qolmasin."""
     o, exam = _public(db, token)
     s = _sub_by_key(db, exam, payload.key)
+    if s.status == "expelled":
+        return {"ok": False, "expelled": True}
     if s.status != "in_progress":
         return {"ok": True, "submitted": True}
     if not _can_answer(o):
@@ -1045,7 +1093,13 @@ def public_away(token: str, payload: AwayIn, db: Session = Depends(get_db)):
     s.away_count = (s.away_count or 0) + 1
     s.away_sec = (s.away_sec or 0) + max(0, min(3600, int(payload.seconds or 0)))
     db.commit()
-    return {"ok": True, "away_count": s.away_count}
+    limit = o.away_limit
+    if limit and s.away_count > limit:
+        expel(db, exam, s, f"Sahifadan {s.away_count} marta chiqdi "
+                           f"(ruxsat: {limit})")
+        return {"ok": True, "away_count": s.away_count, "expelled": True}
+    return {"ok": True, "away_count": s.away_count,
+            "away_limit": limit, "left": (limit - s.away_count) if limit else None}
 
 
 @router.post("/api/public/exam/{token}/submit")
@@ -1056,6 +1110,8 @@ def public_submit(token: str, payload: SubmitIn, request: Request,
         raise HTTPException(410, "Test yopilgan")
     if payload.key:
         s = _sub_by_key(db, exam, payload.key)
+        if s.status == "expelled":
+            return {"ok": False, "expelled": True}
         if s.status == "in_progress":
             if not _can_answer(o):
                 # Muhlat o'tib ketgan — saqlangan javoblar bilan yakunlanadi

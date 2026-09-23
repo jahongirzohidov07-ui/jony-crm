@@ -68,10 +68,12 @@ export default function TeacherSession() {
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   }, []);
 
-  const loadGrid = useCallback(() => {
+  // silent: saqlagandan keyingi yangilash. Jadval DOM'da qoladi,
+  // aks holda sahifa qisqarib tepaga sakraydi (2026-09-23).
+  const loadGrid = useCallback((silent = false) => {
     if (!gid) return;
     setErr("");
-    setGrid(null);
+    if (!silent) setGrid(null);
     api
       .get<Any>(`/groups/${gid}/support-attendance?year=${ym.y}&month=${ym.m}`)
       .then((r) => {
@@ -91,7 +93,9 @@ export default function TeacherSession() {
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   }, [gid, ym]);
 
-  useEffect(loadGrid, [loadGrid]);
+  useEffect(() => {
+    loadGrid();
+  }, [loadGrid]);
 
   // Tanlangan kun o'zgarganda o'quvchi belgilari va soat yangilanadi
   useEffect(() => {
@@ -167,7 +171,7 @@ export default function TeacherSession() {
         hours: needSession ? hours : null,
       });
       pushToast("Support yo'qlamasi saqlandi", "success", 2500);
-      loadGrid();
+      loadGrid(true);
     } catch {
       /* xato toast'da */
     } finally {
@@ -262,7 +266,7 @@ export default function TeacherSession() {
           <div className="bg-white rounded-xl border border-red-200 p-4">
             <p className="text-sm text-red-600">{err}</p>
             <button
-              onClick={loadGrid}
+              onClick={() => loadGrid()}
               className="mt-2 text-sm font-medium text-brand-600"
             >
               Qayta urinish

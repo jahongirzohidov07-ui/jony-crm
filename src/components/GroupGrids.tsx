@@ -329,7 +329,10 @@ export function AttendanceTab({
     }
   }
 
-  if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+  // Yangilanish paytida eski jadval joyida qoladi — aks holda sahifa
+  // qisqarib, brauzer tepaga sakraydi (2026-09-23).
+  if (loading && !grid)
+    return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
   if (err)
     return (
       <div className="py-8 text-center">
@@ -834,7 +837,10 @@ export function GradesTab({
     }
   }
 
-  if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+  // Yangilanish paytida eski jadval joyida qoladi — aks holda sahifa
+  // qisqarib, brauzer tepaga sakraydi (2026-09-23).
+  if (loading && !grid)
+    return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
   if (err)
     return (
       <div className="py-8 text-center">
@@ -1665,19 +1671,34 @@ export function SupportAttendanceTab({
   const [to, setTo] = useState("");
   const [tErr, setTErr] = useState("");
 
-  const load = () => {
-    setLoading(true);
+  // JIM QAYTA YUKLASH (2026-09-23, Jahongir: "kompyuter versiyada
+  // yo'qlama qilganda har bitta clickda eng boshiga qaytib qolyabdi").
+  //
+  // Sababi: har belgidan keyin load() ishlab, setLoading(true) jadvalni
+  // "Yuklanmoqda..." matniga almashtirardi. Jadval DOM'dan chiqib
+  // ketgani uchun sahifa qisqarib, brauzer sahifani tepaga tashlardi.
+  // Endi belgidan keyingi yangilash JIM bo'ladi: jadval joyida turadi,
+  // faqat ichidagi raqamlar yangilanadi. "Yuklanmoqda" faqat birinchi
+  // ochilishda ko'rinadi.
+  const load = (silent = false) => {
+    if (!silent) setLoading(true);
     api
       .get<SupportAttendanceGrid>(
         `/groups/${groupId}/support-attendance?year=${year}&month=${month}`
       )
       .then(setGrid)
-      .catch((e) =>
-        setErr(e instanceof Error ? e.message : "Yuklab bo'lmadi"),
-      )
-      .finally(() => setLoading(false));
+      .catch((e) => {
+        if (!silent)
+          setErr(e instanceof Error ? e.message : "Yuklab bo'lmadi");
+      })
+      .finally(() => {
+        if (!silent) setLoading(false);
+      });
   };
-  useEffect(load, [groupId, year, month]);
+  useEffect(() => {
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupId, year, month]);
 
   // Kun tanlanmagan bo'lsa — bugun (yoki oxirgi o'tgan support kuni)
   useEffect(() => {
@@ -1746,7 +1767,7 @@ export function SupportAttendanceTab({
       alert(e instanceof Error ? e.message : "Xatolik");
     } finally {
       setSaving(null);
-      load();
+      load(true);
     }
   }
 
@@ -1762,7 +1783,7 @@ export function SupportAttendanceTab({
         end_time: to || null,
         marks: [],
       });
-      load();
+      load(true);
     } catch (e) {
       setTErr(e instanceof Error ? e.message : "Xatolik");
     } finally {
@@ -1770,12 +1791,18 @@ export function SupportAttendanceTab({
     }
   }
 
-  if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+  // Yangilanish paytida eski jadval joyida qoladi — aks holda sahifa
+  // qisqarib, brauzer tepaga sakraydi (2026-09-23).
+  if (loading && !grid)
+    return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
   if (err)
     return (
       <div className="py-8 text-center">
         <p className="text-sm text-red-600 mb-2">{err}</p>
-        <button onClick={load} className="text-sm text-brand-600 underline">
+        <button
+          onClick={() => load()}
+          className="text-sm text-brand-600 underline"
+        >
           Qayta urinish
         </button>
       </div>

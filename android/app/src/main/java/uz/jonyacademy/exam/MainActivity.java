@@ -46,7 +46,8 @@ public class MainActivity extends Activity {
 
     /** Test havolasi faqat shu manzillardan bo'lishi mumkin. */
     private static final List<String> HOSTS = Arrays.asList(
-            "jony-crm.vercel.app", "jonyacademy.uz", "www.jonyacademy.uz");
+            "jonyos.uz", "www.jonyos.uz", "jony-crm.vercel.app",
+            "jonyacademy.uz", "www.jonyacademy.uz");
 
     private static final int REQ_PHOTO = 41;
 

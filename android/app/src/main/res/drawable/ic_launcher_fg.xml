@@ -1,17 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Oq varaq va belgi — imtihon varaqasi -->
+<!-- Javob varaqasi va sekundomer (Jahongir tanladi, 2026-09-23).
+     Shakl 72dp li xavfsiz maydonga sig'adi: Android belgini dumaloq
+     yoki kvadrat qilib kesganda hech joyi qirqilmaydi. Hajm gradient
+     bilan emas, orqada turgan to'q ko'k nusxa bilan beriladi -
+     kichik o'lchamda ham tiniq ko'rinadi. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M38,28h24l12,12v40a4,4 0 0,1 -4,4h-32a4,4 0 0,1 -4,-4v-48a4,4 0 0,1 4,-4z" />
-    <path
-        android:fillColor="#BFDBFE"
-        android:pathData="M62,28l12,12h-12z" />
-    <path
-        android:fillColor="#2563EB"
-        android:pathData="M44,58l6,6l14,-14l4,4l-18,18l-10,-10z" />
+
+    <group
+        android:pivotX="0"
+        android:pivotY="0"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:translateX="9.6"
+        android:translateY="10.4">
+
+        <!-- varaqning qalinligi -->
+        <path
+            android:fillColor="#0F4593"
+            android:pathData="M24,18 h44 a6,6 0 0 1 6,6 v52 l-8,8 H32 a8,8 0 0 1 -8,-8 Z" />
+        <!-- varaqning o'zi -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M24,12 h36 a8,8 0 0 1 8,8 v50 a8,8 0 0 1 -8,8 h-36 a8,8 0 0 1 -8,-8 v-50 a8,8 0 0 1 8,-8 Z" />
+
+        <!-- belgilangan javoblar -->
+        <path
+            android:fillColor="#1A6FE4"
+            android:pathData="M23,26 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+        <path
+            android:fillColor="#1A6FE4"
+            android:pathData="M37,43 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+        <path
+            android:fillColor="#1A6FE4"
+            android:pathData="M51,60 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+
+        <!-- bo'sh katakchalar -->
+        <path
+            android:strokeColor="#B9D2F7"
+            android:strokeWidth="3"
+            android:pathData="M37,26 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+        <path
+            android:strokeColor="#B9D2F7"
+            android:strokeWidth="3"
+            android:pathData="M51,26 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+        <path
+            android:strokeColor="#B9D2F7"
+            android:strokeWidth="3"
+            android:pathData="M23,43 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+        <path
+            android:strokeColor="#B9D2F7"
+            android:strokeWidth="3"
+            android:pathData="M51,43 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+        <path
+            android:strokeColor="#B9D2F7"
+            android:strokeWidth="3"
+            android:pathData="M23,60 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+        <path
+            android:strokeColor="#B9D2F7"
+            android:strokeWidth="3"
+            android:pathData="M37,60 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+
+        <!-- sekundomer: qalinligi, gavdasi va millari -->
+        <path
+            android:fillColor="#0F4593"
+            android:pathData="M49,74 a23,23 0 1 0 46,0 a23,23 0 1 0 -46,0 Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M49,70 a23,23 0 1 0 46,0 a23,23 0 1 0 -46,0 Z" />
+        <path
+            android:strokeColor="#1A6FE4"
+            android:strokeWidth="6"
+            android:strokeLineCap="round"
+            android:pathData="M72,70 V56" />
+        <path
+            android:strokeColor="#7FB0F2"
+            android:strokeWidth="5"
+            android:strokeLineCap="round"
+            android:pathData="M72,70 L82,76" />
+    </group>
 </vector>

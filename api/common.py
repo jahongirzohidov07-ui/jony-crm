@@ -6105,15 +6105,23 @@ def _support_month(db: Session, teacher_id: int, year: int,
     solo_hours = round(sum((r.minutes or 0) / 60 for r in rows
                            if (r.students_count or 0)
                            <= roles.SUPPORT_SMALL_MAX), 2)
+    # Yakka dars o'quvchi bo'yicha ham 3 kishilik darsdek sanaladi
+    # (2026-09-23). Hisobotdagi o'quvchi soni o'zgarmaydi.
+    solo_n = sum(1 for r in rows if r.student_id)
+    s_points = sum(roles.SUPPORT_SOLO_AS_STUDENTS if r.student_id
+                   else (r.students_count or 0) for r in rows)
     calc = roles.support_salary(hours, students, pct, minus=adj_total,
-                                hours_points=h_points)
+                                hours_points=h_points,
+                                students_points=s_points)
     gnames = {g.id: g.name for g in db.query(models.Group)
               .filter(models.Group.id.in_(gids or [-1])).all()}
-    if solo_hours:
+    if solo_hours or solo_n:
         formula = (f"({round(hours - solo_hours, 2)} soat x "
                    f"{roles.SUPPORT_HOURS_W} + {solo_hours} yakka soat x "
-                   f"{roles.SUPPORT_HOURS_W_SMALL} + {calc['students']} "
-                   f"o'quvchi x {roles.SUPPORT_STUDENTS_W} + "
+                   f"{roles.SUPPORT_HOURS_W_SMALL} + {s_points} "
+                   f"o'quvchi x {roles.SUPPORT_STUDENTS_W} "
+                   f"(yakka dars {roles.SUPPORT_SOLO_AS_STUDENTS} "
+                   f"o'quvchidek) + "
                    f"koef {calc['coef']} x {roles.SUPPORT_RESULT_W}")
     else:
         formula = (f"({calc['hours']} soat x "
@@ -6135,7 +6143,9 @@ def _support_month(db: Session, teacher_id: int, year: int,
             for a in adjs],
         "formula": formula.replace(",", " "),
         "solo_hours": solo_hours,
-        "solo_count": sum(1 for r in rows if r.student_id),
+        "solo_count": solo_n,
+        "solo_as_students": roles.SUPPORT_SOLO_AS_STUDENTS,
+        "students_points": s_points,
         "min": roles.SUPPORT_PAY_MIN,
         "max": roles.SUPPORT_PAY_MAX,
     }

@@ -168,6 +168,13 @@ sal = client.get("/api/me/support-sessions", headers=HS).json()
 ck("oylikda yakka soat ko'rinadi", sal["solo_hours"], 1.0)
 ck("soat bali 0.60", sal["hours_part"], 0.6)
 ck("yakka darslar soni", sal["solo_count"], 1)
+# Yakka dars 3 kishilik darsdek sanaladi (2026-09-23)
+ck("hisobotda o'quvchi soni o'zgarmaydi", sal["students"], 1)
+ck("oylikda esa 3 o'quvchidek", sal["students_points"], 3)
+ck("o'quvchi bali 3 x 0.20", sal["students_part"], 0.6)
+# Ish ballari (natija koeffitsiyenti bundan tashqari qo'shiladi)
+ck("1 soatlik yakka dars = 1.2 ball (0.60 + 0.60)",
+   round(sal["hours_part"] + sal["students_part"], 2), 1.2)
 # Guruh darsi qo'shilsa — u eski qoidada (0.30)
 client.post("/api/me/support-sessions", headers=HS,
             json={"group_id": GID, "start_time": "10:00", "hours": 2,
@@ -175,6 +182,8 @@ client.post("/api/me/support-sessions", headers=HS,
 sal = client.get("/api/me/support-sessions", headers=HS).json()
 ck("jami 3 soat", sal["hours"], 3.0)
 ck("ball: yakka 1x0.60 + guruh 2x0.30 = 1.2", sal["hours_part"], 1.2)
+ck("o'quvchi: yakka 3 + guruh 8 = 11", sal["students_points"], 11)
+ck("o'quvchi bali 11 x 0.20", sal["students_part"], 2.2)
 ck("formulada ikkalasi ham ko'rinadi",
    "yakka soat" in sal["formula"], True)
 

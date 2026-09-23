@@ -5365,6 +5365,11 @@ SUPPORT_HOURS_W = 0.30
 # alohida yuritiladi: oy yakunidagi jami o'quvchi soniga qarab emas.
 SUPPORT_SMALL_MAX = 3
 SUPPORT_HOURS_W_SMALL = 0.60
+# Yakka dars o'quvchilar bo'yicha ham 3 kishilik darsdek sanaladi
+# (2026-09-23, Jahongir: "individual yoki qo'shimcha biriktirganda
+# 3ta o'quvchiga dars o'tgandek bo'lsin"). Hisobotda o'quvchi soni
+# o'zgarmaydi - faqat oylik shunday hisoblanadi.
+SUPPORT_SOLO_AS_STUDENTS = 3
 SUPPORT_STUDENTS_W = 0.20
 SUPPORT_RESULT_W = 0.50
 
@@ -5415,7 +5420,8 @@ def support_hours_points(hours: float, students: int) -> float:
 
 def support_salary(hours: float, students: int, percent,
                    minus: float = 0.0,
-                   hours_points: float | None = None) -> dict:
+                   hours_points: float | None = None,
+                   students_points: float | None = None) -> dict:
     """Formula bitta joyda — kartada ham, ro'yxatda ham, testda ham
     aynan shu hisob.
 
@@ -5426,7 +5432,9 @@ def support_salary(hours: float, students: int, percent,
     # (yakka darslar qimmatroq). Berilmasa — eski, oddiy hisob.
     h_part = (round(hours * SUPPORT_HOURS_W, 2) if hours_points is None
               else round(float(hours_points), 2))
-    s_part = round(students * SUPPORT_STUDENTS_W, 2)
+    s_part = (round(students * SUPPORT_STUDENTS_W, 2)
+              if students_points is None
+              else round(float(students_points) * SUPPORT_STUDENTS_W, 2))
     r_part = round(coef * SUPPORT_RESULT_W, 2)
     gross = round(h_part + s_part + r_part, 2)
     minus = round(max(0.0, float(minus or 0)), 2)

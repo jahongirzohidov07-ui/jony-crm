@@ -254,9 +254,16 @@ export default function MySessions() {
             </p>
             {!d.volunteer && (
               <p className="text-xs text-slate-400">
-                x 0.20 = {d.students_part}
+                {d.solo_count
+                  ? `${d.students_points} x 0.20 = ${d.students_part}`
+                  : `x 0.20 = ${d.students_part}`}
               </p>
             )}
+            {!d.volunteer && d.solo_count ? (
+              <p className="text-[11px] text-slate-400">
+                yakka dars {d.solo_as_students} o'quvchidek
+              </p>
+            ) : null}
           </div>
           <div className="rounded-lg border border-slate-200 p-3">
             <p className="text-xs text-slate-500">Test natijasi</p>

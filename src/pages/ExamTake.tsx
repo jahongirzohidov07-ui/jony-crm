@@ -84,6 +84,33 @@ function shrink(file: File): Promise<string> {
   });
 }
 
+/** SUV BELGISI (2026-09-23, Jahongir: "ismiga suv belgi qo'shchi").
+ *  Savollar ustida o'quvchining ismi xira takrorlanib turadi —
+ *  skrinshot tarqalsa, kimdan chiqqani ko'rinib turadi. Bosishga
+ *  xalaqit bermaydi (pointer-events yo'q). */
+function Watermark({ text }: { text: string }) {
+  const rows = Array.from({ length: 16 });
+  return (
+    <div
+      aria-hidden
+      className="fixed inset-0 z-30 overflow-hidden pointer-events-none select-none"
+    >
+      <div className="absolute -inset-1/4 rotate-[-24deg]">
+        {rows.map((_, i) => (
+          <div
+            key={i}
+            className="whitespace-nowrap text-slate-900/[0.09] text-[15px] font-semibold tracking-wide py-6"
+          >
+            {Array.from({ length: 8 })
+              .map(() => text)
+              .join("     •     ")}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function mmss(sec: number) {
   const s = Math.max(0, Math.ceil(sec));
   const m = Math.floor(s / 60);
@@ -99,6 +126,8 @@ export default function ExamTake() {
   const [offset, setOffset] = useState(0);
   const [now, setNow] = useState(Date.now());
   const [key, setKey] = useState<string | null>(() => store(`exam:${token}:key`));
+  // Suv belgisida turadigan ism (sahifa yangilansa ham saqlanib qoladi)
+  const [who, setWho] = useState<string>(() => store(`exam:${token}:who`) || "");
   const [step, setStep] = useState<"who" | "photo">("who");
   const [studentId, setStudentId] = useState<number | null>(null);
   const [notListed, setNotListed] = useState(false);
@@ -260,6 +289,9 @@ export default function ExamTake() {
       if (!r.ok) throw new Error(j.detail || "Kirib bo'lmadi");
       store(`exam:${token}:key`, j.key);
       setKey(j.key);
+      const nm = j.name || (notListed ? name.trim() : "");
+      store(`exam:${token}:who`, nm);
+      setWho(nm);
       await load();
       window.scrollTo(0, 0);
     } catch (e) {
@@ -500,6 +532,7 @@ export default function ExamTake() {
   const low = endsIn !== null && endsIn <= 60;
   return shell(
     <div className="space-y-4 pb-24">
+      {who ? <Watermark text={`${who} · ${exam.title}`} /> : null}
       {exam.parts.map((p, pi) => (
         <div key={pi} className={card}>
           <h2 className="font-bold text-slate-900">{p.title}</h2>

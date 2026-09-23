@@ -1000,7 +1000,10 @@ def public_begin(token: str, payload: BeginIn, request: Request,
         online_max=o.online_max or 0, sub_key=secrets.token_urlsafe(16))
     db.add(sub)
     db.commit()
-    return {"ok": True, "key": sub.sub_key}
+    # Ism suv belgisi uchun ham qaytariladi (2026-09-23, Jahongir:
+    # "ismiga suv belgi qo'shchi") — skrinshot tarqalsa, kimniki
+    # ekani ko'rinib tursin
+    return {"ok": True, "key": sub.sub_key, "name": typed or ""}
 
 
 @router.post("/api/public/exam/{token}/save")

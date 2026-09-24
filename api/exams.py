@@ -249,6 +249,68 @@ def save_exam_results(
     return _apply_exam_marks(db, exam, payload, user)
 
 
+@router.put("/api/students/{student_id}/exams/{exam_id}")
+def student_exam_mark(
+    student_id: int,
+    exam_id: int,
+    payload: schemas.StudentExamMark,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.STUDENT_EXAMS_EDIT)),
+):
+    """O'quvchi kartasidan bitta natijani kiritish yoki tuzatish
+    (2026-09-24, Jahongir: "imtixon tarixini o'zgartirish qo'shish
+    tahrirlashni ham qo'sh hrga").
+
+    Guruh varag'i bilan BIR XIL yo'ldan o'tadi (_apply_exam_marks):
+    foiz, coin, XP, sertifikat va Telegram xabari bir joyda
+    hisoblanadi — kartadan kiritilgani "boshqacha" bo'lib qolmaydi."""
+    st = db.query(models.Student).get(student_id)
+    if not st:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    exam = db.query(models.Exam).get(exam_id)
+    if not exam:
+        raise HTTPException(404, "Test topilmadi")
+    if not _in_user_branches(db, user, st.branch_id):
+        raise HTTPException(403, "Bu o'quvchi sizning filialingizda emas")
+    # Bola shu guruhda o'qigan bo'lishi kerak — hozir yoki ilgari
+    gids = {st.group_id} | {
+        lk.group_id for lk in db.query(models.StudentGroupLink)
+        .filter(models.StudentGroupLink.student_id == st.id).all()}
+    if exam.group_id not in gids:
+        raise HTTPException(400, "Bu o'quvchi shu guruhda o'qimagan")
+
+    old = next((r for r in exam.results if r.student_id == st.id), None)
+    old_txt = None
+    if old is not None:
+        old_txt = ("kelmadi" if old.absent
+                   else (f"{old.band} band" if old.band is not None
+                         else f"{old.score}/{exam.max_score}"))
+    res = _apply_exam_marks(db, exam, schemas.ExamScoreBulk(marks=[
+        schemas.ExamScoreMark(student_id=st.id, score=payload.score,
+                              band=payload.band, absent=payload.absent,
+                              note=payload.note)]), user)
+    new_txt = ("kelmadi" if payload.absent
+               else (f"{payload.band} band" if payload.band is not None
+                     else f"{payload.score}/{exam.max_score}"))
+    audit.log(db, user, entity="exam", action="update", entity_id=exam.id,
+              entity_label=st.full_name,
+              field="O'quvchi kartasidan natija",
+              old_value=old_txt, new_value=new_txt,
+              note=payload.note, branch_id=st.branch_id, commit=True)
+    row = next((r for r in db.query(models.ExamResult)
+                .filter(models.ExamResult.exam_id == exam.id,
+                        models.ExamResult.student_id == st.id).all()), None)
+    return {
+        "ok": True,
+        "score": row.score if row else None,
+        "band": row.band if row else None,
+        "percent": row.percent if row else None,
+        "coins": row.coins if row else None,
+        "absent": bool(row.absent) if row else False,
+        "exam": getattr(res, "id", exam.id),
+    }
+
+
 def _apply_exam_marks(db: Session, exam: models.Exam,
                       payload: schemas.ExamScoreBulk, user):
     """Natijalarni yozishning O'ZAGI — foiz, coin, Telegram, XP,

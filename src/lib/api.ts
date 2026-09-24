@@ -865,9 +865,13 @@ export interface StudentExamRow {
 
 export interface StudentExams {
   results: StudentExamRow[];
+  /** Natijasi hali yozilmagan testlar — kartadan qo'shish uchun. */
+  missing: StudentExamRow[];
   count: number;
   avg_percent: number | null;
   coins: number;
+  can_edit: boolean;
+  hint: string;
 }
 
 export interface StudentAttendanceRow {

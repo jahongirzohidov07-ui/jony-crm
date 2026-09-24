@@ -851,6 +851,15 @@ ATTENDANCE_VIEW = TEACHING_ACCESS + [HR_MANAGER]
 # ochilishi bilan ruxsat xatosi chiqardi.
 STUDENT_GROUPS_VIEW = ATTENDANCE_VIEW
 
+# O'QUVCHI KARTASIDAGI IMTIHON TARIXI (2026-09-24, Jahongir:
+# "imtixon tarixini o'zgartirish qo'shish tahrirlashni ham qo'sh
+# hrga"). Ko'rish - dars beruvchi xodimlar va HR. Tuzatish esa
+# guruh varag'idagi bilan BIR XIL ro'yxat: ustoz va support natija
+# kirita olmaydi (baholash examinerniki), ularga HR qo'shiladi.
+STUDENT_EXAMS_VIEW = TEACHING_STAFF + [HR_MANAGER]
+STUDENT_EXAMS_EDIT = [r for r in TEACHING_ACCESS
+                      if r not in (TEACHER, SUPPORT_TEACHER)] + [HR_MANAGER]
+
 # Refund: sotuv menejeri SO'RAYDI, filial rahbari yoki moliyachi
 # TASDIQLAYDI. Bitta odam ham so'rab ham tasdiqlay olmaydi (asoschidan
 # tashqari) — pul qaytarish ikki ko'z ostida bo'ladi.

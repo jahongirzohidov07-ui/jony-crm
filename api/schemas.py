@@ -762,6 +762,14 @@ class ExamScoreBulk(BaseModel):
     marks: List[ExamScoreMark]
 
 
+class StudentExamMark(BaseModel):
+    """O'quvchi kartasidan bitta natijani kiritish/tuzatish."""
+    score: Optional[float] = None
+    band: Optional[float] = None
+    absent: bool = False
+    note: Optional[str] = None
+
+
 # ---------- Coin / gamification ----------
 class CoinEntryOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)

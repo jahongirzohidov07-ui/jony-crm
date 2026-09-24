@@ -9,6 +9,7 @@ import {
   type Student,
   type StudentDetail as StudentDetailType,
   type StudentExams,
+  type StudentExamRow,
   type StudentAttendance,
   type CoinEntry,
   type Branch,
@@ -1390,16 +1391,21 @@ function AttendanceTab({ studentId }: { studentId: number }) {
 function ExamsTab({ studentId }: { studentId: number }) {
   const [data, setData] = useState<StudentExams | null>(null);
   const [loading, setLoading] = useState(true);
+  // Kartadan natija kiritish/tuzatish (2026-09-24). Tuzatilganda
+  // foiz, coin va XP server tomonda qaytadan hisoblanadi.
+  const [edit, setEdit] = useState<StudentExamRow | null>(null);
 
-  useEffect(() => {
+  const load = useCallback(() => {
     api
-      .get<StudentExams>(`/students/${studentId}/exams`)
+      .fresh<StudentExams>(`/students/${studentId}/exams`)
       .then(setData)
       .finally(() => setLoading(false));
   }, [studentId]);
+  useEffect(load, [load]);
 
   if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
-  if (!data || data.results.length === 0)
+  if (!data) return null;
+  if (data.results.length === 0 && !(data.missing || []).length)
     return (
       <p className="text-sm text-slate-400 py-8 text-center">
         Hali imtihon natijasi yo'q.
@@ -1443,6 +1449,7 @@ function ExamsTab({ studentId }: { studentId: number }) {
               <th className="text-right px-4 py-3 font-medium">Natija</th>
               <th className="text-right px-4 py-3 font-medium">Foiz</th>
               <th className="text-right px-4 py-3 font-medium">Coin</th>
+              {data.can_edit && <th className="px-4 py-3"></th>}
             </tr>
           </thead>
           <tbody>
@@ -1470,10 +1477,176 @@ function ExamsTab({ studentId }: { studentId: number }) {
                 <td className="px-4 py-3 text-right text-brand-700">
                   {r.coins || "—"}
                 </td>
+                {data.can_edit && (
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => setEdit(r)}
+                      className="text-xs text-brand-600 underline decoration-dotted"
+                    >
+                      Tuzatish
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* NATIJASI YOZILMAGAN TESTLAR — kartadan qo'shiladi */}
+      {data.can_edit && (data.missing || []).length > 0 && (
+        <div className="mt-4 border border-amber-200 bg-amber-50 rounded-xl p-4">
+          <p className="text-sm font-medium text-amber-900 mb-2">
+            Natijasi kiritilmagan testlar
+          </p>
+          <div className="space-y-1.5">
+            {data.missing.map((r) => (
+              <div key={r.exam_id} className="flex items-center gap-2 text-sm">
+                <span className="text-slate-800">{examTitle(r)}</span>
+                <span className="text-xs text-slate-500">
+                  {r.group} · {formatDate(r.date)}
+                </span>
+                <button
+                  onClick={() => setEdit(r)}
+                  className="ml-auto text-xs text-brand-700 underline decoration-dotted"
+                >
+                  Natija qo'shish
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {data.can_edit && (
+        <p className="text-xs text-slate-500 mt-3">{data.hint}</p>
+      )}
+
+      {edit && (
+        <ExamMarkModal
+          studentId={studentId}
+          row={edit}
+          onClose={() => setEdit(null)}
+          onSaved={() => {
+            setEdit(null);
+            load();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+/** Bitta natijani kiritish yoki tuzatish oynasi (2026-09-24). */
+function ExamMarkModal({
+  studentId, row, onClose, onSaved,
+}: {
+  studentId: number;
+  row: StudentExamRow;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const isMock = row.kind === "mock";
+  const [val, setVal] = useState(
+    isMock
+      ? row.band != null ? String(row.band) : ""
+      : row.score != null ? String(row.score) : ""
+  );
+  const [absent, setAbsent] = useState(!!row.absent);
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const save = async () => {
+    setBusy(true);
+    setErr("");
+    try {
+      const num = val.trim() === "" ? null : Number(val);
+      if (!absent && (num === null || Number.isNaN(num))) {
+        setErr("Ballni kiriting yoki \"kelmadi\" deb belgilang");
+        setBusy(false);
+        return;
+      }
+      await api.put(`/students/${studentId}/exams/${row.exam_id}`, {
+        score: absent || isMock ? null : num,
+        band: absent || !isMock ? null : num,
+        absent,
+        note: note.trim() || null,
+      });
+      onSaved();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Saqlanmadi");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl w-full max-w-sm p-5 space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-slate-800">{examTitle(row)}</h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-xs text-slate-500">
+          {row.group} · {formatDate(row.date)}
+          {!isMock && row.max_score ? ` · max ${row.max_score} ball` : ""}
+        </p>
+
+        <div>
+          <label className="block text-xs text-slate-500 mb-1">
+            {isMock ? "Band" : "Ball"}
+          </label>
+          <input
+            type="number"
+            step={isMock ? "0.5" : "1"}
+            value={val}
+            disabled={absent}
+            onChange={(e) => setVal(e.target.value)}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm disabled:bg-slate-50"
+          />
+        </div>
+
+        <label className="flex items-center gap-2 text-sm text-slate-700">
+          <input
+            type="checkbox"
+            checked={absent}
+            onChange={(e) => setAbsent(e.target.checked)}
+          />
+          Imtihonga kelmagan
+        </label>
+
+        <div>
+          <label className="block text-xs text-slate-500 mb-1">
+            Nega tuzatilyapti
+          </label>
+          <input
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Masalan: varaq qayta tekshirildi"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          />
+        </div>
+
+        {err && <p className="text-sm text-rose-600">{err}</p>}
+
+        <div className="flex gap-2 pt-1">
+          <button
+            disabled={busy}
+            onClick={save}
+            className="rounded-lg bg-brand-600 text-white text-sm px-4 py-2 disabled:opacity-50"
+          >
+            Saqlash
+          </button>
+          <button
+            onClick={onClose}
+            className="rounded-lg border border-slate-300 text-sm px-4 py-2"
+          >
+            Bekor
+          </button>
+        </div>
       </div>
     </div>
   );

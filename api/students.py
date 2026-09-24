@@ -70,9 +70,14 @@ def student_lead(
 def student_exams(
     student_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_STAFF)),
+    user=Depends(require_role(*roles.STUDENT_EXAMS_VIEW)),
 ):
-    """O'quvchining barcha imtihon natijalari - eng yangisi tepada."""
+    """O'quvchining barcha imtihon natijalari - eng yangisi tepada.
+
+    2026-09-24: natijasi YOZILMAGAN testlar ham qaytariladi
+    ("missing") — kartadan turib qo'shish uchun. Jahongir:
+    "imtixon tarixini o'zgartirish qo'shish tahrirlashni ham
+    qo'sh hrga"."""
     rows = (
         db.query(models.ExamResult, models.Exam)
         .join(models.Exam, models.ExamResult.exam_id == models.Exam.id)
@@ -93,12 +98,46 @@ def student_exams(
             "coins": r.coins, "absent": bool(r.absent),
         })
     scored = [x for x in out if x["percent"] is not None]
+
+    # NATIJASI YO'Q TESTLAR: o'quvchi qatnashgan guruhlarning
+    # o'tkazilgan testlari ichida shu bolaning yozuvi bo'lmaganlari.
+    done_ids = {x["exam_id"] for x in out}
+    gids = set()
+    s = db.query(models.Student).get(student_id)
+    if s:
+        if s.group_id:
+            gids.add(s.group_id)
+        gids |= {lk.group_id for lk in
+                 db.query(models.StudentGroupLink)
+                 .filter(models.StudentGroupLink.student_id == student_id)
+                 .all() if lk.group_id}
+    missing = []
+    if gids:
+        for e in (db.query(models.Exam)
+                  .filter(models.Exam.group_id.in_(gids),
+                          models.Exam.status == "done")
+                  .order_by(models.Exam.date.desc()).limit(60).all()):
+            if e.id in done_ids:
+                continue
+            g = groups.get(e.group_id)
+            missing.append({
+                "exam_id": e.id, "kind": e.kind, "unit_no": e.unit_no,
+                "title": e.title, "date": e.date.isoformat(),
+                "max_score": e.max_score,
+                "group": g.name if g else None,
+                "mock": e.kind == "mock",
+            })
     return {
         "results": out,
+        "missing": missing,
         "count": len(scored),
         "avg_percent": round(sum(x["percent"] for x in scored) / len(scored), 1)
         if scored else None,
         "coins": sum(x["coins"] or 0 for x in out),
+        "can_edit": user.role in tuple(roles.STUDENT_EXAMS_EDIT),
+        "hint": ("Natijani tuzatsangiz foiz, coin va XP qaytadan "
+                 "hisoblanadi — o'zgartirish kim tomonidan qilingani "
+                 "tarixga yoziladi."),
     }
 
 @router.get("/api/students/{student_id}/attendance")

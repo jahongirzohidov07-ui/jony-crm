@@ -2626,13 +2626,53 @@ def archive_students(
         })
     return {"groups": groups, "rows": rows, "total": len(rows)}
 
+def _exit_details(db, u, off, months) -> dict:
+    """Xodim NEGA ketgani: ketish jarayonidagi sabab, chiqish suhbati
+    va qancha ishlagani. Ketish jarayoni ochilmagan bo'lsa sabab
+    bo'sh qoladi va arxivda "sababi yozilmagan" bo'lib chiqadi."""
+    hired = u.hired_date
+    if not hired:
+        t = (db.query(models.Teacher)
+             .filter(models.Teacher.user_id == u.id).first())
+        hired = t.hired_date if t else None
+    key = off.reason if off else None
+    return {
+        "hired_date": hired.isoformat() if hired else None,
+        "months": months(hired, u.exit_date),
+        "position": u.position,
+        "phone": u.phone,
+        "reason_key": key,
+        "reason_label": roles.EXIT_LABELS.get(key or ""),
+        "ours": (key in roles.EXIT_OURS) if key else None,
+        "exit_notes": off.exit_notes if off else None,
+        "would_return": (bool(off.would_return)
+                         if off and off.would_return is not None else None),
+        "has_reason": bool(key),
+    }
+
+
 @router.get("/api/archive/staff")
 def archive_staff(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.STAFF_VIEWERS)),
 ):
     """Ishdan bo'shagan xodimlar - qanday ajrashilgani bo'yicha.
-    Qayta ishga olish masalasida shu ro'yxat hal qiluvchi."""
+    Qayta ishga olish masalasida shu ro'yxat hal qiluvchi.
+
+    2026-09-24 (Jahongir: "hr ga xodimlar arxivini ochib ber, ishdan
+    ketgan nega ketgan hammasi bo'lsin"): har qatorda endi NEGA
+    ketgani ham bor — ketish jarayonidagi sabab (roles.EXIT_REASONS),
+    chiqish suhbati izohi, qaytib kelarmidi va qancha ishlagani.
+    Sabab yozilmaganlar alohida ko'rinadi: HR ularni to'ldiradi."""
+    _off = {}
+    for o in db.query(models.Offboarding).order_by(
+            models.Offboarding.id).all():
+        _off[o.user_id] = o          # oxirgisi qoladi
+
+    def _months(a, b):
+        if not a or not b:
+            return None
+        return round((b - a).days / 30.4, 1)
     q = scope_to_branch(db.query(models.User), models.User, user).filter(
         models.User.is_active == 0)
     rows = [{
@@ -2646,6 +2686,7 @@ def archive_staff(
                                                  "Neytral"),
         "exit_reason": u.exit_reason,
         "exit_date": u.exit_date.isoformat() if u.exit_date else None,
+        **_exit_details(db, u, _off.get(u.id), _months),
     } for u in q.all()]
     # Hisob ochilmagan, ishdan ketgan USTOZ KARTALARI ham arxivda
     # ko'rinadi — O'qituvchilar bo'limida "ketgan" bo'lib yotmaydi.
@@ -2663,6 +2704,13 @@ def archive_staff(
             "exit_label": roles.EXIT_TYPE_LABELS.get("neutral", "Neytral"),
             "exit_reason": None,
             "exit_date": t.left_date.isoformat() if t.left_date else None,
+            "hired_date": (t.hired_date.isoformat()
+                           if t.hired_date else None),
+            "months": _months(t.hired_date, t.left_date),
+            "reason_key": None, "reason_label": None, "ours": None,
+            "exit_notes": None, "would_return": None,
+            "position": None, "phone": None,
+            "has_reason": False,
         })
     rows.sort(key=lambda r: (r["exit_date"] or "", r["full_name"]), reverse=True)
 
@@ -2672,7 +2720,37 @@ def archive_staff(
             "key": key, "label": label, "hint": hint,
             "count": sum(1 for r in rows if r["exit_type"] == key),
         })
-    return {"groups": groups, "rows": rows, "total": len(rows)}
+
+    # NEGA KETISHYAPTI. Faqat sababi yozilganlar hisobga olinadi —
+    # aks holda "boshqa" ulushi soxta ko'rinadi.
+    named = [r for r in rows if r["reason_key"]]
+    by_reason = []
+    for key, label, ours in roles.EXIT_REASONS:
+        n = sum(1 for r in named if r["reason_key"] == key)
+        if n:
+            by_reason.append({"key": key, "label": label, "ours": ours,
+                              "count": n})
+    by_reason.sort(key=lambda x: -x["count"])
+    ours_n = sum(x["count"] for x in by_reason if x["ours"])
+    this_year = sum(1 for r in rows
+                    if (r["exit_date"] or "").startswith(
+                        str(roles.local_today().year)))
+    tenures = [r["months"] for r in rows if r.get("months")]
+    return {
+        "groups": groups, "rows": rows, "total": len(rows),
+        "by_reason": by_reason,
+        "reasons": [{"key": k, "label": l, "ours": o}
+                    for k, l, o in roles.EXIT_REASONS],
+        "no_reason": sum(1 for r in rows if not r["reason_key"]),
+        "ours_percent": (round(ours_n / len(named) * 100, 1)
+                         if named else None),
+        "this_year": this_year,
+        "avg_months": (round(sum(tenures) / len(tenures), 1)
+                       if tenures else None),
+        "hint": ("Sabab yozilmagan qatorlarni to'ldiring — nega "
+                 "ketayotganini bilmasdan ketishning oldini olib "
+                 "bo'lmaydi."),
+    }
 
 @router.put("/api/archive/staff/{user_id}")
 def set_exit_type(
@@ -2686,11 +2764,38 @@ def set_exit_type(
         raise HTTPException(404, "Xodim topilmadi")
     if payload.exit_type not in roles.EXIT_TYPE_LABELS:
         raise HTTPException(400, "Noma'lum toifa")
+    if payload.reason_key and payload.reason_key not in roles.EXIT_LABELS:
+        raise HTTPException(400, "Noma'lum ketish sababi")
     old = u.exit_type
     u.exit_type = payload.exit_type
     u.exit_reason = payload.exit_reason
+    if payload.exit_date:
+        u.exit_date = payload.exit_date
     if not u.exit_date:
         u.exit_date = date.today()
+
+    # SABAB BITTA JOYDA (2026-09-24). Ro'yxatdan tanlangan sabab va
+    # chiqish suhbati Offboarding yozuviga tushadi — HR hisobotlari
+    # ("ketishlarning qanchasi bizga bog'liq") o'sha yerdan o'qiydi,
+    # shuning uchun arxivda to'ldirilgani hisobotda ham ko'rinadi.
+    if (payload.reason_key or payload.exit_notes is not None
+            or payload.would_return is not None):
+        o = (db.query(models.Offboarding)
+             .filter(models.Offboarding.user_id == u.id)
+             .order_by(models.Offboarding.id.desc()).first())
+        if o is None:
+            o = models.Offboarding(user_id=u.id, branch_id=u.branch_id,
+                                   steps="{}", completed=1,
+                                   by_user_id=user.id)
+            db.add(o)
+        if payload.reason_key:
+            o.reason = payload.reason_key
+        if payload.exit_notes is not None:
+            o.exit_notes = payload.exit_notes
+        if payload.would_return is not None:
+            o.would_return = 1 if payload.would_return else 0
+        if u.exit_date and not o.last_day:
+            o.last_day = u.exit_date
     audit.log(db, user, entity="user", action="update", entity_id=u.id,
               entity_label=u.full_name, field="exit_type",
               old_value=old, new_value=u.exit_type, note=payload.exit_reason,

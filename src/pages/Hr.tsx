@@ -48,7 +48,7 @@ type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacanci
   | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
   | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps"
-  | "penalty" | "blacklist" | "solo";
+  | "penalty" | "blacklist" | "solo" | "exited";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
@@ -71,6 +71,8 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "onbsteps", label: "Onboarding" },
   // 2026-09-23, Jahongir: "hr qo'sha olsin u o'quvchilarni"
   { key: "solo", label: "Yakka support" },
+  // 2026-09-24, Jahongir: "hr ga xodimlar arxivini ochib ber"
+  { key: "exited", label: "Ketganlar arxivi" },
   // 2026-09-16, Jahongir: examiner va supportlardan jarima ball ayirish
   { key: "penalty", label: "Jarima ballari" },
   // 2026-09-16, Jahongir: "o'quv markaz qora ro'yxatini shakllantir"
@@ -1438,6 +1440,7 @@ export default function Hr() {
       {activeTab === "library" && <LibraryTab />}
       {activeTab === "onbsteps" && <OnboardingStepsTab />}
       {activeTab === "solo" && <SoloSupportTab />}
+      {activeTab === "exited" && <ExitedStaffTab />}
       {activeTab === "penalty" && <PenaltyPointsTab />}
       {activeTab === "blacklist" && <HrBlacklistTab />}
     </div>
@@ -2476,6 +2479,430 @@ function SoloSupportTab() {
           </table>
         </div>
       )}
+    </div>
+  );
+}
+
+/** KETGANLAR ARXIVI (2026-09-24, Jahongir: "hr ga xodimlar arxivini
+ *  ochib ber, ishdan ketgan nega ketgan hammasi bo'lsin").
+ *
+ *  Ro'yxat ikki manbadan yig'iladi: hisobi yopilgan xodimlar va
+ *  hisobsiz ustoz kartalari. Sababi yozilmaganlar sariq bilan
+ *  ajratiladi — HR ularni shu yerda to'ldiradi va o'sha sabab HR
+ *  hisobotiga ham tushadi. */
+type ExitRow = {
+  id: number;
+  kind: string;
+  full_name: string;
+  username: string;
+  role_label: string;
+  branch: string | null;
+  position: string | null;
+  phone: string | null;
+  exit_type: string;
+  exit_label: string;
+  exit_reason: string | null;
+  exit_date: string | null;
+  hired_date: string | null;
+  months: number | null;
+  reason_key: string | null;
+  reason_label: string | null;
+  ours: boolean | null;
+  exit_notes: string | null;
+  would_return: boolean | null;
+  has_reason: boolean;
+};
+
+type ExitData = {
+  rows: ExitRow[];
+  total: number;
+  groups: { key: string; label: string; hint: string; count: number }[];
+  by_reason: { key: string; label: string; ours: boolean; count: number }[];
+  reasons: { key: string; label: string; ours: boolean }[];
+  no_reason: number;
+  ours_percent: number | null;
+  this_year: number;
+  avg_months: number | null;
+  hint: string;
+};
+
+const EXIT_TONE: Record<string, string> = {
+  green: "bg-emerald-100 text-emerald-700",
+  neutral: "bg-slate-100 text-slate-600",
+  red: "bg-red-100 text-red-700",
+};
+
+function ExitedStaffTab() {
+  const [d, setD] = useState<ExitData | null>(null);
+  const [q, setQ] = useState("");
+  const [type, setType] = useState("");
+  const [reason, setReason] = useState("");
+  const [year, setYear] = useState("");
+  const [edit, setEdit] = useState<ExitRow | null>(null);
+
+  const load = useCallback(() => {
+    api.fresh<ExitData>("/archive/staff").then(setD).catch(() => setD(null));
+  }, []);
+  useEffect(load, [load]);
+
+  if (!d) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+
+  const years = [...new Set(
+    d.rows.map((r) => (r.exit_date || "").slice(0, 4)).filter(Boolean)
+  )].sort().reverse();
+
+  const rows = d.rows.filter((r) => {
+    if (q && !r.full_name.toLowerCase().includes(q.toLowerCase()))
+      return false;
+    if (type && r.exit_type !== type) return false;
+    if (reason === "none" ? r.has_reason : reason && r.reason_key !== reason)
+      return false;
+    if (year && !(r.exit_date || "").startsWith(year)) return false;
+    return true;
+  });
+
+  const card = "bg-white border border-slate-200 rounded-xl p-4";
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+        <div className={card}>
+          <p className="text-xs text-slate-500">Jami ketgan</p>
+          <p className="text-xl font-semibold text-slate-900">{d.total}</p>
+          <p className="text-xs text-slate-400">shu yil {d.this_year} ta</p>
+        </div>
+        <div className={card}>
+          <p className="text-xs text-slate-500">O'rtacha ishlagan</p>
+          <p className="text-xl font-semibold text-slate-900">
+            {d.avg_months != null ? `${d.avg_months} oy` : "—"}
+          </p>
+        </div>
+        <div className={card}>
+          <p className="text-xs text-slate-500">Bizga bog'liq sabab</p>
+          <p className="text-xl font-semibold text-slate-900">
+            {d.ours_percent != null ? `${d.ours_percent}%` : "—"}
+          </p>
+          <p className="text-xs text-slate-400">ish haqi, rahbariyat, yuk</p>
+        </div>
+        <div className={card}>
+          <p className="text-xs text-slate-500">Sababi yozilmagan</p>
+          <p className={`text-xl font-semibold ${
+            d.no_reason ? "text-amber-600" : "text-slate-900"}`}>
+            {d.no_reason}
+          </p>
+        </div>
+      </div>
+
+      {d.by_reason.length > 0 && (
+        <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+          <p className="text-sm font-medium text-slate-700 mb-2">
+            Nega ketishgan
+          </p>
+          <div className="space-y-1.5">
+            {d.by_reason.map((x) => (
+              <div key={x.key} className="flex items-center gap-2 text-sm">
+                <span className="w-44 shrink-0 text-slate-600">
+                  {x.label}
+                </span>
+                <div className="flex-1 h-2 bg-slate-100 rounded-full">
+                  <div
+                    className={`h-2 rounded-full ${
+                      x.ours ? "bg-red-400" : "bg-slate-400"}`}
+                    style={{
+                      width: `${(x.count / d.by_reason[0].count) * 100}%`,
+                    }}
+                  />
+                </div>
+                <span className="w-8 text-right text-slate-700">
+                  {x.count}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-2 mb-3">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Ism bo'yicha qidirish"
+          className="flex-1 min-w-[180px] rounded-lg border border-slate-300 px-3 py-2 text-sm"
+        />
+        <select
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+        >
+          <option value="">Qanday ajrashilgan</option>
+          {d.groups.map((g) => (
+            <option key={g.key} value={g.key}>
+              {g.label} ({g.count})
+            </option>
+          ))}
+        </select>
+        <select
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+        >
+          <option value="">Sabab</option>
+          <option value="none">Sababi yozilmagan ({d.no_reason})</option>
+          {d.reasons.map((r) => (
+            <option key={r.key} value={r.key}>{r.label}</option>
+          ))}
+        </select>
+        <select
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+        >
+          <option value="">Yil</option>
+          {years.map((y) => (
+            <option key={y} value={y}>{y}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="bg-white border border-slate-200 rounded-xl overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-slate-500 text-xs">
+            <tr>
+              <th className="text-left px-4 py-2.5 font-medium">Xodim</th>
+              <th className="text-left px-3 py-2.5 font-medium">Lavozim</th>
+              <th className="text-left px-3 py-2.5 font-medium">Filial</th>
+              <th className="text-left px-3 py-2.5 font-medium">Ishladi</th>
+              <th className="text-left px-3 py-2.5 font-medium">Ketdi</th>
+              <th className="text-left px-3 py-2.5 font-medium">Nega</th>
+              <th className="px-3 py-2.5"></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {rows.map((r) => (
+              <tr key={`${r.kind}-${r.id}`}>
+                <td className="px-4 py-2.5">
+                  <span className="text-slate-800">{r.full_name}</span>
+                  <span
+                    className={`ml-2 px-1.5 py-0.5 rounded text-[11px] ${
+                      EXIT_TONE[r.exit_type] || EXIT_TONE.neutral}`}
+                  >
+                    {r.exit_label}
+                  </span>
+                  {r.would_return === false && (
+                    <span className="block text-[11px] text-slate-400">
+                      qaytib kelmaydi
+                    </span>
+                  )}
+                </td>
+                <td className="px-3 py-2.5 text-slate-600">
+                  {r.position || r.role_label}
+                </td>
+                <td className="px-3 py-2.5 text-slate-600">
+                  {r.branch || "—"}
+                </td>
+                <td className="px-3 py-2.5 text-slate-600">
+                  {r.months != null ? `${r.months} oy` : "—"}
+                </td>
+                <td className="px-3 py-2.5 text-slate-600">
+                  {r.exit_date || "—"}
+                </td>
+                <td className="px-3 py-2.5">
+                  {r.reason_label ? (
+                    <span className={r.ours ? "text-red-700" : "text-slate-700"}>
+                      {r.reason_label}
+                    </span>
+                  ) : (
+                    <span className="text-amber-600">sababi yozilmagan</span>
+                  )}
+                  {(r.exit_notes || r.exit_reason) && (
+                    <span className="block text-[11px] text-slate-500">
+                      {r.exit_notes || r.exit_reason}
+                    </span>
+                  )}
+                </td>
+                <td className="px-3 py-2.5 text-right">
+                  {r.kind === "user" && (
+                    <button
+                      onClick={() => setEdit(r)}
+                      className="text-xs text-brand-600 underline decoration-dotted"
+                    >
+                      To'ldirish
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+            {rows.length === 0 && (
+              <tr>
+                <td colSpan={7} className="px-4 py-10 text-center text-slate-400">
+                  Bu shart bo'yicha hech kim topilmadi.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <p className="text-xs text-slate-500 mt-3">{d.hint}</p>
+
+      {edit && (
+        <ExitEditModal
+          row={edit}
+          reasons={d.reasons}
+          types={d.groups}
+          onClose={() => setEdit(null)}
+          onSaved={() => {
+            setEdit(null);
+            load();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+function ExitEditModal({
+  row, reasons, types, onClose, onSaved,
+}: {
+  row: ExitRow;
+  reasons: { key: string; label: string }[];
+  types: { key: string; label: string }[];
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const [f, setF] = useState({
+    exit_type: row.exit_type || "neutral",
+    reason_key: row.reason_key || "",
+    exit_notes: row.exit_notes || row.exit_reason || "",
+    exit_date: row.exit_date || "",
+    would_return: row.would_return,
+  });
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const save = async () => {
+    setBusy(true);
+    setErr("");
+    try {
+      await api.put(`/archive/staff/${row.id}`, {
+        exit_type: f.exit_type,
+        exit_reason: f.exit_notes || null,
+        reason_key: f.reason_key || null,
+        exit_notes: f.exit_notes || null,
+        exit_date: f.exit_date || null,
+        would_return: f.would_return,
+      });
+      onSaved();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Saqlanmadi");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-5 space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-slate-800">{row.full_name}</h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+
+        <div>
+          <label className="block text-xs text-slate-500 mb-1">
+            Nega ketdi
+          </label>
+          <select
+            value={f.reason_key}
+            onChange={(e) => setF({ ...f, reason_key: e.target.value })}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          >
+            <option value="">Tanlanmagan</option>
+            {reasons.map((r) => (
+              <option key={r.key} value={r.key}>{r.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs text-slate-500 mb-1">
+            Qanday ajrashildi
+          </label>
+          <select
+            value={f.exit_type}
+            onChange={(e) => setF({ ...f, exit_type: e.target.value })}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          >
+            {types.map((t) => (
+              <option key={t.key} value={t.key}>{t.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs text-slate-500 mb-1">
+            Ketgan sana
+          </label>
+          <input
+            type="date"
+            value={f.exit_date}
+            onChange={(e) => setF({ ...f, exit_date: e.target.value })}
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs text-slate-500 mb-1">
+            Chiqish suhbati
+          </label>
+          <textarea
+            rows={3}
+            value={f.exit_notes}
+            onChange={(e) => setF({ ...f, exit_notes: e.target.value })}
+            placeholder="O'z so'zlari bilan: nimadan norozi edi, nima yaxshi edi"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-slate-500">Qaytib kelarmidi:</span>
+          {[["ha", true], ["yo'q", false]].map(([lbl, val]) => (
+            <button
+              key={String(val)}
+              onClick={() =>
+                setF({ ...f, would_return: f.would_return === val ? null : (val as boolean) })
+              }
+              className={`px-3 py-1 rounded-lg text-xs border ${
+                f.would_return === val
+                  ? "bg-brand-600 text-white border-brand-600"
+                  : "bg-white text-slate-600 border-slate-300"
+              }`}
+            >
+              {lbl as string}
+            </button>
+          ))}
+        </div>
+
+        {err && <p className="text-sm text-rose-600">{err}</p>}
+
+        <div className="flex gap-2 pt-1">
+          <button
+            disabled={busy}
+            onClick={save}
+            className="rounded-lg bg-brand-600 text-white text-sm px-4 py-2 disabled:opacity-50"
+          >
+            Saqlash
+          </button>
+          <button
+            onClick={onClose}
+            className="rounded-lg border border-slate-300 text-sm px-4 py-2"
+          >
+            Bekor
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

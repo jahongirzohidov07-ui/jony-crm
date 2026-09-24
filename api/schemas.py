@@ -1284,6 +1284,12 @@ class AttachmentCreate(BaseModel):
 class ExitTypeUpdate(BaseModel):
     exit_type: str
     exit_reason: Optional[str] = None
+    # Sabab ro'yxatdan (roles.EXIT_REASONS) va chiqish suhbati —
+    # HR ketganlar arxivida to'ldiradi (2026-09-24).
+    reason_key: Optional[str] = None
+    exit_date: Optional[date] = None
+    exit_notes: Optional[str] = None
+    would_return: Optional[bool] = None
 
 
 # ---------------------------------------------------- Avtomatik tekshiruv

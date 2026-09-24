@@ -4629,6 +4629,16 @@ def can_assign_role(requester_role: str, target_role: str) -> bool:
 #  Yangi sana ko'rsatilmasa so'rov qabul qilinmaydi.
 # =====================================================================
 
+# ERKIN SURISH OLIB TASHLANDI (2026-09-24, Jahongir: "o'qituvchilardan
+# erkin darsni surishni olib tashla"). Ilgari ustoz oyiga ikki marta
+# hech kimdan so'ramay dars ko'chira olardi — so'rov o'sha zahoti
+# "avtomat" bo'lib kuchga kirardi. Endi ustozning HAR BIR surishi
+# o'quv bo'limi tasdig'idan o'tadi. Rahbariyat (RESCHEDULE_APPROVE)
+# uchun hech nima o'zgarmadi — ular avvalgidek to'g'ridan-to'g'ri
+# ko'chiradi. Quyidagi sonlar saqlanib qoldi: ular endi faqat
+# hisobot uchun ("shu oyda nechta surildi").
+RESCHEDULE_TEACHER_AUTO = False
+
 RESCHEDULE_PER_MONTH = 2        # oyiga avtomat ruxsat beriladigan soni
 RESCHEDULE_PER_WINDOW = 12      # uzoq oynadagi umumiy chegara
 RESCHEDULE_WINDOW_DAYS = 180    # 6 oy
@@ -4685,7 +4695,10 @@ def reschedule_quota(used_month: int, used_window: int) -> dict:
         "left_window": left_window,
         # Ikkalasidan kichigi — haqiqiy qolgan imkon
         "left": min(left_month, left_window),
-        "auto_ok": left_month > 0 and left_window > 0,
+        # Avtomat ruxsat: ustozda o'chirilgan (2026-09-24)
+        "auto_ok": (RESCHEDULE_TEACHER_AUTO
+                    and left_month > 0 and left_window > 0),
+        "teacher_auto": RESCHEDULE_TEACHER_AUTO,
     }
 
 

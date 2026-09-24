@@ -1500,7 +1500,15 @@ def my_reschedules(db: Session = Depends(get_db),
         "min_notice_days": roles.RESCHEDULE_MIN_NOTICE_DAYS,
         "max_shift_days": roles.RESCHEDULE_MAX_SHIFT_DAYS,
         "carry_over": roles.RESCHEDULE_CARRY_OVER,
-        "hint": (f"Oyiga {roles.RESCHEDULE_PER_MONTH} marta avtomat "
+        # 2026-09-24: ustozda avtomat surish o'chirildi, shuning
+        # uchun matn ham o'zgardi (roles.RESCHEDULE_TEACHER_AUTO).
+        "hint": ("Har bir dars ko'chirish o'quv bo'limi tasdig'idan "
+                 "o'tadi. So'rovingiz tasdiqlanmaguncha dars eski "
+                 "kunida qoladi — o'quvchilarni oldindan "
+                 "ogohlantirmang. Dars ko'p surilsa o'quvchining "
+                 "qiziqishi tushadi."
+                 if not roles.RESCHEDULE_TEACHER_AUTO else
+                 f"Oyiga {roles.RESCHEDULE_PER_MONTH} marta avtomat "
                  f"ruxsat beriladi, 6 oyda jami "
                  f"{roles.RESCHEDULE_PER_WINDOW} marta. Foydalanilmagan "
                  f"imkon keyingi oyga o'tmaydi. Dars ko'p surilsa "

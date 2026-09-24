@@ -735,6 +735,8 @@ export interface AttendanceGrid {
       per_month: number;
       left: number | null;
       auto_ok: boolean;
+      /** Ustozda avtomat surish yoqilganmi (2026-09-24: o'chirilgan). */
+      teacher_auto?: boolean;
     } | null;
   } | null;
 }
@@ -4840,6 +4842,8 @@ export interface RescheduleQuota {
   left_window: number;
   left: number;
   auto_ok: boolean;
+  /** Ustozda avtomat surish yoqilganmi (2026-09-24: o'chirilgan). */
+  teacher_auto?: boolean;
 }
 
 export interface RescheduleRow {

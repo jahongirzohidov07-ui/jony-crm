@@ -734,11 +734,15 @@ function MoveLessonModal({
               className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3"
             />
 
+            {/* 2026-09-24: ustozda avtomat surish o'chirildi, endi
+                har bir so'rov tasdiqqa boradi. Sonlar hisobot uchun
+                qoldi — "shu oyda nechta surildi". */}
             {box.quota && (
               <p className="text-xs text-slate-500 mb-2">
-                Shu oyda {box.quota.used_month}/{box.quota.per_month}{" "}
-                ishlatilgan.
-                {box.quota.auto_ok
+                Shu oyda {box.quota.used_month} marta surilgan.
+                {box.quota.teacher_auto === false
+                  ? " So'rov o'quv bo'limiga boradi — tasdiqlangach dars ko'chadi."
+                  : box.quota.auto_ok
                   ? " Bu so'rov avtomat tasdiqlanadi."
                   : " Kvota tugagan — so'rov o'quv bo'limiga boradi."}
               </p>

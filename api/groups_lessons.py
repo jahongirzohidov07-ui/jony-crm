@@ -1798,6 +1798,10 @@ def _reschedule_box(db: Session, group_id: int, user: models.User,
         box["quota"] = _reschedule_usage(db, t.id, m)
         box["month"] = m.replace(day=1).isoformat()
         box["hint"] = (
+            "Har bir dars ko'chirish o'quv bo'limi tasdig'idan o'tadi. "
+            "Tasdiqlangunicha eski sana kuchda qoladi. Dars ko'p "
+            "surilsa o'quvchining qiziqishi tushadi."
+            if not roles.RESCHEDULE_TEACHER_AUTO else
             f"Oyiga {roles.RESCHEDULE_PER_MONTH} marta avtomat ruxsat "
             f"beriladi. Chegaradan oshsa so'rov tasdiqqa ketadi. "
             f"Dars ko'p surilsa o'quvchining qiziqishi tushadi.")
@@ -1954,7 +1958,8 @@ def group_reschedule(gid: int, payload: schemas.GroupRescheduleIn,
         "status": r.status,
         "applied": applied,
         "message": ("Dars ko'chirildi." if applied else
-                    "Kvotadan oshdi — so'rov o'quv bo'limiga yuborildi."),
+                    "So'rov o'quv bo'limiga yuborildi — tasdiqlangach "
+                    "dars ko'chadi."),
     }
 
 @router.put("/api/lessons/{lesson_id}/homework")

@@ -306,8 +306,11 @@ function MoveForm({
         <p className="text-xs text-slate-500 mb-3">
           Kamida {data.min_notice_days} kun oldin so'ralishi kerak, ko'pi
           bilan {data.max_shift_days} kunga ko'chiriladi.
-          {data.quota.left === 0 &&
-            " Kvotangiz tugagan — so'rov tasdiqqa yuboriladi."}
+          {data.quota.teacher_auto === false
+            ? " Har bir so'rov o'quv bo'limi tasdig'idan o'tadi."
+            : data.quota.left === 0
+            ? " Kvotangiz tugagan — so'rov tasdiqqa yuboriladi."
+            : ""}
         </p>
 
         {err && <p className="text-sm text-red-600 mb-2">{err}</p>}

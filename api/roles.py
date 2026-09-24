@@ -844,6 +844,13 @@ PLANS_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, TEACHER, SALES_HEAD, SALES_MANAGER]
 # faqat xodimlarning darslari qanday ketayotganini kuzatadi.
 ATTENDANCE_VIEW = TEACHING_ACCESS + [HR_MANAGER]
 
+# O'QUVCHINING GURUHLARI VA GURUH TARIXI (2026-09-24, Jahongir:
+# "hrga o'quvchilar avval qaysi guruhda bo'lgani xozirda qaysi
+# guruhda ekani ko'rinsin o'quvchi kartasiga kirganda"). HR davomatni
+# allaqachon ko'rardi, lekin guruh kartasi unga yopiq edi va karta
+# ochilishi bilan ruxsat xatosi chiqardi.
+STUDENT_GROUPS_VIEW = ATTENDANCE_VIEW
+
 # Refund: sotuv menejeri SO'RAYDI, filial rahbari yoki moliyachi
 # TASDIQLAYDI. Bitta odam ham so'rab ham tasdiqlay olmaydi (asoschidan
 # tashqari) — pul qaytarish ikki ko'z ostida bo'ladi.

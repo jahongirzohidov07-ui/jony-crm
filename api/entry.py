@@ -8658,7 +8658,8 @@ if _mgx_groups_v1 is not None:
 
     @app.get("/api/students/{student_id}/groups")
     def mgx_student_groups(student_id: int, db: Session = Depends(get_db),
-                           user=Depends(require_role(*roles.TEACHING_ACCESS))):
+                           user=Depends(require_role(
+                               *roles.STUDENT_GROUPS_VIEW))):
         rows = _mgx_groups_v1(student_id=student_id, db=db, user=user)
         s = db.query(models.Student).get(student_id)
         st = getattr(s, "status", None) or "active"

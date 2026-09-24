@@ -37,6 +37,8 @@ type Row = {
   status_label?: string | null;
   joined_date?: string | null;
   left_date?: string | null;
+  /** Shu guruhda necha oy bo'lgani. */
+  months?: number | null;
 };
 
 const WD: Record<string, string> = {
@@ -293,16 +295,38 @@ export function StudentGroupsCard({
         </p>
       )}
 
+      {/* GURUH TARIXI (2026-09-24, Jahongir: "avval qaysi guruhda
+          bo'lgani xozirda qaysi guruhda ekani ko'rinsin"). Ilgari
+          bu yerda bitta kulrang qator turardi — qachondan qachongacha
+          va qaysi ustozda o'qigani ko'rinmasdi. */}
       {closed.length > 0 && (
-        <p className="text-xs text-slate-400 mt-3">
-          Chiqqan guruhlari:{" "}
-          {closed
-            .map(
-              (r) =>
-                r.group + (r.left_date ? ` (${formatDate(r.left_date)})` : "")
-            )
-            .join(", ")}
-        </p>
+        <div className="mt-4 border-t border-slate-100 pt-3">
+          <p className="text-sm font-medium text-slate-700 mb-2">
+            Avvalgi guruhlari
+          </p>
+          <div className="space-y-1.5">
+            {closed.map((r) => (
+              <div
+                key={r.id}
+                className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-sm"
+              >
+                <span className="text-slate-700">{r.group}</span>
+                {r.teacher && (
+                  <span className="text-xs text-slate-500">{r.teacher}</span>
+                )}
+                <span className="text-xs text-slate-500">
+                  {r.joined_date ? formatDate(r.joined_date) : "—"} →{" "}
+                  {r.left_date ? formatDate(r.left_date) : "—"}
+                </span>
+                {r.months != null && (
+                  <span className="text-xs text-slate-400">
+                    {r.months} oy
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
 
       {active.length > 1 && (

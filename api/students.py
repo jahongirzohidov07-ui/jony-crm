@@ -1656,11 +1656,22 @@ def move_student_group(
     return {"ok": True, "group_id": g.id, "group": g.name,
             "recharge": recharge}
 
+def _link_months(lk) -> float | None:
+    """O'quvchi shu guruhda necha oy bo'lgani. Hali chiqmagan bo'lsa —
+    bugungi kungacha."""
+    if not lk.joined_date:
+        return None
+    end = lk.left_date or roles.local_today()
+    if end < lk.joined_date:
+        return None
+    return round((end - lk.joined_date).days / 30.4, 1)
+
+
 @router.get("/api/students/{student_id}/groups")
 def student_groups(
     student_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.TEACHING_ACCESS)),
+    user=Depends(require_role(*roles.STUDENT_GROUPS_VIEW)),
 ):
     """O'quvchining guruhlari (2026-08-17).
 
@@ -1716,6 +1727,9 @@ def student_groups(
                             if lk.joined_date else None),
             "left_date": (lk.left_date.isoformat()
                           if lk.left_date else None),
+            # Shu guruhda necha oy o'qigani (2026-09-24) — guruh
+            # tarixida "qachondan qachongacha" bilan birga turadi.
+            "months": _link_months(lk),
         })
     return {"rows": out,
             "active_count": sum(1 for r in out if r["active"]),

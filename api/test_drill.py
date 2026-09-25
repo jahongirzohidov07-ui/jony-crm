@@ -100,6 +100,9 @@ client.post("/api/drill/stop", headers=H)
 print("\n=== F. KIM KIRA OLADI ===")
 ck("ustoz kira olmaydi",
    client.get("/api/drill/state", headers=HT).status_code, 403)
+_m = client.get("/api/drill/state", headers=HT).json()["detail"]
+ck("xato matni lavozimni aytadi", "O'qituvchi" in _m, True)
+ck("kimga ruxsat borligini aytadi", "Administrator" in _m, True)
 ck("HR topshira olmaydi",
    client.get("/api/drill/state", headers=HH).status_code, 403)
 ck("HR sozlamani ko'radi",

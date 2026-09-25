@@ -41,11 +41,30 @@ from sqlalchemy.orm import Session
 import audit
 import models
 import roles
-from auth import require_role
+from auth import get_current_user, require_role
 from database import get_db
 from common import _in_user_branches, _seed_done, _seed_mark  # noqa: F401
 
 router = APIRouter()
+
+
+def _take_user(user=Depends(get_current_user)):
+    """Mashqni kim topshiradi.
+
+    require_role o'rniga alohida tekshiruv: rad etilganda QAYSI
+    lavozim bilan kirilgani aytiladi. 2026-09-25, Jahongir: "admin
+    akkauntidan sinab ko'rdim, link orqali kirsam bu amal uchun
+    ruxsatingiz yo'q deb yozdi" — eski xabar sababni ko'rsatmagani
+    uchun muammoni topib bo'lmasdi."""
+    r = getattr(user, "role", None)
+    if r in tuple(roles.DRILL_TAKE):
+        return user
+    lbl = roles.UZ_LABELS.get(r or "", r or "noma'lum")
+    ok = ", ".join(roles.UZ_LABELS.get(x, x) for x in roles.DRILL_TAKE)
+    raise HTTPException(
+        403, f"Mashq faqat quyidagi lavozimlar uchun: {ok}. Siz "
+             f"\"{lbl}\" lavozimi bilan kirgansiz. Agar bu xodim ham "
+             f"mashq topshirishi kerak bo'lsa, asoschiga ayting.")
 
 # =====================================================================
 #  RO'YXAT (boshlang'ich). HR keyin o'zgartiradi — bu faqat birinchi
@@ -317,7 +336,7 @@ def _running(db: Session, user):
 @router.get("/api/drill/state")
 def drill_state(branch_id: int | None = None,
                 db: Session = Depends(get_db),
-                user=Depends(require_role(*roles.DRILL_TAKE))):
+                user=Depends(_take_user)):
     """Mashq sahifasi: hozirgi urinish, vazifa va o'tgan natijalar."""
     seed_tasks(db)
     b = _pick_branch(db, user, branch_id)
@@ -364,7 +383,7 @@ def drill_state(branch_id: int | None = None,
 @router.post("/api/drill/start")
 def drill_start(branch_id: int | None = None,
                 db: Session = Depends(get_db),
-                user=Depends(require_role(*roles.DRILL_TAKE))):
+                user=Depends(_take_user)):
     seed_tasks(db)
     b = _test_branch(db, user, branch_id)
     old = _running(db, user)
@@ -398,7 +417,7 @@ class DoneIn(BaseModel):
 @router.post("/api/drill/done")
 def drill_done(payload: DoneIn = Body(default=DoneIn()),
                db: Session = Depends(get_db),
-               user=Depends(require_role(*roles.DRILL_TAKE))):
+               user=Depends(_take_user)):
     """Vazifani yopish: tekshiriladi, so'ng keyingisi beriladi."""
     a = _running(db, user)
     if a is None:
@@ -448,7 +467,7 @@ def drill_done(payload: DoneIn = Body(default=DoneIn()),
 
 @router.post("/api/drill/stop")
 def drill_stop(db: Session = Depends(get_db),
-               user=Depends(require_role(*roles.DRILL_TAKE))):
+               user=Depends(_take_user)):
     a = _running(db, user)
     if a is None:
         raise HTTPException(400, "Mashq boshlanmagan")

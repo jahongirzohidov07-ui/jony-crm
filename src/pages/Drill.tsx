@@ -50,6 +50,9 @@ type State = {
   left: number | null;
   history: Attempt[];
   hint: string;
+  /** Sinov deb belgilangan filiallar va nega boshlab bo'lmayotgani. */
+  test_branches: { id: number; name: string }[];
+  why: string | null;
   message?: string;
   ok?: boolean;
 };
@@ -123,9 +126,18 @@ export default function Drill() {
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
           <p className="text-sm text-amber-900">
             Mashq faqat <b>sinov filialida</b> ishlaydi — haqiqiy filialda
-            soxta o'quvchi va to'lov paydo bo'lmasligi uchun. Tepadagi
-            tanlagichdan sinov filialiga o'ting.
+            soxta o'quvchi va to'lov paydo bo'lmasligi uchun.
           </p>
+          {d.why && (
+            <p className="text-sm text-amber-800 mt-1">{d.why}</p>
+          )}
+          {d.test_branches.length > 0 && (
+            <p className="text-xs text-amber-700 mt-2">
+              Agar tepada filial tanlagichi bo'lmasa, HR akkauntingizni
+              sinov filialiga o'tkazishi kerak — shundan keyin bu yerda
+              "Boshlash" ishlaydi.
+            </p>
+          )}
         </div>
       )}
 

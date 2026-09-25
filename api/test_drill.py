@@ -82,9 +82,10 @@ r = client.put("/api/drill/branches/%d" % TBID, headers=HH,
 ck("HR filialni sinov deb belgiladi", r.status_code, 200)
 ck("haqiqiy filialdagi admin boshlay olmaydi",
    client.post("/api/drill/start", headers=HA2).status_code, 400)
-ck("sababi aytilgan",
-   "SINOV" in client.post("/api/drill/start", headers=HA2).json()["detail"],
-   True)
+_msg = client.post("/api/drill/start", headers=HA2).json()["detail"]
+ck("sababi aytilgan", "sinov filialida" in _msg, True)
+ck("qaysi filial sinov ekani aytilgan", "Sinov filiali" in _msg, True)
+ck("hozir qayerdaligi aytilgan", "Zafar" in _msg, True)
 
 print("\n=== F. KIM KIRA OLADI ===")
 ck("ustoz kira olmaydi",

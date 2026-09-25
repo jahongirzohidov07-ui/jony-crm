@@ -147,17 +147,51 @@ def seed_tasks(db: Session) -> None:
 
 
 # ------------------------------------------------------------ yordamchi
-def _test_branch(db: Session, user) -> models.Branch:
+def _test_list(db: Session):
+    return (db.query(models.Branch)
+            .filter(models.Branch.is_test == 1)
+            .order_by(models.Branch.name).all())
+
+
+def _pick_branch(db: Session, user, branch_id=None):
+    """Mashq qaysi filialda ketadi.
+
+    Tanlagichdan filial berilgan bo'lsa (tepadagi filial tanlagichi
+    GET so'rovlarga branch_id qo'shadi) va foydalanuvchi o'sha
+    filialda ishlay olsa — o'sha; aks holda o'zining filiali.
+    2026-09-25: ilgari faqat user.branch_id qaralardi, shuning uchun
+    filiali boshqa joyda turgan admin "Mashq" ni ocholmasdi va sabab
+    ham tushunarsiz edi."""
+    b = None
+    if branch_id:
+        cand = db.query(models.Branch).get(int(branch_id))
+        if cand is not None and _in_user_branches(db, user, cand.id):
+            b = cand
+    if b is None and user.branch_id:
+        b = db.query(models.Branch).get(user.branch_id)
+    return b
+
+
+def _test_branch(db: Session, user, branch_id=None) -> models.Branch:
     """Mashq faqat SINOV filialida. Aks holda soxta yozuvlar haqiqiy
     hisobotlarga tushib ketardi."""
-    b = (db.query(models.Branch).get(user.branch_id)
-         if user.branch_id else None)
-    if b is None or not b.is_test:
+    b = _pick_branch(db, user, branch_id)
+    if b is not None and b.is_test:
+        return b
+    tests = _test_list(db)
+    if not tests:
         raise HTTPException(
-            400, "Mashq faqat SINOV filialida ishlaydi. Tepadagi "
-                 "tanlagichdan sinov filialiga o'ting (filialni sinov "
-                 "deb belgilashni HR yoki asoschi qiladi).")
-    return b
+            400, "Sinov filiali belgilanmagan. HR bo'limi → Admin "
+                 "mashqi bo'limidan qaysi filial sinov ekanini "
+                 "belgilang.")
+    names = ", ".join(t.name for t in tests)
+    raise HTTPException(
+        400, f"Mashq faqat sinov filialida ishlaydi ({names}). "
+             f"Hozir siz "
+             f"\"{b.name if b else 'filialsiz'}\" da turibsiz. "
+             f"Tepadagi tanlagichdan sinov filialiga o'ting; agar "
+             f"tanlagich bo'lmasa, HR akkauntingizni sinov filialiga "
+             f"o'tkazishi kerak.")
 
 
 def _tasks(db: Session):
@@ -273,12 +307,12 @@ def _running(db: Session, user):
 
 # ------------------------------------------------------------ admin
 @router.get("/api/drill/state")
-def drill_state(db: Session = Depends(get_db),
+def drill_state(branch_id: int | None = None,
+                db: Session = Depends(get_db),
                 user=Depends(require_role(*roles.DRILL_TAKE))):
     """Mashq sahifasi: hozirgi urinish, vazifa va o'tgan natijalar."""
     seed_tasks(db)
-    b = (db.query(models.Branch).get(user.branch_id)
-         if user.branch_id else None)
+    b = _pick_branch(db, user, branch_id)
     a = _running(db, user)
     cur = _current(db, a) if a else None
     if cur is not None:
@@ -292,10 +326,19 @@ def drill_state(db: Session = Depends(get_db),
                     models.DrillAttempt.status != "running")
             .order_by(models.DrillAttempt.id.desc()).limit(5).all())
     tasks = _tasks(db)
+    tests = _test_list(db)
     return {
         "can_start": bool(b and b.is_test) and bool(tasks),
         "test_branch": bool(b and b.is_test),
         "branch": b.name if b else None,
+        "test_branches": [{"id": t.id, "name": t.name} for t in tests],
+        "why": (None if (b and b.is_test) else
+                ("Sinov filiali belgilanmagan — HR bo'limi → Admin "
+                 "mashqi dan belgilang."
+                 if not tests else
+                 f"Siz \"{b.name if b else 'filialsiz'}\" da "
+                 f"turibsiz. Mashq uchun sinov filialiga o'ting: "
+                 + ", ".join(t.name for t in tests))),
         "tasks": [_task_out(t) for t in tasks],
         "attempt": _attempt_out(db, a) if a else None,
         "current": _step_out(db, cur) if cur is not None else None,
@@ -310,10 +353,11 @@ def drill_state(db: Session = Depends(get_db),
 
 
 @router.post("/api/drill/start")
-def drill_start(db: Session = Depends(get_db),
+def drill_start(branch_id: int | None = None,
+                db: Session = Depends(get_db),
                 user=Depends(require_role(*roles.DRILL_TAKE))):
     seed_tasks(db)
-    b = _test_branch(db, user)
+    b = _test_branch(db, user, branch_id)
     old = _running(db, user)
     if old is not None:
         old.status = "stopped"
@@ -335,7 +379,7 @@ def drill_start(db: Session = Depends(get_db),
     db.commit()
     audit.log(db, user, entity="drill", action="start", entity_id=a.id,
               entity_label=b.name, branch_id=b.id, commit=True)
-    return drill_state(db=db, user=user)
+    return drill_state(branch_id=b.id, db=db, user=user)
 
 
 class DoneIn(BaseModel):
@@ -361,7 +405,7 @@ def drill_done(payload: DoneIn = Body(default=DoneIn()),
             "message": ("Bu vazifa bajarilgani ko'rinmadi. Tizimda "
                         "amalni bajaring, so'ng qaytadan \"Bajardim\" "
                         "bosing."),
-            **drill_state(db=db, user=user),
+            **drill_state(branch_id=a.branch_id, db=db, user=user),
         }
     now = datetime.utcnow()
     cur.done_at = now
@@ -389,7 +433,8 @@ def drill_done(payload: DoneIn = Body(default=DoneIn()),
             started_at=datetime.utcnow(),
             snapshot_id=_snapshot(db, nxt, a.branch_id)))
         db.commit()
-    return {"ok": True, **drill_state(db=db, user=user)}
+    return {"ok": True,
+            **drill_state(branch_id=a.branch_id, db=db, user=user)}
 
 
 @router.post("/api/drill/stop")
@@ -401,7 +446,7 @@ def drill_stop(db: Session = Depends(get_db),
     a.status = "stopped"
     a.finished_at = datetime.utcnow()
     db.commit()
-    return drill_state(db=db, user=user)
+    return drill_state(branch_id=a.branch_id, db=db, user=user)
 
 
 # --------------------------------------------------------------- HR

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jony Examiner</string>
+    <string name="intro">Yangi imtihon so\'rovi kelganda ovoz bilan xabar
+        beradi — telefon qulf bo\'lsa ham ekranga chiqadi.</string>
+    <string name="login_hint">Login</string>
+    <string name="pass_hint">Parol</string>
+    <string name="enter">Kirish</string>
+    <string name="later">Keyinroq</string>
+    <string name="open_queue">Ko\'rish</string>
+</resources>

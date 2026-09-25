@@ -1,0 +1,10 @@
+# Android — yig'ilgan fayllar va mahalliy sozlamalar git'ga kirmaydi
+.gradle/
+build/
+local.properties
+*.apk
+*.aab
+# Imzo kaliti HECH QACHON git'ga qo'yilmaydi
+*.jks
+*.keystore
+keystore.properties

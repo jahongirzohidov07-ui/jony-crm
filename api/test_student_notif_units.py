@@ -87,9 +87,18 @@ print("\n=== UNITLAR RO'YXATI ===")
 r = c.get("/api/student/vocab/units", headers=H)
 ck("status 200", r.status_code, 200)
 units = r.json()["units"]
-ck("33 unit bor (SAT chiqarilgan)", len(units), 33)
+# 2026-09-25: 1–33 bot unitlari + 34–100 chastota unitlari (Jahongir:
+# "umumiy 100ta unit bolsin"). Bitta sovuq startda byudjet bilan
+# yoziladi, shuning uchun bu yerda aniq soni emas, 33 dan KO'PLIGI
+# va SAT so'zlari qaytmagani tekshiriladi.
+ck("33 dan ko'p unit (34+ chastota unitlari)", len(units) > 33, True)
 ck("tartib raqam bo'yicha", units[0]["key"], "Unit 1")
-ck("oxirgisi Unit 33", units[-1]["key"], "Unit 33")
+ck("Unit 33 dan keyin Unit 34 keladi",
+   [u["key"] for u in units][32:34], ["Unit 33", "Unit 34"])
+ck("SAT so'zi ('inlaid' Unit 33 da) 34+ ga ko'chmagan",
+   db.query(models.VocabWord).filter(models.VocabWord.word == "inlaid",
+                                     models.VocabWord.is_active == 1)
+   .first().topic, "Unit 33")
 u1_n = units[0]["n"]
 ck("Unit 1 da so'z bor", u1_n > 0, True)
 
@@ -105,8 +114,13 @@ w_units = {w.topic for w in db.query(models.VocabWord)
 ck("hamma so'z Unit 1 dan", w_units, {"Unit 1"})
 
 print("\n=== UNIT PROGRESSI ===")
+# 2026-09-25: "Unit 1" ru/de/ko lug'atida ham bor — til filtrisiz
+# .first() boshqa tilning so'zini qaytarib, tekshiruv qizil edi.
 w = (db.query(models.VocabWord)
-     .filter(models.VocabWord.topic == "Unit 1").first())
+     .filter(models.VocabWord.topic == "Unit 1",
+             models.VocabWord.language == "en",
+             models.VocabWord.is_active == 1)
+     .order_by(models.VocabWord.id).first())
 c.post("/api/student/vocab/answer", headers=H,
        json={"game": "en_uz", "word_id": w.id,
              "answer": w.translation})

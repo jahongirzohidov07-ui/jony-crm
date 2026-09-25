@@ -5117,7 +5117,9 @@ def _skills_card(db: Session, student_id: int) -> dict:
     skills = []
     for k in roles.SKILL_KEYS:
         pts = per_skill[k]
-        score = roles.skill_score(pts)
+        # 2026-09-25: lug'at o'z shkalasida (so'z boyligi bo'yicha),
+        # qolgan ko'nikmalar umumiy shkalada — roles.score_for_skill.
+        score = roles.score_for_skill(k, pts)
         have = avail.get(k, 0)
         skills.append({
             "key": k,

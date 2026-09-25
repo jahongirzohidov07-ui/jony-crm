@@ -115,7 +115,10 @@ db = SessionLocal()
 for i in range(400):
     db.add(models.GrammarAttempt(student_id=SID, question_id=2000 + i,
                                  correct=1, date=date.today()))
-for i in range(950):
+# 2026-09-25: lug'at endi O'Z shkalasida (roles.VOCAB_SCORE_SCALE) —
+# Jahongir: "9.0 uchun 15000+ soz kerak". 6.0 (B2) uchun 3 500 ta
+# alohida so'z kerak (ilgari umumiy shkalada 950 edi).
+for i in range(3500):
     db.add(models.VocabAttempt(student_id=SID, word_id=i + 1,
                                game="en_uz", correct=1,
                                date=date.today()))

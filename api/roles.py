@@ -963,6 +963,52 @@ def skill_score(points: float) -> int:
     return 100
 
 
+# LUG'AT uchun ALOHIDA shkala (2026-09-25). Jahongir: "lugat balli 9.0
+# soz kamku u yerda 9.0 uchun 15000+ soz kerak kamida ... umumiy
+# 100ta unit bolsin ... shundan kelib chiqib IELTS ball bersin".
+# Ilgari lug'at ham umumiy SKILL_SCORE_SCALE bilan yurardi — 3 200 ta
+# so'z 9.0 berardi. Endi ball = kamida bir marta to'g'ri topilgan
+# ALOHIDA so'zlar soni, tayanch nuqtalar so'z boyligi tadqiqotlari
+# bo'yicha (A1 ~300-500, A2 ~1000, B1 ~2000, B2 ~4000, C1 ~7000,
+# C2 ~10000 so'z oilasi):
+#     300 -> 8  = A1 (3.0)      3500 -> 44 = B2 (6.0)
+#     800 -> 18 = A2 (4.0)      6500 -> 70 = C1 (7.5)
+#    1800 -> 30 = B1 (5.0)     10000 -> 95 = C2 (9.0)
+# 100 unit (1–33 bot + 34–100 chastota) jami ~10 450 so'z — 9.0 uchun
+# deyarli hammasini bilish kerak. Raqamlarni o'zgartirish shu yerda.
+VOCAB_SCORE_SCALE = [
+    (0, 0), (300, 8), (800, 18), (1800, 30), (3500, 44),
+    (6500, 70), (10000, 95), (10450, 100),
+]
+
+
+def _interp_score(points: float, scale: list) -> int:
+    p = max(0.0, float(points or 0))
+    if p >= scale[-1][0]:
+        return 100
+    for i in range(len(scale) - 1):
+        lo_p, lo_s = scale[i]
+        hi_p, hi_s = scale[i + 1]
+        if p < hi_p:
+            frac = (p - lo_p) / max(1, hi_p - lo_p)
+            return int(round(lo_s + frac * (hi_s - lo_s)))
+    return 100
+
+
+def vocab_score(words: float) -> int:
+    """Lug'at: bilingan so'zlar soni -> 0-100 (VOCAB_SCORE_SCALE)."""
+    return _interp_score(words, VOCAB_SCORE_SCALE)
+
+
+def score_for_skill(skill: str, points: float) -> int:
+    """Ko'nikma bo'yicha to'g'ri shkala: lug'at o'ziniki, qolganlari
+    umumiy. Hamma joy (o'quvchi kartasi, dashboard, mashq sahifasi)
+    shu bitta funksiyadan o'tsin — ikki xil hisob bo'lib ketmasin."""
+    if skill == "vocabulary":
+        return vocab_score(points)
+    return skill_score(points)
+
+
 def points_for_score(score: float) -> int:
     """skill_score teskarisi: shu 0-100 ballga chiqish uchun necha
     ball kerak."""

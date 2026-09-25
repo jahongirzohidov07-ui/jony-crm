@@ -1542,8 +1542,26 @@ def vocab_answer(payload: schemas.VocabAnswerIn,
                 idempotency_key=f"VOCAB:{date.today()}:{s.id}:{w.id}:{payload.game}")
             if res.get("ok"):
                 xp_given = float(roles.VOCAB_XP_PER_CORRECT)
+            else:
+                # 2026-09-25 XATO TUZATILDI. Takror kalitda (shu kuni shu
+                # so'z shu o'yinda ikkinchi marta) award_xp "skipped"
+                # qaytaradi va COMMIT QILMAYDI — yuqoridagi VocabAttempt
+                # yozuvi so'rov tugaganda yo'qolib ketardi. Natijada
+                # "3 marta to'g'ri topsa ko'k" qoidasi bir kunda
+                # ishlamasdi (faqat 1-to'g'ri javob sanalardi).
+                # XP berilmaydi (to'g'ri), lekin urinish saqlanadi.
+                db.commit()
         except Exception:
             db.rollback()
+            # XP tizimi yiqilsa ham o'quvchining urinishi yo'qolmasin.
+            try:
+                db.add(models.VocabAttempt(
+                    student_id=s.id, word_id=w.id, game=payload.game,
+                    correct=1, answer=(payload.answer or "")[:200],
+                    date=date.today()))
+                db.commit()
+            except Exception:
+                db.rollback()
 
     return {
         "correct": ok,

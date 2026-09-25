@@ -59,10 +59,15 @@ s.user_id = u.id; db.commit()
 Hs = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'998901112233','password':'jonyjony'}).json()['access_token']}"}
 Ht = {"Authorization": f"Bearer {c.post('/api/auth/login', json={'username':'ust','password':'Parol123!'}).json()['access_token']}"}
 
-print("=== 33 UNIT, SAT YO'Q ===")
+print("=== 1–33 BOT UNITLARI (SAT YO'Q) + 34+ CHASTOTA UNITLARI ===")
 r = c.get("/api/student/vocab/units", headers=Hs)
 units = r.json()["units"]
-ck("33 unit (SAT chiqarilgan)", len(units), 33)
+# 2026-09-25: Jahongir "umumiy 100ta unit bolsin" — 34–100 unitlar
+# qo'shildi (vocab_extra_seed). SAT bo'limi baribir yo'q: 1–33
+# botniki, 34+ chastota bo'yicha.
+ck("33 dan ko'p unit", len(units) > 33, True)
+ck("birinchi 33 tasi bot unitlari",
+   [u["key"] for u in units[:33]], [f"Unit {i}" for i in range(1, 34)])
 ck("Unit 1 da 116 so'z", units[0]["n"], 116)
 ck("boshida 0%", units[0]["percent"], 0)
 ck("rangi ko'k", units[0]["tone"], "blue")

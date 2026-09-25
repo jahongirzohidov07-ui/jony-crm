@@ -246,6 +246,18 @@ try:
 except Exception:
     pass
 
+# Inglizcha lug'at davomi Unit 34–100 (2026-09-25, Jahongir: "davomiy
+# unitlarni ham qosh 100tadan soz bolsin ... umumiy 100ta unit
+# bolsin"). Marker fayl hajmidan; jonli bazada byudjet bilan, tugamasa
+# keyingi startda davom etadi.
+try:
+    from sqlalchemy.orm import Session as _VSX
+    from vocab_extra_seed import seed_vocab_extra
+    with _VSX(engine) as _dbx:
+        seed_vocab_extra(_dbx)
+except Exception:
+    pass
+
 # Grammar savollar bazasi (idempotent - faqat yo'qlarini qo'shadi)
 try:
     from sqlalchemy.orm import Session as _VS7

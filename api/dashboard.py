@@ -409,7 +409,7 @@ def report_student_app_usage(
                 p = pts_gr.get(sid, 0)
             else:
                 p = per_skill.get(sid, {}).get(k, 0)
-            vals.append(roles.skill_score(p))
+            vals.append(roles.score_for_skill(k, p))
         avg = round(sum(vals) / len(vals), 1) if vals else 0.0
         skill_rows.append({
             "key": k, "label": roles.SKILL_LABELS[k],

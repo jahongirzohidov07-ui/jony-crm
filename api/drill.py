@@ -98,7 +98,9 @@ SEED = [
     ("payment_history", "To'lovlar tarixini oching", 25, "view",
      None, None, None, "O'quvchi kartasi → To'lovlar"),
     ("refund", "To'lovni qaytaring (refund)", 60, "audit",
-     None, "payment", "refund,delete,amount_edit,update", "To'lovni qaytarish"),
+     None, "payment",
+     "refund_request,refund_approve,refund,delete,amount_edit,update",
+     "To'lov kartasi → Qaytarish (refund) so'rovi"),
     ("trial_activate", "Sinov darsidagi o'quvchini faollashtiring", 45,
      "audit", None, "student", "activate", "Sinov → Faol"),
     ("freeze", "O'quvchini muzlating", 40, "audit",
@@ -120,7 +122,8 @@ SEED = [
     ("reward", "Coinga olingan sovg'ani o'quvchiga biriktiring", 45,
      "audit", None, "reward", "update,create", "Coin do'koni"),
     ("password", "Profil parolini o'zgartiring", 45, "audit",
-     None, "user", "update,password", "Profil → Parolni o'zgartirish"),
+     None, "user", "password_change,password_reset,update",
+     "Profil → Parolni o'zgartirish"),
     ("debtors", "Qarzdorlar bo'limini oching", 25, "view",
      None, None, None, "Qarzdorlar ro'yxati"),
     ("archive", "Arxiv bo'limini oching", 25, "view",
@@ -129,9 +132,61 @@ SEED = [
      None, None, None, "Guruhlar → Arxivdagilar"),
     ("courses", "Kurslar bo'limini oching", 25, "view",
      None, None, None, "Kurslar va narxlar"),
-    ("rooms", "Xona sig'imini belgilang", 30, "row",
-     "rooms", None, None, "Filiallar → Xonalar"),
+    ("rooms", "Xona sig'imini belgilang", 30, "audit",
+     None, "room", "create,update,delete",
+     "Filiallar → Xonalar: sig'imni kiriting yoki yangi xona oching"),
 ]
+
+# =====================================================================
+#  QAYSI BANDGA QANDAY HUQUQ KERAK (2026-09-25)
+#
+#  Jahongir: "ba'zi vazifalarni bajarsa ham tizimda ko'rinmadi deb
+#  Bajardim bosilmayabdi".
+#
+#  Sabab shundaki, cheklist LC UP dan olingan — u yerda admin hamma
+#  ishni qiladi. JonyOS da esa bir qancha amal administratorga
+#  BERILMAGAN: guruh ochish, refund, muzlatish, guruhdan guruhga
+#  o'tkazish, coin va chegirma. Ya'ni admin vazifani bajara olmaydi,
+#  demak tizim uni "bajarilmadi" deb turaveradi.
+#
+#  Yechim: bunday bandda vazifa KO'RSATISHGA aylanadi — xodim
+#  qayerdan qilinishini ko'rsatadi va o'tadi. HR natijada buni
+#  ajratib ko'radi. Huquqni ochish/yopish qarori esa asoschiniki.
+#  DIQQAT: ro'yxatlar NUSXA qilib olinadi (list(...)). entry.py ba'zi
+#  ro'yxatlarga keyinroq administratorni qo'shib qo'yadi, lekin
+#  endpointlar huquqni IMPORT paytida olgan — ya'ni o'sha qo'shimcha
+#  ularga yetib bormaydi. Nusxa olmasak, mashq "bu amalni qila
+#  olasiz" deb o'ylab, xodim esa 403 olib, vazifani hech qachon
+#  yopolmasdi (2026-09-25 da aynan shu holat topildi).
+NEEDS = {
+    "lead_add": list(roles.LEAD_ACCESS),
+    "student_add": list(roles.LEAD_ACCESS),
+    "group_create": list(roles.GROUP_MANAGE),
+    "payment_add": list(roles.CASH_ACCESS),
+    "payment_add2": list(roles.CASH_ACCESS),
+    "refund": list(roles.REFUND_REQUEST),
+    "trial_activate": list(roles.FREEZE_ROLES),
+    "freeze": list(roles.FREEZE_ROLES),
+    "unfreeze": list(roles.FREEZE_ROLES),
+    "group_move": list(roles.FREEZE_ROLES),
+    "attendance": list(roles.TEACHING_STAFF),
+    "comment": list(roles.TEACHING_STAFF) + [roles.HR_MANAGER],
+    "discount": list(roles.DISCOUNT_REQUEST),
+    "task_create": list(roles.TASK_ACCESS),
+    "coins": list(roles.COIN_ADMIN),
+    "reward": list(roles.COIN_ADMIN),
+    "rooms": list(roles.ACADEMIC_ACCESS),
+    "password": None,          # har kim o'z parolini o'zgartiradi
+}
+
+
+def _can_do(user, task) -> bool:
+    """Shu xodim bu amalni tizimda BAJARA oladimi."""
+    need = NEEDS.get(task.key)
+    if not need:
+        return True
+    return getattr(user, "role", None) in tuple(need)
+
 
 _TABLES = {
     "students": models.Student, "leads": models.Lead,
@@ -163,6 +218,46 @@ def seed_tasks(db: Session) -> None:
         _seed_mark(db, "drill_tasks_v1")
     except Exception:
         db.rollback()
+    sync_verifiers(db)
+
+
+def sync_verifiers(db: Session, key: str = "drill_verify_v2") -> int:
+    """Tekshiruv qoidalarini ro'yxatdagi bilan tenglaydi (bir martalik).
+
+    2026-09-25, Jahongir: "ba'zi vazifalarni bajarsa ham tizimda
+    ko'rinmadi deb Bajardim bosilmayabdi". Sabab: uchta bandda
+    tekshiruv noto'g'ri qo'yilgan edi — parol o'zgarishi auditda
+    "password_change" deb yoziladi ("update" emas), refund
+    "refund_request", xona sig'imi esa YANGI xona emas, mavjudini
+    tahrirlash. Ro'yxat bazaga bir marta yozilgani uchun tuzatish
+    o'z-o'zidan yetib bormasdi.
+
+    HR qo'ygan SONIYA va NOM o'zgarmaydi — faqat tekshiruv maydonlari.
+    """
+    if _seed_done(db, key):
+        return 0
+    n = 0
+    try:
+        for row in SEED:
+            k, _title, _sec, kind, table, ent, act, hint = row
+            t = (db.query(models.DrillTask)
+                 .filter(models.DrillTask.key == k).first())
+            if t is None:
+                continue
+            if (t.verify_kind, t.verify_table, t.verify_entity,
+                    t.verify_action) != (kind, table, ent, act):
+                t.verify_kind, t.verify_table = kind, table
+                t.verify_entity, t.verify_action = ent, act
+                t.hint = hint
+                n += 1
+        db.commit()
+        _seed_mark(db, key)
+        if n:
+            print(f"[drill] tekshiruv qoidasi yangilandi: {n} ta band")
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        print(f"[drill] tekshiruv qoidasi yangilanmadi: {e}")
+    return n
 
 
 # ------------------------------------------------------------ yordamchi
@@ -265,13 +360,21 @@ def _snapshot(db: Session, task, branch_id: int) -> Optional[int]:
 def _verify(db: Session, step, task, user, branch_id: int) -> bool:
     if task.verify_kind == "view":
         return True
+    # Huquqi yo'q bo'lsa — ko'rsatish bandi (yuqoridagi NEEDS izohi)
+    if not _can_do(user, task):
+        return True
     if task.verify_kind == "row":
         m = _TABLES.get(task.verify_table or "")
         if m is None:
             return True
         q = db.query(m).filter(m.id > (step.snapshot_id or 0))
         if hasattr(m, "branch_id"):
-            q = q.filter(m.branch_id == branch_id)
+            # Filiali YOZILMAGAN yozuv ham hisoblanadi (2026-09-25):
+            # ba'zi shakllarda filial tanlanmaydi va bo'sh qoladi —
+            # shunda "bajarilgani ko'rinmadi" bo'lib qolardi.
+            from sqlalchemy import or_ as _or
+            q = q.filter(_or(m.branch_id == branch_id,
+                             m.branch_id.is_(None)))
         return db.query(q.exists()).scalar()
     # audit
     acts = [a.strip() for a in (task.verify_action or "").split(",")
@@ -288,15 +391,19 @@ def _verify(db: Session, step, task, user, branch_id: int) -> bool:
     return db.query(q.exists()).scalar()
 
 
-def _step_out(db: Session, step) -> dict:
+def _step_out(db: Session, step, user=None) -> dict:
     t = db.query(models.DrillTask).get(step.task_id)
+    shown = bool(t is not None and user is not None and not _can_do(user, t))
     return {
         "id": step.id, "task_id": step.task_id,
         "order_no": step.order_no,
         "title": t.title if t else "—",
         "hint": t.hint if t else None,
         "seconds": t.seconds if t else 0,
-        "verify_kind": t.verify_kind if t else "view",
+        "verify_kind": ("view" if shown
+                        else (t.verify_kind if t else "view")),
+        # Huquqi yo'qligi uchun ko'rsatish bandiga aylandi
+        "shown_only": shown,
         "started_at": step.started_at.isoformat() if step.started_at else None,
         "done_at": step.done_at.isoformat() if step.done_at else None,
         "spent": step.spent,
@@ -399,7 +506,8 @@ def drill_state(branch_id: int | None = None,
                  + ", ".join(t.name for t in tests))),
         "tasks": [_task_out(t) for t in tasks],
         "attempt": _attempt_out(db, a) if a else None,
-        "current": _step_out(db, cur) if cur is not None else None,
+        "current": (_step_out(db, cur, user) if cur is not None
+                    else None),
         "left": left,
         "now": datetime.utcnow().isoformat(),
         "pass_percent": _conf(db).pass_percent,
@@ -459,11 +567,22 @@ def drill_done(payload: DoneIn = Body(default=DoneIn()),
     t = db.query(models.DrillTask).get(cur.task_id)
     ok = True if payload.skip else _verify(db, cur, t, user, a.branch_id)
     if not ok:
+        what = {
+            "row": {"students": "yangi o'quvchi", "leads": "yangi lid",
+                    "groups": "yangi guruh", "payments": "yangi to'lov",
+                    "discounts": "yangi chegirma", "tasks": "yangi vazifa",
+                    "rooms": "yangi xona",
+                    "comments": "yangi izoh"}.get(t.verify_table or "",
+                                                 "yangi yozuv"),
+            "audit": "bu amal",
+        }.get(t.verify_kind, "bu amal")
         return {
             "ok": False,
-            "message": ("Bu vazifa bajarilgani ko'rinmadi. Tizimda "
-                        "amalni bajaring, so'ng qaytadan \"Bajardim\" "
-                        "bosing."),
+            "message": (f"Tizimda {what} ko'rinmadi. Amalni shu "
+                        f"akkaunt bilan va sinov filialida bajaring, "
+                        f"so'ng qaytadan \"Bajardim\" bosing. Agar "
+                        f"bajargan bo'lsangiz — \"Keyingisi\" bilan "
+                        f"o'tib keting va HR ga ayting."),
             **drill_state(branch_id=a.branch_id, db=db, user=user),
         }
     now = datetime.utcnow()

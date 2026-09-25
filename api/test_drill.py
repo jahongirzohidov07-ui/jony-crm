@@ -135,7 +135,7 @@ print(f"     (endi: {cur['title']} — {cur['verify_kind']})")
 print("\n=== C. BAJARMASDAN YOPIB BO'LMAYDI ===")
 r = client.post("/api/drill/done", headers=HA, json={}).json()
 ck("yopilmadi", r["ok"], False)
-ck("tushuntirish berildi", "bajarilgani ko'rinmadi" in r["message"], True)
+ck("tushuntirish berildi", "ko'rinmadi" in r["message"], True)
 ck("o'sha vazifa turibdi", r["current"]["title"], cur["title"])
 
 print("\n=== D. HAQIQATDA BAJARILSA ===")

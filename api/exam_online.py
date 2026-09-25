@@ -1654,8 +1654,49 @@ def seed_variants(db: Session) -> int:
     data = _bank_variants()
     if not data:
         return 0
+    # Parallel sovuq startlar (Vercel 2–4 instansiya) bir vaqtda yozib
+    # dublikat qilmasin — Postgres sessiya qulfi (commit'lar orasida ham
+    # turadi; oxirida bo'shatiladi)
+    locked = False
+    try:
+        from sqlalchemy import text as _sql
+        if db.bind.dialect.name == "postgresql":
+            locked = bool(db.execute(_sql("SELECT pg_try_advisory_lock(:k)"),
+                                     {"k": 20260926}).scalar())
+            if not locked:
+                return 0
+    except Exception:
+        db.rollback()
+    try:
+        return _seed_variants_locked(db, data, exam_bank_seed)
+    finally:
+        if locked:
+            try:
+                db.execute(_sql("SELECT pg_advisory_unlock(:k)"), {"k": 20260926})
+                db.commit()
+            except Exception:
+                db.rollback()
+
+
+def _seed_variants_locked(db: Session, data: dict, exam_bank_seed) -> int:
     meta = {key: tpl for key, tpl in exam_bank_seed.TEMPLATES}
     made = 0
+    # Avvalgi startlarda dublikat tushib qolgan bo'lsa — keyingilarini
+    # yashirish (o'chirilmaydi): bitta (daraja, tur, unit, variant) = 1
+    seen = {}
+    for t in (db.query(models.ExamTemplate)
+              .filter(models.ExamTemplate.variant.isnot(None),
+                      models.ExamTemplate.is_active == 1)
+              .order_by(models.ExamTemplate.id).all()):
+        k = (t.level, t.kind, t.unit_no, t.variant)
+        if k in seen:
+            t.is_active = 0
+            t.title = (t.title or "") + " (dublikat)"
+            print(f"[exam-bank] dublikat variant yashirildi: {t.title}",
+                  flush=True)
+        else:
+            seen[k] = t.id
+    db.commit()
     for key, letters in data.items():
         tpl = meta.get(key)
         if not tpl:

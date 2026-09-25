@@ -147,6 +147,12 @@ def clean_parts(parts) -> list:
                 qid = f"{qid}_{n}"
             seen.add(qid)
             item = {"id": qid, "n": n, "type": typ, "q": text}
+            # MAVZU (2026-09-26, #177): "Grammar · Present simple" kabi —
+            # keyin o'quvchi/guruh/ustoz kesimida qaysi mavzuda ko'p xato
+            # qilingani chiqadi. Bo'sh bo'lsa yozilmaydi.
+            topic = str(q.get("topic") or "").strip()[:80]
+            if topic:
+                item["topic"] = topic
             img = _clean_image(q.get("image"), f"{n}-savol")
             if img:
                 item["image"] = img
@@ -346,6 +352,25 @@ def list_templates(level: Optional[str] = None, kind: Optional[str] = None,
     return [_tpl_summary(t) for t in rows]
 
 
+@router.get("/api/exam-templates/topics")
+def template_topics(db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.EXAM_ACCESS,
+                                              *roles.EXAM_EDIT))):
+    """Bazadagi barcha mavzular (tahrir oynasidagi tanlagich uchun):
+    boshlang'ich ro'yxat + examinerlar qo'shganlari, nechta savolda
+    ishlatilgani bilan (#177)."""
+    counts: dict = {}
+    for name in _bank_topic_names():
+        counts.setdefault(name, 0)
+    for (parts_txt,) in db.query(models.ExamTemplate.parts).all():
+        for q in _questions(_load(parts_txt)):
+            t = q.get("topic")
+            if t:
+                counts[t] = counts.get(t, 0) + 1
+    return [{"topic": k, "count": v}
+            for k, v in sorted(counts.items(), key=lambda x: (x[0].split(" · ")[0], x[0]))]
+
+
 @router.get("/api/exam-templates/{tid}")
 def get_template(tid: int, db: Session = Depends(get_db),
                  user=Depends(require_role(*roles.EXAM_ACCESS,
@@ -473,7 +498,9 @@ def _answer_sheet(detail: list, qmap: dict) -> list:
                     "image": img if img.startswith("/exam-img/") else None,
                     "has_image": bool(img),
                     "type": q.get("type"), "given_text": given_text,
-                    "correct": correct})
+                    "correct": correct,
+                    # Mavzu — examiner javob varag'ida ko'radi (#177)
+                    "topic": q.get("topic") or None})
     return out
 
 
@@ -1379,6 +1406,130 @@ def student_exam_begin(token: str, payload: AppBeginIn, request: Request,
             "resumed": False}
 
 
+# ------------------------------------------------ savol MAVZULARI (#177)
+# 2026-09-26. @jonybazabaza kanalidagi test bazasi (Step 1/2/3 unit,
+# mid, end — 1 585 savol) 42 ta shablonga to'liq mos ekani javob
+# kalitlari bilan tekshirildi; har savolga mavzu belgilandi:
+# "Listening · Short replies", "Vocabulary · Food and drink",
+# "Grammar · Present simple" … (exam_topics.json — shablon kaliti ->
+# bo'limlar -> savollar tartibida). Keyin o'quvchi/guruh/ustoz
+# kesimida qaysi mavzuda ko'p xato qilinishi shu orqali chiqadi.
+_TOPICS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            "exam_topics.json")
+_TOPICS_CACHE: Optional[dict] = None
+
+
+def _bank_topics() -> dict:
+    """{shablon kaliti: [[mavzu, ...] har bo'lim uchun]}"""
+    global _TOPICS_CACHE
+    if _TOPICS_CACHE is None:
+        try:
+            with open(_TOPICS_FILE, encoding="utf-8") as f:
+                _TOPICS_CACHE = json.load(f)
+        except Exception:
+            _TOPICS_CACHE = {}
+    return _TOPICS_CACHE
+
+
+def _bank_topic_names() -> list:
+    names = set()
+    for parts in _bank_topics().values():
+        for arr in parts:
+            names.update(x for x in arr if x)
+    return sorted(names)
+
+
+def _apply_topics_by_position(parts: list, topics: list) -> int:
+    """Seed'dan yaratilayotgan shablon: mavzular tartib bo'yicha."""
+    n = 0
+    for p, arr in zip(parts, topics or []):
+        for q, t in zip(p.get("questions") or [], arr or []):
+            if t and not q.get("topic"):
+                q["topic"] = t
+                n += 1
+    return n
+
+
+def _qsig(q: dict) -> str:
+    """Savolni tanib olish imzosi — matn + variantlar (tartib va
+    raqamdan qat'i nazar)."""
+    return _norm(q.get("q") or "") + "|" + "|".join(
+        _norm(o) for o in (q.get("options") or []))
+
+
+def _seed_topic_index() -> dict:
+    """{(level, kind, unit_no): {imzo: mavzu}} — jonli bazadagi
+    (allaqachon yaratilgan, ehtimol tahrirlangan) shablonlarga mavzu
+    qo'yish uchun savol matni bo'yicha moslashtiriladi."""
+    import exam_bank_seed
+    topics = _bank_topics()
+    out = {}
+    for key, tpl in exam_bank_seed.TEMPLATES:
+        tp = topics.get(key)
+        if not tp:
+            continue
+        idx = {}
+        for p, arr in zip(tpl["parts"], tp):
+            for q, t in zip(p.get("questions") or [], arr):
+                if t:
+                    idx.setdefault(_qsig(q), t)
+        out[(tpl["level"], tpl["kind"], tpl.get("unit_no"))] = idx
+    return out
+
+
+def _fill_topics_in_parts(parts: list, idx: dict) -> int:
+    n = 0
+    for q in _questions(parts):
+        if q.get("topic"):
+            continue
+        t = idx.get(_qsig(q))
+        if t:
+            q["topic"] = t
+            n += 1
+    return n
+
+
+def fill_topics_from_bank(db: Session, key: str = "exam_topics_v1") -> int:
+    """BIR MARTALIK: jonli bazadagi shablonlarga va ochilgan linklar
+    nusxasiga (o'tgan imtihonlar tahlili uchun) mavzu qo'yadi. Faqat
+    mavzusi bo'sh savollarga, matni seed bilan aynan mos kelsa —
+    examiner tahrirlagan savol tegilmaydi (hech narsa o'chirilmaydi)."""
+    if _seed_done(db, key):
+        return 0
+    filled = 0
+    try:
+        index = _seed_topic_index()
+        for t in db.query(models.ExamTemplate).all():
+            idx = index.get((t.level, t.kind, t.unit_no))
+            if not idx:
+                continue
+            parts = _load(t.parts)
+            n = _fill_topics_in_parts(parts, idx)
+            if n:
+                t.parts = json.dumps(parts, ensure_ascii=False)
+                filled += n
+        for o in db.query(models.ExamOnline).all():
+            exam = db.query(models.Exam).get(o.exam_id)
+            group = db.query(models.Group).get(exam.group_id) if exam else None
+            if not exam or not group:
+                continue
+            idx = index.get((group.level, exam.kind, exam.unit_no))
+            if not idx:
+                continue
+            parts = _load(o.parts)
+            n = _fill_topics_in_parts(parts, idx)
+            if n:
+                o.parts = json.dumps(parts, ensure_ascii=False)
+                filled += n
+        db.commit()
+        _seed_mark(db, key)
+        print(f"[exam-bank] mavzular qo'yildi: {filled} ta savol")
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        print(f"[exam-bank] mavzular qo'yilmadi: {e}")
+    return filled
+
+
 # ------------------------------------------------ boshlang'ich test bazasi
 def seed_templates(db: Session) -> None:
     """Jahongir yuborgan testlar (Step 1 Unit 1 …) bazaga bir marta
@@ -1405,16 +1556,18 @@ def seed_templates(db: Session) -> None:
             models.ExamTemplate.kind == tpl["kind"],
             models.ExamTemplate.unit_no == tpl.get("unit_no")).first()
         if not exists:
+            parts = clean_parts(tpl["parts"])
+            _apply_topics_by_position(parts, _bank_topics().get(key))
             db.add(models.ExamTemplate(
                 level=tpl["level"], kind=tpl["kind"],
                 unit_no=tpl.get("unit_no"), title=tpl["title"],
-                parts=json.dumps(clean_parts(tpl["parts"]),
-                                 ensure_ascii=False),
+                parts=json.dumps(parts, ensure_ascii=False),
                 paper_max=tpl.get("paper_max", 0), created_by="JonyOS"))
             db.commit()
         _seed_mark(db, key)
     fill_exam_max_from_bank(db)
     fill_mid_end_100(db)
+    fill_topics_from_bank(db)
 
 
 def fill_mid_end_100(db: Session, key: str = "exam_mid_end_100_v1"):

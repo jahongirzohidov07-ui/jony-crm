@@ -22,7 +22,10 @@ type Q = {
   options?: string[];
   answer: number | string[];
   image?: string | null;
+  /** Mavzu (#177): "Grammar · Present simple" — tahlil shu bo'yicha */
+  topic?: string | null;
 };
+type TopicRow = { topic: string; count: number };
 type Part = {
   title: string;
   instructions: string;
@@ -219,6 +222,13 @@ function TemplateEditor({
   );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Mavzular ro'yxati (#177) — tanlagich uchun; yangi mavzuni ham yozsa bo'ladi
+  const [topics, setTopics] = useState<TopicRow[]>([]);
+  useEffect(() => {
+    api.get<TopicRow[]>("/exam-templates/topics").then(setTopics).catch(() => setTopics([]));
+  }, []);
+  const untagged = parts.reduce(
+    (a, p) => a + p.questions.filter((q) => !(q.topic || "").trim()).length, 0);
 
   const setPart = (i: number, patch: Partial<Part>) =>
     setParts(parts.map((p, j) => (j === i ? { ...p, ...patch } : p)));
@@ -405,7 +415,13 @@ function TemplateEditor({
                                   className="text-slate-300 hover:text-red-500 pt-1.5"><X size={15} /></button>
                         )}
                       </div>
-                      <div className="ml-8 mt-2 flex items-center gap-2">
+                      <div className="ml-8 mt-2 flex items-center gap-2 flex-wrap">
+                        {/* MAVZU (#177): tahlil "qaysi mavzuda ko'p xato" shu bo'yicha */}
+                        <input className={inp + " max-w-xs text-xs" + (!(q.topic || "").trim() ? " border-amber-300" : "")}
+                               list="exam-topic-list" value={q.topic || ""}
+                               placeholder="Mavzu: Grammar · Present simple"
+                               title="Mavzu — ro'yxatdan tanlang yoki yangisini yozing"
+                               onChange={(e) => setQ(pi, qi, { topic: e.target.value })} />
                         {q.image ? (
                           <>
                             <img src={q.image} alt="" className="h-16 rounded border border-slate-200" />
@@ -498,11 +514,23 @@ function TemplateEditor({
           )}
         </fieldset>
 
+        {/* Mavzular tanlagichi — bazadagi barcha mavzular (#177) */}
+        <datalist id="exam-topic-list">
+          {topics.map((t) => (
+            <option key={t.topic} value={t.topic}>{t.count ? `${t.count} ta savolda` : ""}</option>
+          ))}
+        </datalist>
+
         {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
         <div className="flex items-center justify-between mt-4">
           <span className="text-xs text-slate-500">
             Jami {n} savol (har biri 1 ball)
             {f.paper_max ? ` + qog'oz ${f.paper_max}` : ""}
+            {untagged > 0 && (
+              <span className="ml-2 text-amber-600" title="Mavzusiz savollar tahlilga tushmaydi">
+                · mavzusiz: {untagged}
+              </span>
+            )}
           </span>
           {!readOnly && (
             <button onClick={save} disabled={saving}

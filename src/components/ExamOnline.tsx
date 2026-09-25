@@ -43,6 +43,8 @@ export type OnlineSubmission = {
     correct: string | null;
     image?: string | null;
     has_image?: boolean;
+    /** Savol mavzusi (#177) — "Grammar · Present simple" */
+    topic?: string | null;
   }[];
 };
 type TemplateRow = {
@@ -250,6 +252,12 @@ export function AnswerSheetButton({
                             <span className="text-slate-500">To'g'risi: </span>
                             <span className="text-emerald-700 font-medium">{d.correct}</span>
                           </>
+                        )}
+                        {d.topic && (
+                          <span className="ml-2 inline-block rounded-full bg-slate-100 text-slate-600 px-2 py-0.5 text-[11px]"
+                                title="Mavzu">
+                            {d.topic}
+                          </span>
                         )}
                       </p>
                     </div>

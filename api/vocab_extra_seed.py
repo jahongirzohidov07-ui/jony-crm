@@ -69,6 +69,68 @@ def _seed_key() -> str:
     return f"vocab_en_extra:{size}"
 
 
+LOCK_ID = 20260925          # pg_advisory lock kaliti (ixtiyoriy son)
+
+
+def _try_lock(db) -> bool:
+    """PARALLEL SOVUQ STARTLAR QULFI (2026-09-25, jonli logdan saboq).
+
+    Deploydan keyin bir vaqtda 4 ta instansiya uyg'ondi, har biri
+    o'zicha birinchi 1 200 so'zni yozdi — bir-birining yozuvini
+    ko'rmagani uchun DUBLIKATLAR paydo bo'ldi (vocab_words.word da
+    unique cheklov yo'q). Endi Postgres'da tranzaksiya qulfi olinadi:
+    qulf band bo'lsa (boshqa instansiya yozyapti) bu start seedni
+    o'tkazib yuboradi. Qulf commit/rollback bilan o'zi bo'shaydi —
+    instansiya o'lib qolsa ham osilib qolmaydi. SQLite (testlar,
+    bitta jarayon) da qulf shart emas."""
+    try:
+        if db.bind.dialect.name != "postgresql":
+            return True
+        from sqlalchemy import text
+        got = db.execute(text("SELECT pg_try_advisory_xact_lock(:k)"),
+                         {"k": LOCK_ID}).scalar()
+        return bool(got)
+    except Exception:
+        return True
+
+
+def dedupe_active_en(db) -> int:
+    """Faol inglizcha DUBLIKATLARNI tozalaydi — O'CHIRMASDAN.
+
+    Bir xil so'z (kichik harfda) bir nechta faol qatorda bo'lsa: eng
+    kichik id QOLADI, qolganlari is_active=0 bo'ladi, ularga bog'langan
+    VocabAttempt'lar (o'quvchi urinishlari) asosiy qatorga
+    KO'CHIRILADI — progress yo'qolmaydi. Nofaol eski dublikatlarga
+    (2026-08-11 migratsiyasi) tegilmaydi."""
+    import models
+    rows = (db.query(models.VocabWord.id, models.VocabWord.word)
+            .filter(models.VocabWord.is_active == 1,
+                    (models.VocabWord.language == "en")
+                    | (models.VocabWord.language.is_(None)))
+            .order_by(models.VocabWord.id).all())
+    keep, dups = {}, []
+    for wid, word in rows:
+        k = (word or "").strip().lower()
+        if k in keep:
+            dups.append((wid, keep[k]))
+        else:
+            keep[k] = wid
+    for dup_id, keep_id in dups:
+        (db.query(models.VocabAttempt)
+         .filter(models.VocabAttempt.word_id == dup_id)
+         .update({models.VocabAttempt.word_id: keep_id},
+                 synchronize_session=False))
+        (db.query(models.VocabWord)
+         .filter(models.VocabWord.id == dup_id)
+         .update({models.VocabWord.is_active: 0},
+                 synchronize_session=False))
+    if dups:
+        db.commit()
+        print(f"[vocab-extra] dublikat tozalandi: {len(dups)} ta "
+              f"(nofaol qilindi, urinishlar ko'chirildi)")
+    return len(dups)
+
+
 def seed_vocab_extra(db, budget: int | None = WORD_BUDGET) -> dict | None:
     """Idempotent: faqat yo'q so'zlarni qo'shadi, borini tegmaydi.
 
@@ -78,16 +140,30 @@ def seed_vocab_extra(db, budget: int | None = WORD_BUDGET) -> dict | None:
     key = _seed_key()
     if _seed_done(db, key):
         return None
+    if not _try_lock(db):
+        print("[vocab-extra] boshqa instansiya yozyapti — o'tkazib yuborildi")
+        return {"made": 0, "revived": 0, "finished": False, "locked": True}
+    # Avval (bo'lsa) parallel startlardan qolgan dublikatlarni tozalaymiz —
+    # shunda "have" ro'yxati toza bo'ladi.
+    deduped = dedupe_active_en(db)
+    if not _try_lock(db):          # dedupe commit qulfni bo'shatgan bo'lishi mumkin
+        return {"made": 0, "revived": 0, "finished": False, "locked": True,
+                "deduped": deduped}
     rows = _load()
     cap = float("inf") if budget is None else int(budget)
 
     # Bazadagi inglizcha so'zlar (faol va nofaol) — yengil so'rov.
+    # FAOL nusxa birinchi keladi: bitta so'zning faol va nofaol
+    # (dublikat) qatori bo'lsa, faoli hisobga olinadi — aks holda
+    # nofaol dublikat "tiklanib" yana ikkita faol bo'lib qolardi.
     have = {}
     for wid, word, active, topic in (
             db.query(models.VocabWord.id, models.VocabWord.word,
                      models.VocabWord.is_active, models.VocabWord.topic)
             .filter((models.VocabWord.language == "en")
-                    | (models.VocabWord.language.is_(None))).all()):
+                    | (models.VocabWord.language.is_(None)))
+            .order_by(models.VocabWord.is_active.desc(),
+                      models.VocabWord.id.asc()).all()):
         have.setdefault((word or "").strip().lower(), (wid, active, topic))
 
     made = revived = 0
@@ -130,4 +206,5 @@ def seed_vocab_extra(db, budget: int | None = WORD_BUDGET) -> dict | None:
     else:
         print(f"[vocab-extra] en: qismi yuklandi (+{made}, tiklandi "
               f"{revived}), keyingi startda davom")
-    return {"made": made, "revived": revived, "finished": finished}
+    return {"made": made, "revived": revived, "finished": finished,
+            "deduped": deduped}

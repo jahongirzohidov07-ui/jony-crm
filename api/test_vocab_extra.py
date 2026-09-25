@@ -144,6 +144,50 @@ ck("urinishi saqlandi",
    .filter(models.VocabAttempt.word_id == w90.id).count(), 1)
 db2.close()
 
+print("\n=== 3b. PARALLEL START DUBLIKATLARI TOZALANADI (o'chirmasdan) ===")
+# Jonli logda ko'rildi: 4 ta instansiya bir vaqtda birinchi 1200 so'zni
+# yozib, dublikat qildi. Shuni takrorlaymiz: "the" ning 2 ta qo'shimcha
+# FAOL nusxasi + nusxada urinish bor. Kutilgan: bitta faol qoladi (eng
+# kichik id), qolganlari nofaol, urinish asosiyga ko'chadi.
+db3 = SessionLocal()
+orig = (db3.query(models.VocabWord)
+        .filter(models.VocabWord.word == "the",
+                models.VocabWord.language == "en",
+                models.VocabWord.is_active == 1).one())
+copies = []
+for _ in range(2):
+    cpy = models.VocabWord(word="the", translation=orig.translation,
+                           level=orig.level, topic=orig.topic,
+                           example=orig.example, language="en",
+                           is_active=1, created_by="wordfreq")
+    db3.add(cpy); db3.flush(); copies.append(cpy.id)
+db3.add(models.VocabAttempt(student_id=1, word_id=copies[1], game="en_uz",
+                            correct=1, date=date.today()))
+mark = db3.query(models.SeedMark).get(vx._seed_key())
+if mark is not None:
+    db3.delete(mark)
+db3.commit()
+_common._SEED_KEYS = None
+res = vx.seed_vocab_extra(db3, budget=None)
+ck("seed avval 2 ta dublikatni tozaladi", res.get("deduped"), 2)
+ck("qayta tozalash hech narsa topmaydi", vx.dedupe_active_en(db3), 0)
+db3.expire_all()
+the_rows = (db3.query(models.VocabWord)
+            .filter(models.VocabWord.word == "the",
+                    models.VocabWord.language == "en")
+            .order_by(models.VocabWord.id).all())
+ck("'the' uchun bitta faol qator", sum(1 for r in the_rows if r.is_active), 1)
+ck("faoli — eng kichik id (asl nusxa)",
+   [r.id for r in the_rows if r.is_active], [orig.id])
+ck("nusxalar O'CHIRILMAGAN, nofaol", len(the_rows), 3)
+ck("nusxadagi urinish asosiyga ko'chdi",
+   db3.query(models.VocabAttempt)
+   .filter(models.VocabAttempt.word_id == orig.id).count(), 1)
+ck("seed nusxani qayta tiklamadi (made=0, revived=0)",
+   (res["made"], res["revived"]), (0, 0))
+ck("marker qayta qo'yildi", _seed_done(db3, vx._seed_key()), True)
+db3.close()
+
 print("\n=== 4. SHKALA ===")
 ck("3200 so'z endi 9.0 EMAS (ilgari 95 ball edi)",
    roles.score_for_skill("vocabulary", 3200) < 95, True)

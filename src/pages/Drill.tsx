@@ -37,6 +37,10 @@ type Attempt = {
   done: number;
   in_time: number;
   spent: number;
+  /** Vaqtida bajarilgan vazifalar ulushi va xulosa (2026-09-25). */
+  percent: number;
+  passed: boolean;
+  verdict: string | null;
 };
 
 type State = {
@@ -50,6 +54,7 @@ type State = {
   left: number | null;
   history: Attempt[];
   hint: string;
+  pass_percent: number;
   /** Sinov deb belgilangan filiallar va nega boshlab bo'lmayotgani. */
   test_branches: { id: number; name: string }[];
   why: string | null;
@@ -265,13 +270,36 @@ export function DrillPanel({ compact = false }: { compact?: boolean }) {
         </div>
       ) : (
         <div className={card}>
+          {/* OXIRGI NATIJA (2026-09-25, Jahongir: "60% foiz o'tsa
+              xodimni ishga olsa bo'ladi") */}
+          {d.history[0] && (
+            <div
+              className={`rounded-lg border p-3 mb-4 ${
+                d.history[0].passed
+                  ? "bg-emerald-50 border-emerald-200"
+                  : "bg-amber-50 border-amber-200"
+              }`}
+            >
+              <p
+                className={`text-sm font-medium ${
+                  d.history[0].passed ? "text-emerald-900" : "text-amber-900"
+                }`}
+              >
+                Oxirgi natija: {d.history[0].verdict}
+              </p>
+              <p className="text-xs text-slate-600 mt-0.5">
+                {d.history[0].in_time} / {d.history[0].total} vazifa vaqtida
+                bajarildi
+              </p>
+            </div>
+          )}
           <p className="text-sm text-slate-600 mb-3">{d.hint}</p>
           <p className="text-sm text-slate-500 mb-4">
             Jami {d.tasks.length} ta vazifa ·{" "}
             {Math.round(
               d.tasks.reduce((a, t) => a + t.seconds, 0) / 60
             )}{" "}
-            daqiqagacha
+            daqiqagacha · o'tish uchun {d.pass_percent}%
           </p>
           <button
             disabled={busy || !d.can_start}
@@ -305,6 +333,15 @@ export function DrillPanel({ compact = false }: { compact?: boolean }) {
                 </span>
                 <span className="text-slate-700">
                   {a.in_time} / {a.total} vazifa vaqtida
+                </span>
+                <span
+                  className={`px-1.5 py-0.5 rounded text-[11px] ${
+                    a.passed
+                      ? "bg-emerald-100 text-emerald-700"
+                      : "bg-amber-100 text-amber-800"
+                  }`}
+                >
+                  {a.percent}%
                 </span>
                 <span className="ml-auto text-slate-400">
                   {Math.round(a.spent / 60)} daqiqa

@@ -2949,12 +2949,16 @@ type DrillAttempt = {
   done: number;
   in_time: number;
   spent: number;
+  percent: number;
+  passed: boolean;
+  verdict: string | null;
 };
 
 function DrillAdminTab() {
   const [d, setD] = useState<{
     tasks: DrillTask[];
     total_seconds: number;
+    pass_percent: number;
     attempts: DrillAttempt[];
     branches: { id: number; name: string; is_test: boolean }[];
     hint: string;
@@ -2983,6 +2987,40 @@ function DrillAdminTab() {
   return (
     <div>
       <p className="text-sm text-slate-500 mb-4">{d.hint}</p>
+
+      {/* O'TISH FOIZI (2026-09-25, Jahongir: "60% foiz o'tsa xodimni
+          ishga olsa bo'ladi") */}
+      <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+        <p className="text-sm font-medium text-slate-700 mb-1">
+          O'tish foizi
+        </p>
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            min={10}
+            max={100}
+            defaultValue={d.pass_percent}
+            onBlur={async (e) => {
+              const v = Number(e.target.value);
+              if (!v || v === d.pass_percent) return;
+              try {
+                await api.put("/drill/settings", { pass_percent: v });
+                load();
+              } catch (er) {
+                alert(er instanceof Error ? er.message : "Saqlanmadi");
+              }
+            }}
+            className="w-20 rounded-lg border border-slate-300 px-2 py-1 text-sm text-right"
+          />
+          <span className="text-sm text-slate-500">
+            % dan yuqori bo'lsa — ishga olsa bo'ladi
+          </span>
+        </div>
+        <p className="text-xs text-slate-400 mt-1.5">
+          Foiz vaqtida bajarilgan vazifalardan chiqadi: vaqtdan oshgani
+          ham, o'tkazib yuborilgani ham hisobga olinmaydi.
+        </p>
+      </div>
 
       <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
         <p className="text-sm font-medium text-slate-700 mb-2">
@@ -3091,6 +3129,7 @@ function DrillAdminTab() {
                   Bajardi
                 </th>
                 <th className="text-right px-3 py-2.5 font-medium">Vaqt</th>
+                <th className="text-left px-3 py-2.5 font-medium">Natija</th>
                 <th className="text-left px-3 py-2.5 font-medium">Holat</th>
               </tr>
             </thead>
@@ -3111,6 +3150,22 @@ function DrillAdminTab() {
                   </td>
                   <td className="px-3 py-2.5 text-right text-slate-500">
                     {Math.round(a.spent / 60)} daq
+                  </td>
+                  <td className="px-3 py-2.5">
+                    {a.status === "running" ? (
+                      <span className="text-slate-400 text-xs">—</span>
+                    ) : (
+                      <span
+                        className={`px-1.5 py-0.5 rounded text-[11px] ${
+                          a.passed
+                            ? "bg-emerald-100 text-emerald-700"
+                            : "bg-amber-100 text-amber-800"
+                        }`}
+                        title={a.verdict || ""}
+                      >
+                        {a.percent}%{a.passed ? " · o'tdi" : ""}
+                      </span>
+                    )}
                   </td>
                   <td className="px-3 py-2.5 text-xs text-slate-500">
                     {a.status === "done"

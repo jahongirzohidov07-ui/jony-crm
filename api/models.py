@@ -4391,3 +4391,17 @@ class DrillStep(Base):
     skipped = Column(Integer, default=0)
     # "row" tekshiruvi uchun: band boshlanganda jadvaldagi eng katta id
     snapshot_id = Column(Integer, nullable=True)
+
+
+class DrillSetting(Base):
+    """MASHQ SOZLAMASI — bitta qator (id=1).
+
+    2026-09-25, Jahongir: "60% foiz o'tsa xodimni ishga olsa bo'ladi".
+    O'tish foizi kodda qotib qolmasin: HR uni o'zgartira oladi."""
+    __tablename__ = "drill_settings"
+
+    id = Column(Integer, primary_key=True)
+    pass_percent = Column(Integer, default=60)
+    updated_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)

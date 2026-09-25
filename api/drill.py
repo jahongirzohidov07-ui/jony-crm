@@ -221,6 +221,16 @@ def _test_branch(db: Session, user, branch_id=None) -> models.Branch:
              f"o'tkazishi kerak.")
 
 
+def _conf(db: Session):
+    """O'tish foizi. Bitta qator — bo'lmasa 60% bilan yaratiladi."""
+    c = db.query(models.DrillSetting).get(1)
+    if c is None:
+        c = models.DrillSetting(id=1, pass_percent=60)
+        db.add(c)
+        db.commit()
+    return c
+
+
 def _tasks(db: Session):
     return (db.query(models.DrillTask)
             .filter(models.DrillTask.is_active == 1)
@@ -303,9 +313,24 @@ def _attempt_out(db: Session, a) -> dict:
              .order_by(models.DrillStep.order_no).all())
     rows = [_step_out(db, s) for s in steps]
     u = db.query(models.User).get(a.user_id)
+    total = db.query(models.DrillTask).filter(
+        models.DrillTask.is_active == 1).count()
+    in_time = sum(1 for r in rows if r["in_time"])
+    percent = round(in_time / total * 100) if total else 0
+    need = _conf(db).pass_percent
     return {
         "id": a.id, "user_id": a.user_id,
         "user": u.full_name if u else None,
+        # NATIJA (2026-09-25): vaqtida bajarilgan vazifalar ulushi.
+        # O'tkazib yuborilgani ham, vaqtdan oshgani ham sanalmaydi.
+        "percent": percent,
+        "pass_percent": need,
+        "passed": percent >= need,
+        "verdict": (None if a.status == "running" else
+                    (f"{percent}% — ishga olsa bo'ladi"
+                     if percent >= need else
+                     f"{percent}% — hali tayyor emas "
+                     f"({need}% kerak), qayta topshirsin")),
         "status": a.status,
         "started_at": a.started_at.isoformat() if a.started_at else None,
         "finished_at": (a.finished_at.isoformat()
@@ -377,6 +402,7 @@ def drill_state(branch_id: int | None = None,
         "current": _step_out(db, cur) if cur is not None else None,
         "left": left,
         "now": datetime.utcnow().isoformat(),
+        "pass_percent": _conf(db).pass_percent,
         "history": [_attempt_out(db, x) for x in past],
         "hint": ("Vazifani tizimning o'zida bajaring, so'ng "
                  "\"Bajardim\" bosing — tizim tekshiradi. Vaqt "
@@ -495,6 +521,7 @@ def drill_admin(db: Session = Depends(get_db),
            .order_by(models.DrillAttempt.id.desc()).limit(50).all())
     return {
         "tasks": [_task_out(t) for t in tasks],
+        "pass_percent": _conf(db).pass_percent,
         "total_seconds": sum(t.seconds for t in tasks if t.is_active),
         "attempts": [_attempt_out(db, a) for a in att],
         "branches": [{"id": b.id, "name": b.name, "is_test": bool(b.is_test)}
@@ -541,6 +568,29 @@ def drill_task_edit(tid: int, payload: TaskIn,
               entity_label=t.title, field="soniya",
               old_value=old, new_value=t.seconds, commit=True)
     return _task_out(t)
+
+
+class PassIn(BaseModel):
+    pass_percent: int
+
+
+@router.put("/api/drill/settings")
+def drill_settings(payload: PassIn, db: Session = Depends(get_db),
+                   user=Depends(require_role(*roles.DRILL_MANAGE))):
+    """O'tish foizi (2026-09-25, Jahongir: "60% foiz o'tsa xodimni
+    ishga olsa bo'ladi"). HR keyin o'zgartira oladi."""
+    if not (10 <= payload.pass_percent <= 100):
+        raise HTTPException(400, "Foiz 10 dan 100 gacha bo'lsin")
+    c = _conf(db)
+    old = c.pass_percent
+    c.pass_percent = payload.pass_percent
+    c.updated_by = user.full_name
+    c.updated_at = datetime.utcnow()
+    db.commit()
+    audit.log(db, user, entity="drill_task", action="update",
+              entity_label="O'tish foizi", field="foiz",
+              old_value=old, new_value=c.pass_percent, commit=True)
+    return {"ok": True, "pass_percent": c.pass_percent}
 
 
 class BranchTestIn(BaseModel):

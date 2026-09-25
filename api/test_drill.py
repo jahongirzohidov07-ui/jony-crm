@@ -189,6 +189,38 @@ adm = client.get("/api/drill/admin", headers=HH).json()
 ck("HR urinishlarni ko'radi", len(adm["attempts"]) >= 1, True)
 ck("kim topshirgani ko'rinadi", adm["attempts"][0]["user"], "Admin Aziza")
 
+print("\n=== H. O'TISH FOIZI (60%) ===")
+st = client.get("/api/drill/state", headers=HA).json()
+ck("standart o'tish foizi", st["pass_percent"], 60)
+
+# Toza urinish: hamma vazifa "o'tkazib yuborildi" — natija 0%
+client.post("/api/drill/stop", headers=HA)
+client.post("/api/drill/start", headers=HA)
+guard = 0
+while guard < 40:
+    r = client.post("/api/drill/done", headers=HA, json={"skip": True}).json()
+    guard += 1
+    if not r.get("current"):
+        break
+last = client.get("/api/drill/state", headers=HA).json()["history"][0]
+ck("hammasi o'tkazib yuborilsa 0%", last["percent"], 0)
+ck("o'tmadi", last["passed"], False)
+ck("xulosa yozilgan", "hali tayyor emas" in (last["verdict"] or ""), True)
+ck("qancha kerakligi aytilgan", "60%" in (last["verdict"] or ""), True)
+
+print("\n=== I. HR FOIZNI O'ZGARTIRADI ===")
+r = client.put("/api/drill/settings", headers=HH, json={"pass_percent": 40})
+ck("o'zgartirildi", r.json()["pass_percent"], 40)
+ck("chegaradan tashqari rad etiladi",
+   client.put("/api/drill/settings", headers=HH,
+              json={"pass_percent": 5}).status_code, 400)
+ck("admin o'zgartira olmaydi",
+   client.put("/api/drill/settings", headers=HA,
+              json={"pass_percent": 90}).status_code, 403)
+adm = client.get("/api/drill/admin", headers=HH).json()
+ck("HR panelida ko'rinadi", adm["pass_percent"], 40)
+ck("urinishda natija foizi bor", "percent" in adm["attempts"][0], True)
+
 print()
 if fails:
     print("XATOLAR:", ", ".join(fails))

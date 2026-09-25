@@ -64,10 +64,21 @@ function mmss(sec: number) {
 }
 
 export default function Drill() {
+  return <DrillPanel />;
+}
+
+/**
+ * Mashq paneli. Alohida sahifada ham, "Shaxsiy rivojlanish" ichida
+ * ham shu komponent ishlatiladi (2026-09-25, Jahongir: "shaxsiy
+ * rivojlanish degan joyiga qo'shib ber"). Ruxsati yo'q xodimga
+ * umuman ko'rinmaydi.
+ */
+export function DrillPanel({ compact = false }: { compact?: boolean }) {
   const [d, setD] = useState<State | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const [left, setLeft] = useState<number | null>(null);
+  const [hidden, setHidden] = useState(false);
   const tick = useRef<number | null>(null);
 
   const load = useCallback(() => {
@@ -77,7 +88,12 @@ export default function Drill() {
         setD(r);
         setLeft(r.left);
       })
-      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+      .catch((e) => {
+        const m = e instanceof Error ? e.message : "Xatolik";
+        // Ruxsati yo'q xodimga panel umuman ko'rinmaydi
+        if (m.includes("lavozim")) setHidden(true);
+        else setErr(m);
+      });
   }, []);
   useEffect(load, [load]);
 
@@ -108,6 +124,11 @@ export default function Drill() {
     }
   };
 
+  if (hidden) return null;
+  if (!d && err)
+    return compact ? null : (
+      <p className="text-sm text-slate-500 py-10 text-center">{err}</p>
+    );
   if (!d) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
 
   const card = "bg-white border border-slate-200 rounded-xl p-5";
@@ -116,7 +137,11 @@ export default function Drill() {
     <div className="max-w-3xl">
       <div className="flex items-center gap-2 mb-1">
         <Timer size={18} className="text-slate-400" />
-        <h1 className="text-xl font-semibold text-slate-900">Mashq</h1>
+        {compact ? (
+          <h2 className="text-lg font-semibold text-slate-900">Mashq</h2>
+        ) : (
+          <h1 className="text-xl font-semibold text-slate-900">Mashq</h1>
+        )}
       </div>
       <p className="text-sm text-slate-500 mb-5">
         Tizimni qanchalik tez boshqarishingizni tekshiramiz

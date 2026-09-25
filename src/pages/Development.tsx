@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { api } from "../lib/api";
+import { DrillPanel } from "./Drill";
 import { useAuth } from "../lib/AuthContext";
 import { FOUNDER, HR_MANAGER } from "../lib/roles";
 
@@ -101,6 +102,13 @@ export default function Development() {
       <p className="text-sm text-slate-500 mb-5">
         Videolarni shu yerda ko'rasiz — ko'rgan qismingiz o'zi belgilanadi
       </p>
+
+      {/* MASHQ (2026-09-25, Jahongir: "shaxsiy rivojlanish degan
+          joyiga qo'shib ber"). Ruxsati bo'lmagan xodimga
+          ko'rinmaydi — panel o'zini yashiradi. */}
+      <div className="mb-6">
+        <DrillPanel compact />
+      </div>
 
       {/* Umumiy holat */}
       <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">

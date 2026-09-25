@@ -103,8 +103,10 @@ ck("ustoz kira olmaydi",
 _m = client.get("/api/drill/state", headers=HT).json()["detail"]
 ck("xato matni lavozimni aytadi", "O'qituvchi" in _m, True)
 ck("kimga ruxsat borligini aytadi", "Administrator" in _m, True)
-ck("HR topshira olmaydi",
-   client.get("/api/drill/state", headers=HH).status_code, 403)
+# 2026-09-25: ofis lavozimlari (HR ham) topshira oladi — ilgari
+# ro'yxat faqat administrator edi va amalda hech kim kira olmadi
+ck("HR ham topshira oladi",
+   client.get("/api/drill/state", headers=HH).status_code, 200)
 ck("HR sozlamani ko'radi",
    client.get("/api/drill/admin", headers=HH).status_code, 200)
 ck("admin sozlamani ko'ra olmaydi",

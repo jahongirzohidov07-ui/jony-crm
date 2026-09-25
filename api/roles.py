@@ -859,7 +859,14 @@ STUDENT_GROUPS_VIEW = ATTENDANCE_VIEW
 # MASHQ (2026-09-25, Jahongir: "test filialga kirib mashq degan
 # bo'lim ochiladi faqat adminlarga"). Topshiradigan — administrator
 # (asoschi ham sinab ko'ra oladi). Sozlaydigan — HR va asoschi.
-DRILL_TAKE = [ADMINISTRATOR, FOUNDER]
+# 2026-09-25 (Jahongir: "admin akkauntidan sinab ko'rdim ... ruxsatingiz
+# yo'q deb yozdi"): ro'yxat faqat administrator bilan chegaralangani
+# uchun amalda hech kim topshira olmadi — markazda "admin" ishini
+# qiladigan xodimning lavozimi boshqacha nomlanishi mumkin. Endi
+# ro'yxatda ofisda ishlaydigan barcha lavozimlar bor; ustoz, support
+# va examiner yo'q (cheklist ularning ishi emas).
+DRILL_TAKE = [ADMINISTRATOR, FOUNDER, BRANCH_MANAGER, SALES_HEAD,
+              SALES_MANAGER, ACADEMIC_HEAD, HR_MANAGER]
 DRILL_MANAGE = FULL_ACCESS + [HR_MANAGER]
 
 STUDENT_EXAMS_VIEW = TEACHING_STAFF + [HR_MANAGER]

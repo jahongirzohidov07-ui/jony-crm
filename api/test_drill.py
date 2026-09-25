@@ -87,6 +87,16 @@ ck("sababi aytilgan", "sinov filialida" in _msg, True)
 ck("qaysi filial sinov ekani aytilgan", "Sinov filiali" in _msg, True)
 ck("hozir qayerdaligi aytilgan", "Zafar" in _msg, True)
 
+print("\n=== A2. FILIALI BOSHQA BO'LGAN ASOSCHI ===")
+# Asoschi butun tashkilot bo'yicha ishlaydi. "Boshlash" POST bo'lgani
+# uchun tepadagi filial tanlagichi unga qo'shilmaydi — yagona sinov
+# filiali bo'lsa, server o'zi tanlashi kerak.
+r = client.post("/api/drill/start", headers=H)
+ck("asoschi boshlay oldi", r.status_code, 200)
+ck("sinov filialida", r.json()["branch"], "Sinov filiali")
+ck("filial id qaytdi", r.json()["branch_id"], TBID)
+client.post("/api/drill/stop", headers=H)
+
 print("\n=== F. KIM KIRA OLADI ===")
 ck("ustoz kira olmaydi",
    client.get("/api/drill/state", headers=HT).status_code, 403)

@@ -179,6 +179,14 @@ def _test_branch(db: Session, user, branch_id=None) -> models.Branch:
     if b is not None and b.is_test:
         return b
     tests = _test_list(db)
+    # "Boshlash" POST bo'lgani uchun tepadagi filial tanlagichi unga
+    # qo'shilmaydi (u faqat GET so'rovlarga qo'shiladi). Shuning uchun
+    # foydalanuvchi kira oladigan YAGONA sinov filiali bo'lsa, o'shani
+    # o'zimiz tanlaymiz — aks holda tugma hech qachon ishlamasdi
+    # (2026-09-25).
+    mine = [t for t in tests if _in_user_branches(db, user, t.id)]
+    if len(mine) == 1:
+        return mine[0]
     if not tests:
         raise HTTPException(
             400, "Sinov filiali belgilanmagan. HR bo'limi → Admin "
@@ -331,6 +339,7 @@ def drill_state(branch_id: int | None = None,
         "can_start": bool(b and b.is_test) and bool(tasks),
         "test_branch": bool(b and b.is_test),
         "branch": b.name if b else None,
+        "branch_id": b.id if b else None,
         "test_branches": [{"id": t.id, "name": t.name} for t in tests],
         "why": (None if (b and b.is_test) else
                 ("Sinov filiali belgilanmagan — HR bo'limi → Admin "

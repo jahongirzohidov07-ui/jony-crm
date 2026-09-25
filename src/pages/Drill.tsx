@@ -53,6 +53,7 @@ type State = {
   /** Sinov deb belgilangan filiallar va nega boshlab bo'lmayotgani. */
   test_branches: { id: number; name: string }[];
   why: string | null;
+  branch_id: number | null;
   message?: string;
   ok?: boolean;
 };
@@ -249,7 +250,12 @@ export default function Drill() {
           </p>
           <button
             disabled={busy || !d.can_start}
-            onClick={() => act("/drill/start")}
+            onClick={() =>
+              act(
+                "/drill/start" +
+                  (d.branch_id ? `?branch_id=${d.branch_id}` : "")
+              )
+            }
             className="flex items-center gap-1.5 rounded-lg bg-brand-600 text-white text-sm px-5 py-2.5 disabled:opacity-40"
           >
             <Play size={15} /> Boshlash

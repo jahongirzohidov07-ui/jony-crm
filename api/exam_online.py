@@ -1499,6 +1499,12 @@ def fill_topics_from_bank(db: Session, key: str = "exam_topics_v1") -> int:
     filled = 0
     try:
         index = _seed_topic_index()
+        if not index:
+            # exam_topics.json o'qilmadi (deployda yo'q?) — belgi
+            # qo'yilmaydi, keyingi startda qayta uriniladi
+            print("[exam-bank] mavzular fayli topilmadi — o'tkazib yuborildi",
+                  flush=True)
+            return 0
         for t in db.query(models.ExamTemplate).all():
             idx = index.get((t.level, t.kind, t.unit_no))
             if not idx:
@@ -1523,10 +1529,10 @@ def fill_topics_from_bank(db: Session, key: str = "exam_topics_v1") -> int:
                 filled += n
         db.commit()
         _seed_mark(db, key)
-        print(f"[exam-bank] mavzular qo'yildi: {filled} ta savol")
+        print(f"[exam-bank] mavzular qo'yildi: {filled} ta savol", flush=True)
     except Exception as e:  # noqa: BLE001
         db.rollback()
-        print(f"[exam-bank] mavzular qo'yilmadi: {e}")
+        print(f"[exam-bank] mavzular qo'yilmadi: {e}", flush=True)
     return filled
 
 

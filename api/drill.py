@@ -311,7 +311,12 @@ def _attempt_out(db: Session, a) -> dict:
         "finished_at": (a.finished_at.isoformat()
                         if a.finished_at else None),
         "steps": rows,
-        "total": len(rows),
+        # "total" — MASHQDAGI JAMI vazifa soni (ochilgan bandlar emas,
+        # 2026-09-25): sekundomerda "3/27" deb ko'rinishi kerak edi,
+        # ilgari "3/3" chiqardi.
+        "total": db.query(models.DrillTask).filter(
+            models.DrillTask.is_active == 1).count(),
+        "opened": len(rows),
         "done": sum(1 for r in rows if r["ok"]),
         "in_time": sum(1 for r in rows if r["in_time"]),
         "spent": sum(r["spent"] or 0 for r in rows),

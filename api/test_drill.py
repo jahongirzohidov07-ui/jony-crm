@@ -120,6 +120,9 @@ ck("vazifa berildi", bool(d["current"]), True)
 ck("birinchi band", d["current"]["order_no"], 1)
 ck("sekundomer bor", d["left"] is not None, True)
 ck("ro'yxatda 27 ta band", len(d["tasks"]), 27)
+# Sekundomerdagi sanoq JAMI vazifa soni bo'yicha bo'lishi kerak
+ck("sanoq 27 dan ketadi", d["attempt"]["total"], 27)
+ck("ochilgan bandlar alohida", d["attempt"]["opened"], 1)
 
 # Birinchi bandlar "view" — o'zi tasdiqlaydi
 while d.get("current") and d["current"]["verify_kind"] == "view":

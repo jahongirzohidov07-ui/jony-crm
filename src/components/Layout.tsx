@@ -72,6 +72,7 @@ import {
   setToken,
 } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
+import { DrillTimer } from "./DrillTimer";
 import { PasswordInput } from "./PasswordInput";
 
 const navItems = [
@@ -766,6 +767,11 @@ export default function Layout() {
         </div>
         <Outlet />
       </main>
+
+      {/* MASHQ SEKUNDOMERI (2026-09-25, Jahongir: "har safar chiqib
+          ketganda sekundomer o'chib qolyabdi") — mashq ketayotgan
+          bo'lsa har qanday sahifada osilib turadi. */}
+      <DrillTimer />
 
       {(showPasswordModal || forcePw) && (
         <ChangePasswordModal

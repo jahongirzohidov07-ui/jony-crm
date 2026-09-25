@@ -635,6 +635,7 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
               shown.map((c) => ({
                 "F.I.Sh.": c.full_name,
                 Telefon: c.phone ?? "",
+                "Yashash joyi": c.address ?? "",
                 Vakansiya: c.role_label ?? "",
                 Fan: c.subject ?? "",
                 Bosqich: stageLabel(c.stage),
@@ -668,6 +669,9 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
               <tr className="text-xs text-slate-500">
                 <th className="text-left px-4 py-2.5">F.I.Sh.</th>
                 <th className="text-left">Telefon</th>
+                {/* 2026-09-24, Jahongir: "yashash joyi chiqib tursin
+                    karta ochilmasdan turib ham" */}
+                <th className="text-left">Yashash joyi</th>
                 <th className="text-left">Vakansiya</th>
                 <th className="text-left">Manba</th>
                 <th className="text-left">Bosqich</th>
@@ -697,6 +701,15 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     )}
                   </td>
                   <td className="text-slate-500">{formatPhone(c.phone) || "—"}</td>
+                  <td className="text-slate-600 max-w-[190px]">
+                    {c.address ? (
+                      <span className="block truncate" title={c.address}>
+                        {c.address}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400">—</span>
+                    )}
+                  </td>
                   <td className="text-slate-600">
                     {c.role_label ? (
                       <>

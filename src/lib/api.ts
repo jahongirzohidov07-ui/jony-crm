@@ -1271,6 +1271,8 @@ export interface CandidateHistoryRow {
 }
 
 export interface Candidate {
+  /** Yashash manzili — ro'yxatda ham ko'rinadi (2026-09-24). */
+  address?: string | null;
   id: number;
   full_name: string;
   phone?: string | null;

@@ -64,6 +64,7 @@ for un, nm, role in [("asos", "Asoschi", roles.FOUNDER),
                        role=role, branch_id=BID, is_active=1))
 db.commit()
 u = db.query(models.User).filter(models.User.username == "ust").first()
+UST_ID = u.id
 t = models.Teacher(full_name="Ustoz Anvar", branch_id=BID, user_id=u.id,
                    is_active=1)
 db.add(t)
@@ -129,6 +130,17 @@ ck("tasdiqlandi", r.status_code, 200)
 ck("endi yangi kunda dars bor", TO.isoformat() in lesson_dates(), True)
 ck("eski kundan olindi", FROM.isoformat() in lesson_dates(), False)
 
+print("\n=== C2. USTOZGA XABAR BORDI ===")
+d2 = SessionLocal()
+tasks = list(d2.query(models.Task)
+             .filter(models.Task.assignee_id == UST_ID).all())
+d2.close()
+ck("ustozga vazifa tushdi", len(tasks), 1)
+ck("sarlavhada qaror bor", "TASDIQLANDI" in tasks[0].title, True)
+ck("matnda yangi sana bor", TO.isoformat() in tasks[0].description, True)
+ck("nima qilish kerakligi yozilgan",
+   "ogohlantiring" in tasks[0].description, True)
+
 print("\n=== D. RAHBARIYATGA TEGILMADI ===")
 FROM2 = TO
 TO2 = FROM2 + timedelta(days=2)
@@ -137,6 +149,30 @@ r = client.post(f"/api/groups/{GID}/reschedule", headers=H, json={
     "reason": "other", "note": "Jadval tuzatildi"})
 ck("asoschi so'rovi darrov qo'llandi", r.json()["applied"], True)
 ck("dars ko'chdi", TO2.isoformat() in lesson_dates(), True)
+
+print("\n=== E. RAD ETILSA HAM XABAR BORADI ===")
+FROM3 = TO2 + timedelta(days=3)
+d3 = SessionLocal()
+d3.add(models.Lesson(group_id=GID, date=FROM3, held=0))
+d3.commit()
+d3.close()
+r = client.post(f"/api/groups/{GID}/reschedule", headers=HT, json={
+    "from_date": FROM3.isoformat(),
+    "to_date": (FROM3 + timedelta(days=1)).isoformat(),
+    "reason": "family", "note": "Oilaviy sabab"})
+rid2 = r.json()["id"]
+client.post(f"/api/reschedules/{rid2}/decide", headers=HO,
+            json={"decision": "rejected", "note": "O'sha kuni xona band"})
+d4 = SessionLocal()
+tt = list(d4.query(models.Task)
+          .filter(models.Task.assignee_id == UST_ID).all())
+d4.close()
+ck("ikkinchi xabar ham bor", len(tt), 2)
+rej = [x for x in tt if "RAD ETILDI" in x.title]
+ck("rad etilgani aytildi", len(rej), 1)
+ck("sababi yozilgan", "xona band" in rej[0].description, True)
+ck("eski kunida qolishi aytilgan",
+   "ESKI kunida qoladi" in rej[0].description, True)
 
 print()
 if fails:

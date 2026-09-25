@@ -381,6 +381,12 @@ def list_candidates(
         "stage": c.stage, "source": c.source,
         "branch_id": c.branch_id,
         "branch": c.branch.name if c.branch else None,
+        # YASHASH JOYI RO'YXATDA (2026-09-24, Jahongir: "hr bo'limi
+        # nomzodlar uchun yashash joyi chiqib tursin karta ochilmasdan
+        # turib ham"). Manzil arizada allaqachon so'ralardi, lekin
+        # faqat kartani ochganda ko'rinardi — HR har birini ochib
+        # chiqishga majbur edi.
+        "address": c.address,
         "note": c.note, "reject_reason": c.reject_reason,
         "hired_date": c.hired_date.isoformat() if c.hired_date else None,
         "created_at": c.created_at.isoformat() if c.created_at else None,
@@ -1066,6 +1072,7 @@ def _app_out(db: Session, a: models.CandidateApplication,
         "candidate_id": a.candidate_id,
         "candidate": c.full_name if c else None,
         "phone": c.phone if c else None,
+        "address": c.address if c else None,
         "blacklist": (_blacklist.hit_brief(
             _blacklist.match(_bl_entries, c.full_name, c.phone))
             if c and _bl_entries is not None else None),

@@ -2762,6 +2762,51 @@ def _notify_reschedule_approvers(db: Session, r, group, teacher) -> None:
     db.commit()
 
 
+def _notify_reschedule_teacher(db: Session, r, group, decided_by) -> None:
+    """QARORDAN KEYIN USTOZGA XABAR (2026-09-24, Jahongir: "xa ustozga
+    xabar borsin").
+
+    Ustozdan erkin surish olib tashlangach, so'rov tasdiqqa boradigan
+    bo'ldi — demak ustoz javobni BILISHI shart: dars ko'chdimi yoki
+    eski kunida qoldimi. Bilmasa, o'quvchilarni noto'g'ri kunga
+    chaqiradi.
+
+    Ikki yo'l: tizim ichidagi vazifa (har doim) va Telegram (agar
+    ustoz akkauntini botga ulagan bo'lsa)."""
+    uid = getattr(r, "requested_by", None)
+    if not uid:
+        return
+    u = db.query(models.User).get(uid)
+    if u is None:
+        return
+    ok = r.status in roles.RESCHEDULE_DONE
+    gname = group.name if group is not None else "—"
+    head = ("Dars ko'chirish TASDIQLANDI" if ok
+            else "Dars ko'chirish RAD ETILDI")
+    body = (f"{gname}\n"
+            f"{r.from_date} → {r.to_date}\n"
+            f"Qaror: {decided_by.full_name if decided_by else 'Tizim'}\n"
+            + (f"Izoh: {r.decision_note}\n" if r.decision_note else "")
+            + ("Dars yangi kunga ko'chdi — o'quvchilarni "
+               "ogohlantiring." if ok else
+               "Dars ESKI kunida qoladi — o'quvchilarni "
+               "ogohlantirmang."))
+    try:
+        _hr_task_for(db, u.id,
+                     title=f"{head}: {gname} {r.from_date}",
+                     body=body,
+                     branch_id=group.branch_id if group is not None else None,
+                     days=1)
+        db.commit()
+    except Exception:
+        db.rollback()
+    try:
+        if u.telegram_chat_id and notify.enabled():
+            notify.send(u.telegram_chat_id, f"JONYOS — {head}\n\n{body}")
+    except Exception:
+        pass
+
+
 def _norm_surname(full_name: str) -> str:
     """Familiyani solishtirish uchun soddalashtiradi.
 
@@ -7229,6 +7274,7 @@ __all__ = [
     "_close_request_tasks",
     "_notify_discount_approvers",
     "_notify_reschedule_approvers",
+    "_notify_reschedule_teacher",
     "_same_surname",
     "_do_family_link",
     "_founder_name_fix",

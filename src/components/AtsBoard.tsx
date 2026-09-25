@@ -113,6 +113,13 @@ export function AtsBoard() {
                       {r.role_label || r.vacancy || "lavozim ko'rsatilmagan"}
                       {r.subject ? ` · ${r.subject}` : ""}
                     </p>
+                    {/* Yashash joyi kartochkada ham (2026-09-24) */}
+                    {r.address && (
+                      <p className="text-[11px] text-slate-500 truncate"
+                         title={r.address}>
+                        {r.address}
+                      </p>
+                    )}
                     <p
                       className={`text-[11px] mt-1 ${
                         r.overdue ? "text-red-600 font-medium" : "text-slate-400"

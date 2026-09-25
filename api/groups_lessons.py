@@ -1707,6 +1707,13 @@ def reschedule_decide(rid: int, payload: schemas.RescheduleDecision,
     except Exception:
         pass
     db.commit()
+    # Ustoz javobni bilsin (2026-09-24): tasdiqlandimi yoki rad
+    # etildimi — vazifa va Telegram orqali.
+    try:
+        _notify_reschedule_teacher(
+            db, r, db.query(models.Group).get(r.group_id), user)
+    except Exception:
+        pass
     audit.log(db, user, entity="lesson_reschedule", action=payload.decision,
               entity_id=rid, note=payload.note, commit=True)
     return _resch_out(db, r)

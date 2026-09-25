@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.app.KeyguardManager;
 import android.content.pm.ServiceInfo;
 import android.media.AudioAttributes;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.provider.Settings;
 
 import org.json.JSONArray;
@@ -30,8 +32,8 @@ import org.json.JSONObject;
  * (foreground service) va har 90 soniyada JonyOS dagi imtihon
  * navbatini so'raydi. Yangi so'rov paydo bo'lsa:
  *   1) "boshqa ilovalar ustidan" ruxsati bo'lsa — suzuvchi oyna
- *      darrov ochiladi va hushtak chaladi (AlertActivity);
- *   2) ruxsat bo'lmasa — hushtakli baland bildirishnoma, telefon
+ *      darrov ochiladi va bulbul kuyi chaladi (AlertActivity);
+ *   2) ruxsat bo'lmasa — bulbul kuyili baland bildirishnoma, telefon
  *      qulflangan bo'lsa ekran yonadi (full-screen intent).
  *
  * NEGA SHUNDAY. Haqiqiy "push" (Firebase) uchun alohida Firebase
@@ -43,9 +45,9 @@ import org.json.JSONObject;
 public class WatchService extends Service {
 
     static final String CH_WATCH = "watch";
-    // Kanal ovozi yaratilgandan keyin o'zgarmaydi — hushtak uchun yangi
-    // kanal ochildi, eskisi o'chiriladi.
-    static final String CH_ALERT = "exam_whistle";
+    // Kanal ovozi yaratilgandan keyin o'zgarmaydi — yangi ovoz uchun
+    // yangi kanal ochiladi, eskilari o'chiriladi.
+    static final String CH_ALERT = "exam_bulbul";
     /** Oyna o'zi chalganda — bildirishnoma faqat iz, jim. */
     static final String CH_LOG = "exam_log";
     private static final long PERIOD = 90_000L;
@@ -177,15 +179,16 @@ public class WatchService extends Service {
         nm.createNotificationChannel(watch);
 
         nm.deleteNotificationChannel("exam_alert");
+        nm.deleteNotificationChannel("exam_whistle");
         NotificationChannel alert = new NotificationChannel(
                 CH_ALERT, "Yangi imtihon",
                 NotificationManager.IMPORTANCE_HIGH);
-        alert.setDescription("Yangi imtihon so'rovi kelganda — hushtak");
+        alert.setDescription("Yangi imtihon so'rovi kelganda — bulbul kuyi");
         alert.enableVibration(true);
         alert.setVibrationPattern(new long[]{0, 500, 400, 500});
         alert.setSound(
                 Uri.parse("android.resource://" + c.getPackageName()
-                        + "/" + R.raw.whistle),
+                        + "/" + R.raw.bulbul),
                 new AudioAttributes.Builder()
                         .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                         .build());
@@ -199,7 +202,7 @@ public class WatchService extends Service {
         nm.createNotificationChannel(log);
     }
 
-    /** Yangi so'rov: suzuvchi oyna + hushtak (yoki baland bildirishnoma). */
+    /** Yangi so'rov: suzuvchi oyna + bulbul kuyi (yoki baland bildirishnoma). */
     static void alert(Context c, JSONObject order, int total) {
         // Maydonlar serverdagi _exam_order_out bilan bir xil
         // (api/common.py). Bo'sh qiymat JSON da null bo'lib keladi.
@@ -255,9 +258,9 @@ public class WatchService extends Service {
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         // "Boshqa ilovalar ustidan" ruxsati bor bo'lsa oyna to'g'ridan-
-        // to'g'ri ochiladi va hushtakni o'zi chaladi; bildirishnoma esa
+        // to'g'ri ochiladi va bulbul kuyini o'zi chaladi; bildirishnoma esa
         // ro'yxatda iz bo'lib qoladi (jim — ovoz ikki marta chalmasin).
-        // Ruxsat yo'q bo'lsa — hushtakli baland bildirishnoma.
+        // Ruxsat yo'q bo'lsa — bulbul kuyili baland bildirishnoma.
         //
         // NEGA (2026-09-25, Jahongir: "bildirishnoma kelmadi"): TECNO
         // HiOS yangi ilova bildirishnomasini "past" darajaga tushiradi
@@ -281,10 +284,21 @@ public class WatchService extends Service {
         }
         NotificationManager nm = c.getSystemService(NotificationManager.class);
         if (overlay) {
-            try {
-                c.startActivity(full);
-            } catch (Exception e) {
-                // Oyna ochilmasa — bildirishnoma baribir chiqadi
+            Ringer.start(c);
+            KeyguardManager km = c.getSystemService(KeyguardManager.class);
+            PowerManager pm = c.getSystemService(PowerManager.class);
+            boolean locked = (km != null && km.isKeyguardLocked())
+                    || (pm != null && !pm.isInteractive());
+            if (locked) {
+                // Qulf ekrani: ekranni yoqib, qulf ustidan chiqadigan oyna
+                try {
+                    c.startActivity(full);
+                } catch (Exception e) {
+                    // Oyna ochilmasa — bildirishnoma baribir chiqadi
+                }
+            } else {
+                // Telefon ishlatilmoqda: tepada suzuvchi oyna
+                FloatingAlert.show(c, title, text, total);
             }
         }
         nm.notify(2, nb.build());

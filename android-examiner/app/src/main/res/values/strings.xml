@@ -8,4 +8,5 @@
     <string name="enter">Kirish</string>
     <string name="later">Keyinroq</string>
     <string name="open_queue">Ko\'rish</string>
+    <string name="queue_total">Navbatda jami %1$d ta so\'rov</string>
 </resources>

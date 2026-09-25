@@ -2842,24 +2842,30 @@ def grammar_topics(language: str = "en",
     qids = {q.id: q.topic for q in qs}
     att = (db.query(models.GrammarAttempt.question_id,
                     models.GrammarAttempt.correct,
+                    models.GrammarAttempt.mode,
                     func.count(models.GrammarAttempt.id))
            .filter(models.GrammarAttempt.student_id == s.id)
            .group_by(models.GrammarAttempt.question_id,
-                     models.GrammarAttempt.correct).all())
+                     models.GrammarAttempt.correct,
+                     models.GrammarAttempt.mode).all())
     t_stat = {}
-    for qid, corr, cnt in att:
+    for qid, corr, mode, cnt in att:
         t = qids.get(qid)
         if not t:
             continue
-        st = t_stat.setdefault(t, [0, 0])   # [togri, xato]
+        st = t_stat.setdefault(t, [0, 0, 0])   # [togri, xato, aralash xato]
         st[0 if corr else 1] += int(cnt)
+        # 2026-09-25: aralash mashqdagi xato alohida — mavzu
+        # ko'rsatilmagan holdagi xato haqiqiy bo'shliq.
+        if not corr and mode == "mix":
+            st[2] += int(cnt)
     weak = []
-    for t, (ok, bad) in t_stat.items():
+    for t, (ok, bad, mix_bad) in t_stat.items():
         total_att = ok + bad
         if bad >= 3 and total_att and bad * 100 / total_att > 25:
-            weak.append({"topic": t, "wrong": bad,
+            weak.append({"topic": t, "wrong": bad, "mix_wrong": mix_bad,
                          "accuracy": round(ok * 100 / total_att)})
-    weak.sort(key=lambda x: -x["wrong"])
+    weak.sort(key=lambda x: (-x["mix_wrong"], -x["wrong"]))
     weak = weak[:6]
 
     def build(level):
@@ -3017,44 +3023,212 @@ def grammar_round(topic: str, kind: str | None = None,
     picked = (fresh + done)[:want]
     random.shuffle(picked)
 
-    items = []
-    for q in picked:
-        opts = json.loads(q.options)
-        if q.kind == "cloze":
-            # cloze: options = [[blank1 variantlari], [blank2...]] -
-            # har guruh alohida aralashtiriladi, javob ketmaydi
-            shuffled = []
-            for grp in opts:
-                g = grp[:]
-                random.shuffle(g)
-                shuffled.append(g)
-            items.append({
-                "id": q.id, "kind": q.kind, "prompt": q.prompt,
-                "options": shuffled, "solved": q.id in solved,
-            })
-            continue
-        if q.kind == "order":
-            # So'zlarni aralashtiramiz; tasodifan to'g'ri tartibda
-            # qolib ketmasin
-            shuffled = opts[:]
-            for _ in range(10):
-                random.shuffle(shuffled)
-                if shuffled != opts or len(opts) < 2:
-                    break
-            opts = shuffled
-        elif q.kind == "fill":
-            opts = opts[:]
-            random.shuffle(opts)
-        # error turida tartib saqlanadi - variantlar gapning
-        # bo'laklari, o'qish tartibi muhim
-        items.append({
-            "id": q.id, "kind": q.kind, "prompt": q.prompt,
-            "options": opts, "solved": q.id in solved,
-        })
+    items = [_gram_item(q, solved) for q in picked]
 
     return {
         "topic": topic, "items": items,
         "xp_per_correct": roles.GRAMMAR_XP_PER_CORRECT,
+    }
+
+
+def _gram_item(q, solved: set) -> dict:
+    """Bitta savolni mijozga ketadigan ko'rinishga keltiradi.
+
+    Mavzu ichidagi mashq ham, aralash mashq ham shu yerdan o'tadi
+    (ikki xil tuzilma bo'lib ketmasin). To'g'ri javob KETMAYDI:
+    order/fill/cloze variantlari aralashtiriladi, error turida tartib
+    saqlanadi (variantlar gapning bo'laklari)."""
+    opts = json.loads(q.options)
+    base = {"id": q.id, "kind": q.kind, "prompt": q.prompt,
+            "solved": q.id in solved,
+            # Aralash mashqda mijoz mavzuni FAQAT javobdan keyin
+            # ko'rsatadi (savolda ko'rsatsa mashqning ma'nosi yo'qoladi).
+            "topic": q.topic, "level": q.level or "A1"}
+    if q.kind == "cloze":
+        shuffled = []
+        for grp in opts:
+            g = grp[:]
+            random.shuffle(g)
+            shuffled.append(g)
+        return {**base, "options": shuffled}
+    if q.kind == "order":
+        shuffled = opts[:]
+        for _ in range(10):
+            random.shuffle(shuffled)
+            if shuffled != opts or len(opts) < 2:
+                break
+        opts = shuffled
+    elif q.kind == "fill":
+        opts = opts[:]
+        random.shuffle(opts)
+    return {**base, "options": opts}
+
+
+GRAM_LEVEL_ORDER = ("A1", "A2", "B1", "B2", "C1", "C2")
+
+
+def _gram_unlocked(qs, solved: set) -> list:
+    """Qaysi darajalar OCHIQ — /grammar/topics dagi zanjir bilan bir
+    xil qoida: A1 doim; keyingi daraja oldingisining hamma savoli
+    kamida bir marta to'g'ri yechilganda ochiladi."""
+    by_level = {}
+    for q in qs:
+        by_level.setdefault(q.level or "A1", []).append(q)
+    unlocked = []
+    prev_done = True
+    for lv in GRAM_LEVEL_ORDER:
+        if not prev_done:
+            break
+        unlocked.append(lv)
+        lst = by_level.get(lv, [])
+        prev_done = bool(lst) and all(q.id in solved for q in lst)
+    return unlocked
+
+
+MIX_LEVEL_ALL = "all"
+
+
+@router.get("/api/student/grammar/mix")
+def grammar_mix(level: str = MIX_LEVEL_ALL, kind: str | None = None,
+                count: int = 0, language: str = "en",
+                db: Session = Depends(get_db),
+                user=Depends(require_role(roles.STUDENT))):
+    """ARALASH MASHQ (2026-09-25).
+
+    Jahongir: "grammatikaga aralash mashq qilish funksyiyasini qoshgin
+    shunda aynan qaysi mavzuda koproq xato qilyabdi o'ziga bilinib
+    korinib tursin, chunki bitta mavzuni ishlagan odam javob topishi
+    osonda".
+
+    Qoida:
+      - savollar OCHIQ darajalardagi (yoki tanlangan bitta ochiq
+        darajadagi) BARCHA mavzulardan olinadi;
+      - mavzular teng taqsimlanadi (round-robin) — bitta mavzu
+        bosib ketmasin; har mavzu ichida avval xato qilingan,
+        keyin yechilmagan, oxirida yechilgan savollar;
+      - natija to'liq aralashtiriladi; mavzu nomi savolda emas,
+        javobdan keyin ko'rinadi (mijoz shunday chizadi).
+    Javob /grammar/answer ga mode="mix" bilan yuboriladi — shu
+    belgidan mavzular kesimidagi tahlil (/grammar/mix/stats) chiqadi."""
+    s = _me(db, user)
+    if language not in GRAMMAR_LANGS:
+        language = "en"
+    qq = (db.query(models.GrammarQuestion)
+          .filter(models.GrammarQuestion.is_active == 1))
+    qs = _gram_lang(qq, language).all()
+    if not qs:
+        raise HTTPException(404, "Bu tilda grammatika mashqlari yo'q")
+    solved = {qid for (qid,) in
+              db.query(func.distinct(models.GrammarAttempt.question_id))
+              .filter(models.GrammarAttempt.student_id == s.id,
+                      models.GrammarAttempt.correct == 1).all()}
+    unlocked = _gram_unlocked(qs, solved)
+    level = (level or MIX_LEVEL_ALL).upper() if level != MIX_LEVEL_ALL \
+        else MIX_LEVEL_ALL
+    if level == MIX_LEVEL_ALL:
+        scope = unlocked
+    else:
+        if level not in GRAM_LEVEL_ORDER:
+            raise HTTPException(400, "Daraja noto'g'ri")
+        if level not in unlocked:
+            raise HTTPException(403, "Bu daraja hali qulf — oldingi "
+                                     "darajani tugating")
+        scope = [level]
+    pool = [q for q in qs if (q.level or "A1") in scope]
+    if kind in ("fill", "order", "error", "cloze"):
+        pool = [q for q in pool if q.kind == kind]
+    if not pool:
+        raise HTTPException(404, "Aralash mashq uchun savol topilmadi")
+
+    want = int(count or 0)
+    if want <= 0:
+        want = roles.GRAMMAR_ROUND_SIZE
+    want = max(1, min(want, 100))
+
+    wrongs = {qid: int(cnt) for qid, cnt in
+              db.query(models.GrammarAttempt.question_id,
+                       func.count(models.GrammarAttempt.id))
+              .filter(models.GrammarAttempt.student_id == s.id,
+                      models.GrammarAttempt.correct == 0)
+              .group_by(models.GrammarAttempt.question_id).all()}
+
+    groups: dict = {}
+    for q in pool:
+        groups.setdefault(q.topic, []).append(q)
+    for t, lst in groups.items():
+        fresh = [q for q in lst if q.id not in solved]
+        done = [q for q in lst if q.id in solved]
+        random.shuffle(fresh)
+        fresh.sort(key=lambda q: -wrongs.get(q.id, 0))
+        random.shuffle(done)
+        groups[t] = fresh + done
+    order = list(groups)
+    random.shuffle(order)
+    picked = []
+    while len(picked) < want and any(groups.values()):
+        for t in order:
+            if groups[t]:
+                picked.append(groups[t].pop(0))
+                if len(picked) >= want:
+                    break
+    random.shuffle(picked)
+
+    return {
+        "mode": "mix", "levels": scope,
+        "topics": len({q.topic for q in pool}),
+        "items": [_gram_item(q, solved) for q in picked],
+        "xp_per_correct": roles.GRAMMAR_XP_PER_CORRECT,
+    }
+
+
+@router.get("/api/student/grammar/mix/stats")
+def grammar_mix_stats(language: str = "en", days: int = 60,
+                      db: Session = Depends(get_db),
+                      user=Depends(require_role(roles.STUDENT))):
+    """Aralash mashqdagi natija — MAVZULAR KESIMIDA.
+
+    Faqat mode="mix" urinishlari sanaladi: mavzu ko'rsatilmagan
+    holda qilingan xato haqiqiy bo'shliqni ko'rsatadi. Ko'p xato
+    qilingan mavzu tepada; har qatorda aniqlik foizi."""
+    s = _me(db, user)
+    if language not in GRAMMAR_LANGS:
+        language = "en"
+    try:
+        days = int(days)
+    except (TypeError, ValueError):
+        days = 60
+    days = max(1, min(days, 365))
+    since = date.today() - timedelta(days=days)
+    qq = (db.query(models.GrammarAttempt.correct,
+                   models.GrammarQuestion.topic,
+                   models.GrammarQuestion.level)
+          .join(models.GrammarQuestion,
+                models.GrammarQuestion.id == models.GrammarAttempt.question_id)
+          .filter(models.GrammarAttempt.student_id == s.id,
+                  models.GrammarAttempt.mode == "mix",
+                  models.GrammarAttempt.date >= since))
+    rows = _gram_lang(qq, language).all()
+    stat: dict = {}
+    for corr, topic, lvl in rows:
+        st = stat.setdefault(topic, {"topic": topic, "level": lvl or "A1",
+                                     "total": 0, "wrong": 0})
+        st["total"] += 1
+        if not corr:
+            st["wrong"] += 1
+    topics = []
+    for st in stat.values():
+        st["accuracy"] = round((st["total"] - st["wrong"]) * 100 / st["total"]) \
+            if st["total"] else 0
+        topics.append(st)
+    # Eng ko'p xato tepada; teng bo'lsa aniqligi pasti oldin
+    topics.sort(key=lambda x: (-x["wrong"], x["accuracy"], x["topic"]))
+    total = sum(x["total"] for x in topics)
+    wrong = sum(x["wrong"] for x in topics)
+    return {
+        "days": days, "attempts": total, "wrong": wrong,
+        "accuracy": round((total - wrong) * 100 / total) if total else 0,
+        "topics": topics,
+        "weakest": [x for x in topics if x["wrong"] > 0][:3],
     }
 
 
@@ -3095,9 +3269,12 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
                           models.GrammarAttempt.correct == 1)
                   .first() is not None)
 
+    # Aralash mashqdan kelgan javob alohida belgilanadi (2026-09-25) —
+    # mavzular kesimidagi tahlil shundan chiqadi.
+    mode = "mix" if (payload.mode or "").strip().lower() == "mix" else None
     db.add(models.GrammarAttempt(
         student_id=s.id, question_id=q.id,
-        correct=1 if ok else 0,
+        correct=1 if ok else 0, mode=mode,
         answer=(payload.answer or "")[:300], date=date.today()))
     # XP beriladigan holatda commit'ni award_xp qiladi — ikki marta
     # tasdiqlash shart emas (2026-09-07, Neon compute tejash).
@@ -3115,8 +3292,21 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
                 idempotency_key=f"GRAM:{s.id}:{q.id}")
             if res.get("ok"):
                 xp_given = float(roles.GRAMMAR_XP_PER_CORRECT)
+            else:
+                # award_xp "skipped" qaytarsa commit qilmaydi — urinish
+                # yozuvi yo'qolmasin (lug'atdagi xato bilan bir xil,
+                # 2026-09-25).
+                db.commit()
         except Exception:
             db.rollback()
+            try:
+                db.add(models.GrammarAttempt(
+                    student_id=s.id, question_id=q.id, correct=1,
+                    mode=mode, answer=(payload.answer or "")[:300],
+                    date=date.today()))
+                db.commit()
+            except Exception:
+                db.rollback()
 
     return {
         "correct": ok,
@@ -3125,6 +3315,9 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
         "explain": q.explain,
         "first_time": ok and not was_solved,
         "xp": xp_given,
+        # Aralash mashqda mijoz mavzuni javobdan KEYIN ko'rsatadi
+        "topic": q.topic,
+        "level": q.level or "A1",
     }
 
 

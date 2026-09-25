@@ -21,7 +21,18 @@ type Any = any;
  * mijozga oldindan kelmaydi. Har savoldan keyin izoh ko'rsatiladi —
  * bola nafaqat "xato", balki NEGA xatoligini ham ko'radi.
  */
-export default function StudentGrammarPlay() {
+const LEVEL_KEYS = ["a1", "a2", "b1", "b2", "c1", "c2"] as const;
+
+/**
+ * mix=true — ARALASH MASHQ (2026-09-25). Jahongir: "grammatikaga
+ * aralash mashq qilish funksyiyasini qoshgin shunda aynan qaysi
+ * mavzuda koproq xato qilyabdi o'ziga bilinib korinib tursin, chunki
+ * bitta mavzuni ishlagan odam javob topishi osonda".
+ * Savollar ochiq darajalardagi barcha mavzulardan aralash keladi,
+ * mavzu nomi FAQAT javobdan keyin ko'rinadi, oxirida mavzular
+ * kesimida natija chiqadi.
+ */
+export default function StudentGrammarPlay({ mix = false }: { mix?: boolean }) {
   const { topic } = useParams();
   const [items, setItems] = useState<Any[]>([]);
   const [idx, setIdx] = useState(0);
@@ -31,21 +42,38 @@ export default function StudentGrammarPlay() {
   const [picked, setPicked] = useState<string[]>([]); // order uchun
   // MASHQ TURI (2026-08-11, Jahongir): mavzu tanlangach 4 tur
   // taklif qilinadi. null = hali tanlanmagan (tanlash ekrani).
-  const [kind, setKind] = useState<string | null>(null);
+  // Aralash mashqda tur tanlanmaydi — hamma tur aralash.
+  const [kind, setKind] = useState<string | null>(mix ? "mix" : null);
   // Mashqlar soni (2026-08-21, Jahongir: "10, 20, 30, 50 tanlaydigan
   // bolsin va koproq mashq qila olsin"). null = hali tanlanmagan.
   const [cnt, setCnt] = useState<number | null>(null);
   const [kinds, setKinds] = useState<string[]>([]);
+  // Aralash mashq: qaysi daraja(lar)dan — "all" yoki bitta ochiq daraja
+  const [lvl, setLvl] = useState<string | null>(null);
+  const [unlocked, setUnlocked] = useState<string[]>([]);
+  // Aralash mashq: mavzular kesimida joriy natija
+  const [perTopic, setPerTopic] = useState<Record<string, { ok: number; total: number }>>({});
   const [clozeSel, setClozeSel] = useState<Record<number, string>>({});
   const [result, setResult] = useState<Any>(null); // serverdan javob
   const [score, setScore] = useState({ ok: 0, xp: 0 });
   const [finished, setFinished] = useState(false);
 
   useEffect(() => {
-    // Bu mavzuda qaysi turlar borligini bilib olamiz
+    // Bu mavzuda qaysi turlar borligini bilib olamiz (aralashda —
+    // qaysi darajalar ochiqligini)
     api
       .get<Any>(`/student/grammar/topics?language=${getLang()}`)
       .then((r) => {
+        if (mix) {
+          const avail = new Set(
+            ((r?.available || ["A1"]) as string[]).map((x) => x.toLowerCase()),
+          );
+          const open = LEVEL_KEYS.filter(
+            (k) => avail.has(k) && (k === "a1" || !r?.[`${k}_locked`]),
+          ).map((k) => k.toUpperCase());
+          setUnlocked(open.length ? open : ["A1"]);
+          return;
+        }
         const all = [
           ...(r?.a1?.topics || []),
           ...(r?.a2?.topics || []),
@@ -57,8 +85,11 @@ export default function StudentGrammarPlay() {
         const t = all.find((x: Any) => x.topic === topic);
         setKinds(t?.kinds || ["fill", "error", "order"]);
       })
-      .catch(() => setKinds(["fill", "error", "order"]));
-  }, [topic]);
+      .catch(() => {
+        setKinds(["fill", "error", "order"]);
+        setUnlocked(["A1"]);
+      });
+  }, [topic, mix]);
 
   const load = useCallback(() => {
     setErr("");
@@ -67,17 +98,20 @@ export default function StudentGrammarPlay() {
     setResult(null);
     setPicked([]);
     setScore({ ok: 0, xp: 0 });
+    setPerTopic({});
     setFinished(false);
     if (kind === null || cnt === null) return;
-    api
-      .get<Any>(
-        `/student/grammar/round?topic=${encodeURIComponent(topic || "")}${
+    if (mix && lvl === null) return;
+    const url = mix
+      ? `/student/grammar/mix?level=${encodeURIComponent(lvl || "all")}&count=${cnt}&language=${getLang()}`
+      : `/student/grammar/round?topic=${encodeURIComponent(topic || "")}${
           kind && kind !== "mix" ? `&kind=${kind}` : ""
-        }&count=${cnt}&language=${getLang()}`,
-      )
+        }&count=${cnt}&language=${getLang()}`;
+    api
+      .get<Any>(url)
       .then((r) => setItems(r.items || []))
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [topic, kind, cnt]);
+  }, [topic, kind, cnt, mix, lvl]);
 
   useEffect(load, [load]);
 
@@ -93,10 +127,22 @@ export default function StudentGrammarPlay() {
       const r = await api.post<Any>("/student/grammar/answer", {
         question_id: q.id,
         answer,
+        ...(mix ? { mode: "mix" } : {}),
       });
       setResult(r);
       if (r.correct)
         setScore((s) => ({ ok: s.ok + 1, xp: s.xp + (r.xp || 0) }));
+      // Aralash mashq: mavzular kesimida hisob (oxirida ko'rsatiladi)
+      if (mix) {
+        const t = r.topic || q.topic || "—";
+        setPerTopic((p) => {
+          const cur = p[t] || { ok: 0, total: 0 };
+          return {
+            ...p,
+            [t]: { ok: cur.ok + (r.correct ? 1 : 0), total: cur.total + 1 },
+          };
+        });
+      }
       autoNext.schedule(
         autoNextDelay({
           correct: !!r.correct,
@@ -173,7 +219,9 @@ export default function StudentGrammarPlay() {
               </div>
             </>
           ) : (
-            <p className="text-[19px] font-extrabold truncate">{topic}</p>
+            <p className="text-[19px] font-extrabold truncate">
+              {mix ? "Aralash mashq" : topic}
+            </p>
           )}
         </div>
       </div>
@@ -199,6 +247,68 @@ export default function StudentGrammarPlay() {
               to'g'ri javob
               {score.xp > 0 && ` · +${score.xp} XP`}
             </p>
+
+            {/* ---- ARALASH MASHQ: MAVZULAR KESIMIDA (2026-09-25) ----
+                 Ko'p xato qilingan mavzu tepada — bola aynan qayerda
+                 qoqilganini ko'radi va "Takrorlash" bilan o'sha
+                 mavzuga o'tadi. */}
+            {mix && Object.keys(perTopic).length > 0 && (
+              <div className="mt-5 text-left">
+                <p className="text-sm font-semibold text-slate-800 mb-2">
+                  Mavzular kesimida
+                </p>
+                <div className="space-y-1.5">
+                  {Object.entries(perTopic)
+                    .map(([t, v]) => ({
+                      topic: t, ok: v.ok, total: v.total,
+                      wrong: v.total - v.ok,
+                      pct: v.total ? Math.round((v.ok * 100) / v.total) : 0,
+                    }))
+                    .sort((a, b) => b.wrong - a.wrong || a.pct - b.pct)
+                    .map((row) => (
+                      <div
+                        key={row.topic}
+                        className={`rounded-xl border px-3 py-2.5 ${
+                          row.wrong > 0
+                            ? "border-red-200 bg-red-50"
+                            : "border-emerald-200 bg-emerald-50"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <p className="text-[13px] font-semibold text-slate-800 flex-1 min-w-0 truncate">
+                            {row.topic}
+                          </p>
+                          <span
+                            className={`text-[12px] font-bold shrink-0 ${
+                              row.wrong > 0 ? "text-red-600" : "text-emerald-600"
+                            }`}
+                          >
+                            {row.ok}/{row.total}
+                            {row.wrong > 0 && ` · ${row.wrong} xato`}
+                          </span>
+                          {row.wrong > 0 && (
+                            <Link
+                              to={`/student/grammar/${encodeURIComponent(row.topic)}`}
+                              className="text-[11px] font-bold text-violet-700 bg-white border border-violet-200 rounded-full px-2.5 py-1 shrink-0"
+                            >
+                              Takrorlash
+                            </Link>
+                          )}
+                        </div>
+                        <div className="h-1.5 rounded-full bg-white/70 mt-1.5 overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${
+                              row.wrong > 0 ? "bg-red-400" : "bg-emerald-500"
+                            }`}
+                            style={{ width: `${row.pct}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
             <div className="flex gap-2 mt-5">
               <button
                 onClick={load}
@@ -217,8 +327,59 @@ export default function StudentGrammarPlay() {
           </div>
         )}
 
+        {/* ---- ARALASH MASHQ: DARAJANI TANLASH (2026-09-25) ---- */}
+        {mix && lvl === null && !err && (
+          <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <p className="text-sm font-semibold text-slate-800 mb-1">
+              Aralash mashq
+            </p>
+            <p className="text-[12px] text-slate-500 mb-3">
+              Savollar bir nechta mavzudan aralash keladi, mavzu nomi
+              oldindan ko'rsatilmaydi — qaysi mavzuda haqiqatan
+              qoqilayotganingiz oxirida bilinadi.
+            </p>
+            <div className="space-y-1.5">
+              <button
+                onClick={() => setLvl("all")}
+                className="w-full flex items-center gap-3 border border-violet-200 bg-violet-50 rounded-xl p-3.5 active:scale-[0.99] transition text-left"
+              >
+                <div className="w-9 h-9 rounded-lg bg-violet-600 text-white flex items-center justify-center shrink-0 text-sm font-bold">
+                  ∑
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-slate-800">
+                    Hammasi
+                  </p>
+                  <p className="text-[11px] text-slate-500">
+                    Ochiq darajalar: {unlocked.join(", ") || "A1"}
+                  </p>
+                </div>
+              </button>
+              {unlocked.map((L) => (
+                <button
+                  key={L}
+                  onClick={() => setLvl(L)}
+                  className="w-full flex items-center gap-3 border border-slate-200 rounded-xl p-3.5 active:scale-[0.99] transition text-left"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0 text-sm font-bold">
+                    {L}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-slate-800">
+                      Faqat {L}
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      Shu darajaning barcha mavzularidan
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* ---- MASHQLAR SONINI TANLASH ---- */}
-        {kind !== null && cnt === null && !err && (
+        {kind !== null && cnt === null && (!mix || lvl !== null) && !err && (
           <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-sm font-semibold text-slate-800 mb-3">
               Nechta mashq ishlaysiz?
@@ -245,17 +406,17 @@ export default function StudentGrammarPlay() {
                 </button>
               ))}
               <button
-                onClick={() => setKind(null)}
+                onClick={() => (mix ? setLvl(null) : setKind(null))}
                 className="w-full text-center text-xs text-slate-400 pt-2"
               >
-                ← Mashq turiga qaytish
+                {mix ? "← Darajaga qaytish" : "← Mashq turiga qaytish"}
               </button>
             </div>
           </div>
         )}
 
         {/* ---- MASHQ TURINI TANLASH ---- */}
-        {kind === null && !err && (
+        {!mix && kind === null && !err && (
           <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-sm font-semibold text-slate-800 mb-3">
               Qaysi turdagi mashqni xohlaysiz?
@@ -459,6 +620,15 @@ export default function StudentGrammarPlay() {
                 {result.explain && (
                   <p className="text-xs text-slate-500 mt-1">
                     {result.explain}
+                  </p>
+                )}
+                {/* Aralash mashqda mavzu FAQAT javobdan keyin ochiladi */}
+                {mix && (result.topic || q.topic) && (
+                  <p className="text-xs text-slate-600 mt-1.5">
+                    📌 Mavzu: <b>{result.topic || q.topic}</b>
+                    {(result.level || q.level) && (
+                      <span className="text-slate-400"> · {result.level || q.level}</span>
+                    )}
                   </p>
                 )}
                 <button

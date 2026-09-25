@@ -3885,6 +3885,12 @@ class GrammarAttempt(Base):
     answer = Column(String)
     date = Column(Date, default=date.today)
     created_at = Column(DateTime, default=datetime.utcnow)
+    # Qaysi rejimda yechildi (2026-09-25, Jahongir: "grammatikaga
+    # aralash mashq qilish funksiyasini qoshgin shunda aynan qaysi
+    # mavzuda koproq xato qilyabdi o'ziga bilinib korinib tursin").
+    # NULL = mavzu ichida (eski yozuvlar), "mix" = aralash mashq —
+    # mavzu ko'rsatilmagan holdagi xato haqiqiy bo'shliqni ko'rsatadi.
+    mode = Column(String, nullable=True, index=True)
 
 
 class VocabUnitPass(Base):

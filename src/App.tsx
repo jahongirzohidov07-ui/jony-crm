@@ -308,6 +308,9 @@ function AppRoutes() {
             element={<StudentNotifications />}
           />
           <Route path="grammar" element={<StudentGrammar />} />
+          {/* Aralash mashq (2026-09-25) — statik yo'l dinamik :topic dan
+              oldin turadi */}
+          <Route path="grammar/mix" element={<StudentGrammarPlay mix />} />
           <Route path="grammar/:topic" element={<StudentGrammarPlay />} />
           <Route path="leaderboard" element={<StudentLeaderboard />} />
           <Route path="shop" element={<StudentShop />} />

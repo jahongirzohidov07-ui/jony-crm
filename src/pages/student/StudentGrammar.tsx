@@ -35,6 +35,8 @@ export default function StudentGrammar() {
   const [err, setErr] = useState("");
   const [sel, setSel] = useState<string>("a1");
   const [xp, setXp] = useState<number | null>(null);
+  // ARALASH MASHQ statistikasi (2026-09-25) — mavzular kesimida
+  const [mixStats, setMixStats] = useState<Any>(null);
   // O'RGANILAYOTGAN TIL (2026-08-24, Jahongir: "Boshqa tillarni
   // grammatikasi yoq ekan ularni ham qoshib qoygin") — bayroqdagi
   // tanlov endi grammatikaga ham ta'sir qiladi.
@@ -63,6 +65,9 @@ export default function StudentGrammar() {
     api.get<Home>("/student/home")
       .then((h) => setXp(h.gamification?.lifetime_xp ?? null))
       .catch(() => {});
+    api.get<Any>(`/student/grammar/mix/stats?language=${lang}`)
+      .then(setMixStats)
+      .catch(() => setMixStats(null));
   }, []);
 
   const info = useMemo(() => {
@@ -184,6 +189,71 @@ export default function StudentGrammar() {
         <p className="text-xs text-slate-400 mt-1.5">Umumiy progress</p>
       </div>
 
+      {/* ---- ARALASH MASHQ (2026-09-25, Jahongir: "grammatikaga aralash
+           mashq qilish funksyiyasini qoshgin shunda aynan qaysi mavzuda
+           koproq xato qilyabdi o'ziga bilinib korinib tursin, chunki
+           bitta mavzuni ishlagan odam javob topishi osonda") ---- */}
+      <div className="rounded-2xl border p-4 mt-4"
+           style={{ background: "#141F4F", borderColor: "#5B4BE8" }}>
+        <div className="flex items-start gap-3">
+          <span className="w-11 h-11 rounded-xl bg-violet-600 flex items-center justify-center text-white text-[18px] font-extrabold shrink-0">
+            🎲
+          </span>
+          <div className="flex-1 min-w-0">
+            <p className="text-[15px] font-bold text-white">Aralash mashq</p>
+            <p className="text-[12px] text-slate-300 mt-0.5">
+              Barcha ochiq mavzulardan aralash savollar. Mavzu oldindan
+              ko'rsatilmaydi — qaysi mavzuda haqiqatan qoqilayotganingiz
+              shu yerda bilinadi.
+            </p>
+          </div>
+        </div>
+        {mixStats && (mixStats.attempts || 0) > 0 && (
+          <div className="mt-3 rounded-xl border px-3 py-2.5"
+               style={{ background: "#1A2558", borderColor: "#3A4890" }}>
+            <p className="text-[11px] text-slate-400">
+              So'nggi {mixStats.days} kun · {mixStats.attempts} savol ·
+              aniqlik <b className="text-white">{mixStats.accuracy}%</b>
+            </p>
+            {(mixStats.weakest || []).length > 0 ? (
+              <div className="mt-1.5 space-y-1">
+                <p className="text-[11px] font-bold text-amber-300">
+                  Eng ko'p xato:
+                </p>
+                {mixStats.weakest.map((w: Any) => (
+                  <Link
+                    key={w.topic}
+                    to={`/student/grammar/${encodeURIComponent(w.topic)}`}
+                    className="flex items-center gap-2 text-[12px]"
+                  >
+                    <span className="flex-1 min-w-0 truncate text-white">
+                      {w.topic}
+                    </span>
+                    <span className="text-red-300 font-bold shrink-0">
+                      {w.wrong} xato · {w.accuracy}%
+                    </span>
+                    <span className="text-[10px] text-violet-300 font-bold shrink-0">
+                      Takrorlash →
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className="text-[12px] text-emerald-300 mt-1">
+                Aralash mashqda xato yo'q — zo'r!
+              </p>
+            )}
+          </div>
+        )}
+        <Link
+          to="/student/grammar/mix"
+          className="mt-3 w-full py-3 rounded-xl bg-violet-600 text-white text-sm font-bold flex items-center justify-center gap-2 active:scale-[0.99] transition"
+        >
+          Aralash mashqni boshlash
+          <ChevronRight size={16} />
+        </Link>
+      </div>
+
       {/* ---- QIYNALGAN MAVZULAR (2026-08-24, Jahongir: "Qaysidur
            mavzuda qiynalsa qiynalgan mavzularidan yana takrorlaydigan
            joyi ham bo'lsin") ---- */}
@@ -211,6 +281,9 @@ export default function StudentGrammar() {
                   </p>
                   <p className="text-[11px] text-slate-400">
                     {w.wrong} ta xato · aniqlik {w.accuracy}%
+                    {(w.mix_wrong || 0) > 0 && (
+                      <span className="text-red-300"> · aralashda {w.mix_wrong}</span>
+                    )}
                   </p>
                 </div>
                 <span className="text-[11px] font-bold text-amber-300 bg-amber-400/10 border border-amber-400/30 rounded-full px-2.5 py-1 shrink-0">

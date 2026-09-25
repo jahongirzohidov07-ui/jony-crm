@@ -50,6 +50,9 @@ class StudentPhotoIn(BaseModel):
 class GrammarAnswerIn(BaseModel):
     question_id: int
     answer: str
+    # "mix" = aralash mashqdan kelgan javob (2026-09-25); yo'q bo'lsa
+    # mavzu ichidagi oddiy mashq.
+    mode: str | None = None
 
 
 class ChangePasswordRequest(BaseModel):

@@ -179,6 +179,20 @@ def update_exam(
         new_max = None
     elif not new_max or new_max <= 0:
         raise HTTPException(400, "Maksimal ballni kiriting")
+    # ONLINE TEST ULANGAN BO'LSA (2026-09-25): online ball savollar
+    # sonidan chiqadi, shuning uchun maksimal ballni undan PAST qilib
+    # bo'lmaydi — aks holda online natija 100% dan oshib ketardi.
+    if new_max is not None:
+        try:
+            _on = (db.query(models.ExamOnline)
+                   .filter(models.ExamOnline.exam_id == exam.id).first())
+        except Exception:
+            _on = None
+        if _on is not None and (_on.online_max or 0) > new_max:
+            raise HTTPException(
+                400, f"Bu testga online havola ulangan: online qismi "
+                     f"{int(_on.online_max)} ball. Maksimal ball undan "
+                     f"kam bo'lishi mumkin emas.")
     if new_max is not None:
         over = [r for r in scored if r.score is not None and r.score > new_max]
         if over:
@@ -379,8 +393,17 @@ def _apply_exam_marks(db: Session, exam: models.Exam,
             if m.score is None:
                 raise HTTPException(400, "Ballni kiriting")
             if m.score < 0 or m.score > (exam.max_score or 0):
+                # Sabab aytilsin (2026-09-25, Jahongir: "imtixon
+                # qo'shsa qizil yozuv chiqib qolyabdi 0-40 orasida
+                # bo'lishi kerak ball deb"). Ilgari faqat "0 va 40
+                # oralig'ida" derdi va 40 qayerdan kelgani, uni
+                # qanday o'zgartirish mumkinligi yozilmasdi.
                 raise HTTPException(
-                    400, f"Ball 0 va {exam.max_score} oralig'ida bo'lishi kerak")
+                    400, f"Ball 0 va {exam.max_score} oralig'ida bo'lishi "
+                         f"kerak — shu testning maksimal bali "
+                         f"{exam.max_score} deb belgilangan. Test "
+                         f"haqiqatda boshqacha bo'lsa, testni "
+                         f"tahrirlab maksimal ballni to'g'rilang.")
             row.score = m.score
             row.band = None
             row.percent = round(m.score / exam.max_score * 100, 1)

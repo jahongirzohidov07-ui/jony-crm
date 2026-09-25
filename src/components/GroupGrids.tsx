@@ -1121,15 +1121,27 @@ function ExamForm({
                 </label>
                 <input
                   type="number"
-                  disabled={!!bankMax}
-                  title={bankMax ? "Test bazasidagi savollar soni" : undefined}
+                  title={bankMax
+                    ? "Test bazasidan olingan — kerak bo'lsa o'zgartiring"
+                    : undefined}
                   className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm disabled:bg-slate-50"
                   value={maxScore}
                   onChange={(e) => setMaxScore(e.target.value)}
                 />
+                {/* 2026-09-25: maydon endi QULFLANMAGAN. Bazadagi
+                    son taklif bo'lib turadi, haqiqiy test boshqacha
+                    bo'lsa examiner o'zgartiradi — aks holda natija
+                    kiritishda "Ball 0 va 40 oralig'ida" degan qizil
+                    yozuv chiqib, chiqish yo'li qolmasdi. */}
                 {bankMax ? (
                   <p className="text-[11px] text-slate-400 mt-1">
                     Test bazasidan: {bankMax} savol
+                    {Number(maxScore) !== bankMax && (
+                      <span className="block text-amber-600">
+                        O'zgartirdingiz. Online havola ulansa, online
+                        qismi baribir {bankMax} ball bo'ladi.
+                      </span>
+                    )}
                   </p>
                 ) : null}
               </div>

@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Qo'ng'iroq (bildirishnoma) — examiner ilovasi belgisi -->
+<!-- Jony Examiner belgisi: magistr qalpog'ini kiygan qo'ng'iroq
+     (imtihon + bildirishnoma). Ko'k-oq ranglar (2026-09-25). -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- qo'ng'iroq -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M54,26 a4,4 0 0 1 4,4 v2 a16,16 0 0 1 12,15 v10 l6,9 v4 H32 v-4 l6,-9 v-10 a16,16 0 0 1 12,-15 v-2 a4,4 0 0 1 4,-4 Z" />
+        android:pathData="M40,68 v-12 a14,14 0 0 1 28,0 v12 l5,6 v3 H35 v-3 Z" />
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M47,74 h14 a7,7 0 0 1 -14,0 Z" />
+        android:pathData="M48,79 h12 a6,6 0 0 1 -12,0 Z" />
+    <!-- qalpoq tagi -->
     <path
-        android:fillColor="#7FB0F2"
-        android:pathData="M69,24 a5,5 0 1 0 10,0 a5,5 0 1 0 -10,0 Z" />
+        android:fillColor="#CFE3FF"
+        android:strokeColor="#0B3A8C"
+        android:strokeWidth="1.6"
+        android:pathData="M41,37 v8 c0,0 6,5 13,5 c7,0 13,-5 13,-5 v-8 L54,41 Z" />
+    <!-- qalpoq taxtasi -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0B3A8C"
+        android:strokeWidth="1.6"
+        android:strokeLineJoin="round"
+        android:pathData="M54,26 L78,34 L54,42 L30,34 Z" />
+    <!-- shokila -->
+    <path
+        android:strokeColor="#8EC5FF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M54,34 L74,35.5 L74,48" />
+    <path
+        android:fillColor="#8EC5FF"
+        android:pathData="M72,48 h4 l1.2,7.5 h-6.4 Z" />
+    <path
+        android:fillColor="#0B3A8C"
+        android:pathData="M52.2,34 a1.8,1.8 0 1 0 3.6,0 a1.8,1.8 0 1 0 -3.6,0 Z" />
 </vector>

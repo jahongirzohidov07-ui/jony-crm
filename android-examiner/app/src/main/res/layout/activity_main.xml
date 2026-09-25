@@ -2,7 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC">
+    android:background="#F8FAFC"
+    android:fitsSystemWindows="true">
+    <!-- fitsSystemWindows: Android 15 sahifani status panel ostiga
+         cho'zadi — sayt tepasi soat ostida qolib ketardi -->
 
     <WebView
         android:id="@+id/web"

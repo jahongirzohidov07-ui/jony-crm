@@ -17,6 +17,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,6 +52,7 @@ public class WatchService extends Service {
     /** Oyna o'zi chalganda — bildirishnoma faqat iz, jim. */
     static final String CH_LOG = "exam_log";
     private static final long PERIOD = 90_000L;
+    static final String TAG = "JonyExaminer";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean running = false;
@@ -117,6 +119,7 @@ public class WatchService extends Service {
         new Thread(() -> {
             try {
                 JSONArray rows = Api.orders(this);
+                Log.i(TAG, "navbat: " + rows.length() + " ta yangi so'rov");
                 int maxId = 0;
                 JSONObject newest = null;
                 for (int i = 0; i < rows.length(); i++) {
@@ -148,8 +151,10 @@ public class WatchService extends Service {
                 Api.clear(this);
                 relogin(this);
                 handler.post(this::stopSelf);
-            } catch (Exception ignored) {
-                // Internet yo'q — keyingi urinishda
+            } catch (Exception e) {
+                // Internet yo'q — keyingi urinishda. Log qoladi: telefon
+                // qulfida tarmoq yopilsa shu yerdan ko'rinadi.
+                Log.w(TAG, "tekshiruv o'tmadi: " + e);
             }
         }).start();
     }

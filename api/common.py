@@ -2948,7 +2948,8 @@ def _do_family_link(db: Session, a: models.Student, b: models.Student,
     kids = (db.query(models.Student)
             .filter(models.Student.parent_id == a.parent_id).all())
     pct = _family_discount_percent(db, a)
-    active = sum(1 for k in kids if k.status == "active")
+    # Chegirma hisobida muzlatilganlar ham sanaladi (2026-09-25)
+    active = sum(1 for k in kids if k.status in FAMILY_COUNT_STATUSES)
     # OILADAGI HAMMA FARZANDNING SHU OY HISOBI QAYTA YOZILADI
     # (2026-09-25, Jahongir: "aka uka bolsa bittasiga chegirma ishlab
     # ikkinchisiga ishlamayabdi"). Sabab: chegirma foizi ikkalasida
@@ -2972,7 +2973,8 @@ def _do_family_link(db: Session, a: models.Student, b: models.Student,
                       "status": k.status} for k in kids],
         "active_children": active,
         "message": (
-            f"Bog'landi \u2014 oilada {active} ta faol farzand, har biriga "
+            f"Bog'landi \u2014 oilada {active} ta farzand o'qiyapti "
+            f"(muzlatilgani ham sanaladi), har biriga "
             f"{pct:.0f}% oilaviy chegirma avtomat hisoblanadi."
             if pct else
             f"Bog'landi. Oilaviy chegirma uchun kamida "
@@ -2980,15 +2982,23 @@ def _do_family_link(db: Session, a: models.Student, b: models.Student,
     }
 
 
+# Oilaviy chegirma hisobida sanaladigan holatlar (2026-09-25,
+# Jahongir: "hammasini tuzat togrla"). MUZLATILGAN farzand ham
+# sanaladi: muzlatish vaqtinchalik, aka-ukadan biri bir oy dam olsa
+# ikkinchisi chegirmadan ayrilmasligi kerak. Arxiv va ketganlar
+# sanalmaydi — ular butunlay chiqib ketgan.
+FAMILY_COUNT_STATUSES = ("active", "frozen")
+
+
 def _family_discount_percent(db: Session, s: models.Student) -> float:
     """Oilaviy chegirma foizi. AVTOMAT: bir ota-onaga bog'langan
-    FAOL farzandlar soni chegaradan oshsa - chegirma bor, kamaysa
-    o'zidan yo'qoladi. Hech kim qo'lda olib tashlashi shart emas."""
+    farzandlar soni (faol + muzlatilgan) chegaradan oshsa - chegirma
+    bor, kamaysa o'zidan yo'qoladi. Qo'lda olib tashlash shart emas."""
     if not s.parent_id:
         return 0.0
     n = (db.query(models.Student)
          .filter(models.Student.parent_id == s.parent_id,
-                 models.Student.status == "active").count())
+                 models.Student.status.in_(FAMILY_COUNT_STATUSES)).count())
     if n >= roles.FAMILY_DISCOUNT_MIN_CHILDREN:
         return roles.FAMILY_DISCOUNT_PERCENT
     return 0.0

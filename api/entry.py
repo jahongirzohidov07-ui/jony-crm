@@ -7979,11 +7979,18 @@ def _fz_left_from(db: Session, s, on: date) -> int:
         return 0
 
 
-def _fz_set(db: Session, s, period: str, lessons: int, why: str, user):
+def _fz_set(db: Session, s, period: str, lessons: int, why: str, user,
+            unit: float = None):
     """Shu oyning hisoblangan to'lovini `lessons` dars bo'yicha qo'yadi.
-    Yangi qator faqat dars bor bo'lsa yaratiladi."""
+    Yangi qator faqat dars bor bo'lsa yaratiladi.
+
+    `unit` — bitta dars narxi. Muzlatishda u holat o'zgarishidan OLDIN
+    hisoblanib beriladi (2026-09-25): aks holda o'quvchi "frozen"
+    bo'lgach chegirmasi to'xtab, dars narxi QIMMATLASHIB ketardi va
+    muzlatish qarzni kamaytirish o'rniga oshirib yuborardi."""
     lessons = max(int(lessons or 0), 0)
-    unit = _fz_unit(db, s)
+    if unit is None:
+        unit = _fz_unit(db, s)
     target = roles.money(lessons * unit)
     row = _fz_row(db, s.id, period)
     gname = s.group.name if s.group else ""
@@ -8066,6 +8073,10 @@ def freeze_student_v2(student_id: int, payload: dict = Body(...),
     if rcode and rcode not in roles.FREEZE_REASON_LABELS:
         raise HTTPException(400, "Muzlatish sababi ro'yxatdan tanlansin")
 
+    # DARS NARXI HOLAT O'ZGARISHIDAN OLDIN (2026-09-25). "frozen"
+    # bo'lgach o'quvchining chegirmasi to'xtaydi va narx qimmatlashib
+    # ketardi — muzlatish qarzni kamaytirish o'rniga OSHIRIB yuborardi.
+    _fz_price = _fz_unit(db, st)
     st.status = "frozen"
     st.frozen_until = until
     st.frozen_reason = rcode or None
@@ -8088,9 +8099,28 @@ def freeze_student_v2(student_id: int, payload: dict = Body(...),
 
     adjust = None
     if st.group_id and st.group is not None:
-        n = _fz_held_before(db, st, frm)
-        adjust = _fz_set(db, st, _fz_period(frm), n,
-                         f"{frm.strftime('%d.%m')} dan muzlatildi", user)
+        # ORQAGA SANA BILAN MUZLATISH (2026-09-25). Ilgari faqat
+        # muzlatish sanasi TUSHGAN OY to'g'rilanardi. 62 kungacha
+        # orqaga ruxsat berilgani uchun, masalan 20-avgustdan
+        # muzlatilsa, sentabr hisobi to'liq summada qolib ketardi.
+        # Endi muzlatish oyidan bugungi oygacha hammasi ko'riladi:
+        #   - muzlatish oyi — o'sha sanagacha o'tilgan darslar;
+        #   - keyingi oylar — o'quvchi ro'yxatga tushgan darslar
+        #     (odatda 0, shunda qator nolga tushadi; agar baribir
+        #     kelgan bo'lsa, o'sha darslar hisoblanadi).
+        why = f"{frm.strftime('%d.%m')} dan muzlatildi"
+        y, m = frm.year, frm.month
+        first = True
+        while (y, m) <= (today.year, today.month):
+            on = date(y, m, 1)
+            n = _fz_held_before(db, st, frm) if first else \
+                _af_marked_lessons(db, st, on)
+            res = _fz_set(db, st, f"{y:04d}-{m:02d}", n, why, user,
+                          unit=_fz_price)
+            if first:
+                adjust = res
+                first = False
+            y, m = (y + 1, 1) if m == 12 else (y, m + 1)
         db.commit()
     return {"ok": True, "from_date": frm.isoformat(), "adjust": adjust}
 

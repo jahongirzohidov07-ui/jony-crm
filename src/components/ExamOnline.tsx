@@ -55,6 +55,8 @@ type TemplateRow = {
   title: string;
   q_count: number;
   paper_max: number;
+  /** A (asl), B, C, D, E — variantlar (2026-09-26) */
+  variant?: string;
 };
 export type OnlineData = {
   online: {
@@ -62,6 +64,10 @@ export type OnlineData = {
     is_open: boolean;
     template_id: number;
     template_title: string | null;
+    /** Qaysi variantlardan yig'ilgan, bo'limlar tartibida "B,A,D,C,E" — faqat examinerga */
+    variants?: string | null;
+    /** Listening skripti (audio yo'q variantlar) — examiner o'qib beradi */
+    scripts?: { part: string; script: string }[];
     online_max: number;
     paper_max: number;
     published_at: string | null;
@@ -453,17 +459,37 @@ export function OnlineLinkCard({
 }) {
   const [tplId, setTplId] = useState<number | "">("");
   const [paper, setPaper] = useState("");
+  // VARIANTLAR (2026-09-26): "mix" — har bo'lim tasodifiy variantdan
+  // (ustoz oldindan bilolmaydi); "single" — faqat tanlangan variant
+  const [mode, setMode] = useState<"mix" | "single">("mix");
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [scriptsOpen, setScriptsOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Bir daraja+tur+unit'ning variantlari bitta "oila" — ro'yxatda
+  // oila bir marta (A yoki birinchi variant), variant soni bilan
+  const families = (() => {
+    const map = new Map<string, TemplateRow & { count: number }>();
+    for (const t of data?.templates || []) {
+      const key = `${t.level || ""}|${t.kind}|${t.unit_no ?? ""}`;
+      const cur = map.get(key);
+      if (!cur) map.set(key, { ...t, count: 1 });
+      else {
+        cur.count += 1;
+        if ((t.variant || "A") < (cur.variant || "A")) Object.assign(cur, t, { count: cur.count });
+      }
+    }
+    return Array.from(map.values());
+  })();
+
   useEffect(() => {
-    if (data && !data.online && data.templates.length && tplId === "") {
-      const t = data.templates[0];
+    if (data && !data.online && families.length && tplId === "") {
+      const t = families[0];
       setTplId(t.id);
       setPaper(String(t.paper_max || 0));
     }
-  }, [data, tplId]);
+  }, [data, families, tplId]);
 
   if (kind === "mock" || !data) return null;
   const o = data.online;
@@ -499,7 +525,7 @@ export function OnlineLinkCard({
             <label className="text-xs text-slate-500">
               Test
               <select
-                className="block mt-1 rounded-lg border border-slate-300 px-2 py-1.5 text-sm bg-white max-w-[280px]"
+                className="block mt-1 rounded-lg border border-slate-300 px-2 py-1.5 text-sm bg-white max-w-[300px]"
                 value={tplId}
                 onChange={(e) => {
                   const t = data.templates.find((x) => x.id === Number(e.target.value));
@@ -507,9 +533,10 @@ export function OnlineLinkCard({
                   if (t) setPaper(String(t.paper_max || 0));
                 }}
               >
-                {data.templates.map((t) => (
+                {(mode === "mix" ? families : data.templates.map((t) => ({ ...t, count: 0 }))).map((t) => (
                   <option key={t.id} value={t.id}>
                     {t.title} ({t.q_count} savol
+                    {mode === "mix" && t.count > 1 ? `, ${t.count} variant aralash` : ""}
                     {t.level ? `, ${levelLabel(t.level)}` : ""}
                     {t.level && data.group_level && t.level !== data.group_level
                       ? " — boshqa daraja"
@@ -517,6 +544,23 @@ export function OnlineLinkCard({
                     )
                   </option>
                 ))}
+              </select>
+            </label>
+            {/* Variant rejimi (2026-09-26, Jahongir: "ustozlar aynan testga
+                tayyorlash holatlari kuzatilyabdi") */}
+            <label className="text-xs text-slate-500">
+              Variantlar
+              <select
+                className="block mt-1 rounded-lg border border-slate-300 px-2 py-1.5 text-sm bg-white"
+                value={mode}
+                onChange={(e) => {
+                  const m = e.target.value as "mix" | "single";
+                  setMode(m);
+                  setTplId("");
+                }}
+              >
+                <option value="mix">Aralash — har bo'lim tasodifiy (tavsiya)</option>
+                <option value="single">Bitta variant</option>
               </select>
             </label>
             <label className="text-xs text-slate-500">
@@ -536,6 +580,7 @@ export function OnlineLinkCard({
                   api.post<OnlineData>(`/exams/${examId}/online`, {
                     template_id: tplId,
                     paper_max: Number(paper || 0),
+                    mode,
                   })
                 )
               }
@@ -625,7 +670,40 @@ export function OnlineLinkCard({
           {o.online_max} savol
           {o.paper_max > 0 ? ` + qog'oz ${o.paper_max} ball` : ""} · topshirgan: {placed}
         </span>
+        {/* VARIANTLAR (faqat examinerga; ustozga server yubormaydi) */}
+        {o.variants && (
+          <span className="text-[11px] text-slate-600 bg-slate-100 rounded px-2 py-0.5"
+                title="Har bo'lim qaysi variantdan olingan (tartib bo'yicha)">
+            Variantlar:{" "}
+            {o.variants.split(",").map((v, i) => (
+              <b key={i} className="ml-0.5">{i + 1}-{v}</b>
+            ))}
+          </span>
+        )}
       </div>
+      {/* LISTENING SKRIPTI — audio yo'q variantlarda examiner ikki marta
+          o'qib beradi (2026-09-26) */}
+      {(o.scripts?.length || 0) > 0 && (
+        <div className="mt-2">
+          <button type="button" onClick={() => setScriptsOpen(!scriptsOpen)}
+                  className="text-xs text-brand-700 font-medium">
+            {scriptsOpen ? "▾" : "▸"} Listening skripti ({o.scripts!.length} bo'lim) — examiner o'qib beradi
+          </button>
+          {scriptsOpen && (
+            <div className="mt-1 space-y-2">
+              {o.scripts!.map((s, i) => (
+                <div key={i} className="rounded-lg border border-amber-200 bg-amber-50/60 p-3">
+                  <p className="text-xs font-semibold text-amber-800 mb-1">{s.part}</p>
+                  <pre className="text-sm text-slate-800 whitespace-pre-wrap font-sans">{s.script}</pre>
+                  <p className="text-[11px] text-amber-700 mt-1">
+                    Har jumlani/matnni ikki marta o'qing, o'quvchilar ekranda javob belgilaydi.
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
       <div className="flex flex-wrap items-center gap-2 mt-3">
         <input
           readOnly

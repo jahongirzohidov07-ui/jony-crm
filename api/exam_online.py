@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import json
+import random
 import re
 import secrets
 import time
@@ -187,6 +188,10 @@ def clean_parts(parts) -> list:
             "audio_url": (str(p.get("audio_url") or "").strip() or None),
             # Bo'lim rasmi — masalan A–G kasblar jadvali (2026-09-18)
             "image": _clean_image(p.get("image"), p.get("title") or "Bo'lim"),
+            # LISTENING SKRIPTI (2026-09-26, variantlar): audio yo'q
+            # variantlarda examiner o'qib beradigan matn. Faqat
+            # examinerga — public_parts'ga tushmaydi.
+            "script": str(p.get("script") or "").strip()[:6000],
             "questions": qs,
         })
     if n == 0:
@@ -311,12 +316,21 @@ class TemplateIn(BaseModel):
     parts: list
     paper_max: float = 0
     is_active: bool = True
+    variant: Optional[str] = None      # A/B/C/D/E (bo'sh = A)
+
+
+def _clean_variant(v) -> str:
+    v = (str(v or "A").strip().upper() or "A")[:1]
+    if v not in "ABCDEFGH":
+        raise HTTPException(400, "Variant A–H harfi bo'lishi kerak")
+    return v
 
 
 def _tpl_summary(t: models.ExamTemplate) -> dict:
     parts = _load(t.parts)
     return {
         "id": t.id, "level": t.level, "kind": t.kind, "unit_no": t.unit_no,
+        "variant": (t.variant or "A"),
         "title": t.title, "paper_max": t.paper_max or 0,
         "q_count": sum(1 for _ in _questions(parts)),
         "is_active": bool(t.is_active),
@@ -348,7 +362,8 @@ def list_templates(level: Optional[str] = None, kind: Optional[str] = None,
     if kind:
         q = q.filter(models.ExamTemplate.kind == kind)
     rows = q.order_by(models.ExamTemplate.level, models.ExamTemplate.kind,
-                      models.ExamTemplate.unit_no).all()
+                      models.ExamTemplate.unit_no,
+                      models.ExamTemplate.variant).all()
     return [_tpl_summary(t) for t in rows]
 
 
@@ -391,6 +406,7 @@ def create_template(payload: TemplateIn, db: Session = Depends(get_db),
         title=payload.title.strip(),
         parts=json.dumps(clean_parts(payload.parts), ensure_ascii=False),
         paper_max=payload.paper_max, is_active=1 if payload.is_active else 0,
+        variant=_clean_variant(payload.variant),
         created_by=user.full_name)
     db.add(t)
     db.commit()
@@ -414,6 +430,8 @@ def update_template(tid: int, payload: TemplateIn,
     t.parts = json.dumps(clean_parts(payload.parts), ensure_ascii=False)
     t.paper_max = payload.paper_max
     t.is_active = 1 if payload.is_active else 0
+    if payload.variant is not None:
+        t.variant = _clean_variant(payload.variant)
     db.commit()
     audit.log(db, user, entity="exam_template", action="update",
               entity_id=t.id, entity_label=t.title, commit=True)
@@ -443,6 +461,61 @@ def delete_template(tid: int, db: Session = Depends(get_db),
 class OnlineIn(BaseModel):
     template_id: int
     paper_max: Optional[float] = None
+    # "mix" (odatiy) — har bo'lim shu daraja/tur/unit'ning tasodifiy
+    # variantidan; "single" — faqat tanlangan shablon (2026-09-26)
+    mode: str = "mix"
+
+
+def _family(db: Session, t: models.ExamTemplate) -> list:
+    """Bir daraja + tur + unit'ning barcha faol variantlari (A, B, …)."""
+    q = db.query(models.ExamTemplate).filter(
+        models.ExamTemplate.is_active == 1,
+        models.ExamTemplate.kind == t.kind,
+        models.ExamTemplate.level == t.level)
+    if t.kind == "unit":
+        q = q.filter(models.ExamTemplate.unit_no == t.unit_no)
+    rows = q.all()
+    rows.sort(key=lambda x: (x.variant or "A", x.id))
+    return rows
+
+
+def _shape(parts: list) -> tuple:
+    return tuple(len(p.get("questions") or []) for p in parts)
+
+
+def mix_parts(base: models.ExamTemplate, family: list, rnd=None) -> tuple:
+    """VARIANTLARNI ARALASHTIRISH (2026-09-26, Jahongir: "ustozlar aynan
+    testga tayyorlash holatlari kuzatilyabdi").
+
+    Har bo'lim uchun tasodifiy variant tanlanadi (5 variant × 5 bo'lim =
+    3 125 kombinatsiya) — ustoz qaysi savollar tushishini oldindan
+    bilolmaydi. Faqat TUZILISHI bir xil (bo'lim va savollar soni)
+    variantlar aralashadi; boshqacha tuzilganlari chetda qoladi.
+    Qaytaradi: (parts, "B,A,D,C,E")."""
+    rnd = rnd or random
+    base_parts = _load(base.parts)
+    shape = _shape(base_parts)
+    pool = {}
+    for t in family:
+        parts = _load(t.parts)
+        if _shape(parts) == shape:
+            pool[t.variant or "A"] = parts
+    if len(pool) <= 1:
+        return base_parts, (base.variant or "A")
+    letters = sorted(pool)
+    out, chosen = [], []
+    for i in range(len(base_parts)):
+        L = rnd.choice(letters)
+        out.append(json.loads(json.dumps(pool[L][i])))
+        chosen.append(L)
+    # Hech bo'lmaganda bitta bo'lim boshqa variantdan bo'lsin — hammasi
+    # tasodifan bir xil chiqib qolmasin (5 bo'limda 1/625 ehtimol)
+    if len(set(chosen)) == 1 and len(letters) > 1:
+        i = rnd.randrange(len(out))
+        alt = rnd.choice([x for x in letters if x != chosen[i]])
+        out[i] = json.loads(json.dumps(pool[alt][i]))
+        chosen[i] = alt
+    return clean_parts(out), ",".join(chosen)
 
 
 class OnlineToggle(BaseModel):
@@ -576,13 +649,21 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
     # Guruh darajasiga moslari birinchi
     templates.sort(key=lambda t: (t["level"] != lvl, t["title"]))
     online = None
-    qmap = _qmap(_load(o.parts)) if o else {}
+    o_parts = _load(o.parts) if o else []
+    qmap = _qmap(o_parts) if o else {}
+    can_manage = user.role in RESULT_ROLES
     if o:
         t = db.query(models.ExamTemplate).get(o.template_id)
         online = {
             "token": o.token, "is_open": bool(o.is_open),
             "template_id": o.template_id,
             "template_title": t.title if t else None,
+            # Variantlar va listening skripti — FAQAT examinerga
+            # (ustoz ko'rmaydi, 2026-09-26)
+            "variants": (o.variants or None) if can_manage else None,
+            "scripts": ([{"part": p.get("title"), "script": p.get("script")}
+                         for p in o_parts if p.get("script")]
+                        if can_manage else []),
             "online_max": o.online_max, "paper_max": o.paper_max,
             "published_at": (o.published_at.isoformat()
                              if o.published_at else None),
@@ -631,7 +712,13 @@ def create_online(exam_id: int, payload: OnlineIn,
     t = db.query(models.ExamTemplate).get(payload.template_id)
     if not t or not t.is_active:
         raise HTTPException(404, "Test bazada topilmadi")
-    parts = _load(t.parts)
+    # VARIANTLAR ARALASH (2026-09-26): odatiy rejimda har bo'lim shu
+    # daraja/tur/unit'ning tasodifiy variantidan olinadi — ustoz
+    # savollarni oldindan bilolmaydi. "single" — faqat tanlangan shablon.
+    if (payload.mode or "mix") == "single":
+        parts, variants = _load(t.parts), (t.variant or "A")
+    else:
+        parts, variants = mix_parts(t, _family(db, t))
     online_max = float(sum(1 for _ in _questions(parts)))
     if payload.paper_max is not None:
         paper_max = float(payload.paper_max)
@@ -654,14 +741,17 @@ def create_online(exam_id: int, payload: OnlineIn,
     exam.max_score = total
     o = models.ExamOnline(exam_id=exam.id, template_id=t.id,
                           token=secrets.token_urlsafe(9), is_open=1,
-                          parts=t.parts, online_max=online_max,
-                          paper_max=paper_max, created_by=user.full_name)
+                          parts=json.dumps(parts, ensure_ascii=False),
+                          online_max=online_max,
+                          paper_max=paper_max, created_by=user.full_name,
+                          variants=variants)
     db.add(o)
     db.commit()
     audit.log(db, user, entity="exam", action="update", entity_id=exam.id,
               entity_label=exam.title or roles.exam_title(exam.kind, exam.unit_no),
               field="online_link", old_value=old_max,
-              new_value=f"{t.title}: online {online_max:g} + qog'oz {paper_max:g}",
+              new_value=f"{t.title}: online {online_max:g} + qog'oz "
+                        f"{paper_max:g}, variantlar {variants}",
               commit=True)
     return get_online(exam_id, db, user)
 
@@ -1536,6 +1626,71 @@ def fill_topics_from_bank(db: Session, key: str = "exam_topics_v1") -> int:
     return filled
 
 
+# ------------------------------------------------ VARIANTLAR (B, C, D, E)
+# 2026-09-26, Jahongir: "shu savollarni 4-5 xil variantini tayyorlab
+# qoyish kerak chunki ustozlar aynan testga tayyorlash holatlari
+# kuzatilyabdi". exam_bank_variants.json: {shablon kaliti: {"B": parts,
+# "C": parts, ...}} — asl (A) bilan bir xil tuzilish (bo'lim/savol soni,
+# tur, mavzu), lekin boshqa savollar; listening bo'limida examiner
+# o'qib beradigan `script`. Fayl bosqichma-bosqich to'ladi — har
+# (kalit, harf) alohida belgi bilan bir marta yoziladi.
+_VARIANTS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                              "exam_bank_variants.json")
+
+
+def _bank_variants() -> dict:
+    try:
+        with open(_VARIANTS_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def seed_variants(db: Session) -> int:
+    """Faylga qo'shilgan yangi variantlarni bazaga yozadi (idempotent).
+    Asl shablon (A) tegilmaydi; mavjud (level, kind, unit, variant)
+    qayta yaratilmaydi — examiner tahrirlagan bo'lsa shu qoladi."""
+    import exam_bank_seed
+    data = _bank_variants()
+    if not data:
+        return 0
+    meta = {key: tpl for key, tpl in exam_bank_seed.TEMPLATES}
+    made = 0
+    for key, letters in data.items():
+        tpl = meta.get(key)
+        if not tpl:
+            continue
+        for letter, parts in sorted(letters.items()):
+            mark = f"{key}:var{letter}"
+            if _seed_done(db, mark):
+                continue
+            exists = db.query(models.ExamTemplate).filter(
+                models.ExamTemplate.level == tpl["level"],
+                models.ExamTemplate.kind == tpl["kind"],
+                models.ExamTemplate.unit_no == tpl.get("unit_no"),
+                models.ExamTemplate.variant == letter).first()
+            if not exists:
+                try:
+                    clean = clean_parts(parts)
+                except HTTPException as e:
+                    print(f"[exam-bank] variant {key} {letter} xato: {e.detail}",
+                          flush=True)
+                    continue
+                db.add(models.ExamTemplate(
+                    level=tpl["level"], kind=tpl["kind"],
+                    unit_no=tpl.get("unit_no"),
+                    title=f"{tpl['title']} — {letter} varianti",
+                    parts=json.dumps(clean, ensure_ascii=False),
+                    paper_max=tpl.get("paper_max", 0), variant=letter,
+                    created_by="JonyOS"))
+                db.commit()
+                made += 1
+            _seed_mark(db, mark)
+    if made:
+        print(f"[exam-bank] variantlar yozildi: {made} ta shablon", flush=True)
+    return made
+
+
 # ------------------------------------------------ boshlang'ich test bazasi
 def seed_templates(db: Session) -> None:
     """Jahongir yuborgan testlar (Step 1 Unit 1 …) bazaga bir marta
@@ -1568,12 +1723,18 @@ def seed_templates(db: Session) -> None:
                 level=tpl["level"], kind=tpl["kind"],
                 unit_no=tpl.get("unit_no"), title=tpl["title"],
                 parts=json.dumps(parts, ensure_ascii=False),
-                paper_max=tpl.get("paper_max", 0), created_by="JonyOS"))
+                paper_max=tpl.get("paper_max", 0), variant="A",
+                created_by="JonyOS"))
             db.commit()
         _seed_mark(db, key)
     fill_exam_max_from_bank(db)
     fill_mid_end_100(db)
     fill_topics_from_bank(db)
+    try:
+        seed_variants(db)
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        print(f"[exam-bank] variantlar yozilmadi: {e}", flush=True)
 
 
 def fill_mid_end_100(db: Session, key: str = "exam_mid_end_100_v1"):

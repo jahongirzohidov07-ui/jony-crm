@@ -88,6 +88,8 @@ db = SessionLocal()
 exam_online.seed_templates(db)
 n_all = n_topic = 0
 for t in db.query(models.ExamTemplate).all():
+    if (t.variant or "A") != "A":
+        continue        # B-E variantlar alohida (test_exam_variants)
     for q in exam_online._questions(exam_online._load(t.parts)):
         n_all += 1
         n_topic += 1 if q.get("topic") else 0
@@ -185,7 +187,14 @@ r = client.get("/api/exam-templates/topics", headers=HE)
 ck("200", r.status_code, 200)
 rows = {x["topic"]: x["count"] for x in r.json()}
 # 264 - 3 (Step 2 U3: tahrirlangan, bo'shatilgan, qayta nomlangan)
-ck("Listening · Short replies 261 ta", rows.get("Listening · Short replies"), 261)
+# + B–E variantlardagilar (exam_bank_variants.json) — bazadan hisoblanadi
+d2 = SessionLocal()
+exp_sr = sum(1 for t in d2.query(models.ExamTemplate).all()
+             for q in exam_online._questions(exam_online._load(t.parts))
+             if q.get("topic") == "Listening · Short replies")
+d2.close()
+ck("Listening · Short replies soni bazaga teng (>= 261)",
+   (rows.get("Listening · Short replies"), exp_sr >= 261), (exp_sr, True))
 ck("yangi mavzu ro'yxatda", rows.get("Grammar · Yangi mavzu"), 1)
 ck("ustozga yopiq", client.get("/api/exam-templates/topics", headers=HT).status_code, 403)
 ck("tartib: ko'nikma bo'yicha",

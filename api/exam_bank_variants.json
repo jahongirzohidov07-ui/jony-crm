@@ -1,0 +1,7172 @@
+{
+"exam_tpl_step1_unit2": {
+"B": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. What’s your address?\n2. Is your city big?\n3. What’s your surname?\n4. How do you spell your first name?\n5. Do you have an email address?\n6. What’s your phone number?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s 0161 555 0198.",
+"It’s Lopez.",
+"It’s 36, Castle Road."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, it’s very small.",
+"No, I’m not.",
+"Yes, I do."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"I’m from Poland.",
+"It’s Novak.",
+"Nice to meet you."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"marta@home.com.",
+"It’s 07981 224 556.",
+"M-A-R-T-A."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it is.",
+"Yes, I do.",
+"Yes, please."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s 07700 900 123.",
+"It’s 45, King Street.",
+"It’s Green."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · People, things and places",
+"instructions": "Read the sentences about people, things and places. What are the missing words? The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "Marco isn’t happy today – he’s very s _ _ .",
+"answer": [
+"sad",
+"ad"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "This exercise isn’t easy – it’s really d _ _ _ _ _ _ _ _ .",
+"answer": [
+"difficult",
+"ifficult"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "My car isn’t new – it’s twenty years o _ _ .",
+"answer": [
+"old",
+"ld"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "£500 for a phone? That’s very e _ _ _ _ _ _ _ _ !",
+"answer": [
+"expensive",
+"xpensive"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "London isn’t a small town – it’s a very b _ _ city.",
+"answer": [
+"big",
+"ig"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "This TV programme isn’t interesting – it’s b _ _ _ _ _ .",
+"answer": [
+"boring",
+"oring"
+],
+"topic": "Vocabulary · People, things and places"
+}
+]
+},
+{
+"title": "Part 3 · Numbers",
+"instructions": "Choose the word to match the number.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "13",
+"options": [
+"thirteen",
+"thirty",
+"fourteen",
+"forty",
+"seventeen",
+"eighty",
+"twenty"
+],
+"answer": 0,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "40",
+"options": [
+"thirteen",
+"thirty",
+"fourteen",
+"forty",
+"seventeen",
+"eighty",
+"twenty"
+],
+"answer": 3,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "17",
+"options": [
+"thirteen",
+"thirty",
+"fourteen",
+"forty",
+"seventeen",
+"eighty",
+"twenty"
+],
+"answer": 4,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "80",
+"options": [
+"thirteen",
+"thirty",
+"fourteen",
+"forty",
+"seventeen",
+"eighty",
+"twenty"
+],
+"answer": 5,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "30",
+"options": [
+"thirteen",
+"thirty",
+"fourteen",
+"forty",
+"seventeen",
+"eighty",
+"twenty"
+],
+"answer": 1,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "20",
+"options": [
+"thirteen",
+"thirty",
+"fourteen",
+"forty",
+"seventeen",
+"eighty",
+"twenty"
+],
+"answer": 6,
+"topic": "Vocabulary · Numbers"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the conversation in a student café between Aiko and Tomas. Choose the correct answer (A, B or C) for each space.",
+"passage": "A new friend\n\nAiko: Hi, I’m Aiko. What’s your name?\nTomas: Tomas. Nice to meet you, Aiko. Are you from Japan?\nAiko: Yes, from Osaka. And you?\nTomas: I’m from Brno. It’s a city in the Czech Republic. The (19) ………… there are very good.\nAiko: Really? (20) ………… big?\nTomas: No, they’re small, but they’re new. My brother is a student in Brno. (21) ………… flat is near the river.\nAiko: My home in Osaka is small, too. It has three (22) ………… . One room is for my two sisters. (23) ………… names are Yui and Emi.\nTomas: Do you have (24) ………… here in Manchester?\nAiko: Yes, I do. It’s near the school.\nTomas: Me too! My address is 12, Green Road.\nAiko: Oh! My address is 14, Green Road!",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"university",
+"universities",
+"university’s"
+],
+"answer": 1,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"They’re",
+"Are they",
+"Is it"
+],
+"answer": 1,
+"topic": "Grammar · Subject and object pronouns"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"His",
+"Her",
+"Their"
+],
+"answer": 0,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"room",
+"room’s",
+"rooms"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Her",
+"Their",
+"Our"
+],
+"answer": 1,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"flat",
+"an flat",
+"a flat"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about things and places. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Our hotel rooms ............ big – they’re very small.",
+"options": [
+"is",
+"aren’t",
+"isn’t"
+],
+"answer": 1,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Marta is from Poland and this is a photo of ............ family.",
+"options": [
+"her",
+"his",
+"our"
+],
+"answer": 0,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "............ an expensive restaurant?",
+"options": [
+"Are they",
+"Is it",
+"Is they"
+],
+"answer": 1,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "I have two ............ in my bag.",
+"options": [
+"sandwiches",
+"sandwich",
+"sandwich’s"
+],
+"answer": 0,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "Where are my ............ , Dan?",
+"options": [
+"key",
+"key’s",
+"keys"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "My sister has three ............ – two girls and a boy.",
+"options": [
+"child",
+"children",
+"childs"
+],
+"answer": 1,
+"topic": "Grammar · a/an and plurals"
+}
+]
+}
+],
+"C": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. I’m from Reykjavik.\n2. What’s your email address?\n3. Do you have a phone number in the UK?\n4. What’s your first name?\n5. Is Warsaw a big city?\n6. How do you spell your surname?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"Is it a hotel?",
+"Are they at home?",
+"Can you spell that, please?"
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s 44, Church Road.",
+"It’s lena.k@mymail.com.",
+"It’s L-E-N-A."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I do.",
+"Yes, it’s big.",
+"Yes, please."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s 07222 815 903.",
+"It’s Brazilian.",
+"It’s Pedro."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I am.",
+"Yes, it is.",
+"Yes, they are."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"S-I-L-V-A.",
+"silva@fastmail.com.",
+"It’s 07555 118 260."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · People, things and places",
+"instructions": "Read the sentences about people, things and places. What are the missing words? The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "The tickets aren’t expensive – they’re c _ _ _ _ .",
+"answer": [
+"cheap",
+"heap"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "The food in that café isn’t good – it’s b _ _ .",
+"answer": [
+"bad",
+"ad"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "The old town in Prague is very b _ _ _ _ _ _ _ _ .",
+"answer": [
+"beautiful",
+"eautiful"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "‘Is Rome the capital of Italy?’ ‘Yes, that’s r _ _ _ _ !’",
+"answer": [
+"right",
+"ight"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "Be careful! The tea isn’t cold – it’s very h _ _ .",
+"answer": [
+"hot",
+"ot"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "Numbers in English are e _ _ _ – they aren’t difficult for me.",
+"answer": [
+"easy",
+"asy"
+],
+"topic": "Vocabulary · People, things and places"
+}
+]
+},
+{
+"title": "Part 3 · Numbers",
+"instructions": "Choose the word to match the number.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "50",
+"options": [
+"fifteen",
+"fifty",
+"eighteen",
+"eighty",
+"ninety",
+"thirteen",
+"twenty-two"
+],
+"answer": 1,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "18",
+"options": [
+"fifteen",
+"fifty",
+"eighteen",
+"eighty",
+"ninety",
+"thirteen",
+"twenty-two"
+],
+"answer": 2,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "90",
+"options": [
+"fifteen",
+"fifty",
+"eighteen",
+"eighty",
+"ninety",
+"thirteen",
+"twenty-two"
+],
+"answer": 4,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "22",
+"options": [
+"fifteen",
+"fifty",
+"eighteen",
+"eighty",
+"ninety",
+"thirteen",
+"twenty-two"
+],
+"answer": 6,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "15",
+"options": [
+"fifteen",
+"fifty",
+"eighteen",
+"eighty",
+"ninety",
+"thirteen",
+"twenty-two"
+],
+"answer": 0,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "80",
+"options": [
+"fifteen",
+"fifty",
+"eighteen",
+"eighty",
+"ninety",
+"thirteen",
+"twenty-two"
+],
+"answer": 3,
+"topic": "Vocabulary · Numbers"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the conversation at a party between Lena and Pedro. Choose the correct answer (A, B or C) for each space.",
+"passage": "At a party\n\nLena: Hello! I’m Lena. Are you a student here?\nPedro: Yes, I am. I’m Pedro, from Brazil.\nLena: Brazil! The (19) ………… in Brazil are beautiful.\nPedro: Yes, (20) ………… very big, too. My home is in Salvador, near the sea.\nLena: Is your family in Salvador?\nPedro: My mother is. (21) ………… flat is in the old part of the city. My two brothers are in London. They have a small house with two (22) ………… .\nLena: Are they students?\nPedro: No, they’re doctors. (23) ………… hospital is in the centre of London.\nLena: And you? Where’s your home here?\nPedro: I have (24) ………… in Green Street, near the park. And you?\nLena: My flat is in Green Street, too – number 30!\nPedro: Oh! Number 32 is my room!",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"beach",
+"beaches",
+"beach’s"
+],
+"answer": 1,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"it’s",
+"they’re",
+"we’re"
+],
+"answer": 1,
+"topic": "Grammar · Subject and object pronouns"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Her",
+"His",
+"Its"
+],
+"answer": 0,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"bedroom",
+"bedroom’s",
+"bedrooms"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Their",
+"His",
+"Your"
+],
+"answer": 0,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"an room",
+"room",
+"a room"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about things and places. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "............ Ana and Luis from Argentina?",
+"options": [
+"Is",
+"Are",
+"They are"
+],
+"answer": 1,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "That’s my brother and that’s ............ new car.",
+"options": [
+"her",
+"his",
+"their"
+],
+"answer": 1,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "This café ............ expensive – the coffee is only £1.",
+"options": [
+"isn’t",
+"is it",
+"are"
+],
+"answer": 0,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Can I have two ............ of tea, please?",
+"options": [
+"cups",
+"cup",
+"cup’s"
+],
+"answer": 0,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "Our two ............ are from Sweden.",
+"options": [
+"teacher",
+"teacher’s",
+"teachers"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "The two ............ in this picture are my aunts.",
+"options": [
+"woman",
+"womans",
+"women"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+}
+]
+}
+],
+"D": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. What’s your phone number, Ahmed?\n2. Are you from Turkey?\n3. Can you spell your surname, please?\n4. What’s your address in London?\n5. My surname is Nguyen.\n6. Do you have a mobile phone?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s 8, Station Road.",
+"It’s 07911 660 428.",
+"It’s Ahmed Khan."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, it isn’t.",
+"No, thanks.",
+"No, I’m from Greece."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes. K-O-W-A-L.",
+"Yes, it’s Kowal Street.",
+"Yes, it’s 07811 342 900."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s tom.h@webmail.com.",
+"It’s 020 7946 0512.",
+"It’s 7, Queen Street."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"How do you spell that?",
+"How old is it?",
+"Where is it?"
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it is.",
+"Yes, I do.",
+"Yes, I am."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · People, things and places",
+"instructions": "Read the sentences about people, things and places. What are the missing words? The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "This restaurant isn’t bad – the pizza is very g _ _ _ .",
+"answer": [
+"good",
+"ood"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "It isn’t hot in Moscow in January – it’s very c _ _ _ .",
+"answer": [
+"cold",
+"old"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "He’s a f _ _ _ _ _ actor – he’s in a lot of films.",
+"answer": [
+"famous",
+"amous"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "My grandfather is 80, but my brother is only 12 – he’s very y _ _ _ _ .",
+"answer": [
+"young",
+"oung"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "Two and two is five? No, that’s w _ _ _ _ !",
+"answer": [
+"wrong",
+"rong"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "Our new teacher is very n _ _ _ – all the students like her.",
+"answer": [
+"nice",
+"ice"
+],
+"topic": "Vocabulary · People, things and places"
+}
+]
+},
+{
+"title": "Part 3 · Numbers",
+"instructions": "Choose the word to match the number.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "70",
+"options": [
+"fourteen",
+"forty",
+"seventy",
+"seventeen",
+"twenty-one",
+"a hundred",
+"fifteen"
+],
+"answer": 2,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "14",
+"options": [
+"fourteen",
+"forty",
+"seventy",
+"seventeen",
+"twenty-one",
+"a hundred",
+"fifteen"
+],
+"answer": 0,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "21",
+"options": [
+"fourteen",
+"forty",
+"seventy",
+"seventeen",
+"twenty-one",
+"a hundred",
+"fifteen"
+],
+"answer": 4,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "100",
+"options": [
+"fourteen",
+"forty",
+"seventy",
+"seventeen",
+"twenty-one",
+"a hundred",
+"fifteen"
+],
+"answer": 5,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "17",
+"options": [
+"fourteen",
+"forty",
+"seventy",
+"seventeen",
+"twenty-one",
+"a hundred",
+"fifteen"
+],
+"answer": 3,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "40",
+"options": [
+"fourteen",
+"forty",
+"seventy",
+"seventeen",
+"twenty-one",
+"a hundred",
+"fifteen"
+],
+"answer": 1,
+"topic": "Vocabulary · Numbers"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the conversation on a train between Daniel and Mei. Choose the correct answer (A, B or C) for each space.",
+"passage": "On the train\n\nDaniel: Hi. Is this seat free?\nMei: Yes, it is. I’m Mei.\nDaniel: I’m Daniel. Nice to meet you. Are you from China?\nMei: Yes, from Hangzhou. It’s near Shanghai.\nDaniel: The (19) ………… in Hangzhou are famous! Are they beautiful?\nMei: Yes, (20) ………… very beautiful. I have two photos of the lake here. And where are you from?\nDaniel: From Cork, in Ireland. My parents have a small hotel there. (21) ………… hotel is near the sea.\nMei: That’s nice! Is Cork a big city?\nDaniel: No, it isn’t. But the (22) ………… in Cork are very good.\nMei: My sister is a student in Ireland. (23) ………… university is in Dublin.\nDaniel: Dublin is a great city. I have (24) ………… there – it’s very small!\nMei: Oh, Dublin is my stop, too!",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"garden",
+"garden’s",
+"gardens"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"it’s",
+"they’re",
+"you’re"
+],
+"answer": 1,
+"topic": "Grammar · Subject and object pronouns"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Their",
+"His",
+"Her"
+],
+"answer": 0,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"shop’s",
+"shops",
+"shop"
+],
+"answer": 1,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"His",
+"Our",
+"Her"
+],
+"answer": 2,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"an apartment",
+"a apartment",
+"apartment"
+],
+"answer": 0,
+"topic": "Grammar · a/an and plurals"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about things and places. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "My phone ............ new – it’s three years old.",
+"options": [
+"aren’t",
+"isn’t",
+"is it"
+],
+"answer": 1,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Ken and Yumi are from Tokyo. ............ flat is very small.",
+"options": [
+"Our",
+"Their",
+"His"
+],
+"answer": 1,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "............ Sam and Kate at school today?",
+"options": [
+"Are",
+"Is",
+"Am"
+],
+"answer": 0,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "I have two ............ in my bag – an English one and a French one.",
+"options": [
+"dictionary",
+"dictionarys",
+"dictionaries"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "The ............ in this shop are cheap.",
+"options": [
+"watches",
+"watch",
+"watch’s"
+],
+"answer": 0,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "Do you have ............ in your bag?",
+"options": [
+"a umbrella",
+"an umbrella",
+"umbrella"
+],
+"answer": 1,
+"topic": "Grammar · a/an and plurals"
+}
+]
+}
+],
+"E": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. What’s your email address, please?\n2. Is your surname Rossi?\n3. How do you spell ‘Leeds’?\n4. Do you have an address in Manchester?\n5. Is Cairo a small city?\n6. My name’s Anastasia Papadopoulou.",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s 07340 551 876.",
+"It’s O-M-A-R.",
+"It’s omar22@quickmail.com."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, I’m not.",
+"No, it’s Ricci.",
+"No, it’s 22."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"L-E-E-D-S.",
+"It’s in England.",
+"It’s a small city."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I am.",
+"Yes, it is.",
+"Yes, I do."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, I don’t.",
+"No, it’s very big.",
+"No, they aren’t."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Can you spell that for me?",
+"Is it near London?",
+"Are they students?"
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · People, things and places",
+"instructions": "Read the sentences about people, things and places. What are the missing words? The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "My phone is two years old, but my brother’s phone is n _ _ .",
+"answer": [
+"new",
+"ew"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "It’s my birthday today – I’m very h _ _ _ _ !",
+"answer": [
+"happy",
+"appy"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "Monaco is a very s _ _ _ _ country – it isn’t big.",
+"answer": [
+"small",
+"mall"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "The museum is very i _ _ _ _ _ _ _ _ _ _ – it has a lot of old photos.",
+"answer": [
+"interesting",
+"nteresting"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "The party is g _ _ _ _ – the music is very good!",
+"answer": [
+"great",
+"reat"
+],
+"topic": "Vocabulary · People, things and places"
+},
+{
+"type": "text",
+"q": "Her friend is in a different country now, so she’s very s _ _ .",
+"answer": [
+"sad",
+"ad"
+],
+"topic": "Vocabulary · People, things and places"
+}
+]
+},
+{
+"title": "Part 3 · Numbers",
+"instructions": "Choose the word to match the number.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "90",
+"options": [
+"ninety",
+"seventy",
+"twenty",
+"forty-five",
+"eighteen",
+"thirteen",
+"fifty"
+],
+"answer": 0,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "20",
+"options": [
+"ninety",
+"seventy",
+"twenty",
+"forty-five",
+"eighteen",
+"thirteen",
+"fifty"
+],
+"answer": 2,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "45",
+"options": [
+"ninety",
+"seventy",
+"twenty",
+"forty-five",
+"eighteen",
+"thirteen",
+"fifty"
+],
+"answer": 3,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "13",
+"options": [
+"ninety",
+"seventy",
+"twenty",
+"forty-five",
+"eighteen",
+"thirteen",
+"fifty"
+],
+"answer": 5,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "50",
+"options": [
+"ninety",
+"seventy",
+"twenty",
+"forty-five",
+"eighteen",
+"thirteen",
+"fifty"
+],
+"answer": 6,
+"topic": "Vocabulary · Numbers"
+},
+{
+"type": "choice",
+"q": "70",
+"options": [
+"ninety",
+"seventy",
+"twenty",
+"forty-five",
+"eighteen",
+"thirteen",
+"fifty"
+],
+"answer": 1,
+"topic": "Vocabulary · Numbers"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the conversation in a school office between Sofia and Omar. Choose the correct answer (A, B or C) for each space.",
+"passage": "In the school office\n\nSofia: Hello. Are you new here?\nOmar: Yes, I am. I’m Omar. I’m from Egypt.\nSofia: I’m Sofia, from Spain. Egypt is a great country! The (19) ………… in Egypt are very interesting.\nOmar: Yes, and I like (20) ………… very much. My home is in Alexandria. It’s a city near the sea.\nSofia: Is your family there?\nOmar: My father is. (21) ………… shop is in the city centre. My mother and my brother are here in Leeds. They have a flat with very big (22) ………… .\nSofia: Is (23) ………… flat near the school?\nOmar: Yes, it is. And you? Where’s your home?\nSofia: I have (24) ………… near the station. It’s small but it’s nice. What’s your address?\nOmar: It’s 21, Park Road.\nSofia: That’s my street!",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"museum",
+"museums",
+"museum’s"
+],
+"answer": 1,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"they",
+"them",
+"their"
+],
+"answer": 1,
+"topic": "Grammar · Subject and object pronouns"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Her",
+"Your",
+"His"
+],
+"answer": 2,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"window",
+"window’s",
+"windows"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Their",
+"Its",
+"Her"
+],
+"answer": 0,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"a house",
+"an house",
+"house"
+],
+"answer": 0,
+"topic": "Grammar · a/an and plurals"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about things and places. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "The apples ............ good – they’re very old.",
+"options": [
+"aren’t",
+"isn’t",
+"am not"
+],
+"answer": 0,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "I’m from Brazil and this is ............ city, Recife.",
+"options": [
+"my",
+"his",
+"your"
+],
+"answer": 0,
+"topic": "Grammar · Possessive adjectives"
+},
+{
+"type": "choice",
+"q": "............ your friend a doctor?",
+"options": [
+"Are",
+"Is",
+"He is"
+],
+"answer": 1,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Our school has twelve ............ and a big café.",
+"options": [
+"classroom",
+"classrooms",
+"classroom’s"
+],
+"answer": 1,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "I have three ............ : a black one, a red one and a blue one.",
+"options": [
+"pen’s",
+"pen",
+"pens"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+},
+{
+"type": "choice",
+"q": "Fifty ............ are in my English school – and only two teachers!",
+"options": [
+"person",
+"peoples",
+"people"
+],
+"answer": 2,
+"topic": "Grammar · a/an and plurals"
+}
+]
+}
+]
+},
+"exam_tpl_step1_unit4": {
+"B": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. What time do you get up in the week?\n2. Do you speak Spanish?\n3. This is a photo of my parents.\n4. Who’s the woman in the photo?\n5. Where does your brother work?\n6. Can I see your photos?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"In the kitchen.",
+"At seven o’clock.",
+"Yes, I do."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, please.",
+"It’s my sister.",
+"Yes, a little."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"They look really happy!",
+"Nice to meet you.",
+"Where do you live?"
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"She’s fine, thanks.",
+"She’s my mother, Rosa.",
+"It’s in Rome."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"He’s twenty-five.",
+"At half past nine.",
+"In a hospital in Lima."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, of course. Here you are.",
+"Yes, he is.",
+"I’m from Poland."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · People",
+"instructions": "Read the sentences about people. What are the missing words? The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "I h _ _ _ a big family – three brothers and two sisters.",
+"answer": [
+"have",
+"ave"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "My grandparents l _ _ _ in a small village near the sea.",
+"answer": [
+"live",
+"ive"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Can you s _ _ _ _ more slowly, please? I don’t understand.",
+"answer": [
+"speak",
+"peak"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "I r _ _ _ the newspaper on the train every morning.",
+"answer": [
+"read",
+"ead"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "My children g _ to bed at 8.00 every evening.",
+"answer": [
+"go",
+"o"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Do you p _ _ _ the piano or the guitar?",
+"answer": [
+"play",
+"lay"
+],
+"topic": "Vocabulary · People"
+}
+]
+},
+{
+"title": "Part 3 · People",
+"instructions": "Read the sentences and complete the words for people. The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "My mother is a w _ _ _ _ and my father is a man.",
+"answer": [
+"woman",
+"oman"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Tom is eight years old. He isn’t a man, he’s a b _ _ .",
+"answer": [
+"boy",
+"oy"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Your mother and your father are your p _ _ _ _ _ _ .",
+"answer": [
+"parents",
+"arents"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "There are a lot of p _ _ _ _ _ in the shop today – men, women and children.",
+"answer": [
+"people",
+"eople"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Our son is only three months old. He’s a b _ _ _ .",
+"answer": [
+"baby",
+"aby"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Their daughter Lina is a little g _ _ _ – she’s only six.",
+"answer": [
+"girl",
+"irl"
+],
+"topic": "Vocabulary · People"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the text about a woman and her sister. Choose the best answer (A, B or C) for each space.",
+"passage": "My sister, Amira\n\nThis is a photo of my sister, Amira, and me at her house. Amira and I are from Egypt, but she (19) ………… in Toronto, Canada, with her husband, Daniel. He is Canadian and he speaks English and French. Amira is a doctor in a big hospital. What time (20) ………… start work? She starts at 7.00 in the morning and finishes at 4.00. Daniel (21) ………… in a bank near their flat. They have one son, Adam. He is six. Where (22) ………… Adam go to school? His school is in the city centre and he goes there by bus. In the evening, Amira (23) ………… dinner for the family and Daniel reads to Adam. What (24) ………… do at the weekend? They go to the park or they visit friends. In the summer, they come to Egypt for four weeks. I love those weeks!",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"to live",
+"lives",
+"live"
+],
+"answer": 1,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"does she",
+"she does",
+"she"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"work",
+"working",
+"works"
+],
+"answer": 2,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"does he",
+"does",
+"do"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"makes",
+"make",
+"to make"
+],
+"answer": 0,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"does they",
+"they do",
+"do they"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about people. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "What time ............ finish work?",
+"options": [
+"you do",
+"do you",
+"you"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "We ............ work on Saturdays.",
+"options": [
+"don’t",
+"doesn’t",
+"aren’t"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Your new teacher is nice. Where ............ from?",
+"options": [
+"does she",
+"she is",
+"is she"
+],
+"answer": 2,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "My uncle ............ English at a school in Nairobi.",
+"options": [
+"teach",
+"teaches",
+"teaching"
+],
+"answer": 1,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "My parents ............ the news on TV every evening.",
+"options": [
+"watches",
+"watching",
+"watch"
+],
+"answer": 2,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "Kenji ............ to music on the bus.",
+"options": [
+"listens",
+"listen",
+"to listen"
+],
+"answer": 0,
+"topic": "Grammar · Present simple"
+}
+]
+}
+],
+"C": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Who’s this boy in the photo?\n2. What time does your class start?\n3. Does your sister live in London?\n4. These are my two daughters.\n5. Where do your parents live?\n6. Do you like this photo?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it is.",
+"It’s my son, Luca.",
+"I’m very well, thanks."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"At half past eight.",
+"In the classroom.",
+"Yes, it does."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, I don’t.",
+"Yes, she’s my sister.",
+"No, she lives in Manchester."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Oh, they’re beautiful!",
+"What’s your name?",
+"Nice to meet you, too."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"At six o’clock.",
+"In a small town near Warsaw.",
+"They’re teachers."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I am.",
+"Yes, please.",
+"Yes, it’s lovely."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · People",
+"instructions": "Read the sentences about people. What are the missing words? The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "My brother and I w _ _ _ for a big bank in Dubai.",
+"answer": [
+"work",
+"ork"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "I s _ _ _ _ Chemistry at university in Manchester.",
+"answer": [
+"study",
+"tudy"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "We l _ _ _ _ _ to music in the car.",
+"answer": [
+"listen",
+"isten"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "I usually m _ _ _ my friends in a café on Friday evenings.",
+"answer": [
+"meet",
+"eet"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "My parents t _ _ _ _ Maths at a school in Lagos.",
+"answer": [
+"teach",
+"each"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "We w _ _ _ _ films on TV on Saturday evenings.",
+"answer": [
+"watch",
+"atch"
+],
+"topic": "Vocabulary · People"
+}
+]
+},
+{
+"title": "Part 3 · People",
+"instructions": "Read the sentences and complete the words for people. The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "My grandfather is an old m _ _ – he’s 85.",
+"answer": [
+"man",
+"an"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Sara is a g _ _ _ of ten. She goes to a school near here.",
+"answer": [
+"girl",
+"irl"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Anna has three c _ _ _ _ _ _ _ – two sons and a daughter.",
+"answer": [
+"children",
+"hildren"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "The p _ _ _ _ _ in my office are very friendly.",
+"answer": [
+"people",
+"eople"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Look at the little b _ _ _ ! She’s only two weeks old.",
+"answer": [
+"baby",
+"aby"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Mrs Costa is married. Her h _ _ _ _ _ _ is called Marco.",
+"answer": [
+"husband",
+"usband"
+],
+"topic": "Vocabulary · People"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the text about a woman and her sister. Choose the best answer (A, B or C) for each space.",
+"passage": "My sister, Beatriz\n\nHere is a photo of me and my sister, Beatriz. We are from Portugal. I live in Lisbon, but Beatriz is in Scotland. She is a teacher, and she (19) ………… her job in a small school there. She loves the quiet town – she (20) ………… like big cities! Her husband, Ewan, is Scottish. He (21) ………… the guitar in a band and he works in a music shop. They have a daughter, Sofia. She is 12. What (22) ………… Sofia do after school? She plays with her two dogs in the garden. Beatriz and Ewan (23) ………… a lot of books, and they go to the cinema every Friday. What time (24) ………… get up? Beatriz gets up at 6.00 and Sofia gets up at 7.30. At the weekend, they walk with the dogs by the sea. I go to Scotland every summer, and Beatriz comes to Lisbon at Christmas. We talk on the phone every Sunday, too.",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"likes",
+"like",
+"to like"
+],
+"answer": 0,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t",
+"not",
+"doesn’t"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"play",
+"plays",
+"to play"
+],
+"answer": 1,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"do",
+"does",
+"is"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"reads",
+"to read",
+"read"
+],
+"answer": 2,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"do they",
+"are they",
+"they do"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about people. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "How many languages ............ speak?",
+"options": [
+"your parents",
+"your parents do",
+"do your parents"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "My sister ............ eat meat.",
+"options": [
+"doesn’t",
+"isn’t",
+"not"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "............ your brother a student?",
+"options": [
+"Does",
+"Is",
+"Are"
+],
+"answer": 1,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Our teacher ............ in a small flat near the school.",
+"options": [
+"living",
+"lives",
+"live"
+],
+"answer": 1,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "My grandparents ............ coffee every morning.",
+"options": [
+"drink",
+"drinks",
+"drinking"
+],
+"answer": 0,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "Lucas ............ work at 9.00 every day.",
+"options": [
+"start",
+"to start",
+"starts"
+],
+"answer": 2,
+"topic": "Grammar · Present simple"
+}
+]
+}
+],
+"D": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Is this your husband?\n2. When do you play tennis?\n3. My brother has a new baby.\n4. Where does your mother work?\n5. Look, this is me and my friends in Rome.\n6. Do you have any brothers or sisters?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, I’m not.",
+"Yes, please.",
+"No, that’s my brother, Tomas."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"On Saturday mornings.",
+"In the park.",
+"Yes, I do."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"I’m fine, thanks.",
+"Oh, that’s great news!",
+"See you tomorrow!"
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"She’s from Egypt.",
+"She’s forty-five.",
+"In a school in Cairo."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Wow, what a nice photo!",
+"Yes, I do.",
+"See you on Friday."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it’s very nice.",
+"Yes, one sister.",
+"Yes, I’m fine."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · People",
+"instructions": "Read the sentences about people. What are the missing words? The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "I e _ _ lunch in a café near my office.",
+"answer": [
+"eat",
+"at"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "I g _ _ up at 6.30 every morning and have a shower.",
+"answer": [
+"get",
+"et"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "On Sundays, we g _ to the park with the children.",
+"answer": [
+"go",
+"o"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Nadia and Omar are from Egypt, but they s _ _ _ _ very good English.",
+"answer": [
+"speak",
+"peak"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "What time do you f _ _ _ _ _ work in the evening?",
+"answer": [
+"finish",
+"inish"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "I m _ _ _ my brother for lunch every Wednesday.",
+"answer": [
+"meet",
+"eet"
+],
+"topic": "Vocabulary · People"
+}
+]
+},
+{
+"title": "Part 3 · People",
+"instructions": "Read the sentences and complete the words for people. The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "The w _ _ _ _ in the red car is my aunt.",
+"answer": [
+"woman",
+"oman"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Our neighbours have a b _ _ called Sam. He’s nine.",
+"answer": [
+"boy",
+"oy"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "I live with my p _ _ _ _ _ _ – my mum and my dad.",
+"answer": [
+"parents",
+"arents"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "There are five people in my f _ _ _ _ _ : my parents, my two brothers and me.",
+"answer": [
+"family",
+"amily"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "A b _ _ _ can’t walk or talk – it’s very young.",
+"answer": [
+"baby",
+"aby"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "That m _ _ with the black hair is my uncle.",
+"answer": [
+"man",
+"an"
+],
+"topic": "Vocabulary · People"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the text about a woman and her sister. Choose the best answer (A, B or C) for each space.",
+"passage": "My sister, Priya\n\nThis is my sister, Priya, and me in Mumbai. We are Indian, but Priya lives in Melbourne, Australia, with her family. She (19) ………… Medicine at the university there. Her husband, Arjun, is a chef in a hotel restaurant. What time (20) ………… finish work? He finishes at 11.00 at night! After her classes, Priya (21) ………… home at 5.30 and helps Rahul with his homework. They have two children, Rahul and Meera. Rahul is 9 and Meera is 4. Where (22) ………… Rahul play football? He plays in the park near their house every Saturday. On Sundays, Arjun (23) ………… a big lunch for the family. Priya and Arjun (24) ………… have a car, so they go everywhere by bus or by bike. Every December, they come to India for three weeks. It is my favourite time of the year.",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"study",
+"studies",
+"to study"
+],
+"answer": 1,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"he does",
+"he",
+"does he"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"comes",
+"come",
+"to come"
+],
+"answer": 0,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"do he",
+"does",
+"do"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"cook",
+"cooking",
+"cooks"
+],
+"answer": 2,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t",
+"doesn’t",
+"no"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about people. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "What ............ do at the weekend?",
+"options": [
+"are you",
+"do you",
+"you"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "............ your parents live in Turkey?",
+"options": [
+"Have",
+"Does",
+"Do"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Why ............ at home today? Is it a holiday?",
+"options": [
+"are you",
+"you are",
+"do you"
+],
+"answer": 0,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Every summer, my family ............ my grandparents in Mexico.",
+"options": [
+"visit",
+"visits",
+"to visit"
+],
+"answer": 1,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "My friends and I ............ Arabic at evening classes.",
+"options": [
+"learn",
+"learns",
+"learning"
+],
+"answer": 0,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "Marina ............ work at 6.00 in the evening.",
+"options": [
+"finish",
+"to finish",
+"finishes"
+],
+"answer": 2,
+"topic": "Grammar · Present simple"
+}
+]
+}
+],
+"E": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. How old is your daughter?\n2. What time do you have dinner?\n3. Who are the people in this photo?\n4. Does your father speak English?\n5. Here’s a photo of my new flat.\n6. Do you like your new job?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"She’s at school.",
+"She’s six.",
+"She’s very well."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"At home.",
+"Yes, every day.",
+"At about seven."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"They’re my grandparents.",
+"They’re fine, thanks.",
+"It’s in Turkey."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I do.",
+"Yes, he’s fifty.",
+"Yes, very well."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Oh, it looks lovely!",
+"It’s half past two.",
+"I’m from Chile."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I am.",
+"Yes, it’s great.",
+"Yes, please."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · People",
+"instructions": "Read the sentences about people. What are the missing words? The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "My cousins p _ _ _ basketball in the school team.",
+"answer": [
+"play",
+"lay"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Ana and her husband w _ _ _ for a small company in Porto.",
+"answer": [
+"work",
+"ork"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "My son and daughter s _ _ _ _ Biology at university in Leeds.",
+"answer": [
+"study",
+"tudy"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "We h _ _ _ a small flat in the city centre.",
+"answer": [
+"have",
+"ave"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "My grandparents w _ _ _ _ TV every evening after dinner.",
+"answer": [
+"watch",
+"atch"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Do you r _ _ _ books in English or in Spanish?",
+"answer": [
+"read",
+"ead"
+],
+"topic": "Vocabulary · People"
+}
+]
+},
+{
+"title": "Part 3 · People",
+"instructions": "Read the sentences and complete the words for people. The first letter is already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "A g _ _ _ is a female child.",
+"answer": [
+"girl",
+"irl"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Men, women and children are all p _ _ _ _ _ .",
+"answer": [
+"people",
+"eople"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Mr Sato is married. His w _ _ _ is called Yumi.",
+"answer": [
+"wife",
+"ife"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "My friend’s son is a b _ _ of ten.",
+"answer": [
+"boy",
+"oy"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "My grandmother is an old w _ _ _ _ – she’s ninety.",
+"answer": [
+"woman",
+"oman"
+],
+"topic": "Vocabulary · People"
+},
+{
+"type": "text",
+"q": "Some c _ _ _ _ _ _ _ start school at four years old.",
+"answer": [
+"children",
+"hildren"
+],
+"topic": "Vocabulary · People"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the text about a woman and her sister. Choose the best answer (A, B or C) for each space.",
+"passage": "My sister, Elena\n\nThis is a photo of my sister, Elena, and her family in Italy. Elena and I are from Greece. I live in Athens, but Elena’s home is in a village near Florence. She (19) ………… Italian very well now. Her husband, Marco, is Italian and he is a farmer. Elena works in a shop in the village, but she (20) ………… work on Fridays, so she goes to the market in Florence with her friends. They have three children: Nikos, Lucia and Sara. Nikos is 14 and the girls are 7. Nikos (21) ………… the bus to school in Florence. What time (22) ………… the children go to bed? At 9.00 – but Nikos reads in bed until 10.00! Marco (23) ………… up at 5.00 every morning and works with the animals. (24) ………… Marco like his job? Yes, he does – he loves the farm. I visit them every August, and we go to the sea together.",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"speak",
+"speaking",
+"speaks"
+],
+"answer": 2,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"doesn’t",
+"isn’t",
+"don’t"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"take",
+"takes",
+"to take"
+],
+"answer": 1,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"are",
+"does",
+"do"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"gets",
+"get",
+"getting"
+],
+"answer": 0,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Do",
+"Does",
+"Is he"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about people. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Where ............ study?",
+"options": [
+"does your sister",
+"your sister does",
+"your sister"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "I ............ like cold weather.",
+"options": [
+"doesn’t",
+"am not",
+"don’t"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "............ your friends from Spain?",
+"options": [
+"Do",
+"Are",
+"Is"
+],
+"answer": 1,
+"topic": "Grammar · be: negatives and questions"
+},
+{
+"type": "choice",
+"q": "My grandmother ............ me every Sunday.",
+"options": [
+"phone",
+"phones",
+"to phone"
+],
+"answer": 1,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "The students ............ to school every morning.",
+"options": [
+"walk",
+"walks",
+"walking"
+],
+"answer": 0,
+"topic": "Grammar · Present simple"
+},
+{
+"type": "choice",
+"q": "Pedro ............ his lunch in the park.",
+"options": [
+"eat",
+"to eat",
+"eats"
+],
+"answer": 2,
+"topic": "Grammar · Present simple"
+}
+]
+}
+]
+},
+"exam_tpl_step1_unit5": {
+"B": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Excuse me, where’s the bus station?\n2. Can I have a towel, please?\n3. Are there any good restaurants near here?\n4. Is there a swimming pool in the hotel?\n5. Excuse me, can you help me? I’m looking for the museum.\n6. Is this the hospital?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s in the next street, on the left.",
+"Yes, there is.",
+"No, thank you."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s on the left.",
+"Yes, of course. Here you are.",
+"Yes, I am."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it is.",
+"It’s very nice.",
+"Yes, there are two in this street."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, they are.",
+"No, sorry, there isn’t.",
+"It’s very hot today."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, they aren’t.",
+"Yes, I am.",
+"Yes, it’s in this street, next to the bank."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, it’s the hotel.",
+"Yes, there is.",
+"No, I’m not."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · In a hotel room",
+"instructions": "Read the sentences about things in a hotel room. What are the missing letters? Some letters are already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You sleep in it at night. b _ _",
+"answer": [
+"bed",
+"ed"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You stand under it and wash your body. s _ _ _ _ _",
+"answer": [
+"shower",
+"hower"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You dry your hands and face with it after a shower. t _ _ _ _",
+"answer": [
+"towel",
+"owel"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "Your head is on it when you sleep. p _ _ _ _ _",
+"answer": [
+"pillow",
+"illow"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You watch films and the news on it. T _",
+"answer": [
+"TV",
+"V"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You turn it on when the room is dark. l _ _ _",
+"answer": [
+"lamp",
+"amp"
+],
+"topic": "Vocabulary · In a hotel room"
+}
+]
+},
+{
+"title": "Part 3 · Places",
+"instructions": "Read the sentences about places in a town. What are the missing letters? Some letters are already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You sleep here when you are on holiday in a different town. h _ _ _ _",
+"answer": [
+"hotel",
+"otel"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You can see old and interesting things here. m _ _ _ _ _",
+"answer": [
+"museum",
+"useum"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "A very big shop where you buy food and drink. s _ _ _ _ _ _ _ _ _ _",
+"answer": [
+"supermarket",
+"upermarket"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "A green place in a town with trees, where people walk and play. p _ _ _",
+"answer": [
+"park",
+"ark"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You go here to get a train. s _ _ _ _ _ _",
+"answer": [
+"station",
+"tation"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You leave your car here. c _ _   p _ _ _",
+"answer": [
+"car park",
+"ar ark"
+],
+"topic": "Vocabulary · Places"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the text about Marco and his town. Choose the best answer (A, B or C) for each space.",
+"passage": "Marco’s Town\n\nHi, I’m Marco. I live in Sorello, a small town by the sea in Italy. (19) ………… a beautiful old market in the centre of the town. (20) ………… two big beaches near Sorello and (21) ………… some lovely cafés next to the sea. (22) ………… a cinema in my town, so we watch films at home. Sorello is quiet, but I love it. What about your town? (23) ………… any beaches near it? (24) ………… a cinema?",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"There are",
+"There is",
+"It is"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"There are",
+"There is",
+"They are"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"there is",
+"there are",
+"it is"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"There isn’t",
+"There aren’t",
+"It isn’t"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Is there",
+"Are there",
+"Are they"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Is it",
+"Are there",
+"Is there"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about a city. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "There ............ four big parks in the city.",
+"options": [
+"is",
+"are",
+"have"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ is a very old museum near the river.",
+"options": [
+"It",
+"There",
+"They"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "There ............ a new cinema in the shopping centre.",
+"options": [
+"is",
+"are",
+"has"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ any cheap hotels near the station?",
+"options": [
+"Are there",
+"Is there",
+"Is it"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ a bus station in the city – people go by train.",
+"options": [
+"There aren’t",
+"It isn’t",
+"There isn’t"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ a good café in this street?",
+"options": [
+"Are they",
+"Are there",
+"Is there"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+}
+]
+}
+],
+"C": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Excuse me, is there a bank near here?\n2. Where’s the swimming pool?\n3. Can I have my key, please?\n4. Are there any shops in the hotel?\n5. Excuse me, is the museum near here?\n6. Is there a phone in my room?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it’s very old.",
+"Yes, there’s one in the next street.",
+"No, I don’t."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s on the first floor.",
+"Yes, there is.",
+"Yes, please."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, they aren’t.",
+"It’s in this street.",
+"Certainly. Room 12, here you are."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, there aren’t, but there’s a big shop in the next street.",
+"Yes, it is.",
+"Yes, we do."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, there are.",
+"Yes, it’s in this street.",
+"Thanks a lot."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, they are.",
+"It’s a very nice room.",
+"Yes, there is – it’s next to the bed."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · In a hotel room",
+"instructions": "Read the sentences about things in a hotel room. What are the missing letters? Some letters are already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You sit in it in hot water and wash. b _ _ _",
+"answer": [
+"bath",
+"ath"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "It’s on the bed and it keeps you warm at night. b _ _ _ _ _ _",
+"answer": [
+"blanket",
+"lanket"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You sit at it and write or use your laptop. d _ _ _",
+"answer": [
+"desk",
+"esk"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You use it to call reception. p _ _ _ _",
+"answer": [
+"phone",
+"hone"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You sit on it at the desk. c _ _ _ _",
+"answer": [
+"chair",
+"hair"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You put your clothes in it. w _ _ _ _ _ _ _",
+"answer": [
+"wardrobe",
+"ardrobe"
+],
+"topic": "Vocabulary · In a hotel room"
+}
+]
+},
+{
+"title": "Part 3 · Places",
+"instructions": "Read the sentences about places in a town. What are the missing letters? Some letters are already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You have a coffee and a cake here. c _ _ _",
+"answer": [
+"café",
+"afé",
+"cafe",
+"afe"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "Your money is here, and you can get money from a machine outside it. b _ _ _",
+"answer": [
+"bank",
+"ank"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "Children go here to learn. s _ _ _ _ _",
+"answer": [
+"school",
+"chool"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "People sell fruit, vegetables and clothes here, in the street. m _ _ _ _ _",
+"answer": [
+"market",
+"arket"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "Planes leave from here. a _ _ _ _ _ _",
+"answer": [
+"airport",
+"irport"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You go here to get a bus to a different town. b _ _   s _ _ _ _ _ _",
+"answer": [
+"bus station",
+"us tation"
+],
+"topic": "Vocabulary · Places"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the text about Aisha and her town. Choose the best answer (A, B or C) for each space.",
+"passage": "Aisha’s Town\n\nMy name is Aisha and I live in Kembi, a town in Kenya. Kembi isn’t big, but it’s a nice place. (19) ………… a big park with a lake next to my house. (20) ………… lots of small shops and a market on Saturdays. (21) ………… a good hospital in Kembi – my mother is a nurse there. (22) ………… any hotels in my town, so tourists don’t stay here. Now tell me about your town. (23) ………… a hospital? (24) ………… any big parks?",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"There is",
+"There are",
+"They are"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It is",
+"There are",
+"There is"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"They are",
+"There are",
+"There is"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"There isn’t",
+"They aren’t",
+"There aren’t"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Is it",
+"Is there",
+"Are there"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Are there",
+"Is there",
+"Has it"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about a city. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "There ............ a lot of tourists in the city in summer.",
+"options": [
+"are",
+"is",
+"has"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ is a big hospital in Park Road.",
+"options": [
+"They",
+"It",
+"There"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "There ............ a market in the main square on Sundays.",
+"options": [
+"are",
+"is",
+"am"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ a library near your school?",
+"options": [
+"Are there",
+"Is it",
+"Is there"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ any beaches near the city.",
+"options": [
+"There isn’t",
+"There aren’t",
+"They aren’t"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ any museums in the city centre?",
+"options": [
+"Is there",
+"Has it",
+"Are there"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+}
+]
+}
+],
+"D": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Excuse me, where’s the station?\n2. Is there a café near here?\n3. Can I have a blanket, please? My room is cold.\n4. Are there any banks in this street?\n5. Excuse me, can you help me? I’m looking for the swimming pool.\n6. Is this the hotel?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, there are.",
+"No, thanks.",
+"It’s next to the park."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, there’s one on the corner.",
+"Yes, it is.",
+"It’s very good."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, there are.",
+"It’s on the right.",
+"Of course. Here you are."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, there aren’t. They’re in the next street.",
+"No, it isn’t.",
+"Yes, I do."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it’s very big.",
+"Yes, of course. It’s in the next street.",
+"Yes, I am."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, there isn’t.",
+"Yes, they are.",
+"Yes, it is. Welcome!"
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · In a hotel room",
+"instructions": "Read the sentences about things in a hotel room. What are the missing letters? Some letters are already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You have a quick wash under it in the morning. s _ _ _ _ _",
+"answer": [
+"shower",
+"hower"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "It’s in the bathroom. You dry your body with it. t _ _ _ _",
+"answer": [
+"towel",
+"owel"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You open it when the room is hot, and you can see the street through it. w _ _ _ _ _",
+"answer": [
+"window",
+"indow"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You open the door of your room with it. k _ _",
+"answer": [
+"key",
+"ey"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "Cold drinks and water are in it. f _ _ _ _ _",
+"answer": [
+"fridge",
+"ridge"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "It’s big and soft, and you sleep in it. b _ _",
+"answer": [
+"bed",
+"ed"
+],
+"topic": "Vocabulary · In a hotel room"
+}
+]
+},
+{
+"title": "Part 3 · Places",
+"instructions": "Read the sentences about places in a town. What are the missing letters? Some letters are already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "Students study here after school. u _ _ _ _ _ _ _ _ _",
+"answer": [
+"university",
+"niversity"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You can read and borrow books here. l _ _ _ _ _ _",
+"answer": [
+"library",
+"ibrary"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You watch films here with lots of other people. c _ _ _ _ _",
+"answer": [
+"cinema",
+"inema"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You can see lions, elephants and monkeys here. z _ _",
+"answer": [
+"zoo",
+"oo"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You watch a play here. t _ _ _ _ _ _",
+"answer": [
+"theatre",
+"heatre",
+"theater",
+"heater"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You buy stamps and send letters here. p _ _ _   o _ _ _ _ _",
+"answer": [
+"post office",
+"ost ffice"
+],
+"topic": "Vocabulary · Places"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the text about Tomás and his town. Choose the best answer (A, B or C) for each space.",
+"passage": "Tomás’s Town\n\nHello! My name is Tomás. I’m from Vila Nova, a small town in the north of Portugal. (19) ………… lots of old streets and a beautiful river. (20) ………… a station in the town centre, and the train to the city is very fast. (21) ………… three good restaurants near the river and a café too. But (22) ………… any big shops or supermarkets – people go to the city for those. Tell me about your town. (23) ………… a river in your town? (24) ………… any good restaurants?",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"They are",
+"There are",
+"Is there"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"There is",
+"It is",
+"There are"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"There is",
+"There are",
+"Are there"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"there isn’t",
+"there aren’t",
+"they aren’t"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Is there",
+"Are they",
+"Is it"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Are they",
+"Is there",
+"Are there"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about a city. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "There ............ a lovely beach near the city.",
+"options": [
+"are",
+"am",
+"is"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ are two supermarkets in this street.",
+"options": [
+"There",
+"It",
+"They"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "There ............ lots of nice cafés in the old town.",
+"options": [
+"is",
+"are",
+"be"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ a car park near the cinema?",
+"options": [
+"Is",
+"Is there",
+"Are there"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ a university in the city, so students go to the capital.",
+"options": [
+"There aren’t",
+"There isn’t",
+"It isn’t"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ any good restaurants near the station?",
+"options": [
+"Are there",
+"Is there",
+"There are"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+}
+]
+}
+],
+"E": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Is there a restaurant in the hotel?\n2. Excuse me, where’s the supermarket?\n3. Can I have two pillows, please?\n4. Are there any cafés near the beach?\n5. Excuse me, is the station near here?\n6. Excuse me, is there a car park near here?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, it isn’t.",
+"Yes, there is – it’s on the second floor.",
+"Yes, we are."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s on the left, next to the cinema.",
+"Yes, there is.",
+"No, we don’t."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, there are.",
+"It’s in the next street.",
+"Yes, of course. No problem."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it is.",
+"Yes, there are lots.",
+"No, it isn’t."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, I’m not.",
+"Yes, there are.",
+"No, it’s in the centre of town."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, there’s one behind the hotel.",
+"Yes, it’s a car.",
+"No, they aren’t."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · In a hotel room",
+"instructions": "Read the sentences about things in a hotel room. What are the missing letters? Some letters are already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "It’s soft and you put your head on it in bed. p _ _ _ _ _",
+"answer": [
+"pillow",
+"illow"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "It’s next to the bed and it gives light. l _ _ _",
+"answer": [
+"lamp",
+"amp"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You go into the room through it. d _ _ _",
+"answer": [
+"door",
+"oor"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "You look at your face in it. m _ _ _ _ _",
+"answer": [
+"mirror",
+"irror"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "It’s in the bathroom. You fill it with hot water and sit in it. b _ _ _",
+"answer": [
+"bath",
+"ath"
+],
+"topic": "Vocabulary · In a hotel room"
+},
+{
+"type": "text",
+"q": "It’s on the bed. You put it over you when you are cold. b _ _ _ _ _ _",
+"answer": [
+"blanket",
+"lanket"
+],
+"topic": "Vocabulary · In a hotel room"
+}
+]
+},
+{
+"title": "Part 3 · Places",
+"instructions": "Read the sentences about places in a town. What are the missing letters? Some letters are already there. Write the whole word.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You have lunch or dinner here and a waiter brings your food. r _ _ _ _ _ _ _ _ _",
+"answer": [
+"restaurant",
+"estaurant"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "Doctors and nurses work here. h _ _ _ _ _ _ _",
+"answer": [
+"hospital",
+"ospital"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You buy things here – clothes, books or food. s _ _ _",
+"answer": [
+"shop",
+"hop"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You watch a football match here. s _ _ _ _ _ _",
+"answer": [
+"stadium",
+"tadium"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You sit on the sand next to the sea here. b _ _ _ _",
+"answer": [
+"beach",
+"each"
+],
+"topic": "Vocabulary · Places"
+},
+{
+"type": "text",
+"q": "You swim here. It’s often in a sports centre. s _ _ _ _ _ _ _   p _ _ _",
+"answer": [
+"swimming pool",
+"wimming ool"
+],
+"topic": "Vocabulary · Places"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the text about Lena and her town. Choose the best answer (A, B or C) for each space.",
+"passage": "Lena’s Town\n\nI’m Lena and I live in Birkholm, a small town in Denmark, with my parents and my brother. (19) ………… a lovely old museum in the centre and a big library next to it. (20) ………… lots of bikes in Birkholm because (21) ………… only one bus! (22) ………… a swimming pool near my school, so we swim in the sea. I like my town, but it’s very quiet. And your town? (23) ………… any museums? (24) ………… a swimming pool?",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"There are",
+"It is",
+"There is"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"There are",
+"They are",
+"There is"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"there is",
+"is there",
+"there are"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"There aren’t",
+"Isn’t there",
+"There isn’t"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Is there",
+"Are there",
+"Have there"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Is there",
+"There is",
+"Are there"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about a city. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "There ............ a famous old bridge in the city.",
+"options": [
+"is",
+"have",
+"are"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ are lots of students in the city because of the university.",
+"options": [
+"They",
+"There",
+"It"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "There ............ three cinemas in the shopping centre.",
+"options": [
+"is",
+"has",
+"are"
+],
+"answer": 2,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ a bank near the hotel?",
+"options": [
+"Are there",
+"Is there",
+"Has there"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ many hotels in the city centre, so rooms are expensive.",
+"options": [
+"There aren’t",
+"There isn’t",
+"Aren’t there"
+],
+"answer": 0,
+"topic": "Grammar · there is/there are"
+},
+{
+"type": "choice",
+"q": "............ any parks in your city?",
+"options": [
+"Is there",
+"Are there",
+"They are"
+],
+"answer": 1,
+"topic": "Grammar · there is/there are"
+}
+]
+}
+]
+},
+"exam_tpl_step1_unit6": {
+"B": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. I’ll carry those bags for you.\n2. Would you like a sandwich? I’ve got two.\n3. I’m sorry, I don’t have your book with me today.\n4. I don’t know where the bus station is.\n5. Can I help you with your homework?\n6. Ooh, these cakes look really nice.",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"How much are they?",
+"Oh, thanks – that’s very kind.",
+"Yes, I’d like a bag, please."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it’s a nice sandwich.",
+"Here’s your sandwich.",
+"No, thanks. I’m not hungry."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Don’t worry, it’s fine.",
+"Would you like a book?",
+"Yes, I’ve got it."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, it’s OK, thanks.",
+"Don’t worry, I’ll show you.",
+"Yes, please, that’s great."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s for tomorrow.",
+"Yes, I do my homework.",
+"Thanks, but I’m OK."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Would you like one? I’ve got lots.",
+"Yes, I’d like a coffee, please.",
+"No, it’s OK, thanks."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · Jobs",
+"instructions": "Read the sentences about jobs and daily life. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Marco is a ............ in a big hotel – he cooks lunch and dinner for 200 people every day.",
+"options": [
+"taxi driver",
+"chef",
+"receptionist"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Elena is a ............ – she works in a hospital and helps the doctors.",
+"options": [
+"nurse",
+"shop assistant",
+"student"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "My cousin drives people to the airport every day because he is a ............ .",
+"options": [
+"chef",
+"factory worker",
+"taxi driver"
+],
+"answer": 2,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Does your new ............ give you a lot of homework?",
+"options": [
+"teacher",
+"receptionist",
+"taxi driver"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Yusuf is a ............ – he sells shoes in a big shop in the town centre.",
+"options": [
+"bank worker",
+"shop assistant",
+"factory worker"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Anna is a ............ in a small café near the station – she brings the coffee to your table.",
+"options": [
+"doctor",
+"teacher",
+"waitress"
+],
+"answer": 2,
+"topic": "Vocabulary · Jobs"
+}
+]
+},
+{
+"title": "Part 3 · Daily life",
+"instructions": "Read the sentences about daily life. What are the missing words? The first letter is already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "I usually h _ _ _  c _ _ _ _ _ with Jana at 10.30 – she makes it in the office kitchen.",
+"answer": [
+"have coffee",
+"ave offee"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "The children g _  t _  s _ _ _ _ _ by bus – it’s about ten minutes from our house.",
+"answer": [
+"go to school",
+"o o chool"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "What time do you f _ _ _ _ _  w _ _ _ on Fridays? Is it early?",
+"answer": [
+"finish work",
+"inish ork"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "We often h _ _ _  l _ _ _ _ in a small café near the office at 1 o’clock.",
+"answer": [
+"have lunch",
+"ave unch"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "My brothers don’t g _  t _  b _ _ before 12 o’clock at night – they watch films.",
+"answer": [
+"go to bed",
+"o o ed"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "Does Karim g _ _  u _ early on Sundays, or does he stay in bed?",
+"answer": [
+"get up",
+"et p"
+],
+"topic": "Vocabulary · Daily life"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the conversation between Dan and Mia. Mia has a brother, Leo. Dan asks about Leo’s life. Choose the best answer (A, B or C) for each space.",
+"passage": "Dan: What does your brother do?\nMia: Leo? He’s a chef, but he (19) ………… in a restaurant.\nDan: Where does he work?\nMia: In a big hospital in Manchester. He cooks for the people there.\nDan: (20) ………… like the job?\nMia: Yes, (21) ………… . He starts work at 6 o’clock in the morning, but he (22) ………… late – he goes home at 2 o’clock.\nDan: (23) ………… him at the hospital sometimes?\nMia: No, I don’t. It’s a long way from my flat. But we have lunch together on Sundays.\nDan: Nice. And what does he do in the evening?\nMia: He plays football with his friends. He (24) ………… TV very much – he loves sport.\nDan: Me too!",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t cook",
+"doesn’t cook",
+"not cook"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Does he",
+"Is he",
+"Do he"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"he does",
+"he is",
+"he can"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"doesn’t finish",
+"don’t finish",
+"not finish"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Does he meet",
+"You meet",
+"Do you meet"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t watch",
+"not watch",
+"doesn’t watch"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about daily life. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Amir ............ early on Saturdays because the shop is closed.",
+"options": [
+"doesn’t get up",
+"don’t get up",
+"not get up"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "My father has a car, but he ............ drive to work – he walks.",
+"options": [
+"don’t",
+"doesn’t",
+"isn’t"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Sam has a lot of books, but ............ read them – he watches TV.",
+"options": [
+"he doesn’t",
+"he isn’t",
+"there isn’t"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Does your sister work in the hospital at night? ............",
+"options": [
+"Yes, she is.",
+"Yes, she does.",
+"Yes, she works."
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "What time ............ breakfast on Sundays?",
+"options": [
+"you have",
+"you do have",
+"do you have"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Does the shop close at 6 o’clock? Yes, ............ .",
+"options": [
+"it does",
+"it closes",
+"it is"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+}
+],
+"C": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Would you like a cup of coffee?\n2. I’ll help you with those boxes.\n3. Sorry, I’m late again.\n4. I don’t have any money for the bus.\n5. Can I get you something to eat?\n6. Brr, it’s very cold in here.",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"Here’s your coffee.",
+"Yes, please – that’s great.",
+"Yes, I like coffee shops."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"They’re for my sister.",
+"Would you like a box?",
+"No, it’s fine, thank you."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"That’s OK, don’t worry.",
+"Would you like a coffee?",
+"Yes, it’s 8 o’clock."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Don’t worry, I’ll pay.",
+"Yes, please, that’s very kind.",
+"No, thank you, I’m fine."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"I’ll get it for you.",
+"Yes, it’s a nice café.",
+"That’s kind, but I’m fine."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, please.",
+"Would you like a cup of tea?",
+"Thanks, that’s great."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · Jobs",
+"instructions": "Read the sentences about jobs and daily life. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "My aunt is a ............ – she works in a big hospital and helps people when they are ill.",
+"options": [
+"doctor",
+"taxi driver",
+"chef"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Tomas is a ............ – he makes chairs and tables in a big building near the river.",
+"options": [
+"shop assistant",
+"factory worker",
+"receptionist"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Keiko is a ............ at a big office – she sits near the door and says hello to visitors.",
+"options": [
+"chef",
+"teacher",
+"receptionist"
+],
+"answer": 2,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Does the ............ in this restaurant cook the fish with rice?",
+"options": [
+"waiter",
+"chef",
+"bus driver"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Omar is ............ – he drives a big red bus in the city every day.",
+"options": [
+"a bus driver",
+"an office worker",
+"a doctor"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Are you a ............ at the university? What do you study?",
+"options": [
+"teacher",
+"student",
+"waiter"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+}
+]
+},
+{
+"title": "Part 3 · Daily life",
+"instructions": "Read the sentences about daily life. What are the missing words? The first letter is already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "I don’t w _ _ _  u _ before 9 o’clock at the weekend – I love my bed!",
+"answer": [
+"wake up",
+"ake p"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "The shop closes at 7.00 and then Yuki and her sister g _  h _ _ _ in Yuki’s car.",
+"answer": [
+"go home",
+"o ome"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "My grandparents h _ _ _  d _ _ _ _ _ very early – at about 5.30 in the afternoon.",
+"answer": [
+"have dinner",
+"ave inner"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "Do you h _ _ _  b _ _ _ _ _ _ _ _ at home or at work in the morning?",
+"answer": [
+"have breakfast",
+"ave reakfast"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "The nurses in this hospital s _ _ _ _  w _ _ _ at 7 o’clock in the morning.",
+"answer": [
+"start work",
+"tart ork"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "Emre and Ali don’t f _ _ _ _ _  w _ _ _ until 10 o’clock at night because the restaurant is very busy.",
+"answer": [
+"finish work",
+"inish ork"
+],
+"topic": "Vocabulary · Daily life"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the conversation between Ana and Ben. Ben has a friend, Sam. Ana asks about Sam’s life. Choose the best answer (A, B or C) for each space.",
+"passage": "Ana: What does your friend Sam do?\nBen: He’s a taxi driver, but he (19) ………… in the city.\nAna: Where does he drive?\nBen: At the airport. He takes people to their hotels.\nAna: (20) ………… at night?\nBen: Yes, (21) ………… – from 10 in the evening to 6 in the morning. He (22) ………… very much, so he’s always tired.\nAna: (23) ………… a lot of money?\nBen: Not really, but he likes the job. He talks to people from all over the world.\nAna: That’s nice. And where does he live?\nBen: In a small flat near the airport. It’s noisy, but he (24) ………… a lot of money for it.\nAna: I see.",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t drive",
+"doesn’t drive",
+"not drive"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Does he work",
+"Do he work",
+"Is he work"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"he does",
+"he is",
+"he has"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t sleep",
+"not sleep",
+"doesn’t sleep"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Do he get",
+"Does he get",
+"Is he get"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t pay",
+"doesn’t pay",
+"not pay"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about daily life. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Hakan ............ meat – he only eats fish and vegetables.",
+"options": [
+"doesn’t eat",
+"don’t eat",
+"not eat"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "We have a big garden, but my mother ............ like flowers.",
+"options": [
+"no",
+"don’t",
+"doesn’t"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Erika is a teacher, but ............ work on Mondays – she has a free day.",
+"options": [
+"she isn’t",
+"there isn’t",
+"she doesn’t"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Does your brother play football at the weekend? ............",
+"options": [
+"Yes, he plays.",
+"Yes, he does.",
+"Yes, he is."
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "What time ............ work in the morning?",
+"options": [
+"you start",
+"do you start",
+"you do start"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Does your bus stop near the school? Yes, ............ .",
+"options": [
+"it is",
+"it stops",
+"it does"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+}
+],
+"D": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Would you like some more rice?\n2. I’ll open the door for you.\n3. I’m sorry, I don’t have a pen.\n4. I don’t understand this exercise.\n5. Can I get you a taxi?\n6. Mmm, that coffee looks good.",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, it’s rice.",
+"No, thank you – I’m fine.",
+"Where’s the rice?"
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Would you like a key?",
+"Yes, it’s open.",
+"Oh, thank you – that’s kind."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Don’t worry, I’ve got two.",
+"Yes, please.",
+"Thanks, but I’m OK."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"I’d like some help, please.",
+"Don’t worry, I’ll help you.",
+"Yes, please – that’s kind."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I’m a taxi driver.",
+"No, it’s OK – I’ll walk.",
+"The station is over there."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Would you like a cup?",
+"Yes, please – that’s great.",
+"No, thanks, I’m fine."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · Jobs",
+"instructions": "Read the sentences about jobs and daily life. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Ravi is a ............ in a big school in Delhi – he teaches maths to children.",
+"options": [
+"teacher",
+"waiter",
+"factory worker"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Julia is a ............ – she works in a bank and helps people with their money.",
+"options": [
+"taxi driver",
+"bank worker",
+"nurse"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "My neighbour is a ............ – he works at the police station in the town centre.",
+"options": [
+"police officer",
+"chef",
+"student"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Does your ............ work at the big hospital or at the small one near the park?",
+"options": [
+"waitress",
+"doctor",
+"shop assistant"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Diego is ............ – he plays for a big club in Madrid and he’s on TV every week.",
+"options": [
+"a football player",
+"a bus driver",
+"an office worker"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Lin doesn’t cook in the restaurant – she’s a ............ and she takes the food to the tables.",
+"options": [
+"chef",
+"receptionist",
+"waitress"
+],
+"answer": 2,
+"topic": "Vocabulary · Jobs"
+}
+]
+},
+{
+"title": "Part 3 · Daily life",
+"instructions": "Read the sentences about daily life. What are the missing words? The first letter is already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "On Sundays we h _ _ _  b _ _ _ _ _ _ _ _ late, at about 11 o’clock, and we don’t have lunch.",
+"answer": [
+"have breakfast",
+"ave reakfast"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "The students g _  t _  b _ _ late – at 1 or 2 o’clock in the morning!",
+"answer": [
+"go to bed",
+"o o ed"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "Do you g _  t _  w _ _ _ by car, or do you walk to the office?",
+"answer": [
+"go to work",
+"o o ork"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "The people in my office h _ _ _  c _ _ _ _ _ and a biscuit at 3 o’clock every afternoon.",
+"answer": [
+"have coffee",
+"ave offee"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "I only s _ _ _ _ for five or six hours a night – it’s not a lot.",
+"answer": [
+"sleep",
+"leep"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "What time do the children g _ _  u _ on school days?",
+"answer": [
+"get up",
+"et p"
+],
+"topic": "Vocabulary · Daily life"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the conversation between Tom and Priya. Priya has a cousin, Nadia. Tom asks about Nadia’s life. Choose the best answer (A, B or C) for each space.",
+"passage": "Tom: What does your cousin do?\nPriya: Nadia? She’s a doctor, but she (19) ………… in this country.\nTom: Where does she live?\nPriya: In a small village in Kenya. She works in a little hospital there.\nTom: (20) ………… a lot of people every day?\nPriya: Yes, (21) ………… – about 50! She (22) ………… for lunch because she’s very busy, but she loves her job.\nTom: (23) ………… her sometimes?\nPriya: No, it’s a long way from here, but we talk on the phone every week.\nTom: And is her house nice?\nPriya: Yes, it’s small, but it’s next to the school. She (24) ………… a car – she walks everywhere.\nTom: Interesting!",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t live",
+"doesn’t live",
+"not live"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Is she see",
+"Does she see",
+"Do she see"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"she can",
+"she is",
+"she does"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t stop",
+"not stop",
+"doesn’t stop"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Do you visit",
+"Does she visit",
+"You visit"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"doesn’t have",
+"don’t have",
+"not have"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about daily life. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "My uncle ............ coffee – he drinks tea all day.",
+"options": [
+"don’t drink",
+"doesn’t drink",
+"not drink"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "There’s a piano in our house, but my dad ............ play it.",
+"options": [
+"doesn’t",
+"isn’t",
+"not"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Ivan works in a café, but ............ make the coffee – he only washes the cups.",
+"options": [
+"he isn’t",
+"he doesn’t",
+"it doesn’t"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Does your mother start work at 8 o’clock? ............",
+"options": [
+"Yes, she is.",
+"Yes, she starts.",
+"Yes, she does."
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "What ............ for breakfast?",
+"options": [
+"you eat",
+"do you eat",
+"you do eat"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Does the train leave at 6.15? Yes, ............ .",
+"options": [
+"it does",
+"it leaves",
+"it is"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+}
+],
+"E": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Would you like to sit here?\n2. I’ll make you a sandwich.\n3. Sorry, I don’t have your phone number.\n4. I don’t know where the hotel is.\n5. Can I help you with the cooking?\n6. That cake looks lovely.",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s a nice chair.",
+"Thank you, that’s very kind.",
+"Yes, I’d like a table, please."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Thanks, but I’m not hungry.",
+"Yes, it’s a cheese sandwich.",
+"How much is it?"
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Would you like a phone?",
+"Yes, I’ve got a new phone.",
+"Don’t worry – here it is."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Don’t worry, I’ll take you there.",
+"Yes, please, that’s very kind.",
+"No, thank you, I’m OK."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I’m a chef.",
+"It’s chicken and rice.",
+"Thank you, but I’m OK."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, please, that’s great.",
+"Would you like some?",
+"No, it’s OK, thanks."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · Jobs",
+"instructions": "Read the sentences about jobs and daily life. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Pedro is a ............ – he works in a big hospital, but he isn’t a doctor.",
+"options": [
+"nurse",
+"teacher",
+"chef"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "My friend Aysel is ............ – she sits at a desk all day and writes emails.",
+"options": [
+"a taxi driver",
+"an office worker",
+"a waitress"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Is the ............ in that shop friendly? I want to buy a new bag.",
+"options": [
+"chef",
+"student",
+"shop assistant"
+],
+"answer": 2,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Kwame is a ............ – he makes phones all day and he starts work at 6 o’clock.",
+"options": [
+"factory worker",
+"bank worker",
+"receptionist"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Our ............ at the hotel is very nice – he cooks a great breakfast.",
+"options": [
+"chef",
+"receptionist",
+"nurse"
+],
+"answer": 0,
+"topic": "Vocabulary · Jobs"
+},
+{
+"type": "choice",
+"q": "Are you a ............ ? You drive very well!",
+"options": [
+"waiter",
+"taxi driver",
+"teacher"
+],
+"answer": 1,
+"topic": "Vocabulary · Jobs"
+}
+]
+},
+{
+"title": "Part 3 · Daily life",
+"instructions": "Read the sentences about daily life. What are the missing words? The first letter is already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "The shop assistants h _ _ _  l _ _ _ _ at 12.30, but I have it at 2 o’clock.",
+"answer": [
+"have lunch",
+"ave unch"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "Sofia and I w _ _ _  u _ at 6 o’clock every day because of the baby.",
+"answer": [
+"wake up",
+"ake p"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "After the football match, the boys g _  h _ _ _ and have a shower.",
+"answer": [
+"go home",
+"o ome"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "I s _ _ _ _  w _ _ _ at 8.30, but the shop opens at 9.00.",
+"answer": [
+"start work",
+"tart ork"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "Do your parents h _ _ _  d _ _ _ _ _ at home or in a restaurant on Fridays?",
+"answer": [
+"have dinner",
+"ave inner"
+],
+"topic": "Vocabulary · Daily life"
+},
+{
+"type": "text",
+"q": "The children in my street g _  t _  s _ _ _ _ _ at 8.30 – they walk there with their mothers.",
+"answer": [
+"go to school",
+"o o chool"
+],
+"topic": "Vocabulary · Daily life"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read the conversation between Lucas and Emma. Emma has a sister, Ola. Lucas asks about Ola’s life. Choose the best answer (A, B or C) for each space.",
+"passage": "Lucas: What does your sister do?\nEmma: Ola? She’s a student, but she (19) ………… at the university here.\nLucas: Where does she study?\nEmma: In Warsaw. She studies business.\nLucas: (20) ………… have classes every day?\nEmma: Yes, (21) ………… – from Monday to Friday. She (22) ………… English very well, so she has English classes in the evening too.\nLucas: (23) ………… her every week?\nEmma: Yes, on Sundays. And I visit her in Warsaw sometimes – it’s a beautiful city.\nLucas: And what does she do at the weekend?\nEmma: She (24) ………… to parties – she goes to the library! She wants a good job in a bank.\nLucas: She’s a good student!",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"doesn’t study",
+"don’t study",
+"not study"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Do she",
+"Is she",
+"Does she"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"she has",
+"she does",
+"she is"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t speak",
+"doesn’t speak",
+"not speak"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Does she phone",
+"Do you phone",
+"You phone"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"don’t go",
+"not go",
+"doesn’t go"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about daily life. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Ahmed ............ the bus to work because he lives near the office.",
+"options": [
+"don’t take",
+"not take",
+"doesn’t take"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "I love this song, but my sister ............ like it.",
+"options": [
+"no",
+"doesn’t",
+"isn’t"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Maya is a student, but ............ study in the evening – she works in a shop.",
+"options": [
+"she doesn’t",
+"she isn’t",
+"they don’t"
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Does your father cook dinner on Sundays? ............",
+"options": [
+"Yes, he does.",
+"Yes, he cooks.",
+"Yes, he is."
+],
+"answer": 0,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Where ............ your friends on Saturdays?",
+"options": [
+"you meet",
+"you do meet",
+"do you meet"
+],
+"answer": 2,
+"topic": "Grammar · Present simple: negatives and questions"
+},
+{
+"type": "choice",
+"q": "Does the class finish at 12.30? Yes, ............ .",
+"options": [
+"it finishes",
+"it does",
+"it is"
+],
+"answer": 1,
+"topic": "Grammar · Present simple: negatives and questions"
+}
+]
+}
+]
+},
+"exam_tpl_step1_unit7": {
+"B": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Good morning. Can I help you?\n2. How much is this umbrella?\n3. Here you are.\n4. Do you have these shoes in black?\n5. I’m sorry, we don’t have any red ones.\n6. Anything else?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"You’re welcome.",
+"Yes, please. I’d like a black hat.",
+"No, it isn’t mine."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s twelve pounds.",
+"They’re twelve pounds each.",
+"Yes, it is."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Nice to see you.",
+"Thanks very much.",
+"Yes, I do."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"They’re very nice.",
+"No, thank you.",
+"Yes, we do. Here you are."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, please.",
+"It’s five pounds.",
+"That’s OK. Can I have a blue one, please?"
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, that’s all, thanks.",
+"Yes, it is.",
+"Here you are."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · Things",
+"instructions": "Read the sentences about things. What are the missing letters? The first letter is already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You use this when it rains: an u _ _ _ _ _ _ _",
+"answer": [
+"umbrella",
+"mbrella"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You open the door with this: a k _ _",
+"answer": [
+"key",
+"ey"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You drink tea or coffee from this: a c _ _",
+"answer": [
+"cup",
+"up"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You put your plates and cups on this and eat at it: a t _ _ _ _",
+"answer": [
+"table",
+"able"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You take photos with this: a c _ _ _ _ _",
+"answer": [
+"camera",
+"amera"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You put your food on this: a p _ _ _ _",
+"answer": [
+"plate",
+"late"
+],
+"topic": "Vocabulary · Things"
+}
+]
+},
+{
+"title": "Part 3 · Clothes",
+"instructions": "Read the sentences about clothes. What are the missing letters? Some letters are already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You wear them on your legs. They are blue, and young people love them: j _ _ _ _",
+"answer": [
+"jeans",
+"eans"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear it over your other clothes when it’s cold outside. It’s long: a c _ _ _",
+"answer": [
+"coat",
+"oat"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear them on your feet to play sport: white t _ _ _ _ _ _ _",
+"answer": [
+"trainers",
+"rainers"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "Men often wear it to work with a jacket. It’s the colour of the sky: a b _ _ _  s _ _ _ _",
+"answer": [
+"blue shirt",
+"lue hirt"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "Women often wear it with jeans or a skirt. It’s the colour of grass, but light: a light g _ _ _ _  t _ _",
+"answer": [
+"green top",
+"reen op"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear them on your legs when it’s hot. They are grey, but not light grey: d _ _ _  grey s _ _ _ _ _",
+"answer": [
+"dark shorts",
+"ark horts",
+"dark grey shorts"
+],
+"topic": "Vocabulary · Clothes"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read about a shop. Choose the best answer, A, B or C, for each space.",
+"passage": "Rosa’s Corner\n\nMy aunt has a small shop in our town. Every Sunday I work at my (19) ………… shop for three hours. Her name is Rosa, so the shop is called ‘Rosa’s Corner’. (20) ………… shop isn’t big, but it sells a lot of nice things: (21) ………… bags, hats and dresses. The prices are good, so students and young women often come in.\nThe clothes in the shop are beautiful, but my (22) ………… clothes are always the same. Rosa wears an old grey top and black trousers every day. Sometimes I say to her, ‘Look at (23) ………… red dress. It’s perfect for you!’ or ‘(24) ………… blue shoes are great. Do you want them?’ But Rosa always says, ‘No, thanks. My old clothes are fine.’",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"aunt",
+"aunt’s",
+"aunts"
+],
+"answer": 1,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"This",
+"These",
+"Those"
+],
+"answer": 0,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"woman’s",
+"women",
+"women’s"
+],
+"answer": 2,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Rosa",
+"Rosas’",
+"Rosa’s"
+],
+"answer": 2,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"these",
+"this",
+"those"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Those",
+"That",
+"This"
+],
+"answer": 0,
+"topic": "Grammar · this/that/these/those"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about clothes. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "How much are ............ black boots here?",
+"options": [
+"this",
+"these",
+"that"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "Can I have a look at ............ green jacket over there?",
+"options": [
+"these",
+"those",
+"that"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "............ are my sister’s shoes, not mine.",
+"options": [
+"This",
+"These",
+"That"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "Is this ............ umbrella?",
+"options": [
+"Anna",
+"Annas’",
+"Anna’s"
+],
+"answer": 2,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "In the shop, the ............ T-shirts are £5 and the girls’ T-shirts are £6.",
+"options": [
+"boys’",
+"boy",
+"boy’s"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "That white house is ............ home.",
+"options": [
+"Ben and Sara’s",
+"Ben’s and Sara",
+"Ben and Sara"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+}
+]
+}
+],
+"C": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. How much are those green cups?\n2. Can I have two of these plates, please?\n3. Do you have this T-shirt in blue?\n4. That’s fifteen pounds, please.\n5. Would you like a bag?\n6. Thank you. Have a nice day.",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s three pounds.",
+"Yes, they are.",
+"They’re three pounds each."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I do.",
+"Certainly. Here you are.",
+"No, I’m fine, thanks."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, sorry, we only have it in white.",
+"Yes, please.",
+"It’s very small."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"You’re welcome.",
+"That’s all, thanks.",
+"Here you are."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, I do.",
+"Yes, please.",
+"No, it isn’t."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Thanks, you too.",
+"Here you are.",
+"It’s four pounds fifty."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · Things",
+"instructions": "Read the sentences about things. What are the missing letters? The first letter is already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You wear this on your arm. It tells you the time: a w _ _ _ _",
+"answer": [
+"watch",
+"atch"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You buy water or juice in this: a b _ _ _ _ _",
+"answer": [
+"bottle",
+"ottle"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You use this to call your friends and send messages: a p _ _ _ _",
+"answer": [
+"phone",
+"hone"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You sit on this at a table or a desk: a c _ _ _ _",
+"answer": [
+"chair",
+"hair"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You read this in the morning. It has the news in it: a n _ _ _ _ _ _ _ _",
+"answer": [
+"newspaper",
+"ewspaper"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You drink water or juice from this: a g _ _ _ _",
+"answer": [
+"glass",
+"lass"
+],
+"topic": "Vocabulary · Things"
+}
+]
+},
+{
+"title": "Part 3 · Clothes",
+"instructions": "Read the sentences about clothes. What are the missing letters? Some letters are already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You wear them on your feet, under your shoes: s _ _ _ _",
+"answer": [
+"socks",
+"ocks"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear it over a shirt or a T-shirt when it’s cold. It’s warm: a s _ _ _ _ _ _",
+"answer": [
+"sweater",
+"weater"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear them on your feet in winter or in the rain. They are big shoes: brown b _ _ _ _",
+"answer": [
+"boots",
+"oots"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "Women often wear it to a party. It’s long, from the top of your body to your legs. It’s the colour of a tomato: a r _ _  d _ _ _ _",
+"answer": [
+"red dress",
+"ed ress"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear it round your neck when it’s cold. It’s the colour of the sun, but light: a light y _ _ _ _ _  s _ _ _ _",
+"answer": [
+"yellow scarf",
+"ellow carf"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear them on your legs. They aren’t jeans and they aren’t shorts. They are green, but not light green: d _ _ _  green t _ _ _ _ _ _ _",
+"answer": [
+"dark trousers",
+"ark rousers",
+"dark green trousers"
+],
+"topic": "Vocabulary · Clothes"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read about a shop. Choose the best answer, A, B or C, for each space.",
+"passage": "Leo’s Old Things\n\nMy grandfather has a shop in the old part of our city. On Saturday mornings you can find me at my (19) ………… shop. The shop is called ‘Leo’s Old Things’ – Leo is my grandfather’s name. (20) ………… name is funny, but it’s true – everything in the shop is old: clocks, lamps, pictures and books. The shop also sells old (21) ………… clothes from the 1960s – coats, jackets and hats – and people buy them for parties.\nI love the old things, but (22) ………… favourite thing is a big clock next to the door. It’s from 1950, and it isn’t for sale. Customers often ask ‘How much is (23) ………… clock?’ or ‘Are (24) ………… old books for sale?’ My grandfather says ‘Yes’ to the books, but for the clock the answer is always ‘No!’",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"grandfather’s",
+"grandfathers",
+"grandfather"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"These",
+"Those",
+"This"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"childrens",
+"children’s",
+"childrens’"
+],
+"answer": 1,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Leo’s",
+"Leos",
+"Leos’"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"those",
+"that",
+"these"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"this",
+"that",
+"these"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about clothes. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Excuse me, is ............ your bag?",
+"options": [
+"these",
+"this",
+"those"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "I don’t like ............ red trousers over there.",
+"options": [
+"that",
+"this",
+"those"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "............ is my favourite shop in the city.",
+"options": [
+"These",
+"This",
+"Those"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "Where is ............ new watch?",
+"options": [
+"Paolo’s",
+"Paolo",
+"Paolos’"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "The ............ coats are next to the door, and the women’s coats are at the back.",
+"options": [
+"men’s",
+"mens",
+"mens’"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "These presents are for ............ children.",
+"options": [
+"Ali and Nadia",
+"Ali’s and Nadia",
+"Ali and Nadia’s"
+],
+"answer": 2,
+"topic": "Grammar · Possessive 's"
+}
+]
+}
+],
+"D": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. Can I have a look at that watch, please?\n2. How much is that lamp?\n3. Do you want a bag for that?\n4. Excuse me, where are the hats?\n5. I’m sorry, we don’t have any small ones.\n6. Is that everything?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s half past two.",
+"Of course. Here you are.",
+"Yes, I do."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"They’re twenty-five pounds.",
+"Yes, it’s a lamp.",
+"It’s twenty-five pounds."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, thanks. I have one.",
+"Yes, it is.",
+"It’s over there."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"They’re ten pounds each.",
+"Yes, we do.",
+"They’re over there, next to the coats."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Oh, OK. Thank you anyway.",
+"Yes, please.",
+"Great, I’d like two."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, it isn’t mine.",
+"Yes, that’s all, thank you.",
+"Here’s your bag."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · Things",
+"instructions": "Read the sentences about things. What are the missing letters? The first letter is already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "It’s on the wall and it tells you the time: a c _ _ _ _",
+"answer": [
+"clock",
+"lock"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You read this. It has a lot of pages: a b _ _ _",
+"answer": [
+"book",
+"ook"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "It’s on the wall and you look at it, but it isn’t a clock. It can be a photo: a p _ _ _ _ _ _",
+"answer": [
+"picture",
+"icture"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You put your books and things in this and carry it: a b _ _",
+"answer": [
+"bag",
+"ag"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You cut your food with this: a k _ _ _ _",
+"answer": [
+"knife",
+"nife"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You write with this: a p _ _",
+"answer": [
+"pen",
+"en"
+],
+"topic": "Vocabulary · Things"
+}
+]
+},
+{
+"title": "Part 3 · Clothes",
+"instructions": "Read the sentences about clothes. What are the missing letters? Some letters are already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You wear them on your feet, with socks: s _ _ _ _",
+"answer": [
+"shoes",
+"hoes"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear it on your head when it’s sunny or cold: a h _ _",
+"answer": [
+"hat",
+"at"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "Women wear it. It isn’t trousers and it isn’t a dress: a red s _ _ _ _",
+"answer": [
+"skirt",
+"kirt"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear it over your shirt when it’s cold. It’s short, not long like a coat. It’s the colour of night: a b _ _ _ _  j _ _ _ _ _",
+"answer": [
+"black jacket",
+"lack acket"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear it over all your clothes when it’s cold outside. It’s long. It’s the colour of chocolate, but light: a light b _ _ _ _  c _ _ _",
+"answer": [
+"brown coat",
+"rown oat"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "They are trousers, and they are blue, but not light blue: d _ _ _  blue j _ _ _ _",
+"answer": [
+"dark jeans",
+"ark eans",
+"dark blue jeans"
+],
+"topic": "Vocabulary · Clothes"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read about a shop. Choose the best answer, A, B or C, for each space.",
+"passage": "Ana’s Shoes\n\nMy sister has a shoe shop near the station. After school on Fridays I go to my (19) ………… shop and help her. Her name is Ana, and ‘Ana’s Shoes’ is the name of the shop. There are shoes for everyone. (20) ………… shoes next to the door are for women, and the boots at the back are for men. There are also (21) ………… shoes in small sizes – they are cheap, so parents like them.\nAna loves shoes, but (22) ………… feet are always in old grey trainers! When new shoes arrive, I say ‘Why don’t you wear (23) ………… red shoes? They’re beautiful.’ or ‘(24) ………… blue bag is nice. It’s perfect with your trainers!’ But my sister always laughs and says ‘No, I love my old trainers.’",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"sister’s",
+"sisters",
+"sister"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"This",
+"These",
+"That"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"girl’s",
+"girls’",
+"girls"
+],
+"answer": 1,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Ana’s",
+"Anas’",
+"Anas"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"this",
+"that",
+"these"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Those",
+"These",
+"That"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about clothes. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "I love ............ blue dress in the shop window.",
+"options": [
+"those",
+"that",
+"these"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "Are ............ your shoes under the chair?",
+"options": [
+"that",
+"this",
+"those"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "............ hat is too small for me.",
+"options": [
+"Those",
+"These",
+"This"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "Are these ............ socks?",
+"options": [
+"Jacks",
+"Jack’s",
+"Jacks’"
+],
+"answer": 1,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "The ............ bags are under their chairs.",
+"options": [
+"students’",
+"student’s",
+"students"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "Is this ............ car?",
+"options": [
+"Ken and Yuki’s",
+"Ken’s and Yuki",
+"Ken and Yuki"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+}
+]
+}
+],
+"E": [
+{
+"title": "Part 1 · Listening",
+"instructions": "You will hear six short sentences. For each one, choose the best reply. You will hear each sentence twice.",
+"passage": "",
+"script": "1. How much are these socks?\n2. Can I have one of those blue plates, please?\n3. Do you have this in a different colour?\n4. Are these shoes for you?\n5. Is this your bag?\n6. Which one would you like, the red one or the green one?",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"It’s four pounds fifty.",
+"Yes, I’d like some.",
+"They’re four pounds fifty."
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"No, I don’t like blue.",
+"Yes, of course. Here you are.",
+"It’s on the table."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, we have it in red and blue.",
+"No, thank you.",
+"Yes, it’s very nice."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, they’re forty pounds.",
+"No, they’re for my brother.",
+"No, they aren’t here."
+],
+"answer": 1,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Yes, please.",
+"No, I’d like a bag.",
+"Yes, it is. Thank you!"
+],
+"answer": 2,
+"topic": "Listening · Short replies"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"The red one, please.",
+"Yes, I would.",
+"They’re six pounds."
+],
+"answer": 0,
+"topic": "Listening · Short replies"
+}
+]
+},
+{
+"title": "Part 2 · Things",
+"instructions": "Read the sentences about things. What are the missing letters? The first letter is already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "It’s on your desk and it gives you light at night: a l _ _ _",
+"answer": [
+"lamp",
+"amp"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You need this to go on a train or a bus, or to see a film: a t _ _ _ _ _",
+"answer": [
+"ticket",
+"icket"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You write emails and go on the internet with this: a c _ _ _ _ _ _ _",
+"answer": [
+"computer",
+"omputer"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You eat soup with this: a s _ _ _ _",
+"answer": [
+"spoon",
+"poon"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You sleep in this at night: a b _ _",
+"answer": [
+"bed",
+"ed"
+],
+"topic": "Vocabulary · Things"
+},
+{
+"type": "text",
+"q": "You eat with a knife and this: a f _ _ _",
+"answer": [
+"fork",
+"ork"
+],
+"topic": "Vocabulary · Things"
+}
+]
+},
+{
+"title": "Part 3 · Clothes",
+"instructions": "Read the sentences about clothes. What are the missing letters? Some letters are already there. Write the whole words.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "text",
+"q": "You wear them on your feet when it rains or snows. They are big: b _ _ _ _",
+"answer": [
+"boots",
+"oots"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "Women and girls wear it. It’s like a top and a skirt in one: a d _ _ _ _",
+"answer": [
+"dress",
+"ress"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear them on the beach or when you play football. They are short trousers: blue s _ _ _ _ _",
+"answer": [
+"shorts",
+"horts"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear it on your head. It’s the colour of snow: a w _ _ _ _  h _ _",
+"answer": [
+"white hat",
+"hite at"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "Men wear it under a jacket. It has long arms. It’s the colour of a strawberry, but light: a light r _ _  s _ _ _ _",
+"answer": [
+"red shirt",
+"ed hirt"
+],
+"topic": "Vocabulary · Clothes"
+},
+{
+"type": "text",
+"q": "You wear them on your feet, under your shoes. They are blue, but not dark blue: l _ _ _ _  blue s _ _ _ _",
+"answer": [
+"light socks",
+"ight ocks",
+"light blue socks"
+],
+"topic": "Vocabulary · Clothes"
+}
+]
+},
+{
+"title": "Part 4 · Reading",
+"instructions": "Read about a shop. Choose the best answer, A, B or C, for each space.",
+"passage": "Sam’s Phones\n\nMy uncle has a phone shop in the shopping centre. My Saturday job is at my (19) ………… shop. The shop’s name is ‘Sam’s Phones’ – Sam is my uncle. (20) ………… shop is always busy because the prices are good. We sell new phones, computers and cameras, and we also buy (21) ………… old phones and sell them again.\nMy uncle knows a lot about phones, but (22) ………… phone is very old, and he never buys a new one. I often say ‘Why don’t you get (23) ………… new phone? It’s great!’ or ‘(24) ………… cameras are really good. Do you want one?’ But he always says ‘No. My old phone is fine.’",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "",
+"options": [
+"uncle",
+"uncles",
+"uncle’s"
+],
+"answer": 2,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"This",
+"Those",
+"These"
+],
+"answer": 0,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"people",
+"people’s",
+"peoples"
+],
+"answer": 1,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"Sams’",
+"Sams",
+"Sam’s"
+],
+"answer": 2,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"those",
+"this",
+"these"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "",
+"options": [
+"These",
+"That",
+"This"
+],
+"answer": 0,
+"topic": "Grammar · this/that/these/those"
+}
+]
+},
+{
+"title": "Part 5 · Grammar",
+"instructions": "Read the sentences about clothes. Choose the best answer, A, B or C, for each space.",
+"passage": "",
+"script": "",
+"questions": [
+{
+"type": "choice",
+"q": "Do you like ............ yellow scarf? It’s new.",
+"options": [
+"these",
+"those",
+"this"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "How much are ............ shoes in the window?",
+"options": [
+"that",
+"those",
+"this"
+],
+"answer": 1,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "............ is my new coat. It’s very warm.",
+"options": [
+"These",
+"Those",
+"This"
+],
+"answer": 2,
+"topic": "Grammar · this/that/these/those"
+},
+{
+"type": "choice",
+"q": "Is that ............ new phone?",
+"options": [
+"Mei’s",
+"Meis",
+"Meis’"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "My ............ house is by the sea.",
+"options": [
+"grandparents’",
+"grandparent",
+"grandparents"
+],
+"answer": 0,
+"topic": "Grammar · Possessive 's"
+},
+{
+"type": "choice",
+"q": "The party is at ............ flat on Friday.",
+"options": [
+"Omar and Leila",
+"Omar and Leila’s",
+"Omar’s and Leila"
+],
+"answer": 1,
+"topic": "Grammar · Possessive 's"
+}
+]
+}
+]
+}
+}

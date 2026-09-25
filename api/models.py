@@ -4268,6 +4268,12 @@ class ExamTemplate(Base):
     parts = Column(Text, nullable=False, default="[]")
     # Writing + Speaking (qog'ozda) maksimal bali; 0 = yo'q
     paper_max = Column(Float, nullable=False, default=0)
+    # VARIANT (2026-09-26, Jahongir: "shu savollarni 4-5 xil variantini
+    # tayyorlab qoyish kerak chunki ustozlar aynan testga tayyorlash
+    # holatlari kuzatilyabdi"). Bir daraja+tur+unit uchun A (asl),
+    # B, C, D, E — bir xil tuzilish, boshqa savollar. Link ochilganda
+    # har bo'lim tasodifiy variantdan olinadi. NULL = A (eski yozuvlar).
+    variant = Column(String, nullable=True, index=True)
     is_active = Column(Integer, nullable=False, default=1)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -4307,6 +4313,9 @@ class ExamOnline(Base):
     # "5tami nechtadir son ... shundan oshsa testdan chiqarib yuborsin").
     # Shu songacha uzrli (internet uzilishi va h.k.).
     away_limit = Column(Integer, nullable=True)
+    # Qaysi variantlardan yig'ilgani, bo'limlar tartibida: "B,A,D,C,E"
+    # (2026-09-26). NULL — eski link / bitta shablon.
+    variants = Column(String, nullable=True)
 
 
 class ExamSubmission(Base):

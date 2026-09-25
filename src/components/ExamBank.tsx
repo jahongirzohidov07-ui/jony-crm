@@ -32,6 +32,8 @@ type Part = {
   passage: string;
   audio_url: string | null;
   image?: string | null;
+  /** Listening skripti — audio yo'q variantlarda examiner o'qib beradi */
+  script?: string;
   questions: Q[];
 };
 type Tpl = {
@@ -43,6 +45,8 @@ type Tpl = {
   q_count: number;
   paper_max: number;
   is_active: boolean;
+  /** A (asl), B, C, D, E (2026-09-26) */
+  variant?: string;
   parts?: Part[];
 };
 
@@ -155,6 +159,10 @@ export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
                   }`}
                 >
                   <td className="px-4 py-3 font-medium text-slate-800">
+                    {/* Variant belgisi (2026-09-26): A asl, B–E parallel */}
+                    <span className={`inline-block w-6 text-center rounded text-[11px] font-bold mr-2 ${
+                      (t.variant || "A") === "A" ? "bg-slate-100 text-slate-600" : "bg-violet-100 text-violet-700"
+                    }`}>{t.variant || "A"}</span>
                     {t.title}
                     {!t.is_active && <span className="ml-2 text-xs text-slate-400">yashirin</span>}
                   </td>
@@ -257,6 +265,7 @@ function TemplateEditor({
         title: f.title,
         paper_max: Number(f.paper_max || 0),
         is_active: f.is_active,
+        variant: f.variant || "A",
         parts,
       };
       if (f.id) await api.put(`/exam-templates/${f.id}`, body);
@@ -324,6 +333,16 @@ function TemplateEditor({
                 </select>
               </label>
             )}
+            <label className="text-xs text-slate-500">
+              Variant
+              <select className={inp + " bg-white"} value={f.variant || "A"}
+                      title="A — asl; B–E — parallel variantlar (linkda aralashadi)"
+                      onChange={(e) => setF({ ...f, variant: e.target.value })}>
+                {LETTERS.slice(0, 6).split("").map((v) => (
+                  <option key={v} value={v}>{v}{v === "A" ? " (asl)" : ""}</option>
+                ))}
+              </select>
+            </label>
             <label className="text-xs text-slate-500 flex items-end gap-2 pb-2">
               <input type="checkbox" checked={f.is_active}
                      onChange={(e) => setF({ ...f, is_active: e.target.checked })} />
@@ -359,6 +378,13 @@ function TemplateEditor({
               <input className={inp + " mt-2"} placeholder="Audio havolasi (listening uchun, ixtiyoriy)"
                      value={p.audio_url || ""}
                      onChange={(e) => setPart(pi, { audio_url: e.target.value || null })} />
+              {/* Listening skripti — examiner o'qib beradi; o'quvchiga ko'rinmaydi */}
+              {(p.script || /listening/i.test(p.title)) && (
+                <textarea className={inp + " mt-2"} rows={p.script ? 4 : 1}
+                          placeholder="Listening skripti — examiner o'qib beradigan matn (o'quvchiga ko'rinmaydi)"
+                          value={p.script || ""}
+                          onChange={(e) => setPart(pi, { script: e.target.value })} />
+              )}
               <div className="mt-2 flex items-center gap-2">
                 {p.image ? (
                   <>

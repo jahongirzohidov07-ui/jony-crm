@@ -108,89 +108,89 @@ HT = tok("ustoz")
 print("=== A. BOSHLANG'ICH BAZA ===")
 r = client.get("/api/exam-templates", headers=HE)
 ck("javob 200", r.status_code, 200)
-tpl = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 1]
+tpl = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 1]
 ck("Step 1 Unit 1 bor", len(tpl), 1)
 TID = tpl[0]["id"]
 ck("30 ta savol", tpl[0]["q_count"], 30)
-u2 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 2]
+u2 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 2]
 ck("Step 1 Unit 2 bor, 30 savol", [x["q_count"] for x in u2], [30])
-u3 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 3]
+u3 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 3]
 ck("Step 1 Unit 3 bor, 30 savol", [x["q_count"] for x in u3], [30])
-u4 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 4]
+u4 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 4]
 ck("Step 1 Unit 4 bor, 30 savol", [x["q_count"] for x in u4], [30])
-u5 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 5]
+u5 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 5]
 ck("Step 1 Unit 5 bor, 30 savol", [x["q_count"] for x in u5], [30])
-u6 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 6]
+u6 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 6]
 ck("Step 1 Unit 6 bor, 30 savol", [x["q_count"] for x in u6], [30])
-mid = [x for x in r.json() if x["level"] == "step1" and x["kind"] == "mid"]
+mid = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["kind"] == "mid"]
 ck("Step 1 Mid-course bor, 45 savol", [x["q_count"] for x in mid], [45])
-u7 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 7]
+u7 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 7]
 ck("Step 1 Unit 7 bor, 30 savol", [x["q_count"] for x in u7], [30])
-u8 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 8]
+u8 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 8]
 ck("Step 1 Unit 8 bor, 30 savol", [x["q_count"] for x in u8], [30])
-u9 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 9]
+u9 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 9]
 ck("Step 1 Unit 9 bor, 30 savol", [x["q_count"] for x in u9], [30])
-u10 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 10]
+u10 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 10]
 ck("Step 1 Unit 10 bor, 30 savol", [x["q_count"] for x in u10], [30])
-u11 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 11]
+u11 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 11]
 ck("Step 1 Unit 11 bor, 30 savol", [x["q_count"] for x in u11], [30])
-u12 = [x for x in r.json() if x["level"] == "step1" and x["unit_no"] == 12]
+u12 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["unit_no"] == 12]
 ck("Step 1 Unit 12 bor, 30 savol", [x["q_count"] for x in u12], [30])
-end = [x for x in r.json() if x["level"] == "step1" and x["kind"] == "end"]
+end = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step1" and x["kind"] == "end"]
 ck("Step 1 End of course bor, 45 savol", [x["q_count"] for x in end], [45])
-s2 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 1]
+s2 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 1]
 ck("Step 2 Unit 1 bor, 40 savol", [x["q_count"] for x in s2], [40])
-s22 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 2]
+s22 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 2]
 ck("Step 2 Unit 2 bor, 40 savol", [x["q_count"] for x in s22], [40])
-s23 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 3]
+s23 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 3]
 ck("Step 2 Unit 3 bor, 40 savol", [x["q_count"] for x in s23], [40])
-s24 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 4]
+s24 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 4]
 ck("Step 2 Unit 4 bor, 40 savol", [x["q_count"] for x in s24], [40])
-s25 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 5]
+s25 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 5]
 ck("Step 2 Unit 5 bor, 40 savol", [x["q_count"] for x in s25], [40])
-s26 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 6]
+s26 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 6]
 ck("Step 2 Unit 6 bor, 40 savol", [x["q_count"] for x in s26], [40])
-s27 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 7]
+s27 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 7]
 ck("Step 2 Unit 7 bor, 40 savol", [x["q_count"] for x in s27], [40])
-s28 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 8]
+s28 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 8]
 ck("Step 2 Unit 8 bor, 40 savol", [x["q_count"] for x in s28], [40])
-s29 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 9]
+s29 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 9]
 ck("Step 2 Unit 9 bor, 40 savol", [x["q_count"] for x in s29], [40])
-s210 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 10]
+s210 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 10]
 ck("Step 2 Unit 10 bor, 40 savol", [x["q_count"] for x in s210], [40])
-s211 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 11]
+s211 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 11]
 ck("Step 2 Unit 11 bor, 40 savol", [x["q_count"] for x in s211], [40])
-s212 = [x for x in r.json() if x["level"] == "step2" and x["unit_no"] == 12]
+s212 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["unit_no"] == 12]
 ck("Step 2 Unit 12 bor, 40 savol", [x["q_count"] for x in s212], [40])
-s2end = [x for x in r.json() if x["level"] == "step2" and x["kind"] == "end"]
+s2end = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step2" and x["kind"] == "end"]
 ck("Step 2 End of course bor, 40 savol", [x["q_count"] for x in s2end], [40])
-s31 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 1]
+s31 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 1]
 ck("Step 3 Unit 1 bor, 40 savol", [x["q_count"] for x in s31], [40])
-s32 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 2]
+s32 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 2]
 ck("Step 3 Unit 2 bor, 40 savol", [x["q_count"] for x in s32], [40])
-s33 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 3]
+s33 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 3]
 ck("Step 3 Unit 3 bor, 40 savol", [x["q_count"] for x in s33], [40])
-s34 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 4]
+s34 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 4]
 ck("Step 3 Unit 4 bor, 40 savol", [x["q_count"] for x in s34], [40])
-s35 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 5]
+s35 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 5]
 ck("Step 3 Unit 5 bor, 40 savol", [x["q_count"] for x in s35], [40])
-s36 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 6]
+s36 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 6]
 ck("Step 3 Unit 6 bor, 40 savol", [x["q_count"] for x in s36], [40])
-s37 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 7]
+s37 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 7]
 ck("Step 3 Unit 7 bor, 40 savol", [x["q_count"] for x in s37], [40])
-s38 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 8]
+s38 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 8]
 ck("Step 3 Unit 8 bor, 40 savol", [x["q_count"] for x in s38], [40])
-s39 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 9]
+s39 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 9]
 ck("Step 3 Unit 9 bor, 40 savol", [x["q_count"] for x in s39], [40])
-s310 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 10]
+s310 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 10]
 ck("Step 3 Unit 10 bor, 40 savol", [x["q_count"] for x in s310], [40])
-s311 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 11]
+s311 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 11]
 ck("Step 3 Unit 11 bor, 40 savol", [x["q_count"] for x in s311], [40])
-s312 = [x for x in r.json() if x["level"] == "step3" and x["unit_no"] == 12]
+s312 = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["unit_no"] == 12]
 ck("Step 3 Unit 12 bor, 40 savol", [x["q_count"] for x in s312], [40])
-s3end = [x for x in r.json() if x["level"] == "step3" and x["kind"] == "end"]
+s3end = [x for x in r.json() if x.get("variant", "A") == "A" and x["level"] == "step3" and x["kind"] == "end"]
 ck("Step 3 End of course bor, 45 savol", [x["q_count"] for x in s3end], [45])
-mids = {x["level"]: x["q_count"] for x in r.json() if x["kind"] == "mid"}
+mids = {x["level"]: x["q_count"] for x in r.json() if x["kind"] == "mid" and x.get("variant", "A") == "A"}
 ck("Step 2 va Step 3 Mid-course bor, 45 savoldan",
    (mids.get("step2"), mids.get("step3")), (45, 45))
 t3 = client.get(f"/api/exam-templates/{u3[0]['id']}", headers=HE).json()

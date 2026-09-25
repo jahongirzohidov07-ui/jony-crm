@@ -58,9 +58,13 @@ export default function Login() {
       // ustoz/support -> Jony Teacher (telefonda yo'qlama uchun),
       // qolganlar -> xodimlar paneli. Ustoz xohlasa Profil'dagi
       // "To'liq panelga o'tish" orqali eski ko'rinishga o'tadi.
+      // 2026-09-25: imtihon havolasi (/t/<kod>) ilovaga olib kirganda
+      // login'dan keyin AYNAN o'sha imtihon sahifasiga qaytadi —
+      // faqat o'quvchi va faqat ilova ichidagi manzil.
+      const next = new URLSearchParams(window.location.search).get("next") || "";
       const dest =
         u?.role === "student"
-          ? "/student"
+          ? (next.startsWith("/student/") ? next : "/student")
           : u?.role === "teacher" || u?.role === "support_teacher"
             ? "/teacher"
             : "/";

@@ -637,6 +637,13 @@ export function OnlineLinkCard({
           {copied ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
           {copied ? "Nusxalandi" : "Nusxa olish"}
         </button>
+        {/* 2026-09-25: imtihon Jony Student ilovasi ichida — link ochiq
+            bo'lsa guruh o'quvchilari bosh sahifada va bildirishnomada
+            ko'radi; link ham ilovaga olib kiradi (kim ekani login'dan). */}
+        <span className="basis-full text-[11px] text-slate-500">
+          📱 Guruh o'quvchilariga <b>Jony Student</b> ilovasida o'zi ko'rinadi
+          (bosh sahifa + bildirishnoma); link ham ilovaga olib kiradi.
+        </span>
         {data.can_manage && (
           <button
             disabled={busy}

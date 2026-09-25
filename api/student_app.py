@@ -405,6 +405,10 @@ def student_home(db: Session = Depends(get_db),
         "ranks": ranks,
         "games": [{"key": k, "label": lbl, "hint": hint}
                   for k, lbl, hint in roles.VOCAB_GAMES],
+        # OCHIQ IMTIHON (2026-09-25, Jahongir: "cherer Student app
+        # qiladigan qilish kerak"): guruh uchun link ochilgan bo'lsa
+        # bosh sahifada banner — link shart emas, ilovadan kiradi.
+        "exam_live": _exam_live(db, s),
     }
 
 
@@ -504,6 +508,20 @@ def student_learn(db: Session = Depends(get_db),
         # yoqolib qolibdi, alohida bo'lim ochilishi kerak").
         "ielts": _ielts_gate(db, s.id),
     }
+
+
+def _exam_live(db: Session, s) -> list:
+    """Bosh sahifa uchun ochiq imtihonlar (yengil: faqat ochiq
+    linklar bo'yicha bitta so'rov). Xato bo'lsa bosh sahifa yiqilmasin."""
+    try:
+        from exam_online import active_exams_for_student
+        return [{k: x.get(k) for k in ("token", "title", "group", "state",
+                                        "duration_min", "q_count",
+                                        "my_status", "starts_at", "ends_at")}
+                for x in active_exams_for_student(db, s)]
+    except Exception:
+        db.rollback()
+        return []
 
 
 def _ielts_gate(db: Session, student_id: int) -> dict:
@@ -2217,6 +2235,27 @@ def student_notifications(db: Session = Depends(get_db),
             "body": body,
             "date": when.isoformat() if when else None,
         })
+
+    # 4) OCHIQ IMTIHON (2026-09-25, Jahongir: "cherer Student app
+    #    qiladigan qilish kerak") — examiner guruh uchun link ochgan
+    #    bo'lsa, o'quvchi ilovada ko'radi va shu yerdan kiradi.
+    try:
+        from exam_online import active_exams_for_student
+        for ex in active_exams_for_student(db, s):
+            state_txt = ("Test ketyapti — hoziroq kiring!"
+                         if ex["state"] == "running"
+                         else "Examiner boshlashini kuting — ilovadan kiring")
+            items.append({
+                "id": f"exam-live:{ex['token']}",
+                "kind": "exam",
+                "title": f"Imtihon: {ex['title']}",
+                "body": state_txt + (f" · {ex['duration_min']} daqiqa"
+                                     if ex.get("duration_min") else ""),
+                "date": datetime.utcnow().isoformat(),
+                "href": f"/student/exam/{ex['token']}",
+            })
+    except Exception:
+        db.rollback()
 
     items.sort(key=lambda x: x["date"] or "", reverse=True)
     return {"student_id": s.id, "items": items,

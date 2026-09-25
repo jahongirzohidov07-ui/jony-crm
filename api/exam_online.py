@@ -1162,6 +1162,223 @@ def public_submit(token: str, payload: SubmitIn, request: Request,
             "pending": status != "placed"}
 
 
+# ================================================== JONY STUDENT ILOVASI ICHIDA
+# 2026-09-25, Jahongir: "cherer Student app qiladigan qilish kerak link
+# ham shu Student appga keladigan qilaylik".
+#
+# Farqi (link orqali loginsiz tartibdan):
+#   - o'quvchi ILOVAGA KIRGAN — ro'yxatdan tanlash yo'q, kim ekani
+#     login'dan aniq; rasm bilan tasdiqlash QOLADI ("baribir ozini
+#     tasdiqlashi kerak rasm bilan chunki birovni nomidan boshqasi
+#     ishlashi ham mumkin");
+#   - imtihon o'z guruhi uchun ochilgan bo'lsa bosh sahifada va
+#     bildirishnomada o'zi ko'rinadi — link shart emas; link kelsa ham
+#     /t/<token> ilovaga yo'naltiradi;
+#   - natija to'g'ridan-to'g'ri o'z qatoriga tushadi ("pending" yo'q).
+# Javob saqlash/chiqish/topshirish — avvalgi public yo'llar (kalit
+# bilan), ikki xil mantiq bo'lib ketmasin.
+
+def _student_gids(db: Session, s) -> set:
+    """O'quvchining guruhlari: asosiy + ko'p-guruh bog'lanishlari."""
+    gids = {s.group_id} if s.group_id else set()
+    try:
+        for (gid,) in (db.query(models.StudentGroupLink.group_id)
+                       .filter(models.StudentGroupLink.student_id == s.id,
+                               models.StudentGroupLink.active == 1).all()):
+            gids.add(gid)
+    except Exception:
+        db.rollback()
+    return {g for g in gids if g}
+
+
+def _my_sub(db: Session, exam_id: int, student_id: int):
+    """O'quvchining shu imtihondagi eng so'nggi topshirig'i
+    (in_progress > placed > qolganlar)."""
+    subs = (db.query(models.ExamSubmission)
+            .filter(models.ExamSubmission.exam_id == exam_id,
+                    models.ExamSubmission.student_id == student_id)
+            .order_by(models.ExamSubmission.id.desc()).all())
+    for want in ("in_progress", "placed"):
+        for x in subs:
+            if x.status == want:
+                return x
+    return subs[0] if subs else None
+
+
+def _student_exam_item(db: Session, o, exam, s, group=None) -> dict:
+    finalize_expired(db, o, exam)
+    group = group or db.query(models.Group).get(exam.group_id)
+    is_open = bool(o.is_open) and _exam_open_for_results(exam)
+    state = timer_state(o) if is_open else "closed"
+    my = _my_sub(db, exam.id, s.id)
+    my_status = my.status if my else "none"
+    item = {
+        "token": o.token, "exam_id": exam.id,
+        "title": exam.title or roles.exam_title(exam.kind, exam.unit_no),
+        "group": group.name if group else "", "kind": exam.kind,
+        "unit_no": exam.unit_no,
+        "date": exam.date.isoformat() if exam.date else None,
+        "state": state, "starts_at": _iso(o.started_at),
+        "ends_at": _iso(o.ends_at), "duration_min": o.duration_min,
+        "q_count": int(o.online_max or 0), "paper_max": o.paper_max or 0,
+        "my_status": my_status,
+        "submitted_at": (my.submitted_at.isoformat()
+                         if my and my.submitted_at else None),
+        "published": bool(o.published_at),
+    }
+    # Natija faqat examiner e'lon qilgandan keyin (2026-09-18 qoidasi)
+    if my and my.status == "placed" and o.published_at:
+        total = (my.online_score or 0) + (my.paper_score or 0)
+        mx = (my.online_max or 0) + (o.paper_max or 0)
+        item["score"] = total
+        item["max_score"] = mx
+        item["percent"] = round(total * 100 / mx) if mx else None
+    return item
+
+
+def active_exams_for_student(db: Session, s) -> list:
+    """Bosh sahifa va bildirishnoma uchun: hozir ochiq va hali
+    topshirilmagan (yoki davom etayotgan) imtihonlar."""
+    gids = _student_gids(db, s)
+    if not gids:
+        return []
+    rows = (db.query(models.ExamOnline, models.Exam)
+            .join(models.Exam, models.Exam.id == models.ExamOnline.exam_id)
+            .filter(models.Exam.group_id.in_(list(gids)),
+                    models.ExamOnline.is_open == 1)
+            .all())
+    out = []
+    for o, exam in rows:
+        if exam.status == "cancelled" or not _exam_open_for_results(exam):
+            continue
+        item = _student_exam_item(db, o, exam, s)
+        if item["state"] in ("waiting", "countdown", "running") and \
+                item["my_status"] in ("none", "in_progress"):
+            out.append(item)
+    out.sort(key=lambda x: (x["state"] != "running", x["title"]))
+    return out
+
+
+def _student_me(db: Session, user):
+    from student_app import _me
+    return _me(db, user)
+
+
+@router.get("/api/student/exams/online")
+def student_online_exams(db: Session = Depends(get_db),
+                         user=Depends(require_role(roles.STUDENT))):
+    """O'quvchining ONLINE imtihonlari: hozir ochiqlari + tarixi.
+    (/api/student/exams — tasdiqlangan natijalar tarixi — student_app'da
+    avvaldan bor, unga tegilmadi.)"""
+    s = _student_me(db, user)
+    gids = _student_gids(db, s)
+    active, history = [], []
+    if gids:
+        rows = (db.query(models.ExamOnline, models.Exam)
+                .join(models.Exam, models.Exam.id == models.ExamOnline.exam_id)
+                .filter(models.Exam.group_id.in_(list(gids)))
+                .order_by(models.Exam.date.desc(), models.Exam.id.desc())
+                .all())
+        for o, exam in rows:
+            if exam.status == "cancelled":
+                continue
+            item = _student_exam_item(db, o, exam, s)
+            if item["state"] in ("waiting", "countdown", "running") and \
+                    item["my_status"] in ("none", "in_progress"):
+                active.append(item)
+            elif item["my_status"] != "none":
+                history.append(item)
+    active.sort(key=lambda x: (x["state"] != "running", x["title"]))
+    return {"active": active, "history": history[:20]}
+
+
+def _student_online(db: Session, token: str, s):
+    o, exam = _public(db, token)
+    if exam.group_id not in _student_gids(db, s):
+        raise HTTPException(403, "Bu imtihon sizning guruhingiz uchun emas")
+    return o, exam
+
+
+@router.get("/api/student/exam/{token}")
+def student_exam_state(token: str, db: Session = Depends(get_db),
+                       user=Depends(require_role(roles.STUDENT))):
+    """Ilovadagi imtihon sahifasi holati — public sahifa bilan bir xil
+    tuzilma, lekin ro'yxat o'rniga "me" va o'zining topshirig'i
+    (davom etayotgan bo'lsa kaliti bilan — telefon o'chib qolsa
+    ham qayta kirib davom etadi)."""
+    s = _student_me(db, user)
+    o, exam = _student_online(db, token, s)
+    finalize_expired(db, o, exam)
+    group = db.query(models.Group).get(exam.group_id)
+    is_open = bool(o.is_open) and _exam_open_for_results(exam)
+    state = timer_state(o) if is_open else "closed"
+    my = _my_sub(db, exam.id, s.id)
+    mine = None
+    if my:
+        mine = {"status": my.status,
+                "key": my.sub_key if my.status == "in_progress" else None,
+                "submitted_at": (my.submitted_at.isoformat()
+                                 if my.submitted_at else None),
+                "pending": my.status not in ("placed",),
+                "paper_max": o.paper_max or 0}
+    return {
+        "title": exam.title or roles.exam_title(exam.kind, exam.unit_no),
+        "group": group.name if group else "",
+        "date": exam.date.isoformat() if exam.date else None,
+        "is_open": is_open, "state": state,
+        "server_now": _iso(datetime.utcnow()),
+        "starts_at": _iso(o.started_at), "ends_at": _iso(o.ends_at),
+        "duration_min": o.duration_min,
+        "q_count": int(o.online_max or 0), "paper_max": o.paper_max or 0,
+        "students": [],
+        "parts": public_parts(_load(o.parts))
+        if is_open and state == "running" else [],
+        "me": {"id": s.id, "name": s.full_name},
+        "my": mine,
+    }
+
+
+class AppBeginIn(BaseModel):
+    photo: str
+
+
+@router.post("/api/student/exam/{token}/begin")
+def student_exam_begin(token: str, payload: AppBeginIn, request: Request,
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(roles.STUDENT))):
+    """Ilovadan kirish: kim ekani login'dan, rasm — tasdiq uchun.
+    Davom etayotgan topshirig'i bo'lsa o'sha kalit qaytadi (ikkinchi
+    yozuv ochilmaydi)."""
+    s = _student_me(db, user)
+    o, exam = _student_online(db, token, s)
+    ip = _client_ip(request)
+    if not _rate_ok(ip or "?"):
+        raise HTTPException(429, "Juda ko'p urinish — birozdan keyin qayta "
+                                 "urinib ko'ring")
+    if not o.is_open or not _exam_open_for_results(exam) or \
+            timer_state(o) == "finished":
+        raise HTTPException(410, "Test yopilgan")
+    cur = _my_sub(db, exam.id, s.id)
+    if cur and cur.status == "in_progress":
+        return {"ok": True, "key": cur.sub_key, "name": s.full_name,
+                "resumed": True}
+    if cur and cur.status in ("placed", "duplicate", "pending"):
+        raise HTTPException(409, "Siz bu testni allaqachon topshirgansiz")
+    if cur and cur.status == "expelled":
+        raise HTTPException(403, "Siz bu testdan chetlatilgansiz")
+    photo = payload.photo or ""
+    if not photo.startswith("data:image/") or len(photo) > PHOTO_MAX_CHARS:
+        raise HTTPException(400, "Kameradan rasm oling")
+    sub = models.ExamSubmission(
+        exam_id=exam.id, student_id=s.id, typed_name=s.full_name,
+        photo=photo, answers="{}", status="in_progress", ip=ip[:64],
+        online_max=o.online_max or 0, sub_key=secrets.token_urlsafe(16))
+    db.add(sub)
+    db.commit()
+    return {"ok": True, "key": sub.sub_key, "name": s.full_name,
+            "resumed": False}
+
+
 # ------------------------------------------------ boshlang'ich test bazasi
 def seed_templates(db: Session) -> None:
     """Jahongir yuborgan testlar (Step 1 Unit 1 …) bazaga bir marta

@@ -128,6 +128,15 @@ export default function StudentNotifications() {
                     <p className="text-[14px] text-slate-200 mt-1 leading-relaxed break-words">
                       {n.body}
                     </p>
+                    {/* Ochiq imtihon (2026-09-25): bir bosishda kiradi */}
+                    {n.href && (
+                      <Link
+                        to={n.href}
+                        className="inline-flex items-center gap-1 mt-2 text-[13px] font-bold text-white bg-red-600 rounded-lg px-3 py-1.5"
+                      >
+                        Imtihonga kirish →
+                      </Link>
+                    )}
                   </div>
                   {n.date && (
                     <span className="text-[12px] text-blue-200 student-notification-date">

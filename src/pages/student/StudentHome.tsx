@@ -30,6 +30,17 @@ import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
 
 const MISSION_ICONS = ["vocabulary", "grammar", "listening"] as const;
 
+/** Ochiq imtihon (bosh sahifa banneri) — /student/home dagi exam_live */
+type ExamLive = {
+  token: string;
+  title: string;
+  group?: string;
+  state: "waiting" | "countdown" | "running" | string;
+  duration_min?: number | null;
+  q_count?: number;
+  my_status?: string;
+};
+
 export default function StudentHome() {
   const [d, setD] = useState<Home | null>(null);
   const [err, setErr] = useState("");
@@ -140,6 +151,45 @@ export default function StudentHome() {
             </p>
           </div>
         </div>
+
+        {/* ============ OCHIQ IMTIHON (2026-09-25, Jahongir: "cherer
+            Student app qiladigan qilish kerak link ham shu Student appga
+            keladigan qilaylik") — examiner guruh uchun test ochgan bo'lsa
+            shu yerda banner: link shart emas, bir bosishda kiradi. */}
+        {((d as unknown as { exam_live?: ExamLive[] }).exam_live || []).map((ex) => (
+          <Link
+            key={ex.token}
+            to={`/student/exam/${encodeURIComponent(ex.token)}`}
+            className="block rounded-3xl p-4 border-2 active:scale-[0.99] transition"
+            style={{
+              background: ex.state === "running"
+                ? "linear-gradient(120deg,#B91C1C 0%,#DC2626 100%)"
+                : "linear-gradient(120deg,#B45309 0%,#D97706 100%)",
+              borderColor: "rgba(255,255,255,0.35)",
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-[24px] shrink-0">
+                📝
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-bold text-white/80 uppercase tracking-wide">
+                  {ex.state === "running" ? "Imtihon ketyapti" : "Imtihon ochildi"}
+                </p>
+                <p className="text-[17px] font-extrabold text-white truncate">{ex.title}</p>
+                <p className="text-[12px] text-white/85 mt-0.5">
+                  {ex.state === "running"
+                    ? "Hoziroq kiring — vaqt ketyapti"
+                    : ex.my_status === "in_progress"
+                      ? "Siz kirgansiz — examiner Start bosishini kuting"
+                      : "Rasmingizni olib, examiner Start bosishini kuting"}
+                  {ex.duration_min ? ` · ${ex.duration_min} daqiqa` : ""}
+                </p>
+              </div>
+              <ChevronRight size={22} className="text-white shrink-0" />
+            </div>
+          </Link>
+        ))}
 
         {/* ======================================= DARAJA KARTASI */}
         <div

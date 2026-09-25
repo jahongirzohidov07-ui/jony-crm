@@ -241,8 +241,22 @@ function AppRoutes() {
         {/* Jonli o'yin — ustoz/proyektor ekrani (to'liq ekran, yon menyusiz) */}
         <Route path="/live/:id" element={<RequireStaff><LiveHost /></RequireStaff>} />
         <Route path="/teacher-run/:lessonId" element={<RequireStaff><TeacherRun /></RequireStaff>} />
-        {/* Online test — loginsiz, link orqali (2026-09-18) */}
+        {/* Online test — havola orqali (2026-09-18). 2026-09-25: o'quvchi
+            kirgan bo'lsa ilovadagi sahifaga yo'naltiradi; kirmagan bo'lsa
+            login (keyin shu imtihonga qaytadi) yoki mehmon tartibi. */}
         <Route path="/t/:token" element={<ExamTake />} />
+        {/* Imtihon JONY STUDENT ILOVASI ICHIDA (2026-09-25, Jahongir:
+            "cherer Student app qiladigan qilish kerak"). Student
+            qobig'idan TASHQARIDA — pastki menyu taymer/topshirish
+            panelini to'sib qo'ymasin, o'quvchi chalg'imasin. */}
+        <Route
+          path="/student/exam/:token"
+          element={
+            <RequireAuth>
+              <ExamTake inApp />
+            </RequireAuth>
+          }
+        />
         {/* Referal havolasi: jonyos.uz/r/JONY-XXXXX — loginsiz */}
         <Route path="/r/:code" element={<Referral />} />
         <Route path="/parent/:token" element={<Parent />}>

@@ -2949,6 +2949,20 @@ def _do_family_link(db: Session, a: models.Student, b: models.Student,
             .filter(models.Student.parent_id == a.parent_id).all())
     pct = _family_discount_percent(db, a)
     active = sum(1 for k in kids if k.status == "active")
+    # OILADAGI HAMMA FARZANDNING SHU OY HISOBI QAYTA YOZILADI
+    # (2026-09-25, Jahongir: "aka uka bolsa bittasiga chegirma ishlab
+    # ikkinchisiga ishlamayabdi"). Sabab: chegirma foizi ikkalasida
+    # ham to'g'ri ko'rinardi, lekin oy boshida yechilgan pul faqat
+    # SO'ROV YUBORILGAN bolada qayta hisoblanardi — ikkinchisi
+    # to'liq summada qolib ketardi.
+    if pct:
+        try:
+            from finance import _recharge_current_month as _rc
+            for k in kids:
+                if k.status == "active" and k.group_id:
+                    _rc(db, k)
+        except Exception:
+            db.rollback()
     return {
         "parent_id": a.parent_id,
         "merged_parent_id": moved,

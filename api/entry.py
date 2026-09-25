@@ -7005,6 +7005,56 @@ def _mc_refund_prev(db: Session, today, deadline=None) -> tuple:
     return n, finished
 
 
+def _dsc_fix_month(db: Session, today) -> list:
+    """CHEGIRMASI BOR, LEKIN HISOBI CHEGIRMASIZ QOLGANLAR (2026-09-25).
+
+    Jahongir: "10% chegirma yechib olmayabdi". Sababi ikkita edi va
+    ikkalasi ham tuzatildi (finance.create_discount endi darhol
+    amaldagi chegirmada ham hisobni qayta yozadi; qisman oy hisobi
+    ham tuzatiladi). Bu funksiya ESKI, allaqachon qolib ketgan
+    qatorlarni to'g'rilaydi — oyiga bir marta.
+
+    Ishonchli: hisobni finance._recharge_current_month() ning O'ZI
+    yozadi, ya'ni qoida bitta joyda. U faqat KAMAYTIRADI va chegirma
+    allaqachon qo'llangan qatorga tegmaydi."""
+    period = _mc_key(today.year, today.month)
+    if period < _MC_FROM:
+        return []
+    import finance as _F
+    sids = [sid for (sid,) in
+            db.query(models.Discount.student_id)
+            .filter(models.Discount.status == "active").distinct().all()]
+    if not sids:
+        return []
+    done = []
+    for chunk in _billing._chunks(sids) if hasattr(_billing, "_chunks") \
+            else [sids]:
+        rows = (db.query(models.Student)
+                .filter(models.Student.id.in_(chunk),
+                        models.Student.group_id.isnot(None),
+                        models.Student.status == "active").all())
+        for s in rows:
+            has = (db.query(models.Payment)
+                   .filter(models.Payment.student_id == s.id,
+                           models.Payment.period == period,
+                           models.Payment.kind == "charge").first())
+            if has is None:
+                continue
+            before = abs(float(has.amount or 0))
+            try:
+                if _F._recharge_current_month(db, s):
+                    done.append({"student_id": s.id, "name": s.full_name,
+                                 "old": before})
+            except Exception:
+                db.rollback()
+    if done:
+        audit.log(db, None, entity="payment", action="update",
+                  entity_label=f"{period}: chegirma qo'llanmagan hisoblar",
+                  new_value=len(done),
+                  note=", ".join(d["name"] for d in done[:40]), commit=True)
+    return done
+
+
 def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     """Login va kunlik cron shu funksiyani chaqiradi.
 
@@ -7038,6 +7088,11 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     refund_key = f"mcr_{period}"
     # Yechilmay qolganlarni tekshirish — kuniga bir marta (2026-09-16)
     missed_key = f"mcm_{today.isoformat()}"
+    # Chegirmasi bor, lekin shu oy hisobi chegirmasiz qolganlar —
+    # oyiga bir marta (2026-09-25, Jahongir: "10% chegirma yechib
+    # olmayabdi"). Sababi tuzatildi; bu esa ESKI qolib ketganlarini
+    # ham to'g'rilaydi.
+    dsc_key = f"dscfix_{period}"
     todo = [g for g in _mc_active_groups(db)
             if not _sd(db, f"mcf_{period}_g{g.id}")]
     if not todo and _sd(db, refund_key) and _sd(db, missed_key):
@@ -7077,6 +7132,13 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
                 _sm(db, missed_key)
             except Exception:
                 db.rollback()
+        n4 = 0
+        if ok1 and not _sd(db, dsc_key):
+            try:
+                n4 = len(_dsc_fix_month(db, today))
+                _sm(db, dsc_key)
+            except Exception:
+                db.rollback()
         try:
             db.commit()
         except Exception:
@@ -7089,7 +7151,10 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
                 db.commit()
             except Exception:
                 pass
+    if n4:
+        print(f"[chegirma] shu oy hisobi to'g'rilandi: {n4} o'quvchi")
     return {"yechildi": n1, "qaytarildi": n2, "tutib_qolindi": n3,
+            "chegirma_tuzatildi": n4,
             "tugagan": ok1 and ok2}
 
 
@@ -8199,11 +8264,23 @@ def _af_install():
     shuning uchun ikkalasi aralashib ketmaydi)."""
     import sys as _s
     done = []
-    for mod in ("common", "system", "main"):
-        m = _s.modules.get(mod)
+    # 2026-09-25 TUZATISH (Jahongir: "muzlatilgan oquvchida katta
+    # qarzdorlik qolib ketyabdi"). Ilgari bu yerda faqat uchta modul
+    # nomi yozilgan edi: "common", "system", "main". Avtomuzlatishning
+    # YAGONA chaqiruv joyi esa groups_lessons.py — u `from common
+    # import *` orqali funksiyaning ESKI nusxasini ushlab turardi.
+    # Natijada "480 000 -> 240 000" qayta hisobi jonli tizimda hech
+    # qachon ishlamagan: 3 darsga kelmagani uchun avtomuzlatilgan
+    # o'quvchida oy boshidagi to'liq summa qarz bo'lib qolaverardi.
+    # Endi `_tr_install` dagi kabi nomni ushlab turgan HAMMA modul
+    # yamaladi.
+    for mod, m in list(_s.modules.items()):
         if m is None:
             continue
-        old = getattr(m, "_freeze_task", None)
+        try:
+            old = getattr(m, "_freeze_task", None)
+        except Exception:
+            continue
         if old is None or getattr(old, "_af_new", False):
             continue
 

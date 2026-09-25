@@ -4,6 +4,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import bisect
+import re
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
@@ -1352,6 +1353,18 @@ def create_discount(
     # administrator yuborardi, javob kelishini kutib o'tirardi.
     if d.status == "pending":
         _notify_discount_approvers(db, d, st)
+    # DARHOL AMALDAGI CHEGIRMA — SHU OY HISOBI HAM TO'G'RILANADI
+    # (2026-09-25, Jahongir: "10% chegirma yechib olmayabdi").
+    # Tasdiqlash huquqi bor odam (asoschi, filial rahbari, moliya
+    # direktori) chegirmani O'ZI yozsa, u darrov "active" bo'ladi,
+    # lekin oy boshida yechilgan to'liq summa o'z holicha qolardi:
+    # tuzatish faqat "Tasdiqlash" tugmasida bor edi. Endi ikkala
+    # yo'lda ham bir xil.
+    if d.status == "active":
+        try:
+            _recharge_current_month(db, st)
+        except Exception:
+            db.rollback()
     audit.log(db, user, entity="discount", action="create", entity_id=d.id,
               entity_label=st.full_name, branch_id=st.branch_id,
               new_value=f"{roles.DISCOUNT_TYPE_LABELS[d.kind]} "
@@ -1390,18 +1403,55 @@ def _recharge_current_month(db: Session, st: models.Student) -> bool:
     p = next((r for r in rows if r.created_by == mc), None)
     if p is None and len(rows) == 1             and abs(abs(rows[0].amount) - full) <= 0.5:
         p = rows[0]
+    target = want
+    # QISMAN OY (2026-09-25, Jahongir: "10% chegirma yechib
+    # olmayabdi"). Oy o'rtasida faollashgan o'quvchining hisobi to'liq
+    # oy emas — "faollashgandan 6 dars". Bunday qatorga ilgari UMUMAN
+    # tegilmasdi va chegirma o'sha oyda butunlay yo'qolardi.
+    #
+    # Ikki marta chegirma qo'llamaslik uchun: faqat summa AYNAN
+    # (darslar soni x narx) bo'lgan qatorni tuzatamiz. Chegirma
+    # allaqachon qo'llangan qator bu hisobga to'g'ri kelmaydi,
+    # shuning uchun unga tegilmaydi.
+    if p is None and len(rows) == 1:
+        r0 = rows[0]
+        disc = _student_discount_percent(db, st)
+        price = _E._billing.student_lesson_price(st, g)
+        since = today.replace(day=1)
+        if st.enrolled_date and st.enrolled_date > since:
+            since = st.enrolled_date
+        try:
+            n = min(len(_lessons_left_in_month(db, g.id, since)), std)
+        except Exception:
+            n = 0
+        expect = roles.money(price * n)
+        # Bir marta to'g'rilangan qatorda CHEGIRMASIZ asl summa
+        # izohda qoladi ("[asos:240000]"). Shunda keyin yana chegirma
+        # qo'shilsa, hisob har safar asl summadan qayta olinadi —
+        # chegirma ustiga chegirma tushmaydi.
+        base = None
+        m = re.search(r"\[asos:(\d+)\]", r0.note or "")
+        if m:
+            base = float(m.group(1))
+        elif n > 0 and abs(abs(r0.amount) - expect) <= 0.5:
+            base = expect
+        if disc > 0 and base:
+            p = r0
+            target = roles.money(base * (100.0 - disc) / 100.0)
+            if not m:
+                p.note = (p.note or "") + f" [asos:{int(base)}]"
     if p is None:
         return False
-    if want >= abs(p.amount) - 0.5:
+    if target >= abs(p.amount) - 0.5:
         return False
     old_amt = p.amount
-    p.amount = -want
+    p.amount = -target
     p.note = ((p.note or "") + f" · chegirma qo'llandi: "
-              f"{int(abs(old_amt)):,} -> {int(want):,}").replace(",", " ")
+              f"{int(abs(old_amt)):,} -> {int(target):,}").replace(",", " ")
     p.updated_at = datetime.utcnow()
     audit.log(db, None, entity="payment", action="update", entity_id=p.id,
               entity_label=st.full_name, field="amount",
-              old_value=old_amt, new_value=-want,
+              old_value=old_amt, new_value=-target,
               note="Chegirma tasdiqlandi — shu oy hisobi qayta yozildi",
               branch_id=st.branch_id)
     db.commit()

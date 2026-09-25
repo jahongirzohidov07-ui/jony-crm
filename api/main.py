@@ -146,6 +146,7 @@ import tasks as _r_tasks
 import teacher_app as _r_teacher_app
 import teachers as _r_teachers
 import timetable as _r_timetable
+import wheel as _r_wheel
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -196,6 +197,7 @@ app.include_router(_r_tasks.router)
 app.include_router(_r_teacher_app.router)
 app.include_router(_r_teachers.router)
 app.include_router(_r_timetable.router)
+app.include_router(_r_wheel.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:
@@ -250,6 +252,16 @@ try:
     from grammar_seed import seed_grammar
     with _VS7(engine) as _db7:
         seed_grammar(_db7)
+except Exception:
+    pass
+
+# Baraban bo'laklari (2026-09-25): bazada bittasi ham bo'lmasa
+# boshlang'ich ro'yxat yoziladi; keyin faqat Sozlamalardan o'zgaradi.
+try:
+    from sqlalchemy.orm import Session as _VSW
+    from wheel import seed_prizes as _seed_wheel
+    with _VSW(engine) as _dbw:
+        _seed_wheel(_dbw)
 except Exception:
     pass
 

@@ -4405,3 +4405,65 @@ class DrillSetting(Base):
     updated_by = Column(String, nullable=True)
     updated_at = Column(DateTime, default=datetime.utcnow,
                         onupdate=datetime.utcnow)
+
+
+# =====================================================================
+#  BARABAN — lidlar testi oxiridagi sovg'a g'ildiragi (2026-09-25)
+# =====================================================================
+#
+#  Jahongir: "yangi lidlar ishlaydigan test bor shu testni bajargan
+#  oquvchiga oxirida baraban chiqishi kerak va barabanda xar xil
+#  sovgalar skidkalar 10-100%gacha coinlar 10-100gacha bo'lishi
+#  kerak aylantirganda bittasiga tushsa shu sovga avtomat unga
+#  otishi kerak".
+#
+#  Ikki jadval:
+#    wheel_prizes — g'ildirakdagi bo'laklar va EHTIMOLLIKLARI.
+#                   Asoschi Sozlamalardan o'zgartiradi. Kodda
+#                   qotmaydi. Hech qachon o'chirilmaydi — is_active=0.
+#    wheel_spins  — har aylantirish. SERVER tanlaydi va shu yerga
+#                   yozadi, telefon faqat animatsiya qiladi. Bir lidga
+#                   BITTA aylantirish. Sovg'a o'quvchiga qanday
+#                   qo'llangani ham shu qatorda: qaysi chegirma /
+#                   qaysi tanga yozuvi, qachon, kimga.
+
+class WheelPrize(Base):
+    __tablename__ = "wheel_prizes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    kind = Column(String, nullable=False)          # coin | discount
+    value = Column(Integer, nullable=False)        # tanga soni / foiz
+    weight = Column(Float, nullable=False, default=1.0)  # ehtimol og'irligi
+    label = Column(String, nullable=True)          # "10% chegirma"
+    order_no = Column(Integer, default=0)
+    is_active = Column(Integer, default=1)
+    updated_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class WheelSpin(Base):
+    __tablename__ = "wheel_spins"
+
+    id = Column(Integer, primary_key=True, index=True)
+    lead_id = Column(Integer, ForeignKey("leads.id"), nullable=True,
+                     index=True)
+    session_token = Column(String, nullable=True, index=True)
+    phone = Column(String, nullable=True, index=True)
+    name = Column(String, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True)
+    prize_id = Column(Integer, ForeignKey("wheel_prizes.id"), nullable=True)
+    prize_kind = Column(String, nullable=False)    # coin | discount
+    prize_value = Column(Integer, nullable=False)
+    prize_label = Column(String, nullable=True)
+    spun_at = Column(DateTime, default=datetime.utcnow)
+    # Qo'llanish izi (hech narsa o'chirilmaydi)
+    applied_student_id = Column(Integer, ForeignKey("students.id"),
+                                nullable=True, index=True)
+    coin_entry_id = Column(Integer, nullable=True)
+    discount_id = Column(Integer, nullable=True)
+    applied_at = Column(DateTime, nullable=True)
+    notified_at = Column(DateTime, nullable=True)  # asoschiga xabar
+    note = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)

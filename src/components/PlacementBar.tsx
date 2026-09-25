@@ -12,15 +12,38 @@ import { api } from "../lib/api";
 type Any = any;
 const inp = "w-full border border-slate-200 rounded-lg px-3 py-2 text-sm";
 
+/** BARABAN (2026-09-25): test oxirida tushgan sovg'a. Admin o'quvchi
+ *  ochayotganda ko'rib tursin — sovg'a avtomat qo'llanadi, lekin
+ *  odam "menga 30% tushgan edi" desa, shu yerdan tekshiradi. */
+export function WheelBadge({ lead }: { lead: Any }) {
+  const w = lead?.wheel;
+  if (!w?.prize) return null;
+  const p = w.prize;
+  const txt = p.kind === "discount" ? `${p.value}% chegirma` : `${p.value} tanga`;
+  const tip = p.kind === "discount"
+    ? `Baraban: ${txt} — faqat BIRINCHI oyga, faollashganda avtomat${w.applied ? " (qo'llangan)" : ""}`
+    : `Baraban: ${txt} — o'quvchi ochilganda avtomat${w.applied ? " (qo'llangan)" : ""}`;
+  return (
+    <span title={tip}
+          className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px] font-semibold ${
+            w.applied ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-800"}`}>
+      🎁 {txt}
+    </span>
+  );
+}
+
 export function PlacementBadge({ lead }: { lead: Any }) {
   const p = lead?.placement;
   const o = lead?.placement_open;
   if (p) {
     return (
-      <span title={`${p.book} · Unit ${p.unit} · ${p.score}/${p.total} · ${p.date}`}
-            className="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 rounded px-1.5 py-0.5 text-[11px] font-semibold">
-        <GraduationCap size={11} /> {p.level} · U{p.unit}
-      </span>
+      <>
+        <span title={`${p.book} · Unit ${p.unit} · ${p.score}/${p.total} · ${p.date}`}
+              className="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 rounded px-1.5 py-0.5 text-[11px] font-semibold">
+          <GraduationCap size={11} /> {p.level} · U{p.unit}
+        </span>
+        <WheelBadge lead={lead} />
+      </>
     );
   }
   if (o) {

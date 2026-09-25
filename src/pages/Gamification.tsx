@@ -904,6 +904,136 @@ function PassMarkBox({ canAdmin }: { canAdmin: boolean }) {
   );
 }
 
+// ------------------------------------------------------ Baraban ----
+/**
+ * BARABAN — lidlar testi oxiridagi sovg'a g'ildiragi (2026-09-25).
+ *
+ * Jahongir: "barabanda xar xil sovgalar skidkalar 10-100%gacha
+ * coinlar 10-100gacha bo'lishi kerak aylantirganda bittasiga tushsa
+ * shu sovga avtomat unga otishi kerak".
+ *
+ * Bu yerda faqat EHTIMOLLIKLAR (og'irlik) va bo'laklar. Tanlovni
+ * server qiladi. Chegirma faqat BIRINCHI oyga, faollashganda; tanga
+ * o'quvchi ochilganda. Faqat asoschi o'zgartiradi — bu pul.
+ * Bo'lak o'chirilmaydi, "o'chirilgan" deb belgilanadi.
+ */
+type WheelPrizeRow = {
+  id?: number; kind: "coin" | "discount"; value: number; weight: number;
+  label: string; is_active: boolean; order_no: number; percent?: number;
+};
+
+function WheelBox() {
+  const { user } = useAuth();
+  const isFounder = user?.role === "founder";
+  const [rows, setRows] = useState<WheelPrizeRow[]>([]);
+  const [meta, setMeta] = useState<{ expected_discount_percent: number; notify_from: number } | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  function load() {
+    api.get<{ prizes: WheelPrizeRow[]; expected_discount_percent: number; notify_from: number }>("/wheel/prizes")
+      .then((r) => { setRows(r.prizes || []); setMeta(r); })
+      .catch(() => {});
+  }
+  useEffect(load, []);
+
+  const active = rows.filter((r) => r.is_active);
+  const total = active.reduce((s, r) => s + Math.max(Number(r.weight) || 0, 0), 0);
+  const pct = (r: WheelPrizeRow) =>
+    r.is_active && total > 0 ? Math.round(Math.max(Number(r.weight) || 0, 0) * 1000 / total) / 10 : 0;
+  const expected = active.reduce((s, r) =>
+    s + (r.kind === "discount" && total > 0 ? Math.max(Number(r.weight) || 0, 0) / total * Number(r.value) : 0), 0);
+
+  function upd(i: number, patch: Partial<WheelPrizeRow>) {
+    setRows(rows.map((r, idx) => (idx === i ? { ...r, ...patch } : r)));
+    setSaved(false);
+  }
+
+  async function save() {
+    setSaving(true); setError(null);
+    try {
+      const r = await api.put<{ prizes: WheelPrizeRow[]; expected_discount_percent: number; notify_from: number }>(
+        "/wheel/prizes",
+        rows.map((x, i) => ({
+          id: x.id, kind: x.kind, value: Number(x.value), weight: Number(x.weight),
+          label: x.label, is_active: !!x.is_active, order_no: i,
+        })),
+      );
+      setRows(r.prizes || []); setMeta(r); setSaved(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  if (rows.length === 0) return null;
+
+  return (
+    <div className="bg-white rounded-xl border border-amber-200 p-4 mb-6">
+      <h3 className="font-semibold text-slate-900 mb-1">🎁 Baraban (lid testi oxirida)</h3>
+      <p className="text-sm text-slate-500 mb-3">
+        Lid diagnostik testni tugatgach bir marta aylantiradi. Sovg'a
+        <b> avtomat</b> qo'llanadi: tanga — o'quvchi ochilganda, chegirma —
+        faollashganda va <b>faqat birinchi oyga</b>. Sovg'ani server tanlaydi.
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-slate-500 text-xs uppercase">
+            <tr>
+              <th className="text-left px-3 py-2 font-medium">Sovg'a</th>
+              <th className="text-left px-3 py-2 font-medium">Og'irlik</th>
+              <th className="text-left px-3 py-2 font-medium">Ehtimol</th>
+              <th className="text-left px-3 py-2 font-medium">Faol</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, i) => (
+              <tr key={r.id ?? i} className={`border-t border-slate-100 ${r.is_active ? "" : "opacity-50"}`}>
+                <td className="px-3 py-2 font-medium text-slate-800">
+                  {r.kind === "discount" ? `${r.value}% chegirma` : `${r.value} tanga`}
+                  {r.kind === "discount" && meta && r.value >= meta.notify_from && (
+                    <span className="ml-2 text-[11px] text-amber-700">asoschiga xabar</span>
+                  )}
+                </td>
+                <td className="px-3 py-2">
+                  <input type="number" min={0} step={0.5} disabled={!isFounder}
+                         className="w-24 rounded-lg border border-slate-300 px-2 py-1 text-sm disabled:bg-slate-50"
+                         value={r.weight}
+                         onChange={(e) => upd(i, { weight: Number(e.target.value) })} />
+                </td>
+                <td className="px-3 py-2 text-slate-600">{pct(r)}%</td>
+                <td className="px-3 py-2">
+                  <input type="checkbox" disabled={!isFounder} checked={!!r.is_active}
+                         onChange={(e) => upd(i, { is_active: e.target.checked })} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-sm text-slate-700 mt-3">
+        O'rtacha xarajat: har aylantirishga birinchi oy to'lovining{" "}
+        <b>{Math.round(expected * 10) / 10}%</b>i.
+        {meta && ` 100% tushganda va ${meta.notify_from}% dan yuqorida asoschiga darrov Telegram boradi.`}
+      </p>
+      {isFounder ? (
+        <div className="flex items-center gap-3 mt-3">
+          <button onClick={save} disabled={saving}
+                  className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60">
+            {saving ? "Saqlanmoqda..." : "Saqlash"}
+          </button>
+          {saved && <span className="text-sm text-emerald-600">Saqlandi</span>}
+        </div>
+      ) : (
+        <p className="text-xs text-slate-400 mt-3">Bu pul — faqat asoschi o'zgartiradi.</p>
+      )}
+      {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
+    </div>
+  );
+}
+
 // ------------------------------------------------------ Coin qoidasi ----
 function RulesTab({ canAdmin }: { canAdmin: boolean }) {
   const [rules, setRules] = useState<ExamCoinRule[]>([]);
@@ -942,6 +1072,7 @@ function RulesTab({ canAdmin }: { canAdmin: boolean }) {
   return (
     <div className="max-w-2xl">
       <PassMarkBox canAdmin={canAdmin} />
+      <WheelBox />
 
       <p className="text-sm text-slate-500 mb-4">
         Imtihon natijasi shu jadval bo'yicha coinga aylanadi. O'quvchining

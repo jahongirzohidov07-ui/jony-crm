@@ -3273,6 +3273,21 @@ def _activate_student(db: Session, s: models.Student, *, on: date,
         s.enrolled_date = on
     _sync_student_left_date(s)
 
+    # BARABAN SOVG'ASI (2026-09-25). Lid testi oxirida tushgan chegirma
+    # aynan SHU YERDA, hisob yozilishidan OLDIN qo'yiladi — shunda
+    # faollashish hisobi (_charge_from_activation) uni o'zi hisobga
+    # oladi (_student_discount_percent orqali) va alohida "tuzatish"
+    # kerak bo'lmaydi. Faqat birinchi oy. Xato bo'lsa faollashtirish
+    # to'xtamaydi — sovg'a keyin ham qo'llanadi (idempotent).
+    # SAVEPOINT: sovg'ada xato bo'lsa faqat o'sha qism qaytariladi,
+    # yuqoridagi "faol" holati va pastdagi hisob buzilmaydi.
+    try:
+        import wheel as _wheel
+        with db.begin_nested():
+            _wheel.apply_for_student(db, s, on=on, user=user, commit=False)
+    except Exception:
+        pass
+
     # Xuddi shu sabab bilan (yuqoridagi izohga qarang) main orqali
     # dinamik chaqiramiz - entry.py buni almashtirishi mumkin.
     import main as _main

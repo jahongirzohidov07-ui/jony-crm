@@ -10214,7 +10214,40 @@ if _pt_leads_v1 is not None:
             for r in out:
                 r["placement"] = done.get(r.get("id"))
                 r["placement_open"] = open_.get(r.get("id"))
+            # BARABAN (2026-09-25): lidga tushgan sovg'a ro'yxatda
+            # ko'rinsin — admin o'quvchi ochayotganda bilib tursin.
+            try:
+                import wheel as _wheel
+                _sp = {}
+                for w in (db.query(models.WheelSpin)
+                          .filter(models.WheelSpin.lead_id.in_(ids))
+                          .order_by(models.WheelSpin.id.asc()).all()):
+                    _sp.setdefault(w.lead_id, w)
+                _pz = _wheel.active_prizes(db)
+                for r in out:
+                    w = _sp.get(r.get("id"))
+                    r["wheel"] = _wheel.spin_out(db, w, _pz) if w else None
+            except Exception:
+                pass
         return out
+
+
+# ---- Baraban: ochiq endpointlar (test sahifasi uchun) ----------------
+#  Sovg'ani SERVER tanlaydi va yozadi; telefon faqat animatsiya qiladi.
+@app.get("/api/public/placement/{token}/wheel")
+def pt_wheel_state(token: str, db: Session = Depends(get_db)):
+    import wheel as _wheel
+    return _wheel.state_for_session(db, _pt_public(db, token))
+
+
+@app.post("/api/public/placement/{token}/wheel/spin")
+def pt_wheel_spin(token: str, db: Session = Depends(get_db)):
+    import wheel as _wheel
+    s = _pt_public(db, token)
+    spin, created = _wheel.spin_for_session(db, s)
+    out = _wheel.spin_out(db, spin)
+    out["created"] = created
+    return out
 
 
 # =====================================================================

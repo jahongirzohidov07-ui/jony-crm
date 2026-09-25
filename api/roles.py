@@ -1405,12 +1405,47 @@ DISCOUNT_TYPES = [
      "O'quvchi o'z coinига do'kondan sotib olgan"),
     ("app_referral", "Do'st taklifi (avtomat)",
      "Havola orqali kelgan do'sti to'lov qilgani uchun - tizim o'zi qo'yadi"),
+    ("wheel", "Baraban sovg'asi (avtomat)",
+     "Lid testi oxirida barabandan tushgan - faqat BIRINCHI oyga, "
+     "tizim o'zi qo'yadi"),
 ]
 DISCOUNT_TYPE_LABELS = {k: lbl for k, lbl, _ in DISCOUNT_TYPES}
 DISCOUNT_TYPE_HINTS = {k: h for k, _, h in DISCOUNT_TYPES}
 
 # Qaysi chegirmani tizim o'zi boshqaradi - qo'lda tegilmaydi.
-AUTO_DISCOUNT_TYPES = ["family", "coin_shop", "app_referral"]
+AUTO_DISCOUNT_TYPES = ["family", "coin_shop", "app_referral", "wheel"]
+
+# ======================================================================
+#  BARABAN (2026-09-25, Jahongir: "barabanda xar xil sovgalar
+#  skidkalar 10-100%gacha coinlar 10-100gacha bo'lishi kerak")
+# ======================================================================
+#
+#  Standart bo'laklar va EHTIMOLLIKLARI (og'irlik = foiz). Bu faqat
+#  BOSHLANG'ICH ro'yxat — bazaga bir marta yoziladi, keyin asoschi
+#  Sozlamalardan o'zgartiradi. Kod ustunlik qilmaydi.
+#
+#  O'rtacha xarajat: har aylantirishga birinchi oy to'lovining ~13%
+#  (0.2·10 + 0.12·20 + 0.08·30 + 0.06·50 + 0.03·70 + 0.01·100).
+#  100 liddan 1 tasi birinchi oy bepul o'qiydi.
+WHEEL_DEFAULT_PRIZES = [
+    # (tur, qiymat, og'irlik, yorliq)
+    ("coin",     10, 20.0, "10 tanga"),
+    ("coin",     30, 15.0, "30 tanga"),
+    ("coin",     50, 10.0, "50 tanga"),
+    ("coin",    100,  5.0, "100 tanga"),
+    ("discount", 10, 20.0, "10% chegirma"),
+    ("discount", 20, 12.0, "20% chegirma"),
+    ("discount", 30,  8.0, "30% chegirma"),
+    ("discount", 50,  6.0, "50% chegirma"),
+    ("discount", 70,  3.0, "70% chegirma"),
+    ("discount", 100, 1.0, "100% chegirma"),
+]
+# Shu foizdan boshlab asoschiga darrov Telegram xabar boradi
+# (Jahongir tasdiqladi: avtomat qo'llanadi, lekin u bilib turadi).
+WHEEL_NOTIFY_FROM_PERCENT = 70
+# Baraban chegirmasi qancha oyga: faqat BIRINCHI oy (Jahongir
+# tasdiqladi — aks holda 100% tushgan bola butun kurs bepul o'qirdi).
+WHEEL_DISCOUNT_MONTHS = 1
 
 # ======================================================================
 #  REFERAL DASTURI  (2026-08-28, Jahongir)

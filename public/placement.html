@@ -79,6 +79,16 @@
   .center { text-align:center; }
   .hidden { display:none; }
   @media (min-width:600px){ .wrap{padding-top:40px;} }
+  /* Baraban */
+  .wheel { background:linear-gradient(180deg,#fff7ed,#fff); border:1px solid #fed7aa; border-radius:16px; padding:16px 12px 18px; margin:16px 0; }
+  .wheel h2 { margin:0 0 4px; font-size:20px; }
+  .wheel .wbox { position:relative; width:300px; max-width:100%; margin:12px auto 10px; padding:0; }
+  .wheel canvas { width:100%; height:auto; display:block; border-radius:50%; box-shadow:0 8px 24px rgba(0,0,0,.12); transition:transform 5.2s cubic-bezier(.12,.72,.08,1); }
+  .wheel .ptr { position:absolute; top:-6px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent; border-top:26px solid #ef4444; z-index:2; filter:drop-shadow(0 2px 2px rgba(0,0,0,.25)); }
+  .wheel .won { margin-top:12px; background:#fff; border:2px dashed #f59e0b; border-radius:14px; padding:12px; }
+  .wheel .prize { font-size:28px; font-weight:800; color:#b45309; margin:4px 0; }
+  .wheel .btn { background:#f59e0b; }
+  .wheel .btn:disabled { opacity:.55; }
 </style>
 </head>
 <body>
@@ -127,6 +137,25 @@
     <div class="book" id="rbook">Step 3 — B1 darajasi · Unit 4</div>
     <div class="topic" id="rtopic"></div>
     <div class="adv" id="radvice"></div>
+
+    <!-- BARABAN (2026-09-25): sovg'ani SERVER tanlaydi, bu yerda faqat
+         animatsiya. Bir lidga bir marta. -->
+    <div id="wheel" class="wheel hidden">
+      <h2 id="wtitle">🎁 Sovg'a barabani</h2>
+      <p class="muted" id="wsub">Testni tugatganingiz uchun — bir marta aylantiring. Nima tushsa, o'sha sizniki!</p>
+      <div class="wbox">
+        <div class="ptr"></div>
+        <canvas id="wcv" width="300" height="300"></canvas>
+      </div>
+      <button class="btn" id="btn-spin">Aylantirish</button>
+      <div class="won hidden" id="wwon">
+        <div class="muted">Sizga tushdi</div>
+        <div class="prize" id="wprize">—</div>
+        <div class="muted" id="whow"></div>
+      </div>
+      <div class="err" id="werr"></div>
+    </div>
+
     <a class="btn" id="rreport" href="#" target="_blank" rel="noopener" style="margin:14px 0 4px;text-decoration:none">📄 Batafsil hisobotni ochish va yuklab olish</a>
     <div id="rskills" style="text-align:left;margin:16px 0"></div>
     <div class="stats">
@@ -414,6 +443,118 @@
     $('rnote').textContent = r.note || '';
     show('s-done');
     window.scrollTo(0, 0);
+    loadWheel();
+  }
+
+  // ---------------- BARABAN ----------------
+  // Sovg'ani SERVER tanlaydi va yozadi. Bu yerda faqat chizish va
+  // "qaysi bo'lakka to'xtash" animatsiyasi. Bir lidga bir marta.
+  const W = { prizes: [], spun: null, busy: false, base: 0 };
+  const WCOL = ['#f59e0b','#fbbf24','#f97316','#fb923c','#eab308','#facc15','#ea580c','#fdba74','#d97706','#fde68a'];
+
+  function drawWheel(prizes) {
+    const cv = $('wcv'); if (!cv || !cv.getContext) return;
+    const ctx = cv.getContext('2d');
+    const n = prizes.length; if (!n) return;
+    const cx = cv.width / 2, cy = cv.height / 2, R = cx - 4;
+    const seg = 2 * Math.PI / n;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    for (let i = 0; i < n; i++) {
+      const a0 = -Math.PI / 2 + i * seg, a1 = a0 + seg;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, a0, a1); ctx.closePath();
+      ctx.fillStyle = WCOL[i % WCOL.length]; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+      // yozuv
+      ctx.save();
+      ctx.translate(cx, cy); ctx.rotate(a0 + seg / 2);
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = (i % 2 === 0) ? '#fff' : '#7c2d12';
+      ctx.font = (n > 8 ? '700 13px' : '700 15px') + ' system-ui, sans-serif';
+      const p = prizes[i];
+      const t = p.kind === 'discount' ? (p.value + '%') : (p.value + ' tanga');
+      ctx.fillText(t, R - 10, 0);
+      ctx.restore();
+    }
+    // markaz
+    ctx.beginPath(); ctx.arc(cx, cy, 22, 0, 2 * Math.PI); ctx.fillStyle = '#fff'; ctx.fill();
+    ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 4; ctx.stroke();
+  }
+
+  function prizeText(p) {
+    if (!p) return '—';
+    return p.kind === 'discount' ? (p.value + '% chegirma') : (p.value + ' tanga');
+  }
+
+  function howText(p) {
+    if (!p) return '';
+    return p.kind === 'discount'
+      ? 'Guruhga yozilib, o\'qishni boshlaganingizda BIRINCHI OY to\'lovidan avtomat ayiriladi.'
+      : 'Guruhga yozilganingizda Jony Student ilovasidagi balansingizga avtomat tushadi.';
+  }
+
+  function showWon(spin) {
+    $('wprize').textContent = prizeText(spin.prize);
+    $('whow').textContent = howText(spin.prize);
+    $('wwon').classList.remove('hidden');
+    $('btn-spin').classList.add('hidden');
+    $('wsub').textContent = 'Sovg\'angiz saqlandi. Administrator siz bilan bog\'langanda eslatib qo\'ying.';
+  }
+
+  // Bo'lak markazini tepadagi ko'rsatkichga keltiradigan burchak (gradus)
+  function angleFor(index, n) {
+    const seg = 360 / n;
+    const center = index * seg + seg / 2;       // tepadan soat yo'nalishida
+    return (360 - center) % 360;
+  }
+
+  async function loadWheel() {
+    const box = $('wheel'); if (!box) return;
+    try {
+      const st = await api('/wheel');
+      W.prizes = st.prizes || [];
+      if (!W.prizes.length) { box.classList.add('hidden'); return; }
+      drawWheel(W.prizes);
+      box.classList.remove('hidden');
+      if (st.spun && st.spin) {
+        // Allaqachon aylantirilgan — to'g'ridan-to'g'ri natijaga qo'yamiz
+        const cv = $('wcv');
+        cv.style.transition = 'none';
+        cv.style.transform = 'rotate(' + angleFor(Math.max(0, st.spin.index), W.prizes.length) + 'deg)';
+        showWon(st.spin);
+      } else if (st.available) {
+        $('btn-spin').classList.remove('hidden');
+        $('wwon').classList.add('hidden');
+      } else {
+        box.classList.add('hidden');
+      }
+    } catch (e) {
+      box.classList.add('hidden');
+    }
+  }
+
+  async function spinWheel() {
+    if (W.busy) return;
+    W.busy = true;
+    const btn = $('btn-spin'); btn.disabled = true; $('werr').textContent = '';
+    try {
+      const r = await api('/wheel/spin', { method: 'POST', body: JSON.stringify({}) });
+      const n = W.prizes.length;
+      let idx = r.index;
+      if (idx < 0 || idx >= n) {
+        // Bo'lak o'chirilgan bo'lsa ham natijani ko'rsatamiz
+        idx = W.prizes.findIndex(p => p.kind === r.prize.kind && p.value === r.prize.value);
+        if (idx < 0) { showWon(r); W.busy = false; return; }
+      }
+      const cv = $('wcv');
+      cv.style.transition = 'transform 5.2s cubic-bezier(.12,.72,.08,1)';
+      W.base += 360 * 5;                              // 5 to'liq aylanish
+      const target = W.base + angleFor(idx, n);
+      requestAnimationFrame(() => { cv.style.transform = 'rotate(' + target + 'deg)'; });
+      setTimeout(() => { showWon(r); W.busy = false; }, 5400);
+    } catch (e) {
+      W.busy = false; btn.disabled = false;
+      $('werr').textContent = e.message;
+    }
   }
 
   function apply(d, name) {
@@ -472,6 +613,7 @@
 
   $('btn-start').onclick = () => go($('btn-start'));
   $('btn-next').onclick = () => go($('btn-next'));
+  $('btn-spin').onclick = () => spinWheel();
   window.addEventListener('beforeunload', (e) => { if (cur) { e.preventDefault(); e.returnValue = ''; } });
   init();
 })();

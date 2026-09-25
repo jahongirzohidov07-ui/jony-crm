@@ -38,6 +38,10 @@ ACTIONS = {
     # 2026-09-16
     "merge": "Birlashtirildi",
     "import": "Import qilindi",
+    # 2026-09-25: baraban (lid testi oxiridagi sovg'a)
+    "wheel_spin": "Baraban aylantirildi",
+    "wheel_coins": "Baraban tangasi berildi",
+    "wheel_prizes": "Baraban sozlamasi o'zgardi",
 }
 
 # Kuzatiladigan obyektlar.
@@ -69,6 +73,8 @@ ENTITIES = {
     "hr_blacklist": "Qora ro'yxat",
     "support_adjustment": "Support jarimasi",
     "examiner_adjustment": "Examiner jarimasi",
+    # 2026-09-25: baraban sozlamasi
+    "settings": "Sozlamalar",
 }
 
 

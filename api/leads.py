@@ -579,6 +579,18 @@ def convert_lead(
             db.commit()
         except Exception:
             db.rollback()
+    # BARABAN SOVG'ASI (2026-09-25, Jahongir: "aylantirganda bittasiga
+    # tushsa shu sovga avtomat unga otishi kerak"). Lid testi oxirida
+    # tushgan sovg'a shu yerda o'quvchiga bog'lanadi: TANGA darrov
+    # balansga (o'quvchi bor), CHEGIRMA esa faollashishni kutadi —
+    # u faqat birinchi oyga, faollashgan oy hisobiga tushadi.
+    # Xato bo'lsa o'quvchi ochilishi to'xtamaydi (idempotent, keyin
+    # faollashtirishda yana urinib ko'radi).
+    try:
+        import wheel as _wheel
+        _wheel.apply_for_student(db, student, on=None, user=user)
+    except Exception:
+        db.rollback()
     db.refresh(student)
     return to_student_out(db, student)
 

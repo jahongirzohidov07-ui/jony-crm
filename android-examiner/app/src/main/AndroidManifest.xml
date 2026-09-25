@@ -14,6 +14,10 @@
     <!-- Yangi imtihon kelganda ekranni yoqib ko'rsatish (suzuvchi oyna) -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- "Boshqa ilovalar ustidan": oyna bildirishnomaga bog'liq bo'lmay
+         ochiladi (TECNO/Xiaomi bildirishnomani jim qilib qo'yadi) -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- Telefon qayta yoqilsa kuzatuv o'zi tiklanadi -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 

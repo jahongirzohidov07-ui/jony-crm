@@ -21,6 +21,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.window.OnBackInvokedDispatcher;
 
 import androidx.core.app.ActivityCompat;
@@ -140,7 +141,10 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Xabar o'tkazib yuborilmasligi uchun ikki sozlama kerak:
+     * Xabar o'tkazib yuborilmasligi uchun uch sozlama kerak:
+     *   0) "boshqa ilovalar ustidan" — oyna telefon qaysi ekranda
+     *      bo'lmasin ochiladi (eng muhimi: TECNO bildirishnomani jim
+     *      qilib qo'yadi, oyna esa baribir chiqadi);
      *   1) batareya tejash kuzatuvni uxlatib qo'ymasin;
      *   2) Android 14+ da ekranga chiqadigan oyna ruxsati.
      * Har ochilishda faqat bittasi so'raladi — ikkala oyna bir
@@ -148,6 +152,15 @@ public class MainActivity extends Activity {
      */
     private void askBackground() {
         try {
+            if (!Settings.canDrawOverlays(this)) {
+                Toast.makeText(this, "Jony Examiner ga ruxsat bering — "
+                        + "yangi imtihon oynasi shunda chiqadi",
+                        Toast.LENGTH_LONG).show();
+                startActivity(new Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName())));
+                return;
+            }
             PowerManager pm = getSystemService(PowerManager.class);
             if (!pm.isIgnoringBatteryOptimizations(getPackageName())) {
                 startActivity(new Intent(

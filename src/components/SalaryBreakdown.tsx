@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { ChevronDown, ChevronRight, Building2, Layers, Users } from "lucide-react";
-import { api, type SalaryBreakdown as Breakdown, type SalaryBreakdownStudent } from "../lib/api";
+import { ChevronDown, ChevronRight, Building2, Download, Layers, Users }
+  from "lucide-react";
+import { api, downloadFile, type SalaryBreakdown as Breakdown,
+  type SalaryBreakdownStudent } from "../lib/api";
 import { formatSom } from "../lib/format";
 
 /**
@@ -27,6 +29,24 @@ export function SalaryBreakdown({
   const [err, setErr] = useState("");
   const [view, setView] = useState<"groups" | "students">("groups");
   const [open, setOpen] = useState<Set<number>>(new Set());
+  const [dl, setDl] = useState(false);
+  const [dlErr, setDlErr] = useState("");
+
+  /** Shu oyning hisobotini PDF qilib yuklab olish (2026-09-25). */
+  async function pdf() {
+    const [y, m] = period.split("-");
+    setDl(true);
+    setDlErr("");
+    try {
+      await downloadFile(
+        `/teachers/${teacherId}/salary.pdf?year=${Number(y)}&month=${Number(m)}`,
+        `${d?.full_name ?? "Ustoz"} - ${d?.title ?? period} oyligi.pdf`);
+    } catch (e) {
+      setDlErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setDl(false);
+    }
+  }
 
   useEffect(() => {
     const [y, m] = period.split("-");
@@ -63,6 +83,20 @@ export function SalaryBreakdown({
           Qanday hisoblandi · {d.attendances} yo'qlama · {d.students.length} o'quvchi
           {d.multi_branch && ` · ${d.branches.length} filial`}
         </p>
+        <div className="flex items-center gap-1.5">
+        {/* PDF (2026-09-25, Jahongir: "har oygi oyliki qaysi oquvchidan
+            qancha olishini hisobotini pdf qilib yuklab olsa bolsin").
+            Filial rahbariga faqat o'z filiali chiqadi — buni server
+            hal qiladi. */}
+        <button
+          type="button"
+          onClick={pdf}
+          disabled={dl}
+          title="Shu oy hisobotini PDF qilib yuklab olish"
+          className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+        >
+          <Download size={12} /> {dl ? "Tayyorlanmoqda..." : "PDF"}
+        </button>
         <div className="inline-flex rounded-lg border border-slate-200 bg-white p-0.5 text-[11px]">
           <button
             type="button"
@@ -83,7 +117,26 @@ export function SalaryBreakdown({
             <Users size={12} /> O'quvchilar
           </button>
         </div>
+        </div>
       </div>
+
+      {/* Filial rahbariga hisobot faqat O'Z filiali bo'yicha kesiladi
+          (2026-09-25). Tepadagi qatorda esa ustozning UMUMIY oyligi
+          turadi — farqni aytib qo'yamiz, aks holda "raqam nega
+          boshqacha" degan savol chiqadi. */}
+      {d.scoped && (
+        <p className="text-[11px] text-slate-600 bg-slate-100 border border-slate-200 rounded-lg px-2.5 py-1.5">
+          Faqat {(d.scope_branches ?? []).join(", ")} bo'yicha.
+          Ustoz boshqa filialda ham dars bersa, uning umumiy oyligi
+          bundan ko'p bo'ladi.
+        </p>
+      )}
+
+      {dlErr && (
+        <p className="text-[11px] text-red-600 bg-red-50 border border-red-200 rounded-lg px-2.5 py-1.5">
+          {dlErr}
+        </p>
+      )}
 
       {d.sealed && d.sealed_amount != null && Math.abs(d.sealed_amount - d.amount) >= 1 && (
         <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5">

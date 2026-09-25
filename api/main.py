@@ -122,6 +122,7 @@ import finance as _r_finance
 import gamification as _r_gamification
 import liveplay as _r_liveplay
 import vocab_pdf as _r_vocab_pdf
+import salary_pdf as _r_salary_pdf
 import lesson_run as _r_lesson_run
 import assignments as _r_assignments
 import mastery as _r_mastery
@@ -170,6 +171,7 @@ app.include_router(_r_finance.router)
 app.include_router(_r_gamification.router)
 app.include_router(_r_liveplay.router)
 app.include_router(_r_vocab_pdf.router)
+app.include_router(_r_salary_pdf.router)
 app.include_router(_r_lesson_run.router)
 app.include_router(_r_assignments.router)
 app.include_router(_r_mastery.router)

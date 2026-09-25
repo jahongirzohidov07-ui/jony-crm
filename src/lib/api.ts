@@ -140,6 +140,34 @@ function cacheable(path: string): boolean {
   return !NO_CACHE.some((p) => path.startsWith(p));
 }
 
+/** FAYL YUKLAB OLISH (PDF, Excel...) — 2026-09-25.
+ *
+ *  Oddiy <a href> ishlamaydi: server tokenni sarlavhada so'raydi.
+ *  Shuning uchun fayl token bilan olinadi va brauzerga blob sifatida
+ *  beriladi. Xato bo'lsa server matni ko'rsatiladi ("Bu ustoz sizning
+ *  filialingizda bu oyda dars bermagan" kabi). */
+export async function downloadFile(path: string, filename: string) {
+  const token = getToken();
+  const res = await fetch(`/api${path}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    let msg = "Faylni tayyorlab bo'lmadi";
+    try {
+      const j = await res.json();
+      if (j && typeof j.detail === "string") msg = j.detail;
+    } catch { /* javob JSON emas — umumiy matn qoladi */ }
+    throw new Error(msg);
+  }
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
 /** Keshni tozalash. Bo'sh chaqirilsa - hammasini.
  *  Masalan: invalidate("/students") - faqat o'quvchilarga tegishlisini. */
 export function invalidate(prefix?: string) {
@@ -2609,6 +2637,10 @@ export interface SalaryBreakdown {
   multi_branch: boolean;
   branches: SalaryBreakdownBranch[];
   students: SalaryBreakdownStudent[];
+  /** Filial rahbariga hisobot o'z filiali bo'yicha kesilgan
+   *  (2026-09-25). Ustozning o'zi va markaz rollari uchun bo'lmaydi. */
+  scoped?: boolean;
+  scope_branches?: string[];
 }
 
 export interface SalaryPaymentRow {

@@ -2098,6 +2098,75 @@ def _salary_breakdown(db: Session, t, year: int, month: int) -> dict:
     }
 
 
+def _salary_breakdown_scoped(db: Session, user, t, year: int,
+                             month: int) -> dict:
+    """Oylik hisoboti FILIAL CHEGARASI bilan (2026-09-25).
+
+    Jahongir: "bu funksiya filial rahbarlarida ham bolsin" — va ustoz
+    ikki filialda ishlasa rahbar FAQAT O'Z filialini ko'radi.
+
+    Qoida:
+      - butun tashkilotni ko'radigan rol (asoschi, moliya, HR, o'quv
+        bo'limi) — hammasini;
+      - ustozning o'zi — o'z oyligini to'liq (ikkala filial bilan);
+      - filialga bog'langan rahbar — faqat o'z filial(lar)idagi guruh,
+        o'quvchi va summa. Summa shu filial bo'yicha qayta yig'iladi,
+        shuning uchun u ustoz qo'lga oladigan UMUMIY summadan kam
+        bo'lishi mumkin — "scoped" belgisi aynan shuning uchun bor.
+    """
+    data = _salary_breakdown(db, t, year, month)
+    role = getattr(user, "role", None)
+    if user is None or role in tuple(roles.ORG_WIDE_ROLES):
+        return data
+    try:
+        me = _teacher_of_user(db, user)
+    except Exception:
+        me = None
+    if me is not None and me.id == t.id:
+        return data                       # o'zinikini to'liq ko'radi
+    own = [b for b in data["branches"]
+           if _in_user_branches(db, user, b.get("branch_id"), null_ok=True)]
+    if len(own) == len(data["branches"]):
+        return data
+
+    flat: dict = {}
+    for b in own:
+        for g in b["groups"]:
+            for r in g["students"]:
+                f = flat.setdefault(r["student_id"], {
+                    "student_id": r["student_id"], "student": r["student"],
+                    "status": r["status"], "present": 0, "absent": 0,
+                    "counted": 0, "not_counted": 0, "amount": 0.0,
+                    "groups": [], "branches": []})
+                for k in ("present", "absent", "counted", "not_counted",
+                          "amount"):
+                    f[k] += r[k]
+                if g["group"] not in f["groups"]:
+                    f["groups"].append(g["group"])
+                if b["branch"] not in f["branches"]:
+                    f["branches"].append(b["branch"])
+    flat_rows = sorted(
+        (dict(f, amount=round(f["amount"], 2),
+              groups=", ".join(f["groups"]),
+              branches=", ".join(f["branches"])) for f in flat.values()),
+        key=lambda x: (-x["amount"], x["student"]))
+    return dict(
+        data,
+        branches=own,
+        students=flat_rows,
+        amount=round(sum(b["amount"] for b in own), 2),
+        attendances=sum(b["attendances"] for b in own),
+        lessons=sum(b["lessons"] for b in own),
+        not_counted=sum(b["not_counted"] for b in own),
+        multi_branch=len(own) > 1,
+        # Muhrlangan summa BUTUN oylikniki — filial kesimida uni
+        # ko'rsatish chalg'itadi.
+        sealed_amount=None,
+        scoped=True,
+        scope_branches=[b["branch"] for b in own],
+    )
+
+
 def _problem(key: str, message: str) -> dict:
     return {
         "key": key,
@@ -7330,6 +7399,7 @@ __all__ = [
     "_paid_share",
     "_payroll_branch_label",
     "_salary_breakdown",
+    "_salary_breakdown_scoped",
     "_check_pay_scope",
     "_pay_branch",
     "_period_bounds",

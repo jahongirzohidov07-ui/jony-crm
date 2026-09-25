@@ -322,7 +322,11 @@ def teacher_salary_breakdown(
     y, m = year or today.year, month or today.month
     if not 1 <= m <= 12:
         raise HTTPException(400, "Oy noto'g'ri")
-    return _salary_breakdown(db, t, y, m)
+    # FILIAL CHEGARASI (2026-09-25). Filial rahbari FINANCE_ACCESS
+    # orqali istalgan ustozning hisobotini, shu jumladan BOSHQA
+    # filialdagi guruh va o'quvchilarini ham ko'rardi. Endi u faqat
+    # o'z filialidagi qismni ko'radi; ustoz o'zinikini to'liq ko'radi.
+    return _salary_breakdown_scoped(db, user, t, y, m)
 
 @router.post("/api/teachers/{teacher_id}/payments")
 def pay_teacher(

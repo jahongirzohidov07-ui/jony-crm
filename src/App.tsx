@@ -48,6 +48,7 @@ const Complaints = lazy(() => import("./pages/Complaints"));
 const Academic = lazy(() => import("./pages/Academic"));
 const TimetableGrid = lazy(() => import("./pages/TimetableGrid"));
 const Archive = lazy(() => import("./pages/Archive"));
+const Drill = lazy(() => import("./pages/Drill"));
 const DiscountsPage = lazy(() => import("./pages/DiscountsPage"));
 // Dars rejalari + jonli o'yin (Kahoot uslubi), 2026-09-18
 const LessonPlans = lazy(() => import("./pages/LessonPlans"));
@@ -380,6 +381,8 @@ function AppRoutes() {
           <Route path="audit" element={<Audit />} />
           <Route path="timetable" element={<TimetableGrid />} />
           <Route path="archive" element={<Archive />} />
+          {/* Adminlar mashqi (2026-09-25) */}
+          <Route path="mashq" element={<Drill />} />
           <Route path="discounts" element={<DiscountsPage />} />
           <Route path="plans" element={<LessonPlans />} />
           <Route path="learning" element={<LearningReport />} />

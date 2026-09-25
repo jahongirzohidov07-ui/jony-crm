@@ -29,6 +29,10 @@ class Branch(Base):
     # bu boshqa biznesning aylanmasi. Ko'rish uchun tepadagi
     # tanlagichdan o'sha filialni tanlash kerak.
     is_partner = Column(Integer, default=0, index=True)
+    # SINOV FILIALI (2026-09-25): adminlar mashqi shu filialda
+    # kechadi. Mashq paytida yaratilgan o'quvchi, to'lov va guruh
+    # haqiqiy filiallarga tushmaydi.
+    is_test = Column(Integer, default=0, index=True)
     partner_note = Column(String, nullable=True)   # kim boshqaradi, ulush
     owner_percent = Column(Float, nullable=True)   # bizning ulushimiz (%)
 
@@ -4332,3 +4336,58 @@ class ExamSubmission(Base):
     submitted_at = Column(DateTime, default=datetime.utcnow)
     placed_by = Column(String, nullable=True)
     placed_at = Column(DateTime, nullable=True)
+
+
+class DrillTask(Base):
+    """MASHQ BANDI (2026-09-25). Admin qanday vazifani necha soniyada
+    bajarishi kerakligi. HR bo'limidan tahrirlanadi."""
+    __tablename__ = "drill_tasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, index=True, nullable=False)
+    order_no = Column(Integer, default=0, index=True)
+    title = Column(String, nullable=False)
+    hint = Column(String, nullable=True)
+    seconds = Column(Integer, default=30)
+    # row = jadvalda yangi yozuv; audit = tarixdagi amal; view = ko'rish
+    verify_kind = Column(String, default="view")
+    verify_table = Column(String, nullable=True)
+    verify_entity = Column(String, nullable=True)
+    verify_action = Column(String, nullable=True)
+    verify_field = Column(String, nullable=True)
+    is_active = Column(Integer, default=1)
+    updated_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class DrillAttempt(Base):
+    """Bitta urinish: kim, qachon, qaysi filialda."""
+    __tablename__ = "drill_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True,
+                     nullable=False)
+    branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
+    status = Column(String, default="running", index=True)
+    started_at = Column(DateTime, default=datetime.utcnow)
+    finished_at = Column(DateTime, nullable=True)
+
+
+class DrillStep(Base):
+    """Urinishdagi bitta band: qachon boshlandi, qancha vaqt ketdi,
+    tekshiruvdan o'tdimi."""
+    __tablename__ = "drill_steps"
+
+    id = Column(Integer, primary_key=True, index=True)
+    attempt_id = Column(Integer, ForeignKey("drill_attempts.id"),
+                        index=True, nullable=False)
+    task_id = Column(Integer, ForeignKey("drill_tasks.id"), nullable=False)
+    order_no = Column(Integer, default=0)
+    started_at = Column(DateTime, default=datetime.utcnow)
+    done_at = Column(DateTime, nullable=True)
+    spent = Column(Integer, nullable=True)      # soniya
+    ok = Column(Integer, default=0)
+    skipped = Column(Integer, default=0)
+    # "row" tekshiruvi uchun: band boshlanganda jadvaldagi eng katta id
+    snapshot_id = Column(Integer, nullable=True)

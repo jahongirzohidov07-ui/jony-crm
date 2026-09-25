@@ -48,7 +48,7 @@ type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacanci
   | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
   | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps"
-  | "penalty" | "blacklist" | "solo" | "exited";
+  | "penalty" | "blacklist" | "solo" | "exited" | "drill";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
@@ -73,6 +73,8 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "solo", label: "Yakka support" },
   // 2026-09-24, Jahongir: "hr ga xodimlar arxivini ochib ber"
   { key: "exited", label: "Ketganlar arxivi" },
+  // 2026-09-25: adminlar mashqi — vazifalar va soniyalar
+  { key: "drill", label: "Admin mashqi" },
   // 2026-09-16, Jahongir: examiner va supportlardan jarima ball ayirish
   { key: "penalty", label: "Jarima ballari" },
   // 2026-09-16, Jahongir: "o'quv markaz qora ro'yxatini shakllantir"
@@ -1454,6 +1456,7 @@ export default function Hr() {
       {activeTab === "onbsteps" && <OnboardingStepsTab />}
       {activeTab === "solo" && <SoloSupportTab />}
       {activeTab === "exited" && <ExitedStaffTab />}
+      {activeTab === "drill" && <DrillAdminTab />}
       {activeTab === "penalty" && <PenaltyPointsTab />}
       {activeTab === "blacklist" && <HrBlacklistTab />}
     </div>
@@ -2916,6 +2919,212 @@ function ExitEditModal({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** ADMIN MASHQI (2026-09-25, Jahongir: "hr uchun shu miqdorni
+ *  o'zgartirishni qo'shib qo'y yangi bo'lim ochib").
+ *
+ *  HR har bandning soniyasini va nomini o'zgartiradi, keraksizini
+ *  o'chiradi, qaysi filial SINOV ekanini belgilaydi va kim qanday
+ *  topshirganini ko'radi. */
+type DrillTask = {
+  id: number;
+  key: string;
+  order_no: number;
+  title: string;
+  hint: string | null;
+  seconds: number;
+  verify_label: string;
+  is_active: boolean;
+};
+
+type DrillAttempt = {
+  id: number;
+  user: string | null;
+  status: string;
+  started_at: string | null;
+  total: number;
+  done: number;
+  in_time: number;
+  spent: number;
+};
+
+function DrillAdminTab() {
+  const [d, setD] = useState<{
+    tasks: DrillTask[];
+    total_seconds: number;
+    attempts: DrillAttempt[];
+    branches: { id: number; name: string; is_test: boolean }[];
+    hint: string;
+  } | null>(null);
+  const [busy, setBusy] = useState(0);
+
+  const load = useCallback(() => {
+    api.fresh<typeof d>("/drill/admin").then(setD);
+  }, []);
+  useEffect(load, [load]);
+
+  if (!d) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
+
+  const save = async (t: DrillTask, patch: Record<string, unknown>) => {
+    setBusy(t.id);
+    try {
+      await api.put(`/drill/tasks/${t.id}`, patch);
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Saqlanmadi");
+    } finally {
+      setBusy(0);
+    }
+  };
+
+  return (
+    <div>
+      <p className="text-sm text-slate-500 mb-4">{d.hint}</p>
+
+      <div className="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+        <p className="text-sm font-medium text-slate-700 mb-2">
+          Sinov filiali
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {d.branches.map((b) => (
+            <button
+              key={b.id}
+              onClick={async () => {
+                await api.put(`/drill/branches/${b.id}`, {
+                  is_test: !b.is_test,
+                });
+                load();
+              }}
+              className={`px-3 py-1.5 rounded-lg text-sm border ${
+                b.is_test
+                  ? "bg-brand-600 text-white border-brand-600"
+                  : "bg-white text-slate-600 border-slate-300"
+              }`}
+            >
+              {b.name}
+            </button>
+          ))}
+        </div>
+        <p className="text-xs text-slate-400 mt-2">
+          Mashq faqat belgilangan filialda boshlanadi — haqiqiy filialda
+          soxta o'quvchi va to'lov paydo bo'lmaydi.
+        </p>
+      </div>
+
+      <div className="bg-white border border-slate-200 rounded-xl overflow-x-auto mb-4">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50 text-slate-500 text-xs">
+            <tr>
+              <th className="text-left px-4 py-2.5 font-medium w-10">#</th>
+              <th className="text-left px-3 py-2.5 font-medium">Vazifa</th>
+              <th className="text-left px-3 py-2.5 font-medium">Tekshiruv</th>
+              <th className="text-right px-3 py-2.5 font-medium">Soniya</th>
+              <th className="px-3 py-2.5"></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {d.tasks.map((t) => (
+              <tr key={t.id} className={t.is_active ? "" : "opacity-50"}>
+                <td className="px-4 py-2.5 text-slate-400">{t.order_no}</td>
+                <td className="px-3 py-2.5">
+                  <span className="text-slate-800">{t.title}</span>
+                  {t.hint && (
+                    <span className="block text-[11px] text-slate-400">
+                      {t.hint}
+                    </span>
+                  )}
+                </td>
+                <td className="px-3 py-2.5 text-xs text-slate-500">
+                  {t.verify_label}
+                </td>
+                <td className="px-3 py-2.5 text-right">
+                  <input
+                    type="number"
+                    min={5}
+                    max={600}
+                    defaultValue={t.seconds}
+                    disabled={busy === t.id}
+                    onBlur={(e) => {
+                      const v = Number(e.target.value);
+                      if (v && v !== t.seconds) save(t, { seconds: v });
+                    }}
+                    className="w-20 rounded-lg border border-slate-300 px-2 py-1 text-sm text-right"
+                  />
+                </td>
+                <td className="px-3 py-2.5 text-right">
+                  <button
+                    onClick={() => save(t, { is_active: !t.is_active })}
+                    className="text-xs text-slate-500 underline decoration-dotted"
+                  >
+                    {t.is_active ? "O'chirish" : "Yoqish"}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-xs text-slate-500 mb-5">
+        Jami: {d.tasks.filter((t) => t.is_active).length} ta vazifa ·{" "}
+        {Math.round(d.total_seconds / 60)} daqiqa
+      </p>
+
+      <p className="text-sm font-medium text-slate-700 mb-2">Urinishlar</p>
+      {d.attempts.length === 0 ? (
+        <p className="text-sm text-slate-400 py-6 text-center">
+          Hali hech kim topshirmagan.
+        </p>
+      ) : (
+        <div className="bg-white border border-slate-200 rounded-xl overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-slate-500 text-xs">
+              <tr>
+                <th className="text-left px-4 py-2.5 font-medium">Xodim</th>
+                <th className="text-left px-3 py-2.5 font-medium">Sana</th>
+                <th className="text-right px-3 py-2.5 font-medium">
+                  Vaqtida
+                </th>
+                <th className="text-right px-3 py-2.5 font-medium">
+                  Bajardi
+                </th>
+                <th className="text-right px-3 py-2.5 font-medium">Vaqt</th>
+                <th className="text-left px-3 py-2.5 font-medium">Holat</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {d.attempts.map((a) => (
+                <tr key={a.id}>
+                  <td className="px-4 py-2.5 text-slate-800">
+                    {a.user || "—"}
+                  </td>
+                  <td className="px-3 py-2.5 text-slate-500">
+                    {a.started_at?.slice(0, 16).replace("T", " ")}
+                  </td>
+                  <td className="px-3 py-2.5 text-right text-slate-700">
+                    {a.in_time} / {a.total}
+                  </td>
+                  <td className="px-3 py-2.5 text-right text-slate-600">
+                    {a.done}
+                  </td>
+                  <td className="px-3 py-2.5 text-right text-slate-500">
+                    {Math.round(a.spent / 60)} daq
+                  </td>
+                  <td className="px-3 py-2.5 text-xs text-slate-500">
+                    {a.status === "done"
+                      ? "yakunlandi"
+                      : a.status === "running"
+                      ? "ketmoqda"
+                      : "to'xtatilgan"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

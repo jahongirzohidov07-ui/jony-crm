@@ -856,6 +856,12 @@ STUDENT_GROUPS_VIEW = ATTENDANCE_VIEW
 # hrga"). Ko'rish - dars beruvchi xodimlar va HR. Tuzatish esa
 # guruh varag'idagi bilan BIR XIL ro'yxat: ustoz va support natija
 # kirita olmaydi (baholash examinerniki), ularga HR qo'shiladi.
+# MASHQ (2026-09-25, Jahongir: "test filialga kirib mashq degan
+# bo'lim ochiladi faqat adminlarga"). Topshiradigan — administrator
+# (asoschi ham sinab ko'ra oladi). Sozlaydigan — HR va asoschi.
+DRILL_TAKE = [ADMINISTRATOR, FOUNDER]
+DRILL_MANAGE = FULL_ACCESS + [HR_MANAGER]
+
 STUDENT_EXAMS_VIEW = TEACHING_STAFF + [HR_MANAGER]
 STUDENT_EXAMS_EDIT = [r for r in TEACHING_ACCESS
                       if r not in (TEACHER, SUPPORT_TEACHER)] + [HR_MANAGER]

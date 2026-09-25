@@ -114,6 +114,7 @@ import events as _r_events
 import comments as _r_comments
 import content as _r_content
 import dashboard as _r_dashboard
+import drill as _r_drill
 import examiners as _r_examiners
 import exams as _r_exams
 # Online test — link orqali (2026-09-18)
@@ -164,6 +165,7 @@ app.include_router(_r_events.router)
 app.include_router(_r_comments.router)
 app.include_router(_r_content.router)
 app.include_router(_r_dashboard.router)
+app.include_router(_r_drill.router)
 app.include_router(_r_examiners.router)
 app.include_router(_r_exams.router)
 app.include_router(_r_exam_online.router)

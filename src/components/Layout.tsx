@@ -521,6 +521,11 @@ export default function Layout() {
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/archive", label: "Arxiv", icon: ArchiveIcon }];
   }
+  // MASHQ (2026-09-25, Jahongir: "faqat adminlarga") — administrator
+  // tizimni qanchalik tez boshqarishini sinov filialida o'lchaydi.
+  if (user?.role === "administrator" || user?.role === "founder") {
+    items = [...items, { to: "/mashq", label: "Mashq", icon: Timer }];
+  }
   // TADBIRLAR (2026-09-14): tug'ilgan kunlar va tadbirlar.
   if (can(user?.role, EVENTS_ACCESS)) {
     items = [...items, { to: "/events", label: "Tadbirlar", icon: PartyPopper }];

@@ -626,10 +626,71 @@ SEED_KO_A2 = [
 ]
 
 
+# Seed to'plamlari: (ma'lumot, daraja, til). Pastdagi _missing_sets
+# shu ro'yxatni bazadagi holat bilan solishtiradi.
+def _all_sets():
+    return [
+        (SEED_EN_C1, "C1", "en"),
+        (SEED_EN_C2, "C2", "en"),
+        (SEED_RU_A1, "A1", "ru"),
+        (SEED_RU_A2, "A2", "ru"),
+        (SEED_DE_A1, "A1", "de"),
+        (SEED_DE_A2, "A2", "de"),
+        (SEED_KO_A1, "A1", "ko"),
+        (SEED_KO_A2, "A2", "ko"),
+    ]
+
+
+def _missing_sets(db):
+    """Qaysi (til, daraja) juftligi bazada YO'Q — bitta so'rov bilan.
+
+    NEGA MARKER YETMAYDI (2026-09-25, Jahongir: "programmada
+    JonyStudentappda muammo koreys tiliga o'tmayabdi ekan").
+
+    Ilgari bu seed "grammar_v3" markeri bilan bir marta ishlab,
+    keyin QAYTA KIRMASDI. Faylga keyinchalik ru/de/ko qo'shilganda
+    jonli bazaga tushmadi — marker allaqachon yozilgan edi. Yangi
+    bazada (test) hammasi ishlaydi, jonli bazada esa koreys
+    grammatikasi bo'sh qoladi. Aynan shu hol kuzatilgan.
+
+    Endi marker emas, KONTENT tekshiriladi. Yangi til yoki daraja
+    qo'shilsa o'zi tushadi; hammasi joyida bo'lsa bitta arzon
+    so'rovdan keyin chiqib ketadi."""
+    import models
+    from sqlalchemy import func
+    rows = (db.query(models.GrammarQuestion.language,
+                     models.GrammarQuestion.level,
+                     func.count(models.GrammarQuestion.id))
+            .group_by(models.GrammarQuestion.language,
+                      models.GrammarQuestion.level).all())
+    have = {(lang, lvl) for lang, lvl, n in rows if n}
+    return [s for s in _all_sets() if (s[2], s[1]) not in have]
+
+
+def _seed_key() -> str:
+    """Marker kaliti KONTENTDAN chiqadi.
+
+    Shunda yangi til yoki daraja qo'shilsa kalit o'zi o'zgaradi va
+    seed bir marta qayta ishlaydi. Hammasi joyida bo'lsa esa hech
+    qanday so'rov yo'q — kalit xotiradagi ro'yxatdan tekshiriladi.
+    Sxema barmoq izi bilan bir xil mantiq."""
+    parts = sorted(f"{lang}-{level}" for _, level, lang in _all_sets())
+    return "grammar_v3:" + ",".join(parts)
+
+
 def seed_grammar_extra(db):
-    """C1/C2 (en) + ru/de/ko A1/A2. Idempotent, marker grammar_v3."""
+    """C1/C2 (en) + ru/de/ko A1/A2. Idempotent.
+
+    Eski "grammar_v3" markeri kontentga bog'lanmagan edi: faylga
+    yangi til qo'shilganda ham qulf ochilmasdi. Endi kalit
+    kontentdan chiqadi, ustiga esa kontent tekshiruvi qo'yilgan."""
     from common import _seed_done, _seed_mark
-    if _seed_done(db, "grammar_v3"):
+    key = _seed_key()
+    if _seed_done(db, key):
+        return None
+    todo = _missing_sets(db)
+    if not todo:
+        _seed_mark(db, key)
         return None
     import json
     import models
@@ -654,16 +715,12 @@ def seed_grammar_extra(db):
                 have.add((topic, prompt))
                 made += 1
 
-    _add(SEED_EN_C1, "C1", "en")
-    _add(SEED_EN_C2, "C2", "en")
-    _add(SEED_RU_A1, "A1", "ru")
-    _add(SEED_RU_A2, "A2", "ru")
-    _add(SEED_DE_A1, "A1", "de")
-    _add(SEED_DE_A2, "A2", "de")
-    _add(SEED_KO_A1, "A1", "ko")
-    _add(SEED_KO_A2, "A2", "ko")
+    # Faqat YETISHMAYOTGANI qo'shiladi — borini qayta yozmaydi
+    for seed, level, language in todo:
+        _add(seed, level, language)
+        print(f"[grammar] {language} {level}: kontent qo'shildi")
 
     if made:
         db.commit()
-    _seed_mark(db, "grammar_v3")
+    _seed_mark(db, key)
     return made

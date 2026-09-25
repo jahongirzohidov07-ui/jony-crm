@@ -147,16 +147,35 @@ def _mk_grammar(db, level, asked):
                         "hint": "Bo'sh joyga mosini tanlang"}}
 
 
+# BOSHQA YOZUV TIZIMLARI (harflar). Tinish belgilari bu yerda YO'Q —
+# 2026-09-25: ilgari "ord(ch) > 0x24F" deb tekshirilardi va ingliz
+# gapidagi uzun tire ("— it's arranged") ham "koreyscha" deb
+# hisoblanardi. Til belgisini HARF bildiradi, tinish belgisi emas.
+_FOREIGN_RANGES = (
+    (0x0400, 0x052F),   # kirill (rus)
+    (0x0590, 0x06FF),   # ibroniy, arab
+    (0x1100, 0x11FF),   # hangul jamo
+    (0x3040, 0x30FF),   # yapon (hiragana/katakana)
+    (0x3130, 0x318F),   # hangul mos belgilari
+    (0x3400, 0x9FFF),   # xitoy ideogrammalari
+    (0xAC00, 0xD7AF),   # hangul bo'g'inlari (koreys)
+)
+
+
+def _foreign_letter(ch: str) -> bool:
+    """Belgi boshqa yozuv tizimining HARFIMI."""
+    o = ord(ch)
+    return any(lo <= o <= hi for lo, hi in _FOREIGN_RANGES)
+
+
 def _latin_word(w: str) -> bool:
     """So'z lotin alifbosidami? (2026-09-08 himoyasi)
 
     Til belgisi noto'g'ri qo'yilgan yozuv ingliz to'plamiga tushib
     qolmasin: koreys (hangul), rus/kirill, arab, xitoy harflari bo'lsa
-    bu so'z ingliz tili emas."""
-    for ch in (w or ""):
-        if ord(ch) > 0x24F:          # lotin va lotin kengaytmasidan tashqari
-            return False
-    return True
+    bu so'z ingliz tili emas. Tinish belgilari (tire, qo'shtirnoq)
+    bunga kirmaydi — ular ingliz so'zida ham uchraydi."""
+    return not any(_foreign_letter(ch) for ch in (w or ""))
 
 
 def _vocab_pool(db, level):

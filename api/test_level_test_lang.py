@@ -85,16 +85,33 @@ db.add(models.VocabWord(word="книга", translation="kitob (ru)", level="A1",
 db.commit()
 
 print("=== 1. Grammatika: faqat ingliz savollari ===")
-seen, ko_ru = set(), 0
+# MEZON (2026-09-25 tuzatildi): "ord(ch) > 0x24F" deb tekshirish
+# XATO edi — ingliz gapidagi uzun tire ("— it's arranged", U+2014)
+# ham "koreyscha" deb sanalardi va bu test sababsiz qizil turardi.
+# Tilni HARF bildiradi: hangul, kirill, arab, xitoy. Tinish belgisi
+# emas. Mezon mahsulot kodi bilan bitta joyda — level_test._foreign_letter.
+seen, ko_ru, leaked = set(), 0, []
 for _ in range(60):
     q = level_test._mk_grammar(db, "A1", [])
     if not q:
         continue
-    seen.add(q["payload"]["prompt"])
-    if any(ord(ch) > 0x24F for ch in q["payload"]["prompt"]):
+    pr = q["payload"]["prompt"]
+    seen.add(pr)
+    if any(level_test._foreign_letter(ch) for ch in pr):
         ko_ru += 1
+        leaked.append(pr)
 ck("koreys/rus savoli chiqmadi", ko_ru, 0)
+if leaked:
+    print("      aralashib ketgan savollar: " + str(leaked[:3]))
 ck("ingliz savollari chiqdi", len(seen) > 0, True)
+# Tinish belgisi bor ingliz gapi CHETLATILMASLIGI kerak
+ck("uzun tire ingliz savolini chetlatmaydi",
+   level_test._latin_word("We meet tomorrow — it's arranged."), True)
+ck("qo'shtirnoq (’) chetlatmaydi",
+   level_test._latin_word("don’t"), True)
+ck("hangul chetlatiladi", level_test._latin_word("사과"), False)
+ck("kirill chetlatiladi",
+   level_test._latin_word("книга"), False)
 
 print()
 print("=== 2. Lug'at: lotin bo'lmagan so'z chiqmaydi ===")
@@ -104,7 +121,11 @@ _all = (db.query(models.VocabWord)
                 models.VocabWord.level == "A1",
                 _or(models.VocabWord.language == "en",
                     models.VocabWord.language.is_(None))).all())
-_bad = [w for w in _all if any(ord(ch) > 0x24F for ch in w.word)]
+# Mezon mahsulot kodi bilan BIR XIL bo'lishi shart — aks holda
+# sonlar mos kelmaydi (seed'dagi ingliz so'zlarida tinish belgisi
+# bo'lishi mumkin, u chetlatilmaydi).
+_bad = [w for w in _all
+        if any(level_test._foreign_letter(ch) for ch in w.word)]
 pool = level_test._vocab_pool(db, "A1")
 ck("bazada lotin bo'lmagan yozuv bor", len(_bad) >= 2, True)
 ck("to'plam aynan shularsiz", len(pool), len(_all) - len(_bad))

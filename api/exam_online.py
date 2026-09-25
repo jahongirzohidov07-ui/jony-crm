@@ -58,6 +58,16 @@ _HITS: dict = {}
 _MAX_PER_HOUR = 300                # bitta sinf bitta Wi-Fi (bitta IP) dan kiradi
 COUNTDOWN_SEC = 10                 # "Start"dan keyin teskari sanoq
 AWAY_LIMIT_DEFAULT = 5             # sahifadan chiqishga ruxsat (undan keyin chetlatiladi)
+# O'TISH (mid) VA YAKUNIY (end) TESTLAR 100 BALLIK (2026-09-25,
+# Jahongir: "o'tish testi midterm end of course maks ball 100
+# bo'ladi"). Unit testlarda esa maksimal ball savollar soniga teng
+# bo'lib qolaveradi.
+#
+# Online qismi savollar sonidan chiqadi (masalan 45), qolgani —
+# Writing va Speaking qog'ozda (55). Ikkalasi qo'shilib 100 bo'ladi,
+# shuning uchun bu yerda faqat JAMISI belgilanadi; taqsimot
+# avtomat: qog'oz = 100 − savollar soni.
+MID_END_TOTAL = 100.0
 GRACE_SEC = 90                     # vaqt tugagach avtomatik topshirish muhlati
 
 
@@ -276,6 +286,9 @@ def bank_max(db: Session, group, kind: str, unit_no=None):
     if not t:
         return None
     n = sum(1 for _ in _questions(_load(t.parts)))
+    if kind in ("mid", "end"):
+        # Qog'oz qismi bazada belgilanmagan bo'lsa ham jami 100
+        return max(float(n), MID_END_TOTAL)
     return float(n) + float(t.paper_max or 0)
 
 
@@ -593,8 +606,14 @@ def create_online(exam_id: int, payload: OnlineIn,
         raise HTTPException(404, "Test bazada topilmadi")
     parts = _load(t.parts)
     online_max = float(sum(1 for _ in _questions(parts)))
-    paper_max = float(t.paper_max or 0) if payload.paper_max is None \
-        else float(payload.paper_max)
+    if payload.paper_max is not None:
+        paper_max = float(payload.paper_max)
+    elif t.kind in ("mid", "end"):
+        # 100 ballik testda qog'oz qismi qolgan ballni oladi
+        paper_max = float(t.paper_max or 0) or max(
+            0.0, MID_END_TOTAL - online_max)
+    else:
+        paper_max = float(t.paper_max or 0)
     if paper_max < 0:
         raise HTTPException(400, "Writing/Speaking bali noto'g'ri")
     total = online_max + paper_max
@@ -1178,6 +1197,47 @@ def seed_templates(db: Session) -> None:
             db.commit()
         _seed_mark(db, key)
     fill_exam_max_from_bank(db)
+    fill_mid_end_100(db)
+
+
+def fill_mid_end_100(db: Session, key: str = "exam_mid_end_100_v1"):
+    """BIR MARTALIK (2026-09-25): o'tish va yakuniy testlarning
+    maksimal balini 100 ga tenglaydi.
+
+    Faqat natijasi KIRITILMAGAN, linki ochilmagan va bekor
+    qilinmagan testlar — natijasi borlarining foizi va coini
+    o'zgarib ketmasin. Shablonlarda qog'oz qismi ham to'ldiriladi:
+    online savollar soni + qog'oz = 100."""
+    if _seed_done(db, key):
+        return 0
+    changed = 0
+    try:
+        for t in (db.query(models.ExamTemplate)
+                  .filter(models.ExamTemplate.kind.in_(("mid", "end")))
+                  .all()):
+            n = float(sum(1 for _ in _questions(_load(t.parts))))
+            want = max(0.0, MID_END_TOTAL - n)
+            if not (t.paper_max or 0) and want > 0:
+                t.paper_max = want
+        linked = {o.exam_id for o in db.query(models.ExamOnline).all()}
+        for ex in (db.query(models.Exam)
+                   .filter(models.Exam.kind.in_(("mid", "end"))).all()):
+            if ex.status == "cancelled" or ex.id in linked:
+                continue
+            if any(not r.absent and (r.score is not None
+                                     or r.band is not None)
+                   for r in ex.results):
+                continue
+            if (ex.max_score or 0) != MID_END_TOTAL:
+                ex.max_score = MID_END_TOTAL
+                changed += 1
+        db.commit()
+        _seed_mark(db, key)
+        print(f"[exam-bank] mid/end 100 ballik: {changed} ta imtihon")
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        print(f"[exam-bank] mid/end 100 ballik yangilanmadi: {e}")
+    return changed
 
 
 def fill_exam_max_from_bank(db: Session, key: str = "exam_max_from_bank_v1"):

@@ -226,9 +226,11 @@ ck("yangi Unit 1 testi: 50 yozilgan, bazadan 30", r.json()["max_score"], 30)
 ck("forma uchun: Unit 2 = 30",
    client.get(f"/api/groups/{GID}/exam-bank-max?kind=unit&unit_no=2", headers=HE)
    .json()["max_score"], 30)
-ck("forma uchun: Mid = 45",
+# O'tish va yakuniy test 100 ballik (2026-09-25, Jahongir): savollar
+# soni emas, jami ball qaytadi - qolgani Writing/Speaking uchun.
+ck("forma uchun: Mid = 100",
    client.get(f"/api/groups/{GID}/exam-bank-max?kind=mid", headers=HE)
-   .json()["max_score"], 45)
+   .json()["max_score"], 100)
 ck("mock uchun yo'q",
    client.get(f"/api/groups/{GID}/exam-bank-max?kind=mock", headers=HE)
    .json()["max_score"], None)

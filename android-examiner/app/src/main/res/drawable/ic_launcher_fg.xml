@@ -1,42 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Jony Examiner belgisi: magistr qalpog'ini kiygan qo'ng'iroq
-     (imtihon + bildirishnoma). Ko'k-oq ranglar (2026-09-25). -->
+<!-- Jony Examiner belgisi: magistr qalpog'i, ko'k-oq (2026-09-25) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- qo'ng'iroq -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M40,68 v-12 a14,14 0 0 1 28,0 v12 l5,6 v3 H35 v-3 Z" />
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M48,79 h12 a6,6 0 0 1 -12,0 Z" />
-    <!-- qalpoq tagi -->
-    <path
-        android:fillColor="#CFE3FF"
-        android:strokeColor="#0B3A8C"
-        android:strokeWidth="1.6"
-        android:pathData="M41,37 v8 c0,0 6,5 13,5 c7,0 13,-5 13,-5 v-8 L54,41 Z" />
-    <!-- qalpoq taxtasi -->
-    <path
-        android:fillColor="#FFFFFF"
-        android:strokeColor="#0B3A8C"
-        android:strokeWidth="1.6"
-        android:strokeLineJoin="round"
-        android:pathData="M54,26 L78,34 L54,42 L30,34 Z" />
-    <!-- shokila -->
-    <path
-        android:strokeColor="#8EC5FF"
-        android:strokeWidth="1.8"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M54,34 L74,35.5 L74,48" />
-    <path
-        android:fillColor="#8EC5FF"
-        android:pathData="M72,48 h4 l1.2,7.5 h-6.4 Z" />
-    <path
-        android:fillColor="#0B3A8C"
-        android:pathData="M52.2,34 a1.8,1.8 0 1 0 3.6,0 a1.8,1.8 0 1 0 -3.6,0 Z" />
+    <group android:translateY="3">
+        <!-- qalpoq tagi -->
+        <path
+            android:fillColor="#CFE3FF"
+            android:strokeColor="#0B3A8C"
+            android:strokeWidth="2"
+            android:strokeLineJoin="round"
+            android:pathData="M36,47 L54,54 L72,47 V62 C72,62 64,70 54,70 C44,70 36,62 36,62 Z" />
+        <!-- taxta -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:strokeColor="#0B3A8C"
+            android:strokeWidth="2"
+            android:strokeLineJoin="round"
+            android:pathData="M54,32 L84,43 L54,54 L24,43 Z" />
+        <!-- shokila -->
+        <path
+            android:strokeColor="#8EC5FF"
+            android:strokeWidth="2.2"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:pathData="M54,43 L80,45 L80,62" />
+        <path
+            android:fillColor="#8EC5FF"
+            android:pathData="M77.5,62 h5 l1.5,9 h-8 Z" />
+        <path
+            android:fillColor="#0B3A8C"
+            android:pathData="M51.8,43 a2.2,2.2 0 1 0 4.4,0 a2.2,2.2 0 1 0 -4.4,0 Z" />
+    </group>
 </vector>

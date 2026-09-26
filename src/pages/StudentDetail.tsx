@@ -23,7 +23,7 @@ import {
   FINANCE_ACCESS, CASH_ACCESS, TEACHING_STAFF, PAYMENT_EDIT,
   REFUND_REQUEST, REFUND_APPROVE, FOUNDER, FINANCE_DIRECTOR, can, founderLike,
   HR_MANAGER,
-  FREEZE_ROLES, COIN_BALANCE_EDIT,
+  FREEZE_ROLES, COIN_BALANCE_EDIT, MONEY_BALANCE_EDIT,
 } from "../lib/roles";
 import { XpCard } from "../components/XpCard";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
@@ -45,6 +45,8 @@ const KIND_LABEL: Record<string, string> = {
   charge: "Hisoblandi",
   discount: "Chegirma",
   refund: "Refund (qaytarildi)",
+  // 2026-09-26: filial rahbari balansni to'g'riladi (kassaga kirmaydi)
+  adjustment: "Balans tuzatildi",
 };
 
 const STATUS_LABEL: Record<string, string> = {
@@ -166,6 +168,52 @@ function ProfileCard({
         >
           <span className="font-semibold">{formatSom(student.balance)}</span>
           <span className="text-xs ml-1 opacity-70">balans</span>
+          {/* BALANSNI TO'G'RILASH — faqat FILIAL RAHBARI (2026-09-26).
+              Eski yozuvlar o'chmaydi: farq "Balans tuzatildi" yozuvi
+              bo'lib qo'shiladi, kassaga tushum bo'lib kirmaydi. */}
+          {can(user?.role, MONEY_BALANCE_EDIT) && (
+            <button
+              onClick={async () => {
+                const cur = Math.round(student.balance);
+                const v = prompt(
+                  `${student.full_name} — balans.\n` +
+                    "To'g'ri summani yozing (qarz bo'lsa minus bilan, " +
+                    "masalan -240000):",
+                  String(cur)
+                );
+                if (v === null) return;
+                const want = Number(v.replace(/[\s,]/g, ""));
+                if (!Number.isFinite(want)) {
+                  alert("Summani raqam bilan yozing");
+                  return;
+                }
+                if (Math.round(want) === cur) return;
+                const why = prompt(
+                  `${formatSom(cur)} -> ${formatSom(want)}\n` +
+                    "Nima uchun o'zgartirilyapti? (majburiy, tarixda qoladi)",
+                  ""
+                );
+                if (why === null) return;
+                if (why.trim().length < 3) {
+                  alert("Sababni yozing — balans sababsiz o'zgartirilmaydi");
+                  return;
+                }
+                try {
+                  await api.put(`/students/${student.id}/balance`, {
+                    balance: want,
+                    note: why.trim(),
+                  });
+                  onChanged();
+                } catch (e) {
+                  alert(e instanceof Error ? e.message : "Xatolik");
+                }
+              }}
+              title="Balansni to'g'rilash"
+              className="ml-1 p-0.5 rounded hover:bg-black/5 align-middle"
+            >
+              <Pencil size={12} />
+            </button>
+          )}
         </div>
         <div className="rounded-lg px-3 py-1.5 bg-amber-50 text-amber-700 flex items-center gap-1.5">
           <Coins size={14} />

@@ -176,6 +176,14 @@ export const EVENTS_MANAGE = [...FULL_ACCESS, EVENT_MANAGER];
 export const COIN_BALANCE_EDIT = [FOUNDER, BRANCH_MANAGER];
 
 /**
+ * PUL BALANSINI TO'G'RILASH (2026-09-26, Jahongir: "o'quvchi kartasiga
+ * balans tahrirlash qo'shib ber faqat filial rahbariga ruxsat
+ * berilsin"). Server ham faqat filial rahbariga va faqat o'z filiali
+ * o'quvchisiga ruxsat beradi (roles.MONEY_BALANCE_EDIT).
+ */
+export const MONEY_BALANCE_EDIT = [BRANCH_MANAGER];
+
+/**
  * Kassa: pul qabul qilish, qarzdorlar, to'lov foizi.
  * Administrator shu ishni qiladi — lekin FOYDANI ko'rmaydi.
  */

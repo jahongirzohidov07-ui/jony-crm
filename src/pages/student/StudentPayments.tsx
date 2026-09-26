@@ -31,7 +31,8 @@ export default function StudentPayments() {
 
   const all: Any[] = d?.rows || [];
   const rows = all.filter((r) => {
-    if (filt === "pay") return Number(r.amount) > 0 && r.kind !== "discount";
+    if (filt === "pay") return Number(r.amount) > 0 && r.kind !== "discount"
+      && r.kind !== "adjustment";
     if (filt === "charge") return Number(r.amount) < 0;
     return true;
   });

@@ -523,6 +523,13 @@ def delete_payment(
     if p.kind in ("payment", "refund") and not founder_like(user):
         raise HTTPException(
             403, "To'lov (pul kirimi) yozuvini faqat asoschi o'chiradi")
+    # Balans tuzatishi (2026-09-26) — uni qo'ygan filial rahbari yoki
+    # asoschi o'chiradi; aks holda boshqa xodim o'chirib, balansni
+    # jimgina orqaga qaytarib qo'yishi mumkin edi.
+    if (p.kind == roles.PAYMENT_ADJUST_KIND and not founder_like(user)
+            and user.role not in tuple(roles.MONEY_BALANCE_EDIT)):
+        raise HTTPException(
+            403, "Balans tuzatishini faqat filial rahbari o'chiradi")
 
     # Qarzdorlikni o'chirish ("charge" yozuvini olib tashlash) alohida
     # amal - kim qildi, qachon, qancha summani - hammasi yoziladi.
@@ -3336,6 +3343,10 @@ def edit_payment(payment_id: int, payload: schemas.PaymentEditIn,
     if (user.role == roles.BRANCH_MANAGER and st
             and not _in_user_branches(db, user, st.branch_id)):
         raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+    if (p.kind == roles.PAYMENT_ADJUST_KIND and not founder_like(user)
+            and user.role not in tuple(roles.MONEY_BALANCE_EDIT)):
+        raise HTTPException(
+            403, "Balans tuzatishini faqat filial rahbari o'zgartiradi")
     if payload.amount <= 0:
         raise HTTPException(400, "Summani musbat son bilan kiriting")
     # Parallel tahrir: boshqa xodim shu orada o'zgartirgan bo'lsa —

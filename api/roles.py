@@ -1164,6 +1164,14 @@ COIN_ADMIN = list(FULL_ACCESS)
 # obyekt bo'lgani uchun (entry.py unga HR menejerni qo'shadi), unga
 # tayanib qolsak, huquq bilmagan holda HR ga ham o'tib ketardi.
 COIN_BALANCE_EDIT = [FOUNDER, BRANCH_MANAGER]
+# PUL BALANSINI TO'G'RILASH (2026-09-26, Jahongir: "o'quvchi kartasiga
+# balans tahrirlash qo'shib ber faqat filial rahbariga ruxsat
+# berilsin"). Faqat filial rahbari va faqat o'z filiali o'quvchisi.
+MONEY_BALANCE_EDIT = [BRANCH_MANAGER]
+# Tuzatish yozuvining turi: kassaga TUSHUM ham, hisoblangan to'lov ham
+# emas — hisobotlar faqat "payment"/"charge"/"discount"ni sanaydi,
+# balans esa hamma yozuvlar yig'indisi.
+PAYMENT_ADJUST_KIND = "adjustment"
 
 # ---- Adminlar (sotuv menejeri) KPI ------------------------------------
 # Admin ish haqi = fiks oylik + eski to'lovlarni yig'ish bonusi +

@@ -1016,6 +1016,12 @@ class PriceLockIn(BaseModel):
     note: Optional[str] = None
 
 
+class BalanceSetIn(BaseModel):
+    """Pul balansini to'g'ri summaga keltirish (faqat filial rahbari)."""
+    balance: float
+    note: str
+
+
 class CoinSetIn(BaseModel):
     """Coin balansini to'g'ri songa keltirish (faqat asoschi)."""
     balance: int

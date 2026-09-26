@@ -396,6 +396,63 @@ def set_coin_balance(
     return {"ok": True, "balance": want, "changed": diff}
 
 
+@router.put("/api/students/{student_id}/balance")
+def set_money_balance(
+    student_id: int,
+    payload: schemas.BalanceSetIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.MONEY_BALANCE_EDIT)),
+):
+    """PUL BALANSINI TO'G'RILASH — faqat FILIAL RAHBARI (2026-09-26).
+
+    Jahongir: "o'quvchi kartasiga balans tahrirlash qo'shib ber faqat
+    filial rahbariga ruxsat berilsin".
+
+    Coin tuzatishi bilan bir xil qoida: eski yozuvlar O'CHIRILMAYDI,
+    balans yozuvlar yig'indisi bo'lgani uchun FARQ alohida "Tuzatish"
+    yozuvi bo'lib qo'shiladi. Tur "adjustment" — kassaga tushum ham,
+    hisoblangan to'lov ham emas, shuning uchun kassa va daromad
+    hisobotlari o'zgarmaydi, faqat o'quvchi balansi to'g'rilanadi.
+    Sabab majburiy — bu pul."""
+    s = db.query(models.Student).get(student_id)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    if not _in_user_branches(db, user, s.branch_id, null_ok=True):
+        raise HTTPException(403, "Bu o'quvchi boshqa filialga tegishli")
+    reason = (payload.note or "").strip()
+    if len(reason) < 3:
+        raise HTTPException(400, "Sababni yozing — balans sababsiz "
+                                 "o'zgartirilmaydi")
+    want = roles.money(payload.balance)
+    if abs(want) > 100_000_000:
+        raise HTTPException(400, "Summa juda katta — tekshirib qayta "
+                                 "kiriting")
+    now = roles.money(student_balance(db, student_id))
+    diff = roles.money(want - now)
+    if not diff:
+        return {"ok": True, "balance": now, "changed": 0,
+                "message": "Balans allaqachon shunday"}
+    fmt = lambda v: f"{int(v):,}".replace(",", " ")  # noqa: E731
+    p = models.Payment(
+        student_id=student_id, amount=diff,
+        kind=roles.PAYMENT_ADJUST_KIND, method=None,
+        note=(f"Balans tuzatildi: {fmt(now)} -> {fmt(want)}. "
+              f"Sabab: {reason}"),
+        created_by=user.full_name)
+    p.entered_at = datetime.utcnow()
+    db.add(p)
+    db.commit()
+    db.refresh(p)
+    _ensure_public_id(db, "payment", p)
+    audit.log(db, user, entity="student", action="balance_fix",
+              entity_id=s.id, entity_label=s.full_name, field="balance",
+              old_value=now, new_value=want, note=reason,
+              branch_id=s.branch_id)
+    db.commit()
+    return {"ok": True, "balance": want, "changed": diff,
+            "payment_id": p.id}
+
+
 def sweep_left_to_archive(db: Session, branch_id: int | None = None) -> int:
     """GURUHSIZ VA QARZSIZ "Chiqib ketgan"larni AVTOMAT arxivga o'tkazish.
 

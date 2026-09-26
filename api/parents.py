@@ -325,6 +325,7 @@ def parent_manifest(token: str, db: Session = Depends(get_db)):
 _PARENT_KIND_LABEL = {
     "payment": "To'lov", "charge": "Hisoblandi",
     "discount": "Chegirma", "refund": "Refund (qaytarildi)",
+    "adjustment": "Balans tuzatildi",
 }
 _PARENT_METHOD_LABEL = {
     "cash": "Naqd", "card": "Click",

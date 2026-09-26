@@ -2011,7 +2011,7 @@ def student_payments(db: Session = Depends(get_db),
             .order_by(models.Payment.created_at.desc())
             .limit(60).all())
     kinds = {"payment": "To'lov", "charge": "Oylik hisob",
-             "discount": "Chegirma"}
+             "discount": "Chegirma", "adjustment": "Balans tuzatildi"}
     return {
         "balance": student_balance(db, s.id),
         "rows": [{

@@ -2009,7 +2009,9 @@ function DeletedPaymentsTab() {
                       ? "Hisoblangan"
                       : r.kind === "discount"
                         ? "Chegirma"
-                        : "To'lov"}
+                        : r.kind === "adjustment"
+                          ? "Balans tuzatildi"
+                          : "To'lov"}
                     {r.period ? ` · ${r.period}` : ""}
                   </td>
                   <td className="px-3 py-2 text-slate-600">

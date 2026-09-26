@@ -271,12 +271,60 @@ def _link(db: Session, m: models.IgMedia, auto_create: bool) -> str:
     return "new"
 
 
-def sync(db: Session, days: int = 60, auto_create: bool = True,
-         who: str = "avtomat") -> dict:
+K_CURSOR = "instagram_full_cursor"
+K_FULL_DONE = "instagram_full_done"
+BASE_FIELDS = ("id,caption,media_type,media_product_type,permalink,"
+               "timestamp,like_count,comments_count")
+_NESTED = ("insights.metric(reach,saved,shares,views,follows,"
+           "profile_visits)", "insights.metric(reach,saved,shares)")
+
+
+def _first_page(path: str, tok: str) -> tuple:
+    """Insightslarni media bilan BIRGA so'raymiz (50 post = 1 so'rov).
+    Meta biror metrikani rad etsa — xavfsizroq to'plam, u ham bo'lmasa
+    oddiy maydonlar (unda insights har post uchun alohida)."""
+    last = None
+    for extra in _NESTED + ("",):
+        f = BASE_FIELDS + ("," + extra if extra else "")
+        try:
+            return _get(path, fields=f, limit=50, access_token=tok), bool(extra)
+        except Exception as e:
+            last = e
+    raise last
+
+
+def _parse_ins(it: dict) -> dict | None:
+    blk = it.get("insights")
+    if not isinstance(blk, dict):
+        return None
+    out = {}
+    for x in blk.get("data") or []:
+        vals = x.get("values") or [{}]
+        v = vals[0].get("value") if vals else None
+        if v is None:
+            v = (x.get("total_value") or {}).get("value")
+        out[x.get("name")] = int(v or 0)
+    return out
+
+
+def sync(db: Session, days: int | None = 60, auto_create: bool = True,
+         who: str = "avtomat", full: bool = False,
+         create_days: int = 60, budget_s: float = 45.0) -> dict:
+    """days — shuncha kunlik postlar yangilanadi. full=True — akkauntdagi
+    HAMMA postlar (2026-09-26, Jahongir: "hamma JonyAcademy kanalidagi
+    videolar statistikasi menda korinsa"). Vaqt chegarasi (budget_s)
+    oshsa, qolgan joy "cursor" bilan saqlanadi va keyingi safar (cron
+    yoki tugma) o'sha joydan davom etadi — Vercel vaqt limitiga
+    tushmaslik uchun. Rejaga avtomat qator faqat oxirgi create_days
+    kundagi postlar uchun qo'shiladi — eski yuzlab postlar kontent-
+    planni to'ldirib yubormasin (ular Instagram jadvalida ko'rinadi)."""
+    import time as _t
+    t0 = _t.time()
     tok, uid, api = creds(db)
     if not tok:
         return {"ok": False, "note": "Instagram ulanmagan (token yo'q)"}
     base = _base(api)
+    nested = True
     try:
         if not uid:
             info = discover(tok)
@@ -285,21 +333,25 @@ def sync(db: Session, days: int = 60, auto_create: bool = True,
             _set(db, K_USER, uid, who)
             _set(db, K_API, api, who)
             _set(db, K_NAME, info.get("username"), who)
-        path = f"{base}/{uid}/media"
-        fields = ("id,caption,media_type,media_product_type,permalink,"
-                  "timestamp,like_count,comments_count")
-        page = _get(path, fields=fields, limit=50, access_token=tok)
+        cursor = _s(db, K_CURSOR) if full else ""
+        if cursor:
+            page = HTTP["get"](cursor)
+            nested = "insights.metric" in cursor
+        else:
+            page, nested = _first_page(f"{base}/{uid}/media", tok)
     except Exception as e:
         note = f"Instagram javob bermadi: {e}"[:250]
         _set(db, K_LAST_NOTE, note, who)
         db.commit()
         return {"ok": False, "note": note}
 
-    since = datetime.utcnow() - timedelta(days=days)
+    now = datetime.utcnow()
+    since = None if full else now - timedelta(days=days or 60)
+    create_since = now - timedelta(days=create_days)
     seen = made = linked = updated = 0
-    stop = False
+    stop = partial = False
     pages = 0
-    while page and not stop and pages < 6:
+    while page and not stop and pages < 60:
         pages += 1
         for it in page.get("data") or []:
             ts = it.get("timestamp")
@@ -308,7 +360,7 @@ def sync(db: Session, days: int = 60, auto_create: bool = True,
                     if ts else None
             except ValueError:
                 posted = None
-            if posted and posted < since:
+            if since and posted and posted < since:
                 stop = True
                 break
             seen += 1
@@ -324,7 +376,9 @@ def sync(db: Session, days: int = 60, auto_create: bool = True,
             m.posted_at = posted
             m.likes = int(it.get("like_count") or 0)
             m.comments = int(it.get("comments_count") or 0)
-            ins = _insights(base, str(it["id"]), tok)
+            ins = _parse_ins(it)
+            if ins is None:
+                ins = _insights(base, str(it["id"]), tok)
             m.reach = ins.get("reach", m.reach or 0)
             m.saves = ins.get("saved", m.saves or 0)
             m.shares = ins.get("shares", m.shares or 0)
@@ -332,9 +386,10 @@ def sync(db: Session, days: int = 60, auto_create: bool = True,
             m.follows = ins.get("follows", m.follows or 0)
             m.profile_visits = ins.get("profile_visits",
                                        m.profile_visits or 0)
-            m.fetched_at = datetime.utcnow()
+            m.fetched_at = now
             db.flush()
-            how = _link(db, m, auto_create)
+            fresh = bool(posted and posted >= create_since)
+            how = _link(db, m, auto_create and fresh)
             if how == "new":
                 made += 1
             elif how in ("sc", "day"):
@@ -342,8 +397,17 @@ def sync(db: Session, days: int = 60, auto_create: bool = True,
             if m.content_id:
                 _apply_metric(db, m.content_id, m)
                 updated += 1
+        db.commit()
         nxt = (page.get("paging") or {}).get("next")
         if stop or not nxt:
+            if full:
+                _set(db, K_CURSOR, "", who)
+                _set(db, K_FULL_DONE, now.isoformat(timespec="seconds"), who)
+            break
+        if _t.time() - t0 > budget_s:
+            partial = True
+            if full:
+                _set(db, K_CURSOR, nxt, who)
             break
         try:
             page = HTTP["get"](nxt)
@@ -353,7 +417,11 @@ def sync(db: Session, days: int = 60, auto_create: bool = True,
     note = (f"{seen} ta post o'qildi, {updated} tasining raqamlari "
             f"yangilandi, {linked} tasi rejaga bog'landi, {made} tasi "
             f"rejaga avtomat qo'shildi")
-    _set(db, K_LAST, datetime.utcnow().isoformat(timespec="seconds"), who)
+    if partial and full:
+        note += ". Postlar ko'p — qolganlari keyingi yangilanishda davom etadi"
+    total = db.query(models.IgMedia).count()
+    note += f". Jami bazada: {total} ta post"
+    _set(db, K_LAST, now.isoformat(timespec="seconds"), who)
     _set(db, K_LAST_NOTE, note, who)
     db.commit()
     # Obunachilar soni ham (dashboard kartasi)
@@ -365,7 +433,8 @@ def sync(db: Session, days: int = 60, auto_create: bool = True,
     except Exception:
         db.rollback()
     return {"ok": True, "seen": seen, "updated": updated,
-            "linked": linked, "created": made, "note": note}
+            "linked": linked, "created": made, "note": note,
+            "partial": partial, "total": total}
 
 
 def followers(db: Session | None = None) -> int | None:
@@ -385,6 +454,8 @@ def cron_sync(db: Session) -> dict:
     tok, _, _ = creds(db)
     if not tok:
         return {"ok": False, "note": "token yo'q"}
+    if not _s(db, K_FULL_DONE):
+        return sync(db, full=True, who="cron")
     return sync(db, days=30, who="cron")
 
 
@@ -394,7 +465,7 @@ def ig_status(db: Session = Depends(get_db),
               user=Depends(require_role(*roles.SMM_ACCESS))):
     tok, uid, api = creds(db)
     rows = (db.query(models.IgMedia)
-            .order_by(models.IgMedia.posted_at.desc()).limit(60).all())
+            .order_by(models.IgMedia.posted_at.desc()).limit(1000).all())
     titles = {}
     ids = [r.content_id for r in rows if r.content_id]
     att = {}
@@ -457,7 +528,11 @@ def ig_set_token(payload: dict = Body(...), db: Session = Depends(get_db),
               note=f"Instagram ulandi: @{info.get('username')} "
                    f"(token {_mask(tok)})")
     db.commit()
-    res = sync(db, who=user.full_name)
+    # Ulanganda — akkauntdagi HAMMA postlar (vaqt yetmasa davomi cron'da)
+    _set(db, K_CURSOR, "", user.full_name)
+    _set(db, K_FULL_DONE, "", user.full_name)
+    db.commit()
+    res = sync(db, who=user.full_name, full=True)
     return {"ok": True, "username": info.get("username"),
             "account_id": info["user_id"], "sync": res}
 
@@ -479,7 +554,8 @@ def ig_disconnect(db: Session = Depends(get_db),
 @router.post("/api/smm/instagram/sync")
 def ig_sync_now(db: Session = Depends(get_db),
                 user=Depends(require_role(*roles.SMM_ACCESS))):
-    return sync(db, who=user.full_name)
+    # To'liq tarix hali tugamagan bo'lsa — o'sha joydan davom etadi
+    return sync(db, who=user.full_name, full=not _s(db, K_FULL_DONE))
 
 
 @router.post("/api/smm/instagram/link")
@@ -678,7 +754,10 @@ def ig_oauth_callback(code: str | None = None, state: str | None = None,
     except Exception:
         db.rollback()
     try:
-        sync(db, who=u.full_name)
+        _set(db, K_CURSOR, "", u.full_name)
+        _set(db, K_FULL_DONE, "", u.full_name)
+        db.commit()
+        sync(db, who=u.full_name, full=True)
     except Exception:
         db.rollback()
     return RedirectResponse(back + "&ig=ok", 302)

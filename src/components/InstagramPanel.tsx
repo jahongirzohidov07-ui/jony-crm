@@ -36,6 +36,7 @@ export function InstagramPanel() {
     }
   }, []);
 
+  const [onlyVideo, setOnlyVideo] = useState(false);
   const [appId, setAppId] = useState("");
   const [appSecret, setAppSecret] = useState("");
   const saveApp = async () => {
@@ -94,7 +95,11 @@ export function InstagramPanel() {
 
   if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
 
-  const posts: Any[] = d.posts || [];
+  const allPosts: Any[] = d.posts || [];
+  // Faqat videolar (reels) — Jahongir: "hamma ... videolar statistikasi"
+  const posts: Any[] = onlyVideo
+    ? allPosts.filter((p) => (p.type || "").toUpperCase() === "VIDEO")
+    : allPosts;
   const n = (v: number) => (v || 0).toLocaleString("ru-RU");
 
   return (
@@ -252,6 +257,16 @@ export function InstagramPanel() {
         </div>
       )}
 
+      {allPosts.length > 0 && (
+        <div className="flex items-center gap-3 text-[13px] text-slate-600">
+          <span>Jami {allPosts.length} ta post</span>
+          <label className="flex items-center gap-1.5">
+            <input type="checkbox" checked={onlyVideo}
+              onChange={(e) => setOnlyVideo(e.target.checked)} />
+            Faqat videolar (reels)
+          </label>
+        </div>
+      )}
       {posts.length > 0 && (
         <div className="rounded-xl border border-slate-200 bg-white overflow-x-auto">
           <table className="w-full text-[13px]">

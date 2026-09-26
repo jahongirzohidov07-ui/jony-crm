@@ -163,12 +163,14 @@ ck("status javobida ham token yo'q",
 
 print("\n=== 3. SINXRON NATIJASI (token joylanganda o'zi ishladi) ===")
 sy = j["sync"]
-ck("3 ta yangi post o'qildi (200 kunlik eski olinmadi)", sy["seen"], 3)
+ck("ulanganda HAMMA postlar o'qildi (200 kunlik eski ham)", sy["seen"], 4)
 ck("2 tasi rejaga bog'landi", sy["linked"], 2)
 ck("1 tasi rejaga avtomat qo'shildi", sy["created"], 1)
 db.expire_all()
 media = {m.ig_id: m for m in db.query(models.IgMedia).all()}
-ck("ig_media: 3 ta", sorted(media), ["m1", "m2", "m3"])
+ck("ig_media: 4 ta (eski ham)", sorted(media), ["m1", "m2", "m3", "old"])
+ck("eski post rejaga QO'SHILMADI (kontent-plan to'lmasin)",
+   media["old"].content_id, None)
 ck("m1 -> havola bo'yicha c1", media["m1"].content_id, c1.id)
 ck("m2 -> shu kungi reja c2", media["m2"].content_id, c2.id)
 c2r = db.query(models.Content).get(c2.id)
@@ -195,7 +197,7 @@ r = c.post("/api/smm/instagram/sync", headers=HS).json()
 ck("yana 3 ta o'qildi", r["seen"], 3)
 ck("yangi qator qo'shilmadi", r["created"], 0)
 db.expire_all()
-ck("ig_media hali 3 ta", db.query(models.IgMedia).count(), 3)
+ck("ig_media hali 4 ta", db.query(models.IgMedia).count(), 4)
 ck("kontentlar: faqat 1 ta qo'shilgan",
    db.query(models.Content).count(), n_before + 1)
 
@@ -210,7 +212,7 @@ ck("SMM uza oladi",
    c.post("/api/smm/instagram/disconnect", headers=HS).status_code, 200)
 db.expire_all()
 ck("token bo'shadi", ig._s(db, ig.K_TOKEN), "")
-ck("postlar joyida", db.query(models.IgMedia).count(), 3)
+ck("postlar joyida", db.query(models.IgMedia).count(), 4)
 ck("raqamlar joyida",
    db.query(models.ContentMetric)
    .filter(models.ContentMetric.content_id == c1.id).first().views, 9000)
@@ -220,6 +222,54 @@ ck("auditda ulash/uzish yozilgan",
 ck("audit yozuvida ham token yo'q",
    any(TOKEN in (a.note or "") for a in db.query(models.AuditLog).all()),
    False)
+
+print("\n=== 7. KO'P POST: BIRGA SO'RASH VA DAVOM ETTIRISH ===")
+db.query(models.IntegrationSetting).filter_by(key=ig.K_TOKEN).update(
+    {"value": TOKEN})
+db.commit()
+BIG = [{"id": f"n{i}", "caption": f"Post {i}", "media_type": "VIDEO",
+        "permalink": f"https://www.instagram.com/reel/N{i:03d}/",
+        "timestamp": "2024-01-01T10:00:00+0000", "like_count": i,
+        "comments_count": 0,
+        "insights": {"data": [{"name": "views", "values": [{"value": i * 10}]},
+                              {"name": "follows", "values": [{"value": 1}]}]}}
+       for i in range(120)]
+CALLS.clear()
+
+
+def big_get(url):
+    CALLS.append(url)
+    u = urlparse(url)
+    q = parse_qs(u.query)
+    if u.path.endswith("/insights"):
+        raise RuntimeError("alohida insights so'ralmasligi kerak")
+    if u.path.endswith("/1784/media"):
+        off = int(q.get("after", ["0"])[0])
+        nxt = off + 50
+        page = {"data": BIG[off:nxt]}
+        if nxt < len(BIG):
+            page["paging"] = {"next": url.split("&after=")[0]
+                              + f"&after={nxt}"}
+        return page
+    if u.path.endswith("/1784"):
+        return {"followers_count": 1}
+    raise RuntimeError("?" + u.path)
+
+
+ig.HTTP["get"] = big_get
+r1 = ig.sync(db, full=True, budget_s=-1)       # 1 sahifadan keyin to'xtaydi
+ck("vaqt tugadi -> qisman, davom joyi saqlandi",
+   (r1["partial"], bool(ig._s(db, ig.K_CURSOR))), (True, True))
+r2 = ig.sync(db, full=True)                     # davom etadi
+ck("davomi o'qildi, to'liq tugadi",
+   (r2["partial"], ig._s(db, ig.K_CURSOR), bool(ig._s(db, ig.K_FULL_DONE))),
+   (False, "", True))
+ck("120 ta post bazada", db.query(models.IgMedia).filter(
+    models.IgMedia.ig_id.like("n%")).count(), 120)
+ck("insights media bilan birga keldi (alohida so'rov yo'q)",
+   any(c.endswith("/insights") for c in CALLS), False)
+ck("raqamlar yozildi", db.query(models.IgMedia).filter_by(ig_id="n7")
+   .first().views, 70)
 
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))

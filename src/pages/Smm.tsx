@@ -69,8 +69,12 @@ export default function Smm() {
   const { user } = useAuth();
   const isSmm = can(user?.role, SMM_ACCESS);
   const seesInbox = can(user?.role, INBOX_ACCESS);
-  const [tab, setTab] = useState<Tab>(
-    isSmm ? "dashboard" : seesInbox ? "inbox" : "brand");
+  const [tab, setTab] = useState<Tab>(() => {
+    // Facebook'dan qaytganda (?tab=instagram) to'g'ri oynaga tushsin
+    const want = new URLSearchParams(window.location.search).get("tab");
+    if (want && TABS.some((t) => t.key === want)) return want as Tab;
+    return isSmm ? "dashboard" : seesInbox ? "inbox" : "brand";
+  });
   // "Boshqa" ro'yxati ochiqmi (hook erta return'dan OLDIN bo'lishi shart)
   const [more, setMore] = useState(false);
 

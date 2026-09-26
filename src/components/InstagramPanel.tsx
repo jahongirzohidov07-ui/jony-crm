@@ -26,6 +26,40 @@ export function InstagramPanel() {
   }, []);
   useEffect(load, [load]);
 
+  // Facebook'dan qaytgach (?ig=ok yoki ?ig_error=...) natijani ko'rsatish
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get("ig") === "ok") setMsg("Instagram ulandi — postlar tortildi.");
+    if (p.get("ig_error")) setErr("Ulanmadi: " + p.get("ig_error"));
+    if (p.get("ig") || p.get("ig_error")) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
+
+  const [appId, setAppId] = useState("");
+  const [appSecret, setAppSecret] = useState("");
+  const saveApp = async () => {
+    setErr(""); setBusy("app");
+    try {
+      await api.post("/smm/instagram/app", { app_id: appId, app_secret: appSecret });
+      setAppSecret("");
+      setMsg("Meta ilova saqlandi. Endi «Facebook orqali ulash» ni bosing.");
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(null); }
+  };
+  const fbConnect = async () => {
+    setErr(""); setBusy("fb");
+    try {
+      const r = await api.post<Any>("/smm/instagram/oauth/start", {});
+      window.location.href = r.url;
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+      setBusy(null);
+    }
+  };
+
   const connect = async () => {
     setErr(""); setMsg(""); setBusy("connect");
     try {
@@ -85,6 +119,57 @@ export function InstagramPanel() {
             Ulangach har bir post va reels bo'yicha ko'rishlar, qamrov, like,
             izoh, saqlash, ulashish, <b>shu postdan kelgan obunachilar</b> va
             profilga o'tishlar har kuni o'zi yig'iladi.
+          </p>
+
+          {/* 1-USUL: token ko'chirmasdan, muddatsiz */}
+          <div className="rounded-lg border border-brand-200 bg-brand-50/50 p-4 space-y-2">
+            <p className="text-sm font-semibold text-slate-800">
+              Tavsiya: Facebook orqali ulash (token ko'chirish shart emas, muddati tugamaydi)
+            </p>
+            {d.app_id && d.has_secret ? (
+              <>
+                <button onClick={fbConnect} disabled={busy !== null || !d.can_set_token}
+                  className="px-4 py-2 rounded-lg bg-[#1877F2] text-white text-sm font-semibold disabled:opacity-50">
+                  {busy === "fb" ? "Facebook ochilmoqda…" : "Facebook orqali ulash"}
+                </button>
+                <p className="text-[12px] text-slate-500">
+                  Facebook «ruxsat berasizmi?» deb so'raydi: Jony Academy sahifasi va
+                  Instagram akkauntini belgilab «Davom etish» ni bosing. Tayyor.
+                </p>
+              </>
+            ) : d.can_set_token ? (
+              <>
+                <p className="text-[12px] text-slate-600">
+                  Bir martalik: Meta ilovasining <b>App ID</b> va <b>App Secret</b>'ini
+                  joylang (developers.facebook.com → ilova → App settings → Basic).
+                  Ilovaning «Facebook Login → Settings → Valid OAuth Redirect URIs»
+                  maydoniga shu manzil qo'shilgan bo'lishi kerak:
+                </p>
+                <code className="block text-[12px] bg-white border border-slate-200 rounded px-2 py-1 select-all">
+                  {d.redirect_uri}
+                </code>
+                <div className="flex flex-wrap gap-2">
+                  <input value={appId} onChange={(e) => setAppId(e.target.value)}
+                    placeholder={d.app_id ? `App ID: ${d.app_id}` : "App ID"}
+                    className="w-48 rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                  <input type="password" autoComplete="off" value={appSecret}
+                    onChange={(e) => setAppSecret(e.target.value)}
+                    placeholder="App Secret"
+                    className="flex-1 min-w-[220px] rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+                  <button onClick={saveApp}
+                    disabled={busy !== null || !(appId || d.app_id) || appSecret.length < 32}
+                    className="px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-medium disabled:opacity-40">
+                    Saqlash
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p className="text-[12px] text-amber-700">Buni asoschi yoki SMM menejer qiladi.</p>
+            )}
+          </div>
+
+          <p className="text-[12px] font-semibold text-slate-500 pt-1">
+            2-usul: tokenni qo'lda joylash
           </p>
           <ol className="text-[13px] text-slate-600 list-decimal pl-5 space-y-1.5">
             <li><b>Instagram ilovasida:</b> Sozlamalar → Hisob turi va vositalar →

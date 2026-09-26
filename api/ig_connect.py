@@ -416,6 +416,10 @@ def ig_status(db: Session = Depends(get_db),
         "last_sync": _s(db, K_LAST) or None,
         "last_note": _s(db, K_LAST_NOTE) or None,
         "can_set_token": user.role in TOKEN_ROLES,
+        # "Facebook orqali ulash" uchun (secret hech qachon qaytmaydi)
+        "app_id": app_creds(db)[0] or None,
+        "has_secret": bool(app_creds(db)[1]),
+        "redirect_uri": redirect_uri(),
         "posts": [{
             "id": r.id, "permalink": r.permalink, "type": r.media_type,
             "caption": (r.caption or "")[:120],
@@ -493,3 +497,188 @@ def ig_link(payload: dict = Body(...), db: Session = Depends(get_db),
     _apply_metric(db, c.id, m)
     db.commit()
     return {"ok": True}
+
+
+# =====================================================================
+#  "FACEBOOK ORQALI ULASH" — TOKEN KO'CHIRMASDAN (2026-09-26)
+#
+#  Jahongir: "instagramni qilib ber qanday qilaman ozing qilib ber
+#  hammasini". Token ko'chirib joylash murakkab va 60 kunda eskiradi.
+#  Shuning uchun oddiy OAuth: JonyOS'da tugma -> Facebook "ruxsat
+#  berasizmi?" -> qaytib keladi -> tayyor.
+#
+#  Qanday tuzilgan:
+#    1. Meta ilovasining App ID va App Secret'i bazada (integration_
+#       settings) yoki muhit o'zgaruvchisida (META_APP_ID/SECRET).
+#       Secret javobda hech qachon qaytmaydi.
+#    2. /oauth/start — imzolangan "state" (kim, qachongacha) bilan
+#       Facebook dialog havolasini qaytaradi.
+#    3. /oauth/callback — Facebook qaytargan kodni tokenga, uni uzoq
+#       muddatli tokenga almashtiradi, keyin SAHIFA tokenini oladi:
+#       uzoq muddatli foydalanuvchi tokenidan olingan sahifa tokenining
+#       muddati TUGAMAYDI. Instagram Business akkaunt shu sahifadan.
+#    4. Darrov sinxron qilinadi va SMM -> Instagram oynasiga qaytadi.
+# =====================================================================
+import base64 as _b64
+import hashlib as _hl
+import hmac as _hmac
+import time as _time
+
+from fastapi.responses import RedirectResponse
+
+K_APP_ID = "meta_app_id"
+K_APP_SECRET = "meta_app_secret"
+OAUTH_SCOPES = ("instagram_basic,instagram_manage_insights,"
+                "pages_show_list,pages_read_engagement,business_management")
+CALLBACK_PATH = "/api/smm/instagram/oauth/callback"
+
+
+def _public_base() -> str:
+    b = (os.getenv("PUBLIC_URL") or "https://jonyos.uz").strip().rstrip("/")
+    if not b.startswith("http"):
+        b = "https://" + b
+    return b
+
+
+def redirect_uri() -> str:
+    return _public_base() + CALLBACK_PATH
+
+
+def app_creds(db: Session) -> tuple:
+    aid = _s(db, K_APP_ID) or (os.getenv("META_APP_ID") or "").strip()
+    sec = _s(db, K_APP_SECRET) or (os.getenv("META_APP_SECRET") or "").strip()
+    return aid, sec
+
+
+def _sign(payload: str) -> str:
+    from auth import SECRET_KEY
+    mac = _hmac.new(str(SECRET_KEY).encode(), payload.encode(),
+                    _hl.sha256).hexdigest()[:32]
+    return payload + "." + mac
+
+
+def make_state(user_id: int, ttl: int = 900) -> str:
+    raw = f"{user_id}:{int(_time.time()) + ttl}"
+    return _b64.urlsafe_b64encode(_sign(raw).encode()).decode().rstrip("=")
+
+
+def check_state(state: str) -> int | None:
+    try:
+        pad = "=" * (-len(state) % 4)
+        s = _b64.urlsafe_b64decode(state + pad).decode()
+        raw, mac = s.rsplit(".", 1)
+        if _sign(raw) != s:
+            return None
+        uid, exp = raw.split(":")
+        if int(exp) < int(_time.time()):
+            return None
+        return int(uid)
+    except Exception:
+        return None
+
+
+def oauth_finish(db: Session, code: str, who: str) -> dict:
+    """Kod -> qisqa token -> uzoq token -> muddatsiz sahifa tokeni."""
+    aid, sec = app_creds(db)
+    if not (aid and sec):
+        raise RuntimeError("Meta ilovasi sozlanmagan (App ID / Secret)")
+    short = _get(f"{FB}/oauth/access_token", client_id=aid,
+                 client_secret=sec, redirect_uri=redirect_uri(), code=code)
+    st = short.get("access_token")
+    if not st:
+        raise RuntimeError("Facebook token bermadi")
+    long_ = _get(f"{FB}/oauth/access_token", grant_type="fb_exchange_token",
+                 client_id=aid, client_secret=sec, fb_exchange_token=st)
+    lt = long_.get("access_token") or st
+    acc = _get(f"{FB}/me/accounts",
+               fields="name,access_token,instagram_business_account"
+                      "{id,username,followers_count}",
+               access_token=lt)
+    for page in acc.get("data") or []:
+        ig = page.get("instagram_business_account") or {}
+        if ig.get("id") and page.get("access_token"):
+            _set(db, K_TOKEN, page["access_token"], who)
+            _set(db, K_USER, str(ig["id"]), who)
+            _set(db, K_API, "fb", who)
+            _set(db, K_NAME, ig.get("username") or page.get("name"), who)
+            db.commit()
+            return {"username": ig.get("username"), "page": page.get("name")}
+    raise RuntimeError(
+        "Ruxsat berilgan Facebook sahifalarda Instagram Business akkaunt "
+        "topilmadi. Instagram Professional (Biznes) bo'lishi va Facebook "
+        "sahifaga ulangan bo'lishi kerak; ruxsat oynasida sahifani "
+        "belgilashni unutmang.")
+
+
+@router.post("/api/smm/instagram/app")
+def ig_set_app(payload: dict = Body(...), db: Session = Depends(get_db),
+               user=Depends(require_role(*TOKEN_ROLES))):
+    """Meta ilovasi: App ID (ochiq) va App Secret (maxfiy)."""
+    aid = re.sub(r"\D", "", str(payload.get("app_id") or ""))
+    sec = (payload.get("app_secret") or "").strip()
+    if len(aid) < 8:
+        raise HTTPException(400, "App ID — faqat raqamlar (15-16 xonali)")
+    if sec and not re.fullmatch(r"[0-9a-fA-F]{32}", sec):
+        raise HTTPException(400, "App Secret 32 belgili bo'lishi kerak")
+    _set(db, K_APP_ID, aid, user.full_name)
+    if sec:
+        _set(db, K_APP_SECRET, sec, user.full_name)
+    db.commit()
+    audit.log(db, user, entity="integration", action="update",
+              entity_label="Meta ilova",
+              note=f"Meta ilova sozlandi: App ID {aid}"
+                   + (f", secret {_mask(sec)}" if sec else ""))
+    db.commit()
+    return {"ok": True, "app_id": aid, "has_secret": bool(app_creds(db)[1])}
+
+
+@router.post("/api/smm/instagram/oauth/start")
+def ig_oauth_start(db: Session = Depends(get_db),
+                   user=Depends(require_role(*TOKEN_ROLES))):
+    aid, sec = app_creds(db)
+    if not (aid and sec):
+        raise HTTPException(400, "Avval Meta ilovasining App ID va App "
+                                 "Secret'ini saqlang")
+    url = ("https://www.facebook.com/v21.0/dialog/oauth?"
+           + urllib.parse.urlencode({
+               "client_id": aid, "redirect_uri": redirect_uri(),
+               "state": make_state(user.id), "scope": OAUTH_SCOPES,
+               "response_type": "code"}))
+    return {"url": url}
+
+
+@router.get(CALLBACK_PATH)
+def ig_oauth_callback(code: str | None = None, state: str | None = None,
+                      error: str | None = None,
+                      error_description: str | None = None,
+                      db: Session = Depends(get_db)):
+    back = _public_base() + "/smm?tab=instagram"
+    if error or not code:
+        msg = error_description or error or "bekor qilindi"
+        return RedirectResponse(back + "&ig_error="
+                                + urllib.parse.quote(msg[:150]), 302)
+    uid = check_state(state or "")
+    u = db.query(models.User).get(uid) if uid else None
+    if not u or u.role not in TOKEN_ROLES or not u.is_active:
+        return RedirectResponse(back + "&ig_error="
+                                + urllib.parse.quote("Havola eskirgan — "
+                                                     "qaytadan bosing"), 302)
+    try:
+        info = oauth_finish(db, code, u.full_name)
+    except Exception as e:
+        db.rollback()
+        return RedirectResponse(back + "&ig_error="
+                                + urllib.parse.quote(str(e)[:200]), 302)
+    try:
+        audit.log(db, u, entity="integration", action="update",
+                  entity_label="Instagram",
+                  note=f"Instagram Facebook orqali ulandi: "
+                       f"@{info.get('username')} ({info.get('page')})")
+        db.commit()
+    except Exception:
+        db.rollback()
+    try:
+        sync(db, who=u.full_name)
+    except Exception:
+        db.rollback()
+    return RedirectResponse(back + "&ig=ok", 302)

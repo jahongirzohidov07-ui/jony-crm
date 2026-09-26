@@ -63,6 +63,8 @@ export default function Smm() {
   const seesInbox = can(user?.role, INBOX_ACCESS);
   const [tab, setTab] = useState<Tab>(
     isSmm ? "dashboard" : seesInbox ? "inbox" : "brand");
+  // "Boshqa" ro'yxati ochiqmi (hook erta return'dan OLDIN bo'lishi shart)
+  const [more, setMore] = useState(false);
 
   if (!can(user?.role, CONTENT_REQUESTER) && !can(user?.role, IDEA_SUBMIT)
       && !seesInbox)
@@ -80,6 +82,20 @@ export default function Smm() {
     return isSmm || t.key === "ideas" || t.key === "requests";
   });
 
+  // SODDALASHTIRISH (2026-09-26, Jahongir: "SMM qismini juda ham
+  // murakkablashib ketgan shuni eng kerakli qismlarini qoldirib
+  // soddalashtirib bergin"). Ekranda faqat kundalik ish uchun 4 ta
+  // asosiy bo'lim: Bugun, Kontent-plan, Tahlil, Murojaatlar. Qolganlari
+  // O'CHIRILMAGAN — "Boshqa" tugmasi ostida turadi, ma'lumotlari joyida.
+  // SMM bo'lmagan xodim (g'oya/so'rov yuboruvchi) uchun bo'limlar kam —
+  // ularga hammasi avvalgidek ko'rinadi.
+  const MAIN: Tab[] = ["dashboard", "plan", "canalytics", "inbox"];
+  const primary = isSmm ? shown.filter((t) => MAIN.includes(t.key)) : shown;
+  const extra = isSmm ? shown.filter((t) => !MAIN.includes(t.key)) : [];
+  const extraActive = extra.some((t) => t.key === tab);
+  const label = (t: { key: Tab; label: string }) =>
+    t.key === "canalytics" ? "Tahlil" : t.label;
+
   return (
     <div>
       <div className="flex items-center gap-2 mb-1">
@@ -87,24 +103,55 @@ export default function Smm() {
         <h1 className="text-xl font-semibold text-slate-900">SMM</h1>
       </div>
       <p className="text-sm text-slate-500 mb-5">
-        G'oya → reja → ssenariy → tasdiq → joylash → natija
+        Reja → joylash → natija
       </p>
 
-      <div className="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto">
-        {shown.map((t) => (
+      <div className="flex gap-1 border-b border-slate-200 mb-2 overflow-x-auto">
+        {primary.map((t) => (
           <button
             key={t.key}
-            onClick={() => setTab(t.key)}
+            onClick={() => { setTab(t.key); setMore(false); }}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition ${
               tab === t.key
                 ? "border-brand-600 text-brand-700"
                 : "border-transparent text-slate-500 hover:text-slate-700"
             }`}
           >
-            {t.label}
+            {label(t)}
           </button>
         ))}
+        {extra.length > 0 && (
+          <button
+            onClick={() => setMore((v) => !v)}
+            className={`ml-auto px-3 py-2.5 text-sm border-b-2 -mb-px whitespace-nowrap ${
+              extraActive
+                ? "border-brand-600 text-brand-700 font-medium"
+                : "border-transparent text-slate-400 hover:text-slate-600"
+            }`}
+            title="Kam ishlatiladigan bo'limlar: taqvim, g'oyalar, so'rovlar, hisobot, media, brend kitob..."
+          >
+            {extraActive ? label(extra.find((t) => t.key === tab)!) : "Boshqa"} {more ? "▴" : "▾"}
+          </button>
+        )}
       </div>
+      {more && extra.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {extra.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => { setTab(t.key); setMore(false); }}
+              className={`px-3 py-1.5 rounded-lg text-sm border ${
+                tab === t.key
+                  ? "border-brand-300 bg-brand-50 text-brand-700"
+                  : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+      )}
+      {!more && <div className="mb-3" />}
 
       {tab === "dashboard" && <DashboardTab />}
       {tab === "calendar" && <CalendarTab />}

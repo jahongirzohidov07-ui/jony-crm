@@ -108,7 +108,10 @@ ck("plans: IELTS 3.0 26 dars tayyor", (len(r.json()[2]["lessons"]), r.json()[2][
 ck("plans: IELTS 4.0 25 dars tayyor", (len(r.json()[3]["lessons"]), r.json()[3]["ready"]), (25, True))
 ck("tayyor dars 200 (2.0 1-dars)", c.get("/api/plans/ielts_2_0/1", headers=T).status_code, 200)
 ck("5.0 1-dars ochiladi", c.get("/api/plans/ielts_5_0/1", headers=T).status_code, 200)
-ck("5.0 tayyor bo'lmagan dars 404", c.get("/api/plans/ielts_5_0/48", headers=T).status_code, 404)
+# IELTS 5.0 endi to'liq: 1-48 darslarning hammasi yozilgan (2026-09-26)
+ck("5.0 oxirgi dars (48) ochiladi",
+   c.get("/api/plans/ielts_5_0/48", headers=T).status_code, 200)
+ck("bo'lmagan dars 404", c.get("/api/plans/ielts_5_0/49", headers=T).status_code, 404)
 ck("plans: IELTS 5.0 48 mavzu (Introduction 1-35 + Writing 36-48)", (len(r.json()[4]["lessons"]), r.json()[4]["lessons"][0]["title"]), (48, "Reading: Paraphrases"))
 ck("plans: IELTS 5.0 darslar tayyorlanmoqda", r.json()[4]["ready_count"] >= 1, True)
 r = c.get("/api/plans/ielts_1_0/18", headers=T)

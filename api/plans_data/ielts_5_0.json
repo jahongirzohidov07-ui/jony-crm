@@ -26541,6 +26541,663 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 36,
+   "title": "Writing Task 2: Kirish — savol turlari va baholash mezonlari",
+   "grammar_topic": "Writing Task 2 — umumiy tanishuv, 4 ta savol turi, Band descriptors (asosan 7.0)",
+   "vocab_topic": "Writing Task 2 ga kirish va baholash",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — rasmiy IELTS Writing Band Descriptors (May 2023) va ustoz bergan slaydlar; namuna essay Jony Academy tomonidan yozilgan.",
+   "objectives": [
+    "Task 2 ning asosiy shartlarini yod olish: 250 so'z, 40 daqiqa, Task 1 dan IKKI BAROBAR ko'p ball.",
+    "4 ta savol turini bir qarashda ajratish: OPINION, DISCUSSION, OPINION+DISCUSSION, SITUATION.",
+    "Har bir savol turi javobda nimani TALAB qilishini bilish (nimani yozmasa ball tushadi).",
+    "Baholashning 4 mezonini va ularning 7.0 talabini oddiy tilda tushunish.",
+    "Namuna essayni to'rt tomondan (lug'at, grammatika, tuzilma, bog'lovchilar) tahlil qila olish."
+   ],
+   "materials": [
+    "Doska: 4 ta savol turi ustunlari va 4 ta mezon kartochkasi.",
+    "Namuna essay (quyida) — har o'quvchiga nusxa, uchta rangli qalam bilan.",
+    "Rasmiy Band Descriptors jadvali (ustozda) — 6, 7 va 8 qatorlari.",
+    "Xatolar daftari: \"mening zaif mezonim\" sahifasi."
+   ],
+   "timeline": [
+    [
+     10,
+     "Task 2 bilan tanishuv",
+     "250 so'z, 40 daqiqa, ikki barobar ball — doskaga yoziladi"
+    ],
+    [
+     15,
+     "4 ta savol turi",
+     "Har turga bittadan misol, doskada 4 ustun"
+    ],
+    [
+     15,
+     "1-2-mashq: turni aniqlash",
+     "10 ta savol birga, keyin \"javobda nima bo'ladi\""
+    ],
+    [
+     20,
+     "Band descriptors — 4 mezon",
+     "Har mezon: rasmiy so'z, keyin oddiy til; 7.0 ga urg'u"
+    ],
+    [
+     15,
+     "3-5-mashq: 7.0 ni tushunish",
+     "Ibora-ma'no, 6 va 7 farqi, mezonni topish"
+    ],
+    [
+     25,
+     "Namuna essay tahlili",
+     "Lug'at, grammatika, tuzilma, bog'lovchilar — to'rt yurish"
+    ],
+    [
+     15,
+     "Slayddagi essay",
+     "Uch rangli belgilash bilan takrorlanadi"
+    ],
+    [
+     5,
+     "Xulosa va uyga vazifa",
+     "\"Mening zaif mezonim\" yoziladi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Task 2 — IELTS Writing ning ikkinchi va ASOSIY qismi. Kamida 250 so'z, taxminan 40 daqiqa. Ball jihatidan Task 1 dan IKKI BAROBAR og'ir: Writing bahosining uchdan ikki qismi shu essaydan chiqadi. Shuning uchun Task 1 ni 20 daqiqada tugatib, qolgan vaqtni Task 2 ga berish kerak.",
+     "250 so'zdan kam yozilsa jarima bor; ko'p yozish taqiqlanmagan, lekin 280-300 so'zdan oshgani odatda foyda bermaydi — xato ko'payadi, vaqt yetmaydi.",
+     "Ruchka ham, qalam ham mumkin (qog'oz imtihonda). Kompyuterda so'z sanagich bor, qog'ozda esa o'quvchi o'z qatoridagi so'z sonini bilishi kerak: odatda 10 qator taxminan 100 so'z.",
+     "General Training va Academic da Task 2 deyarli bir xil; GT da uslub biroz kamroq rasmiy bo'lishi mumkin, lekin qurilish bir xil.",
+     "4 TA SAVOL TURI: OPINION (to'liq o'z fikri), DISCUSSION (ikki tomon), OPINION+DISCUSSION (ikki tomon va o'z fikri), SITUATION (muammo-yechim / sabab-natija). Savol turini noto'g'ri tanish — eng qimmat xato: butun essay mavzuga tegishli bo'lsa ham, savolga javob bermagani uchun Task Response 5.0 ga tushadi.",
+     "BAHOLASH — 4 mezon, har biri 25%: Task Response (savolga javob), Coherence & Cohesion (tartib va bog'lanish), Lexical Resource (lug'at), Grammatical Range & Accuracy (grammatika). Umumiy ball — shu to'rttaning o'rtachasi.",
+     "7.0 ning kaliti: \"hammasi mukammal\" emas, balki \"asosan to'g'ri, ba'zi kamchilik bor\". Rasmiy jadvalda 7.0 uchun ataylab \"some inaccuracies\", \"a few errors\", \"inappropriacies occur\" deb yozilgan — ya'ni xatosiz yozish shart emas, xato KAM bo'lishi va tushunishga xalaqit bermasligi kerak."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Shartlarni yozdiring",
+      "250 so'z / 40 daqiqa / x2 ball",
+      "Yod bo'lsin"
+     ],
+     [
+      "2-bosqich",
+      "4 turni ko'rsating",
+      "Savoldagi so'roq gapga qarang",
+      "Tur shundan chiqadi"
+     ],
+     [
+      "3-bosqich",
+      "Turni aniqlash mashqi",
+      "Avval birga, keyin mustaqil",
+      "10 ta savol"
+     ],
+     [
+      "4-bosqich",
+      "4 mezonni oching",
+      "Har biri 25%",
+      "Kartochka doskada qoladi"
+     ],
+     [
+      "5-bosqich",
+      "7.0 ni soddalashtiring",
+      "Rasmiy ibora, keyin o'zbekcha",
+      "Yozib olishsin"
+     ],
+     [
+      "6-bosqich",
+      "Namuna essay — 4 yurish",
+      "Har yurishda bitta rang",
+      "Aralashtirmang"
+     ],
+     [
+      "7-bosqich",
+      "Zaif mezonni belgilang",
+      "Har o'quvchi o'ziniki",
+      "Keyingi darslar shunga qarab"
+     ]
+    ],
+    "presentation": [
+     [
+      "Nega Task 2 muhimroq?",
+      "Balli ikki barobar: Writing bahosining uchdan ikki qismi shundan."
+     ],
+     [
+      "250 so'zdan kam yozsam?",
+      "Jarima bor — Task Response tushadi. 260-280 so'z eng xavfsiz."
+     ],
+     [
+      "Savol turini qanday bilaman?",
+      "So'nggi so'roq gapga qarang: \"agree or disagree\" — OPINION; \"discuss both views\" — ikkalasi; \"problems and solutions\" — SITUATION."
+     ],
+     [
+      "Ikkala tomonni yozdim, lekin fikrim yo'q.",
+      "\"Discuss both views AND give your own opinion\" bo'lsa — fikr MAJBURIY. Yo'q bo'lsa ball tushadi."
+     ],
+     [
+      "7.0 uchun xatosiz yozish kerakmi?",
+      "Yo'q. Rasmiy jadvalning o'zida \"a few errors\" deb yozilgan — kam xato, tushunishga xalaqit bermaydigan xato."
+     ],
+     [
+      "4 mezondan qaysi biri eng og'ir?",
+      "Hammasi teng — har biri 25%. Lekin eng tez tushadigani Task Response: savolga javob bermaslik."
+     ],
+     [
+      "Uzun so'z ishlatsam ball ko'tariladimi?",
+      "Faqat TO'G'RI ishlatilsa. Noto'g'ri joyda ishlatilgan \"kuchli\" so'z Lexical Resource ni tushiradi."
+     ]
+    ],
+    "notes": [
+     "Bu — Writing bo'limining birinchi darsi. Maqsad: qoidalarni yodlash emas, TUSHUNISH. Har mezonni o'quvchi o'z so'zi bilan aytib bera olishi kerak.",
+     "7.0 ga urg'u beriladi, chunki markaz talabalarining ko'pchiligi 6.0-6.5 da qotib qoladi. Farq odatda bitta narsada: fikr ochib berilmagan (Task Response) yoki bog'lovchilar mexanik (Coherence).",
+     "Rasmiy jadvaldan uzun parcha o'qib bermang — har mezondan 2-3 ta kalit ibora oling, qolganini o'zbekcha tushuntiring. Jadvalning o'zi ustozda turadi.",
+     "Namuna essay tahlili — darsning eng qimmat qismi. To'rt yurishni ARALASHTIRMANG: har yurishda faqat bitta narsa qidiriladi, aks holda o'quvchi chalkashadi.",
+     "Ustoz slaydlaridagi essay (crime/punishment, 264 so'z) ham xuddi shu uch rang bilan belgilangan: sariq — lug'at, yashil — grammatika, siyoh — bog'lovchilar. Vaqt qolsa, o'sha essayni ham shu usulda takrorlang.",
+     "Dars oxirida har o'quvchi \"mening zaif mezonim\" ni yozadi — 37-48-darslar shu ro'yxatga qarab olib boriladi."
+    ],
+    "mistakes": [
+     [
+      "Savol turini noto'g'ri tanish",
+      "So'nggi so'roq gapni o'qish",
+      "Task Response 5.0 ga tushadi"
+     ],
+     [
+      "Fikrni aytmaslik (opinion)",
+      "Kirish va xulosada aniq fikr",
+      "\"Discuss + opinion\" da majburiy"
+     ],
+     [
+      "250 so'zdan kam yozish",
+      "10 qator taxminan 100 so'z",
+      "Jarima bor"
+     ],
+     [
+      "Bitta xatboshida ikkita fikr",
+      "Bitta xatboshi — bitta fikr",
+      "Coherence tushadi"
+     ],
+     [
+      "Bog'lovchini har gapda ishlatish",
+      "Kerak joyda ishlatish",
+      "\"Mexanik\" deb baholanadi"
+     ],
+     [
+      "Yodlangan uzun so'zni noto'g'ri qo'yish",
+      "Ma'nosini bilmasa ishlatmaslik",
+      "Lexical Resource tushadi"
+     ],
+     [
+      "Misolsiz fikr",
+      "Fikr, sababi, misoli",
+      "7.0 da fikr ochib berilishi shart"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "1-mashq: Savol turini aniqlang",
+     "type": "Og'zaki, 10 daqiqa",
+     "instr": "Ustoz savolni o'qiydi; o'quvchi turini aytadi va QAYSI SO'Z shunday deyishga majbur qilganini ko'rsatadi.",
+     "items": [
+      "Some people think children should start school at the age of four. To what extent do you agree or disagree?",
+      "Discuss the advantages and disadvantages of working from home.",
+      "Some people prefer to live in a city, while others prefer the countryside. Discuss both views and give your own opinion.",
+      "Many young people in cities are overweight. What are the causes and what solutions can you suggest?",
+      "Is the increasing use of mobile phones by children a positive or a negative development?",
+      "Some believe universities should be free for everyone. Others say students should pay. Discuss both these views.",
+      "More and more people live alone. What factors contribute to this? Is it a realistic expectation that this will continue?",
+      "Do the advantages of studying abroad outweigh the disadvantages?",
+      "Traffic in big cities is getting worse. What problems does this cause and how can they be solved?",
+      "Some people say that money is the most important factor when choosing a job. To what extent do you agree?"
+     ],
+     "answers": [
+      "OPINION",
+      "DISCUSSION",
+      "OPINION+DISCUSSION",
+      "SITUATION",
+      "OPINION",
+      "DISCUSSION",
+      "SITUATION",
+      "OPINION+DISCUSSION",
+      "SITUATION",
+      "OPINION"
+     ],
+     "why": [
+      "\"To what extent do you agree\" — faqat o'z fikri, ikki tomon shart emas.",
+      "\"advantages and disadvantages\" — ikki tomon, fikr so'ralmagan.",
+      "\"discuss both views AND give your own opinion\" — ikki tomon va fikr.",
+      "\"causes ... solutions\" — muammo-yechim.",
+      "\"positive or negative development\" — baho berish, ya'ni fikr.",
+      "Faqat \"discuss both\" — o'z fikri so'ralmagan, lekin ikki tomon majburiy.",
+      "\"what factors contribute\" — sabab; ikkinchi savol ham alohida javob talab qiladi.",
+      "\"outweigh\" — ikkala tomonni ko'rsatib, qaysi biri og'irligini aytish kerak.",
+      "Ikki qism: muammolar va yechimlar. Ikkalasiga ham javob shart.",
+      "Fikr so'ralyapti; qarshi tomonni bitta xatboshida ko'rsatish mumkin, lekin asosiy fikr aniq bo'lishi kerak."
+     ],
+     "note": "Doskada 4 ustun turadi: OPINION, DISCUSSION, OPINION+DISCUSSION, SITUATION. Har savol o'z ustuniga yoziladi.",
+     "layout": "qa"
+    },
+    {
+     "title": "2-mashq: Bu turda javobda NIMA bo'lishi shart?",
+     "type": "Moslashtirish",
+     "instr": "Turni javob tuzilmasi bilan bog'lang.",
+     "items": [
+      "OPINION",
+      "DISCUSSION",
+      "OPINION+DISCUSSION",
+      "SITUATION"
+     ],
+     "answers": [
+      "Kirishda aniq fikr, 2 xatboshi shu fikrni himoya qiladi, xulosada takror",
+      "1-xatboshi birinchi qarash, 2-xatboshi ikkinchi qarash, ikkalasi ham teng ochiladi",
+      "Ikki qarash va O'Z FIKRI (kirishda ham, xulosada ham)",
+      "Muammo/sabab xatboshisi va yechim/natija xatboshisi, har biri aniq va amaliy"
+     ],
+     "why": [
+      "Qarshi fikrni bir xatboshida ko'rsatish mumkin, lekin pozitsiya oxirigacha bir xil qolishi shart.",
+      "O'z fikri so'ralmagan bo'lsa ham, xulosa kerak.",
+      "Fikr yo'q bo'lsa — Task Response 5.0.",
+      "Umumiy gap emas, aniq yechim: kim, nima qiladi."
+     ],
+     "note": "Har turda kirish + 2 ta body + xulosa = 4 xatboshi. Bu tuzilma 36-48-darslarda o'zgarmaydi.",
+     "layout": "qa"
+    },
+    {
+     "title": "3-mashq: 7.0 rasmiy jadvalda nima deyilgan?",
+     "type": "Moslashtirish",
+     "instr": "Chap tomonda rasmiy ibora, o'ngda oddiy tildagi ma'nosi.",
+     "items": [
+      "Task Response: \"main parts of the prompt are appropriately addressed\"",
+      "Task Response: \"a clear and developed position\"",
+      "Task Response: \"a tendency to over-generalise\"",
+      "Coherence: \"logically organised ... clear progression\"",
+      "Coherence: \"cohesive devices ... used flexibly but with some inaccuracies\"",
+      "Lexical: \"some ability to use less common and/or idiomatic items\"",
+      "Lexical: \"awareness of style and collocation, though inappropriacies occur\"",
+      "Grammar: \"a variety of complex structures with some flexibility and accuracy\"",
+      "Grammar: \"error-free sentences are frequent\""
+     ],
+     "answers": [
+      "Savolning HAMMA qismiga javob berilgan",
+      "Fikr aniq va ochib berilgan",
+      "Ba'zan haddan tashqari umumiy gap bo'lib qoladi",
+      "Tartib mantiqiy, fikr oldinga yuradi",
+      "Bog'lovchilar xilma-xil, ba'zi xatosi bor",
+      "Kam uchraydigan so'zlarni ishlata oladi",
+      "So'z birikmalari asosan to'g'ri, ba'zan noo'rin",
+      "Murakkab gaplar xilma-xil va asosan to'g'ri",
+      "Xatosiz gaplar KO'P"
+     ],
+     "why": [
+      "Ikki savol bo'lsa, ikkalasiga ham.",
+      "Faqat aytilgan emas — sababi va misoli bilan.",
+      "7.0 da bu kechiriladi, 8.0 da yo'q.",
+      "Orqaga qaytib takrorlanmaydi.",
+      "Har gapda \"Moreover\" turgani — bu 6.0.",
+      "Ishlata olishi kerak, hammasini emas.",
+      "\"make a decision\" to'g'ri, \"do a decision\" xato.",
+      "Bir xil murakkab gapni takrorlash yetmaydi.",
+      "Hammasi emas — ko'p."
+     ],
+     "note": "Kalit fikr: 7.0 = \"asosan to'g'ri, ba'zi kamchilik bor\". Mukammallik 8.0 va 9.0 da talab qilinadi.",
+     "layout": "pairs"
+    },
+    {
+     "title": "4-mashq: Bu 6.0 mi yoki 7.0 mi?",
+     "type": "Og'zaki, 8 daqiqa",
+     "instr": "Ustoz tavsifni o'qiydi; o'quvchi bandni aytadi.",
+     "items": [
+      "Fikr bor, lekin xulosada nima demoqchiligi noaniq.",
+      "Xatboshilar mantiqiy, bir fikrdan ikkinchisiga o'tish tabiiy.",
+      "Bog'lovchilar bor, lekin bir xil va ortiqcha ishlatilgan.",
+      "Kam uchraydigan so'zlar ishlatilgan, ba'zan noo'rin.",
+      "Murakkab gaplar bor, lekin ularda xato oddiy gaplardan ko'p.",
+      "Xatosiz gaplar ko'p, tinish belgilari boshqariladi.",
+      "Asosiy fikrlar bor, lekin ba'zilari ochilmagan.",
+      "Savolning ikkala qismiga ham javob berilgan."
+     ],
+     "answers": [
+      "6.0",
+      "7.0",
+      "6.0",
+      "7.0",
+      "6.0",
+      "7.0",
+      "6.0",
+      "7.0"
+     ],
+     "why": [
+      "7.0 da pozitsiya oxirigacha aniq.",
+      "\"Clear progression\".",
+      "\"Mechanical\" — mexanik.",
+      "Urinish bor, xato kechiriladi.",
+      "Aniq belgi: murakkab gap — ko'p xato.",
+      "\"Error-free sentences are frequent\".",
+      "7.0 da fikr \"extended and supported\".",
+      "Task Response ning birinchi sharti."
+     ],
+     "layout": "qa"
+    },
+    {
+     "title": "5-mashq: Bu kamchilik qaysi mezonga tegishli?",
+     "type": "Og'zaki, 7 daqiqa",
+     "instr": "To'rt kartochka: TR, CC, LR, GRA.",
+     "items": [
+      "\"Discuss both views\" yozilgan, lekin faqat bitta tomon ochilgan.",
+      "Butun essay bitta katta xatboshi.",
+      "\"I think, I think, I think\" — bir xil ibora takrorlanyapti.",
+      "\"He go to school every day.\"",
+      "Har gap \"Moreover\" yoki \"Furthermore\" bilan boshlanadi.",
+      "Fikr aytilgan, lekin na sabab, na misol bor.",
+      "\"Do a mistake\" deb yozilgan.",
+      "Hamma gap \"The government should...\" bilan boshlanadi, gap tuzilishi bir xil."
+     ],
+     "answers": [
+      "Task Response",
+      "Coherence & Cohesion",
+      "Lexical Resource",
+      "Grammatical Range & Accuracy",
+      "Coherence & Cohesion",
+      "Task Response",
+      "Lexical Resource",
+      "Grammatical Range & Accuracy"
+     ],
+     "why": [
+      "Savolning yarmi javobsiz.",
+      "Xatboshilash shu mezonning bir qismi.",
+      "Xilma-xillik yo'q.",
+      "Oddiy gapdagi xato.",
+      "Mexanik bog'lovchi.",
+      "Fikr ochib berilmagan.",
+      "So'z birikmasi (collocation) xatosi.",
+      "Xilma-xillik yo'q."
+     ],
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Namuna essay (Band 8 darajasi): qat'iy jazo va sud qarori",
+     "qtype": "Discuss both views + opinion — to'rt tomonlama tahlil",
+     "source": "Jony Academy namuna essayi (264 so'z)",
+     "book_ref": "Savol turi — OPINION + DISCUSSION. Ustoz slaydidagi essay bilan bir xil savolga yozilgan, lekin matn Jony Academy'niki.",
+     "text": [
+      "SAVOL: Some people believe that there should be fixed punishments for each crime. Others argue that the circumstances of an individual crime, and the motivation for committing it, should always be taken into account. Discuss both these views and give your own opinion.",
+      "Whether every offence should carry a set penalty, or whether judges should weigh up why a crime was committed, is a question that divides legal experts. While a rigid tariff has obvious attractions, I would argue that the context of an offence must shape the sentence.",
+      "Supporters of fixed penalties point to consistency. If the punishment for a particular offence is laid down in advance, two people who commit the same act receive the same sentence, regardless of who their lawyer is or which judge hears the case. This predictability also acts as a deterrent, because potential offenders know exactly what they risk. Sentencing hearings, moreover, become far shorter, which saves courts a considerable amount of money that could be redirected into policing or victim support.",
+      "Those who favour flexibility, however, argue that identical acts are rarely identical crimes. A woman who steals food for her children and a gang member who robs a shop for profit have both broken the same law, yet most people would hesitate to punish them in the same way. Taking motive and circumstances into account allows courts to recognise coercion, desperation or genuine remorse, and it leaves room for rehabilitation rather than pure retribution. Without that discretion, the law risks being obeyed but not respected.",
+      "In my view, fairness matters more than administrative convenience. A sensible compromise is to set clear sentencing ranges for each offence and to let judges move within them once they have examined the motives involved. This preserves consistency while ensuring that the punishment genuinely fits both the crime and the person who committed it."
+     ],
+     "paraphrases": [
+      [
+       "fixed punishments",
+       "a set penalty / a rigid tariff"
+      ],
+      [
+       "for each crime",
+       "for a particular offence"
+      ],
+      [
+       "circumstances",
+       "the context of an offence"
+      ],
+      [
+       "motivation for committing it",
+       "why a crime was committed / motive"
+      ],
+      [
+       "taken into account",
+       "weigh up / taking ... into account"
+      ],
+      [
+       "give your own opinion",
+       "I would argue / In my view"
+      ]
+     ],
+     "glossary": [
+      "offence — jinoyat, huquqbuzarlik",
+      "penalty — jazo",
+      "sentence — hukm (sud bergan jazo)",
+      "deterrent — qo'rqituvchi, to'suvchi omil",
+      "discretion — sudyaning qaror erkinligi",
+      "rehabilitation — tuzatish, hayotga qaytarish",
+      "retribution — qasos, jazolash",
+      "coercion — majburlash",
+      "remorse — pushaymonlik"
+     ],
+     "tasks": [
+      {
+       "title": "1-yurish — LUG'AT (Lexical Resource): oddiy so'z qanday kuchaytirilgan?",
+       "type": "Sariq qalam",
+       "instr": "O'quvchi essaydan shu iboralarni topib sariq bilan belgilaydi.",
+       "items": [
+        "punishment (jazo)",
+        "fixed punishment",
+        "crime (jinoyat)",
+        "stops people committing crimes",
+        "judges can decide",
+        "punishing people",
+        "forced to do it",
+        "saves money"
+       ],
+       "answers": [
+        "penalty · sentence: \"a set penalty\", \"the same sentence\"",
+        "\"a rigid tariff\", \"sentencing ranges ... laid down in advance\"",
+        "\"offence\", \"the same act\"",
+        "\"acts as a deterrent\"",
+        "\"discretion\"",
+        "\"retribution\"; helping them change => \"rehabilitation\"",
+        "\"coercion\"; really sorry => \"genuine remorse\"",
+        "\"saves ... a considerable amount of money\", \"redirected into policing\""
+       ],
+       "why": [
+        "Bitta so'zni takrorlash o'rniga sinonim qatori.",
+        "Kuchli ibora: rigid tariff — o'zgarmas jazo tizimi.",
+        "Uch xil so'z bilan aytilgan — takror yo'q.",
+        "Bitta ibora uzun gapni almashtiradi.",
+        "Bir so'z bilan tushuncha: qaror erkinligi.",
+        "Ikki qarama-qarshi tushuncha juft ishlatilgan.",
+        "Kuchli, aniq iboralar.",
+        "Faqat \"save money\" emas — pul qayerga ketishi ham aytilgan."
+       ],
+       "note": "DIQQAT: bu so'zlar \"chiroyli bo'lsin\" deb emas, ANIQ ma'no uchun qo'yilgan. 7.0 belgisi — so'z birikmasi to'g'ri: \"acts as a deterrent\", \"laid down in advance\", \"leaves room for\".",
+       "layout": "pairs"
+      },
+      {
+       "title": "2-yurish — GRAMMATIKA (GRA): qanday gap qurilmalari ishlatilgan?",
+       "type": "Yashil qalam",
+       "instr": "Har qurilmaga essaydan misol topiladi.",
+       "items": [
+        "Ega o'rnida butun gap (noun clause)",
+        "Yon berish (concession)",
+        "Shart gap va majhul nisbat",
+        "Ichki savol gaplar",
+        "Izohlovchi ergash gap (which)",
+        "Sifatlovchi ergash gaplar",
+        "Gerundiy ega",
+        "Majhul gerundiy",
+        "Zamon ergash gapi va Present Perfect"
+       ],
+       "answers": [
+        "\"Whether every offence should carry a set penalty ... is a question\"",
+        "\"While a rigid tariff has obvious attractions, I would argue ...\"",
+        "\"If the punishment ... is laid down in advance, two people ... receive ...\"",
+        "\"regardless of who their lawyer is or which judge hears the case\"",
+        "\"..., which saves courts a considerable amount of money that could be redirected ...\"",
+        "\"A woman who steals food ... and a gang member who robs a shop ... have both broken ...\"",
+        "\"Taking motive and circumstances into account allows courts to ...\"",
+        "\"the law risks being obeyed but not respected\"",
+        "\"once they have examined the motives involved\""
+       ],
+       "why": [
+        "Essay birinchi gapdanoq murakkab boshlangan.",
+        "Qarshi tomonni tan olib, keyin o'z fikri.",
+        "Shart va passive birga.",
+        "Ikki ichki savol bitta gapda.",
+        "which va that ketma-ket, ustiga modal passive.",
+        "Ikki ergash gap, bitta kesim.",
+        "-ing bilan boshlangan ega.",
+        "Kam uchraydigan, kuchli qurilma.",
+        "once + have examined; \"motives involved\" — qisqargan sifatlovchi."
+       ],
+       "note": "Sanab chiqing: essayda 9 xil qurilma bor va ularning hammasi TO'G'RI ishlatilgan. 7.0 talabi shu: \"a variety of complex structures with some accuracy\".",
+       "layout": "pairs"
+      },
+      {
+       "title": "3-yurish — TUZILMA (structure): har xatboshi nima ish bajaryapti?",
+       "type": "Jadval",
+       "instr": "Xatboshilarni vazifasi bo'yicha ajrating.",
+       "note": "Qoida: har xatboshida BITTA asosiy fikr. Fikr, tushuntirish, misol yoki natija. Misol \"For example\" bilan boshlanishi shart emas — bu yerda misol jonli holat bilan berilgan.",
+       "layout": "grid",
+       "head": [
+        "Xatboshi",
+        "Vazifasi",
+        "Ichidagi tartib"
+       ],
+       "rows": [
+        [
+         "1. Kirish (2 gap)",
+         "Savolni O'Z so'zi bilan qaytarish va fikr",
+         "1-gap: ikki qarash ;; 2-gap: \"While ..., I would argue\" — pozitsiya"
+        ],
+        [
+         "2. Birinchi qarash (4 gap)",
+         "Qat'iy jazo tarafdorlari",
+         "asosiy fikr: bir xillik ;; tushuntirish: bir xil hukm ;; natija: deterrent ;; qo'shimcha foyda: pul tejaladi"
+        ],
+        [
+         "3. Ikkinchi qarash (4 gap)",
+         "Moslashuvchan jazo tarafdorlari",
+         "asosiy fikr: bir xil ish, bir xil jinoyat emas ;; MISOL: ona va to'da a'zosi ;; tushuntirish: coercion, rehabilitation ;; natija: obeyed but not respected"
+        ],
+        [
+         "4. Xulosa (3 gap)",
+         "Fikrni tasdiqlash va murosa",
+         "pozitsiya ;; aniq taklif: sentencing ranges va discretion ;; yakuniy gap"
+        ]
+       ]
+      },
+      {
+       "title": "4-yurish — BOG'LANISH (Coherence & Cohesion): gaplar nima bilan ulangan?",
+       "type": "Siyoh qalam",
+       "instr": "Har bog'lovchining VAZIFASINI ayting.",
+       "items": [
+        "While ...",
+        "If ...",
+        "also",
+        "moreover (gap ichida, vergul bilan)",
+        "however (\"Those who favour flexibility, however, argue\")",
+        "yet",
+        "Without that discretion",
+        "rather than",
+        "This / that discretion / them / it",
+        "In my view"
+       ],
+       "answers": [
+        "Yon berish: \"to'g'ri, lekin\"",
+        "Shart",
+        "Qo'shimcha",
+        "Qo'shimcha",
+        "Qarama-qarshilik",
+        "Qarama-qarshilik",
+        "Shartning boshqa ko'rinishi",
+        "Taqqoslash",
+        "Referens: olmosh bilan bog'lash",
+        "Fikr bildirish"
+       ],
+       "why": [
+        "Kirishda pozitsiyani tayyorlaydi.",
+        "Qoida qanday ishlashini ko'rsatadi.",
+        "Gap boshida emas, ichida — tabiiyroq.",
+        "6.0 da u har doim gap boshida turadi; bu yerda o'rtada — \"flexibly\".",
+        "Gap boshida emas — mexaniklikdan qochilgan.",
+        "\"but\" ning kuchliroq varianti.",
+        "\"If there were no discretion\" o'rniga qisqa ibora.",
+        "Ikki tushunchani qarama-qarshi qo'yadi.",
+        "Takrorlamasdan oldingi fikrga ishora — 7.0 da aynan shu talab qilinadi.",
+        "Xulosada pozitsiya yana aniq aytiladi."
+       ],
+       "note": "Sanang: essayda bog'lovchi KO'P emas — taxminan 10 ta, lekin har biri O'Z JOYIDA. 6.0 dan farqi shu: miqdor emas, o'rinlilik.",
+       "layout": "pairs"
+      },
+      {
+       "title": "Ustoz slaydidagi essayni ham shunday tahlil qiling",
+       "type": "Uyda yoki vaqt qolsa",
+       "instr": "Uch rang: sariq — lug'at, yashil — grammatika, siyoh — bog'lovchilar.",
+       "items": [
+        "Sariq belgilangan iboralardan 8 tasini yozing",
+        "Yashil belgilangan qurilmalardan 5 tasini yozing",
+        "Siyoh belgilangan bog'lovchilardan 6 tasini yozing",
+        "Xatboshilar vazifasini yozing"
+       ],
+       "answers": [
+        "lug'at ro'yxati",
+        "grammatika ro'yxati",
+        "bog'lovchi ro'yxati",
+        "4 qator"
+       ],
+       "why": [
+        "Har biriga o'zbekcha ma'no.",
+        "Qanday qurilma ekanini ayting.",
+        "Har birining vazifasi.",
+        "Kirish, 1-qarash, 2-qarash, xulosa."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "\"Mening zaif mezonim\"",
+     "type": "Yozma",
+     "instr": "To'rt mezondan qaysi biri o'zingizga eng qiyin ekanini yozing va NEGA shundayligini 2 gapda tushuntiring.",
+     "answers": "Ustoz ro'yxatni yig'adi — 37-48-darslar shu bo'yicha olib boriladi.",
+     "layout": "list"
+    },
+    {
+     "title": "Savol turlari daftari",
+     "type": "Yozma",
+     "instr": "8 ta IELTS savolini toping, har birining turini yozing va qaysi so'z shunday deyishga majbur qilganini belgilang.",
+     "answers": "8 qator: savol — turi — kalit so'z.",
+     "layout": "list"
+    },
+    {
+     "title": "Namuna essayni ko'chirib yozish",
+     "type": "Yozma",
+     "instr": "Namuna essayni QO'LDA ko'chirib yozing va 10 ta yangi so'z yoki iborani lug'at daftariga yozing.",
+     "answers": "Ko'chirish — qurilmani qo'l bilan his qilish uchun; keyingi darsda so'raladi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Zaif mezon tahlili",
+     "2 gap bilan sabab",
+     "2 coin"
+    ],
+    [
+     "Savol turlari daftari",
+     "8 qator, kalit so'zi bilan",
+     "2 coin"
+    ],
+    [
+     "Namuna essay va 10 so'z",
+     "to'liq",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

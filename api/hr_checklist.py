@@ -37,6 +37,12 @@ router = APIRouter()
 # o'zida (_LIB_MANAGE) — bu ro'yxat o'shaning ichida.
 CHECKLIST_VIEW = list(dict.fromkeys(
     list(roles.FULL_ACCESS) + [roles.HR_MANAGER, roles.HEAD_SUPPORT]))
+# CHECKLISTDAN TAHRIRLASH (2026-09-26, Jahongir: "shu yerni o'zidan
+# o'zgartirib qo'sha olay"). Alohida endpoint yo'q — sahifa mavjud
+# /api/library va /api/pd/videos ga yozadi, huquq ham o'shalarniki:
+# kutubxona — HR, support boshlig'i va rahbarlar; avtomat kuzatiladigan
+# video — faqat asoschi va HR (entry._PD_MANAGE).
+PD_EDIT = [roles.FOUNDER, roles.HR_MANAGER]
 
 
 def _targets(raw) -> list:
@@ -86,6 +92,9 @@ def hr_checklist(role: str = roles.SUPPORT_TEACHER,
                              "kind": "video", "kind_label": "Video",
                              "topic": v.topic or "",
                              "required": bool(v.required),
+                             "targets": _targets(v.target_roles),
+                             "url": (f"https://youtu.be/{v.yt_id}"
+                                     if v.yt_id else None),
                              "can_mark": False})
     if LI is not None:
         labels = {"video": "Video", "book": "Kitob", "file": "Fayl",
@@ -98,6 +107,8 @@ def hr_checklist(role: str = roles.SUPPORT_TEACHER,
                              "kind_label": labels.get(it.kind, it.kind),
                              "topic": "Kutubxona",
                              "required": bool(it.required),
+                             "targets": _targets(it.target_roles),
+                             "url": it.url,
                              "can_mark": True})
 
     people = _people(db, role, user, branch_id)
@@ -161,4 +172,6 @@ def hr_checklist(role: str = roles.SUPPORT_TEACHER,
                             if rows else 0),
         },
         "can_mark": user.role in tuple(CHECKLIST_VIEW),
+        "can_edit_lib": user.role in tuple(CHECKLIST_VIEW),
+        "can_edit_pd": user.role in tuple(PD_EDIT),
     }

@@ -157,6 +157,62 @@ ck("ustozga o'z videosi ham chiqadi",
 r = c.get("/api/hr/checklist?role=yo'q", headers=H_HR)
 ck("noto'g'ri lavozim", r.status_code, 400)
 
+print("\n=== 7. CHECKLISTDAN QO'SHISH / OLIB TASHLASH ===")
+SUP = roles.SUPPORT_TEACHER
+
+
+def cols(role=SUP):
+    j = c.get(f"/api/hr/checklist?role={role}", headers=H_HR).json()
+    return {col["title"]: col for col in j["columns"]}, j
+
+
+_, j = cols()
+ck("HR kutubxona va videoni tahrirlay oladi",
+   (j["can_edit_lib"], j["can_edit_pd"]), (True, True))
+r = c.post("/api/library", headers=H_HR,
+           json={"title": "Qog'oz kitob", "kind": "book", "url": None,
+                 "target_roles": [SUP], "required": True})
+ck("havolasiz kitob qo'shildi", r.status_code, 200)
+r2 = c.post("/api/library", headers=H_HR,
+            json={"title": "Havolasiz havola", "kind": "link", "url": None,
+                  "target_roles": [SUP]})
+ck("havolasiz havola rad etiladi", r2.status_code, 400)
+r3 = c.post("/api/pd/videos", headers=H_HR,
+            json={"title": "Yangi video", "yt": "https://youtu.be/dQw4w9WgXcQ",
+                  "target_roles": [SUP], "required": True})
+ck("video qo'shildi", r3.status_code, 200)
+cc, _ = cols()
+ck("ikkalasi ustunda", ("Qog'oz kitob" in cc, "Yangi video" in cc),
+   (True, True))
+ck("video havolasi", cc["Yangi video"]["url"], "https://youtu.be/dQw4w9WgXcQ")
+ck("faqat support uchun", cc["Qog'oz kitob"]["targets"], [SUP])
+# Tahrirlash
+c.put(f"/api/library/{r.json()['id']}", headers=H_HR,
+      json={"title": "Qog'oz kitob (2-nashr)", "required": False})
+cc, _ = cols()
+ck("nomi va majburiyligi o'zgardi",
+   cc.get("Qog'oz kitob (2-nashr)", {}).get("required"), False)
+# Faqat shu lavozimdagi -> yashiriladi
+c.put(f"/api/library/{r.json()['id']}", headers=H_HR, json={"active": False})
+cc, _ = cols()
+ck("yashirildi", "Qog'oz kitob (2-nashr)" in cc, False)
+# Hammaga berilgan -> faqat support ro'yxatidan chiqadi
+staff = [x for x in roles.STAFF_ROLES if x != SUP]
+c.put(f"/api/library/{opt.id}", headers=H_HR, json={"target_roles": staff})
+cc, _ = cols()
+ct, _ = cols(roles.TEACHER)
+ck("supportdan chiqdi, ustozda qoldi",
+   ("Qo'shimcha havola" in cc, "Qo'shimcha havola" in ct), (False, True))
+# Support boshlig'i: kutubxona ha, avtomat video yo'q
+hs = user("hs", "Support Boshlig'i", roles.HEAD_SUPPORT)
+H_HS = tok("hs")
+j = c.get("/api/hr/checklist", headers=H_HS).json()
+ck("support boshlig'i: kutubxona ha, video yo'q",
+   (j["can_edit_lib"], j["can_edit_pd"]), (True, False))
+r = c.post("/api/pd/videos", headers=H_HS,
+           json={"title": "X", "yt": "dQw4w9WgXcQ", "target_roles": [SUP]})
+ck("support boshlig'i video qo'sha olmaydi", r.status_code, 403)
+
 print()
 if fails:
     print(f"XATO: {len(fails)} ta tekshiruv o'tmadi")

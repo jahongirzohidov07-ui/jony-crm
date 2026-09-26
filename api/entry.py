@@ -5355,7 +5355,9 @@ def library_add(payload: dict = Body(...), db: Session = Depends(get_db),
         raise HTTPException(400, "Noto'g'ri tur")
     url = str(payload.get("url") or "").strip() or None
     aid = payload.get("attachment_id")
-    if not url and not aid:
+    # Qog'oz kitobning havolasi bo'lmasligi mumkin (2026-09-26, HR
+    # checklistdan qo'shish): kitob uchun havola ixtiyoriy.
+    if not url and not aid and kind != "book":
         raise HTTPException(
             400, "Havola qo'ying yoki fayl yuklang — bittasi bo'lishi kerak")
     it = _LI(

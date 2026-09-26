@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Check, X, Download, Search, PlayCircle, BookOpen, Link2, FileText } from "lucide-react";
+import {
+  Check, X, Download, Search, PlayCircle, BookOpen, Link2, FileText, Plus, Pencil,
+} from "lucide-react";
 import { api } from "../lib/api";
 import { exportToExcel } from "../lib/exportXlsx";
 
@@ -13,11 +15,18 @@ import { exportToExcel } from "../lib/exportXlsx";
  * belgisini pleyer qo'yadi (aldab bo'lmaydi) — HR uni bosa olmaydi.
  * Kutubxona (kitob, havola, fayl) katagini HR bosib "o'tdi" qiladi yoki
  * bekor qiladi — kutubxonadagi belgi bilan bitta narsa.
+ *
+ * SHU YERNING O'ZIDAN QO'SHISH VA TAHRIRLASH (2026-09-26, Jahongir:
+ * "shu yerni o'zidan o'zgartirib qo'sha olay"). "+ Qo'shish" yangi
+ * ustun ochadi; ustun sarlavhasini bosish — nomi, havolasi,
+ * majburiyligi yoki olib tashlash. Yozuvlar o'sha-o'sha kutubxona va
+ * video bo'limida turadi, bu yerda faqat qulay kirish.
  */
 
 type Col = {
   key: string; source: "pd" | "lib"; id: number; title: string;
   kind: string; kind_label: string; topic: string; required: boolean;
+  targets: string[]; url: string | null;
   can_mark: boolean;
 };
 type Cell = { passed: boolean; percent: number; at: string | null; by: string | null };
@@ -30,6 +39,8 @@ type Data = {
   roles: { key: string; label: string }[];
   summary: { people: number; complete: number; avg_percent: number };
   can_mark: boolean;
+  can_edit_lib: boolean;
+  can_edit_pd: boolean;
 };
 
 const KIND_ICON: Record<string, typeof PlayCircle> = {
@@ -43,6 +54,8 @@ export function ChecklistTab() {
   const [q, setQ] = useState("");
   const [onlyLeft, setOnlyLeft] = useState(false);
   const [busy, setBusy] = useState<string | null>(null);
+  // null — yopiq, "new" — yangi qo'shish, Col — shu ustunni tahrirlash
+  const [dialog, setDialog] = useState<Col | "new" | null>(null);
 
   const load = useCallback(() => {
     setErr("");
@@ -97,6 +110,7 @@ export function ChecklistTab() {
 
   const pd = d.columns.filter((c) => c.source === "pd");
   const lib = d.columns.filter((c) => c.source === "lib");
+  const canAdd = d.can_edit_lib || d.can_edit_pd;
 
   return (
     <div>
@@ -106,7 +120,8 @@ export function ChecklistTab() {
           <p className="text-sm text-slate-500">
             Kim qaysi videoni ko'rdi, qaysi kitobni o'qidi — o'tdi / o'tmadi.
             Video belgisini pleyer o'zi qo'yadi; kitob va boshqa
-            materiallarni katakni bosib belgilaysiz.
+            materiallarni katakni bosib belgilaysiz. Ustun nomini bosib
+            tahrirlaysiz.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -127,6 +142,12 @@ export function ChecklistTab() {
                    onChange={(e) => setOnlyLeft(e.target.checked)} />
             Faqat tugatmaganlar
           </label>
+          {canAdd && (
+            <button onClick={() => setDialog("new")}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 text-sm font-medium">
+              <Plus size={14} /> Qo'shish
+            </button>
+          )}
           <button onClick={exportXlsx}
                   className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-sm hover:bg-slate-50">
             <Download size={14} /> Excel
@@ -152,10 +173,15 @@ export function ChecklistTab() {
       {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
 
       {d.columns.length === 0 ? (
-        <p className="text-sm text-slate-500 bg-white rounded-xl border border-slate-200 p-6 text-center">
-          Bu lavozimga hali video yoki kutubxona materiali biriktirilmagan.
-          "Shaxsiy rivojlanish" yoki "Kutubxona" bo'limidan qo'shing.
-        </p>
+        <div className="text-sm text-slate-500 bg-white rounded-xl border border-slate-200 p-6 text-center">
+          <p>Bu lavozimga hali video yoki kitob biriktirilmagan.</p>
+          {canAdd && (
+            <button onClick={() => setDialog("new")}
+                    className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-3 py-2 text-sm font-medium">
+              <Plus size={14} /> Birinchisini qo'shish
+            </button>
+          )}
+        </div>
       ) : (
         <div className="bg-white rounded-xl border border-slate-200 overflow-auto max-h-[70vh]">
           <table className="text-sm border-separate border-spacing-0">
@@ -181,14 +207,22 @@ export function ChecklistTab() {
               <tr>
                 {d.columns.map((c) => {
                   const Icon = KIND_ICON[c.kind] ?? FileText;
+                  const editable = c.source === "pd" ? d.can_edit_pd : d.can_edit_lib;
                   return (
-                    <th key={c.key} title={`${c.kind_label}: ${c.title}${c.required ? "" : " (ixtiyoriy)"}`}
-                        className="sticky top-[29px] z-20 bg-white border-b border-r border-slate-200 px-2 py-2 align-bottom font-medium text-slate-700 min-w-[112px] max-w-[140px]">
-                      <div className="flex flex-col items-center gap-1 text-center">
+                    <th key={c.key}
+                        title={`${c.kind_label}: ${c.title}${c.required ? "" : " (ixtiyoriy)"}${editable ? "\nBosing — tahrirlash" : ""}`}
+                        className="sticky top-[29px] z-20 bg-white border-b border-r border-slate-200 p-0 align-bottom font-medium text-slate-700 min-w-[112px] max-w-[140px]">
+                      <button type="button" disabled={!editable}
+                              onClick={() => setDialog(c)}
+                              className={`group w-full px-2 py-2 flex flex-col items-center gap-1 text-center ${
+                                editable ? "hover:bg-slate-50 cursor-pointer" : "cursor-default"}`}>
                         <Icon size={14} className={c.source === "pd" ? "text-indigo-500" : "text-amber-600"} />
                         <span className="text-[11px] leading-tight line-clamp-3 normal-case">{c.title}</span>
                         {!c.required && <span className="text-[10px] text-slate-400">ixtiyoriy</span>}
-                      </div>
+                        {editable && (
+                          <Pencil size={11} className="text-slate-300 group-hover:text-slate-500" />
+                        )}
+                      </button>
                     </th>
                   );
                 })}
@@ -252,6 +286,178 @@ export function ChecklistTab() {
           </table>
         </div>
       )}
+
+      {dialog && (
+        <ItemDialog
+          col={dialog === "new" ? null : dialog}
+          role={d.role}
+          roleLabel={d.role_label}
+          allRoles={d.roles.map((r) => r.key)}
+          canPd={d.can_edit_pd}
+          canLib={d.can_edit_lib}
+          onClose={() => setDialog(null)}
+          onSaved={() => { setDialog(null); load(); }}
+        />
+      )}
+    </div>
+  );
+}
+
+type Kind = "book" | "link" | "pd";
+
+/** Ustun qo'shish / tahrirlash: kitob, havola yoki YouTube video.
+ *  YouTube video pleyer bilan kuzatiladi ("o'tdi"ni o'zi qo'yadi);
+ *  kitob va havolani HR jadvalda bosib belgilaydi. */
+function ItemDialog({ col, role, roleLabel, allRoles, canPd, canLib, onClose, onSaved }: {
+  col: Col | null; role: string; roleLabel: string; allRoles: string[];
+  canPd: boolean; canLib: boolean; onClose: () => void; onSaved: () => void;
+}) {
+  const initKind: Kind = col
+    ? (col.source === "pd" ? "pd" : col.kind === "book" ? "book" : "link")
+    : canLib ? "book" : "pd";
+  const [kind, setKind] = useState<Kind>(initKind);
+  const [title, setTitle] = useState(col?.title ?? "");
+  const [url, setUrl] = useState(col?.url ?? "");
+  const [required, setRequired] = useState(col?.required ?? true);
+  const [err, setErr] = useState("");
+  const [saving, setSaving] = useState(false);
+  // Bir nechta lavozimga (yoki hammaga) berilgan yozuv — olib
+  // tashlaganda faqat shu lavozim ro'yxatidan chiqadi.
+  const shared = !!col && (col.targets.length === 0 || col.targets.length > 1);
+
+  async function save() {
+    setErr("");
+    if (!title.trim()) { setErr("Nomini yozing"); return; }
+    if ((kind === "pd" || kind === "link") && !url.trim()) {
+      setErr(kind === "pd" ? "YouTube havolasini qo'ying" : "Havolani qo'ying");
+      return;
+    }
+    setSaving(true);
+    try {
+      if (!col) {
+        if (kind === "pd") {
+          await api.post("/pd/videos", {
+            title: title.trim(), yt: url.trim(), target_roles: [role], required,
+          });
+        } else {
+          await api.post("/library", {
+            title: title.trim(), kind, url: url.trim() || null,
+            target_roles: [role], required,
+          });
+        }
+      } else if (col.source === "pd") {
+        const body: Record<string, unknown> = { title: title.trim(), required };
+        if (url.trim() !== (col.url ?? "")) body.yt = url.trim();
+        await api.put(`/pd/videos/${col.id}`, body);
+      } else {
+        await api.put(`/library/${col.id}`, {
+          title: title.trim(), url: url.trim() || null, required,
+        });
+      }
+      onSaved();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+      setSaving(false);
+    }
+  }
+
+  /** Faqat SHU lavozim ro'yxatidan olib tashlaydi. Boshqa lavozimlarga
+   *  ham berilgan bo'lsa — ularda qoladi; faqat shu lavozimga bo'lsa —
+   *  yozuv yashiriladi (o'chirilmaydi, kim o'tgani tarixda qoladi). */
+  async function remove() {
+    if (!col) return;
+    const msg = shared
+      ? `"${col.title}" ${roleLabel} ro'yxatidan olib tashlanadi. Boshqa lavozimlarda qoladi.`
+      : `"${col.title}" yashiriladi. Kim o'tgani saqlanib qoladi.`;
+    if (!window.confirm(msg)) return;
+    setSaving(true);
+    try {
+      const path = col.source === "pd" ? `/pd/videos/${col.id}` : `/library/${col.id}`;
+      if (shared) {
+        const base = col.targets.length === 0 ? allRoles : col.targets;
+        await api.put(path, { target_roles: base.filter((r) => r !== role) });
+      } else {
+        await api.put(path, { active: false });
+      }
+      onSaved();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+      setSaving(false);
+    }
+  }
+
+  const kinds: { key: Kind; label: string; hint: string; ok: boolean }[] = [
+    { key: "book", label: "Kitob", hint: "HR jadvalda bosib belgilaydi. Havola ixtiyoriy.", ok: canLib },
+    { key: "link", label: "Havola", hint: "Maqola, kurs, hujjat. HR jadvalda bosib belgilaydi.", ok: canLib },
+    { key: "pd", label: "YouTube video", hint: "JonyOS ichida ochiladi, kim qancha ko'rgani o'zi belgilanadi.", ok: canPd },
+  ];
+
+  return (
+    <div className="fixed inset-0 bg-black/30 flex items-start justify-center z-50 p-4 pt-16 overflow-y-auto">
+      <div className="bg-white rounded-xl w-full max-w-md p-5 shadow-xl">
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="font-semibold text-slate-800">
+            {col ? "Tahrirlash" : "Checklistga qo'shish"}
+          </h3>
+          <button onClick={onClose} className="text-slate-400"><X size={18} /></button>
+        </div>
+        <p className="text-xs text-slate-500 mb-4">
+          {col
+            ? `${col.kind_label} · ${shared ? "bir nechta lavozimda" : roleLabel}`
+            : `${roleLabel} uchun yangi ustun`}
+        </p>
+        {err && <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-3">{err}</p>}
+        <div className="space-y-3">
+          {!col && (
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">Turi</label>
+              <div className="grid grid-cols-3 gap-2">
+                {kinds.filter((k) => k.ok).map((k) => (
+                  <button key={k.key} type="button" onClick={() => setKind(k.key)}
+                          className={`rounded-lg border px-2 py-2 text-sm ${
+                            kind === k.key ? "border-brand-600 bg-brand-50 text-brand-700 font-medium"
+                              : "border-slate-200 text-slate-600"}`}>
+                    {k.label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1">
+                {kinds.find((k) => k.key === kind)?.hint}
+              </p>
+            </div>
+          )}
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Nomi</label>
+            <input value={title} onChange={(e) => setTitle(e.target.value)}
+                   placeholder={kind === "book" ? "Teach Like a Champion" : "Nomi"}
+                   className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm" />
+          </div>
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">
+              {kind === "pd" ? "YouTube havolasi" : kind === "book" ? "Havola (ixtiyoriy)" : "Havola"}
+            </label>
+            <input value={url} onChange={(e) => setUrl(e.target.value)}
+                   placeholder={kind === "pd" ? "https://youtu.be/..." : "https://..."}
+                   className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm" />
+          </div>
+          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+            <input type="checkbox" checked={required} onChange={(e) => setRequired(e.target.checked)} />
+            Majburiy — "O'tdi" hisobiga kiradi
+          </label>
+        </div>
+        <div className="flex items-center justify-between mt-5">
+          {col ? (
+            <button type="button" onClick={remove} disabled={saving}
+                    className="text-sm text-rose-600 hover:underline disabled:opacity-50">
+              {shared ? `${roleLabel} ro'yxatidan olib tashlash` : "Olib tashlash"}
+            </button>
+          ) : <span />}
+          <button type="button" onClick={save} disabled={saving}
+                  className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60">
+            {saving ? "Saqlanmoqda..." : "Saqlash"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -139,6 +139,26 @@ ck("auditda secret ham, token ham yo'q",
    any(x in (a.note or "") for a in db.query(models.AuditLog).all()
        for x in (SECRET, PAGE_TOKEN)), False)
 
+print("\n=== 5. FACEBOOK LOGIN FOR BUSINESS (config_id) ===")
+ck("config yo'q -> scope bilan (config_id yo'q)",
+   ("config_id" in q, s.json().get("config_id")), (False, None))
+c.post("/api/smm/instagram/app", headers=HB,
+       json={"app_id": "1614151326992230"})
+u2 = c.post("/api/smm/instagram/oauth/start", headers=HB).json()["url"]
+q2 = {k: v[0] for k, v in parse_qs(urlparse(u2).query).items()}
+ck("JonyOS ilovasi -> config_id 1127900133139057, scope yuborilmaydi",
+   (q2.get("config_id"), "scope" in q2), ("1127900133139057", False))
+ck("secret saqlanib qoldi (App ID yangilanganda)",
+   c.get("/api/smm/instagram", headers=HB).json()["has_secret"], True)
+c.post("/api/smm/instagram/app", headers=HB,
+       json={"app_id": "1614151326992230", "config_id": "99887766554433"})
+u3 = c.post("/api/smm/instagram/oauth/start", headers=HB).json()["url"]
+q3 = {k: v[0] for k, v in parse_qs(urlparse(u3).query).items()}
+ck("qo'lda kiritilgan config_id ustun", q3.get("config_id"), "99887766554433")
+ck("status config_id ko'rsatadi",
+   c.get("/api/smm/instagram", headers=HB).json()["config_id"],
+   "99887766554433")
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))
 sys.exit(1 if fails else 0)

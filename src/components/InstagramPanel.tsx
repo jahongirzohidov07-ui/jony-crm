@@ -42,7 +42,7 @@ export function InstagramPanel() {
   const saveApp = async () => {
     setErr(""); setBusy("app");
     try {
-      await api.post("/smm/instagram/app", { app_id: appId, app_secret: appSecret });
+      await api.post("/smm/instagram/app", { app_id: appId || d?.app_id || "", app_secret: appSecret });
       setAppSecret("");
       setMsg("Meta ilova saqlandi. Endi «Facebook orqali ulash» ni bosing.");
       load();

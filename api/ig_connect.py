@@ -490,6 +490,7 @@ def ig_status(db: Session = Depends(get_db),
         # "Facebook orqali ulash" uchun (secret hech qachon qaytmaydi)
         "app_id": app_creds(db)[0] or None,
         "has_secret": bool(app_creds(db)[1]),
+        "config_id": config_id(db) or None,
         "redirect_uri": redirect_uri(),
         "posts": [{
             "id": r.id, "permalink": r.permalink, "type": r.media_type,
@@ -604,6 +605,11 @@ from fastapi.responses import RedirectResponse
 
 K_APP_ID = "meta_app_id"
 K_APP_SECRET = "meta_app_secret"
+# Facebook Login for Business: ruxsatlar "configuration" orqali beriladi
+# (scope o'rniga config_id). JonyOS ilovasi uchun 2026-09-26 da Meta'da
+# "JonyOS Instagram statistika" konfiguratsiyasi yaratildi.
+K_CONFIG_ID = "meta_config_id"
+KNOWN_CONFIGS = {"1614151326992230": "1127900133139057"}
 OAUTH_SCOPES = ("instagram_basic,instagram_manage_insights,"
                 "pages_show_list,pages_read_engagement,business_management")
 CALLBACK_PATH = "/api/smm/instagram/oauth/callback"
@@ -624,6 +630,12 @@ def app_creds(db: Session) -> tuple:
     aid = _s(db, K_APP_ID) or (os.getenv("META_APP_ID") or "").strip()
     sec = _s(db, K_APP_SECRET) or (os.getenv("META_APP_SECRET") or "").strip()
     return aid, sec
+
+
+def config_id(db: Session, aid: str | None = None) -> str:
+    aid = aid if aid is not None else app_creds(db)[0]
+    return (_s(db, K_CONFIG_ID) or (os.getenv("META_CONFIG_ID") or "").strip()
+            or KNOWN_CONFIGS.get(aid or "", ""))
 
 
 def _sign(payload: str) -> str:
@@ -692,6 +704,7 @@ def ig_set_app(payload: dict = Body(...), db: Session = Depends(get_db),
     """Meta ilovasi: App ID (ochiq) va App Secret (maxfiy)."""
     aid = re.sub(r"\D", "", str(payload.get("app_id") or ""))
     sec = (payload.get("app_secret") or "").strip()
+    cfg = re.sub(r"\D", "", str(payload.get("config_id") or ""))
     if len(aid) < 8:
         raise HTTPException(400, "App ID — faqat raqamlar (15-16 xonali)")
     if sec and not re.fullmatch(r"[0-9a-fA-F]{32}", sec):
@@ -699,6 +712,8 @@ def ig_set_app(payload: dict = Body(...), db: Session = Depends(get_db),
     _set(db, K_APP_ID, aid, user.full_name)
     if sec:
         _set(db, K_APP_SECRET, sec, user.full_name)
+    if cfg:
+        _set(db, K_CONFIG_ID, cfg, user.full_name)
     db.commit()
     audit.log(db, user, entity="integration", action="update",
               entity_label="Meta ilova",
@@ -715,11 +730,15 @@ def ig_oauth_start(db: Session = Depends(get_db),
     if not (aid and sec):
         raise HTTPException(400, "Avval Meta ilovasining App ID va App "
                                  "Secret'ini saqlang")
-    url = ("https://www.facebook.com/v21.0/dialog/oauth?"
-           + urllib.parse.urlencode({
-               "client_id": aid, "redirect_uri": redirect_uri(),
-               "state": make_state(user.id), "scope": OAUTH_SCOPES,
-               "response_type": "code"}))
+    q = {"client_id": aid, "redirect_uri": redirect_uri(),
+         "state": make_state(user.id), "response_type": "code"}
+    cfg = config_id(db, aid)
+    if cfg:
+        q["config_id"] = cfg          # Facebook Login for Business
+    else:
+        q["scope"] = OAUTH_SCOPES     # oddiy Facebook Login
+    url = "https://www.facebook.com/v21.0/dialog/oauth?" + \
+        urllib.parse.urlencode(q)
     return {"url": url}
 
 

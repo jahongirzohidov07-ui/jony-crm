@@ -57,7 +57,16 @@ def _files() -> list:
             if not name.endswith(".json"):
                 continue
             with open(os.path.join(d, name), encoding="utf-8") as fh:
-                out.append(json.load(fh))
+                tpl = json.load(fh)
+            # Har bo'limga "ielts_listening" / "cefr_reading" kabi aniq
+            # ko'nikma belgisi qo'yiladi: xom ballni qaysi jadval
+            # bo'yicha bandga o'girishni shu hal qiladi. Bo'lim nomiga
+            # tayanib bo'lmaydi — IELTS Listening bo'limlari ham
+            # shunchaki "Part 1" deb nomlangan.
+            skill = f"{sub}_{tpl.get('section') or ''}".strip("_")
+            for part in tpl.get("parts") or []:
+                part.setdefault("skill", skill)
+            out.append(tpl)
     return out
 
 

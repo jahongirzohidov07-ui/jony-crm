@@ -222,6 +222,12 @@ def clean_parts(parts) -> list:
             "audio_url": (str(p.get("audio_url") or "").strip() or None),
             # Bo'lim rasmi — masalan A–G kasblar jadvali (2026-09-18)
             "image": _clean_image(p.get("image"), p.get("title") or "Bo'lim"),
+            # KO'NIKMA (2026-09-26, mock bazasi): "ielts_listening",
+            # "ielts_reading", "cefr_listening", "writing" ... — xom
+            # ballni qaysi jadval bo'yicha bandga o'girishni shu
+            # belgilaydi (mock_band). Bo'lim nomiga tayanib bo'lmaydi:
+            # IELTS Listening bo'limlari ham shunchaki "Part 1" deyiladi.
+            "skill": (str(p.get("skill") or "").strip().lower()[:40] or None),
             # LISTENING SKRIPTI (2026-09-26, variantlar): audio yo'q
             # variantlarda examiner o'qib beradigan matn. Faqat
             # examinerga — public_parts'ga tushmaydi.
@@ -292,6 +298,39 @@ def _roster(db: Session, group_id: int) -> list:
         or list(_group_students(db, group_id))
 
 
+def _mark_for(exam: models.Exam, online: models.ExamOnline,
+              sub: models.ExamSubmission):
+    """Bitta topshiriq uchun guruh testiga yoziladigan baho.
+
+    MOCK = band (0-9), ball emas — exams._apply_exam_marks mock uchun
+    aynan band talab qiladi. IELTS Listening/Reading xom bali rasmiy
+    jadval bo'yicha bandga o'giriladi (mock_band). CEFR Multilevel'da
+    rasmiy o'tkazish jadvali yo'q (qo'llanmalar mytests.uz ga
+    yo'naltiradi), shuning uchun TAXMINIY band yozilmaydi: None
+    qaytadi va darajani examiner xom balga qarab o'zi qo'yadi.
+    Writing/Speaking mocklarida avtomat savol yo'q — bandni examiner
+    qog'oz bali sifatida kiritadi.
+
+    Ikki joydan chaqiriladi: topshiriq o'quvchiga joylashganda
+    (_write_result) va examiner hammasini tasdiqlaganda
+    (publish_online). Ilgari ikkinchisi mockni hisobga olmay
+    to'g'ridan-to'g'ri ball yozardi va mock tasdiqlanmasdan 400
+    qaytarardi.
+    """
+    if (exam.kind or "") == "mock":
+        b = mock_band(_load(online.parts), sub.online_score, sub.online_max)
+        if b is None:
+            if (sub.online_max or 0) > 0:
+                return None
+            b = sub.paper_score or 0
+        return schemas.ExamScoreMark(student_id=sub.student_id,
+                                     band=round(float(b) * 2) / 2,
+                                     absent=False)
+    return schemas.ExamScoreMark(
+        student_id=sub.student_id,
+        score=(sub.online_score or 0) + (sub.paper_score or 0), absent=False)
+
+
 def _write_result(db: Session, exam: models.Exam, online: models.ExamOnline,
                   sub: models.ExamSubmission, user) -> None:
     """Joylashtirilgan topshiriqni guruh testining natijasiga yozadi.
@@ -302,28 +341,9 @@ def _write_result(db: Session, exam: models.Exam, online: models.ExamOnline,
         return          # examiner hali tasdiqlamagan
     if (online.paper_max or 0) > 0 and sub.paper_score is None:
         return
-    total = (sub.online_score or 0) + (sub.paper_score or 0)
-    if (exam.kind or "") == "mock":
-        # MOCK = BAND, ball emas (exams._apply_exam_marks mock uchun
-        # band talab qiladi). Listening/Reading xom bali rasmiy jadval
-        # bo'yicha bandga o'giriladi; Writing/Speaking mocklarida
-        # avtomat tekshiriladigan savol yo'q — examiner qog'ozda
-        # bandning o'zini qo'yadi.
-        b = mock_band(_load(online.parts), sub.online_score, sub.online_max)
-        if b is None:
-            if (sub.online_max or 0) > 0:
-                # CEFR Multilevel va boshqa rasmiy jadvali yo'q mocklar:
-                # xom ballni examiner submissionlar ro'yxatida ko'radi va
-                # darajani o'zi qo'yadi. Taxminiy band YOZILMAYDI —
-                # noto'g'ri raqam hisobotlarga tushib ketmasin.
-                return
-            b = sub.paper_score or 0
-        mark = schemas.ExamScoreMark(student_id=sub.student_id,
-                                     band=round(float(b) * 2) / 2,
-                                     absent=False)
-    else:
-        mark = schemas.ExamScoreMark(student_id=sub.student_id, score=total,
-                                     absent=False)
+    mark = _mark_for(exam, online, sub)
+    if mark is None:
+        return
     _exams._apply_exam_marks(db, exam, schemas.ExamScoreBulk(marks=[mark]),
                              user)
 
@@ -395,12 +415,19 @@ _BAND_READING = [(39, 9.0), (37, 8.5), (35, 8.0), (33, 7.5), (30, 7.0),
 
 
 def _mock_section(parts: list) -> str:
-    """Bo'lim nomlaridan qaysi ko'nikma ekanini aniqlaydi."""
+    """Qaysi ko'nikma va qaysi imtihon: "ielts_listening",
+    "ielts_reading", "cefr_listening", ... Avval bo'limdagi aniq
+    "skill" maydoni o'qiladi; u yo'q bo'lsa (eski yozuvlar) bo'lim
+    nomiga qaraladi — ilgari faqat IELTS bor edi."""
+    for p in parts:
+        sk = str(p.get("skill") or "").strip().lower()
+        if sk:
+            return sk
     t = " ".join(str(p.get("title") or "") for p in parts).lower()
     if "listening" in t:
-        return "listening"
+        return "ielts_listening"
     if "reading" in t:
-        return "reading"
+        return "ielts_reading"
     return ""
 
 
@@ -414,10 +441,12 @@ def mock_band(parts: list, score, total) -> Optional[float]:
     if total <= 0:
         return None
     sec = _mock_section(parts)
-    if not sec:
+    if sec not in ("ielts_listening", "ielts_reading"):
+        # CEFR Multilevel: qo'llanmalarda xom balldan darajaga rasmiy
+        # o'tkazish jadvali yo'q — taxminiy band o'ylab topilmaydi.
         return None
     raw = int(round(score / total * 40))
-    table = _BAND_LISTENING if sec == "listening" else _BAND_READING
+    table = _BAND_LISTENING if sec == "ielts_listening" else _BAND_READING
     for low, band in table:
         if raw >= low:
             return band
@@ -874,7 +903,10 @@ def create_online(exam_id: int, payload: OnlineIn,
         parts, variants = _load(t.parts), (t.variant or "A")
     else:
         parts, variants = mix_parts(t, _family(db, t))
-    online_max = float(sum(1 for _ in _questions(parts)))
+    # Essay (Writing) savollari avtomat tekshirilmaydi — maksimal
+    # ballga kirmaydi (2026-09-26).
+    online_max = float(sum(1 for q in _questions(parts)
+                           if q.get("type") != "essay"))
     if payload.paper_max is not None:
         paper_max = float(payload.paper_max)
     elif t.kind in ("mid", "end") and _subj(t) == "english":
@@ -893,7 +925,10 @@ def create_online(exam_id: int, payload: OnlineIn,
                  f"{exam.max_score:g}. Online {online_max:g} + qog'oz "
                  f"{paper_max:g} = {total:g} — mos emas")
     old_max = exam.max_score
-    exam.max_score = total
+    if (exam.kind or "") != "mock":
+        # Mock natijasi BAND (0-9) — maksimal ball yozilmaydi, aks holda
+        # gradebook mockni ballik testdek ko'rsatib qo'yadi.
+        exam.max_score = total
     o = models.ExamOnline(exam_id=exam.id, template_id=t.id,
                           token=secrets.token_urlsafe(9), is_open=1,
                           parts=json.dumps(parts, ensure_ascii=False),
@@ -1078,9 +1113,10 @@ def save_paper(exam_id: int, payload: PaperBulk,
             continue
         s.paper_score = m.paper
         if m.paper is not None:
-            marks.append(schemas.ExamScoreMark(
-                student_id=m.student_id,
-                score=(s.online_score or 0) + m.paper, absent=False))
+            # Mockda ball emas, band yoziladi (_mark_for)
+            mk = _mark_for(exam, o, s)
+            if mk is not None:
+                marks.append(mk)
     db.commit()
     if marks and o.published_at:
         _exams._apply_exam_marks(db, exam, schemas.ExamScoreBulk(marks=marks),
@@ -1111,9 +1147,9 @@ def publish_online(exam_id: int, db: Session = Depends(get_db),
     for s in placed:
         if (o.paper_max or 0) > 0 and s.paper_score is None:
             continue
-        marks.append(schemas.ExamScoreMark(
-            student_id=s.student_id,
-            score=(s.online_score or 0) + (s.paper_score or 0), absent=False))
+        m = _mark_for(exam, o, s)
+        if m is not None:
+            marks.append(m)
     o.published_at = datetime.utcnow()
     o.published_by = user.full_name
     db.commit()

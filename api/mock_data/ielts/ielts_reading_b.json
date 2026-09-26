@@ -1,0 +1,541 @@
+{
+ "key": "mock_ielts_reading_b",
+ "section": "reading",
+ "kind": "mock",
+ "variant": "B",
+ "title": "IELTS Mock · Reading — Variant B",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "READING PASSAGE 1\n\nYou should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.\n\nQuestions 1-7\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-7 on your answer sheet, write\n  TRUE          if the statement agrees with the information\n  FALSE         if the statement contradicts the information\n  NOT GIVEN     if there is no information on this\n\nQuestions 8-13\nComplete the summary below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 8-13 on your answer sheet.\n\nBuilding a fen trackway (Questions 8-13)",
+   "passage": "Walking on Water: the prehistoric trackways of the Neldram Fens\n\nThe Neldram Fens form a shallow basin of peat and standing water some sixty kilometres inland from the eastern coast. For much of the year the ground there is soft enough to swallow a boot, and in winter the separate pools run together into a single grey sheet, leaving the low gravel islands genuinely cut off. It looks an unpromising place to build a road. Yet buried beneath the peat lies one of the richest engineering records in prehistoric northern Europe: the remains of more than forty wooden walkways, laid down over a period of roughly nine centuries, which allowed people to cross the wetland dry-shod.\n\nThe first of these structures came to light by accident. In 1963 a peat cutter named Alwen Mardle, clearing a drainage channel at the southern edge of the fen, struck a row of split timbers lying flat in the black peat. Mardle took them for the remains of a farm bridge of no great age and mentioned them to nobody for four years. Only in 1967, when a university team arrived to survey the basin, were the timbers examined and shown to be some four thousand years old. Systematic survey has since identified forty-three separate trackways, of which eleven have been excavated.\n\nMost of the walkways belong to a design that excavators call the rail-and-plank type, and its chief virtue is economy. Pairs of sharpened pegs were driven into the peat at an angle so that they crossed a little above the surface, producing a line of V-shaped cradles along the intended route. Into these cradles the builders dropped long rails of birch or alder. Planks of oak, split radially from large trunks, were then laid across the rails to form a walking surface about a metre wide. Nothing was nailed, tied or jointed: the weight of the planks and the spring of the pegs held the whole assembly in place.\n\nThat such fragile structures survive at all is a consequence of the peat itself. Waterlogged peat contains almost no oxygen, and without oxygen the bacteria and fungi that normally consume dead wood cannot operate. Timber lifted from the fen may emerge with the marks of the axe as crisp as the day it was cut. The same property makes excavation a race. Once exposed, the wood begins to dry, and a plank that has lain intact for four millennia can split and curl within hours. Excavators work under shade netting, spraying the surface continually, and lift each timber onto a rigid board before it leaves the trench.\n\nDating has transformed what can be said about the people who built the tracks. Using 1,400 oak timbers from the fen and from nearby river gravels, Dr Seren Vaill assembled a tree-ring chronology precise enough to assign individual planks to a single felling season. Her results were unexpected. The Harrow Path, at 1.8 kilometres the longest route known, had been assumed to represent generations of patient extension. In fact every tree used in its construction was felled in the same spring. Vaill calculates that a community of about fifty adults could have laid the whole path in ten days, provided the timber had been prepared in advance.\n\nThe pegs carry a second kind of information. Thousands of them are of hazel, and their rings show that they were cut from stems of remarkably uniform age, most of them between six and eight years old. Such regularity does not occur in wild woodland, where stems of every age grow together. It is the signature of coppicing, the practice of cutting a tree back to its stump so that it throws up straight rods which can be harvested on a cycle. The trackway pegs therefore push the managed woodland of this region back by several centuries.\n\nWhy the tracks were built remains disputed. The practical explanation is grazing: the gravel islands carried summer pasture, and a walkway would have let animals and people reach it without a boat. Yet objects recovered from beside and beneath the timbers complicate the picture. Excavators have recorded a polished stone axe whose edge had never been used, a small wooden bowl lying upright in the peat, and a string of amber beads pressed into the mud below a plank. Some archaeologists read these as deliberate offerings made to the water; others point out that a walkway a metre wide crossing deep mud is exactly the place where people drop things. The two explanations are not easy to separate, and the excavators of the Harrow Path have argued that a route could be both a road and a place of ceremony without contradiction.\n\nThe immediate question is no longer interpretation but survival. Pumped drainage for arable farming has lowered the water table across the basin by more than a metre since the 1950s, and monitoring wells show oxygen reaching depths that were sealed for thousands of years. Timbers re-excavated in 2015 were measurably softer than the same timbers recorded in 1974. A re-wetting scheme begun in 2009 now holds water levels artificially high across three hundred hectares of the southern fen, and the trackways within it appear stable. Outside the scheme, conservators expect little to remain within fifty years.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Mardle informed archaeologists about the timbers immediately after finding them.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  All of the trackways so far identified in the Neldram Fens have been excavated.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  Rail-and-plank trackways were built without the use of any fastenings.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  Oak was harder to split into planks than birch was.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  Wood taken from the fen starts to deteriorate very soon after it is exposed to the air.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  Tree-ring dating showed that the Harrow Path had been lengthened over several generations.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  The amber beads recovered from beneath one trackway were made in the local area.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "text",
+     "q": "8  To build a trackway of the rail-and-plank type, workers first drove pairs of pointed ............ into the peat at an angle so that they crossed, forming a line of cradles.",
+     "answer": [
+      "pegs"
+     ],
+     "topic": "Reading · Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "9  Long ............ made of birch or alder were then dropped into the cradles, and split oak planks were laid across them to give a surface about a metre wide.",
+     "answer": [
+      "rails"
+     ],
+     "topic": "Reading · Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "10  The timber has survived because waterlogged peat contains almost no ............ , without which the organisms that destroy wood cannot function.",
+     "answer": [
+      "oxygen"
+     ],
+     "topic": "Reading · Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "11  Working from a chronology built out of 1,400 oak timbers, Dr Seren Vaill showed that the trees used for the ............ , the longest of the routes, were all felled in a single spring.",
+     "answer": [
+      "Harrow Path"
+     ],
+     "topic": "Reading · Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "12  The hazel pegs were all of a very uniform age, which is evidence for the practice of ............ .",
+     "answer": [
+      "coppicing"
+     ],
+     "topic": "Reading · Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "13  The trackways are now at risk because pumped ............ for arable farming has lowered the water table by over a metre since the 1950s.",
+     "answer": [
+      "drainage"
+     ],
+     "topic": "Reading · Summary completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "READING PASSAGE 2\n\nYou should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.\nReading Passage 2 has eight paragraphs, A-H.\n\nQuestions 14-19\nWhich paragraph contains the following information?\nWrite the correct letter, A-H, in boxes 14-19 on your answer sheet.\nNB You may use any letter only once.\n\nQuestions 20-23\nLook at the following statements and the list of specialists below.\nMatch each statement with the correct specialist, A-D.\nWrite the correct letter, A-D, in boxes 20-23 on your answer sheet.\n\nList of specialists\n  A  Imre Follan\n  B  Nadia Cresswick\n  C  Tomas Oyelaran\n  D  Marielle Duquet\n\nQuestions 24-26\nComplete each sentence with the correct ending, A-F, below.\nWrite the correct letter, A-F, in boxes 24-26 on your answer sheet.\n  A  a three-dimensional model accurate to within a few millimetres.\n  B  covering the exposed timbers with geotextile and sandbags.\n  C  everything on board entered the sea at a single moment.\n  D  a working period of about twenty minutes for each diver.\n  E  the removal of every loose find to a laboratory.\n  F  a shortage of trained conservators in the region.",
+   "passage": "Archaeology beneath the waves: working at Cape Varlen\n\nA  The wreck now known as Varlen 1 was found by people who were not looking for it. In 1998 a fishing crew working two kilometres off Cape Varlen brought up a torn net with a corroded bronze handle caught in it, and a sketch of the object, sent to a regional museum, was identified within a week as part of a cauldron of the third century. A side-scan sonar survey the following summer located a low mound on the seabed at a depth of thirty-four metres, and test trenches cut in 2001 confirmed that the mound was the cargo of a merchant ship: amphorae stacked four deep, ingots of tin, and, beneath them, the lower hull still held in shape by the sand.\n\nB  Wrecks of this kind are valued out of all proportion to their size, and the reason is chronological. A settlement accumulates. A house is repaired, a pit is dug through an older floor, and the objects found together in a single layer may have arrived there over a century. A ship is the opposite. Everything on board entered the sea at a single moment, so the pottery, the coins, the tools and the crew's own possessions form what archaeologists call a closed deposit. One dated coin in such a deposit dates everything lying around it. Half of the chronology now used for the region's coarse pottery rests on four excavated wrecks.\n\nC  The work is correspondingly demanding, and the profession is a narrow one. A maritime archaeologist at Varlen needs both an archaeological training and a commercial diving qualification, and very few universities offer the two together. At thirty-four metres a diver breathing air has roughly twenty minutes of useful working time before the ascent and the decompression stops consume the rest of the dive; teams therefore work in pairs, to a written task list agreed on the surface, and a productive day may amount to forty minutes of digging per person. Surface-supplied gas mixtures extend the working period, but they require a support vessel that most research budgets cannot sustain.\n\nD  Recording has changed far more than digging has. Until the late 2000s a trench was drawn by hand on plastic film, with every measurement taken from fixed points by tape, and a single structure might occupy two field seasons. Today a diver swims a slow grid above the trench with a camera, collecting several thousand overlapping photographs; software then computes a three-dimensional model accurate to within a few millimetres. The Varlen team recorded the entire exposed hull in fifteen minutes of bottom time. The model can be measured, sliced and re-examined years afterwards by people who never dived the site, which matters, because the trench itself no longer exists once the excavation is finished.\n\nE  What should be done with a site once it is known is the central argument of the discipline. Dr Imre Follan, who directed the 2001 trenches, has since become the best-known advocate of leaving material where it lies. His case is that excavation is a destructive act which can be performed only once, that the record it produces is always narrower than the site itself, and that a wreck under sand is in a chemically stable condition no laboratory can match. At Varlen the trenches were backfilled, the exposed timbers were wrapped in geotextile and weighted down with sandbags, and the site is now inspected every second year.\n\nF  Professor Nadia Cresswick regards this confidence as misplaced. The seabed, she argues, is not a vault but a working environment: bottom trawling has cut through at least three known wrecks on this coast, and damage from anchoring goes unrecorded because nobody is watching. Her more serious concern is biological. The wood-boring mollusc known locally as the sea auger was until recently confined to the warmer water south of the cape; the survey panels she has placed along the coast since 2011 show it advancing northwards as winter sea temperatures rise, and timber left uncovered on the seabed for a single season now shows tunnelling. Where a site is under an identifiable threat, she maintains, rescue excavation is not vandalism but duty.\n\nG  A third voice belongs to the laboratory. Dr Tomas Oyelaran, who runs the regional conservation unit, points out that raising waterlogged timber commits somebody to decades of work. The cell walls of such wood are hollow and are held open by the water inside them; if that water is simply allowed to evaporate the timber shrinks and disintegrates, so it must be impregnated, usually with polyethylene glycol, in tanks whose temperature is controlled continuously. The hull section lifted from a neighbouring wreck in 1996 spent seventeen years in treatment before it could be displayed. Oyelaran's objection is practical rather than philosophical: the region's museums have neither the space nor the staff for the material already recovered, and an excavation that begins without a funded conservation plan is, in his phrase, a slow way of throwing objects away.\n\nH  Marielle Duquet approaches the problem from the water rather than from the trench. Sport divers reach these wrecks constantly, and the choice is therefore not between disturbance and no disturbance but between uninformed visits and useful ones. Her programme trains recreational divers over four weekends in site recording, photography and reporting, and then licenses them to monitor particular wrecks; three previously unknown sites on this coast were reported by her volunteers in a single year. Professional archaeologists, she argues, will never have the diving hours to watch a whole coastline, and a discipline that treats amateurs as a nuisance is choosing to be blind.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  an account of how the wreck was originally discovered",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "15  an explanation of why a wreck yields better dating evidence than a settlement does",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "16  reference to the qualifications needed to work on sites of this kind",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "17  a comparison of the time required by older and newer recording methods",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  mention of how long a single conservation treatment lasted",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  an argument that people outside the profession have a necessary role",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "20  Warmer winters are allowing a destructive creature to extend its range.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "21  Digging up a site can only ever be done once, so it should be avoided where possible.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "22  There is already more recovered material than local institutions can look after.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "23  Non-specialists can be taught to produce records that are genuinely useful.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 3,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "24  The cargo of Varlen 1 is unusually useful to historians because",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "25  Preserving the site where it lies has involved",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "26  Photographing the trench from a camera grid produces",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching sentence endings"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "READING PASSAGE 3\n\nYou should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.\n\nQuestions 27-32\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 27-32 on your answer sheet, write\n  YES           if the statement agrees with the claims of the writer\n  NO            if the statement contradicts the claims of the writer\n  NOT GIVEN     if it is impossible to say what the writer thinks about this\n\nQuestions 33-35\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 33-35 on your answer sheet.\n\nQuestions 36-39\nComplete the summary using the list of words, A-J, below.\nWrite the correct letter, A-J, in boxes 36-39 on your answer sheet.\n  A  challenged      B  funding        C  legislation     D  permanent\n  E  popular         F  reversible     G  stratigraphy    H  tourists\n  I  uncertainty     J  visitors\n\nQuestion 40\nChoose TWO letters, A-E.\nWrite the correct letters in box 40 on your answer sheet.",
+   "passage": "The honest ruin\n\nAt Hallowmere, visitors photograph the Perrin Gate. It is a fine thing: a pointed arch of grey stone, complete to its parapet. A plaque beside it records, in letters about a centimetre high, that roughly two-thirds of what is visible was built in 1928 out of stones found fallen in the ditch below. Nobody reads the plaque. This is usually offered as proof that reconstruction deceives the public. It seems to me to prove something narrower and a great deal more fixable: that we are careless about how we tell people what they are looking at. The deception, where it exists, is a failure of labelling rather than an inherent property of rebuilt stone.\n\nThe case against reconstruction is normally made as though the alternative were neutral. But the taste for the unrestored fragment is not a default position; it is a preference with a date. Through most of recorded history a damaged building of value was repaired, and repaired in the materials and the manner of the age that repaired it. The idea that a ruin possesses an authenticity which repair destroys belongs to the late eighteenth and nineteenth centuries, to the poets and painters who found ivy and broken arches more moving than whole walls. When the Antiquarian Society of Marle declared in 1874 that a ruin repaired is a ruin destroyed, it was stating a taste in the grammar of a law. That taste has governed conservation policy ever since, largely unexamined; the arguments that genuinely matter are of an altogether different kind.\n\nThe first and gravest of them is archaeological. To rebuild, you must usually dig, and to dig is to consume. The sequence of deposits around the base of a wall, its stratigraphy, is the only record of how that wall was used, altered and abandoned, and once it has been shovelled away to lay a modern footing it cannot be re-examined by anybody, ever, with any technique whatever. Most of what we can now extract from soil was invented in the last forty years, which ought to make us modest about the next forty.\n\nThe second objection concerns argument. A scholarly reconstruction is a hypothesis, and hypotheses are supposed to be contestable. A drawing can be criticised; a report can be answered. A building that has been rebuilt cannot be challenged in the same way; it simply stands there, heavy and convincing, and in time it becomes the thing itself. The temple platform at Orenhall is the standard warning. Its columns were re-erected in the 1930s at intervals taken from an antiquarian's measured drawing of 1802, and in 1994 that drawing was shown to have been compiled largely from imagination. The reconstruction remains. It is too heavy to move, too expensive to dismantle and too photogenic to question, and two generations of textbooks have reproduced a column spacing that no evidence supports.\n\nAgainst all this stands an argument that specialists are too quick to wave away. A knee-high line of rubble tells the ordinary visitor nothing whatever. It takes a trained eye to see a building in it, and most of the people who come to a heritage site neither have one nor are under any obligation to acquire one. Sites are not free to maintain; their funding follows their visitors, and a site that cannot hold an audience will in the end be a site that nobody protects. There is also a plain structural case: some rebuilding is simply the repair that stops a wall falling over, and in the field the boundary between consolidation and reconstruction is far less clean than in policy documents.\n\nThe compromise that has emerged is anastylosis: re-erecting a structure from its own fallen material, adding as little new substance as possible, and making that new substance visible, through paler mortar or different tooling, so that the eye can separate ancient from modern at a glance. I think this is close to right, provided three conditions hold. The original position of every element must be documented before it is moved. The new work must be reversible, so that a later generation with better evidence can take it down again. And the intervention must be described honestly, on the site and in print, in language a visitor will actually read.\n\nDigital reconstruction is sometimes offered as the escape from the whole dilemma, and it does one thing no wall can do: it can hold several versions at once, rendering in solid stone the parts for which there is direct evidence and in transparent grey the parts that are inference, so that the building's uncertainty is visible in its own fabric. That is a genuine advance. But the medium has weaknesses of its own which are rarely admitted. Formats fall out of use, and a model that cannot be opened is a model that does not exist; and like any other collection, a digital one needs continuing money to migrate, check and store. A wall neglected for ten years is in poor condition; a file neglected for ten years is frequently nothing at all.\n\nThat leaves the visitor, about whom conservators are unnecessarily gloomy. Kataryn Ohl's survey of 1,200 people at four reconstructed sites found the opposite of what the profession expects: those who were told clearly which elements were modern rated their visit more highly than those who were not, and were markedly better at recalling what they had seen. People are perfectly used to holding provisional knowledge; they do it every time they read a weather forecast. What they resent is not being told.\n\nThe question, then, is not whether the past may be rebuilt. It is what we owe to the people who will study these places in two hundred years. Keep the evidence. Mark the guesses. Make it possible to undo what we have done. A reconstruction that satisfies those three demands is not a lie; and a ruin left to rot in the name of authenticity is not automatically telling the truth.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  The preference for leaving ruins unrepaired is a comparatively recent cultural attitude.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  The most serious argument against rebuilding is that it destroys evidence that later researchers would need.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  On an actual site, the difference between consolidation and reconstruction is easy to draw.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  Most national authorities now insist that reconstruction work be reversible.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "31  Digital reconstructions attract larger audiences than physical ones do.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  Ordinary visitors are unable to grasp that a reconstruction is only one possible interpretation.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "33  In the first paragraph, the writer uses the Perrin Gate in order to argue that",
+     "options": [
+      "A  visitors to heritage sites are routinely misled about what they are seeing.",
+      "B  the real failure lies in how the information is presented, not in the rebuilding itself.",
+      "C  most of the stonework at reconstructed sites turns out to be modern.",
+      "D  photography has altered the way people experience old monuments."
+     ],
+     "answer": 1,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "34  What does the writer suggest about the declaration made by the Antiquarian Society of Marle in 1874?",
+     "options": [
+      "A  It was based on a careful survey of damaged buildings.",
+      "B  It expressed a matter of taste in the language of a rule.",
+      "C  It was disregarded by the conservators of the time.",
+      "D  It described a way of treating ruins that was already centuries old."
+     ],
+     "answer": 1,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  The writer's main objection to the 1930s work at Orenhall is that",
+     "options": [
+      "A  the materials used are visibly different from the original ones.",
+      "B  it was carried out without proper records of the excavation being kept.",
+      "C  it made permanent an arrangement based on evidence that was later discredited.",
+      "D  it cost far more than the site could reasonably afford."
+     ],
+     "answer": 2,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "36  The first serious objection is that rebuilding normally requires digging, which destroys the ............ that later researchers would depend on.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 6,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "37  The second is that a finished structure cannot be ............ in the way that a drawing or a report can.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 0,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "38  The writer nevertheless accepts that there is a real case for rebuilding, since a low line of rubble means nothing to most visitors and heritage sites depend for their ............ on the people they attract.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 1,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "39  He therefore supports work that re-uses original material, makes new material obvious, and above all remains ............ , so that a better-informed generation can take it down.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 5,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "multi",
+     "q": "40  Which TWO weaknesses of digital reconstruction does the writer identify? Choose TWO letters, A-E.",
+     "options": [
+      "A  It cannot present more than one version of a building.",
+      "B  The files it produces may become impossible to open in future.",
+      "C  It requires money on a continuing basis if it is to be maintained.",
+      "D  It is less accurate than rebuilding in stone.",
+      "E  Visitors find it harder to understand than a physical structure."
+     ],
+     "answer": [
+      1,
+      2
+     ],
+     "pick": 2,
+     "topic": "Reading · Multiple choice (two answers)"
+    }
+   ]
+  }
+ ]
+}

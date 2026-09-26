@@ -1,0 +1,533 @@
+{
+ "key": "mock_ielts_reading_a",
+ "section": "reading",
+ "kind": "mock",
+ "variant": "A",
+ "title": "IELTS Mock · Reading — Variant A",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "READING PASSAGE 1\n\nYou should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.\n\n— — —\n\nQuestions 1-7\n\nDo the following statements agree with the information given in Reading Passage 1?\n\nIn boxes 1-7 on your answer sheet, write\n\nTRUE\tif the statement agrees with the information\nFALSE\tif the statement contradicts the information\nNOT GIVEN\tif there is no information on this\n\n— — —\n\nQuestions 8-13\n\nComplete the notes below.\n\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\n\nWrite your answers in boxes 8-13 on your answer sheet.\n\nFlowers that depend on moths\n•\tthe flowers are usually 8 …………… in colour, since colour itself is of little use in darkness\n•\tnectar is held deep inside a long narrow tube known as the 9 ……………\n•\tthe strongest scent is released within an hour of 10 ……………\n\nOkonjo's study at Little Fenn\n•\tlit plots received 62 per cent fewer moth visits than unlit plots\n•\t11 …………… growing beneath the lamps produced about a third fewer seeds\n\nMeasures recommended\n•\tdelay the mowing of verges and field margins until 12 ……………\n•\treplace white LEDs with 13 …………… lamps\n•\tleave dead stems standing in gardens over winter",
+   "passage": "The Night Shift\n\nWhen people picture pollination, they tend to imagine a bumblebee pushing its way into a foxglove on a bright June morning. The image is accurate enough, but it tells only half the story. Once the sun goes down, a second and far less visible workforce clocks on. Britain has roughly 2,500 species of moth, compared with fewer than thirty species of bumblebee, and recent fieldwork suggests that these night-flying insects carry a great deal more pollen than anyone had assumed.\n\nPart of the reason for the oversight is practical. Counting insects after dark is cold, slow and awkward, and until compact infrared cameras became affordable most surveys of pollinator activity simply stopped at dusk. When Dr Helena Vance of the University of Marbury began filming hedgerows in the Ravensmoor Valley in 2016, she expected her equipment to record a thin trickle of visitors. Instead the cameras logged an average of 84 moth visits an hour along a single twenty-metre stretch of hawthorn — a rate close to the daytime traffic on the same hedge.\n\nMoths are also built quite differently from bees, and the difference matters. A worker bee grooms itself constantly in flight, combing loose grains into the pollen baskets on its hind legs so that they can be carried home and eaten. Moths make no such effort. Pollen simply adheres to the dense scales that cover the thorax, the segment of the body between the head and the abdomen; very little of it ends up on the legs at all. When Vance's team swabbed captured moths and identified the grains under a microscope, they found pollen from as many as seventeen plant species on a single insect. Because that pollen is stuck to the body rather than packed away as food, a larger share of it is eventually rubbed off onto another flower.\n\nPlants, for their part, have evolved an entire design language aimed at the night shift. Flowers that rely on moths are usually pale — white, cream or the faintest pink — because colour is of little use in darkness, while a pale surface still catches what little light there is. Many have a long narrow tube, or corolla, which can be reached only by the extended proboscis of a hovering moth, and most hold their nectar deep inside it. Above all they smell. Honeysuckle, evening primrose and night-scented stock all release their strongest perfume within an hour of sunset, and analysis of that perfume shows that several of the key compounds are not manufactured at all during daylight.\n\nSuch an elegant system is easily disrupted. In 2019 a team led by Dr Samir Okonjo installed portable lamps over a series of meadow plots near the village of Little Fenn and left neighbouring plots unlit. Over six weeks the lit plots received 62 per cent fewer moth visits than the dark ones. More importantly, the effect travelled up the chain: red campion growing beneath the lamps produced about a third fewer seeds. Okonjo argues that the lamps do not so much frighten moths away as hold them in place, since an insect circling a bright bulb is an insect that is not visiting flowers.\n\nThe findings carry obvious agricultural weight. Moths have now been filmed working oilseed rape, raspberry and field bean, crops whose yields are usually credited entirely to bees. Vance is careful not to overstate the case. Bees remain the more efficient visitors for most crops, and nobody is proposing that growers dispense with their hives. Her point is narrower: a pollination service that never appears in the accounts is a service that will not be defended when decisions about land use are taken.\n\nWhat, then, can be done? The measures proposed are unglamorous and cheap. Road verges and field margins, often the richest moth habitat in an intensively farmed landscape, are typically mown in July, precisely when caterpillars are feeding; delaying the cut until September allows most of them to complete their development. Street lighting can be switched from the harsh white LEDs installed across much of Europe over the past decade to amber lamps, whose longer wavelengths appear to disturb night-flying insects far less. Gardeners are encouraged to set aside a corner for night-scented species, and to resist the urge to tidy away the dead stems in which many moths pass the winter.\n\nNone of this will happen quickly. Moths suffer from an image problem that bees do not: they are associated with holes in jumpers rather than with honey, and very few people have ever watched one feed. Vance's cameras may yet change that. Her footage of a hawk-moth hanging motionless at a honeysuckle flower, its tongue extended like a wire, has been watched several million times online — which is, she notes drily, several million more people than have read her papers.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Britain has a greater number of moth species than of bumblebee species.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  Vance expected her cameras in the Ravensmoor Valley to record a large number of moth visits.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  The rate of moth visits Vance recorded on hawthorn was similar to the rate of daytime visits to the same hedge.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  Bees deliberately gather pollen in order to take it back to the nest.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  Moths carry most of the pollen they pick up on their legs.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  Moth-pollinated flowers produce larger quantities of nectar than bee-pollinated flowers.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  Okonjo believes that artificial light drives moths out of the area altogether.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "text",
+     "q": "8  the flowers are usually …………… in colour",
+     "answer": [
+      "pale"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "9  nectar is held deep inside a long narrow tube known as the ……………",
+     "answer": [
+      "corolla",
+      "the corolla"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  the strongest scent is released within an hour of ……………",
+     "answer": [
+      "sunset"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  …………… growing beneath the lamps produced about a third fewer seeds",
+     "answer": [
+      "red campion"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  delay the mowing of verges and field margins until ……………",
+     "answer": [
+      "September"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  replace white LEDs with …………… lamps",
+     "answer": [
+      "amber"
+     ],
+     "topic": "Reading · Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "READING PASSAGE 2\n\nYou should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.\n\nReading Passage 2 has eight paragraphs, A-H.\n\n— — —\n\nQuestions 14-19\n\nWhich paragraph contains the following information?\n\nWrite the correct letter, A-H, in boxes 14-19 on your answer sheet.\n\nNB  You may use any letter only once.\n\n— — —\n\nQuestions 20-23\n\nLook at the following statements (Questions 20-23) and the list of researchers below.\n\nMatch each statement with the correct researcher, A-E.\n\nWrite the correct letter, A-E, in boxes 20-23 on your answer sheet.\n\nList of Researchers\nA\tMarta Ilves\nB\tDuncan Reay\nC\tPriya Anand\nD\tTomas Brandt\nE\tLucia Ferrer\n\n— — —\n\nQuestions 24-26\n\nComplete the sentences below.\n\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\n\nWrite your answers in boxes 24-26 on your answer sheet.",
+   "passage": "The Overlooked Engineers\n\nA\tA freshwater mussel does not look like a keystone species. Half-buried in the gravel of a river bed, it may pass its whole life within a few metres of the spot where it settled, and an adult freshwater pearl mussel can survive well over a century without travelling at all. Yet a single adult cleans as much as forty litres of water a day, stripping out algae, bacteria and suspended silt and depositing the waste as nutrient-rich pellets that feed insect larvae in the gravel beneath it. A bed of ten thousand mussels can therefore filter the whole flow of a small river several times over in a single summer. Across Europe, populations have fallen by an estimated 90 per cent since 1900, and in most of the rivers where the animal survives at all, every individual is elderly.\n\nB\tThat last detail is the heart of the problem, and it follows from an unusually complicated life cycle. In late summer a female releases several million microscopic larvae, known as glochidia, into the current. Almost all are swept away or eaten within hours. The handful that survive must be drawn in by a passing fish, and not just any fish: in most northern rivers only a young salmon or trout will serve. The larva clamps onto a gill filament, where it is sealed inside a cyst and spends the winter drawing nourishment from its host without causing noticeable harm. In spring the young mussel, by then half a millimetre across, lets go and must land on clean, well-oxygenated gravel. If it settles on silt, it suffocates. The arithmetic is brutal: of five million larvae released, on average fewer than five reach adulthood.\n\nC\tThe animal's troubles began long before modern farming. For three centuries the freshwater pearl mussel was hunted for the single small pearl that perhaps one shell in a thousand contains, and because there is no way of telling from the outside which shell that is, the harvest destroyed the rest. In parts of Scotland and Scandinavia the practice continued into the 1990s. Yet pearl fishing was never the principal cause of the collapse. The deeper damage was indirect and largely invisible: the drainage of wet farmland, the ploughing of fields to the lip of the bank and the clear-felling of conifer plantations all washed fine sediment into rivers, where it settled into the gravel and sealed it shut. Dams and weirs cut salmon and trout off from the upper reaches, and where the host fish cannot go, the mussel cannot follow.\n\nD\tMarta Ilves runs a hatchery on the River Ovan, and her method reverses the odds. Each autumn her team collects glochidia from wild females and releases them into tanks holding young brown trout, which inhale the larvae as they breathe. The infected fish are held until spring, when the juvenile mussels drop off and are caught in fine mesh trays. There they are reared for five years on cultured algae before being returned to the river, large enough by then to resist being washed downstream. Roughly 30 per cent of the juveniles in Ilves's trays survive to release, against a wild figure statistically indistinguishable from zero. 'The hatchery does not save the mussel,' she says. 'It buys the river time.'\n\nE\tNot everyone is convinced that the time is well bought. Duncan Reay, a river ecologist who has spent twenty years on catchment restoration, calls hatchery work 'a hospital, not a cure'. Juveniles released into a river bed still choked with silt will die exactly as their wild siblings died, he argues, and every pound spent on tanks is a pound not spent on fencing cattle away from the bank or persuading farmers to leave an uncultivated margin. He does not oppose captive rearing outright; he objects to its place in the queue.\n\nF\tPriya Anand has made that argument measurable. Working on eleven rivers, she buried oxygen probes fifteen centimetres down in the gravel, where juvenile mussels actually live, rather than in the open water above, where most official monitoring takes place. The difference proved enormous. Juveniles, she found, require dissolved oxygen above six milligrams per litre to feed and grow; in catchments dominated by intensive arable farming, the level within the gravel fell as low as two, even where the water flowing over the surface looked clear. Her threshold is now used by several national agencies to decide whether a stretch of river is fit to receive hatchery-reared mussels at all.\n\nG\tTomas Brandt approaches the animal from a different direction entirely. Having sequenced mussels from thirty rivers, he reports that populations in neighbouring catchments are often more distinct than anyone expected, apparently adapted over thousands of years to local water chemistry and to local strains of host fish. A mussel taken from a healthy river and placed in an empty one may therefore produce larvae that cannot infect the trout living there. Brandt's recommendation is unpopular with managers who would prefer a single large breeding stock: each river, he insists, should be treated as a separate unit and restocked only from its own survivors.\n\nH\tThe most persuasive argument for all this work may not be biological. Lucia Ferrer, an environmental economist, examined a water utility facing heavy expenditure on new filtration equipment to remove sediment and nitrate at its treatment works. She compared that with the cost of paying upstream landowners to fence stock out of streams, restore wet meadows and replant bankside trees. Every euro spent in the catchment, she calculated, saved roughly nine at the treatment plant. The mussels returning to those streams are, strictly speaking, a by-product. 'The mussel is not the reason we are doing this,' Ferrer says. 'It is the receipt.'",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  a comparison of the cost of two different ways of improving water quality",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "15  a description of how young mussels are deliberately brought into contact with host fish",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "16  reference to a historical practice that targeted the mussel directly",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "17  an explanation of why mussels from different rivers should not be mixed",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  figures showing how few larvae ever become adults",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  a measurement that is now used to select suitable release sites",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 5,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "20  Repairing habitat should come before producing more mussels.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "21  Rearing mussels in captivity greatly increases the proportion of young that survive.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "22  Restoration work can be justified in purely financial terms.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 4,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "23  Conditions inside the river bed itself must be tested before any mussels are released.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "text",
+     "q": "24  A single adult mussel can clean as much as …………… of water every day.",
+     "answer": [
+      "forty litres",
+      "40 litres",
+      "forty liters",
+      "40 liters"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "25  During the winter a glochidium remains attached to a …………… of its host fish.",
+     "answer": [
+      "gill filament",
+      "gill filaments"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "26  Reay describes hatchery work as a …………… , because in his view it fails to address the underlying cause of the decline.",
+     "answer": [
+      "hospital"
+     ],
+     "topic": "Reading · Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "READING PASSAGE 3\n\nYou should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.\n\n— — —\n\nQuestions 27-31\n\nDo the following statements agree with the claims of the writer in Reading Passage 3?\n\nIn boxes 27-31 on your answer sheet, write\n\nYES\tif the statement agrees with the claims of the writer\nNO\tif the statement contradicts the claims of the writer\nNOT GIVEN\tif it is impossible to say what the writer thinks about this\n\n— — —\n\nQuestions 32-35\n\nChoose the correct letter, A, B, C or D.\n\nWrite the correct letter in boxes 32-35 on your answer sheet.\n\n— — —\n\nQuestion 36\n\nChoose TWO letters, A-E.\n\nWrite the correct letters in box 36 on your answer sheet.\n\n— — —\n\nQuestions 37-40\n\nComplete the summary using the list of words, A-J, below.\n\nWrite the correct letter, A-J, in boxes 37-40 on your answer sheet.\n\nA  donations\tB  honesty\tC  processes\tD  function\tE  predators\nF  tourists\tG  habitats\tH  publicity\tI  budgets\tJ  captivity\n\nThe writer accepts that appeals built around a single appealing animal are unusually effective at attracting 37 …………… , and does not argue that flagships should be abandoned. The real objection is that a flagship is selected for its appearance rather than for its ecological 38 …………… . A better approach would be to choose species whose own activities supply the 39 …………… that many other organisms occupy, such as a tortoise whose burrows shelter several hundred species during drought and fire. Since the choice of flagship is at once a marketing decision and a scientific one, the writer concludes that what matters is whether it is made with 40 …………… .",
+   "passage": "The Trouble with Flagships\n\nAsk a passer-by in any city to name an endangered animal and the answers will be strikingly consistent: a panda, a tiger, a polar bear, perhaps a mountain gorilla. This uniformity is not an accident of taste. Each of those animals has been selected, promoted and in some cases quietly redesigned by conservation organisations as a flagship — a species chosen not because it is the most threatened, nor because it is the most ecologically important, but because it is the most likely to persuade a stranger to reach for a credit card. The term entered the literature in the 1980s, and the strategy has been extraordinarily successful at what it was built to do. Whether it has been good for conservation is a harder question, and one the field has been curiously reluctant to ask.\n\nThe defence of the flagship rests on two propositions. The first is financial and hardly controversial: charisma converts into donations, and donations convert into land, wardens and legal advice. The second is ecological and a great deal bolder. A flagship, it is said, is also an umbrella. Protect enough forest for a viable tiger population and you will necessarily protect the beetles, orchids and frogs that share it; the large animal, needing a great deal of space, drags everything else to safety behind it.\n\nIt is worth noticing that the second proposition is an empirical claim, and that it is almost never tested. When Ana Krauss and her colleagues examined forty-seven reserves in South-East Asia whose boundaries had been drawn around large mammals, they found that the umbrella worked exactly as advertised for the mammals themselves: the network captured 81 per cent of the mapped range of the target species. For other groups the performance collapsed. Only 34 per cent of the region's endemic amphibians and 29 per cent of its restricted-range plants fell inside the same boundaries. The reason was not carelessness on the part of the planners. Those species are concentrated in limestone hills and lowland swamp forest, terrain that large mammals largely avoid and that reserve designers therefore left outside the fence.\n\nThe second difficulty is arithmetic. In the national conservation budget Krauss went on to analyse, a little under 60 per cent of all species-specific spending was directed at three per cent of the listed species. Every pound has an opportunity cost, and the cost here falls on organisms that nobody has heard of and nobody will miss until they are gone — the fungi, the freshwater snails, the unglamorous pollinating flies on which whole habitats quietly depend.\n\nThe third objection is the one I consider most serious, and it has nothing to do with money. It concerns the story we are teaching. A flagship campaign presents conservation as the rescue of individual animals: an orphan is found, reared, named and released, and the audience is invited to feel that something broken has been mended. Almost nothing about genuine ecological recovery looks like that. Rivers are restored by allowing them to flood; heathland by setting fire to it; woodland by letting trees fall over and rot where they lie; grassland by returning large herbivores that eat, trample and foul it. These are processes, not rescues, and they are frequently ugly. A public trained on flagships finds them baffling. It is entirely predictable that captive-breeding programmes attract enthusiastic support while proposals to reintroduce predators, or simply to stop dredging a river, meet resistance: the first looks like kindness, the second looks like neglect.\n\nThe strongest reply to all of this is not that the objections are wrong but that they are beside the point. Abandon the panda, the argument runs, and the money does not migrate to the freshwater snail; it simply evaporates. Donors give to faces. There is good evidence for this. Controlled trials of fundraising material consistently show that an appeal built around a single named animal outperforms one built around a habitat or a statistic, sometimes by a factor of three. I accept that premise entirely. What I do not accept is the conclusion usually drawn from it.\n\nFor the premise establishes only that flagships raise donations. It says nothing whatever about which species ought to be made into flagships — and that choice, in practice, is made by a communications department looking at photographs. Suppose it were made instead by asking a different question: which species, if it recovered, would drag the most ecological function back with it? The answers are rarely photogenic at first glance, but they are far from hopeless. A burrowing tortoise whose tunnels shelter several hundred other species during drought and fire. A fig tree that fruits in the lean season when nothing else does, and without which a third of a forest's birds would starve. A hornbill that carries heavy seeds across gaps no other animal will cross. When a conservation trust built a national campaign around precisely such a hornbill — complete with a name, a map of its journeys and a live satellite tracker — it raised more in eighteen months than its previous big-cat appeal had raised in five years.\n\nThe lesson is not that charisma is a trap, but that charisma is manufactured, and anything manufactured can be manufactured differently. A flagship is simultaneously a marketing decision and an ecological one, and at present only one of those departments is in the room when it is taken. Until both are, we shall go on protecting the animals that photograph well and calling it a strategy. The question worth asking of any campaign is not whether it has a flagship — it should — but whether anybody chose that flagship honestly.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  The animals the public names as endangered have generally been chosen deliberately by organisations.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  The reserves Krauss studied failed to protect the large mammals for which they were designed.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  If flagship campaigns were given up, the money they currently raise would be spent on less familiar species instead.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  The writer regards the effect of flagships on public understanding as more damaging than their effect on budgets.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "31  Public opposition to reintroducing predators has grown stronger over the past decade.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  What does the writer say about the claim that a flagship species acts as an umbrella?",
+     "options": [
+      "A  It has seldom been checked against evidence.",
+      "B  It is rejected by most conservation organisations.",
+      "C  It applies only to species that require large territories.",
+      "D  It was invented in the 1980s by professional fundraisers."
+     ],
+     "answer": 0,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "33  According to Krauss's findings, amphibians and restricted-range plants were left outside the reserves mainly because",
+     "options": [
+      "A  the boundaries had been drawn too tightly around the target species.",
+      "B  they occur in habitats that large mammals tend to avoid.",
+      "C  planners had no accurate information about where they lived.",
+      "D  they were not considered worth protecting at the time."
+     ],
+     "answer": 1,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "34  The writer's objection to the way conservation funding is distributed is that",
+     "options": [
+      "A  the total sums involved are far too small.",
+      "B  governments refuse to fund work on individual species.",
+      "C  a very small number of species absorbs most of the money.",
+      "D  the species receiving money are not genuinely at risk."
+     ],
+     "answer": 2,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  The writer argues that flagship campaigns lead the public to expect conservation to consist of",
+     "options": [
+      "A  the creation of new protected areas.",
+      "B  the rescue of individual animals.",
+      "C  the reintroduction of large predators.",
+      "D  the funding of scientific research."
+     ],
+     "answer": 1,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "multi",
+     "q": "36  Which TWO characteristics does the writer say a better kind of flagship species would have? Choose TWO letters, A-E.",
+     "options": [
+      "A  It creates or maintains habitat that other species depend on.",
+      "B  It is already familiar to the general public.",
+      "C  It can be bred easily in captivity.",
+      "D  It carries out a process such as seed dispersal.",
+      "E  It is found in a large number of countries."
+     ],
+     "answer": [
+      0,
+      3
+     ],
+     "pick": 2,
+     "topic": "Reading · Multiple choice (two answers)"
+    },
+    {
+     "type": "choice",
+     "q": "37  The writer accepts that appeals built around a single appealing animal are unusually effective at attracting ……………",
+     "options": [
+      "A  donations",
+      "B  honesty",
+      "C  processes",
+      "D  function",
+      "E  predators",
+      "F  tourists",
+      "G  habitats",
+      "H  publicity",
+      "I  budgets",
+      "J  captivity"
+     ],
+     "answer": 0,
+     "topic": "Reading · Summary completion (word list)"
+    },
+    {
+     "type": "choice",
+     "q": "38  The real objection is that a flagship is selected for its appearance rather than for its ecological ……………",
+     "options": [
+      "A  donations",
+      "B  honesty",
+      "C  processes",
+      "D  function",
+      "E  predators",
+      "F  tourists",
+      "G  habitats",
+      "H  publicity",
+      "I  budgets",
+      "J  captivity"
+     ],
+     "answer": 3,
+     "topic": "Reading · Summary completion (word list)"
+    },
+    {
+     "type": "choice",
+     "q": "39  A better approach would be to choose species whose own activities supply the …………… that many other organisms occupy",
+     "options": [
+      "A  donations",
+      "B  honesty",
+      "C  processes",
+      "D  function",
+      "E  predators",
+      "F  tourists",
+      "G  habitats",
+      "H  publicity",
+      "I  budgets",
+      "J  captivity"
+     ],
+     "answer": 6,
+     "topic": "Reading · Summary completion (word list)"
+    },
+    {
+     "type": "choice",
+     "q": "40  The writer concludes that what matters is whether the choice is made with ……………",
+     "options": [
+      "A  donations",
+      "B  honesty",
+      "C  processes",
+      "D  function",
+      "E  predators",
+      "F  tourists",
+      "G  habitats",
+      "H  publicity",
+      "I  budgets",
+      "J  captivity"
+     ],
+     "answer": 1,
+     "topic": "Reading · Summary completion (word list)"
+    }
+   ]
+  }
+ ]
+}

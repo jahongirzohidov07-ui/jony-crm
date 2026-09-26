@@ -34,11 +34,12 @@ export type OnlineSubmission = {
   detail: {
     id: string;
     n: number;
-    ok: boolean;
+    /** essay (Writing) — avtomat tekshirilmaydi, shuning uchun null */
+    ok: boolean | null;
     given: string | null;
     part: string | null;
     q: string;
-    type: "choice" | "text" | null;
+    type: "choice" | "text" | "multi" | "essay" | null;
     given_text: string | null;
     correct: string | null;
     image?: string | null;
@@ -234,8 +235,11 @@ export function AnswerSheetButton({
                       }`}
                     >
                       <p className="text-slate-800 whitespace-pre-line">
-                        <span className={`font-semibold mr-1.5 ${d.ok ? "text-emerald-600" : "text-rose-600"}`}>
-                          {d.ok ? "✓" : "✗"} {d.n}.
+                        <span className={`font-semibold mr-1.5 ${
+                          d.ok === null ? "text-slate-400"
+                            : d.ok ? "text-emerald-600" : "text-rose-600"
+                        }`}>
+                          {d.ok === null ? "✎" : d.ok ? "✓" : "✗"} {d.n}.
                         </span>
                         {d.image && (
                           <img src={d.image} alt="" className="inline-block h-10 rounded mr-2 align-middle" />
@@ -249,10 +253,14 @@ export function AnswerSheetButton({
                       </p>
                       <p className="mt-1 text-xs">
                         <span className="text-slate-500">Javobi: </span>
-                        <span className={d.ok ? "text-emerald-700 font-medium" : "text-rose-700 font-medium"}>
+                        <span className={
+                          d.ok === null
+                            ? "text-slate-700 whitespace-pre-line block mt-1 bg-slate-50 rounded-lg p-2 border border-slate-200"
+                            : d.ok ? "text-emerald-700 font-medium" : "text-rose-700 font-medium"
+                        }>
                           {d.given_text ?? <i className="text-slate-400 font-normal">javob bermagan</i>}
                         </span>
-                        {!d.ok && (
+                        {d.ok === false && (
                           <>
                             <span className="text-slate-400 mx-1.5">·</span>
                             <span className="text-slate-500">To'g'risi: </span>
@@ -491,7 +499,10 @@ export function OnlineLinkCard({
     }
   }, [data, families, tplId]);
 
-  if (kind === "mock" || !data) return null;
+  // MOCK ham online (2026-09-26): IELTS mock bazasi qo'shilgandan keyin
+  // mock testga ham link ochiladi — natija xom baldan IELTS bandiga
+  // avtomat o'giriladi (exam_online.mock_band).
+  if (!data) return null;
   const o = data.online;
   const url = o ? `${window.location.origin}/t/${o.token}` : "";
 
@@ -515,6 +526,13 @@ export function OnlineLinkCard({
         <p className="text-sm font-medium text-slate-800 flex items-center gap-2 mb-2">
           <Link2 size={15} className="text-brand-600" /> Online test linki
         </p>
+        {kind === "mock" && (
+          <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 mb-2">
+            Mock: Listening va Reading bo'limlari avtomat tekshiriladi — xom
+            ball rasmiy jadval bo'yicha IELTS bandiga o'giriladi. Writing va
+            Speaking bandini examiner qog'oz balida kiritadi.
+          </p>
+        )}
         {data.templates.length === 0 ? (
           <p className="text-xs text-slate-500">
             Test bazasida bu tur/unit uchun test yo'q. Examinerlar boshlig'i

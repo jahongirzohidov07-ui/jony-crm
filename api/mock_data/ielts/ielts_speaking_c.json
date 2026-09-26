@@ -1,0 +1,57 @@
+{
+ "key": "mock_ielts_speaking_c",
+ "section": "speaking",
+ "kind": "mock",
+ "variant": "C",
+ "title": "IELTS Mock · Speaking — Variant C",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Part 1 — Introduction and interview (4–5 minutes). The examiner reads the opening frame, then asks the questions from the three topics below. Ask every question as written; you may add short follow-ups such as 'Why?' or 'Can you give me an example?' but do not explain vocabulary. Keep the whole of Part 1 to five minutes.",
+   "passage": "",
+   "script": "EXAMINER FRAME — read aloud exactly.\n\nGood morning / Good afternoon. My name is the examiner for today. Can you tell me your full name, please?\nThank you. And what should I call you?\nCan you tell me where you come from?\nCould I see your identification, please? Thank you.\n\nNow, in this first part I'd like to ask you some questions about yourself.\n\nTOPIC 1 — MOBILE PHONES\n1  How often do you use your mobile phone during a normal day?\n2  What do you mainly use your phone for?\n3  Do you prefer calling people or sending messages? Why?\n4  Would you like to spend less time on your phone? Why or why not?\n\nTOPIC 2 — MACHINES AT HOME\n5  Which machine or appliance in your home do you use most often?\n6  Who usually repairs things when they stop working in your home?\n7  Do you read the instructions when you buy something new? Why or why not?\n8  Would you like a robot to do your housework? Why or why not?\n\nTOPIC 3 — GETTING AROUND\n9  How do you usually travel around the place where you live?\n10  Has transport in your area changed since you were a child?\n11  Do you enjoy long journeys? Why or why not?\n12  What one change would make travelling easier where you live?\n\nThank you. Now let's move on to the second part.",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "PART 1 — the examiner asks the twelve questions in the script above (Mobile phones, Machines at home, Getting around). Mark holistically on Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy, and Pronunciation.",
+     "topic": "Speaking · Part 1 interview",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Part 2 — Individual long turn (3–4 minutes). Hand the candidate the cue card, a pencil and paper. Say the rubric, allow exactly one minute of preparation, then ask the candidate to speak for one to two minutes. Stop the candidate at two minutes and ask the two rounding-off questions.",
+   "passage": "",
+   "script": "EXAMINER FRAME — read aloud exactly.\n\nNow I'm going to give you a topic, and I'd like you to talk about it for one to two minutes. Before you talk, you'll have one minute to think about what you're going to say. You can make some notes if you wish. Do you understand?\n\nHere is your topic. I'd like you to describe a machine or device that you, or someone you know, repaired.\n\nCUE CARD\nDescribe a machine or device that you, or someone you know, repaired.\nYou should say:\n  • what the machine or device was\n  • what had gone wrong with it\n  • how it was repaired\nand explain why you still remember this experience.\n\n[Allow one minute of preparation.]\nAll right? Remember you have one to two minutes for this. Don't worry if I stop you. I'll tell you when the time is up. Can you start speaking now, please?\n\n[After one to two minutes:] Thank you.\n\nROUNDING-OFF QUESTIONS\n13  Do you often try to fix things yourself?\n14  Was it easy to find the parts or the help you needed?",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "PART 2 — the candidate speaks for 1–2 minutes on the cue card above, then answers the two rounding-off questions. Mark holistically on the four criteria; note whether all four bullet points and the 'explain why' were covered.",
+     "topic": "Speaking · Part 2 long turn",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Part 3 — Two-way discussion (4–5 minutes). The questions are linked to the Part 2 topic and move from concrete to abstract. Ask them in order, but you may reorder or skip one if the discussion develops naturally. Push the candidate to justify opinions ('Why do you think that?', 'Could it be the other way round?').",
+   "passage": "",
+   "script": "EXAMINER FRAME — read aloud exactly.\n\nWe've been talking about repairing a machine, and I'd now like to discuss with you some more general questions related to this.\n\nLET'S CONSIDER FIRST OF ALL REPAIRING AND REPLACING\n15  Why do you think many people now throw things away instead of repairing them?\n16  In your country, is it easy to find someone who can repair household equipment?\n17  Should manufacturers be required to design products that ordinary people can repair? Why?\n\nNOW LET'S TALK ABOUT HOW TECHNOLOGY DEVELOPS\n18  How has the design of everyday products changed over the last thirty years?\n19  What skills do you think engineers will need in the future that they don't need today?\n\nFINALLY, LET'S THINK ABOUT TECHNOLOGY AND SOCIETY\n20  Some people say technology develops faster than society can adapt to it. What's your view?\n21  How far should governments control new technologies before they reach the public?\n22  Do you think future engineering will be driven more by environmental problems or by convenience? Why?\n\nThank you. That is the end of the speaking test.",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "PART 3 — the examiner asks the eight discussion questions above. Mark holistically on the four criteria, paying particular attention to the candidate's ability to speculate, justify opinions and use abstract language.",
+     "topic": "Speaking · Part 3 discussion",
+     "min_words": 0
+    }
+   ]
+  }
+ ]
+}

@@ -17,10 +17,15 @@ import { EXAM_KINDS, UNIT_COUNT, examKindLabel } from "../lib/exams";
 type Q = {
   id?: string;
   n?: number;
-  type: "choice" | "text";
+  /** multi — "Choose TWO letters"; essay — Writing, examiner qo'lda baholaydi */
+  type: "choice" | "text" | "multi" | "essay";
   q: string;
   options?: string[];
-  answer: number | string[];
+  answer: number | string[] | number[];
+  /** multi — nechta variant belgilanadi (javoblar sonidan olinadi) */
+  pick?: number | null;
+  /** essay — eng kam so'z (IELTS Writing: 150 / 250) */
+  min_words?: number | null;
   image?: string | null;
   /** Mavzu (#177): "Grammar · Present simple" — tahlil shu bo'yicha */
   topic?: string | null;
@@ -464,12 +469,17 @@ function TemplateEditor({
                                 value={q.type}
                                 onChange={(e) => {
                                   const t = e.target.value as Q["type"];
-                                  setQ(pi, qi, t === "choice"
-                                    ? { type: t, options: q.options?.length ? q.options : ["", "", ""], answer: 0 }
+                                  const opts = q.options?.length ? q.options : ["", "", ""];
+                                  setQ(pi, qi,
+                                    t === "choice" ? { type: t, options: opts, answer: 0 }
+                                    : t === "multi" ? { type: t, options: opts.length >= 3 ? opts : ["", "", "", "", ""], answer: [] }
+                                    : t === "essay" ? { type: t, answer: [], min_words: q.min_words || 250 }
                                     : { type: t, answer: [] });
                                 }}>
                           <option value="choice">Variantli</option>
                           <option value="text">Yozma javob</option>
+                          <option value="multi">Ko'p javobli (TWO letters)</option>
+                          <option value="essay">Insho (qo'lda baholanadi)</option>
                         </select>
                         {!readOnly && (
                           <button type="button" title="Savolni o'chirish"
@@ -540,6 +550,49 @@ function TemplateEditor({
                                     onClick={() => setQ(pi, qi, { options: [...(q.options || []), ""] })}
                                     className="text-xs text-brand-600 ml-5">+ variant</button>
                           )}
+                        </div>
+                      ) : q.type === "multi" ? (
+                        <div className="ml-8 mt-2 space-y-1.5">
+                          <p className="text-[11px] text-slate-400">
+                            To'g'ri variantlarning hammasini belgilang — o'quvchi
+                            shuncha variant tanlaydi, hammasi to'g'ri bo'lsagina 1 ball.
+                          </p>
+                          {(q.options || []).map((o, oi) => {
+                            const cur = Array.isArray(q.answer)
+                              ? (q.answer as (number | string)[]).filter((x) => typeof x === "number") as number[]
+                              : [];
+                            return (
+                              <div key={oi} className="flex items-center gap-2">
+                                <input type="checkbox" checked={cur.includes(oi)}
+                                       title="To'g'ri javob"
+                                       onChange={() => setQ(pi, qi, {
+                                         answer: (cur.includes(oi)
+                                           ? cur.filter((x) => x !== oi)
+                                           : [...cur, oi]).sort((a, b) => a - b),
+                                       })} />
+                                <span className="text-xs font-semibold text-slate-500 w-3">{LETTERS[oi]}</span>
+                                <input className={inp} value={o}
+                                       onChange={(e) => setQ(pi, qi, {
+                                         options: (q.options || []).map((x, j) => (j === oi ? e.target.value : x)),
+                                       })} />
+                              </div>
+                            );
+                          })}
+                          {!readOnly && (q.options || []).length < 8 && (
+                            <button type="button"
+                                    onClick={() => setQ(pi, qi, { options: [...(q.options || []), ""] })}
+                                    className="text-xs text-brand-600 ml-5">+ variant</button>
+                          )}
+                        </div>
+                      ) : q.type === "essay" ? (
+                        <div className="ml-8 mt-2 flex items-center gap-2">
+                          <label className="text-xs text-slate-500">Eng kam so'z</label>
+                          <input type="number" min={0} className={inp + " max-w-[7rem]"}
+                                 value={q.min_words ?? 250}
+                                 onChange={(e) => setQ(pi, qi, { min_words: Number(e.target.value) || 0 })} />
+                          <p className="text-[11px] text-slate-400">
+                            Avtomat tekshirilmaydi — examiner o'qib qog'oz balini qo'yadi.
+                          </p>
                         </div>
                       ) : (
                         <div className="ml-8 mt-2">

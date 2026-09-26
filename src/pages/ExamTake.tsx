@@ -21,10 +21,14 @@ import { getToken } from "../lib/api";
 type Q = {
   id: string;
   n: number;
-  type: "choice" | "text";
+  type: "choice" | "text" | "multi" | "essay";
   q: string;
   options?: string[];
   image?: string | null;
+  /** multi — nechta variant belgilanishi kerak ("Choose TWO letters") */
+  pick?: number | null;
+  /** essay — eng kam so'z (IELTS Writing: 150 / 250) */
+  min_words?: number | null;
 };
 type Part = {
   title: string;
@@ -169,7 +173,9 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   const [name, setName] = useState("");
   const [search, setSearch] = useState("");
   const [photo, setPhoto] = useState<string | null>(null);
-  const [answers, setAnswers] = useState<Record<string, string | number>>(
+  const [answers, setAnswers] = useState<
+    Record<string, string | number | number[]>
+  >(
     () => store(`exam:${token}:answers`) || {}
   );
   const [sending, setSending] = useState(false);
@@ -381,8 +387,8 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
     );
   }, [exam, search]);
 
-  const answered = Object.values(answers).filter(
-    (v) => v !== "" && v !== null && v !== undefined
+  const answered = Object.values(answers).filter((v) =>
+    Array.isArray(v) ? v.length > 0 : v !== "" && v !== null && v !== undefined
   ).length;
 
   async function onPhoto(file?: File) {
@@ -783,7 +789,82 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
                   <span className="font-semibold text-slate-500 mr-1.5">{q.n}.</span>
                   {q.q}
                 </p>
-                {q.type === "choice" ? (
+                {q.type === "essay" ? (
+                  // IELTS Writing — kompyuterda yoziladi, examiner o'qib
+                  // baholaydi. So'z sanagichi CD IELTS'dagidek pastda turadi.
+                  (() => {
+                    const txt = String(answers[q.id] ?? "");
+                    const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+                    const need = q.min_words || 0;
+                    return (
+                      <div>
+                        <textarea
+                          className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm leading-relaxed min-h-[16rem]"
+                          value={txt}
+                          spellCheck={false}
+                          placeholder="Javobingizni shu yerga yozing"
+                          onChange={(e) =>
+                            setAnswers({ ...answers, [q.id]: e.target.value })
+                          }
+                        />
+                        <div className="mt-1 flex items-center justify-between text-xs">
+                          <span
+                            className={
+                              need && words < need
+                                ? "text-amber-600 font-medium"
+                                : "text-slate-500"
+                            }
+                          >
+                            {words} so'z{need ? ` · kamida ${need}` : ""}
+                          </span>
+                          {need && words < need ? (
+                            <span className="text-amber-600">
+                              Yana {need - words} so'z kerak
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
+                    );
+                  })()
+                ) : q.type === "multi" ? (
+                  // "Choose TWO letters, A-E" — bir nechta variant belgilanadi.
+                  // Kerakligidan ortiq belgilansa eng eskisi o'chadi.
+                  (() => {
+                    const cur: number[] = Array.isArray(answers[q.id])
+                      ? (answers[q.id] as number[])
+                      : [];
+                    const need = q.pick || 2;
+                    const toggle = (oi: number) => {
+                      const has = cur.includes(oi);
+                      let next = has ? cur.filter((x) => x !== oi) : [...cur, oi];
+                      if (next.length > need) next = next.slice(next.length - need);
+                      setAnswers({ ...answers, [q.id]: next });
+                    };
+                    return (
+                      <div>
+                        <p className="text-xs text-slate-500 mb-1.5">
+                          {need} ta variant belgilang ({cur.length}/{need})
+                        </p>
+                        <div className="grid gap-1.5">
+                          {(q.options || []).map((o, oi) => (
+                            <button
+                              key={oi}
+                              onClick={() => toggle(oi)}
+                              className={`text-left rounded-xl border px-3 py-2.5 text-sm transition ${
+                                cur.includes(oi)
+                                  ? "border-brand-500 bg-brand-50 text-brand-800 font-medium"
+                                  : "border-slate-200 text-slate-700 hover:border-slate-300"
+                              }`}
+                            >
+                              <span className="font-semibold mr-2">{LETTERS[oi]}</span>
+                              {o !== LETTERS[oi] && o}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()
+                ) : q.type === "choice" ? (
                   // Faqat harfli variantlar (rasmdan tanlash) — bir qatorda
                   <div
                     className={

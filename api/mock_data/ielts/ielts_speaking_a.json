@@ -1,0 +1,57 @@
+{
+ "key": "mock_ielts_speaking_a",
+ "section": "speaking",
+ "kind": "mock",
+ "variant": "A",
+ "title": "IELTS Mock · Speaking — Variant A",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Part 1 (4-5 minutes). The examiner introduces himself/herself, checks the candidate's identification, then asks questions on three familiar topics. Ask each question as written; use the bracketed prompts only if the candidate gives a very short answer. Do not help the candidate with vocabulary.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "EXAMINER'S FRAME (read aloud):\n\"Good morning / good afternoon. My name is Delia Marchetti. Can you tell me your full name, please?\"\n\"And what should I call you?\"\n\"Can I see your identification, please? Thank you.\"\n\"Now, in this first part, I'd like to ask you some questions about yourself.\"\n\nTOPIC 1 - PLANTS AND GARDENS\n1  Do you have any plants in your home? [Why? / Why not?]\n2  Did you ever look after a plant when you were a child?\n3  Are gardens or parks with plants popular in your home town?\n4  Would you like to learn more about growing vegetables? [Why? / Why not?]\n\nTOPIC 2 - WEATHER AND SEASONS\n5  What is the weather usually like where you live?\n6  Which season of the year do you enjoy most? [Why?]\n7  Does the weather ever change your plans for the day?\n8  Do you prefer to check the weather forecast, or just go outside and see?\n\nTOPIC 3 - ANIMALS AND BIRDS\n9  Are there many birds in the area where you live?\n10  Did you learn about animals at school when you were young?\n11  Do you enjoy watching programmes or videos about animals? [Why? / Why not?]\n12  Would you like to visit a place where you could see wild animals? [Why? / Why not?]\n\n[Examiner: \"Thank you. Now I'm going to give you a topic and I'd like you to talk about it for one to two minutes.\"]",
+     "topic": "Speaking · Part 1 (Introduction and interview)",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Part 2 (3-4 minutes). Hand the candidate the cue card, paper and a pencil. Allow exactly one minute of preparation, then say \"All right? Remember you have one to two minutes for this, so don't worry if I stop you. I'll tell you when the time is up. Can you start speaking now, please?\" Stop the candidate at two minutes and ask the two rounding-off questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "EXAMINER'S FRAME (read aloud):\n\"Now I'm going to give you a topic, and I'd like you to talk about it for one to two minutes. Before you talk, you'll have one minute to think about what you're going to say. You can make some notes if you wish. Do you understand?\"\n\"Here is some paper and a pencil for making notes, and here is your topic. I'd like you to describe a plant, tree or flower that you think is important to people in your country.\"\n\nCUE CARD\n13  Describe a plant, tree or flower that you think is important to people in your country.\n\nYou should say:\n  - what the plant, tree or flower is\n  - where it grows and what it looks like\n  - how people use it or enjoy it\n\nand explain why you think it is important to people in your country.\n\n[Candidate speaks for 1-2 minutes. Examiner: \"Thank you.\"]\n\nROUNDING-OFF QUESTIONS\n  - Do many people in your country know the name of this plant?\n  - Would you like to grow it yourself one day?\n\n[Examiner: \"Thank you. We've been talking about a plant that is important in your country, and I'd like to discuss with you one or two more general questions related to this.\"]",
+     "topic": "Speaking · Part 2 (Individual long turn)",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Part 3 (4-5 minutes). A two-way discussion of more abstract issues linked to the Part 2 topic. Ask the questions in order, moving from the concrete to the abstract; you may ask follow-up questions such as \"Why do you think that?\" or \"Can you give me an example?\" Choose from the list according to the time available.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "EXAMINER'S FRAME (read aloud):\n\"We've been talking about a plant that is important to people in your country, and I'd now like to discuss with you one or two more general questions related to this.\"\n\nDISCUSSION QUESTIONS - PLANTS, PEOPLE AND THE NATURAL WORLD\n14  Why do you think some plants become symbols of a whole country?\n15  What are the advantages of planting more trees in large cities?\n16  Some people say children today know far less about wild plants and animals than their grandparents did. Do you agree?\n17  How can schools help young people understand the natural world better?\n18  Who should be responsible for protecting wild areas - governments, companies or ordinary citizens?\n19  Do you think scientists should be allowed to change plants in a laboratory in order to grow more food?\n20  How might the relationship between people and nature change over the next fifty years?\n\n[Examiner: \"Thank you. That is the end of the speaking test.\"]",
+     "topic": "Speaking · Part 3 (Two-way discussion)",
+     "min_words": 0
+    }
+   ]
+  }
+ ]
+}

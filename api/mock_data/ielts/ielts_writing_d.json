@@ -1,0 +1,43 @@
+{
+ "key": "mock_ielts_writing_d",
+ "section": "writing",
+ "kind": "mock",
+ "variant": "D",
+ "title": "IELTS Mock · Writing — Variant D",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "WRITING TASK 1 · You should spend about 20 minutes on this task. Describe the two maps below. Write at least 150 words. Your answer is written on paper and marked by your teacher.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  WRITING TASK 1\n\nYou should spend about 20 minutes on this task.\n\nThe two maps below show the central public space of the town of Halworth, known as Marden Common, as it was in 2004 and as it is today after redevelopment.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.\n\n[The figure is described in full below. Use only this description.]\n\nMARDEN COMMON IN 2004 — a rectangular site bounded by Bell Street on the north side, Halworth Road on the east side, a railway line on the south side, and Foundry Lane on the west side. Features, by position:\n- North-west corner: a car park for about 80 cars, reached from Foundry Lane.\n- North-east corner: a covered bus station with four bays, with its entrance on Bell Street.\n- Centre: a large area of open grass with a circular stone fountain in the middle.\n- East side, beside Halworth Road: a row of eight small shops.\n- South side, beside the railway line: a fenced storage yard belonging to the railway, with no public access.\n- West side, beside Foundry Lane: a children's playground and two tennis courts.\n- Pedestrian access: one narrow path crossing the grass from Bell Street in the north to the storage-yard fence in the south. There is no crossing over the railway.\n\nMARDEN COMMON TODAY — the same rectangular site with the same four boundaries. Features, by position:\n- North-west corner: the car park has been reduced to about 25 spaces, and the remaining space is now a cycle hub with cycle parking and a repair kiosk.\n- North-east corner: the bus station is unchanged, but a glass-roofed walkway now links it to the centre of the site.\n- Centre: the grass and the fountain have been replaced by a paved public square with seating, trees planted in rows, and an outdoor stage on its northern edge.\n- East side, beside Halworth Road: the eight small shops have been demolished and replaced by a two-storey library and community centre.\n- South side, beside the railway line: the storage yard has gone and is now a landscaped garden with a footbridge crossing the railway to the residential area beyond.\n- West side, beside Foundry Lane: the tennis courts remain; the playground has been enlarged and a small cafe has been built next to it.\n- Pedestrian access: the narrow path has been replaced by two wide paved routes, one running north to south from Bell Street to the footbridge, and one running east to west from Halworth Road to Foundry Lane, crossing at the centre of the square.",
+     "topic": "Writing · Task 1 (two maps)",
+     "min_words": 150
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "WRITING TASK 2 · You should spend about 40 minutes on this task. Write about the following topic. Write at least 250 words. Your answer is written on paper and marked by your teacher.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  WRITING TASK 2\n\nYou should spend about 40 minutes on this task.\n\nWrite about the following topic:\n\nIn many countries, people now spend a large proportion of their free time alone rather than in the company of friends, neighbours or relatives.\n\nWhat do you think are the causes of this trend, and what effects does it have on society?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+     "topic": "Writing · Task 2 (causes and effects)",
+     "min_words": 250
+    }
+   ]
+  }
+ ]
+}

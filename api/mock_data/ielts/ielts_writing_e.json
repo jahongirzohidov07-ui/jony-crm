@@ -1,0 +1,43 @@
+{
+ "key": "mock_ielts_writing_e",
+ "section": "writing",
+ "kind": "mock",
+ "variant": "E",
+ "title": "IELTS Mock · Writing — Variant E",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "WRITING TASK 1\n\nYou should spend about 20 minutes on this task.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "WRITING TASK 1 · You should spend about 20 minutes on this task.\n\nThe two pie charts below show where the total income of Karvala Furniture, a medium-sized furniture company, came from in 2004 and in 2024. A third, smaller pair of figures shows the company's total income in each year.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nDATA (each pie chart adds up to 100% of that year's total income):\n\nPIE CHART 1 — Sources of income, 2004\n- Sales in company-owned shops: 54%\n- Sales to hotels and offices (contract sales): 23%\n- Online sales: 4%\n- Repair and restoration services: 11%\n- Renting out warehouse space: 8%\n\nPIE CHART 2 — Sources of income, 2024\n- Sales in company-owned shops: 21%\n- Sales to hotels and offices (contract sales): 26%\n- Online sales: 38%\n- Repair and restoration services: 6%\n- Renting out warehouse space: 9%\n\nTOTAL INCOME\n- 2004: 40 million dollars\n- 2024: 95 million dollars\n\nWrite at least 150 words.",
+     "topic": "Writing · Task 1 (pie charts)",
+     "min_words": 150
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "WRITING TASK 2\n\nYou should spend about 40 minutes on this task.\n\nWrite about the following topic.\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "WRITING TASK 2 · You should spend about 40 minutes on this task.\n\nWrite about the following topic:\n\nSome people believe that large companies should be legally required to spend a fixed share of their profits on the towns and cities in which they operate. Others argue that a company's only responsibility is to pay its taxes and earn money for its owners and employees.\n\nDiscuss both these views and give your own opinion.\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+     "topic": "Writing · Task 2 (discussion essay)",
+     "min_words": 250
+    }
+   ]
+  }
+ ]
+}

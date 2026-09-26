@@ -1,0 +1,57 @@
+{
+ "key": "mock_ielts_speaking_d",
+ "section": "speaking",
+ "kind": "mock",
+ "variant": "D",
+ "title": "IELTS Mock · Speaking — Variant D",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Part 1 (4–5 minutes). The examiner introduces himself or herself, checks the candidate's identity, and then asks general questions on three familiar topics. Ask the questions in the order given. Do not explain vocabulary; if the candidate does not understand, repeat the question once in exactly the same words. Keep each answer to roughly 20–30 seconds and move on — the whole of Part 1 must finish inside 5 minutes.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  PART 1 — FULL EXAMINER SCRIPT (read aloud; candidate answers orally; do not write anything in the answer box).\n\n[Opening frame]\nExaminer: Good morning / Good afternoon. My name is [examiner's name]. Can you tell me your full name, please?\nExaminer: And what shall I call you?\nExaminer: Can you tell me where you come from?\nExaminer: Could I see your identification, please?\nExaminer: Thank you. Now, in this first part, I'd like to ask you some questions about yourself.\n\n[Topic 1 — Neighbours and the place you live]\n1. Do you know the people who live near you? [Why? / Why not?]\n2. How often do you speak to your neighbours?\n3. What do you think makes someone a good neighbour?\n4. Would you like to live in the same neighbourhood in ten years' time? [Why? / Why not?]\n\n[Topic 2 — Making decisions]\n5. Do you usually make decisions quickly or slowly? [Why?]\n6. Who do you ask for advice when you have a difficult decision to make?\n7. Is it easier to decide things alone or with other people? [Why?]\n8. Tell me about a small decision you made this week.\n\n[Topic 3 — Spending time with other people]\n9. Do you prefer meeting friends in a group or one at a time? [Why?]\n10. How do people in your country usually celebrate good news?\n11. Do you enjoy meeting new people? [Why? / Why not?]\n12. Has the way you spend time with friends changed in the last few years? [How?]\n\nExaminer: Thank you. Now I'm going to give you a topic, and I'd like you to talk about it for one to two minutes.",
+     "topic": "Speaking · Part 1 (Introduction and interview)",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Part 2 (3–4 minutes). Hand the candidate the task card, a pencil and paper. Say the instructions exactly as printed, allow one minute of preparation, then say \"All right? Remember you have one to two minutes for this, so don't worry if I stop you. I'll tell you when the time is up. Can you start speaking now, please?\" Stop the candidate at two minutes. Then ask the two rounding-off questions and take the task card back.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  PART 2 — FULL EXAMINER SCRIPT AND TASK CARD (read aloud; candidate answers orally; do not write anything in the answer box).\n\nExaminer: Now I'm going to give you a topic, and I'd like you to talk about it for one to two minutes. Before you talk, you'll have one minute to think about what you're going to say. You can make some notes if you wish. Do you understand?\nExaminer: Here's some paper and a pencil for making notes, and here is your topic. I'd like you to describe a time when you changed your mind about something important.\n\n[TASK CARD]\nDescribe a time when you changed your mind about something important.\n\nYou should say:\n• what the decision or opinion was\n• what made you start thinking differently\n• how the people around you reacted\n• what you did in the end\n\nand explain why you think you changed your mind at that particular moment.\n\n[After one minute]\nExaminer: All right? Remember you have one to two minutes for this, so don't worry if I stop you. I'll tell you when the time is up. Can you start speaking now, please?\n\n[After one to two minutes]\nExaminer: Thank you.\n\n[Rounding-off questions]\n1. Do you often tell other people when you have changed your mind?\n2. Was it a difficult thing to do?\n\nExaminer: Thank you. Can I have the booklet and the pencil back, please?",
+     "topic": "Speaking · Part 2 (Individual long turn)",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Part 3 (4–5 minutes). Ask the questions in the order given, moving from the more concrete to the more abstract. You may ask the follow-up prompts in brackets to extend an answer, and you may re-phrase a question in Part 3 if the candidate does not understand it. Finish the test with the closing line.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  PART 3 — FULL EXAMINER SCRIPT (read aloud; candidate answers orally; do not write anything in the answer box).\n\nExaminer: We've been talking about a time when you changed your mind, and I'd now like to discuss with you one or two more general questions related to this.\n\n[Changing opinions — individuals]\n1. Why do you think some people find it so hard to admit that they were wrong? [What is it that they are afraid of?]\n2. In your view, what changes people's opinions more effectively — facts and evidence, or the experience of other people? [Why?]\n3. Do you think young people change their minds more easily than older people? [Why do you think that is?]\n\n[Changing opinions — groups and society]\n4. How much influence do our friends and families have on what we believe? [Is that influence a good thing?]\n5. Some people say that social media makes opinions more fixed rather than more open. Would you agree? [Why? / Why not?]\n6. Why do attitudes in a society — for example towards work, or towards family life — sometimes change very quickly and sometimes take generations?\n\n[Wider abstraction]\n7. Should schools teach children how to disagree with each other? [What would that look like in practice?]\n8. Do you think a society benefits when people are willing to change their minds in public, or does it make leaders look weak? [Why?]\n\nExaminer: Thank you. That is the end of the speaking test.",
+     "topic": "Speaking · Part 3 (Two-way discussion)",
+     "min_words": 0
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "key": "mock_ielts_speaking_b",
+ "section": "speaking",
+ "kind": "mock",
+ "variant": "B",
+ "title": "IELTS Mock · Speaking — Variant B",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Introduction and interview (4–5 minutes). The examiner reads the opening frame aloud, checks the candidate's identity, then asks questions on three familiar topics. Ask the questions in the order printed. Do not help the candidate with vocabulary; you may repeat a question once.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  PART 1 — EXAMINER SCRIPT (read aloud)\n\nOPENING FRAME\n\"Good morning / Good afternoon. My name is ……… . Can you tell me your full name, please?\"\n\"And what shall I call you?\"\n\"Can you tell me where you're from?\"\n\"Can I see your identification, please?\"\n\"Thank you. Now, in this first part I'd like to ask you some questions about yourself.\"\n\nTOPIC 1 — OLD BUILDINGS IN YOUR AREA\n\"Let's talk about the buildings where you live.\"\n1. Are there any old buildings in the town or city where you live?\n2. How often do you walk past them?\n3. Do you think old buildings look better than new ones? Why / why not?\n4. Would you like to live in a very old house? Why / why not?\n\nTOPIC 2 — FAMILY STORIES\n\"Now let's move on to talk about stories in your family.\"\n5. Has anyone in your family told you stories about the past?\n6. Who in your family knows the most about earlier generations?\n7. Do you prefer hearing stories or reading them? Why?\n8. Would you like to know more about your grandparents' childhood? Why / why not?\n\nTOPIC 3 — MUSEUMS\n\"Let's talk about museums.\"\n9. When did you last visit a museum?\n10. Are museums popular with young people in your country?\n11. What kind of museum would you most like to visit — art, science or history? Why?\n12. Do you think school trips to museums are useful? Why / why not?\n\n\"Thank you. That is the end of Part 1.\"",
+     "topic": "Speaking · Part 1 (Interview)",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Individual long turn (3–4 minutes). Hand the candidate the cue card, a pencil and paper. Say: \"I'm going to give you a topic and I'd like you to talk about it for one to two minutes. Before you talk you'll have one minute to think about what you're going to say. You can make some notes if you wish. Do you understand?\" Allow exactly one minute of preparation, then say: \"All right? Remember you have one to two minutes for this, so don't worry if I stop you. I'll tell you when the time is up. Can you start speaking now, please?\" Stop the candidate at two minutes and ask the two rounding-off questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  PART 2 — CUE CARD AND ROUNDING-OFF QUESTIONS (read aloud / hand to candidate)\n\nCUE CARD\n\"Describe an old object that has been kept in your family or in your community for a long time.\n\nYou should say:\n  • what the object is and what it looks like\n  • where it originally came from\n  • how you first found out about it\n  • who looks after it now\n\nand explain why you think people have kept it for so long.\"\n\nROUNDING-OFF QUESTIONS (ask after the long turn)\n• Do you think this object will still be kept in fifty years' time?\n• Have you ever shown it to anyone outside your family?\n\n\"Thank you. Can I have the booklet and the paper back, please?\"",
+     "topic": "Speaking · Part 2 (Long turn)",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Two-way discussion (4–5 minutes). Say: \"We've been talking about an old object that has been kept for a long time, and I'd like to discuss with you one or two more general questions related to this.\" Ask the questions in order, moving from the concrete to the abstract. You may rephrase a question once if the candidate does not understand it.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  PART 3 — DISCUSSION QUESTIONS (read aloud)\n\n\"We've been talking about an old object that has been kept for a long time, and I'd like to discuss with you one or two more general questions related to this.\"\n\nKEEPING THE PAST\n1. Why do you think ordinary families keep old things they no longer use?\n2. What kinds of objects from today's world do you think will be valuable to historians in two hundred years?\n\nWHO PAYS, WHO DECIDES\n3. Should governments spend public money on excavating and restoring ancient sites, or should that money go to schools and hospitals?\n4. Who do you think should decide which historic buildings in a city are protected — experts, local residents, or politicians?\n\nTOWARDS THE ABSTRACT\n5. Some people say that a country's version of its own history is never completely neutral. Do you agree?\n6. In what ways might the story of the past change when new evidence is discovered?\n7. Now that so many records are stored digitally, do you think future generations will know more about us, or less?\n8. Is there any danger in a society being too attached to its past? Why / why not?\n\n\"Thank you. That is the end of the speaking test.\"",
+     "topic": "Speaking · Part 3 (Discussion)",
+     "min_words": 0
+    }
+   ]
+  }
+ ]
+}

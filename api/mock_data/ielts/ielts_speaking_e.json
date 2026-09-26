@@ -1,0 +1,57 @@
+{
+ "key": "mock_ielts_speaking_e",
+ "section": "speaking",
+ "kind": "mock",
+ "variant": "E",
+ "title": "IELTS Mock · Speaking — Variant E",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Part 1 — Introduction and interview (4–5 minutes). The examiner reads the opening frame aloud, checks the candidate's identification, and then asks the questions below. Ask all four questions in each of the three topic sets. Do not rephrase a question more than once, and do not comment on the quality of the answers.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  PART 1 — FULL EXAMINER SCRIPT (read aloud; 4–5 minutes)\n\nOPENING FRAME\nExaminer: Good morning / Good afternoon. My name is [examiner's name]. Can you tell me your full name, please?\nExaminer: And what should I call you?\nExaminer: Can you tell me where you come from?\nExaminer: Thank you. Now, could I see your identification, please?\nExaminer: Thank you, that's fine. Now, in this first part of the test I'd like to ask you some questions about yourself.\n\nTOPIC 1 — SHOPS AND SHOPPING\n1. Let's talk about shops. What kinds of shops are there near your home?\n2. Do you prefer shopping in small shops or in large shopping centres? Why?\n3. How often do you buy things online?\n4. Has the way you shop changed in the last few years? In what way?\n\nTOPIC 2 — SAVING AND SPENDING MONEY\n5. Now let's talk about money. Did you learn anything about saving money when you were a child?\n6. Do you usually plan what you are going to spend each month?\n7. What do young people in your country most often save money for?\n8. Is it easy to save money where you live? Why / Why not?\n\nTOPIC 3 — JOBS AND WORKPLACES\n9. Let's move on to work. What job would you most like to do in the future?\n10. Would you rather work for a large company or a small one? Why?\n11. Do many people in your town work from home?\n12. What makes a workplace pleasant, do you think?\n\nExaminer: Thank you. Now I'm going to give you a topic, and I'd like you to talk about it for one to two minutes.",
+     "topic": "Speaking · Part 1 interview",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Part 2 — Individual long turn (3–4 minutes). Hand the candidate the task card, a pencil and paper. Allow exactly one minute of preparation, then ask the candidate to speak for one to two minutes. Stop the candidate at two minutes and ask the two rounding-off questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "13  PART 2 — FULL EXAMINER SCRIPT (read aloud; 3–4 minutes)\n\nExaminer: Now I'm going to give you a topic and I'd like you to talk about it for one to two minutes. Before you talk, you'll have one minute to think about what you're going to say. You can make some notes if you wish. Do you understand?\nExaminer: Here is your paper and pencil for making notes, and here is your topic. I'd like you to describe a small local business that you think is doing well.\n\nTASK CARD\nDescribe a small local business that you think is doing well.\nYou should say:\n  • what the business is and where it is\n  • how you first found out about it\n  • what it sells or what service it offers\nand explain why you think this business is doing well.\n\nExaminer: All right? Remember, you have one to two minutes for this. Don't worry if I stop you. I'll tell you when the time is up. Can you start speaking now, please?\n\n[Candidate speaks for 1–2 minutes. Stop the candidate at two minutes.]\n\nExaminer: Thank you.\n\nROUNDING-OFF QUESTIONS\n1. Do you go to this business often?\n2. Would you like to run a business like this one yourself?\n\nExaminer: Thank you. Can I have the booklet and the pencil back, please?",
+     "topic": "Speaking · Part 2 long turn",
+     "min_words": 0
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Part 3 — Two-way discussion (4–5 minutes). Ask the questions below in order, moving from the more concrete to the more abstract. You may ask follow-up questions such as \"Why do you think that is?\" or \"Can you give me an example?\", but do not add new topics. Close the test with the finishing frame.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "14  PART 3 — FULL EXAMINER SCRIPT (read aloud; 4–5 minutes)\n\nExaminer: We've been talking about a small local business, and I'd now like to discuss with you one or two more general questions related to this.\n\nSMALL BUSINESSES AND LARGE COMPANIES\n1. What kinds of small businesses are most common in towns and cities in your country?\n2. Why do you think some people prefer to buy from a small local shop rather than from a large chain?\n3. In what ways can large companies make life difficult for small businesses?\n\nSTARTING AND RUNNING A BUSINESS\n4. What qualities does a person need in order to run a business successfully?\n5. Some people say that young people today are more interested in starting their own business than earlier generations were. Do you agree?\n6. How important is it for governments to support people who want to start a business?\n\nTHE WIDER ECONOMY\n7. How has the growth of online selling changed the economy of towns and cities?\n8. Do you think that a country's economic growth always improves people's quality of life? Why / Why not?\n\nFINISHING FRAME\nExaminer: Thank you. That is the end of the speaking test.",
+     "topic": "Speaking · Part 3 discussion",
+     "min_words": 0
+    }
+   ]
+  }
+ ]
+}

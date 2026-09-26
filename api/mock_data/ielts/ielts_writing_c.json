@@ -1,0 +1,43 @@
+{
+ "key": "mock_ielts_writing_c",
+ "section": "writing",
+ "kind": "mock",
+ "variant": "C",
+ "title": "IELTS Mock · Writing — Variant C",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "WRITING TASK 1. You should spend about 20 minutes on this task. Write at least 150 words. Because no picture is supplied, the diagram is given to you in words: every stage, input and output of the process is listed in the box below, and you should treat that list exactly as you would treat a printed flow chart.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  WRITING TASK 1 · You should spend about 20 minutes on this task.\n\nThe diagram below shows the process by which used lithium-ion batteries taken from electric buses are recycled into material for new batteries at the Verdanta plant in Oporo, northern Portugal.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\n— — — THE DIAGRAM (given in words) — — —\n\nTitle of diagram: Recycling of used electric-bus battery packs at the Verdanta plant, Oporo\n\nStage 1  INTAKE. Whole battery packs arrive by lorry from bus depots. Each pack weighs about 400 kg. Packs are weighed and given a bar code.\n\nStage 2  DISCHARGE. Packs are connected to the plant's own electrical grid for 12 hours until all remaining charge is removed. Arrow labelled 'electricity recovered' leads from this stage to the plant's workshops, which run on this recovered power.\n\nStage 3  TESTING. A computer checks the health of each pack. The flow chart divides here into two branches:\n   Branch A (labelled 'still above 70% capacity' — about one pack in four): the pack goes to Stage 3a.\n   Branch B (labelled 'below 70% capacity' — about three packs in four): the pack goes to Stage 4.\n\nStage 3a  SECOND LIFE. Packs in Branch A are repaired, re-cased and sold to solar farms as storage units. After roughly eight years of this second use, an arrow returns them from Stage 3a back into Stage 4, so that nothing leaves the cycle permanently.\n\nStage 4  DISMANTLING (by hand). Workers remove the outer steel casing, the wiring and the cooling pipes. Two outputs leave here: steel and copper, both sent directly to metal foundries outside the plant.\n\nStage 5  SHREDDING. The remaining cells are cut up inside a sealed chamber filled with nitrogen gas (to prevent fire). Output: a coarse mixture of plastic, metal foil and black powder.\n\nStage 6  SEPARATION. The mixture passes over a vibrating screen and through a water bath. Plastic floats off and is sold to a moulding factory; the heavy black powder sinks and continues.\n\nStage 7  CHEMICAL BATH. The black powder is dissolved in acid and heated to 90°C for six hours. Output: three separate salts — lithium, cobalt and nickel.\n\nStage 8  DRYING AND PACKING. The three salts are dried in ovens and packed in 25 kg sacks.\n\nStage 9  DISPATCH. The sacks are sent to battery factories, where they are used to build new cells. A dotted arrow runs from Stage 9 all the way back to Stage 1, showing that these new cells will eventually return to the plant as used packs.\n\nWaste note printed beside Stage 7: the acid is cleaned and re-used; only 5 per cent of the original pack ends up as landfill waste.\n\n— — — END OF DIAGRAM — — —\n\nWrite at least 150 words.",
+     "topic": "Writing · Task 1 (process diagram)",
+     "min_words": 150
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "WRITING TASK 2. You should spend about 40 minutes on this task. Write at least 250 words. Task 2 carries twice as many marks as Task 1, so leave yourself enough time to plan, write and check your essay.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  WRITING TASK 2 · You should spend about 40 minutes on this task.\n\nWrite about the following topic:\n\nSome people believe that vehicles which drive themselves, without a human at the wheel, will make road travel far safer than it is today.\n\nOthers argue that handing control of vehicles to computers will create new and more serious dangers.\n\nDiscuss both these views and give your own opinion.\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+     "topic": "Writing · Task 2 (discussion essay — technology)",
+     "min_words": 250
+    }
+   ]
+  }
+ ]
+}

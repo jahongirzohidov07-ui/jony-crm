@@ -1,0 +1,522 @@
+{
+ "key": "mock_ielts_reading_e",
+ "section": "reading",
+ "kind": "mock",
+ "variant": "E",
+ "title": "IELTS Mock · Reading — Variant E",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "READING PASSAGE 1\n\nYou should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.\n\nQuestions 1-7\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-7 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n\nQuestions 8-13\nComplete the sentences below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 8-13 on your answer sheet.",
+   "passage": "Coins in the Slot: the unlikely endurance of the vending machine\n\nFor an invention that has never been fashionable, the vending machine has proved remarkably hard to kill off. It has outlived the golden age of the department store, the mail-order catalogue and at least three confident predictions of its own extinction. Its principle has not altered since the 1880s: the customer pays, a mechanism releases the goods, and no shop assistant is involved. Everything else about it - the coins, the contents, the customers - has been rebuilt many times over.\n\nWhat made automatic retailing practical in Britain was not clever engineering but reliable money. The Victorian penny was heavy, uniform and expensive to forge, which gave inventors a dependable object to design around. Elias Redfern, a clockmaker from the town of Marchbourne, patented a postcard dispenser in 1883 that worked on a balance arm: a genuine penny was heavy enough to tip the arm and release a card, while a washer or a light foreign coin was not. Redfern's machines reached the seaside piers within two years, and the railway platforms soon afterwards.\n\nThe trade grew by attaching itself to places where people were obliged to wait. Stations, piers, ferry terminals and theatre foyers all held customers with time on their hands and no shop open to them. That dependence on delay has never really gone away, and it explains the industry's peculiar geography: a machine's takings have always had more to do with the timetable of the building it stands in than with the quality of what it sells.\n\nIt also explains a long period of commercial confusion. By 1905 the confectioner Brayton and Sons had placed more than eleven thousand machines across Britain, yet the firm's own accounts show that the chocolate inside them was sold at a loss. The machines were treated as advertising: an enamelled sign at head height in every station in the country, which happened to release a bar of chocolate if a coin was pushed into it. When the directors finally examined the figures in 1911, they discovered that a third of their machines had not been refilled for more than a year.\n\nNobody in the trade talks for long without mentioning the slug. A slug is a disc of the correct weight and size and of no value whatever, and the history of vending is in large part the history of an arms race between the people who make them and the people who make the machines. Manufacturers added magnets, then electrical tests of conductivity, then optical readers. Each measure raised the cost of the machine, and each was defeated within a few years. The Vending Trades Association estimated in 1958 that British operators were losing around four hundred thousand pounds a year to slugs, a figure the industry preferred not to publish at the time.\n\nThe industry was rescued, as so often, by refrigeration. Cooled machines could hold a product that customers genuinely wanted on demand rather than merely tolerated - a cold drink - and, crucially, one that could not be bought more cheaply two streets away in a shop that was still open. The chilled drinks machine turned vending from a novelty into a business, and it moved the centre of the trade from the pier to the factory floor.\n\nThe post-war workplace was the industry's most profitable idea. A machine in a corridor cost a fraction of a staffed canteen, ran through the night shift and required no kitchen. By the 1960s many large employers had quietly transferred the job of feeding their workforce to a wall. The arrangement suited accountants rather better than it suited employees, and the reputation of vended food - reliably available, reliably mediocre - dates from precisely this period.\n\nThe most heavily vended country in the world is Japan, where machines stand unattended on residential streets after dark, selling hot coffee, batteries and umbrellas. Operators elsewhere usually explain this by pointing to low rates of vandalism, but the more convincing reason is spatial. Retail rents are high and shop floors are small, so a machine on the pavement is a cheap extension of a shop that has run out of room.\n\nTwo developments have kept the machine alive in recent decades. The first is cashless payment. A card reader removes the industry's oldest problem, the coin, along with the theft, the jamming and the daily expense of collection. The second is data. A connected machine reports what it has sold and what it still holds, so that a driver is sent only where stock is genuinely needed. Route planning, not retailing, is where the modern profit sits: in the trade's own surveys, roughly two fifths of the cost of a vended item is the journey made to restock it.\n\nThe likely future is therefore less glamorous than the robot shop of magazine covers. Operators speak of the machine as a small warehouse rather than a small shop - a cupboard placed as close as possible to the customer, holding a narrow range of goods chosen by software. Whether anyone will find that fashionable is another matter. The vending machine has survived for a century and a half without ever being admired, and there is no evidence that admiration was ever required.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Redfern's dispenser could distinguish a real penny from objects of a similar shape.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  Redfern's machines were installed on railway platforms before they appeared on piers.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  Brayton and Sons earned most of their profit from the chocolate sold in their machines.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  Brayton and Sons took on extra staff to refill their machines after 1911.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  The Vending Trades Association's estimate of losses in 1958 was made public as soon as it was produced.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  Measures designed to defeat slugs made machines more expensive to produce.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  Machines in Japan offer a wider range of goods than machines in Britain.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "text",
+     "q": "8  Early machines were placed where customers were obliged to ____________.",
+     "answer": [
+      "wait"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "9  A machine's earnings depend more on the ____________ of the building it stands in than on what it sells.",
+     "answer": [
+      "timetable"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Brayton and Sons regarded their machines mainly as a form of ____________.",
+     "answer": [
+      "advertising"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "11  The industry was saved by ____________, which allowed machines to sell cold drinks.",
+     "answer": [
+      "refrigeration"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "12  After the war, a machine in a corridor was far cheaper than a staffed ____________.",
+     "answer": [
+      "canteen"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "13  About two fifths of the cost of a vended item is the ____________ made to restock the machine.",
+     "answer": [
+      "journey"
+     ],
+     "topic": "Reading · Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "READING PASSAGE 2\n\nYou should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.\n\nQuestions 14-19\nReading Passage 2 has eight paragraphs, A-H.\nWhich paragraph contains the following information?\nWrite the correct letter, A-H, in boxes 14-19 on your answer sheet.\nNB You may use any letter only once.\n\nQuestions 20-23\nLook at the following statements and the list of researchers below.\nMatch each statement with the correct researcher, A-D.\nWrite the correct letter, A-D, in boxes 20-23 on your answer sheet.\n\nList of Researchers\nA  Ines Ferreira\nB  Martin Okeke\nC  Hannah Vogel\nD  Soren Halvorsen\n\nQuestions 24-26\nComplete the sentences below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.\nWrite your answers in boxes 24-26 on your answer sheet.",
+   "passage": "Who Owns the Work? The slow return of employee ownership\n\nA  Ownership is the part of business that management education tends to skip. Students learn about strategy, marketing and the handling of people, and are rarely asked who the firm actually belongs to or what difference the answer makes. Yet the question has been quietly answered in a new way by a growing number of companies. An employee-owned business is one in which a majority stake is held, either directly or through a trust, by the people who work in it. In the United Kingdom the number of such firms passed 1,400 in 2023; two decades earlier it had been fewer than 200. Slower but similar growth has been recorded in France, Australia and Canada.\n\nB  The model is older than the recent statistics suggest. In 1951 Albert Renshaw, the owner of a textile business in the north of England, found himself approaching seventy with no children and a workforce of four hundred. Rather than sell to a rival, he transferred his shares to a trust whose sole purpose was to hold them on behalf of his employees, who received a share of the profits each year but could never sell the company itself. The Renshaw Trust still exists. Its founder left no manifesto and gave interviews only reluctantly; when pressed, he said he had done it because he could not think of a better use for the firm.\n\nC  Three structures dominate today, and the differences between them matter a good deal more than the shared label suggests. Under direct ownership, employees hold shares personally and may sell them when they leave, which makes the arrangement feel real but allows ownership to drain away over a generation. Under trust ownership, a trust holds the shares permanently on behalf of all current employees; nobody can cash in, so the structure is stable but abstract, and new recruits inherit it without paying for it. Hybrid models combine a controlling trust with a minority of individually held shares, and are now the commonest choice among firms converting for the first time.\n\nD  Does it work? The most careful study to date is by Professor Ines Ferreira, whose team compared 2,300 converted firms with matched conventional competitors over eight years. Ferreira reports an average productivity gain of about four per cent - real, but far smaller than advocates tend to claim. More interesting is where the gain came from. Firms that combined ownership with genuine consultation, such as elected councils with the right to see the accounts, accounted for almost all of it; firms that handed out shares and changed nothing else performed no better than their rivals. Ownership without voice, Ferreira concludes, is a bonus scheme with paperwork.\n\nE  A second line of research concerns bad times rather than good. Dr Martin Okeke of the University of Auckland followed six hundred firms through the downturn that began in 2008. Employee-owned companies were markedly less likely to make staff redundant, but the finding is not as cheerful as it first appears: they achieved this by cutting hours and by freezing or reducing pay, so that the burden was shared out rather than removed. Employment was protected; earnings were not.\n\nF  The immediate cause of the recent growth is demographic rather than ideological. A generation of owner-managers who founded firms in the 1980s has reached retirement age, and many of them dislike the obvious exits - a sale to a competitor, which usually means the loss of the name and half the staff, or a sale to an investment fund, which usually means debt. Policy has helped. In 2014 the government introduced a relief which exempted owners selling a controlling stake to an employee trust from capital gains tax, and the number of conversions rose sharply over the following three years.\n\nG  The strongest criticisms are financial. Professor Hannah Vogel points out that an employee owner has both salary and savings invested in a single enterprise: if the firm fails the loss is total, and no financial adviser would recommend such a portfolio to anybody. Others question whether the effect survives scale. Professor Soren Halvorsen argues that in a firm of forty people an individual's effort is visible to colleagues, while in a firm of four thousand it is not, so the incentive to work harder weakens as the workforce grows; his data show the productivity advantage disappearing above roughly eight hundred employees.\n\nH  What separates the successes from the disappointments is unglamorous. The firms that do well invest in the machinery of participation. Calderbank Engineering, a converted foundry in the Midlands, gives every elected representative a course in reading company accounts before they take a seat on the board, on the grounds that information without the ability to interpret it is merely noise. The lesson of thirty years of evidence is that employee ownership is not a policy that can simply be installed. It is a structure that makes a certain kind of management possible, and then waits to see whether anybody uses it.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  a comparison of the different legal arrangements that are available",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "15  a reference to a change in the tax treatment of a sale",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 5,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "16  an example of a company that trains the people who represent its staff",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "17  figures comparing the present number of employee-owned firms with the number in an earlier period",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  an account of how one particular firm came to be owned by its workforce",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  a warning about the financial exposure of employee owners",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "20  Employee-owned firms keep people in work by reducing what those people earn.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "21  The benefits of the model are confined to organisations below a certain size.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 3,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "22  Improvements in performance depend on employees having a genuine say.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "23  Employee owners stand to lose everything if their company collapses.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "text",
+     "q": "24  Ferreira's study found an average productivity gain of about ____________.",
+     "answer": [
+      "four per cent",
+      "4 per cent",
+      "four percent",
+      "4 percent",
+      "4%"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "25  Since 2014, owners who sell a controlling stake to an employee trust have been exempt from ____________.",
+     "answer": [
+      "capital gains tax"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "26  At Calderbank Engineering, elected representatives take a course in reading ____________ before joining the board.",
+     "answer": [
+      "company accounts",
+      "accounts"
+     ],
+     "topic": "Reading · Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "READING PASSAGE 3\n\nYou should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.\n\nQuestions 27-32\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 27-32 on your answer sheet, write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n\nQuestions 33-36\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 33-36 on your answer sheet.\n\nQuestions 37-39\nComplete the summary using the list of words, A-J, below.\nWrite the correct letter, A-J, in boxes 37-39 on your answer sheet.\n\nThe writer's conclusion\nFor the writer, the deepest problem is not unfairness but the loss of the ability to 37 ________. A price offered privately rather than published cannot be held against a rival's price, and 38 ________ depends on exactly that. He therefore proposes not prohibition but 39 ________, so that shoppers at least know which kind of price they are being shown.\n\nA  casino    B  compare    C  competition    D  disclosure    E  regulation\nF  profit    G  vigilance    H  trust    I  bargain    J  advertising\n\nQuestion 40\nChoose TWO letters, A-E.\nWrite the correct letters in box 40 on your answer sheet.",
+   "passage": "The Price of Everything\n\nNot long ago a price was a fact about a thing. It might tell you about the cost of making it, or how scarce it was that week, or - if the shop was an expensive one - how good it was supposed to be. What it did not tell you was anything about yourself. The figure on the shelf edge was the one everybody else saw, and that dull consistency was among the more valuable features of a market economy. It is now disappearing.\n\nAutomated repricing began, sensibly enough, in the airline business, where the problem it solved was genuine: a seat that leaves the ground empty is worth nothing, and an airline that cannot cut its price in the final week is throwing money away. From travel the software spread to hotels, then to online retail, and it is now moving into the ordinary shop, where electronic shelf labels allow a supermarket to change forty thousand prices in an afternoon without anyone walking down an aisle.\n\nEconomists have a respectable defence of all this, and it ought to be stated before it is criticised. Prices that move carry information: they tell producers what to make more of and consumers when to wait. Prices that differ between customers can, in principle, help the poorer ones - a student ticket, a cheap Tuesday matinee. Charging everybody the same is not obviously fairer than charging according to what people can manage. I accept that this argument has force, and that a world of permanently fixed prices would be a poorer and a less flexible one.\n\nBut the defence rests on an assumption that is quietly being abandoned. It assumes that the buyer can see what is going on - that the student knows there is a student rate, that the rule by which prices vary is public even when the prices themselves are not. Personalised pricing breaks that assumption. The rule is no longer published, and it is not even fixed. It is inferred, continuously, from a customer's device, location, browsing history and past willingness to pay, and it is designed precisely so that the customer cannot work out what it is.\n\nEvidence is harder to come by than one might expect, because the firms hold the data. In 2022 the consumer group Fairline ran an audit in which two hundred volunteers loaded identical baskets of goods from eleven online retailers on the same afternoon. The totals differed by as much as eleven per cent. That figure has been widely quoted, usually with more confidence than it deserves: the audit could not show why the prices differed, and the retailers' explanation - that the variation reflects delivery zones, stock levels and the minute at which a page is loaded - cannot honestly be ruled out. The point of the study is not that it proved personalisation. It is that nobody outside the companies can tell.\n\nHere is where I part company with most critics. The usual complaint about dynamic pricing is that it takes money from consumers, and perhaps it does, though the sums are modest and sometimes run the other way. The heavier cost is a different one, and it is paid in attention. When prices are stable and public, buying something is a small decision. When they are unstable and private, every purchase becomes a trade: you should probably check another site, clear your history, try again tomorrow, and consider whether the discount you have been shown is a discount at all. We have quietly asked ordinary people to behave like professional traders, in a market where the other side has better information, faster systems and no duty to tell the truth. Most people, sensibly, decline: they pay whatever is on the screen and feel faintly cheated, which across millions of transactions is a real cost even though it appears in no accounts.\n\nThe deeper damage is to comparison itself. Competition is not primarily a matter of there being many sellers; it is a matter of buyers being able to tell them apart. A published price is a public fact, and public facts are what make rivalry work: I can hold one against another, and the knowledge that I can do so disciplines both. An offer made privately to me, calculated from what an algorithm believes about my patience, cannot be held against anything. It is the peculiar achievement of these systems that a technology sold as the sharp edge of competition has begun to dissolve the very thing that makes competition possible.\n\nThe obvious reply is that comparison sites solve this. They do not, and increasingly they cannot. Many are paid by the sellers they rank; the rest must contend with prices that change while the page is loading. The result is an arms race that consumes real resources and produces nothing anybody wants to own.\n\nNone of this argues for prohibition, and I would not support it. There are uses of variable pricing that are plainly legitimate. An airline that cuts the fare on an unsold seat is harming nobody. A concert promoter who lets prices rise towards the level the resale market would charge anyway is merely keeping money that would otherwise go to touts. What is not legitimate is the concealment - the pretence that a figure calculated for one person is the price of the thing.\n\nThe remedy I would argue for is therefore an unambitious one: disclosure. A displayed price should have to state whether it has been personalised, and a shopper should have the right to see the standard price that a customer about whom nothing is known would be shown. This would not stop the practice. It would put it in daylight, which is usually enough. Whether any government will impose such a rule is another question, and one I am not able to answer. But a market in which nobody can find out what anything costs is not a free market. It is a casino with better lighting.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  The writer accepts that prices which move with demand can serve a useful purpose.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  The Fairline audit established that the price differences it found were caused by personalisation.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  The writer believes shoppers are now expected to behave like professional traders.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  Supermarkets in Europe alter their prices more frequently than those in North America.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "31  The writer regards the money lost by consumers as the most damaging effect of the practice.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  The writer believes that younger shoppers are affected by personalised pricing more than older ones.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "33  According to the first paragraph, the important change in modern pricing is that a price now describes",
+     "options": [
+      "A  the cost of producing the goods.",
+      "B  the buyer as much as the product.",
+      "C  the condition of the wider economy.",
+      "D  the quality of what is being sold."
+     ],
+     "answer": 1,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "34  The writer's main objection to the economists' defence of variable pricing is that",
+     "options": [
+      "A  it has never been tested outside the travel industry.",
+      "B  it takes no account of the effect on sellers.",
+      "C  it assumes buyers can see how prices are decided.",
+      "D  it applies only to customers on low incomes."
+     ],
+     "answer": 2,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  What does the writer consider the chief cost of personalised pricing for ordinary shoppers?",
+     "options": [
+      "A  the time and attention required to stay alert",
+      "B  a noticeable rise in their average bills",
+      "C  the withdrawal of discounts for loyal customers",
+      "D  the closure of small independent retailers"
+     ],
+     "answer": 0,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "36  The writer describes the remedy he favours as",
+     "options": [
+      "A  a complete ban on automated repricing.",
+      "B  a return to prices fixed by law.",
+      "C  a tax on personalised offers.",
+      "D  a modest requirement to declare what is happening."
+     ],
+     "answer": 3,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "37  Gap 37 in the summary above",
+     "options": [
+      "A  casino",
+      "B  compare",
+      "C  competition",
+      "D  disclosure",
+      "E  regulation",
+      "F  profit",
+      "G  vigilance",
+      "H  trust",
+      "I  bargain",
+      "J  advertising"
+     ],
+     "answer": 1,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "38  Gap 38 in the summary above",
+     "options": [
+      "A  casino",
+      "B  compare",
+      "C  competition",
+      "D  disclosure",
+      "E  regulation",
+      "F  profit",
+      "G  vigilance",
+      "H  trust",
+      "I  bargain",
+      "J  advertising"
+     ],
+     "answer": 2,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "39  Gap 39 in the summary above",
+     "options": [
+      "A  casino",
+      "B  compare",
+      "C  competition",
+      "D  disclosure",
+      "E  regulation",
+      "F  profit",
+      "G  vigilance",
+      "H  trust",
+      "I  bargain",
+      "J  advertising"
+     ],
+     "answer": 3,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "multi",
+     "q": "40  Which TWO of the following uses of variable pricing does the writer accept as legitimate? Choose TWO letters, A-E.",
+     "options": [
+      "A  reducing the fare on a seat that would otherwise go unsold",
+      "B  charging long-standing customers more than new ones",
+      "C  raising ticket prices so that resellers do not take the difference",
+      "D  hiding the standard price from shoppers",
+      "E  matching a rival's increase automatically"
+     ],
+     "answer": [
+      0,
+      2
+     ],
+     "pick": 2,
+     "topic": "Reading · Multiple choice (two answers)"
+    }
+   ]
+  }
+ ]
+}

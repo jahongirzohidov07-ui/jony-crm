@@ -1,0 +1,43 @@
+{
+ "key": "mock_ielts_writing_b",
+ "section": "writing",
+ "kind": "mock",
+ "variant": "B",
+ "title": "IELTS Mock · Writing — Variant B",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "WRITING TASK 1\n\nYou should spend about 20 minutes on this task.\n\nThe two maps below show the riverside settlement of Harlow Bend in 1905 and the same settlement in 2020.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  WRITING TASK 1 · You should spend about 20 minutes on this task.\n\nThe two maps below show the riverside settlement of HARLOW BEND in 1905 and the same settlement in 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.\n\n--------------------------------------------------\nDESCRIPTION OF THE TWO MAPS (use this information as your figure)\n--------------------------------------------------\nBoth maps show the same rectangular area. The River Ashen flows from west to east across the middle of the area. The land north of the river is the OLD TOWN; the land south of the river is the SOUTH BANK. A single road, Mill Road, runs from north to south and crosses the river at the centre of each map.\n\nMAP 1 — HARLOW BEND IN 1905\n| Feature | Position | Notes |\n| A stone bridge | centre, where Mill Road crosses the River Ashen | narrow, one lane |\n| A water mill | on the north bank, immediately west of the bridge | powered by the river |\n| A market square | old town, north-east of the bridge | open, unpaved |\n| A church | old town, north-west corner | with a graveyard beside it |\n| Rows of workers' cottages | old town, along both sides of Mill Road north of the market square | about thirty small houses |\n| Farmland and orchards | the whole of the south bank | no buildings at all |\n| A ferry landing | south bank, at the east end of the river | small wooden jetty |\n| A woodland strip | far east of the area, on both banks | dense trees |\n\nMAP 2 — HARLOW BEND IN 2020\n| Feature | Position | Notes |\n| A concrete road bridge | same central position as the old stone bridge | two lanes; the stone bridge has been demolished |\n| A museum | on the north bank, immediately west of the bridge | the water mill building, converted |\n| A paved pedestrian plaza with cafés | old town, north-east of the bridge | on the site of the former market square |\n| The church | old town, north-west corner | unchanged; the graveyard remains |\n| Apartment blocks | old town, along both sides of Mill Road north of the plaza | five blocks; the cottages have been cleared |\n| A housing estate | western half of the south bank | about sixty detached houses on the former farmland |\n| A supermarket and car park | eastern half of the south bank | on the former orchards |\n| A riverside park with a footpath | a narrow strip along the whole south bank of the river | new |\n| The ferry landing | removed | replaced by a boat club |\n| The woodland strip | far east, north bank only | the southern half of the woodland has been cleared for the car park |",
+     "topic": "Writing · Task 1 (two maps)",
+     "min_words": 150
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "WRITING TASK 2\n\nYou should spend about 40 minutes on this task.\n\nWrite about the following topic.\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  WRITING TASK 2 · You should spend about 40 minutes on this task.\n\nWrite about the following topic:\n\nMany governments spend large sums of public money on repairing and protecting historic buildings and archaeological sites. Some people believe this is a valuable use of national funds, while others argue that the same money would do more good if it were spent on present-day needs such as housing and hospitals.\n\nDiscuss both these views and give your own opinion.\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+     "topic": "Writing · Task 2 (discussion — heritage vs present-day spending)",
+     "min_words": 250
+    }
+   ]
+  }
+ ]
+}

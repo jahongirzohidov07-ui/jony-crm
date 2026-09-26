@@ -70,6 +70,8 @@ AWAY_LIMIT_DEFAULT = 5             # sahifadan chiqishga ruxsat (undan keyin che
 # shuning uchun bu yerda faqat JAMISI belgilanadi; taqsimot
 # avtomat: qog'oz = 100 − savollar soni.
 MID_END_TOTAL = 100.0
+# MOCK = IELTS band (0-9), xom ball emas (src/lib/exams.ts MOCK_MAX_BAND)
+MOCK_BAND_MAX = 9.0
 GRACE_SEC = 90                     # vaqt tugagach avtomatik topshirish muhlati
 
 
@@ -114,6 +116,7 @@ def _questions(parts: list):
 
 
 IMAGE_MAX_CHARS = 300_000          # savol rasmi (data URL) ~220KB
+ESSAY_MAX_CHARS = 12_000           # Writing javobi (~1500 so'z)
 
 
 def _clean_image(v, where: str):
@@ -179,6 +182,36 @@ def clean_parts(parts) -> list:
                     raise HTTPException(
                         400, f"{n}-savol: to'g'ri javob yozilmagan")
                 item["answer"] = ans
+            elif typ == "multi":
+                # KO'P JAVOBLI (2026-09-26, IELTS mock): "Choose TWO
+                # letters, A-E" — o'quvchi bir nechta variantni belgilaydi,
+                # hammasi to'g'ri bo'lsagina 1 ball beriladi.
+                opts = [str(o).strip() for o in (q.get("options") or [])
+                        if str(o).strip()]
+                if len(opts) < 3:
+                    raise HTTPException(
+                        400, f"{n}-savol: kamida 3 ta variant kerak")
+                a = q.get("answer")
+                if not isinstance(a, list):
+                    raise HTTPException(
+                        400, f"{n}-savol: javob ro'yxat bo'lishi kerak")
+                try:
+                    a = sorted({int(x) for x in a})
+                except (TypeError, ValueError):
+                    raise HTTPException(400, f"{n}-savol: javob noto'g'ri")
+                if len(a) < 2 or any(not (0 <= i < len(opts)) for i in a):
+                    raise HTTPException(
+                        400, f"{n}-savol: kamida 2 ta to'g'ri variant kerak")
+                item["options"] = opts
+                item["answer"] = a
+                item["pick"] = len(a)
+            elif typ == "essay":
+                # QOG'OZDA BAHOLANADI (2026-09-26, IELTS mock Writing):
+                # o'quvchi kompyuterda matn yozadi, avtomat tekshirilmaydi —
+                # examiner o'qib qog'oz balini qo'yadi. Maksimal ballga
+                # ham, foizga ham kirmaydi.
+                item["answer"] = []
+                item["min_words"] = max(0, int(q.get("min_words") or 0))
             else:
                 raise HTTPException(400, f"{n}-savol: noma'lum tur")
             qs.append(item)
@@ -208,7 +241,8 @@ def public_parts(parts: list) -> list:
             **{k: p.get(k) for k in ("title", "instructions", "passage",
                                      "audio_url", "image")},
             "questions": [{k: q.get(k) for k in ("id", "n", "type", "q",
-                                                 "options", "image")}
+                                                 "options", "image",
+                                                 "pick", "min_words")}
                           for q in p.get("questions") or []],
         })
     return out
@@ -218,13 +252,27 @@ def grade(parts: list, answers: dict):
     """(ball, maksimal, tafsilot). Har savol 1 ball."""
     score, total, detail = 0, 0, []
     for q in _questions(parts):
-        total += 1
         given = answers.get(q["id"])
-        if q["type"] == "choice":
+        typ = q["type"]
+        if typ == "essay":
+            # Avtomat tekshirilmaydi — examiner qog'oz balini qo'yadi.
+            detail.append({"id": q["id"], "n": q["n"], "ok": None,
+                           "given": None if given is None
+                           else str(given)[:ESSAY_MAX_CHARS]})
+            continue
+        total += 1
+        if typ == "choice":
             try:
                 ok = given is not None and int(given) == int(q["answer"])
             except (TypeError, ValueError):
                 ok = False
+        elif typ == "multi":
+            try:
+                g = sorted({int(x) for x in (given or [])})
+            except (TypeError, ValueError):
+                g = []
+            ok = bool(g) and g == sorted(q["answer"])
+            given = ",".join(str(i) for i in g) if g else None
         else:
             g = _norm(given)
             ok = bool(g) and any(g == _norm(a) for a in q["answer"])
@@ -255,9 +303,22 @@ def _write_result(db: Session, exam: models.Exam, online: models.ExamOnline,
     if (online.paper_max or 0) > 0 and sub.paper_score is None:
         return
     total = (sub.online_score or 0) + (sub.paper_score or 0)
-    _exams._apply_exam_marks(db, exam, schemas.ExamScoreBulk(marks=[
-        schemas.ExamScoreMark(student_id=sub.student_id, score=total,
-                              absent=False)]), user)
+    if (exam.kind or "") == "mock":
+        # MOCK = BAND, ball emas (exams._apply_exam_marks mock uchun
+        # band talab qiladi). Listening/Reading xom bali rasmiy jadval
+        # bo'yicha bandga o'giriladi; Writing/Speaking mocklarida
+        # avtomat tekshiriladigan savol yo'q — examiner qog'ozda
+        # bandning o'zini qo'yadi.
+        b = mock_band(_load(online.parts), sub.online_score, sub.online_max)
+        band = b if b is not None else (sub.paper_score or 0)
+        mark = schemas.ExamScoreMark(student_id=sub.student_id,
+                                     band=round(float(band) * 2) / 2,
+                                     absent=False)
+    else:
+        mark = schemas.ExamScoreMark(student_id=sub.student_id, score=total,
+                                     absent=False)
+    _exams._apply_exam_marks(db, exam, schemas.ExamScoreBulk(marks=[mark]),
+                             user)
 
 
 def _place(db: Session, exam, online, sub, student_id: int, user) -> None:
@@ -284,7 +345,7 @@ def bank_max(db: Session, group, kind: str, unit_no=None):
     qog'oz qismi). Guruh darajasi, tur va unit bo'yicha; topilmasa None.
     (2026-09-18, Jahongir: "xamma biriktirilgan test unitlarini
     maksimal ballini test soniga qarab o'zing belgilab chiq")"""
-    if kind not in ("unit", "mid", "end") or not group or not group.level:
+    if kind not in ("unit", "mid", "end", "mock") or not group             or not group.level:
         return None
     q = db.query(models.ExamTemplate).filter(
         models.ExamTemplate.is_active == 1,
@@ -299,12 +360,61 @@ def bank_max(db: Session, group, kind: str, unit_no=None):
               if _subj(x) == _subj(group)), None)
     if not t:
         return None
-    n = sum(1 for _ in _questions(_load(t.parts)))
+    if kind == "mock":
+        # Mock natijasi bandda yoziladi: Listening/Reading xom bali
+        # _write_result'da rasmiy jadval bo'yicha bandga o'giriladi,
+        # Writing/Speaking bandini examiner qog'ozdan kiritadi.
+        return MOCK_BAND_MAX
+    # Essay (Writing) savollari avtomat tekshirilmaydi — maksimal ballga
+    # kirmaydi, ular paper_max orqali hisoblanadi.
+    n = sum(1 for q in _questions(_load(t.parts))
+            if q.get("type") != "essay")
     if kind in ("mid", "end") and _subj(t) == "english":
         # Qog'oz qismi (Writing/Speaking) bazada belgilanmagan bo'lsa
         # ham jami 100 — faqat ingliz tilida; matematikada qog'oz yo'q
         return max(float(n), MID_END_TOTAL)
     return float(n) + float(t.paper_max or 0)
+
+
+# ----------------------------------------------------- IELTS mock -> band
+# Rasmiy Cambridge xom ball -> band jadvallari (40 savollik bo'lim).
+# Listening va Academic Reading chegaralari boshqa-boshqa.
+_BAND_LISTENING = [(39, 9.0), (37, 8.5), (35, 8.0), (32, 7.5), (30, 7.0),
+                   (26, 6.5), (23, 6.0), (18, 5.5), (16, 5.0), (13, 4.5),
+                   (11, 4.0), (8, 3.5), (6, 3.0), (4, 2.5)]
+_BAND_READING = [(39, 9.0), (37, 8.5), (35, 8.0), (33, 7.5), (30, 7.0),
+                 (27, 6.5), (23, 6.0), (19, 5.5), (15, 5.0), (13, 4.5),
+                 (10, 4.0), (8, 3.5), (6, 3.0), (4, 2.5)]
+
+
+def _mock_section(parts: list) -> str:
+    """Bo'lim nomlaridan qaysi ko'nikma ekanini aniqlaydi."""
+    t = " ".join(str(p.get("title") or "") for p in parts).lower()
+    if "listening" in t:
+        return "listening"
+    if "reading" in t:
+        return "reading"
+    return ""
+
+
+def mock_band(parts: list, score, total) -> Optional[float]:
+    """Xom ballni IELTS bandiga o'giradi (mock testlar uchun).
+    Bo'lim Listening/Reading bo'lmasa yoki savol bo'lmasa — None."""
+    try:
+        score, total = float(score or 0), float(total or 0)
+    except (TypeError, ValueError):
+        return None
+    if total <= 0:
+        return None
+    sec = _mock_section(parts)
+    if not sec:
+        return None
+    raw = int(round(score / total * 40))
+    table = _BAND_LISTENING if sec == "listening" else _BAND_READING
+    for low, band in table:
+        if raw >= low:
+            return band
+    return 2.0 if raw >= 3 else 1.0
 
 
 def _exam_open_for_results(exam: models.Exam) -> bool:
@@ -356,9 +466,9 @@ def _tpl_summary(t: models.ExamTemplate) -> dict:
 
 
 def _validate_tpl(p: TemplateIn):
-    if p.kind not in ("unit", "mid", "end"):
-        raise HTTPException(400, "Online test faqat Unit, Mid-course va "
-                                 "End of course uchun")
+    if p.kind not in ("unit", "mid", "end", "mock"):
+        raise HTTPException(400, "Online test faqat Unit, Mid-course, "
+                                 "End of course va Mock uchun")
     if p.kind == "unit" and not (p.unit_no and 1 <= p.unit_no <= roles.UNIT_COUNT):
         raise HTTPException(400, f"Unit raqami 1-{roles.UNIT_COUNT} oralig'ida")
     if p.level and p.level not in roles.ALL_LEVELS:
@@ -581,6 +691,22 @@ def _answer_sheet(detail: list, qmap: dict) -> list:
             a = q.get("answer")
             correct = (_opt_label(opts, a)
                        if isinstance(a, int) and 0 <= a < len(opts) else None)
+        elif q.get("type") == "multi":
+            def _lab(v):
+                try:
+                    idx = sorted({int(x) for x in str(v or "").split(",")
+                                  if str(x).strip() != ""})
+                except (TypeError, ValueError):
+                    return None
+                idx = [i for i in idx if 0 <= i < len(opts)]
+                return ", ".join(_opt_label(opts, i) for i in idx) or None
+            given_text = _lab(given)
+            correct = ", ".join(_opt_label(opts, i)
+                                for i in (q.get("answer") or [])
+                                if 0 <= i < len(opts)) or None
+        elif q.get("type") == "essay":
+            given_text = given if given not in (None, "") else None
+            correct = None
         else:
             given_text = given if given not in (None, "") else None
             correct = " / ".join(q.get("answer") or [])
@@ -723,9 +849,9 @@ def create_online(exam_id: int, payload: OnlineIn,
                   db: Session = Depends(get_db),
                   user=Depends(require_role(*RESULT_ROLES))):
     exam = _exams._exam_in_scope(db, exam_id, user)
-    if exam.kind not in ("unit", "mid", "end"):
-        raise HTTPException(400, "Online link faqat Unit, Mid-course va "
-                                 "End of course testlari uchun")
+    if exam.kind not in ("unit", "mid", "end", "mock"):
+        raise HTTPException(400, "Online link faqat Unit, Mid-course, "
+                                 "End of course va Mock testlari uchun")
     if not _exam_open_for_results(exam):
         raise HTTPException(400, "Test hali tasdiqlanmagan — avval Examiner "
                                  "tasdiqlashi kerak")

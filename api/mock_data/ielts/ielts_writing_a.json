@@ -1,0 +1,43 @@
+{
+ "key": "mock_ielts_writing_a",
+ "section": "writing",
+ "kind": "mock",
+ "variant": "A",
+ "title": "IELTS Mock · Writing — Variant A",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "WRITING TASK 1 · You should spend about 20 minutes on this task. Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  WRITING TASK 1 · You should spend about 20 minutes on this task.\n\nThe bar chart below shows the number of breeding pairs of three seabird species recorded on Kestrel Rock, a small island nature reserve, in 1996, 2006 and 2016. The table shows the breeding success of the same three species in those years, measured as the percentage of nests that produced at least one surviving chick.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nBAR CHART — Number of breeding pairs on Kestrel Rock\n(vertical axis: breeding pairs, 0 to 14,000, marked every 2,000; three bars per species, one for each year)\n\nSpecies                 | 1996   | 2006   | 2016\nAsh-winged petrel       |  4,200 |  2,600 |  1,500\nSpeckled guillemot      |  9,800 | 11,400 | 12,100\nNorthern storm gull     |  3,100 |  3,050 |  5,700\nTotal (all three)       | 17,100 | 17,050 | 19,300\n\nTABLE — Breeding success (percentage of nests producing at least one surviving chick)\n\nSpecies                 | 1996 | 2006 | 2016\nAsh-winged petrel       | 61%  | 44%  | 29%\nSpeckled guillemot      | 55%  | 60%  | 63%\nNorthern storm gull     | 48%  | 47%  | 58%\nReserve average         | 55%  | 50%  | 50%\n\nWrite at least 150 words.",
+     "topic": "Writing · Task 1 (bar chart + table)",
+     "min_words": 150
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "WRITING TASK 2 · You should spend about 40 minutes on this task. Write about the following topic. Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  WRITING TASK 2 · You should spend about 40 minutes on this task.\n\nWrite about the following topic:\n\nSome people believe that protecting wild animals and their natural habitats should be the responsibility of national governments, which alone can pass laws and fund large reserves. Others argue that lasting protection depends far more on the daily choices of ordinary individuals.\n\nDiscuss both these views and give your own opinion.\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+     "topic": "Writing · Task 2 (discussion — environment / wildlife protection)",
+     "min_words": 250
+    }
+   ]
+  }
+ ]
+}

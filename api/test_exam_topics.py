@@ -88,8 +88,9 @@ db = SessionLocal()
 exam_online.seed_templates(db)
 n_all = n_topic = 0
 for t in db.query(models.ExamTemplate).all():
-    if (t.variant or "A") != "A" or (t.subject or "english") != "english":
-        continue        # B-E variantlar va matematika alohida testlarda
+    if (t.variant or "A") != "A" or (t.subject or "english") != "english"             or t.kind == "mock":
+        continue        # B-E variantlar, matematika va IELTS mock bazasi
+                        # alohida testlarda (test_exam_math, test_mock_bank)
     for q in exam_online._questions(exam_online._load(t.parts)):
         n_all += 1
         n_topic += 1 if q.get("topic") else 0

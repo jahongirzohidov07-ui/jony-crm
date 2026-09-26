@@ -1,0 +1,465 @@
+{
+ "key": "mock_ielts_listening_d",
+ "section": "listening",
+ "kind": "mock",
+ "variant": "D",
+ "title": "IELTS Mock · Listening — Variant D",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Questions 1-10\nComplete the form below.\nWrite NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.\n\nRIVERBANK BEFRIENDING SCHEME - Volunteer enquiry form\nFirst name: Carys",
+   "passage": "",
+   "script": "NARRATOR: Part 1. You will hear a woman telephoning a community organisation about becoming a volunteer. First you have some time to look at questions 1 to 10. [pause] Now listen carefully and answer questions 1 to 10.\n\nDANIEL: Good morning, Riverbank Befriending Scheme, Daniel speaking. How can I help?\nCARYS: Oh, hello. I picked up one of your leaflets at the health centre - the one about visiting older people who live on their own. I'd like to find out how to get involved.\nDANIEL: That's lovely to hear. What I usually do is take a few details over the phone, and then I post out an information pack. It only takes about five minutes. Is now a good time?\nCARYS: Now is fine, yes.\nDANIEL: Wonderful. Could I start with your first name?\nCARYS: It's Carys.\nDANIEL: Sorry, would you mind spelling that for me?\nCARYS: Of course. C-A-R-Y-S.\nDANIEL: C-A-R-Y-S. And the surname?\nCARYS: Redfern. That's R-E-D-F-E-R-N.\nDANIEL: R-E-D-F-E-R-N. Thank you. And where are you living at the moment?\nCARYS: Forty Marlow Gardens - oh, sorry, no, ignore that, that's my mother's house. I'm always giving people the wrong one. Mine is number fourteen. Fourteen Marlow Gardens.\nDANIEL: Fourteen. And that's here in Ashcombe, is it?\nCARYS: It is, yes, just behind the park.\nDANIEL: And the postcode?\nCARYS: B-S seven, four Q L.\nDANIEL: BS7 4QL. And the best number to reach you on during the day?\nCARYS: My mobile is probably easiest. It's oh-seven-eight-one-one, six-two-oh, three-nine-four.\nDANIEL: Let me read that back - oh-seven-eight-one-one, six-two-oh, three-nine-four. Lovely. Now, we always ask people what they do during the week, partly so that we can match you sensibly and partly for the training records.\nCARYS: I'm a teaching assistant. At Fairview Primary, just down the road. I did train as a nurse years ago, but I never actually practised, so I wouldn't want you to write that down.\nDANIEL: Teaching assistant it is. And which afternoon or evening could you offer us? Most of our volunteers visit the same person once a week.\nCARYS: Well, Tuesdays used to be completely free, but I've just joined a choir, so Tuesday's gone. Thursday would suit me much better.\nDANIEL: Thursday. Now, some of our volunteers do the shopping, some simply sit and chat, and some help with letters and forms. Is there anything in particular you'd like to offer?\nCARYS: Honestly? I'd love to do gardening. I've had an allotment for six years, and I know from my own family that older people miss their gardens terribly once they can't manage them.\nDANIEL: Gardening. That's unusual, and it's very welcome indeed - I've got three people on my list who'd be delighted. I'll put that down as your preference. Now, before you can start visiting anyone there's a short induction course.\nCARYS: How long does that take?\nDANIEL: One Saturday, ten until three, and we feed you. The next one is on the fifth of March - ah, no, sorry, I'm looking at the wrong column, that one's completely full. The one after that is the twelfth of March.\nCARYS: The twelfth. I'll write that in my diary.\nDANIEL: There's also a background check, which everybody has to have. It used to cost twenty-five pounds, but the charity subsidises it now, so you'll only pay eighteen pounds.\nCARYS: Eighteen. And do I pay that on the day?\nDANIEL: On the day, yes - card or cash, whichever you prefer. And you'll need to bring something with you to prove who you are. A driving licence is acceptable, but we'd much prefer your passport, because it has both your photograph and your full legal name.\nCARYS: I'll bring the passport, then. Can I ask you something?\nDANIEL: Please do.\nCARYS: I'm a bit nervous about what on earth I'd say to somebody I've never met.\nDANIEL: Everybody says that, without exception. There's a whole hour on the induction about starting conversations. And you're never thrown in on your own - an experienced volunteer comes with you for your first three visits.\nCARYS: Oh, that's a relief.\nDANIEL: I'll get the pack in the post to you today. Thank you for ringing, Carys.\nCARYS: Thank you very much. Goodbye.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Surname: ....................",
+     "answer": [
+      "Redfern"
+     ],
+     "topic": "Listening · Form completion (spelling)"
+    },
+    {
+     "type": "text",
+     "q": "2  Address: .................... Marlow Gardens, Ashcombe",
+     "answer": [
+      "14",
+      "fourteen"
+     ],
+     "topic": "Listening · Form completion (number)"
+    },
+    {
+     "type": "text",
+     "q": "3  Postcode: ....................",
+     "answer": [
+      "BS7 4QL",
+      "BS74QL"
+     ],
+     "topic": "Listening · Form completion (code)"
+    },
+    {
+     "type": "text",
+     "q": "4  Mobile number: ....................",
+     "answer": [
+      "07811 620394",
+      "07811620394"
+     ],
+     "topic": "Listening · Form completion (number)"
+    },
+    {
+     "type": "text",
+     "q": "5  Current job: ....................",
+     "answer": [
+      "teaching assistant"
+     ],
+     "topic": "Listening · Form completion (detail)"
+    },
+    {
+     "type": "text",
+     "q": "6  Day she is available each week: ....................",
+     "answer": [
+      "Thursday"
+     ],
+     "topic": "Listening · Form completion (day)"
+    },
+    {
+     "type": "text",
+     "q": "7  Activity she would prefer to offer: ....................",
+     "answer": [
+      "gardening"
+     ],
+     "topic": "Listening · Form completion (detail)"
+    },
+    {
+     "type": "text",
+     "q": "8  Date of the induction course: ....................",
+     "answer": [
+      "12 March",
+      "12th March",
+      "March 12",
+      "March 12th"
+     ],
+     "topic": "Listening · Form completion (date)"
+    },
+    {
+     "type": "text",
+     "q": "9  Cost of the background check: £....................",
+     "answer": [
+      "18",
+      "£18",
+      "eighteen"
+     ],
+     "topic": "Listening · Form completion (price)"
+    },
+    {
+     "type": "text",
+     "q": "10  Proof of identity she must bring: her ....................",
+     "answer": [
+      "passport"
+     ],
+     "topic": "Listening · Form completion (detail)"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Questions 11-14\nChoose the correct letter, A, B or C.\n\nQuestions 15-20\nLabel the plan below. Write the correct letter, A-H, next to Questions 15-20.\nThe plan shows the ground floor of the building. You come in through the main entrance at the front; the reception desk is directly in front of you, and one straight corridor runs from reception to the back door. Four rooms lie on the left-hand side of the corridor: A is the first room on the left (nearest the entrance), B is the second room on the left, C is the third room on the left, and D is the last room on the left (at the back, beside the back door). Four rooms lie on the right-hand side of the corridor: E is the first room on the right (nearest the entrance, directly opposite A), F is the second room on the right, G is the third room on the right, and H is the last room on the right (at the back).",
+   "passage": "",
+   "script": "NARRATOR: Part 2. You will hear the manager of a new community centre giving a short talk to a group of visitors. First you have some time to look at questions 11 to 20. [pause] Now listen carefully and answer questions 11 to 20.\n\nMANAGER: Good afternoon everybody, and welcome to the Ashcombe Wellbeing Hub. My name's Ravi and I run the place. Before I take you round, let me tell you what this building is and how it works, because almost everything people assume about us turns out to be wrong.\n\nLet's start with the building itself. Nearly every visitor walks through that door and asks whether this was the old school. It wasn't - the school stood on the other side of the park and was knocked down in the nineteen-nineties. And no, we're not the old library either; the library is very much alive and it's two doors along on your left. What this actually was, right up until two thousand and eleven, was Ashcombe fire station. In the main hall you can still see the hook where the bell hung.\n\nNow, money, because people always want to know. The general assumption is that the council paid for all of this. The council sold us the building for one pound, which was generous, but the two point three million pounds that the refurbishment cost came almost entirely from a national health charity, who ran a competition for disused public buildings and, to our astonishment, we won it. Local residents raised about fourteen thousand - sorry, forty thousand pounds, and that bought all the furniture.\n\nThe third thing is who comes. When we drew up the plans, we expected our typical visitor to be a woman over seventy, and plenty of them do come, in very much the numbers we predicted. Young families started coming too, rather more of them than we had expected, and that pleased us enormously. But the genuine surprise - and I say this as somebody who has run community centres for twenty years - has been the men. Men are now very nearly half of our regular visitors. In my previous job it was about one in nine. The woodwork group and the repair cafe must have something to do with it.\n\nAnd one piece of practical advice, if you're thinking of coming back as a visitor rather than on a tour. Please don't try to book online. The booking system exists only for our paid courses, and you certainly don't have to sign up for one of those in order to use the building. Just turn up on a Wednesday. Wednesday is our open day: every room is staffed and every group is running.\n\nRight. The ground floor is simple. You come in at the front; the reception desk is straight ahead, and behind it one straight corridor runs the whole length of the building to the back door. On your left there are four rooms - A, B, C and D, with A nearest the entrance and D at the far end. On your right there are another four - E, F, G and H, E nearest the entrance and H at the very back.\n\nLet's begin on the right-hand side. The very first door on your right, as soon as you pass reception, is the cafe. It's at the front so that people can see in from the street.\n\nThe quiet room is the opposite case. Nobody speaks above a whisper in there and phones have to be switched off, so we put it as far from the cafe as the building allows: it's on the left, the very last room on that side, right next to the back door.\n\nThe toy library is the first room on your left, directly opposite the cafe, so that parents can keep an eye on the pushchairs.\n\nCounselling next. We have two counsellors here three days a week, and their office is on the right, the third door down - that's between the store room and the music room.\n\nThe cookery room is on the left, the second door - no, sorry, the third door on that side, directly opposite the counselling office. The second room on the left, by the way, is the staff office.\n\nAnd finally the music room, which is the last room on the right, at the very back of the building, because of the noise.\n\nRight - shall we make a start?",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "11  Before it became a community centre, the building was",
+     "options": [
+      "A  a school.",
+      "B  a library.",
+      "C  a fire station."
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "12  Most of the money for the refurbishment came from",
+     "options": [
+      "A  the local council.",
+      "B  a national charity.",
+      "C  donations by residents."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "13  What has most surprised the speaker since the centre opened?",
+     "options": [
+      "A  the number of men who attend",
+      "B  the number of young families who attend",
+      "C  the number of visitors aged over seventy"
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "14  The speaker advises new visitors to",
+     "options": [
+      "A  reserve a place using the website.",
+      "B  come along on a Wednesday.",
+      "C  sign up for one of the paid courses."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "15  the cafe",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Listening · Plan labelling"
+    },
+    {
+     "type": "choice",
+     "q": "16  the quiet room",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Listening · Plan labelling"
+    },
+    {
+     "type": "choice",
+     "q": "17  the toy library",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Listening · Plan labelling"
+    },
+    {
+     "type": "choice",
+     "q": "18  the counselling office",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Listening · Plan labelling"
+    },
+    {
+     "type": "choice",
+     "q": "19  the cookery room",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Listening · Plan labelling"
+    },
+    {
+     "type": "choice",
+     "q": "20  the music room",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Listening · Plan labelling"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Questions 21-24\nChoose the correct letter, A, B or C.\n\nQuestions 25-27\nWhich task will each of the following people carry out before the next meeting?\nChoose THREE answers from the list below and write the correct letter, A-F, next to Questions 25-27.\nTasks\nA  booking a seminar room\nB  completing the ethics application\nC  contacting the shopping centre management\nD  designing the recruitment poster\nE  re-analysing the pilot data\nF  training the new observers\n\nQuestions 28-30\nComplete the sentences below.\nWrite NO MORE THAN TWO WORDS for each answer.",
+   "passage": "",
+   "script": "NARRATOR: Part 3. You will hear two psychology students, Luka and Nadia, discussing their research project with their tutor, Dr Halvorsen. First you have some time to look at questions 21 to 30. [pause] Now listen carefully and answer questions 21 to 30.\n\nDR HALVORSEN: Right, you two. How did the pilot go?\nLUKA: Not brilliantly, I'm afraid.\nDR HALVORSEN: Go on.\nLUKA: Well, the plan was that Nadia and I would both stand near the entrance of the shopping centre and record what happened when our confederate dropped a folder of papers. We were coding the same thirty incidents - whether anybody stopped, how quickly, how many people got involved.\nNADIA: And the trouble was that we didn't agree with each other. Out of those thirty incidents we gave the same score for about twenty - no, eighteen, I counted them again last night.\nDR HALVORSEN: So your inter-rater reliability was poor.\nNADIA: Very poor. And it wasn't the equipment - the cameras worked perfectly - and there were plenty of people going past. It was simply that Luka and I were interpreting the phrase 'offering help' completely differently. He counted somebody who made eye contact and slowed down. I didn't.\nDR HALVORSEN: That's a useful failure. You never had an operational definition.\nLUKA: We've written one now. Three levels: no response, verbal response, physical help.\nDR HALVORSEN: Much better. What about timing?\nLUKA: We ran the pilot at half past nine in the morning, and the problem was that the flow of people changed enormously minute by minute. A bus would arrive and suddenly there'd be forty people, then nothing at all for five minutes.\nNADIA: So we're moving the sessions to late afternoon. It isn't that it's busier then - the total over an hour is actually very similar - and it isn't just that we're both free then, though we are. It's that the numbers stay much steadier, which means our conditions are comparable.\nDR HALVORSEN: Sensible. Now, this questionnaire you want to give to the people who help.\nNADIA: It's fourteen items at the moment.\nDR HALVORSEN: Far too many. These are people holding shopping bags. I'd cut it to about six. And don't be tempted to add open questions - you won't have time to analyse them properly - and translation isn't an issue with this sample, so leave it in English.\nLUKA: Six items. Fine.\nDR HALVORSEN: And the video?\nNADIA: We were going to store the recordings for twelve months, in case we wanted to go back and re-code anything later on.\nDR HALVORSEN: The ethics committee will refuse that outright. You have no consent to film these people. Code straight from the recording and then delete it the same day - so there will be nothing left to re-code afterwards.\nNADIA: Delete once coded. Understood.\nDR HALVORSEN: Now - who is doing what before we meet again? Luka?\nLUKA: I'll ring the shopping centre. We need written permission from the centre management before we set foot in there with a camera.\nDR HALVORSEN: Yes, and do that first, because nothing else can happen without it. Nadia?\nNADIA: I'll do the ethics application. I did one last year, so it won't take long. I could train the two new observers as well, if that helps.\nDR HALVORSEN: No - leave the observers to me. I'd rather do that training myself so that it's consistent. The recruitment poster can wait; we don't need confederates for another month. And nobody needs to book a seminar room - we've got this one every fortnight.\nLUKA: What about re-analysing the pilot data?\nDR HALVORSEN: Don't waste an evening on it. The pilot coding was unreliable, so there is genuinely nothing in it worth analysing. Start again cleanly.\nLUKA: Is there anything published we could compare our results with?\nDR HALVORSEN: There's one rather good field study - it was done in Ipswich, no, I'm wrong, it was Norwich. Norwich, two years ago. Same design, smaller city. Compare your figures with theirs.\nDR HALVORSEN: And do be careful as you read around this. The overwhelming majority of published work in this area uses laboratory settings - students sitting in a room being read a scenario. Field work like yours is rare, and you should say so clearly in the report. And make sure the report finishes with a proper discussion of your limitations - the small sample, the single site, the weather. See you in a fortnight.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "21  What was the main problem with the pilot study?",
+     "options": [
+      "A  Too few people passed the observation point.",
+      "B  The two observers recorded the same events differently.",
+      "C  The recording equipment did not work properly."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "22  Why are the students moving their observations to the late afternoon?",
+     "options": [
+      "A  The shopping centre is busier then.",
+      "B  Both students are free at that time.",
+      "C  The flow of people is more consistent then."
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "23  What does Dr Halvorsen advise about the questionnaire?",
+     "options": [
+      "A  It should contain far fewer items.",
+      "B  It should include some open questions.",
+      "C  It should be available in other languages."
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "24  What will happen to the video recordings?",
+     "options": [
+      "A  They will be stored for twelve months.",
+      "B  They will be destroyed as soon as they are coded.",
+      "C  They will be re-coded at a later date."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  Luka",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 2,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "26  Nadia",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 1,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "27  Dr Halvorsen",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 5,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "text",
+     "q": "28  The students will compare their results with an earlier field study carried out in ....................",
+     "answer": [
+      "Norwich"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "29  Dr Halvorsen warns that most published research in this area has used .................... settings.",
+     "answer": [
+      "laboratory"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "30  The report must end with a full discussion of the study's ....................",
+     "answer": [
+      "limitations"
+     ],
+     "topic": "Listening · Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "Questions 31-40\nComplete the notes below.\nWrite ONE WORD ONLY for each answer.\n\nTHE PSYCHOLOGY OF LONELINESS\n\nDefinition (Questions 31-32)\nMeasuring loneliness (Questions 33-34)\nEffects on health (Questions 35-37)\nWhy cities are affected (Questions 38-39)\nWhat works (Question 40)",
+   "passage": "",
+   "script": "NARRATOR: Part 4. You will hear part of a lecture on the psychology of loneliness. First you have some time to look at questions 31 to 40. [pause] Now listen carefully and answer questions 31 to 40.\n\nLECTURER: Good morning. Today I want to talk about loneliness - not as a private misery, which is how most of us experience it, but as something psychologists can define, measure and, increasingly, as something that the people who design cities have to take seriously.\n\nLet's begin with the definition, because it is more precise than you might expect. The standard formulation is that loneliness is the distress that arises from a gap between the relationships a person wants and the relationships that person actually has. Notice what that definition does not say. It says nothing about how many people you know. A student with six housemates can be profoundly lonely; a widow who sees one friend a fortnight may not be lonely at all, because one friend a fortnight is what she wants. It is the gap that hurts, not the number.\n\nAnd that leads to the second point, which students very often get wrong in essays. Loneliness is not the same thing as solitude. Solitude is chosen. People seek it out, they pay money for it, and the research consistently shows it to be restorative rather than harmful. The difference is entirely a matter of choice.\n\nNow, measurement. The first researchers in this field, in the nineteen-fifties - sorry, the nineteen-sixties - did the obvious thing: they asked people, straightforwardly, 'Are you lonely?' The results were close to useless. You might assume the problem was poor memory - it wasn't. The problem was the stigma attached to the admission. People will tell a stranger their income, their weight and their political views before they will tell that stranger that they have nobody to ring on a Sunday.\n\nSo modern instruments get round this by never using the word 'lonely' at all. Instead they ask about belonging - questions such as 'How often do you feel that you are part of a group of friends?' or 'How often do you feel that there are people who really understand you?' The word itself never appears, and the responses turn out to be far more honest and far more stable over time.\n\nLet's turn to health, where the findings are genuinely striking. The first and best replicated effect is on sleep. Lonely people do not necessarily sleep fewer hours - that was the early claim, and it has not held up - but the quality is worse: they wake more often during the night, even in a laboratory where they are perfectly safe. The second effect is hormonal. Lonely people show raised levels of - and I want you to be careful here, because people often write adrenaline in the exam - raised levels of cortisol, the hormone associated with chronic stress. And the third finding, which follows from the second, concerns the immune system. Chronic loneliness is associated with a measurably weaker immune response, and the size of that effect has been compared, by more than one research group, to the effect of smoking. That comparison is contested, but nobody now argues that the effect is trivial.\n\nWhy should cities be particularly affected? Two reasons dominate the literature. The first is relocation. In a neighbourhood where a third of the residents move every two years, friendships never mature; people are perfectly pleasant to one another, but they never reach the stage of asking a favour. The second reason is the disappearance of what sociologists call 'third places' - somewhere that is neither home nor work, where you can sit for an hour without spending much. A survey of four thousand residents in three British cities asked people what had closed near them. Post offices came up often, and pubs came up often, but the single biggest loss, by a clear margin, was libraries.\n\nFinally, what works? Here the evidence is humbling. Schemes that simply provide company - a weekly visitor, a telephone call, a coffee morning - produce disappointingly small effects. You might expect friendship to be the active ingredient. It isn't. The schemes with the strongest results are those that give the participant a purpose: a job to do, a plot to dig, a child to read with, a rota that they are on. Being needed appears to matter more than being visited.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "31  Loneliness is the distress caused by a gap between the .................... a person wants and those the person actually has.",
+     "answer": [
+      "relationships"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "32  Loneliness must not be confused with ...................., which is chosen and is usually restorative.",
+     "answer": [
+      "solitude"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "33  Early direct questions failed because of the .................... attached to admitting loneliness.",
+     "answer": [
+      "stigma"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "34  Modern scales avoid the word 'lonely' and ask instead about ....................",
+     "answer": [
+      "belonging"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "35  The best replicated health effect is on the quality of a person's ....................",
+     "answer": [
+      "sleep"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "36  Lonely people show raised levels of the stress hormone ....................",
+     "answer": [
+      "cortisol"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "37  The effect on the .................... system has been compared to the effect of smoking.",
+     "answer": [
+      "immune"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "38  In cities, frequent .................... prevents friendships from maturing.",
+     "answer": [
+      "relocation"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "39  Among 'third places', the biggest loss reported in the survey was ....................",
+     "answer": [
+      "libraries"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "40  The most successful schemes give the participant a ...................., not simply company.",
+     "answer": [
+      "purpose"
+     ],
+     "topic": "Listening · Note completion"
+    }
+   ]
+  }
+ ]
+}

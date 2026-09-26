@@ -1,0 +1,475 @@
+{
+ "key": "mock_ielts_listening_b",
+ "section": "listening",
+ "kind": "mock",
+ "variant": "B",
+ "title": "IELTS Mock · Listening — Variant B",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Questions 1–10\n\nComplete the form below.\n\nWrite ONE WORD AND/OR A NUMBER for each answer.\n\nWEAVER'S FIELD COMMUNITY DIG — VOLUNTEER REGISTRATION FORM\n\nExample: Enquiry taken by: Daniel",
+   "passage": "",
+   "script": "NARRATOR: Part 1. You will hear a conversation between a woman who is enquiring about a community archaeology project and a member of staff at the site office. First, you have some time to look at Questions 1 to 10. [pause] You will see that there is an example, which has been done for you. Now we shall begin. You should answer the questions as you listen, because you will not hear the recording again. Listen carefully and answer Questions 1 to 10.\n\nDANIEL: Good morning, Weaver's Field community dig, Daniel speaking. How can I help?\n\nMEGAN: Oh, good morning. I saw a notice about volunteers being wanted for the summer season, and I wondered whether there were any places left.\n\nDANIEL: There are, yes — we've still got room in both groups. Shall I take a few details? I'll put my own name at the top of the form as the person who took the enquiry.\n\nMEGAN: Lovely, thank you.\n\nDANIEL: So, first of all, could I have your surname?\n\nMEGAN: It's Pryce.\n\nDANIEL: Price — as in the price of something? P-R-I-C-E?\n\nMEGAN: That's the usual spelling, but mine's the Welsh one. It's P-R-Y-C-E. A 'y' in the middle, not an 'i'. Everybody gets it wrong.\n\nDANIEL: P-R-Y-C-E. Thank you. And your first name?\n\nMEGAN: Megan.\n\nDANIEL: Right. Now, we don't need your full address at this stage — just a postcode, so we can work out who lives near enough to share lifts.\n\nMEGAN: It's B-H-nine, four-L-T. Sorry, I always say that far too quickly. BH9 4LT.\n\nDANIEL: BH9 4LT. Got it. And what do you do for a living? We ask because some jobs turn out to be useful on a dig.\n\nMEGAN: I'm a librarian. I trained as a teacher years ago, but I've been a librarian now for about twelve years.\n\nDANIEL: Excellent — we'll have you cataloguing the finds in no time. Now, when would you like to start? The first group begins on the fifth of July and the second group on the twenty-first.\n\nMEGAN: I can't manage the fifth, I'm afraid. Could I join the first group part-way through — say, the eleventh?\n\nDANIEL: Let me check. The eleventh is a Sunday, and we don't work Sundays. The twelfth would be absolutely fine, though.\n\nMEGAN: The twelfth of July, then.\n\nDANIEL: The twelfth. And roughly how many days can you give us?\n\nMEGAN: Well, I've got two weeks off, so fourteen days in theory... but I'd want a few days at home in the middle. Let's say nine.\n\nDANIEL: Nine days. That's very generous. Have you done anything like this before?\n\nMEGAN: A little. I spent a weekend at a site up in Northumberland two years ago, but they only let me do the washing — cleaning the pottery, mostly. I never got anywhere near a trench.\n\nDANIEL: Pottery washing is a real skill — half our finds would be unidentifiable without it. I'll write down 'pottery'. Now, is there anything you'd need help with?\n\nMEGAN: Well, I don't drive. Is the site reachable by bus?\n\nDANIEL: Not really — the nearest stop is four miles away. But we run a car share from the town centre every morning, so I'll put down that you need transport.\n\nMEGAN: Thank you, that would make all the difference.\n\nDANIEL: Now, things to bring. We provide all the tools, and there are spare waterproofs in the hut. The one thing we can't supply is gloves — everyone has to bring their own pair.\n\nMEGAN: Gloves. And boots too, I assume?\n\nDANIEL: We do keep boots in most sizes, actually, so gloves is the only essential. Good strong ones, not gardening ones.\n\nMEGAN: Understood.\n\nDANIEL: And there's a small charge, I'm afraid. It used to be twenty pounds a week, but the council gave us a grant this year, so it's come down to eighteen pounds a week.\n\nMEGAN: Eighteen pounds a week. That's very reasonable.\n\nDANIEL: One last thing — everybody does a half-day training session before they start. It's always been held in the village hall, but the hall's being rewired this summer, so this year the training is in the barn at the top of the field.\n\nMEGAN: In the barn. Right. Thank you very much, Daniel.\n\nDANIEL: Thank you, Megan. We'll see you on the twelfth.\n\nNARRATOR: That is the end of Part 1.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Surname:",
+     "answer": [
+      "Pryce"
+     ],
+     "topic": "Listening · Form completion (spelling)"
+    },
+    {
+     "type": "text",
+     "q": "2  Postcode:",
+     "answer": [
+      "BH9 4LT",
+      "BH94LT"
+     ],
+     "topic": "Listening · Form completion (letters and numbers)"
+    },
+    {
+     "type": "text",
+     "q": "3  Occupation:",
+     "answer": [
+      "librarian",
+      "a librarian"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "4  Preferred starting date:",
+     "answer": [
+      "12 July",
+      "12th July",
+      "July 12",
+      "the 12th of July",
+      "12 of July"
+     ],
+     "topic": "Listening · Form completion (dates)"
+    },
+    {
+     "type": "text",
+     "q": "5  Number of days available:",
+     "answer": [
+      "9",
+      "nine",
+      "9 days",
+      "nine days"
+     ],
+     "topic": "Listening · Form completion (numbers)"
+    },
+    {
+     "type": "text",
+     "q": "6  Previous experience: washing ........",
+     "answer": [
+      "pottery"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "7  Help needed with:",
+     "answer": [
+      "transport"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "8  Item volunteer must bring:",
+     "answer": [
+      "gloves"
+     ],
+     "topic": "Listening · Form completion (distractor)"
+    },
+    {
+     "type": "text",
+     "q": "9  Charge per week: £........",
+     "answer": [
+      "18",
+      "£18",
+      "18 pounds",
+      "eighteen"
+     ],
+     "topic": "Listening · Form completion (prices)"
+    },
+    {
+     "type": "text",
+     "q": "10  Training session takes place in the ........",
+     "answer": [
+      "barn",
+      "the barn"
+     ],
+     "topic": "Listening · Form completion (distractor)"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Questions 11–13\n\nChoose the correct letter, A, B or C.\n\nQuestions 14–16\n\nWhat comment does the speaker make about each of the following attractions?\n\nChoose THREE answers from the box and write the correct letter, A–F, next to Questions 14–16.\n\nCOMMENTS\nA  It has recently been repaired.\nB  It closes whenever the weather is poor.\nC  There is an additional charge for it.\nD  It is not suitable for young children.\nE  It can only be visited with a guide.\nF  It has been moved from its original position.\n\nQuestions 17–20\n\nLabel the plan below. Write the correct letter, A–H, next to Questions 17–20.\n\nPLAN OF CALDERMOOR CASTLE SITE — the eight lettered positions are:\nA  just inside the main gate, on the LEFT of the entrance path\nB  just inside the main gate, on the RIGHT of the entrance path\nC  at the southern end of the entrance path, where it meets the lawn\nD  on the EAST side of the lawn, beside the chapel ruins\nE  on the WEST side of the lawn, directly in front of the old stables\nF  behind the old stables, at the far western edge of the site\nG  at the NORTHERN end of the car park, next to the exit barrier\nH  at the SOUTHERN end of the car park, beside the picnic area",
+   "passage": "",
+   "script": "NARRATOR: Part 2. You will hear a talk given by the visitor manager of a castle site to a group of volunteer guides. First, you have some time to look at Questions 11 to 16. [pause] Now listen carefully and answer Questions 11 to 16.\n\nRHIAN: Good morning everyone, and welcome back to Caldermoor Castle. I'm Rhian Talbot, the visitor manager — if anything goes wrong this season, come and find me.\n\nMany people have asked why the site was shut for the whole of last year. The rumour in the village was that the March floods had brought down a section of the curtain wall. They hadn't — the masonry came through that very wet winter far better than the Victorian repairs did. And no, it wasn't a money problem either; our grant was renewed in full and we kept every member of staff. The real reason was simpler. The university excavation team needed uninterrupted access to the inner courtyard, and you cannot run a trench three metres deep with visitors walking past. So we closed, they dug, and now we are open again.\n\nSo, what's new this year? I did promise you a café. I'm sorry to say it's still a year away; the kitchen fittings haven't been approved. Several of you asked about an audio guide — still only an idea. What we have managed is a minibus, running every forty minutes from the railway station to the main gate, free with a ticket. It's the single thing our visitors had asked for most.\n\nOne piece of advice for everybody: come early. Not because tickets run out — we've never once sold out, and you can always buy on the day. And not because the tours begin early; the first guided tour is at eleven. It's the car park. It holds ninety vehicles and not one more, and by half past eleven on a sunny Saturday people are turned away.\n\nNow, three attractions visitors will ask you about.\n\nFirst, the gatehouse. For three years it was fenced off and the stone was crumbling. A team of masons spent last winter on it, and it reopened in March looking better than it has in a century. People will ask whether it costs extra to go up the tower — it doesn't.\n\nSecond, the watermill. Some of you may remember it used to shut the moment it rained, because the roof leaked. That's no longer true — the roof was replaced two years ago. The restriction now is different: the wheel machinery is dangerous, so the mill is kept locked and visitors can only go inside as part of a guided tour.\n\nAnd third, the chapel ruins — a lovely spot, with beautiful carving on the east window. But the floor is a mass of uneven slabs with very deep gaps between them, and we really do not recommend it for families with small children. There's no extra charge and it's open in all weathers — it's the ground that's the problem.\n\nNARRATOR: Before you hear the rest of the talk, you have some time to look at Questions 17 to 20. [pause] Now listen and answer Questions 17 to 20.\n\nRHIAN: Right. Please look at the plan — visitors will ask you where things are two hundred times a day.\n\nStart at the main gate, at the top of the plan. The entrance path runs south down to the lawn. As you come through the gate there's a small stone hut on your left — that used to be the ticket hut, but it's a store now. The ticket kiosk you want is directly opposite it, on the right-hand side of the path just inside the gate.\n\nNext, the finds tent, where the archaeologists display what came out of the courtyard. Last season it was tucked away behind the old stables and nobody found it. This year we've moved it to the front: it's on the west side of the lawn, directly in front of the stables.\n\nThe first-aid point is on the opposite side of the lawn — the east side, right beside the chapel ruins.\n\nAnd finally, coaches. They drop off at the gate but they don't pick up there. The pick-up point is in the car park, and not at the picnic-area end where it was last year — there were complaints about the noise. It's now at the northern end, immediately next to the exit barrier.\n\nNARRATOR: That is the end of Part 2.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "11  Why was the castle site closed last year?",
+     "options": [
+      "A  Flood water had damaged the walls.",
+      "B  There was not enough money for staff.",
+      "C  Archaeologists needed uninterrupted access to part of the site."
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "12  What facility has been introduced this year?",
+     "options": [
+      "A  a café",
+      "B  a minibus service",
+      "C  an audio guide"
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "13  Why does the speaker advise visitors to arrive early?",
+     "options": [
+      "A  Parking space is very limited.",
+      "B  Tickets often sell out.",
+      "C  The guided tours start early."
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "14  the gatehouse",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 0,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "15  the watermill",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 4,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "16  the chapel ruins",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 3,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "17  ticket kiosk",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Listening · Plan labelling"
+    },
+    {
+     "type": "choice",
+     "q": "18  finds tent",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Listening · Plan labelling"
+    },
+    {
+     "type": "choice",
+     "q": "19  first-aid point",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Listening · Plan labelling"
+    },
+    {
+     "type": "choice",
+     "q": "20  coach pick-up point",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Listening · Plan labelling"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Questions 21–24\n\nChoose the correct letter, A, B or C.\n\nQuestions 25–27\n\nWhat does the tutor say about each of the following sources?\n\nChoose THREE answers from the box and write the correct letter, A–F, next to Questions 25–27.\n\nCOMMENTS ON SOURCES\nA  It is more reliable than the tutor had expected.\nB  It should be used only to establish dates.\nC  It contains mistakes that have since been corrected.\nD  Permission must be obtained before it can be used.\nE  It repeats information found in another source.\nF  It is no longer accepted by specialists.\n\nQuestions 28–30\n\nComplete the sentences below.\n\nWrite NO MORE THAN TWO WORDS for each answer.",
+   "passage": "",
+   "script": "NARRATOR: Part 3. You will hear two archaeology students, Priya and Sam, discussing their field project with their tutor, Dr Okonjo. First, you have some time to look at Questions 21 to 27. [pause] Now listen carefully and answer Questions 21 to 27.\n\nDR OKONJO: Come in, both of you. So — Thornleigh. Remind me how you chose a deserted medieval village nobody has looked at since the nineteen-fifties.\n\nPRIYA: By accident, honestly. We were doing the geophysics practical on the estate next door, and the farmer came over to see what we were up to. He mentioned in passing that his top field was full of bumps and that his grandfather used to plough up roof tile there.\n\nSAM: We nearly didn't follow it up. It was only when we saw the size of the field that we realised the bumps might be house platforms.\n\nDR OKONJO: So it wasn't the published material that drew you in?\n\nPRIYA: No — there isn't really any. One paragraph in a county survey, and that's it.\n\nDR OKONJO: Good — put that in the introduction. Now, what's surprised you so far?\n\nPRIYA: The date. Every textbook says these villages emptied in the fourteenth century, and I assumed Thornleigh went the same way — plague, sheep, done by fourteen hundred. But the documents show people still paying rent there in fifteen ninety-two. It hung on nearly two hundred years longer than I'd assumed.\n\nDR OKONJO: Far more interesting than another plague story. Sam, the archives. Any difficulties?\n\nSAM: One big one. The handwriting's been fine — better than I feared, once I got used to the abbreviations. The dates are clear too. The problem is that the material is split. Half is in the county record office and half in the cathedral library twenty miles away, and they're open on different days. I've made three trips and still haven't seen everything.\n\nDR OKONJO: That's normal. Build it into your timetable. And speaking of the timetable — can I be blunt about the weakest part of the proposal?\n\nPRIYA: Please.\n\nDR OKONJO: The schedule. Your research question is excellent, and your sample of fifteen platforms is perfectly defensible. But you've given yourselves three weeks to survey, excavate two test pits, process the finds and write eight thousand words. That is not a plan, it's a wish. Cut one test pit.\n\nSAM: Two seemed safer.\n\nDR OKONJO: One done properly beats two in a hurry. Now, the sources. The tithe map of eighteen forty-six — I told you to treat it with caution, because tithe surveyors were often careless about boundaries. I've since compared it with the geophysics, and I was wrong. The boundaries line up almost exactly — a far better document than I expected.\n\nPRIYA: That's encouraging.\n\nDR OKONJO: The parish register is different. The original transcription of nineteen eleven had a whole decade of baptisms in the wrong order, and several names misread. The local history society put all that right fifteen years ago, so as long as you cite the revised edition you're safe.\n\nSAM: And the aerial photographs?\n\nDR OKONJO: Excellent quality — they show the hollow way beautifully. The complication is ownership: they belong to a private collection and the family require written consent before anyone reproduces them. Write this week — it takes a month.\n\nNARRATOR: Before you hear the rest of the conversation, you have some time to look at Questions 28 to 30. [pause] Now listen and answer Questions 28 to 30.\n\nDR OKONJO: Right — equipment. What are you taking into the field?\n\nSAM: We've been offered a metal detector by the county unit, but with unstratified ploughsoil it wouldn't tell us much. What I've actually arranged is to borrow a drone from the Geography Department — low-level photographs in the early morning, when the shadows are long.\n\nDR OKONJO: Good. Book it in writing. And Priya, which section are you writing?\n\nPRIYA: I was going to do the buildings, but Sam's covering those with the survey. So I'll concentrate on the water supply — where the springs are, how the ponds were fed, why the stream was diverted.\n\nDR OKONJO: Good, and under-studied. One more thing. Your documents run from twelve hundred to fifteen ninety-two, and you'll lose your reader in the detail. Add a timeline — a simple one, half a page, at the front.\n\nDR OKONJO: Then I'll see you in a fortnight.\n\nNARRATOR: That is the end of Part 3.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "21  How did the students first learn about the Thornleigh site?",
+     "options": [
+      "A  from a remark made by a local farmer",
+      "B  from a published county survey",
+      "C  from photographs taken by the university"
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "22  What has surprised Priya about the village?",
+     "options": [
+      "A  It was abandoned because of plague.",
+      "B  It was occupied far later than she expected.",
+      "C  It was much smaller than the records suggest."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "23  What difficulty has Sam had with the documents?",
+     "options": [
+      "A  The handwriting is hard to read.",
+      "B  They are kept in two different places.",
+      "C  Many of the dates are missing."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "24  According to the tutor, the weakest part of the students' proposal is",
+     "options": [
+      "A  the amount of time allowed.",
+      "B  the number of platforms sampled.",
+      "C  the research question itself."
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  the tithe map of 1846",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 0,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "26  the parish register",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 2,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "27  the aerial photographs",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 3,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "text",
+     "q": "28  Sam has arranged to borrow a ........ from the Geography Department.",
+     "answer": [
+      "drone",
+      "a drone"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "29  Priya's section of the report will concentrate on the village's ........",
+     "answer": [
+      "water supply",
+      "the water supply"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "30  The tutor recommends adding a ........ at the front of the report.",
+     "answer": [
+      "timeline",
+      "time line",
+      "a timeline"
+     ],
+     "topic": "Listening · Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "Questions 31–40\n\nComplete the notes below.\n\nWrite ONE WORD ONLY for each answer.\n\nTHE ARCHAEOLOGY OF COASTAL SALT-MAKING",
+   "passage": "",
+   "script": "NARRATOR: Part 4. You will hear part of a lecture on the archaeology of coastal salt-making. First, you have some time to look at Questions 31 to 40. [pause] Now listen carefully and answer Questions 31 to 40.\n\nLECTURER: Good afternoon. Today I want to look at an industry that shaped hundreds of miles of coastline and then vanished so completely that most people walking over its remains have no idea what they are standing on. I'm talking about coastal salt-making, drawing on the excavations at Kelbeck Sands, where I've worked for six seasons.\n\nLet's begin with why salt mattered. There's a popular idea that salt was chiefly a seasoning. It was, of course, but that is not what drove the industry. Before refrigeration, salt was the only practical way of keeping protein through the winter, and at Kelbeck the demand came from the fishing fleets. Meat was salted too, certainly, but the accounts are unambiguous: it was fish that kept the salt pans burning.\n\nNow location, where students often make an assumption I want to challenge. You would expect salt-workings wherever the sea was saltiest, or where there was most sunshine for evaporation. In this climate, neither decided anything. Boiling seawater takes an enormous amount of heat, and at Kelbeck the medieval pans are found, without exception, within two miles of managed woodland. Where the timber ran out, the industry moved, even if the water was good. In later centuries they switched to coal.\n\nNow the process, more ingenious than most expect. Seawater from the shore is far too weak to boil economically — you would burn a forest to get a sackful. So the workers concentrated it first. At high tide, water was channelled inland into a series of shallow ponds cut into the clay. These lay open to wind and sun, and as the water evaporated the salt was left clinging to the sand.\n\nThe salty sand was scraped up and carried to what we call a kinch — a filtering tank lined with straw. Fresh seawater was poured through it, dissolving the salt crystals, and what trickled out at the bottom was a brine perhaps eight times stronger than the sea. That, and only that, was worth putting on a fire.\n\nBoiling was done in shallow open pans. Early writers assumed these were iron, and iron pans were certainly used later. But the fragments we recover from the medieval levels at Kelbeck are, almost all of them, lead. Lead corrodes, but it conducts heat well and a blacksmith could repair a lead pan in an afternoon. Iron only takes over in the seventeenth century.\n\nWhat interests me most is the waste, because it is what survives. Every tonne of salt left many tonnes of washed-out sand, tipped beside the workings. Over three or four centuries it built up into enormous artificial mounds — some at Kelbeck stand seven metres high. Local people call them the Grey Hills and assume they are natural dunes. They are not. They are industrial spoil, and the most reliable indicator that salt was made at a site.\n\nThose mounds had an afterlife. Standing above the flood level on an otherwise waterlogged shore, they were the only dry ground for miles. From the sixteenth century onwards we find cottages built directly on top of them. Several villages on that coast sit, quite literally, on the rubbish of a dead industry.\n\nNow, distribution — and here I should correct something you may have read. It is often said that the inland routes were marked by stone crosses. A few were, but the crosses are later and mostly religious. What the documents actually record is the packaging: the salt moved in wooden barrels, and the barrels were made in the coastal villages themselves. The registers list more coopers than fishermen in some parishes.\n\nAnd then it ended. The usual explanation is cheap foreign imports, but the dates don't support that. What killed coastal boiling was domestic: the opening of the great rock-salt mines inland, where salt could be dug out without burning anything. Within two generations the pans were abandoned.\n\nWhich leaves the present day. The mounds are protected on paper, but the sea has returned. Rising water levels and winter storms are cutting into them, and at Kelbeck we lose roughly a metre a year. Erosion, not development and not farming, is what will destroy these sites, and it is why we are excavating now.\n\nNARRATOR: That is the end of Part 4.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "31  The main demand for salt came from the need to preserve ........",
+     "answer": [
+      "fish",
+      "herring"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "32  Medieval pans were always sited within two miles of managed ........",
+     "answer": [
+      "woodland"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "33  Seawater was first channelled into shallow ........ cut into the clay.",
+     "answer": [
+      "ponds"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "34  The liquid that ran out of the filtering tank is known as ........",
+     "answer": [
+      "brine",
+      "a brine"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "35  Medieval boiling pans were usually made of ........",
+     "answer": [
+      "lead"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "36  Waste sand built up into large artificial ........",
+     "answer": [
+      "mounds"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "37  From the 16th century these heaps were used as sites for ........",
+     "answer": [
+      "cottages"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "38  Salt was transported inland in ........ made in the coastal villages.",
+     "answer": [
+      "barrels"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "39  The industry declined when salt began to be obtained from inland ........",
+     "answer": [
+      "mines"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "40  The greatest threat to the surviving sites today is ........",
+     "answer": [
+      "erosion"
+     ],
+     "topic": "Listening · Note completion"
+    }
+   ]
+  }
+ ]
+}

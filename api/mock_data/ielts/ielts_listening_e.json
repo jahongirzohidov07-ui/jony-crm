@@ -1,0 +1,473 @@
+{
+ "key": "mock_ielts_listening_e",
+ "section": "listening",
+ "kind": "mock",
+ "variant": "E",
+ "title": "IELTS Mock · Listening — Variant E",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Questions 1-10. Complete the form below. Write ONE WORD AND/OR A NUMBER for each answer.",
+   "passage": "",
+   "script": "Now turn to Part 1. You will hear a woman telephoning a market traders' association about renting a stall. First you have some time to look at Questions 1 to 10. Now listen carefully and answer Questions 1 to 10.\n\nDOUGLAS: Good morning, Fenwood Market Traders' Association, Douglas speaking.\n\nROSE: Oh, good morning. I'd like to ask about taking a stall at your Saturday makers' market. Is this the right number?\n\nDOUGLAS: It is indeed. I can open a trader file for you now, if you've got five minutes. Could I start with your name?\n\nROSE: Yes, of course. It's Rose Quilter.\n\nDOUGLAS: Rose... and is that Quilter beginning with a K?\n\nROSE: No, with a Q. Let me spell it: Q-U-I-L-T-E-R.\n\nDOUGLAS: Q-U-I-L-T-E-R. Thank you. And what sort of business is it?\n\nROSE: Well, I began by making soap, and honestly half the town still thinks of me as the soap woman, but I stopped that two years ago. Everything I sell now is jewellery.\n\nDOUGLAS: So I'll put jewellery down as the trade. Now, our pitches come in two sizes. There's a two-metre table, which most newcomers take, and a three-metre one.\n\nROSE: I did think about two metres, but I've got quite a lot of display stands, so I'd better say three metres.\n\nDOUGLAS: Three metres it is. And which Saturday were you hoping to start?\n\nROSE: The first one in March, if that's possible — the seventh, I think.\n\nDOUGLAS: Let me look. Ah, no, I'm afraid the seventh is completely full; we've got the school craft group in that week. The next one with space is the fourteenth.\n\nROSE: The fourteenth of March is fine. Let's book that.\n\nDOUGLAS: Right. Now the charges. A three-metre pitch is forty-eight pounds — sorry, no, forget that, forty-eight is the double pitch. A three-metre pitch is forty-two pounds for the day.\n\nROSE: Forty-two. And do I pay that in advance?\n\nDOUGLAS: You pay a deposit when you book and the rest on the morning. The deposit is fifteen pounds.\n\nROSE: Fifteen. That's manageable.\n\nDOUGLAS: Is there anything you need us to arrange on the pitch itself? Some traders ask for water, some for electricity.\n\nROSE: I don't need water, but I do use two small lamps, so electricity, please.\n\nDOUGLAS: I'll note electricity. There's no extra charge, but bring your own extension lead. Now, setting up. Traders may come in from eight o'clock — although, hold on, that changed in January. It's seven thirty now, and everyone must be ready by nine.\n\nROSE: Seven thirty. I'll set my alarm.\n\nDOUGLAS: And one important thing about access. Visitors come in through the east gate on the high street, but traders mustn't use that one because of the steps. You need the north gate, by the car park, where you can drive right up to the square.\n\nROSE: The north gate. Got it.\n\nDOUGLAS: Last question, and it's just for our records: how did you hear about the market?\n\nROSE: My sister gets your newsletter, but that isn't really how I found out. I heard the chairwoman being interviewed on a podcast about small businesses, and that's what made me ring.\n\nDOUGLAS: A podcast — I'll write that down; the committee will be pleased. I'll email your confirmation this afternoon. Is there anything else?\n\nROSE: Just one thing. Can I sell at the same pitch every month?\n\nDOUGLAS: After three markets you can request a permanent pitch, yes. Speak to me again in June.\n\nROSE: Wonderful. Thank you very much, Douglas.\n\nDOUGLAS: My pleasure. See you on the fourteenth.\n\nThat is the end of Part 1. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Surname:",
+     "answer": [
+      "Quilter",
+      "QUILTER"
+     ],
+     "topic": "Listening · Form completion (spelling)"
+    },
+    {
+     "type": "text",
+     "q": "2  Type of business: ____",
+     "answer": [
+      "jewellery",
+      "jewelry"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "3  Pitch size required: ____ metres",
+     "answer": [
+      "3",
+      "three"
+     ],
+     "topic": "Listening · Form completion (number)"
+    },
+    {
+     "type": "text",
+     "q": "4  First market booked: ____ March",
+     "answer": [
+      "14",
+      "14th",
+      "fourteenth"
+     ],
+     "topic": "Listening · Form completion (date)"
+    },
+    {
+     "type": "text",
+     "q": "5  Charge for the day: £____",
+     "answer": [
+      "42",
+      "42.00",
+      "forty-two"
+     ],
+     "topic": "Listening · Form completion (price)"
+    },
+    {
+     "type": "text",
+     "q": "6  Deposit payable on booking: £____",
+     "answer": [
+      "15",
+      "15.00",
+      "fifteen"
+     ],
+     "topic": "Listening · Form completion (price)"
+    },
+    {
+     "type": "text",
+     "q": "7  Service needed on the pitch: ____",
+     "answer": [
+      "electricity"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "8  Traders may start setting up at: ____ am",
+     "answer": [
+      "7.30",
+      "7:30",
+      "07.30",
+      "730"
+     ],
+     "topic": "Listening · Form completion (time)"
+    },
+    {
+     "type": "text",
+     "q": "9  Traders must enter by the ____ gate",
+     "answer": [
+      "north"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Heard about the market from a ____",
+     "answer": [
+      "podcast"
+     ],
+     "topic": "Listening · Form completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Questions 11-13: Choose the correct letter, A, B or C.\n\nQuestions 14-16: Who deals with each matter at the Business Yard? Choose THREE answers from the list and write the correct letter, A-F, next to Questions 14-16. The people are: A  the site manager;  B  the duty caretaker;  C  the finance office;  D  the tenants' committee;  E  the security desk;  F  the café manager.\n\nQuestions 17-20: Label the site plan below. Write the correct letter, A-H, next to Questions 17-20. The lettered places on the plan are described as follows: A is the small hut immediately to the LEFT of the main gate; B is the small hut immediately to the RIGHT of the main gate; C is the room at the LEFT-HAND end of the ground floor of the Old Mill Building; D is the room at the RIGHT-HAND end of the ground floor of the Old Mill Building; E is the open area directly BEHIND the Old Mill Building, on its north side; F is the open yard between the gate and the building, on the WEST side of the central path; G is the open yard between the gate and the building, on the EAST side of the central path; H is the low single-storey block in the far right-hand corner of the site, beyond the car park.",
+   "passage": "",
+   "script": "Now turn to Part 2. You will hear a talk given to new tenants at a business centre called Harrow Bank Business Yard. First you have some time to look at Questions 11 to 20. Now listen carefully and answer Questions 11 to 20.\n\nGood afternoon, everyone, and welcome to Harrow Bank Business Yard. I'm Tessa Underwood and I look after lettings here. Before I take you round the site, let me say a few words about the place and about how things work.\n\nPeople often ask about the name. Because the big building in the middle is called the Old Mill, almost everybody assumes this was once a flour mill, and there is a furniture factory in the town with a similar name, which adds to the confusion. In fact neither is right. For most of the last century this was a printing works, turning out timetables and catalogues for the railway companies.\n\nNow, what's different this year? I know some of you signed up because you'd heard rumours about cheaper rent. I'm sorry to say the monthly rent is exactly what it was last year — the board discussed a reduction and decided against it. Parking, too, is unchanged: two pounds a day, paid through the machine by the car park. The real change, and I think it's the one that matters most to small firms, is that the yard now stays open until ten at night instead of closing at six. So if your best working hours are in the evening, you can use them.\n\nOne small administrative point. Meeting rooms used to be booked at reception, and a few of you have been leaving notes there, which is why two of you turned up for the same room last Tuesday. Reception no longer keeps the diary. Nor do we take bookings by phone, whatever the old leaflet says. Everything now goes through the app, which you'll be sent a link to this evening. And yes, the café manager takes sandwich orders, but that is all she takes.\n\nWhile we're on practicalities, let me tell you who to go to when something goes wrong, because tenants waste an extraordinary amount of time asking the wrong person. If your heating stops working, or a tap is dripping, or a door won't lock, don't email me and don't ring the site manager — the duty caretaker is here from seven until seven and will deal with it, usually the same day. Questions about money are different. If an invoice looks wrong, or you want to change the date your payment leaves your account, that's the finance office, upstairs in the Old Mill; they answer within two working days. And if you want to put on an event — a launch party, a market, a film night in the courtyard — the decision isn't mine. The tenants' committee meets on the first Monday of the month — the first Tuesday, sorry, they changed it in the spring — and they approve or refuse every application for the courtyard themselves.\n\nRight, the site. Imagine you're standing at the main gate, looking north up the central path towards the Old Mill Building. There's a small hut on either side of you. The one on your left is the security desk, staffed overnight. The one on your right is where you leave your bicycle — it takes about twenty bikes and the code changes monthly.\n\nWalk up the path to the Old Mill. On the ground floor there are two large rooms, one at each end. At the right-hand end is — sorry, I nearly said the kitchen, but the kitchen is on the first floor. The right-hand room is the post room. The print room, with the big copiers and the guillotine, is at the other end, the left-hand end of the ground floor.\n\nIf you carry on round the building, the whole area behind it, on the north side, is the loading bay. Lorries reverse in there, so please don't park.\n\nFinally, the meeting pods. People always look for them inside the Old Mill and they aren't there. They're in the low single-storey block right over in the far corner on your right, past the car park. Six pods, all bookable by the hour.\n\nThat's the tour in words; now let's go and walk it.\n\nThat is the end of Part 2. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "11  The Old Mill Building was originally",
+     "options": [
+      "A  a flour mill.",
+      "B  a printing works.",
+      "C  a furniture factory."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "12  What has changed at the Business Yard this year?",
+     "options": [
+      "A  the opening hours",
+      "B  the monthly rent",
+      "C  the cost of parking"
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "13  Meeting rooms must now be booked",
+     "options": [
+      "A  at reception.",
+      "B  by telephone.",
+      "C  through the app."
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "14  a heating fault in your unit",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 1,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "15  a query about an invoice",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 2,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "16  permission to hold an event in the courtyard",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 3,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "17  bike store",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "18  print room",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "19  loading bay",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "20  meeting pods",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Listening · Map labelling"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Questions 21-24: Choose the correct letter, A, B or C.\n\nQuestions 25-27: What comment does the tutor make about each source of data? Choose THREE answers from the list and write the correct letter, A-F, next to Questions 25-27. The comments are: A  It is out of date;  B  The sample is too small;  C  It covers only one kind of business;  D  Permission will be needed to use it;  E  The categories are not consistent;  F  It repeats information they already have.\n\nQuestions 28-30: Complete the sentences below. Write NO MORE THAN TWO WORDS for each answer.",
+   "passage": "",
+   "script": "Now turn to Part 3. You will hear two business students, Priya and Callum, discussing their project with their tutor, Dr Naylor. First you have some time to look at Questions 21 to 30. Now listen carefully and answer Questions 21 to 30.\n\nDR NAYLOR: Come in, both of you. So — the loyalty card study. Last time we spoke you were looking at the whole of Merridale town centre.\n\nCALLUM: We were, and that's the first thing we wanted to tell you. We've cut it down to one street, Ashgrove Road.\n\nDR NAYLOR: Because I suggested it, I hope?\n\nPRIYA: Well, you did mention it, but that wasn't really the reason. We wrote to about sixty independent businesses and only nine of them wrote back. With nine we had nothing. On Ashgrove Road there are fourteen shops in the scheme and eleven have agreed to take part, so the street gives us something we can actually work with. It isn't that one street's data is easier to compare — it's simply that without Ashgrove Road we had nothing.\n\nDR NAYLOR: That's a sound reason, and a much more honest one. Now, what have you found so far?\n\nCALLUM: The thing that genuinely surprised me was the shop owners. I'd assumed the customers would be the interesting part — whether older people used the card more, whether it pulled in people from the villages, that sort of thing. Actually the customer patterns were rather dull. What I hadn't expected was how sharply the owners disagree with each other about whether the scheme is worth anything at all. The baker thinks it has saved her business; the man in the hardware shop calls it a waste of paper.\n\nDR NAYLOR: That disagreement is your story, I'd say. Now, I've read your questionnaire. It's a sensible length — twelve questions, that's fine — and there are one or two questions I'd call slightly leading, which we can tidy up in five minutes. But my real worry is bigger than either of those. Every single person you've surveyed is already holding a card. You have nothing at all from the people who were offered one and said no.\n\nPRIYA: Oh. That's true. They're the ones who'd tell us why it doesn't work.\n\nDR NAYLOR: Exactly. Stand outside two of the shops for an afternoon and ask the people leaving without a card.\n\nCALLUM: We can do that. Can I ask about the till data? We asked the shops for weekly sales totals and most of them went quiet.\n\nDR NAYLOR: I'm not surprised. Weekly figures feel like commercial secrets to a small trader. Drop the weekly request — don't abandon the idea altogether, though. Ask for monthly summaries instead. Far less sensitive, and for a one-year comparison it's all you need.\n\nPRIYA: Monthly summaries. Right. We had three other sources we wanted to check with you. The council's footfall counts for the town centre —\n\nDR NAYLOR: Use them with care. The sensors were switched off during the roadworks and nobody has published anything since twenty twenty-two, so whatever you say about them, say clearly that they're out of date.\n\nPRIYA: And the Chamber of Commerce survey?\n\nDR NAYLOR: Useful, but frustrating. They changed the way they group businesses halfway through — what used to be counted as retail became hospitality — so the categories aren't consistent from one year to the next. You can't simply draw a line through it.\n\nCALLUM: And the shops' own till records?\n\nDR NAYLOR: Those are fine academically, but they're not yours to take. Each owner must sign to say you may use them; permission has to come first.\n\nPRIYA: Understood. So, dividing the writing up — I'll do the introduction, and I'll summarise the published research on customer retention, since that's the literature we've both been reading.\n\nDR NAYLOR: Good. And the figures?\n\nCALLUM: I'll build the graphs. I thought a chart of card sign-ups by month —\n\nDR NAYLOR: Sign-ups are the weakest number you have. Your main graph should show how average spend changed across the year. That's what a reader will want.\n\nCALLUM: Average spend. Fine.\n\nDR NAYLOR: One last thing, and it's not optional. Before you interview anybody, the consent forms have to be submitted to the department. Not after — before.\n\nPRIYA: We'll send them on Friday.\n\nThat is the end of Part 3. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "21  Why did the students limit their study to one street?",
+     "options": [
+      "A  Their tutor advised them to.",
+      "B  Too few businesses replied to them.",
+      "C  The street data was easier to compare."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "22  What surprised Callum about his findings?",
+     "options": [
+      "A  Older customers used the card most.",
+      "B  The card attracted visitors from outside the town.",
+      "C  The shop owners strongly disagreed with one another."
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "23  What is Dr Naylor's main criticism of the questionnaire?",
+     "options": [
+      "A  It is too long.",
+      "B  It contains leading questions.",
+      "C  It excludes people without a card."
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "24  What does Dr Naylor advise about the till data?",
+     "options": [
+      "A  request monthly summaries instead",
+      "B  continue asking for weekly totals",
+      "C  leave the sales figures out completely"
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  the council's footfall counts",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 0,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "26  the Chamber of Commerce survey",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 4,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "27  the shops' own till records",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 3,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "text",
+     "q": "28  In the introduction, Priya will summarise published research on ____.",
+     "answer": [
+      "customer retention",
+      "retention"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "29  The main graph should show how ____ changed over the year.",
+     "answer": [
+      "average spend"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "30  Before any interviews take place, the students must submit the ____.",
+     "answer": [
+      "consent forms",
+      "consent form"
+     ],
+     "topic": "Listening · Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "Questions 31-40. Complete the notes below. Write ONE WORD ONLY for each answer.",
+   "passage": "",
+   "script": "Now turn to Part 4. You will hear part of a lecture on the economics of subscription business models. First you have some time to look at Questions 31 to 40. Now listen carefully and answer Questions 31 to 40.\n\nGood morning. Today I want to look at a way of charging that has quietly taken over large parts of the modern economy: the subscription. You pay a small amount at regular intervals, and in return you keep receiving something for as long as you go on paying. It sounds trivial. It is not: it changes what a company owns, what a customer owns, and how both behave.\n\nLet's begin with origins. Students often assume the subscription was invented by the insurance industry, because a premium looks rather like a subscription, and I can see why you'd think that. But the first business to depend on it was publishing. From the seventeenth century onwards, printers sold books and then periodicals by persuading readers to pay in advance for issues that did not yet exist.\n\nThe model then sat fairly quietly for three hundred years until the early two thousands — the late nineties for one or two firms, but the early two thousands for the industry — when software companies discovered it. Before that, a firm sold you a boxed product and heard nothing from you until the next version. What changed is that firms stopped selling licences altogether and began renting access instead. You no longer own the program on your machine; you rent the right to open it.\n\nSo why do companies like this so much? Two main reasons, and the first is the one every finance director will give you. Revenue becomes predictable. A company selling boxed products has no idea what next March looks like. A company with eighty thousand subscribers — eighty thousand, sorry, not eight thousand — knows within a percentage point or two. And predictability is not just comforting — it is financially valuable, because it makes it far easier to plan investment. You will borrow more cheaply, and you will commit to building a factory or hiring forty engineers, if you can show a lender a stable stream of income.\n\nThe second reason is about the cost of customers. There is a well-known rule of thumb in this field, and though the exact figure varies, the direction never does: keeping an existing customer costs roughly a fifth of what it costs to find a new one. Some textbooks say a seventh — I've even seen a tenth quoted — but a fifth is the figure most studies cluster around. If that is true, a business model that automatically renews the relationship every month is doing your marketing for you.\n\nNow look at it from the customer's side. Why does anyone accept this? Partly because what people increasingly want is access rather than ownership. A car that sits unused for twenty-three hours a day is a poor purchase; the ability to use a car when you need one is not. And partly because there is no large payment at the start. The barrier to trying something falls to almost nothing, which is precisely why firms offer free trials.\n\nBut there are risks, and I want you to take them seriously. The industry's key measure of health is the churn rate — the proportion of subscribers who leave in a given period. Churn is brutal arithmetic: a firm losing five per cent of its customers a month replaces its whole customer base in under two years.\n\nSecond, there is a growing consumer problem that researchers call subscription fatigue. The average household in several European countries now holds more than a dozen separate subscriptions, many of them forgotten, and the resentment that follows is corrosive to trust.\n\nThird, and this follows directly from the second, regulators have begun to intervene. Several jurisdictions now insist that if a customer can sign up in two clicks, they must be able to leave in two clicks — in other words, firms must provide a simple cancellation route, with no telephone queues and no retention scripts.\n\nFinally, where is this heading? It is no longer a consumer phenomenon. Aircraft engine manufacturers have for some years sold not engines but flying hours. The manufacturer keeps ownership, and therefore the incentive to make the product last. More on that next week.\n\nThat is the end of Part 4. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "31  Origins — the first industry to rely on subscriptions was ____.",
+     "answer": [
+      "publishing"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "32  From the early 2000s, software firms stopped selling ____.",
+     "answer": [
+      "licences",
+      "licenses",
+      "licence",
+      "license"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "33  Benefit for firms: revenue becomes ____.",
+     "answer": [
+      "predictable"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "34  Stable income makes it easier to plan ____.",
+     "answer": [
+      "investment"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "35  Keeping a customer costs about a ____ of the cost of finding a new one.",
+     "answer": [
+      "fifth"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "36  Benefit for customers: they want ____ rather than ownership.",
+     "answer": [
+      "access"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "37  There is no large ____ at the start.",
+     "answer": [
+      "payment"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "38  Key measure of a firm's health: the ____ rate.",
+     "answer": [
+      "churn"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "39  Consumer problem caused by too many subscriptions: subscription ____.",
+     "answer": [
+      "fatigue"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "40  Regulators now require firms to offer a simple ____ route.",
+     "answer": [
+      "cancellation"
+     ],
+     "topic": "Listening · Note completion"
+    }
+   ]
+  }
+ ]
+}

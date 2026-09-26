@@ -1,0 +1,459 @@
+{
+ "key": "mock_ielts_listening_a",
+ "section": "listening",
+ "kind": "mock",
+ "variant": "A",
+ "title": "IELTS Mock · Listening — Variant A",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Questions 1-10\nComplete the form below.\nWrite ONE WORD AND/OR A NUMBER for each answer.\n\nMARSDEN VALLEY OTTER WATCH – VOLUNTEER REGISTRATION\nFirst name: Daniel",
+   "passage": "",
+   "script": "Part One. You will hear a telephone conversation between a woman who works for a wildlife trust and a man who wants to join a volunteer river survey. First, you have some time to look at questions one to ten. Now listen carefully and answer questions one to ten.\n\nFIONA: Good morning, Marsden Valley Wildlife Trust. Fiona speaking.\n\nDANIEL: Oh, good morning. I've seen something about an otter survey on the river, and I was wondering whether you still needed volunteers.\n\nFIONA: We certainly do. The survey runs from March right through to October, and we're about fifteen people short at the moment. Shall I take a few details while you're on the line?\n\nDANIEL: Yes, please do.\n\nFIONA: Lovely. Can I start with your name?\n\nDANIEL: It's Daniel.\n\nFIONA: And the surname?\n\nDANIEL: Whitcombe. People spell it wrong all the time, so I'd better give you the letters. It's W-H-I-T-C-O-M-B-E.\n\nFIONA: W-H-I-T-C-O-M-B-E. Thank you. And can I ask what you do for a living? We only ask because volunteers sometimes have skills we can borrow.\n\nDANIEL: Well, I trained as an electrician years ago, but I gave that up when I moved here. I'm a plumber now.\n\nFIONA: A plumber. That's genuinely useful - the roof of our field centre leaks every winter. Now, your address?\n\nDANIEL: It's twenty-seven Larchfield Avenue.\n\nFIONA: Sorry, did you say Larchmont Avenue?\n\nDANIEL: No, Larchfield. L-A-R-C-H-F-I-E-L-D. Avenue.\n\nFIONA: Larchfield Avenue. Got it. Now, we monitor three separate stretches of the river. There's Oakhurst Weir, Bramley Bridge and Pinfold Meadow. Do you have a preference?\n\nDANIEL: Which one is nearest the town centre?\n\nFIONA: Oakhurst Weir, but I'm afraid that team is already full - it always fills first. Pinfold Meadow has space, and so does Bramley Bridge.\n\nDANIEL: Then I'll take Bramley Bridge, if that's all right. I cycle past it every day.\n\nFIONA: Bramley Bridge it is. Next, which evening could you manage? Most of our teams go out on Tuesdays.\n\nDANIEL: Tuesday is difficult, I'm afraid. I coach a children's football team. Wednesday or Thursday would suit me much better.\n\nFIONA: Ah - Wednesday is the one evening we never survey, because the water company opens the sluice and the level drops. So shall I put you down for Thursday?\n\nDANIEL: Thursday, yes, that's fine.\n\nFIONA: Right. Everybody has to do a half-day training session before they start. We're running two this year: one on the fifth of March and one a week after that.\n\nDANIEL: I'm away on the fifth, unfortunately.\n\nFIONA: Actually, ignore the fifth altogether - there's a note here saying it's been cancelled. So it's the twelfth of March, ten o'clock until one.\n\nDANIEL: The twelfth. I'll write that down.\n\nFIONA: There's a deposit on the equipment, by the way - that's the trail camera and the night scope. It's forty-five pounds, and you get every penny of it back when you hand the kit in at the end of the season.\n\nDANIEL: Sorry - fifty-four pounds?\n\nFIONA: Forty-five. Four, then five.\n\nDANIEL: Forty-five pounds. And is there anything I need to bring myself?\n\nFIONA: A torch, and a decent pair of gloves - the banks are thick with brambles. Some people bring a notebook as well, but don't bother buying one, we hand those out on the training day.\n\nDANIEL: A torch and gloves. And how long does one survey actually take?\n\nFIONA: We used to tell people an hour, but honestly, by the time you've walked the bank and written everything up, it's ninety minutes. I'd rather be truthful with you at the start.\n\nDANIEL: Ninety minutes is fine.\n\nFIONA: Last question, and it's only for our records: how did you hear about the scheme?\n\nDANIEL: A friend at work mentioned it, I think - no, that's not right, that was something else. I saw your poster in the library, the one with the photograph of the cub on the log.\n\nFIONA: The library. Wonderful - that poster brings us more people than anything else. I'll send you a confirmation by email today.\n\nDANIEL: Thank you very much indeed.\n\nThat is the end of Part One. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Surname: ....................",
+     "answer": [
+      "Whitcombe"
+     ],
+     "topic": "Listening · Form completion (spelling)"
+    },
+    {
+     "type": "text",
+     "q": "2  Occupation: ....................",
+     "answer": [
+      "plumber"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "3  Address: 27 .................... Avenue",
+     "answer": [
+      "Larchfield"
+     ],
+     "topic": "Listening · Form completion (spelling)"
+    },
+    {
+     "type": "text",
+     "q": "4  Survey site chosen: .................... Bridge",
+     "answer": [
+      "Bramley"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "5  Evening available: ....................",
+     "answer": [
+      "Thursday",
+      "Thursdays"
+     ],
+     "topic": "Listening · Form completion (days)"
+    },
+    {
+     "type": "text",
+     "q": "6  Date of training session: .................... March",
+     "answer": [
+      "12",
+      "12th",
+      "twelfth"
+     ],
+     "topic": "Listening · Form completion (dates)"
+    },
+    {
+     "type": "text",
+     "q": "7  Refundable deposit on equipment: £....................",
+     "answer": [
+      "45",
+      "£45",
+      "forty-five"
+     ],
+     "topic": "Listening · Form completion (numbers)"
+    },
+    {
+     "type": "text",
+     "q": "8  Must bring a torch and a pair of ....................",
+     "answer": [
+      "gloves"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "9  Length of one survey: .................... minutes",
+     "answer": [
+      "90",
+      "ninety"
+     ],
+     "topic": "Listening · Form completion (numbers)"
+    },
+    {
+     "type": "text",
+     "q": "10  Heard about the scheme from a poster in the ....................",
+     "answer": [
+      "library"
+     ],
+     "topic": "Listening · Form completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Questions 11-13\nChoose the correct letter, A, B or C.\n\nQuestions 14-16\nWhen is the best time of year to see each of the following?\nChoose THREE answers from the list and write the correct letter, A-F, next to Questions 14-16.\nA  January     B  March     C  May     D  July     E  September     F  November\n\nQuestions 17-20\nLabel the map below. Write the correct letter, A-H, next to Questions 17-20.\nThe lettered positions on the map of Thornmere Wetlands are as follows. The entrance and car park are at the southern end of the reserve. A is a small building on the western side of the car park, beside the gate in its north-western corner. B is on the eastern side of the car park. A main path runs due north from the car park to a T-junction with the northern path. C is beside the main path, halfway along it, on the western side. D is beside the main path, halfway along it, on the eastern side. The northern path runs east to west across the top of the reserve. E is at the western end of the northern path, at the edge of the lake. F is at the eastern end of the northern path. G is out on the lake shore at the far north of the reserve, midway between the western and eastern ends of the northern path, reached by a short spur running north. H is in the south-eastern corner of the reserve, beyond the boundary hedge.",
+   "passage": "",
+   "script": "Part Two. You will hear a warden giving a short introductory talk to a group of visitors at a nature reserve. First, you have some time to look at questions eleven to twenty. Now listen carefully and answer questions eleven to twenty.\n\nWARDEN: Good afternoon, everyone, and welcome to Thornmere Wetlands. I'm Iris, the senior warden here.\n\nLet me start with a bit of history, because almost everybody gets this wrong. Visitors look at all this open water and assume Thornmere was built as a reservoir. It wasn't. Others have read that it's drowned farmland, and it's true there was a farm on the eastern edge until the nineteen fifties - but the basin itself is not farmland either. The whole of this site is a gravel quarry. They dug here for thirty years, the machines stopped in nineteen eighty-one, and the water arrived on its own.\n\nNow, we read all the comment cards, and I want to be open about what people tell us. Every year somebody writes about the prices in the cafe, and yes, the cake is expensive. We've had a handful of letters asking for more signs along the trails. But the complaint we receive more than any other, by a very long way, is about the condition of the paths. They flood, they're muddy from October to April, and we know. The boardwalk being built this winter is our answer.\n\nA word about dogs. Dogs are welcome here - we're one of the few reserves in the county that says so. You don't need a permit, and there's no need to leave them in the car. But they must stay on the eastern path. That's the only route where they're allowed, because the ground-nesting birds are all on the western side.\n\nRight - what can you see, and when? People get the timings wrong so often that I say this in every talk.\n\nWater voles first. Visitors turn up in mid-July with cameras and see nothing at all. July is exactly when the vegetation along the ditches is tallest and the animals are hidden. If water voles are what you want, come in May, when the new growth is still short and they're feeding out in the open.\n\nDragonflies are different. There are a few on the wing from late spring onwards, but for the emperor dragonflies - the big ones that patrol over the main lake - July is the month.\n\nAnd our wintering geese. People always say January, and there certainly are geese in January. But the real spectacle isn't the birds sitting on the water in midwinter; it's the arrival, when several thousand come in over the ridge at dusk - and that happens in November.\n\nNow, the map on the back of your leaflet. Let me talk you round it, because two of the buildings have moved since it was printed.\n\nYou came in through the car park at the southern end. The cafe, by the way, is the large building on the eastern side of the car park. As you leave by the gate in the north-western corner, there's a low wooden building immediately on your left, on the western side of the car park. That's the volunteers' hut.\n\nFrom there the main path runs due north. About halfway along, on your left - sorry, on your right, the eastern side - you'll find the dragonfly pond, a shallow pool we dug three years ago. Don't confuse it with the reedbed directly opposite, on the western side of the path.\n\nAt the top, the main path meets the northern path in a T-junction. Turn left and follow the northern path to its western end, and you'll come to the bird tower, standing right at the water's edge.\n\nFinally, the otter hide. The old leaflets show it at the eastern end of the northern path, and that is wrong - we moved it two years ago. It now sits out on the lake shore at the far north of the reserve, midway between the western and eastern ends of that path. Take the short spur that leads north and you'll walk straight into it.\n\nOne last thing: follow the boundary hedge to the south-eastern corner and just beyond it you'll see the ruins of that old farm, outside the reserve.\n\nPlease be back at the car park by half past four. Thank you.\n\nThat is the end of Part Two. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "11  The land now occupied by the reserve was originally",
+     "options": [
+      "A  a reservoir.",
+      "B  a gravel quarry.",
+      "C  farmland."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "12  What do visitors complain about most often?",
+     "options": [
+      "A  the cost of the cafe",
+      "B  the shortage of signs",
+      "C  the condition of the paths"
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "13  Visitors who bring dogs must",
+     "options": [
+      "A  keep to the eastern path.",
+      "B  obtain a permit in advance.",
+      "C  leave the dogs in their car."
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "14  water voles",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 2,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "15  emperor dragonflies",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 3,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "16  wintering geese",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 5,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "17  the volunteers' hut",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "18  the dragonfly pond",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "19  the bird tower",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "20  the otter hide",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Listening · Map labelling"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Questions 21-24\nChoose the correct letter, A, B or C.\n\nQuestions 25-27\nWhat problem did the students have at each of the following sites?\nChoose THREE answers from the list and write the correct letter, A-E, next to Questions 25-27.\nA  The trap was moved by members of the public.\nB  Artificial lighting nearby reduced the trap's effectiveness.\nC  They were unable to get in after dark.\nD  The ground was too wet for the equipment.\nE  Local residents complained about the noise.\n\nQuestions 28-30\nComplete the sentences below.\nWrite ONE WORD ONLY for each answer.",
+   "passage": "",
+   "script": "Part Three. You will hear two students, Priya and Tom, discussing a biology field project with their tutor, Dr Alcott. First, you have some time to look at questions twenty-one to thirty. Now listen carefully and answer questions twenty-one to thirty.\n\nDR ALCOTT: Come in, both of you. So - urban moths. Remind me why moths, Tom. When we last spoke you were set on butterflies.\n\nTOM: I was. But then I went through the county biological records, and there are twenty years of butterfly transects for this city - three separate groups have walked them. Whereas for moths, apart from one survey in the university grounds in two thousand and nine, there is essentially nothing.\n\nPRIYA: They're more numerous too, which helps with the statistics, and they're no harder to identify once you've got the key. But the reason we chose them is that nobody has looked.\n\nDR ALCOTT: Good. That's the right reason. Now, your first method - what went wrong?\n\nTOM: We used light traps, and to begin with we borrowed a very bright mercury vapour lamp. The catches were enormous. We were delighted for a fortnight, then Priya spotted the problem.\n\nPRIYA: We were pulling moths in from half a kilometre away, maybe further. So a trap in a small back garden wasn't sampling that garden at all - it was sampling half the district. The whole point is to compare one garden with another, and we'd destroyed that.\n\nDR ALCOTT: And the specimens themselves?\n\nPRIYA: They were fine - undamaged, all released next morning. And the lamps were lent to us, so cost wasn't an issue either. It was purely the catchment.\n\nDR ALCOTT: Right. Now, the analysis you sent me. You've run a t-test on the site totals.\n\nTOM: We have. Should we add more sites? We could get to fifteen.\n\nDR ALCOTT: No, you don't need more sites - nine is respectable for an undergraduate project. And a second season would be lovely, but you haven't got one; you submit in June. The problem is the test itself. Your data are counts. They're heavily skewed, and half your gardens produced fewer than five individuals on some nights. You need a model built for count data, not a t-test.\n\nPRIYA: A generalised linear model, then.\n\nDR ALCOTT: Exactly. Now - weather. Moth activity is driven by temperature and cloud cover, so what are you using?\n\nPRIYA: We took the figures from the national weather station.\n\nTOM: Which is eleven kilometres away, on the far side of the hill. On some nights it's three degrees colder there than in the city centre.\n\nDR ALCOTT: Then don't use it. Could the department lend you loggers? Let me think - no, actually, ours are all committed to the estuary project until August. Buy your own. A small temperature sensor is about thirty pounds, and you can put one beside each trap.\n\nTOM: That's manageable. We'll order nine.\n\nDR ALCOTT: Good. And the sites - you said you'd had trouble at all three.\n\nPRIYA: We did. Redhill Allotments is a beautifully dark site, no street lights, but the allotment committee locks the gates at sunset and wouldn't give us a key. So we could only set up before dusk.\n\nTOM: Carver Street Gardens was the opposite problem. There's a floodlight on the side of the flats next door that stays on all night, and our trap was competing with it.\n\nPRIYA: And then Priory Park. Twice we came back at six in the morning and the trap had been picked up and carried thirty metres to the bandstand. Nothing was broken or taken - people had just moved it, out of curiosity.\n\nDR ALCOTT: All three are worth writing up honestly. Now, division of labour?\n\nTOM: I'll do the methods - no, wait, Priya's better at that. I'll take responsibility for the analysis instead, since I'm learning the statistics.\n\nPRIYA: And I'll write the methods and site descriptions.\n\nDR ALCOTT: Fine. One thing to be careful about: the published literature is clear that the single biggest threat to urban moth populations is lighting, so engage with that properly rather than mentioning it in your last paragraph.\n\nPRIYA: Understood.\n\nDR ALCOTT: And the department now insists that every field report contains a section on ethics - trapping, handling, release.\n\nTOM: We'll put it straight after the methods.\n\nThat is the end of Part Three. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "21  Tom decided to study moths rather than butterflies mainly because",
+     "options": [
+      "A  moths are easier to identify.",
+      "B  moths are more numerous in cities.",
+      "C  moths have been largely ignored by other researchers."
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "22  What was wrong with the students' first trapping method?",
+     "options": [
+      "A  It drew insects in from far outside the study site.",
+      "B  It injured the insects that were caught.",
+      "C  It was too expensive to repeat."
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "23  What does Dr Alcott say the students must change?",
+     "options": [
+      "A  the number of sites they use",
+      "B  the statistical test they have applied",
+      "C  the length of the study period"
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "24  What do they decide to do about weather data?",
+     "options": [
+      "A  buy sensors of their own",
+      "B  carry on using the national weather station",
+      "C  borrow equipment from the department"
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  Redhill Allotments",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 2,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "26  Carver Street Gardens",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 1,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "27  Priory Park",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 0,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "text",
+     "q": "28  In the final report, Tom will be responsible for the ....................",
+     "answer": [
+      "analysis"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "29  Dr Alcott says published research identifies .................... as the greatest threat to urban moths.",
+     "answer": [
+      "lighting"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "30  The department requires every field report to contain a section on ....................",
+     "answer": [
+      "ethics"
+     ],
+     "topic": "Listening · Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "Questions 31-40\nComplete the notes below.\nWrite ONE WORD ONLY for each answer.\n\nBIOLUMINESCENCE IN THE DEEP SEA",
+   "passage": "",
+   "script": "Part Four. You will hear part of a lecture given to first-year marine biology students about light produced by living organisms in the deep sea. First, you have some time to look at questions thirty-one to forty. Now listen carefully and answer questions thirty-one to forty.\n\nLECTURER: Good morning. Today I want to talk about bioluminescence - light made by living things - and how extraordinarily common it is in the deep ocean. If you took a column of seawater from the surface down to three thousand metres and counted the animals in it, about three-quarters could produce light. On land, bioluminescence is a curiosity. Down there it is the normal condition.\n\nLet's begin with the chemistry, which is simpler than you might expect. In almost every case the light comes from a small molecule, known generically as luciferin, reacting with oxygen. That reaction is far too slow to be useful on its own, so it is speeded up enormously by an enzyme, usually called luciferase. You will sometimes hear people say the reaction depends on a special pigment, and that is not right; the essential partner for the luciferin is the enzyme.\n\nNow, colour. Bioluminescence on land is mostly green or yellow - think of a glow-worm in a hedge. In the deep sea, almost everything is blue. There's a straightforward reason: blue light travels further through seawater than any other colour, and the eyes of deep-sea animals are tuned to it. There are a handful of exceptions - one family of dragonfish produces red light - but the rule is blue.\n\nSo what is all this light for? Let me give you four uses.\n\nThe first is camouflage, and it is thoroughly counter-intuitive. It's called counter-illumination. Imagine a small fish hanging in mid-water at four hundred metres - sorry, let's say three hundred, the principle is the same. There is still a faint glow coming down from the surface. A predator swimming below looks up and sees the fish outlined against that glow. So the fish covers its underside with tiny light organs, matches their brightness to the water above, and then, seen from below, there is no shadow at all. The fish simply disappears.\n\nThe second use is defence by distraction. A number of deep-sea squid, when they are attacked, do not release a cloud of ink - ink is useless in permanent darkness. Instead they eject a cloud of glowing fluid, and while the predator is investigating that bright cloud, the squid has gone.\n\nThird, and most famously, hunting. The deep-sea anglerfish carries a lure on a modified fin spine dangling just in front of its jaws. The lure glows, and it draws prey towards the mouth. Note that the anglerfish does not make that light itself. Its lure is a pouch packed with bacteria, which it farms. In fact a great many fish, including the flashlight fish, synthesise no light at all but instead keep bacteria inside dedicated organs, controlling the brightness with a fold of skin.\n\nThe fourth use is my favourite: the burglar alarm. When certain jellyfish are seized, they put on a violent display of flashing light that can be seen for many metres. It looks suicidal - until you realise what it does. The display advertises the position of the animal attacking them, and it attracts a larger predator, which may well eat the attacker. The jellyfish is not trying to escape. It is calling for something bigger.\n\nFinally, a word about why we know far less than we should. For a century - well, rather more than a century, but a century will do - the only way to collect these animals was to tow a net behind a ship. Nets damage the animals: the light organs are extremely delicate, and what arrives on deck is usually a bag of broken tissue that no longer glows at all. For that reason, modern teams have largely abandoned nets in favour of remotely operated vehicles, which can film an animal in place, at depth, without touching it.\n\nAnd a practical footnote. The luciferase enzyme has become one of the most useful tools in biomedical research. If you insert the gene into tumour cells, those cells produce light, and a tumour that would otherwise be invisible becomes visible in a laboratory image. So a jellyfish in the Pacific has quietly changed the way we photograph cancer.\n\nThat is the end of Part Four. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "31  Chemistry: luciferin reacts with oxygen, and the reaction is speeded up by an ....................",
+     "answer": [
+      "enzyme"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "32  Colour: deep-sea light is nearly always .................... , the colour that travels furthest through seawater.",
+     "answer": [
+      "blue"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "33  Camouflage (counter-illumination): light organs underneath mean that no .................... can be seen from below.",
+     "answer": [
+      "shadow"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "34  Defence: attacked squid release a glowing cloud instead of ....................",
+     "answer": [
+      "ink"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "35  Hunting: the anglerfish's glowing lure draws .................... towards its mouth.",
+     "answer": [
+      "prey"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "36  Many fish make no light themselves but keep .................... inside special organs.",
+     "answer": [
+      "bacteria"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "37  'Burglar alarm': the flashing display attracts a larger .................... , which may attack the jellyfish's attacker.",
+     "answer": [
+      "predator"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "38  Research problem: nets .................... the animals, so their light organs stop working.",
+     "answer": [
+      "damage"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "39  Modern teams prefer to use remotely operated ....................",
+     "answer": [
+      "vehicles"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "40  Medical use: a tumour that would otherwise be invisible becomes .................... in a laboratory image.",
+     "answer": [
+      "visible"
+     ],
+     "topic": "Listening · Note completion"
+    }
+   ]
+  }
+ ]
+}

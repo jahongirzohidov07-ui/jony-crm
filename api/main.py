@@ -1317,3 +1317,20 @@ try:
 except Exception as _e34:
     print(f"[seed] stretinko 420 xato: {_e34}")
 
+
+# ---------------------------------------------------------------------------
+# MOCK TEST BAZASI (2026-09-26)
+#
+# Jahongir: "sen xuddi shu pattern va uslubdagi Mock testlar tuzib
+# berasan haqiqiy IELTS CDI testlari bilan 1x1 kopya bo'lishi kerak ...
+# va katta mock test bazasini yarat".
+# api/mock_data/ielts/*.json — Jony Academy uchun yangidan yozilgan
+# IELTS Listening / Reading / Writing / Speaking variantlari. Idempotent.
+# ---------------------------------------------------------------------------
+try:
+    from sqlalchemy.orm import Session as _VS35
+    from mock_seed import seed_mocks as _sm35
+    with _VS35(engine) as _db35:
+        _sm35(_db35)
+except Exception as _e35:
+    print(f"[seed] mock bazasi xato: {_e35}")

@@ -1,0 +1,473 @@
+{
+ "key": "mock_ielts_listening_c",
+ "section": "listening",
+ "kind": "mock",
+ "variant": "C",
+ "title": "IELTS Mock · Listening — Variant C",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Questions 1-10\n\nComplete the form below.\n\nWrite ONE WORD AND/OR A NUMBER for each answer.\n\nRIVERBEND MAKERSPACE - NEW MEMBER ENQUIRY",
+   "passage": "",
+   "script": "You will hear a conversation between a woman who wants to join a community workshop and a member of staff. First, you have some time to look at questions 1 to 10.\n\nNow listen carefully and answer questions 1 to 10.\n\nOWEN: Good morning, Riverbend Makerspace, Owen speaking. How can I help?\n\nHANNAH: Oh, hello. I picked up one of your leaflets in the library and I'd like to find out about joining.\n\nOWEN: Of course. Let me take a few details and then I'll talk you through the options. Can I start with your name?\n\nHANNAH: Yes, it's Hannah - Hannah Pardoe.\n\nOWEN: And how do you spell the surname?\n\nHANNAH: It's P-A-R-D-O-E. People very often put a W on the end, but there isn't one.\n\nOWEN: P-A-R-D-O-E. Got that. Right. There are three types of membership. Full membership gives you the building seven days a week. Then there's weekend only, which is Saturday and Sunday, nine till six. And there's the evening one, which runs from five until ten, Monday to Friday.\n\nHANNAH: Hmm. I don't finish work until half past four, so... weekend would be - actually, no. My weekends are completely taken up with family things. The evening one is really the only one that works.\n\nOWEN: Evening membership, then. That one's thirty-four pounds a month. Full is fifty-two and weekend is twenty-nine, in case anyone asks you.\n\nHANNAH: Thirty-four. That's fine.\n\nOWEN: Now, before you can touch any of the machines you have to attend an induction session. We run one on the second Tuesday of every month. The next one is the ninth of May - oh, sorry, ignore that, I'm reading off last month's sheet. The ninth was April. It's the twelfth of May.\n\nHANNAH: The twelfth. I'll write that down.\n\nOWEN: Is there a particular area you're interested in? Most new members come to us for woodwork or for the 3D printers.\n\nHANNAH: Well, I've done a fair bit of woodwork at home already, and the printers don't really appeal. What I'd genuinely like to learn is welding. Is that something you cover?\n\nOWEN: Welding, absolutely. It's one of our busiest workshops, so do book early. For the induction itself we supply the aprons and the heavy gloves. The one thing we ask you to bring yourself is a pair of goggles. Any ordinary safety pair will do - you can buy them for a few pounds.\n\nHANNAH: Goggles. Right, I'll get some.\n\nOWEN: Every member is allocated a storage locker for tools and unfinished projects. Let me see what's free. I can give you fifty-one - no, sorry, fifty-one was taken last week. Yours will be number forty-seven.\n\nHANNAH: Forty-seven. Lovely.\n\nOWEN: The main door has a keypad on it. We used to post the access code out with the welcome pack, but too many letters went astray, so now we just send it by text. That means I need your mobile number to be correct on the system.\n\nHANNAH: No problem, I'll give it to you in a moment. Can I ask about parking?\n\nOWEN: Ah. That's the one awkward thing about us. There's no parking at all on our site - the yard is used for deliveries. The nearest place is the car park behind the library, which is about four minutes' walk, and it's free after six in the evening.\n\nHANNAH: Behind the library. That's easy enough.\n\nOWEN: It is.\n\nHANNAH: And one last thing - is there any kind of discount available?\n\nOWEN: We used to run a student discount, but that finished at the end of last year, I'm afraid. What we do offer now is a discount for volunteers. If you help out at one of our open days, you get a free month added to your membership. Quite a few people do two or three a year.\n\nHANNAH: That sounds worth doing. Thank you, that's all very clear.\n\nOWEN: My pleasure. I'll email you the confirmation today.\n\nThat is the end of Part 1. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Surname:",
+     "answer": [
+      "Pardoe",
+      "PARDOE"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "2  Type of membership chosen:",
+     "answer": [
+      "evening",
+      "Evening"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "3  Cost per month: £",
+     "answer": [
+      "34",
+      "£34",
+      "thirty-four"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "4  Date of induction session:",
+     "answer": [
+      "12 May",
+      "12th May",
+      "May 12",
+      "May 12th"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "5  Workshop the member wants to learn:",
+     "answer": [
+      "welding",
+      "Welding"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "6  Member must bring her own:",
+     "answer": [
+      "goggles",
+      "Goggles"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "7  Storage locker number:",
+     "answer": [
+      "47",
+      "forty-seven"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "8  Access code will be sent by:",
+     "answer": [
+      "text",
+      "SMS"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "9  Nearest car park is behind the:",
+     "answer": [
+      "library",
+      "Library"
+     ],
+     "topic": "Listening · Form completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Discount is now offered to:",
+     "answer": [
+      "volunteers",
+      "volunteer"
+     ],
+     "topic": "Listening · Form completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Questions 11-13\n\nChoose the correct letter, A, B or C.\n\nQuestions 14-16\n\nWhich feature is mentioned in connection with each of the following bicycle models?\n\nChoose THREE answers from the list A-F and write the correct letter next to Questions 14-16.\n\nA  a step-through frame\nB  a longer-range battery\nC  a child seat\nD  puncture-proof tyres\nE  a folding frame\nF  a cargo rack\n\nQuestions 17-20\n\nLabel the map below. Write the correct letter, A-H, next to Questions 17-20.\n\nThe map shows the central square of Halford Point Technology Park. The lettered locations are as follows:\nA is at the north end of the main path, beside the bus stop.\nB is directly opposite the main entrance, on the far side of the square.\nC is on the west side of the square, between the cafe and the pond.\nD is at the south-east corner, next to the delivery gate.\nE is in the middle of the square, beside the fountain.\nF is behind the main building, next to the bicycle racks.\nG is at the west end of the staff car park, beside the recycling bins.\nH is at the top of the steps that lead up to the sports hall.",
+   "passage": "",
+   "script": "You will hear a talk given by the travel coordinator of a technology park about its bicycle hire scheme. First, you have some time to look at questions 11 to 20.\n\nNow listen carefully and answer questions 11 to 20.\n\nROSIE: Good afternoon, everyone, and welcome to Halford Point. My name is Rosie Kandel and I coordinate transport across the park. I've got ten minutes to tell you how our bicycle hire scheme works, which models we run, and where everything is.\n\nFirst, a bit of history. People often assume we launched the scheme for environmental reasons, and of course cutting our emissions is a welcome side effect. Several of you emailed to ask whether it began as a staff health initiative, because we do now run cycling clubs. But neither of those was the trigger. The plain truth is that by that spring our car park had simply run out of spaces, and building a second one would have cost more than the entire scheme has cost in six years. So it was a parking problem, and bicycles were the cheapest answer.\n\nNow, what surprised us in the first twelve months. We had budgeted for a heavy morning peak, with people riding in from the station between eight and nine, and we did get that - although it was smaller than predicted. We also assumed most riders would be experienced cyclists, and in fact roughly a third had not ridden since school, which we should probably have anticipated. No, the genuine surprise, the thing none of us had modelled, was the time of day. Our busiest period, by a clear margin, turned out to be the middle of the day - lunchtime trips out to the retail park and back.\n\nAnd looking ahead. There have been persistent rumours that the hire charge is going up in September, and I can tell you today that that is not happening this year - the price is frozen until at least next April. What is changing on the first of September is who can use the bikes. Until now you have needed a park pass, which means staff and contractors only. From September the scheme opens up, and anyone living in the surrounding area will be able to hire a bike from our stands. We expect it to be busy, so please do book ahead.\n\nRight - the three models, because people get them confused. The Skylark is our entry-level bike, and it was chosen specifically with occasional riders in mind. The key thing about it is the step-through frame - there's no crossbar, so you don't have to lift your leg over anything. It's the one I recommend to nervous riders.\n\nThe Bramble is for the long runs - out to the reservoir, or over to the Eastfield site. We did consider giving the Bramble solid tyres, and in the end that idea went to a different model. What the Bramble has is a much larger battery, which will take you about ninety kilometres on one charge.\n\nAnd the Tor is the workhorse. It's the heaviest of the three, and it's the one that got the puncture-proof tyres, because it spends most of its life on the gravel track along the canal, where we were repairing three or four flats a week.\n\nNow, locations, and please do mark these on the map in your pack.\n\nThe repair station - where you'll find pumps, spanners and the tool board - is right at the west end of the staff car park, beside the recycling bins. Some of you will remember it used to be by the pond; that site is now the flower stall.\n\nThe charging hub, where the batteries are swapped, is tucked away behind the main building, immediately next to the bicycle racks. It's covered, so you can do it in the rain.\n\nStaff showers and lockers are at the top of the steps leading up to the sports hall. Do use them - they're rarely busy before nine.\n\nAnd finally the helmet kiosk. We originally planned to put it at the south-east corner by the delivery gate, but the lorries made that impossible, so it now sits right in the middle of the square, beside the fountain. You can't miss it.\n\nThat is the end of Part 2. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "11  Why was the bicycle hire scheme originally introduced?",
+     "options": [
+      "A  because the car park was full",
+      "B  to reduce the park's carbon emissions",
+      "C  to improve the health of staff"
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "12  What surprised the organisers during the first year?",
+     "options": [
+      "A  the size of the morning peak from the station",
+      "B  the time of day when most trips were made",
+      "C  how many riders were inexperienced"
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "13  What will change in September?",
+     "options": [
+      "A  The hire charge will increase.",
+      "B  The scheme will be open to local residents.",
+      "C  Advance booking will no longer be needed."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "14  the Skylark",
+     "options": [
+      "A  a step-through frame",
+      "B  a longer-range battery",
+      "C  a child seat",
+      "D  puncture-proof tyres",
+      "E  a folding frame",
+      "F  a cargo rack"
+     ],
+     "answer": 0,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "15  the Bramble",
+     "options": [
+      "A  a step-through frame",
+      "B  a longer-range battery",
+      "C  a child seat",
+      "D  puncture-proof tyres",
+      "E  a folding frame",
+      "F  a cargo rack"
+     ],
+     "answer": 1,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "16  the Tor",
+     "options": [
+      "A  a step-through frame",
+      "B  a longer-range battery",
+      "C  a child seat",
+      "D  puncture-proof tyres",
+      "E  a folding frame",
+      "F  a cargo rack"
+     ],
+     "answer": 3,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "17  repair station",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "18  charging hub",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 5,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "19  staff showers",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Listening · Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "20  helmet kiosk",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Listening · Map labelling"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Questions 21-24\n\nChoose the correct letter, A, B or C.\n\nQuestions 25-27\n\nWhat problem do the students identify with each of the following materials?\n\nChoose THREE answers from the list A-F and write the correct letter next to Questions 25-27.\n\nA  It is too expensive to buy in quantity.\nB  It performs poorly in cold water.\nC  It cannot be obtained locally.\nD  It needs specialist tools to shape.\nE  It breaks down in sunlight.\nF  It adds too much weight.\n\nQuestions 28-30\n\nComplete the sentences below.\n\nWrite NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
+   "passage": "",
+   "script": "You will hear two engineering students, Priya and Marcus, discussing a design project with their tutor, Dr Finlay. First, you have some time to look at questions 21 to 30.\n\nNow listen carefully and answer questions 21 to 30.\n\nDR FINLAY: Come in, both of you. So - the river sensor. Last time we met you were still working on the wind turbine blade.\n\nPRIYA: We were, and we've dropped it.\n\nDR FINLAY: Tell me why. Was it the equipment? I know the wind tunnel has been oversubscribed.\n\nMARCUS: That did worry us at first, but the technician found us three slots, so it wasn't really a problem in the end. And you didn't push us either way, to be fair.\n\nPRIYA: No, what decided it was that we went to the group presentations in week four and discovered that Ravi's team was doing almost exactly the same thing - same aerofoil, same test rig. There didn't seem much point in two groups producing the same report.\n\nDR FINLAY: Sensible. So, a low-cost sensor for river water quality. What's wrong with the sensors that already exist?\n\nMARCUS: Well, they're not cheap, obviously, and the small ones are still quite bulky, which matters if you want to leave them in a stream. But honestly, neither of those is the real issue. The real issue is drift. Every commercial unit we looked at has to be recalibrated, some of them monthly. If you're a volunteer group with forty sensors along a river, nobody is going to do that. That's the problem we want to attack.\n\nDR FINLAY: Good - and that's a much sharper research question. Now, I've read your draft specification, and I have one concern. You're proposing to measure temperature, turbidity, dissolved oxygen, conductivity, pH and nitrate.\n\nPRIYA: Is that too ambitious?\n\nDR FINLAY: For twelve weeks, yes. My advice is not to run everything in the laboratory first, tempting though that is, and not to go running to the water company for their data - they'll take two months to answer. My advice is simply to cut the list. Pick two, perhaps three variables, and do them properly. A sensor that measures two things reliably is a result. Six things measured badly is nothing.\n\nMARCUS: That's fair.\n\nDR FINLAY: And the housing?\n\nPRIYA: We went round in circles on that. Marcus wanted to 3D print it, and we did print a prototype, but the layers let water through after about a week.\n\nMARCUS: They did. And buying an off-the-shelf waterproof box would eat most of our budget. So what we've settled on is a length of recycled drainage pipe with end caps. It costs almost nothing, it's already designed to sit in water, and the scrapyard on Mill Lane will give us as much as we want.\n\nDR FINLAY: I like that. Now, the probe contacts. What have you rejected and why?\n\nPRIYA: Stainless steel first. It's chemically ideal, and cheap enough. But we have no way of cutting or bending it accurately - you need proper machine tools, and the workshop won't let undergraduates use the lathe.\n\nMARCUS: Then nylon, which we wanted for the mounting collar. The trouble is that these units sit in the open all summer. Nylon goes brittle and cracks under ultraviolet - one supplier's own datasheet says eighteen months. That rules it out.\n\nPRIYA: And copper, which would be perfect electrically. But at the price per metre we were quoted, forty units would cost more than the rest of the project put together.\n\nDR FINLAY: All reasonable. Practical matters now. You'll need flow data to interpret your readings.\n\nMARCUS: Yes - we're borrowing a flow meter from the geography department. Dr Osei has agreed, as long as we return it before the field trip.\n\nDR FINLAY: Excellent. And transmission?\n\nPRIYA: The radio is the biggest drain on the battery, so we're only waking it up occasionally. We first said every two hours, but the calculations didn't work - the battery lasted five weeks. So data goes to the base station once every six hours.\n\nDR FINLAY: Much better. Last thing - the first draft is due at the end of week eight, and do remember the department changed the requirements this year. Every draft must now contain a section on risk assessment. Students lost marks last year for leaving it out.\n\nMARCUS: Risk assessment. Noted.\n\nThat is the end of Part 3. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "21  Why did the students change their project topic?",
+     "options": [
+      "A  The equipment they needed was unavailable.",
+      "B  Another group was working on the same idea.",
+      "C  Their tutor advised them against it."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "22  According to Marcus, the main weakness of existing commercial sensors is",
+     "options": [
+      "A  their purchase price.",
+      "B  their need for frequent recalibration.",
+      "C  their physical size."
+     ],
+     "answer": 1,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "23  What does Dr Finlay advise the students to do?",
+     "options": [
+      "A  measure fewer variables",
+      "B  carry out all testing in the laboratory first",
+      "C  request data from the water company"
+     ],
+     "answer": 0,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "24  What have the students decided to use for the sensor housing?",
+     "options": [
+      "A  a 3D-printed case",
+      "B  a waterproof box bought ready-made",
+      "C  a piece of recycled pipe"
+     ],
+     "answer": 2,
+     "topic": "Listening · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  stainless steel",
+     "options": [
+      "A  It is too expensive to buy in quantity.",
+      "B  It performs poorly in cold water.",
+      "C  It cannot be obtained locally.",
+      "D  It needs specialist tools to shape.",
+      "E  It breaks down in sunlight.",
+      "F  It adds too much weight."
+     ],
+     "answer": 3,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "26  nylon",
+     "options": [
+      "A  It is too expensive to buy in quantity.",
+      "B  It performs poorly in cold water.",
+      "C  It cannot be obtained locally.",
+      "D  It needs specialist tools to shape.",
+      "E  It breaks down in sunlight.",
+      "F  It adds too much weight."
+     ],
+     "answer": 4,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "choice",
+     "q": "27  copper",
+     "options": [
+      "A  It is too expensive to buy in quantity.",
+      "B  It performs poorly in cold water.",
+      "C  It cannot be obtained locally.",
+      "D  It needs specialist tools to shape.",
+      "E  It breaks down in sunlight.",
+      "F  It adds too much weight."
+     ],
+     "answer": 0,
+     "topic": "Listening · Matching"
+    },
+    {
+     "type": "text",
+     "q": "28  The students will borrow a ............ from the geography department.",
+     "answer": [
+      "flow meter",
+      "flowmeter",
+      "flow-meter"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "29  Readings will be sent to the base station once every ............ .",
+     "answer": [
+      "six hours",
+      "6 hours"
+     ],
+     "topic": "Listening · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "30  Every draft of the report must now include a section on ............ .",
+     "answer": [
+      "risk assessment",
+      "risk-assessment"
+     ],
+     "topic": "Listening · Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "Questions 31-40\n\nComplete the notes below.\n\nWrite ONE WORD ONLY for each answer.\n\nPASSIVE COOLING IN TALL BUILDINGS",
+   "passage": "",
+   "script": "You will hear part of a lecture on passive cooling in tall buildings. First, you have some time to look at questions 31 to 40.\n\nNow listen carefully and answer questions 31 to 40.\n\nLECTURER: Right. Today I want to look at how a tall building can be kept comfortable without relying entirely on mechanical air conditioning - what engineers call passive cooling.\n\nLet me begin with a piece of history that is often told incorrectly. The first successful mechanical cooling system was installed not in a hospital and not in a cinema, as the textbooks sometimes claim, but in a printing works. And the problem the young engineer was asked to solve was not heat at all. The paper kept expanding and shrinking between one colour and the next, which ruined the registration of the ink. So what he was actually controlling was the humidity. Cooling the air was simply the means by which he did it.\n\nNow, some numbers. In a hot climate, cooling a large office tower can account for more than half of that building's electricity. I want to be precise - I am not saying half of its total energy, because heating, lifts and hot water are counted separately and often come from gas. I mean specifically its electricity.\n\nThere are three principles, and almost every passive design is some combination of them: shading, ventilation and thermal mass.\n\nShading first. Some of you will have read that the east wall is the critical one to protect. For fixed shading that is exactly wrong. On the south face of a building - and I'm speaking about the northern hemisphere throughout - the sun is high in the sky in the middle of the day, so a simple horizontal shelf above the window cuts out almost all of the direct sun. Fixed shades work best on the south side. On the east and west walls the sun rises and sets low down and shines straight in under any fixed shelf, so there you need shades that rotate through the day. We call them tracking fins. They cost more and they need maintenance, but nothing else works.\n\nSecond, ventilation, and in particular what is known as the stack effect. Warm air is less dense, so it rises. If you give that warm air a route out of the building - usually a tall central shaft, sometimes an atrium, sometimes a purpose-built shaft running the full height - it will draw cooler air in at the bottom, with no fan at all. The condition, of course, is that the outdoor air has to be cooler than the indoor air, and in most climates that is only true at night. So night ventilation is the standard technique: you flush the building through in the small hours and close it up in the morning. The obstacle in city centres is almost never technical. It is noise. Nobody will accept an open window beside a busy road, and once you glaze the windows shut, the strategy collapses.\n\nThird, thermal mass. Traditional buildings in hot regions were built with very thick walls of stone - mud brick in some places, certainly, but stone is the classic example. Heat takes so long to travel through the wall that it arrives in the evening, when it is wanted. The modern equivalent is to leave the concrete ceilings exposed rather than hiding them behind suspended panels, so the slab can absorb heat all day.\n\nA brief case study. In the Harrowgate tower, completed four years ago, the engineers went further and embedded pipes containing a specially formulated wax. During the day the wax absorbs a great deal of heat as it changes from a solid into a liquid - not into a gas, I should stress; that is a different technology altogether. Overnight, cool air is blown across the pipes and the wax sets again.\n\nSo why is this not universal? Performance is not the obstacle; several of these buildings outperform their predictions. The obstacle is the extra cost at the construction stage - typically eight per cent - which developers who intend to sell the building will not pay, because the savings go to somebody else.\n\nFinally, current research. One promising line is a paint containing microscopic glass beads, which reflects sunlight while radiating heat away to the sky.\n\nThat is the end of Part 4. You now have half a minute to check your answers.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "31  The first mechanical cooling system was designed to control the ............ in a printing works.",
+     "answer": [
+      "humidity"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "32  In hot climates, cooling can use over half of a tower's ............ .",
+     "answer": [
+      "electricity"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "33  Fixed shades are most effective on the ............ side of a building.",
+     "answer": [
+      "south"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "34  On east and west walls, the shades need to ............ during the day.",
+     "answer": [
+      "rotate"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "35  In the stack effect, warm air leaves through a central ............ .",
+     "answer": [
+      "shaft"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "36  Outdoor air is normally cool enough for this only at ............ .",
+     "answer": [
+      "night"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "37  In city centres the main obstacle to opening windows is ............ .",
+     "answer": [
+      "noise"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "38  Traditional hot-climate buildings had thick walls made of ............ .",
+     "answer": [
+      "stone"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "39  In the Harrowgate tower, the wax in the pipes turns into a ............ during the day.",
+     "answer": [
+      "liquid"
+     ],
+     "topic": "Listening · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "40  The main barrier to wider use is the additional ............ of construction.",
+     "answer": [
+      "cost"
+     ],
+     "topic": "Listening · Note completion"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,558 @@
+{
+ "key": "mock_ielts_reading_c",
+ "section": "reading",
+ "kind": "mock",
+ "variant": "C",
+ "title": "IELTS Mock · Reading — Variant C",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.\n\nQuestions 1-6\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-6 on your answer sheet, write\nTRUE   if the statement agrees with the information\nFALSE   if the statement contradicts the information\nNOT GIVEN   if there is no information on this\n\nQuestions 7-10\nComplete the notes below.\nChoose ONE WORD AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 7-10 on your answer sheet.\n\nThe Haldersund trial\n- A two-year scheme, ending in 2021\n- Six vans replaced by eleven cargo bicycles working from a rented 7 ............, a small warehouse beside the harbour\n- Parcels were brought to this building every morning by 8 ............\n- Deliveries per hour increased from 5.2 to 9 ............\n- Most of the money saved was absorbed by the 10 ............ of the building\n\nQuestions 11-13\nAnswer the questions below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 11-13 on your answer sheet.",
+   "passage": "Pedal Power Returns to the City\n\nLong before the delivery van arrived, the bicycle was the workhorse of the European high street. Photographs taken in the 1920s show butchers' boys and chemists' apprentices steering heavy carrier cycles, each built around a small front wheel with a steel tray slung above it. Machines of that kind were designed to carry about fifty kilograms, and in towns where most customers lived within a mile or two of the shop, nothing faster was needed. Cheap petrol after 1945 brought the tradition to an end across most of the continent. Only in the Netherlands and Denmark, where the land is flat and housing is tightly packed, did the trade bicycle survive in any numbers.\n\nIts return has been driven by arithmetic rather than by nostalgia. When the transport consultancy Verdel fitted tracking units to 240 delivery vans in three northern cities in 2018, the findings surprised even the firms that owned the vehicles. The average van covered only thirty-four kilometres in a working day, yet it stopped sixty-eight times. Almost two thirds of the driver's shift was spent loading, walking to doors and, above all, hunting for somewhere legal to stop. Where a vehicle stands still for most of its working life, the ability to travel quickly between stops is worth remarkably little. Verdel concluded that in dense old quarters the van was being asked to do a job for which it had never been designed.\n\nToday's machines fall into three broad families. The long john places a low platform between the rider and a small front wheel and typically carries a hundred kilograms. The long tail instead stretches the rear of an ordinary bicycle frame, giving up capacity — usually eighty kilograms — in return for a machine that handles much like a normal bike and can be kept in a hallway. The heaviest work is done by four-wheeled quadricycles, which take loads of up to three hundred and fifty kilograms and are, in effect, small electric vehicles with pedals attached. All three are now built in steel or aluminium, with boxes of plywood or composite.\n\nAlmost every commercial machine uses an electric motor. European rules require the assistance to stop at twenty-five kilometres an hour, so the motor is there to move the load rather than to make the rider fast. A typical battery of five hundred watt-hours will cover about sixty kilometres of loaded riding, although cold weather can cut that figure by a fifth. Operators have learned to keep spare batteries at their depots and to exchange them at midday, which removes the need for long charging stops.\n\nEngineers have had to rethink several components. Steering comes first: on a long john the handlebars are joined to the front wheel by a linkage rod running beneath the cargo box, and the length of that rod decides whether the machine feels stable or nervous. Braking is the second difficulty, since a fully loaded quadricycle rolling downhill carries the momentum of a small car; hydraulic disc brakes, once a luxury, are now standard. The frame is the third. A cargo cycle is loaded off-centre and must resist twisting rather than simple bending, which is why many builders run a deep box section along the spine of the machine.\n\nThe clearest evidence comes from the port city of Haldersund, where the council ran a two-year trial that ended in 2021. Six vans serving the old centre were withdrawn and replaced by eleven cargo bicycles working from a rented microhub, a small warehouse beside the harbour. Parcels reached the hub each morning by lorry and were sorted into panniers before the riders set out. Deliveries per hour rose from 5.2 to 8.6, and the proportion of parcels that had to be carried back undelivered fell by half. The council's own accountants were careful, however, to point out that although the bicycles were far cheaper to run, the rent of the building swallowed most of the saving, and the scheme reached break-even only in its second year.\n\nCargo cycles are not a universal answer. Riders are exposed to the weather, and in Haldersund sickness absence during the winter months was higher among cycle couriers than among van drivers. Hills defeat all but the strongest motors, and few operators will send a loaded quadricycle up a gradient steeper than one in ten. Theft is a constant worry, because a loaded machine can be worth more than a small car, and insurers have been slow to write policies for a vehicle that fits neatly into none of their existing categories.\n\nWhat the industry now wants is not new technology but rules. Operators are asking for agreed standards on width and weight, for loading bays that a cycle may legally use, and for secure overnight storage close to the districts they serve. Several cities have begun to build lockable depots under railway arches. None of this is glamorous, but it is the sort of unremarkable groundwork that decides whether a promising vehicle becomes an ordinary part of city life.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Early carrier bicycles were built to take loads of around fifty kilograms.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  After 1945 the trade bicycle went out of use in every European country.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  Verdel's 2018 study was paid for by the companies that owned the vans.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  The heaviest cargo cycles can carry more than three times the load a long john typically takes.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  Cold conditions can reduce the distance a battery will cover.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  On a long john the handlebars are fixed directly to the front wheel.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "text",
+     "q": "7  Six vans replaced by eleven cargo bicycles working from a rented ............, a small warehouse beside the harbour",
+     "answer": [
+      "microhub"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "8  Parcels were brought to this building every morning by ............",
+     "answer": [
+      "lorry"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "9  Deliveries per hour increased from 5.2 to ............",
+     "answer": [
+      "8.6"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Most of the money saved was absorbed by the ............ of the building",
+     "answer": [
+      "rent"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  Which workers in Haldersund were absent through illness more often in winter?",
+     "answer": [
+      "cycle couriers",
+      "couriers"
+     ],
+     "topic": "Reading · Short answer"
+    },
+    {
+     "type": "text",
+     "q": "12  What feature of the landscape defeats all but the strongest motors?",
+     "answer": [
+      "hills"
+     ],
+     "topic": "Reading · Short answer"
+    },
+    {
+     "type": "text",
+     "q": "13  According to the final paragraph, what does the industry want instead of new technology?",
+     "answer": [
+      "rules",
+      "agreed standards"
+     ],
+     "topic": "Reading · Short answer"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.\n\nQuestions 14-21\nReading Passage 2 has eight paragraphs, A-H.\nChoose the correct heading for each paragraph from the list of headings below.\nWrite the correct number, i-xi, in boxes 14-21 on your answer sheet.\n\nList of Headings\ni  Turning a by-product into a resource\nii  A simple barrier with a large effect\niii  Why the earliest designs wasted energy\niv  A second resource that is easily overlooked\nv  A shortage of qualified staff\nvi  Bringing the coolant closer to the chip\nvii  Evidence that the old limits were too cautious\nviii  The scale of the heat that must be removed\nix  Borrowing the weather\nx  The rising cost of construction materials\nxi  A measure that failed to catch on\n\n14  Paragraph A\n15  Paragraph B\n16  Paragraph C\n17  Paragraph D\n18  Paragraph E\n19  Paragraph F\n20  Paragraph G\n21  Paragraph H\n\nQuestions 22-25\nComplete the summary below using the list of words, A-J, below.\nWrite the correct letter, A-J, in boxes 22-25 on your answer sheet.\n\nThe move back to liquid\nAir struggles to carry heat away once rack 22 ............ passes a certain point, and processors built for machine learning have pushed it far beyond that point. Liquid has therefore returned: coolant may be pumped through plates clamped onto individual chips, or whole boards may be lowered into a tank of non-conducting 23 ............ . Evaporative towers, meanwhile, cut the 24 ............ a site needs, but consume very large quantities of 25 ............ , which has obliged some operators to redesign their plants.\n\nA  density   B  dust   C  electricity   D  fluid   E  humidity\nF  plumbing   G  pumps   H  salt   I  servers   J  water\n\nQuestion 26\nChoose TWO letters, A-E.\nWrite the correct letters in box 26 on your answer sheet.",
+   "passage": "Cooling the Data Hall\n\nA  Every watt of electricity that enters a data hall leaves it as heat. A single rack of servers drawing ten kilowatts is, thermally speaking, a very efficient electric fire, and a medium-sized facility may hold five hundred such racks. Removing that heat has always been the largest item on the electricity bill after the computers themselves. The industry measures its success with a ratio known as power usage effectiveness, or PUE: the total electricity entering the site divided by the electricity reaching the computing equipment. A PUE of 2.0, common twenty years ago, meant that a watt was being spent on cooling and distribution for every watt of computing; the best sites today report figures close to 1.1.\n\nB  The first generation of halls was cooled in a way that now looks careless. Air was chilled to around twenty degrees by units standing at the edge of the room, pushed beneath a raised floor, and allowed to rise through perforated tiles laid across it. Nothing separated the cold air from the hot exhaust pouring out of the back of the racks, and the two streams mixed freely above the cabinets. Engineers compensated by chilling harder, which simply widened the gap between the temperature the machines needed and the temperature at which the room was held. A great deal of the electricity bought for cooling never reached a server at all.\n\nC  The remedy, when it came, required no new science. If hot and cold air must not mix, they should be kept apart: the racks are turned so that all the intake faces line up along one aisle and all the exhausts along another, and the aisle is then closed off with doors and a roof, or in the cheapest retrofits with heavy plastic curtains. Containment of this kind is routinely reported to cut cooling energy by a fifth or more, and it can be installed in a working hall over a single weekend.\n\nD  Containment also made a second change possible. For decades operators held their halls at temperatures that would have suited a cold office, in the belief that warm electronics fail. When the International Data Facilities Council widened its recommended intake range to twenty-seven degrees, the proposal met open resistance. The evidence, however, had already been gathered: several large operators had published failure records covering hundreds of thousands of machines, and the rate of failure at the higher temperature was barely distinguishable from the rate at the lower one. Most of the caution had been inherited from an era of different components and had never been retested. Raising the set point by a few degrees lengthens the hours during which a site can be cooled without refrigeration at all.\n\nE  That last point explains the popularity of what the industry calls free cooling. In a cool climate, outside air can be filtered and blown through the hall directly, or used to chill water in a dry cooler, for much of the year; the compressors then run only on the warmest afternoons. The method is not without complications. Outdoor air carries dust and salt, so filters must be changed often, and in some coastal locations the risk of corrosion is judged too high. Very dry or very damp air brings problems of its own, and humidity control can claw back part of the saving. Even so, a hall built in a northern climate may now run its refrigeration plant for fewer than two hundred hours a year.\n\nF  Air, however, is a poor carrier of heat, and the racks are growing hotter. A cabinet that drew five kilowatts a decade ago may now draw forty or more, because processors designed for machine learning concentrate an extraordinary amount of power into a small area. Density of this order cannot be handled by moving air alone, and so the industry has gone back to liquid. In direct-to-chip systems a coolant is pumped through small metal plates clamped onto the hottest components, while the remaining heat is still carried off by air. In immersion systems whole boards are lowered into a tank of non-conducting fluid. Both approaches call for plumbing skills that most operators lost a generation ago.\n\nG  Electricity is not the only resource a cooling system consumes. Many large sites use evaporative towers, in which water is sprayed into a stream of air and carries heat away as it evaporates. The technique is thermodynamically elegant and can reduce electricity use substantially, but a single campus may evaporate millions of litres in a summer. A second ratio, water usage effectiveness, was introduced to track this, and a growing number of operators now publish the figure alongside their PUE. In regions where supplies are already strained the trade has become politically awkward, and several new facilities have been redesigned around closed loops that use almost no water but rather more power.\n\nH  The heat itself need not be wasted. A hall rejecting forty megawatts is, in principle, a substantial boiler, and schemes now exist in which that warmth is piped into district heating networks. Two obstacles are persistent. The first is quality: air-cooled halls reject heat at about thirty-five degrees, which is too low for most networks, so heat pumps must lift it, and the electricity they use has to be paid for by somebody. The second is timing: demand for heating collapses in summer, precisely when the hall is producing most. Planning permission for the pipework has generally been granted quickly, and existing networks in northern Europe often run within a few hundred metres of large sites; the difficulty lies in the physics and the calendar, not in the paperwork.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  Paragraph A",
+     "options": [
+      "i  Turning a by-product into a resource",
+      "ii  A simple barrier with a large effect",
+      "iii  Why the earliest designs wasted energy",
+      "iv  A second resource that is easily overlooked",
+      "v  A shortage of qualified staff",
+      "vi  Bringing the coolant closer to the chip",
+      "vii  Evidence that the old limits were too cautious",
+      "viii  The scale of the heat that must be removed",
+      "ix  Borrowing the weather",
+      "x  The rising cost of construction materials",
+      "xi  A measure that failed to catch on"
+     ],
+     "answer": 7,
+     "topic": "Reading · Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "15  Paragraph B",
+     "options": [
+      "i  Turning a by-product into a resource",
+      "ii  A simple barrier with a large effect",
+      "iii  Why the earliest designs wasted energy",
+      "iv  A second resource that is easily overlooked",
+      "v  A shortage of qualified staff",
+      "vi  Bringing the coolant closer to the chip",
+      "vii  Evidence that the old limits were too cautious",
+      "viii  The scale of the heat that must be removed",
+      "ix  Borrowing the weather",
+      "x  The rising cost of construction materials",
+      "xi  A measure that failed to catch on"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "16  Paragraph C",
+     "options": [
+      "i  Turning a by-product into a resource",
+      "ii  A simple barrier with a large effect",
+      "iii  Why the earliest designs wasted energy",
+      "iv  A second resource that is easily overlooked",
+      "v  A shortage of qualified staff",
+      "vi  Bringing the coolant closer to the chip",
+      "vii  Evidence that the old limits were too cautious",
+      "viii  The scale of the heat that must be removed",
+      "ix  Borrowing the weather",
+      "x  The rising cost of construction materials",
+      "xi  A measure that failed to catch on"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "17  Paragraph D",
+     "options": [
+      "i  Turning a by-product into a resource",
+      "ii  A simple barrier with a large effect",
+      "iii  Why the earliest designs wasted energy",
+      "iv  A second resource that is easily overlooked",
+      "v  A shortage of qualified staff",
+      "vi  Bringing the coolant closer to the chip",
+      "vii  Evidence that the old limits were too cautious",
+      "viii  The scale of the heat that must be removed",
+      "ix  Borrowing the weather",
+      "x  The rising cost of construction materials",
+      "xi  A measure that failed to catch on"
+     ],
+     "answer": 6,
+     "topic": "Reading · Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "18  Paragraph E",
+     "options": [
+      "i  Turning a by-product into a resource",
+      "ii  A simple barrier with a large effect",
+      "iii  Why the earliest designs wasted energy",
+      "iv  A second resource that is easily overlooked",
+      "v  A shortage of qualified staff",
+      "vi  Bringing the coolant closer to the chip",
+      "vii  Evidence that the old limits were too cautious",
+      "viii  The scale of the heat that must be removed",
+      "ix  Borrowing the weather",
+      "x  The rising cost of construction materials",
+      "xi  A measure that failed to catch on"
+     ],
+     "answer": 8,
+     "topic": "Reading · Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "19  Paragraph F",
+     "options": [
+      "i  Turning a by-product into a resource",
+      "ii  A simple barrier with a large effect",
+      "iii  Why the earliest designs wasted energy",
+      "iv  A second resource that is easily overlooked",
+      "v  A shortage of qualified staff",
+      "vi  Bringing the coolant closer to the chip",
+      "vii  Evidence that the old limits were too cautious",
+      "viii  The scale of the heat that must be removed",
+      "ix  Borrowing the weather",
+      "x  The rising cost of construction materials",
+      "xi  A measure that failed to catch on"
+     ],
+     "answer": 5,
+     "topic": "Reading · Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "20  Paragraph G",
+     "options": [
+      "i  Turning a by-product into a resource",
+      "ii  A simple barrier with a large effect",
+      "iii  Why the earliest designs wasted energy",
+      "iv  A second resource that is easily overlooked",
+      "v  A shortage of qualified staff",
+      "vi  Bringing the coolant closer to the chip",
+      "vii  Evidence that the old limits were too cautious",
+      "viii  The scale of the heat that must be removed",
+      "ix  Borrowing the weather",
+      "x  The rising cost of construction materials",
+      "xi  A measure that failed to catch on"
+     ],
+     "answer": 3,
+     "topic": "Reading · Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "21  Paragraph H",
+     "options": [
+      "i  Turning a by-product into a resource",
+      "ii  A simple barrier with a large effect",
+      "iii  Why the earliest designs wasted energy",
+      "iv  A second resource that is easily overlooked",
+      "v  A shortage of qualified staff",
+      "vi  Bringing the coolant closer to the chip",
+      "vii  Evidence that the old limits were too cautious",
+      "viii  The scale of the heat that must be removed",
+      "ix  Borrowing the weather",
+      "x  The rising cost of construction materials",
+      "xi  A measure that failed to catch on"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "22  Air struggles to carry heat away once rack ............ passes a certain point.",
+     "options": [
+      "A  density",
+      "B  dust",
+      "C  electricity",
+      "D  fluid",
+      "E  humidity",
+      "F  plumbing",
+      "G  pumps",
+      "H  salt",
+      "I  servers",
+      "J  water"
+     ],
+     "answer": 0,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "23  Whole boards may be lowered into a tank of non-conducting ............ .",
+     "options": [
+      "A  density",
+      "B  dust",
+      "C  electricity",
+      "D  fluid",
+      "E  humidity",
+      "F  plumbing",
+      "G  pumps",
+      "H  salt",
+      "I  servers",
+      "J  water"
+     ],
+     "answer": 3,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "24  Evaporative towers cut the ............ a site needs.",
+     "options": [
+      "A  density",
+      "B  dust",
+      "C  electricity",
+      "D  fluid",
+      "E  humidity",
+      "F  plumbing",
+      "G  pumps",
+      "H  salt",
+      "I  servers",
+      "J  water"
+     ],
+     "answer": 2,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "25  Evaporative towers consume very large quantities of ............ .",
+     "options": [
+      "A  density",
+      "B  dust",
+      "C  electricity",
+      "D  fluid",
+      "E  humidity",
+      "F  plumbing",
+      "G  pumps",
+      "H  salt",
+      "I  servers",
+      "J  water"
+     ],
+     "answer": 9,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "multi",
+     "q": "26  Which TWO difficulties does the writer mention in connection with supplying waste heat to district heating networks? Choose TWO letters, A-E.",
+     "options": [
+      "A  The heat leaves the building at too low a temperature.",
+      "B  Planning consent for the pipework is hard to obtain.",
+      "C  The need for heating falls away in summer.",
+      "D  Heat networks are generally too far from large sites.",
+      "E  People living nearby complain about the noise."
+     ],
+     "answer": [
+      0,
+      2
+     ],
+     "pick": 2,
+     "topic": "Reading · Multiple choice (two answers)"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.\n\nQuestions 27-32\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 27-32 on your answer sheet, write\nYES   if the statement agrees with the claims of the writer\nNO   if the statement contradicts the claims of the writer\nNOT GIVEN   if it is impossible to say what the writer thinks about this\n\nQuestions 33-36\nLook at the following statements and the list of experts below.\nMatch each statement with the correct expert, A-D.\nWrite the correct letter, A-D, in boxes 33-36 on your answer sheet.\n\nList of Experts\nA  Marta Enkvist\nB  Tomás Belan\nC  Priya Raghunathan\nD  Ivor Keel\n\nQuestions 37-38\nComplete the sentences below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 37-38 on your answer sheet.\n\nQuestions 39-40\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 39 and 40 on your answer sheet.",
+   "passage": "The Hundred-Year Question\n\nAsk an engineer how long a bridge will last and you will be given a number taken from a code: fifty years for temporary works, a hundred for an ordinary road bridge, a hundred and twenty for a major crossing. The number looks like a promise, and the public reads it as one. It is nothing of the kind. A design life is a statistical statement. It is the period over which the probability of failure, given the loads and the maintenance the designer assumed, remains below an agreed threshold. A structure that has reached its design life has not expired; it has reached the point at which the assumptions behind it ought to be examined again. The word life does the damage, and we chose it ourselves.\n\nLengthening a design life is not free. Almost every method of doing it amounts to adding something — deeper concrete cover over the reinforcement, stainless steel in place of carbon steel, thicker sections, more coatings, more inspection hatches. Each addition has to be quarried, smelted or cast today in exchange for a benefit that may not arrive for ninety years. Since by far the greater part of a structure's environmental cost is incurred before it opens to traffic, extending the design life brings that cost forward while pushing the benefit into a future that nobody can guarantee.\n\nThe usual reply is that the alternative is worse: demolition consumes resources too, and rebuilding closes a route for years. I accept the force of this. But the reply rests on an assumption that deserves examination, namely that structures are removed because they have worn out.\n\nThey are not. Marta Enkvist went through the records of four hundred road bridges taken out of service in her country over a period of thirty years and found that only fourteen per cent were removed because the structure itself had deteriorated beyond economic repair. The rest went because a road was widened, because a junction was realigned, because a river was re-engineered after a flood, or because the deck could not carry the vehicles that had come to use it. The reasons, Enkvist concludes, were almost never the ones against which the original designers had spent their effort guarding.\n\nIf obsolescence rather than decay is the binding constraint, the design question changes. Tomás Belan has argued for years that the profession should design for maintenance instead of against it: bearings that can be exchanged without closing the carriageway, inspection galleries wide enough to walk along, drainage that can actually be cleared, and sacrificial elements that are expected to corrode and are meant to be swapped out. His approach costs a little more at the outset and assumes an owner who will turn up with a spanner in thirty years' time.\n\nThat assumption is where Priya Raghunathan parts company with him. Maintenance budgets, she points out, are the first thing a hard-pressed authority cuts, because the consequences appear long after the officials responsible have moved on. If future spending cannot be relied upon, the honest response is to build heavily now and to treat the waste as the price of not trusting anybody. Her argument is uncomfortable, and it is uncomfortably well founded: the inspection backlogs of the past decade are evidence for her position rather than for Belan's.\n\nIvor Keel offers a third route. Instrument the structure, he says. Strain gauges, corrosion sensors and accelerometers are now cheap enough to embed by the hundred, and once a bridge reports on its own behaviour the remaining life can be computed from measurement rather than assumed at the drawing board. A structure that turns out to be carrying less than it was designed for can be left alone; one that is suffering can be caught early.\n\nI am less enthusiastic about this than I should like to be. Sensors do not inspect; they report, and a report requires somebody to read it. The great majority of the monitoring data gathered from bridges over the past twenty years has never been examined by anyone at all, and a proportion of it can no longer be read even in principle, because the software that produced it has been abandoned by its makers. A sensor network without an institution behind it is a way of generating reassurance rather than knowledge.\n\nSo where does this leave the hundred-year question? It leaves it as the wrong question. The useful measure of a structure is not how long it can be expected to stand untouched, but how cheaply it can be changed: whether a deck can be widened without replacing the piers, whether a span can be lifted out and a different one dropped in, whether the drawings and the calculations will still be legible when the engineers who made them are dead. Adaptability is an unglamorous virtue and it wins no competitions. But it is the only property that answers the failure mode we actually observe. And we should stop printing the word life in public documents, because each time we do so we promise something we have not designed for.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  People outside the profession tend to read a design life as a guarantee.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  Designing for a longer life brings a structure's environmental cost forward in time.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  Most bridges are taken out of service because their materials have decayed.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  Enkvist's study would have been more useful had it covered a longer period.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "31  Raghunathan's concern about future funding is exaggerated.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  A large part of the monitoring data collected from bridges has never been looked at.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "33  Components that are expected to wear out should be built so that they can be exchanged.",
+     "options": [
+      "A  Marta Enkvist",
+      "B  Tomás Belan",
+      "C  Priya Raghunathan",
+      "D  Ivor Keel"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "34  The reasons structures are removed are rarely the ones designers prepare for.",
+     "options": [
+      "A  Marta Enkvist",
+      "B  Tomás Belan",
+      "C  Priya Raghunathan",
+      "D  Ivor Keel"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "35  Money set aside for upkeep is likely to be withdrawn when finances are tight.",
+     "options": [
+      "A  Marta Enkvist",
+      "B  Tomás Belan",
+      "C  Priya Raghunathan",
+      "D  Ivor Keel"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "36  How much life a structure has left should be worked out from measurements taken on site.",
+     "options": [
+      "A  Marta Enkvist",
+      "B  Tomás Belan",
+      "C  Priya Raghunathan",
+      "D  Ivor Keel"
+     ],
+     "answer": 3,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "text",
+     "q": "37  Belan recommends the use of ............ elements, which are expected to corrode and are then replaced.",
+     "answer": [
+      "sacrificial"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "38  For the writer, the useful measure of a structure is how cheaply it can be ............ .",
+     "answer": [
+      "changed"
+     ],
+     "topic": "Reading · Sentence completion"
+    },
+    {
+     "type": "choice",
+     "q": "39  What does the writer say about the figures for design life given in codes?",
+     "options": [
+      "A  They are deliberately cautious in order to protect designers.",
+      "B  They express a probability rather than a promise.",
+      "C  They rest on outdated assumptions about traffic loads.",
+      "D  They are normally exceeded by a wide margin."
+     ],
+     "answer": 1,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "40  Which statement best sums up the writer's conclusion?",
+     "options": [
+      "A  Structures should be built more heavily than the codes require.",
+      "B  Monitoring technology will settle the argument within a generation.",
+      "C  Designers should aim at ease of alteration rather than maximum longevity.",
+      "D  Design lives should be shortened so that less material is used."
+     ],
+     "answer": 2,
+     "topic": "Reading · Multiple choice"
+    }
+   ]
+  }
+ ]
+}

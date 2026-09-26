@@ -1,0 +1,520 @@
+{
+ "key": "mock_ielts_reading_d",
+ "section": "reading",
+ "kind": "mock",
+ "variant": "D",
+ "title": "IELTS Mock · Reading — Variant D",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "READING PASSAGE 1\nYou should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.\n\nQuestions 1-6\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-6 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n\nQuestions 7-13\nComplete the notes below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 7-13 on your answer sheet.\n\nMANAGING THE EXPERIENCE OF WAITING\n\nTelephone service centre\n- the silence on hold was replaced by a regular announcement of each caller's 7 ..............\n- complaints about waiting dropped by a 8 ..............\n- the time actually spent on hold rose a little\n\nQueue layouts\n- parallel system: a separate line at every 9 ..............\n    - a late arrival may be served first after choosing a 10 ..............\n- serpentine system: fairer, and cuts the 11 .............. in waiting times\n    - drawback: customers estimate the delay from the 12 .............. of the line they can see\n\nDenford Associates survey (eleven countries)\n- orderliness showed no link with a country's 13 ..............\n- what mattered was the belief that other people would follow the rule",
+   "passage": "The Quiet Order of the Queue\n\nFew arrangements in public life are as ordinary, or as quietly complicated, as the queue. A line of people waiting for a bus, a cinema ticket or a bowl of soup appears to need no management whatsoever. Individuals arrive, place themselves at the back, and edge forward until their turn comes. Nobody supervises the process, no contract is signed and no penalty is written down, yet the arrangement holds for hours at a time. Social scientists regard the queue as one of the most dependable pieces of informal organisation that human beings produce, and they have spent several decades trying to work out why it survives.\n\nAt the centre of the queue lies a single principle: first come, first served. Its appeal is that it takes no account of wealth, status, charm or need. The only fact that matters is the moment of arrival, and that fact is visible to everyone. Because the principle is so easily grasped, it can be applied by strangers who share no common language, which is why orderly lines appear at ferry terminals and mountain huts where nobody has been instructed to form them.\n\nResearchers who study waiting distinguish between two types of line. The physical queue is the visible one, in which a person's place is marked by their own body. The virtual queue replaces the body with a token - a numbered ticket, a name displayed on a screen, or a position held in a telephone system. Virtual queues were first adopted by butchers' shops and were later taken up by banks and government offices. They allow customers to sit down or wander off, but they also remove the steady evidence of progress that a visible line supplies. Studies of waiting rooms find that people in virtual queues, who cannot see how many others are ahead of them, report more irritation than those standing in a line, even when the wait is of identical length.\n\nThe strength of the unwritten rule was tested in an unusual experiment by the social psychologist Ruth Callander, whose assistants attempted to enter 240 queues in shops, stations and post offices without asking permission. In slightly more than half of these attempts somebody objected. The objection, however, came overwhelmingly from the one or two people standing immediately behind the point at which the assistant had entered; those further back, although delayed by exactly the same amount, almost never spoke at all. Callander concluded that a queue is policed not by the group as a whole but by the small number of individuals who feel personally displaced. Attempts to remove an intruder by physical means were rare, occurring in fewer than one queue in twenty.\n\nTolerance is not uniform. Callander's assistants were accepted far more readily when they were visibly rejoining a line that they had briefly left, and also when they carried a single item in a shop where everyone else had a full basket. Both situations appear to be recognised as legitimate exceptions rather than as breaches of the rule.\n\nA second line of research asks not how queues are enforced but how they feel. Waiting is almost always experienced as longer than the clock records, and the gap between the measured and the felt duration widens when the waiting is empty of information. A clear illustration comes from a telephone service centre which changed the way it handled callers on hold. The recorded silence was replaced by a voice announcing each caller's position in the line every thirty seconds. Complaints about waiting fell by a third, although the average time spent on hold actually rose slightly over the same period.\n\nDesigners of public buildings must also choose between two layouts. In the parallel system, every service point has a line of its own, and customers select the one they think will move fastest. In the serpentine system, a single winding line feeds all the service points, and the person at the front goes to whichever counter becomes free. The serpentine arrangement is demonstrably fairer, since it removes the possibility that a customer who arrived later is served earlier simply because they chose a faster line, and it reduces the variation in waiting times, so that very few people are badly delayed. Even so, many supermarkets keep their parallel lines, because shoppers judge how long they will wait from the length of the line in front of them, and one line serving eight tills looks alarming. Retail consultants report that some stores which switched to a serpentine layout lost customers at the door, who turned away before discovering that the line was moving quickly.\n\nWhat finally interests sociologists about the queue is what it reveals about trust. A survey of eleven countries carried out by the research firm Denford Associates found no relationship between a country's wealth and the orderliness of its queues. The factor that mattered most was whether respondents believed that other people would also obey the rule. Where that belief was strong, lines formed without instruction; where it was weak, people crowded forwards, not because they preferred disorder but because they expected it. The queue, in other words, is held together by nothing more solid than the expectation that it will hold.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  The first come, first served principle can be used by people who do not speak the same language.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  Virtual queues were introduced in order to reduce the cost of employing staff.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  People in a virtual queue report greater annoyance than people in a visible line who wait for the same length of time.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  In Callander's experiment, people standing further back in the queue objected as often as those immediately behind the intruder.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  Attempts to remove Callander's assistants by physical means occurred in more than a quarter of the queues they entered.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  Assistants carrying a single item were accepted more often than those who were rejoining a line.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · TFNG"
+    },
+    {
+     "type": "text",
+     "q": "7  Telephone service centre: the silence on hold was replaced by a regular announcement of each caller's ..............",
+     "answer": [
+      "position"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "8  Telephone service centre: complaints about waiting dropped by a ..............",
+     "answer": [
+      "third",
+      "a third"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "9  Parallel system: there is a separate line at every ..............",
+     "answer": [
+      "service point"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Parallel system: a late arrival may be served first after choosing a ..............",
+     "answer": [
+      "faster line"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  Serpentine system: it is fairer, and cuts the .............. in waiting times.",
+     "answer": [
+      "variation"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  Serpentine system - drawback: customers estimate the delay from the .............. of the line they can see.",
+     "answer": [
+      "length"
+     ],
+     "topic": "Reading · Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  Denford Associates survey: orderliness showed no link with a country's ..............",
+     "answer": [
+      "wealth"
+     ],
+     "topic": "Reading · Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "READING PASSAGE 2\nYou should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2 below.\nReading Passage 2 has eight paragraphs, A-H.\n\nQuestions 14-19\nWhich paragraph contains the following information?\nWrite the correct letter, A-H, in boxes 14-19 on your answer sheet.\nNB You may use any letter only once.\n\nQuestions 20-23\nLook at the following statements and the list of researchers below.\nMatch each statement with the correct researcher, A-E.\nWrite the correct letter, A-E, in boxes 20-23 on your answer sheet.\n\nLIST OF RESEARCHERS\nA  Ingrid Solbakk\nB  Paul Ferreira\nC  Marta Beaulieu\nD  Yusuf Adeyemi\nE  Nadia Persson\n\nQuestions 24-26\nComplete the summary below.\nChoose the correct word, A-J, from the box below.\nWrite the correct letter, A-J, in boxes 24-26 on your answer sheet.\n\nHallbrook Insurance asked its staff to keep two mornings a week of 24 .............. in the main office. Employees said that their 25 .............. had got better, but the policy lost its force once senior managers stopped observing it. Later research suggests that satisfaction at work depends far less on the measured level of noise than on how much 26 .............. people feel they have over the space around them.\n\nA  collaboration      B  concentration      C  control      D  cost      E  distance\nF  loudness      G  privacy      H  silence      I  supervision      J  training",
+   "passage": "The Sound of Work\n\nA  The open-plan office has won. Roughly seven in ten office employees across western Europe now work in a space without internal walls, and in the technology sector the figure is higher still. The arguments for the arrangement have changed very little in fifty years. Removing partitions is said to encourage colleagues to speak to one another, to allow teams to be reshaped without building work, and - a point rarely made aloud but rarely absent from the calculation - to house more people in fewer square metres. What has changed is the volume of evidence about what open plan does to the people inside it, and much of that evidence concerns sound.\n\nB  Noise is not a single thing, and the brain does not treat all of it alike. A steady mechanical hum, such as ventilation, is quickly filtered out and soon stops being noticed at all. Speech is different. Language is processed more or less automatically: a listener with no interest whatever in a colleague's conversation cannot easily prevent their own attention from decoding it. The effect is strongest when speech is clearly audible and intermittent, because each new fragment captures attention afresh. This is why a single telephone call at the far end of a room can be more disruptive than the continuous murmur of forty people.\n\nC  The most careful demonstration of this comes from Ingrid Solbakk, who tested four hundred volunteers on a demanding proofreading task under three conditions. In the first, the room was quiet. In the second, a recording of speech was played that had been electronically scrambled so that no words could be made out. In the third, an ordinary conversation was played at exactly the same volume as the scrambled recording. Accuracy fell slightly in the scrambled condition, but it fell almost four times as far when the conversation was intelligible. Loudness, Solbakk concluded, was much the weaker predictor of harm; what mattered was whether meaning could be extracted.\n\nD  This finding has quietly reshaped the way acousticians approach office design. For most of the twentieth century the goal was simply to make workplaces quieter. Paul Ferreira, who advises building owners on acoustics, argues that the goal should instead be to make speech harder to follow, and that a room can in fact be made too quiet: in near silence, a conversation three desks away is perfectly clear. Ferreira's schemes therefore add a low, shaped background sound, tuned to the frequencies of the human voice, so that distant speech dissolves into it while nearby speech remains comfortable. Measured in decibels such rooms are louder than before. Measured in complaints, they perform considerably better.\n\nE  The promise of conversation, meanwhile, has proved harder to keep than the promise of savings. Marta Beaulieu followed a design agency of ninety staff for eighteen months, beginning six months before it moved from cellular offices into a single open floor. Face-to-face exchanges did not disappear, but they changed shape: they became markedly shorter and more frequent, while the long, unhurried discussions in which decisions had previously been made migrated almost entirely into bookable meeting rooms, where they had to be scheduled days in advance. Beaulieu's conclusion was not that the move destroyed collaboration but that it redistributed it, and did so in favour of the people confident enough to book a room.\n\nF  Not everyone suffers equally. Questionnaire studies consistently identify a minority - perhaps one worker in five - who describe themselves as highly sensitive to noise and who report far greater disturbance than colleagues sitting in the same room. Personality plays a part, but so does practice. Yusuf Adeyemi compared experienced editors with trainees on an identical interrupted task and found that the experienced group lost far less accuracy, apparently because the work had become sufficiently automatic to survive interruption. The implication is uncomfortable for employers: the open-plan floor is hardest on precisely those staff who are still learning.\n\nG  Organisations that take the problem seriously tend to reach for rules rather than walls. Hallbrook Insurance asked its staff to observe two mornings a week of complete silence in the main office, a policy known internally as the library rule. Six months later, employees reported clearly improved concentration, and the scheme was extended to a second building. It then began to weaken, for a reason that had nothing to do with acoustics. Two senior managers continued to take calls at their desks during the silent hours, and within a few weeks the rule had lost its authority. A protocol of this kind, Hallbrook's own review noted, survives only as long as the most visible people in the room obey it.\n\nH  Perhaps the most useful finding of the past decade concerns neither loudness nor layout. Nadia Persson surveyed the occupants of sixty buildings and compared their answers with acoustic measurements taken in the same spaces. The measured noise level explained surprisingly little. What predicted satisfaction far better was the degree of control that people felt they had over their surroundings: whether they could move to a quiet room when they needed one, whether they could ask for a conversation to be taken elsewhere without embarrassment, whether they could decide for themselves where to sit on a difficult afternoon. The lesson is not that open plan is intolerable. It is that a room in which nothing can be altered is intolerable, and that offices are usually designed by people who will never have to work in them.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  a comparison of the effects of three different listening conditions",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "15  a reference to the proportion of employees who work in open-plan space",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "16  an explanation of why making a workplace quieter may not solve the problem",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "17  the claim that a workplace rule depends on the conduct of senior staff",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  a description of how the length of colleagues' discussions altered after a move",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  mention of the influence of experience on resistance to interruption",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 5,
+     "topic": "Reading · Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "20  found that skilled workers were less affected by interruption than beginners",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 3,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "21  showed experimentally that whether speech can be understood matters more than how loud it is",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 0,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "22  recommends adding sound to a workplace rather than taking it away",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 1,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "23  found that lengthy discussions moved into a different setting after a change of layout",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 2,
+     "topic": "Reading · Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "24  Hallbrook Insurance asked its staff to keep two mornings a week of .............. in the main office.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 7,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "25  Employees said that their .............. had got better.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 1,
+     "topic": "Reading · Summary completion (word box)"
+    },
+    {
+     "type": "choice",
+     "q": "26  Satisfaction at work depends far less on the measured level of noise than on how much .............. people feel they have over the space around them.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 2,
+     "topic": "Reading · Summary completion (word box)"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "READING PASSAGE 3\nYou should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3 below.\n\nQuestions 27-33\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 27-33 on your answer sheet, write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n\nQuestions 34-36\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 34-36 on your answer sheet.\n\nQuestion 37\nChoose TWO letters, A-E.\nWrite the correct letters in box 37 on your answer sheet.\n\nQuestions 38-40\nAnswer the questions below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 38-40 on your answer sheet.",
+   "passage": "Counting Contentment\n\nFor most of the twentieth century, governments judged their own performance by counting things that could be counted: tonnes of steel, kilometres of road, and above all the value of the goods and services produced. Gross domestic product was never designed to measure whether citizens were living well, and the economists who built it said so at the time. It is therefore entirely reasonable that statistical offices in more than forty countries now also ask their citizens a question about their lives, and publish the answers. What I want to argue is that the motive is honourable, the instrument is a great deal weaker than its users admit, and the political consequences of forgetting this are worse than either.\n\nThe instrument, in almost every national survey, is a single question with a numerical answer: overall, how satisfied are you with your life nowadays, where nought means not at all and ten means completely? The results are averaged, compared across regions, tracked over years and reported in the press as though they had come from a thermometer. They have not. A thermometer and the thing it measures are independent of one another; a rating scale is part of the very situation it is supposed to describe.\n\nConsider first what the numbers are made of. Two people whose inner lives were somehow identical could still answer differently, because they use the scale differently. Some respondents treat eight as the ordinary condition of a life without disaster; others reserve eight for exceptional weeks. These habits are learned, and they vary systematically between regions and language groups. Survey designers have worked hard on the wording, and the wording has certainly improved, but no form of words can standardise what a number privately means to the person choosing it. The problem is sharpest over time. Patients who acquire a serious illness frequently report satisfaction close to their earlier level within two years, not because the illness has ceased to matter but because they have quietly redefined the scale. Researchers call this response shift, and it is a considerable nuisance for anyone who wants to use the figures to judge a health service.\n\nThere is a second difficulty, and it is arithmetical. The scale has a top. Most wealthy populations already cluster between six and eight, and a country whose average is 7.4 cannot improve in the way that its output can double. Small movements in the second decimal place are then presented as national triumphs or national crises, when they may be artefacts of who happened to answer the telephone that month. A measure that cannot register a large improvement is a poor guide to whether a large improvement has occurred.\n\nThird, the question asks for a summary judgment about an entire life, and human beings do not keep such a judgment ready. They construct one at the moment of asking, out of whatever happens to be available: the weather, a recent argument, the subject of the previous question on the form. I do not want to make too much of this. Random influences of that kind genuinely do cancel out across a sample of ten thousand people, and defenders of the surveys are right to say so. But systematic influences do not cancel. If a population is asked during a month of unusual hardship, or if the interview is conducted face to face rather than online, the whole distribution shifts, and no amount of sample size will repair it.\n\nAgainst all this stands the strongest argument for the surveys, which is that the numbers do work. People who report low satisfaction are measurably more likely, in the years that follow, to leave their jobs, to end their marriages, to move house and to visit their doctors. I once argued that this proved very little, and I no longer think that was fair: a question whose answers predict behaviour years in advance is plainly capturing something real and lasting. Yet predicting what somebody will do is not the same as measuring how well their life is going, and the leap from the first to the second is made far too casually. A reliable signal is not automatically a good yardstick.\n\nMy real worry, though, is not methodological but political, and it follows from a principle every administrator knows: what gets measured gets managed. Suppose a minister is judged on the national satisfaction figure. Two policies are available. The first provides short courses of treatment for mild anxiety, which is cheap, popular and reliably moves self-reported satisfaction within a year. The second rebuilds a district of poor housing, which is expensive, slow, and whose benefits appear in the figures, if at all, long after the minister has left office. The incentive points one way. This is not an accusation of cynicism; treating anxiety is a good thing to do. It is a prediction about incentives, and it applies to any single number that acquires authority.\n\nWhat follows is not that the surveys should stop. It is that they should be published in a form that resists the temptation of the headline. I would publish a dashboard of separate indicators - health, security, time, relationships, work - and never a single composite figure, because a composite invites exactly the management I have described. I would report the distribution rather than the average, and in particular the proportion of the population at the very bottom of the scale, whose misery is the thing a government can most usefully reduce and the thing an average most effectively hides. And I would treat every published figure as the beginning of an argument rather than the end of one.\n\nNone of this is an argument against taking happiness seriously. It is an argument against confusing a number with the thing it stands for. The question was never whether contentment can be counted. It is what we permit ourselves to do once we have counted it.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  The writer accepts that governments have decent reasons for collecting information about wellbeing.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  The writer believes that gross domestic product should no longer be published.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  Better question wording has removed the differences in the way people use the scale.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  Small changes in national averages are treated as more significant than they deserve.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "31  Chance influences on individual answers are cancelled out when the sample is very large.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  Ministers who prefer cheap policies are being deliberately dishonest with the public.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "33  Several governments have already adopted the kind of dashboard the writer proposes.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "34  In the fourth paragraph, the writer's main point about the nought-to-ten scale is that",
+     "options": [
+      "A  respondents in wealthy countries almost all choose the number eight.",
+      "B  movements in the average are usually caused by mistakes in data collection.",
+      "C  its upper limit prevents it from recording further progress in wealthy countries.",
+      "D  it ought to be replaced by a measure of economic output."
+     ],
+     "answer": 2,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  The writer mentions short courses of treatment for mild anxiety in order to",
+     "options": [
+      "A  show that mental health services are seriously underfunded.",
+      "B  illustrate how a quickly measured gain may be chosen over a more valuable one.",
+      "C  argue that such treatment has little lasting effect on patients.",
+      "D  explain why rebuilding poor housing costs so much."
+     ],
+     "answer": 1,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "36  What does the writer concede about the ability of the scores to predict behaviour?",
+     "options": [
+      "A  It has been exaggerated by those who defend the surveys.",
+      "B  It proves that the scores measure how well people's lives are going.",
+      "C  It is stronger for health outcomes than for decisions about work.",
+      "D  It shows that the question captures something genuine and lasting."
+     ],
+     "answer": 3,
+     "topic": "Reading · Multiple choice"
+    },
+    {
+     "type": "multi",
+     "q": "37  Which TWO recommendations does the writer make about the publication of wellbeing figures? Choose TWO letters, A-E.",
+     "options": [
+      "A  a single composite index should be published each year",
+      "B  the share of people with the lowest scores should be reported",
+      "C  national surveys of life satisfaction should be discontinued",
+      "D  several separate indicators should be given instead of one headline figure",
+      "E  all interviews should be carried out online rather than face to face"
+     ],
+     "answer": [
+      1,
+      3
+     ],
+     "pick": 2,
+     "topic": "Reading · Multiple choice (two answers)"
+    },
+    {
+     "type": "text",
+     "q": "38  What term do researchers use for the process by which people redefine the scale after becoming seriously ill?",
+     "answer": [
+      "response shift"
+     ],
+     "topic": "Reading · Short answer"
+    },
+    {
+     "type": "text",
+     "q": "39  What kind of influences on answers does the writer say a large sample cannot remove?",
+     "answer": [
+      "systematic",
+      "systematic influences"
+     ],
+     "topic": "Reading · Short answer"
+    },
+    {
+     "type": "text",
+     "q": "40  What does the writer say should be reported instead of the average?",
+     "answer": [
+      "distribution",
+      "the distribution"
+     ],
+     "topic": "Reading · Short answer"
+    }
+   ]
+  }
+ ]
+}

@@ -223,7 +223,10 @@ base = (db.query(models.ExamTemplate)
         .filter_by(kind="mock", level="ielts_graduation", variant="A")
         .filter(models.ExamTemplate.title.like("%Listening%")).first())
 fam = exam_online._family(db, base)
-ck("oila = shu darajadagi hamma mock", len(fam), 20)
+# Oila endi ko'nikma bo'yicha ham ajratiladi: Listening faqat
+# Listening bilan. Aks holda tashqi to'plam akademiya bazasiga
+# aralashib ketishi mumkin edi (2026-09-26).
+ck("oila = faqat Listening variantlari", len(fam), 5)
 rnd = random.Random(7)
 seen, mixbad = set(), []
 for _ in range(25):

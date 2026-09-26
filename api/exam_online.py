@@ -640,9 +640,26 @@ def _family(db: Session, t: models.ExamTemplate) -> list:
         models.ExamTemplate.level == t.level)
     if t.kind == "unit":
         q = q.filter(models.ExamTemplate.unit_no == t.unit_no)
-    rows = [x for x in q.all() if _subj(x) == _subj(t)]
+    # KO'NIKMA BO'YICHA HAM AJRATILADI (2026-09-26). Aks holda bitta
+    # darajadagi hamma mock bitta oila bo'lib qolardi va tasodifan bir
+    # xil tuzilishga tushgan boshqa bazaning matni (masalan tashqi
+    # "challenge" to'plami) akademiyaning o'z bazasiga aralashib
+    # ketishi mumkin edi.
+    sk = _tpl_skill(t)
+    rows = [x for x in q.all()
+            if _subj(x) == _subj(t) and _tpl_skill(x) == sk]
     rows.sort(key=lambda x: (x.variant or "A", x.id))
     return rows
+
+
+def _tpl_skill(t) -> str:
+    """Shablonning ko'nikma belgisi ("ielts_reading", "cefr_listening",
+    ...). Eski shablonlarda yo'q — bo'sh satr qaytadi va ular
+    o'zaro bir oila bo'lib qolaveradi."""
+    try:
+        return _mock_section(_load(t.parts))
+    except Exception:
+        return ""
 
 
 def _shape(parts: list) -> tuple:

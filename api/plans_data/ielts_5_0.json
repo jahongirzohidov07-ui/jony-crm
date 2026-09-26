@@ -21,7 +21,9 @@
    "materials": [
     "Bu rejadagi 3 ta qo'shimcha matn (chop etiladi yoki ekranda)",
     "Xatolar daftari: \"savoldagi so'z — matndagi so'z\" ustunlari",
-    "Sekundomer (har matnga 8 daqiqa)"
+    "Sekundomer (har matnga 8 daqiqa)",
+    "Asosiy matn \"The World's Friendliest City\" jadvali bilan — doskada yoki har o'quvchiga nusxa",
+    "Dars oxiridagi 10 so'zli yozma test ro'yxati — sinf mashqidagi chap ustun so'zlari (a lot of people, cheap, began, well-known, the price went up, children, difficult, almost all, help, quickly)"
    ],
    "timeline": [
     [
@@ -867,7 +869,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz javob savoldagi so'z bilan emas, matndagi boshqa so'z bilan turishini ko'rdik — uyga vazifa ham xuddi shu ish, faqat endi yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — \"The quietest city in the world\" matni: sekundomerni qo'ying, 8 daqiqada 8 ta javobni yozing, keyin har javobni rejadagi izoh bilan o'zingiz tekshiring.",
+    "Ikkinchisi — Paraphrase daftari: bugungi matnlardan 20 juft ko'chiring, chap ustunga savolda bo'lishi mumkin bo'lgan so'z, o'ng ustunga matndagi so'z; bunga taxminan 15 daqiqa ketadi.",
+    "Eng ko'p qilinadigan xato — javobni o'z sinonimi bilan yozish: matnda \"car horns\" tursa, javob ham \"car horns\" bo'ladi, \"horns\" ham, \"noise\" ham emas.",
+    "Uchinchi vazifa — men hozir beradigan 10 ta so'zning sinonimi — keyingi dars boshida 5 daqiqada yozma tekshiriladi, qolgan ikkitasini daftarda olib kelasiz, men daftarni yig'ib ko'raman."
+   ],
    "homework": [
     {
      "title": "3-matn: \"The quietest city in the world\"",
@@ -924,7 +932,14 @@
     "Bashoratni matn bilan tekshirish: \"kutgan turim to'g'ri keldimi?\" degan odatni shakllantirish.",
     "3 ta Band 4–5 matnda mustaqil ishlab, har javobni izohlash."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #3 \"The happiest country in the world\" matni va \"The Happy Planet Index\" qaydlar jadvali (1–6 bo'sh joy) — har o'quvchiga bitta nusxa; darsni shu jadvalning 1 va 2-savolidan boshlaysiz.",
+    "Reading #4 \"A city survey with a difference\" matni, a–g moslash ro'yxati va \"The City Brands Index\" qaydlari (1–7) — har o'quvchiga bitta nusxa.",
+    "1-qo'shimcha \"The country that measures happiness instead of money\" — qaydlar (8 ta bo'sh joy) va MATN alohida varaqda bo'lsin: sinf mashqida avval faqat qaydlar tarqatiladi, matn ustozda turadi va bashorat yozilgandan keyin beriladi.",
+    "2-qo'shimcha \"The library that lends everything except books\" — har o'quvchiga bitta nusxa; 20 daqiqalik vaqtli bosqich uchun telefon sekundomeri yoki devor soati tayyor tursin.",
+    "Uyga beriladigan paket: \"Living on a floating island\" matni va 8 ta qaydi + ustoz o'zi tayyorlaydigan 12 ta bo'sh joyli bashorat ro'yxati (matnsiz, faqat qayd qatorlari) — har o'quvchiga bittadan, dars oxirida tarqatiladi.",
+    "Doskada qo'ng'iroqdan oldin yozib qo'yiladi: javob turlari YIL / SON / OT / SIFAT, \"ONE WORD OR A NUMBER\" qoidasi va xatolar daftarining yangi ustuni \"kutgan turim — chiqqan javob\"; har o'quvchida xatolar daftari va qalam bo'lsin (bo'sh joy turi chetiga qalam bilan yoziladi)."
+   ],
    "timeline": [
     [
      5,
@@ -1731,7 +1746,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz javobni matnga qaramay bashorat qilishni o'rgandik, uydagi vazifa ham shundan davom etadi: \"Living on a floating island\" matni, 12 ta bo'sh joyli bashorat ro'yxati va xatolar daftari.",
+    "Matnni bir o'tirishda, soatga qarab 8 daqiqada bajaring: avval har bo'sh joy yoniga turini yozing — yil, son yoki ot — keyin matndan faqat shu turdagi so'zni qidiring.",
+    "Bashorat ro'yxatiga javob YOZILMAYDI, faqat TUR yoziladi; u besh daqiqadan ko'p vaqt olmaydi, 12 tadan 10 tasi to'g'ri bo'lsa vazifa bajarilgan hisoblanadi.",
+    "Eng ko'p uchraydigan xato — javobga ortiqcha so'z qo'shish: \"3,812 metres\" emas, faqat \"3,812\"; \"the totora\" emas, \"totora\"; chegara ONE WORD OR A NUMBER.",
+    "Xatolar daftarida bugungi uchta matndagi har bir xato javob savol, xato javob, to'g'ri javob va sabab bilan yozilsin; keyingi dars boshida uchala vazifani daftar bilan birga stolga qo'yasiz, men yurib ko'raman va paraphrase juftlarini og'zaki so'rayman."
+   ],
    "homework": [
     {
      "title": "3-matn: \"Living on a floating island\"",
@@ -1775,14 +1796,14 @@
   },
   {
    "no": 3,
-   "title": "Listening: Form Completion (Section 1)",
+   "title": "Listening: Form Completion (Part 1)",
    "grammar_topic": "Form completion — ariza/blank to'ldirish (1-bo'lim)",
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
    "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 3 Dubai Palm Apartments, Track 4 Good Moves) va 3 ta mualliflik skripti.",
    "objectives": [
-    "Section 1 dagi formani to'ldirishda javob turini oldindan aniqlash (ism, raqam, sana, narx).",
+    "Part 1 dagi formani to'ldirishda javob turini oldindan aniqlash (ism, raqam, sana, narx).",
     "Harflab aytilgan ism va familiyani (spelling) va telefon raqamini xatosiz yozish.",
     "Raqam, sana, pul va vaqtni IELTS qoidasi bo'yicha yozish.",
     "\"Tuzatish\" (correction) holatini eshitish: so'zlovchi javobni o'zgartirganda oxirgisini olish.",
@@ -1842,7 +1863,7 @@
    ],
    "grammar": {
     "intro": [
-     "Section 1 — telefon suhbati yoki ro'yxatdan o'tish. Javoblar deyarli har doim: ism, familiya, manzil, telefon, sana, narx, vaqt.",
+     "Part 1 — telefon suhbati yoki ro'yxatdan o'tish. Javoblar deyarli har doim: ism, familiya, manzil, telefon, sana, narx, vaqt.",
      "Formani eshitishdan OLDIN o'qing va har bo'sh joy ustiga turini yozing: N (name), NUM (number), D (date), $ (price), T (time).",
      "Ism va manzil harflab aytiladi. Faqat harflarni yozing, keyin so'zga aylantiring. B–P, M–N, S–F, G–J, I–E — eng ko'p adashtiradigan juftlar.",
      "Telefon raqamida \"double\" = ikkita bir xil raqam (double four = 44), \"oh\" yoki \"zero\" = 0.",
@@ -1991,7 +2012,7 @@
    "listenings": [
     {
      "title": "Track 3. Dubai Palm Apartments",
-     "qtype": "Form completion (Section 1) — asosiy",
+     "qtype": "Form completion (Part 1) — asosiy",
      "audios": "Ustoz bergan audio (Track 3)",
      "audio": "ielts5_03_dubai_palm.mp3",
      "intro": [
@@ -2148,7 +2169,7 @@
     },
     {
      "title": "Track 4. Good Moves Accommodation Agency",
-     "qtype": "Form completion (Section 1) — qo'shimcha mashq",
+     "qtype": "Form completion (Part 1) — qo'shimcha mashq",
      "audios": "Ustoz bergan audio (Track 4)",
      "audio": "ielts5_03_good_moves.mp3",
      "intro": [
@@ -2305,7 +2326,7 @@
     },
     {
      "title": "Student accommodation office",
-     "qtype": "Form completion (Section 1)",
+     "qtype": "Form completion (Part 1)",
      "audios": "Jony Academy skripti — ustoz o'qiydi yoki yozib olinadi",
      "intro": [
       "Ariza formasi: talaba turar joy so'rab qo'ng'iroq qilmoqda. BIR MARTA tinglang.",
@@ -2417,7 +2438,7 @@
     },
     {
      "title": "Sports centre membership",
-     "qtype": "Form completion (Section 1)",
+     "qtype": "Form completion (Part 1)",
      "audios": "Jony Academy skripti",
      "intro": [
       "Sport markaziga a'zo bo'lish uchun qo'ng'iroq. BIR MARTA tinglang, keyin transkript bilan tekshiring."
@@ -2527,7 +2548,7 @@
     },
     {
      "title": "Taxi booking for the airport",
-     "qtype": "Form completion (Section 1)",
+     "qtype": "Form completion (Part 1)",
      "audios": "Jony Academy skripti — uyga vazifa",
      "intro": [
       "Taksi buyurtmasi. Uyda bir marta tinglang (yoki oila a'zosi o'qib bersin), keyin transkript bilan tekshiring."
@@ -2630,7 +2651,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun sinfda uchta skriptda formani birga to'ldirdik — uyga vazifada xuddi shu ishni endi yolg'iz o'zingiz qilasiz.",
+    "Birinchisi — \"Taxi booking for the airport\": audioni (yoki oila a'zosi o'qib berganini) BIR MARTA tinglab, 11 ta bo'sh joyni to'ldirasiz va faqat shundan keyin transkriptni ochib tekshirasiz; bu taxminan 15 daqiqa.",
+    "Keyin \"Imlo mashqi\" va \"Raqam diktanti\": juftingiz bilan telefonda 20 ta ism va ko'cha nomini harflab, 15 ta telefon raqami va narxni aytib yozasiz — har biri 10 daqiqa, \"double\", \"oh\" va 13/30, 15/50 juftlariga alohida diqqat qiling.",
+    "Eng ko'p qilinadigan xato — transkriptni oldindan ochib qo'yish yoki audioni ikki marta tinglash: imtihonda audio bir marta qo'yiladi, shuning uchun bunday qilsangiz mashq kuchini yo'qotadi.",
+    "Keyingi darsga daftaringizda to'ldirilgan forma, 20 ta harflangan so'z va 15 ta raqam bilan kelasiz; dars boshida birga sanaymiz: imlo 18/20 — 2 coin, forma 9/11 — 2 coin, raqam diktanti 13/15 — 1 coin."
+   ],
    "homework": [
     {
      "title": "3-skript: \"Taxi booking for the airport\"",
@@ -2687,7 +2714,14 @@
     "Savolning so'roq so'ziga qarab javob turini aniqlash: who — odam, when — vaqt, how many — son.",
     "3 ta Band 4–5 matnda ishlash va har javobni izohlash."
    ],
-   "materials": [],
+   "materials": [
+    "Sinfda ishlanadigan ikki matn — \"How a pencil is made\" va \"From bean to bar: making chocolate\" — flow chart va short answer savollari bilan, har o'quvchiga bittadan nusxa.",
+    "Uyga beriladigan 3-matn \"How a plastic bottle becomes a jacket\" — har o'quvchiga bittadan nusxa, javoblarsiz; dars oxirida tarqatiladi.",
+    "Freya Stark (Reading #5) va Patrick Malone 1- va 2-qism flow chartlari — qutilar bo'sh holda chop etilsin, har juftlikka bitta nusxa.",
+    "\"Guruhini toping\" mashqi uchun 13 ta kartochka: har biriga bitta savol turi nomi yozilgan (True/False/Not Given, Short Answer, Matching Headings va h.k.) — qirqib qo'yiladi, har juftlikka bitta komplekt.",
+    "Doskada dars boshlanishidan oldin ikki ustun tayyor tursin: \"TARTIB BOR\" va \"TARTIB YO'Q\"; yonida qizil marker — short answer javobidagi artiklni o'chirib ko'rsatish uchun.",
+    "Sekundomer (har qo'shimcha matnga 8 daqiqa) va har o'quvchida daftar: birinchi mashqda tartib jadvali ko'chiriladi, tahlil bosqichida \"savoldagi so'z — matndagi so'z\" ustunlari to'ldiriladi."
+   ],
    "timeline": [
     [
      5,
@@ -3651,7 +3685,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun flow chart va short answer bilan ishladik, uyga ham aynan shu ikki tur beriladi — uchta vazifa bor, uchalasi ham doskadagi tartib qoidasiga tayanadi.",
+    "Birinchisi — \"How a plastic bottle becomes a jacket\" matni: sekundomer qo'ying, 8 daqiqada flow chartning sakkiz bo'sh joyini to'ldiring, keyin short answer savollariga javob bering.",
+    "Ikkinchisi — tartib jadvali: daftarga ikki ustun chizing, o'nta savol turini \"tartib bor\" va \"tartib yo'q\" ustunlariga joylashtiring va har biriga nega shundayligini bitta gapda yozing; uchinchisi — o'zingiz biladigan bir jarayonni (choy damlash, non yopish) olti bosqichda, kamida beshta ketma-ketlik so'zi bilan yozing.",
+    "Eng ko'p uchraydigan xato — bo'sh joyga to'liq gap yozish: \"ONE WORD ONLY\" yozilgan joyga faqat bitta so'z tushadi, \"It is washed\" emas, \"washed\"; artikl ham so'z hisoblanadi.",
+    "Hammasi keyingi darsga, bitta daftarda: jadval va jarayon yozuvini dars boshida yig'ib olaman, matn javoblarini birga tekshiramiz va bittangiz plastik shishadan kurtka chiqish jarayonini og'zaki aytib beradi."
+   ],
    "homework": [
     {
      "title": "3-matn: \"How a plastic bottle becomes a jacket\"",
@@ -3695,7 +3735,7 @@
   },
   {
    "no": 5,
-   "title": "Listening: Note Completion (Section 1)",
+   "title": "Listening: Note Completion (Part 1)",
    "grammar_topic": "Note completion — qayd (eslatma) to'ldirish, 1-bo'lim",
    "vocab_topic": "",
    "duration": 120,
@@ -3708,7 +3748,14 @@
     "Chalg'ituvchi (distractor) javobni tanimaslik: so'zlovchi bir necha variant aytadi, faqat bittasi to'g'ri.",
     "So'z chegarasini saqlash va imloni to'g'ri yozish."
    ],
-   "materials": [],
+   "materials": [
+    "Track 11 (ielts5_05_expedition.mp3) va Track 07 (ielts5_05_magazine.mp3) — telefon yoki kolonkaga oldindan yuklab qo'ying, ovoz darajasini sinfning orqa qatoridan tekshiring: ikkala audio ham BIR MARTA qo'yiladi, to'xtatib qayta qo'yilmaydi.",
+    "\"Candidate notes\" (Track 11) va \"Magazine interview\" (Track 07) qayd jadvallari — har o'quvchiga bittadan nusxa; ikkalasi bitta betning ikki tomoniga sig'adi.",
+    "\"Language school enrolment\" va \"Museum tour booking\" skriptlari — faqat ustozda bitta nusxa (bu ikkisiga audio yo'q, ustoz ovoz chiqarib o'qiydi); o'quvchilarga esa shu ikki mashqning bo'sh qayd ro'yxati — har biriga bittadan nusxa.",
+    "Uyga vazifa uchun \"Cycling club information\" qayd varag'i va transkripti — har o'quvchiga bittadan, dars oxirida tarqatiladi (transkript varaqning orqa tomonida bo'lsin, ish tugamaguncha ochilmaydi).",
+    "Doskaga darsdan oldin yozib qo'ying: signal so'zlar — but, though, actually, sorry, in fact — va paraphrase juftliklari cost = price = charge, can speak = hold conversations in, degree in = graduated in.",
+    "Har o'quvchida daftar va qizil qalam (chalg'ituvchi javoblar qizil bilan belgilanadi); ustozda raqam diktanti ro'yxati (13/30, 15/50, 7.30/7.13 juftliklari, 15 ta) va qaydlarni o'qish vaqtini o'lchash uchun soat yoki taymer."
+   ],
    "timeline": [
     [
      5,
@@ -3763,7 +3810,7 @@
      "Audioda javob so'zi ko'pincha qaydda yozilganidan boshqacha aytiladi: qaydda \"cost\", audioda \"price\"; qaydda \"free\", audioda \"no charge\".",
      "Chalg'ituvchi: \"The tour is usually 15 pounds, but for students it's 9.\" Savol talaba narxi haqida bo'lsa — 9.",
      "Javob eshitilgach, so'zlovchi uni takrorlashi yoki tasdiqlashi mumkin (\"So that's Tuesday, yes\"). Takrorni kutib, birinchi eshitgan javobni o'zgartirishga tayyor turing.",
-     "Section 1 da eng ko'p xato: imlo va \"s\" (ko'plik). \"Two ticket\" emas, \"two tickets\".",
+     "Part 1 da eng ko'p xato: imlo va \"s\" (ko'plik). \"Two ticket\" emas, \"two tickets\".",
      "Vaqt: 8.15 yoki \"quarter past eight\" — ikkalasi ham to'g'ri, lekin qaydda nuqta bo'lsa raqam bilan yozing."
     ],
     "formulas": [
@@ -3905,7 +3952,7 @@
    "listenings": [
     {
      "title": "Track 11. A new member for the expedition",
-     "qtype": "Note completion (Section 1) — asosiy",
+     "qtype": "Note completion (Part 1) — asosiy",
      "audios": "Ustoz bergan audio (Track 11)",
      "audio": "ielts5_05_expedition.mp3",
      "intro": [
@@ -4052,7 +4099,7 @@
     },
     {
      "title": "Track 07. Magazine interview",
-     "qtype": "Note completion (Section 1) — qo'shimcha mashq",
+     "qtype": "Note completion (Part 1) — qo'shimcha mashq",
      "audios": "Ustoz bergan audio (Track 07)",
      "audio": "ielts5_05_magazine.mp3",
      "intro": [
@@ -4212,7 +4259,7 @@
     },
     {
      "title": "Language school enrolment",
-     "qtype": "Note completion (Section 1)",
+     "qtype": "Note completion (Part 1)",
      "audios": "Jony Academy skripti",
      "intro": [
       "Til kursiga yozilish. BIR MARTA tinglang; qaydlarni to'ldiring.",
@@ -4322,7 +4369,7 @@
     },
     {
      "title": "Museum tour booking",
-     "qtype": "Note completion (Section 1)",
+     "qtype": "Note completion (Part 1)",
      "audios": "Jony Academy skripti",
      "intro": [
       "Muzeyga guruh ekskursiyasi buyurtmasi. BIR MARTA tinglang."
@@ -4426,7 +4473,7 @@
     },
     {
      "title": "Cycling club information",
-     "qtype": "Note completion (Section 1)",
+     "qtype": "Note completion (Part 1)",
      "audios": "Jony Academy skripti — uyga vazifa",
      "intro": [
       "Velosiped klubi haqida ma'lumot. Uyda bir marta tinglang, keyin transkriptga qarang."
@@ -4525,7 +4572,14 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun to'rtta qaydni birga to'ldirdik, endi beshinchisini — \"Cycling club information\" ni — uyda yolg'iz o'zingiz bajarasiz: audioni BIR MARTA qo'ying, to'xtatmang va 11 ta qaydni oxirigacha to'ldiring, bu 10–12 daqiqa vaqt oladi.",
+    "Javoblarni yozib bo'lgandan keyingina varaqning orqasidagi transkriptni oching va xatolaringizni qizil qalam bilan tuzating; oldin qarasangiz, mashqning ma'nosi qolmaydi.",
+    "Ikkinchi vazifa — \"Chalg'ituvchi daftari\": bugungi uchta skriptdan 10 ta noto'g'ri javobni ko'chirib yozasiz va har bir qatorda uni ochib bergan signal so'zni ko'rsatasiz — but, though, sorry, average kabi.",
+    "Eng ko'p xato shu yerda: ko'pchilik faqat \"noto'g'ri\" deb yozadi-yu, signal so'zni yozmaydi — signal so'zsiz qator hisobga olinmaydi.",
+    "Uchinchi vazifa — raqam va vaqt diktanti: men 15 ta narx, vaqt va masofani o'qiyman, siz faqat raqamni yozasiz; 13/30 va 15/50 juftliklarida urg'uni diqqat bilan tinglang.",
+    "Uchala vazifani bitta daftarda bajaring va keyingi darsning boshida daftarni menga topshiring; men tekshirib, coinni o'sha kuni yozaman."
+   ],
    "homework": [
     {
      "title": "3-skript: \"Cycling club information\"",
@@ -4582,7 +4636,14 @@
     "Javobni faqat matndan olish: dunyo haqidagi bilim yoki mantiq bilan javob berilmaydi.",
     "3 ta Band 4–5 matnda ishlab, har javob uchun matndagi gapni ko'rsatish."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #6 \"Mau Piailug, ocean navigator\" matni savollari bilan (3 + 7 savol) — har o'quvchiga bitta nusxa, savollar matn bilan bir varaqda.",
+    "Reading #9 \"Sylvia Earle, underwater hero\" matni short answer va T/F/NG savollari bilan — har o'quvchiga bitta nusxa.",
+    "\"The accident that gave us the microwave\" va \"The woman who mapped the ocean floor\" matnlari, glossary qatori matn ostida chop etilsin — har juftlikka bittadan nusxa, ular juftlikda ishlanadi.",
+    "\"The first photograph\" matni va 8 ta savoli — har o'quvchiga bitta nusxa; dars oxirida uyga vazifa uchun tarqatiladi, sinfda ochilmaydi.",
+    "Uchta kartochka — TRUE, FALSE, NOT GIVEN — qalin qog'ozga yozib qirqing, har juftlikka bitta to'plam: \"Uch ustun mashqi\"da o'quvchi javobni kartochka ko'tarib beradi. Shu mashqning 6 ta matn-savol juftligi ustoz varag'ida chop etilgan bo'lsin.",
+    "Doskada dars boshlanishidan oldin uchta ustun yozib qo'yilsin: TRUE — \"bir xil\", FALSE — \"qarshi\", NOT GIVEN — \"yo'q\"; yoniga to'rtinchi ustun — \"isbot: qaysi xatboshi, qaysi gap\". Vaqtni o'lchash uchun telefonda sekundomer (7 savolga 10 daqiqa)."
+   ],
    "timeline": [
     [
      5,
@@ -5370,7 +5431,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz TRUE, FALSE va NOT GIVEN ni faqat matnga tayanib ajratdik; uyda xuddi shu ishni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — \"The first photograph\" matni: soatga qarang, 10 daqiqada 8 ta savolga javob bering va har javob yoniga isbotni yozing, masalan \"3-xatboshi, 2-gap\".",
+    "Ikkinchi vazifa — bugungi matnlardan 8 ta FALSE yoki NOT GIVEN javobni daftarga ko'chirasiz: savol, javob va sabab; sababsiz qator qabul qilinmaydi.",
+    "Uchinchi vazifa — o'zingiz 10 ta savol yozasiz, har birida all, only, never, most yoki first so'zi bo'lsin, so'ng matnga qarab javob berasiz; uchala vazifa birga 30–35 daqiqa oladi.",
+    "Eng ko'p uchraydigan xato shu: \"men bilaman, bu to'g'ri\" deb TRUE yozish — matn aytmagan bo'lsa, javob NOT GIVEN. Daftarni keyingi darsga to'liq yozilgan holda olib keling, dars boshida har javobingizdan matndagi qatorni so'rayman."
+   ],
    "homework": [
     {
      "title": "3-matn: \"The first photograph\"",
@@ -5427,7 +5494,14 @@
     "Chizma turini farqlash: qurilma sxemasi, jarayon sxemasi, joy rejasi.",
     "3 ta Band 4–5 matnda mustaqil ishlash va har javobni izohlash."
    ],
-   "materials": [],
+   "materials": [
+    "Doskaga dars boshlanishidan oldin oddiy velosiped chizmasi: rom, o'rindiq, zanjir, ikki g'ildirak, rul va chiroq — belgilarsiz, faqat chiziqlar; \"Predlog mashqi\" shu chizma ustida og'zaki bajariladi.",
+    "Doska chetiga predloglar ro'yxati: above, below/beneath, inside, through, between, on either side, at the top of, at the base of — dars oxirigacha o'chirilmaydi, uchala matnda ham shu ro'yxatga qaytiladi.",
+    "Reading #10 \"The electric revolution\" matni va elektromobil chizmasi (ielts5_07_electric_car.jpg) — har juftlikka bitta nusxa; chizmadagi 1–6 belgilar bo'sh holda chop etilsin.",
+    "\"Inside a wind turbine\" (9 belgi) va \"How a vacuum flask keeps drinks hot\" (7 belgi) matnlari — har o'quvchiga bittadan nusxa; glossary qatori (nacelle, hub, blade / stopper, pad, case) matn ostida ko'rinib tursin, bu so'zlar o'quvchiga mutlaqo yangi.",
+    "Reading #11 \"The Boeing 787\" matni va samolyot chizmasi (ielts5_07_boeing_787.jpg) — har juftlikka bitta nusxa; eng qiyin mashq, faqat dastlabki uch matn tugagach tarqatiladi.",
+    "Uyga vazifa to'plami, dars oxirida tarqatiladi: \"The parts of a traditional water mill\" matni (9 belgi) va 15 gapli predlog testi — har o'quvchiga bittadan, ustiga \"O'z chizmangiz\" uchun bo'sh A4 varaq; har o'quvchida oddiy qalam va o'chirg'ich bo'lsin (chizmaga belgi qalam bilan qo'yiladi)."
+   ],
    "timeline": [
     [
      5,
@@ -6145,7 +6219,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun chizmadagi belgini matndan topishni birga mashq qildik — uyga vazifada xuddi shu ishni endi yolg'iz o'zingiz, ustozsiz bajarasiz.",
+    "Birinchi vazifa — \"The parts of a traditional water mill\" matni: soatga qarab 10 daqiqa vaqt oling va 9 ta belgini to'ldiring, javob ONE WORD ONLY, ya'ni faqat bitta so'z.",
+    "Ikkinchisi — \"O'z chizmangiz\": uyingizdagi bitta qurilmani (choynak, velosiped, fen) chizib, 8 qismini inglizcha belgilaysiz va har biriga kamida 6 ta predlog ishlatib joylashuv gapini yozasiz, bu 20 daqiqacha vaqt oladi; uchinchisi — 15 gapli predlog testi, doskadagi ro'yxatdan foydalanasiz va 15 tadan 13 tasi to'g'ri bo'lsa bajarilgan hisoblanadi.",
+    "Eng ko'p qilinadigan xato shu yerda: chizmada allaqachon yozilgan so'z bo'sh joyga yana ko'chiriladi — \"the ___ stone\" ga \"bed stone\" deb ikki so'z yoziladi, to'g'risi esa faqat \"bed\"; va javob har doim ot bo'lsin, fe'l emas.",
+    "Uchala vazifa ham bitta daftarda bo'ladi, chizmangizni daftarga yopishtirasiz va keyingi darsga olib kelasiz: birinchi 10 daqiqada javoblarni juftlikda solishtiramiz, keyin daftarlarni yig'ib olaman."
+   ],
    "homework": [
     {
      "title": "3-matn: \"The parts of a traditional water mill\"",
@@ -6202,7 +6282,14 @@
     "Chalg'ituvchi tavsiflarni tanish: so'zlovchi avval boshqa qismni aytadi, keyin kerakligiga o'tadi.",
     "Javobni so'z chegarasida va to'g'ri imloda yozish."
    ],
-   "materials": [],
+   "materials": [
+    "Audio: Track 17 (ielts5_08_ferry.mp3) va Track 08 (ielts5_08_train.mp3) — darsdan oldin ochib, ovoz balandligi tekshirilsin; ikkalasi ham sinfda FAQAT BIR MARTA qo'yiladi.",
+    "Ferry chizmasi (ielts5_08_ferry.png) va Sunshine Express chizmasi (ielts5_08_train.png) — har o'quvchiga bittadan nusxa; \"you are here\" belgisi ko'rinib tursin.",
+    "3 ta mualliflik skripti uchun bo'sh rejalar: fabrika zali (9 ta bo'sh joy), yomg'ir suvi tizimi kesimi (9 ta), kutubxona rejasi (9 ta) — har o'quvchiga bittadan; kutubxona rejasi uyga vazifaga ham kerak, ortiqcha nusxa oling.",
+    "Doskada dars boshlanishidan oldin: oddiy xona rejasi (kirish, stol, deraza, burchak) — 1-bosqichda shu chizmada \"qaysi tartibda aytiladi?\" deb so'raladi.",
+    "Sinf mashqi (Joy iboralari mashqi) uchun 6 ta kartochka: opposite the entrance; just above the handle; at the far end of the corridor; on your left as you come in; between the pump and the tank; running along the back wall.",
+    "Har o'quvchida oddiy qalam va o'chirg'ich (audio vaqtida chizmaga belgi qo'yiladi), ustozda 4 ta skript transkripti va joy iboralarini bo'yash uchun marker."
+   ],
    "timeline": [
     [
      5,
@@ -6799,7 +6886,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun chizmani eshitib to'ldirdik — uyga vazifa ham xuddi shu, faqat endi buni yolg'iz o'zingiz, ustozsiz qilasiz.",
+    "Birinchi vazifa — \"The new library building\" skripti: avval rejani 30 soniya o'qib chiqing, keyin FAQAT BIR MARTA eshiting, 9 ta bo'sh joyni to'ldiring va oxirida transkript bilan tekshiring; hammasi 15 daqiqa.",
+    "Ikkinchisi — joy iboralari lug'ati: 20 ta iborani tarjimasi va o'z gapingiz bilan yozasiz, 20 daqiqa; uchinchisi — \"O'z rejangiz\": uyingiz yoki maktabingiz rejasini chizib, 1 daqiqada kamida 8 ta joy iborasi bilan tasvirlaysiz.",
+    "Eng ko'p qilinadigan xato — skriptni to'xtatib yoki qayta-qayta eshitish; imtihonda audio bir marta qo'yiladi, shuning uchun bir marta eshiting va ulgurmagan joyingizga qalam bilan belgi qo'ying.",
+    "Uchala vazifa keyingi darsga: daftarni o'zingiz olib kelasiz, ovozli yozuvni esa darsdan oldin menga yuborasiz."
+   ],
    "homework": [
     {
      "title": "3-skript: \"The new library building\"",
@@ -6856,7 +6949,14 @@
     "Variantni o'chirib borish usuli bilan ishlash (elimination).",
     "Javobni belgilab, keyingi savolga o'tishda kechikmaslik."
    ],
-   "materials": [],
+   "materials": [
+    "Audio: ielts5_09_ferry_details.mp3 (Track 18, Ferry) va ielts5_09_train_trip.mp3 (Track 09, Sunshine Express) — dars boshlanishidan oldin telefon yoki kolonkaga yuklab, orqa partadan eshitiladigan qilib sinab qo'ying; ikkalasi ham faqat BIR MARTA qo'yiladi.",
+    "\"Choosing a part-time job\" va \"A talk about the city bike scheme\" skriptlari — bu ikkisining audiosi yo'q, ustoz o'zi ovoz chiqarib o'qiydi: skriptni chop etib, MAYA va TOM repliklarini ikki xil belgilab chiqing.",
+    "Savol varag'i: Ferry 6–10, Sunshine Express 1–5, part-time job 1–5 va city bike 1–6 savollari A/B/C variantlari bilan — har o'quvchiga bitta nusxa, audio boshlanishidan OLDIN tarqatiladi.",
+    "Sekundomer yoki telefon taymeri — har mashq oldidan savollarni o'qishga 45 soniya berasiz; shu bilan uyga vazifadagi \"Tez o'qish mashqi\" ham tekshiriladi.",
+    "Transkript nusxalari (Ferry va Sunshine Express) — har juftlikka bitta, faqat tekshirish bosqichida tarqatiladi; har o'quvchida ikki xil rangli qalam bo'lsin: javob joyi bir rang, chalg'ituvchi joyi boshqa rang.",
+    "[class] \"Chalg'ituvchi turlari\" uchun 6 ta gap alohida qog'ozchalarga yozib, kesib qo'yiladi (o'quvchi kartochkani tortib oladi va turini aytadi); doskaga esa dars boshlanishidan oldin uch tur — ESKI ma'lumot / BOSHQA odamning fikri / QISMAN to'g'ri — va signal so'zlar yozib qo'yiladi: but, however, actually, though, in the end, only."
+   ],
    "timeline": [
     [
      5,
@@ -7434,7 +7534,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz chalg'ituvchining uch turini ajratishni o'rgandik; uyda endi ularni o'zingiz topasiz — shunda bu bilim sizniki bo'ladi.",
+    "Birinchi vazifa — \"Tutorial: choosing a project topic\" skripti: bir marta tinglang, to'xtatmang, 6 ta javobni belgilang, faqat shundan keyin transkriptni ochib tekshiring; hammasi 20 daqiqa vaqt oladi.",
+    "Ikkinchisi — \"Chalg'ituvchi daftari\": bugungi uch skriptdan 12 ta chalg'ituvchini ko'chiring va har birining yoniga turini yozing — eski ma'lumot, boshqa odamning fikri yoki qisman to'g'ri.",
+    "Eng ko'p qilinadigan xato shu: gap ko'chiriladi-yu, turi yozilmaydi — turi ko'rsatilmagan qator qabul qilinmaydi, u qator uchun ball yo'q.",
+    "Uchinchisi — \"Tez o'qish mashqi\": 10 ta savolda kalit so'zni belgilab, har variantni bitta so'zga qisqartirasiz, hammasi 45 soniya ichida; uchala vazifani ham keyingi darsning boshida daftar bilan topshirasiz, tez o'qishni esa sekundomer bilan o'zingiz ko'rsatasiz."
+   ],
    "homework": [
     {
      "title": "3-skript: \"Tutorial: choosing a project topic\"",
@@ -7491,7 +7597,14 @@
     "Bir-biriga o'xshash sarlavhalarni farqlash: farqli so'zni topish.",
     "3 ta Band 4–5 matnda ishlash va har tanlovni izohlash."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #12 \"Traffic Jams — No End in Sight\" matni va i–vii sarlavhalar ro'yxati — har o'quvchiga bitta nusxa (1-qo'shimcha reading).",
+    "Reading #13 \"Pedestrians only\" matni — har o'quvchiga bitta nusxa; shu matnning i–vii sarlavhalari qirqilgan 7 ta tasma — har juftlikka bitta to'plam.",
+    "Reading #14 \"Macon Money\" matni va i–ix sarlavhalari — har juftlikka bitta nusxa; kalit so'zlarni belgilash uchun rangli qalam yoki marker.",
+    "\"Why city birds sing differently\" va \"The return of the wolf\" matnlari — har o'quvchiga bittadan: bu darsda audio yo'q, Listening bosqichi shu matnlar bilan to'ldiriladi.",
+    "\"Sleep and the teenage brain\" uy vazifasi varaqasi — har o'quvchiga bitta, orqa tomonida 6 ta \"bu xatboshi ... haqida\" gapi uchun bo'sh joy; har o'quvchida tuzoq daftari va qalam bo'lsin.",
+    "Doskada qo'ng'iroqqacha: ikki ustun — \"ASOSIY G'OYA\" va \"TAFSILOT\"; yonida uch qadam: 1) xatboshi → 2) o'z gapingiz → 3) sarlavhalar ro'yxati. Stolda sekundomer (har xatboshiga 1.5 daqiqa)."
+   ],
    "timeline": [
     [
      5,
@@ -8341,7 +8454,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz xatboshini o'qib, asosiy g'oyasini o'z so'zimiz bilan aytishni mashq qildik — uyda xuddi shuni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa: \"Sleep and the teenage brain\" matni — 10 daqiqada A–F xatboshilariga sarlavha tanlang, har biriga avval \"bu xatboshi ... haqida\" gapingizni yozing, sarlavhalar ro'yxatiga faqat shundan keyin qarang.",
+    "Ikkinchi vazifa \"Asosiy g'oya mashqi\": istalgan gazeta maqolasidan 6 xatboshi olib, har biriga to'rt so'zdan oshmaydigan o'z sarlavhangizni yozasiz; uchinchisi — \"Tuzoq daftari\": bugungi matnlardan 9 ta ishlatilmagan sarlavhani ko'chirib, har biriga nega mos emasligini bir gapda tushuntirasiz.",
+    "Eng ko'p qilinadigan xato — sarlavhani bitta gapga qarab tanlash: sarlavha faqat bitta gapga mos kelsa, bu tafsilot tuzog'i, u butun xatboshiga mos bo'lishi kerak; tuzoq daftarida sababsiz yozilgan qator ham qabul qilinmaydi.",
+    "Uchalasi qo'shib taxminan yarim soat oladi; keyingi darsga daftaringiz bilan keling, dars boshida javoblarni birga tekshiramiz."
+   ],
    "homework": [
     {
      "title": "3-matn: \"Sleep and the teenage brain\"",
@@ -8398,7 +8517,14 @@
     "Uzun savollarni (Passage 3 uslubi) qismlarga bo'lib o'qish.",
     "3 ta Band 4–5 matnda ishlash va har tanlovni izohlash."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #15 \"Air conditioning\" matni va 1–5 multiple choice savollari — har o'quvchiga bitta nusxa; javob kaliti va izohlar faqat ustozda qoladi.",
+    "Reading #16 \"The ballpoint pen\", \"Why we believe things that are not true\" va \"The four-day week experiment\" matnlari savollari bilan — har o'quvchiga bittadan nusxa (chop etiladi yoki ekranda).",
+    "Uyga beriladigan \"The language that has no numbers\" matni 1–7 savollari bilan — har o'quvchiga bitta nusxa, javoblarsiz; dars oxirida tarqatiladi.",
+    "\"Farqli so'z mashqi\" varaqasi — 10 juft A/B variant, yonida \"farqli so'z\" va \"qanday tekshiraman\" ustunlari bo'sh qoldirilgan; har o'quvchiga bitta (uyga vazifa).",
+    "Doskada dars boshlanishidan oldin tayyor tursin: 4 ta rad etish sababi (matn qarshi / aytilmagan / qisman to'g'ri / juda kuchli so'z) va sinf mashqining birinchi juftligi yonma-yon — \"Most students finished early\" / \"All students finished early\"; farqli so'zni belgilash uchun 2 ta rangli marker.",
+    "Har o'quvchida tuzoq daftari uchun 4 ustunli sahifa (savol | tanlangan variant | tur | sabab) va taymer yoki sekundomer — har savolga 1.5–2 daqiqa, 2-matn IELTS tezligida bajariladi."
+   ],
    "timeline": [
     [
      5,
@@ -9194,20 +9320,27 @@
   },
   {
    "no": 12,
-   "title": "Listening: Sentence Completion (Section 2)",
+   "title": "Listening: Sentence Completion (Part 2)",
    "grammar_topic": "Sentence completion — gapni to'ldirish (2-bo'lim, monolog)",
    "vocab_topic": "",
    "duration": 120,
    "test_after": "",
    "book_ref": "Jony Academy materiali — ustoz bergan audiolar (Track 22 Electronics exhibition, Track 10 Joe) va 3 ta mualliflik skripti.",
    "objectives": [
-    "Section 2 (bitta so'zlovchi, monolog) formatiga ko'nikish.",
+    "Part 2 (bitta so'zlovchi, monolog) formatiga ko'nikish.",
     "Bo'sh joyni grammatik jihatdan to'g'ri to'ldirish: ot, fe'l, son yoki sifat.",
     "Gapdagi kalit so'zga qarab audio bo'yicha \"qayerdaman\" degan savolga javob berish.",
     "Paraphrase kutish: gapda bir so'z, audioda boshqasi.",
     "So'z chegarasini va grammatik mosligini tekshirish (birlik/ko'plik, zamon)."
    ],
-   "materials": [],
+   "materials": [
+    "Audio: ielts5_12_exhibition.mp3 (Track 22, Electronics exhibition) va ielts5_12_joe_habits.mp3 (Track 10, Joe) — kolonka darsdan oldin ulanib, ovozi sinab ko'riladi; har ikkalasi faqat BIR MARTA qo'yiladi.",
+    "Sinf savol varaqlari — Electronics exhibition 1–6, Joe 1–6, wildlife park 10 gap va summer festival 12 gap: har o'quvchiga bitta nusxa, javobsiz va transkriptsiz.",
+    "Ustoz nusxasi: 3 ta Jony Academy skripti (wildlife park, summer festival, sports hall) yirik shriftda chop etilgan — bular audio emas, ustoz ovoz chiqarib o'qiydi.",
+    "Doskaga dars boshlanishidan oldin yoziladi: 6 bosqich (o'qi — turkumni belgila — kalit so'z — paraphrase — yoz — gapni qayta o'qi) va to'rt belgi: ot / fe'l / son / sifat.",
+    "Doskaning o'ng yarmi \"gapdagi so'z — audiodagi so'z\" ikki ustuni uchun bo'sh qoldiriladi: paraphrase juftlari (deals with — is all about, checking — measuring) shu yerga yoziladi.",
+    "Sekundomer yoki telefon taymeri (har skriptdan oldin gaplarni o'qishga 45 soniya) va uyga vazifa varag'i: \"Introduction to the sports hall\" 10 gapi + bashorat mashqining 15 gapi, har o'quvchida xatolar daftari va qalam."
+   ],
    "timeline": [
     [
      5,
@@ -9259,7 +9392,7 @@
     "intro": [
      "Sentence completion — to'liq gap beriladi, ichida bo'sh joy bor. Javob gapga GRAMMATIK jihatdan mos tushishi shart.",
      "Avval gapni o'qing va bo'sh joydan oldingi va keyingi so'zga qarang: \"a ___ of\" — ot; \"will ___ the cost\" — fe'l.",
-     "Section 2 monolog: so'zlovchi mavzu bo'ylab tartib bilan yuradi. Savollar ham shu tartibda.",
+     "Part 2 monolog: so'zlovchi mavzu bo'ylab tartib bilan yuradi. Savollar ham shu tartibda.",
      "Paraphrase: gapda \"students can borrow\", audioda \"students are allowed to take out\". Ma'no bir xil, so'z boshqa.",
      "Javobni yozgach gapni ichingizda to'liq o'qing: mantiq va grammatika to'g'rimi?",
      "Ko'p uchraydigan xato: javobni audiodan eshitilgandek yozib, gapga mos kelmasligi (masalan, \"to go\" o'rniga \"going\").",
@@ -9321,7 +9454,7 @@
       "Asosiy so'zni yozing: \"(bus) station\" — \"station\"."
      ],
      [
-      "Section 2 da nechta so'zlovchi?",
+      "Part 2 da nechta so'zlovchi?",
       "Odatda bitta: ma'ruza, tanishtiruv yoki radio ko'rsatuv."
      ],
      [
@@ -9883,7 +10016,7 @@
   },
   {
    "no": 13,
-   "title": "Listening: Pick from a List (Section 2-3)",
+   "title": "Listening: Pick from a List (Part 2-3)",
    "grammar_topic": "Pick from a list (listening) — ro'yxatdan ikki (yoki uch) javob tanlash",
    "vocab_topic": "Elektronika, texnologiya va turmush",
    "duration": 120,
@@ -9896,7 +10029,14 @@
     "Har javob alohida ball olishini bilish — bittasini eshitib qolsangiz ham yozing.",
     "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
    ],
-   "materials": [],
+   "materials": [
+    "Track 23 (Irina) savol varag'i: 7–10-savollar va har biriga A–E variantlar — har o'quvchiga bitta nusxa; transkript faqat ustozda, tekshirishdan keyin tarqatiladi.",
+    "Track 11 (Joe) savol varag'i: 1–4-savollar va A–E variantlar — har o'quvchiga bitta nusxa.",
+    "Ikki audio — ielts5_13_irina_survey.mp3 va ielts5_13_joe_devices.mp3 — qo'ng'iroqdan oldin kolonkaga ulanib, ovozi sinab ko'rilsin va fayl boshiga qaytarilsin (har biri BIR MARTA qo'yiladi).",
+    "Doskaga dars boshlanishidan oldin ikki ustun yoziladi: INKOR — but, however, not, decided not, I'm not keen on; TASDIQ — really like, that's great, definitely. \"Tasdiq yoki inkor?\" sinf mashqi shu ustunlarga tayanadi.",
+    "3 ta skript chop etilgan holda ustoz qo'lida (Foto klub, Ko'ngillilar kuni, Maya — Dr Reed) — audiosi yo'q, ustoz ovoz chiqarib o'qiydi.",
+    "Har o'quvchiga \"Chalg'ituvchi tahlili\" uchun 3 ustunli bo'sh jadval: variant | audioda qanday eshitildi | nega javob emas — uyga vazifada shu jadval to'ldiriladi."
+   ],
    "timeline": [
     [
      5,
@@ -9946,12 +10086,12 @@
    ],
    "grammar": {
     "intro": [
-     "Listening pick from a list — savol va 5 ta variant (A–E) beriladi, ulardan IKKITASI to'g'ri. Ba'zan Section 3 da uchtasi.",
+     "Listening pick from a list — savol va 5 ta variant (A–E) beriladi, ulardan IKKITASI to'g'ri. Ba'zan Part 3 da uchtasi.",
      "Ikkala harf ham alohida ball: 7–8-savol = 2 ball. Tartib muhim emas: \"B, C\" = \"C, B\".",
      "Eng muhim qoida: variantlarni tinglashdan OLDIN o'qing. Audioda vaqt kam — kalit so'zlarni oldindan bilsangiz, tez ilg'aysiz.",
      "Barcha 5 variant audioda biror shaklda tilga olinadi. \"Eshitildi\" degani \"javob\" degani emas — variant TASDIQLANDIMI yoki INKOR qilindimi, shuni tinglang.",
      "Chalg'ituvchining ikki turi: 1) variant aytiladi, keyin rad etiladi (\"I was thinking of buying a calculator, but I decided it wasn't necessary\"); 2) variant boshqa kishi/narsa haqida.",
-     "Section 2 — monolog (bitta so'zlovchi); Section 3 — suhbat (2–4 kishi). Kim gapirayotganini kuzating."
+     "Part 2 — monolog (bitta so'zlovchi); Part 3 — suhbat (2–4 kishi). Kim gapirayotganini kuzating."
     ],
     "formulas": [
      [
@@ -10005,7 +10145,7 @@
       "Tasdiqlangan ikkitasini oling; qolganlari rad etilgan yoki boshqa narsa haqida."
      ],
      [
-      "Section 2 va 3 farqi?",
+      "Part 2 va 3 farqi?",
       "2 — monolog; 3 — suhbat. Usul bir xil."
      ],
      [
@@ -10047,7 +10187,7 @@
      [
       "Kim gapiryaptini aralashtirish",
       "So'zlovchini kuzatish",
-      "Section 3 da bir necha kishi"
+      "Part 3 da bir necha kishi"
      ]
     ]
    },
@@ -10255,7 +10395,7 @@
      "qtype": "Pick from a list (1–4)",
      "audios": "Jony Academy skripti (Band 4–5)",
      "intro": [
-      "Foto klub rahbari yangi a'zolarga so'zlamoqda (Section 2 monolog). Avval savollarni o'qing, keyin skriptni bir marta tinglang (ustoz o'qiydi)."
+      "Foto klub rahbari yangi a'zolarga so'zlamoqda (Part 2 monolog). Avval savollarni o'qing, keyin skriptni bir marta tinglang (ustoz o'qiydi)."
      ],
      "transcript": [
       "Good evening, everyone, and welcome to the Riverside Photography Club. Let me tell you a bit about what we do.",
@@ -10308,7 +10448,7 @@
      "qtype": "Pick from a list (1–4)",
      "audios": "Jony Academy skripti (Band 4–5)",
      "intro": [
-      "Ko'ngillilar tashkiloti muvofiqlashtiruvchisi (Section 2). Avval savollarni o'qing, keyin bir marta tinglang."
+      "Ko'ngillilar tashkiloti muvofiqlashtiruvchisi (Part 2). Avval savollarni o'qing, keyin bir marta tinglang."
      ],
      "transcript": [
       "Hello and thank you all for coming to our volunteer open day. I'll explain how you can help and what we can offer you.",
@@ -10360,7 +10500,7 @@
      "qtype": "Pick from a list (1–4)",
      "audios": "Jony Academy skripti (Band 4–5) — uyga vazifa",
      "intro": [
-      "Talaba (Maya) va o'qituvchi (Dr Reed) guruh loyihasi haqida gaplashmoqda (Section 3 suhbat). Uyda bir marta tinglang."
+      "Talaba (Maya) va o'qituvchi (Dr Reed) guruh loyihasi haqida gaplashmoqda (Part 3 suhbat). Uyda bir marta tinglang."
      ],
      "transcript": [
       "DR REED: Come in, Maya. So, how's the group project going?",
@@ -10472,7 +10612,14 @@
     "Xulosadagi paraphraseni matndagi asl ibora bilan bog'lash.",
     "Javoblar odatda (USUALLY) matn tartibida kelishini bilib, shundan foydalanish."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #17 \"Rubik's Cube\" matni va 1–7 xulosasi — har o'quvchiga bitta nusxa (sinf mashqidan keyin birga bajariladi).",
+    "Reading #18 \"Marcel Bich\" hamda \"The sticky note that nobody wanted\" matnlari (glossariysi bilan) — har o'quvchiga bittadan nusxa.",
+    "\"The invention of the bar code\" matni va A–J ro'yxati; o'sha 10 so'z alohida qirqilgan kartochka qilib tayyorlansin — har juftlikka bitta to'plam (2-tur, box mashqi uchun).",
+    "Uyga vazifa matni \"The man who made the world wear jeans\" — har o'quvchiga bitta nusxa, dars oxirida tarqatiladi.",
+    "Doskada dars boshlanishidan oldin: parosat jadvali (\"the ___ of\" — ot, \"to ___ a pen\" — fe'l, \"a ___ pen\" — sifat, \"are ___\" — sifat) va yirik harflar bilan \"NO MORE THAN TWO WORDS\".",
+    "O'quvchilarda: paraphrase daftari, xatolar daftari va qalam (javoblar avval qalamda yoziladi); ustozda soat yoki sekundomer — 2-qo'shimcha reading vaqt bilan bajariladi."
+   ],
    "timeline": [
     [
      5,
@@ -11143,7 +11290,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun xulosadagi iborani matndagi asl ibora bilan bog'lashni o'rgandik — uyda xuddi shu ishni yolg'iz o'zingiz qilasiz.",
+    "Birinchi vazifa — \"The man who made the world wear jeans\" matni: soatga qarab 8 daqiqa qo'ying va 1–6 bo'sh joyni shu vaqt ichida to'ldiring, har javobdan keyin gapni qayta o'qib grammatikasini tekshiring.",
+    "Keyin paraphrase daftariga bugungi readinglardan 15 juft ko'chiring — chapga xulosadagi ibora, o'ngga matndagi asl ibora — va \"The invention of the bar code\" box mashqidagi ortiqcha to'rt so'z nega mos emasligini bittadan gap bilan yozing; ikkalasi birga 20 daqiqacha oladi.",
+    "Eng ko'p uchraydigan xato — javobni o'z so'zingiz bilan yozish yoki uch so'z yozish: ko'rsatma \"NO MORE THAN TWO WORDS AND/OR A NUMBER\" deydi, shuning uchun so'z matndan, o'zgartirmasdan va ikkitadan oshmasdan olinadi.",
+    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz, javoblarni birga tekshiramiz va men har javob uchun \"bu xulosadagi qaysi ibora, matnda qaysi ibora?\" deb so'rayman."
+   ],
    "homework": [
     {
      "title": "3-matn: \"The man who made the world wear jeans\"",
@@ -11200,7 +11353,14 @@
     "Javobni gapga qo'yib qayta o'qish: grammatika va ma'no to'g'rimi?",
     "4 ta matnda (ustoz matni + 3 ta Jony Academy matni) ishlash va har javobni isbotlash."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #20 \"The honey badger\" matni, 1–8 gaplari va glossariysi — har o'quvchiga bitta nusxa; lekin matn dars boshida ustozda turadi va faqat sinf mashqidagi 6 ta bashorat yozilgandan keyin tarqatiladi.",
+    "Sinf mashqining 6 ta gapi (\"fearless, ___ and tough\", \"will attack ___\", \"make it ___\", \"meat-based and ___\", \"___ form the biggest part\", \"by their ___\") alohida varaqqa chiqarilsin yoki doskaning yopiq qismiga qo'ng'iroqdan oldin yozib qo'yilsin — o'quvchilar ularni matnsiz ko'radi.",
+    "1-qo'shimcha matn \"The octopus: a clever escape artist\" (1–7 gaplari va so'z chegarasi tahlilidagi 4 ta noto'g'ri variant bilan) — har o'quvchiga bitta nusxa, mustaqil bajariladi.",
+    "2-qo'shimcha matn \"How camels survive the desert\" (1–7 gaplari bilan) — har o'quvchiga bitta nusxa; bu bosqich vaqt bilan o'tkaziladi, shuning uchun ustozda sekundomer yoki devor soati tayyor tursin.",
+    "Uyga beriladigan paket: \"The return of the wolves\" matni va 7 ta gapi — har o'quvchiga bittadan, dars oxirida tarqatiladi.",
+    "Doskada qo'ng'iroqdan oldin: yirik harflar bilan \"NO MORE THAN TWO WORDS\" va yonida \"NO MORE THAN TWO WORDS AND/OR A NUMBER\", ostida esa 6-savol tahliliga bo'sh joy (matnda \"sense of smell\", javob esa \"smell\"); o'quvchilarda paraphrase daftari, xatolar daftari va qalam bo'lsin — javoblar avval qalamda yoziladi, chunki gapni qayta o'qib tuzatiladi."
+   ],
    "timeline": [
     [
      5,
@@ -11871,7 +12031,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun bo'sh joyga matndan aynan mos so'zni topishni va so'z chegarasidan chiqmaslikni mashq qildik — uyda xuddi shu ishni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — \"The return of the wolves\" matni: soatga qarab 10 daqiqa qo'ying, 7 ta gapni shu vaqt ichida to'ldiring va har javobni gapga qo'yib qayta o'qing, grammatikasi buzilmasa javob to'g'ri.",
+    "Keyin so'z chegarasi daftariga bugungi to'rt matndan 6 ta javobni ko'chiring va har biriga bitta \"noto'g'ri variant\" yozing — uch so'zli, artikl qo'shilgan yoki shakli o'zgargan — hamda nega 0 ball olishini bir gapda tushuntiring; oxirida honey badger matnidan 8 ta paraphrase juftini yozasiz: chapga gapdagi so'z, o'ngga matndagi ibora. Ikkalasi birga 20 daqiqacha oladi.",
+    "Eng ko'p uchraydigan xato — matndagi to'liq iborani ko'chirib qo'yish: \"sense of smell\" uch so'z va 0 ball, kerakligi esa faqat \"smell\"; shuning uchun har javobni yozib bo'lgach so'zlarini sanab chiqing.",
+    "Uchala vazifani ham bitta daftarga bajaring va keyingi dars boshida daftar ochiq holda stolga qo'ying: javoblarni birga tekshiramiz va men har javob uchun \"gapdagi qaysi so'z matndagi qaysi iboraga teng?\" deb so'rayman."
+   ],
    "homework": [
     {
      "title": "4-matn: \"The return of the wolves\"",
@@ -11928,7 +12094,14 @@
     "So'z chegarasini saqlash va tuzatilgan (o'zgartirilgan) javobni yozish.",
     "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
    ],
-   "materials": [],
+   "materials": [
+    "Track 27 \"Animal World — today's events\" savol varag'i: to'rt ustunli jadval (name of event | location | type of event | time) va 1–7 bo'sh kataklari bilan — har o'quvchiga bitta nusxa; transkript faqat ustozda, tekshirishdan keyin tarqatiladi.",
+    "Track 12 \"Natural History day — morning events\" savol varag'i: to'rt ustunli jadval (Name of event | Theme or topic | Type of event | Location) va 1–8 bo'sh kataklari bilan — har o'quvchiga bitta nusxa.",
+    "Ikki audio — ielts5_16_animal_world.mp3 va ielts5_16_natural_history.mp3 — qo'ng'iroqdan oldin kolonkaga ulanib, ovozi sinab ko'rilsin va fayl boshiga qaytarilsin (har biri BIR MARTA qo'yiladi).",
+    "Uchta Jony Academy skripti ustoz qo'lida chop etilgan bo'lsin (Community centre — weekly classes, Museum floor guide, University open day — tour schedule): audiosi yo'q, ustoz oddiy tezlikda ovoz chiqarib o'qiydi; birinchi ikkitasining bo'sh jadvali o'quvchilarga ham nusxa qilinadi.",
+    "Doskaga dars boshlanishidan oldin ikki narsa yoziladi: ustun turlari qatori — location → joy nomi, time → soat, type of event → lecture/film/workshop, theme → ot; va alohida ramkada tuzatish signallari — \"no, sorry, correct that\", \"rather than\", \"in the ... , not ...\".",
+    "Doskaning burchagiga yirik harflar bilan \"NO MORE THAN TWO WORDS OR A NUMBER\"; uyga vazifa jadvali \"University open day — tour schedule\" (1–6) dars oxirida tarqatish uchun har o'quvchiga bitta nusxa, o'quvchilarda esa ustun turi daftari va qalam bo'lsin."
+   ],
    "timeline": [
     [
      5,
@@ -12633,7 +12806,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun jadvalni ustun sarlavhasiga qarab to'ldirishni va tuzatilgan javobni ushlashni mashq qildik — uyda endi xuddi shu ishni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — \"University open day — tour schedule\" skripti: avval jadvalni o'qib chiqing, keyin bir marta tinglang yoki birovga bir marta o'qitib bering, to'xtatmang, 1–6 kataklarni to'ldiring va faqat shundan keyin transkriptni ochib tekshiring — hammasi 10 daqiqa vaqt oladi.",
+    "Ikkinchisi — \"Ustun turi daftari\": Track 27 va Track 12 jadvallaridan 8 ta bo'sh katak ko'chirib, har biriga ustun turini (location / time / type / theme) va qanday so'z kutilganini yozasiz; uchinchisi — \"Tuzatish tuzoqlari\": bugungi besh mashqdan tuzatilgan yoki rad etilgan 4 ta javobni signali bilan yozib (main hall, computer room rather than a studio kabi), oxirgi to'g'ri variantni belgilaysiz — ikkalasi birga 20 daqiqacha.",
+    "Eng ko'p qilinadigan xato — birinchi eshitilgan so'zni shosha-pisha yozib qo'yish: 6-savolda javob \"lunch\", \"dining hall\" emas, chunki ustun taomni so'rayapti; tuzatish daftarida esa signali ko'rsatilmagan qator qabul qilinmaydi, u qator uchun ball yo'q.",
+    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz, javoblarni birga tekshiramiz va men har javob uchun \"bu jadvaldagi qaysi ustun edi, audioda qaysi so'z bilan aytildi?\" deb so'rayman."
+   ],
    "homework": [
     {
      "title": "5-skript: \"University open day — tour schedule\"",
@@ -12690,7 +12869,14 @@
     "\"Chap / o'ng\" ni so'zlovchi qaysi tomonga qarab yurganiga qarab aniqlash (xaritaga qarab emas).",
     "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash; eng qiyini — oxirida."
    ],
-   "materials": [],
+   "materials": [
+    "Doskaga dars boshlanishidan oldin strelkalar bilan 14 ta yo'nalish so'zini yozib qo'ying: turn left / turn right, go straight ahead, go past, cross, opposite, next to, between, at the corner of, T-junction, Y-junction, crossroads, roundabout, traffic lights, zebra crossing. Birinchi sinf mashqi (\"Yo'nalish so'zlari\") shular bo'yicha ketadi va so'zlar dars oxirigacha o'chirilmaydi.",
+    "Zoo xaritasi (ielts5_17_zoo_map.png) - har o'quvchiga bitta nusxa; A-G harflari aniq ko'rinsin, o'quvchi javobni xaritaning ustiga yozadi.",
+    "Riverside Park (ielts5_17_park.png) va Westgate Shopping Centre (ielts5_17_shopping.png) xaritalari - har o'quvchiga bittadan. Bu ikki mashqda audio YO'Q, skriptni ustoz o'zi ovoz chiqarib o'qiydi, shuning uchun ikkala skript matnini ustoz uchun alohida chop etib oling.",
+    "Track 13 kollej rejasi (ielts5_17_college_plan.png) - har o'quvchiga bitta nusxa, A4 to'liq o'lchamda: A-K harflari ko'p, kichraytirib chop etilsa xonalar bir-biridan farqlanmaydi.",
+    "Audio dars boshlanishidan oldin ochilgan va ovozi tekshirilgan bo'lsin: ielts5_17_zoo.mp3 (Track 28) va ielts5_17_college.mp3 (Track 13). Ikkalasi ham BIR MARTA qo'yiladi, shuning uchun kolonka ishlayotganiga oldindan ishonch hosil qiling.",
+    "Har o'quvchida oddiy qalam va o'chirg'ich bo'lsin - 4-bosqichda yo'l xarita ustida qalam bilan chizib boriladi; uyga beriladigan \"Getting around the town centre\" xaritasi (ielts5_17_town.png) ham har o'quvchiga bitta nusxa qilib tayyorlansin."
+   ],
    "timeline": [
     [
      5,
@@ -13020,7 +13206,7 @@
      "audios": "Jony Academy skripti (Band 4–5)",
      "image": "ielts5_17_shopping.png",
      "intro": [
-      "Savdo markazi ma'lumot xodimi (Section 2). Avval \"West entrance\" va koridorni toping. Skriptni bir marta tinglang."
+      "Savdo markazi ma'lumot xodimi (Part 2). Avval \"West entrance\" va koridorni toping. Skriptni bir marta tinglang."
      ],
      "transcript": [
       "Good morning and welcome to Westgate Shopping Centre. If you've come in through the west entrance, you're at the start of our main corridor.",
@@ -13204,7 +13390,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz xarita bo'ylab so'zlovchi bilan birga yurdik - uyga vazifa ham xuddi shu ish, faqat endi men yoningizda bo'lmayman, o'zingiz yolg'iz bajarasiz.",
+    "Birinchi vazifa - \"Getting around the town centre\" skripti: xaritani oldingizga qo'ying, BIR MARTA tinglang yoki o'qitib eshiting, 3 ta harfni yozing, keyin transkript bilan tekshiring; bunga 10 daqiqa yetadi.",
+    "Eng ko'p qilinadigan xato - chap va o'ngni xaritaga qarab olish: \"on your left\" yurayotgan odamning chapi, u burilgandan keyin sizning chapingiz o'zgaradi, shuning uchun har yo'nalishdan keyin qalam bilan qayerda turganingizni belgilab boring.",
+    "Ikkinchi vazifa - Yo'nalish lug'ati: doskadagi 14 ta so'zni o'zbekcha tarjimasi va bittadan gap bilan ko'chiring, taxminan 15 daqiqa ketadi.",
+    "Uchinchi vazifa - O'z xaritangiz: uyingizdan maktabgacha A-F harfli oddiy xarita chizing va 5 gaplik yo'l ko'rsatish matnini yozing; keyingi dars boshida daftarlarni yig'aman, xaritangizni esa sherigingiz tinglab harflarni topadi."
+   ],
    "homework": [
     {
      "title": "4-skript: \"Getting around the town centre\"",
@@ -13261,7 +13453,14 @@
     "Tuzoqlarni ajratish: matnda bor, lekin boshqa narsa haqida; qisman to'g'ri; teskari.",
     "5 ta matnda ishlash: ustozning 2 matni + 3 ta Jony Academy matni."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #21 \"Humpback whale breaks migration record\" matni va 1–14 savollari (7 juft \"Choose TWO\") — har o'quvchiga bitta nusxa, javobsiz; javob kaliti va rad etish izohlari faqat ustozda qoladi.",
+    "Reading #22 \"On the trail of the honey badger\" matni 1–5 savollari bilan, shuningdek \"Why birds fly in a V\" va \"The dance of the honeybee\" matnlari savollari bilan — har o'quvchiga bittadan nusxa (chop etiladi yoki ekranda).",
+    "Uyga beriladigan \"How animals sleep\" matni 1–6 savollari bilan — har o'quvchiga bitta nusxa, javobsiz; dars oxirida tarqatiladi.",
+    "Doskada dars boshlanishidan oldin tayyor tursin: 4 ta belgi — \"bor / savolga emas / teskari / aytilmagan\" (butun dars davomida ishlatiladi) va sinf mashqining birinchi juftligi yonma-yon: gap \"Female badgers never socialised with each other.\" — variant \"Female badgers do not mix with male badgers.\"; 9–10-savol tahlili uchun doskaning o'ng chetida bo'sh joy qoldiring (janub: hostile, hard to get to → shimol: friendlier, easier to reach).",
+    "Har o'quvchida \"Tuzoq jadvali\" uchun 4 ustunli sahifa (savol | rad etilgan variant | turi | sabab) — Humpback whale matnining 7 savoli uchun 7 qator; uyga vazifa ham shu jadvalda davom ettiriladi.",
+    "Taymer yoki sekundomer va 2 ta rangli marker: har \"Choose TWO\" juftiga 2–3 daqiqa, honey badger matni IELTS tezligida bajariladi; marker bilan variantdagi kalit so'z va matndagi paraphrase belgilanadi."
+   ],
    "timeline": [
     [
      5,
@@ -14017,7 +14216,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun har variantni \"bor / savolga emas / teskari / aytilmagan\" deb tekshirishni o'rgandik — uyda xuddi shu ishni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — \"How animals sleep\" matni: soatga qarab 12 daqiqa qo'ying, 1–6 savolning har biriga IKKITA harf yozing va har javob yoniga matndagi qaysi gap isbot bo'lganini qisqa ko'chirib qo'ying.",
+    "Keyin \"Tuzoq jadvali\": Humpback whale matnining 7 savolidan har biriga rad etilgan bitta variant tanlab, turini yozasiz — aytilmagan / teskari / boshqa guruh / boshqa narsa haqida; \"Paraphrase juftlari\" da esa honey badger matnidan 8 ta variantning matndagi juftini yozasiz (masalan: show interest in — curious); ikkalasi birga 20 daqiqacha oladi.",
+    "Eng ko'p qilinadigan xato — bitta harf yozib qo'yish yoki variantdagi so'z matnda uchragani uchun uni tanlash: har harf alohida ball oladi, shuning uchun ikkalasi ham yozilishi shart, va so'z matnda bo'lsa ham \"bu savolga javobmi?\" deb tekshiring.",
+    "Uchala vazifani keyingi dars boshida daftar ochiq holda stolga qo'yasiz: javoblarni birga tekshiramiz va men har rad etilgan variant uchun \"nega yo'q?\" deb sababini so'rayman, turi yozilmagan qator qabul qilinmaydi."
+   ],
    "homework": [
     {
      "title": "5-matn: \"How animals sleep\"",
@@ -14074,7 +14279,14 @@
     "Gapdagi kuchli so'zlarni (many, most, only, more than) matn bilan solishtirish.",
     "5 ta matnda ishlash: ustozning 2 matni + 3 ta Jony Academy matni."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #23 \"Making a change\" matni 9 ta YES / NO / NOT GIVEN savoli va glossary qatori bilan — har o'quvchiga bitta nusxa; savollar matn bilan bir varaqda bo'lsin, chunki asosiy ish shu matnda boshlanadi.",
+    "Reading #24 \"Breaking the habit\" matni 7 ta savoli bilan — har o'quvchiga bitta nusxa; varaq ostiga \"Xato turi\" jadvali chop etilsin: 2, 4, 5 va 6-savol uchun bo'sh katak (cheklovchi so'z / teskari / ma'lumot yo'q).",
+    "\"Should every child learn to code?\" va \"In praise of boredom\" matnlari savollari va glossary bilan — har o'quvchiga bittadan nusxa; ikkalasi ham mustaqil bajariladi, shuning uchun telefonda sekundomer tayyor tursin (7 savolga 10 daqiqa, qolgan vaqt tekshirishga).",
+    "\"Why we should walk more\" matni va 7 savoli — har o'quvchiga bitta nusxa; dars oxirida uyga vazifa uchun tarqatiladi, sinfda ochilmaydi.",
+    "Ikkita kartochka — FAKT va FIKR — qalin qog'ozga yozib qirqing, har o'quvchiga bitta juft: \"Fakt yoki fikr?\" sinf mashqida o'quvchi javobni kartochka ko'tarib beradi; o'sha mashqning 6 ta gapi ustoz varag'ida chop etilgan bo'lsin.",
+    "Doskada qo'ng'iroqdan oldin ikki ustun yozib qo'yilsin: FAKT — \"6-dars, T/F/NG, matndagi dalil\" | FIKR — \"bugun, Y/N/NG, muallif bahosi\"; ustun ostiga fikr so'zlari ro'yxati yozilsin: kindness, unusual, the truth is, better off, not good news, should. Har o'quvchida xatolar daftari va qalam bo'lsin."
+   ],
    "timeline": [
     [
      5,
@@ -14857,7 +15069,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz YES, NO va NOT GIVEN ni muallifning o'z so'ziga tayanib ajratdik; uyda xuddi shu ishni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — 5-matn \"Why we should walk more\": soatga qarang, 10 daqiqada 7 ta savolga javob bering va har javob yoniga muallifning qaysi so'zi shunday deyishga majbur qilganini yozing, masalan \"in my experience\".",
+    "Ikkinchi vazifa — \"Fakt yoki fikr\": \"Making a change\" va \"Breaking the habit\" matnlaridan 5 ta fakt va 5 ta fikr gapini ko'chirasiz, fikr gapida baho so'zining ostiga chizasiz — doskadagi ro'yxat yordam beradi.",
+    "Uchinchi vazifa — \"NO yoki NOT GIVEN\": bugungi matnlardan 6 ta shunday javobni olasiz va har biri uchun bir gapda \"matnda qarama-qarshi gap bor\" yoki \"yo'q\" deb izohlaysiz; uchala vazifa birga 30 daqiqa oladi.",
+    "Eng ko'p uchraydigan xato shu: muallif fikr bildirmagan joyga NO yozish — NO faqat matnda qarama-qarshi gap bo'lsa qo'yiladi, aks holda javob NOT GIVEN. Daftarni keyingi darsga to'liq yozilgan holda olib keling, dars boshida har javobingizdan muallifning so'zini so'rayman."
+   ],
    "homework": [
     {
      "title": "5-matn: \"Why we should walk more\"",
@@ -14914,7 +15132,14 @@
     "Inkor tuzoqlarini ajratish: \"did not move very ___\" + \"started very slowly\" = quickly.",
     "5 ta matnda ishlash: ustozning 2 matni + 3 ta Jony Academy matni."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #25 \"Reducing errors in memory\" matni, glossariysi va 1–5 xulosasi A–J ro'yxati bilan — har o'quvchiga bitta nusxa (asosiy matn, sinfda birga bajariladi).",
+    "Reading #26 \"Fighting fear using virtual reality\" matni va uning A–J ro'yxati — har o'quvchiga bitta nusxa; shu ro'yxatdagi 10 so'z alohida qirqilgan kartochka qilib ham tayyorlansin, har juftlikka bitta to'plam (guruhlash stolda so'zlarni ko'chirib bajariladi).",
+    "\"The power of a short nap\" va \"How the Rosetta Stone was read\" matnlari, har biri o'z A–J ro'yxati bilan — har o'quvchiga bittadan nusxa, ikkalasi sinfda mustaqil ishlanadi.",
+    "Uyga vazifa matni \"Why the Leaning Tower leans\" A–J ro'yxati bilan — har o'quvchiga bitta nusxa, dars oxirida tarqatiladi.",
+    "Doskada dars boshlanishidan oldin: bo'sh guruh jadvali (SON | SIFAT | MIQDOR | OT / ANIQLOVCHI) va yirik harflar bilan \"WRITE THE CORRECT LETTER, A–J\" — javobga so'z emas, harf yoziladi.",
+    "O'quvchilarda: tuzoq daftari va qalam (javoblar avval qalamda yoziladi, ishlatilgan harf ro'yxatdan chizib tashlanadi); ustozda soat yoki sekundomer — 3- va 4-matn vaqt bilan bajariladi."
+   ],
    "timeline": [
     [
      5,
@@ -15646,7 +15871,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun ro'yxatdagi ortiqcha so'zlarni birma-bir o'chirib borishni va so'zni gap mantiqiga qarab tanlashni mashq qildik — uyda xuddi shu qadamlarni yolg'iz o'zingiz takrorlaysiz.",
+    "Birinchi vazifa — \"Why the Leaning Tower leans\" matni: soatga qarab 10 daqiqa qo'ying, avval A–J ro'yxatini guruhlarga ajrating, keyin 1–5 bo'sh joyga faqat HARF yozing.",
+    "Ikkinchi vazifa — bugungi beshta box ro'yxatini daftarda son / sifat / ot / fe'l guruhlariga ajratasiz va har bo'sh joy qaysi guruhni talab qilishini yozasiz; uchinchisi — tuzoq daftariga har matndan bittadan eng yaxshi tuzoqni ko'chirasiz (masalan fewer → more, slowly → quickly) va nega tuzoq ekanini bir gap bilan izohlaysiz; ikkalasi birga 20 daqiqacha oladi.",
+    "Eng ko'p uchraydigan xato — ro'yxatdagi so'z matnda ko'ringani uchun uni darrov tanlash: minora matnida \"south\" ham, \"dangerous\" ham bor, lekin savol boshqa narsani so'raydi — gapni oxirigacha o'qing va inkor bor-yo'qligini tekshiring.",
+    "Uchala vazifani keyingi dars boshida daftar ochiq holda stolga qo'yasiz, javoblarni birga tekshiramiz va men har matn uchun \"ortiqcha qolgan beshta so'z nega mos emas?\" deb so'rayman."
+   ],
    "homework": [
     {
      "title": "5-matn: \"Why the Leaning Tower leans\"",
@@ -15703,7 +15934,14 @@
     "Ortiqcha variantlarni (6 tadan 2 tasi) va chalg'ituvchilarni ajratish.",
     "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
    ],
-   "materials": [],
+   "materials": [
+    "Ikkala ustoz audiosi — ielts5_21_success.mp3 (CD2 Track 5) va ielts5_21_happiness.mp3 (Track 14) — darsdan oldin telefon yoki kolonkaga yuklab qo'ying va ovozni sinfning orqa qatoridan tekshiring: ikkalasi ham BIR MARTA qo'yiladi, to'xtatib qayta qo'yilmaydi.",
+    "\"A successful person for the seminar\" va \"What makes people happy?\" javob varaqlari — har o'quvchiga bittadan nusxa; har varaqda 1–4 qatorlari va A–F qutisi bo'sh holda chop etilsin, javob kaliti varaqda bo'lmasin.",
+    "Track 5 qutisidagi 6 variant (A a personal style; B a lot of money; C a relative's influence; D an invention; E a wise decision; F a change of job) alohida kartochkalarga qirqilgan holda — har juftlikka bitta to'plam; \"Sinonimini ayting\" mashqida o'quvchi karta oladi va audioda bu qanday aytilishi mumkinligini aytadi.",
+    "\"Three famous travellers\" va \"Choosing a holiday destination\" skriptlari — faqat ustozda bitta nusxa (bu ikkisiga audio yo'q, ustoz ovoz chiqarib o'qiydi); o'quvchilarga esa shu ikki mashqning bo'sh 1–4 / A–F javob ro'yxati, har biriga bittadan nusxa.",
+    "Uyga vazifa to'plami — \"Four study tips from students\": bir tomonida 1–4 va A–F qutisi, orqa tomonida transkript; har o'quvchiga bittadan, dars oxirida tarqatiladi va harflar yozilmaguncha orqa tomoni ochilmasligi aytiladi.",
+    "Doskaga darsdan oldin yozib qo'ying: tepasida savol \"What helped each person to become successful?\", chap ustunda Track 5 ning A–F variantlari, o'ng tomoni sinonimlar uchun bo'sh; har o'quvchida daftar, oddiy va qizil qalam (inkor qilingan va ortiqcha variantlar qizil bilan belgilanadi), ustozda tinglashdan oldingi 2 daqiqani o'lchaydigan soat va javob kaliti — Track 5: 1 C · 2 A · 3 E · 4 D, Track 14: 1 F · 2 C · 3 A · 4 E."
+   ],
    "timeline": [
     [
      5,
@@ -16326,7 +16564,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz qutidagi variant audioda deyarli hech qachon aynan aytilmasligini ko'rdik — \"a relative's influence\" o'rniga \"his uncle was a film student\" eshitildi; uyda xuddi shu ishni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — 5-skript, \"Four study tips from students\": varaqning old tomonidagi A–F qutisini avval o'qing, har variantga bittadan sinonim o'ylang, keyin skriptni bir marta tinglang yoki uydagi birov sizga bir marta ovoz chiqarib o'qib bersin, 1–4 ga harflarni yozing va faqat shundan keyin varaqning orqasidagi transkriptni oching — bu 10 daqiqa oladi.",
+    "Ikkinchi vazifa — \"Sinonim daftari\": Track 5 va Track 14 qutilaridagi 12 ta variantni daftarga ko'chirib, har birining yoniga audioda qanday aytilganini yozasiz (a relative's influence — his uncle was a film student), ortiqcha variantlarga esa \"aytilmagan\" yoki \"inkor qilingan\" deb qo'yasiz; uchinchisi — \"O'z matching mashqingiz\": oilangizdagi 4 kishi haqida 4 gap va 6 variantli quti, 2 tasi ortiqcha bo'lsin.",
+    "Eng ko'p qilinadigan xato shu: so'z eshitilgani uchun harfni yozib qo'yish — Madina \"I don't use any special apps\" deydi, demak C javob emas; har harfni yozishdan oldin gap tasdiqmi yoki inkormi, bir tekshiring.",
+    "O'z mashqingizda variantlarni gapdagi so'zlar bilan bir xil yozmang, paraphrase qiling; uchala vazifa birga taxminan yarim soat oladi, daftarni keyingi darsga to'liq yozilgan holda olib keling — dars boshida sherigingiz sizning mashqingizni tinglab moslaydi, men esa sinonim daftaringizni yig'ib tekshiraman."
+   ],
    "homework": [
     {
      "title": "5-skript: \"Four study tips from students\"",
@@ -16370,20 +16614,27 @@
   },
   {
    "no": 22,
-   "title": "Listening: Pick from a List (Section 3 — discussion)",
-   "grammar_topic": "Pick from a list (Section 3) — suhbatda ikki kishi KELISHGAN javoblarni tanlash",
+   "title": "Listening: Pick from a List (Part 3 — discussion)",
+   "grammar_topic": "Pick from a list (Part 3) — suhbatda ikki kishi KELISHGAN javoblarni tanlash",
    "vocab_topic": "Muvaffaqiyat, baxt va o'qish",
    "duration": 120,
    "test_after": "",
    "book_ref": "Jony Academy materiali — ustoz bergan audiolar (CD2 Track 6 choosing a successful person, Track 15 personality tests) va 3 ta mualliflik skripti.",
    "objectives": [
-    "Section 3 suhbatida (2 kishi) \"Choose TWO\" savollarini ishlash.",
+    "Part 3 suhbatida (2 kishi) \"Choose TWO\" savollarini ishlash.",
     "Ikki so'zlovchi KELISHGAN fikrni ajratish: taklif — rad etish — kelishuv zanjirini kuzatish.",
     "\"Agree\", \"decide\", \"do next\" kabi savol so'zlarini oldindan belgilash.",
     "Kelishuv signallarini tanish: \"Yeah, you're right\", \"I agree\", \"OK, let's...\", \"that's it\".",
     "13-darsdagi pick from a list ko'nikmasini qiyinroq, suhbat formatida mustahkamlash."
    ],
-   "materials": [],
+   "materials": [
+    "Ikkala audio darsdan oldin ochib qo'yilsin: ielts5_22_choosing.mp3 (CD2 Track 6) va ielts5_22_personality.mp3 (Track 15) — kolonka ulangan, ovoz sinab ko'rilgan, ikkalasi ham 0:00 da to'xtatib turilsin, chunki har biri FAQAT BIR MARTA qo'yiladi.",
+    "Doskada dars boshlanmasdan turib: TAKLIF → RAD / KELISHUV uchta so'z katta qilib yozilsin (\"Taklif, rad yoki kelishuv?\" sinf mashqi shu uchtasiga quriladi), yoniga signal so'zlar ustuni — \"Yeah, you're right / I agree / OK, let's... / That's a good idea\" va \"but / I'm not sure / I don't think we can ... yet\".",
+    "Track 6 va Track 15 savol varaqasi (5–10 savollar, har biriga A–E variantlar) — har o'quvchiga bitta nusxa; variantlar qo'lda bo'lmasa \"Choose TWO letters\" ishlamaydi, shuning uchun bu varaqada transkript BO'LMASIN.",
+    "\"Planning a class trip\" va \"Tutor meeting — improving an essay\" skriptlarining 1–4 savollari — har juftlikka bitta nusxa.",
+    "Ustoz uchun o'sha ikki skriptning to'liq transkripti chop etilgan holda (bu ikkisida audio yo'q — ustoz ovoz chiqarib o'qiydi): KATE/SAM va DR HALE/NODIR gaplari ikki xil rang yoki belgi bilan ajratilsin, ikkinchi rolni kuchli o'quvchi o'qib bersa bo'ladi.",
+    "\"Choosing a club at university\" (5-skript) uyga vazifa varaqasi — har o'quvchiga bitta nusxa: 1-betda 1–4 savol va variantlar, 2-betda transkript (uyda kimdir o'qib berishi va tekshirish uchun, oldindan ochilmasin); o'quvchilar zanjir daftari va ruchka bilan kelsin."
+   ],
    "timeline": [
     [
      5,
@@ -16433,7 +16684,7 @@
    ],
    "grammar": {
     "intro": [
-     "13-darsda pick from a list asosan bitta so'zlovchi (monolog) yoki oddiy suhbat edi. Bu darsda — Section 3: ikki talaba muhokama qiladi, takliflar beriladi, ba'zilari qabul, ba'zilari rad qilinadi.",
+     "13-darsda pick from a list asosan bitta so'zlovchi (monolog) yoki oddiy suhbat edi. Bu darsda — Part 3: ikki talaba muhokama qiladi, takliflar beriladi, ba'zilari qabul, ba'zilari rad qilinadi.",
      "Savolda \"Which TWO things do the students AGREE...\" — bu eng muhim so'z. Bittasining taklifi yetarli emas; ikkinchisi rozi bo'lishi kerak.",
      "Zanjir: 1) taklif (\"What about choosing a woman?\") → 2) e'tiroz (\"Is it fair to select someone because of their gender?\") → 3) kelishuv (\"Yeah, OK, let's pick a woman\"). Javob — oxirgi kelishuv.",
      "Rad etish signallari: \"I'm not sure\", \"but\", \"I don't think we can ... yet\", \"maybe their fame won't last\". Bunday variant — chalg'ituvchi.",
@@ -16492,7 +16743,7 @@
       "Bu chalg'ituvchi: \"It isn't about money\" → wealth emas."
      ],
      [
-      "Section 3 da nechta kishi?",
+      "Part 3 da nechta kishi?",
       "Odatda 2–3 (talabalar va o'qituvchi)."
      ],
      [
@@ -16754,7 +17005,7 @@
      "qtype": "Pick from a list (1–4)",
      "audios": "Jony Academy skripti (Band 4–5)",
      "intro": [
-      "Ikki talaba (Kate va Sam) sinf sayohatini rejalashtirmoqda (Section 3). Avval savollarni o'qing, keyin bir marta tinglang."
+      "Ikki talaba (Kate va Sam) sinf sayohatini rejalashtirmoqda (Part 3). Avval savollarni o'qing, keyin bir marta tinglang."
      ],
      "transcript": [
       "KATE: So, Sam, we need to decide where to take the class for the end-of-year trip.",
@@ -16816,7 +17067,7 @@
      "qtype": "Pick from a list (1–4)",
      "audios": "Jony Academy skripti (Band 4–5)",
      "intro": [
-      "Talaba (Nodir) o'qituvchi (Dr Hale) bilan insho haqida gaplashmoqda (Section 3). Avval savollarni o'qing, keyin bir marta tinglang."
+      "Talaba (Nodir) o'qituvchi (Dr Hale) bilan insho haqida gaplashmoqda (Part 3). Avval savollarni o'qing, keyin bir marta tinglang."
      ],
      "transcript": [
       "DR HALE: Come in, Nodir. I've read your essay on city transport.",
@@ -16933,7 +17184,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun darsda taklif — rad — kelishuv zanjirini birga kuzatdik; uyda endi shu zanjirni o'zingiz topasiz.",
+    "Birinchi vazifa — \"Choosing a club at university\": varaqaning 1-betidagi 1–4 savol va variantlarni avval o'qing, keyin skriptni bir marta tinglang yoki uydagi birovga bir marta o'qitib bering, harflarni belgilang va faqat shundan keyin 2-betdagi transkriptni ochib tekshiring — 15 daqiqa.",
+    "Keyin \"Zanjir daftari\": Track 6 va Track 15 dan 6 ta taklifni yozing va har birining yoniga signal so'zini qo'ying — \"Yeah, you're right\" yoki \"That's a good idea\" bo'lsa kelishuv, \"but\" yoki \"I'm not sure\" bo'lsa rad; \"Kim haqida?\" da esa Track 15 dan 4 ta fikrni yozib, har birini Amy aytganmi yoki Matt aytganmi belgilang va \"time on my own\" tuzog'ini bir gap bilan tushuntiring — ikkalasiga 25 daqiqa.",
+    "Eng ko'p uchraydigan xato — taklifni javob deb yozib qo'yish: taklif hali javob emas, ikkinchi odam rozi bo'lguncha kuting.",
+    "Uchala vazifani ham keyingi darsga zanjir daftari bilan olib keling, dars boshida yig'aman, \"Choosing a club\" varaqasini ham qaytarasiz."
+   ],
    "homework": [
     {
      "title": "5-skript: \"Choosing a club at university\"",
@@ -16977,7 +17234,7 @@
   },
   {
    "no": 23,
-   "title": "Listening: Form Completion (Section 1 — review)",
+   "title": "Listening: Form Completion (Part 1 — review)",
    "grammar_topic": "Form completion — formani to'ldirish (takrorlash, qiyinroq)",
    "vocab_topic": "Kurslar, chiptalar va ro'yxatdan o'tish",
    "duration": 120,
@@ -16990,7 +17247,14 @@
     "Ikki raqam aytilganda qaysi biri formadagi qatorga tegishli ekanini ajratish (home / work).",
     "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
    ],
-   "materials": [],
+   "materials": [
+    "1-mashq (Online Writing Course) va 2-mashq (International Book Fair) formalari — bo'sh holda chop etilgan, har o'quvchiga bittadan; javob kaliti alohida varaqda, faqat ustozda qoladi.",
+    "3-mashq (Oxford English Centre — Enrolment) va 4-mashq (FitLife — New member) formalari — har o'quvchiga bittadan; bu ikkisining skripti faqat ustozda, chunki audio yo'q — ustoz ovoz chiqarib o'qiydi.",
+    "Audio darsdan oldin ochib qo'yiladi: ielts5_23_writing_course.mp3 (CD2 Track 7) va ielts5_23_book_fair.mp3 (Track 16); ovoz balandligi oxirgi partadan turib tekshiriladi, chunki har ikkisi BIR MARTA qo'yiladi.",
+    "Doskaga qo'ng'iroqdan oldin yoziladi: tuzatish signallari \"No, ...\", \"Not quite\", \"Sorry, ...\", \"N for November, not M for Mike\" va yonida \"double L = LL, double seven = 77\".",
+    "Sinf mashqi (\"Harflab aytish va tuzatish\") uchun 5 ta kartochka qirqib tayyorlanadi — har birida bitta harflash: WALLACE, SACHDEVA, PN6 3BZ, OX13 3NJ, 0787 345077; kartochka ustoz qo'lida, o'quvchi faqat quloq bilan yozadi.",
+    "Uyga vazifa uchun 5-skript (Seaview Hotel — Booking) formasi har o'quvchiga bitta nusxa; transkript varaqning orqa tomoniga chop etiladi. O'quvchi daftar va ruchka bilan keladi — formalar daftarga yopishtiriladi."
+   ],
    "timeline": [
     [
      5,
@@ -17040,7 +17304,7 @@
    ],
    "grammar": {
     "intro": [
-     "Form completion — Section 1 ning eng ko'p uchraydigan turi: ikki kishi suhbati, biri ma'lumot so'raydi, ikkinchisi beradi. Forma suhbat tartibida to'ldiriladi (ALWAYS).",
+     "Form completion — Part 1 ning eng ko'p uchraydigan turi: ikki kishi suhbati, biri ma'lumot so'raydi, ikkinchisi beradi. Forma suhbat tartibida to'ldiriladi (ALWAYS).",
      "Harflab aytish: ism, familiya va ko'cha nomi deyarli har doim harflanadi. \"Double L\" = LL, \"double seven\" = 77. Harfni eshitgan zahoti yozing.",
      "Postcode — harf va raqam aralash (PN6 3BZ, OX13 3NJ). Harflar ko'pincha tuzatiladi: \"BS?\" — \"No, BZ\"; \"M for Mike?\" — \"No, N for November\".",
      "Telefon raqami — guruhlab aytiladi va ko'pincha qayta o'qiladi. Xodim noto'g'ri takrorlasa, so'zlovchi tuzatadi — tuzatilgan raqam yoziladi.",
@@ -17775,7 +18039,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun beshta formani eshitib to'ldirdik va har safar tuzatishni kutdik — uyga vazifa ham xuddi shu ish, lekin endi mening yordamimsiz.",
+    "Birinchi vazifa — \"Hotel booking by phone\": varaqdagi Seaview Hotel formasini oching, skriptni bir marta tinglang yoki uyda kimdir sizga bir marta o'qib bersin, oltita javobni yozing va faqat shundan keyin orqa tomondagi transkript bilan tekshiring; hammasi 10-15 daqiqa.",
+    "Ikkinchisi — \"Harflab yozish\": bugungi besh mashqdagi barcha harflangan so'zlarni (Sachdeva, Wallace, Karimova, Bridges, Pereira, Rose Hill) yozib chiqing va har birida sizni adashtirgan harfni belgilang; uchinchisi — \"Tuzatish daftari\": oltita tuzatishni \"noto'g'ri — to'g'ri\" ko'rinishida, qaysi signal so'zdan bilganingiz bilan birga yozing.",
+    "Eng ko'p yo'l qo'yiladigan xato — transkriptni forma to'ldirilmasdan oldin ochib qo'yish: unda vazifadan foyda qolmaydi, avval quloq bilan yozing, keyin tekshiring.",
+    "Uchala vazifa ham keyingi darsning boshida daftarda topshiriladi: formada 6 javobdan 5 tasi to'g'ri bo'lsa 2 coin, harflashda barcha so'z to'g'ri bo'lsa yana 2 coin, tuzatish daftarining 6 qatori uchun 1 coin."
+   ],
    "homework": [
     {
      "title": "5-skript: \"Hotel booking by phone\"",
@@ -17819,7 +18089,7 @@
   },
   {
    "no": 24,
-   "title": "Listening: Multiple Choice (Section 1 — review)",
+   "title": "Listening: Multiple Choice (Part 1 — review)",
    "grammar_topic": "Multiple choice (listening) — A, B yoki C (takrorlash, qiyinroq)",
    "vocab_topic": "Kurslar, tadbirlar va ma'lumot so'rash",
    "duration": 120,
@@ -17832,7 +18102,14 @@
     "So'zlovchining FIKRI yoki MASLAHATINI so'raydigan savollarni ishlash (\"The woman says the cafés are ...\").",
     "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
    ],
-   "materials": [],
+   "materials": [
+    "CD2 Track 8 (ielts5_24_writing_course.mp3) va Track 17 (ielts5_24_book_fair.mp3) — qo'ng'iroqdan oldin qurilmada ochib, ovozi sinab ko'riladi; ikkalasi ham darsda faqat BIR MARTA qo'yiladi.",
+    "6-10-savollar (The writing course) va 8-12-savollar (Book Fair) A, B, C variantlari bilan — har o'quvchiga bitta nusxa; transkriptlar alohida varaqda va faqat tinglab bo'lgandan keyin tarqatiladi.",
+    "Doska dars boshlanishidan oldin tayyor bo'lsin: \"uchala variant ham audioda eshitiladi\" qoidasi va 4 ta tuzoq nomi — eski raqam / rad etilgan / taklif-tanlov / baho.",
+    "\"Uchalasi qayerda?\" sinf mashqi uchun 5 ta kartochka kesib qo'yiladi: £340 · by email · by text message · his hobby · very good.",
+    "3 ta Jony Academy skripti (Booking a cooking class, Asking about a bike hire scheme, Choosing a phone plan) — audiosi yo'q, ustoz ovoz chiqarib o'qiydi, shuning uchun chop etilgan nusxa faqat ustozda turadi.",
+    "Har o'quvchida xatolar daftari va qalam — tahlil bosqichida har bir noto'g'ri javob sababi bilan yoziladi."
+   ],
    "timeline": [
     [
      5,
@@ -18344,7 +18621,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugungi asosiy qoida — uchala variant ham audioda eshitiladi — uyga vazifada ham xuddi shu ustida ishlaymiz.",
+    "Birinchi vazifa: 5-skript \"Choosing a phone plan\" ni uyda BIR MARTA tinglang, 4 ta savolni belgilang va faqat shundan keyin transkript bilan tekshiring — 10 daqiqa yetadi.",
+    "Ikkinchisi \"Uchala variant daftari\": CD2 Track 8 va Track 17 dan 6 ta savol oling va har birining A, B, C varianti audioda qanday eshitilganini yozing (20 daqiqa); uchinchisi \"Tuzoq turlari\" — 5 ta tuzoq va har biriga turi: eski raqam / rad etilgan / taklif-tanlov / baho / hisoblash.",
+    "Eng ko'p uchraydigan xato — transkriptni oldin o'qib, keyin javobni belgilash; bunda vazifa bekorga ketadi, shuning uchun avval tinglang, keyin tekshiring.",
+    "Uchala vazifani ham daftarda keyingi darsga olib keling — dars boshida birinchi 5 daqiqada tekshiraman va normativ bo'yicha coin qo'yaman."
+   ],
    "homework": [
     {
      "title": "5-skript: \"Choosing a phone plan\"",
@@ -18401,7 +18684,14 @@
     "\"NB You may use any letter more than once\" qoidasidan foydalanish.",
     "Table completion bilan birgalikda ishlash (ikki savol turi bitta matnda)."
    ],
-   "materials": [],
+   "materials": [
+    "\"Speed reading\" matni A–H xatboshilari harflari ko'rinib turgan holda, 1–6 matching savollari va 7–13 \"Chunking\" jadvali (kataklari bo'sh) bilan — har o'quvchiga bitta nusxa; bu darsning asosiy matni.",
+    "\"Reading #28. Graphic novels\" matni (A–H), 1–7 matching savollari va 8–14 jadvali glossariysi bilan — har o'quvchiga bitta nusxa (1-qo'shimcha reading).",
+    "\"The long story of the umbrella\" va \"Why we forget\" matnlari (A–E, glossariysi bilan) — har o'quvchiga bittadan; bu darsda audio yo'q, Listening bosqichida \"Why we forget\" matnini ustoz ovoz chiqarib o'qiydi, o'quvchilar matnsiz tinglaydi, keyin varaqa tarqatiladi.",
+    "Sinf mashqi \"Ma'lumot turini ayting\" uchun beshta savol alohida qirqilgan kartochka qilib tayyorlansin (\"a definition of speed reading\", \"the fastest reading speeds\", \"the types of people who need to read more quickly\", \"why reading material should be interesting\", \"how a reader can become confused\") — har juftlikka bitta to'plam.",
+    "Uyga vazifa varaqasi \"How the bicycle was invented\" (A–E matni va 1–6 savollari) — har o'quvchiga bitta, dars oxirida tarqatiladi; orqa tomonida Graphic novels xatboshilari uchun A dan H gacha sakkizta belgilangan bo'sh qator bo'lsin.",
+    "Doskada qo'ng'iroqqacha: ikki ustun — \"HEADING = butun xatboshining asosiy g'oyasi\" va \"INFORMATION = xatboshi ichidagi bitta detal\"; yonida ma'lumot turlari ro'yxati (ta'rif, raqam, sabab, misol, muammo, natija) va yirik harflar bilan \"NEVER — savollar matn tartibida emas\" hamda \"NB You may use any letter more than once\". O'quvchilarda xatolar daftari, qalam va xatboshi chetiga izoh yozish uchun marker; ustozda soat yoki sekundomer — 2-qo'shimcha reading vaqt bilan bajariladi."
+   ],
    "timeline": [
     [
      5,
@@ -19245,7 +19535,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz savoldagi ma'lumotni butun matndan, tartibsiz qidirishni mashq qildik — uyda xuddi shuni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — \"How the bicycle was invented\" matni: soatga qarab 10 daqiqa qo'ying va 1–6 savolga A–E xatboshilaridan javob toping, har javob yoniga uni isbotlaydigan gapni ham ko'chirib qo'ying, chunki keyingi darsda men har javob uchun \"qaysi gap buni isbotlaydi?\" deb so'rayman.",
+    "Ikkinchi vazifa \"Xatboshi izohlari\": Graphic novels matnining sakkizta xatboshisiga (A dan H gacha) 4–5 so'zlik qisqa izoh yozasiz — bu sizning matn xaritangiz bo'ladi; uchinchisi \"Ma'lumot turi\": bugungi besh matndan 10 ta savol olib, har biri qanday ma'lumot so'rashini yozasiz — ta'rif, raqam, sabab, misol, muammo yoki natija. Ikkalasi birga 20 daqiqacha oladi.",
+    "Eng ko'p qilinadigan xato — javobni o'xshash so'zga qarab tanlash: \"bicycle\" yoki \"wheel\" so'zi deyarli har xatboshida uchraydi, shuning uchun avval savol qanday TURdagi ma'lumot so'rayotganini aniqlang, keyin faqat shu turdagi gapni qidiring; va bitta harf ikki marta javob bo'lishi mumkinligini unutmang — NB qoidasi bu matnda ham amal qiladi.",
+    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz, javoblarni birga tekshiramiz."
+   ],
    "homework": [
     {
      "title": "5-matn: \"How the bicycle was invented\"",
@@ -19302,7 +19598,14 @@
     "Bir odam bir necha marta javob bo'lishi mumkinligini (NB) hisobga olish.",
     "Summary completion bilan birgalikda ishlash (bitta matnda ikki savol turi)."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #29 \"Here today, gone tomorrow\" matni + 1–12 savollar — har o'quvchiga bitta nusxa; ismlarni doira ichiga olish uchun (1-bosqich) har o'quvchida rangli qalam yoki marker bo'lsin.",
+    "Reading #30 \"Holidays with a difference\" matni + summary 1–8 va matching 9–13 savollari — har o'quvchiga bitta nusxa; uyga vazifadagi \"Ismlar xaritasi\" shu matndan tuziladi, shuning uchun nusxa uyga ketadi.",
+    "\"Working from home: four views\" va \"Should children get homework?\" matnlari — har juftlikka bittadan nusxa.",
+    "\"Living in a big city\" matni + 1–6 savollar — har o'quvchiga bitta nusxa, dars oxirida uyga vazifa sifatida beriladi (sinfda ishlanmaydi).",
+    "Doskada qo'ng'iroqdan oldin tayyor turadigan to'rt bo'sh ustun: A Louisa Richardson, B Rod Downie, C Frigg Jorgensen, D Prisca Campbell — \"Kim nima dedi?\" mashqida shu yerga 2–3 so'zli izohlar yoziladi va 8–12 savollar tugagunicha o'chirilmaydi.",
+    "5 ta kichik ism kartasi: Louisa Richardson, Rod Downie, Frigg Jorgensen, Prisca Campbell va Hillary Clinton (tuzoq kartasi) — \"Kim nima dedi?\" mashqida ustoz karta tortib ism aytadi."
+   ],
    "timeline": [
     [
      5,
@@ -20206,7 +20509,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun darsda matching people savollarini ismlar xaritasi bilan yechdik; uyda xuddi shu usulni endi yolg'iz o'zingiz qo'llab ko'rasiz.",
+    "Uchta ish bor: \"Living in a big city\" matnidan 1–6 savollar, \"Holidays with a difference\" uchun ismlar xaritasi va Polar tourism summarysidagi 7 ta paraphrase juftligi.",
+    "Avval \"Living in a big city\"ni soatga qarab 10 daqiqada bajaring — to'rt ismni doira ichiga olib, har biri yoniga 2–3 so'z yozgandan keyingina savollarni o'qing; ismlar xaritasi bilan summary daftari yana 15–20 daqiqa oladi.",
+    "Eng ko'p xato shu yerda bo'ladi: harf takrorlanmaydi deb o'ylash. \"Living in a big city\"da NB bor — ikki odam ikki martadan javob bo'ladi, shuning uchun birinchi topgan harfingizni \"band\" deb hisoblamang.",
+    "Uchala ishni ham bitta daftarga yozing va keyingi dars boshida topshiring; har javob yoniga o'sha odam aytgan inglizcha gapni ham ko'chiring, chunki men \"buni kim aytgan?\" deb so'rayman — isbotsiz javob hisobga olinmaydi."
+   ],
    "homework": [
     {
      "title": "5-matn: \"Living in a big city\"",
@@ -20250,20 +20559,27 @@
   },
   {
    "no": 27,
-   "title": "Listening: Section 3 — Matching / Flow Chart Completion",
-   "grammar_topic": "Section 3 — akademik suhbat: matching (A–C harfini takrorlash mumkin) va flow chart (jarayon sxemasi)",
+   "title": "Listening: Part 3 — Matching / Flow Chart Completion",
+   "grammar_topic": "Part 3 — akademik suhbat: matching (A–C harfini takrorlash mumkin) va flow chart (jarayon sxemasi)",
    "vocab_topic": "Akademik taqdimot va jarayonlar",
    "duration": 120,
    "test_after": "",
    "book_ref": "Jony Academy materiali — ustoz bergan audiolar (CD2 Track 21 tutor feedback, CD2 Track 22 desalination; qo'shimcha: Track 20 essay feedback, Track 21 cloud seeding) va 3 ta mualliflik skripti.",
    "objectives": [
-    "Section 3 formatiga ko'nikish: talaba va o'qituvchi (tutor) akademik ish haqida gaplashadi.",
+    "Part 3 formatiga ko'nikish: talaba va o'qituvchi (tutor) akademik ish haqida gaplashadi.",
     "Matchingda bir harfni bir necha marta ishlatish (NB You may use any letter more than once) va o'qituvchining FIKRINI ajratish.",
     "Flow chart (jarayon sxemasi) bosqichlarini tartib bilan kuzatish: collection → treatment → removal → result → use.",
     "Talaba fikri va o'qituvchi fikrini farqlash: savol \"What comment does the TUTOR make...\" bo'lsa, faqat o'qituvchi gapi hisoblanadi.",
     "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
    ],
-   "materials": [],
+   "materials": [
+    "Audio: ielts5_27_presentation.mp3 (CD2 Track 21), ielts5_27_desalination.mp3 (CD2 Track 22), ielts5_27_essay.mp3 (Track 20) va ielts5_27_cloud_seeding.mp3 (Track 21) — dars boshlanishidan oldin telefon yoki kolonkaga yuklab, orqa partadan eshitiladigan qilib sinab qo'ying; har biri faqat BIR MARTA qo'yiladi.",
+    "Savol varaqasi: 1-varaq — Fahad taqdimoti 1–5 matching (A It needs to be shorter; B The ideas are difficult to follow; C Some information should be added) va desalination 6–10 flow charti strelkalari bilan; 2-varaq — Jo inshosi 1–5 matching (A not well organised; B may not be correct; C not relevant) va cloud seeding 6–10 flow charti. Har o'quvchiga bittadan, 1-varaq audio qo'yilishidan OLDIN, 2-varaq qo'shimcha mashq bosqichida tarqatiladi.",
+    "3 ta Jony Academy skripti (\"Research project — tutor feedback\", \"How recycled paper is made\", \"Group presentation on solar energy\") — bularning audiosi yo'q, ustoz ovoz chiqarib o'qiydi: skriptni chop etib DR GRANT/LOLA, JAMSHID/TUTOR va ANNA/RUSTAM repliklarini ikki xil belgilab chiqing; uchinchisi uyga vazifa varaqasi sifatida dars oxirida tarqatiladi.",
+    "[class] \"Kimning fikri?\" uchun 5 ta gap alohida qog'ozchalarga yozib, kesib qo'yiladi (o'quvchi kartochkani tortib oladi, \"talaba\" yoki \"o'qituvchi\" deydi va A/B/C harfini qo'yadi).",
+    "Doskada qo'ng'iroqqacha: ikki ustun TALABA | O'QITUVCHI; yonida yirik harflar bilan \"NB You may use any letter more than once\" va \"NO MORE THAN TWO WORDS\"; pastda zanjir: collection → treatment → salt removal → result → use.",
+    "Track 21 va Track 22 transkript nusxalari — har juftlikka bitta, faqat tekshirish bosqichida tarqatiladi; o'quvchilarda xatolar daftari va ikki rangli qalam bo'lsin (o'qituvchi gapi bir rang, talaba gapi boshqa rang)."
+   ],
    "timeline": [
     [
      5,
@@ -20313,7 +20629,7 @@
    ],
    "grammar": {
     "intro": [
-     "Section 3 — 2–3 kishining akademik suhbati: talaba loyihasi, taqdimot, tadqiqot. Til 1–2 sectionlardan qiyinroq, fikrlar tez almashadi.",
+     "Part 3 — 2–3 kishining akademik suhbati: talaba loyihasi, taqdimot, tadqiqot. Til 1–2 sectionlardan qiyinroq, fikrlar tez almashadi.",
      "Matching (Track 21): taqdimotning 5 qismi va 3 ta izoh (A shorter, B difficult to follow, C information should be added). Harflar TAKRORLANADI — \"NB You may use any letter more than once\". Shuning uchun \"bu harf ishlatildi\" deb o'chirmang.",
      "Kimning fikri? Talaba o'z fikrini aytadi (\"I thought I should keep the introduction brief\"), lekin savol o'qituvchi izohini so'raydi (\"Yes, but you can say why you like the topic\" → C: add information). Talaba taklifi ko'pincha chalg'ituvchi.",
      "Flow chart (Track 22): jarayon bosqichlari strelka bilan ketma-ket. Audio ham shu tartibda boradi. Har bosqich nomi (Collection, Treatment, Salt removal) — langar.",
@@ -20376,7 +20692,7 @@
       "Ikkalasi ham qabul qilinadi (kalit: seabird / sea(-)bird)."
      ],
      [
-      "Section 3 nima uchun qiyin?",
+      "Part 3 nima uchun qiyin?",
       "Ikki kishi, akademik so'zlar, fikr tez o'zgaradi. Kim gapirayotganini kuzating."
      ],
      [
@@ -21116,7 +21432,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun Part 3 da ikki ishni qildik: o'qituvchining izohini talaba gapidan ajratdik va flow chartni bosqichma-bosqich to'ldirdik — uyda xuddi shu ikkisini yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — 5-skript \"Group presentation on solar energy\": avval 1–4 matching va 5–8 flow chartni o'qib chiqing, keyin BIR MARTA tinglang (yoki uydagi birov ovoz chiqarib o'qib bersin) va to'xtatmasdan to'ldiring; 10 daqiqa yetadi, keyin transkript bilan tekshirasiz.",
+    "Ikkinchisi — \"Talaba — o'qituvchi jadvali\": Track 21 ning 5 qismi uchun ikki ustun chizasiz, chapga talaba nima dedi, o'ngga o'qituvchi nima dedi, harfni esa faqat o'ng ustunga qarab qo'yasiz; uchinchisi — \"O'z flow chartingiz\": bitta jarayonni 5 bosqichga bo'lib chizasiz va first, then, after that, finally bilan 5 gap yozasiz; ikkalasi birga 20 daqiqacha.",
+    "Eng ko'p uchraydigan xato — talabaning o'z taklifini javob deb olish (\"keep the introduction brief\" → A) yoki flow chartga formada allaqachon turgan so'zni (\"canal\", \"rocket\") yozib qo'yish: javob o'qituvchining bahosidan olinadi va ikki so'zdan oshmaydi.",
+    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz, javoblarni birga tekshiramiz va men har matching javobi uchun \"talaba nima dedi, o'qituvchi nima dedi, savol kimni so'raydi?\" deb so'rayman."
+   ],
    "homework": [
     {
      "title": "5-skript: \"Group presentation on solar energy\"",
@@ -21142,7 +21464,7 @@
    ],
    "normativ": [
     [
-     "Section 3 (uyga)",
+     "Part 3 (uyga)",
      "8 javobdan 6 tasi to'g'ri",
      "2 coin"
     ],
@@ -21173,7 +21495,14 @@
     "So'z chegarasini har bo'limda qayta o'qish: \"ONE WORD AND/OR A NUMBER\" — \"TWO WORDS\" emas.",
     "5 ta matnda ishlash: ustozning 2 matni + 3 ta Jony Academy matni."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #31 \"The burden of thirst\" matni A–F xatboshilari va 1–13 savollari bilan — har o'quvchiga bitta nusxa, javobsiz; i–viii sarlavhalar ro'yxati matn bilan bir varaqda bo'lsin, javob kaliti va tuzoq izohlari faqat ustozda qoladi.",
+    "Reading #32 \"The rain makers\" matni 1–14 savollari bilan (i–ix sarlavhalar, 7–12 sentence completion, 13–14 \"Choose TWO\") — har o'quvchiga bitta nusxa; bu matn IELTS tezligida, vaqt bilan bajariladi, shuning uchun stolda taymer yoki sekundomer tursin.",
+    "\"The return of the tram\" va \"Farms without fields\" matnlari savollari bilan — har o'quvchiga bittadan nusxa: bu darsda audio yo'q, Listening bosqichi shu ikki matn bilan to'ldiriladi.",
+    "\"The Great Green Wall\" uy vazifasi varaqasi — har o'quvchiga bitta nusxa, javobsiz; dars oxirida tarqatiladi, orqa tomonida \"headings / sentence completion / TFNG uchun necha daqiqa ketdi\" deb yoziladigan uchta bo'sh qator qoldiring.",
+    "Doskada qo'ng'iroqqacha tayyor tursin: sinf mashqining besh qatorli jadvali — savol turi | qoida | tartib (ALWAYS / USUALLY / NEVER) | eng katta tuzoq (headings, sentence completion, pick from a list, summary, Yes / No / Not Given); yonida Passage 2 vaqt rejasi: headings 7 + sentence completion 8 + pick from a list 3 + tekshirish 2 = 20 daqiqa. Bu ikki ro'yxat dars oxirigacha o'chirilmaydi.",
+    "Qirqib tayyorlanadigan kartochkalar: #31 matnining i–viii sarlavhalari alohida tasmalarga qirqilgan — har juftlikka bitta to'plam (A–F xatboshilariga qo'yib ko'riladi, ikkita tasma ortiqcha qoladi); har o'quvchida xatolar daftari, qalam va ikki rangli marker — biri savoldagi kalit so'z, ikkinchisi matndagi paraphrase uchun."
+   ],
    "timeline": [
     [
      5,
@@ -22131,7 +22460,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun bitta matnda uch xil savol turini ketma-ket ishladik va har turga alohida vaqt ajratdik — uyda endi xuddi shu ishni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — \"The Great Green Wall\" matni: soatga qarab 15 daqiqa qo'ying, avval A–D xatboshilariga sarlavha tanlang, keyin sentence completionni, oxirida TRUE / FALSE / NOT GIVEN ni ishlang va har javob yoniga matndagi isbot gapni qisqa ko'chirib qo'ying.",
+    "Ikkinchisi — \"Qoidalar kartasi\": beshta savol turiga (headings, sentence completion, pick from a list, summary, Yes / No / Not Given) bittadan kartochka, har birida qoida, tartib va eng katta tuzoq yoziladi; uchinchisi — \"Headings xaritasi\": \"The rain makers\" matnining oltita xatboshisiga o'z sarlavhangizni 4–6 so'zda yozib, keyin ro'yxatdagi sarlavha bilan solishtirasiz — ikkalasi birga 20 daqiqacha oladi.",
+    "Eng ko'p qilinadigan xato — so'z chegarasini har bo'limda qayta o'qimaslik: bugungi ikkala ustoz matnida bitta so'z edi, \"The Great Green Wall\"da esa \"NO MORE THAN TWO WORDS AND/OR A NUMBER\" yozilgan, ya'ni \"Sahara Desert\" to'liq javob — ishni boshlashdan oldin har ko'rsatmani boshidan o'qing.",
+    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz: javoblarni birga tekshiramiz va men har bo'limga necha daqiqa ketganini so'rayman — vaqti yozilmagan ish to'liq hisoblanmaydi."
+   ],
    "homework": [
     {
      "title": "5-matn: \"The Great Green Wall\"",
@@ -22188,7 +22523,14 @@
     "Muallif fikrini (views) baho so'zlaridan topish: \"fortunately\", \"justifiably\", \"hideous\", \"an enormous achievement\".",
     "Passage 3 vaqt rejasi: 20 daqiqa, 14 savol."
    ],
-   "materials": [],
+   "materials": [
+    "Reading #33 \"The Pompidou Centre\" matni 1–14 savollari bilan (MCQ 1–4, A–F sentence endings 5–8, Yes / No / Not Given 9–14) — har o'quvchiga bitta nusxa, javobsiz; A–F oxirlar ro'yxati va glossary matn bilan bir varaqda bo'lsin, javob kaliti va tuzoq izohlari faqat ustozda qoladi.",
+    "Reading #34 \"The man who tried to destroy Paris\" matni xuddi shu tuzilishdagi 1–14 savoli bilan — har o'quvchiga bitta nusxa; bu matnda o'quvchilar birinchi matndagi usulni mustaqil qo'llaydi, shuning uchun stolda taymer yoki sekundomer tursin (20 daqiqa). Ustoz varag'ida 14-savolning ikki tomoni yozib qo'yilgan bo'lsin — \"modern houses that look like they are much older\" nega NO va nega NOT GIVEN emas; muhokama shu qog'ozdan yuritiladi.",
+    "\"The Sydney Opera House\" va \"The Eiffel Tower: from eyesore to icon\" matnlari savollari va glossary bilan — har o'quvchiga bittadan nusxa; bu darsda audio yo'q, Listening bosqichi shu ikki yengilroq (Band 4–5) matn bilan to'ldiriladi.",
+    "\"Learning to love concrete\" uy vazifasi varaqasi — har o'quvchiga bitta nusxa, javobsiz; dars oxirida tarqatiladi, sinfda ochilmaydi; orqa tomonida \"MCQ / sentence endings / Yes-No-Not Given uchun necha daqiqa ketdi\" deb yoziladigan uchta bo'sh qator qoldiring.",
+    "Doskada qo'ng'iroqdan oldin ikki narsa tayyor tursin: xatboshi vazifasi so'zlari — tasvirlash, tushuntirish, taqqoslash, tanqid, baholash, misol keltirish (sinf mashqi ham, ikkinchi uy vazifasi ham shu ro'yxatdan ishlaydi); yonida Passage 3 vaqt rejasi: MCQ 7 + endings 5 + Y/N/NG 6 + tekshirish 2 = 20 daqiqa. Ikkalasi dars oxirigacha o'chirilmaydi.",
+    "\"Xatboshi nima qiladi?\" mashqi uchun ustoz varag'i — Pompidou matnining to'rt xatboshisi bo'yicha birinchi va oxirgi gap juftliklari chop etilgan (og'zaki o'qiladi, o'quvchiga berilmaydi); #33 ning A–F oxirlari qalin qog'ozga yozib qirqilgan tasmalar — har juftlikka bitta to'plam (ikkita tasma ortiqcha qoladi); har o'quvchida xatolar daftari, qalam va ikki rangli marker: biri muallif bahosi so'zlari (fortunately, hideous, an enormous achievement), ikkinchisi matndagi paraphrase uchun."
+   ],
    "timeline": [
     [
      5,
@@ -23151,7 +23493,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun bitta matnda uch turni — MCQ, sentence endings va Yes / No / Not Given ni — ketma-ket ishladik va har turga o'z vaqtini ajratdik; uyda endi xuddi shu ishni yolg'iz o'zingiz bajarasiz.",
+    "Birinchi vazifa — 5-matn \"Learning to love concrete\": soatga qarab 15 daqiqa qo'ying, avval ikkita MCQ ni, keyin sentence endingsni, oxirida Yes / No / Not Given ni ishlang va har javob yoniga matndagi isbot gapni qisqa ko'chirib qo'ying.",
+    "Ikkinchisi — \"Xatboshi vazifalari\": Le Corbusier matnining 8 xatboshisiga doskadagi ro'yxatdan bittadan vazifa so'zini yozasiz (tasvirlash, tushuntirish, taqqoslash, tanqid, baholash, misol) — 8 qator; uchinchisi — \"Muallif fikri daftari\": Pompidou va Le Corbusier matnlaridan muallif fikrini bildirgan 10 ta so'z yoki iborani, har birining yoniga qaysi xatboshidan olinganini yozasiz; bu ikkalasi birga 20 daqiqacha oladi.",
+    "Eng ko'p qilinadigan xato — \"main purpose\" savolida xatboshining bitta detalini tanlash: variant matnda bor bo'lsa ham, savol xatboshi NIMA QILISHINI so'raydi, shuning uchun avval vazifa so'zini o'zingiz ayting, keyin variantni tanlang.",
+    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz: \"Learning to love concrete\" javoblarini birga tekshiramiz, men MCQ 2 — \"main purpose\" savolining isbotini va muallif fikri daftaringizdan bir nechta iborani so'rayman."
+   ],
    "homework": [
     {
      "title": "5-matn: \"Learning to love concrete\"",
@@ -23195,20 +23543,27 @@
   },
   {
    "no": 30,
-   "title": "Listening: Section 4 (Lecture — Note Completion)",
-   "grammar_topic": "Section 4 — akademik ma'ruza (monolog), 10 ta qayd, pauzasiz",
+   "title": "Listening: Part 4 (Lecture — Note Completion)",
+   "grammar_topic": "Part 4 — akademik ma'ruza (monolog), 10 ta qayd, pauzasiz",
    "vocab_topic": "Arxitektura: an'anaviy va zamonaviy binolar",
    "duration": 120,
    "test_after": "",
    "book_ref": "Jony Academy materiali — ustoz bergan audiolar (CD2 Track 27 Traditional Samoan Houses, Track 22 The Beijing Olympic Stadium) va 3 ta mualliflik skripti.",
    "objectives": [
-    "Section 4 formatiga ko'nikish: bitta ma'ruzachi, akademik mavzu, 10 ta savol PAUZASIZ.",
+    "Part 4 formatiga ko'nikish: bitta ma'ruzachi, akademik mavzu, 10 ta savol PAUZASIZ.",
     "Qaydlardagi sarlavhalardan (Overall design, Roof, Supporting posts) ma'ruza tuzilishini oldindan bilish va \"qayerdaman\" savoliga javob berish.",
     "Ma'ruzachining bo'lim almashtirish signallarini tanish: \"first of all\", \"now, let's have a close look at\", \"the last area I want to look at\".",
     "Akademik so'z va paraphraselarni ushlash: \"permits heat loss\" = \"a way of allowing heat to rise ... thereby cooling the house\".",
     "5 ta mashqda (2 ta ustoz audiosi + 3 ta skript) ishlash."
    ],
-   "materials": [],
+   "materials": [
+    "1-mashq (Samoa, CD2 Track 27) va 2-mashq (Stadion, Track 22) qayd jadvallari, 1–10 savol — har o'quvchiga bittadan nusxa, javob kalitisiz.",
+    "3-mashq \"the history of the umbrella\" (1–8) va 4-mashq \"how bees make honey\" (1–8) qayd jadvallari — har o'quvchiga bittadan; bu ikkisida audio yo'q, shuning uchun ustozda ikkala transkriptning chop etilgan nusxasi bo'lsin (ustoz o'zi pauzasiz ovoz chiqarib o'qiydi).",
+    "5-mashq \"the Registan of Samarkand\" qaydlari va transkripti — uyga vazifa uchun har o'quvchiga bitta nusxa, darsning oxirida tarqatiladi.",
+    "Audio darsdan oldin ochib qo'yiladi: ielts5_30_samoa.mp3 (CD2 Track 27) va ielts5_30_stadium.mp3 (Track 22) — kolonka tovushi tekshirilgan, ikkalasi ham boshiga qaytarilgan (Part 4 o'rtasida to'xtatilmaydi).",
+    "Doskada dars boshlanishidan oldin turadi: bo'lim signallari — first of all / now, let's have a close look at / next / so how...? / the last area / finally — va Samoa sarlavhalari: Overall design – Roof – Supporting posts.",
+    "Ustozda ikkala audioning javob kaliti bitta nusxa (faqat ustoz uchun) va soniya o'lchaydigan soat yoki telefon — qaydlarni o'qishga 45 soniya beriladi; o'quvchilarda xatolar daftari va qalam (javoblar qalamda yoziladi)."
+   ],
    "timeline": [
     [
      5,
@@ -23258,7 +23613,7 @@
    ],
    "grammar": {
     "intro": [
-     "Section 4 — IELTS Listeningning oxirgi va eng qiyin qismi: bitta so'zlovchining ma'ruzasi (lecture). O'rtada pauza YO'Q — 10 savolni o'qishga faqat boshida vaqt beriladi. Shuning uchun boshidagi 30–45 soniyada barcha qaydlarni o'qib chiqing.",
+     "Part 4 — IELTS Listeningning oxirgi va eng qiyin qismi: bitta so'zlovchining ma'ruzasi (lecture). O'rtada pauza YO'Q — 10 savolni o'qishga faqat boshida vaqt beriladi. Shuning uchun boshidagi 30–45 soniyada barcha qaydlarni o'qib chiqing.",
      "Qaydlar sarlavhalarga bo'lingan (Overall design / Roof / Supporting posts). Sarlavha — ma'ruzaning bo'limi. Ma'ruzachi yangi bo'limga o'tganda signal beradi: \"Now, let's have a close look at the roof\", \"So how does the house stay upright?\" (= Supporting posts).",
      "Qaydlar ma'ruza tartibida (ALWAYS). Bitta javobni o'tkazib yuborsangiz, to'xtamang — keyingi qaydning kalit so'zini kuting.",
      "Qaydlar qisqartirilgan: \"high top permits 6 ___ loss\" — ma'ruzada to'liq gap: \"this is a way of allowing heat to rise ... thereby cooling the house\". Qayddagi so'z ko'pincha ma'ruzadagi uzun gapning paraphrase'i.",
@@ -23305,7 +23660,7 @@
     ],
     "presentation": [
      [
-      "Section 4 da pauza bormi?",
+      "Part 4 da pauza bormi?",
       "Yo'q. Barcha 10 savolni boshida o'qing."
      ],
      [
@@ -23330,7 +23685,7 @@
      ]
     ],
     "notes": [
-     "Section 4 ni o'rgatishdan oldin: 12-dars (sentence completion, Section 2 monolog) va 5-dars (note completion) ko'nikmalarini eslating. Section 4 ular birlashmasi, lekin tezroq va akademik.",
+     "Part 4 ni o'rgatishdan oldin: 12-dars (sentence completion, Part 2 monolog) va 5-dars (note completion) ko'nikmalarini eslating. Part 4 ular birlashmasi, lekin tezroq va akademik.",
      "Ustoz kaliti yuborilgan va kiritildi: Samoa — 1 oval / oval(-)shaped 2 blinds 3 (river) stones 4 sugar cane / sugar(-)cane 5 steep 6 heat 7 forest(s) 8 status 9 old people 10 (complex) pattern; Stadium — 1 two structures 2 90,000 spectators 3 beams 4 423 million 5 distance 6 low hill 7 unusual shape 8 moving 9 (magical) forest 10 coloured light.",
      "Birinchi tinglashda o'quvchilar faqat bo'lim signallarini belgilaydi (Overall design → Roof → Posts), ikkinchisida javoblarni yozadi."
     ],
@@ -23403,7 +23758,7 @@
    "listenings": [
     {
      "title": "CD2 Track 27. Traditional Samoan Houses",
-     "qtype": "Section 4 — Note completion (1–10) — asosiy",
+     "qtype": "Part 4 — Note completion (1–10) — asosiy",
      "audios": "Ustoz bergan audio (CD2 Track 27)",
      "audio": "ielts5_30_samoa.mp3",
      "intro": [
@@ -23514,7 +23869,7 @@
     },
     {
      "title": "Track 22. The Beijing Olympic Stadium",
-     "qtype": "Section 4 — Note completion (1–10) — qo'shimcha mashq",
+     "qtype": "Part 4 — Note completion (1–10) — qo'shimcha mashq",
      "audios": "Ustoz bergan audio (Track 22)",
      "audio": "ielts5_30_stadium.mp3",
      "intro": [
@@ -23617,10 +23972,10 @@
     },
     {
      "title": "Lecture: the history of the umbrella",
-     "qtype": "Section 4 — Note completion (1–8)",
+     "qtype": "Part 4 — Note completion (1–8)",
      "audios": "Jony Academy skripti (Band 4–5)",
      "intro": [
-      "Ma'ruza (Section 4 monolog). Avval qaydlarni o'qing va sarlavhalarni belgilang, keyin skriptni bir marta tinglang (ustoz o'qiydi, pauzasiz)."
+      "Ma'ruza (Part 4 monolog). Avval qaydlarni o'qing va sarlavhalarni belgilang, keyin skriptni bir marta tinglang (ustoz o'qiydi, pauzasiz)."
      ],
      "transcript": [
       "Good morning. Today I want to look at an everyday object with a surprisingly long history — the umbrella.",
@@ -23713,10 +24068,10 @@
     },
     {
      "title": "Lecture: how bees make honey",
-     "qtype": "Section 4 — Note completion (1–8)",
+     "qtype": "Part 4 — Note completion (1–8)",
      "audios": "Jony Academy skripti (Band 4–5)",
      "intro": [
-      "Biologiya ma'ruzasi (Section 4). Avval qaydlarni o'qing, keyin bir marta tinglang."
+      "Biologiya ma'ruzasi (Part 4). Avval qaydlarni o'qing, keyin bir marta tinglang."
      ],
      "transcript": [
       "In today's lecture, I'd like to explain how honeybees produce honey.",
@@ -23812,10 +24167,10 @@
     },
     {
      "title": "Lecture: the Registan of Samarkand",
-     "qtype": "Section 4 — Note completion (1–8)",
+     "qtype": "Part 4 — Note completion (1–8)",
      "audios": "Jony Academy skripti (Band 4–5) — uyga vazifa",
      "intro": [
-      "Arxitektura ma'ruzasi (Section 4). Uyda bir marta tinglang."
+      "Arxitektura ma'ruzasi (Part 4). Uyda bir marta tinglang."
      ],
      "transcript": [
       "Today we're going to look at one of the most famous public squares in the world — the Registan in Samarkand, Uzbekistan.",
@@ -23904,7 +24259,13 @@
      ]
     }
    ],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun Part 4 ni sinfda uch marta ko'rdik, uyda esa uni yolg'iz, hech kim to'xtatmaydigan sharoitda sinab ko'rasiz.",
+    "Birinchi vazifa — 5-skript \"Lecture: the Registan of Samarkand\": avval 45 soniya sakkizta qaydni o'qing, keyin matnni BIR MARTA pauzasiz tinglang, bo'sh joylarni to'ldiring va faqat shundan keyin transkript bilan tekshiring — bunga 15 daqiqa yetadi.",
+    "Qolgan ikkitasi yozma: Track 27 va Track 22 transkriptidan bo'lim almashtiradigan 6 ta gapni ko'chirib, yoniga qaysi sarlavhaga olib borishini yozing (masalan: \"So how does the house stay upright?\" — Supporting posts), va Samoa ma'ruzasidan 8 ta paraphrase juftini yozing (masalan: permits heat loss — allowing heat to rise ... cooling) — ikkalasiga 20 daqiqa.",
+    "Eng ko'p qilinadigan xato — transkriptni oldindan o'qib qo'yish: unda mashq behuda ketadi, chunki Part 4 ning butun qiyinligi pauzasiz tinglashda, shuning uchun transkript faqat javoblar yozib bo'lingandan keyin ochiladi.",
+    "Uchala vazifa ham bitta daftarga yoziladi va keyingi dars boshida tekshiraman: Registan qaydlaridan 8 tadan 6 tasi to'g'ri bo'lsa 2 coin, 6 qator bo'lim signali uchun 2 coin, 8 juft paraphrase uchun 1 coin."
+   ],
    "homework": [
     {
      "title": "5-skript: \"Lecture: the Registan of Samarkand\"",
@@ -23930,7 +24291,7 @@
    ],
    "normativ": [
     [
-     "Section 4 (uyga)",
+     "Part 4 (uyga)",
      "8 javobdan 6 tasi to'g'ri",
      "2 coin"
     ],
@@ -23961,7 +24322,14 @@
     "Asosiy tuzoqni tanish: oxir matnga ko'ra TO'G'RI, lekin boshqa gap boshiga tegishli.",
     "5 ta matnda bosqichma-bosqich ishlash: Band 4 → Band 5.5."
    ],
-   "materials": [],
+   "materials": [
+    "1–2-matn (\"The milkmaids and the first vaccine\" va \"Why the Titanic sank so quickly\") savollari bilan — har o'quvchiga bittadan nusxa, javobsiz; A–G oxirlar qutisi matn bilan bir varaqda bo'lsin, javob kaliti va tuzoq izohlari faqat ustozda qoladi.",
+    "3–4-matn (\"How computers learnt to play chess\" va \"The mould that changed medicine\") savollari bilan — har o'quvchiga bittadan nusxa: bu darsda audio yo'q, Listening bosqichi 4-matn bilan to'ldiriladi (ustoz uni ovoz chiqarib o'qib beradi), 4-matn esa vaqt bilan bajariladi — stolda taymer yoki telefon sekundomeri tursin.",
+    "5-matn \"The Silk Road: more than a road\" uy vazifasi varaqasi — har o'quvchiga bitta nusxa, javobsiz; dars oxirida tarqatiladi, orqa tomoniga uch ustunli bo'sh jadval (grammatika | matndan joy | ma'no) chizib qo'ying.",
+    "Doskada qo'ng'iroqqacha tayyor tursin: sinf mashqining besh oxiri — A to find a cure. B was built in 1912. C that the plan had failed. D were too expensive. E carefully. — matn yozilmaydi, mashq og'zaki bajariladi; yonida uch filtr ro'yxati: 1) GRAMMATIKA, 2) MATNDAN JOY (javoblar USUALLY tartibda), 3) MA'NO (\"Aynan shu bosh haqidami?\"). Bu ikki ro'yxat dars oxirigacha o'chirilmaydi.",
+    "Doskaning o'ng yarmida 1-matn uchun bo'sh jadval: chap ustunda 1–5 gap boshlari, o'ng ustunda nomzod harflar uchun joy — ustoz birinchi matnni shu jadvalda \"ovoz chiqarib o'ylash\" usulida birga yechadi.",
+    "Qirqib tayyorlanadigan kartochkalar: 3-matnning A–H oxirlari alohida tasmalarga qirqilgan — har juftlikka bitta to'plam (6 ta boshga qo'yib ko'riladi, 2 tasi ortiqcha qoladi); 29-darsdagi Pompidou matni 5–8 savollari bilan — har juftlikka bitta nusxa (dars oxiridagi 5 daqiqalik takrorlash va uchinchi uy vazifasi uchun); har o'quvchida xatolar daftari, qalam va ikki rangli marker — biri gap boshidagi kalit so'z, ikkinchisi matndagi paraphrase uchun."
+   ],
    "timeline": [
     [
      5,
@@ -24840,7 +25208,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun uch filtrni birga ishlatdik — endi uyda o'zingiz qo'llaysiz: birinchi vazifa 5-matn, \"The Silk Road: more than a road\".",
+    "Taymer qo'ying va 12 daqiqada bajaring; har savol yoniga uchta filtrni yozing — grammatika, matndan joy, ma'no — chunki men javob harfini emas, o'sha uch qatorni tekshiraman.",
+    "Ikkinchi vazifa \"Tuzoq ovchisi\": bugungi besh matndagi 10 ta ortiqcha oxirni ko'chiring va har biriga turini yozing — teskari, boshqa odam, boshqa vaqt yoki boshqa narsa haqida; bu taxminan 10 daqiqa oladi.",
+    "Uchinchi vazifa \"O'z mashqingizni tuzing\": 29-darsdagi Pompidou matnidan 3 ta gap boshi va 5 ta oxir yozing, ikkitasi ataylab tuzoq bo'lsin — keyingi darsda sherigingiz uni yechadi.",
+    "Eng ko'p qilinadigan xato — darhol matnni o'qishga tushish: avval grammatika filtrini yozing, u variantlarni ikki-uchtaga tushiradi; uchala vazifa ham daftarda bajariladi va keyingi dars boshida stolga qo'yiladi."
+   ],
    "homework": [
     {
      "title": "5-matn: \"The Silk Road: more than a road\"",
@@ -24884,7 +25258,7 @@
   },
   {
    "no": 32,
-   "title": "Listening: Full Listening Test (Section 1–4)",
+   "title": "Listening: Full Listening Test (Part 1–4)",
    "grammar_topic": "To'liq Listening testi — 4 section, 40 savol, audio bir marta + 10 daqiqa ko'chirish",
    "vocab_topic": "Imtihon sharoitida to'liq test",
    "duration": 120,
@@ -24893,13 +25267,13 @@
    "objectives": [
     "To'liq IELTS Listening testini imtihon sharoitida bajarish: 4 section, 40 savol, audio faqat BIR MARTA.",
     "Har section oldidagi pauzada keyingi savollarni o'qish va bo'sh joy turini (ism, raqam, ot, harf) oldindan belgilash.",
-    "3–31-darslarda o'rganilgan listening savol turlarini bitta testda qo'llash: form, notes, map, MCQ, chart tanlash, sentence completion, Section 4 ma'ruza.",
+    "3–31-darslarda o'rganilgan listening savol turlarini bitta testda qo'llash: form, notes, map, MCQ, chart tanlash, sentence completion, Part 4 ma'ruza.",
     "Javoblarni 10 daqiqada javob varag'iga xatosiz ko'chirish: imlo, so'z chegarasi, raqamlar.",
     "Natijani band ballga o'girish va xatolarni savol turi bo'yicha tahlil qilish (34–35-darslar uchun zaif turlar ro'yxati)."
    ],
    "materials": [
     "Savol varag'i: Practice Test, Listening 1–40 (har o'quvchiga nusxa; 16–20 uchun xarita, 26–27 uchun chartlar).",
-    "Audio: 4 fayl (Section 1–4) — Listening bo'limida, ketma-ket qo'yiladi.",
+    "Audio: 4 fayl (Part 1–4) — Listening bo'limida, ketma-ket qo'yiladi.",
     "Javob varag'i (1–40) va band ball jadvali.",
     "To'liq transkript — kitobning Audio script qismi (CD2 Track 31–34), tahlil bosqichi uchun."
    ],
@@ -24911,12 +25285,12 @@
     ],
     [
      15,
-     "Section 1–2",
+     "Part 1–2",
      "Atlas Hotel (1–10), Orana Wildlife Park (11–20) — audio to'xtatilmaydi"
     ],
     [
      15,
-     "Section 3–4",
+     "Part 3–4",
      "Study-skills course (21–30), Airport design (31–40) — S4 pauzasiz"
     ],
     [
@@ -24946,7 +25320,7 @@
      "Section'lar qiyinlashib boradi: S1 — kundalik suhbat (mehmonxona), S2 — monolog (hayvonot parki), S3 — o'quv suhbati (talabalar va o'qituvchi), S4 — akademik ma'ruza, PAUZASIZ.",
      "Har section oldidan va S1–S3 ichidagi pauzalarda savollarni o'qishga vaqt beriladi. Bu vaqtni keyingi qismni o'qishga sarflang, o'tgan javobni o'ylashga emas.",
      "S1 boshida namuna (Example) bor: \"Arrival date — 23rd August\". Namuna eshittirilgach, audio boshidan qayta boshlanadi — ovozlarga ko'nikish uchun.",
-     "Bu testdagi savol turlari: form completion (3, 23-dars), note completion (5-dars), map/plan labelling (17-dars), multiple choice (9, 24-dars), chart/graph tanlash (MCQ ning rasmli ko'rinishi), sentence completion (12-dars), Section 4 notes (30-dars).",
+     "Bu testdagi savol turlari: form completion (3, 23-dars), note completion (5-dars), map/plan labelling (17-dars), multiple choice (9, 24-dars), chart/graph tanlash (MCQ ning rasmli ko'rinishi), sentence completion (12-dars), Part 4 notes (30-dars).",
      "Chart/graph savolida (26–27) so'zlarni emas, NISBATLARNI tinglang: \"kichik foiz\", \"yarmidan ko'pi\", \"birinchi o'rinda\", \"eng kam foydali\".",
      "Test tugagach ustoz javoblarni o'qiydi; har o'quvchi to'g'ri javoblar sonini sanaydi va jadval bo'yicha band ballni topadi."
     ],
@@ -24959,13 +25333,13 @@
      ],
      [
       "2-bosqich",
-      "Section 1–2 (1–20)",
+      "Part 1–2 (1–20)",
       "Atlas Hotel; Orana Wildlife Park",
       "~15 daqiqa"
      ],
      [
       "3-bosqich",
-      "Section 3–4 (21–40)",
+      "Part 3–4 (21–40)",
       "Study-skills course; Airport design",
       "~15 daqiqa"
      ],
@@ -25167,13 +25541,13 @@
    "readings": [],
    "listenings": [
     {
-     "title": "Section 1. CD2 Track 31. Atlas Hotel — booking and tourist survey",
+     "title": "Part 1. CD2 Track 31. Atlas Hotel — booking and tourist survey",
      "qtype": "Form completion (1–10)",
      "audios": "Ustoz bergan audio (CD2 Track 31)",
      "audio": "ielts5_32_s1.mp3",
      "intro": [
       "Ayol mehmonxonaga qo'ng'iroq qilib xona bron qiladi (1–5), keyin turizm boshqarmasi uchun qisqa so'rovnomaga javob beradi (6–10). Avval namuna eshittiriladi, keyin audio boshidan qayta boshlanadi.",
-      "Savol varag'i: Section 1 — ikki forma (Hotel Booking Form; Tourist Board — Questions for holidaymakers). Ko'rsatma: NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer."
+      "Savol varag'i: Part 1 — ikki forma (Hotel Booking Form; Tourist Board — Questions for holidaymakers). Ko'rsatma: NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer."
      ],
      "transcript": [
       "To'liq transkript — kitobning Audio script qismida (CD2 Track 31). Bu yerda — qisqacha mazmun va javoblar joyi.",
@@ -25335,14 +25709,14 @@
      ]
     },
     {
-     "title": "Section 2. CD2 Track 32. Orana Wildlife Park",
+     "title": "Part 2. CD2 Track 32. Orana Wildlife Park",
      "qtype": "Note completion (11–15) + Map labelling (16–20)",
      "audios": "Ustoz bergan audio (CD2 Track 32)",
      "audio": "ielts5_32_s2.mp3",
      "image": "ielts5_32_orana_map.jpg",
      "intro": [
       "Park xodimi tashrif buyuruvchilarga Orana Wildlife Park haqida gapiradi (11–15), keyin xarita bo'yicha yo'l ko'rsatadi (16–20). Xaritada avval \"Main Entrance\", ma'lumot markazi (I) va kompasni toping: shimol — tepada, sharq — o'ngda.",
-      "Savol varag'i: Section 2 — notes (11–15) va plan (16–20, harflar A–I). Ko'rsatma: NO MORE THAN TWO WORDS AND/OR A NUMBER (11–15); Write the correct letter, A–I (16–20)."
+      "Savol varag'i: Part 2 — notes (11–15) va plan (16–20, harflar A–I). Ko'rsatma: NO MORE THAN TWO WORDS AND/OR A NUMBER (11–15); Write the correct letter, A–I (16–20)."
      ],
      "transcript": [
       "To'liq transkript — kitobning Audio script qismida (CD2 Track 32). Bu yerda — qisqacha mazmun va javoblar joyi.",
@@ -25450,14 +25824,14 @@
      ]
     },
     {
-     "title": "Section 3. CD2 Track 33. Study-skills course — survey results",
+     "title": "Part 3. CD2 Track 33. Study-skills course — survey results",
      "qtype": "Multiple choice (21–25) + Chart/graph (26–27) + Sentence completion (28–30)",
      "audios": "Ustoz bergan audio (CD2 Track 33)",
      "audio": "ielts5_32_s3.mp3",
      "image": "ielts5_32_charts.jpg",
      "intro": [
       "Ikki talaba — Sylvie va Daniel — o'qituvchi Mr Driver oldida o'tgan semestrdagi study-skills kursi bo'yicha so'rovnoma natijalarini taqdim qiladi. 26-savol — doiraviy diagramma (A–C), 27-savol — ustunli grafik (A–C): rasmga qarang.",
-      "Savol varag'i: Section 3 — MCQ 21–25, chartlar 26–27, gaplar 28–30. Ko'rsatma: Choose the correct letter A, B or C (21–27); NO MORE THAN TWO WORDS (28–30)."
+      "Savol varag'i: Part 3 — MCQ 21–25, chartlar 26–27, gaplar 28–30. Ko'rsatma: Choose the correct letter A, B or C (21–27); NO MORE THAN TWO WORDS (28–30)."
      ],
      "transcript": [
       "To'liq transkript — kitobning Audio script qismida (CD2 Track 33). Bu yerda — qisqacha mazmun va javoblar joyi.",
@@ -25569,13 +25943,13 @@
      ]
     },
     {
-     "title": "Section 4. CD2 Track 34. Airport design — lecture",
+     "title": "Part 4. CD2 Track 34. Airport design — lecture",
      "qtype": "Note completion (31–40)",
      "audios": "Ustoz bergan audio (CD2 Track 34)",
      "audio": "ielts5_32_s4.mp3",
      "intro": [
       "Arxitektura ma'ruzasi: aeroport dizayni yillar davomida qanday o'zgargani. PAUZA YO'Q — boshida barcha qaydlarni o'qing va sarlavhalarni belgilang: Reasons for changes (33–35), Inside the building (36–37), The exterior of the building (38–40).",
-      "Savol varag'i: Section 4 — Airport Design notes. Ko'rsatma: NO MORE THAN TWO WORDS for each answer."
+      "Savol varag'i: Part 4 — Airport Design notes. Ko'rsatma: NO MORE THAN TWO WORDS for each answer."
      ],
      "transcript": [
       "To'liq transkript — kitobning Audio script qismida (CD2 Track 34). Bu yerda — qisqacha mazmun va javoblar joyi.",
@@ -25692,7 +26066,7 @@
      "layout": "list"
     },
     {
-     "title": "Section 3 ni qayta tinglash",
+     "title": "Part 3 ni qayta tinglash",
      "type": "Listening",
      "instr": "3-audioni (CD2 Track 33) kitobdagi transkript bilan qayta tinglang. 21–27 savollarning har birida rad etilgan variantlar qayerda tilga olinganini transkriptda belgilang.",
      "answers": "Listening bo'limidagi \"Kimning fikri va nisbatlar\" tahlili bilan solishtiriladi.",
@@ -25701,7 +26075,7 @@
     {
      "title": "Zaif tur takrori",
      "type": "Listening",
-     "instr": "Eng ko'p xato qilgan savol turingiz bo'yicha oldingi darsdan bitta skriptni qayta bajaring: form — 3/23-dars, map — 17-dars, MCQ — 9/24-dars, Section 4 — 30-dars.",
+     "instr": "Eng ko'p xato qilgan savol turingiz bo'yicha oldingi darsdan bitta skriptni qayta bajaring: form — 3/23-dars, map — 17-dars, MCQ — 9/24-dars, Part 4 — 30-dars.",
      "answers": "Javoblar o'sha darsning Listening bo'limida.",
      "layout": "list"
     }
@@ -25718,7 +26092,7 @@
      "2 coin"
     ],
     [
-     "Section 3 tuzoqlari",
+     "Part 3 tuzoqlari",
      "7 savol, rad etilgan variantlar bilan",
      "1 coin"
     ]
@@ -25739,7 +26113,14 @@
     "Natijani band ballga o'girish va o'z xatolarini savol turi bo'yicha tahlil qilish.",
     "Keyingi mock testlar (34–35-darslar) uchun shaxsiy \"zaif savol turlari\" ro'yxatini tuzish."
    ],
-   "materials": [],
+   "materials": [
+    "Savol varag'i: Full Practice Reading — uchala matn (William Kamkwamba; White mountain, green tourism; Reading in a whole new way) va 1–40 savollar bitta to'plamda, har o'quvchiga bitta nusxa; 1–5 uchun flow chart kataklari bo'sh, 19–22 uchun A–E variantlari va 37–40 uchun A–F oxirlari qutisi aniq ko'rinib tursin.",
+    "Javob varag'i (1–40) — har o'quvchiga bitta, qo'ng'iroqqacha stol ustida tayyor tursin: Reading'da ko'chirish uchun qo'shimcha vaqt yo'q, o'quvchi javobni darhol shu varaqqa yozadi.",
+    "Javoblar kaliti (1–40) — ustozdagi kitob nusxasidan; 5-bosqichda ovoz chiqarib o'qiladi. Kalitda 6-savol (FALSE), 24-savol (summer) va 32-savol (NOT GIVEN) oldindan belgilab qo'yilsin — bular testning eng ko'p xato qilinadigan uchtasi.",
+    "Xato tahlili jadvali: besh ustunli bo'sh varaqa (savol raqami, savol turi, mening javobim, to'g'ri javob, xato sababi) — har o'quvchiga bitta; 6-bosqichda to'ldiriladi va shu varaqa birinchi uyga vazifa bo'lib ketadi.",
+    "Doskada qo'ng'iroqqacha: vaqt rejasi soat raqamlari bilan (P1 — 17–18 daqiqa, P2 — 20 daqiqa, P3 — 22 daqiqa, testning tugash vaqti aniq yozilgan) va yonida yirik harflar bilan \"KO'CHIRISH VAQTI YO'Q — javobni darhol varaqqa yoz\". \"To'g'ri javoblar → band\" jadvali doskaning ikkinchi qanotiga yozilib, test tugaguncha yopiq tursin (yoki alohida qog'ozga yozib qo'yiladi va 5-bosqichda osiladi).",
+    "Ustozda soat yoki sekundomer — har 20 daqiqada vaqt e'lon qilinadi (\"Passage 2 ga o'ting\"). O'quvchilar xatolar daftari, qalam va o'chirg'ich bilan keladi; ikkinchi uyga vazifa uchun 6, 19, 25 va 31-darslarning uyga vazifa matnlari ustozda zaxira nusxada bo'lsin — dars oxirida o'quvchining zaif turiga qarab beriladi."
+   ],
    "timeline": [
     [
      5,
@@ -26500,7 +26881,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun birinchi marta to'liq Reading testini imtihon sharoitida ishladik — uyga vazifa ham shundan kelib chiqadi: endi bizga ball emas, har bir xatoning sababi kerak.",
+    "Birinchi vazifa — \"Xato tahlili jadvali\": darsda boshlagan jadvalni uyda oxirigacha to'ldiring, har xato uchun savol raqami, savol turi, o'z javobingiz, to'g'ri javob va sabab yozilsin (paraphrase'ni ko'rmadim, so'z chegarasi, tuzoq yoki vaqt yetmadi) — 15–20 daqiqa oladi.",
+    "Ikkinchi vazifa — \"Zaif tur takrori\": jadvalda eng ko'p xato chiqqan turni oling va o'sha turni o'rgangan darsning uyga vazifa matnini qaytadan bajaring (T/F/NG bo'lsa 6-dars, Y/N/NG bo'lsa 19-dars, matching information bo'lsa 25-dars, sentence endings bo'lsa 31-dars); uchinchisi — \"Passage 3 qayta o'qish\": \"Reading in a whole new way\" matnini bu safar vaqtsiz, tinch o'qib chiqib, 10 ta paraphrase juftini yozasiz — chapda savoldagi so'z, o'ngda matndagi ibora (masalan, \"can be found everywhere — screens fill our pockets\"). Ikkalasi birga 30 daqiqacha oladi.",
+    "Eng ko'p qilinadigan xato — jadvalga faqat \"noto'g'ri\" deb yozib qo'yish: sabab ustuni bo'sh qolsa, vazifa bajarilmagan hisoblanadi, chunki bizga necha xato qilganingiz emas, QAYSI turda xato qilganingiz kerak.",
+    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz; men jadvalingizga qarab har biringizga ikkita zaif savol turini belgilab beraman — 34 va 35-darsdagi mock testlarda aynan shularni kuzataman."
+   ],
    "homework": [
     {
      "title": "Xato tahlili jadvali",
@@ -27157,7 +27544,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz to'rtta savol turini va to'rtta baholash mezonini ochdik; uyga vazifa ham xuddi shu ikkitasini mustahkamlaydi, faqat endi yordamsiz, yolg'iz o'zingiz bajarasiz.",
+    "Birinchi ikkitasi qisqa: \"Mening zaif mezonim\" da to'rt mezondan qaysi biri o'zingizga eng og'ir ekanini yozib, sababini 2 gapda tushuntirasiz (5 daqiqa); \"Savol turlari daftari\" da esa 8 ta IELTS savolini topib, har biriga turini va turni belgilab bergan kalit so'zni yozasiz — 8 qator, taxminan 20 daqiqa.",
+    "Uchinchisi — bugun tahlil qilgan 264 so'zlik namuna essayni QO'LDA to'liq ko'chirib yozing va undan 10 ta yangi so'z yoki iborani lug'at daftariga o'zbekcha ma'nosi bilan chiqaring; bunga 30-35 daqiqa ketadi, ko'chirish qurilmani qo'l bilan his qilish uchun kerak.",
+    "Eng ko'p qilinadigan xato — savol turini mavzuga qarab taxmin qilish: turni faqat SO'NGGI so'roq gap belgilaydi, shuning uchun \"discuss both views\", \"causes and solutions\" kabi kalit so'zni savolning o'zidan ko'chirib yozing, yodingizdan yozmang.",
+    "Uchalasi ham keyingi dars boshida daftar bilan topshiriladi: zaif mezon varaqlarini men yig'ib olaman, ko'chirilgan essaydan esa 5 daqiqalik og'zaki so'rov bo'ladi."
+   ],
    "homework": [
     {
      "title": "\"Mening zaif mezonim\"",
@@ -27770,7 +28163,13 @@
     }
    ],
    "listenings": [],
-   "homework_intro": [],
+   "homework_intro": [
+    "Bugun biz A essayga ham, B essayga ham mezon-mezon ball qo'ydik — uyda xuddi shu ishni o'z essayingizga qilasiz.",
+    "Birinchi vazifa \"O'z essayingga ball qo'y\": eski essayingizni oling, to'rt mezonga ball qo'ying va har ballga bittadan sabab yozing; shu bilan birga 1-mashqdagi 12 tekshiruv savolini daftaringiz oxiriga ko'chirib qo'ying — ikkalasiga 20 daqiqa yetadi.",
+    "Keyin A essayning 3-xatboshisini 5-mashqdagi tartib bilan qayta yozing: asosiy fikr, sabab, misol, natija — kamida to'rt gap, yana 20 daqiqa.",
+    "Eng ko'p qilinadigan xato — ball qo'yib, sababini yozmaslik yoki o'ziga ortiqcha ball qo'yish; har ball yonida \"nega aynan shunday\" degan bitta jumla bo'lsin.",
+    "Uchala vazifa ham daftarda bajariladi va keyingi darsning boshida yig'iladi; men ballaringizni o'z bahom bilan solishtiraman."
+   ],
    "homework": [
     {
      "title": "O'z essayingga ball qo'y",

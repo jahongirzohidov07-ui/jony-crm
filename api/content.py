@@ -1926,6 +1926,10 @@ def _plan_row(db: Session, c: models.Content, m=None,
         "status": c.status,
         "status_label": roles.CONTENT_STATUS_LABELS.get(c.status, c.status),
         "status_tone": roles.CONTENT_STATUS_TONE.get(c.status, "slate"),
+        # Holat doskasi uchun (2026-09-26): shoshilinch belgisi va
+        # ogohlantirishlar (kechikdi, rozilik yo'q...) — so'rovsiz
+        "priority": c.priority,
+        "warnings": _content_warnings(db, c),
         "kpi_target": c.kpi_target,
         "conclusion": c.conclusion,
         "series": c.series,

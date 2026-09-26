@@ -37,6 +37,9 @@ const TONE: Record<string, string> = {
   brown: "bg-yellow-800/20 text-yellow-900",
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any;
+
 type Tab = "dashboard" | "calendar" | "plan" | "board" | "canalytics"
   | "instagram" | "inbox"
   | "attribution" | "ideas" | "requests" | "brand" | "media" | "kb"
@@ -392,19 +395,40 @@ function BoardTab() {
   const [ok, setOk] = useState("");
   const [urgent, setUrgent] = useState(false);
 
-  // Oxirgi 60 kun + kelajak: eski yopilgan postlar doskani to'ldirmasin
-  const from = new Date(Date.now() - 60 * 86400000).toISOString().slice(0, 10);
+  // MANBA = KONTENT-PLAN (2026-09-26). Jahongir: "bizdagi kontent
+  // rejalarimizdagi shu kontentlarni ... kontent plan bo'limida ketma
+  // ket ko'rinib turishi kerak". Avval doska /content ro'yxatidan
+  // o'qirdi — u filial tanlanganda filialsiz (Exceldan yuklangan)
+  // postlarni ko'rsatmasdi va doska bo'sh chiqardi. Endi aynan
+  // Kontent-plan qatorlari (bir xil filial qoidasi), sana tartibida.
   const load = () => {
     api
-      .get<ContentList>(`/content?date_from=${from}` +
-        (platform ? `&platform=${platform}` : ""))
-      .then((d) => setRows(d.rows))
+      .get<Any>("/smm/plan")
+      .then((d) => {
+        const plan: Any[] = d.rows || [];
+        setRows(plan.map((r: Any) => ({
+          id: r.id, title: r.title,
+          planned_date: r.date, planned_time: r.time,
+          platform: r.platform,
+          platform_label: r.platform || "—",
+          platform_tone: /insta/i.test(r.platform || "") ? "rose"
+            : /tele/i.test(r.platform || "") ? "sky"
+            : /you/i.test(r.platform || "") ? "red" : "slate",
+          owner: r.owner, status: r.status,
+          status_label: r.status_label, tone: r.status_tone,
+          priority: r.priority,
+          warnings: r.warnings || [],
+          blocked: (r.warnings || []).some((w: Any) => w.severity === "block"),
+        } as Any)).sort((a: Any, b: Any) =>
+          (a.planned_date || "9999").localeCompare(b.planned_date || "9999")
+          || (a.planned_time || "").localeCompare(b.planned_time || "")));
+      })
       .catch(() => setRows([]));
   };
   useEffect(() => {
     api.get<ContentMeta>("/content-meta").then(setMeta);
   }, []);
-  useEffect(load, [platform]);
+  useEffect(load, []);
 
   if (!meta || !rows)
     return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
@@ -430,10 +454,12 @@ function BoardTab() {
   };
 
   const needle = q.trim().toLowerCase();
-  const shownRows = needle
-    ? rows.filter((r) => (r.title || "").toLowerCase().includes(needle)
-        || (r.owner || "").toLowerCase().includes(needle))
-    : rows;
+  const shownRows = rows.filter((r) =>
+    (!platform || (r.platform || "") === platform)
+    && (!needle || (r.title || "").toLowerCase().includes(needle)
+        || (r.owner || "").toLowerCase().includes(needle)));
+  const platformOpts = Array.from(new Set(
+    rows.map((r) => r.platform || "").filter(Boolean)));
   const cols = meta.statuses.filter(
     (s) => showCancelled || s.key !== "cancelled");
   const cancelledCount = rows.filter((r) => r.status === "cancelled").length;
@@ -453,8 +479,8 @@ function BoardTab() {
           onChange={(e) => setPlatform(e.target.value)}
         >
           <option value="">Barcha platformalar</option>
-          {meta.platforms.map((p) => (
-            <option key={p.key} value={p.key}>{p.label}</option>
+          {platformOpts.map((p) => (
+            <option key={p} value={p}>{p}</option>
           ))}
         </select>
         <label className="flex items-center gap-1.5 text-xs text-slate-500">
@@ -476,7 +502,9 @@ function BoardTab() {
       {urgent && (
         <UrgentChange
           rows={rows.filter((r) => r.status !== "cancelled")}
-          platforms={meta.platforms}
+          platforms={[{ key: "instagram", label: "Instagram" },
+                      { key: "telegram", label: "Telegram" },
+                      { key: "youtube", label: "YouTube" }]}
           onClose={() => setUrgent(false)}
           onDone={(m) => { setUrgent(false); setErr(""); setOk(m); load(); }}
         />

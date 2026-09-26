@@ -112,6 +112,23 @@ db.expire_all()
 ck("o'zgarmagan sana tarixga qayta yozilmaydi",
    db.query(models.ContentMove).filter_by(content_id=CID).count(), 1)
 
+print("\n=== 4. HOLAT DOSKASI MANBASI = KONTENT-PLAN ===")
+# Exceldan yuklangan postlar ko'pincha filialsiz — filial tanlanganda
+# ham doskada (kontent-plan orqali) ko'rinishi kerak
+nob = models.Content(title="Filialsiz Excel post", platform="Instagram Reels",
+                     planned_date=date.today() - timedelta(days=1),
+                     status="script", priority="urgent")
+db.add(nob)
+db.commit()
+plan = c.get(f"/api/smm/plan?branch_id={br.id}", headers=HS).json()
+row = next((x for x in plan["rows"] if x["id"] == nob.id), None)
+ck("filialsiz post filial tanlanganda ham bor", bool(row), True)
+ck("  holat, shoshilinch belgisi", ((row or {}).get("status"),
+                                   (row or {}).get("priority")),
+   ("script", "urgent"))
+ck("  kechikdi ogohlantirishi keladi",
+   any(w["key"] == "late" for w in (row or {}).get("warnings", [])), True)
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))
 sys.exit(1 if fails else 0)

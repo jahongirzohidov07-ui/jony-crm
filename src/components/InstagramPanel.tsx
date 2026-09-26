@@ -86,18 +86,31 @@ export function InstagramPanel() {
             izoh, saqlash, ulashish, <b>shu postdan kelgan obunachilar</b> va
             profilga o'tishlar har kuni o'zi yig'iladi.
           </p>
-          <ol className="text-[13px] text-slate-600 list-decimal pl-5 space-y-1">
-            <li>Instagram akkaunt <b>Professional</b> (Business) bo'lsin va
-              Facebook sahifaga ulangan bo'lsin.</li>
-            <li><b>developers.facebook.com → Tools → Graph API Explorer</b> ni
-              oching, ilovangizni tanlang.</li>
-            <li>Ruxsatlar: <code>instagram_basic</code>,{" "}
+          <ol className="text-[13px] text-slate-600 list-decimal pl-5 space-y-1.5">
+            <li><b>Instagram ilovasida:</b> Sozlamalar → Hisob turi va vositalar →
+              «Professional hisobga o'tish» → <b>Biznes</b>.</li>
+            <li><b>Facebook sahifaga ulang:</b> Instagram → Profilni tahrirlash →
+              «Sahifa» → Jony Academy Facebook sahifasini tanlang (sahifa
+              bo'lmasa avval facebook.com'da oching).</li>
+            <li><b>developers.facebook.com</b> → My Apps → <b>Create App</b> →
+              turi «Business» → nomi: «JonyOS».</li>
+            <li>Tools → <b>Graph API Explorer</b>: o'ngda o'sha ilovani tanlang →
+              «Add a permission» dan qo'shing: <code>instagram_basic</code>,{" "}
               <code>instagram_manage_insights</code>,{" "}
               <code>pages_show_list</code>,{" "}
-              <code>pages_read_engagement</code> → <b>Generate Access Token</b>.</li>
-            <li>Tokenni uzoq muddatliga (60 kun) aylantirib, shu yerga
-              joylang. Akkaunt raqamini JonyOS o'zi topadi.</li>
+              <code>pages_read_engagement</code>,{" "}
+              <code>business_management</code> → <b>Generate Access Token</b> →
+              ochilgan oynada sahifa va Instagram akkauntni belgilab ruxsat bering.</li>
+            <li>Tokenni 60 kunlik qiling: Tools → <b>Access Token Debugger</b> →
+              tokenni joylab «Debug» → pastdagi <b>Extend Access Token</b> →
+              chiqqan yangi tokenni nusxalang.</li>
+            <li>Shu tokenni pastdagi maydonga joylab <b>Ulash</b> ni bosing.
+              Akkauntni JonyOS o'zi topadi va postlarni darrov tortadi.</li>
           </ol>
+          <p className="text-[12px] text-amber-700">
+            Token 60 kunda eskiradi — shunda shu yerda xato yozuvi chiqadi,
+            5–6-qadamni takrorlab yangisini joylaysiz.
+          </p>
           {d.can_set_token ? (
             <div className="flex flex-wrap gap-2">
               <input

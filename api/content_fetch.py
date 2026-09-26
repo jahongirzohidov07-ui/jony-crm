@@ -173,19 +173,34 @@ def _youtube(url: str) -> tuple:
 # =================================================================
 
 def _instagram(url: str) -> tuple:
-    token = (os.getenv("INSTAGRAM_TOKEN") or "").strip()
-    user = (os.getenv("INSTAGRAM_USER_ID") or "").strip()
+    # 2026-09-26: token endi JonyOS ichida saqlanadi (SMM -> Instagram
+    # oynasi). Bo'lmasa avvalgidek muhit o'zgaruvchisi.
+    try:
+        import ig_connect as _ig
+        token, user, api = _ig.creds()
+    except Exception:
+        token = (os.getenv("INSTAGRAM_TOKEN") or "").strip()
+        user = (os.getenv("INSTAGRAM_USER_ID") or "").strip()
+        api = "fb"
     if not (token and user):
-        return None, ("Instagram raqamlarini faqat rasmiy token bilan "
-                      "olish mumkin. Vercel'da INSTAGRAM_TOKEN va "
-                      "INSTAGRAM_USER_ID qo'shilsa avtomat ishlaydi. "
+        return None, ("Instagram ulanmagan. SMM -> Instagram oynasida "
+                      "token joylansa, raqamlar avtomat keladi. "
                       "Hozircha qo'lda kiriting.")
+    if api == "ig":
+        # Instagram Login tokeni: to'liq sinxron ig_connect'da
+        try:
+            import ig_connect as _ig
+            base = _ig.IGG
+        except Exception:
+            base = "https://graph.instagram.com/v21.0"
+    else:
+        base = "https://graph.facebook.com/v21.0"
     m = re.search(r"instagram\.com/(?:p|reel|tv)/([A-Za-z0-9_-]+)", url)
     if not m:
         return None, "Instagram havolasi tushunarsiz"
     code = m.group(1)
     try:
-        raw = _get("https://graph.facebook.com/v20.0/"
+        raw = _get(f"{base}/"
                    f"{user}/media?fields=id,permalink,like_count,"
                    f"comments_count&limit=100&access_token={token}")
         rows = json.loads(raw).get("data", [])
@@ -200,8 +215,8 @@ def _instagram(url: str) -> tuple:
            "comments": int(hit.get("comments_count") or 0)}
     try:
         ins = json.loads(_get(
-            f"https://graph.facebook.com/v20.0/{hit['id']}/insights"
-            f"?metric=reach,saved,shares,plays&access_token={token}"))
+            f"{base}/{hit['id']}/insights"
+            f"?metric=reach,saved,shares,views&access_token={token}"))
         for it in ins.get("data", []):
             val = (it.get("values") or [{}])[0].get("value") or 0
             nm = it.get("name")
@@ -211,7 +226,7 @@ def _instagram(url: str) -> tuple:
                 out["saves"] = int(val)
             elif nm == "shares":
                 out["shares"] = int(val)
-            elif nm == "plays":
+            elif nm in ("plays", "views"):
                 out["views"] = int(val)
     except Exception:
         pass

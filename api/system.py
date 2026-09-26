@@ -264,6 +264,9 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
         # bo'lsa bir zumda qaytadi
         ("phone_norm", lambda: __import__("phones").normalize_existing(
             db, budget_s=20.0)),
+        # Instagram: har post raqamlari avtomat (2026-09-26). Token
+        # bo'lmasa bir zumda qaytadi.
+        ("ig_sync", lambda: __import__("ig_connect").cron_sync(db)),
     ):
         try:
             _fn()

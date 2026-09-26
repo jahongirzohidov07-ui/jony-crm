@@ -16,6 +16,8 @@ import {
 import { useAuth } from "../lib/AuthContext";
 import { Time24Input } from "../components/Time24Input";
 import { ContentPlan, ContentAnalytics } from "../components/ContentPlan";
+import { InstagramPanel } from "../components/InstagramPanel";
+import { VideoCheck } from "../components/VideoCheck";
 import {
   SMM_ACCESS, IDEA_SUBMIT, CONTENT_REQUESTER, INBOX_ACCESS, can,
 } from "../lib/roles";
@@ -35,7 +37,8 @@ const TONE: Record<string, string> = {
   brown: "bg-yellow-800/20 text-yellow-900",
 };
 
-type Tab = "dashboard" | "calendar" | "plan" | "board" | "canalytics" | "inbox"
+type Tab = "dashboard" | "calendar" | "plan" | "board" | "canalytics"
+  | "instagram" | "inbox"
   | "attribution" | "ideas" | "requests" | "brand" | "media" | "kb"
   | "report";
 
@@ -48,6 +51,7 @@ const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: "plan", label: "Kontent-plan", icon: Table2 },
   { key: "board", label: "Holat doskasi", icon: Table2 },
   { key: "canalytics", label: "Kontent tahlili", icon: TrendingUp },
+  { key: "instagram", label: "Instagram", icon: Image },
   { key: "inbox", label: "Murojaatlar", icon: MessageSquare },
   { key: "attribution", label: "Natija", icon: TrendingUp },
   { key: "ideas", label: "G'oyalar", icon: Lightbulb },
@@ -93,7 +97,9 @@ export default function Smm() {
   // 2026-09-26 (2): "Murojaatlar" tushunarsiz edi (Instagram ulanmagan,
   // bo'sh turardi) — "Boshqa"ga o'tdi. O'rniga "Holat doskasi" (Kanban).
   // Jahongir: "brendbookni qoldir" — Brend kitob asosiy qatorda.
-  const MAIN: Tab[] = ["dashboard", "plan", "board", "canalytics", "brand"];
+  // Instagram (2026-09-26): "telegramdan kora bizga instagram muhim".
+  const MAIN: Tab[] = ["dashboard", "plan", "board", "canalytics",
+                       "instagram", "brand"];
   const primary = isSmm ? shown.filter((t) => MAIN.includes(t.key)) : shown;
   const extra = isSmm ? shown.filter((t) => !MAIN.includes(t.key)) : [];
   const extraActive = extra.some((t) => t.key === tab);
@@ -161,6 +167,7 @@ export default function Smm() {
       {tab === "calendar" && <CalendarTab />}
       {tab === "plan" && <ContentPlan />}
       {tab === "board" && <BoardTab />}
+      {tab === "instagram" && <InstagramPanel />}
       {tab === "canalytics" && <ContentAnalytics />}
       {tab === "inbox" && <InboxTab />}
       {tab === "attribution" && <AttributionTab />}
@@ -1285,6 +1292,7 @@ function ContentCard({ id, onClose }: { id: number; onClose: () => void }) {
               </button>
             </div>
           )}
+          {canEdit && <VideoCheck contentId={d.id} />}
 
           {d.status === "approval" && isApprover && (
             <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-100">

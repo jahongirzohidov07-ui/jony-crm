@@ -2378,6 +2378,9 @@ class ContentMetric(Base):
     source = Column(String, default="manual")
     fetched_at = Column(DateTime, nullable=True)
     fetch_note = Column(String, nullable=True)
+    # Instagram insights "follows": shu postdan kelgan obunachilar
+    # (2026-09-26, Jahongir: "shu videodan nechta obunachi keldi")
+    follows = Column(Integer, default=0)
     updated_by = Column(String, nullable=True)
     updated_at = Column(DateTime, default=datetime.utcnow,
                         onupdate=datetime.utcnow)
@@ -4485,4 +4488,66 @@ class WheelSpin(Base):
     applied_at = Column(DateTime, nullable=True)
     notified_at = Column(DateTime, nullable=True)  # asoschiga xabar
     note = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class IntegrationSetting(Base):
+    """Tashqi xizmat sozlamalari (kalit -> qiymat). Birinchi foydalanish:
+    Instagram tokeni (2026-09-26). Tokenni ASOSCHI O'ZI joylaydi;
+    API javobida hech qachon to'liq ko'rsatilmaydi (faqat oxirgi 4 belgi).
+    O'chirilmaydi — "uzish" qiymatni bo'shatadi, izi auditda qoladi."""
+    __tablename__ = "integration_settings"
+
+    key = Column(String, primary_key=True)
+    value = Column(Text, nullable=True)
+    updated_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class IgMedia(Base):
+    """Instagram akkauntimizdagi har bir post/reels (avtomat sinxron).
+    Kontent-plandagi postga bog'lansa (content_id) raqamlari
+    ContentMetric'ga ham yoziladi."""
+    __tablename__ = "ig_media"
+
+    id = Column(Integer, primary_key=True, index=True)
+    ig_id = Column(String, unique=True, index=True, nullable=False)
+    shortcode = Column(String, index=True, nullable=True)
+    permalink = Column(String, nullable=True)
+    caption = Column(Text, nullable=True)
+    media_type = Column(String, nullable=True)
+    posted_at = Column(DateTime, nullable=True)
+    likes = Column(Integer, default=0)
+    comments = Column(Integer, default=0)
+    views = Column(Integer, default=0)
+    reach = Column(Integer, default=0)
+    saves = Column(Integer, default=0)
+    shares = Column(Integer, default=0)
+    follows = Column(Integer, default=0)
+    profile_visits = Column(Integer, default=0)
+    content_id = Column(Integer, ForeignKey("contents.id"), nullable=True,
+                        index=True)
+    link_note = Column(String, nullable=True)
+    fetched_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class VideoCheck(Base):
+    """Video yuklanganda avtomat tekshiruv natijasi (2026-09-26).
+    Jahongir: "videoni yuklaganda tahlil qiladigan funksiya ... oxirida
+    tel raqam qoyilmagan, oxirida logo animation qoshilmagan".
+    Video faylning o'zi SAQLANMAYDI — faqat natija (JSON)."""
+    __tablename__ = "video_checks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    content_id = Column(Integer, ForeignKey("contents.id"), index=True,
+                        nullable=True)
+    file_name = Column(String, nullable=True)
+    duration = Column(Float, nullable=True)
+    width = Column(Integer, nullable=True)
+    height = Column(Integer, nullable=True)
+    ok = Column(Integer, default=0)
+    result = Column(Text, nullable=True)
+    created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

@@ -711,10 +711,14 @@ function RowEditor({ row, meta, onSave, onFetch, busy }: {
 export function ContentAnalytics() {
   const [months, setMonths] = useState(3);
   const [d, setD] = useState<Any>(null);
+  // Har post: ko'rish -> murojaat -> sotuv -> tushum (2026-09-26)
+  const [pp, setPp] = useState<Any>(null);
 
   useEffect(() => {
     api.get<Any>(`/smm/content-analytics?months=${months}`)
       .then(setD).catch(() => setD(null));
+    api.get<Any>(`/smm/per-post?months=${months}`)
+      .then(setPp).catch(() => setPp(null));
   }, [months]);
 
   if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
@@ -771,6 +775,74 @@ export function ContentAnalytics() {
           {d.avg_views.toLocaleString("ru")} ko'rish · faollik {d.avg_er}%
         </span>
       </div>
+
+      {pp && (pp.rows || []).length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 mb-4 overflow-x-auto">
+          <div className="px-4 pt-3 pb-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <p className="text-[13px] font-semibold text-slate-800">
+              Har bir post: nechta odam yozdi, nechta sotuv bo'ldi
+            </p>
+            <span className="text-[12px] text-slate-500">
+              Jami: {pp.totals.leads} lid · {pp.totals.sales} sotuv ·{" "}
+              {Math.round(pp.totals.revenue).toLocaleString("ru")} so'm
+            </span>
+          </div>
+          <table className="w-full text-[12px]">
+            <thead className="bg-slate-50 text-slate-500 text-[10px] uppercase">
+              <tr>
+                <th className="text-left px-3 py-1.5">Sana</th>
+                <th className="text-left px-3 py-1.5">Post</th>
+                <th className="text-right px-2 py-1.5">Ko'rish</th>
+                <th className="text-right px-2 py-1.5">Obuna</th>
+                <th className="text-right px-2 py-1.5">Murojaat</th>
+                <th className="text-right px-2 py-1.5">Lid</th>
+                <th className="text-right px-2 py-1.5">Sotuv</th>
+                <th className="text-right px-3 py-1.5">Tushum</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...pp.rows]
+                .sort((a: Any, b: Any) =>
+                  (b.sales - a.sales) || (b.leads - a.leads) || (b.views - a.views))
+                .map((r: Any) => (
+                <tr key={r.id} className="border-t border-slate-100">
+                  <td className="px-3 py-1.5 text-slate-400 tabular-nums whitespace-nowrap">
+                    {r.date?.slice(5).split("-").reverse().join(".")}
+                  </td>
+                  <td className="px-3 py-1.5 max-w-[280px] truncate text-slate-700">
+                    {r.url
+                      ? <a href={r.url} target="_blank" rel="noreferrer"
+                          className="hover:text-brand-700">{r.title}</a>
+                      : r.title}
+                    <span className="text-slate-400"> · {r.platform_label}</span>
+                  </td>
+                  <td className="px-2 py-1.5 text-right tabular-nums">
+                    {r.views ? r.views.toLocaleString("ru") : "—"}
+                  </td>
+                  <td className="px-2 py-1.5 text-right tabular-nums text-emerald-700">
+                    {r.follows ? `+${r.follows}` : "—"}
+                  </td>
+                  <td className="px-2 py-1.5 text-right tabular-nums">{r.messages || "—"}</td>
+                  <td className="px-2 py-1.5 text-right tabular-nums font-medium">{r.leads || "—"}</td>
+                  <td className="px-2 py-1.5 text-right tabular-nums font-semibold text-brand-700">
+                    {r.sales || "—"}
+                  </td>
+                  <td className="px-3 py-1.5 text-right tabular-nums">
+                    {r.revenue ? Math.round(r.revenue).toLocaleString("ru") : "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="px-4 py-2 text-[11px] text-slate-400">
+            Lid postga uch yo'l bilan bog'lanadi: administrator lid ochganda
+            «Qaysi video/postdan?» ni tanlaydi; saytdagi arizada post kodi
+            (?c=… yoki utm_content) yoki promo-kod bo'ladi; «Murojaatlar»dan
+            lidga aylantiriladi. Sotuv — lid o'quvchiga aylangani, tushum — uning
+            to'lovlari.
+          </p>
+        </div>
+      )}
 
       {(d.tips || []).length > 0 && (
         <div className="space-y-2 mb-4">

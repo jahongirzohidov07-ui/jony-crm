@@ -156,6 +156,20 @@ def public_lead(payload: dict, request: Request,
         note_lines.append(f"Sahifa: {page}")
     if utm:
         note_lines.append(f"UTM: {utm}")
+    # Qaysi postdan kelgani (2026-09-26): ?c=, utm_content, promo-kod
+    # yoki sahifa havolasidan avtomat topiladi
+    src_content = None
+    try:
+        from content import resolve_content_ref as _rcr
+        for raw in (_s("content", 80), _s("c", 40), _s("utm_content", 80),
+                    _s("promo", 40), page):
+            src_content = _rcr(db, raw)
+            if src_content:
+                break
+    except Exception:
+        src_content = None
+    if src_content:
+        note_lines.append(f"Post: {src_content.title}")
 
     lead = models.Lead(
         full_name=full_name,
@@ -164,6 +178,7 @@ def public_lead(payload: dict, request: Request,
         stage=roles.LEAD_SOURCE_DEFAULT_STAGE.get("website", "new"),
         branch_id=branch.id if branch else None,
         note="\n".join(note_lines),
+        content_id=src_content.id if src_content else None,
         created_by="Sayt")
     db.add(lead); db.commit(); db.refresh(lead)
     _ensure_public_id(db, "lead", lead)
@@ -312,6 +327,10 @@ def create_lead(
         branch_id=payload.branch_id if payload.branch_id is not None else user.branch_id,
         assigned_user_id=payload.assigned_user_id,
         created_by=user.full_name,
+        # Qaysi postdan kelgani — mavjud bo'lsagina yoziladi
+        content_id=(payload.content_id if payload.content_id and
+                    db.query(models.Content).get(payload.content_id)
+                    else None),
     )
     db.add(lead)
     db.commit()
@@ -335,6 +354,9 @@ def update_lead(
             "Lidni bu bosqichga qo'lda surib bo'lmaydi - "
             "\"O'quvchiga aylantirish\" tugmasidan foydalaning",
         )
+    if data.get("content_id") and not db.query(models.Content).get(
+            data["content_id"]):
+        raise HTTPException(400, "Bunday post topilmadi")
     for k, v in data.items():
         setattr(lead, k, v)
     db.commit()

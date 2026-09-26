@@ -97,6 +97,12 @@ def _fetch_instagram_followers() -> int | None:
     oxirgi qo'lda kiritilgan qiymat saqlanib qoladi."""
     import json as _json
     import urllib.request
+    # 2026-09-26: token JonyOS ichida (SMM -> Instagram) saqlanadi
+    try:
+        import ig_connect as _ig
+        return _ig.followers()
+    except Exception:
+        pass
     token = os.getenv("INSTAGRAM_TOKEN")
     uid = os.getenv("INSTAGRAM_USER_ID")
     if not token or not uid:

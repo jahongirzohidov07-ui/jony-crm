@@ -2683,3 +2683,141 @@ def smm_urgent_change(
               branch_id=c.branch_id)
     db.commit()
     return _content_out(db, c, full=True)
+
+
+# =====================================================================
+#  HAR VIDEODAN MUROJAAT VA SOTUV (2026-09-26)
+#
+#  Jahongir: "Har bir videodan nechta odam murojaat qildi, nechta sotuv
+#  boldi aniq avtomat hisoblashni yo'lga qoyish kerak".
+#
+#  Lid qaysi postdan kelgani (Lead.content_id) uch yo'l bilan yoziladi:
+#    1) administrator lid ochganda "Qaysi videodan?" ni tanlaydi;
+#    2) saytdagi ariza havolasida ?c=<post raqami> yoki
+#       utm_content=CONTENT-JA-... yoki promo-kod bo'lsa — avtomat;
+#    3) "Murojaatlar"dan lidga aylantirilganda (avvaldan bor).
+#  Sotuv = lid o'quvchiga aylangani, tushum = o'sha o'quvchining
+#  to'lovlari (kind="payment"). Hammasi BIR NECHTA so'rov bilan —
+#  har post uchun alohida so'rov yo'q (Neon trafigi).
+# =====================================================================
+def attribution_by_content(db: Session, ids: list) -> dict:
+    ids = [i for i in ids if i]
+    out = {i: {"messages": 0, "leads": 0, "sales": 0, "revenue": 0.0}
+           for i in ids}
+    if not ids:
+        return out
+    for cid, n in (db.query(models.SocialMessage.content_id,
+                            func.count(models.SocialMessage.id))
+                   .filter(models.SocialMessage.content_id.in_(ids))
+                   .group_by(models.SocialMessage.content_id).all()):
+        out[cid]["messages"] = int(n or 0)
+    leads = (db.query(models.Lead.content_id,
+                      models.Lead.converted_student_id)
+             .filter(models.Lead.content_id.in_(ids)).all())
+    sid_to_c = {}
+    for cid, sid in leads:
+        out[cid]["leads"] += 1
+        if sid:
+            out[cid]["sales"] += 1
+            sid_to_c[sid] = cid
+    if sid_to_c:
+        for sid, total in (db.query(models.Payment.student_id,
+                                    func.sum(models.Payment.amount))
+                           .filter(models.Payment.student_id.in_(
+                               list(sid_to_c)),
+                                   models.Payment.kind == "payment")
+                           .group_by(models.Payment.student_id).all()):
+            out[sid_to_c[sid]]["revenue"] += float(total or 0)
+    for v in out.values():
+        v["revenue"] = round(v["revenue"], 2)
+    return out
+
+
+def resolve_content_ref(db: Session, raw: str | None):
+    """"123", "CONTENT-JA-2026-0123", promo-kod yoki havoladagi ?c=123
+    / utm_content=... -> Content yoki None."""
+    s = (raw or "").strip()
+    if not s:
+        return None
+    import re as _re
+    m = _re.search(r"[?&](?:c|utm_content)=([^&#\s]+)", s)
+    if m:
+        s = urllib_unquote(m.group(1))
+    if s.isdigit():
+        return db.query(models.Content).get(int(s))
+    up = s.upper()
+    m = _re.match(r"CONTENT-[A-Z]+-\d{4}-(\d+)$", up)
+    if m:
+        c = (db.query(models.Content)
+             .filter(func.upper(models.Content.content_id) == up).first())
+        return c or db.query(models.Content).get(int(m.group(1)))
+    return (db.query(models.Content)
+            .filter(func.upper(models.Content.promo_code) == up).first())
+
+
+def urllib_unquote(s: str) -> str:
+    from urllib.parse import unquote
+    return unquote(s or "")
+
+
+@router.get("/api/leads/content-options")
+def lead_content_options(db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.LEAD_ACCESS))):
+    """Lid formasidagi "Qaysi videodan?" ro'yxati: oxirgi 60 kunda
+    joylangan postlar (yangisi tepada)."""
+    since = roles.local_today() - timedelta(days=60)
+    rows = (db.query(models.Content)
+            .filter(models.Content.planned_date >= since,
+                    models.Content.status.in_(list(roles.CONTENT_LIVE)))
+            .order_by(models.Content.planned_date.desc(),
+                      models.Content.id.desc())
+            .limit(120).all())
+    return {"rows": [{
+        "id": c.id, "title": c.title,
+        "date": c.planned_date.isoformat() if c.planned_date else None,
+        "platform": c.platform,
+        "platform_label": roles.PLATFORM_LABELS.get(c.platform or "", "—"),
+        "code": c.content_id or _content_code(c),
+    } for c in rows]}
+
+
+@router.get("/api/smm/per-post")
+def smm_per_post(months: int = 3, branch_id: int | None = None,
+                 db: Session = Depends(get_db),
+                 user=Depends(require_role(*roles.SMM_ACCESS))):
+    """Har bir joylangan post: ko'rish, obuna + murojaat, lid, sotuv,
+    tushum. Tahlil ekranidagi asosiy jadval."""
+    today = roles.local_today()
+    since = today - timedelta(days=30 * max(1, min(months, 12)))
+    q = scope_to_branch(db.query(models.Content), models.Content,
+                        user, branch_id, keep_unset=True)
+    rows = (q.filter(models.Content.planned_date >= since,
+                     models.Content.status.in_(list(roles.CONTENT_LIVE)))
+            .order_by(models.Content.planned_date.desc()).all())
+    ids = [c.id for c in rows]
+    mets = {x.content_id: x for x in db.query(models.ContentMetric)
+            .filter(models.ContentMetric.content_id.in_(ids or [-1])).all()}
+    att = attribution_by_content(db, ids)
+    out = []
+    for c in rows:
+        m = mets.get(c.id)
+        a = att.get(c.id, {})
+        out.append({
+            "id": c.id, "title": c.title,
+            "code": c.content_id or _content_code(c),
+            "date": c.planned_date.isoformat() if c.planned_date else None,
+            "platform": c.platform,
+            "platform_label": roles.PLATFORM_LABELS.get(c.platform or "", "—"),
+            "url": c.post_url,
+            "views": (m.views or 0) if m else 0,
+            "reach": (m.reach or 0) if m else 0,
+            "follows": (getattr(m, "follows", 0) or 0) if m else 0,
+            "messages": a.get("messages", 0),
+            "leads": a.get("leads", 0),
+            "sales": a.get("sales", 0),
+            "revenue": a.get("revenue", 0.0),
+        })
+    tot = {k: sum(r[k] for r in out)
+           for k in ("views", "follows", "messages", "leads", "sales",
+                     "revenue")}
+    return {"rows": out, "totals": tot, "months": months}

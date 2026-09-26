@@ -80,6 +80,22 @@ function LeadForm({
   );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // "Qaysi videodan?" (2026-09-26, Jahongir: "har bir videodan nechta
+  // odam murojaat qildi, nechta sotuv boldi aniq avtomat hisoblash")
+  const [contentId, setContentId] = useState<string>(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (initial as any)?.content_id ? String((initial as any).content_id) : ""
+  );
+  const [contentOpts, setContentOpts] = useState<
+    { id: number; title: string; date: string | null; platform_label: string }[]
+  >([]);
+  const socialSource = ["instagram", "telegram", "ads", "website"].includes(source);
+  useEffect(() => {
+    if (!socialSource || contentOpts.length) return;
+    api.get<{ rows: typeof contentOpts }>("/leads/content-options")
+      .then((r) => setContentOpts(r.rows || []))
+      .catch(() => setContentOpts([]));
+  }, [socialSource, contentOpts.length]);
 
   function pickSource(s: LeadSource) {
     setSource(s);
@@ -131,6 +147,7 @@ function LeadForm({
         ...(editing ? {} : { note: note || null }),
         branch_id: branchId ? Number(branchId) : null,
         assigned_user_id: assignedId ? Number(assignedId) : null,
+        content_id: socialSource && contentId ? Number(contentId) : null,
       };
       if (editing) await api.put(`/leads/${initial!.id}`, body);
       else await api.post("/leads", body);
@@ -154,6 +171,7 @@ function LeadForm({
               note: note || null,
               branch_id: branchId ? Number(branchId) : null,
               assigned_user_id: assignedId ? Number(assignedId) : null,
+              content_id: socialSource && contentId ? Number(contentId) : null,
               force: true,
             });
             onSaved();
@@ -272,6 +290,32 @@ function LeadForm({
               ))}
             </div>
           </div>
+
+          {socialSource && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Qaysi video / postdan?
+              </label>
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+                value={contentId}
+                onChange={(e) => setContentId(e.target.value)}
+              >
+                <option value="">— bilmayman / umumiy —</option>
+                {contentOpts.map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.date ? o.date.slice(5).split("-").reverse().join(".") + " · " : ""}
+                    {o.platform_label} · {o.title}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-slate-400 mt-1">
+                "Qaysi videoni ko'rib yozdingiz?" deb so'rang — shunda har bir
+                videodan nechta odam kelgani va nechta sotuv bo'lgani avtomat
+                hisoblanadi.
+              </p>
+            </div>
+          )}
 
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">

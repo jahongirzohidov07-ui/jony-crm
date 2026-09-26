@@ -488,6 +488,9 @@ class LeadCreate(BaseModel):
     note: Optional[str] = None
     branch_id: Optional[int] = None
     assigned_user_id: Optional[int] = None
+    # Qaysi videodan/postdan kelgani (2026-09-26, "har bir videodan
+    # nechta odam murojaat qildi, nechta sotuv boldi")
+    content_id: Optional[int] = None
     # Telefon dublikat ogohlantirishidan keyin "baribir qo'shish"
     force: Optional[bool] = False
 
@@ -503,6 +506,7 @@ class LeadUpdate(BaseModel):
     note: Optional[str] = None
     branch_id: Optional[int] = None
     assigned_user_id: Optional[int] = None
+    content_id: Optional[int] = None
 
 
 class LeadOut(BaseModel):
@@ -522,6 +526,7 @@ class LeadOut(BaseModel):
     assigned_user_id: Optional[int] = None
     assigned_user: Optional[StaffOption] = None
     converted_student_id: Optional[int] = None
+    content_id: Optional[int] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
 

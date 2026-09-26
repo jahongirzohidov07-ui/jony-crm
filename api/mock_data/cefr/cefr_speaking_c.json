@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_c",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "C",
+ "title": "CEFR Multilevel Mock - Speaking - Variant C",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Part 1 - Interview (Part 1.1 and Part 1.2). The examiner asks you questions about yourself, your home, your daily journeys and the place where you live. In Part 1.1 answer in one or two sentences. In Part 1.2 give longer answers of three or four sentences. This part lasts about 4-5 minutes.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  PART 1 - INTERVIEW (about 4-5 minutes)\n\nEXAMINER SCRIPT - read aloud. Text in [square brackets] is a direction to the examiner and is NOT read to the candidate.\n\n[Opening - not assessed]\n\"Good morning / Good afternoon. My name is ________, and this is my colleague ________. Could you tell me your full name, please?\"\n\"Thank you. And could you show me your identity document, please?\"\n\"Thank you. This part of the test lasts about four to five minutes. Please answer naturally, in full sentences. Are you ready? Let us begin.\"\n\n[PART 1.1 - short personal questions. Ask ALL SIX. Expect one or two sentences each. Do not let the candidate speak for more than about 20 seconds per question.]\n- \"Where do you live at the moment - in a town, a city or a village?\"\n- \"What is the weather usually like where you live?\"\n- \"How do you normally travel to your school or to your workplace?\"\n- \"Is there a park or a river near your home? How often do you go there?\"\n- \"Do you put your household rubbish into separate bins? Why, or why not?\"\n- \"Which season of the year do you enjoy most, and why?\"\n\n[PART 1.2 - extended questions on a familiar topic. Ask ALL FOUR. Expect three or four sentences each. If an answer is very short, use one prompt from the list below, then move on.]\n- \"Tell me about a place in your country that you think every visitor should see.\"\n- \"Describe a short journey that you make regularly. What do you usually see or do on the way?\"\n- \"What do people in your neighbourhood do to keep the streets clean and green?\"\n- \"Would you like to live closer to nature than you do now? Why, or why not?\"\n\n[Prompts for short answers - use only if needed]\n\"Why do you say that?\"  /  \"Can you give me an example?\"  /  \"How does that make you feel?\"\n\n[Examiner closes Part 1]\n\"Thank you. That is the end of Part 1.\"\n\nASSESSMENT REMINDER FOR THE EXAMINER\nDo not correct the candidate during Part 1. Make short notes only. Mark the test at the end, on the Jony Academy Multilevel Speaking band sheet (Fluency and Coherence / Lexical Resource / Grammatical Range and Accuracy / Pronunciation), giving one overall score of 0-9 for the whole paper.",
+     "min_words": 0,
+     "topic": "Speaking - Part 1 interview (personal and familiar topics)"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Part 2 - Long turn. The examiner gives you a cue card with a topic and four points. You have ONE minute to prepare and make notes, then you speak on your own for 1-2 minutes. The examiner will stop you when the time is up and may ask one or two short follow-up questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  PART 2 - LONG TURN (cue card: 1 minute preparation, 1-2 minutes speaking)\n\nEXAMINER SCRIPT - read aloud. Text in [square brackets] is a direction to the examiner and is NOT read to the candidate.\n\n\"Now I am going to give you a topic, and I would like you to talk about it for one to two minutes. Before you talk, you have one minute to think about what you are going to say. You can make some notes if you wish. Here is your paper and a pencil, and here is your topic.\"\n\n[Hand the candidate the cue card below, a sheet of paper and a pencil. Start the timer for ONE minute. Do not speak during the preparation minute.]\n\n--------------------------------------------------\nCUE CARD - VARIANT C\n\nDescribe a journey you made to a place with beautiful natural scenery.\n\nYou should say:\n - where you went and how you travelled there,\n - who you went with,\n - what you saw or did when you arrived,\n\nand explain how the place made you feel and whether you would go back.\n--------------------------------------------------\n\n[After one minute]\n\"All right. Remember, you have one to two minutes for this. Do not worry if I stop you. I will tell you when the time is up. Could you start speaking now, please?\"\n\n[Let the candidate speak. Stop the candidate at TWO minutes. If the candidate stops before one minute, use one or two rounding-off questions from the list below, then close.]\n\n[Rounding-off questions - choose one or two only]\n- \"Was it difficult to get there?\"\n- \"Would you recommend that place to a friend from another country?\"\n\n[Examiner closes Part 2]\n\"Thank you. Can I have the cue card and the paper back, please? That is the end of Part 2.\"\n\nASSESSMENT REMINDER FOR THE EXAMINER\nPart 2 tests the ability to speak at length without support. Note whether all four bullet points were covered, whether the talk had a clear beginning and end, and how much hesitation and self-correction there was.",
+     "min_words": 0,
+     "topic": "Speaking - Part 2 cue card long turn (travel and natural scenery)"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Part 3 - Discussion. The examiner asks you more abstract questions connected with the topic of Part 2: tourism, the environment and the future. Give extended answers, explain your reasons and give examples. This part lasts about 4-5 minutes.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  PART 3 - DISCUSSION (about 4-5 minutes)\n\nEXAMINER SCRIPT - read aloud. Text in [square brackets] is a direction to the examiner and is NOT read to the candidate.\n\n\"We have been talking about a journey to a beautiful natural place, and now I would like to discuss with you one or two more general questions related to this. The questions in this part are more abstract, so take a moment to think before you answer.\"\n\n[THEME A - Tourism and local places. Ask at least TWO.]\n- \"Why do you think so many people travel to see nature rather than to see cities?\"\n- \"What effect does a large number of visitors have on a small mountain or lakeside village?\"\n- \"Some people say that tourism protects natural places, and others say that it destroys them. What is your view?\"\n\n[THEME B - The environment and everyday choices. Ask at least TWO.]\n- \"Whose responsibility is it to look after the environment: ordinary people, companies, or the government? Why?\"\n- \"How easy is it for an ordinary family to reduce the amount of waste it produces?\"\n- \"Do people in your country worry more about the environment now than they did twenty years ago? Why do you think that is?\"\n\n[THEME C - The future. Ask ONE or TWO, depending on the time remaining.]\n- \"How do you think people will travel for their holidays in fifty years' time?\"\n- \"If a city had to choose between building a new road and protecting an old forest, what should it choose, and why?\"\n\n[Follow-up prompts - use these to push the candidate towards longer, more abstract answers]\n\"Why do you think that is?\"  /  \"What would the consequences of that be?\"  /  \"Does everybody share that opinion?\"  /  \"How does that compare with the situation in another country?\"\n\n[Examiner closes the test]\n\"Thank you. That is the end of the speaking test.\"\n\nASSESSMENT REMINDER FOR THE EXAMINER\nPart 3 tests the ability to express and justify opinions, to speculate and to discuss abstract ideas. Award the single overall Speaking score (0-9) now, using the four criteria on the Jony Academy Multilevel Speaking band sheet, and enter it on the candidate's record.",
+     "min_words": 0,
+     "topic": "Speaking - Part 3 discussion (environment, tourism, future)"
+    }
+   ]
+  }
+ ]
+}

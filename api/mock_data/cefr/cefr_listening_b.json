@@ -1,0 +1,453 @@
+{
+ "key": "mock_cefr_listening_b",
+ "section": "listening",
+ "skill": "listening",
+ "kind": "mock",
+ "variant": "B",
+ "title": "CEFR Multilevel Mock - Listening - Variant B",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Questions 1-8. You will hear eight sentences. You will hear each sentence twice. Choose the best reply to each sentence: A, B or C.",
+   "passage": "",
+   "script": "EXAMINER: Part One. You will hear sentences. You will hear each sentence twice. Choose the best reply to the sentence, A, B or C. You now have fifteen seconds to look at the questions.\n[PAUSE 15 SECONDS]\n\nEXAMINER: Question 1.\nSPEAKER: Have you finished uploading your project to the college portal yet?\n[PAUSE 3 SECONDS]\nSPEAKER (second time): Have you finished uploading your project to the college portal yet?\n[PAUSE 5 SECONDS]\n\nEXAMINER: Question 2.\nSPEAKER: Why don't we revise for the computing test together this evening?\n[PAUSE 3 SECONDS]\nSPEAKER (second time): Why don't we revise for the computing test together this evening?\n[PAUSE 5 SECONDS]\n\nEXAMINER: Question 3.\nSPEAKER: I'm afraid the interactive whiteboard in room twelve isn't working.\n[PAUSE 3 SECONDS]\nSPEAKER (second time): I'm afraid the interactive whiteboard in room twelve isn't working.\n[PAUSE 5 SECONDS]\n\nEXAMINER: Question 4.\nSPEAKER: How long does the online coding course last?\n[PAUSE 3 SECONDS]\nSPEAKER (second time): How long does the online coding course last?\n[PAUSE 5 SECONDS]\n\nEXAMINER: Question 5.\nSPEAKER: Could you remind me of the password for the student Wi-Fi?\n[PAUSE 3 SECONDS]\nSPEAKER (second time): Could you remind me of the password for the student Wi-Fi?\n[PAUSE 5 SECONDS]\n\nEXAMINER: Question 6.\nSPEAKER: Your presentation slides look far too crowded.\n[PAUSE 3 SECONDS]\nSPEAKER (second time): Your presentation slides look far too crowded.\n[PAUSE 5 SECONDS]\n\nEXAMINER: Question 7.\nSPEAKER: Do you mind if I record the lecture on my phone?\n[PAUSE 3 SECONDS]\nSPEAKER (second time): Do you mind if I record the lecture on my phone?\n[PAUSE 5 SECONDS]\n\nEXAMINER: Question 8.\nSPEAKER: What a shame you missed the robotics workshop.\n[PAUSE 3 SECONDS]\nSPEAKER (second time): What a shame you missed the robotics workshop.\n[PAUSE 5 SECONDS]\n\nEXAMINER: That is the end of Part One.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  \"Have you finished uploading your project to the college portal yet?\"",
+     "options": [
+      "No, the file was too large, so I'm compressing it now.",
+      "Yes, the portal is on the second floor.",
+      "I'd rather study history than geography."
+     ],
+     "answer": 0,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "2  \"Why don't we revise for the computing test together this evening?\"",
+     "options": [
+      "It was built in nineteen ninety-eight.",
+      "That's a good idea. Shall we meet at six?",
+      "No, I've never read that author."
+     ],
+     "answer": 1,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "3  \"I'm afraid the interactive whiteboard in room twelve isn't working.\"",
+     "options": [
+      "Yes, I bought it last summer.",
+      "She teaches maths on Tuesdays.",
+      "Don't worry, a technician is coming after lunch."
+     ],
+     "answer": 2,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "4  \"How long does the online coding course last?\"",
+     "options": [
+      "It costs nothing at all.",
+      "About twelve weeks, I think.",
+      "In the computer lab, upstairs."
+     ],
+     "answer": 1,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "5  \"Could you remind me of the password for the student Wi-Fi?\"",
+     "options": [
+      "It's written on the card next to the printer.",
+      "I'm sorry, I can't remember when it opened.",
+      "No, I prefer working at home."
+     ],
+     "answer": 0,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "6  \"Your presentation slides look far too crowded.\"",
+     "options": [
+      "The train leaves at half past nine.",
+      "Yes, she's a very good presenter.",
+      "Thanks. I'll cut some of the text before Friday."
+     ],
+     "answer": 2,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "7  \"Do you mind if I record the lecture on my phone?\"",
+     "options": [
+      "It's much colder than it was yesterday.",
+      "Not at all, as long as you don't share it online.",
+      "I left my phone in the canteen."
+     ],
+     "answer": 1,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "8  \"What a shame you missed the robotics workshop.\"",
+     "options": [
+      "Yes, I'd really been looking forward to it.",
+      "It's on the left, just past the library.",
+      "About forty students, I'd say."
+     ],
+     "answer": 0,
+     "topic": "Listening - Dialogue reply"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "You will hear someone giving a talk about a new Digital Skills Centre. For each question, fill in the missing information in the numbered space. Write ONE WORD and / or A NUMBER for each answer.\n\nGREENHILL COLLEGE - DIGITAL SKILLS CENTRE\nLocation: Hartwell Building, (9) ......... floor\nWeekday opening: 8 a.m. until (10) ......... p.m.\nTo borrow equipment, bring your (11) ......... card\nBusiest course this term: (12) .........\nLength of each workshop: (13) ......... minutes\nIf the website is down, book by sending an (14) .........",
+   "passage": "",
+   "script": "EXAMINER: Part Two. You will hear someone giving a talk. For each question, fill in the missing information in the numbered space. Write ONE WORD and / or A NUMBER for each answer. You now have thirty seconds to look at the notes.\n[PAUSE 30 SECONDS]\n\nSPEAKER (Ms Karimova, centre manager): Good morning, everyone, and thank you for coming along to this short introduction to our new Digital Skills Centre here at Greenhill College.\nLet me start with where we are, because a great many students went to the wrong place last week. The centre is in the Hartwell Building. When we first announced it in the spring, the plan was to put us on the second floor - but the second floor is now the science store, so we have moved. We are on the third floor, at the end of the corridor. Third floor, Hartwell Building.\nNow, opening hours. From Monday to Friday we open at eight in the morning and we stay open until nine in the evening. I know some of you have heard that we close at seven; that was true only during the trial month. From now on it is nine p.m. on weekdays. On Saturdays we close much earlier, at two.\nEquipment next. We lend out laptops, headsets, microphones and cameras, and it is all completely free. However, you cannot borrow anything without identification. Please don't bring your passport or your bank card - what we need is your library card. That is the only card our system recognises.\nWe run four courses this term: video editing, web design, data handling and animation. They are all popular, but animation is by far the busiest. We had to open three extra groups for animation alone, so if that is the one you want, please book early.\nAnd a word about the practical workshops. They are short and intensive. Each workshop lasts ninety minutes, with no break in the middle, so do bring a bottle of water. Ninety minutes, from start to finish.\nFinally, booking. The easiest way is through the website, where you can see every free place in real time. If the website is down, or if you need a place at short notice, you can simply send an email to the centre office and we will reply the same day. Please don't telephone - the office line is very often engaged.\nRight, that is everything from me. Do come up to the third floor and have a look round.\n\nEXAMINER: Now listen again.\n[THE TALK IS READ A SECOND TIME]\nEXAMINER: That is the end of Part Two.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "9  Location: Hartwell Building, ......... floor",
+     "answer": [
+      "third",
+      "3rd",
+      "3"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Weekday opening: 8 a.m. until ......... p.m.",
+     "answer": [
+      "nine",
+      "9"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  To borrow equipment, bring your ......... card",
+     "answer": [
+      "library"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  Busiest course this term: .........",
+     "answer": [
+      "animation"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  Length of each workshop: ......... minutes",
+     "answer": [
+      "ninety",
+      "90"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "14  If the website is down, book by sending an .........",
+     "answer": [
+      "email",
+      "e-mail"
+     ],
+     "topic": "Listening - Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "You hear four people talking about studying online. For questions 15-18, choose from the list (A - F) what helped each speaker most. There are TWO EXTRA letters which you do not need to use.\n\nA  having a quiet place to work\nB  regular video calls with a tutor\nC  recorded lessons that could be replayed\nD  a printed timetable on the wall\nE  studying together with a friend\nF  switching off phone notifications",
+   "passage": "",
+   "script": "EXAMINER: Part Three. You hear four people talking about studying online. For questions fifteen to eighteen, choose from the list A to F what helped each speaker most. There are TWO EXTRA letters which you do not need to use. You now have twenty seconds to look at the list.\n[PAUSE 20 SECONDS]\n\nSPEAKER ONE (Malika): When our lessons moved online I panicked, because I write slowly and the teacher speaks quickly. My tutor did offer me a video call every Monday, which was very kind, but honestly I only used it twice. What saved me was something much simpler: every lesson was recorded. I could go back, play a difficult explanation three or four times and stop it whenever I needed to. Nothing else came close to that.\n\nSPEAKER TWO (Sardor): My problem was never the lessons; it was me. I would open the maths page, then a message would appear, and forty minutes later I would still be scrolling. My sister suggested printing out a timetable and sticking it above my desk. I made one, and it is still there, but I am not sure I ever looked at it. The thing that actually changed my results was turning off every alert on my phone before I started. Silence, and suddenly I was working.\n\nSPEAKER THREE (Nigora): I live in a very quiet house, so noise was never an issue for me. What I really missed was other people. In the end, a girl from my group and I agreed to log in at the same time every afternoon and work side by side on a call, testing each other at the end. Explaining things to her taught me far more than reading ever did. Working with her was the whole difference.\n\nSPEAKER FOUR (Bekzod): I have three younger brothers, so you can imagine the noise. For the first month I tried to study at the kitchen table and understood almost nothing. Then the college opened a small reading room in the evenings, and I started going there every day. The same lessons, the same laptop, the same teacher - but somewhere still and silent. That, and only that, is why I passed.\n\nEXAMINER: Now listen again.\n[THE FOUR SPEAKERS ARE HEARD A SECOND TIME]\nEXAMINER: That is the end of Part Three.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "15  Speaker One (Malika)",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 2,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "16  Speaker Two (Sardor)",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 5,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "17  Speaker Three (Nigora)",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 4,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "18  Speaker Four (Bekzod)",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple matching"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "You will hear someone giving a talk about the ground floor of the Innovation Block. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use.\n\nMAP - GROUND FLOOR, INNOVATION BLOCK\nThe entrance is at the bottom of the map. One straight corridor runs from the entrance up to the far wall, where the staircase is.\nOn the LEFT of the corridor, from the entrance upwards: A, B, C, D.\nOn the RIGHT of the corridor, from the entrance upwards: E, F, G, H.\nThe reception desk is just inside the entrance on the right, before E. The staircase is at the top of the corridor, between D and H.",
+   "passage": "",
+   "script": "EXAMINER: Part Four. You will hear someone giving a talk. Label the places, nineteen to twenty-three, on the map, A to H. There are THREE extra options which you do not need to use. You now have thirty seconds to look at the map.\n[PAUSE 30 SECONDS]\n\nGUIDE (Tom Whitfield): Right, everybody, gather round - this is the ground floor of our Innovation Block, and I will walk you through it before you go off on your own.\nYou are standing at the entrance, at the bottom of the map. One long corridor runs straight ahead of you to the far wall, and there are four rooms on each side. Reception is just here on your right as you come in, and the staircase is right at the top, at the end of the corridor.\nLet us start with the noisiest room, the three-D printing room. Turn left as soon as you come through the door: it is the very first room on the left-hand side of the corridor. You will hear the machines before you see them.\nNow cross the corridor. Directly opposite the three-D printing room, on the right-hand side, just past the reception desk, is the language lab. First door on the right, then - thirty headsets and a very strict rule about food.\nNext, the charging point, and please listen carefully, because this one has moved. For two years it was beside reception, and half the college still goes there out of habit. It is not there any more. It is now right at the top of the corridor on the right, the last space before you reach the staircase.\nStraight across from the charging point, on the left-hand side of the corridor, is the quiet study pod. It is the furthest room on the left, next to the stairs, and it is the one place in this building where you must not talk.\nAnd finally the repair cafe, where you bring your broken laptops and phones on Wednesdays. Stay on the right-hand side and walk up towards the stairs: the repair cafe is the room immediately before the charging point. Third room on the right, directly below the charging point and directly above the second room on that side.\nThat is the tour. Take a map with you, and I will see you back here at four.\n\nEXAMINER: Now listen again.\n[THE TALK IS READ A SECOND TIME]\nEXAMINER: That is the end of Part Four.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "19  The 3D printing room",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "20  The language lab",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "21  The charging point",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "22  The quiet study pod",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "23  The repair cafe",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Listening - Map labelling"
+    }
+   ]
+  },
+  {
+   "title": "Part 5",
+   "instructions": "You will hear three extracts from a conversation between a student, Dilnoza, and her tutor, Mr Harding. Choose the correct answer (A, B or C) for each question (24-29). There are TWO questions for each extract. Mark your answers on the answer sheet.",
+   "passage": "",
+   "script": "EXAMINER: Part Five. You will hear three extracts from a conversation between a student, Dilnoza, and her tutor, Mr Harding, about her digital research project. Choose the correct answer, A, B or C, for each question. There are TWO questions for each extract.\n\nEXAMINER: Extract One. Questions twenty-four and twenty-five. You now have fifteen seconds to read the questions.\n[PAUSE 15 SECONDS]\n\nDILNOZA: Mr Harding, have you got five minutes? I think my project is falling apart.\nMR HARDING: It is certainly not falling apart. Sit down. Is it the survey software again?\nDILNOZA: No, no, the software is fine now - I worked that out in the end. And I have plenty of data; that is exactly the trouble. Four hundred and twelve students answered, and every one of them answered twenty-six questions. I opened the spreadsheet on Sunday, looked at it for an hour, and closed it again. I simply do not know where to begin with it all.\nMR HARDING: Ah. That is a much better problem than having nothing.\nDILNOZA: It does not feel better.\nMR HARDING: Listen. Do not touch the spreadsheet at all yet. Before you analyse anything, go back to your research aim - one sentence - and then choose the six questions out of the twenty-six that actually answer it. Ignore the other twenty for the moment. They are not lost; they are just not for this week.\nDILNOZA: Only six? Should I not ask Kamila to help me sort out the rest?\nMR HARDING: Later, perhaps. But do the choosing yourself, and do it first. Everything else follows from that.\n\nEXAMINER: Extract Two. Questions twenty-six and twenty-seven. You now have fifteen seconds to read the questions.\n[PAUSE 15 SECONDS]\n\nDILNOZA: Can I ask about the presentation as well? I am dreading it, after last time.\nMR HARDING: Remind me what went wrong last time.\nDILNOZA: I was still talking about slide four when the bell went. I had nineteen slides and I showed five of them.\nMR HARDING: Right - so it is timing, not nerves.\nDILNOZA: It is timing. My voice was fine; you told me last year I was too quiet, but I have worked on that. And my file opened perfectly - it was poor Jamshid whose slides would not open, not me.\nMR HARDING: Good. Then here is the rule I would give you: one idea on each slide. Not two, not a list of eight. One. If a slide contains two ideas, split it into two slides, and if you cannot say what the single idea is, delete the slide.\nDILNOZA: Should I add more photographs?\nMR HARDING: Photographs are pleasant, but they are not the point, and no, you do not need to print handouts this time either - the department is trying to use less paper. One idea per slide. That alone will fix your timing.\n\nEXAMINER: Extract Three. Questions twenty-eight and twenty-nine. You now have fifteen seconds to read the questions.\n[PAUSE 15 SECONDS]\n\nDILNOZA: And when exactly do I have to hand everything in?\nMR HARDING: The deadline is Tuesday the fourteenth - no, wait, I am confusing myself. Tuesday the fourteenth is the draft. The final version has to be uploaded by Thursday the sixteenth, before midnight. You will get my written feedback on Friday the seventeenth.\nDILNOZA: Thursday the sixteenth. All right. There is one more thing - I have to record eight interviews and my equipment is not good enough.\nMR HARDING: What do you need?\nDILNOZA: Ideally a laptop, a camera and a microphone.\nMR HARDING: The department laptops are all booked until the end of term, I am afraid, so that is a no. And you already own a camera - the one you used in October was yours, was it not?\nDILNOZA: It was, yes.\nMR HARDING: Then keep using it. The microphone I can help with: I will lend you mine on Monday. It clips onto a collar and it will make a real difference to the sound.\nDILNOZA: Thank you. That is honestly the part I was most worried about.\n\nEXAMINER: Now listen again.\n[THE THREE EXTRACTS ARE HEARD A SECOND TIME]\nEXAMINER: That is the end of Part Five.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "24  Why is Dilnoza worried about her project?",
+     "options": [
+      "She cannot make the survey software work.",
+      "She has not collected enough answers.",
+      "She has too much information to organise."
+     ],
+     "answer": 2,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  What does Mr Harding tell her to do first?",
+     "options": [
+      "choose the few questions she will analyse",
+      "ask a classmate to help her",
+      "collect answers from more students"
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "26  What went wrong in Dilnoza's last presentation?",
+     "options": [
+      "Her slides would not open.",
+      "She ran out of time.",
+      "She spoke too quietly."
+     ],
+     "answer": 1,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "27  What does Mr Harding advise her to do with her slides?",
+     "options": [
+      "add more photographs to them",
+      "print handouts of them for the audience",
+      "put only one idea on each of them"
+     ],
+     "answer": 2,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "28  When must the final version of the project be uploaded?",
+     "options": [
+      "Tuesday the 14th",
+      "Thursday the 16th",
+      "Friday the 17th"
+     ],
+     "answer": 1,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "29  What does Mr Harding agree to lend Dilnoza?",
+     "options": [
+      "a microphone",
+      "a laptop",
+      "a camera"
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple choice"
+    }
+   ]
+  },
+  {
+   "title": "Part 6",
+   "instructions": "You will hear a part of a lecture about technology in the classroom. For each question, fill in the missing information in the numbered space. Write no more than ONE WORD for each answer.\n\nTECHNOLOGY IN THE CLASSROOM - LECTURE NOTES\nEarly teaching machines were designed to give every student instant (30) ......... .\nTheir second promise was that each learner could work at his or her own (31) ......... .\nWhen tablets were used for short activities, reports showed that (32) ......... improved.\nIn rural schools the biggest barrier was the lack of reliable (33) ......... .\nScreen work only helped when it was balanced with regular (34) ......... .\nConclusion: technology should (35) ......... the teacher, not replace the teacher.",
+   "passage": "",
+   "script": "EXAMINER: Part Six. You will hear a part of a lecture. For each question, fill in the missing information in the numbered space. Write no more than ONE WORD for each answer. You now have thirty seconds to look at the notes.\n[PAUSE 30 SECONDS]\n\nLECTURER (Dr Aziza Rahimova): Good afternoon. In today's lecture I want to look at the long, and frankly rather repetitive, history of machines in the classroom.\nThe story does not begin with the internet. It begins almost a hundred years ago, with simple mechanical boxes that presented a question, took the learner's answer and immediately said whether it was right or wrong. Those early teaching machines were not designed to save money, and they were not designed to replace anybody. They were designed to do one thing that the crowded classroom could not do: to give every student instant feedback. A teacher with forty children cannot correct forty answers in the same second; a machine can.\nOut of that came the second promise, and it is the promise every new device has made since. In an ordinary lesson the whole class moves forward together - too fast for some, painfully slow for others. With a machine in front of you, nobody has to wait and nobody is left behind. Each learner works at his or her own pace. That single idea, self-pacing, is the thread that runs from the mechanical box of the nineteen twenties right through to the tablet in your bag.\nNow, what happened when tablets actually arrived in real schools? The research is a great deal more modest than the advertising. Where tablets replaced the teacher, results fell. But where teachers used them for short, focused activities of ten or fifteen minutes, one finding was reported again and again: motivation improved. Pupils who had stopped trying began trying again. Not knowledge overnight - motivation. And motivation, of course, is where knowledge starts.\nThe obstacles, though, are real, and they are not the obstacles people expect. When we surveyed rural schools, the commonest complaint was not the price of the devices, and it was not a shortage of training, although both were mentioned. The single biggest barrier was the lack of reliable electricity. A tablet that cannot be charged is a piece of glass.\nAnd there is a subtler danger. Studies that followed pupils over three years found that screen work only helped when it was balanced with regular discussion - children talking to one another and to an adult about what they had just done. Screens alone produced pupils who could click the right box and could not explain why.\nWhich brings me to my conclusion, and it is the same conclusion those first engineers reached a century ago. The evidence does not say that technology is good or bad for learning. It says that technology works when it is used to support the teacher, and fails when it is used to replace the teacher. Support, not replace. Hold on to that phrase, because in the seminar on Thursday I am going to ask you to argue against it.\n\nEXAMINER: Now listen again.\n[THE LECTURE IS READ A SECOND TIME]\nEXAMINER: That is the end of Part Six. You now have ten minutes to transfer your answers to the answer sheet.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "30  Early teaching machines were designed to give every student instant .........",
+     "answer": [
+      "feedback"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "31  Their second promise was that each learner could work at his or her own .........",
+     "answer": [
+      "pace"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "32  When tablets were used for short activities, reports showed that ......... improved.",
+     "answer": [
+      "motivation"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "33  In rural schools the biggest barrier was the lack of reliable .........",
+     "answer": [
+      "electricity"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "34  Screen work only helped when it was balanced with regular .........",
+     "answer": [
+      "discussion"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "35  Conclusion: technology should ......... the teacher, not replace the teacher.",
+     "answer": [
+      "support"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    }
+   ]
+  }
+ ]
+}

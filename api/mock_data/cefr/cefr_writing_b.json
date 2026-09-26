@@ -1,0 +1,48 @@
+{
+ "key": "mock_cefr_writing_b",
+ "section": "writing",
+ "skill": "writing",
+ "kind": "mock",
+ "variant": "B",
+ "title": "CEFR Multilevel Mock - Writing - Variant B",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Read the situation below and answer BOTH Task 1.1 and Task 1.2. Write your answers on the answer sheet.\n\nYou received a message from the manager of your study centre.\n\nDear Student,\n\nFrom the first of next month the Silk Road Study Centre is planning two changes. First, we will stop printing paper workbooks: every student will be asked to buy a tablet and read all course materials on screen. Second, our evening classes on Tuesday and Thursday will no longer take place in the building; they will be taught online instead.\n\nWe would like to hear from you before we make the final decision.\n\nDilnoza Rahimova\nThe Centre Manager",
+   "passage": "You received a message from the manager of your study centre.\n\nDear Student,\n\nFrom the first of next month the Silk Road Study Centre is planning two changes. First, we will stop printing paper workbooks: every student will be asked to buy a tablet and read all course materials on screen. Second, our evening classes on Tuesday and Thursday will no longer take place in the building; they will be taught online instead.\n\nWe would like to hear from you before we make the final decision.\n\nDilnoza Rahimova\nThe Centre Manager",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  WRITING TASK 1.1\n\nYou received a message from the manager of your study centre.\n\nDear Student,\n\nFrom the first of next month the Silk Road Study Centre is planning two changes. First, we will stop printing paper workbooks: every student will be asked to buy a tablet and read all course materials on screen. Second, our evening classes on Tuesday and Thursday will no longer take place in the building; they will be taught online instead.\n\nWe would like to hear from you before we make the final decision.\n\nDilnoza Rahimova\nThe Centre Manager\n\nWrite a short letter to your friend who also studies at this centre with you. Explain the situation about the possible changes and tell them how you feel about it.\n\nWrite about 50 words.",
+     "min_words": 50,
+     "topic": "Writing - Informal letter to a friend"
+    },
+    {
+     "type": "essay",
+     "q": "2  WRITING TASK 1.2\n\nWrite a letter to the study centre manager.\n\n- give your opinion about buying a tablet and reading all the materials on screen;\n- explain what you think about moving the Tuesday and Thursday evening classes online;\n- suggest what the centre should do instead.\n\nWrite about 120-150 words.",
+     "min_words": 120,
+     "topic": "Writing - Formal letter"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Read the task below and write your answer on the answer sheet.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  WRITING PART 2\n\nYou are participating in an online discussion for learners.\n\nThe question is: Some people say that technology in the classroom, such as tablets, videos and translation apps, helps students learn faster, while others believe it stops young people from thinking for themselves. What is your opinion?\n\nPost your response, giving reasons and examples. Write 180-200 words.",
+     "min_words": 180,
+     "topic": "Writing - Opinion post"
+    }
+   ]
+  }
+ ]
+}

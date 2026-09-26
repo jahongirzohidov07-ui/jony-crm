@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_b",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "B",
+ "title": "CEFR Multilevel Mock - Speaking - Variant B",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Part 1 - Interview. The examiner asks you short questions about yourself, your home, your studies and your daily life (Part 1.1), and then some longer questions on two topics (Part 1.2). Answer in full sentences and give reasons. This part lasts about 4-5 minutes.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  SPEAKING PART 1 - INTERVIEW (about 4-5 minutes)\n\nEXAMINER SCRIPT - read the framed lines aloud exactly as printed. Do not help the candidate with vocabulary, and do not comment on the quality of the answers.\n\n[Before the recorder starts] Check that the candidate's name and exam number match the register. Start the recorder, then say:\n\n\"Good morning. My name is the examiner for today. Could you tell me your full name, please?\"\n\"And could you show me your identification document, thank you.\"\n\"This is the Jony Academy Multilevel Speaking test. The test has three parts and lasts about fifteen minutes. Everything is recorded. Are you ready? Let us begin.\"\n\n--- PART 1.1 - SHORT PERSONAL QUESTIONS (about 2 minutes) ---\nAsk the candidate SIX questions from the list below, in the order printed. Expect one or two sentences for each. Do not let a single answer run longer than about twenty seconds; move on politely with \"Thank you\" if it does.\n\n1. Where do you live at the moment, and who do you live with?\n2. What time do you usually get up on a school day or a work day?\n3. Do you prefer studying in the morning or in the evening? Why?\n4. Which subject at school was easiest for you, and which was hardest?\n5. How often do you use a phone or a computer to study something?\n6. Do you like learning in a group, or on your own? Why?\n\n--- PART 1.2 - EXTENDED PERSONAL QUESTIONS (about 2-3 minutes) ---\nNow tell the candidate: \"Now I am going to ask you some longer questions. Please give a full answer with reasons.\"\nAsk ALL SIX questions below. They come in two topic sets of three. If an answer is only a few words, use ONE follow-up prompt: \"Could you tell me a little more about that?\" Use each follow-up only once per question.\n\nTOPIC SET A - Your studies\n7. Tell me about a teacher who helped you a lot. What did this teacher do that other teachers did not do?\n8. What is the best way for you personally to remember new words or new information? Why does that way work for you?\n9. Some students at your school study very hard but still get low marks. Why do you think that happens?\n\nTOPIC SET B - Technology in your daily life\n10. What is the first application you open on your phone in the morning, and why that one?\n11. How has the internet changed the way you find information, compared with the way your parents found it?\n12. Is there any piece of technology you would like to stop using for a month? Explain your answer.\n\n[Close Part 1] \"Thank you. That is the end of Part 1.\"\n\nEXAMINER NOTE - assessment: award one whole band from 0 to 9 for the candidate's performance across the whole test on the four criteria used at Jony Academy: Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy, and Pronunciation. Record your Part 1 impression now, but do not announce any score to the candidate.",
+     "min_words": 0,
+     "topic": "Speaking - Part 1 interview (personal questions)"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Part 2 - Long turn. The examiner gives you a topic card. You have ONE minute to prepare and you may make notes. Then you speak on the topic for one to two minutes. The examiner will not interrupt you during this time, and may ask one or two short questions at the end.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  SPEAKING PART 2 - LONG TURN / CUE CARD (about 3-4 minutes)\n\nEXAMINER SCRIPT - read the framed lines aloud exactly as printed.\n\n\"Now I am going to give you a topic card. You have ONE minute to think about what you are going to say. You may make notes on the paper in front of you. Then you will speak for one to two minutes. Do not worry if I stop you - I will tell you when the time is up. Here is your paper and a pencil, and here is your topic.\"\n\nHAND THE CANDIDATE THIS CARD:\n\n+---------------------------------------------------------------+\n| Describe a lesson, course or training session where            |\n| technology helped you to learn something.                      |\n|                                                                |\n| You should say:                                                |\n|  - what the lesson or course was about,                        |\n|  - what kind of technology was used,                           |\n|  - how you used that technology during the lesson,             |\n|                                                                |\n| and explain why the technology made the learning better        |\n| or worse for you.                                              |\n+---------------------------------------------------------------+\n\nStart the one-minute timer. After exactly one minute say:\n\"All right? Remember, you have one to two minutes for this. I will tell you when the time is up. Could you start speaking now, please?\"\n\nLet the candidate speak. Do NOT interrupt before one minute has passed. Stop the candidate at two minutes with: \"Thank you.\"\n\nROUNDING-OFF QUESTIONS - ask ONE or TWO only, and keep the answers short:\n- Would you recommend that lesson or course to a friend?\n- Do you still use that same technology today?\n\n[Close Part 2] \"Thank you. Can I have the card and the paper back, please?\"\n\nEXAMINER NOTE - timing: if the candidate stops before one minute, use the single prompt \"Is there anything else you would like to add about that?\" once. If the candidate stops again, move to the rounding-off questions and record the short turn in your notes, because the length of the long turn affects Fluency and Coherence.",
+     "min_words": 0,
+     "topic": "Speaking - Part 2 cue card long turn"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Part 3 - Discussion. The examiner asks you more general and more abstract questions connected with the topic of Part 2. Give your opinion, explain your reasons and use examples. This part lasts about 4-5 minutes.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  SPEAKING PART 3 - DISCUSSION (about 4-5 minutes)\n\nEXAMINER SCRIPT - read the framed line aloud, then manage the discussion.\n\n\"We have been talking about learning with technology, and now I would like to discuss with you some more general questions related to this topic.\"\n\nAsk the questions in the order printed, moving through the three groups. You do NOT have to ask every question: ask at least SIX, and choose the later questions according to how well the candidate is coping. Group 1 is the easiest, Group 3 is the most demanding.\n\nGROUP 1 - Schools and technology today\n13. How are classrooms in your country different now from the classrooms of twenty years ago?\n14. Should every school pupil be given a tablet or a laptop by the state? Why, or why not?\n15. Some parents say phones should be collected at the school gate every morning. How far do you agree?\n\nGROUP 2 - Teachers, machines and skills\n16. If a computer program can explain grammar clearly and never gets tired, what is left for a human teacher to do?\n17. Do you think young people today are better at finding information but worse at remembering it? What makes you say that?\n18. Which skills will be more valuable in twenty years than they are today, and which skills will matter less?\n\nGROUP 3 - Wider consequences\n19. Who should be responsible when a student uses an artificial intelligence program to write an essay and then submits it as their own work - the student, the teacher, or the company that made the program?\n20. In poorer regions, some families cannot afford the internet at home. What could be done so that these children are not left behind?\n21. Is it possible for a country to introduce technology into education too quickly? What problems could that cause?\n\nADDITIONAL PROBES - use only when an answer is very short or very general:\n- \"Why do you think that is?\"\n- \"Could you give me an example?\"\n- \"Would everybody agree with you?\"\n\n[Close the test] \"Thank you very much. That is the end of the speaking test. Goodbye.\"\nStop the recorder.\n\nEXAMINER NOTE - marking: after the candidate leaves, write ONE whole band from 0 to 9 for each of the four criteria - Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy, Pronunciation - and then the overall band, which is the average of the four rounded to the nearest whole band. The paper maximum is 9. Part 3 answers carry the most weight for Lexical Resource and Grammatical Range, because this is where abstract language is required.",
+     "min_words": 0,
+     "topic": "Speaking - Part 3 abstract discussion"
+    }
+   ]
+  }
+ ]
+}

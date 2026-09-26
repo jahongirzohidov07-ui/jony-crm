@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_a",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "A",
+ "title": "CEFR Multilevel Mock - Speaking - Variant A",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "PART 1 - INTERVIEW (about 3-4 minutes). The examiner asks you short questions about yourself, your everyday life and your work or studies. Part 1.1: answer each question in one or two sentences. Part 1.2: answer in more detail and give a reason or an example. Answer in English only. You may not prepare notes for this part.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  EXAMINER SCRIPT - PART 1 (INTERVIEW)\n\n[Examiner, to the candidate:] Good morning / Good afternoon. My name is the examiner for today. Could you tell me your full name, please? Thank you. And could you show me your identity document, please? Thank you. This part of the test lasts about four minutes. Please answer in English.\n\nPART 1.1 - SHORT PERSONAL QUESTIONS (about 1-2 minutes)\n[Ask ALL four questions below, one at a time. Expect one or two sentences for each. Do not help the candidate with vocabulary. If an answer is one word, ask once: 'Could you say a little more, please?']\n  1. Where do you live at the moment - in a city, a town or a village?\n  2. What time do you usually get up on a working day?\n  3. Do you work, or are you a student?\n  4. What do you usually do after work or after your classes?\n\nPART 1.2 - EXTENDED QUESTIONS ON A FAMILIAR TOPIC (about 2 minutes)\n[Say:] Now I am going to ask you some questions about your daily routine and the work people do.\n[Ask FOUR of the five questions below. Expect three to five sentences, with a reason or an example.]\n  5. Describe a normal weekday for you, from the morning until the evening.\n  6. Which part of the day do you work or study best in, and why?\n  7. How do you usually travel to your work or to your college? Is it convenient?\n  8. What kind of job did you want to do when you were a child? Do you still like that idea?\n  9. Is it easy for young people in your town to find their first job? Why, or why not?\n\n[At the end of Part 1 say:] Thank you. Now we will move on to Part 2.",
+     "min_words": 0,
+     "topic": "Speaking - Interview (Part 1.1 and 1.2)"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "PART 2 - LONG TURN / CUE CARD (about 3-4 minutes). You will be given a topic card. You have ONE minute to prepare and you may make notes on the paper provided. Then you must talk about the topic for one to two minutes. The examiner will tell you when to stop and may ask you one short follow-up question.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  EXAMINER SCRIPT - PART 2 (LONG TURN, CUE CARD)\n\n[Examiner, hand the candidate the card, a pencil and paper, and say:] Now I am going to give you a topic and I would like you to talk about it for one to two minutes. Before you talk you have one minute to think about what you are going to say. You can make some notes if you wish. Do you understand? Here is your topic card.\n\n--- CANDIDATE TASK CARD ---\nDescribe a working day that did not go as you had planned.\nYou should say:\n  - when this day was and where you were;\n  - what you had planned to do on that day;\n  - what went wrong and how you dealt with it;\nand explain what you learned from that day.\n--- END OF CARD ---\n\n[After exactly one minute say:] All right. Remember, you have one to two minutes for this. Do not worry if I stop you. I will tell you when the time is up. Could you start speaking now, please?\n\n[Allow the candidate to speak for 1-2 minutes. Stop the candidate at two minutes with:] Thank you.\n\n[Then ask ONE short rounding-off question and accept a brief answer:]\n  a) Did you tell anybody else about that day afterwards?\n  b) Would you do anything differently now?\n\n[Take the card back and say:] Thank you. Now we will move on to Part 3.",
+     "min_words": 0,
+     "topic": "Speaking - Long turn (cue card)"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "PART 3 - DISCUSSION (about 4-5 minutes). The examiner asks you more general questions connected with the topic of Part 2. Give full answers, explain your opinion, and support what you say with reasons and examples. You may be asked to compare, to speculate about the future, or to disagree politely with a statement.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  EXAMINER SCRIPT - PART 3 (DISCUSSION)\n\n[Examiner, say:] We have been talking about a working day that did not go as planned, and now I would like to ask you some more general questions about work and everyday life. Please give full answers and explain your ideas.\n\nSET A - PLANNING AND TIME (choose two)\n  1. Why do you think some people plan every hour of the day while others do not plan at all?\n  2. Is it possible to teach young people to organise their time well? How?\n\nSET B - PRESSURE AND PROBLEM-SOLVING (choose two)\n  3. What kinds of job are the most stressful in your country, and why?\n  4. Some people say that a small amount of pressure at work is useful. Would you agree with that?\n\nSET C - THE FUTURE OF EVERYDAY WORK (choose one or two)\n  5. How has the working day in your country changed over the last twenty years?\n  6. Do you think most people will still travel to an office in twenty years' time? Why, or why not?\n  7. If machines take over the routine parts of a job, what will be left for people to do?\n\n[Prompts the examiner may use if an answer is too short: 'Why do you think that?', 'Can you give me an example?', 'And what about older people / people in smaller towns?']\n\n[At the end say:] Thank you. That is the end of the speaking test.",
+     "min_words": 0,
+     "topic": "Speaking - Discussion"
+    }
+   ]
+  }
+ ]
+}

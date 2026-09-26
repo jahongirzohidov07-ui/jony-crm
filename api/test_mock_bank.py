@@ -48,8 +48,11 @@ def ck(name, got, want):
 
 # ----------------------------------------------------------------- A
 print("=== A. MOCK FAYLLARI IELTS FORMATIDA ===")
-FILES = mock_seed._files()
-ck("20 fayl (4 bo'lim × 5 variant)", len(FILES), 20)
+ALL = mock_seed._files()
+FILES = [t for t in ALL if "cefr" not in (t.get("levels") or [])]
+CEFR = [t for t in ALL if "cefr" in (t.get("levels") or [])]
+ck("IELTS: 20 fayl (4 bo'lim × 5 variant)", len(FILES), 20)
+ck("CEFR: 12 fayl (4 bo'lim × 3 variant)", len(CEFR), 12)
 
 by_sec = {}
 for t in FILES:
@@ -168,9 +171,13 @@ db = SessionLocal()
 mock_seed.seed_mocks(db)
 rows = db.query(models.ExamTemplate).filter_by(kind="mock").all()
 LEVELS = ["ielts_foundation", "ielts_graduation", "ielts_intro"]
-ck("20 fayl × 3 daraja = 60 shablon", len(rows), 60)
-ck("darajalar to'g'ri", sorted({r.level for r in rows}), LEVELS)
+ck("IELTS 20×3 + CEFR 12×1 = 72 shablon", len(rows), 72)
+ck("darajalar to'g'ri", sorted({r.level for r in rows}), ["cefr"] + LEVELS)
 ck("variantlar A-E", sorted({r.variant for r in rows}), list("ABCDE"))
+ck("CEFR shablonlari 12 ta, variant A-C",
+   (sum(1 for r in rows if r.level == "cefr"),
+    sorted({r.variant for r in rows if r.level == "cefr"})),
+   (12, list("ABC")))
 ck("hammasi english, unit_no yo'q",
    ({r.subject for r in rows}, {r.unit_no for r in rows}),
    ({"english"}, {None}))
@@ -178,6 +185,28 @@ n_before = len(rows)
 mock_seed.seed_mocks(db)
 ck("ikkinchi seed hech narsa qo'shmaydi",
    db.query(models.ExamTemplate).filter_by(kind="mock").count(), n_before)
+
+print(chr(10) + "=== D2. CEFR MULTILEVEL FORMATI ===")
+cbad = []
+for t in CEFR:
+    parts = exam_online.clean_parts(t["parts"])
+    shape = tuple(len(p["questions"]) for p in parts)
+    want = {"listening": (8, 6, 4, 5, 6, 6), "reading": (6, 8, 6, 9, 6)}.get(t["section"])
+    if want and shape != want:
+        cbad.append(f"{t['key']}: {shape}")
+    # Bo'lim nomlarida "Listening"/"Reading" bo'lmasin — bo'lmasa
+    # mock_band IELTS jadvalini xato qo'llab yubormaydi.
+    for p in parts:
+        low = p["title"].lower()
+        if "listening" in low or "reading" in low:
+            cbad.append(f"{t['key']}: bo'lim nomi {p['title']!r}")
+ck("CEFR tuzilishi kitobdagidek (35 savol)", cbad, [])
+ck("CEFR Listening/Reading 35 savol",
+   sorted({sum(len(p["questions"]) for p in t["parts"])
+           for t in CEFR if t["section"] in ("listening", "reading")}), [35])
+ck("CEFR'da IELTS band jadvali qo'llanmaydi",
+   {exam_online.mock_band(t["parts"], 30, 35) for t in CEFR
+    if t["section"] in ("listening", "reading")}, {None})
 
 
 class _G:

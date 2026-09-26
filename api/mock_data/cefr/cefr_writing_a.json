@@ -1,0 +1,48 @@
+{
+ "key": "mock_cefr_writing_a",
+ "section": "writing",
+ "skill": "writing",
+ "kind": "mock",
+ "variant": "A",
+ "title": "CEFR Multilevel Mock - Writing - Variant A",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Part 1 has TWO tasks. Read the message below and answer both Task 1.1 and Task 1.2. Write your answers on the answer sheet. Task 1.1: write a short informal letter to a friend (about 50 words). Task 1.2: write a formal letter to the manager (about 120-150 words).",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  PART 1\nYou received a message from your staff canteen manager.\n\nDear Colleague,\nFrom the first of next month the staff canteen at Marzon Textiles will close at 1 p.m. instead of 3 p.m., because fewer people eat late. We also plan to stop cooking hot meals and to sell cold sandwiches only. Please let us know what you think before we decide.\nAmina Toshpulatova\nThe Canteen Manager\n\nWRITING TASK 1.1\nWrite a short letter to your friend who also works at Marzon Textiles with you. Explain the situation about the possible changes and tell them how you feel about it.\nWrite about 50 words.",
+     "min_words": 50,
+     "topic": "Writing - Informal letter to a friend"
+    },
+    {
+     "type": "essay",
+     "q": "2  PART 1\nYou received a message from your staff canteen manager.\n\nDear Colleague,\nFrom the first of next month the staff canteen at Marzon Textiles will close at 1 p.m. instead of 3 p.m., because fewer people eat late. We also plan to stop cooking hot meals and to sell cold sandwiches only. Please let us know what you think before we decide.\nAmina Toshpulatova\nThe Canteen Manager\n\nWRITING TASK 1.2\nWrite a letter to the canteen manager.\n- give your opinion about the new closing time of 1 p.m.\n- explain what you think about selling cold sandwiches instead of hot meals\n- suggest what the canteen should do instead\nWrite about 120-150 words.",
+     "min_words": 120,
+     "topic": "Writing - Formal letter to a manager"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Part 2 has ONE task. Read the question and post your response, giving reasons and examples. Write 180-200 words. Write your answer on the answer sheet.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  PART 2\nYou are participating in an online discussion for learners.\nThe question is: Many companies now allow their staff to work from home several days a week. Some people say this makes workers more productive and gives them a better daily life, while others believe it damages teamwork and makes young employees learn more slowly. What is your opinion?\nPost your response, giving reasons and examples. Write 180-200 words.",
+     "min_words": 180,
+     "topic": "Writing - Online discussion post"
+    }
+   ]
+  }
+ ]
+}

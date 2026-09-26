@@ -528,9 +528,11 @@ export function OnlineLinkCard({
         </p>
         {kind === "mock" && (
           <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 mb-2">
-            Mock: Listening va Reading bo'limlari avtomat tekshiriladi — xom
-            ball rasmiy jadval bo'yicha IELTS bandiga o'giriladi. Writing va
-            Speaking bandini examiner qog'oz balida kiritadi.
+            Mock: Listening va Reading avtomat tekshiriladi. IELTS'da xom
+            ball rasmiy jadval bo'yicha bandga o'giriladi. CEFR
+            Multilevel'da rasmiy o'tkazish jadvali yo'q — examiner xom
+            ballni ko'rib darajani o'zi qo'yadi. Writing va Speaking
+            bahosi qog'oz balida kiritiladi.
           </p>
         )}
         {data.templates.length === 0 ? (

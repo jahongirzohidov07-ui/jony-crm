@@ -1,0 +1,452 @@
+{
+ "key": "mock_cefr_listening_c",
+ "section": "listening",
+ "skill": "listening",
+ "kind": "mock",
+ "variant": "C",
+ "title": "CEFR Multilevel Mock - Listening - Variant C",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "You will hear sentences. You will hear each sentence twice. Choose the best reply to the sentence.",
+   "passage": "",
+   "script": "EXAMINER (read aloud): Part One. You will hear eight sentences. You will hear each sentence twice. After each sentence, choose the best reply, A, B or C. You now have fifteen seconds to look at the questions.\n\n[Pause 15 seconds]\n\nQuestion one. [Read twice, with a two-second pause between the readings]\nWOMAN: Do you know what time the last ferry back from the island leaves?\n\nQuestion two. [Read twice]\nMAN: I'm sorry, but the coastal path is closed for repairs this week.\n\nQuestion three. [Read twice]\nWOMAN: Shall we put the plastic bottles in the recycling bin or in the green one?\n\nQuestion four. [Read twice]\nMAN: Your suitcase is a little over the weight limit, I'm afraid.\n\nQuestion five. [Read twice]\nWOMAN: How was the train journey through the mountains?\n\nQuestion six. [Read twice]\nMAN: Do you mind if I open the window? It's rather warm in this carriage.\n\nQuestion seven. [Read twice]\nWOMAN: Why did the council decide to plant so many trees along the river?\n\nQuestion eight. [Read twice]\nMAN: You should have booked the eco-lodge earlier - it's completely full now.\n\nThat is the end of Part One.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Do you know what time the last ferry back from the island leaves?",
+     "options": [
+      "At half past six, I believe.",
+      "It's about nine kilometres long.",
+      "Yes, the water was very cold."
+     ],
+     "answer": 0,
+     "topic": "Listening - Short dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "2  I'm sorry, but the coastal path is closed for repairs this week.",
+     "options": [
+      "Thank you, I'll take two.",
+      "It was built in 1954.",
+      "Oh no - is there another route we could take?"
+     ],
+     "answer": 2,
+     "topic": "Listening - Short dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "3  Shall we put the plastic bottles in the recycling bin or in the green one?",
+     "options": [
+      "The trip lasted four days.",
+      "In the recycling bin, definitely.",
+      "I don't mind waiting outside."
+     ],
+     "answer": 1,
+     "topic": "Listening - Short dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "4  Your suitcase is a little over the weight limit, I'm afraid.",
+     "options": [
+      "Could I move something into my hand luggage?",
+      "Yes, it's a window seat.",
+      "The train leaves from platform three."
+     ],
+     "answer": 0,
+     "topic": "Listening - Short dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "5  How was the train journey through the mountains?",
+     "options": [
+      "About forty pounds return.",
+      "No, I haven't packed yet.",
+      "Absolutely stunning - I took hundreds of photographs."
+     ],
+     "answer": 2,
+     "topic": "Listening - Short dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "6  Do you mind if I open the window? It's rather warm in this carriage.",
+     "options": [
+      "I booked it online last night.",
+      "Not at all, go ahead.",
+      "It's a shame about the rain."
+     ],
+     "answer": 1,
+     "topic": "Listening - Short dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "7  Why did the council decide to plant so many trees along the river?",
+     "options": [
+      "Next Tuesday afternoon, I think.",
+      "They cost about twelve pounds each.",
+      "To stop the banks being washed away in floods."
+     ],
+     "answer": 2,
+     "topic": "Listening - Short dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "8  You should have booked the eco-lodge earlier - it's completely full now.",
+     "options": [
+      "I know - I should have sorted it out weeks ago.",
+      "There's a swimming pool and a gym.",
+      "It's roughly two hours from the airport."
+     ],
+     "answer": 0,
+     "topic": "Listening - Short dialogue reply"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "You will hear someone giving a talk. For each question, fill in the missing information in the numbered space.\nWrite ONE WORD and / or A NUMBER for each answer.\n\nRIVERSIDE VOLUNTEER DAY - GREENFIELD VALLEY NATURE PARK\nMeeting point: outside the visitor (9) ________ , next to the main car park\nDate: Saturday the (10) ________ of April, starting at 9 a.m.\nVolunteers must bring waterproof (11) ________ (gloves are provided)\nLunch will be served in the old (12) ________ behind the bird garden\nEvery team is given a (13) ________ for writing down the rubbish they collect\nCost of the day: (14) ________ pounds per person (includes the minibus)",
+   "passage": "",
+   "script": "EXAMINER (read aloud): Part Two. You will hear a woman giving a talk about a volunteer day at a nature park. For each question, fill in the missing information in the numbered space. Write ONE WORD and / or A NUMBER for each answer. You now have thirty seconds to read the notes. You will hear the talk twice.\n\n[Pause 30 seconds]\n\nSPEAKER: Good morning, everyone, and thank you for coming along to hear about our Riverside Volunteer Day at Greenfield Valley Nature Park. My name is Nilufar and I look after the volunteers there.\n\nLet me start with where we meet. Last year we all gathered in the park cafe, but the cafe is being refitted this spring, so this time please come to the visitor centre instead. The visitor centre is the low brick building right next to the main car park, so it is very easy to find. To repeat: we meet outside the visitor centre, not the cafe.\n\nNow, the date. You may have seen the eleventh of April printed on our first leaflet - please ignore that, because the eleventh is the training morning for team leaders only. The volunteer day itself is Saturday the eighteenth of April, starting at nine o'clock sharp.\n\nWhat should you bring? Well, we will be working in shallow water and soft mud along the riverbank, so trainers are really no use at all. Please bring waterproof boots. We do have a few spare pairs, but only in very large sizes, so do try to bring your own boots if you possibly can. Gloves are provided.\n\nLunch is included and it will be served in the old barn - that is the long stone building behind the bird garden. If it rains, we eat there too, so please do not worry about the weather.\n\nEach team will be given a notebook, and we would like you to write down everything you pull out of the river: bottles, tyres, shopping trolleys, whatever you find. Our scientists use those notebooks to work out where the rubbish is coming from. Some teams last year used their phones instead, but it is the notebook that we need back at the end of the day.\n\nFinally, the cost. The charge covers the minibus from the town centre. It was six pounds last year, but thanks to our sponsors we have brought it down, so this year the day costs just four pounds per person. Children under twelve come free.\n\n[Repeat the whole talk]\n\nThat is the end of Part Two.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "9  Meeting point: outside the visitor ________ , next to the main car park",
+     "answer": [
+      "centre",
+      "center"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Date: Saturday the ________ of April, starting at 9 a.m.",
+     "answer": [
+      "18",
+      "18th",
+      "eighteenth"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  Volunteers must bring waterproof ________ (gloves are provided)",
+     "answer": [
+      "boots"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  Lunch will be served in the old ________ behind the bird garden",
+     "answer": [
+      "barn"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  Every team is given a ________ for writing down the rubbish they collect",
+     "answer": [
+      "notebook"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "14  Cost of the day: ________ pounds per person (includes the minibus)",
+     "answer": [
+      "4",
+      "four"
+     ],
+     "topic": "Listening - Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "You hear four people talking about a recent long journey. For questions 15-18, choose from the list (A - F) what each speaker says about their choice of transport. There are TWO EXTRA letters which you do not need to use.\n\nA  They wanted to reduce the damage their journey did to the atmosphere.\nB  They travelled that way because a relative kept telling them to.\nC  They chose the cheapest option available.\nD  They wanted to save as much time as possible.\nE  They wanted to look at the landscape on the way.\nF  Everything else was already fully booked.",
+   "passage": "",
+   "script": "EXAMINER (read aloud): Part Three. You will hear four people talking about why they chose a particular way of travelling on a recent long journey. For questions fifteen to eighteen, choose from the list A to F what each speaker says about their choice. There are TWO extra letters which you do not need to use. You now have twenty seconds to read the list. You will hear the recording twice.\n\n[Pause 20 seconds]\n\nSPEAKER ONE (Question 15, man): I did look at flying, honestly I did. It was about thirty pounds cheaper and it would have saved me a whole day, so on paper the plane won easily. But every time I sit on an aeroplane I find myself thinking about what it is putting into the atmosphere, and in the end I simply could not do it. I took the sleeper train instead. My sister said I was mad, and she may well be right, but at least I slept well.\n\nSPEAKER TWO (Question 16, woman): I left it far too late, that is the truth of it. I tried the coach first - nothing. Then the cheap flights - all gone, every single one, and the expensive ones were ridiculous. By Thursday evening the ferry was literally the only thing with a seat left on it, so that is how I went. It turned out to be lovely, actually, but I cannot pretend I planned it that way.\n\nSPEAKER THREE (Question 17, man): My father has crossed that sea about forty times and he would not stop going on about it. Every phone call: take the boat, take the boat, you will regret flying. In the end I gave in, mostly to keep him quiet. And yes, the views were beautiful, and yes, it was probably greener than flying, but neither of those was the reason. I went by boat because he told me to.\n\nSPEAKER FOUR (Question 18, woman): I could have been there in an hour and ten minutes by plane. But you see absolutely nothing from thirty thousand feet - just the top of the clouds and the back of somebody's head. So I took the slow road through the hills, with a window seat facing west, and I watched the lakes and the forests go past all afternoon. It cost more and it took nine hours. Worth every minute.\n\n[Repeat the whole recording]\n\nThat is the end of Part Three.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "15  Speaker 1",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "16  Speaker 2",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 5,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "17  Speaker 3",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 1,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "18  Speaker 4",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 4,
+     "topic": "Listening - Multiple matching"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "You will hear someone giving a talk. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use.\n\nMAP OF SILVERBROOK COUNTRY PARK (north is at the top)\nThe main entrance is at the bottom of the map. A straight path, the Long Walk, runs north from the entrance to the lake. Halfway along the Long Walk, on the right-hand side, there is a very old oak tree. The lake is at the top of the map, with a small island in the middle of it and reed beds along its northern shore. A footbridge crosses the eastern end of the lake.\nThe eight marked positions are:\nA  beside the path, immediately on the LEFT as you come through the main entrance\nB  beside the path, immediately on the RIGHT as you come through the main entrance\nC  on the LEFT of the Long Walk, opposite the old oak tree\nD  on the RIGHT of the Long Walk, just beyond the old oak tree\nE  at the WESTERN end of the lake\nF  on the island in the middle of the lake\nG  at the EASTERN end of the lake, beside the footbridge\nH  in the far NORTHERN corner of the park, beyond the reed beds",
+   "passage": "",
+   "script": "EXAMINER (read aloud): Part Four. You will hear a park ranger giving a talk to a group of visitors. Label the places, nineteen to twenty-three, on the map, using the letters A to H. There are THREE extra options which you do not need to use. You now have thirty seconds to look at the map. You will hear the talk twice.\n\n[Pause 30 seconds]\n\nRANGER: Good afternoon and welcome to Silverbrook Country Park. Before we set off, let me show you where everything is on this map, because the park is a good deal bigger than it looks.\n\nYou came in through the main entrance at the bottom of the map. As you came through the gate you will have noticed two small wooden buildings, one on each side of the path. The one on your left, as you walk in, is the cycle store - that is where you leave your bicycles, and it is free. The building on your right, directly across the path from it, is the cafe. So: bicycles on the left, cake on the right. Easy to remember.\n\nFrom the entrance, the straight path running north is called the Long Walk. Follow it for about ten minutes and, on your right-hand side, you will come to a very old oak tree - it is nearly four hundred years old and you really cannot miss it. Just beyond the oak, on that same side of the path, stands our big information board with all the walking routes on it. Now, I know some of you have been here before and will remember the board standing on the left of the path, opposite the oak. We moved it last spring because the grass there turned to mud, so please look for it just past the tree, on the right.\n\nCarry on north and the Long Walk brings you to the lake. At the western end of the lake there is a wooden jetty where the rowing boats are tied up. Do be careful not to walk to the eastern end looking for the boats - the eastern end is where the footbridge crosses, and there is no jetty there at all. And the small island in the middle of the lake has nothing on it at all - we leave that one to the ducks.\n\nAnd finally, the bird hide, which is what most of you have come for. Go round the lake, keep the reed beds on your left, and keep walking until you reach the very far northern corner of the park. The hide is there, well past the reed beds, where it is nice and quiet. It is a fifteen-minute walk from the lake, so do allow yourselves time.\n\n[Repeat the whole talk]\n\nThat is the end of Part Four.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "19  the bird hide",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "20  the cafe",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "21  the cycle store",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "22  the information board",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "23  the jetty for the rowing boats",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Listening - Map labelling"
+    }
+   ]
+  },
+  {
+   "title": "Part 5",
+   "instructions": "You will hear three extracts. Choose the correct answer (A, B or C) for each question (24-29). There are TWO questions for each extract. Mark your answers on the answer sheet.\n\nExtract One - questions 24 and 25\nExtract Two - questions 26 and 27\nExtract Three - questions 28 and 29",
+   "passage": "",
+   "script": "EXAMINER (read aloud): Part Five. You will hear three extracts from a conversation between two students, Madina and Oliver, who are planning a geography project. Choose the correct answer, A, B or C, for each question, twenty-four to twenty-nine. There are TWO questions for each extract. You now have thirty seconds to read the questions. You will hear each extract twice.\n\n[Pause 30 seconds]\n\nEXTRACT ONE (questions 24 and 25)\nMADINA: So, Oliver, have you decided what our project is actually going to be about? We have to hand the title in on Friday.\nOLIVER: I have, yes. I was going to look at how coastal towns are protecting themselves from rising sea levels, but I have dropped that idea completely.\nMADINA: Why? It sounded interesting.\nOLIVER: It was interesting. The problem is that there is almost nothing published about our stretch of coast. I spent two whole afternoons in the library and came away with three paragraphs. Mrs Karimova did warn me that the subject was very wide, but honestly, that was not what stopped me - I simply could not find the information anywhere.\nMADINA: Fair enough. And nobody else has taken it?\nOLIVER: No, the group next to us is doing wind farms. So instead I think we should look at what tourism is doing to Pebblehaven - the traffic, the litter, the price of the houses, all of it.\nMADINA: Tourism and its effects on the town. Yes, I like that. It is narrow enough to finish in six weeks.\n\n[Repeat Extract One]\n\nEXTRACT TWO (questions 26 and 27)\nMADINA: How are we actually getting to Pebblehaven? My brother could drive us, I suppose, if he is free.\nOLIVER: I looked at the train first, but it is nearly three hours and you have to change twice. And the school minibus is being serviced that week, so that is out. In the end I have booked us two seats on the coach - it goes straight there and it is half the price of the train.\nMADINA: Perfect. Now, the interviews. I would really like us to do them early, before the day-trippers arrive. The people behind the counters are far too busy after eleven o'clock to talk to two students.\nOLIVER: Good point. Shall I bring a recorder?\nMADINA: Bring it if you want to, but I would still write everything down by hand. The wind on that seafront ruins recordings - we tried it last summer.\n\n[Repeat Extract Two]\n\nEXTRACT THREE (questions 28 and 29)\nOLIVER: Right, I have been through all the questionnaires. Do you know what surprised me most? It was not the complaints about litter and parking - almost everybody mentioned those, exactly as we expected. It was that more than half of the shopkeepers said they would like fewer visitors in the town, even though the visitors are what they live on.\nMADINA: That is strange. That has to go right at the front of the report.\nOLIVER: Agreed. So, shall we start writing this evening?\nMADINA: Not yet. Before we write a single word, I think we have to go and talk to the town council. We have got the shopkeepers' side and we have got the residents' side, but we have not got anybody official. Once we have done that, we write.\nOLIVER: All right, you are probably right. I will email them tonight.\n\n[Repeat Extract Three]\n\nThat is the end of Part Five.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "24  What is the main subject of the students' project?",
+     "options": [
+      "the effects of tourism on a coastal town",
+      "how a coastal town is protecting itself from rising sea levels",
+      "the building of wind farms near the coast"
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  Why did Oliver give up his first idea?",
+     "options": [
+      "His teacher told him the subject was too wide.",
+      "He could not find enough published information.",
+      "Another group had already chosen it."
+     ],
+     "answer": 1,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "26  How will the students travel to Pebblehaven?",
+     "options": [
+      "by train",
+      "by coach",
+      "by car"
+     ],
+     "answer": 1,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "27  What does Madina say about the interviews?",
+     "options": [
+      "They should be done early in the day.",
+      "They should all be recorded.",
+      "They should be done after eleven o'clock."
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "28  What surprised Oliver about the results of the questionnaires?",
+     "options": [
+      "how many people complained about litter and parking",
+      "that the residents disagreed with the shopkeepers",
+      "that most shopkeepers wanted fewer visitors"
+     ],
+     "answer": 2,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "29  What do the students agree to do next?",
+     "options": [
+      "start writing the report that evening",
+      "send out more questionnaires",
+      "speak to the town council"
+     ],
+     "answer": 2,
+     "topic": "Listening - Multiple choice"
+    }
+   ]
+  },
+  {
+   "title": "Part 6",
+   "instructions": "You will hear a part of a lecture. For each question, fill in the missing information in the numbered space.\nWrite no more than ONE WORD for each answer.\n\nSLOW TRAVEL\nThe expression 'slow travel' was borrowed from an Italian campaign about (30) ________ .\nThe researchers the lecturer trusts most say a slow trip means staying in one place for at least a (31) ________ .\nAbout three quarters of the emissions produced by tourism come from (32) ________ .\nLong-stay visitors spend roughly three times as much in local (33) ________ as weekend visitors do.\nThe real obstacle to slow travel is not money but (34) ________ .\nThe lecturer recommends that governments should cut the (35) ________ charged on rail tickets.",
+   "passage": "",
+   "script": "EXAMINER (read aloud): Part Six. You will hear part of a lecture about slow travel. For each question, fill in the missing information in the numbered space. Write no more than ONE WORD for each answer. You now have thirty seconds to read the notes. You will hear the lecture twice.\n\n[Pause 30 seconds]\n\nLECTURER: Good afternoon. Today I want to talk about a way of travelling that has grown remarkably quickly over the last twenty years, and that is slow travel.\n\nLet me begin with the name, because the name was borrowed. In the nineteen eighties a movement began in Italy which protested against fast food and argued instead for local, seasonal ingredients. The expression slow travel comes directly from that earlier campaign about food, and it carries exactly the same idea: do less, but do it properly.\n\nSo what does a slow traveller actually do? Definitions vary a great deal. Some travel writers are quite happy to call a single week slow travel. The researchers I personally find most convincing set the bar a good deal higher: they say that a genuinely slow trip means staying in one place for at least a month - long enough to shop where local people shop and to learn the bus timetable by heart.\n\nNow, why does any of this matter environmentally? When people hear the words tourism and pollution together, they usually picture hotels - the towels, the swimming pools, the air conditioning running all night. Hotels do matter, and I do not want to dismiss them, but they are not the main problem. Roughly three quarters of all the emissions produced by tourism come from transport, and the greater part of that from aviation alone.\n\nThere is an economic argument as well. A study of four European regions found that visitors who stay for several weeks spend nearly three times as much in local businesses as visitors who come only for a weekend. That is because they buy their food in the market, they use the buses, they get their hair cut, they go to the dentist.\n\nOf course, slow travel has its drawbacks. People assume that the first one is money, but in fact, if you work it out per day, slow travel is usually cheaper than a short trip. The real obstacle is time. Most employees simply do not have four free weeks in a year, and no amount of enthusiasm changes that.\n\nFinally, what should governments do? I could give you a very long list, but my own recommendation is a simple one: cut the taxes charged on rail tickets, so that the train becomes the cheap way to travel rather than the expensive one.\n\n[Repeat the whole lecture]\n\nThat is the end of Part Six. You now have ten minutes to transfer your answers to the answer sheet.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "30  The expression 'slow travel' was borrowed from an Italian campaign about ________ .",
+     "answer": [
+      "food"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "31  The researchers the lecturer trusts most say a slow trip means staying in one place for at least a ________ .",
+     "answer": [
+      "month"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "32  About three quarters of the emissions produced by tourism come from ________ .",
+     "answer": [
+      "transport"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "33  Long-stay visitors spend roughly three times as much in local ________ as weekend visitors do.",
+     "answer": [
+      "businesses"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "34  The real obstacle to slow travel is not money but ________ .",
+     "answer": [
+      "time"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "35  The lecturer recommends that governments should cut the ________ charged on rail tickets.",
+     "answer": [
+      "taxes"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    }
+   ]
+  }
+ ]
+}

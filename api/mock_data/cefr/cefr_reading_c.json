@@ -1,0 +1,504 @@
+{
+ "key": "mock_cefr_reading_c",
+ "section": "reading",
+ "skill": "reading",
+ "kind": "mock",
+ "variant": "C",
+ "title": "CEFR Multilevel Mock - Reading - Variant C",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Read the text. Fill in each gap with ONE word. You must use a word which is somewhere in the rest of the text. Mark your answers on the answer sheet.",
+   "passage": "NIGHT TRAINS RETURN\n\nTwenty years ago most of Europe's sleeper services were closed. Airlines had cut their fares to meet the demand for cheap holidays, and a seat on a plane often sold for less than the cost of a taxi to the airport. Today the night train is coming back, and passengers who once thought only about speed now count the carbon (1) ________ of every flight.\n\nA sleeper leaves a city centre in the evening and arrives in another city (2) ________ soon after breakfast. Nobody pays for a hotel room, and children can walk up and down the corridor instead of sitting still for eight hours.\n\nRailways in Austria, Sweden and Norway have ordered carriages with private cabins, reading lamps and wide windows. Every cabin door has a strong lock, so nobody has to sit awake in the middle of the (3) ________. Beds are not always cheap, yet (4) ________ for them rises every winter.\n\nCritics reply that a sleeper needs expensive (5) ________ at night, while a plane needs none. Supporters answer that the staff who bring (6) ________ to the cabin door in the morning are exactly why people now choose the slow way.",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Gap (1): \"... now count the carbon ________ of every flight.\"",
+     "answer": [
+      "cost"
+     ],
+     "topic": "Reading - Word gap fill (word from the text)"
+    },
+    {
+     "type": "text",
+     "q": "2  Gap (2): \"... arrives in another city ________ soon after breakfast.\"",
+     "answer": [
+      "centre"
+     ],
+     "topic": "Reading - Word gap fill (word from the text)"
+    },
+    {
+     "type": "text",
+     "q": "3  Gap (3): \"... nobody has to sit awake in the middle of the ________.\"",
+     "answer": [
+      "night"
+     ],
+     "topic": "Reading - Word gap fill (word from the text)"
+    },
+    {
+     "type": "text",
+     "q": "4  Gap (4): \"Beds are not always cheap, yet ________ for them rises every winter.\"",
+     "answer": [
+      "demand"
+     ],
+     "topic": "Reading - Word gap fill (word from the text)"
+    },
+    {
+     "type": "text",
+     "q": "5  Gap (5): \"... a sleeper needs expensive ________ at night, while a plane needs none.\"",
+     "answer": [
+      "staff"
+     ],
+     "topic": "Reading - Word gap fill (word from the text)"
+    },
+    {
+     "type": "text",
+     "q": "6  Gap (6): \"... the staff who bring ________ to the cabin door in the morning ...\"",
+     "answer": [
+      "breakfast"
+     ],
+     "topic": "Reading - Word gap fill (word from the text)"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Read the texts 7-14 and the statements A-J. Decide which text matches with the situation described in the statements.\nEach statement can be used ONCE only. There are TWO extra statements that you do not need to use.\nMark your answers on the answer sheet.\n\nA) You want to travel between two towns and you do not want to bring the bicycle back to the place where you hired it.\nB) You would like to do something useful for nature for a weekend without paying anything at all.\nC) You want somewhere completely quiet with no cars, and you do not mind walking a long way to get there.\nD) You want to learn a new water sport and receive written proof that you have completed the course.\nE) You are looking for an activity after dark, and you have no car of your own.\nF) You want to watch wild birds early in the morning with a guide, and you need a flat, smooth path.\nG) You would like to eat with a local family and learn how they cook.\nH) You are organising a school visit and you want the pupils to leave something growing behind them.\nI) You want a luxury hotel with a swimming pool, a spa and room service.\nJ) You are looking for paid work as a tour guide during the summer season.",
+   "passage": "E'LONLAR / NOTICES\n\n7  KARABOYA WETLAND CENTRE\nDawn walks every day from 1 April to 31 October, led by our resident ornithologist. Herons, spoonbills and, in September, the cranes. The whole two-kilometre trail is a level wooden boardwalk, suitable for wheelchairs and pushchairs. Binoculars lent free of charge. Under-12s free. Closed November to March.\n\n8  AKSU MOUNTAIN LODGE\nThere is no road to the lodge. Guests leave the car at Aksu bridge and walk up for about four hours; we carry your bag on a pony. Twelve beds, wood stove, hot meals, no engines and no electricity after ten o'clock. Maximum eight guests a night, so silence is guaranteed.\n\n9  GREEN WHEELS CYCLE HIRE\nTouring bikes, child seats and trailers. Helmet, lock, pump and repair kit are included in the price. One-way hire is our speciality: pick the bike up here and leave it at any of our seven stations along the river valley, at no extra cost. Open every day of the year, including holidays.\n\n10  TANDIR VILLAGE HOMESTAY\nStay in a working farmhouse with the Nazarov family. Guests knead and bake their own bread in the clay oven, pick vegetables in the garden and share the evening meal at the family table. Vegetarian cooking only. Bathroom shared with the family. Some English and Russian spoken.\n\n11  RIVERSIDE CLEAN-UP WEEKEND\nTwo days of clearing plastic and old netting from the riverbank. Camping, hot food and gloves are all provided free; you bring a sleeping bag. No experience is needed and no fee is charged. Volunteers must be 16 or over. Saturday 09:00 to Sunday 16:00, once a month in summer.\n\n12  DENIZ COAST KAYAK SCHOOL\nA two-day beginners' course in sheltered water. Kayak, paddle, helmet and buoyancy aid supplied. You must be able to swim fifty metres unaided. Everyone who finishes the course receives a recognised certificate of competence, which is accepted by clubs across the country.\n\n13  STARLIGHT DESERT CAMP\nGuided night-sky tours with a 300mm telescope, three hours from sunset. A minibus collects guests from four points in the city and brings them back; no private transport is needed. Warm clothing is essential, as the temperature falls sharply. Book at least three days in advance.\n\n14  PINE FOREST TREE NURSERY\nChoose a sapling, plant it yourself on the hillside and receive a certificate with the exact position of your tree, so that you can find it again in years to come. Groups of schoolchildren especially welcome; we provide spades and a short talk. Open Monday to Friday only.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "7  Karaboya Wetland Centre",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching texts to situations"
+    },
+    {
+     "type": "choice",
+     "q": "8  Aksu Mountain Lodge",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching texts to situations"
+    },
+    {
+     "type": "choice",
+     "q": "9  Green Wheels Cycle Hire",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching texts to situations"
+    },
+    {
+     "type": "choice",
+     "q": "10  Tandir Village Homestay",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching texts to situations"
+    },
+    {
+     "type": "choice",
+     "q": "11  Riverside Clean-Up Weekend",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching texts to situations"
+    },
+    {
+     "type": "choice",
+     "q": "12  Deniz Coast Kayak School",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching texts to situations"
+    },
+    {
+     "type": "choice",
+     "q": "13  Starlight Desert Camp",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching texts to situations"
+    },
+    {
+     "type": "choice",
+     "q": "14  Pine Forest Tree Nursery",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching texts to situations"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Read the text and choose the correct heading for each paragraph from the list of headings below.\nThere are more headings than paragraphs, so you will not use all of them. You cannot use any heading more than once.\nMark your answers on the answer sheet.\n\nList of headings:\nA) Sudden fame and what caused it\nB) Where the money goes now\nC) Counting the visitors instead of stopping them\nD) The price of being popular\nE) A plan that had to be dropped\nF) Lessons that have travelled to other places\nG) A festival that changed the village calendar\nH) The difficulty of finding staff in winter",
+   "passage": "THE VILLAGE THAT CHOSE ITS VISITORS\n\nI\nUntil 2016, Vardzhin was a village of two hundred and forty people beside a small green lake, known mainly to the families who had always come there. Then a photograph of the lake at sunrise, posted by a travel account with several million followers, was shared until it appeared on screens all over the world. In the following summer the village received eleven thousand visitors. In the summer after that, it received ninety thousand.\n\nII\nThe lake itself did not change, but everything around it did. The single footpath widened into a scar of bare mud forty metres across. The village spring, which had supplied every house since anyone could remember, ran dry in August for the first time in living memory. Rubbish appeared in the reeds where herons nested, and the herons left. Three families sold their houses to an agency that rented them out by the night, and the primary school, which needed twelve pupils to stay open, ended the year with nine.\n\nIII\nThe council's first proposal was simple, and popular at the meeting where it was made: close the road and let nobody in except residents. Within a month it was clear that this could not work. A quarter of the village now depended on visitors for a living; the road was a public right of way that the council had no power to close; and the regional government let it be known that a ban would end the grant that paid for the village ambulance. The proposal was withdrawn without a vote.\n\nIV\nWhat replaced it was less dramatic and far more effective. Since 2019, anyone wishing to walk to the lake must book a timed entry online. Four hundred places are released for each day, and no more. Two hundred of them are held back until the previous evening, so that visitors who cannot plan far ahead are not excluded. A ticket costs nothing between seven and nine in the morning, and the equivalent of six euros in the middle of the day. Residents, and anyone born in the district, enter free at any hour.\n\nV\nThe money the system raises does not disappear into a distant treasury. By agreement it stays in the village. It has paid for a boardwalk that keeps feet off the peat, a second spring captured higher up the mountain, a minibus that runs to the nearest town four times a day, and the wages of two wardens. Last year it also paid the school's heating bill; the school reopened in 2021 with fourteen pupils.\n\nVI\nThe lake is not as quiet as it was in 2015, and nobody in Vardzhin pretends otherwise. But the mud scar is healing, the herons have nested twice, and four of the families who left have come back. Delegations now arrive from other crowded places - a cathedral town in France, an island in the Adriatic, a national park in Japan - to look not at the lake but at the booking system. The village that was almost destroyed by a photograph has become, to its own surprise, an exporter of ideas.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "15  Paragraph I",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "16  Paragraph II",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "17  Paragraph III",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "18  Paragraph IV",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "19  Paragraph V",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "20  Paragraph VI",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching headings"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "Read the text below.\nFor questions 21-24, choose the correct answer A, B, C, or D.\nFor questions 25-29, decide if the following statements agree with the information given in the text. Choose A) True, B) False or C) No Information.\nMark your answers on the answer sheet.",
+   "passage": "THE RETURN OF THE SAILING FREIGHTER\n\nFor most of the twentieth century, the idea of moving cargo under sail seemed to belong in a museum. Diesel engines were cheap, reliable and independent of the weather, and by 1970 almost no commercial sailing vessel remained in service on the world's trade routes. In the last decade, however, a small number of shipping companies have begun to build freighters that use the wind again - not out of nostalgia, but because the arithmetic has changed.\n\nShipping is responsible for roughly three per cent of global greenhouse gas emissions, a figure comparable to that of a medium-sized industrial country. Because ships operate in international waters, they were left out of most early climate agreements, and fuel used at sea was never taxed in the way that petrol for cars was. That is now changing. European ports have begun to charge vessels according to the carbon they release, and several large retailers have promised their customers that goods will arrive with a measurably smaller footprint. Suddenly a technology that costs nothing to run has become interesting to accountants as well as to environmentalists.\n\nThe new vessels are not copies of old ones. The Aurelia, launched in 2024 by a Dutch cooperative, carries 1,100 tonnes of cargo and is rigged with four rigid wing sails, each controlled by software rather than by a crew climbing ropes. Sensors read the wind every few seconds and adjust the wings automatically; the captain sets a destination, and the routing system chooses a course that may be several hundred kilometres longer than the direct line but considerably quicker under sail. A small electric motor, charged partly by propellers that turn in the water while the ship is sailing, handles harbour manoeuvres and windless days.\n\nThe obvious objection is speed. A modern container ship crosses the Atlantic in about eight days; the Aurelia takes between twelve and eighteen, depending on the season. For fresh food or fashion this is fatal. For coffee, cocoa, wine, timber and machinery parts it matters much less, and some producers have discovered that customers will pay extra for a bottle that arrives under sail. The cooperative sells cargo space a year in advance and has never yet sailed with an empty hold.\n\nCritics point out that the world moves eleven billion tonnes of goods by sea each year, and that a fleet of Aurelias would need centuries to make a difference. Supporters do not really disagree. Their argument is narrower: sailing freighters prove that fuel-free shipping is possible today, and every large operator now studying wind-assist systems for conventional ships is, in effect, borrowing from their experiment. Several of the world's biggest carriers have already fitted rotor sails to ordinary tankers, cutting fuel use by between five and twenty per cent. That saving is unglamorous, but multiplied across fifty thousand vessels it is worth more than any single romantic ship.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "21  According to the first paragraph, cargo sailing ships are being built again mainly because",
+     "options": [
+      "shipping companies want to preserve traditional skills.",
+      "the financial situation has altered.",
+      "diesel engines have become unreliable.",
+      "museums have asked for working examples."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "22  Why was fuel used at sea not taxed in the past?",
+     "options": [
+      "Ships produced very little pollution at that time.",
+      "Ports refused to collect the money.",
+      "Governments had promised shipowners an exemption.",
+      "Ships work outside the borders of any country."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "23  What does the writer say about the route the Aurelia follows?",
+     "options": [
+      "It is always the shortest possible line between two ports.",
+      "The captain chooses it personally every morning.",
+      "It can be longer in distance but faster overall.",
+      "It avoids any harbour where there is no wind."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "24  In the last paragraph, the writer suggests that the main value of sailing freighters is that they",
+     "options": [
+      "encourage much larger companies to adopt wind technology.",
+      "will soon replace container ships on most routes.",
+      "carry goods that could not travel in any other way.",
+      "make products such as coffee and wine cheaper."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  The Aurelia can carry more than one thousand tonnes of cargo.",
+     "options": [
+      "True",
+      "False",
+      "No Information"
+     ],
+     "answer": 0,
+     "topic": "Reading - True/False/No Information"
+    },
+    {
+     "type": "choice",
+     "q": "26  The Aurelia's wing sails are adjusted by hand by members of the crew.",
+     "options": [
+      "True",
+      "False",
+      "No Information"
+     ],
+     "answer": 1,
+     "topic": "Reading - True/False/No Information"
+    },
+    {
+     "type": "choice",
+     "q": "27  The crew of the Aurelia are paid more than crews on diesel-powered ships.",
+     "options": [
+      "True",
+      "False",
+      "No Information"
+     ],
+     "answer": 2,
+     "topic": "Reading - True/False/No Information"
+    },
+    {
+     "type": "choice",
+     "q": "28  The cooperative has sometimes had to send the Aurelia to sea with no cargo on board.",
+     "options": [
+      "True",
+      "False",
+      "No Information"
+     ],
+     "answer": 1,
+     "topic": "Reading - True/False/No Information"
+    },
+    {
+     "type": "choice",
+     "q": "29  Rotor sails fitted to ordinary tankers reduce the amount of fuel those ships use.",
+     "options": [
+      "True",
+      "False",
+      "No Information"
+     ],
+     "answer": 0,
+     "topic": "Reading - True/False/No Information"
+    }
+   ]
+  },
+  {
+   "title": "Part 5",
+   "instructions": "Read the following text for questions 30-35.\nFor questions 30-33, fill in the missing information in the numbered spaces.\nWrite no more than ONE WORD and / or A NUMBER for each question.\nFor questions 34-35, choose the correct answer A, B, C, or D.\nMark your answers on the answer sheet.",
+   "passage": "WHEN THE SHEEP LEFT THE VALLEY\n\nEconomists have a blunt word for land that produces almost nothing: marginal. For two centuries the high valleys of northern Britain, Spain and the Balkans were farmed not because the soil rewarded the effort but because there was nowhere else for the population to go. When the population finally did go - to cities, to factories, to other countries - the sheep stayed, held in place by subsidies that paid farmers for the hectares they owned rather than for the food they produced. The result was a landscape that looked ancient and was in fact a recent and expensive invention: a green desert, cropped so closely that no tree could ever establish itself.\n\nGlen Raigh, a valley of 4,000 hectares in the Scottish uplands, was such a place. In 1998 it supported eleven thousand sheep, four full-time shepherds and an annual loss, before subsidy, of about 180,000 pounds. Its owner, an insurance company that had bought it as a tax shelter, eventually offered it for sale at a price below the replacement value of its own fences. A charitable trust bought it in 2004 with no agricultural plan whatsoever. It simply removed the sheep, blocked the drainage ditches that Victorian engineers had cut into the peat, and waited.\n\nWhat happened next has been documented more carefully than almost any comparable project, largely because the trust's donors demanded evidence rather than photographs. Within four years birch, rowan and willow had colonised the lower slopes without a single tree being planted. Within nine, the peat, rewetted, had stopped oxidising and had begun once again to accumulate carbon; measurement suggested that the valley had moved from emitting roughly 9,000 tonnes of carbon dioxide a year to absorbing a little over two thousand. Breeding wader numbers, which conventional wisdom held would collapse without grazing animals, fell for three seasons and then climbed above their starting level as wet ground returned.\n\nThe economics have proved more contentious than the ecology. Glen Raigh now employs nineteen people: ecologists, two guides, a small team maintaining paths, and the staff of a twelve-room lodge converted from the old shooting house. That is more than four times the workforce of the sheep farm, although the jobs are seasonal in a way that shepherding was not, and several of them depend on visitors who arrive by car and by plane - a contradiction the trust concedes but has not solved. Roughly sixty per cent of the valley's income now comes from tourism, a further quarter from selling verified carbon credits to companies, and the remainder from research contracts and donations.\n\nCritics, many of them from farming families in neighbouring glens, make two arguments that deserve a hearing. The first is cultural: a way of life that shaped the language, the music and the place names of the region is being ended by people who did not grow up in it and who can afford to be patient. The second is arithmetical: if marginal land everywhere stopped producing food, that food would be grown somewhere else, quite possibly on land cleared from tropical forest, and the global ledger would show a loss rather than a gain. Defenders of rewilding answer that the quantity of food actually produced by such land is trivial - the sheep of Glen Raigh supplied roughly one day's meat a year for a town of ten thousand people - and that the honest comparison is not between sheep and forest but between sheep and everything else the valley might conceivably do.\n\nWhat the case genuinely demonstrates is narrower, and more useful, than either side claims. It shows that when the subsidy holding a landscape in place is withdrawn, the landscape does not return to some lost past; it moves somewhere new, and the speed of that movement surprises almost everyone who studies it.",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "30  The charitable trust bought Glen Raigh in ________ .",
+     "answer": [
+      "2004"
+     ],
+     "topic": "Reading - Summary gap fill"
+    },
+    {
+     "type": "text",
+     "q": "31  Before the peat was rewetted, the valley released about ________ tonnes of carbon dioxide a year.",
+     "answer": [
+      "9,000",
+      "9000"
+     ],
+     "topic": "Reading - Summary gap fill"
+    },
+    {
+     "type": "text",
+     "q": "32  The estate today provides work for ________ people.",
+     "answer": [
+      "nineteen",
+      "19"
+     ],
+     "topic": "Reading - Summary gap fill"
+    },
+    {
+     "type": "text",
+     "q": "33  About ________ per cent of the valley's income comes from tourism.",
+     "answer": [
+      "sixty",
+      "60"
+     ],
+     "topic": "Reading - Summary gap fill"
+    },
+    {
+     "type": "choice",
+     "q": "34  The writer uses the phrase \"a green desert\" in order to emphasise that the landscape",
+     "options": [
+      "received very little rainfall during the year.",
+      "held very little life in spite of its green appearance.",
+      "was too wet for young trees to take root.",
+      "had been completely abandoned by its owners."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  In the final paragraph, the writer concludes that the Glen Raigh project mainly proves that",
+     "options": [
+      "rewilding is more profitable than farming in every region.",
+      "historic landscapes can be restored with great accuracy.",
+      "removing financial support produces fast and unexpected change.",
+      "the critics of rewilding have misunderstood the evidence."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    }
+   ]
+  }
+ ]
+}

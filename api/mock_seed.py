@@ -10,8 +10,9 @@ yozilgan: Cambridge kitoblaridan birorta gap ham ko'chirilmagan.
 Ko'chirilgani faqat FORMAT: bo'limlar soni, savollar soni, savol
 turlari, ko'rsatma matnlari va band jadvali.
 
-  mock_data/ielts/*.json — har fayl bitta bo'lim (Listening / Reading /
-  Writing / Speaking) va bitta variant (A-E). Fayl ichida:
+  mock_data/<imtihon>/*.json — ielts/ va cefr/ papkalari. Har fayl
+  bitta bo'lim (Listening / Reading / Writing / Speaking) va bitta
+  variant. Fayl ichida:
     key      — seed kaliti (bir marta yoziladi, keyin examiner tahrirlaydi)
     section  — listening | reading | writing | speaking
     variant  — A..E
@@ -21,9 +22,16 @@ turlari, ko'rsatma matnlari va band jadvali.
   Bir daraja + "mock" ichida bir xil TUZILISHdagi variantlar avtomat
   aralashadi (exam_online.mix_parts): Listening A ning 1-qismi, C ning
   2-qismi... — ustoz qaysi savollar tushishini oldindan bilolmaydi.
-  Listening (10,10,10,10), Reading (13,13,14), Writing (1,1) va
-  Speaking (1,1,1) tuzilishlari boshqa-boshqa, shuning uchun ular
-  o'zaro aralashmaydi.
+  IELTS Listening (10,10,10,10), IELTS Reading (13,13,14), CEFR
+  Listening (8,6,4,5,6,6), CEFR Reading (6,8,6,9,6), Writing va
+  Speaking tuzilishlari boshqa-boshqa, shuning uchun ular o'zaro
+  aralashmaydi.
+
+  CEFR Multilevel: darajasi "cefr". Kitoblarda xom balldan CEFR
+  darajasiga RASMIY o'tkazish jadvali yo'q (ikkala qo'llanma ham
+  mytests.uz ga yo'naltiradi), shuning uchun avtomat band yozilmaydi —
+  examiner xom ballni ko'rib darajani o'zi qo'yadi (exam_online.
+  _write_result). IELTS Listening/Reading uchun esa rasmiy jadval bor.
 """
 import json
 import os
@@ -33,19 +41,23 @@ from sqlalchemy.orm import Session
 import models
 from common import _seed_done, _seed_mark
 
-DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                   "mock_data", "ielts")
+DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mock_data")
 
 
 def _files() -> list:
+    """mock_data ichidagi har papka bitta imtihon turi: ielts, cefr, ..."""
     if not os.path.isdir(DIR):
         return []
     out = []
-    for name in sorted(os.listdir(DIR)):
-        if not name.endswith(".json"):
+    for sub in sorted(os.listdir(DIR)):
+        d = os.path.join(DIR, sub)
+        if not os.path.isdir(d):
             continue
-        with open(os.path.join(DIR, name), encoding="utf-8") as fh:
-            out.append(json.load(fh))
+        for name in sorted(os.listdir(d)):
+            if not name.endswith(".json"):
+                continue
+            with open(os.path.join(d, name), encoding="utf-8") as fh:
+                out.append(json.load(fh))
     return out
 
 

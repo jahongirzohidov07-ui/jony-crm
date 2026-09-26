@@ -310,9 +310,16 @@ def _write_result(db: Session, exam: models.Exam, online: models.ExamOnline,
         # avtomat tekshiriladigan savol yo'q — examiner qog'ozda
         # bandning o'zini qo'yadi.
         b = mock_band(_load(online.parts), sub.online_score, sub.online_max)
-        band = b if b is not None else (sub.paper_score or 0)
+        if b is None:
+            if (sub.online_max or 0) > 0:
+                # CEFR Multilevel va boshqa rasmiy jadvali yo'q mocklar:
+                # xom ballni examiner submissionlar ro'yxatida ko'radi va
+                # darajani o'zi qo'yadi. Taxminiy band YOZILMAYDI —
+                # noto'g'ri raqam hisobotlarga tushib ketmasin.
+                return
+            b = sub.paper_score or 0
         mark = schemas.ExamScoreMark(student_id=sub.student_id,
-                                     band=round(float(band) * 2) / 2,
+                                     band=round(float(b) * 2) / 2,
                                      absent=False)
     else:
         mark = schemas.ExamScoreMark(student_id=sub.student_id, score=total,

@@ -1,0 +1,454 @@
+{
+ "key": "mock_cefr_listening_a",
+ "section": "listening",
+ "skill": "listening",
+ "kind": "mock",
+ "variant": "A",
+ "title": "CEFR Multilevel Mock - Listening - Variant A",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "For questions 1-8, you will hear eight short sentences. You will hear each sentence twice. Choose the best reply (A, B or C) to each sentence. Mark your answers on the answer sheet.",
+   "passage": "",
+   "script": "EXAMINER: Part One. You will hear sentences. You will hear each sentence twice. Choose the best reply to the sentence. You now have fifteen seconds to look at the questions for Part One.\n\n[15 seconds]\n\nEXAMINER: Question one.\nSPEAKER (woman): Would you mind covering the front desk while I pop out for lunch?\n[pause 3 seconds]\nSPEAKER (woman): Would you mind covering the front desk while I pop out for lunch?\n[pause 5 seconds]\n\nEXAMINER: Question two.\nSPEAKER (man): I am afraid the printer has jammed again.\n[pause 3 seconds]\nSPEAKER (man): I am afraid the printer has jammed again.\n[pause 5 seconds]\n\nEXAMINER: Question three.\nSPEAKER (woman): How long have you been working in the warehouse?\n[pause 3 seconds]\nSPEAKER (woman): How long have you been working in the warehouse?\n[pause 5 seconds]\n\nEXAMINER: Question four.\nSPEAKER (man): Sorry I am late. The bus broke down on the ring road.\n[pause 3 seconds]\nSPEAKER (man): Sorry I am late. The bus broke down on the ring road.\n[pause 5 seconds]\n\nEXAMINER: Question five.\nSPEAKER (man): Could you tell me where I can find the staff canteen?\n[pause 3 seconds]\nSPEAKER (man): Could you tell me where I can find the staff canteen?\n[pause 5 seconds]\n\nEXAMINER: Question six.\nSPEAKER (woman): Shall we order some sandwiches for the meeting?\n[pause 3 seconds]\nSPEAKER (woman): Shall we order some sandwiches for the meeting?\n[pause 5 seconds]\n\nEXAMINER: Question seven.\nSPEAKER (woman): What do you think of the new shift system?\n[pause 3 seconds]\nSPEAKER (woman): What do you think of the new shift system?\n[pause 5 seconds]\n\nEXAMINER: Question eight.\nSPEAKER (man): Do you happen to know whether Tuesday's training has been cancelled?\n[pause 3 seconds]\nSPEAKER (man): Do you happen to know whether Tuesday's training has been cancelled?\n[pause 5 seconds]\n\nEXAMINER: That is the end of Part One.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Would you mind covering the front desk while I pop out for lunch?",
+     "options": [
+      "Not at all - take your time.",
+      "Yes, I minded it very much.",
+      "It is on the second floor, I think."
+     ],
+     "answer": 0,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "2  I'm afraid the printer has jammed again.",
+     "options": [
+      "Congratulations on the new job.",
+      "Shall I ring the maintenance team?",
+      "No, I printed it yesterday morning."
+     ],
+     "answer": 1,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "3  How long have you been working in the warehouse?",
+     "options": [
+      "It is about three kilometres away.",
+      "Yes, I work extremely hard.",
+      "About three years now."
+     ],
+     "answer": 2,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "4  Sorry I'm late - the bus broke down on the ring road.",
+     "options": [
+      "Don't worry, we've only just started.",
+      "Yes, please put it on the top shelf.",
+      "I'd much rather walk than drive."
+     ],
+     "answer": 0,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "5  Could you tell me where I can find the staff canteen?",
+     "options": [
+      "I usually have soup and a roll.",
+      "It's on the ground floor, next to the lifts.",
+      "Because the old kitchen was too small."
+     ],
+     "answer": 1,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "6  Shall we order some sandwiches for the meeting?",
+     "options": [
+      "The meeting was very useful, thanks.",
+      "No, I've already met him twice.",
+      "That's a good idea - I'll ring the cafe."
+     ],
+     "answer": 2,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "7  What do you think of the new shift system?",
+     "options": [
+      "I think it suits the early risers better.",
+      "I thought about it at about six.",
+      "Yes, it is certainly a system."
+     ],
+     "answer": 0,
+     "topic": "Listening - Dialogue reply"
+    },
+    {
+     "type": "choice",
+     "q": "8  Do you happen to know whether Tuesday's training has been cancelled?",
+     "options": [
+      "I trained for nearly two hours.",
+      "No, it's still going ahead as far as I know.",
+      "Tuesday is my favourite, actually."
+     ],
+     "answer": 1,
+     "topic": "Listening - Dialogue reply"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "You will hear someone giving a talk. For questions 9-14, fill in the missing information in the numbered space. Write ONE WORD and / or A NUMBER for each answer.\n\nRIVERBANK COMMUNITY CENTRE - SKILLS SWAP EVENINGS (notes)",
+   "passage": "",
+   "script": "EXAMINER: Part Two. You will hear someone giving a talk. For each question, fill in the missing information in the numbered space. Write ONE WORD and / or A NUMBER for each answer. You now have thirty seconds to look at the notes for Part Two.\n\n[30 seconds]\n\nEXAMINER: Now listen carefully. You will hear the talk twice.\n\nHELEN BROOKFIELD (woman, warm and unhurried): Good evening, everyone, and thank you all for coming along on such a cold night. My name is Helen Brookfield and I am the activities coordinator here at the Riverbank Community Centre. I would like to spend the next few minutes telling you about our Skills Swap evenings, which are meant for people who work locally and who want to learn something practical without paying for an expensive course.\n\nThe idea behind a Skills Swap is very simple indeed. Everybody who comes along brings one skill that they are willing to teach, and takes away one skill that they would like to learn. Last month, for example, a bus driver taught two people how to mend a bicycle tyre, and in return a retired tailor showed him how to take up a pair of trousers. Nobody pays anybody. You simply swap.\n\nNow, let me give you the practical details, because those are the things people ask me about at the door.\n\nFirst, when we meet. For several years we ran these sessions on a Tuesday, and I know a number of you will remember that perfectly well. Unfortunately, the sports club now uses the main hall every Tuesday, so since April we have met on Thursday evening instead, and to be honest that suits our shift workers rather better. So it is Thursday now, every week, starting at seven o'clock.\n\nSome people assume this is a brand new scheme, but it is not. Our very first Skills Swap evening took place in two thousand and nineteen. I should add that the centre building itself opened in nineteen ninety-eight, so the scheme is a good deal younger than the walls around us.\n\nNext, the room. In the winter we sometimes borrowed the cafe downstairs, and it was always far too noisy. From now on we will meet in the workshop on the first floor, which has proper benches, a sink, and much better lighting. Go up the main staircase and it is the second door on your left.\n\nHow long does an evening last? We used to run for a full two hours, but people told us, quite rightly, that two hours is a great deal after a day at work. So each session now lasts ninety minutes, and we finish promptly, because the caretaker locks the side door at half past eight.\n\nThere is one thing I would ask you to bring with you to your first session, and that is a notebook. We can lend you pens, we can lend you tools, and we can lend you aprons, but a notebook of your own is far more useful, because you will want to write down each step while your partner is explaining it to you.\n\nAnd finally, the cost. The evening itself is completely free. What we do ask is that members pay a subscription once a year. Last year it was eight pounds; I am afraid the heating bill has gone up rather sharply, so from September the subscription is twelve pounds for the whole year. That includes tea, biscuits, and the use of everything in the workshop.\n\nRight. Are there any questions before I let you all go home?\n\nEXAMINER: Now listen again.\n\n[The talk is repeated.]\n\nEXAMINER: That is the end of Part Two.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "9  The Skills Swap is now held every ____________ evening.",
+     "answer": [
+      "Thursday",
+      "Thursdays"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  The first Skills Swap evening took place in ____________ .",
+     "answer": [
+      "2019"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  From now on members will meet in the ____________ on the first floor.",
+     "answer": [
+      "workshop"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  Each session now lasts ____________ minutes.",
+     "answer": [
+      "90",
+      "ninety"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  Bring a ____________ of your own to the first session.",
+     "answer": [
+      "notebook"
+     ],
+     "topic": "Listening - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "14  From September the yearly subscription is ____________ pounds.",
+     "answer": [
+      "12",
+      "twelve"
+     ],
+     "topic": "Listening - Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "You hear four people. For questions 15-18, choose from the list (A - F) what each speaker says about their first week in a new job. There are TWO EXTRA letters which you do not need to use. Mark your answers on the answer sheet.\n\nA  A colleague made the first day much easier.\nB  The journey to work took far longer than expected.\nC  The equipment was very hard to use at first.\nD  There was much more paperwork than expected.\nE  The working hours were changed at short notice.\nF  There was never time for a proper lunch break.",
+   "passage": "",
+   "script": "EXAMINER: Part Three. You hear four people talking about their first week in a new job. For questions fifteen to eighteen, choose from the list A to F what each speaker says about that first week. There are TWO EXTRA letters which you do not need to use. You now have thirty seconds to look at the list.\n\n[30 seconds]\n\nEXAMINER: Now listen carefully. You will hear the four speakers twice.\n\nSPEAKER ONE (man, mid-twenties): I had been dreading it, to be honest with you. I got there twenty minutes early and then just stood in the corridor holding my coat, because I did not know which door to go through. Then a woman from the accounts team, Nadira her name is, came over, introduced herself and walked me round every single desk on the floor. She even sat with me at lunch and explained who does what and who not to speak to before ten in the morning. Without her I think I would have spent the whole day staring at a blank screen. The work itself turned out to be perfectly manageable.\n\n[pause 3 seconds]\n\nSPEAKER TWO (woman, thirties): The advert said nine until five, the interview said nine until five, and I had arranged my daughter's nursery around nine until five. Then on the Wednesday of my very first week the supervisor wandered over and announced that the whole department was moving to an early start, half past seven, from the following Monday. Two working days' notice, that was all I got. Everybody else seemed to have known about it for a fortnight. I am not complaining about the job, and the people are genuinely lovely, but that was a real shock.\n\n[pause 3 seconds]\n\nSPEAKER THREE (man, forties): On paper it is twenty-five minutes door to door. I had even driven it once on a Sunday afternoon to make sure. What I had not allowed for was the level crossing on Fenwick Road at half past seven on a weekday morning. Day one it took me fifty minutes. Day two it took an hour and ten, and I walked in looking like a thundercloud. I catch the earlier train now, which means leaving the house at ten past six, but at least I arrive in a reasonable mood.\n\n[pause 3 seconds]\n\nSPEAKER FOUR (woman, twenties): The building is modern, the team are friendly and the hours are exactly what I asked for. What very nearly finished me off was the till. Or the terminal, sorry, that is what they insist on calling it. It has got about forty buttons on it and not one of them is labelled in plain English. On my second morning I pressed the wrong one and cancelled somebody's entire order in front of a queue of eleven people. Three weeks on I can do it without even looking down, but in that first week I dreaded every single customer.\n\nEXAMINER: Now listen again.\n\n[The four speakers are repeated.]\n\nEXAMINER: That is the end of Part Three.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "15  Speaker 1",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "16  Speaker 2",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 4,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "17  Speaker 3",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 1,
+     "topic": "Listening - Multiple matching"
+    },
+    {
+     "type": "choice",
+     "q": "18  Speaker 4",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 2,
+     "topic": "Listening - Multiple matching"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "You will hear someone giving a talk. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use. Mark your answers on the answer sheet.\n\nMAP: MEADOWGATE BUSINESS PARK\nThe main gate is at the bottom (south) of the map. Willow Road runs straight from the main gate to the top (north) of the map. There are four plots on the west side of Willow Road (the left-hand side as you come in through the gate) and four plots on the east side (the right-hand side).\nWest side, from south to north:  A - B - C - D\nEast side, from south to north:  E - F - G - H",
+   "passage": "",
+   "script": "EXAMINER: Part Four. You will hear someone giving a talk. Label the places, nineteen to twenty-three, on the map, A to H. There are THREE extra options which you do not need to use. You now have thirty seconds to look at the map.\n\n[30 seconds]\n\nEXAMINER: Now listen carefully. You will hear the talk twice.\n\nTOUR GUIDE (woman, brisk and friendly): Good morning, everybody, and welcome to Meadowgate Business Park. Before we set off on the walking tour, let me take you through the map you have all been given, so that nobody gets lost between here and the coffee.\n\nLook at the map. You are standing at the main gate, right at the bottom of the map, at the south end of the site. The road running straight ahead of you from south to north is Willow Road. There are four plots on the left-hand side, that is the west side of the road, and four plots on the right-hand side, the east side. They are marked A to H.\n\nNow, the first building on your left, immediately inside the gate, is reception, where you all signed in this morning. I will not ask you to label that one; you know where it is by now.\n\nLet us start with the staff car park. I know that one or two of you have been leaving your cars on the grass verge by the gate, and we would much rather you did not. The staff car park is the next plot along on the west side, directly north of reception. So, as you look up the road from the gate, it sits immediately behind the reception building.\n\nNow look across the road. Opposite the staff car park, on the east side of Willow Road, and in fact the very first thing on your right as you come through the gate, is the cycle shelter. It is fully covered, there is a pump fixed to the wall, and there is usually room for about thirty bikes.\n\nCarry on northwards. The next plot on your right, just past the cycle shelter, is the post room. Parcels and letters for every company on the park are delivered there, and you collect them yourselves between eight and ten.\n\nBack to the west side. The third plot along, the one between the staff car park and the storage yard, is the canteen. Now, I should mention that for years the canteen was right at the far end of the park, next door to the training centre, and everybody complained about the walk. It moved down here in January so that it is closer to the gate, and the complaints have stopped.\n\nBeyond the canteen, at the northern end of the west side, is the storage yard, which is closed to visitors, and on the east side the third plot along is the boiler house. Please do not go into either of those.\n\nThat leaves the training centre. It is the very last plot on the east side, right at the north end of the park, directly across the road from the storage yard. If you walk past the boiler house and keep going until the road simply stops, the training centre is on your right.\n\nRight then. Coats on, and we will start at the cycle shelter.\n\nEXAMINER: Now listen again.\n\n[The talk is repeated.]\n\nEXAMINER: That is the end of Part Four.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "19  the staff car park",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "20  the post room",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 5,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "21  the training centre",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "22  the canteen",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Listening - Map labelling"
+    },
+    {
+     "type": "choice",
+     "q": "23  the cycle shelter",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Listening - Map labelling"
+    }
+   ]
+  },
+  {
+   "title": "Part 5",
+   "instructions": "You will hear three extracts. Choose the correct answer (A, B or C) for each question (24-29). There are TWO questions for each extract. Mark your answers on the answer sheet.",
+   "passage": "",
+   "script": "EXAMINER: Part Five. You will hear three extracts. Choose the correct answer, A, B or C, for each question, twenty-four to twenty-nine. There are TWO questions for each extract. You now have thirty seconds to look at the questions.\n\n[30 seconds]\n\nEXAMINER: Extract One. Questions twenty-four and twenty-five.\n\nGARETH (man): So, have you read the email about the trial?\nRUTH (woman): Twice. And I still cannot work out whether it is a good thing or not.\nGARETH: Really? Two days a week at home. I would have thought you would be delighted.\nRUTH: Oh, the two days are not the problem at all. Two days is fine. It is the fact that they are choosing which days, not us. Mine are Tuesday and Wednesday.\nGARETH: And the problem with that is?\nRUTH: Tuesday is the one day of the week when my whole team is actually in the building. So I will be sitting at my kitchen table on the only day that everybody else is here.\nGARETH: Ah. That does rather defeat the object.\nRUTH: I asked whether we could swap days and the answer was, and I am quoting, not during the trial period.\nGARETH: Which is three months, is it not?\nRUTH: Six. It starts in October, and they review it in April. No, sorry, I have got that the wrong way round. They review it in March and then the decision is announced in April.\nGARETH: So we are stuck with it until the spring either way.\n\nEXAMINER: Now listen again.\n\n[Extract One is repeated.]\n\nEXAMINER: Extract Two. Questions twenty-six and twenty-seven.\n\nGARETH: What about the desks? Somebody told me we are losing our own desks completely.\nRUTH: We are. It is all bookable from the first of next month. You book through the app.\nGARETH: And how far ahead can you book? I was fairly sure somebody said a week.\nRUTH: You could book a week ahead in the first draft of the policy, yes. They changed it, because a handful of people were booking the same desk for an entire month and then not turning up. So now the system opens at six o'clock the evening before, and that is it.\nGARETH: Six o'clock the evening before. That is going to be a scramble.\nRUTH: It is. Although the thing I actually mind is the monitors. There is one large screen per desk now instead of two.\nGARETH: I can live with one screen. What I cannot live with is lugging my own keyboard and headset around in a bag every single morning.\nRUTH: But you do not have to. There is a locker for every one of us, on every floor.\nGARETH: Is there? Nobody has told me that. Well, that changes things slightly.\n\nEXAMINER: Now listen again.\n\n[Extract Two is repeated.]\n\nEXAMINER: Extract Three. Questions twenty-eight and twenty-nine.\n\nRUTH: Are you going to the meeting on Friday?\nGARETH: The one about the trial? I suppose I ought to. Are you speaking at it?\nRUTH: I might. Are you? You had a great deal to say about it last week.\nGARETH: I was going to, but I have changed my mind. I will write it all down instead and send it to Frances, because she is collecting written comments until the end of the month. Things that get said out loud in that room have a habit of being forgotten by Monday.\nRUTH: That is probably wiser, yes.\nGARETH: My real worry is not the desks or the days at all. It is the new staff. If you have been here ten years, you know exactly who to ring when something goes wrong. If you started in August and you are at home half the week, you have no idea, and there is nobody sitting next to you to ask.\nRUTH: That is a fair point. Somebody suggested giving every new person a named contact for the first six months.\nGARETH: Did they? That would help far more than the free coffee, I can tell you.\nRUTH: Ah yes, the free coffee. Two weeks of free coffee and we are all supposed to be thrilled.\n\nEXAMINER: Now listen again.\n\n[Extract Three is repeated.]\n\nEXAMINER: That is the end of Part Five.",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "24  What is Ruth's main concern about the trial?",
+     "options": [
+      "the number of days she must spend at home",
+      "the particular days she has been given",
+      "the amount of work she will have to do at home"
+     ],
+     "answer": 1,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  When will the decision about the trial be announced?",
+     "options": [
+      "in October",
+      "in March",
+      "in April"
+     ],
+     "answer": 2,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "26  How far in advance can a desk be booked?",
+     "options": [
+      "the evening before",
+      "a week ahead",
+      "a month ahead"
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "27  What does Gareth say he dislikes most about the new desk arrangement?",
+     "options": [
+      "having only one screen",
+      "carrying his own equipment around",
+      "sharing a locker with other people"
+     ],
+     "answer": 1,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "28  What has Gareth decided to do about Friday's meeting?",
+     "options": [
+      "speak at it himself",
+      "stay away from it completely",
+      "send his comments in writing"
+     ],
+     "answer": 2,
+     "topic": "Listening - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "29  What does Gareth think is the greatest risk of the trial?",
+     "options": [
+      "New employees will find it harder to get help.",
+      "Staff will end up working longer hours.",
+      "Experienced staff will look for other jobs."
+     ],
+     "answer": 0,
+     "topic": "Listening - Multiple choice"
+    }
+   ]
+  },
+  {
+   "title": "Part 6",
+   "instructions": "You will hear a part of a lecture. For questions 30-35, fill in the missing information in the numbered space. Write no more than ONE WORD for each answer.\n\nTHE LUNCH BREAK - A SHORT HISTORY (notes)",
+   "passage": "",
+   "script": "EXAMINER: Part Six. You will hear a part of a lecture. For each question, fill in the missing information in the numbered space. Write no more than ONE WORD for each answer. You now have thirty seconds to look at the notes.\n\n[30 seconds]\n\nEXAMINER: Now listen carefully. You will hear the lecture twice.\n\nLECTURER (man, measured and academic): Right, if everyone is settled, we will carry on with our series on the history of ordinary working life. Last week we looked at the journey to work. Today I want to spend the hour on something that sounds trivial and turns out not to be at all: the lunch break.\n\nLet us begin with the word itself, because the word tells us a great deal. Lunch is a surprisingly young word in English. In the sixteenth century a lunch was not a meal. It was a thing. It meant a thick piece of bread, a lump, essentially, something solid enough to hold in one hand while you carried on working with the other. You will still find the word used in that sense in old farming records. Only much later, and quite gradually, did it come to mean a meal at all.\n\nNow, the timing, which is the part that surprises students most. Before the nineteenth century, for the great majority of people in this country, the main meal of the day was eaten at midday. They did not call it lunch. They called it dinner, and dinner was the largest meal on the table. It made perfect sense. You had been working since dawn, the light was good, the fire was already lit, and the whole household was within walking distance of the kitchen.\n\nWhat broke that arrangement was the factory. Once large numbers of people travelled some distance to a fixed workplace, and once the working day was governed by a bell rather than by daylight, going home for a substantial meal in the middle of the day became impossible. Dinner therefore moved to the evening, where most of us still keep it, and the small parcel of food eaten at the workbench took over the name lunch.\n\nThe next development is the works canteen. The first recognisable canteens appear in the second half of the nineteenth century, and here is the detail I want you to remember: in the great majority of cases the room, the cooking equipment and the food itself were paid for by the employer, and not by the workers. Now, that was not simple generosity. A fed workforce made fewer mistakes, had fewer accidents in the afternoon, and, crucially, did not disappear to the public house at midday.\n\nWhich brings us neatly to the modern evidence. There is a well-known study of office staff, repeated several times since, which compared people who left their workstation for a genuine break with people who ate while they carried on working. The group who took a real break away from the desk showed noticeably better concentration in the afternoon. Their error rate in the last two hours of the day was lower, and they reported feeling less tired.\n\nAnd yet the old habit persists. Recent surveys suggest that roughly half of all office workers in this country still eat their lunch at their desk, usually with one hand on the keyboard. So the lump of bread has survived, more or less intact, for four hundred years. Next week we will look at why the afternoon tea break took an entirely different path.\n\nEXAMINER: Now listen again.\n\n[The lecture is repeated.]\n\nEXAMINER: That is the end of Part Six. You now have ten minutes to transfer your answers to the answer sheet.",
+   "questions": [
+    {
+     "type": "text",
+     "q": "30  In the sixteenth century the word 'lunch' meant a thick piece of ____________ .",
+     "answer": [
+      "bread"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "31  Before the nineteenth century most people ate their main meal at ____________ .",
+     "answer": [
+      "midday",
+      "mid-day"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "32  Factory work moved the main meal of the day to the ____________ .",
+     "answer": [
+      "evening"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "33  In most early canteens the food was paid for by the ____________ .",
+     "answer": [
+      "employer",
+      "employers"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "34  Staff who took a real break showed better ____________ in the afternoon.",
+     "answer": [
+      "concentration"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    },
+    {
+     "type": "text",
+     "q": "35  About half of office workers today still eat their lunch at their ____________ .",
+     "answer": [
+      "desk",
+      "desks"
+     ],
+     "topic": "Listening - Lecture gap-fill"
+    }
+   ]
+  }
+ ]
+}

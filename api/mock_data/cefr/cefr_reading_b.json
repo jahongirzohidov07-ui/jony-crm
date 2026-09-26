@@ -1,0 +1,509 @@
+{
+ "key": "mock_cefr_reading_b",
+ "section": "reading",
+ "skill": "reading",
+ "kind": "mock",
+ "variant": "B",
+ "title": "CEFR Multilevel Mock - Reading - Variant B",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "Read the text. Fill in each gap with ONE word. You must use a word which is somewhere in the rest of the text.",
+   "passage": "ROBOTS IN THE LIBRARY\n\nThe city library in Qoraqamish has a new assistant. It is small, it is white, and it moves on wheels. The staff have named the robot Chiroq, and its only job is to (1) ________ books from the shelves to the reading room.\n\nLibrarian Dilnoza Ergasheva says that the idea came from a student. 'He asked why we spend so much (2) ________ walking,' she remembers. 'He was right. We walk about nine kilometres every day.'\n\nThe (3) ________ Chiroq cannot choose anything for itself. A librarian scans a code, and it follows a black line painted on the floor. It (4) ________ slowly, so nobody has to jump out of its way.\n\nReaders were curious at first, and one or two were afraid of it. The children were not (5) ________ at all. They followed it from room to room and tried to sit on it.\n\nSix months later, the (6) ________ save about eleven hours a week, and a reader waits four minutes for a book instead of twelve. That time now goes to people who need advice. 'A machine can carry books,' Dilnoza says, 'but only a person can recommend one.'",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Gap (1)",
+     "answer": [
+      "carry"
+     ],
+     "topic": "Reading - Word from the text gap fill"
+    },
+    {
+     "type": "text",
+     "q": "2  Gap (2)",
+     "answer": [
+      "time"
+     ],
+     "topic": "Reading - Word from the text gap fill"
+    },
+    {
+     "type": "text",
+     "q": "3  Gap (3)",
+     "answer": [
+      "robot"
+     ],
+     "topic": "Reading - Word from the text gap fill"
+    },
+    {
+     "type": "text",
+     "q": "4  Gap (4)",
+     "answer": [
+      "moves"
+     ],
+     "topic": "Reading - Word from the text gap fill"
+    },
+    {
+     "type": "text",
+     "q": "5  Gap (5)",
+     "answer": [
+      "afraid"
+     ],
+     "topic": "Reading - Word from the text gap fill"
+    },
+    {
+     "type": "text",
+     "q": "6  Gap (6)",
+     "answer": [
+      "staff"
+     ],
+     "topic": "Reading - Word from the text gap fill"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "Read the texts 7-14 and the statements A-J. Decide which text matches with the situation described in the statements.\nEach statement can be used ONCE only. There are TWO extra statements that you do not need to use.\nMark your answers on the answer sheet.\n\nA  You want your child to learn programming, but you cannot afford to buy a computer for the lessons.\nB  You can only study after your working day ends, late in the evening.\nC  You want to practise speaking on a long journey where there is no internet at all.\nD  Your school's computers are broken and there is nobody who can take them across the city.\nE  You want to know exactly what score you would get before you sit the real test.\nF  You spend your evenings marking papers by hand and writing notes to families.\nG  You are worried about how many hours your son spends looking at his phone.\nH  You need an old textbook that the bookshops stopped selling many years ago.\nI  You want to sell your old computer equipment for a good price.\nJ  You are looking for a job teaching in another country.",
+   "passage": "E'LONLAR - LEARNING AND TECHNOLOGY\n\n7  CODESEED JUNIOR\nA Saturday morning coding club for children aged 9 to 12. No experience is needed and there is nothing to buy: every child is given a laptop to use during the three-hour session, and the same laptop is waiting for them the following week. Beginners start by making a simple game about a hungry cat. Places are free, but there are only twenty of them each term.\n\n8  LINGUA LOOP\nFifteen minutes a day, on your phone, wherever you happen to be. The app records you speaking, compares your sentences with a model speaker and shows you exactly which sounds to repeat. Download a whole week of lessons on Sunday and work through them on the bus, in the fields or on a train: once the lessons are on your phone, no connection of any kind is needed.\n\n9  USTOZ PANEL\nSoftware for busy teachers. Scan a set of answer sheets with an ordinary phone camera and the marks appear in seconds, already sorted by question. One button sends every family a short message with their child's result and the date of the next test. Stop carrying a pile of papers home on Friday evening.\n\n10  NIGHTOWL TUTORING\nLive lessons with a real teacher from 21:00 until midnight, seven days a week. Designed for people whose working day finishes long after every ordinary course has closed its doors. Mathematics, English and accounting. Groups of four, so you still get to speak. Every lesson is recorded, in case your shift runs late.\n\n11  QADAM REPAIR BENCH\nCracked screens, dead batteries, keyboards full of chalk dust. We repair school laptops, tablets and projectors. Our van collects the equipment from your building and brings it back, usually within forty-eight hours, so nobody has to carry a box of broken machines across the city. Schools pay after the work is finished.\n\n12  SILK ROAD DIGITAL LIBRARY\nMore than forty thousand scanned textbooks, including hundreds of older editions that have not been printed for thirty years and can no longer be found in any shop. Free with a valid student card. Every title can be downloaded and read later without a connection, and you may keep ten books on your device at one time.\n\n13  BRIGHT FUTURE EXAM LAB\nSit a full mock examination on a computer, under exam conditions, with the same timer and the same screen that you will meet on the real day. Your report appears before you leave the room: your total, your level, and the three question types that cost you the most marks. Every Saturday at 09:00 and at 14:00.\n\n14  SCREENBREAK WORKSHOP\nA four-evening course for parents. How much screen time is normal at eight, at twelve, at sixteen? What does a reasonable rule look like, and how do you keep it without a battle every night? Led by a family counsellor and a secondary school teacher. Bring your questions; nobody will tell you to throw the phone away.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "7  CodeSeed Junior",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching adverts and situations"
+    },
+    {
+     "type": "choice",
+     "q": "8  Lingua Loop",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching adverts and situations"
+    },
+    {
+     "type": "choice",
+     "q": "9  Ustoz Panel",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching adverts and situations"
+    },
+    {
+     "type": "choice",
+     "q": "10  NightOwl Tutoring",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching adverts and situations"
+    },
+    {
+     "type": "choice",
+     "q": "11  Qadam Repair Bench",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching adverts and situations"
+    },
+    {
+     "type": "choice",
+     "q": "12  Silk Road Digital Library",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching adverts and situations"
+    },
+    {
+     "type": "choice",
+     "q": "13  Bright Future Exam Lab",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching adverts and situations"
+    },
+    {
+     "type": "choice",
+     "q": "14  ScreenBreak Workshop",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching adverts and situations"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "Read the text and choose the correct heading for each paragraph from the list of headings below.\nThere are more headings than paragraphs, so you will not use all of them. You cannot use any heading more than once.\nMark your answers on the answer sheet.\n\nA  A device in every pocket\nB  Cheaper machines, larger electricity bills\nC  The people who have to learn first\nD  Why the screen also gets in the way\nE  Teaching at a distance before the internet\nF  Two worlds joined together\nG  Who is still left outside\nH  The one subject a computer cannot teach",
+   "passage": "LEARNING AT A DISTANCE: FROM THE RADIO TO THE MIXED CLASSROOM\n\nI\nIn the mountain districts of the 1960s, the only teacher that some children heard all week arrived through a radio. Lessons were broadcast at fixed hours, and whole families gathered around a single receiver borrowed from a neighbour. Exercise books were posted to a regional office and came back three weeks later with corrections in red pencil. The system was slow, and it travelled in one direction only: a child who did not understand simply waited. Yet it reached valleys that no road reached, and several thousand people learned to read because of it.\n\nII\nEverything accelerated when a usable computer became small enough and cheap enough to carry in a pocket. A machine that cost two months of wages in 2010 cost one week of wages ten years later, and it arrived already carrying a camera, a microphone and a screen. For the first time the learner could answer back. She could photograph her homework and send it, record her own pronunciation and compare it with a model, or ask a question at eleven at night and find a reply waiting for her before breakfast.\n\nIII\nBut the object that delivers the lesson also delivers everything else. A message arrives in the middle of an explanation about fractions, and the explanation is gone. Studies of school and university learners agree on one uncomfortable point: the real cost is not the thirty seconds spent reading the message. It is the four or five minutes afterwards, while the learner slowly rebuilds the thought that was interrupted, and it is inside that rebuilding that most of the mistakes are made.\n\nIV\nGovernments often buy equipment and forget the people who have to use it. A teacher with twenty years of experience is suddenly asked to be a beginner again, in front of thirty witnesses, on a machine that behaves differently every time it is updated. Unsurprisingly, the equipment ends its life in a cupboard. The schools where the change actually worked spent as much on training, and on paid hours for preparation, as they spent on the machines themselves.\n\nV\nAccess is never as equal as the brochures suggest. A lesson that needs a stable connection also needs electricity that does not fail at seven in the evening, a quiet corner, and a charger that is not shared with three brothers and sisters. There are families in which the only device belongs to a parent who takes it to work every morning. The child who most needs the extra explanation is very often the child who is least able to download it.\n\nVI\nThe old argument between the classroom and the screen has quietly ended, and nobody won it. What survives is a mixture. Explanation and repetition are done alone, at whatever speed each learner needs and as many times as that learner needs them. Discussion, disagreement, performance and correction are done together, in a room, with other faces present. The machine takes the repetition. The teacher keeps the part of the work that requires another human being.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "15  Paragraph I",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching headings to paragraphs"
+    },
+    {
+     "type": "choice",
+     "q": "16  Paragraph II",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching headings to paragraphs"
+    },
+    {
+     "type": "choice",
+     "q": "17  Paragraph III",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching headings to paragraphs"
+    },
+    {
+     "type": "choice",
+     "q": "18  Paragraph IV",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching headings to paragraphs"
+    },
+    {
+     "type": "choice",
+     "q": "19  Paragraph V",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching headings to paragraphs"
+    },
+    {
+     "type": "choice",
+     "q": "20  Paragraph VI",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching headings to paragraphs"
+    }
+   ]
+  },
+  {
+   "title": "Part 4",
+   "instructions": "For questions 21-24, choose the correct answer A, B, C, or D. Mark your answers on the answer sheet.\nFor questions 25-29, decide if the following statements agree with the information given in the text.\nA) True   B) False   C) No Information",
+   "passage": "A SCHOOL THAT SWITCHED OFF\n\nTwo years ago the directors of Zarafshon Lyceum, a secondary school with six hundred students, took an unusual decision. For one complete academic year, no student would be allowed to use a personal phone anywhere inside the building. Phones were collected in numbered boxes at the gate every morning and handed back at half past four. The head of the lyceum, Ravshan Aliyev, expected complaints, and he received them: two hundred and fourteen letters from parents in the first month alone.\n\nWhat he did not expect was the second wave. By December, about a third of those same parents had written again, this time to ask the school to keep the rule permanently.\n\nThe lyceum invited a research group from the National Pedagogical Institute to measure what actually happened. The researchers decided not to look at examination results, which in their view could be pushed up or down by far too many other things in the course of a single year. Instead they counted three plain facts: how many minutes a lesson ran before the teacher had to stop and restore order, how many students ate their lunch alone, and how many books were borrowed from the school library.\n\nThe findings were mixed. The library figure rose sharply, from one thousand nine hundred loans in the previous year to five thousand one hundred. The number of students eating alone fell by roughly half. But the interruption figure barely moved: teachers were still stopping lessons just as often, simply for different reasons. 'Phones were never the only thing competing for a child's attention,' said Dr Malika Yusupova, who led the study. 'Take them away and you discover the noise that was underneath.'\n\nThe lyceum also made a second, much quieter change, which received almost no publicity at all. Every classroom was given one shared tablet, kept on the teacher's desk and used for looking things up in the middle of a discussion. Dr Yusupova believes that this mattered more than the ban itself. 'One screen that the whole room can see is a completely different object from thirty screens that nobody else can see,' she said. 'The first one starts a conversation. The second one ends it.'\n\nCritics argue that the experiment proves very little. Zarafshon Lyceum selects its students by examination, and those students already read more than average before they arrived. Others point out that the ban stopped at the gate. Outside it the phones came back within seconds, and the research team made no attempt at all to find out what happened at home.\n\nThe school council voted in June to continue the policy, with one change. Students in their final year may now keep their phones during the day, on the grounds that many of them travel long distances and their families want to be able to reach them. Mr Aliyev describes himself as satisfied rather than triumphant. 'We removed one problem and found another one standing behind it,' he said. 'That is not a failure. That is simply how the work goes.'",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "21  What surprised Mr Aliyev most during the year of the ban?",
+     "options": [
+      "Parents wrote letters of complaint to the school.",
+      "Many of the parents who complained later supported the rule.",
+      "The students accepted the rule without any argument.",
+      "The research group refused to study the school."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "22  Why did the researchers decide not to use examination results?",
+     "options": [
+      "They believed that too many other things could change them in one year.",
+      "They were not allowed to see them.",
+      "The results for that year had not been collected.",
+      "The school asked them to keep the results private."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "23  What did the study find out about interruptions during lessons?",
+     "options": [
+      "They happened far less often than before the ban.",
+      "They stopped completely in the second term.",
+      "They continued at about the same rate, but for other reasons.",
+      "They were counted only in the final year classes."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "24  According to Dr Yusupova, the shared classroom tablet was valuable because",
+     "options": [
+      "it cost less than thirty separate devices.",
+      "it stopped students from reaching the internet.",
+      "it allowed teachers to contact parents quickly.",
+      "everybody in the room could look at the same screen."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  Mr Aliyev expected that some parents would complain about the new rule.",
+     "options": [
+      "A) True",
+      "B) False",
+      "C) No Information"
+     ],
+     "answer": 0,
+     "topic": "Reading - True/False/No Information"
+    },
+    {
+     "type": "choice",
+     "q": "26  More than half of the parents who complained later changed their minds.",
+     "options": [
+      "A) True",
+      "B) False",
+      "C) No Information"
+     ],
+     "answer": 1,
+     "topic": "Reading - True/False/No Information"
+    },
+    {
+     "type": "choice",
+     "q": "27  The number of books borrowed from the library more than doubled.",
+     "options": [
+      "A) True",
+      "B) False",
+      "C) No Information"
+     ],
+     "answer": 0,
+     "topic": "Reading - True/False/No Information"
+    },
+    {
+     "type": "choice",
+     "q": "28  Dr Yusupova has carried out the same study in other schools.",
+     "options": [
+      "A) True",
+      "B) False",
+      "C) No Information"
+     ],
+     "answer": 2,
+     "topic": "Reading - True/False/No Information"
+    },
+    {
+     "type": "choice",
+     "q": "29  Every student at the lyceum must now hand in a phone at the gate.",
+     "options": [
+      "A) True",
+      "B) False",
+      "C) No Information"
+     ],
+     "answer": 1,
+     "topic": "Reading - True/False/No Information"
+    }
+   ]
+  },
+  {
+   "title": "Part 5",
+   "instructions": "Read the following text for questions 30-35.\nFor questions 30-33, fill in the missing information in the numbered spaces.\nWrite no more than ONE WORD and / or A NUMBER for each question.\nFor questions 34-35, choose the correct answer A, B, C, or D.",
+   "passage": "THE PATIENT MACHINE\n\nEvery teacher recognises the moment. A class of thirty, one explanation, and three groups of listeners: those who understood immediately, those who are still assembling the idea, and those who were lost two sentences ago. Adaptive learning software was designed for precisely this moment. Instead of moving the whole room forward at a single speed, the program watches each learner's answers and decides what the next question ought to be. A student who is confident is pushed harder; a student who is struggling is quietly given a smaller step.\n\nThe mechanism behind this is far less mysterious than the marketing suggests. Most systems keep a rough model of what the learner knows: a list of small skills, each one carrying a number that represents how likely it is that the student has mastered it. Every answer nudges those numbers a little up or a little down. When the estimate for a skill crosses a threshold, usually set at 95 per cent, the system stops asking about that skill and moves on to the next one. The approach itself is decades old. What changed was the arrival of computing power cheap enough to run it for millions of learners at the same time.\n\nThe evidence for the benefit is genuine, but narrower than the enthusiasts claim. In a three-year study of forty-seven schools carried out by the Tashkent Institute of Learning Sciences, classes that used adaptive practice for mathematics gained the equivalent of five extra months of progress, compared with classes that did not use it. The effect was strongest among the weakest quarter of the students, and almost invisible among the strongest, who were already perfectly able to work out their own next step. In reading comprehension the results were much less encouraging. The software could test reliably whether a passage had been understood, but it could not teach a student to care about the passage.\n\nThat distinction points towards the deepest limitation of all. Adaptive systems are excellent at skills that can be broken into small, checkable pieces: arithmetic, spelling, verb forms, chemical equations. They are poor at everything that resists being broken up - argument, taste, judgement, and the courage to be wrong in front of other people. Dr Kamola Ismoilova, who directed the study, puts it bluntly. 'The machine is infinitely patient and completely incurious,' she says. 'It will never ask a student why she thinks that. It cannot be surprised by her.'\n\nThere is also a quieter cost, which almost nobody discusses when the contracts are signed. Because these programs generate a continuous record of every keystroke and every hesitation, they produce an unusually detailed portrait of a child: not only what she got wrong, but how long she paused before getting it wrong. Very few schools have any policy at all about who may look at that record, how long it is kept, or what becomes of it if the company that built the software is sold to somebody else. In the study, only six of the forty-seven schools could answer those questions when they were asked.\n\nThe sensible conclusion is neither rejection nor surrender. Where a skill is small, repetitive and objectively checkable, a patient machine is better than an exhausted human being at two o'clock in the afternoon, and freeing a teacher from that work is a real gain. Where the goal is to change the way somebody thinks, the machine can prepare the ground, but it cannot do the planting. The most striking finding of the whole study was not about software at all: the schools that gained the most were not the schools that used the programs most heavily. They were the schools that spent the recovered hours sitting down with the students who needed a conversation rather than another question.",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "30  The system stops asking about a skill when the estimate for it crosses a threshold that is usually set at ________ per cent.",
+     "answer": [
+      "95",
+      "95 per cent",
+      "ninety five"
+     ],
+     "topic": "Reading - Summary gap fill"
+    },
+    {
+     "type": "text",
+     "q": "31  In mathematics, classes using adaptive practice gained the equivalent of ________ extra months of progress.",
+     "answer": [
+      "five",
+      "5",
+      "five months",
+      "5 months"
+     ],
+     "topic": "Reading - Summary gap fill"
+    },
+    {
+     "type": "text",
+     "q": "32  Dr Ismoilova describes the machine as infinitely patient but completely ________.",
+     "answer": [
+      "incurious"
+     ],
+     "topic": "Reading - Summary gap fill"
+    },
+    {
+     "type": "text",
+     "q": "33  Only ________ of the schools in the study could say who was allowed to look at the records that the software produced.",
+     "answer": [
+      "six",
+      "6",
+      "six schools",
+      "6 schools"
+     ],
+     "topic": "Reading - Summary gap fill"
+    },
+    {
+     "type": "choice",
+     "q": "34  What does the writer say about the strongest students in the study?",
+     "options": [
+      "They refused to use the software.",
+      "They gained least, because they could already choose their own next step.",
+      "They improved more in reading than in mathematics.",
+      "They were left out of the measurements."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  Which statement best expresses the writer's overall view?",
+     "options": [
+      "Adaptive software should replace teachers in every subject that can be tested.",
+      "Adaptive software has failed and schools should stop buying it.",
+      "Adaptive software suits narrow skills and should buy teachers time for everything else.",
+      "Adaptive software is above all a danger to the privacy of children."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    }
+   ]
+  }
+ ]
+}

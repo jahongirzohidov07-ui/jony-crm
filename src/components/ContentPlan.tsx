@@ -59,14 +59,21 @@ export function ContentPlan() {
   }, [pick, year, month]);
   useEffect(load, [load, tick]);
 
-  const save = async (id: number, patch: Any) => {
+  const save = async (id: number, patch: Any, status?: string) => {
     try {
-      await api.put(`/content/${id}`, patch);
+      if (Object.keys(patch || {}).length) await api.put(`/content/${id}`, patch);
+      // Holat alohida yo'l bilan: rozilik tekshiruvi va audit backendda
+      if (status) await api.post(`/content/${id}/status`, { status });
+      setMsg("Saqlandi");
       setTick((k) => k + 1);
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "Xatolik");
+      setTick((k) => k + 1);
     }
   };
+  // 2026-09-26, Jahongir: "kontent planni ham qoshimcha qoshish va
+  // ozgartirish kerak ... smm manager kerakli joylarini ozgartira olsin"
+  const [adding, setAdding] = useState(false);
 
   const copy = async (id: number) => {
     setBusy(id);
@@ -263,6 +270,10 @@ export function ContentPlan() {
           {withMetric.length} tasida natija
         </span>
         <div className="flex-1" />
+        <button onClick={() => setAdding((v) => !v)}
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-900 text-white text-sm font-medium">
+          <Plus size={14} /> Yangi post
+        </button>
         <label className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm font-medium cursor-pointer hover:bg-slate-50">
           <Upload size={14} /> Excel'dan yuklash
           <input type="file" accept=".xlsx,.xls" className="hidden"
@@ -287,6 +298,20 @@ export function ContentPlan() {
           <span className="flex-1">{msg}</span>
           <button onClick={() => setMsg("")}><X size={14} /></button>
         </div>
+      )}
+
+      {adding && (
+        <NewPostForm
+          meta={d.meta}
+          branchId={branchNow()}
+          onClose={() => setAdding(false)}
+          onDone={(t: string) => {
+            setAdding(false);
+            setMsg(`«${t}» rejaga qo'shildi`);
+            setPick("all");
+            setTick((k) => k + 1);
+          }}
+        />
       )}
 
       {/* --- import: ko'rib chiqish --- */}
@@ -492,7 +517,8 @@ export function ContentPlan() {
                 {open === r.id && (
                   <tr key={`${r.id}-x`}>
                     <td colSpan={16} className="px-4 py-4 bg-slate-50 border-t border-slate-200">
-                      <RowEditor row={r} meta={d.meta} onSave={save}
+                      <RowEditor row={r} meta={d.meta}
+                                 onSave={save}
                                  onFetch={fetchOne} busy={busy === r.id} />
                     </td>
                   </tr>
@@ -520,12 +546,134 @@ export function ContentPlan() {
 }
 
 /** Qator ichi: brief, ssenariy, havola va natija. */
+/** Jadval ustunlari uchun maydonlar (yangi qo'shish va tahrirlashda bir xil). */
+function MainFields({ v, set, meta }: {
+  v: Any; set: (k: string, val: string) => void; meta: Any;
+}) {
+  const inp = "w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-[13px] bg-white";
+  const L = ({ t }: { t: string }) => (
+    <label className="block text-[11px] font-medium text-slate-500 mb-1">{t}</label>
+  );
+  const Sel = ({ k, opts, empty = "—" }: { k: string; opts: Any[]; empty?: string }) => (
+    <select value={v[k] ?? ""} onChange={(e) => set(k, e.target.value)} className={inp}>
+      <option value="">{empty}</option>
+      {opts.map((o: Any) => (
+        <option key={o.key} value={o.key}>{o.label}</option>
+      ))}
+      {/* Exceldan kelgan eski qiymat ro'yxatda bo'lmasa ham yo'qolmasin */}
+      {v[k] && !opts.some((o: Any) => o.key === v[k]) && (
+        <option value={v[k]}>{v[k]}</option>
+      )}
+    </select>
+  );
+  const platforms = (meta?.platforms || []).map((p: Any) =>
+    Array.isArray(p) ? { key: p[0], label: p[1] } : p);
+  const owners = (meta?.owners || []).map((u: Any) => ({ key: String(u.id), label: u.name }));
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+      <div className="col-span-2 md:col-span-3">
+        <L t="Mavzu *" />
+        <input value={v.title ?? ""} onChange={(e) => set("title", e.target.value)} className={inp} />
+      </div>
+      <div><L t="Sana" />
+        <input type="date" value={v.date ?? ""} onChange={(e) => set("date", e.target.value)} className={inp} /></div>
+      <div><L t="Vaqt" />
+        <input value={v.time ?? ""} placeholder="18:00" onChange={(e) => set("time", e.target.value)} className={inp} /></div>
+      <div><L t="Platforma" /><Sel k="platform" opts={platforms} /></div>
+      <div><L t="Kontent ustuni" /><Sel k="pillar" opts={meta?.pillars || []} /></div>
+      <div><L t="Voronka" /><Sel k="funnel" opts={meta?.funnels || []} /></div>
+      <div><L t="Maqsad" /><Sel k="goal" opts={meta?.goals || []} /></div>
+      <div><L t="Format" /><Sel k="fmt" opts={meta?.formats || []} /></div>
+      <div><L t="Mas'ul" /><Sel k="owner_id" opts={owners} empty="— tanlanmagan —" /></div>
+      <div><L t="Syomka sanasi" />
+        <input type="date" value={v.shoot_date ?? ""} onChange={(e) => set("shoot_date", e.target.value)} className={inp} /></div>
+      <div className="col-span-2"><L t="Auditoriya" />
+        <input value={v.audience ?? ""} onChange={(e) => set("audience", e.target.value)} className={inp} /></div>
+      {"status" in v && (
+        <div><L t="Holati" /><Sel k="status" opts={meta?.statuses || []} /></div>
+      )}
+    </div>
+  );
+}
+
+/** Maydonlarni backend nomlariga o'tkazish. */
+function toPatch(v: Any): Any {
+  return {
+    title: (v.title || "").trim(),
+    planned_date: v.date || null,
+    planned_time: v.time || null,
+    platform: v.platform || null,
+    pillar: v.pillar || null,
+    funnel: v.funnel || null,
+    goal: v.goal || null,
+    fmt: v.fmt || null,
+    owner_id: v.owner_id ? Number(v.owner_id) : null,
+    shoot_date: v.shoot_date || null,
+    audience: v.audience || null,
+  };
+}
+
+/** Kontent-planga qo'lda yangi post qo'shish. */
+function NewPostForm({ meta, branchId, onClose, onDone }: {
+  meta: Any; branchId: number | null;
+  onClose: () => void; onDone: (title: string) => void;
+}) {
+  const [v, setV] = useState<Any>({
+    title: "", date: new Date().toISOString().slice(0, 10), time: "",
+    platform: "instagram", pillar: "", funnel: "", goal: "", fmt: "",
+    owner_id: "", shoot_date: "", audience: "",
+  });
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+  const set = (k: string, val: string) => setV((o: Any) => ({ ...o, [k]: val }));
+  const submit = async () => {
+    if (!v.title.trim()) { setErr("Mavzuni yozing"); return; }
+    setBusy(true); setErr("");
+    try {
+      await api.post("/content", { ...toPatch(v), branch_id: branchId });
+      onDone(v.title.trim());
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(false); }
+  };
+  return (
+    <div className="mb-4 rounded-xl border border-slate-300 bg-white p-4">
+      <div className="flex items-center mb-3">
+        <p className="text-sm font-semibold text-slate-800 flex-1">Rejaga yangi post</p>
+        <button onClick={onClose}><X size={16} /></button>
+      </div>
+      <MainFields v={v} set={set} meta={meta} />
+      {err && <p className="text-sm text-red-600 mt-2">{err}</p>}
+      <div className="flex gap-2 mt-3">
+        <button onClick={submit} disabled={busy}
+          className="px-4 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium disabled:opacity-50">
+          {busy ? "Qo'shilmoqda…" : "Qo'shish"}
+        </button>
+        <span className="text-[11px] text-slate-400 self-center">
+          Hook, ssenariy va matnni qo'shgach qatorni ochib yozasiz.
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function RowEditor({ row, meta, onSave, onFetch, busy }: {
   row: Any; meta: Any;
-  onSave: (id: number, patch: Any) => void;
+  onSave: (id: number, patch: Any, status?: string) => void;
   onFetch: (id: number) => void;
   busy: boolean;
 }) {
+  // Jadval ustunlari (2026-09-26): SMM menejer sana, mavzu, platforma,
+  // mas'ul, holat va boshqa "kerakli joylarini" shu yerda o'zgartiradi
+  const [mv, setMv] = useState<Any>({
+    title: row.title || "", date: row.date || "", time: row.time || "",
+    platform: row.platform || "", pillar: row.pillar || "",
+    funnel: row.funnel || "", goal: row.goal || "", fmt: row.fmt || "",
+    owner_id: row.owner_id ? String(row.owner_id) : "",
+    shoot_date: row.shoot_date || "", audience: row.audience || "",
+    status: row.status || "",
+  });
+  const setM = (k: string, val: string) => setMv((o: Any) => ({ ...o, [k]: val }));
   const [f, setF] = useState<Any>({
     hook: row.hook || "", message: row.message || "",
     proof: row.proof || "", cta: row.cta || "",
@@ -581,8 +729,36 @@ function RowEditor({ row, meta, onSave, onFetch, busy }: {
     </div>
   );
 
+  const saveAll = () => {
+    if (!(mv.title || "").trim()) { alert("Mavzu bo'sh bo'lmasin"); return; }
+    // Faqat o'zgargan jadval maydonlari yuboriladi (tarixga shular yoziladi)
+    const cur = toPatch({
+      title: row.title, date: row.date, time: row.time,
+      platform: row.platform, pillar: row.pillar, funnel: row.funnel,
+      goal: row.goal, fmt: row.fmt, owner_id: row.owner_id,
+      shoot_date: row.shoot_date, audience: row.audience,
+    });
+    const next = toPatch(mv);
+    const diff: Any = {};
+    Object.keys(next).forEach((k) => {
+      if ((next[k] ?? null) !== (cur[k] ?? null)) diff[k] = next[k];
+    });
+    onSave(row.id, { ...f, ...diff },
+      mv.status && mv.status !== row.status ? mv.status : undefined);
+  };
+
   return (
     <div className="space-y-4">
+      <div className="rounded-lg border border-slate-200 bg-white p-3">
+        <p className="text-[11px] font-semibold text-slate-500 uppercase mb-2">
+          Asosiy ma'lumotlar (jadval ustunlari)
+        </p>
+        <MainFields v={mv} set={setM} meta={meta} />
+        <p className="text-[11px] text-slate-400 mt-2">
+          Sana o'zgartirilsa eski sana tarixda qoladi. Postni o'chirish shart
+          emas — holatini «Bekor qilindi» qiling.
+        </p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
         <Field k="hook" label="Hook (1-jumla)"
                ph="Birinchi 3 soniyada ushlaydigan gap" />
@@ -695,7 +871,7 @@ function RowEditor({ row, meta, onSave, onFetch, busy }: {
       </div>
 
       <div className="flex items-center gap-2">
-        <button onClick={() => onSave(row.id, f)}
+        <button onClick={saveAll}
           className="px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-medium">
           Saqlash
         </button>

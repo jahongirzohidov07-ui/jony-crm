@@ -304,6 +304,10 @@ def get_content(
 _TEXT_FIELDS = ["script", "caption", "caption_ru", "caption_en",
                 "hashtags", "story_text", "on_video_text", "hook",
                 "message", "cta"]
+# Kontent-plan jadvali ustunlari — o'zgarishi tarixga yoziladi
+_PLAN_FIELDS = ["title", "planned_date", "planned_time", "platform",
+                "audience", "pillar", "funnel", "goal", "fmt", "owner_id",
+                "shoot_date", "kpi_target", "proof", "post_url"]
 
 @router.put("/api/content/{cid}")
 def update_content(
@@ -316,16 +320,31 @@ def update_content(
     if not c:
         raise HTTPException(404, "Kontent topilmadi")
     given = payload.model_dump(exclude_unset=True)
+    if "title" in given and not (given["title"] or "").strip():
+        raise HTTPException(400, "Mavzu bo'sh bo'lmasin")
 
     for k, v in given.items():
         if k in ("needs_consent", "consent_ok"):
             v = 1 if v else 0
         old = getattr(c, k, None)
-        # Matn o'zgarsa eski variant yo'qolmaydi
-        if k in _TEXT_FIELDS and (old or "") != (v or ""):
+        # Matn o'zgarsa eski variant yo'qolmaydi. 2026-09-26: kontent-
+        # plan ustunlari ham (SMM menejer "kerakli joylarini" o'zgartiradi
+        # — kim, qachon, nimadan nimaga o'zgartirgani tarixda qolsin).
+        changed = (str(old) if old is not None else "") != \
+            (str(v) if v is not None else "")
+        if changed and (k in _TEXT_FIELDS or k in _PLAN_FIELDS):
             db.add(models.ContentVersion(
-                content_id=c.id, field=k, old_value=old, new_value=v,
+                content_id=c.id, field=k,
+                old_value=str(old) if old is not None else None,
+                new_value=str(v) if v is not None else None,
                 changed_by=user.full_name))
+        # Sana o'zgarsa ko'chish tarixi ham yoziladi (taqvimdagi
+        # "Boshqa kunga" bilan bir xil iz)
+        if k == "planned_date" and changed:
+            db.add(models.ContentMove(
+                content_id=c.id, from_date=old, to_date=v,
+                reason="Kontent-plandan o'zgartirildi",
+                moved_by=user.full_name))
         setattr(c, k, v)
     db.commit()
     return _content_out(db, c, full=True)
@@ -2007,6 +2026,15 @@ def smm_plan(year: int | None = None, month: int | None = None,
                         for k, lbl in roles.CONTENT_FORMATS],
             "statuses": [{"key": k, "label": lbl, "tone": t}
                          for k, lbl, t in roles.CONTENT_STATUSES],
+            # Mas'ul tanlash (2026-09-26): SMM jamoasi + hozir biror
+            # postga mas'ul bo'lganlar (ro'yxatdan chiqib qolmasin)
+            "owners": [{"id": u.id, "name": u.full_name}
+                       for u in db.query(models.User)
+                       .filter((models.User.is_active == 1)
+                               & (models.User.role.in_(
+                                   list(roles.SMM_ACCESS))
+                                  | models.User.id.in_(uids or [-1])))
+                       .order_by(models.User.full_name).all()],
         },
     }
 
@@ -2629,8 +2657,12 @@ def smm_urgent_change(
         if not title:
             raise HTTPException(400, "Post mavzusini yozing")
         pd = _d(payload.get("planned_date")) or roles.local_today()
+        # Kontent-plan kalitlari (instagram/telegram/youtube) ham,
+        # taqvim kalitlari (ig_reels, ...) ham qabul qilinadi
         platform = payload.get("platform") or "instagram"
-        if platform not in roles.PLATFORM_LABELS:
+        allowed = {k for k, _ in roles.SOCIAL_PLATFORMS} | set(
+            roles.PLATFORM_LABELS)
+        if platform not in allowed:
             platform = "instagram"
         c = models.Content(
             title=title, planned_date=pd,

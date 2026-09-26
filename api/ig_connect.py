@@ -226,8 +226,14 @@ def _link(db: Session, m: models.IgMedia, auto_create: bool) -> str:
             return "sc"
     posted = m.posted_at.date() if m.posted_at else None
     if posted:
+        # Platforma turlicha yozilgan bo'lishi mumkin: "instagram",
+        # "Instagram Reels" (Exceldan), ig_reels/ig_post/ig_story
+        from sqlalchemy import func as _f, or_ as _or
+        plat = _or(_f.lower(models.Content.platform).like("%insta%"),
+                   models.Content.platform.in_(
+                       ["ig_post", "ig_reels", "ig_story"]))
         cands = (db.query(models.Content)
-                 .filter(models.Content.platform == "instagram",
+                 .filter(plat,
                          models.Content.planned_date == posted,
                          models.Content.status != "cancelled",
                          (models.Content.post_url.is_(None))

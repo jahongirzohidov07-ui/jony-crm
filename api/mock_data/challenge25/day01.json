@@ -1,0 +1,514 @@
+{
+ "key": "challenge25_day01",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "A",
+ "title": "Reading Challenge - Day 1 (3 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1.\n\nQuestions 1-5\nComplete the summary below.\nWrite NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 1-5 on your answer sheet.\n\nStudies at Yale University have shown that a positive attitude can lengthen someone's lifespan by approximately 1 ..................... Another US research team claims to have found a physical reason why this happens. As a result of an eight-year study on 2 .................... male subjects of a certain age, they have noted differences in the 3 .................... among positive and negative thinkers. This discovery has led them to conclude that positive thinking makes the body's entire 4 .................... stronger, which, in turn, reduces ageing. Rosalind Wright cites some early research on 5 .................... in support of this view.\n\nQuestions 6-10\nComplete each sentence with the correct ending, A-H, below.\nWrite the correct letter, A-H, in boxes 6-10 on your answer sheet.\n\nA optimists have an unrealistic view of life.\nB long life is also linked to diet and exercise.\nC excessive optimism may have negative consequences.\nD optimism has not been considered a worthy research topic.\nE a hectic lifestyle can lead to poor health.\nF happiness is not linked to material wealth and comfort.\nG levels of optimism can decrease with age.\nH optimism can have a positive effect on pessimists.\n\nQuestions 11-13\nDo the following statements agree with the claims of the writer in the Reading Passage.\nYES               if the statement agrees with the claims of the writers\nNO                 if statement contradicts the claims of the writers\nNOT GIVEN   if it is impossible to say what the writers thinks about this.",
+   "passage": "Optimism and Health\n\nIf you have a positive outlook, the likelihood is that you will lead a longer life. John Nash examines the link between optimism and good health.\n\nMedical studies are concluding that optimists really do have something to be cheerful about. Coincidental links between optimism and improved general health have been found by researchers. Recently, a Yale University psychologists' study of 660 volunteers aged 50 and above was published. It found that thinking positively about ageing adds an average of seven years to a person's life. The team, led by Dr Becca Levy, suggests that having an optimistic attitude can bolster the will to live, though they admit that they cannot explain it fully.\n\nAnother American research team, however, says they have identified a physical mechanism behind the phenomenon. Their eight-year study of 670 men aged about 63 found that the optimists had significantly better lung function than men who were more pessimistic. This is the first study to show such a link. The research team at Brigham & Women's Hospital and Harvard Medical School believes that attitude somehow strengthens the immune system, and that adopting a more positive outlook may reverse physical decline. 'Preliminary studies on heart patients suggest that by changing a person's outlook, you can improve their mortality risk,' says Dr Rosalind Wright.\n\nThe role of optimism in good health has long been noted but often sidelined. Sigmund Freud, the influential psychologist, equated optimism with ignorance, and from 1970 to 2000 there were 46,000 psychology papers on depression and only 40 on joy.\n\nPart of that negativity may be blamed on optimists themselves. They are not necessarily fun to have around, says Brice Pitt, the Emeritus Professor of the Psychiatry of Old Age at Imperial College, London. 'Optimists tend to be insufferable people. Always jolly, always up, and, frankly, they have a hopelessly rosy outlook,' he says. 'Depressive people see things as they really are, and that is a disadvantage from an evolutionary point of view. Optimism is a piece of evolutionary equipment that has carried us a long way through millennia of setbacks.'\n\nStudies show that optimists do better than pessimists in work, school and sports, suffer less depression, achieve more goals, respond better to stress and fight disease better. Among people aged from their mid-nineties into their hundreds, researchers generally fail to find consistencies in diet or exercise (and some still smoke). What the super-aged do tend to share, however, is a positive, optimistic outlook.\n\nToshihiko Maruta, of the Mayo Institute, headed an earlier American medical study to find a link between optimism and longevity. Her study found that optimists live about 19 per cent longer than people with grim outlooks. 'It tells us that mind and body are linked and that attitude has an impact on the final outcome: death,' she says. That simple message might have far more effect than exhortations to eat fresh fruit and warnings to stay out of the sun.\n\nDespite the benefits of unprecedented material wealth, the World Health Organisation estimates that depression is soon to become the second leading cause of disability. Popular wisdom blames this on our frenetically busy society. According to social forecasters at the Henley Centre, while people in developed countries are 65 per cent better off financially today than they were 15 years ago, there is no evidence that they are any more content with their lives. While much of this is down to the perception among many of being rushed and pressured for time and space, it is the perception not the reality that counts, they say.\n\nThe Henley researchers found that if people think they have enough time, space or money, they feel more relaxed about life, regardless of how much of these things they actually have. 'In terms of money, some of the people who \"feel\" wealthiest, and some of those who \"feel\" poorest, actually have almost the same amount of money at their disposal. Their attitudes and behaviour patterns, however, are different from one another,' says Chad Wallens, a researcher.\n\nFew studies have tried to ascertain the proportion of optimists in the world. But a 1995 nationwide survey conducted in the USA for the American magazine Adweek found that about half the population counted themselves as optimists, with women slightly more apt than men (53 per cent versus 48 per cent) to identify themselves thus. That attitude drops, however, to less than a third of people between the ages of 55 and 64, which supports research showing that men, in particular, tend to become more irritable as they get older. Lynn Myers, a psychotherapist, points out, however, that too much optimism can be a bad thing: 'You can be what is called a cock-eyed optimist, the sort of person who smokes but is convinced they will never get lung cancer.' Curiously, though, the Brigham & Women's Hospital study found that optimism was linked to improved lung function even after smoking was taken into account.\n\nMyers is skeptical about whether there is a simple way that people can become optimistic in order to improve their health chances. 'I certainly would not suggest that there is anything like \"six easy lessons to change your outlook\". But if you can lower your anxiety levels, it tends to make you more optimistic. Conversely, people who are highly anxious tend to be pessimistic,' she says.",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Studies at Yale University have shown that a positive attitude can lengthen someone's lifespan by approximately ....................",
+     "answer": [
+      "seven years",
+      "7 years"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "2  As a result of an eight-year study on .................... male subjects of a certain age ...",
+     "answer": [
+      "670"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "3  ... they have noted differences in the .................... among positive and negative thinkers.",
+     "answer": [
+      "lung function"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "4  This discovery has led them to conclude that positive thinking makes the body's entire .................... stronger, which, in turn, reduces ageing.",
+     "answer": [
+      "immune system"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "5  Rosalind Wright cites some early research on .................... in support of this view.",
+     "answer": [
+      "heart patients"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "6  The writer's reference to Sigmund Freud illustrates the point that",
+     "options": [
+      "A optimists have an unrealistic view of life.",
+      "B long life is also linked to diet and exercise.",
+      "C excessive optimism may have negative consequences.",
+      "D optimism has not been considered a worthy research topic.",
+      "E a hectic lifestyle can lead to poor health.",
+      "F happiness is not linked to material wealth and comfort.",
+      "G levels of optimism can decrease with age.",
+      "H optimism can have a positive effect on pessimists."
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "7  According to Brice Pitt of Imperial College, London,",
+     "options": [
+      "A optimists have an unrealistic view of life.",
+      "B long life is also linked to diet and exercise.",
+      "C excessive optimism may have negative consequences.",
+      "D optimism has not been considered a worthy research topic.",
+      "E a hectic lifestyle can lead to poor health.",
+      "F happiness is not linked to material wealth and comfort.",
+      "G levels of optimism can decrease with age.",
+      "H optimism can have a positive effect on pessimists."
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "8  Researchers at the Henley Centre have shown that",
+     "options": [
+      "A optimists have an unrealistic view of life.",
+      "B long life is also linked to diet and exercise.",
+      "C excessive optimism may have negative consequences.",
+      "D optimism has not been considered a worthy research topic.",
+      "E a hectic lifestyle can lead to poor health.",
+      "F happiness is not linked to material wealth and comfort.",
+      "G levels of optimism can decrease with age.",
+      "H optimism can have a positive effect on pessimists."
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "9  The 1995 Adweek survey found that across the USA",
+     "options": [
+      "A optimists have an unrealistic view of life.",
+      "B long life is also linked to diet and exercise.",
+      "C excessive optimism may have negative consequences.",
+      "D optimism has not been considered a worthy research topic.",
+      "E a hectic lifestyle can lead to poor health.",
+      "F happiness is not linked to material wealth and comfort.",
+      "G levels of optimism can decrease with age.",
+      "H optimism can have a positive effect on pessimists."
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "10  The psychotherapist Lynn Myers suggests that",
+     "options": [
+      "A optimists have an unrealistic view of life.",
+      "B long life is also linked to diet and exercise.",
+      "C excessive optimism may have negative consequences.",
+      "D optimism has not been considered a worthy research topic.",
+      "E a hectic lifestyle can lead to poor health.",
+      "F happiness is not linked to material wealth and comfort.",
+      "G levels of optimism can decrease with age.",
+      "H optimism can have a positive effect on pessimists."
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "11  It has been known for some time that there is a link between optimism and good health.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "12  Optimists have better personal relationships with others than pessimists.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "13  People who live to be over ninety-five are known to take the same amount of regular exercise.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2.\n\nQuestions 14-19\nReading Passage 2 has nine sections, A-I.\nWhich section contains the following information?\nWrite the correct letter, A-I, in boxes 14-19 on your answer sheet.\n\nQuestions 20-22\nLook at the following statements (Questions 20-22) and the list of people below.\nMatch each statement with the correct person, A-D.\nWrite the correct letter, A-D, in boxes 20-22 on your answer sheet.\n\nList of people\nA George de Mestral\nB Andrew Parker\nC Robert Cohen\nD Ronald Fearing\n\nQuestions 23-26\nComplete the sentences.\nWrite ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 23-26 on your answer sheet.",
+   "passage": "Waste Production\n\nA   What has fins like a whale, skin like a lizard, and eyes like a moth? The future of engineering. Almost all living organisms are uniquely adapted to the environment in which they live, some so well that scientists study them in the hope of replicating their natural designs in technology. This process, called biomimetics, is the crossroads where nature and engineering meet.\n\nB   Perhaps the best example of biomimetics is Velcro. In 1948 a Swiss scientist, George de Mestral, had trouble removing a plant's prickle which was stuck to his dog's fur, so he studied it under a microscope. Impressed by the stickiness of the prickle's hooks, he copied the design; engineering a fastener made of two pieces. One piece has stiff hooks like the prickly seedcase; while the other has soft loops that allow the hooks to stick. De Mestral named his invention Velcro - a combination of the words 'velour' and 'crochet.'\n\nC   Andrew Parker, a research fellow at the Natural History Museum in London and at the University of Sydney, is a leading proponent of biomimetics - applying designs from nature to problems in engineering, materials science, medicine and other fields. He has investigated iridescence in butterflies and beetles and antireflective coatings in moth eyes - studies that have led to brighter screens for cellular phones and an anticounterfeiting technique so secret he cannot say which company is behind it. He is working to make cosmetics that mimic the natural sheen of diatoms (a type of algae) and, with the British Ministry of Defence, to emulate the water-repellent properties of these same creatures. He even draws inspiration from nature's past: on the eye of a 45-million-year-old fly trapped in amber that he studied in a museum in Poland, Parker noticed microscopic corrugations that reduced light reflection. This feature is now being built into solar panels.\n\nD   To Parker, every species, even those that have become extinct, is a success story, optimized by millions of years of natural selection. He asks: Why not learn from this? Parker explained how the metallic sheen and dazzling colors of certain birds derive not from pigments but from neatly spaced microstructures that reflect specific wavelengths of light. Such structural color, fade-proof and more brilliant than pigment, is of great interest to people who manufacture paint and holograms on credit cards. Glowworms produce a cool light with almost zero energy loss (a normal light bulb wastes 98 percent of its energy as heat), and bombardier beetles have a highly effective combustion chamber in their posterior that heats chemicals and fires them at would-be predators.\n\nE   For all nature's sophistication, many of its clever devices are made from simple substances like keratin, calcium carbonate, and silica, which are manipulated into structures of fantastic complexity and toughness. The abalone, for example, makes its shell out of calcium carbonate, the same stuff as soft chalk. Yet by coaxing this substance into walls of staggered, nanoscale bricks through a subtle play of proteins, it creates an armor 3,000 times harder than chalk. Understanding the microscale and nanoscale structures responsible for a living material's exceptional properties is critical to re-creating it synthetically.\n\nF   Though impressed by biological structures, Robert Cohen, an engineer at MIT in the United States, considers biology merely a starting point for innovation. 'You don't have to reproduce a lizard skin to make a water-collection device, or a moth eye to make an antireflective coating,' Cohen says. 'The biological structure provides a clue to what is useful. But maybe you can do it better.' Ultimately he considers a biomimetics project a success only if it has the potential to make a useful tool for people. 'Looking at pretty structures in nature is not sufficient,' says Cohen. 'What I want to know is, can we actually transform these structures into something with true utility in the real world?'\n\nG   This, of course, is the tricky bit. Potentially one of the most useful embodiments of natural design is the bio-inspired robot, which could be deployed in places where people would be too conspicuous, bored to tears, or killed. But such robots are notoriously hard to build. Ronald Fearing, a professor of electrical engineering at the University of California, Berkeley, has taken on one of the biggest challenges of all: to create a miniature robotic fly that is swift, small, and maneuverable enough for use in surveillance or search-and-rescue operations.\n\nH   The key to making his micromechanical flying insect (MFI) work, Fearing says, is not to attempt to copy the fly, but to isolate the structures crucial to its feats of flying. 'The fly's wing is driven by 20 muscles, some of which only fire every fifth wing beat, and all you can do is wonder, \"What on earth just happened there?\"' says Fearing. 'Some things are just too mysterious and complex to be able to replicate.'\n\nI   For all the power of the biomimetics paradigm, and the brilliant people who practice it, bio-inspiration has led to surprisingly few mass-produced products, and arguably only one household word - Velcro. Some biomimeticists blame industry, whose short-term expectations about how soon a project should be completed and become profitable clash with the time-consuming nature of biomimetics research. Others lament the difficulty in coordinating joint work among diverse academic and industrial disciplines, which is required to understand natural structures and mimic what they do. But the main reason biomimetics has not yet come of age is that from an engineering standpoint, nature is famously, fabulously complex. For the present, people cannot hope to reproduce such intricate nanopuzzles. Nonetheless, the gap with nature is gradually closing.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  how an organism turns a basic material into something incredibly strong",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "15  a claim that biomimetics has had limited commercial impact so far",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 8,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "16  a difficulty that led to researcher's accidental discovery",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "17  an example of nature being far more efficient than a common household object",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  an ancient specimen that inspired a modern innovation",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  situations where it is preferable to replace a human with a machine",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "20  All living things provide something useful for humans to discover.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "21  Natural designs are sometimes impossible for people to copy.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "22  Biomimetics achieves nothing unless it has a practical application.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "text",
+     "q": "23  Andrew Parker is studying the shiny surface of diatoms in order to develop ....................",
+     "answer": [
+      "cosmetics"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "24  Paint companies are interested in the way some .................... get their colour.",
+     "answer": [
+      "birds"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "25  Bombardier beetles protect themselves by shooting hot .................... at their enemies.",
+     "answer": [
+      "chemicals"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "26  One scientist is studying the .................... to build a tiny robot that can help people in danger.",
+     "answer": [
+      "fly"
+     ],
+     "topic": "Reading - Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3.\n\nQuestions 27-31\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 27-31 on your answer sheet, write\n YES   if the statement agrees with the claims of the writer\n NO   if the statement contradicts the claims of the writer\n NOT GIVEN  if it is impossible to say what the writer thinks about this\n\nQuestions 32-35\nLook at the following statements (Questions 32-35) and the list of researchers below.\nMatch each statement with the correct researcher, A-G.\nWrite the correct letter, A-G, in boxes 32-35 on your answer sheet.\n\nList of People\nA Bhaskar Chakravorti\nB Michael Hammer\nC William Baumol\nD Vijay Vishwanath\nE Erik Brynjolfsson\n\nQuestions 36-40\nComplete the note below.\nWrite NO MORE THAN TWO WORDS from the passage for each answer.\n\nType of innovations: Operational innovations\nDefinition: Being innovative in the way existing business 36 .................... are carried out\nExample: Moving goods by system known as: 37 ....................\nCompany: Wal-Mart\n\nType of innovations: 38 .................... innovations\nDefinition: Developing new approaches to meeting needs of existing markets\nExample: Giving customers means to manufacture products themselves\nCompany: Tetra Pak\n\nType of innovations: 39 .................... innovations\nDefinition: Identifying and meeting new types of customer needs\nExample: Offering customers 40 .................... to go with the main product\nCompany: Air Liquide",
+   "passage": "Business Innovation\n\nAs new 'wonder products' are getting harder and harder to find, what should companies do to survive in today's ever more competitive markets?\n\nThe Oxford English Dictionary defines innovation as 'making changes to something established'. Invention, by contrast, is the act of 'coming upon or finding; discovery'. Revolutionary 'inventions' of 20th-century US firms include, for example, the safety razor, the hydraulic brake, and DNA finger-printing. However, as Adrian Slywotsky of Mercer Management Consulting says, 'In most industries, truly differentiating new-product breakthroughs are becoming increasingly rare.' And as 'blockbuster' novel products become steadily more elusive, big companies would do well to focus instead on making lots of small things better.\n\nUnfortunately, big companies often have big problems with innovation. 'Innovators try to change the status quo,' says Bhaskar Chakravorti of the Monitor Group, 'which is why markets tend to resist them.' Innovations frequently disrupt the way companies do things (and may have been doing them for years). And it is not just markets that are nervous of innovation. Michael Hammer, co-author of 'Re-engineering the Corporation', cites the case of a PC-maker that set out to imitate Dell's famous 'Build to Order' system of computer assembly. The company found its attempts were frustrated by both its head of manufacturing, who feared for his job, and its head of marketing, who did not want to upset his existing retail outlets. So the proposal got nowhere, and Dell continued to dominate the business.\n\nClayton Christensen, a Harvard Business School Professor, describes how disruptive innovations - simpler, cheaper and more convenient products that seriously upset the status quo - often herald the rapid downfall of thriving, long-standing businesses. This, it is widely recognised, is because most such organisations are designed to grow through a series of sustaining innovations - the sort which simply improve on existing products for existing markets.\n\nWilliam Baumol, professor at New York University, argues that large companies have been learning important lessons from the history of innovation. Most have both cut back and re-directed their Research and Development spending in recent years. Innovation by big companies is now based less on the discoveries of white-coated scientists, and more on incremental improvements in the processes that constitute daily operations.\n\nAccording to marketing specialist Vijay Vishwanath, companies also need to adjust to the ongoing fragmentation of markets. Once-uniform mass markets are breaking up into countless 'niches', in which everything has to be customised for a small group of consumers. Looking for blockbusters in such a world is a daunting task. Another problem, according to Chakravorti, lies in the marketing of innovations. Too many executives are still stuck with the strategies used to sell Kodak's first camera 120 years ago, when the product was so revolutionary that the company could forget about competition for at least a decade. Today, rival products can be rushed onto the market at speeds which would have been unimaginable in those days.\n\nCompanies that fail to come up with headline-hitting new products should not despair. 'There are plenty of other, albeit less glamorous, areas where innovation can take place,' says Erik Brynjolfsson of the MIT Sloan School of Management. He claims that the roots of the USA's productivity surge originate in 'a genuine revolution in how American companies are using information technology to reinvent their business processes from top to bottom'.\n\nHammer highlights several instances where firms have added considerably to their shareholder value through what he calls operational innovations - creativity in their business processes. Notable among these is the American retail giant Wal-Mart. While superficially mundane, their pioneering idea of 'cross-docking' - shifting merchandise off trucks from suppliers and straight onto trucks heading for stores - has been fundamental to the company's ability to offer low prices, the platform for its outstanding success.\n\nCompanies are also being encouraged to embrace strategic innovations, following the example of such firms as Southwest Airlines, a low-cost American regional carrier, whose creative strategies and shrewd timing won it a victory over its ailing competitor US Airways. The Swedish packaging company Tetra Pak also used this style of innovation, by moving away from delivering ready-made containers for customers into providing machinery and supplying dedicated materials for them to make their own packaging. This strips out many costs from the process, and also makes it very difficult for the customer to switch suppliers. Like Southwest Airlines, they achieved success through strategic innovations alone, with little innovation in either the underlying technology or the product sold.\n\nIn his book 'How to Grow When Markets Don't', Slywotsky and his co-author Richard Wise recommend what they call demand innovations. A few far-sighted organisations such as the French industrial gas company Air Liquide have found success not - as in the case of strategic innovations - by meeting existing demand in a new way, but by discovering new forms of demand and adapting to supply the products or services required. Air Liquide had been a leading supplier of industrial gases until the early 1990s, when gas became a commodity and their operational income plunged. Realising the value of the skills they had gained over the decades, the company became a supplier not only of gas, but also of the management services to accompany it. Within a short time their profits rose again.\n\nThere are certain things that managers can do to make innovations like these happen within their organisations. For example, projects with potential should be rapidly hived off into independent business units, away from the smothering influence of the status quo. The ultimate outcome of any one innovation may still be unpredictable, the process from which it emerges is not.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  In order to stay in the market, companies today need to concentrate their efforts on finding genuinely original products.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  Disruptive innovations often pose serious threats to even successful, well-established companies.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  A key stage in the development of sustaining innovations involves research into the strengths and weaknesses of competitor's products.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  Manufacturers today are able to compete with innovations over shorter time periods than in the past.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "31  It is hard to tell what the long-term result of any innovation might be.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  the need for companies to cater for ever more specialised sets of customers",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "33  an explanation for the recent upward trend in the US economy.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "34  an example of company personnel who resisted innovation",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "35  a shift in the way many companies are organising their budgets.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "text",
+     "q": "36  (Operational innovations) Being innovative in the way existing business .................... are carried out",
+     "answer": [
+      "processes"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "37  (Wal-Mart) Moving goods by system known as: ....................",
+     "answer": [
+      "cross-docking",
+      "cross docking",
+      "crossdocking"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "38  (Tetra Pak) .................... innovations - developing new approaches to meeting needs of existing markets",
+     "answer": [
+      "strategic"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "39  (Air Liquide) .................... innovations - identifying and meeting new types of customer needs",
+     "answer": [
+      "demand"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "40  (Air Liquide) Offering customers .................... to go with the main product",
+     "answer": [
+      "management services"
+     ],
+     "topic": "Reading - Note completion"
+    }
+   ]
+  }
+ ]
+}

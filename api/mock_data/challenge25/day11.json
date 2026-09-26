@@ -1,0 +1,624 @@
+{
+ "key": "challenge25_day11",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "K",
+ "title": "Reading Challenge - Day 11 (3 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "Answer Questions 1-16, which are based on Reading Passage 1.\n\nQuestions 1 – 8\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-8 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n\nQuestions 9 – 16\nComplete the notes below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 9-16 on your answer sheet.\nNotes\nThe Ascension Island experiment\nDarwin’s plan (Questions 9-10)\nJoseph Hooker’s implementation (Questions 11-13)\nResults of the plan today (Questions 14-16)",
+   "passage": "The Ascension Island experiment\n\nThe tiny tropical island of Ascension in the South Atlantic Ocean has an area of only 98 square kilometres. It is located 1,600 km from the coast of Africa and 2,250 km from South America and is certainly difficult for an ordinary commercial traveler to reach even today. Ascension sits on top of what scientists call the mid-Atlantic ridge. This is a chain of underwater volcanoes which are still in the process of forming as the ocean floor is slowly pulled apart by massive geological forces. A million years ago, molten magma from beneath the ocean floor burst explosively above the waves and thus, a new island was born which was to become Ascension. Because the island occupies a ‘hot spot’ on the ridge, its volcano is especially active to this day.\n\nThe island was discovered by a Portuguese seafarer, João da Nova Castella, in 1501, but was given the name Ascension Island two years later by a second Portuguese explorer, Alfonso de Albuquerque. At that time, Ascension was little more than a barren volcanic rock, largely treeless, with no indigenous people at all and no animals to speak of. Its coastal regions, however, supported a few small, underdeveloped plants, while the central peaks were essentially bald.\n\nBecause of its location, by the early 19th century, Ascension had become a vital strategic base for the British military. It was a thriving waystation providing much needed provisions for British ships. However, the big problem that impeded further expansion of this outpost was the supply of fresh water. Ascension was extremely arid and experienced strong trade winds from southern Africa. Due to the lack of trees, the little rain that did fall swiftly disappeared in the hot environment.\n\nBut Charles Darwin, the British naturalist who is widely regarded as the father of the theory of evolution, devised a bold plan for the barren island. In 1836, the young Darwin was finishing a five-year scientific expedition around the world, reaching strange places like Ascension, where no other naturalist had gone before. Darwin was aboard the British Naval vessel HMS Beagle when it called in at Ascension. Darwin later admitted that his expectations Ascension were low, and indeed, it cannot have appeared to be a very promising place. But arriving on Ascension, Darwin became excited by what he considered to be its potential. Everywhere, he encountered bright red volcanic cones and rugged black lava, evidence of the violent geological forces that must have formed the island. Although it remained quite barren, there was evidence of human presence, including a few sheep, goats, cows and horses that had been introduced by the Navy. Being the inventive scientist that he was, Darwin was intrigued by what he saw and began to plan how this place of wild desolation could be transformed.\n\nOnly a few years after Darwin’s return to England, he laid out his imaginative scheme for Ascension to his good friend, Joseph Hooker, also a respected botanist, who ultimately implemented the plan. In 1839 Hooker set off on his own four-year adventure by sea, an ambitious journey around the icy polar region of Antarctica aboard HMS Erebus and HMS Terror. Mirroring Darwin's journey, the ships called in at Ascension on their way home in 1843.\n\nIn 1847 Hooker advised the Royal Navy to set in motion Darwin’s elaborate plan. With the help of British scientists, shipments of trees were to be sent to Ascension. These would provide shade, helping to reduce evaporation after rain. And the ultimate results of the introduction of trees would be even more important because the retention of water would create fertile soil, encouraging the growth of even more vegetation of all kinds.\n\nSo, beginning in 1850 and continuing year after year, ships started to arrive at Ascension, each depositing tree selected from special gardens maintained by scientists in Europe, South Africa and South America. Soon, on the highest peak of 859m, great changes became apparent. By the late 1870s, a variety of trees including fast-growing eucalyptus, Norfolk Island pine, bamboo and banana trees had all taken root and begun to thrive.\n\nToday, Green Mountain — as the highest peak is now known — is sometimes described as a ‘cloud forest’. The trees capture sea mist, creating dampness in the centre of an essentially dry island. This forest is a fully functioning, but in fact totally artificial ecosystem. When naturally occurring, ecosystems develop over millions of years through the process of evolution. By contrast, the Green Mountain cloud forest was created in a matter of decades. In effect, what Darwin, Hooker and the Navy achieved in an effort to make Ascension Island more habitable was the world’s first experiment in creating a self-sustaining and self-reproducing forest.\n\nCould the Ascension experiment have more far-reaching consequences? Dr Dave Wilkinson, an ecologist at Liverpool John Moores University in the UK, who has extensively studied Ascension and its history, first visited there in 2003. ‘I remember thinking, this is really weird,’ he said. ‘There were all kinds of plants that don't belong together in nature, growing side by side. I only later found out about Darwin, Hooker and everything that had happened,’ he later recalled. Wilkinson has suggested that the principles upon which the Ascension experiment was based could one day be used to transform the planet Mars to make it sustainable for colonies from Earth.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  People can visit Ascension easily today.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  The mid-Atlantic ridge continues to experience volcanic activity.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  João da Nova Castella was the first to call his discovery Ascension Island.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  When the island was discovered, its center contained more life than the area near the sea.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  The Portuguese military wanted to use the island as a base.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  In the 19th century, Ascension Island acted as an important port for naval supplies.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  The British imported fresh water to Ascension Island from southern Africa.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "8  When it rained on Ascension Island, the water quickly dried up.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "text",
+     "q": "9  Darwin’s plan – before his 1836 visit, Darwin had limited ………. of what he might find",
+     "answer": [
+      "expectations"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Darwin’s plan – after his arrival, Darwin saw the ………. of the island and so devised a plan",
+     "answer": [
+      "potential"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  Joseph Hooker’s implementation – on an expedition to explore the area around ………. , Hooker visited Ascension",
+     "answer": [
+      "Antarctica"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  Joseph Hooker’s implementation – trees were planted on Ascension to lessen the ………. of rainwater",
+     "answer": [
+      "evaporation"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  Joseph Hooker’s implementation – from the 1850s, plants were brought to Ascension from ………. around the world",
+     "answer": [
+      "gardens"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "14  Results of the plan today – the cloud forest traps moisture contained in the ………. which blows off the ocean",
+     "answer": [
+      "mist"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "15  Results of the plan today – the cloud forest is a successful man-made ……….",
+     "answer": [
+      "ecosystem"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "16  Results of the plan today – according to Dr Dave Wilkinson, the ideas learned from Ascension may be applicable to life in future human ………. on Mars.",
+     "answer": [
+      "colonies"
+     ],
+     "topic": "Reading - Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "Answer Questions 17-32, which are based on Reading Passage 2.\n\nQuestions 17 – 24\nReading Passage 2 has seven sections, A-G.\nWhich section contains the following information?\nWrite the correct letter, A-G, in boxes 17-24 on your answer sheet.\nNB You may use any letter more than once.\n\nQuestions 25 – 28\nLook at the following aspects of Great Zimbabwe (Questions 25-28) and the list of areas below.\nMatch each aspect with the correct area, A, B or C.\nWrite the correct letter, A, B or C, in boxes 25-28 on your answer sheet.\nNB You may use any letter more than once.\nList of Areas\nA  Hill Complex\nB  Great Enclosure\nC  Valley Complex\n\nQuestions 29 – 32\nComplete the sentences below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 29-32 on your answer sheet.",
+   "passage": "The city of Great Zimbabwe\n\nA   The ruins of the city of Great Zimbabwe in southern Africa are a unique testimony to the civilisation of the Shona* people. The Shona word ‘zimbabwe’ means a large stone house, but the ruins consist of the largest stone complex in Africa built before the modern era, aside from the monumental architecture of ancient Egypt. Their method of construction is unique to African architecture and, although there are examples of similar work elsewhere, none are as distinguished and imposing as Great Zimbabwe. The city was an important trading centre and has been renowned for centuries. The modern country of Zimbabwe, where the ruins are situated, was named after it, and in 1986 Great Zimbabwe was designated both a national monument and a World Heritage site.\n\nB   Great Zimbabwe is located on a plain at an altitude of some 1,100 metres in a sparsely populated region. The city, built between 1100 and 1450 AD, extends over seven square kilometres, and is divided into three areas: the Hill Complex, the Great Enclosure and the Valley Complex.\n\nThe Hill Complex, forming a huge granite mass on top of a north-east/south-west-facing ridge, was continuously occupied from the 12th to the 15th century, and traces of human settlements are found in numerous layers. Rough granite rubble-stone blocks form distinct enclosures, accessed by narrow, partly covered passageways. This complex is generally considered a ‘royal city’; the west enclosure is thought to have been the residence of successive chiefs and the east enclosure, where six soapstone posts topped with figurines of birds were found, is considered to have served a ritual purpose.\n\nC   The Great Enclosure, which is oval shaped, is located to the south of the hills, and dates to the 13th century. The external walls were built of cut granite blocks, laid in regular courses, and within these walls there are community and living areas, and a narrow passage leading to a high conical tower, which may have functioned as a granary warehouse. Interior walls mark off each family’s area, generally comprising a kitchen, two living huts and a yard. Huts were made of mud bricks, composed of a mixture of granitic sand and clay.\n\nD   The Valley Complex, which dates back to the 15th century, is a series of living quarters scattered throughout the valley. Each one has similar characteristics: many of the structures are in brick (huts, indoor flooring, benches, basins, etc.) and dry stone walls provide insulation. Construction work was carried out to a high standard of craftsmanship, incorporating an impressive display of V-shaped and checked wall decorations.\n\nE   Scientific research has shown that Great Zimbabwe was founded around 1100 on a site which had been sparsely occupied in the prehistoric period by the Shona. By the 14th century, it was the principal city of a major state extending over the gold-rich area; its population exceeded 10,000. However, in about 1450 the capital was abandoned. The reasons for this are debated, but suggestions include a shortage of food for the overpopulated city, and deforestation. The resulting migration benefited Khami, which then became the most influential city in the region, and signalled Great Zimbabwe’s waning political power.\n\nF   Archaeological excavations at Great Zimbabwe have revealed glass beads and porcelain from China and Persia, and gold and Arab coins from the Indian Ocean island of Kilwa, which testify to long-standing trade with the outer world. Other evidence, including fragments of pottery and ironware, gives a further insight into the city’s socio-economic complexity and into farming and pastoral activities in the surrounding area. A monumental granite cross, located at a traditionally revered and sacred site, also illustrates contact with Christian missionaries.\n\nIn the late 19th century, numerous soapstone figurines in the form of birds were found mounted on columns, buried among the ruins. These are testimony to the use of the site as a place of worship from the 12th century to the present day. The birds, which had some human features, were subsequently described as the Zimbabwe Birds, and a design based on them became a national symbol, incorporated into the Zimbabwe flag and shown in other prestigious contexts.\n\nG   Despite the importance of the site, it has suffered some deterioration due to variations in temperature and soil moisture content, as well as pressure from tourism, encroaching invasive vegetation, and incorrect preservation methods. The site would benefit if attention was given to conservation techniques and the materials employed, as well as to the need for conservation standards that meet the international benchmark, but which are balanced with the traditional activities still taking place there.\n\nThe site has been legally protected since 1893, and today is managed by the Zimbabwean Ministry of Home Affairs. Funding for the management and conservation of the site comes mainly from central government, with limited revenue generated by the sale of publications and charging an entrance fee for the site.\n\n* Shona: an ethnic group native to Zimbabwe and neighbouring countries",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "17  a list of factors which have resulted in some damage to Great Zimbabwe",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  reference to the high status of some of the original inhabitants",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  proof of the former commercial significance of Great Zimbabwe",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "20  an indication of the global importance attached to Great Zimbabwe nowadays",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "21  mention of the authority currently responsible for the area",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "22  an overview of the layout of the archaeological site",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "23  a reference to the quality of comparable buildings in other places",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "24  theories about the eventual desertion of Great Zimbabwe",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "25  Its outer walls are curved.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "26  Part of it may have been used for ceremonies.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "27  Some of its buildings feature geometric patterns.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "28  It includes a structure that could have been used for storage.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "text",
+     "q": "29  An image based on the bird sculptures found at Great Zimbabwe now appears on the national ………… .",
+     "answer": [
+      "flag"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "30  The impact of nature on Great Zimbabwe, as well as that of ………… , needs to be carefully managed.",
+     "answer": [
+      "tourism"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "31  When choosing methods of conservation for Great Zimbabwe, it is important to adopt global ………… .",
+     "answer": [
+      "standards"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "32  A small part of Great Zimbabwe’s income comes from selling tickets and ………… .",
+     "answer": [
+      "publications"
+     ],
+     "topic": "Reading - Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "Answer Questions 33-49, which are based on Reading Passage 3.\n(In the source booklet this passage is printed as Questions 30-46; the numbering is continued here so that it runs from 1 to 49 across the whole day.)\n\nQuestions 33 – 38\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 33-38 on your answer sheet.\n\nQuestions 39 – 44\nComplete the summary using the list of words, A-J, below.\nWrite the correct letter, A-J, in boxes 39-44 on your answer sheet.\n\nA bilingual child negotiates with her brother\nFaced with her little brother's 39………….. to let her play with his toys, a young bilingual child used all of her communication 40………….. to change his mind. First, she expressed her 41………….. in gentler, more polite language, and pretended to be about to cry. Having switched from English to Japanese, she exploited 42………….. of Japanese culture, such as reminding him of his 43………….. to her as her brother. She succeeded in her 44………….. to convince him.\n\nA request      B attempts      C strategies      D misunderstandings\nE responsibility      F agreement      G judgement      H refusal\nI behavior      J aspects\n\nQuestions 45 – 49\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+   "passage": "Learning to be bilingual\n\nDr Chisato Danjo, Lecturer in Japanese and Linguistics, examines the bilingual family home\n\nFew people would consider mastering more than one language a bad idea. Consequently, parents who speak different languages from each other are generally keen for their children to learn both. They understand that the family setting they create is central to this, and seek ways to ensure their children thrive bilingually. One of the best-known approaches is the 'one-parent-one-language' strategy (OPOL). Each parent uses their native language when communicating with their children, so the children learn both simultaneously. OPOL emphasises consistency - each parent sticking to one language - as key to its approach. But this creates the myth that mixing languages should always be avoided. My recent study, part of a new wave of multilingualism studies, would suggest that this received wisdom is just that: a myth. My research looked at Japanese-British families living in the UK with pre- and early school-age children who were following a more-or-less strict OPOL language policy. I was particularly interested in examining the impact of OPOL in the family home - how does this unique language environment affect the way children use languages?\n\nMost of the Japanese mothers who participated were fluent in Japanese and English, while the fathers possessed merely an elementary grasp of Japanese. This made English the primary language of communication between the parents and outside the home. For this reason, the mothers were careful to carve out additional space for more sustained Japanese language learning with their children. In other words, this dedicated space for communicating in Japanese was time the children spent exclusively with their mother. This seemed to create a connection between 'Japanese language' and 'motherhood' in the children's perception. This link became apparent in the way the children used Japanese as a means of emotional bonding with their mother. In addition, they adopted a broader behavioural repertoire than that which is usually associated with a language. For example, switching to Japanese could sometimes serve as a method to appease Mum when she seemed unhappy. At other times, refusing to communicate in Japanese was a useful means of defiance, even when the dispute was not related to language.\n\nThe OPOL approach emphasises the need for parents to monitor children's language closely and correct them if they mix the two languages. In practice, many parents speaking the minority language are bilingual themselves - so they understand what their children are saying even when they do mix the two. In addition, parents feel it's problematic to keep correcting children when they mix languages. This is particularly the case when children show annoyance at being corrected. The parents believe it is a lot more important to have a meaningful conversation with their children.\n\nBut what if a child uses language that cannot readily be categorised as either one language or the other? An example from my study involved the use of English words adapted to accommodate Japanese pronunciation. One of these borrowed words, 'ice cream', is usually pronounced 'aisukurimu'. The distinction between singular and plural does not exist in Japanese nouns in the English language sense, so whether using singular or plural, even in a borrowed word, 'aisukurimu' is the form normally used. But one of my child participants showed his mother a drawing of two cones of ice cream and described them as 'aisukurimuzu', with a Japanese pronunciation but in English plural form. The child had created something in between.\n\nAnother example from my study focused on the interaction between Japanese-English bilingual siblings. In one case, a six-year-old girl was trying to convince her four-year-old brother to let her play with his toys. Following firm rejections by her brother, the girl drew on her communicative repertoire to convince him. To start with, she shifted from an authoritative demand to a softer and humbler appeal. She rephrased the question by using various polite forms. Then, her voice became more nasal, suggesting she was about to burst into tears. Even more interestingly, while the negotiation had begun in English, in the middle she shifted to Japanese. Although this may give the impression of language mixing, a considerably more complex process was taking place. The shift was accompanied by the incorporation of Japanese cultural elements, such as honorific titles that emphasise emotional attachment, a relationship of dependence between sister and brother, and an assumed obligation to care on the part of the brother. She succeeded.\n\nThese examples show how creatively and strategically human beings use language in their daily communication. Whether bilingual or not, we all constantly select from our repertoire anything that will best serve our purpose. For instance, imagine you want to ask a neighbour a favour. You would use polite language in a friendly voice. But what about your facial expression? Your body language? It is likely you would make appropriate choices. For bilinguals, shifting between languages is all part of their repertoire.\n\nOur language repertoires are shaped by meaning, based on knowledge gathered throughout our lives, and the ways we use language also shape its meaning. The use of OPOL in the family brings specific meaning to language used at home, and children make full use of emergent meaning in their own interactions.\n\nThe popularity of OPOL amongst parents rests on the simplicity of its message, which is that it should be applied consistently. But when we see a child actively using, adapting and negotiating their repertoire, it casts doubt on the belief that it's bad for children to mix languages. What they could actually be doing is demonstrating high-level flexibility and interpersonal skills.\n\nBeing bilingual isn't simply about an ability to speak two languages. Rigidly policing consistency in the OPOL approach could actually inhibit bilingual children's linguistic ability and creativity. And in the same way, it could also limit their parents' ability to reveal their own bilingual skills, using their own repertoires.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "33  What does the writer say about families in which the parents speak different languages?",
+     "options": [
+      "They constantly research ways to help their children learn both languages.",
+      "They realise the importance of their role in their children's language learning.",
+      "They prioritise their children's language learning over their own.",
+      "They find the OPOL approach the easiest to adopt."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "34  The writer uses the term 'received wisdom' in the first paragraph to illustrate that",
+     "options": [
+      "the success of OPOL depends on the languages spoken by the parents.",
+      "OPOL fails if the parents are not consistent in its use.",
+      "one generally accepted principle of OPOL is incorrect.",
+      "there has been a lack of research into OPOL."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  The mothers who took part in the writer's research",
+     "options": [
+      "compensated for the fact that their children were exposed to more English than Japanese.",
+      "took their children's language learning more seriously than their partners did.",
+      "used language learning to increase the time they spent with their children.",
+      "were reluctant for their partners to speak Japanese to their children."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "36  The writer says that the children in her study",
+     "options": [
+      "preferred to use Japanese exclusively for communicating with their mothers.",
+      "understood their mothers better as their knowledge of Japanese increased.",
+      "argued about things that would be unimportant for monolingual children.",
+      "used language in a way that is uncommon."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "37  What does the writer suggest about correcting children who are learning to be bilingual?",
+     "options": [
+      "It is usually avoided if it causes bad feeling.",
+      "Parents tend to prioritise it over maintaining a conversation.",
+      "It is unnecessary with the OPOL method of learning.",
+      "Parents are less likely to do it if they speak both languages."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "38  The writer gives the 'ice cream' example to show that",
+     "options": [
+      "bilingual children find the use of borrowed words less confusing than other children.",
+      "bilingual children like to test their parents with words they know to be wrong.",
+      "knowledge of two languages leads bilingual children to invent new word forms.",
+      "it may be difficult to distinguish which language a bilingual child is using."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "39  Faced with her little brother's ………….. to let her play with his toys, a young bilingual child …",
+     "options": [
+      "request",
+      "attempts",
+      "strategies",
+      "misunderstandings",
+      "responsibility",
+      "agreement",
+      "judgement",
+      "refusal",
+      "behavior",
+      "aspects"
+     ],
+     "answer": 7,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "40  … used all of her communication ………….. to change his mind.",
+     "options": [
+      "request",
+      "attempts",
+      "strategies",
+      "misunderstandings",
+      "responsibility",
+      "agreement",
+      "judgement",
+      "refusal",
+      "behavior",
+      "aspects"
+     ],
+     "answer": 2,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "41  First, she expressed her ………….. in gentler, more polite language, and pretended to be about to cry.",
+     "options": [
+      "request",
+      "attempts",
+      "strategies",
+      "misunderstandings",
+      "responsibility",
+      "agreement",
+      "judgement",
+      "refusal",
+      "behavior",
+      "aspects"
+     ],
+     "answer": 0,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "42  Having switched from English to Japanese, she exploited ………….. of Japanese culture, …",
+     "options": [
+      "request",
+      "attempts",
+      "strategies",
+      "misunderstandings",
+      "responsibility",
+      "agreement",
+      "judgement",
+      "refusal",
+      "behavior",
+      "aspects"
+     ],
+     "answer": 9,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "43  … such as reminding him of his ………….. to her as her brother.",
+     "options": [
+      "request",
+      "attempts",
+      "strategies",
+      "misunderstandings",
+      "responsibility",
+      "agreement",
+      "judgement",
+      "refusal",
+      "behavior",
+      "aspects"
+     ],
+     "answer": 4,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "44  She succeeded in her ………….. to convince him.",
+     "options": [
+      "request",
+      "attempts",
+      "strategies",
+      "misunderstandings",
+      "responsibility",
+      "agreement",
+      "judgement",
+      "refusal",
+      "behavior",
+      "aspects"
+     ],
+     "answer": 1,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "45  Even people who speak only one language know how to adapt their way of communicating according to the situation.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "46  People who grow up in OPOL families will go on to use this approach with their own children.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "47  The reason the OPOL approach is favoured by many parents is that it encourages them to switch languages when necessary.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "48  Bilingual children who mix languages eventually develop a preference for one of the languages.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "49  The OPOL approach may restrict people's capacity to be resourceful in their use of language.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    }
+   ]
+  }
+ ]
+}

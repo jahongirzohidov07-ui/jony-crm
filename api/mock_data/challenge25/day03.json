@@ -1,0 +1,561 @@
+{
+ "key": "challenge25_day03",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "C",
+ "title": "Reading Challenge - Day 3 (3 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1.\n\nQuestions 1-6\nLook at the following statements (Questions 1-6) and the list of projects below.\nMatch each statement with the correct project, A-G.\nWrite the correct letter, A-G, in boxes 1-6 on your answer sheet.\nNB You may choose any letter more than once.\n\nList of projects\nA   tunnel under the Thames\nB   Clifton Suspension Bridge\nC   Bristol-London railway\nD   'atmospheric railway'\nE   Great Western\nF   Great Britain\nG   Great Eastern\n\nQuestions 7-10\nReading Passage 1 has nine paragraphs, A-I.\nWhich paragraph contains the following information?\nWrite the correct letter, A-I, in boxes 7-10 on your answer sheet.\nNB You may choose any letter more than once.\n\nQuestions 11-13\nComplete the notes below.\nWrite NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 11-13 on your answer sheet.\n\nThe Great Eastern\n• was originally intended to carry passengers to 11 ............\n• became less viable commercially as a result of the construction of the 12 ............\n• was bought for use in laying 13 ............",
+   "passage": "Isambard Kingdom Brunel (1806-1859) – an extraordinary engineer\n\nA   Isambard Kingdom Brunel possessed the essential spark of engineering - the drive to innovate. His French father, Marc Isambard Brunel, was himself a famous engineer. Marc settled in Britain and married an English woman, Sophia Kingdom. Isambard was born in 1806. At the age of 14, he was sent to France to study mathematics and science, later returning to England to assist his father, who was building a tunnel under the River Thames in London. Isambard was injured in a tunnel cave-in, and while recuperating near Bristol, in the west of England, he became involved with his own first major project - the Clifton Suspension Bridge, over the River Avon.\n\nB   Two design competitions were held, and Brunel presented four proposals. He won with a design for a bridge with a span longer than any existing at the time, at a height of about 75 metres above water. The technical challenges of this engineering project were immense, and Brunel dealt with them with thoroughness and ingenuity. Unfortunately, he only got so far as to put up the end piers in his lifetime. The Clifton Suspension Bridge in Bristol was completed by engineering colleagues in 1864, and is still in use.\n\nC   While Brunel was still in Bristol, working on the bridge project, he learned that the civic authorities saw the need for a railway link to London. Railway location was controversial, since private landowners and towns had to be dealt with. Mainly, the landed gentry did not want a messy, noisy railway anywhere near them. Brunel showed great skill in presenting his arguments to the various committees and individuals, and won them over. He was awarded the contract and constructed the railway line.\n\nD   Brunel's ready acceptance of new ideas overpowered good engineering judgement (at least in hindsight) when he advocated the installation of an 'atmospheric railway' in South Devon. It had the great attraction of doing away with the locomotive, and potentially could deal with steeper gradients. However, materials were not up to the task, and the mechanism was troublesome and expensive to keep in good repair. The system was withdrawn from use after a year.\n\nE   The idea of using steam to power ships to cross the ocean appealed to Brunel. He formed the Great Western Steamship Company, and construction started on the Great Western in Bristol in 1836. Built of wood, and powered by sail and steam-driven paddle wheels, it was launched the following year. The first trip to New York took just 15 days one way - a great success, as the normal sailing time was over a month. The Great Western was the first steamship to be engaged in transatlantic service and made 74 crossings to New York.\n\nF   Brunel immediately got to work on an even bigger ship. The Great Britain was made of iron and also built in Bristol. The initial design was for the ship to be driven by paddle wheels, but Brunel had seen one of the first propeller driven ships to arrive in Britain, and he abandoned his plans for paddle-wheel propulsion. The ship was launched in 1843 and was the first screw-driven iron ship to cross the Atlantic. For years it sailed from England to Australia and other parts of the world, setting the standard for ocean travel.\n\nG   Conventional wisdom in Brunel's day was that steamships could not carry enough coal to make long ocean voyages. But he correctly figured out that it was a question of size. He designed a ship that was five times larger than any previously built, big enough to carry enough fuel to reach Australia without refueling. In addition, it would carry 4,000 passengers. This was to be the Great Eastern.\n\nH   Brunel chose John Scott Russell, a well-established engineer and naval architect, to construct the ship in London, beginning in 1854, but the contract did not go well. Among other things, Scott Russell kept his estimates unrealistically low, costs soon rose, and the project kept running out of money. Serious technical difficulties led to its launch date being put back more than once, and the Great Eastern was finally ready for its maiden voyage in September 1859. Brunel was too sick to go, and died soon afterwards. Being intended to carry 4,000 passengers to Australia, the ship would have presented serious competition for sailing ships and made a fortune. But the Suez Canal was now in operation and the Great Eastern was too large to use it. Any journey the ship now made to Australia would not be competitive, and it was too large to be economical on the Atlantic run. Although it crossed the Atlantic several times, and survived hurricane conditions that would almost certainly have sunk any other ship, it was not a financial success, and had to be sold in 1864.\n\nI   Its new owner used it to carry 5,000 tons of telegraphic cable, to be laid on the floor of the Atlantic between Europe and North America. This inaugurated a hundred years of transatlantic communication by cable. In 1874, the Great Eastern was superseded by a custom-made ship. It was subsequently used as a funfair in Liverpool, and in 1888 was sold for scrap.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  It had financial problems.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "2  People who would be affected by it opposed it.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "3  Isambard Kingdom Brunel was not responsible for it.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "4  It was taken out of service shortly after completion.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "5  It was finished without Isambard Kingdom Brunel.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "6  It was repeatedly delayed.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "7  an example of Isambard Kingdom Brunel's persuasive powers",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "8  a reference to one of Isambard Kingdom Brunel's designs becoming the generally accepted model of its type",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "9  how one of Isambard Kingdom Brunel's ships was used for a purpose he had not intended",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 8,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "10  a reason why one of Isambard Kingdom Brunel's ships was unprofitable",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "text",
+     "q": "11  The Great Eastern was originally intended to carry passengers to ............",
+     "answer": [
+      "Australia"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  It became less viable commercially as a result of the construction of the ............",
+     "answer": [
+      "Suez Canal",
+      "the Suez Canal"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  It was bought for use in laying ............",
+     "answer": [
+      "telegraphic cable"
+     ],
+     "topic": "Reading - Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2.\n\nQuestions 14-19\nAnswer the questions.\nWrite NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 14-19 on your answer sheet.\n\nQuestions 20-26\nDo the following statements agree with the claims of the writer in Reading Passage 2?\nIn boxes 20-26 on your answer sheet, write\n YES   if the statement agrees with the claims of the writer\n NO   if the statement contradicts the claims of the writer\n NOT GIVEN  if it is impossible to say what the writer thinks about this",
+   "passage": "Waste Production\n\nThe United States of America leads the world in waste production, according to the Environmental Protection Agency (EPA), generating some 200 million tons a year, enough to fill a convoy of garbage trucks stretching eight times around the globe. Each US citizen discards 3.6 pounds a day, almost twice as much as the average German. Others feed on Americans' high-quality leavings. Japan takes their twisted metal and sells it back to them as cars. Other tree-poor nations buy their used paper to make more paper. Scrap iron and waste paper top the exports leaving New York harbor.\n\nLandfills get two-thirds of what's left behind. But much of the heavily populated east coast is expected to run out of landfill space in this decade, and the EPA estimates that within the same time span, 80 per cent of landfills nationwide will close and new sites must be found. Western states have room for more, although dumps and their toxic by-products are seldom welcome neighbors. Where will our waste go?\n\nWe burn 16 per cent now and could burn more. But that raises concerns about air pollution from heavy metals such as lead, cadmium, copper and mercury, which vaporize in intense heat. We could reduce waste by cutting down on the packaging that surrounds our products: it accounts for one-third of our trash. And we could re-use more of it. 'Recycling works, and it makes economic sense even when a material is plentiful,' says Phil Bailey of the National Recycling Coalition in Washington, DC. 'Recycling glass requires less energy than making it from sand. Recycling steel is less expensive than mining ore. This is where the environment and the economy meet. It's becoming an integral part of business and industry.' Recycling has grown beyond a feel-good trend.\n\nHere's how recycling works, generally. A community decides to divert waste from a landfill. In addition to the regular garbage trucks, new haulers with separate compartments must now go out to pick up newspapers, beer cans, pickle jars, detergent bottles and other reclaimables.\n\nAt a recycling center the materials are further sorted and compacted for sale to a manufacturer who makes them into new products. Yard trimmings and wooden construction debris - two of the largest components of landfills after paper - may be composted at the center and offered directly to consumers.\n\nMost collection is operated or subsidised by local and state governments. The pacesetter is Seattle. It recovers 45 per cent of its waste compared with a 17 per cent average for the rest of the country. Success is pinned to a 'pay as you throw' program: residents who recycle best pay the least for removal of their trash. 'Our recyclables are picked up for nothing,' explained Sally Kentch, who lives in a north Seattle neighborhood. 'But we pay $15 a month for a 30-gallon can for garbage that can't be recycled. If we don't recycle well, we may need two garbage cans, which costs twice as much.' With the fees charged for the garbage cans, Seattle covers its weekly garbage pickup and pays two companies to pick up the recyclables. The companies sort the materials and sell them for profit.\n\nBut not everyone praises recycling; there are economic arguments against it as well. 'Implementing programs is expensive, and it's difficult to sell the materials,' says Lynn Scarlett of the Reason Foundation, a Los Angeles think tank. 'It works sometimes, but it doesn't make sense to ship recyclables to markets halfway across the country from areas where there is still landfill space.' Programs that look promising on paper sometimes flounder in practice. In Germany, for example, law-makers were praised in 1991 for requiring manufacturers to recycle their packaging - not literally to take it back, but to pay a second party to recycle the volume of packaging they were producing. Many businesses signalled their compliance by marking their products with a green dot. But without any system of enforcement, some dots appeared that were not backed by recycling contracts. And the packaging piled up beyond the recyclers' ability to process it. Green dots began showing up in landfills.\n\nIn the United States the first surge in recycling was also marked by mountains of unclaimed bottles and paper. The gluts have shrunk but not vanished. Supporters say it just takes time for regional markets to evolve and close the loop from manufacturer to consumer and back to manufacturer again. 'We underestimated people's response to recycling,' said David Dougherty, director of the Clean Washington Center, a state agency in Seattle that develops markets for recyclables. 'They did it so well, an over-supply resulted. But seeing those materials go begging has made people realize the need to create markets for them.'\n\n'We've got to do it right,' says Dougherty. 'We've got to create local markets, make recycling a natural part of the economy so it becomes a part of our lifestyle. Of all the environmental concerns that have come up through the years, this is the most personal. People are uncertain what they can do about saving whales or the rainforest. But they can recycle the waste of their everyday lives.'",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "14  Which country buys metal waste from the USA?",
+     "answer": [
+      "Japan"
+     ],
+     "topic": "Reading - Short answer"
+    },
+    {
+     "type": "text",
+     "q": "15  Which part of the USA has most space left for landfills?",
+     "answer": [
+      "Western states",
+      "the Western states"
+     ],
+     "topic": "Reading - Short answer"
+    },
+    {
+     "type": "text",
+     "q": "16  What is the main objection to burning waste?",
+     "answer": [
+      "air pollution",
+      "the air pollution"
+     ],
+     "topic": "Reading - Short answer"
+    },
+    {
+     "type": "text",
+     "q": "17  Which product is cheaper to recycle than to produce from raw materials?",
+     "answer": [
+      "steel",
+      "recycling steel"
+     ],
+     "topic": "Reading - Short answer"
+    },
+    {
+     "type": "text",
+     "q": "18  What is the largest component of the landfills?",
+     "answer": [
+      "paper"
+     ],
+     "topic": "Reading - Short answer"
+    },
+    {
+     "type": "text",
+     "q": "19  What percentage of waste do most US towns recycle?",
+     "answer": [
+      "17 per cent",
+      "17 percent",
+      "17%",
+      "17"
+     ],
+     "topic": "Reading - Short answer"
+    },
+    {
+     "type": "choice",
+     "q": "20  The USA should burn more of its waste.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "21  People in Seattle recycle because they have to pay for unrecycled waste.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "22  There is no system reinforcing the recycling laws in Los Angeles.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "23  Germany is the country with the most advanced recycling laws.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "24  Some German manufactures made false claims about recycling their packaging.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "25  Given time, the recycling systems in the USA will be able to cope with the amounts of waste produced.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "26  People in Seattle reacted to recycling more enthusiastically than expected.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3.\n\nQuestions 27-30\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 27-30 on your answer sheet.\n\nQuestions 31-34\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 31-34 on your answer sheet, write\n YES   if the statement agrees with the claims of the writer\n NO   if the statement contradicts the claims of the writer\n NOT GIVEN  if it is impossible to say what the writer thinks about this\n\nQuestions 35-40\nComplete the summary using the list of words.\nWrite the correct letter, A-K, in boxes 35-40 on your answer sheet.\n\nProblems of new technologies\nNew technologies may in the future result in a 35 ............ of the ways in which teaching and research are carried out. However, there will be difficulties, such as disagreements over the 36 ............ of the materials produced by a collective effort. Also, with 37 ............ from a number of people, it may be hard to maintain high standards. More, 38 ............ participants in projects may not be at ease with the new technologies and may not feel 39 ............ certain aspects of video-conferencing. In fact, new 40 ............ for personal interaction might be called for.\n\nA cautious     B determination     C categories     D transformation\nE contributions     F qualified     G ownership     H continuation\nI insupportable     J confident     K guidelines",
+   "passage": "Digital communication has revolutionised the way we teach and study history as well as virtually all other academic disciplines. Students and teachers have access to huge amounts of electronic resources. Those like myself, studying the early modern period of European history, can now download a quarter of a million relevant, original, printed works published between the invention of printing and the end of the eighteenth century. Many national libraries and historical archives have very helpful, searchable, online catalogues, and historical journals are increasingly available in electronic as well as print formats. All this facilitates learning and research, and reduces the advantages once enjoyed by prestigious and well-funded international universities and centres for historical research.\n\nYet how far has the digital age transformed how the individual historian works? There is a stereotype of the scholar alone in his or her workshop, crafting a publication destined for a bookshop or library. Indeed, this is how many in the profession probably still think of themselves. The solitary researcher searches through an archive or library – even if this process is now made easier by technology – and then compiles the results into a book or article which probably has a severely restricted readership.\n\nHowever, the communication revolution has changed all this. I want to explore the use of two pieces of technology which my colleagues and I are using in a historical research project I am currently involved in, which is examining language in early modern European history. These pieces of technology will undoubtedly have significant implications for future study and research in history - and indeed in most other academic subjects as well. The first is web-based video-conferencing. The software we are using in our project allows us to link any number of individuals together simultaneously. It is possible for us to bring together for discussions scholars who have a tremendous range of special interests, from historians with different specialities, to literary critics, to political scientists. They may be geographically far-flung. Indeed, our project connects academics in over a dozen institutions. Time zones permitting, there is no obstacle to collaboration with colleagues anywhere in the world, so that conversations, and the sharing of information, ideas and opinions, can occur more regularly. Virtual meetings can be recorded to create an archive of debates that can be viewed or listened to subsequently by others, creating a history, if you will, of a historical research project. This is especially important for future historians trying to validate or replicate the original research. The video links can project presentations, including accompanying slides and other electronic images, and participants at one site can even control a computer at another.\n\nIn addition to its use in research projects, video-conferencing can encourage interchanges among students from different universities, so that the isolation felt by many, especially PhD students, will probably be reduced if they feel part of an international community, rather than of just one institutional body. Video-conferencing can also allow several universities to combine their scarce resources to present joint classes in minor or simply very specialised subjects (perhaps a seminar on the ancient history of the Vlach people in southeast Europe) and thus keep such subjects alive.\n\nThe second technology we are employing in our historical project is an extension of the web-based teaching tools that are now common in most universities for the purpose of giving students access to course documentation. This technology is an interactive website which enables an advanced research group like ours to plan activities and share documents, including copies of important original historical documents, and other resources. The website can also use a 'wiki', which allows multiple users to edit shared documents, whilst significantly also retaining all previous versions. The wiki principle means that texts can be jointly authored, amended and revised. Moreover, it offers a different type of publication because its publishing output is not static; rather it can be altered by authors or even by readers.\n\nOf course the use of technology in historical research is not without its problems. Our project has had difficulties with the quality of sound and pictures in video conferencing. Institutional technical support may be required. Conservative scholars may be uncomfortable using the website or video-conferencing and may need more guidance: a set of informal social rules is necessary when discussing issues with people with whom you cannot make direct eye contact! For some, the idea of being recorded or filmed can be disconcerting.\n\nOther issues centre on copyright - of the resources and of the intellectual work of participants. Will such work encourage the pirating of primary resources that are currently 'owned' by companies that have invested money in making them available? To whom does the product of a collaboration belong? And who can claim to have had an idea when it emerges from a group discussion? With many scholars working together, how can a level of excellence be maintained? And what of research ideas which are controversial or incorrect or even offensive?\n\nYet the advantages of the new technologies for history and other academic fields surely outweigh any problems and, in any case, their development is probably inevitable. Indeed, the potential of routine technologically aided collaboration in the arts and humanities has barely been explored. But just as Wikipedia took an old idea - the print encyclopedia – and transformed it, so our old methods of research and teaching may well be reshaped by collaborative technologies.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  The writer thinks that recent technological advances in academic research have brought about",
+     "options": [
+      "A  more equality among institutions.",
+      "B  more institutional publications.",
+      "C  the publication of more specialised journals.",
+      "D  the production of more original documents."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "28  The writer says that the historians today tend to think of themselves as people",
+     "options": [
+      "A  who are highly competitive.",
+      "B  who work collaboratively with colleagues.",
+      "C  who are socially and professionally isolated.",
+      "D  who are different from their popular image."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "29  The writer refers to his own particular research project as an example of",
+     "options": [
+      "A  why historians have special technological needs.",
+      "B  the reasons for the discovery of modern technologies.",
+      "C  the contrast between old-style research methods and newer ones.",
+      "D  how new technology can be used in research in many academic fields."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "30  Why does the writer say the recording of video-conferencing meetings is useful?",
+     "options": [
+      "A  It makes participants more careful of what they say.",
+      "B  It allows later research into how the project was carried out.",
+      "C  It provides evidence of the researcher's technological skills.",
+      "D  It eliminates the need for using printed or graphic images."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "31  Some technological advances can help reduce the loneliness of certain higher level students.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  Video-conferencing is especially useful for consultations between students and teachers.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "33  An interactive website is more suitable for students than for high level research work.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "34  Wiki publications are not regarded by academics as very reliable.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "35  New technologies may in the future result in a ............ of the ways in which teaching and research are carried out.",
+     "options": [
+      "A  cautious",
+      "B  determination",
+      "C  categories",
+      "D  transformation",
+      "E  contributions",
+      "F  qualified",
+      "G  ownership",
+      "H  continuation",
+      "I  insupportable",
+      "J  confident",
+      "K  guidelines"
+     ],
+     "answer": 3,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "36  However, there will be difficulties, such as disagreements over the ............ of the materials produced by a collective effort.",
+     "options": [
+      "A  cautious",
+      "B  determination",
+      "C  categories",
+      "D  transformation",
+      "E  contributions",
+      "F  qualified",
+      "G  ownership",
+      "H  continuation",
+      "I  insupportable",
+      "J  confident",
+      "K  guidelines"
+     ],
+     "answer": 6,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "37  Also, with ............ from a number of people, it may be hard to maintain high standards.",
+     "options": [
+      "A  cautious",
+      "B  determination",
+      "C  categories",
+      "D  transformation",
+      "E  contributions",
+      "F  qualified",
+      "G  ownership",
+      "H  continuation",
+      "I  insupportable",
+      "J  confident",
+      "K  guidelines"
+     ],
+     "answer": 4,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "38  More, ............ participants in projects may not be at ease with the new technologies",
+     "options": [
+      "A  cautious",
+      "B  determination",
+      "C  categories",
+      "D  transformation",
+      "E  contributions",
+      "F  qualified",
+      "G  ownership",
+      "H  continuation",
+      "I  insupportable",
+      "J  confident",
+      "K  guidelines"
+     ],
+     "answer": 0,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "39  and may not feel ............ certain aspects of video-conferencing.",
+     "options": [
+      "A  cautious",
+      "B  determination",
+      "C  categories",
+      "D  transformation",
+      "E  contributions",
+      "F  qualified",
+      "G  ownership",
+      "H  continuation",
+      "I  insupportable",
+      "J  confident",
+      "K  guidelines"
+     ],
+     "answer": 9,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "40  In fact, new ............ for personal interaction might be called for.",
+     "options": [
+      "A  cautious",
+      "B  determination",
+      "C  categories",
+      "D  transformation",
+      "E  contributions",
+      "F  qualified",
+      "G  ownership",
+      "H  continuation",
+      "I  insupportable",
+      "J  confident",
+      "K  guidelines"
+     ],
+     "answer": 10,
+     "topic": "Reading - Summary completion"
+    }
+   ]
+  }
+ ]
+}

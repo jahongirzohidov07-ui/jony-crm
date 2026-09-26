@@ -1,0 +1,362 @@
+{
+ "key": "challenge25_day12",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "L",
+ "title": "Reading Challenge - Day 12 (2 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "READING PASSAGE 1. Answer Questions 1-16, which are based on Reading Passage 1.\n\nQuestions 1 - 8\nDo the following statements agree with the information given in Reading Passage 1? In boxes 1-8 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n\nQuestions 9 - 16\nComplete the table below.\nChoose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 9-16 on your answer sheet.\n\nYEARS / DEVELOPMENT\n1854 - Elisha Otis introduced New Yorkers to a new invention - a 9 ............ for elevators.\n1855 - Henry Bessemer created a way of making 10 ............ that was sturdy and inexpensive.\n1890 - The New York World Building was completed.\n1916 - New 11 ............ required that the upper floors of buildings were smaller in area than the lower floors.\n1928 - Some of the decorations on the Chrysler Building looked like 12 ............ parts.\n1945 - An aeroplane lost in 13 ............ hit the Empire State Building.\nAfter 1945 - New buildings featured straight lines as well as shiny 14 ............\n1958 - The shape of the Seagram Building was a 15 ............ for other office blocks in New York.\nToday - Despite its tall buildings, New York is still an ideal place for 16 ............",
+   "passage": "Manhattan's Skyscrapers Race to the Top\n\nThe rise of New York's skyscrapers: 1890 - 1960s\n\nDuring the late 19th and 20th centuries, New York City and the skyline of Manhattan, the most famous of the city's five boroughs, or districts, were radically transformed. New technology, stronger building materials, and abundant labor allowed the towers of Manhattan to rise - eventually becoming the tallest in the world.\n\nThe race to the sky began in 1854, when inventor Elisha Otis demonstrated his elevator safety brake to curious crowds in New York. No matter how many times a man cut through cables holding the elevator platform high above gasping onlookers, Otis would descend just a few inches before safely stopping. Along with Otis's elevator, other innovations laid the groundwork for the future. In 1855 Henry Bessemer patented his process for producing a new kind of strong and low-cost steel. Plate glass, produced in volume from the 1850s, and electric lighting in the 1880s also contributed to the rise of the skyscraper.\n\nTechnology alone did not create the Manhattan skyline. Other essential factors included an increasing population, soaring property values, rivalry, geology, vanity, and greed. In 1871, when Chicago developers built the first so-called 'skyscraper', New York entrepreneurs responded - but they had a geological advantage. While Chicago was built on muddy soil, Manhattan stood on solid granite. And because Manhattan was surrounded by water, there was little room for ambitious new buildings to grow unless they looked upward.\n\nThe first tall buildings to rise in New York City appeared in the late 1800s. Completed in 1890, the 94-meter New York World Building was the tallest in the world until the Manhattan Life Insurance Building surpassed it four years later, setting the fast pace and ambitious character of future Manhattan skyscrapers.\n\nThese buildings were striking achievements, but perhaps the most stunning was the Woolworth Building, completed in 1912. At 222 meters, the Woolworth became the world's tallest building. Upon its completion, this architectural wonder was soon as much a symbol of New York City as the famous Statue of Liberty. It promised freedom and very big dreams.\n\nAs parts of New York began to resemble man-made mountain ranges, concerns over the nature of skyscrapers grew. From the sidewalks, streets felt increasingly like canyons. To counteract this, from 1916, city authorities issued zoning laws that stipulated that tall buildings must become narrower at higher levels - causing Manhattan's skyscrapers to resemble multi-layered wedding cakes.\n\nIn 1928, construction began on one of New York's most iconic structures: the Chrysler Building. Walter Chrysler, a motor-industry leader, incorporated several unique features into his building's design. Much of the building's distinctive ornamentation resembled features of the automobile from which Chrysler made his fortune. Upon completion, the Chrysler building was the world's tallest, at 319 meters high.\n\nThe Chrysler Building's time at the top would be short. Just 11 months after the Chrysler's completion in May 1930, the 102-story Empire State Building became the world's tallest building. It was opened by the U.S. president to great acclaim. At 381 meters, the tower matched the ambition of the New York financier John J. Raskob, who commissioned the legendary skyscraper.\n\nUnfortunately, the American economy crashed as the Empire State Building rose at record speed. Not even the building's famous appearance in the 1933 movie King Kong could boost its fortunes. Unable to find tenants, Raskob's magnificent structure was mockingly called the 'Empty State Building.' It took World War II to fill the building with government agencies. Even then, a B-25 bomber almost brought it down, crashing - accidentally - between the 78th and 80th floors in dense fog on July 28, 1945. Five years later, the Empire State Building finally turned a profit. The building itself was an architectural marvel, remaining the world's tallest skyscraper for 40 years.\n\nIn the years following World War II, architecture in New York transformed again. Instead of decorative designs, buildings started to favor a modern look with a sleek design and also gleaming surfaces. Completed in 1952, the United Nations Building was constructed in this style. Designed by the Swiss architect Le Corbusier, the slim tower was like nothing the city had seen before. The trend toward modern lines continued into the 1950s. By the time the Seagram Building was completed in 1958, rectilinear office buildings - with their straight up-and-down walls - were to become typical. With its unique bronze exterior, it was not the tallest building in New York, but it became a model for designing other office towers built from the 1960s onward.\n\nLe Corbusier is often cited as the villain behind this move towards less elegant architecture, yet when he visited New York in 1935 and witnessed the physical impact of skyscrapers for the first time, he said: 'The skyscrapers of New York are romantic, a gesture of pride... but the street has been killed...'. Today his observation hardly seems true: Manhattan's skyscrapers failed to kill the street. In fact, New York City remains one of the world's great walking cities, its avenues and streets lined by towering giants born of a golden age of opportunity and ambition.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Construction of tall buildings in New York City started in the twentieth century.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  An important force in the development of Manhattan's skyscrapers was the increasing price of land.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  Chicago was a better place to build skyscrapers than New York.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  The New York World Building took four years to complete.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  In 1912, the Woolworth Building was visited as often as the Statue of Liberty.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  In its early years, the Empire State Building was a commercial failure.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  The Empire State Building was the first skyscraper to be featured in a film.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "8  Le Corbusier is frequently considered responsible for changing New York's architecture.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "text",
+     "q": "9  1854 - Elisha Otis introduced New Yorkers to a new invention - a ............ for elevators.",
+     "answer": [
+      "brake"
+     ],
+     "topic": "Reading - Table completion"
+    },
+    {
+     "type": "text",
+     "q": "10  1855 - Henry Bessemer created a way of making ............ that was sturdy and inexpensive.",
+     "answer": [
+      "steel"
+     ],
+     "topic": "Reading - Table completion"
+    },
+    {
+     "type": "text",
+     "q": "11  1916 - New ............ required that the upper floors of buildings were smaller in area than the lower floors.",
+     "answer": [
+      "laws"
+     ],
+     "topic": "Reading - Table completion"
+    },
+    {
+     "type": "text",
+     "q": "12  1928 - Some of the decorations on the Chrysler Building looked like ............ parts.",
+     "answer": [
+      "automobile"
+     ],
+     "topic": "Reading - Table completion"
+    },
+    {
+     "type": "text",
+     "q": "13  1945 - An aeroplane lost in ............ hit the Empire State Building.",
+     "answer": [
+      "fog"
+     ],
+     "topic": "Reading - Table completion"
+    },
+    {
+     "type": "text",
+     "q": "14  After 1945 - New buildings featured straight lines as well as shiny ............",
+     "answer": [
+      "surfaces"
+     ],
+     "topic": "Reading - Table completion"
+    },
+    {
+     "type": "text",
+     "q": "15  1958 - The shape of the Seagram Building was a ............ for other office blocks in New York.",
+     "answer": [
+      "model"
+     ],
+     "topic": "Reading - Table completion"
+    },
+    {
+     "type": "text",
+     "q": "16  Today - Despite its tall buildings, New York is still an ideal place for ............",
+     "answer": [
+      "walking"
+     ],
+     "topic": "Reading - Table completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "READING PASSAGE 2. Answer Questions 17-32, which are based on Reading Passage 2.\n\nQuestions 17 - 23\nReading Passage 2 has seven paragraphs, A-G. Which paragraph contains the following information? Write the correct letter, A-G, in boxes 17-23 on your answer sheet.\nNB You may use any letter more than once.\n\nQuestions 24 and 25\nChoose TWO letters, A-E. Write the correct letters in boxes 24 and 25 on your answer sheet.\nWhich TWO of these statements describe characteristics of NREM sleep?\nA NREM sleep is important for maintaining brain function.\nB NREM sleep consists of two distinct parts.\nC The brain remains passive throughout NREM sleep.\nD Each stage of NREM sleep has a unique EEG pattern.\nE Hormones are released continuously throughout NREM sleep.\n\nQuestions 26 and 27\nChoose TWO letters, A-E. Write the correct letters in boxes 26 and 27 on your answer sheet.\nWhich TWO of these statements describe the characteristics of REM sleep?\nA The REM stage is the longest phase of sleep.\nB REM sleep can be identified by an unusual physical feature.\nC REM sleep is important for removing unpleasant memories.\nD REM sleep is another part of NREM sleep.\nE Some scientists consider REM sleep to be a source of human innovation.\n\nQuestions 28 - 32\nComplete the sentences below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 28-32 on your answer sheet.",
+   "passage": "Why Do We Need Sleep?\n\nA According to the United States (U.S.) Centers for Disease Control and Prevention (CDC), more than 80 million American adults are chronically sleep deprived, meaning they sleep less than the recommended minimum of seven hours a night. The resulting fatigue contributes to more than a million auto accidents each year, as well as to a significant number of medical errors. Even small adjustments in sleep can be problematic. The Monday after a daylight-savings time change in the U.S. - when the clocks are moved ahead one hour - there is a 24 percent increase in heart attacks and a jump in fatal car crashes, compared with other Mondays.\n\nB During their lifetimes, about a third of Americans will suffer from at least one of the recognized sleep disorders. They range from common sleep disorders to much rarer and stranger conditions such as sleep apnea and restless leg syndrome. For example, in exploding head syndrome, booming noises seem to reverberate in your brain as you try to sleep. Also, people with Kleine-Levin syndrome will, every few years, sleep nearly nonstop for a week or two. However, insomnia is by far the most prevalent of these problems and the main reason 4 percent of U.S. adults take sleeping pills in any given month.\n\nC Evolution endowed us with sleep that is flexible in its timing and easily disturbed, so that attention can be directed to higher priorities. The brain has an automatic override system that can wake us in all stages of sleep when it perceives an emergency like the cry of a child. But the problem is that, in the modern world, our ancient innate wake-up call is constantly triggered by something that is non-life threatening, like worrying before an exam or the unexpected sound of a car alarm. Before the industrial revolution, which brought us alarm clocks and fixed work schedules, we could often counteract a sleep deficit by simply sleeping in. That is no longer possible.\n\nD The first segment of the brain that begins to fail when we don't get enough sleep is the prefrontal cortex, the center of decision-making and problem-solving. Dr Chira Cirelli, a neuroscientist in the U.S. suggests that, 'Every cognitive function to some extent seems to be affected by sleep loss,' and she comments that people are often more irritable, moody, and irrational. For instance, sleep-deprived suspects held by the police will often confess to anything in exchange for rest. Other research has also found that people who regularly sleep less than six hours a night have an elevated risk of developing depression, as well as other mental and physical illnesses. In fact, lack of sleep has been directly tied to obesity: without enough sleep, the stomach and other organs overproduce ghrelin, the hunger hormone, causing us to eat more. However, proving a cause-and-effect relationship in this case is challenging because subjecting humans to the necessary experiments is unethical.\n\nE NREM (Non-Rapid Eye Movement) makes up the first of two distinct and repetitive phases of a night's sleep. As we fall into NREM sleep, our brain stays active and begins an editing process - deciding which memories to keep and which ones to ignore. The first of NREM's four stages is called the shallow end of sleep and is characterized by a distinctive regular pattern of brain activity, as shown on an EEG (electroencephalogram) device - a machine that measures electrical impulses. In stage two, the EEG measures electric sparks that strike the cerebral cortex (grey matter covering the outer layer of the brain) in regular half-second intervals. Researchers believe that this electrical activity helps the cortex preserve and store recently acquired information. Stages three and four have been described as a deep, coma-like sleep that is as essential to our brain as food is to our body. In stage three, big, rolling waves of brain activity as measured on an EEG are present less than half the time; in stage four, more than half the time. It's in this deep sleep that our cells produce most growth hormones, which are needed throughout life to service bones and muscles.\n\nF REM (Rapid Eye Movement) sleep was at first believed to be only a variation of a stage in NREM sleep, and not particularly significant. However, once scientists documented the distinctive eye movements in REM, and found that virtually all dreaming takes place during this period, REM sleep was recognized as the second major phase of sleep. Today, scientists believe that the content of our approximately two hours of dreams each night in REM sleep is important in the processing of new memories. Some sleep theorists argue that REM sleep is when we are our most intelligent, insightful, creative, and free. It's when we truly come alive. 'REM sleep may be the thing that makes us the most human, both for what it does for the brain and body, and for the sheer experience of it,' says Professor Michael Perlis.\n\nG The problem of sleep loss is not easily solved - whether by power naps or pharmaceuticals. Dr Jeffrey Ellenbogen, a sleep scientist at Johns Hopkins University in the U.S. argues, 'It's tempting to manipulate sleep with drugs or devices, but we don't yet understand sleep enough to risk artificially manipulating the parts'. Dr Ellenbogen and other experts argue against shortcuts, especially the notion that we can mostly do without sleep. In fact, Dr Steven Lockley, of Brigham Women's Hospital in Boston, suggests that sleep may be more essential to us than food.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "17  an example of how sleeplessness can influence a person accused of a crime",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  a description of recordings of different types of brain activity during sleep",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  a description of how present-day society interrupts sleep",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "20  information about the relationship between being overweight and sleep",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "21  a suggestion that medication is an ineffective solution for sleeping problems",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "22  a discovery that changed ideas about how sleep is understood",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "23  examples of the life-threatening consequences of inadequate sleep",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "multi",
+     "q": "24 and 25  Choose TWO letters, A-E. Which TWO of these statements describe characteristics of NREM sleep?",
+     "options": [
+      "NREM sleep is important for maintaining brain function.",
+      "NREM sleep consists of two distinct parts.",
+      "The brain remains passive throughout NREM sleep.",
+      "Each stage of NREM sleep has a unique EEG pattern.",
+      "Hormones are released continuously throughout NREM sleep."
+     ],
+     "answer": [
+      0,
+      3
+     ],
+     "topic": "Reading - Two answers"
+    },
+    {
+     "type": "multi",
+     "q": "26 and 27  Choose TWO letters, A-E. Which TWO of these statements describe the characteristics of REM sleep?",
+     "options": [
+      "The REM stage is the longest phase of sleep.",
+      "REM sleep can be identified by an unusual physical feature.",
+      "REM sleep is important for removing unpleasant memories.",
+      "REM sleep is another part of NREM sleep.",
+      "Some scientists consider REM sleep to be a source of human innovation."
+     ],
+     "answer": [
+      1,
+      4
+     ],
+     "topic": "Reading - Two answers"
+    },
+    {
+     "type": "text",
+     "q": "28  According to the CDC, lack of sleep leads to ............ which is often a factor in car crashes.",
+     "answer": [
+      "fatigue"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "29  The most common sleep disorder in the U.S. is ............",
+     "answer": [
+      "insomnia"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "30  The brain responds to any type of ............ by activating a built-in alarm.",
+     "answer": [
+      "emergency"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "31  Researchers claim that routinely sleep-deprived people are more likely to be obese and suffer from illnesses like ............",
+     "answer": [
+      "depression"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "32  The processing of new memories is crucially linked to our ............ during sleep.",
+     "answer": [
+      "dreams"
+     ],
+     "topic": "Reading - Sentence completion"
+    }
+   ]
+  }
+ ]
+}

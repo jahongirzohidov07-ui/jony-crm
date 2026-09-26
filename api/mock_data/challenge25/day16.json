@@ -1,0 +1,543 @@
+{
+ "key": "challenge25_day16",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "P",
+ "title": "Reading Challenge - Day 16 (3 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "Answer Questions 1-16, which are based on Reading Passage 1.\n\nQuestions 1-8\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-8 on your answer sheet, write\nTRUE  if the statement agrees with the information\nFALSE  if the statement contradicts the information\nNOT GIVEN  if there is no information on this\n\nQuestions 9-16\nComplete the notes below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 9-16 on your answer sheet.\n\nGobekli Tepe\n\nPurpose of Gobekli Tepe\n- the kind of bird shown on many stones suggests the site may have been a 9 .........\n- it is impossible to know why the site was constructed because there's no 10 ......... on the stones\n\nDiscoveries made at the site\n- no remains of houses have been found to indicate a permanent 11 .........\n- many pieces of animal 12 ......... have been found indicating an abundance of wild animals\n\nWhat we have learned about Gobekli Tepe and the area\n- Gobekli Tepe was in a region where 13 ......... as well as fruit were easy to find\n- after the 14 ......... of Gobekli Tepe many people chose to remain in the region\n- an early form of 15 ......... was grown near Gobekli Tepe\n- domesticated 16 ......... were kept at a place nearby",
+   "passage": "Gobekli Tepe: a remarkable discovery\n\nBetween roughly 10,000 and 11,000 BC, in a remote corner of Mesopotamia, now in modern-day Turkey, a people who pre-dated the invention of the wheel and lacked even basic technology such as metal tools, built an enormous complex of stone pillars called Gobekli Tepe (Potbelly Hill). To achieve this, they shaped blocks of limestone into pillars at a stone quarry. They then moved each pillar, weighing between 11 and 22 tons, a distance of 100 to 500 metres from the quarry to the Gobekli Tepe site. There, the pillars were arranged in rings, which usually consisted of eight upright pillars. Each pillar comprised two stones placed together in the form of a 'T'. Typically, six of these pillars, connected by low walls, made up the circumference of each ring and two taller pillars were situated in the centre. The tallest pillars reached almost five metres in height, and the largest rings were almost 20 metres in diameter.\n\nTo date, nearly 200 pillars have been found by archaeologists at the site. A menagerie of animals, including bulls, foxes, snakes, spiders, donkeys, gazelles and lions had been carved in relief on the stones. There are also strange depictions of human-like forms on the stones. Experts have noted that art from other sites around the world created at roughly the same time typically depicts animals in herds, while at Gobekli Tepe, the images are of individual fierce-looking beasts.\n\nAlthough archaeologists had been aware since the 1960s that there were old limestone slabs at Gobekli Tepe, these were for years generally dismissed as nothing more than a jumble of broken stones of fairly recent origin and uncertain purpose, and the site was essentially ignored. Then in 1994, German archaeologist Klaus Schmidt took a closer look and realised that the unusually rounded appearance of the hill was something that 'only man could have created' and archaeologists began studying the site more carefully.\n\nIn addition to traditional excavation, which has uncovered a treasure trove of flint tools as well as four rings of pillars, geomagnetic surveys were also conducted. The surveys revealed 16 additional rings buried in the hill that had been left undisturbed. It appears that every now and then, ancient builders filled in a ring, pillars and all, with dirt, gravel, flint and old tools. They then erected a new circle over or near the old, buried one.\n\nThere are differing opinions about the purpose of Gobekli Tepe. The stones display prominent depictions of vultures, which are birds commonly associated with the dead, and it is possible that Gobekli Tepe was built as an ancient cemetery. However, some people say that the great age of the stones and the lack of any writing on them make interpreting the builders' motivations virtually impossible.\n\nOf the many discoveries made at the site, perhaps the most intriguing is that the builders do not appear to have become settled before constructing the monuments. The indications are, in fact, that they were nomadic hunter-gatherers. This is remarkable because, up until this discovery, most experts believed that in order to build massive structures like those found at Gobekli Tepe, a society needed to have the organisation and resources that could only come about through people living in a settled agricultural community. The evidence found at Gobekli Tepe, however, appears to seriously challenge this conventional wisdom.\n\nArchaeologists have been digging at the site for more than 20 years, but have found no evidence of a well-established ancient settlement such as houses, hearths, cooking sites, or rubbish dumps. However, they have found 100,000 fragments of the bones of wild game animals like boar, gazelle and deer, which strongly suggests the site was used by hunters. And, unlike the dry landscape found around Gobekli Tepe today, 11,000 years ago the region was a paradise that would have provided ample natural nourishment. It would have been full of fruit and nuts, all readily available to be collected by gatherers without the need for farming.\n\nAll of the evidence suggests that these vast monuments at Gobekli Tepe were not built after a settled way of life had been adopted, but that the process of construction itself eventually caused the builders to abandon hunting and gathering. It seems that a large number of the enormous population required to build the complex eventually chose to remain nearby. Only after the monuments were finished did they adopt a more permanent lifestyle. They began cultivating wild grasses in order to feed themselves and in this way started basic agricultural practices. In fact, the original strains of the modern wheat that people farm today have been traced to an ancient village only 32 kilometres from Gobekli Tepe. In addition, there are indications that the first pigs raised in domestic conditions were kept at a village about 100 kilometres away.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  The builders of Gobekli Tepe used tools made of iron.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  Pillars were carved from stone at a quarry and then taken to Gobekli Tepe.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  The arrangement of the pillars in rings is thought to relate to the seasons of the year.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  Specially trained workers carved the animals on the stones.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  The stone carvings of creatures at Gobekli Tepe are similar to those found at other sites from the same period.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  Until the 1990s, archaeologists believed that the Gobekli Tepe site was of little importance.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  Klaus Schmidt thought that the hill at Gobekli Tepe was formed naturally.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "8  Archaeologists had to get permission before they could start studying the Gobekli Tepe site.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "text",
+     "q": "9  the kind of bird shown on many stones suggests the site may have been a .........",
+     "answer": [
+      "cemetery"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  it is impossible to know why the site was constructed because there's no ......... on the stones",
+     "answer": [
+      "writing"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  no remains of houses have been found to indicate a permanent .........",
+     "answer": [
+      "settlement"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  many pieces of animal ......... have been found indicating an abundance of wild animals",
+     "answer": [
+      "bones"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  Gobekli Tepe was in a region where ......... as well as fruit were easy to find",
+     "answer": [
+      "nuts"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "14  after the ......... of Gobekli Tepe many people chose to remain in the region",
+     "answer": [
+      "construction"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "15  an early form of ......... was grown near Gobekli Tepe",
+     "answer": [
+      "wheat"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "16  domesticated ......... were kept at a place nearby",
+     "answer": [
+      "pigs"
+     ],
+     "topic": "Reading - Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "You should spend about 20 minutes on Questions 17-29, which are based on Reading Passage 2.\n\nQuestions 17-20\nLook at the following findings (Questions 17-20) and the list of researchers below.\nMatch each finding with the correct researcher, A, B or C.\nNB  You may use any letter more than once.\n\nList of Researchers\nA  Jerome Siegel\nB  Clifford Saper\nC  Verner Bingman\n\nQuestions 21-26\nComplete the sentences below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 21-26 on your answer sheet.\n\nQuestions 27-29\nReading Passage 2 has 7 paragraphs, A-G.\nWhich paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 27-29 on your answer sheet.",
+   "passage": "Sleep - who needs it?\n\nIt appears that some animals can survive on remarkably little sleep. Could this also be the case for humans?\n\nA   As any new parent knows, the first months of an infant's life mean little sleep for the family. But humans have it easy compared to orcas, also known as killer whales. University of California, Los Angeles, neuroscientist Jerome Siegel and post-doctorate fellow Oleg Lyamin have found that for the first month after giving birth, killer whale mothers and their calves do not experience normal sleep at all, and neither stops moving for more than a few minutes at a time. \"These sleep patterns contrast with those of most other mammals, which need extra sleep during infancy and gradually sleep less as they age, while orcas are never as active as in the first months of life,\" Siegel says. The young orcas' movement and wakefulness help them keep their body temperature constant until mass and blubber insulation develop and allow for frequent respiration. Meanwhile the mothers of newborn orcas must constantly look out for sharks, while teaching the calves to breathe.\n\nB   According to Siegel, the results of his orca study fundamentally change our view of sleep. \"It has often been said that sleep is necessary for an animal's primary development, particularly that of the brain,\" Siegel says. \"But here we have a creature which grows one of the largest brains in the animal kingdom, and yet it is doing this without sleep.\" All mammals and birds appear to need sleep, but scientists are unsure if reptiles and fish do. \"When you come downstairs at three in the morning, the goldfish isn't lying on the bottom of the bowl, it's swimming around,\" Siegel says. But other scientists believe fish do enter a restful dormant state that is at least similar to sleep.\n\nC   Some animals die without proper sleep, and experiments have shown that sleep deprivation can cause death more quickly than food deprivation. Two weeks without sleep can kill laboratory rats. Sleep is clearly important, but what determines how much we sleep, and when? Siegel thinks that the sleep an animal needs is dictated less by biological functions than by the animal's environmental niche. Availability of food is a major factor. The long rest typical of bats, for example, helps the animals to economize on energy. \"If a bat eats insects for only three hours in the evening, then maybe the best thing is to go hang in a cave upside down for the rest of the day,\" Siegel says.\n\nD   Sleep is not the same for all creatures. In dolphins half the brain may rest while the other half stays vigilantly awake, and the animal carries on everyday activities. Dolphins sleep literally with one eye closed - the eye on the opposite side of the body to the dozing brain hemisphere, since the right brain hemisphere works the left eye and vice versa. However, for unknown reasons, closed eyes seem to be a virtually universal prerequisite for sleep.\n\nE   Neuroscientist Clifford Saper of the Harvard Medical School has located a small area at the base of the brain called the ventrolateral preoptic nucleus that sends chemical signals to other parts of the brain during sleep to slow those brain parts down and determines the best sleep budget for the animal. It is flexible, able to reverse the normal nocturnal habits of a rodent to make it sleep at night, if day is the only time the rodent can find what it needs to eat. According to Saper, evidence suggests that for restoring tired muscles or any other body system, sleep is no more effective than a comparable period of wakeful resting - except for one critical organ, the brain. The human brain apparently cannot do without sleep. Studies show that prolonged wakefulness leads to degradation of memory, alertness, coordination and judgment.\n\nF   Nevertheless, studies of species exhibiting \"natural models of sleep deprivation,\" as psychologist Verner Bingman of Ohio's Bowling Green State University calls them, may allow researchers to provide us with new methods for adapting to limited sleep without losing effectiveness. \"We could live 20-hour lives instead of 12- or 14-hour lives,\" says Bingman, who is studying the behavior of the migratory birds Swainson's thrushes, which for migration purposes, go from a normal night's sleep of 10 to 12 hours down to about 2.5 hours so they can fly at night. To handle the energy output of the long journey they must nearly double the amount of fat in their bodies. They have to switch from a diet of seeds to one of fruits and insects, which they must search for during the day, so further limiting their sleep time.\n\nG   Bingman and doctoral student Thomas Fuchs have discovered that during morning and midday hours the thrushes enter phases of drowsiness, during which they take as many as 50 micro naps per hour, most of them lasting about 10 to 20 seconds. When brain waves are measured, these napping behaviors look very much like normal sleep. Says Bingman, \"The trick would be to develop techniques or drugs that could recreate a similar brain pattern in humans.\" Saper, however, disagrees. \"The effect of 20 hours of wakefulness on driving is the equivalent of two shots of whiskey,\" he warns. \"Sleep deprivation is unfortunately a major cause of death in the US in young adults, who have a very high crash rate between 3 and 6 am.\" He thinks we are dreaming if we think we're ever going to get by on as little sleep as newborn orcas or migrating thrushes.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "17  the physiological mechanism which controls the body's sleep patterns",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "18  an observation that some creatures may have no need for sleep",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "19  data indicating the dangers of extended periods of sleeplessness",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "20  an animal behaviour which could serve as a basis for modifying human sleep patterns",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "text",
+     "q": "21  Movement and wakefulness in young orcas assist them in maintaining .........",
+     "answer": [
+      "body temperature"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "22  New orca mothers need to be awake in order to protect their young from .........",
+     "answer": [
+      "sharks"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "23  Sleep deprivation experiments on ......... have shown that animals die without adequate sleep.",
+     "answer": [
+      "laboratory rats",
+      "rats"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "24  Scientists have not yet worked out why almost all animals sleep with .........",
+     "answer": [
+      "closed eyes"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "25  For humans, sleep is vital for the efficient functioning of the .........",
+     "answer": [
+      "brain",
+      "human brain"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "26  During periods of ......... Swainson's thrushes experience severe sleep deprivation.",
+     "answer": [
+      "migration"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "choice",
+     "q": "27  mention of the potential use of chemicals to reduce sleep periods",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "28  reference to a lack of expert consensus regarding the behaviour of certain types of animal",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "29  an example of an animal which continues to function normally during its sleep periods",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching information"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "Answer Questions 30-45, which are based on Reading Passage 3.\n\nQuestions 30-34\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 30-34 on your answer sheet.\n\nQuestions 35-39\nComplete the summary using the list of words, A-I, below.\nWrite the correct letter, A-I, in boxes 35-39 on your answer sheet.\n\nHomo imitans and the imitation instinct\n\nThe success of the Homo imitans theory is, in part, due to the high quality of Meltzoff's 35 ......... Particularly for parents, there was also great 36 ......... in the notion of babies imitating their facial expressions. Then, as the concept of an imitation instinct came to form the basis of other genetic theories, scientists may have felt a certain 37 ......... to question it.\nThese factors, combined with the 38 ......... of carrying out studies on newborns and a certain lack of 39 ......... in how the experiments were conducted, meant that Meltzoff and Moore's idea remained influential well into the 21st century.\n\nA  consistency    B  challenge    C  appeal\nD  obligation     E  controversy  F  reluctance\nG  confidence     H  writing      I  research\n\nQuestions 40-45\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 40-45 on your answer sheet, write\nYES  if the statement agrees with the claims of the writer\nNO  if the statement contradicts the claims of the writer\nNOT GIVEN  if it is impossible to say what the writer thinks about this",
+   "passage": "Are we born able to imitate?\n\nIn the late 1970s, psychologists Andrew Meltzoff and Keith Moore reported that newborn babies could copy a range of facial expressions, including tongue protrusion, mouth opening and lip pursing. Surely such an achievement could only be due to clever genes; after all, it's impossible to imagine how babies could learn to produce the expressions they see on the faces around them, just a few hours or days after birth. According to Meltzoff and Moore, their findings indicated that we must be born with a cognitive mechanism that connects \"felt but unseen movements of the self with the seen but unfelt movements of the other\".\n\nHowever, worrying cracks began to appear in Meltzoff and Moore's picture as soon as their findings were published in Science magazine - and these cracks have been spreading ever since, in fine but disfiguring lines. From the outset, other experts on child development were unable to replicate the results. They found that newborns copied sticking out their tongues, but not other facial gestures - so perhaps instead of an elaborate imitation mechanism, it was a simple reflex in response to stimulation. Evidence that older infants don't copy any facial gestures, not even tongue protrusion, supported that interpretation.\n\nFurther doubts arose when it was discovered that adults can't imitate facial expressions without something called \"mirror experience.\" Experiments have shown that people who film themselves and then try to copy their own facial expressions simply by looking at a frozen image on the screen do no better on their tenth attempt than on their first. The only way they improve is with \"mirror experience\" - if they watch a reflection of their face as they are trying to recreate the expression. It seems that, in order to learn imitation, we need to see, as well as feel, what we are doing. If we were born with a cognitive mechanism that connects seeing another person's gesture with the sensation of replicating it ourselves, we should be able to improve our imitation without \"mirror experience\".\n\nFor several decades, child psychologists have watched the flaws in Meltzoff and Moore's work becoming more apparent, without ever abandoning their belief in it. One of the reasons for this is that Meltzoff portrays Homo imitans - a species born able to mimic - in beautiful, compelling prose. Additionally, every loving parent is drawn to the idea that if you stick out your tongue at a newborn, the baby likes to return the compliment. In the scientific world, the concept of an imitation instinct swiftly became a foundation stone. By the 1990s, it was supporting other claims about how the mind is shaped by the genes. Researchers might have realized that, if the imitation instinct was discredited, other treasured ideas would fall apart.\n\nBut there were also practical considerations. When small babies are not asleep, they are often inattentive; when they're alert, they're often absorbed in things around them, but not by the things a researcher wants them to look at. In each study of newborn imitation, only a small number of babies stayed attentive for long enough to be analyzed. This sampling, along with small variations in experimental procedure, could have produced misleading results. So, until recently, the idea of a newborn imitation instinct was still scientifically plausible.\n\nHowever, a study led by Virginia Slaughter at the University of Queensland in 2016 was so large and thorough that it finally undermined this argument. Slaughter and colleagues studied an unprecedented number of babies at one, three, six and nine weeks old. They tested for imitation for nine gestures, following gold-standard procedures. They found evidence for just one: tongue protrusion. In every other case, the babies were no more likely to produce the gesture after seeing it done than they were if they saw something else. Of course, you can't prove a negative - that no newborn baby has ever been able to imitate. But in the aftermath of the Queensland study, we have no good reason to believe that newborns can copy gestures or, therefore, that humans have an instinct for imitation.\n\nWhat we're left with instead is a wealth of evidence that humans learn to imitate in much the same way as we pick up other social skills. In a 2018 study at Birkbeck College in London, Carina de Klerk and her colleagues discovered that a baby's capacity to imitate depended on how much parents had imitated its facial expressions. The more a parent copies a baby's facial gesture, the more likely the baby is to imitate it. But the effect highlighted here doesn't generalize. Parents who copy babies' smiles make the infants better at imitating smiles, but not at copying hand movements. This specificity is important because it shows that a simple learning mechanism is involved: babies associate the feel of their own mouth opening with the sight of another mouth opening. Being imitated doesn't make babies think that imitation is a good idea, or give them the capacity to imitate any action they like. Rather, parental imitation gives the baby \"mirror experience\", an opportunity to connect a visual image of an action with the feeling of doing it.\n\nIn the space of a few decades, it's become clear that imitation is not a cognitive instinct and is not in our genes. Rather, children learn to imitate through interaction with other people. Adults and peers help them to do this, not only by copying what the child does, but through games, songs and rhymes that synchronize actions, by reacting in the same way and at the same time (for example, \"Ooh, what's that?\"), and, in most cultures, by allowing the child to spend time in front of actual mirrors, while building up the range of movements that they can copy in future. Whether the mirror is real or metaphorical, \"mirror experience\" is what makes children imitators.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "30  What can be found in the first paragraph?",
+     "options": [
+      "the reasoning behind Meltzoff and Moore's view",
+      "the public reactions to Meltzoff and Moore's findings",
+      "the scientific background to Meltzoff and Moore's research",
+      "the procedures followed during Meltzoff and Moore's studies"
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "31  In the second paragraph, regarding Meltzoff and Moore's work, what is the writer referring to with the phrase 'spreading ever since, in fine but disfiguring lines'?",
+     "options": [
+      "mounting awareness of deficiencies in it",
+      "rising numbers of publications covering it",
+      "growing curiosity about the ideas underlying it",
+      "increasing numbers of conflicting interpretations of it"
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "32  According to the writer, what does evidence from older infants suggest?",
+     "options": [
+      "Older babies may not be as focused on adult faces as newborn babies",
+      "Certain facial gestures could take longer than others for infants to learn",
+      "Babies must lose the ability to imitate tongue protrusion at a certain stage",
+      "Newborns' tongue protrusion is probably not a response to seeing this gesture"
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "33  What do the experiments on 'mirror experience' suggest?",
+     "options": [
+      "We intuitively associate gestures with the emotions they correspond to",
+      "We find it hard to copy an image of a gesture without sufficient practice",
+      "We lack a natural capacity to reproduce gestures based solely on observation",
+      "We can instinctively imitate our own gestures better than those of others"
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "34  The word 'this' in the fourth paragraph refers to",
+     "options": [
+      "changing attitudes towards Meltzoff and Moore's work",
+      "experts choosing to disregard clear scientific evidence",
+      "new developments arising within the field of child psychology",
+      "improvements occurring in the way research was conducted"
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  The success of the Homo imitans theory is, in part, due to the high quality of Meltzoff's .........",
+     "options": [
+      "consistency",
+      "challenge",
+      "appeal",
+      "obligation",
+      "controversy",
+      "reluctance",
+      "confidence",
+      "writing",
+      "research"
+     ],
+     "answer": 7,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "36  Particularly for parents, there was also great ......... in the notion of babies imitating their facial expressions.",
+     "options": [
+      "consistency",
+      "challenge",
+      "appeal",
+      "obligation",
+      "controversy",
+      "reluctance",
+      "confidence",
+      "writing",
+      "research"
+     ],
+     "answer": 2,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "37  Then, as the concept of an imitation instinct came to form the basis of other genetic theories, scientists may have felt a certain ......... to question it.",
+     "options": [
+      "consistency",
+      "challenge",
+      "appeal",
+      "obligation",
+      "controversy",
+      "reluctance",
+      "confidence",
+      "writing",
+      "research"
+     ],
+     "answer": 5,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "38  These factors, combined with the ......... of carrying out studies on newborns ...",
+     "options": [
+      "consistency",
+      "challenge",
+      "appeal",
+      "obligation",
+      "controversy",
+      "reluctance",
+      "confidence",
+      "writing",
+      "research"
+     ],
+     "answer": 1,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "39  ... and a certain lack of ......... in how the experiments were conducted ...",
+     "options": [
+      "consistency",
+      "challenge",
+      "appeal",
+      "obligation",
+      "controversy",
+      "reluctance",
+      "confidence",
+      "writing",
+      "research"
+     ],
+     "answer": 0,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "40  Virginia Slaughter and her team used reliable methodology in their research.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "41  Slaughter's team were surprised by evidence showing babies' ability to imitate tongue protrusion.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "42  The findings of the Queensland study proved unconvincing.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "43  The results of the Birkbeck study suggest that copying babies' expressions teaches them to imitate a range of physical actions.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "44  It has become evident that verbal input can help children to imitate adults' behaviours.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "45  The first gestures which children imitate via 'mirror experience' may vary depending on their culture.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    }
+   ]
+  }
+ ]
+}

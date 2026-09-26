@@ -1,0 +1,380 @@
+{
+ "key": "challenge25_day15",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "O",
+ "title": "Reading Challenge - Day 15 (2 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "READING PASSAGE 1\nAnswer Questions 1-16, which are based on Reading Passage 1.\n\nQuestions 1-8\nComplete the notes below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 1-8 on your answer sheet.\n\nThe Terracotta Army\n\nDiscovery and early excavation (Questions 1-4)\n- Yang Zhifa and his brothers were creating a 1 .......... when they made their discovery\n- Together with the terracotta head they found a metal 2 ..........\n- Zhao Kangmin put the terracotta pieces into a 3 .......... and took them to the museum\n- a 4 .......... became aware of the site and wrote about it\n- the government sent more archaeologists to the site\n\nObjects in the four pits (Questions 5-6)\n- Pit one: warriors and numerous 5 ..........\n- Pit two: warriors, chariots and 6 ..........\n- Pit three: warriors and a chariot\n- Pit four: empty\n\nHow the terracotta figures were made (Questions 7-8)\n- mass produced in a number of 7 ..........\n- the 8 .......... of individual figures completed by hand to make them look different\n\nQuestions 9-16\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 9-16 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+   "passage": "The Terracotta Army\n\nIt was a prolonged drought in 1974 that forced farmer Yang Zhifa and his five brothers to start digging a well in a small wooded area just outside their village in Lingtong Country near the city of Xi'an in Northwest China, eventually reaching a depth of 15 metres. On March 29th, they found something much more remarkable than water - the terracotta head of a Chinese warrior along with a heavily-corroded bronze arrowhead. They did not understand the significance of what they had found at the time, but the brothers had stumbled across the first emperor of China's Terracotta Army.\n\nWhen local archaeologist and museum curator Zhao Kangmin got a phone call a couple of weeks later about the farmers' discovery, he knew he needed to get down to the dig site as quickly as possible. The farmers weren't archaeologists, and he was worried they would unwittingly damage the site as they continued to dig for treasure. Zhao jumped on his bicycle and raced to the site. Once there, his worst fears were realized. The brothers had indeed continued to dig, and the site was now littered with hundreds of fragments of shattered terracotta. He told the farmers that they had to stop what they were doing immediately. They were reluctant to agree, but finally did so.\n\nZhao gathered the broken fragments together and loaded them onto a truck to transport them to the Lingtong County Museum where he worked. Over the course of the next few days, Zhao painstakingly put the fragments back together. When he was finished, two imposing, 1.78-metre-tall figures stood before him. This was an incredible find, but he wondered if it was just the tip of the iceberg. To find out, he assigned a small team to start work on excavating the site. It soon became clear, as more soil was cleared and more figures and fragments of figures emerged, that far from there being just a few figures buried underground, there were potentially hundreds.\n\nZhao was uncertain whether the government in Beijing would allocate resources to a large-scale excavation and decided to continue the work with a small team. However, when a journalist visiting the area heard about his work and published an article about the site, word travelled fast. The authorities were quick to recognise the importance of the find and ordered a full excavation of the site. Soon, the dig was teeming with archaeologists. It was quickly dawning on everyone that the farmers had stumbled upon one of the most astonishing archaeological finds in modern history. What they had found was an army cast in terracotta - made to defend the first emperor of China, Qin Shi Huang, in the afterlife.\n\nOver the months that followed, four pits were uncovered. To the astonishment of everyone involved, what was unearthed was an entire army, complete with horses and chariots. The first pit revealed the main bulk of the emperor's army - six thousand warriors in total arranged in battle formation, and scattered around their feet a huge collection of swords. The second pit contained more infantry units, alongside cavalry units and chariots pulled by teams of terracotta horses. The third pit revealed high-ranking officers and an elaborate bronze war chariot. The fourth and final pit was empty. In total, the emperor's army numbered eight thousand strong, all lying undiscovered for 2,200 years, buried just a kilometre and a half away from the giant burial mound that houses the mausoleum of emperor Qin Shi Huang.\n\nAs more and more of the figures were painstakingly uncovered, one thing became clear - no two were the same. Built on an industrial scale in various workshops in the late 3rd century BC, each soldier's face had been individually finished off by hand to give it a unique look. Once cast and put together, the soldiers had then been painted to make them look as realistic as possible. Unfortunately, this paint quickly flaked off from the figures when they were unearthed, leading to criticism about the fact that insufficient environmental research had been undertaken before the figures were exposed to the elements.\n\nA year after the discovery of the army, the Chinese government decided to open up the site to the public. A museum was built, and a protective roof was constructed over the now fully-exposed pits. It wasn't long before tourists began to trickle into the small provincial city of Xi'an, eager to see this amazing sight. Soon word spread around the world, and tourists flew in to see the army in all its glory. The Terracotta Army was officially recognised as a UNESCO World Heritage Site in 1987. Today, it is one of the most popular tourist attractions in China, and on the occasions when groups of the terracotta soldiers have been allowed out of the country to go on display in national museums around the world, they have attracted hundreds of thousands of visitors.",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  Yang Zhifa and his brothers were creating a .......... when they made their discovery",
+     "answer": [
+      "well"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "2  Together with the terracotta head they found a metal ..........",
+     "answer": [
+      "arrowhead"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "3  Zhao Kangmin put the terracotta pieces into a .......... and took them to the museum",
+     "answer": [
+      "truck"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "4  a .......... became aware of the site and wrote about it",
+     "answer": [
+      "journalist"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "5  Pit one: warriors and numerous ..........",
+     "answer": [
+      "swords"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "6  Pit two: warriors, chariots and ..........",
+     "answer": [
+      "horses"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "7  mass produced in a number of ..........",
+     "answer": [
+      "workshops"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "8  the .......... of individual figures completed by hand to make them look different",
+     "answer": [
+      "face",
+      "faces"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "choice",
+     "q": "9  Yang Zhifa and his brothers realised immediately that their discovery was important.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "10  When Zhao Kangmin arrived at the site, he knew he had been right to be concerned.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "11  Yang and his brothers carried out Zhao's order straight away.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "12  After he had assembled two terracotta figures, Zhao sent other people to continue digging.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "13  The government sent archaeologists from every part of China to work on the site.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "14  The figures found in the third pit represented the leaders of the emperor's army.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "15  Extensive research was carried out to discover how excavation would affect the paint on the figures.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "16  Large groups of tourists need special permission to visit the site.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "READING PASSAGE 3\nAnswer Questions 17-30, which are based on Reading Passage 3.\n(In the original source these questions are numbered 33-46; they have been renumbered continuously for this day.)\n\nQuestions 17-21\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 17-21 on your answer sheet.\n\nQuestions 22-26\nComplete the summary using the list of words and phrases, A-J, below.\nWrite the correct letter, A-J, in boxes 22-26 on your answer sheet.\n\nExplanations for youth homelessness\nThere are various explanations for youth homelessness. Firstly, the reduction in 22 .......... was caused by changes in the housing market and is one of a number of 23 .......... for youth homelessness. There may also be 24 .......... for developments, such as the increased demand for single-person accommodation. Thirdly, some young people may find it difficult to get state benefits, and do not have jobs. These are 25 .......... for homelessness. Lastly, factors such as crime and mental illness are examples of 26 ..........\n\nA demographic explanations\nB government support\nC bank loans\nD solutions\nE money owed\nF economic explanations\nG personal explanations\nH structural explanations\nI income\nJ property to rent\n\nQuestions 27-30\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 27-30 on your answer sheet, write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+   "passage": "Youth homelessness\n\nA look at the problems in assessing the scale of homelessness among young people in Britain, and the explanations that have been put forward to account for it\n\nYouth homelessness did not emerge as a public problem in Britain until the second half of the 20th century. In 1975, a television programme called Johnny Go Home shocked the public by showing the risks faced by a runaway child in London, and placed the problem of youth homelessness firmly on the public agenda, although policy initiatives were not forthcoming. Behind the rise in homelessness among young people were the problems of youth unemployment, a reduction in state benefits, and a shortage of suitable housing.\n\nGovernment responses to youth homelessness generally involve encouraging voluntary agencies to set up schemes. The proportions of young people affected vary from region to region, as do the underlying economic structures, making comparison difficult. However, homeless youngsters all over Britain face many of the same risks as they move between relatives, institutions and the street.\n\nStatistics are an integral part of accounts of social issues, whether they be in the press or in the reports of agencies and academic commentators. The reaction of policy makers to a social problem also depends largely on the number of people it is thought to affect. However, there are very few agreed statistics on homelessness.\n\nOne reason for this is that there are a number of practical difficulties with measuring it. Young people who are staying temporarily with friends, for example, may not contact homelessness agencies, so their housing problem goes unrecorded. In addition, some may be homeless for just a night or two, others for months or years.\n\nThere is also no globally accepted definition of homelessness. For example, in Britain someone is deemed homeless by a local authority if they have no accommodation that they are entitled to occupy, but they must also fulfil a number of other criteria: they must have a local connection of some sort, they must not be intentionally homeless, and they must show that they are in 'priority need' of accommodation. Official statistics therefore exclude large numbers of homeless people.\n\nExplanations of the causes of youth homelessness also vary considerably. Structural explanations account for youth homelessness by reference to societal structures, such as changes in the housing market. This is crucial since, by definition, homelessness is a housing issue. In particular, there has been a substantial decline in rented housing in recent years. The economic power of young people is also significant. Both unemployment and low pay are frequently viewed as being integral to homelessness and both factors affect young people in Britain. However, unemployment is not directly the issue - rather it is a question of the subsequent low income that unemployment incurs.\n\nAs such, the state benefit system is also seen to be fundamental to the rise in youth homelessness, because young people's benefits have been heavily restricted in a number of ways. As a result, many young people may be heavily in debt. These various difficulties have been further compounded by a number of demographic changes, such as the expanding number of single-person households. Consequently, while there has been a huge reduction in the supply of affordable accommodation, there has been an increase in the demand for such housing.\n\nHowever, the problem of youth homelessness is often explained in more personal terms, which relate it to the individual behaviors of homeless people. A wide variety of such personal factors are often introduced to help explain youth homelessness, such as leaving home, mental illness, crime, and drug abuse, although there is usually disagreement over how these factors should be interpreted.\n\nFour approaches can be taken towards the explanation of youth homelessness. One is the 'political' model, which sees homelessness as stemming primarily from the way society is organized. This is a view widely adopted in academic circles, but there are also a number of criticisms that can be made of it. Firstly, only by looking in detail at the individual features of the situation is it possible to assess the impact of these structural features on the homeless and to identify appropriate provision. In addition, this approach tends to treat young homeless people as powerless victims, which patronizes them and ignores the fact that they are still capable of self-determination.\n\nThe 'individual culpability' model sees homelessness as having little or nothing to do with societal structures but as resulting from the individual behavior of young homeless people themselves. Young homeless people, it is argued, do not have to leave home. As individuals in a free society they are accountable to themselves for their decisions. The advantage of this perspective is that it gives some credibility to the self-determination of young homeless people. However, because such an approach allocates blame to an individual, it also carries punitive implications.\n\nIn the 'pathology' model, the individual's situation is perceived to be a consequence of personality disorders that may result from early childhood experiences. According to this model, young homeless people have specific problems and they therefore require specialist support. This approach can present a misleading picture of the young homeless - many of whom have no problems other than one of accommodation.\n\nFinally, according to the 'child' model, young people become homeless because they are simply too immature to cope with life. However, there is evidence to suggest that many homeless youngsters show considerable resilience and maturity in learning to cope with and survive homelessness.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "17  How did the TV programme Johnny Go Home affect attitudes to youth homelessness in Britain?",
+     "options": [
+      "A It raised awareness of the issue on a wide scale.",
+      "B It led to official measures to deal with the situation.",
+      "C It discouraged many young people from leaving home.",
+      "D It made people aware of the real causes of the problem."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "18  Comparison of homelessness in different regions is difficult, partly because of variations in",
+     "options": [
+      "A the places homeless children go to.",
+      "B government responses.",
+      "C economic structures.",
+      "D the work done by voluntary agencies."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "19  Why is the lack of agreed statistics on homelessness a problem?",
+     "options": [
+      "A Accounts of the problem by the press are ineffective.",
+      "B Policy makers may not respond appropriately to the situation.",
+      "C Academic commentary on the issue becomes unclear.",
+      "D Agencies may not be able to provide funding."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "20  The lack of statistics on homelessness may partly be caused by",
+     "options": [
+      "A disagreement over the type of data needed.",
+      "B reluctance of the homeless to identify themselves.",
+      "C lack of time to carry out surveys.",
+      "D difficulty in identifying the homeless."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "21  The writer describes the criteria for classifying someone as homeless in Britain to illustrate",
+     "options": [
+      "A the different ways of collecting statistics.",
+      "B the fact that too many people are defined as homeless.",
+      "C the variation there is in different parts of the country.",
+      "D the fact that official statistics may be misleading."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "22  Firstly, the reduction in .......... was caused by changes in the housing market",
+     "options": [
+      "A demographic explanations",
+      "B government support",
+      "C bank loans",
+      "D solutions",
+      "E money owed",
+      "F economic explanations",
+      "G personal explanations",
+      "H structural explanations",
+      "I income",
+      "J property to rent"
+     ],
+     "answer": 9,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "23  ... and is one of a number of .......... for youth homelessness.",
+     "options": [
+      "A demographic explanations",
+      "B government support",
+      "C bank loans",
+      "D solutions",
+      "E money owed",
+      "F economic explanations",
+      "G personal explanations",
+      "H structural explanations",
+      "I income",
+      "J property to rent"
+     ],
+     "answer": 7,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "24  There may also be .......... for developments, such as the increased demand for single-person accommodation.",
+     "options": [
+      "A demographic explanations",
+      "B government support",
+      "C bank loans",
+      "D solutions",
+      "E money owed",
+      "F economic explanations",
+      "G personal explanations",
+      "H structural explanations",
+      "I income",
+      "J property to rent"
+     ],
+     "answer": 0,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "25  Thirdly, some young people may find it difficult to get state benefits, and do not have jobs. These are .......... for homelessness.",
+     "options": [
+      "A demographic explanations",
+      "B government support",
+      "C bank loans",
+      "D solutions",
+      "E money owed",
+      "F economic explanations",
+      "G personal explanations",
+      "H structural explanations",
+      "I income",
+      "J property to rent"
+     ],
+     "answer": 5,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "26  Lastly, factors such as crime and mental illness are examples of ..........",
+     "options": [
+      "A demographic explanations",
+      "B government support",
+      "C bank loans",
+      "D solutions",
+      "E money owed",
+      "F economic explanations",
+      "G personal explanations",
+      "H structural explanations",
+      "I income",
+      "J property to rent"
+     ],
+     "answer": 6,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "27  The 'political' model is unpopular among academics.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  The 'political' model may lead to young homeless people being regarded as having hardly any control over their lives.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  The disadvantages of the 'individual culpability' model far outweigh the advantages.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  The 'child' model is an accurate representation of the situation of many young homeless people.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    }
+   ]
+  }
+ ]
+}

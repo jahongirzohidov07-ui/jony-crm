@@ -1,0 +1,559 @@
+{
+ "key": "challenge25_day02",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "B",
+ "title": "Reading Challenge - Day 2 (3 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1.\n\nQuestions 1-4\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-4 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n\nQuestions 5-8\nComplete the sentences below.\nChoose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 5-8 on your answer sheet.\n\nQuestions 9-13\nLook at the following statements (Questions 9-13) and the list of researchers below.\nMatch each statement with the correct researcher, A-G.\nWrite the correct letter, A-G, in boxes 9-13 on your answer sheet.\nNB You may use any letter more than once.\n\nList of people\nA Bill MacCracken\nB Robert Mills\nC Tim Warren\nD John Rumney\nE Brendan Stark\nF Michael Berry\nG James Wilson",
+   "passage": "Temperature rising\n\nThe impact of global warming on the tourism industry\n\nThe tourism industry depends to a large extent on good weather. The past few years have brought intense hurricanes, typhoons, torrential rains, heat waves and drought. According to the World Meteorological Organization, 2004 was the fourth hottest year on record. And while global warming, defined as human-driven climate change traced to the burning of fossil fuels such as oil, coal and natural gas, cannot be blamed for single-handedly wreaking such havoc, the scientific consensus is that it may intensify some weather events. For example, meteorologists attribute the back-to-back hurricanes in 2004 to a 50- to 70-year natural cycle of increased hurricane activity. But hurricanes tend to become even more formidable on a warmer globe. Bill MacCracken, a scientist at the Climate Institute in Washington DC, likens the present climate to a pot of slowly boiling water on a stove: if you turn up the flame, you get more bubbles, but you can’t attribute one particular bubble to the increase in heat. He says, ‘We’re slowly going to be getting more extreme weather, but we can’t say that any particular type of weather is due to the changing climate.’\n\nTourism companies worldwide are starting to feel the financial effects of weather change. In Scotland higher winter temperatures have led several ski areas to diversify into summer leisure pursuits such as golf, and paragliding in the winter. A similar scenario is taking place in the European Alps. Robert Mills, of the United States Tourism Association, reports that in the upper Midwest of the United States, cooler summers and warmer winters have resulted in resort owners having to restrict outdoor sports such as swimming in lakes and ice fishing. And in the west of the United States, intense forest fires in recent years have limited public access to national and state parks. For the tourism industry, which generated US$578 billion in 2002, or seven per cent of the world’s economy, the costs of extreme weather are high. Last year was the most expensive on record for the insurance side of the industry. ‘Weather and tourism go hand in hand,’ says Tim Warren, an adventure business consultant based in California. ‘If the weather’s not co-operating, the impacts on profits are very real.’\n\nOne of the most impacted areas is the diving industry, whose very survival depends on the health of coral reefs. The Global Coral Reef Monitoring Network reports that 20 per cent of the world’s reefs have been effectively destroyed by factors such as pollution, overfishing, diseases, and bleaching – the last directly related to rise in water temperatures that essentially heats coral until it sheds the algae that feed it, leaving it colourless. Even Australia’s Great Barrier Reef, with its 400 species of coral spanning 1,240 miles, hasn’t been spared. Scientists estimate that bleaching has affected significant areas of the Great Barrier Reef. ‘We hear tourists say, “this doesn’t look like the postcard or as it did three years ago”,’ says John Rumney, manager of Undersea Explorer, a dive and research vessel that operates out of Queensland in Australia.\n\nThe ski industry has also felt the effects of climate change. A 2003 report by Brendan Stark, of the Global Environment Programme (GEP), predicted that downhill skiing could disappear altogether at low-altitude ski resorts such as Kitzbühel in Austria. Snowfall in the New England region of the United States has decreased by 15 per cent since 1953 and, perhaps more significantly, there are seven fewer days per annum with snow on the ground here than there were fifty years ago. While there is no concrete evidence that the warming in the New England is due to the emission of greenhouse gases, many scientists in the United States believe it is consistent with global warming. The ski industry has made great efforts to downplay the impact of climate change. However, less snow and more variable temperatures have had disastrous consequences for many smaller ski operators, who can only open for business when snow is on the ground. According to Michael Berry, president of the Denver-based National Ski Areas Association, ‘the reason why some small ski resorts aren’t around any more is because they decided they could not afford to install snow-making systems.’ The best snowmaking in the world won’t save the industry if current trends continue.\n\nThe Intergovernmental Panel on Climate Change, made up of some 2,000 scientists, estimates a rise of between two and 10.4 degrees Fahrenheit by 2100. As a result, the GEP forecasts that the ski and tourism industry in Switzerland, for example, could eventually lose up to US$1.6 billion annually. The outlook for other travel destinations is not much brighter. Scientists feel polar bears will die out within the next hundred years or so. James Wilson, of the Planet Travel Club, believes that in just 20 to 30 years, if people have not already had the opportunity to see the snows of Mt Kilimanjaro in Tanzania or visit the low-lying Maldive Islands of the Indian Ocean, it will be too late because they will have gone too. Kyoto’s climate treaty, signed by more than 100 countries, required industrialised nations to reduce greenhouse gases by at least five per cent. It is a step towards slowing the trend, but clearly much larger strides are necessary if the travel industry hopes to become less affected by the impact of global warming.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  In Europe, some ski resorts now offer summer activities during the winter months.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  In parts of the United States, fires have prevented tourists from visiting some park areas.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  The financial consequences of global warming on the tourism industry in 2002 was US$578 billion.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  Global warming has caused the closure of some Australian ski resorts.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "text",
+     "q": "5  The …………… is the area of tourism which is suffering most as a result of coral reef damage.",
+     "answer": [
+      "diving industry",
+      "the diving industry",
+      "diving"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "6  Warmer water ultimately changes the appearance of coral to the point where it becomes ……………",
+     "answer": [
+      "colourless",
+      "colorless"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "7  International scientists predict that global temperatures will have increased by at least …………… degrees Fahrenheit by the next century.",
+     "answer": [
+      "two",
+      "2"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "8  Experts believe that this century will see the extinction of ……………",
+     "answer": [
+      "polar bears",
+      "the polar bears",
+      "polar bear"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "choice",
+     "q": "9  The technology required to extend the skiing season is too expensive for some businesses.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "10  It is difficult to know exactly which weather conditions are caused by global warming.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "11  Tourists have observed changes in the environment over time.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "12  The change in the climate will mean that some locations near sea level will no longer exist.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "13  Temperature changes have forced holiday complexes to cut down on certain types of activities.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2.\n\nQuestions 14-16\nReading Passage 2 has nine paragraphs, A-I.\nWhich paragraph contains the following information?\nWrite the correct letter, A-I, in boxes 14-16 on your answer sheet.\nNB You may use any letter more than once.\n\nQuestions 17-20\nChoose the correct letter, A, B, C or D.\n\nQuestions 21-26\nDo the following statements agree with the claims of the writer in Reading Passage 2?\nIn boxes 21-26 on your answer sheet, write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+   "passage": "Giftedness and Intelligence\n\nA   There is a popular view that, by definition, gifted children have IQs of 140 upwards and that testing intelligence by psychologists using an individually administered intelligence test, such as the Wechsler Intelligence Scales for Children, the British Ability Scales or the Kaufmann Assessment Battery for Children, can help to pick out children who might otherwise not be identified as extraordinarily able. Used in this way and in conjunction with other data, educational or clinical psychologists have often advised parents or educationists on strategies to help children realise their abilities.\n\nB   However, today, many psychologists have doubts about the efficacy of these tests and about the ethics of using them. Unfortunately, the terms intelligence and IQ have become such a part of language that we tend to use them as if we knew what they meant. Many readers may have found it reassuring to read the first sentence of this article and think, 'Yes, now we know where we are', when, of course, we have said nothing more than: 'Lots of people think something which may or may not be true.'\n\nC   When Alfred Binet, as the director of the psychology laboratory at the Sorbonne in Paris, was invited in 1904 to construct a test to identify pupils who might need special assistance in their education, he reasoned that older children would perform better on mental tasks than younger children and that what was needed was a set of tasks arranged in chronological order. Children of 7 years of age who performed at the 5-year-old level, for instance, needed special help (his mental orthopaedics) in small classes to enable them to improve.\n\nD   It was all very simple, sensible and empirical. In Binet's words, 'It matters very little what the tests are, so long as they are numerous.' He avoided items like reading skills, which reflected schooling or rote learning and emphasised that he was not measuring intelligence, which was too complex to be measured, and that the results of his tests were purely diagnostic and did not represent innate or immutable qualities. He fully recognised that children from cultured homes who attended schools with small classes would most likely\n\nE   Unfortunately, some psychologists in the UK and in the USA fastened upon Binet’s tests and adopted his notions for purposes he never intended, and so the highly profitable testing industry was quickly spawned to serve the interests of armed forces, employers and educational administrators. On the one hand, they adopted the concept of intelligence as a single human attribute like height and, on the other, they maintained it was a faculty which was largely inherited. Some of the arguments about how much intelligence was inherited - 70 per cent, 80 per cent? - and how much environmentally determined, read like the discussions about how many angels could stand on the top of a needle.\n\nF   If one defines what is to be measured and always uses the same piece of knotted string to measure it, it is perfectly proper to compare the results, especially if one subjects them to stringent statistical analysis. But no matter how accurately one has measured, the value or significance of what has been measured may still be in doubt. Unfortunately, even measuring people's height accurately is not the simple matter it appears to be at first sight. How would we measure an abstract quality like strength and equate it to weight or height or age? The sensible advice we would give anyone who suggested embarking on such a project would be 'don't: “strength” is an abstraction and, like “intelligence”, results from a number of different elements'. Hence, if you want to investigate human performance, whether it is 'strength' or what is popularly called 'intelligence', it is better to do so by studying discrete elements in specific situations. Today, it is that direction in which studies of intellect have moved.\n\nG   There is another important reason why IQ tests have waned in popularity: even if they test abilities of one sort or another, which undoubtedly many of them do, they do not test life-skills such as personality, motivational and emotional factors, which may crucially affect future performance and achievement. We would suggest that taken alone, the result of an IQ test has little value and the view of a unitary, innate faculty such as intelligence diverts our attention from the diversity of abilities, skills and qualities of children.\n\nH   Again, if we are told, for instance, that children are highly intelligent but are grossly underperforming, what is significant is not their abilities but the factors which have caused their inability to perform, factors we should have been attending to all along. IQ tests are unlikely to have discovered why Churchill or Einstein was underperforming at school, if such was in fact the case, nor could they have predicted how they would develop. And we all know people who are intelligent but can do nothing. People who are all empty words and vain gestures.\n\nI   Instead of assessing children's intelligence as measured by intelligence tests, we would be better employed finding out what they can do and how well and quickly they can learn to do more. Tests of intelligence, sometimes masquerading as tests of mental ability, usually succeed in testing what they have been designed to test. But many have a strong verbal element which favours children with a highly verbal background, for example, children of professional people. They will not identify children with artistic or musical abilities and they are unlikely to reveal pupils of exceptional mathematical ability. Some sensitive or over-anxious children may underperform in test situations, and some exceptionally gifted children may find the questions so trivial that they will suspect a trick and spend time searching for hidden meanings.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  an explanation of the methodology behind Binet’s tests",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "15  a discussion of intelligence as a single measurable characteristic",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "16  reasons for inadequacy of IQ tests",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I"
+     ],
+     "answer": 8,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "17  The writer’s purpose in the passage is to",
+     "options": [
+      "describe the history of IQ tests.",
+      "discuss the limitations of IQ tests.",
+      "define the nature of intelligence.",
+      "explain the design of IQ tests."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "18  Alfred Binet’s tests compared children of the same age in order to",
+     "options": [
+      "identify children not performing satisfactorily.",
+      "identify the most intelligent children.",
+      "measure children’s intelligence.",
+      "decide the best age for children’s education to begin."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "19  The tests that Binet designed were",
+     "options": [
+      "based on reading skills.",
+      "based on mathematical skills.",
+      "arranged according to age.",
+      "different for different socio-economic groups."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "20  Recent studies of intellect look at intelligence as",
+     "options": [
+      "a single factor.",
+      "a factor impossible to assess.",
+      "a constantly changing factor.",
+      "separate factors in particular circumstances."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "21  Alfred Binet believed that intelligence could not be measured.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "22  Binet’s tests were intended for use only in the schools of Paris.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "23  Binet’s tests were used by armies for purposes different to his original intention.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "24  Intelligence can be measured like any other human characteristic.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "25  We should assess children’s separate abilities and learning capacity, not intelligence.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "26  Intelligence tests accurately identify gifted and able children.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3.\n\nQuestions 27-34\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 27-34 on your answer sheet, write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this\n\nQuestions 35-40\nReading Passage 3 has ten paragraphs, A-J.\nWhich paragraph contains the following information?\nWrite the correct letter, A-J, in boxes 35-40 on your answer sheet.\nNB You may use any letter more than once.",
+   "passage": "What should companies do to survive?\n\nA   In the world of business, where today’s fashionable management theory soon becomes a stale cliché or a quaint archaism, it is essential to have a clear idea about the enduring rules of good management. The company that follows these is the company that is in the strongest position amid the uncertainties and violent upheavals of the world as we know it.\n\nB   A company is the sum of what its people understand and know how to do well. Value lies increasingly in creative ideas and knowledge. But ideas have value only if people share and develop them in ways that increase revenue; knowledge is useful only if people can find what they need to know. Getting intelligent people to share what is in their heads is vital, and takes more than mere money or clever software. Ideas must flow in every direction through a company – not merely from the top down. And knowledge is worth storing only if senior staff set careful rules to filter and structure it. What goes into a database determines the value of what comes out. So setting central rules and standards is key to good knowledge management.\n\nC   Good judgement is a key skill. Managers constantly blitzed with new information need to build in the data that matters and set aside the rest. Big-bang decisions are generally best avoided – or implemented in small incremental moves that leave room for flexibility and for altering course, if circumstances change.\n\nD   Customers matter – but some matter more than others. Acquiring new customers often costs more than making extra sales to existing ones. So companies must build loyalty by providing reliability and good service. Given the welter of product information reaching customers, memorable brands will grow more important. Companies need not only to widen their reach by finding new markets, but also to deepen existing relationships. They have more information than ever before about their customers, and must use this to offer their most profitable customers special deals and to make them feel part of an elite club. Some companies even seek to ‘fire’ unprofitable customers by charging them higher rates than others.\n\nE   Like its customers, some of a company’s people matter more than others, and not just at the top: managing talent is also about capturing innovative ideas from middle managers and those further down the line. At every level, managers must identify where most value lies. In some cases, a few stars will encapsulate much of a company’s value; in others, teams of employees will matter more. Some companies will want to hire the talents of ‘free agents’ as and when they are required; others, to employ directly their best brains.\n\nF   Companies need to collaborate more, in alliances that allow them to outsource production or spread risk or to enter new markets. Effective collaboration calls for trust and shared understanding, rather than the top-down, command-and-control approach of hierarchical structures. Successful collaboration also requires excellent communication, and incentives that reward sharing information and working for common goals. As costs of handling information in a company decline, new opportunities open for redefining corporate shape, and companies are becoming less hierarchical, with more ways to arrange and rearrange structure. Managers must think through from scratch which activities should be kept in-house and which outsourced, and normally a company should keep those activities it does better than its competitors.\n\nG   Given the pace of change, bosses need more than ever to be able to communicate persuasively through many channels, with their staff and the outside world. They must also listen: the most valuable communications will frequently be bottom-up, and the people nearest to customer are best placed to explain what they see and hear. Managers must listen to them.\n\nH   Ironically, internet technologies, tools of freedom and decentralization, call for discipline and standard processes. Only by setting standards and insisting that everyone abide by them will companies reap their potential savings. Companies need to insist on common practices in areas such as purchasing and information technology in order to harvest real productivity gains. As a result, some aspects of centralisation will increase: a key task of top managers is to provide structures and standards, and to insist that they are observed.\n\nI   Once standards have been set, openness and freedom should reign. Centralisation of standards makes possible decentralisation of decision making. In addition, internet technologies increase the need for a culture of openness, to foster the sharing of knowledge and effective collaboration. Increasingly, companies will allow their suppliers and customers ‘inside the machine,’ as it were, by giving them extraordinary access to their databases and inner workings in order to integrate their operations and to make collaboration effective.\n\nJ   The key to success lies much less in technical know-how than in excellent leaderships to push through and build upon organisational change. At some points in a company’s life, it will need a leader who can rally staff to push through the trauma of disruptive change. At other times, the right style will be the manager-as-coach, a selfless talent scout who specialises in assembling and motivating great teams. Always, the people at the top will set the tone in a firm. Their skills will determine whether it is a good company to work in and do business with.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  Too few companies understand how to evaluate fashionable management theories.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  Certain practices should always be followed when coping with unstable situations.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  It is important that the development of ideas should lead to improvements in the company’s financial position.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  The structuring of a database should be decided by all its users.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "31  More training needs to be provided to help managers assess the usefulness of new information.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  Any major change should be introduce all at once.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "33  Companies can benefit from using different strategies with different customers.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "34  The activities which are common to all companies are best kept in-house.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "35  examples of qualities required when co-operating with other companies",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "36  examples of business activities where all staff should follow the same practices",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "37  examples of alternative employment patterns within a company",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "38  a basis for deciding whether a company should carry out an activity itself or ask an outside company to do it",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "39  an example of how information can be shared by a company and its customers",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 8,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "40  a reason why customers might continue to buy from the same companies",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching information"
+    }
+   ]
+  }
+ ]
+}

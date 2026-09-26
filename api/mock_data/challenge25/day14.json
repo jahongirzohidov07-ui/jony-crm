@@ -1,0 +1,178 @@
+{
+ "key": "challenge25_day14",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "N",
+ "title": "Reading Challenge - Day 14 (1 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "READING PASSAGE 1\nAnswer Questions 1-16, which are based on Reading Passage 1.\n\nQuestions 1-8\nDo the following statements agree with the information given in Reading Passage 1?\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n\nQuestions 9-16\nComplete the notes below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 9-16 on your answer sheet.\n\nAncient Roman and Greek sites visited by Cyriacus",
+   "passage": "An early cultural tourist\n\nIn the 15th century, the Italian merchant Cyriacus of Ancona journeyed in search of the Mediterranean's classical past. In doing so, he laid the groundwork for today's cultural holidays\n\nToday we take it for granted that we travel around the world to admire the monuments of the past. We prepare for such trips by reading about what we are going to see, set out on the journey with a good idea of how we will get there and where we will stay and have a sense of what we will encounter on location. Cyriacus of Ancona (1391-1452), the first cultural tourist since antiquity, lacked these advantages when, in the first half of the 15th century, he sailed around the Mediterranean in search of the remains of Greek and Roman civilisations.\n\nCyriacus first became fascinated by ancient monuments while walking in his home city Ancona and looking at the marble arch, erected in AD 115, to the Roman Emperor Trajan. He suddenly saw the structure in a new light. He no longer saw it as just a familiar and generally overlooked landmark, but as a doorway to the wonders of ancient imperial Rome. Not many people of Cyriacus's time were interested in historical travel, they generally ignored old buildings and structures, or worse, dismantled them for their building materials.\n\nCyriacus decided to see the world for himself and to record details of whatever other antiquities remained to be discovered. His training as a merchant did not prepare him for this vocation; he did not know ancient languages, history or art. However, he set out to solve these failings, first by learning Latin at the age of 30 and then adding ancient Greek. Having done this, he then set off on voyages around the Mediterranean to find, investigate and understand ancient cultures from their buildings, sculptures and inscriptions. Thus he became the first archaelogist and cultural tourist, predating other antiquarians by some 200 years.\n\nTravel in the 15th century, however, was anything but simple or enjoyable. Overland journeys by foot or mule along bad roads, under constant threat from bandits, were bad; voyages by seas were even worse. When the weather cooperated, sailing went relatively smoothly, ships proceeded along coasts from one recognizable landmark to another. However, when there was no wind the ship did not move. Strong winds were no friends either, they drenched the ship with lashing waves and blew it off course. Water swamped the desk, splashed into the cabins and soaked mattresses, clothes and food. Remarkably, Cyriacus never complained about the miseries of travel. Optimistic by nature, he endured such hardships unafraid and saw opportunities where other people saw setbacks.\n\nAmong many of the important records made by Cyriacus was his crucial documenting, in 1431, of the remains of Cyzicus, an ancient Roman city that had relied on commerce for its financial success. He hired a local person to take him to site and then had to work out for himself the significance of the ruins he was looking at because there was no guidebook on ancient architecture to help him. Indeed, his contemporary knowledge about the ruins. Cyzicus had been a splendid city in its prime. Unfortunately, the area was highly seismic and in AD 123 the city was so devastated by a major earthquake that, when the Roman Emperor Hadrian visited it the following year, he was so saddened that he decided to subsidise a campaign to reconstruct Cyzicus. He made a substantial donation for a new temple to the Roman god Jupiter. Cyriacus thought the ruined city was awe-inspiring. He found the remains of the temple and examined it in great detail, looking for clues in ancient texts to help him understand what he was seeing. He sketched the great doorway adorned with carved foliage and mythological characters. Cyriacus's account of this temple is the only record of this building as in the following centuries it was entirely stripped of all its stonework and all that remains is its base.\n\nCyriacus also visited mainland Greece, in 1436, when no one went to Greece in order to see the country's ancient ruins. One of his destinations was the sanctuary of Delphi. The ancient Greeks considered Delphi as being situated in the most beautiful spot in Greece. When Cyriacus arrived at the site of Delphi, however, he found war, earthquakes and avalanches had all but obliterated its ruins. Determined to find any ancient traces, Cyriacus spent six days walking all over the areas, peering at odd stone blocks sticking out of the ground, running his hands over inscriptions to trace fragments of words, and trying to puzzle out the few surviving structural remains. Climbing uphill towards the rocks that tower over the site, he came upon a theatre built into the slope. Soon after his visit, the site was buried by a rockslide and was not seen again until archaelogists began to excavate the area systematically in the late 19th century.\n\nCyriacus had hoped to visit Egypt and Ethipoia but he never got there. However, in his life he did record for posterity countless ancient monuments around the Mediterranean, paving the way for future archaelogists and cultural tourists.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Cyriacus was unable to research his journeys before he left.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  Cyriacus was inspired to begin travelling by a Roman ruin in his city.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  The Roman Emperor Trajan built the city of Ancona.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  Respect for ancient architecture was widespread in the 15th century.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  Cyriacus's experience as a merchant gave him skills he needed to investigate the ancient world.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  Before leaving on his journey, Cyriacus studied ancient languages.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  Travelling by sea in the 15th century was easier than travelling on land.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "8  Cyriacus tried to make his fellow sea travelers more comfortable.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "text",
+     "q": "9  The city of Cyzicus - The wealth of the city had come from 9 ....................",
+     "answer": [
+      "commerce"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  The city of Cyzicus - 10 .................... to the ancient city ruins not available when visited by Cyriacus",
+     "answer": [
+      "guidebook"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  The city of Cyzicus - The city was destroyed by a powerful 11 .................... in AD 123",
+     "answer": [
+      "earthquake"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  The city of Cyzicus - A year later Emperor Hadrian supported a 12 .................... to rebuild the city",
+     "answer": [
+      "campaign"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  The city of Cyzicus - A temple to Jupiter was built - helped by an especially large 13 .................... from Emperor Hadrian",
+     "answer": [
+      "donation"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "14  The city of Cyzicus - Cyriacus found part of the temple, which was built in the time of Emperor Hadrian, and made drawings of the 14 .................... to the temple and its decorative carvings",
+     "answer": [
+      "doorway"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "15  The sanctuary of Delphi - By the 15th century Delphi had almost disappeared due to natural disasters and 15 ....................",
+     "answer": [
+      "war"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "16  The sanctuary of Delphi - Cyriacus found a 16 .................... above Delphi",
+     "answer": [
+      "theatre",
+      "theater"
+     ],
+     "topic": "Reading - Note completion"
+    }
+   ]
+  }
+ ]
+}

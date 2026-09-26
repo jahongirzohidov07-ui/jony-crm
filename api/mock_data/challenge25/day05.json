@@ -1,0 +1,493 @@
+{
+ "key": "challenge25_day05",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "E",
+ "title": "Reading Challenge - Day 5 (3 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1.\n\nQuestions 1-4\nChoose the correct letter, A, B, C, or D.\n\nQuestions 5-7\nChoose THREE correct letters, A-G.\nWhich THREE of the following are part of the societal marketing concept?\n\nQuestions 8-10\nChoose THREE correct letters, A-G.\nWhich THREE of the following does the writer suggest were the reason for the success of Ben & Jerry's?\n\nQuestions 11-13\nChoose THREE correct letters, A-G.\nWhich THREE things show that The Body Shop is an example of the societal marketing practice?",
+   "passage": "Companies try out a new marketing practice\n\nPhilip Kotler describes a business trend of the 1980s and '90s in his book, Marketing Management\n\nTraditional marketing identifies target markets and satisfies consumer needs. In recent years, however, some have questioned whether this marketing concept is an appropriate philosophy in an age of environmental deterioration, resource shortages, explosive population growth, world hunger and poverty, and neglected social services. Are companies that do an excellent job of satisfying consumer wants necessarily acting in the best interests of consumers and society in the long run?\n\nLet us first consider two examples of the marketing concept in action. The fast-food hamburger industry offers tasty but unhealthy food. The hamburgers have a high fat content, and the restaurants promote fries and pies, two products high in starch and fat. The products are wrapped in convenient packaging, which leads to much waste. In satisfying consumer wants, these restaurants may be hurting consumer health and causing environmental problems. The soft drinks industry has catered to our modern desire for convenience by increasing the share of single-use disposable bottles. However, the single-use bottle represents a great waste of resources; approximately 17 bottles are necessary where formerly one reuseable bottle made 17 trips before it was damaged. In addition, many single-use bottles are not biodegradable, and these bottles often litter the environment.\n\nThese situations call for a new concept that enlarges the marketing concept. A suggested name for this new concept is 'the societal marketing concept'. It holds that the organization's task is to determine the needs, wants, and interests of target markets and to deliver the desired satisfactions more effectively and efficiently than competitors, in a way that preserves or enhances the consumer's and the society's well-being. Marketers need to build social and ethical considerations into their marketing practices. They must juggle the often conflicting criteria of company profits, consumer satisfaction, and public interest. Two pioneers in implementing the societal marketing concept are Ben & Jerry's and The Body Shop. But even they have begun to experience some difficulty.\n\nIn 1978, Ben Cohen and Jerry Greenfield formed a superpremium ice cream company called Ben & Jerry's Homemade. Sixteen years after Ben & Jerry's Scoop Shop opened in Burlington, Vermont, USA, sales climbed to US$150 million. The company now has more than 600 employees and 10 franchisees. Their popularity rests on Ben & Jerry's creating innovative flavors such as Rainforest Crunch. Customers also know that 7.5% of Ben & Jerry's pre-tax profits are donated to a variety of social and environmental causes. Ben & Jerry's was additionally noted for its egalitarian employer-employee relations: the company used to have a policy in which the highest-paid employee made no more than five times the lowest-paid worker. Business realities eventually forced the company to modify this ratio to seven to one.\n\nIn 1993, facing stiff competition in the superpremium ice cream category, the company suffered its first loss since going public in 1984. A search began for a new, well-qualified Chief Executive Officer (CEO) to lead the company through its next stage of financial growth. To achieve this, the founders felt they had to raise the compensation level, yet Ben & Jerry's still conducted the CEO search in their own iconoclastic style. An essay contest entitled 'Yo, I'm Your CEO' attracted applications from 20,000 CEO hopefuls. Despite Ben & Jerry's unusual approach to finding a CEO, in the end the company made a rather conventional choice.\n\nIn 1976, Anita Roddick opened The Body Shop in Brighton, UK, in a tiny store selling beauty products in small plastic bottles. Now there are over 1,100 stores in 46 countries and The Body Shop's annual sales growth rate has been between 60% and 100%, with sales reaching US$250 million in 1993. The company manufactures and sells cosmetics based on natural ingredients in simple and appealing recyclable bottles. The ingredients are largely plant-based and are often sourced from developing countries. Products are usually formulated without animal testing, and The Body Shop donates a percentage of profits each year to animal rights groups, homeless shelters, Amnesty International, Save the Rainforest, and other social causes. The outspoken Roddick routinely spoke out against the mainstream beauty industry and promoted her company's brand of socially responsible capitalism. However, going out on a limb means facing closer scrutiny. In 1992, the company filed a libel suit over a television report that challenged its image as a company with a social conscience. While The Body Shop won the suit in 1993, it is still besieged by critics who allege that the company does not live up to its reputation, and its profits have slipped slightly as copycat competitors enter the natural products market.\n\nThese companies are practising cause-related marketing, a version of the societal marketing concept, and it is one major factor in their success. Several companies use cause-related marketing on a limited scale, for example, by contributing to a specific charity based on consumer purchases during a limited period. Companies run these cause-related marketing campaigns for several purposes: to enhance corporate image, thwart negative publicity, pacify consumer groups, launch a new product or brand, broaden their customer base, and generate incremental sales. However, some critics complain that cause-related marketing exploits the cause's constituency and may make consumers feel that they have fulfilled their philanthropic duties by purchasing a product instead of donating directly.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  What point is made about traditional marketing in the first paragraph?",
+     "options": [
+      "A  It can be influenced by population growth.",
+      "B  It considers the long-term needs of society.",
+      "C  It may be unsuited to a time of global problems.",
+      "D  It leads to environmental destruction."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "2  According to the writer, disposable bottles were introduced in the soft drinks industry",
+     "options": [
+      "A  to meet consumer demand.",
+      "B  to reduce damage to bottles.",
+      "C  because they are biodegradable.",
+      "D  because they are more efficient."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "3  In the sixth paragraph, what does the writer give as the main reason for criticisms of The Body Shop?",
+     "options": [
+      "A  The company's profits have decreased.",
+      "B  The company has lost money to other businesses.",
+      "C  The company is less concerned with social issues than it appears to be.",
+      "D  The company uses fewer natural ingredients than it says it does."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "4  In the seventh paragraph, what objection is made to cause-related marketing?",
+     "options": [
+      "A  It is practised in a restricted way.",
+      "B  It is sometimes aimed at only one charity for a short time.",
+      "C  It is practised in order to improve the company's image.",
+      "D  It is likely to discourage people from donating straight to charity."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "multi",
+     "q": "5-7  Choose THREE correct letters, A-G. Which THREE of the following are part of the societal marketing concept?",
+     "options": [
+      "A  Assessing the requirements of customers",
+      "B  Imitating competitor practices",
+      "C  Informing consumers about products",
+      "D  Considering community welfare issues",
+      "E  Promoting items which are profitable",
+      "F  Managing differing requirements in competitive welfare",
+      "G  Involving managers in selling the products"
+     ],
+     "answer": [
+      0,
+      3,
+      5
+     ],
+     "topic": "Reading - Three answers"
+    },
+    {
+     "type": "multi",
+     "q": "8-10  Choose THREE correct letters, A-G. Which THREE of the following does the writer suggest were the reason for the success of Ben & Jerry's?",
+     "options": [
+      "A  Product names were very popular.",
+      "B  New tastes were introduced.",
+      "C  Funds were given to worthy organisations.",
+      "D  The company organized social events.",
+      "E  All workers were treated equally.",
+      "F  Fairness was a factor in salary levels.",
+      "G  Some shops were staffed by volunteers."
+     ],
+     "answer": [
+      1,
+      2,
+      5
+     ],
+     "topic": "Reading - Three answers"
+    },
+    {
+     "type": "multi",
+     "q": "11-13  Choose THREE correct letters, A-G. Which THREE things show that The Body Shop is an example of the societal marketing practice?",
+     "options": [
+      "A  Products are sold in small plastic bottles.",
+      "B  Products are made from natural ingredients.",
+      "C  Social and environmental organisations are consulted on company practice.",
+      "D  Some of the income is given to social organisations.",
+      "E  The product containers can be recycled.",
+      "F  They have trained other companies in environmentally friendly practices.",
+      "G  The company is disapproved of by the mainstream beauty industry."
+     ],
+     "answer": [
+      1,
+      3,
+      4
+     ],
+     "topic": "Reading - Three answers"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2.\n\nQuestions 14-18\nReading Passage 2 has five paragraphs, A-E.\nChoose the correct heading for paragraphs A-E from the list of headings below.\nList of headings:\ni  the symbolic status of the Mbuti\nii  new methods of agriculture\niii  the forest and its inhabitants\niv  the exchange of produce\nv  a potential conflict of interests\nvi  traditions which survive despite changing circumstances\nvii  assistance given to Mbuti by villagers on important occasions\n\nQuestions 19-22\nClassify the following statements as referring to\nA  Mbuti only\nB  Villagers only\nC  Both Mbuti and villagers\n\nQuestions 23-26\nComplete the sentences.\nWrite ONE WORD ONLY from the passage for each answer.",
+   "passage": "The Mbuti of the Ituri Forest in Zaire\n\nA  For perhaps two millennia, the Ituri Forest of northern Zaire in Africa has been the home for both Mbuti hunter-gatherers and Bantu village-dwelling cultivators. The cultivators are settled in isolated villages using only small areas of the forest. The population density in the forest including both Mbuti and cultivators is low, averaging less than three persons per km2. More than 70% of the forest has probably never been cut and large areas remain uninhabited.\n\nAlthough never totally out of touch with villagers, Mbuti spend a great deal of time in the uncultivated parts of the forest. They are considered by all, including themselves, as the guardians of the forest, being the most familiar with the forest and the most efficient at extracting its resources. This alone, however, is not enough to assure Mbuti security. All Mbuti live as forest specialists in association with cultivators. Such interaction is key to their welfare and their future.\n\nB  Economic aspects of the reciprocity between Mbuti and villagers have been described in some detail. Starch foods from villagers' gardens make up a significant part of Mbuti diet year-round. In turn, Mbuti provide villagers on an irregular basis with 'prestige foods', for example honey from the forest. They help clear and harvest the gardens and participate in seasonal fishing expeditions. Mbuti also provide diverse forest supplies, such as thatching and construction materials, firewood and medicinal plants.\n\nTrade relations between Mbuti and the villagers are not rigidly defined; there are no fixed terms. In most cases no cash is involved, and donations may even take the form of gifts. Mbuti, as nomads, are highly unpredictable in what they will provide and when they will provide it. Villagers, on the other hand, have a fairly predictable yearly cycle of activities centered on the preparation, planting and harvesting of their gardens.\n\nC  Important elements in Mbuti-villager reciprocity extend beyond its economic base. For lack of a better term, these elements might be categorized as 'cultural reciprocity'. Under various circumstances, Mbuti use the more hierarchical and formalized social structure of villager societies. For example, in the southern and central Ituri Forest, villagers play a prominent role in Mbuti marriages and deaths, and in mediating outbreaks of conflict among Mbuti. Although Mbuti themselves will decide who will marry whom, and although they may not abide by the recommended terms in cases of arbitration, they nevertheless turn to villagers when wealth or formality is needed. Villagers often organize the resources needed for a wedding feast and delegate responsibilities at a funeral. Even if a death happens in a remote forest camp, the burial takes place in the village. Likewise, individuals involved in any crime occurring in the forest are brought by Mbuti to a village tribunal.\n\nD  At other times, the villagers use Mbuti to act as intermediaries with the forest. Just as Mbuti use the more elaborate political structures of villagers to regulate certain aspects of their own social system, so villagers require the spiritual unity Mbuti have with the forest to assure their own relationship with the land. In the harvest festivals of cultivators of the southern Ituri, Mbuti even take precedence over village ritual authorities. At the start of the harvest, the first crop of bananas is for the ancestors and is left to rot on the plant. The second goes to Mbuti, and only the third is for the mwami (king).\n\nMbuti ease and independence in the forest is acknowledged to be a manifestation of their special relationship with the forest, a unity which the villagers cannot achieve in their more hierarchical, agriculturally-orientated lives. Mbuti participate at major ceremonies, including coronation ceremonies of the mwami, and the opening of new barazza (men's communal house).\n\nE  The exchange relationship between Mbuti and villagers has been flexible enough to survive a number of migrations and political upheavals in the past, and the Bantu are not the only villagers to benefit from this relationship. Immigrants from north Africa entered the forest more than a century ago, and their descendants, the Baungwana, remain there today. The Baungwana are a Swahili-speaking agricultural group, who have not only established themselves in the forest, but have had Mbuti associated with their villages for at least three or four generations. These relatively recent relationships resemble the established Mbuti-Bantu interactions in many ways. The Baungwana come from a different cultural background, but in the Ituri Forest they are also small-scale, subsistence cultivators. Not only do they need forest products, but also, even more so than the indigenous forest villagers, they see the forest as powerful and alien. Therefore, they too value Mbuti for their forest skills.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  Paragraph A",
+     "options": [
+      "i  the symbolic status of the Mbuti",
+      "ii  new methods of agriculture",
+      "iii  the forest and its inhabitants",
+      "iv  the exchange of produce",
+      "v  a potential conflict of interests",
+      "vi  traditions which survive despite changing circumstances",
+      "vii  assistance given to Mbuti by villagers on important occasions"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "15  Paragraph B",
+     "options": [
+      "i  the symbolic status of the Mbuti",
+      "ii  new methods of agriculture",
+      "iii  the forest and its inhabitants",
+      "iv  the exchange of produce",
+      "v  a potential conflict of interests",
+      "vi  traditions which survive despite changing circumstances",
+      "vii  assistance given to Mbuti by villagers on important occasions"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "16  Paragraph C",
+     "options": [
+      "i  the symbolic status of the Mbuti",
+      "ii  new methods of agriculture",
+      "iii  the forest and its inhabitants",
+      "iv  the exchange of produce",
+      "v  a potential conflict of interests",
+      "vi  traditions which survive despite changing circumstances",
+      "vii  assistance given to Mbuti by villagers on important occasions"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "17  Paragraph D",
+     "options": [
+      "i  the symbolic status of the Mbuti",
+      "ii  new methods of agriculture",
+      "iii  the forest and its inhabitants",
+      "iv  the exchange of produce",
+      "v  a potential conflict of interests",
+      "vi  traditions which survive despite changing circumstances",
+      "vii  assistance given to Mbuti by villagers on important occasions"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "18  Paragraph E",
+     "options": [
+      "i  the symbolic status of the Mbuti",
+      "ii  new methods of agriculture",
+      "iii  the forest and its inhabitants",
+      "iv  the exchange of produce",
+      "v  a potential conflict of interests",
+      "vi  traditions which survive despite changing circumstances",
+      "vii  assistance given to Mbuti by villagers on important occasions"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "19  they depend on another group to fulfill certain needs.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 2,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "choice",
+     "q": "20  their lives generally follow a pattern.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 1,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "choice",
+     "q": "21  they have probably inhabited the forest for two thousand years",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 2,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "choice",
+     "q": "22  their superior forest-management abilities are generally acknowledged.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 0,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "text",
+     "q": "23  For every square kilometre of forest there are under ........ inhabitants.",
+     "answer": [
+      "three",
+      "3"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "24  Mbuti occasionally provide villagers with luxuries such as ........ .",
+     "answer": [
+      "honey"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "25  When trading goods, Mbuti and the villagers do not often use ........ .",
+     "answer": [
+      "cash"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "26  Mbuti have the priority over the villagers' king at celebrations taking place at the time of the ........ .",
+     "answer": [
+      "harvest"
+     ],
+     "topic": "Reading - Sentence completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "You should spend about 20 minutes on Questions 27-39, which are based on Reading Passage 3.\n\nQuestions 27-30\nChoose the correct letter, A, B, C or D.\n\nQuestions 31-33\nDo the following statements agree with the claims of the writer in the Reading Passage?\nYES               if the statement agrees with the claims of the writer\nNO                 if the statement contradicts the claims of the writer\nNOT GIVEN   if it is impossible to say what the writer thinks about this\n\nQuestions 34-39\nComplete the summary using the list of words.\nChoose the correct answer and fill the gap.\nList of words:\nA  machines    B  governments    C  functions    D  abstract    E  graphic    F  social vision    G  storyline    H  animals    I  power    J  purpose    K  organisation\n\nThe writer of the article values the film Metropolis for its 34 ........ . It is relevant to our times mainly because it portrays people who have become like 35 ........ . The people in the film are controlled by a dictatorial 36 ........ , which is only interested in money and in 37 ........ . The writer claims that the machinery in the film should take into account the fact that because the 38 ........ of the machines are never fully described, Lang's vision of the future is highly 39 ........ .",
+   "passage": "Metropolis - a classic science-fiction film\n\nWhen the German director Fritz Lang visited the United States in 1924, his first glimpse of the country was a night-time view of the New York skyline from the deck of an ocean liner. This, he later recalled, was the direct inspiration for what is still probably the most innovative and influential science-fiction film ever made - Metropolis. Metropolis is a bleak vision of the 21st century that is at once both chilling and exhilarating. This spectacular city of the future is a technological marvel of high-rise buildings connected by elevated railways and airships. It's also a world of extreme inequality and social division. The workers live below ground and exist solely to operate the city's machines in an endless routine of mind-numbing 10-hour shifts, while the city's elite lead lives of luxury high above. Presiding over them all is the Master of Metropolis, John Fredersen, whose sole satisfaction seems to lie in the exercise of power.\n\nLang's graphic depiction of the future is conceived in almost totally abstract terms. The function of the individual machines is never defined. Instead this mass of dials, levers and gauges symbolically stands for all machines and all industry, with the workers as slave-like extensions of the equipment they have to operate. Lang emphasises this idea in the famous shift-change sequence at the start of the movie, when the workers walk in zombie-like geometric ranks, all dressed in the same dark overalls and all exhibiting the same bowed head and dead-eyed stare. An extraordinary fantasy sequence sees one machine transformed into a huge open-jawed statue which then literally swallows them up.\n\nOn one level, the machines and the exploited workers simply provide the wealth and services which allow the elite to live their lives of leisure, but on a more profound level the purpose of all this crazed industry is to serve itself. Power, control, and the continuance of the system from one 10-hour shift to the next, are all that counts. The city consumes people and their labour and, in the process, becomes a perverse parody of a living being.\n\nIt is enlightening, I think, to relate the film to the modern global economy in which multinational corporations now routinely close their factories in one continent so that they can take advantage of cheap labour in another. Like the industry in Metropolis, these corporations' goals of increased efficiency and profits have little to do with the welfare of the majority of their employees or that of the population at large. Instead their aims are to sustain the momentum of their own growth and to increase the monetary rewards to a tiny elite - their executives and shareholders. Fredersen himself is the essence of the big company boss - most modern industrialists would probably feel perfectly at home in his huge skyscraper office with its panoramic view of the city below. And it is important that there is never any mention of government in Metropolis - the whole concept is by implication obsolete. The only people who have power are the supreme industrialist, Fredersen, and his magician/scientist henchman Rotwang.\n\nSo far so good: when the images are allowed to speak for themselves, the film is impeccable both in its symbolism and in its cynicism. The problem with Metropolis is its sentimental storyline, which sees Freder, Fredersen's son, falling in love with the visionary Maria. Maria leads an underground pseudo-religious movement and preaches that the workers should not rebel but should await the arrival of a 'Mediator' between the 'Head' (capital) and the 'Hands' (labour). The mediator is the 'Heart' - love; as embodied, finally, by Freder's love of Maria and his father's love of him.\n\nLang wrote the screenplay in collaboration with his then wife, Thea von Harbou. In 1933 he fled Germany (and continued a very successful career in Hollywood). She stayed in Germany and continued to make films. There is a constant tension within the film between the too-tidy platitudes of von Harbou's script and the uncompromisingly caustic vigour of Lang's imagery.\n\nAll the same, Metropolis is probably more accurate now as a representation of industrial social relations than it has been at any time since its original release. And Fredersen is certainly still the most potent movie symbol of the handful of elusive corporate figureheads who increasingly treat the world as a Metropolis-like global village.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  In the writer's view, the fact that 'the function of the individual machines is never defined' (paragraph 2)",
+     "options": [
+      "A  emphasises the fantasy element of the film.",
+      "B  makes the film too complicated.",
+      "C  strengthens the main idea of the film.",
+      "D  weakens the plot of the film."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "28  According to the writer, in what is the industry in Metropolis like the multinational corporations of the present?",
+     "options": [
+      "A  Both have gone totally out of control.",
+      "B  Both exploit science and new technologies.",
+      "C  One person governs both systems.",
+      "D  Their main concern is the continuation of the system."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "29  The writer's main purpose in writing this article is",
+     "options": [
+      "A  to connect the film to present-day situations.",
+      "B  to criticise the behaviour of film-makers during the 1930s.",
+      "C  to discuss recent critical views of the film.",
+      "D  to recommend the film Metropolis to viewers."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "30  Which statement best summarises the writer's attitude to the film Metropolis?",
+     "options": [
+      "A  The film is a perfect work of art.",
+      "B  The film is too cynical.",
+      "C  It is a great film which could have been even better.",
+      "D  It is a weak film with some good parts."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "31  The character of Fredersen was based on an industrialist Lang met in America in 1924.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  The imagery of Metropolis is superior to its storyline.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "33  Thea von Harbou and Fritz Lang divorced because of von Harbou's decision to remain in Germany.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "34  The writer of the article values the film Metropolis for its ........ .",
+     "options": [
+      "A  machines",
+      "B  governments",
+      "C  functions",
+      "D  abstract",
+      "E  graphic",
+      "F  social vision",
+      "G  storyline",
+      "H  animals",
+      "I  power",
+      "J  purpose",
+      "K  organisation"
+     ],
+     "answer": 5,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "35  ... it portrays people who have become like ........ .",
+     "options": [
+      "A  machines",
+      "B  governments",
+      "C  functions",
+      "D  abstract",
+      "E  graphic",
+      "F  social vision",
+      "G  storyline",
+      "H  animals",
+      "I  power",
+      "J  purpose",
+      "K  organisation"
+     ],
+     "answer": 0,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "36  The people in the film are controlled by a dictatorial ........ ,",
+     "options": [
+      "A  machines",
+      "B  governments",
+      "C  functions",
+      "D  abstract",
+      "E  graphic",
+      "F  social vision",
+      "G  storyline",
+      "H  animals",
+      "I  power",
+      "J  purpose",
+      "K  organisation"
+     ],
+     "answer": 10,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "37  ... which is only interested in money and in ........ .",
+     "options": [
+      "A  machines",
+      "B  governments",
+      "C  functions",
+      "D  abstract",
+      "E  graphic",
+      "F  social vision",
+      "G  storyline",
+      "H  animals",
+      "I  power",
+      "J  purpose",
+      "K  organisation"
+     ],
+     "answer": 8,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "38  ... because the ........ of the machines are never fully described,",
+     "options": [
+      "A  machines",
+      "B  governments",
+      "C  functions",
+      "D  abstract",
+      "E  graphic",
+      "F  social vision",
+      "G  storyline",
+      "H  animals",
+      "I  power",
+      "J  purpose",
+      "K  organisation"
+     ],
+     "answer": 2,
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "39  ... Lang's vision of the future is highly ........ .",
+     "options": [
+      "A  machines",
+      "B  governments",
+      "C  functions",
+      "D  abstract",
+      "E  graphic",
+      "F  social vision",
+      "G  storyline",
+      "H  animals",
+      "I  power",
+      "J  purpose",
+      "K  organisation"
+     ],
+     "answer": 3,
+     "topic": "Reading - Summary completion"
+    }
+   ]
+  }
+ ]
+}

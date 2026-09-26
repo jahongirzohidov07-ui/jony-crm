@@ -1,0 +1,1059 @@
+{
+ "key": "challenge25_day10",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "J",
+ "title": "Reading Challenge - Day 10 (6 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "Answer Questions 1-16, which are based on Reading Passage 1.\n\nQuestions 1-8\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-8 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n\nQuestions 9-16\nComplete the notes below.\nChoose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 9-16 on your answer sheet.\n\nChanges in picnics\nIn England (Questions 9-10)\nIn the USA (Questions 11-12)\nReturn to France (Question 13)\n20th century onwards (Questions 14-16)",
+   "passage": "The history of the picnic\n\nPicnics became popular in France in the 18th century. A favourite pastime of the upper classes, they were initially purely indoor affairs, held at home or in hired rooms. It was assumed that invited guests would contribute – they could either bring a dish or pay a share of the overall cost. These picnics were often marked by conversation and wit and, as such, were associated with intellectual refinement. At larger gatherings, there was also music, with the result that 'picnic' came to mean the same as a ball or party. Picnics were, however, nothing if not adaptable. When the first restaurants appeared, picnickers quickly began going to them and having their picnics there.\n\nThe French Revolution in 1789 changed everything, with many wealthy French aristocrats fleeing abroad. Some went to Austria, others to Prussia or even America, but the majority chose to go to England. Settling mainly in London, some were now in need of money, but they did their best to maintain their old way of life – and in doing so, introduced the picnic to England. This led to several important developments. The first, and shortest-lived, was that the picnic became decidedly less refined and noisier. This was thanks to a group of around 200 wealthy young people who loved France and French culture and, in late 1801, founded the 'Pic Nic Society'. Held in hired rooms on Tottenham Street in London, the society's gatherings were intended to impress. Every member was required to bring a costly dish and something to drink. As The Times newspaper reported, each member tried to outdo the others in luxury and expense. After dinner, the principal entertainment was always a play. The productions were, admittedly, quite basic: the stage was small and crudely built, unlike in a theatre, and the actors were never professionals. But even so, they were wildly popular.\n\nAnother development in England in the 1800s was more profound. Picnics were adopted by the emerging middle classes and moved outside. What caused this change is unclear, but the most likely explanation is that the English simply applied a fashionable French word to a pre-existing practice, without being aware of what it meant. One of the results was that music ceased to be provided at picnics, which became just rather plain, open-air meals to which people were invited by a host. Another was that it became both more 'genteel' and – thanks to the idealisation of the countryside – more innocent.\n\nIn the decades which followed, this form of picnic found its way to the United States. As was only to be expected, it remained a refined activity most popular with the middle classes in cities; but unlike in England, its setting was associated more with a flight from civilisation than with childlike simplicity. Though still tinged with innocence, paintings of picnics by well-known American artists – such as those by Winslow Homer – tended, therefore, to contain fewer gently rolling fields than shown by English artists and instead had more gnarled trees and rough mountains.\n\nPicnics in the open air were less well received elsewhere, however. Though the restoration of the French monarchy was accompanied by the return of picnicking to France, their indoor version still predominated, especially among the aristocracy. But the legacy of revolutionary equality in France also opened up the picnic there to others lower down the social scale. By the mid-19th century, even members of the working classes in France were starting to adopt the practice. When outdoor picnics eventually did begin to gain ground in France, they were regarded with considered suspicion. Perhaps because of a growing reaction in France against the Romantic idealisation of nature, they were not seen as innocent and wholesome, as they were in England and the United States.\n\nIn general, not until the early 20th century did the outdoor picnic prevail over the indoor kind. Particularly in England, the development of different forms of transport and the acceleration of social change made the countryside accessible to a far greater proportion of the population. Before long, the popularity of the picnic had grown so much that specialist picnic baskets were being produced for the mass market and their contents were becoming more standardised.\n\nOver the last 100 years, picnics have undergone still further changes – largely as a result of the international availability of a huge variety of food to be transported over long distances. Picnics will undoubtedly continue to evolve in the future. Shifting patterns of trade will almost certainly continue to change the foods we pack for a picnic. But whatever happens, one thing is certain: as long as there are friends with whom to share a meal, there will be few things so pleasant as a picnic lunch.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  The first picnics in 18th-century France were held in parks.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  People who attended early French picnics were expected to bring food or help with the expense.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  The hosts of early French picnics often asked their guests to play music.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  The picnic was brought to England by aristocrats escaping the French Revolution.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  Many complaints were received about the noise at the first English picnics.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  People who wanted to join the Pic Nic Society had to have the approval of existing members.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  The picnics held by the Pic Nic Society were extravagant events.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "8  The picnics given by the Pic Nic Society took place in theatres.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "text",
+     "q": "9  In England: in the 1800s, picnics began to be held …………",
+     "answer": [
+      "outside"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "10  In England: picnics no longer usually included ………… for entertainment.",
+     "answer": [
+      "music"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "11  In the USA: picnics were a favourite activity for people living in …………",
+     "answer": [
+      "cities"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "12  In the USA: American ………… of picnics were different from those by English artists",
+     "answer": [
+      "paintings"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "13  Return to France: indoor picnics were still preferred by members of the …………",
+     "answer": [
+      "aristocracy"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "14  20th century onwards: new kinds of ………… meant that picnics in the countryside became more common",
+     "answer": [
+      "transport"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "15  20th century onwards: ………… designed especially for use by picnickers were widely sold",
+     "answer": [
+      "baskets"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "16  20th century onwards: there is now greater ………… in the food that is used for picnics.",
+     "answer": [
+      "variety"
+     ],
+     "topic": "Reading - Note completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "Answer Questions 17-29, which are based on Reading Passage 2.\n\nQuestions 17-22\nReading Passage 2 has six paragraphs, A-F.\nChoose the correct heading for each paragraph from the list of headings below.\nWrite the correct number, i-viii, in boxes 17-22 on your answer sheet.\n\nList of Headings\ni Comparing two planets\nii A surprisingly small moon\niii A longstanding puzzle\niv Saturn's fascinating moon\nv The importance of Titan's gravity\nvi Expectations of possible solutions\nvii The problems for life on Titan\nviii An advantage of the low temperatures\n\nQuestions 23-26\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 23-26 on your answer sheet.\n\nQuestions 27-29\nComplete the summary below.\nChoose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 27-29 on your answer sheet.\n\nThe Cassini-Huygens Probe\nThe Cassini-Huygens probe has produced clearer 27 ………… of Saturn. However, it may take up to 28 ………… before all the data from the probe has been analysed. It is expected that this data will assist in the investigation of the way 29 ………… function, and the nature of other planets and stars.",
+   "passage": "Saturn Spectacular\nSolving the puzzles of the ringed planet\n\nA   In 1610 the Italian astronomer Galileo pointed his crude telescope at the planet Saturn and was dumbfounded by what he saw: 'The planet Saturn is not alone, but is composed of three, which almost touch each other, and never move or change with respect to one another.' Even more surprising, the two bulging planets on either side of the main planet had disappeared when he looked again a few months later. Eventually, the frustrated Galileo decided never to look at Saturn again. Now, of course, we have much better telescopes, and we know that Galileo was looking at the planet's unique set of wide, thin rings. Seen broadside, they resembled companion planets through Galileo's observations, Saturn still teases astronomers. Saturn's magnificent rings, for example, consist of trillions of pieces of ice, some no bigger than a speck of dust. The ring particles are so small that they could be expected to scatter and fall into the planet, yet they are still there. Scientists are unsure about the origin of the rings, their exact chemical composition, and why they behave in the way that they do.\n\nB   However, as spectacular as Saturn's rings are, the fuzzy orange ball of Saturn's giant moon Titan is even more interesting. Although it is larger than the planet Mercury, Titan probably resembles other large moons in the Solar System. It is a rock covered with ice and dirt. However, it has something no other moon has: a substantial atmosphere whose pressure is 50% greater than Earth's. Even more intriguing, Titan's atmosphere consists mainly of nitrogen (the primary component of our own air), mixed with carbon-based compounds. Cloaked in this atmosphere, Titan's surface may resemble the surface chemistry of the early Earth, but astronomers cannot see through the moon's maddeningly opaque orange fog.\n\nC   All sorts of Earth-like chemical interactions could happen on Titan. Scientists hesitate to speak of the possibility of life when they speak of Titan, but it is a distant possibility. Living on Titan would be no walk in the park. From the vantage point of the Saturn system, the sun is a rather dim bulb. Titan is therefore a very cold place. Surface temperatures average about – 300 degrees Fahrenheit. At those temperatures, water is nowhere to get a drink. In addition, there is no oxygen in Titan's atmosphere – it is all locked up in water ice. The only hope for life as we know it, and it is an exceedingly slim one, is that water mixed with ammonia may get warm enough deep below the surface to liquefy. If so, life could possibly eke out an underground living much like the hardy microbes that surround Earth's hydrothermal vents (deep cracks on the seabed through which boiling water and hot gases escape).\n\nD   Titan could contain information on the prebiotic chemistry that led to life on Earth and perhaps elsewhere in the Universe. The bitterly cold temperatures that make Titan so forbidding for life in some ways make it more intriguing. Titan's chilly climate keeps things in a state of preservation, so that it can hang on to most of the substances that it has acquired during its 4.5 billion years in the Solar System. The organic reactions that may have established the starting conditions for life on the Earth are long gone, erased by our planet's high-speed chemical and geologic evolution. On Titan, similar reactions may still be sitting in deep storage.\n\nE   Measured against its showy rings and haze-obscured moon, Saturn itself seems downright ordinary. Yet the 75,000-mile-wide planet – the second largest in the Solar System – holds some serious interest of its own. Like the planet Jupiter, Saturn is a gas giant: a relatively small ball of rock surrounded by a vast envelope of helium, hydrogen and various hydrogen compounds. Saturn is only half as dense as Jupiter, even less dense than water. It releases less heat than Jupiter, but, given its smaller size, scientists are not sure why it radiates any heat at all. Saturn's storms are, surprisingly, more powerful than Jupiter's, and its jet streams are much faster. The planet looks blander, however, because a thick haze of ammonia crystals obscures the colourful banding seen so easily on Jupiter.\n\nF   Scientists hope that studying these differences will reveal how giant planets form, how weather systems work under different conditions and what planets around other stars might be like. A recent spacecraft that investigated Saturn and Titan (the Cassini-Huygens probe) has produced results that Galileo would have dearly appreciated back in 1610: photographs that finally show Saturn with crystalline clarity. After all the data from Cassini-Huygens has been interpreted, even though that might take 40 years, all questions on these topics may have been answered once and for all.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "17  Paragraph A",
+     "options": [
+      "Comparing two planets",
+      "A surprisingly small moon",
+      "A longstanding puzzle",
+      "Saturn's fascinating moon",
+      "The importance of Titan's gravity",
+      "Expectations of possible solutions",
+      "The problems for life on Titan",
+      "An advantage of the low temperatures"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "18  Paragraph B",
+     "options": [
+      "Comparing two planets",
+      "A surprisingly small moon",
+      "A longstanding puzzle",
+      "Saturn's fascinating moon",
+      "The importance of Titan's gravity",
+      "Expectations of possible solutions",
+      "The problems for life on Titan",
+      "An advantage of the low temperatures"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "19  Paragraph C",
+     "options": [
+      "Comparing two planets",
+      "A surprisingly small moon",
+      "A longstanding puzzle",
+      "Saturn's fascinating moon",
+      "The importance of Titan's gravity",
+      "Expectations of possible solutions",
+      "The problems for life on Titan",
+      "An advantage of the low temperatures"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "20  Paragraph D",
+     "options": [
+      "Comparing two planets",
+      "A surprisingly small moon",
+      "A longstanding puzzle",
+      "Saturn's fascinating moon",
+      "The importance of Titan's gravity",
+      "Expectations of possible solutions",
+      "The problems for life on Titan",
+      "An advantage of the low temperatures"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "21  Paragraph E",
+     "options": [
+      "Comparing two planets",
+      "A surprisingly small moon",
+      "A longstanding puzzle",
+      "Saturn's fascinating moon",
+      "The importance of Titan's gravity",
+      "Expectations of possible solutions",
+      "The problems for life on Titan",
+      "An advantage of the low temperatures"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "22  Paragraph F",
+     "options": [
+      "Comparing two planets",
+      "A surprisingly small moon",
+      "A longstanding puzzle",
+      "Saturn's fascinating moon",
+      "The importance of Titan's gravity",
+      "Expectations of possible solutions",
+      "The problems for life on Titan",
+      "An advantage of the low temperatures"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "23  Galileo's observations of Saturn were influenced by",
+     "options": [
+      "the frequency of his attempts.",
+      "the quality of his experiment.",
+      "what he expected to see.",
+      "observations made by others."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "24  The writer suggests that scientists are interested in Titan because",
+     "options": [
+      "it is larger than Earth, although less dense.",
+      "its atmosphere may contain oxygen.",
+      "its surface is invisible because of a thick, coloured fog.",
+      "its atmosphere has similar elements to Earth's atmosphere."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "25  The writer uses the phrase 'no walk in the park' because life forms in Titan would",
+     "options": [
+      "probably exist in water.",
+      "be less developed than life forms on Earth.",
+      "face considerable difficulties.",
+      "be unable to move around."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "26  How does the writer compare Saturn and Jupiter?",
+     "options": [
+      "Saturn gives off more heat than Jupiter.",
+      "Jupiter is less dense than Saturn.",
+      "Saturn is less colourful than Jupiter.",
+      "Jupiter has more violent storms than Saturn."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "text",
+     "q": "27  The Cassini-Huygens probe has produced clearer ………… of Saturn.",
+     "answer": [
+      "photographs"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "28  However, it may take up to ………… before all the data from the probe has been analysed.",
+     "answer": [
+      "40 years",
+      "forty years"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "29  It is expected that this data will assist in the investigation of the way ………… function, and the nature of other planets and stars.",
+     "answer": [
+      "weather systems"
+     ],
+     "topic": "Reading - Summary completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "You should spend about 20 minutes on Questions 30-43, which are based on Reading Passage 3.\n\nQuestions 30-36\nReading Passage 3 has eight sections A – H.\nWhich section A – H contains the following information (Questions 30-36)?\nFor questions 30-36, write the correct letter A – H on your answer sheet, together with the number of each question.\nYou may use any letter more than once.\n\nQuestions 37-39\nLook at the list of techniques (Questions 37-39) and the list of uses which follows it.\nMatch each technique with the correct use, A, B, C or D.\nFor questions 37-39, write the correct letter A - D on your answer sheet, together with the number of each question.\n\nList of uses\nA can help farmers choose the best location for plants\nB can show the composition of the top layer of the ground\nC can detect how far below ground the salt is\nD can determine how old the salt is in a particular area\n\nQuestions 40-43\nFor questions 40-43, choose the correct letter, A, B, C or D.\nWrite the correct letter A - D on your answer sheet, together with the number of each question.",
+   "passage": "Sea Change for Salinity\n\nOne of the most serious problems facing Australian farmers is an increase in the salt content in the soil. However, there are new weapons emerging in the fight against salinity\n\nA Beneath the flat, impassive surface of Australia lie hidden mountains, valleys and gorges - ancient traps and channels for the deadly salt that is stealthily killing so much of the Australian landscape. The war on salt is calling forth new weapons. A suite of high technologies used by geologists to see underground and prospect for gold and minerals is now being used to pinpoint the presence of salt beneath the landscape, and predict where it might move.\n\nB Unless this process is clearly understood, warns Chief of Exploration and Mining Dr Neil Phillips, the hard work now underway of planning and tree-planting on the surface may be rendered ineffective: salt can still sneak past and erupt, following one of the ancient river channels formed millions of years ago. The use of airborne electromagnetic to detect salt hidden beneath the landscape has been around for a decade, but the past two years have seen a major development in its precision and powers of detection. Like the use of radar in battles, it has the potential to turn the tide of the struggle in favour of the defence by helping to pinpoint, plot and predict the movements of the foe.\n\nC Angus Howell, who farms near Warrenbayne, in Southeast Australia, saw his first outbreak of salt in 1948. Over the ensuing decades the patches spread and multiplied until they consumed almost 100 hectares. By the late 1970s, Howell and his fellow farmers had decided it was time for action and established a government-funded 'Landcare' group in a bid to save Australia's farmland. But despite a mounting effort by scientists, farmers and governments, the 'white death' continued to encroach. Small successes were eclipsed by larger defeats and fresh outbreaks.\n\nD 'The technical solutions just aren't there yet for dealing with broadacre salinity, nor are the social and economic solutions. How do you introduce the land-use changes that are needed when people still need to make a living?' Howell asks. There is no satisfactory solution yet. Part of the problem has lain in salt's ability to mount ambushes, emerging somewhere new, sometimes unexpected and unexplained, beating plans to intercept it. Only now are scientists starting to really disclose its secret subterranean stores and passages.\n\nE The need for such knowledge is pressing. Salt has already afflicted six million hectares of once-productive country. At present rates it is predicted that, by 2050, it will have sterilised a total of 17 million hectares and the waters of Australia's Murray River will regularly exceed the World Health Organisation's salt limits for drinking water. Defeating this assault may take centuries, not decades.\n\nF Electromagnetic surveys measure the electrical conductivity of soil to reveal the distribution of salt and the nature and variability of the regolith - the weathered rock and sediment that may lie above the bedrock. Magnetic surveys measure small differences in the Earth's magnetic field, enabling scientists to probe the deep past and reconstruct ancient landscapes - rivers, basins and faults now buried under tens of metres of sediments. These features help to reveal where groundwater is stored, dictate the direction of groundwater movement, and are critical to predicting or ruling out salinity hot-spots.\n\nG Radiometric analysis is based on the detection of radiation emitted by elements contained in rocks and soils, allowing scientists to delineate landforms. These factors influence the mobility of salt through the soil profile and help determine where to plant particular crop species to tackle the problem.\n\nUsing data from the Murray River region, scientists have revealed a network of ancient drainage channels buried metres beneath the current landscape. These buried channels may carry salt and sometimes run at right angles to channels on the surface. This implies that the salt could move underground in quite a different direction to what one would expect by looking at surface slope and drainage.\n\nH One of the biggest advances in detection, says Professor Neil Phillips, has come with the integration of different techniques such as magnetics, electromagnetics and radiomagnetics, and ground mapping. Individually, these technologies only gave clues to what was going on underground. Together they provide a far more revealing picture of the subsurface landscape, several hundred metres deep. Advanced airborne electromagnetics, in particular, enables scientists to take 'slices' of the landscape at depths of five metres, ten metres, fifteen metres and so on, to determine where salt may be stored at depth. This is building up a four-dimensional picture of the subsurface landscape, enabling researchers to understand movements of salt in width, depth, breadth and time.\n\nFrom such technologies it will be possible to locate salt stores, identify how saline they are, look at man-made and natural changes to the landscape that may cause it to mobilise, and then predict where it will head to and over what time span. This in turn will give the salt warriors time to model various ways of containing or curbing the menace, see what works best and then try it out on the ground.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "30  a prediction of the future risk of salt to water supplies",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "31  the reason why technologies must be combined to be effective",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "32  a reference to the recent improvements in the accuracy of airborne electromagnetics",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "33  the organization of concerned farmers into an official body",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "34  the estimated length of time salinity is likely to be a problem",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "35  a summary of stages in a proposed plan of action to combat the salt problem",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "36  the possibility that current re-vegetation practices are a waste of time",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "37  Electromagnetic surveys",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "38  Radiometric analysis",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "39  Airborne electromagnetics",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "40  What link does the writer make between salt and gold?",
+     "options": [
+      "They can both be found in the same locations.",
+      "Both have been found to have an impact on the landscape.",
+      "The same techniques can be used to find both.",
+      "Neither are present in mountainous areas."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "41  What is the 'process' referred to in Section B?",
+     "options": [
+      "the killing of vegetation by salt",
+      "salt's ability to travel below ground",
+      "the ability of trees to decrease salt levels",
+      "the detection of salt by tracing other minerals"
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "42  According to Angus Howell, one problem in the fight against salinity is that",
+     "options": [
+      "not enough farmers are concerned about the fight.",
+      "farmers' requests for help have been ignored.",
+      "some possible measures may cause farmers to lose income",
+      "the government has not provided farmers with sufficient financial support."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "43  Which of the following best describes the writer's view of the salinity problem in Australia?",
+     "options": [
+      "Farmers are fighting an enemy that moves secretly and hides well",
+      "Farmers have been able to contain this enemy in a small area.",
+      "Farmers have already had significant success in fighting this problem.",
+      "Farmers need to form more organised groups to solve this problem."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 4",
+   "instructions": "Questions 44-48\nRead the following list of statements (Questions 44-48) and the list of people (A-D) which follows it.\nMatch each statement (44-48) with the correct person or people (A, B, C or D).\nFor questions 44-48, write the correct letter A, B, C, or D on your answer sheet.\nNB You may use any letter more than once.\n\nList of people\nA Neil Plumridge\nB Gal Zauberman and John Lynch\nC Jan Elsner\nD Tony LaMontagne\n\nQuestions 49-51\nFor questions 49-51, choose the correct letter A, B, C or D.\nWrite the correct letter A-D on your answer sheet.\n\nQuestions 52-56\nComplete the summary below.\nChoose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.\nWrite your answers on your answer sheet.\n\nStress: its effects and how to reduce it\nStatistics on workers' compensation show that people take more time off work due to stress than for any other 52 ………… at work. On average, workers who take time off because of stress stay away for 53 ………… This absence comes at a high price – while the number of insurance claims due to stress amount to only 54 ………… of the total, they account for a much higher proportion of the cost of claims payments. Experts believe that seeking to relieve stress through physical therapies such as sport or 55 ………… may be less effective than simply reviewing your 56 …………",
+   "passage": "STRESS LESS\n\nHow busy is too busy? For some it means sometimes having to have a short lunch; for others it may mean missing lunch altogether. For a few, it is not being able to take a day off once a month. Then there is a group of people for whom working every evening and weekend is normal, and feeling stressed is taken for granted. For most senior executives, workloads swing between extremely busy and frenzied. Neil Plumridge, vice-president of a management consultancy company, says that his weeks vary from a 'manageable' 45 hours to 80 hours, but average 60 hours.\n\nThree signs warn Plumridge about his workload: sleep, scheduling and family. He knows he is doing too much when he gets less than six hours' sleep for three consecutive nights, when he is constantly having to reschedule appointments, and when he misses a family birthday or anniversary. 'Then,' he says, \"I know things are out of control.' Plumridge states that stress is often caused by his having unrealistic expectations of himself. I'll promise a client that I'll do something tomorrow, and then I'll promise another client that I'll do the same thing, when I know it's not going to happen. I could have said: \"Why don't I give that to you in 48 hours?\" The client wouldn't care.\n\nOver-committing is something people experience as an individual problem. However, new research indicates that people may be designed to over-commit. A study in the JOURNAL OF EXPERIMENTAL PSYCHOLOGY shows that people always believe that they will be less busy in the future. This is a misapprehension according to the authors of the report, Gal Zauberman of the University of North Carolina and John Lynch of Duke University. 'On average, an individual will be just as busy two weeks or a month from now as he or she is today. But that is not how it appears in everyday life,' they say. 'People make commitments long in advance that they would never make if the same commitments required immediate action. They discount future time investments relatively steeply.\n\nBeing 'too busy' is highly subjective, but for any individual there are some concrete signs of stress: disturbed sleep and declining mental and physical health are the most common examples. Figures for National Workers' Compensation (insurance against injury caused by work) show that stress causes the most lost time of any workplace injury: employees suffering stress are absent from work for an average of 16.6 weeks. The effects of stress are also expensive. The Australian Government insurer reports that in 2003-2004, claims for stress-related psychological injury accounted for 7% of insurance claims, but almost 27% of the amount paid out in claim payments.\n\nExperts say the key to dealing with stress is not to focus on relief - a game of golf or a massage - but to reassess workloads. Neil Plumridge says he makes it a priority to work out what has to change: that might mean allocating extra staff to a job, allowing more time, or changing expectations. He also relies on the advice of colleagues, saying that his peers coach each other on business problems: 'Just a fresh pair of eyes over an issue can help,' he states.\n\nExecutive stress is not confined to big organisations. Vanessa Stoykov has been running her own advertising agency and public relations business for seven years. Her company has grown so fast that it appeared on the BUSINESS REVIEW WEEKLY 'Fast 100' list of fastest-growing small enterprises in 2004, just after Stoykov had her first child. In 2005, revenue was projected to double to $2.4 million. She had just had her second child. With a fast-growing business and two small children, Stoykov says she has mastered the art of caring for children, typing, and talking on the phone at the same time. But, unlike many others, she appears to thrive on the mental stimulation of running her own business, despite the stress.\n\nJan Elsner, a psychologist who specialises in executive coaching, says that doing well on a demanding workload is typical of senior executives. Some people work best with high-adrenaline periods followed by quieter times, while others thrive under sustained pressure. Elsner's practice is based on a movement known as positive psychology, a school of thought that argues that positive experiences - feeling engaged and challenged, for example - do not balance out negative experiences such as stress; instead they help people increase their resilience over time. Elsner says that many of the senior business people she coaches are increasingly relying more on regulating stress through methods such as meditation. She points to research showing that meditation can alter the biochemistry of the brain and the way that brains and bodies react to stress.\n\nSome experts believe there is too much emphasis on treating job stress as an individual problem. Tony LaMontagne, of the University of Melbourne, says that while personality traits do have some effect on stress, it is systemic stressors - qualities of job roles and organisations themselves - that have a far greater effect. His recent research shows that the major predictor of stress is the level of job control a person has. The best type of job combines challenging work with high autonomy. The worst jobs combine challenging work and low control. People with demanding jobs but little autonomy have up to four times the probability of depression and more than double the risk of heart attack.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "44  High-level workers tend to react positively to stress",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "45  Stress levels are increased by trying to please customers",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "46  Support from other workers may relieve stress",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "47  Lack of independence at work is often responsible for stress",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "48  Workers commonly expect their workloads to lessen over time",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "49  Which of the following is NOT mentioned by Neil Plumridge as an indication that his workload is too heavy?",
+     "options": [
+      "an inability to keep to his schedule",
+      "inattention to family celebrations",
+      "a lack of concentration on a task",
+      "a period of insufficient sleep"
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "50  Which method of lessening work stress is NOT suggested by Neil Plumridge?",
+     "options": [
+      "rethinking ideas of what can be achieved",
+      "extending the deadline for completing the task",
+      "using more workers on a project",
+      "taking more time off for sport or other recreation"
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "51  According to Jan Elsner, meditation offers a method of",
+     "options": [
+      "taking a worker's mind off his troubles",
+      "changing physical response to stress",
+      "resting more effectively",
+      "encouraging executives to take breaks"
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "text",
+     "q": "52  Statistics on workers' compensation show that people take more time off work due to stress than for any other ………… at work.",
+     "answer": [
+      "injury",
+      "workplace injury"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "53  On average, workers who take time off because of stress stay away for …………",
+     "answer": [
+      "16.6 weeks"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "54  While the number of insurance claims due to stress amount to only ………… of the total, they account for a much higher proportion of the cost of claims payments.",
+     "answer": [
+      "7%",
+      "7 per cent",
+      "7 percent"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "55  Experts believe that seeking to relieve stress through physical therapies such as sport or ………… may be less effective",
+     "answer": [
+      "a massage",
+      "massage"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "56  … may be less effective than simply reviewing your …………",
+     "answer": [
+      "workloads",
+      "workload"
+     ],
+     "topic": "Reading - Summary completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 5",
+   "instructions": "Questions 57-62\nComplete the summary below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.\nWrite your answers on your answer sheet.\n\nSeed Hunting\nApart from the processing need to collect seeds in an effort to protect certain plants from 57 …………, seed hunting also makes an important contribution to the development of potential 58 ………… or …………\nBotanists and gardeners were some of the 59 ………… in the hunt for seeds. One of these, called 60 …………, was so keen that he personally provided funding for trips to collect seeds.\nPresent-day seed hunters employed by the Millennium Seed Bank bring back seeds which are then stored in the 61 ………… beneath the bank's headquarters at Wakehurst Place. These seeds play a vital role in the re-construction of 62 ………… and also in various fields of scientific research.\n\nQuestions 63-68\nDo the following statements agree with the information given in Reading Passage 5?\nFor questions 63-68, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\nWrite your answers on your answer sheet.\n\nQuestion 69\nFor question 69, choose TWO letters, A-E.\nWrite the correct letter on your answer sheet.",
+   "passage": "THE SEED HUNTERS\n\nWith a quarter of the world's plants set to vanish within the next 50 years, Doug Alexander reports on the scientists working against the clock to preserve the earth's botanical heritage\n\nThey travel the four corners of the globe, scouring jungles, forests and savannahs. But they're not looking for ancient artefacts, lost treasure or undiscovered tombs - just seed pods. It may lack the romantic allure of archaeology, or the whiff of danger that accompanies going after big game, but seed hunting is an increasingly serious business. Some seek seeds for profit - hunters in the employ of biotechnology firms, pharmaceutical companies and private corporations on the lookout for species that will yield the drugs or crops of the future. Others collect to conserve, working to halt the sad slide into extinction facing so many plant species.\n\nAmong the pioneers of this botanical treasure hunt was John Tradescant, an English royal gardener who brought back plants and seeds from his journeys abroad in the early 1600s. Later, the English botanist Sir Joseph Banks who was the first director of the Royal Botanic Gardens at Kew and travelled with Captain James Cook on his voyages near the end of the 18th century - was so driven to expand his collections that he sent botanists around the world at his own expense.\n\nThose heady days of exploration and discovery may be over, but they have been replaced by a pressing need to preserve our natural history for the future. This modern mission drives hunters such as Dr Michiel van Slageren. He and three other seed hunters work at the Millennium Seed Bank, which is an £80 million international conservation project that aims to protect the world's most endangered wild plant species.\n\nThe group's headquarters are in a modern glass-and-concrete structure on a 200-hectare estate at Wakehurst Place in the West Sussex countryside in the UK. Within its underground vaults are 260 million dry seeds from 220 different countries, all stored at -20°C to survive for centuries. These stored seeds can be used in various ways, including the restoration of damaged environments, or in scientific research to find new benefits to society – in medicine, agriculture or local industry. Among the 5,100 species represented at the seed bank are virtually all of Britain's 1,400 native seed-bearing plants, the most complete such collection of any country's flora.\n\nOverseen by the Royal Botanic Gardens, the Millennium Seed Bank is the world's largest wild-plant depository with over 24,000 species in its collection. The reason is simple: thanks to humanity's efforts, an estimated 25 per cent of the world's plants are on the verge of extinction and may vanish within 50 years. We're currently responsible for habitat destruction on an unprecedented scale and, during the past 400 years, plant species' extinction rates have been about 70 times greater than those indicated by the geological record as being 'normal'. Experts predict that during the next 50 years a further one billion hectares of wilderness will be converted to farmland in developing countries alone. The implications of this loss are enormous. Besides providing staple crops for human consumption, plants are a source of many medicines, and the principal supply of fuel and building materials in many parts of the world. They also protect and improve the quality of the soil and help regulate the climate. Yet, across the globe, plant species are being driven to extinction before their potential benefits are discovered.\n\nThe World Conservation Union has listed 5,714 threatened plant species worldwide, but it admits this is only scratching the surface. With only four per cent of the world's described plants having been evaluated, the true number of threatened species is sure to be much higher. In the UK alone, 300 wild plant species are classified as endangered. The Millennium Seed Bank aims to ensure that even if a plant becomes extinct in the wild, it won't be lost for ever.\n\nSeed banks are an 'insurance policy' to protect the world's heritage for the future, explains Dr Paul Smith, another Royal Botanic Gardens seed hunter. \"Seed conservation techniques were originally developed by farmers,' he says. \"Storage is the basis of what we do, conserving seeds until we can use them - just as in farming.' Smith says there's no reason why any plant species should become extinct, given today's technology. But he admits the biggest challenge is finding, naming and categorising all the world's plants. And someone has to gather these seeds before it is too late. 'There aren't a lot of people out there doing this,' he says. 'The key is to know the flora from a particular area, and that knowledge takes years to acquire.\n\nWhen in the field, Royal Botanic Gardens collectors are guided by a target list, generally provided by the host country, of the seeds they need. Priorities are determined by economic importance, endangered status and distribution - although they will deviate from the list if the chance arises to gather an unknown plant they've stumbled upon.",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "57  Apart from the processing need to collect seeds in an effort to protect certain plants from …………",
+     "answer": [
+      "extinction"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "58  seed hunting also makes an important contribution to the development of potential ………… or …………",
+     "answer": [
+      "drugs or crops",
+      "crops or drugs",
+      "drugs crops",
+      "crops drugs",
+      "drugs and crops"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "59  Botanists and gardeners were some of the ………… in the hunt for seeds.",
+     "answer": [
+      "pioneers"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "60  One of these, called …………, was so keen that he personally provided funding for trips to collect seeds.",
+     "answer": [
+      "Sir Joseph Banks",
+      "Joseph Banks",
+      "Banks"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "61  Present-day seed hunters employed by the Millennium Seed Bank bring back seeds which are then stored in the ………… beneath the bank's headquarters at Wakehurst Place.",
+     "answer": [
+      "underground vaults",
+      "vaults"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "62  These seeds play a vital role in the re-construction of ………… and also in various fields of scientific research.",
+     "answer": [
+      "damaged environments",
+      "environments"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "63  The reasons for collecting seeds have changed over the years.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "64  The Millennium Seed Bank was the first wild plant repository to be set up.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "65  A major threat to plant species is posed by the increasing spread of farmland.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "66  The World Conservation Union has been restricted in its work by lack of resources.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "67  The methods of seed conservation resemble those used in agriculture.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "68  Seed banks will only be successful if the technology improves.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "multi",
+     "q": "69  Which TWO of the following uses of plants are mentioned by the writer? Choose TWO letters, A-E.",
+     "options": [
+      "to improve air quality",
+      "as a source of energy",
+      "to enhance our understanding of nature",
+      "to provide food",
+      "to discover more about species that have died out"
+     ],
+     "answer": [
+      1,
+      3
+     ],
+     "topic": "Reading - Two answers"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 6",
+   "instructions": "Questions 70-74\nReading Passage 6 has seven paragraphs, A–G.\nWhich paragraph contains the following information?\nWrite the correct letter, A–G, in boxes 70-74 on your answer sheet.\n\nQuestions 75-78\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 75-78 on your answer sheet.\n\nQuestions 79-83\nLook at the following statements (Questions 79-83) and the list of people below.\nMatch each statement with the correct person or people, A–G.\nWrite the correct letter, A–G, in boxes 79-83 on your answer sheet.\n\nList of People\nA Jerry Siegel\nB Allan Hobson and Robert McCarley\nC Mark Solms\nD Eric Nofzinger\nE Deirdre Barrett\nF Clara Hill\nG Rosalind Cartwright",
+   "passage": "Unlocking the mystery of dreams\n\nDreams have captivated thinkers since ancient times, but their mystery is now closer than ever to resolution, thanks to new technology that allows scientists to watch the sleeping brain at work.\n\nA Thousands of years ago, dreams were seen as messages from the gods, and in many cultures, they are still considered prophetic, foretelling things to come. In ancient Greece, sick people slept at the temples of Asclepius, the god of medicine, in order to receive healing dreams. Modern dream science really begins at the end of the 19th century with Sigmund Freud, who theorized that dreams were the expression of unconscious desires often from childhood. He believed that exploring these hidden emotions through analysis could help cure mental illness. After Freud, the most important event in dream science was the discovery in the early 1950s of a phase of sleep characterized by intense brain activity and rapid eye movement (REM).\n\nB Adult humans spend about a quarter of their sleep time in REM, much of it dreaming. People awakened in the midst of REM sleep reported vivid dreams, which led researchers to conclude that most dreaming took place during REM. Using a machine called the electroencephalograph (EEG), researchers were able to see that brain activity during REM resembled that of the brain when the body is awake. The mystery of REM sleep is that even though it may not be essential, it is universal – at least in mammals and even birds. Some researchers think REM may have evolved for physiological reasons. \"One thing that's unique about mammals and birds is that they regulate body temperature,\" says neuroscientist Jerry Siegel, director of UCLA's Center for Sleep Research. \"There's no good evidence that any coldblooded animal has REM sleep.\" REM sleep heats up the brain and non-REM cools it off, Siegel says, and that could mean that the changing sleep cycles allow the brain to repair itself. \"It seems likely that REM sleep is filling a basic physiological function and that dreams are a kind of a side-effect, or by-product of this.\n\nC There is great disagreement about the psychological function of dreams and researchers have come up with some differing theories. On one side are scientists like Harvard's Allan Hobson, who believes that dreams are essentially random. In the 1970s, Hobson and his colleague Robert McCarley proposed what they called the \"activation-synthesis hypothesis,\" which describes how dreams are formed by nerve signals sent out during REM sleep from a small area at the base of the brain called the pons. These signals, the researchers said, activate the images that we call dreams. That raised questions about dream research. If dreams are insignificant night-time images created by the brain, what is the point of studying them?\n\nD But more recently, new theories have made some scientists take dreams more seriously. In 1997, Mark Solms of the University of Cape Town in South Africa found that there was more than one mechanism in the brain for activating dreams. Since then, Solms has argued that medical diagnostic equipment like functional magnetic resonance imaging (fMRI) and positron emission tomography (PET) that helps researchers watch dreaming brains might actually lend new support to Freud's ideas because the parts of the brain that are most active during dreaming control emotion. Further research has supported Solm's findings. Scientists using PET and fMRI technology to watch the dreaming brain have found that one of the most active areas during REM is the limbic system, which controls our emotions.\n\nE Much less active during REM sleep is the prefrontal cortex, which is associated with logical thinking. That could explain why dreams in REM sleep often lack a coherent story line. Some researchers have also found that people dream in non-REM sleep as well, although those dreams generally are less vivid. Another active part of the brain in REM sleep is the anterior cingulate cortex, which detects differences or inconsistencies. Eric Nofzinger, director of the Sleep Neuroimaging Program at the University of Pittsburgh Medical Center, thinks that could be why people often solve tricky problems in their dreams.\n\nF Deirdre Barrett, assistant professor at Harvard Medical School, would agree. In her book \"The Committee of Sleep,\" she describes how painters like Jasper Johns and Salvador Dali found inspiration in their dreams. In her own research on problem solving through dreams, Barrett has found that even ordinary people can solve simple problems in their lives (like how to fit old furniture into a new apartment) if they focus on the dilemma before they fall asleep. There is also evidence that dreaming helps certain kinds of learning. Some researchers have found that dreaming about physical tasks, like a gymnast's floor routine, enhances performance.\n\nG Whatever the function of dreams at night, they clearly can play a role in therapy during the day. The University of Maryland's Clara Hill, who has studied the use of dreams in therapy, says that dreams are a \"back door\" into a patient's thinking. \"Dreams reveal stuff about you that you didn't know was there,\" she says. The therapists she trains to work with patients' dreams use dream imagery to uncover hidden emotions and feelings. Rosalind Cartwright from the university medical center in Chicago has been studying depression in divorced men and women, and she is finding that \"good dreamers,\" people who have vivid dreams with strong story lines, are less likely to remain depressed. She thinks that dreaming helps diffuse powerful emotions. \"Dreaming is a mental-health activity,\" she says.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "70  a reference to the significance of dreams on artists' work",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "71  a concern about the usefulness of dream research",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "72  the types of living creatures that have REM sleep",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "73  research results linking dreams to psychological well-being",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "74  an account of how modern research tools have strengthened Freud's theory",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "75  In ancient times, people thought that dreams",
+     "options": [
+      "sent messages to the gods.",
+      "helped resolve conflict.",
+      "were a sign of physical illness.",
+      "predicted future events."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "76  According to the passage, which of the following happens during REM sleep time?",
+     "options": [
+      "People rarely dream.",
+      "People's dreams become confused",
+      "The temperature of the brain increases.",
+      "The brain behaves differently than when you are awake."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "77  What explanation is suggested in paragraph E for lack of a clear narrative in dreams?",
+     "options": [
+      "Some dreams occur in non-REM sleep.",
+      "Some dreams are generated in different areas of the brain.",
+      "The part of the brain in control of reasoning is less involved.",
+      "The part of the brain responsible for feelings is more involved."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "78  According to the passage, which area of the brain helps people find solutions to difficult situations through their dreams?",
+     "options": [
+      "the anterior cingulate cortex",
+      "the pons",
+      "the limbic system",
+      "the prefrontal cortex"
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "79  Technology shows there is a link between dreams and the areas of the brain that deal with feelings.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "80  Dreams are meaningless pictures created by the brain.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "81  Dreaming is a method of calming strong feelings.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "82  Our dreams can show us unexpected things about ourselves.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching people"
+    },
+    {
+     "type": "choice",
+     "q": "83  Dreams may be a result of maintaining an essential body function.",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching people"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,504 @@
+{
+ "key": "challenge25_day04",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "D",
+ "title": "Reading Challenge - Day 4 (3 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1 below.\n\nQuestions 1-6\nWrite the correct letter, A, B, C, or D in boxes 1-6 on your answer sheet.\nClassify the following information as referring to\nA  ambergris only\nB  amber only\nC  both ambergris and amber\nD  neither ambergris nor amber\n\nQuestions 7-9\nComplete the sentences below with NO MORE THAN ONE WORD from the passage.\nWrite your answers in boxes 7-9 on your answer sheet.\n\nQuestions 10-13\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 10-13 on your answer sheet, write\nTRUE                      if the statement agrees with the information\nFALSE                    if the statement contradicts the information\nNOT GIVEN            if there is no information on this",
+   "passage": "Ambergris\n\nWhat is it and where does it come from?\n\nAmbergris was used to perfume cosmetics in the days of ancient Mesopotamia and almost every civilization on the earth has a brush with Ambergris. Before 1,000 AD, the Chinese names ambergris as lung sien hiang, \"dragon's spittle perfume,\" as they think that it was produced from the drooling of dragons sleeping on rocks at the edge of a sea. The Arabs knew ambergris as anbar who believed that it is produced from springs near seas. It also gets its name from here. For centuries, this substance has also been used as a flavouring for food.\n\nDuring the Middle Ages, Europeans used ambergris as a remedy for headaches, colds, epilepsy, and other ailments. In the 1851 whaling novel Moby-Dick, Herman Melville claimed that ambergris was \"largely used in perfumery.\" But nobody ever knew where it really came from. Experts were still guessing its origin thousands of years later, until the long ages of guesswork ended in the 1720's, when Nantucket whalers found gobs of the costly material inside the stomachs of sperm whales. Industrial whaling quickly burgeoned. By 20th century ambergris is mainly recovered from inside the carcasses of sperm whales.\n\nThrough countless ages, people have found pieces of ambergris on sandy beaches. It was named grey amber to distinguish it from golden amber, another rare treasure. Both of them were among the most sought-after substances in the world, almost as valuable as gold. (Ambergris sells for roughly $20 a gram, slightly less than gold at $30 a gram.) Amber floats in salt water, and in old times the origin of both these substances was mysterious. But it turned out that amber and ambergris have little in common. Amber is a fossilized resin from trees that was quite familiar to Europeans long before the discovery of the New World, and prized for jewelry. Although considered a gem, amber is a hard, transparent, wholly-organic material derived from the resin of extinct species of trees, mainly pines.\n\nTo the earliest Western chroniclers, ambergris was variously thought to come from the same bituminous sea founts as amber, from the sperm of fishes or whales, from the droppings of strange sea birds (probably because of confusion over the included beaks of squid) or from the large hives of bees living near the sea. Marco Polo was the first Western chronicler who correctly attribute ambergris to sperm whales and its vomit.\n\nAs sperm whales navigate in the oceans, they often dive down to 2 km or more below the sea level to prey on squid, most famously the Giant Squid. It's commonly accepted that ambergris forms in the whale's gut or intestines as the creature attempts to \"deal\" with squid beaks. Sperm whales are rather partial to squid, but seemingly struggle to digest the hard, sharp, parrot-like beaks. It is thought their stomach juices become hyper-active trying to process the irritants, and eventually hard, resinous lumps are formed around the beaks, and then expelled from their innards by vomiting. When a whale initially vomits up ambergris, it is soft and has a terrible smell. Some marine biologists compare it to the unpleasant smell of cow dung. But after floating on the salty ocean for about a decade, the substance hardens with air and sun into a smooth, waxy, usually rounded piece of nostril heaven. The dung smell is gone, replaced by a sweet, smooth, musky and pleasant earthy aroma.\n\nSince ambergris is derived from animals, naturally a question of ethics arises, and in the case of ambergris, it is very important to consider. Sperm whales are an endangered species, whose populations started to decline as far back as the 19th century due to the high demand for their highly emollient oil, and today their stocks still have not recovered. During the 1970's, the Save the Whales movement brought the plight of whales to international recognition. Many people now believe that whales are \"saved\". This couldn't be further from the truth. All around the world, whaling still exists. Many countries continue to hunt whales, in spite of international treaties to protect them. Many marine researchers are concerned that even the trade in naturally found ambergris can be harmful by creating further incentives to hunt whales for this valuable substance.\n\nOne of the forms ambergris is used today is as a valuable fixative in perfumes to enhance and prolong the scent. But nowadays, since ambergris is rare and expensive, and big fragrance suppliers that make most of the fragrances on the market today do not deal in it for reasons of cost, availability and murky legal issues, most perfumeries prefer to add a chemical derivative which mimics the properties of ambergris. As a fragrance consumer, you can assume that there is no natural ambergris in your perfume bottle, unless the company advertises this fact and unless you own vintage fragrances created before the 1980s. If you are wondering if you have been wearing a perfume with this legendary ingredient, you may want to review your scent collection. Here are a few of some of the top ambergris containing perfumes: Givenchy Amarige, Chanel No. 5, and Gucci Guilty.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  being expensive",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 2,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "choice",
+     "q": "2  adds flavor to food",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 0,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "choice",
+     "q": "3  used as currency",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 3,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "choice",
+     "q": "4  being see-through",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 1,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "choice",
+     "q": "5  referred to by Herman Melville",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 0,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "choice",
+     "q": "6  produces sweet smell",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "answer": 0,
+     "topic": "Reading - Classification"
+    },
+    {
+     "type": "text",
+     "q": "7  Sperm whales can't digest the .......... of the squids.",
+     "answer": [
+      "beaks",
+      "beak"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "8  Sperm whales drive the irritants out of their intestines by ..........",
+     "answer": [
+      "vomiting",
+      "vomit"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "9  The vomit of sperm whales gradually .......... on contact of air before having pleasant smell.",
+     "answer": [
+      "hardens",
+      "harden"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "choice",
+     "q": "10  Most ambergris comes from the dead whales today.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "11  Ambergris is becoming more expensive than before.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "12  Ambergris is still a popular ingredient in perfume production today.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "13  New uses of ambergris have been discovered recently.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2.\n\nQuestions 14-18\nReading Passage 2 has six paragraphs, A-F.\nWhich paragraph contains the following information?\nWrite the correct letter, A-F, in boxes 14-18 on your answer sheet.\n\nQuestions 19-24\nDo the following statements agree with the claims of the writer in Reading Passage 2?\nIn boxes 19-24 on your answer sheet, write\nYES                        if the statement agrees with the claims of the writer\nNO                          if the statement contradicts the claims of the writer\nNOT GIVEN            if it is impossible to say what the writer thinks about this\n\nQuestions 25-26\nChoose the correct letter, A, B, C or D.",
+   "passage": "Next to Nature, but what is art?\n\nJulian Barnes explores the questions posed by Life-Casts, an exhibition of plaster moulds of living people and objects which were originally used for scientific purposes\n\nA   Art changes over time and our idea of what art is changes too. For example, objects originally intended for devotional, ritualistic or recreational purposes may be recategorised as art by members of other later civilisations, such as our own, which no longer respond to these purposes.\n\nB   What also happens is that techniques and crafts which would have been judged inartistic at the time they were used are reassessed. Life-casting is an interesting example of this. It involved making a plaster mould of a living person or thing. This was complex, technical work, as Benjamin Robert Haydon discovered when he poured 250 litres of plaster over his human model and nearly killed him. At the time, the casts were used for medical research and, consequently, in the nineteenth century life-casting was considered inferior to sculpture in the same way that, more recently, photography was thought to be a lesser art than painting. Both were viewed as unacceptable shortcuts by the 'senior' arts. Their virtues of speed and unwavering realism also implied their limitations, they left little or no room for the imagination.\n\nC   For many, life-casting was an insult to the sculptor's creative genius. In an infamous lawsuit of 1834, a moulder whose mask of the dying French emperor Napoleon had been reproduced and sold without his permission was judged to have no rights to the image. In other words, he was specifically held not to be an artist. This judgement reflected the view of established members of the nineteenth-century art world such as Rodin, who commented that life-casting 'happens fast but it doesn't make Art'. Some even feared that 'if too much nature was allowed in, it would lead Art away from its proper course of the Ideal'.\n\nD   The painter Gauguin, at the end of the nineteenth century, worried about future developments in photography. If ever the process went into colour, what painter would labour away at a likeness with a brush made from squirrel-tail? But painting has proved robust. Photography has changed it, of course, just as the novel had to reassess narrative after the arrival of the cinema. But the gap between the senior and junior arts was always narrower than the traditionalists implied. Painters have always used technical back-up such as studio assistants to do the boring bits, while apparently lesser crafts involve great skill, thought, preparation and, depending on how we define it, imagination.\n\nE   Time changes our view in another way, too. Each new art movement implies a reassessment of what has gone before. What is done now alters what was done before. In some cases this is merely self-serving, with the new art using the old to justify itself. It seems to be saying, 'Look at how all of that points to this! Aren't we clever to be the culmination of all that has gone before?' But usually it is a matter of re-alerting the sensibility, reminding us not to take things for granted. Take, for example, the cast of the hand of a giant from a circus, made by an anonymous artist around 1889, an item that would now sit happily in any commercial or public gallery. The most significant impact of this piece is on the eye, in the contradiction between unexpected size and verisimilitude. Next, the human element kicks in. You note that the nails are dirt-encrusted, unless this is the caster's decorative addition, and the fingertips extend far beyond them. Then you take in the element of choice, arrangement, art if you like, in the neat, pleated, buttoned sleeve-end that gives the item balance and variation of texture. This is just a moulded hand, yet the part stands utterly for the whole. It reminds us slyly, poignantly, of the full-size original.\n\nF   But is it art? And, if so, why? These are old, tediously repeated questions to which artists have often responded, 'It is art because I am an artist and therefore what I do is art'. However, what doesn't work for literature works much better for art - works of art do float free of their creators' intentions. Over time the 'reader' does become more powerful. Few of us can look at a medieval altarpiece as its painter intended. We believe too little and aesthetically know too much, so we recreate and find new fields of pleasure in the work. Equally, the lack of artistic intention of Paul Richer and other forgotten craftsmen who brushed oil onto flesh, who moulded, cast and decorated in the nineteenth century is now irrelevant. What counts is the surviving object and our response to it. The tests are simple: does it interest the eye, excite the brain, move the mind to reflection and involve the heart? Further, is an apparent level of skill involved? Much currently fashionable art bothers only the eye and briefly the brain but it fails to engage the mind or the heart. It may, to use the old dichotomy, be beautiful but it is rarely true to any significant depth. One of the constant pleasures of art is its ability to come at us from an unexpected angle and stop us short in wonder.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  an example of a craftsman's unsuccessful claim to ownership of his work",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "15  an example of how trends in art can change attitudes to an earlier work",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "16  the original function of a particular type of art",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "17  ways of assessing whether or not an object is art",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  how artists deal with the less interesting aspects of their work",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  Nineteenth century sculptors admired the speed and realism of life-casting.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "20  Rodin believed the quality of life-casting would improve if a shower process were used.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "21  The importance of painting has decreased with the development of colour photography.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "22  Life-casting requires more skill than sculpture does.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "23  New art encourages us to look at earlier work in a fresh way.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "24  The intended meaning of a work of art can get lost over time.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "25  The most noticeable contrast in the cast of the giant's hand is between the",
+     "options": [
+      "dirt and decoration.",
+      "size and realism.",
+      "choice and arrangement.",
+      "balance and texture."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "26  According to the writer, the importance of any artistic object lies in",
+     "options": [
+      "the artist's intentions.",
+      "the artist's beliefs.",
+      "the relevance it has to modern life.",
+      "the way we respond to it."
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3.\n\nQuestions 27-32\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nIn boxes 27-32 on your answer sheet, write\nYES                        if the statement agrees with the claims of the writer\nNO                          if the statement contradicts the claims of the writer\nNOT GIVEN            if it is impossible to say what the writer thinks about this\n\nQuestions 33-37\nReading Passage 3 has seven paragraphs, A-G.\nWhich paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 33-37 on your answer sheet.\n\nQuestions 38-40\nChoose THREE correct letters, A-G.\nWhich THREE of the following areas are explored by the writer of this article?\nA  the effectiveness of tuition for literacy problems\nB  reasons why employment prospects can be limited for workers with literacy problems\nC  the effect of literacy problems on family mobility\nD  factors that worsen the difficulties caused by literacy problems\nE  how families have a low regard for literacy\nF  how literacy levels among men compare with those of women\nG  the probability of literacy levels rising in the future",
+   "passage": "Literacy and Rural Communities in Australia\n\nA   Little is known about the incidence of literacy in rural areas of Australia, but anecdotal evidence suggests that lack of literacy skills may present particular problems and have different social costs in rural areas compared to urban areas. Social costs, of course, differ at different life stages. For young people, inadequate literacy skills can affect their transition from school to work; for older people lack of literacy skills can reduce their employment options as well as reducing their effectiveness or ability in the workplace. Assuming life-stage differences remain much the same in both city and country areas, it is still possible to make some general comments about differences between urban and rural areas in Australia. It is important, however, to remind the reader of the considerable diversity of rural areas.\n\nB   It is not unusual for males in rural areas to have left school early, or to have left with inadequate literacy skills, and then to move onto farms. This can be due to a number of causes, among which are family pressure or desire to follow the father into the family business, learning difficulties or unhappiness at school, or even peer-group pressure from other young males who have decided to work on their family farms. There are numerous areas where literacy skills are required in farming, such as reading directions for (often dangerous) sprays, the mixing of animal feed, the mixing of fuel for machinery, care of machinery, care of animals, and understanding letters from government authorities. In addition, there are the numerous tasks associated with running a business. Although the responsibility for the business side of the farm may be carried by a female partner with more adequate literacy skills, there remain a number of areas where inadequate literacy skills in males can lead to difficult or dangerous situations.\n\nC   It is difficult to estimate the social costs of low literacy levels for women in non-metropolitan areas. Some research in this area has shown that women leave school early and travel to the city to find work; women's employment options are limited generally, but for women with low literacy skills there is often no alternative to dependence - on family, partner or government benefits. Also, according to a 1989 survey, about ten per cent of women living in rural areas were born outside Australia. We can assume that a fair proportion of these have literacy needs.\n\nD   It is suggested that in times of hardship in farming areas, when there is the threat or actuality of banks foreclosing on mortgages, inadequate literacy skills add to the normal stresses. Farmers and others with inadequate literacy skills affected by a rural down-turn have fewer alternatives for employment, less flexibility, perhaps fewer support mechanisms, and therefore more strains both personally and with a spouse or partner. It is not inconceivable that the additional stress contributes to marriage breakdown or suicide.\n\nE   Problems can become acute in regional towns or areas which are based on one or two major industries. A proportion of manual and construction workers and trade assistants in such towns have low levels of literacy, but are able to find employment so long as new projects and development continue. Shift work and relatively high wages make such work relatively attractive. Once the development is completed, however, there are few alternative options.\n\nF   In some small communities, there is a tendency for the problem of poor literacy skills to be continued with the next generation, thereby repeating the problem. Economic hardship, the need for children to travel (or be driven) long distances to school, and the low value placed on literacy may mean that helping with farm work is seen as more important than regular attendance at school. More children in rural areas than urban areas tend to leave school without completing a full secondary education, despite increasing school retention rates generally, although there is considerable variation between rural areas.\n\nG   The closeness of some rural communities and country towns sometimes means that people are reluctant to admit their literacy problems. While this is generally the case in both city and country locations, cities at least do offer some anonymity for people who make the decision to start a literacy class. In a small country town or rural area, going to a class becomes much more public: tutors in country areas have reported that some students travelled long distances to another town in order to avoid having to reveal their 'problem' in the local area. Obviously, a change in public perception of literacy problems is needed, if people with low literacy skills in rural areas are to avoid the social stigma which is attached to them in the minds of most people.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  There is a lack of factual information on literacy levels in rural Australia.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "28  The rural areas of Australia are very similar to each other.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "29  Most businesses in rural areas are family-run.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "30  Women who can read and write have a wide choice of jobs in rural areas.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "31  In some rural areas, industrial jobs are popular.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "32  Children in urban areas stay on at school longer than children in rural areas.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "33  how an economic recession may aggravate the problems caused by low levels of literacy",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "34  measures which individuals may take to hide the fact that they have poor literacy skills",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "35  examples of things that rural workers may need to read",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "36  the ways literacy problems can affect people over the course of their working life",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "37  a reference to youngsters encouraging each other to leave school early",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "multi",
+     "q": "38-40  Choose THREE correct letters, A-G. Which THREE of the following areas are explored by the writer of this article?",
+     "options": [
+      "the effectiveness of tuition for literacy problems",
+      "reasons why employment prospects can be limited for workers with literacy problems",
+      "the effect of literacy problems on family mobility",
+      "factors that worsen the difficulties caused by literacy problems",
+      "how families have a low regard for literacy",
+      "how literacy levels among men compare with those of women",
+      "the probability of literacy levels rising in the future"
+     ],
+     "answer": [
+      1,
+      3,
+      4
+     ],
+     "topic": "Reading - Three answers"
+    }
+   ]
+  }
+ ]
+}

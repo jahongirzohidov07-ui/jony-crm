@@ -49,10 +49,12 @@ def ck(name, got, want):
 # ----------------------------------------------------------------- A
 print("=== A. MOCK FAYLLARI IELTS FORMATIDA ===")
 ALL = mock_seed._files()
-FILES = [t for t in ALL if "cefr" not in (t.get("levels") or [])]
 CEFR = [t for t in ALL if "cefr" in (t.get("levels") or [])]
+CH25 = [t for t in ALL if (t.get("key") or "").startswith("challenge25_")]
+FILES = [t for t in ALL if t not in CEFR and t not in CH25]
 ck("IELTS: 20 fayl (4 bo'lim × 5 variant)", len(FILES), 20)
 ck("CEFR: 12 fayl (4 bo'lim × 3 variant)", len(CEFR), 12)
+ck("25-day challenge: 17 kun", len(CH25), 17)
 
 by_sec = {}
 for t in FILES:
@@ -171,9 +173,9 @@ db = SessionLocal()
 mock_seed.seed_mocks(db)
 rows = db.query(models.ExamTemplate).filter_by(kind="mock").all()
 LEVELS = ["ielts_foundation", "ielts_graduation", "ielts_intro"]
-ck("IELTS 20×3 + CEFR 12×1 = 72 shablon", len(rows), 72)
+ck("IELTS 20×3 + CEFR 12×1 + challenge 17×3 = 123 shablon", len(rows), 123)
 ck("darajalar to'g'ri", sorted({r.level for r in rows}), ["cefr"] + LEVELS)
-ck("variantlar A-E", sorted({r.variant for r in rows}), list("ABCDE"))
+ck("variantlar A-Q", sorted({r.variant for r in rows}), list("ABCDEFGHIJKLMNOPQ"))
 ck("CEFR shablonlari 12 ta, variant A-C",
    (sum(1 for r in rows if r.level == "cefr"),
     sorted({r.variant for r in rows if r.level == "cefr"})),
@@ -221,7 +223,7 @@ ck("bank_max mock uchun band (9)",
 print("\n=== E. VARIANTLAR ARALASHADI ===")
 base = (db.query(models.ExamTemplate)
         .filter_by(kind="mock", level="ielts_graduation", variant="A")
-        .filter(models.ExamTemplate.title.like("%Listening%")).first())
+        .filter(models.ExamTemplate.title.like("IELTS Mock%Listening%")).first())
 fam = exam_online._family(db, base)
 # Oila endi ko'nikma bo'yicha ham ajratiladi: Listening faqat
 # Listening bilan. Aks holda tashqi to'plam akademiya bazasiga
@@ -242,11 +244,29 @@ ck("kombinatsiyalar xilma-xil (>=10)", len(seen) >= 10, True)
 
 rbase = (db.query(models.ExamTemplate)
          .filter_by(kind="mock", level="ielts_graduation", variant="A")
-         .filter(models.ExamTemplate.title.like("%Reading%")).first())
+         .filter(models.ExamTemplate.title.like("IELTS Mock%Reading%")).first())
 rparts, _rc = exam_online.mix_parts(
     rbase, exam_online._family(db, rbase), rnd)
 ck("Reading aralashmasi (13,13,14)",
    tuple(len(p["questions"]) for p in rparts), (13, 13, 14))
+
+print(chr(10) + "=== F. TASHQI TO'PLAM ALOHIDA TURADI ===")
+ck("challenge25 savollari 644 ta",
+   sum(sum(len(p["questions"]) for p in t["parts"]) for t in CH25), 644)
+ck("hammasi reading va o'z belgisi bilan",
+   (sorted({t["section"] for t in CH25}),
+    sorted({p.get("skill") for t in CH25 for p in t["parts"]})),
+   (["reading"], ["challenge25_reading"]))
+chrow = (db.query(models.ExamTemplate)
+         .filter_by(kind="mock", level="ielts_graduation", variant="A")
+         .filter(models.ExamTemplate.title.like("%Challenge%")).first())
+chfam = exam_online._family(db, chrow)
+ck("challenge oilasi = faqat challenge (17 kun)", len(chfam), 17)
+ck("akademiya Reading bazasi bilan aralashmaydi",
+   any("Challenge" in (x.title or "") for x in exam_online._family(db, rbase)),
+   False)
+ck("challenge uchun avtomat band yo'q (savol soni har xil)",
+   exam_online.mock_band(exam_online._load(chrow.parts), 30, 40), None)
 
 db.close()
 print(f"\nJAMI XATO: {len(fails)} {fails[:8]}")

@@ -1,0 +1,543 @@
+{
+ "key": "challenge25_day06",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "F",
+ "title": "Reading Challenge - Day 6 (3 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "You should spend about 20 minutes on Questions 1-13, which are based on Reading Passage 1.\n\nQuestions 1-7\nDo the following statements agree with the information given in Reading Passage 1?\nIn boxes 1-7 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this\n\nQuestions 8-13\nComplete the summary below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\nWrite your answers in boxes 8-13 on your answer sheet.\n\nThe eco-impact of the Canyon Dam\nFloods are people's nightmare. In the past, canyon was raged by flood every year. The snow from far Wyoming would melt in the season of 8 ......... and caused a flood flow peak in Colorado river. In the four decades after people built the Glen Canyon dam, it only could gather 9 ......... together from tiny, undammed tributaries.\nHumpback chub population on reduced, why?\nThen, several species disappeared including Colorado pike-minnow, 10 ......... and the round-tail chub. Meanwhile, some moved in such as fathead minnows, channel catfish and 11 ......... The non-stopped flow leaded to the washing away of the sediment out of the canyon, which poses great threat to the chubs because it has poor 12 ......... away from predators. In addition, the volume of 13 ......... available behind the dam was too low to rebuild the bars and flooding became more serious.",
+   "passage": "Dirty River But Clean Water\n\nFloods can occur in rivers when the flow rate exceeds the capacity of the river channel, particularly at bends or meanders in the waterway. Floods often cause damage to homes and businesses if they are in the natural flood plains of rivers. While riverine flood damage can be eliminated by moving away from rivers and other bodies of water, people have traditionally lived and worked by rivers because the land is usually flat and fertile and because rivers provide easy travel and access to commerce and industry.\n\nA   Fire and flood are two of humanity's worst nightmares. People have, therefore, always sought to control them. Forest fires are snuffed out quickly. The flow of rivers is regulated by weirs and dams. At least, that is how it used to be. But foresters have learned that forests need fires to clear out the brash and even to get seeds to germinate. And a similar revelation is now dawning on hydrologists. Rivers - and the ecosystems they support - need floods. That is why a man-made torrent has been surging down the Grand Canyon. By Thursday March 6th it was running at full throttle, which was expected to be sustained for 60 hours.\n\nB   Floods once raged through the canyon every year. Spring snow from as far away as Wyoming would melt and swell the Colorado river to a flow that averaged around 1,500 cubic metres (50,000 cubic feet) a second. Every eight years or so, that figure rose to almost 3,000 cubic metres. These floods infused the river with sediment, carved its beaches and built its sandbars.\n\nC   However, in the four decades since the building of the Glen Canyon dam, just upstream of the Grand Canyon, the only sediment that it has collected has come from tiny, undammed tributaries. Even that has not been much use as those tributaries are not powerful enough to distribute the sediment in an ecologically valuable way.\n\nD   This lack of flooding has harmed local wildlife. The humpback chub, for example, thrived in the rust-red waters of the Colorado. Recently, though, its population has crashed. At first sight, it looked as if the reason was that the chub were being eaten by trout introduced for sport fishing in the mid-20th century. But trout and chub co-existed until the Glen Canyon dam was built, so something else is going on. Steve Gloss, of the United States' Geological Survey (USGS), reckons that the chub's decline is the result of their losing their most valuable natural defense, the Colorado's rusty sediment. The chub were well adapted to the poor visibility created by the thick, red water which gave the river its name, and depended on it to hide from predators. Without the cloudy water the chub became vulnerable.\n\nE   And the chub are not alone. In the years since the Glen Canyon dam was built, several species have vanished altogether. These include the Colorado pike-minnow, the razorback sucker and the round-tail chub. Meanwhile, aliens including fathead minnows, channel catfish and common carp, which would have been hard put to survive in the savage waters of the undammed canyon, have moved in.\n\nF   So flooding is the obvious answer. Unfortunately, it is easier said than done. Floods were sent down the Grand Canyon in 1996 and 2004 and the results were mixed. In 1996 the flood was allowed to go on too long. To start with, all seemed well. The floodwaters built up sandbanks and infused the river with sediment. Eventually, however, the continued flow washed most of the sediment out of the canyon. This problem was avoided in 2004, but unfortunately, on that occasion, the volume of sand available behind the dam was too low to rebuild the sandbanks. This time, the USGS is convinced that things will be better. The amount of sediment available is three times greater than it was in 2004. So if a flood is going to do some good, this is the time to unleash one.\n\nG   Even so, it may turn out to be an empty gesture. At less than 1,200 cubic metres a second, this flood is smaller than even an average spring flood, let alone one of the mightier deluges of the past. Those glorious inundations moved massive quantities of sediment through the Grand Canyon, wiping the slate dirty, and making a muddy mess of silt and muck that would make modern river rafters cringe.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "1  Damage caused by fire is worse than that caused by flood.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "2  The flood peaks at almost 1500 cubic meters every eight years.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "3  Contribution of sediments delivered by tributaries has little impact.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "4  Decreasing number of chubs is always caused by introducing of trout since mid 20th century.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "5  It seemed that the artificial flood in 1996 had achieved success partly at the very beginning.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "6  In fact, the yield of artificial flood water is smaller than an average natural flood at present.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "7  Mighty floods drove fast moving flows with clean and high quality water.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "text",
+     "q": "8  The snow from far Wyoming would melt in the season of ......... and caused a flood flow peak in Colorado river.",
+     "answer": [
+      "spring",
+      "the spring"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "9  In the four decades after people built the Glen Canyon dam, it only could gather ......... together from tiny, undammed tributaries.",
+     "answer": [
+      "sediment",
+      "the sediment"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "10  Then, several species disappeared including Colorado pike-minnow, ......... and the round-tail chub.",
+     "answer": [
+      "razorback sucker",
+      "the razorback sucker"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "11  Meanwhile, some moved in such as fathead minnows, channel catfish and .........",
+     "answer": [
+      "common carp"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "12  ... which poses great threat to the chubs because it has poor ......... away from predators.",
+     "answer": [
+      "visibility"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "13  In addition, the volume of ......... available behind the dam was too low to rebuild the bars and flooding became more serious.",
+     "answer": [
+      "sand"
+     ],
+     "topic": "Reading - Summary completion"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "You should spend about 20 minutes on Questions 14-26, which are based on Reading Passage 2.\n\nQuestions 14-20\nThe reading passage has seven paragraphs, A-G.\nChoose the correct heading for paragraphs A-G from the list below.\nWrite the correct number, i-xi, in boxes 14-20 on your answer sheet.\n\nList of Headings\ni  Why better food helps students' learning\nii  Becoming the headmaster of Msekeni\niii  Surprising use of school premises\niv  Global perspective\nv  Why students were undernourished\nvi  Surprising academic outcome\nvii  An innovative program to help girls\nviii  How food program is operated\nix  How food program affects school attendance\nx  None of the usual reasons\nxi  How to maintain academic standard\n\nQuestions 21-24\nComplete the sentences below using NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage.\nWrite your answers in boxes 21-24 on your answer sheet.\n\nQuestions 25 and 26\nChoose TWO letters, A-F.\nWrite the correct letters in boxes 25 and 26 on your answer sheet.\nWhich TWO of the following statements are true?\nA  Some children are taught in the open air.\nB  Bernard Kumanda became the headmaster in 1991.\nC  No new staffs were recruited when attendance rose.\nD  Girls are often treated equally with boys in Malawi.\nE  Scientists have devised ways to detect the most underfed students in school.\nF  WHO is worried about malnutrition among kids in developing countries.",
+   "passage": "Tackling Hunger in Msekeni\n\nA  There are not enough classrooms at the Msekeni primary school, so half the lessons take place in the shade of yellow-blossomed acacia trees. Given this shortage, it might seem odd that one of the school's purpose-built classrooms has been emptied of pupils and turned into a storeroom for sacks of grain. But it makes sense. Food matters more than shelter.\n\nB  Msekeni is in one of the poorer parts of Malawi, a landlocked southern African country of exceptional beauty and great poverty. No war lays waste Malawi, nor is the land unusually crowded or infertile, but Malawians still have trouble finding enough to eat. Half of the children under five are underfed to the point of stunting. Hunger blights most aspects of Malawian life, so the country is as good a place as any to investigate how nutrition affects development, and vice versa.\n\nC  The headmaster at Msekeni, Bernard Kumanda, has strong views on the subject. He thinks food is a priceless teaching aid. Since 1999, his pupils have received free school lunches. Donors such as the World Food Programme (WFP) provide the food: those sacks of grain (mostly mixed maize and soya bean flour, enriched with vitamin A) in that converted classroom. Local volunteers do the cooking - turning the dry ingredients into a bland but nutritious slop and spooning it out on to plastic plates. The children line up in large crowds, cheerfully singing a song called 'We are getting porridge'.\n\nD  When the school's feeding programme was introduced, enrolment at Msekeni doubled. Some of the new pupils had switched from nearby schools that did not give out free porridge, but most were children whose families had previously kept them at home to work. These families were so poor that the long-term benefits of education seemed unattractive when setting against the short-term gain of sending children out to gather firewood or help in the fields. One plate of porridge a day completely altered the calculation. A child fed at school will not howl so plaintively for food at home. Girls, who are more likely than boys to be kept out of school, are given extra snacks to take home.\n\nE  When a school takes in a horde of extra students from the poorest homes, you would expect standards to drop. Anywhere in the world, poor kids tend to perform worse than their better-off classmates. When the influx of new pupils is not accompanied by an increase in the number of teachers, as was the case at Msekeni, you would expect standards to fall even further. But they have not. Pass rates at Msekeni improved dramatically, from 30% to 85%. Although this was an exceptional example, the nationwide results of school feeding programmes were still pretty good. On average, after a Malawian school started handing out free food it attracted 38% more girls and 24% more boys. The pass rate for boys stayed about the same, while for girls it improved by 9.5%.\n\nF  Better nutrition makes for brighter children. Most immediately, well-fed children find it easier to concentrate. It is hard to focus the mind on long division when your stomach is screaming for food. Mr Kumanda says that it used to be easy to spot the kids who were really undernourished. 'They were the ones who stared into space and didn't respond when you asked the question,' he says. More crucially, though, more and better food helps brains grow and develop. Like any other organ in the body, the brain needs nutrition and exercise. But if it is starved of the necessary calories, proteins and micronutrients, it is stunted, perhaps not as severely as a muscle would be, but stunted nonetheless. That is why feeding children at schools work so well. And the fact that the effect of feeding was more pronounced in girls than in boys gives a clue to who eats first in rural Malawian households. It isn't the girls.\n\nG  On a global scale, the good news is that people are eating better than ever before. Homo sapiens has grown 50% bigger since the industrial revolution. Three centuries ago, chronic malnutrition was more or less universal. Now, it is extremely rare in rich countries. In developing countries, where most people live, plates and rice bowls are also fuller than ever before. The proportion of children under five in the developing world who are malnourished to the point of stunting fell from 39% in 1990 to 30% in 2000, says the World Health Organisation (WHO). In other places, the battle against hunger is steadily being won. Better nutrition is making people cleverer and more energetic, which will help them grow more prosperous. And when they eventually join the ranks of the well off, they can start fretting about growing too fast.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "14  Paragraph A",
+     "options": [
+      "i  Why better food helps students' learning",
+      "ii  Becoming the headmaster of Msekeni",
+      "iii  Surprising use of school premises",
+      "iv  Global perspective",
+      "v  Why students were undernourished",
+      "vi  Surprising academic outcome",
+      "vii  An innovative program to help girls",
+      "viii  How food program is operated",
+      "ix  How food program affects school attendance",
+      "x  None of the usual reasons",
+      "xi  How to maintain academic standard"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "15  Paragraph B",
+     "options": [
+      "i  Why better food helps students' learning",
+      "ii  Becoming the headmaster of Msekeni",
+      "iii  Surprising use of school premises",
+      "iv  Global perspective",
+      "v  Why students were undernourished",
+      "vi  Surprising academic outcome",
+      "vii  An innovative program to help girls",
+      "viii  How food program is operated",
+      "ix  How food program affects school attendance",
+      "x  None of the usual reasons",
+      "xi  How to maintain academic standard"
+     ],
+     "answer": 9,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "16  Paragraph C",
+     "options": [
+      "i  Why better food helps students' learning",
+      "ii  Becoming the headmaster of Msekeni",
+      "iii  Surprising use of school premises",
+      "iv  Global perspective",
+      "v  Why students were undernourished",
+      "vi  Surprising academic outcome",
+      "vii  An innovative program to help girls",
+      "viii  How food program is operated",
+      "ix  How food program affects school attendance",
+      "x  None of the usual reasons",
+      "xi  How to maintain academic standard"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "17  Paragraph D",
+     "options": [
+      "i  Why better food helps students' learning",
+      "ii  Becoming the headmaster of Msekeni",
+      "iii  Surprising use of school premises",
+      "iv  Global perspective",
+      "v  Why students were undernourished",
+      "vi  Surprising academic outcome",
+      "vii  An innovative program to help girls",
+      "viii  How food program is operated",
+      "ix  How food program affects school attendance",
+      "x  None of the usual reasons",
+      "xi  How to maintain academic standard"
+     ],
+     "answer": 8,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "18  Paragraph E",
+     "options": [
+      "i  Why better food helps students' learning",
+      "ii  Becoming the headmaster of Msekeni",
+      "iii  Surprising use of school premises",
+      "iv  Global perspective",
+      "v  Why students were undernourished",
+      "vi  Surprising academic outcome",
+      "vii  An innovative program to help girls",
+      "viii  How food program is operated",
+      "ix  How food program affects school attendance",
+      "x  None of the usual reasons",
+      "xi  How to maintain academic standard"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "19  Paragraph F",
+     "options": [
+      "i  Why better food helps students' learning",
+      "ii  Becoming the headmaster of Msekeni",
+      "iii  Surprising use of school premises",
+      "iv  Global perspective",
+      "v  Why students were undernourished",
+      "vi  Surprising academic outcome",
+      "vii  An innovative program to help girls",
+      "viii  How food program is operated",
+      "ix  How food program affects school attendance",
+      "x  None of the usual reasons",
+      "xi  How to maintain academic standard"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "20  Paragraph G",
+     "options": [
+      "i  Why better food helps students' learning",
+      "ii  Becoming the headmaster of Msekeni",
+      "iii  Surprising use of school premises",
+      "iv  Global perspective",
+      "v  Why students were undernourished",
+      "vi  Surprising academic outcome",
+      "vii  An innovative program to help girls",
+      "viii  How food program is operated",
+      "ix  How food program affects school attendance",
+      "x  None of the usual reasons",
+      "xi  How to maintain academic standard"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "text",
+     "q": "21  In Kumanda's school ......... are given to girls after the end of the school day.",
+     "answer": [
+      "extra snacks",
+      "snacks"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "22  Many children from poor families were sent to collect ......... from the field.",
+     "answer": [
+      "firewood"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "23  Thanks to the free food program, ......... of students passed the test.",
+     "answer": [
+      "85%",
+      "85 percent",
+      "85"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "24  The modern human is ......... bigger than before after the industrial revolution.",
+     "answer": [
+      "50%",
+      "50 percent",
+      "50"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "multi",
+     "q": "25-26  Choose TWO letters, A-F. Which TWO of the following statements are true?",
+     "options": [
+      "A  Some children are taught in the open air.",
+      "B  Bernard Kumanda became the headmaster in 1991.",
+      "C  No new staffs were recruited when attendance rose.",
+      "D  Girls are often treated equally with boys in Malawi.",
+      "E  Scientists have devised ways to detect the most underfed students in school.",
+      "F  WHO is worried about malnutrition among kids in developing countries."
+     ],
+     "answer": [
+      0,
+      2
+     ],
+     "topic": "Reading - Two answers"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "You should spend about 20 minutes on Questions 27-40, which are based on Reading Passage 3.\n\nQuestions 27-32\nComplete each sentence with the correct ending, A-H, below.\nWrite the correct letter, A-H, in boxes 27-32 on your answer sheet.\nNB You may use any letter more than once.\n\nA  should easily be understood\nB  should improve by itself\nC  should not involve any mysticism\nD  ought to last a minimum length of time.\nE  needs to be treated at the right time.\nF  should give more recognition.\nG  can earn valuable money.\nH  do not rely on any specific treatment\n\nQuestions 33-35\nChoose the correct letter, A, B, C or D.\nWrite the correct letter in boxes 33-35 on your answer sheet.\n\nQuestions 36-40\nDo the following statements agree with the claims of the writer in Reading Passage 3?\nYES if the statement agrees with the claims of the writers\nNO if the statement contradicts the claims of the writers\nNOT GIVEN if it is impossible to say what the writers thinks about this.",
+   "passage": "The Placebo Effect - The Power of Nothing\n\nWant to devise a new form of alternative medicine? No problem. Here is the recipe. Be warm, sympathetic, reassuring and enthusiastic. Your treatment should involve physical contact, and each session with your patients should last at least half an hour. Encourage your patients to take an active part in their treatment and understand how their disorders relate to the rest of their lives. Tell them that their own bodies possess the true power to heal. Make them pay you out of their own pockets. Describe your treatment in familiar words, but embroidered with a hint of mysticism: energy fields, energy flows, energy blocks, meridians, forces, auras, rhythms and the like. Refer to the knowledge of an earlier age: wisdom carelessly swept aside by the rise and rise of blind, mechanistic science. Oh, come off it, you are saying. Something invented off the top of your head could not possibly work, could it?\n\nWell yes, it could - and often well enough to earn you a living. A good living if you are sufficiently convincing, or better still, really believe in your therapy. Many illnesses get better on their own, so if you are lucky and administer your treatment at just the right time you will get the credit. But that's only part of it. Some of the improvement really would be down to you. Your healing power would be the outcome of a paradoxical force that conventional medicine recognizes but remains oddly ambivalent about: the placebo effect.\n\nPlacebos are treatments that have no direct effect on the body, yet still, work because the patient has faith in their power to heal. Most often the term refers to a dummy pill, but it applies just as much to any device or procedure, from a sticking plaster to a crystal to an operation. The existence of the placebo effect implies that even quackery may confer real benefits, which is why any mention of placebo is a touchy subject for many practitioners of complementary and alternative medicine, who are likely to regard it as tantamount to a charge of charlatanism. In fact, the placebo effect is a powerful part of all medical care, orthodox or otherwise, though its role is often neglected or misunderstood.\n\nOne of the great strengths of CAM may be its practitioners' skill in deploying the placebo effect to accomplish real healing. 'Complementary practitioners are miles better at producing non-specific effects and good therapeutic relationships,' says Edzard Ernst, professor of CAM at Exeter University. The question is whether CAM could be integrated into conventional medicines, as some would like, without losing much of this power.\n\nAt one level, it should come as no surprise that our state of mind can influence our physiology: anger opens the superficial blood vessels of the face; sadness pumps the tear glands. But exactly how placebos work their medical magic is still largely unknown. Most of the scant research done so far has focused on the control of pain because it's one of the commonest complaints and lends itself to experimental study. Here, attention has turned to the endorphins, morphine-like neurochemicals known to help control pain.\n\nBut exactly how placebos work their medical magic is still largely unknown. Most of the scant research to date has focused on the control of pain because it's one of the commonest complaints and lends itself to experimental study. Here, attention has turned to the endorphins, natural counterparts of morphine that are known to help control pain. 'Any of the neurochemicals involved in transmitting pain impulses or modulating them might also be involved in generating the placebo response,' says Don Price, an oral surgeon at the University of Florida who studies the placebo effect in dental pain.\n\n'But endorphins are still out in front.' That case has been strengthened by the recent work of Fabrizio Benedetti of the University of Turin, who showed that the placebo effect can be abolished by a drug, naloxone, which blocks the effects of endorphins. Benedetti induced pain in human volunteers by inflating a blood-pressure cuff on the forearm. He did this several times a day for several days, using morphine each time to control the pain. On the final day, without saying anything, he replaced the morphine with a saline solution. This still relieved the subjects' pain: a placebo effect. But when he added naloxone to the saline the pain relief disappeared. Here was direct proof that placebo analgesia is mediated, at least in part, by these natural opiates.\n\nStill, no one knows how belief triggers endorphin release, or why most people can't achieve placebo pain relief simply by willing it. Though scientists don't know exactly how placebos work, they have accumulated a fair bit of knowledge about how to trigger the effect. A London rheumatologist found, for example, that red dummy capsules made more effective painkillers than blue, green or yellow ones. Research on American students revealed that blue pills make better sedatives than pink, a colour more suitable for stimulants. Even branding can make a difference: if Aspro or Tylenol is what you like to take for a headache, their chemically identical generic equivalents may be less effective.\n\nIt matters, too, how the treatment is delivered. Decades ago, when the major tranquilliser chlorpromazine was being introduced, a doctor in Kansas categorised his colleagues according to whether they were keen on it, openly skeptical of its benefits, or took a 'let's try and see' attitude. His conclusion: the more enthusiastic the doctor, the better the drug performed. And this year Ernst surveyed published studies that compared doctors' bedside manners. The studies turned up one consistent finding: 'Physicians who adopt a warm, friendly and reassuring manner,' he reported, 'are more effective than those whose consultations are formal and do not offer reassurance.'\n\nWarm, friendly and reassuring are precisely CAM's strong suits, of course. Many of the ingredients of that opening recipe - the physical contact, the generous swathes of time, the strong hints of supernormal healing power - are just the kind of thing likely to impress patients. It's hardly surprising, then, that complementary practitioners are generally best at mobilising the placebo effect, says Arthur Kleinman, professor of social anthropology at Harvard University.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "27  Appointments with an alternative practitioner",
+     "options": [
+      "A  should easily be understood",
+      "B  should improve by itself",
+      "C  should not involve any mysticism",
+      "D  ought to last a minimum length of time.",
+      "E  needs to be treated at the right time.",
+      "F  should give more recognition.",
+      "G  can earn valuable money.",
+      "H  do not rely on any specific treatment"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "28  An alternative practitioner's description of the treatment",
+     "options": [
+      "A  should easily be understood",
+      "B  should improve by itself",
+      "C  should not involve any mysticism",
+      "D  ought to last a minimum length of time.",
+      "E  needs to be treated at the right time.",
+      "F  should give more recognition.",
+      "G  can earn valuable money.",
+      "H  do not rely on any specific treatment"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "29  An alternative practitioner who has faith in what he does",
+     "options": [
+      "A  should easily be understood",
+      "B  should improve by itself",
+      "C  should not involve any mysticism",
+      "D  ought to last a minimum length of time.",
+      "E  needs to be treated at the right time.",
+      "F  should give more recognition.",
+      "G  can earn valuable money.",
+      "H  do not rely on any specific treatment"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "30  The illness of patients convinced of alternative practice",
+     "options": [
+      "A  should easily be understood",
+      "B  should improve by itself",
+      "C  should not involve any mysticism",
+      "D  ought to last a minimum length of time.",
+      "E  needs to be treated at the right time.",
+      "F  should give more recognition.",
+      "G  can earn valuable money.",
+      "H  do not rely on any specific treatment"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "31  Improvements of patients receiving alternative practice",
+     "options": [
+      "A  should easily be understood",
+      "B  should improve by itself",
+      "C  should not involve any mysticism",
+      "D  ought to last a minimum length of time.",
+      "E  needs to be treated at the right time.",
+      "F  should give more recognition.",
+      "G  can earn valuable money.",
+      "H  do not rely on any specific treatment"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "32  Conventional medical doctors (who is aware of placebo)",
+     "options": [
+      "A  should easily be understood",
+      "B  should improve by itself",
+      "C  should not involve any mysticism",
+      "D  ought to last a minimum length of time.",
+      "E  needs to be treated at the right time.",
+      "F  should give more recognition.",
+      "G  can earn valuable money.",
+      "H  do not rely on any specific treatment"
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "33  In the fifth paragraph, the writer uses the example of anger and sadness to illustrate that",
+     "options": [
+      "A  People's feeling could affect their physical behaviour",
+      "B  Scientists don't understand how the mind influences the body.",
+      "C  Research on the placebo effect is very limited",
+      "D  How placebo achieves its effect is yet to be understood."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "34  Research on pain control attracts most of the attention because",
+     "options": [
+      "A  Scientists have discovered that endorphins can help to reduce pain.",
+      "B  Only a limited number of researchers gain relevant experience",
+      "C  Pain reducing agents might also be involved in the placebo effect.",
+      "D  Patients often experience pain and like to complain about it"
+     ],
+     "answer": 3,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  Fabrizio Benedetti's research on endorphins indicates that",
+     "options": [
+      "A  They are widely used to regulate pain.",
+      "B  They can be produced by willful thoughts",
+      "C  They can be neutralized by introducing naloxone.",
+      "D  Their pain-relieving effects do not last long enough."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "36  There is enough information for scientists to fully understand the placebo effect.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "37  A London based researcher discovered that red pills should be taken off the market.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "38  People's preference for brands would also have an effect on their healing.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "39  Medical doctors have a range of views of the newly introduced drug of chlorpromazine.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "40  Alternative practitioners are seldom known for applying the placebo effect.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    }
+   ]
+  }
+ ]
+}

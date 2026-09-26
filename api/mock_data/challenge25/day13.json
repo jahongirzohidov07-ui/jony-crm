@@ -1,0 +1,676 @@
+{
+ "key": "challenge25_day13",
+ "section": "reading",
+ "skill": "challenge25_reading",
+ "kind": "mock",
+ "variant": "M",
+ "title": "Reading Challenge - Day 13 (4 matn)",
+ "source": "25-day challenge (akademiya toplami)",
+ "levels": [
+  "ielts_intro",
+  "ielts_foundation",
+  "ielts_graduation"
+ ],
+ "paper_max": 0,
+ "parts": [
+  {
+   "title": "Reading Passage 1",
+   "instructions": "Questions 1-8\nComplete the notes below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\n\nStonehenge\nConstruction Stage 1:\n- the ditch and henge were dug, possibly using tools made from 1 __________\n- 2 __________ may have been arranged in deep pits inside the circle\nStage 2:\n- bluestones from the Preseli Hills were placed in standing position\n  theories about the transportation of the bluestones:\n  - archaeological:\n    a) builders used 3 __________ to make sledges and rollers\n    b) 4 __________ pulled them on giant baskets\n  - geological:\n    c) they were brought from Wales by 5 __________\nStage 3:\n- sandstone slabs were arranged into an outer crescent or ring\nBuilders\n- theory arose in the 17th century that its builders were Celtic 6 __________\nPurpose\n- many experts agree it has been used as a 7 __________ site\n- in the 1960s, it was suggested that it worked as a kind of 8 __________\n\nQuestions 9-16\nDo the following statements agree with the information given in Reading Passage 1?\nWrite\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+   "passage": "Stonehenge\n\nFor centuries, historians and archaeologists have puzzled over the many mysteries of Stonehenge, a prehistoric monument that took an estimated 1,500 years to erect. Located on Salisbury Plain in southern England, it is comprised of roughly 100 massive upright stones placed in a circular layout. Archaeologists believe England's most iconic prehistoric ruin was built in several stages with the earliest constructed 5,000 or more years ago. First, Neolithic Britons used primitive tools, which may have been fashioned out of deer antlers, to dig a massive circular ditch and bank, or henge. Deep pits dating back to that era and located within the circle may have once held a ring of timber posts, according to some scholars.\n\nSeveral hundred years later, it is thought, Stonehenge's builders hoisted an estimated 80 bluestones, 43 of which remain today, into standing positions and placed them in either a horseshoe or circular formation. These stones have been traced all the way to the Preseli Hills in Wales, some 300 kilometers from Stonehenge. How, then, did prehistoric builders without sophisticated tools or engineering haul these boulders, which weigh up to four tons, over such a great distance?\n\nAccording to one long-standing theory among archaeologists, Stonehenge's builders fashioned sledges and rollers out of tree trunks to lug the bluestones from the Preseli Hills. They then transferred the boulders onto rafts and floated them first along the Welsh coast and then up the River Avon toward Salisbury Plain; alternatively, they may have towed each stone with a fleet of vessels. More recent archaeological hypotheses have them transporting the bluestones with supersized wicker baskets on a combination of ball bearings and long grooved planks, hauled by oxen.\n\nAs early as the 1970s, geologists have been adding their voices to the debate over how Stonehenge came into being. Challenging the classic image of industrious builders pushing, carting, rolling or hauling giant stones from faraway Wales, some have suggested that it was glaciers, not humans, that carried the bluestones to Salisbury Plain. Most archaeologists have remained skeptical about this theory, however, wondering how the forces of nature could possibly have delivered the exact number of stones needed to complete the circle.\n\nThe third phase of construction took place around 2000 BCE. At this point, sandstone slabs - known as 'sarsens' - were arranged into an outer crescent or ring; some were assembled into the iconic three-pieced structures called trilithons that stand tall in the centre of Stonehenge. Some 50 stones are now visible on the site, which may once have contained many more. Radiocarbon dating has revealed that work continued at Stonehenge until roughly 1600 BCE, with the bluestones in particular being repositioned multiple times.\n\nBut who were the builders of Stonehenge? In the 17th century, archaeologist John Aubrey made the claim that Stonehenge was the work of druids, who had important religious, judicial and political roles in Celtic society. This theory was widely popularized by the antiquarian William Stukeley, who had unearthed primitive graves at the site. Even today, people who identify as modern druids continue to gather at Stonehenge for the summer solstice. However, in the mid-twentieth century, radiocarbon dating demonstrated that Stonehenge stood more than 1,000 years before the Celts inhabited the region.\n\nMany modern historians and archaeologists now agree that several distinct tribes of people contributed to Stonehenge, each undertaking a different phase of its construction. Bones, tools and other artefacts found on the site seem to support this hypothesis. The first stage was achieved by Neolithic agrarians who were likely to have been indigenous to the British Isles. Later, it is believed, groups with advanced tools and a more communal way of life left their mark on the site. Some believe that they were immigrants from the European continent, while others maintain that they were probably native Britons, descended from the original builders.\n\nIf the facts surrounding the architects and construction of Stonehenge remain shadowy at best, the purpose of the striking monument is even more of a mystery. While there is consensus among the majority of modern scholars that Stonehenge once served the function of burial ground, they have yet to determine what other purposes it had.\n\nIn the 1960s, the astronomer Gerald Hawkins suggested that the cluster of megalithic stones operated as a form of calendar, with different points corresponding to astrological phenomena such as solstices, equinoxes and eclipses occurring at different times of the year. While his theory has received a considerable amount of attention over the decades, critics maintain that Stonehenge's builders probably lacked the knowledge necessary to predict such events or that England's dense cloud cover would have obscured their view of the skies.\n\nMore recently, signs of illness and injury in the human remains unearthed at Stonehenge led a group of British archaeologists to speculate that it was considered a place of healing, perhaps because bluestones were thought to have curative powers.",
+   "script": "",
+   "questions": [
+    {
+     "type": "text",
+     "q": "1  the ditch and henge were dug, possibly using tools made from __________",
+     "answer": [
+      "deer antlers",
+      "antlers"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "2  __________ may have been arranged in deep pits inside the circle",
+     "answer": [
+      "timber posts",
+      "posts"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "3  builders used __________ to make sledges and rollers",
+     "answer": [
+      "tree trunks",
+      "trunks"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "4  __________ pulled them on giant baskets",
+     "answer": [
+      "oxen"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "5  they were brought from Wales by __________",
+     "answer": [
+      "glaciers"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "6  theory arose in the 17th century that its builders were Celtic __________",
+     "answer": [
+      "druids"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "7  many experts agree it has been used as a __________ site",
+     "answer": [
+      "burial",
+      "burial ground"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "text",
+     "q": "8  in the 1960s, it was suggested that it worked as a kind of __________",
+     "answer": [
+      "calendar"
+     ],
+     "topic": "Reading - Note completion"
+    },
+    {
+     "type": "choice",
+     "q": "9  The ditch and bank at Stonehenge were already in place when the bluestones arrived.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "10  During the third phase of construction, sandstone slabs were placed in both the outer areas and the middle of the Stonehenge site.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "11  There is scientific proof that the bluestones stood in the same spot until approximately 1600 BCE.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "12  John Aubrey's claim about Stonehenge was supported by twentieth-century findings.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "13  Objects discovered at Stonehenge seem to indicate that it was constructed by a number of different groups of people.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "14  It is accepted that the builders who used advanced tools to work on Stonehenge came from the British Isles.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "15  Criticisms of Gerald Hawkins' theory about Stonehenge has come mainly from other astronomers.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - TFNG"
+    },
+    {
+     "type": "choice",
+     "q": "16  The theory that people came to Stonehenge to cure their illnesses and injuries has been accepted by archaeologists worldwide.",
+     "options": [
+      "TRUE",
+      "FALSE",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - TFNG"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 2",
+   "instructions": "Questions 17-20\nReading Passage 2 has seven paragraphs, A-G.\nWhich paragraph contains the following information?\nWrite the correct letter A-G.\nNB You may use any letter more than once.\n\nQuestions 21-24\nComplete the summary below.\nChoose ONE WORD ONLY from the passage for each answer.\n\nWhy do howlers have an advantage over other Central American monkeys?\nHowler monkeys have a more rapid rate of (21) ____ than either capuchin or spider monkeys. Unlike the other local monkey species, howlers can survive without eating (22) ____ and so can live inside a relatively small habitat area. Their diet is more flexible, and they are able to tolerate leaves with high levels of (23) ____ . Howlers can also survive periods of (24) ____ better than the other monkey species can.\n\nQuestions 25-29\nLook at the following features (Questions 25-29) and the list of locations below.\nMatch each feature with the correct location, A, B or C.\nNB You may use any letter more than once.\nList of Locations\nA Hacienda La Pacifica\nB Santa Rosa National Park\nC Cholula Cacao Farm",
+   "passage": "The return of monkey life\n\nRain forest trees growing anew on Central American farmland are helping scientists find ways for monkey and agriculture to benefit one another.\n\nA. Hacienda La Pacifica, a remote working cattle ranch in Guanacaste province of northern Costa Rica, has for decades been home to a community of mantled howler monkeys. Other native primates - white-faced capuchin monkeys and spider monkeys - were once common in this area, too, but vanished after the Pan-American Highway was built nearby in the 1950s and most of the surrounding land was cleared for cattle-raising. At Hacienda La Pacifica, however, an enlightened ranch owner chose to leave some strips of native trees growing. He used these as windbreaks to protect both cattle and their food crops from dry-season winds. In the process, the farmer unwittingly founded a unique laboratory for the study of monkeys.\n\nB. Ken Glander, a primatologist from Duke University in the USA, is studying La Pacifica's monkeys in an effort to understand the relationship between howlers and regenerating forests at the edges of grazing lands. Studying such disturbed woodlands is increasingly important because throughout much of the New World Tropics, these are the only forests left. In the 18th century, tropical dry forests once covered most of Central America, but by the 1980s less than two percent remained undisturbed, and less than one percent was protected.\n\nC. Howlers persist at La Pacifica, Glander explains, because they are leaf-eaters. They eat fruit when it is available but, unlike capuchin and spider monkeys, do not depend on large areas of fruiting trees. Glander is particularly interested in howlers' ability to thrive on leaves loaded with toxins - poisonous substances designed to protect the plants. For leaf-eaters, long-term exposure to a specific plant toxin can increase their ability to neutralize the poisonous substances and absorb the leaf nutrients. Watching generations of howlers at La Pacifica has shown Glander that the monkeys keep their systems primed by sampling a variety of plants and then focusing on a small number of the most nutritious food items. The leaves that grow in regenerating forests, like those at La Pacifica, are actually more howler-friendly than those produced by the centuries-old trees that survive farther south. In younger forests, trees put most of their limited energy into growing wood, leaves, and fruit, so they produce much lower levels of toxin than do well-established, old-growth trees.\n\nD. The value of maturing forests to primates is also a subject of study at Santa Rosa National Park, about 35 miles northwest of La Pacifica. Large areas of Santa Rosa's forests had at one time been burnt to make space for cattle ranching and coffee farming, thereby devastating local monkey habitat. But in 1971 the government protected the area by designating it a National Park, and species of indigenous trees which had been absent for decades began to invade the abandoned pastures. Capuchins were the first to begin using the reborn forests, followed by howlers. Eventually, even spider monkeys, fruit-eaters that need large areas of continuous forest, returned. In the first 28 years following protection of the area, the capuchin population doubled, while the number of howlers increased sevenfold.\n\nE. Some of the same traits that allow howlers to survive at La Pacifica also explain their population boom in Santa Rosa. Howler reproduction is faster than that of other native monkey species. They give birth for the first time at about 3.5 years of age, compared with seven years for capuchins, and eight or more for spider monkeys. Also, while a female spider monkey will have a baby about once every four years, well-fed howlers can produce an infant every two years. Another factor is diet. Howlers are very adaptable feeders, and only need a comparatively small home range. Spider monkeys, on the other hand, need to occupy a huge home range. Also crucial is the fact that the leaves howlers eat hold plenty of water, so the monkeys can survive away from open streams and water holes. This ability gives them a real advantage over capuchin and spider monkeys, which have suffered during the long, ongoing drought in the area.\n\nF. Alejandro Estrada, an ecologist at Estacion de Biologia Los Tuxtlas in Veracruz, Mexico, has been studying the ecology of a group of howler monkeys that thrive in a habitat totally altered by humans: a cacao plantation in Tabasco state, Mexico. Cacao plants need shade to grow, so 40 years ago the owners of Cholula Cacao Farm planted figs, monkey pod and other tall trees to form a protective canopy over their crop. The howlers moved in about 25 years ago after nearby forests were cut. This strange habitat seems to support about as many monkeys as would a same-sized patch of wild forest. The howlers eat the leaves and fruit of the shade trees, leaving the valuable cacao pods alone.\n\nG. Estrada believes the monkeys bring underappreciated benefits to such plantations, dispersing the seeds of fruits such as fig and other shade trees, and fertilizing the soil. Spider monkeys also forage for fruit here, though they need nearby areas of forest to survive in the long term. He hopes that farmers will begin to see the advantages of associating with wild monkeys, which could include potential ecotourism projects. \"Conservation is usually viewed as a conflict between farming practices and the need to preserve nature,\" Estrada says. \"We're moving away from that vision and beginning to consider ways in which commercial activities may become a tool for the conservation of primates in human-modified landscapes.\"",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "17  a reason why newer forests provide howlers with better feeding opportunities than older forests",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "18  a reference to a change in farmers' attitudes towards wildlife",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 6,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "19  a description of the means by which howlers select the best available diet for themselves",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "choice",
+     "q": "20  figures relating to the reduction of natural wildlife habitat over a period of time",
+     "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching information"
+    },
+    {
+     "type": "text",
+     "q": "21  Howler monkeys have a more rapid rate of ____ than either capuchin or spider monkeys.",
+     "answer": [
+      "reproduction"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "22  Unlike the other local monkey species, howlers can survive without eating ____ and so can live inside a relatively small habitat area.",
+     "answer": [
+      "fruit"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "23  Their diet is more flexible, and they are able to tolerate leaves with high levels of ____ .",
+     "answer": [
+      "toxins",
+      "toxin"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "text",
+     "q": "24  Howlers can also survive periods of ____ better than the other monkey species can.",
+     "answer": [
+      "drought"
+     ],
+     "topic": "Reading - Summary completion"
+    },
+    {
+     "type": "choice",
+     "q": "25  It has seen the return of native tree species.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "26  It supports only one species of native monkey.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "27  Its monkey population helps the agriculture of the area.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 2,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "28  It is home to populations of all three local monkey species.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching features"
+    },
+    {
+     "type": "choice",
+     "q": "29  Its landscape was altered by the construction of a transport link.",
+     "options": [
+      "A",
+      "B",
+      "C"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching features"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 3",
+   "instructions": "Questions 30-33\nComplete each sentence with the correct ending, A-F, below.\nA does not depend on ingenuity alone.\nB depends on the successful management of certain disputes.\nC has often been misunderstood.\nD is not limited to the creation of new inventions.\nE frequently increases in accordance with the material successes achieved.\nF is linked to factors such as the weather.\n\nQuestions 34-36\nChoose the correct letter, A, B, C or D.\n\nQuestions 37-43\nDo the following statements agree with the views of the writer in Reading Passage 3?\nWrite\nYES if the statement agrees with the views of the writer\nNO if the statement contradicts the views of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+   "passage": "The Ingenuity gap\n\nIn this book introduction the author explains what he means by 'ingenuity' and discusses the factors that influence the requirement for and provision of new ideas in today's society.\n\nIngenuity, as I define it here, consists not only of ideas for new technologies like computers or drought-resistant crops but, more fundamentally, of ideas for better institutions and social arrangements, like efficient markets and competent governments.\n\nHow much and what kinds of ingenuity a society requires depends on a range of factors, including the society's goals and the circumstances within which it must achieve those goals - whether it has a young population or an ageing one, an abundance of natural resources or a scarcity of them, an easy climate or a punishing one, whatever the case may be.\n\nHow much and what kinds of ingenuity a society supplies also depends on many factors, such as the nature of human inventiveness and understanding, the rewards an economy gives to the producers of useful knowledge, and the strength of political opposition to social and institutional reforms.\n\nA good supply of the right kinds of ingenuity is essential, but it isn't, of course, enough by itself. We know that the creation of wealth, for example, depends not only on an adequate supply of useful ideas but also on the availability of other, more conventional factors of production, like capital and labor. Similarly, prosperity, stability and justice usually depend on the resolution, or at least the containment, of major political struggles over wealth and power.\n\nThe past century's countless incremental changes in our societies around the planet, in our technologies and our interactions with our surrounding natural environment, have accumulated to create a qualitatively new world.\n\nBecause these changes have accumulated slowly, it's often hard for us to recognize how profound and sweeping they've been. They include far larger and denser populations; much higher per capita consumption of natural resources; and far better and more widely available technologies for the movement of people, materials, and especially information.\n\nIn combination, these changes have sharply increased the density, intensity, and pace of our interactions with each other; they have greatly increased the burden we place on our natural environment; and they have helped shift power from national and international institutions to individuals and subgroups, such as political special interests and ethnic factions. The management of our relationship with the new world requires immense and ever-increasing amounts of social and technical ingenuity.\n\nWhen we enhance the performance of any system, from our cars to the planet's network of financial institutions, we tend to make it more complex. Many of the natural systems critical to our well-being, like the global climate and the oceans, are extraordinarily complex, to begin with. We often can't predict or manage the behavior of complex systems with much precision, because they are often very sensitive to the smallest of changes and perturbations, and their behavior can flip from one mode to another suddenly and dramatically. Over the last 100 years as the human-made and natural systems we depend upon have become more complex, and as our demands on them have increased, the institutions and technologies we use to manage them must become more complex too, which further boosts our requirement for ingenuity.\n\nHowever, we should not jump to the conclusion that the supply of ingenuity always increases in lockstep with our ingenuity requirement: while it's true that necessity is often the mother of invention, we can't always rely on the right kind of ingenuity appearing when and where we need it. In many cases, the complexity and speed of operation of today's vital economic, social, and ecological systems exceed the human brain's grasp. Not many of us have more than a rudimentary understanding of how these systems work. They remain fraught with countless \"unknown unknowns,\" which makes it hard to supply the ingenuity we need to solve problems associated with these systems.\n\nIn this book, I explore a wide range of other factors that will limit our ability to supply the ingenuity required in the coming century. For example, the crush of information in our everyday lives is shortening our attention span, limiting the time we have to reflect on critical matters of public policy, and making policy arguments more superficial.\n\nModern markets and science are an important part of the story of how we supply ingenuity. Markets are critically important because they give entrepreneurs an incentive to produce knowledge. As for science, although it seems to face no theoretical limits, at least in the foreseeable future, practical constraints often slow its progress. The cost of scientific research tends to increase as it delves deeper into nature.\n\nAnd science's rate of advance depends on the characteristics of the natural phenomena it investigates, simply because some phenomena are intrinsically harder to understand than others, so the production of useful new knowledge in these areas can be very slow.\n\nConsequently, there is often a critical time lag between the recognition of a problem and the delivery of sufficient ingenuity, in the form of technologies, to solve that problem. Progress in the social sciences is especially slow, for reasons we don't yet fully understand; but we desperately need better social scientific knowledge to build the sophisticated institutions today's world demands.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "30  The author's definition of ingenuity",
+     "options": [
+      "A does not depend on ingenuity alone.",
+      "B depends on the successful management of certain disputes.",
+      "C has often been misunderstood.",
+      "D is not limited to the creation of new inventions.",
+      "E frequently increases in accordance with the material successes achieved.",
+      "F is linked to factors such as the weather."
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "31  The type of ingenuity required by a society",
+     "options": [
+      "A does not depend on ingenuity alone.",
+      "B depends on the successful management of certain disputes.",
+      "C has often been misunderstood.",
+      "D is not limited to the creation of new inventions.",
+      "E frequently increases in accordance with the material successes achieved.",
+      "F is linked to factors such as the weather."
+     ],
+     "answer": 5,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "32  The creation of wealth",
+     "options": [
+      "A does not depend on ingenuity alone.",
+      "B depends on the successful management of certain disputes.",
+      "C has often been misunderstood.",
+      "D is not limited to the creation of new inventions.",
+      "E frequently increases in accordance with the material successes achieved.",
+      "F is linked to factors such as the weather."
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "33  The stability of a society",
+     "options": [
+      "A does not depend on ingenuity alone.",
+      "B depends on the successful management of certain disputes.",
+      "C has often been misunderstood.",
+      "D is not limited to the creation of new inventions.",
+      "E frequently increases in accordance with the material successes achieved.",
+      "F is linked to factors such as the weather."
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching sentence endings"
+    },
+    {
+     "type": "choice",
+     "q": "34  What point does the author make about the incremental changes of the last century?",
+     "options": [
+      "A Their effect on the environment has been positive.",
+      "B They have not affected all parts of the world.",
+      "C Their significance may not be noticed.",
+      "D They have had less impact than those of previous centuries."
+     ],
+     "answer": 2,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "35  According to the author, one effect of the combined changes is that life has become",
+     "options": [
+      "A easier.",
+      "B faster.",
+      "C more interesting.",
+      "D more enjoyable."
+     ],
+     "answer": 1,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "36  What observation does the author make about complex natural systems?",
+     "options": [
+      "A They can be greatly affected by minor alterations.",
+      "B They cannot be compared to human-made systems.",
+      "C Their performance cannot be improved by human intervention.",
+      "D Their behavior is better understood than ever before."
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    },
+    {
+     "type": "choice",
+     "q": "37  Changes in the last 100 years have increased the need for human ingenuity.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "38  The amount of ingenuity available is strictly related to the demand which exists for it.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "39  Although ingenuity may be available, it may be inappropriate for the tasks that need solutions at the time.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "40  Few people today truly understand the way the modern world works.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "41  Access to more and more information is improving our grasp of current affairs.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 1,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "42  Future generations will be critical of the way today's governments have conducted themselves.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading - YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "43  It is inevitable that some areas of scientific study advance more quickly than others.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 0,
+     "topic": "Reading - YNNG"
+    }
+   ]
+  },
+  {
+   "title": "Reading Passage 4",
+   "instructions": "Questions 44-48\nReading Passage 4 has seven paragraphs, A-G.\nChoose the correct heading for each paragraph A, B, D, E and F from the list of headings (i-viii) below.\nThere is an example below.\nExample: Paragraph C - Answer: vii\nList of headings\ni Parallels between bee and human activities\nii An evolutionary turning point\niii A lack of total co-operation\niv The preservation of individual plant species\nv The commercial value of bees\nvi The structure of flowering plants\nvii The pursuit of self-interest\nviii The need for further research\n\nQuestions 49-55\nComplete the sentences below with words taken from Reading Passage 4.\nChoose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.\n\nQuestion 56\nChoose the correct letter, A, B, C or D.",
+   "passage": "A Some time in the early Cretaceous period of the earth's history, hunting wasps of a certain type became bees by adopting a vegetarian diet, they began to rely more and more on the pollen of plants as a source of protein for themselves and their offspring, as an alternative to insects. In so doing, they accidentally transported pollen on their bodies to other plants of the same species, bringing about pollination. The stage was thus set for a succession of ever-closer mutual adaptations of bees and flowering plants. In particular, flowers began to reward bees for their unwitting role in their reproduction by providing richer sources of pollen and another source of nutrition, nectar.\n\nB Today about 15 per cent of our diet consists of crops which are pollinated by bees. The meat and other animal products we consume are ultimately derived from bee-pollinated forage crops, and account for another 15 per cent. It follows that around one third of our food is directly or indirectly dependent on the pollinating services of bees. On a global basis, the annual value of agricultural crops dependent on the pollination services of bees is estimated at £1,000 million (US$1,590 million). Much of this pollination is due to honey bees, and in monetary terms it exceeds the value of the annual honey crop by a factor of fifty.\n\nC But the apparently harmonious relationship between bees and plants conceals a conflict of interests. Although flowers need bees and vice versa, it pays each partner to minimise its costs and maximise its profits. This may sound like an extreme case of attributing human qualities to non-human species, but using the marketplace and the principles of double-entry book-keeping as metaphors may give us some insights into what is really going on between bees and flowering plants. In the real world, both flower and bee operate in a competitive marketplace. A community of retailers, the flowers, seek to attract more or less discriminating consumers, the bees. Each flower has to juggle the costs and benefits of investing in advertising, by colour and scent, and providing rewards, nectar and pollen. Clearly a species which depends on cross-pollination is on a knife-edge: it must provide sufficient nectar to attract the interest of a bee, but not enough to satisfy all of its needs in one visit. A satiated bee would return to its nest rather than visit another flower. The bee, on the other hand, is out to get the maximum amount of pollen and nectar. It must assess the quality and quantity of rewards which are on offer and juggle its energy costs so that it makes a calorific profit on each foraging trip. The apparent harmony between plants and bees is therefore not all that it seems. Instead, it is an equilibrium based on compromises between the competing interests of the protagonists.\n\nD This sounds remarkably like the ideas of the 18th-century economist Adam Smith. In his book, The Wealth of Nations, Smith postulated that in human society the competitive interactions of different 'economic units' eventually resulted in a balanced, or 'harmonious' society. One might predict, therefore, that economists would find the relationships between bees and plants of some interest. This is the case in Israel, where economists are collaborating with botanists and entomologists in a long-term study of the pollination biology of the native flora, in an attempt to understand the dynamics of the relationship between communities of bees and plants.\n\nE This sort of study is of more than passing academic interest. It is important that authorities understand the dynamic relationships between plants and their pollinators. This is especially true when, say, devising conservation policies. A good example comes from the forests of tropical South America. Here, as in all rainforests, there is a high diversity of tree species. There may be more than 120 per acre, but in a given acre there may only be one or two individuals of any one species. These trees are pollinated by large, fast-flying bees. There is evidence that certain types of bee learn the distribution of these scattered trees and forage regularly along the same routes. This is called 'trap-lining' and the bees forage for up to 23km from their nests. The bees are therefore acting as long-distance pollinators.\n\nF An issue of current concern in tropical forest conservation is that of trying to estimate the minimum sustainable size of 'islands' of forest reserve in areas where large-scale felling is taking place. There is much discussion on seed dispersal distances. But this is only one half of the equation, so far as the reproduction of trees is concerned. There is another question that must be addressed in order to calculate whether proposed forest reserves are close enough to the nearest large tract of forest: 'What is the flight range of these long-distance foragers?' We need to know much more about bees and their relationships with plants before this question can be answered.\n\nG Bees, then, are vital to our survival. Furthermore, much of the visual impact of human environments derives from vegetation, and most vegetation is dependent on bees for pollination. Thus, as pollinators of crops and natural vegetation, bees occupy key positions in the web of relationships which sustain the living architecture of our planet.",
+   "script": "",
+   "questions": [
+    {
+     "type": "choice",
+     "q": "44  Paragraph A",
+     "options": [
+      "i Parallels between bee and human activities",
+      "ii An evolutionary turning point",
+      "iii A lack of total co-operation",
+      "iv The preservation of individual plant species",
+      "v The commercial value of bees",
+      "vi The structure of flowering plants",
+      "vii The pursuit of self-interest",
+      "viii The need for further research"
+     ],
+     "answer": 1,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "45  Paragraph B",
+     "options": [
+      "i Parallels between bee and human activities",
+      "ii An evolutionary turning point",
+      "iii A lack of total co-operation",
+      "iv The preservation of individual plant species",
+      "v The commercial value of bees",
+      "vi The structure of flowering plants",
+      "vii The pursuit of self-interest",
+      "viii The need for further research"
+     ],
+     "answer": 4,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "46  Paragraph D",
+     "options": [
+      "i Parallels between bee and human activities",
+      "ii An evolutionary turning point",
+      "iii A lack of total co-operation",
+      "iv The preservation of individual plant species",
+      "v The commercial value of bees",
+      "vi The structure of flowering plants",
+      "vii The pursuit of self-interest",
+      "viii The need for further research"
+     ],
+     "answer": 0,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "47  Paragraph E",
+     "options": [
+      "i Parallels between bee and human activities",
+      "ii An evolutionary turning point",
+      "iii A lack of total co-operation",
+      "iv The preservation of individual plant species",
+      "v The commercial value of bees",
+      "vi The structure of flowering plants",
+      "vii The pursuit of self-interest",
+      "viii The need for further research"
+     ],
+     "answer": 3,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "choice",
+     "q": "48  Paragraph F",
+     "options": [
+      "i Parallels between bee and human activities",
+      "ii An evolutionary turning point",
+      "iii A lack of total co-operation",
+      "iv The preservation of individual plant species",
+      "v The commercial value of bees",
+      "vi The structure of flowering plants",
+      "vii The pursuit of self-interest",
+      "viii The need for further research"
+     ],
+     "answer": 7,
+     "topic": "Reading - Matching headings"
+    },
+    {
+     "type": "text",
+     "q": "49  Hunting wasps used to feed on other ____ , rather than on vegetation.",
+     "answer": [
+      "insects"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "50  Flowering plants started to reward bees with rich pollen and an additional food in the form of ____ .",
+     "answer": [
+      "nectar"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "51  Approximately ____ of human food production relies on the activity of bees.",
+     "answer": [
+      "one third",
+      "one-third"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "52  If the process of ____ is to take place effectively, bees need to travel from one flower to another before going back to the nest.",
+     "answer": [
+      "cross-pollination",
+      "cross pollination"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "53  Bees need to balance the ____ of each trip against the calorific rewards they obtain.",
+     "answer": [
+      "energy costs",
+      "energy cost"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "54  There can be over 120 different ____ in an acre of rainforest.",
+     "answer": [
+      "tree species",
+      "species"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "text",
+     "q": "55  The bees that pollinate large forests regularly practise an activity known as ____ .",
+     "answer": [
+      "trap-lining",
+      "trap lining",
+      "traplining"
+     ],
+     "topic": "Reading - Sentence completion"
+    },
+    {
+     "type": "choice",
+     "q": "56  Which is the best title for Reading Passage 4?",
+     "options": [
+      "A The Ecological Importance of Bees",
+      "B The Evolutionary History of Bees",
+      "C The Social Behaviour of Bees",
+      "D The Geographical Distribution of Bees"
+     ],
+     "answer": 0,
+     "topic": "Reading - Multiple choice"
+    }
+   ]
+  }
+ ]
+}

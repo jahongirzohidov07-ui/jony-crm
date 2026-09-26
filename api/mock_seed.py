@@ -75,6 +75,32 @@ def seed_mocks(db: Session) -> None:
     qayta yozilmaydi — examinerlar boshlig'i CRM'da o'zi tahrirlaydi."""
     import exam_online as _eo
 
+    # ESKI CEFR SPEAKING (bir martalik, 2026-09-26). Avvalgi Speaking
+    # shablonlari IELTS uslubida 3 qismli edi; rasmiy Multilevel
+    # formati 4 qismli (Part 1.1 / 1.2 / 2 / 3). Eskilari bazada
+    # qolib ketmasin — yashiriladi, o'chirilmaydi (examiner kerak
+    # bo'lsa Test bazasidan qaytarib yoqa oladi).
+    if not _seed_done(db, "cefr_speaking_old_off_v1"):
+        try:
+            import exam_online as _eo
+            n = 0
+            for t in (db.query(models.ExamTemplate)
+                      .filter(models.ExamTemplate.kind == "mock",
+                              models.ExamTemplate.level == "cefr",
+                              models.ExamTemplate.is_active == 1).all()):
+                parts = _eo._load(t.parts)
+                titles = [str(p.get("title") or "") for p in parts]
+                if "Speaking" in (t.title or "") and "Part 1.1" not in titles:
+                    t.is_active = 0
+                    n += 1
+            db.commit()
+            if n:
+                print(f"[seed] eski CEFR Speaking shablonlari yashirildi: {n}")
+            _seed_mark(db, "cefr_speaking_old_off_v1")
+        except Exception as e:          # noqa: BLE001
+            db.rollback()
+            print(f"[seed] eski CEFR Speaking: {e}")
+
     for tpl in _files():
         parts = None
         for level in (tpl.get("levels") or [None]):

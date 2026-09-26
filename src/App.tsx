@@ -34,6 +34,7 @@ const Moliya = lazy(() => import("./pages/Moliya"));
 const Reports = lazy(() => import("./pages/Reports"));
 const Analitika = lazy(() => import("./pages/Analitika"));
 const Advisor = lazy(() => import("./pages/Advisor"));
+const ExamsHub = lazy(() => import("./pages/ExamsHub"));
 const Library = lazy(() => import("./pages/Library"));
 const Development = lazy(() => import("./pages/Development"));
 const DevelopmentAdmin = lazy(
@@ -396,6 +397,8 @@ function AppRoutes() {
           <Route path="ceo" element={<Ceo />} />
           <Route path="complaints" element={<Complaints />} />
           <Route path="audit" element={<Audit />} />
+          {/* IMTIHONLAR — Audit ichidan alohida bo'limga chiqdi (2026-09-26) */}
+          <Route path="exam" element={<ExamsHub />} />
           <Route path="timetable" element={<TimetableGrid />} />
           <Route path="archive" element={<Archive />} />
           {/* Adminlar mashqi (2026-09-25) */}

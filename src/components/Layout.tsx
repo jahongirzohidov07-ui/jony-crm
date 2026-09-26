@@ -34,7 +34,7 @@ import {
   Bell,
   Settings as SettingsIcon,
  Search, Smartphone , Sparkles , BookOpen, Clapperboard, PartyPopper,
-  Award, Percent } from "lucide-react";
+  Award } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import {
   SUPPORT_TT_VIEW,
@@ -65,12 +65,13 @@ import {
   SMM_MANAGER,
   EVENTS_ACCESS,
   EVENT_MANAGER,
-  DISCOUNT_REQUEST,
+  EXAM_VIEW,
 } from "../lib/roles";
 import {
   api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
   setToken,
 } from "../lib/api";
+import type { Branch } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
 import { DrillTimer } from "./DrillTimer";
 import { PasswordInput } from "./PasswordInput";
@@ -360,6 +361,29 @@ export default function Layout() {
     navigate("/login", { replace: true });
   }
 
+  // SINOV FILIALI (2026-09-26): "Mashq" bandi faqat shu filial
+  // tanlanganda ko'rinadi. Filial ro'yxati bir marta olinadi;
+  // so'rov muvaffaqiyatsiz bo'lsa band chiqmaydi (xavfsiz tomoni).
+  const [testBranches, setTestBranches] = useState<number[]>([]);
+  useEffect(() => {
+    let alive = true;
+    api
+      .get<Branch[]>("/branches")
+      .then((bs) => {
+        if (alive) setTestBranches(bs.filter((b) => b.is_test).map((b) => b.id));
+      })
+      .catch(() => {
+        if (alive) setTestBranches([]);
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  const onTestBranch = (() => {
+    const cur = getGlobalBranch();
+    return !!cur && testBranches.includes(Number(cur));
+  })();
+
   let items = navItems;
   // Asoschida bu bo'limlar o'z bo'limi ichiga ko'chirilgan
   if (user?.role === FOUNDER) {
@@ -444,7 +468,12 @@ export default function Layout() {
   }
   // BIZNES MASLAHATCHI AI - faqat asoschi (2026-08-20, Jahongir:
   // "menga asoschi uchun Biznes maslahatchi AI qoshib ber").
-  if (user?.role === FOUNDER) {
+  // 2026-09-26, Jahongir: "maslahatchi AIni korinmaydigan qilib
+  // turgin ... chunki u ishlagani yoq hozir API ulanmgan". Sahifa va
+  // yo'nalish joyida turibdi — API ulangach shu shartni qaytarish
+  // kifoya: if (user?.role === FOUNDER) { ... }
+  const ADVISOR_READY = false;
+  if (ADVISOR_READY && user?.role === FOUNDER) {
     items = [...items,
       { to: "/advisor", label: "Maslahatchi AI", icon: Sparkles }];
   }
@@ -466,6 +495,14 @@ export default function Layout() {
   // 2026-09-18: fan bo'yicha cheklov olib tashlandi — barcha ustozlarga.
   if (can(user?.role, PLANS_ACCESS)) {
     items = [...items, { to: "/plans", label: "Dars rejalari", icon: BookOpen }];
+  }
+  // IMTIHONLAR (2026-09-26, Jahongir: "audit bolimidagi umumiy
+  // imthonlar exam bo'limi qilib bosh sahifaga qosh"). Audit ichida
+  // turgani uchun topish qiyin edi. Ustozda o'z oqimi bor
+  // ("Imtihon buyurtma"), shuning uchun unga bu band chiqmaydi.
+  if (can(user?.role, EXAM_VIEW) && user?.role !== TEACHER) {
+    items = [...items,
+      { to: "/exam", label: "Imtihonlar", icon: ClipboardCheck }];
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu
   // bo'lim kerak emas — uning ishi odamlar, kontent emas.
@@ -515,16 +552,19 @@ export default function Layout() {
   if (can(user?.role, INVENTORY_VIEW)) {
     items = [...items, { to: "/inventory", label: "Ombor", icon: Package }];
   }
-  // CHEGIRMALAR (2026-09-17): chegirmadagi o'quvchilar alohida bo'limda
-  if (can(user?.role, DISCOUNT_REQUEST)) {
-    items = [...items, { to: "/discounts", label: "Chegirmalar", icon: Percent }];
-  }
+  // CHEGIRMALAR (2026-09-17) 2026-09-26 da Hisobotlar ichiga ko'chdi
+  // (Jahongir: "bosh sahifadagi chegirmalarni hisobotlar bolimiga
+  // otkaz") — menyuda alohida band yo'q, Hisobotlar > Chegirmalar.
   if (can(user?.role, TEACHING_STAFF)) {
     items = [...items, { to: "/archive", label: "Arxiv", icon: ArchiveIcon }];
   }
   // MASHQ (2026-09-25, Jahongir: "faqat adminlarga") — administrator
   // tizimni qanchalik tez boshqarishini sinov filialida o'lchaydi.
-  if (user?.role === "administrator" || user?.role === "founder") {
+  // 2026-09-26: "mashq bolimi faqat test filialda qolsin qolgan
+  // filialga kerak emas" — endi tepadagi tanlagichda sinov filiali
+  // (Branch.is_test) turgandagina ko'rinadi.
+  if ((user?.role === "administrator" || user?.role === "founder")
+      && onTestBranch) {
     items = [...items, { to: "/mashq", label: "Mashq", icon: Timer }];
   }
   // TADBIRLAR (2026-09-14): tug'ilgan kunlar va tadbirlar.

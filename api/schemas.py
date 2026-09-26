@@ -10,6 +10,10 @@ class BranchCreate(BaseModel):
     address: Optional[str] = None
     # HAMKOR FILIAL (2026-08-15): umumiy yig'indilarga qo'shilmaydi
     is_partner: Optional[bool] = None
+    # SINOV FILIALI (2026-09-25): adminlar mashqi shu filialda kechadi.
+    # Menyudagi "Mashq" bandi endi faqat shu filial tanlanganda
+    # ko'rinadi (2026-09-26) — boshqa filiallarga u kerak emas.
+    is_test: Optional[bool] = None
     partner_note: Optional[str] = None
     owner_percent: Optional[float] = None
 

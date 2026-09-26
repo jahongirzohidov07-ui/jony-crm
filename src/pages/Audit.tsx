@@ -9,22 +9,20 @@ import {
   type ExamRow, type ExaminerAnalysis,
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { ExamOrderQueueTab } from "./MyExams";
 import { ExaminerPayTab, ExaminerPayAdminTab } from "./ExaminerPay";
 import {
-  AUDIT_VIEW, EXAM_VIEW, EXAM_ACCESS, can, roleLabel, EXAM_ORDER_ACCEPT,
+  AUDIT_VIEW, EXAM_ACCESS, can, roleLabel,
   EXAMINER_PAY_OWN, EXAMINER_SALARY_VIEW, TEACHING_STAFF,
-  EXAMINER_PENALTY_SET, EXAM_EDIT,
+  EXAMINER_PENALTY_SET,
 } from "../lib/roles";
 import { PenaltyPointsTab } from "../components/PenaltyPoints";
-import { ExamBankTab } from "../components/ExamBank";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatDate } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 import ComplaintsPage from "./Complaints";
 
-type Tab = "log" | "orders" | "exams" | "analysis" | "pay" | "paylist"
-  | "penalty" | "errors" | "complaints" | "bank";
+type Tab = "log" | "pay" | "paylist"
+  | "penalty" | "errors" | "complaints";
 
 /** Xavfli amallar qizil, oddiy o'zgarish kulrang. */
 const DANGER = new Set([
@@ -266,7 +264,10 @@ const EXAM_STATUS_TONE: Record<string, string> = {
   cancelled: "bg-red-50 text-red-600",
 };
 
-function ExamsTab({ branchId }: { branchId: number | null }) {
+/** Filial bo'yicha umumiy imtihonlar ro'yxati. 2026-09-26 dan
+ * alohida "Imtihonlar" bo'limida turadi (ExamsHub), shuning uchun
+ * eksport qilinadi. */
+export function ExamsTab({ branchId }: { branchId: number | null }) {
   const { user } = useAuth();
   const [rows, setRows] = useState<ExamRow[]>([]);
   const [status, setStatus] = useState("");
@@ -492,7 +493,8 @@ function AnalysisTable({
   );
 }
 
-function AnalysisTab({ branchId }: { branchId: number | null }) {
+/** Imtihon tahlili — "Imtihonlar" bo'limidan chaqiriladi. */
+export function AnalysisTab({ branchId }: { branchId: number | null }) {
   const [data, setData] = useState<ExaminerAnalysis | null>(null);
   const [months, setMonths] = useState(6);
   const [loading, setLoading] = useState(true);
@@ -726,9 +728,6 @@ export default function Audit() {
   const [branchId, setBranchId] = useState<number | null>(null);
 
   const showLog = can(user?.role, AUDIT_VIEW);
-  const showExams = can(user?.role, EXAM_VIEW);
-  // Buyurtmani faqat qabul qila oladiganlar ko'radi
-  const showOrders = can(user?.role, EXAM_ORDER_ACCEPT);
   // Volontyor examinerga "Oyligim" umuman chiqmaydi (Jahongir)
   const showPay = can(user?.role, EXAMINER_PAY_OWN) && !user?.salary_hidden;
   const showPayList = can(user?.role, EXAMINER_SALARY_VIEW);
@@ -737,13 +736,13 @@ export default function Audit() {
   const showComplaints = can(user?.role, TEACHING_STAFF);
 
   useEffect(() => {
-    // Examiner kirganda birinchi ko'radigan narsa — kutayotgan
-    // buyurtmalar. Ular ish, qolgani hisobot.
-    if (!showLog && showOrders) setTab("orders");
-    else if (!showLog && showExams) setTab("exams");
-  }, [showLog, showExams, showOrders]);
+    // Imtihon tablari "Imtihonlar" bo'limiga ko'chdi (2026-09-26):
+    // o'zgarishlar tarixini ko'rmaydigan xodim o'z oyligidan boshlaydi.
+    if (!showLog && showPay) setTab("pay");
+    else if (!showLog && showComplaints) setTab("complaints");
+  }, [showLog, showPay, showComplaints]);
 
-  if (!showLog && !showExams) {
+  if (!showLog && !showPay && !showPayList && !showComplaints) {
     return (
       <p className="text-sm text-slate-500 py-10 text-center">
         Bu bo'limga ruxsatingiz yo'q.
@@ -753,12 +752,11 @@ export default function Audit() {
 
   const tabs: { key: Tab; label: string; show: boolean }[] = [
     { key: "log", label: "O'zgarishlar tarixi", show: showLog },
-    { key: "orders", label: "Imtihon buyurtmalari", show: showOrders },
-    { key: "exams", label: "Imtihonlar", show: showExams },
-    { key: "analysis", label: "Imtihon tahlili", show: showExams },
+    // Imtihon buyurtmalari / Imtihonlar / Imtihon tahlili / Test bazasi
+    // 2026-09-26 da alohida "Imtihonlar" bo'limiga ko'chirildi
+    // (Jahongir: "audit bolimidagi umumiy imthonlar exam bo'limi qilib
+    // bosh sahifaga qosh"). Audit endi faqat nazorat bo'limi.
     // 2026-09-18: online test (link) savollari
-    { key: "bank", label: "Test bazasi",
-      show: can(user?.role, EXAM_ACCESS) || can(user?.role, EXAM_EDIT) },
     { key: "pay", label: "Oyligim", show: showPay },
     { key: "paylist", label: "Examiner oyliklari", show: showPayList },
     // 2026-09-16: examinerlar boshlig'i examinerlardan jarima ball ayiradi
@@ -802,10 +800,6 @@ export default function Audit() {
       </div>
 
       {tab === "log" && <LogTab />}
-      {tab === "orders" && <ExamOrderQueueTab />}
-      {tab === "exams" && <ExamsTab branchId={branchId} />}
-      {tab === "analysis" && <AnalysisTab branchId={branchId} />}
-      {tab === "bank" && <ExamBankTab canEdit={can(user?.role, EXAM_EDIT)} />}
       {tab === "pay" && <ExaminerPayTab />}
       {tab === "paylist" && <ExaminerPayAdminTab />}
       {tab === "penalty" && <PenaltyPointsTab only="examiner" />}

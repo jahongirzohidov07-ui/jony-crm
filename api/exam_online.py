@@ -318,8 +318,16 @@ def _mark_for(exam: models.Exam, online: models.ExamOnline,
     qaytarardi.
     """
     if (exam.kind or "") == "mock":
-        b = mock_band(_load(online.parts), sub.online_score, sub.online_max)
+        parts = _load(online.parts)
+        b = mock_band(parts, sub.online_score, sub.online_max)
         if b is None:
+            # CEFR Multilevel: natija 0-75 REYTING, guruh jadvalidagi
+            # mock ustuni esa 0-9 band. Ikkisi bir xil shkala emas,
+            # shuning uchun avtomat hech narsa yozilmaydi — examiner
+            # xom ballni va reytingni ko'rib darajani o'zi qo'yadi
+            # (2026-09-26, rasmiy reyting jadvali shablon ichida).
+            if _mock_section(parts).startswith("cefr"):
+                return None
             if (sub.online_max or 0) > 0:
                 return None
             b = sub.paper_score or 0

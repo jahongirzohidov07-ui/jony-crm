@@ -428,6 +428,8 @@ export interface Branch {
   address?: string;
   /** Hamkor markaz — umumiy yig'indilarga qo'shilmaydi (2026-08-15). */
   is_partner?: boolean | null;
+  /** Sinov filiali — "Mashq" bo'limi faqat shu filialda ko'rinadi. */
+  is_test?: boolean | null;
   partner_note?: string | null;
   owner_percent?: number | null;
 }

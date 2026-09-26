@@ -17,14 +17,16 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  FINANCE_ACCESS, PAYROLL_VIEW, FOUNDER, SMM_MANAGER, can,
+  FINANCE_ACCESS, PAYROLL_VIEW, FOUNDER, SMM_MANAGER, DISCOUNT_REQUEST, can,
 } from "../lib/roles";
+import DiscountsPage from "./DiscountsPage";
 import { MONTHS } from "../lib/expenses";
 import { stageLabel } from "../lib/leads";
 import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi" | "app";
+type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi" | "app"
+  | "discounts";
 
 // OYLIKLAR BO'LIMI MOLIYADAN SHU YERGA KO'CHDI (2026-08-20,
 // Jahongir: "uzr molyia bolimidan hisobotlarga olib ot demoqchi
@@ -1171,14 +1173,25 @@ export default function Reports() {
   // 2026-08-27: marketolog ham kiradi, lekin faqat marketing
   // hisobotlarini ko'radi (SMM_TABS).
   const smm = !finance && user?.role === SMM_MANAGER;
-  const tabs = finance
+  // CHEGIRMALAR (2026-09-26, Jahongir: "bosh sahifadagi chegirmalarni
+  // hisobotlar bolimiga otkaz") — menyudagi alohida band olib
+  // tashlandi, endi shu yerda tab. Ruxsati chegirma so'ray oladigan
+  // rollarda (sotuv, administrator, rahbariyat).
+  const canDiscount = can(user?.role, DISCOUNT_REQUEST);
+  const base = finance
     ? TABS
     : smm
       ? TABS.filter((t) => SMM_TABS.includes(t.key))
-      : TABS.filter((t) => t.key === "payroll");
-  const [tab, setTab] = useState<Tab>(smm ? "funnel" : "payroll");
+      : payrollOnly
+        ? TABS.filter((t) => t.key === "payroll")
+        : [];
+  const tabs = canDiscount
+    ? [...base, { key: "discounts" as Tab, label: "Chegirmalar" }]
+    : base;
+  const [tab, setTab] = useState<Tab>(
+    smm ? "funnel" : payrollOnly || finance ? "payroll" : "discounts");
 
-  if (!finance && !payrollOnly && !smm) {
+  if (!finance && !payrollOnly && !smm && !canDiscount) {
     return (
       <div className="p-8">
         <p className="text-slate-400 text-sm">
@@ -1220,6 +1233,7 @@ export default function Reports() {
       {tab === "sales" && <SalesTab />}
       {tab === "kpi" && <KpiTab canAdmin={user?.role === FOUNDER} />}
       {tab === "app" && <StudentAppTab />}
+      {tab === "discounts" && <DiscountsPage />}
     </div>
   );
 }

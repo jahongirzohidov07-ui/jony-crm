@@ -57,6 +57,15 @@ ck("CEFR: 19 fayl (Speaking 10 variant, qolgani 3 tadan)", len(CEFR), 19)
 ck("CEFR Speaking A-J",
    sorted(t["variant"] for t in CEFR if t["section"] == "speaking"),
    list("ABCDEFGHIJ"))
+# Rasmiy Multilevel Speaking: 4 qism (Part 1.1 / 1.2 / 2 / 3), reyting
+# 0-75 (2026-09-26, DTM spetsifikatsiyasi).
+SP = [t for t in CEFR if t["section"] == "speaking"]
+ck("Speaking 4 qism, rasmiy nomlar bilan",
+   sorted({tuple(p["title"] for p in t["parts"]) for t in SP}),
+   [("Part 1.1", "Part 1.2", "Part 2", "Part 3")])
+ck("Speaking reytingi 75", sorted({t["paper_max"] for t in SP}), [75])
+ck("Speaking kalitlari yangi oilada (eskisi bilan to'qnashmaydi)",
+   all(t["key"].startswith("mock_cefr_ml_speaking_") for t in SP), True)
 ck("25-day challenge: 17 kun", len(CH25), 17)
 
 by_sec = {}

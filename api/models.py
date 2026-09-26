@@ -4274,6 +4274,10 @@ class ExamTemplate(Base):
     # B, C, D, E — bir xil tuzilish, boshqa savollar. Link ochilganda
     # har bo'lim tasodifiy variantdan olinadi. NULL = A (eski yozuvlar).
     variant = Column(String, nullable=True, index=True)
+    # FAN (2026-09-26, matematika bazasi): Group.subject bilan mos
+    # (english, math, …). NULL = english (eski yozuvlar). Link ochilganda
+    # faqat guruh faniga mos shablonlar taklif qilinadi.
+    subject = Column(String, nullable=True, index=True)
     is_active = Column(Integer, nullable=False, default=1)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

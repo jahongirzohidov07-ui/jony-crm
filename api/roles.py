@@ -1299,6 +1299,9 @@ SUBJECTS = [
     ("programming", "Dasturlash"),
     ("mental_math", "Mental arifmetika"),
     ("robotics", "Robototexnika"),
+    # 2026-09-26, Jahongir: "endi matematikanini ozing tuzib qoy" —
+    # maktab matematikasi (Boshlang'ich 5–6, O'rta 7–9, Yuqori 10–11)
+    ("math", "Matematika"),
 ]
 SUBJECT_LABELS = dict(SUBJECTS)
 
@@ -1347,6 +1350,7 @@ SUBJECT_LEVELS = {
     "programming": COURSE_LEVELS,
     "mental_math": COURSE_LEVELS,
     "robotics": COURSE_LEVELS,
+    "math": COURSE_LEVELS,
 }
 
 # Barcha daraja kalitlari - tekshirish uchun

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, X, ChevronUp, ChevronDown } from "lucide-react";
 import { api } from "../lib/api";
-import { SUBJECT_LEVELS, levelLabel } from "../lib/subjects";
+import { SUBJECTS, SUBJECT_LEVELS, levelLabel, subjectLabel } from "../lib/subjects";
 import { EXAM_KINDS, UNIT_COUNT, examKindLabel } from "../lib/exams";
 
 /**
@@ -47,6 +47,8 @@ type Tpl = {
   is_active: boolean;
   /** A (asl), B, C, D, E (2026-09-26) */
   variant?: string;
+  /** Fan: english (odatiy) / math … — guruh fani bilan mos bo'lgani taklif qilinadi */
+  subject?: string;
   parts?: Part[];
 };
 
@@ -88,9 +90,15 @@ function blankPart(i: number): Part {
 }
 
 export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
-  const [rows, setRows] = useState<Tpl[]>([]);
+  const [all, setAll] = useState<Tpl[]>([]);
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState<Tpl | null>(null);
+  // Filtrlar (2026-09-26): fan (english/math), variant (faqat asl A)
+  const [subj, setSubj] = useState("english");
+  const [onlyA, setOnlyA] = useState(true);
+  const rows = all.filter((t) =>
+    (t.subject || "english") === subj && (!onlyA || (t.variant || "A") === "A"));
+  const setRows = setAll;
 
   function load() {
     setLoading(true);
@@ -119,10 +127,24 @@ export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <p className="text-sm text-slate-500">
-          Online test savollari. Guruh testiga link ochilganda shu yerdan
-          tanlanadi.
-        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <p className="text-sm text-slate-500">
+            Online test savollari. Guruh testiga link ochilganda shu yerdan
+            tanlanadi.
+          </p>
+          <select className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm bg-white"
+                  value={subj} onChange={(e) => setSubj(e.target.value)} title="Fan">
+            {SUBJECTS.filter((s) => all.some((t) => (t.subject || "english") === s.key)).map((s) => (
+              <option key={s.key} value={s.key}>
+                {s.label} ({all.filter((t) => (t.subject || "english") === s.key && (t.variant || "A") === "A").length})
+              </option>
+            ))}
+          </select>
+          <label className="text-xs text-slate-500 flex items-center gap-1">
+            <input type="checkbox" checked={onlyA} onChange={(e) => setOnlyA(e.target.checked)} />
+            faqat asl (A) variantlar
+          </label>
+        </div>
         {canEdit && (
           <button
             onClick={() => open(null)}
@@ -164,6 +186,11 @@ export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
                       (t.variant || "A") === "A" ? "bg-slate-100 text-slate-600" : "bg-violet-100 text-violet-700"
                     }`}>{t.variant || "A"}</span>
                     {t.title}
+                    {t.subject && t.subject !== "english" && (
+                      <span className="ml-2 text-[11px] text-sky-700 bg-sky-50 rounded px-1.5 py-0.5">
+                        {subjectLabel(t.subject)}
+                      </span>
+                    )}
                     {!t.is_active && <span className="ml-2 text-xs text-slate-400">yashirin</span>}
                   </td>
                   <td className="px-4 py-3 text-slate-600">{levelLabel(t.level) || "—"}</td>
@@ -266,6 +293,7 @@ function TemplateEditor({
         paper_max: Number(f.paper_max || 0),
         is_active: f.is_active,
         variant: f.variant || "A",
+        subject: f.subject || "english",
         parts,
       };
       if (f.id) await api.put(`/exam-templates/${f.id}`, body);
@@ -333,6 +361,16 @@ function TemplateEditor({
                 </select>
               </label>
             )}
+            <label className="text-xs text-slate-500">
+              Fan
+              <select className={inp + " bg-white"} value={f.subject || "english"}
+                      title="Guruh fani bilan mos shablonlar taklif qilinadi"
+                      onChange={(e) => setF({ ...f, subject: e.target.value })}>
+                {SUBJECTS.map((s) => (
+                  <option key={s.key} value={s.key}>{s.label}</option>
+                ))}
+              </select>
+            </label>
             <label className="text-xs text-slate-500">
               Variant
               <select className={inp + " bg-white"} value={f.variant || "A"}

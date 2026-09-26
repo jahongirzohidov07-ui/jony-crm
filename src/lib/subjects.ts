@@ -12,6 +12,8 @@ export const SUBJECTS = [
   { key: "programming", label: "Dasturlash" },
   { key: "mental_math", label: "Mental arifmetika" },
   { key: "robotics", label: "Robototexnika" },
+  // 2026-09-26: maktab matematikasi (Boshlang'ich / O'rta / Yuqori)
+  { key: "math", label: "Matematika" },
 ];
 
 const CEFR_LEVELS = [
@@ -56,6 +58,7 @@ export const SUBJECT_LEVELS: Record<string, { key: string; label: string }[]> = 
   programming: COURSE_LEVELS,
   mental_math: COURSE_LEVELS,
   robotics: COURSE_LEVELS,
+  math: COURSE_LEVELS,
 };
 
 export function subjectLabel(key?: string | null): string {

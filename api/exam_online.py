@@ -45,6 +45,7 @@ import exams as _exams
 from auth import require_role
 from database import get_db
 from common import _group_students, _get_group_in_scope, _seed_done, _seed_mark
+import common as _common
 
 router = APIRouter()
 
@@ -293,12 +294,15 @@ def bank_max(db: Session, group, kind: str, unit_no=None):
         if not unit_no:
             return None
         q = q.filter(models.ExamTemplate.unit_no == unit_no)
-    t = q.order_by(models.ExamTemplate.id).first()
+    # Guruh faniga mos shablon (english / math …, 2026-09-26)
+    t = next((x for x in q.order_by(models.ExamTemplate.id).all()
+              if _subj(x) == _subj(group)), None)
     if not t:
         return None
     n = sum(1 for _ in _questions(_load(t.parts)))
-    if kind in ("mid", "end"):
-        # Qog'oz qismi bazada belgilanmagan bo'lsa ham jami 100
+    if kind in ("mid", "end") and _subj(t) == "english":
+        # Qog'oz qismi (Writing/Speaking) bazada belgilanmagan bo'lsa
+        # ham jami 100 — faqat ingliz tilida; matematikada qog'oz yo'q
         return max(float(n), MID_END_TOTAL)
     return float(n) + float(t.paper_max or 0)
 
@@ -317,6 +321,19 @@ class TemplateIn(BaseModel):
     paper_max: float = 0
     is_active: bool = True
     variant: Optional[str] = None      # A/B/C/D/E (bo'sh = A)
+    subject: Optional[str] = None      # english (bo'sh) / math / …
+
+
+def _clean_subject(v) -> Optional[str]:
+    v = (str(v or "").strip().lower() or "english")
+    if v not in roles.SUBJECT_LABELS:
+        raise HTTPException(400, "Noto'g'ri fan")
+    return None if v == "english" else v
+
+
+def _subj(x) -> str:
+    """Shablon yoki guruh fani (NULL = english)."""
+    return (getattr(x, "subject", None) or "english")
 
 
 def _clean_variant(v) -> str:
@@ -330,7 +347,7 @@ def _tpl_summary(t: models.ExamTemplate) -> dict:
     parts = _load(t.parts)
     return {
         "id": t.id, "level": t.level, "kind": t.kind, "unit_no": t.unit_no,
-        "variant": (t.variant or "A"),
+        "variant": (t.variant or "A"), "subject": _subj(t),
         "title": t.title, "paper_max": t.paper_max or 0,
         "q_count": sum(1 for _ in _questions(parts)),
         "is_active": bool(t.is_active),
@@ -407,6 +424,7 @@ def create_template(payload: TemplateIn, db: Session = Depends(get_db),
         parts=json.dumps(clean_parts(payload.parts), ensure_ascii=False),
         paper_max=payload.paper_max, is_active=1 if payload.is_active else 0,
         variant=_clean_variant(payload.variant),
+        subject=_clean_subject(payload.subject),
         created_by=user.full_name)
     db.add(t)
     db.commit()
@@ -432,6 +450,8 @@ def update_template(tid: int, payload: TemplateIn,
     t.is_active = 1 if payload.is_active else 0
     if payload.variant is not None:
         t.variant = _clean_variant(payload.variant)
+    if payload.subject is not None:
+        t.subject = _clean_subject(payload.subject)
     db.commit()
     audit.log(db, user, entity="exam_template", action="update",
               entity_id=t.id, entity_label=t.title, commit=True)
@@ -474,7 +494,7 @@ def _family(db: Session, t: models.ExamTemplate) -> list:
         models.ExamTemplate.level == t.level)
     if t.kind == "unit":
         q = q.filter(models.ExamTemplate.unit_no == t.unit_no)
-    rows = q.all()
+    rows = [x for x in q.all() if _subj(x) == _subj(t)]
     rows.sort(key=lambda x: (x.variant or "A", x.id))
     return rows
 
@@ -644,10 +664,12 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
         models.ExamTemplate.kind == exam.kind)
     if exam.kind == "unit" and exam.unit_no:
         tq = tq.filter(models.ExamTemplate.unit_no == exam.unit_no)
-    templates = [_tpl_summary(t) for t in tq.all()]
+    # Faqat guruh faniga mos shablonlar (english / math …, 2026-09-26)
+    gsubj = _subj(group) if group else "english"
+    templates = [_tpl_summary(t) for t in tq.all() if _subj(t) == gsubj]
     lvl = (group.level if group else None)
     # Guruh darajasiga moslari birinchi
-    templates.sort(key=lambda t: (t["level"] != lvl, t["title"]))
+    templates.sort(key=lambda t: (t["level"] != lvl, t["title"], t["variant"]))
     online = None
     o_parts = _load(o.parts) if o else []
     qmap = _qmap(o_parts) if o else {}
@@ -722,7 +744,7 @@ def create_online(exam_id: int, payload: OnlineIn,
     online_max = float(sum(1 for _ in _questions(parts)))
     if payload.paper_max is not None:
         paper_max = float(payload.paper_max)
-    elif t.kind in ("mid", "end"):
+    elif t.kind in ("mid", "end") and _subj(t) == "english":
         # 100 ballik testda qog'oz qismi qolgan ballni oladi
         paper_max = float(t.paper_max or 0) or max(
             0.0, MID_END_TOTAL - online_max)
@@ -1776,6 +1798,80 @@ def seed_templates(db: Session) -> None:
     except Exception as e:  # noqa: BLE001
         db.rollback()
         print(f"[exam-bank] variantlar yozilmadi: {e}", flush=True)
+    try:
+        seed_math(db)
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        print(f"[exam-bank] matematika yozilmadi: {e}", flush=True)
+
+
+def seed_math(db: Session) -> int:
+    """MATEMATIKA bazasi (2026-09-26, Jahongir: "endi matematikanini
+    ozing tuzib qoy baza qildib bo'l tez"): 3 daraja × (12 unit + mid +
+    end) × 5 variant = 210 shablon, protsedura bilan (math_bank.py).
+    Har shablon uchun alohida belgi — bir marta yoziladi; examiner
+    keyin tahrirlasa tegilmaydi. Parallel startlar uchun qulf."""
+    import math_bank
+    locked = False
+    try:
+        from sqlalchemy import text as _sql
+        if db.bind.dialect.name == "postgresql":
+            locked = bool(db.execute(_sql("SELECT pg_try_advisory_lock(:k)"),
+                                     {"k": 20260927}).scalar())
+            if not locked:
+                return 0
+    except Exception:
+        db.rollback()
+    made = 0
+    started = time.time()
+    try:
+        # Mavjudlarini bitta so'rovda olamiz (210 ta alohida so'rov emas)
+        have = {(t.level, t.kind, t.unit_no, t.variant or "A")
+                for t in db.query(models.ExamTemplate)
+                .filter(models.ExamTemplate.subject == math_bank.SUBJECT).all()}
+        pending = 0
+        for level, kind, unit_no in math_bank.all_keys():
+            for letter in math_bank.VARIANTS:
+                mark = f"math:{level}:{kind}:{unit_no or 0}:{letter}"
+                if _seed_done(db, mark):
+                    continue
+                if (level, kind, unit_no, letter) not in have:
+                    t = math_bank.build(level, kind, unit_no, letter)
+                    db.add(models.ExamTemplate(
+                        level=level, kind=kind, unit_no=unit_no,
+                        title=t["title"],
+                        parts=json.dumps(clean_parts(t["parts"]),
+                                         ensure_ascii=False),
+                        paper_max=0, variant=letter,
+                        subject=math_bank.SUBJECT, created_by="JonyOS"))
+                    made += 1
+                db.add(models.SeedMark(key=mark))
+                # Jarayon xotirasidagi belgilar keshini ham yangilaymiz —
+                # aks holda shu jarayonda ikkinchi chaqiruv dublikat
+                # belgi yozmoqchi bo'lib UNIQUE xatosiga uchraydi
+                if _common._SEED_KEYS is not None:
+                    _common._SEED_KEYS.add(mark)
+                pending += 1
+                if pending >= 15:
+                    db.commit()
+                    pending = 0
+                    # Sovuq startni cho'zmaslik: byudjet tugasa keyingi
+                    # startda davom etadi (belgilar yozilgan)
+                    if time.time() - started > 8:
+                        print(f"[exam-bank] matematika: {made} ta yozildi, "
+                              f"davomi keyingi startda", flush=True)
+                        return made
+        db.commit()
+        if made:
+            print(f"[exam-bank] matematika yozildi: {made} ta shablon", flush=True)
+    finally:
+        if locked:
+            try:
+                db.execute(_sql("SELECT pg_advisory_unlock(:k)"), {"k": 20260927})
+                db.commit()
+            except Exception:
+                db.rollback()
+    return made
 
 
 def fill_mid_end_100(db: Session, key: str = "exam_mid_end_100_v1"):
@@ -1793,6 +1889,8 @@ def fill_mid_end_100(db: Session, key: str = "exam_mid_end_100_v1"):
         for t in (db.query(models.ExamTemplate)
                   .filter(models.ExamTemplate.kind.in_(("mid", "end")))
                   .all()):
+            if _subj(t) != "english":
+                continue        # matematikada qog'oz qismi yo'q
             n = float(sum(1 for _ in _questions(_load(t.parts))))
             want = max(0.0, MID_END_TOTAL - n)
             if not (t.paper_max or 0) and want > 0:

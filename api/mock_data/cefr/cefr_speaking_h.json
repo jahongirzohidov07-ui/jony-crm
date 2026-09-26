@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_h",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "H",
+ "title": "CEFR Multilevel Mock - Speaking - Variant H",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "PART 1 - INTERVIEW (about 3-4 minutes; this timing is the academy's estimate, as no official specification was available to us). The examiner greets you, checks your name and your identity document, and then asks you short questions about yourself. Part 1.1: there are three groups of questions - your working or studying day, jobs and careers, and money. Answer each question in one or two sentences at first, and in more detail as the questions get harder. Answer in English only. You may not prepare notes for this part.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  EXAMINER SCRIPT - PART 1 (INTERVIEW)\n\n[Examiner, to the candidate:] Good morning / Good afternoon. I am your examiner for today. Could you tell me your full name, please? Thank you. And how would you like me to address you during the test? Thank you. Could you show me your identity document, please? Thank you. This part of the test takes about four minutes. Please answer in English, and please answer only the question I ask.\n\n[Note for the examiner: ask the twelve questions below in the printed order, one at a time. Do not explain vocabulary and do not comment on the content of an answer. If the candidate answers in a single word, prompt once with 'Could you tell me a little more, please?' and then move on. Keep your own speaking to a minimum.]\n\nCLUSTER 1 - YOUR WORKING OR STUDYING DAY (about 1 minute)\n[Say:] First I would like to ask you about your own working or studying day.\n  1. Do you work at the moment, or are you studying?\n  2. How many days in a week do you work or attend classes?\n  3. Which part of your week is the busiest, and what makes it busy?\n  4. Would you rather start work very early in the morning or finish late in the evening? Why is that?\n\nCLUSTER 2 - JOBS AND CAREERS (about 1 minute)\n[Say:] Now let us talk about jobs more generally.\n  5. What kind of work do most of your friends do?\n  6. Is there any job you would never want to do? Why not?\n  7. Who has given you the most useful advice about choosing a career?\n  8. In a first job, which matters more - a good salary or good training? Why do you say that?\n\nCLUSTER 3 - MONEY AND SPENDING (about 1-2 minutes)\n[Say:] Finally in this part, I would like to ask you about money.\n  9. Do you prefer to pay in cash or by card?\n  10. Do you keep any record of what you spend each month?\n  11. What is the last thing you saved up for, and was it worth it?\n  12. Some people say that children should be given pocket money every week. What is your view, and why?\n\n[At the end of Part 1 say:] Thank you. That is the end of Part 1. Now we will move on to Part 2.",
+     "min_words": 0,
+     "topic": "Speaking - Interview"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "PART 2 - LONG TURN / CUE CARD (about 3-4 minutes; this timing is the academy's estimate, as no official specification was available to us). You will be given a topic card. You have ONE minute to prepare, and you may make notes on the paper and pencil the examiner gives you. Then you speak on the topic on your own for one to two minutes. The examiner will stop you when the time is up and will then ask you two short follow-up questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  EXAMINER SCRIPT - PART 2 (LONG TURN, CUE CARD)\n\n[Examiner, hand the candidate the task card together with a pencil and a sheet of paper, and say:] Now I am going to give you a topic, and I would like you to talk about it for one to two minutes. Before you talk, you have one minute to think about what you are going to say. You may make notes if you wish. Do you understand? Here is your topic card.\n\n--- CANDIDATE TASK CARD ---\nDescribe someone you know who is very good at their job.\nYou should say:\n  - who this person is and how you know them;\n  - what their job involves from day to day;\n  - what exactly they do better than other people;\nand explain how this person's example has affected your own ideas about work.\n--- END OF CARD ---\n\n[Time exactly one minute of preparation in silence. Do not answer questions about the topic during this minute. After the minute say:] All right. Remember, you have one to two minutes for this. Do not worry if I stop you. I will tell you when the time is up. Could you start speaking now, please?\n\n[Allow the candidate to speak. Do not interrupt for hesitation or for grammar. If the candidate stops before one minute, say once: 'Is there anything else you would like to add?' Stop the candidate at two minutes with:] Thank you.\n\n[Now ask BOTH rounding-off questions below and accept a short answer to each:]\n  a) Would you like to do the same job as this person yourself?\n  b) Have you ever told them that you admire the way they work?\n\n[Take the card, the pencil and the notes back, and say:] Thank you. Now we will move on to Part 3.",
+     "min_words": 0,
+     "topic": "Speaking - Long turn"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "PART 3 - DISCUSSION (about 4-5 minutes; this timing is the academy's estimate, as no official specification was available to us). The examiner asks you more general questions connected with the topic of Part 2 - skill at work, careers and money. Give full answers, explain your opinion and support it with reasons and examples. You may be asked to compare, to speculate about the future or to disagree politely with a statement.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  EXAMINER SCRIPT - PART 3 (DISCUSSION)\n\n[Examiner, say:] We have been talking about someone who is very good at their job. Now I would like to ask you some more general questions about work, careers and money. Please give full answers and explain your ideas.\n\n[Note for the examiner: ask the questions in the printed order, moving from the concrete to the abstract. Ask at least six of the seven. Each question has a probe in brackets underneath - use it only if the candidate's answer is short or contains no reason. Do not give your own opinion.]\n\n  1. Apart from experience, what makes somebody good at their job?\n     [Probe: Which of those qualities can actually be taught, and which cannot?]\n  2. How do most young people in your country decide what career to follow?\n     [Probe: How large a part do parents play in that decision?]\n  3. Should the salary be the main reason for choosing a job?\n     [Probe: What would you personally give up money for?]\n  4. Why do you think some jobs that are very useful to society are paid so little?\n     [Probe: Whose responsibility is it to change that - the government, or ordinary customers?]\n  5. Is it fair that people who work with their hands usually earn less than people who work in offices?\n     [Probe: Is that situation changing in your country, or staying the same?]\n  6. How is the idea of a successful career changing?\n     [Probe: How different is it from what your parents' generation believed?]\n  7. If everybody were given enough money to live on without working, would people still go to work?\n     [Probe: What kind of work do you think would disappear first?]\n\n[General prompts the examiner may use at any point: 'Why do you think that?', 'Could you give me an example?', 'And what about people in smaller towns?', 'Would everybody agree with you?']\n\n[At the end say:] Thank you. That is the end of the speaking test.",
+     "min_words": 0,
+     "topic": "Speaking - Discussion"
+    }
+   ]
+  }
+ ]
+}

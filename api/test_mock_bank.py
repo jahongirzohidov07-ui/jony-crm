@@ -53,7 +53,10 @@ CEFR = [t for t in ALL if "cefr" in (t.get("levels") or [])]
 CH25 = [t for t in ALL if (t.get("key") or "").startswith("challenge25_")]
 FILES = [t for t in ALL if t not in CEFR and t not in CH25]
 ck("IELTS: 20 fayl (4 bo'lim × 5 variant)", len(FILES), 20)
-ck("CEFR: 12 fayl (4 bo'lim × 3 variant)", len(CEFR), 12)
+ck("CEFR: 19 fayl (Speaking 10 variant, qolgani 3 tadan)", len(CEFR), 19)
+ck("CEFR Speaking A-J",
+   sorted(t["variant"] for t in CEFR if t["section"] == "speaking"),
+   list("ABCDEFGHIJ"))
 ck("25-day challenge: 17 kun", len(CH25), 17)
 
 by_sec = {}
@@ -173,13 +176,13 @@ db = SessionLocal()
 mock_seed.seed_mocks(db)
 rows = db.query(models.ExamTemplate).filter_by(kind="mock").all()
 LEVELS = ["ielts_foundation", "ielts_graduation", "ielts_intro"]
-ck("IELTS 20×3 + CEFR 12×1 + challenge 17×3 = 123 shablon", len(rows), 123)
+ck("IELTS 20×3 + CEFR 19×1 + challenge 17×3 = 130 shablon", len(rows), 130)
 ck("darajalar to'g'ri", sorted({r.level for r in rows}), ["cefr"] + LEVELS)
 ck("variantlar A-Q", sorted({r.variant for r in rows}), list("ABCDEFGHIJKLMNOPQ"))
-ck("CEFR shablonlari 12 ta, variant A-C",
+ck("CEFR shablonlari 19 ta, variant A-J",
    (sum(1 for r in rows if r.level == "cefr"),
     sorted({r.variant for r in rows if r.level == "cefr"})),
-   (12, list("ABC")))
+   (19, list("ABCDEFGHIJ")))
 ck("hammasi english, unit_no yo'q",
    ({r.subject for r in rows}, {r.unit_no for r in rows}),
    ({"english"}, {None}))

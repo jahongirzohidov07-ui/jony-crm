@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_g",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "G",
+ "title": "CEFR Multilevel Mock - Speaking - Variant G",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "PART 1 - INTERVIEW (about 3-4 minutes; the timing is the academy's estimate, as no official specification was available). The examiner greets you, checks your name and your identity document, and then asks twelve short questions in three groups: your studies, English and other languages, and your teachers and homework. Answer in one or two sentences at first and in a little more detail towards the end of each group. Answer in English only. You may not prepare notes for this part.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  EXAMINER SCRIPT - PART 1 (INTERVIEW)\n\n[Examiner, to the candidate:] Good morning / Good afternoon. My name is your examiner for today. Could you tell me your full name, please? Thank you. And could I see your identity document, please? Thank you. This part of the test takes about three to four minutes. Please answer in English throughout. There is nothing to prepare and no notes for this part.\n\n[Ask the three clusters below in order. Ask every question. Keep the early answers in each cluster short - one or two sentences - and allow three or four sentences for the last question of a cluster. Do not teach, correct or supply vocabulary. If an answer is a single word, ask once: 'Could you tell me a little more, please?' If the candidate misunderstands, repeat the question once in exactly the same words, then move on.]\n\nCLUSTER 1 - YOUR STUDIES (about 1 minute)\n[Say:] First, I would like to ask you about studying.\n  1. Are you studying at the moment, or have you finished your studies?\n  2. Which subject at school was the easiest one for you?\n  3. Where do you usually sit down to study - at home, at a library, or somewhere else?\n  4. How many hours a week do you spend studying, and is that enough for you?\n\nCLUSTER 2 - ENGLISH AND OTHER LANGUAGES (about 1 minute)\n[Say:] Now let us talk about languages.\n  5. How long have you been learning English?\n  6. Which is more difficult for you - speaking English or writing it? Why?\n  7. Where do you hear or read English outside the classroom?\n  8. Is there another language you would like to learn one day? Why that one in particular?\n\nCLUSTER 3 - TEACHERS, CLASSES AND HOMEWORK (about 1-2 minutes)\n[Say:] And now a few questions about your classes.\n  9. How many students were there in your class at school?\n  10. Do you prefer studying on your own, or together with classmates?\n  11. What does a good teacher do that a weak teacher does not do?\n  12. How do you feel about homework - is it useful, or is there simply too much of it? Give a reason.\n\n[At the end of Part 1 say:] Thank you. Now we will move on to Part 2.",
+     "min_words": 0,
+     "topic": "Speaking - Interview"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "PART 2 - LONG TURN / CUE CARD (about 3-4 minutes; the timing is the academy's estimate, as no official specification was available). You will be given a topic card. You have ONE minute to prepare and you may make notes with the paper and pencil provided. Then you talk about the topic for one to two minutes. The examiner will tell you when to stop and will then ask you two short rounding-off questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  EXAMINER SCRIPT - PART 2 (LONG TURN, CUE CARD)\n\n[Examiner, hand the candidate the task card together with a pencil and a sheet of paper, and say:] Now I am going to give you a topic, and I would like you to talk about it for one to two minutes. Before you talk, you have one minute to think about what you are going to say. You may make notes on the paper if you wish. Do you understand? Here is your topic card.\n\n--- CANDIDATE TASK CARD ---\nDescribe an occasion when you taught something to another person.\nYou should say:\n  - who that person was and what you taught them;\n  - why they needed to learn it at that time;\n  - how you explained it and how long it took;\nand explain how you felt about the way it went.\n--- END OF CARD ---\n\n[Start timing. After exactly one minute say:] All right. Remember, you have one to two minutes for this. Do not worry if I stop you - I will tell you when your time is up. Could you begin speaking now, please?\n\n[Let the candidate speak. Do not interrupt to correct language. If the candidate stops before one minute, say once: 'Is there anything else you would like to add?' Stop the candidate at two minutes with:] Thank you.\n\n[Now ask BOTH rounding-off questions and accept a short answer to each:]\n  a) Would you enjoy teaching as a job? Why, or why not?\n  b) Has anybody ever taught you something in that same way?\n\n[Take the card, the pencil and the notes back, and say:] Thank you. Now we will move on to Part 3.",
+     "min_words": 0,
+     "topic": "Speaking - Long turn"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "PART 3 - DISCUSSION (about 4-5 minutes; the timing is the academy's estimate, as no official specification was available). The examiner asks you more general questions connected with the topic of Part 2 - education, studying and learning languages. Give full answers, explain your opinion and support it with reasons and examples. You may be asked to compare, to speculate about the future, or to disagree politely with a statement.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  EXAMINER SCRIPT - PART 3 (DISCUSSION)\n\n[Examiner, say:] We have been talking about teaching something to another person, and now I would like to ask you some more general questions about education and about learning languages. Please give full answers and explain your ideas.\n\n[Ask the questions in the order printed - they move from the concrete to the general. After each answer, use the follow-up probe in brackets ONLY if the answer was short or gave no reason. Use no more than one probe per question.]\n\n  1. Why do you think some people find it easy to explain things to others?\n     [Probe: Is that something a person is born with, or can it be trained?]\n  2. In your country, how has the way children are taught changed since your parents were at school?\n     [Probe: Has that change helped students, or harmed them?]\n  3. Some people say that anyone can learn a foreign language at any age. Would you agree with that?\n     [Probe: What would you say to an adult who believes they have started too late?]\n  4. How important is it to spend time in a country in order to learn its language well?\n     [Probe: Can a learner reach the same level without ever travelling?]\n  5. Should schools spend more time preparing students for examinations, or teaching skills they will use in later life?\n     [Probe: Which of the two did your own school choose, and was that the right choice?]\n  6. What do people gain from studying something they will never be paid for?\n     [Probe: Can you give me an example from your own family or from your friends?]\n  7. Do you think a country becomes stronger when a large number of its people speak a second language?\n     [Probe: In what way exactly - economically, or in some other way?]\n  8. If education were free for everybody, at every age, what do you think would change?\n     [Probe: And who, in your opinion, should pay for that?]\n\n[General prompts the examiner may use at any point: 'Why do you think that?', 'Can you give me an example?', 'And what about people in smaller towns?', 'Would everybody agree with you?']\n\n[At the end say:] Thank you. That is the end of the speaking test.",
+     "min_words": 0,
+     "topic": "Speaking - Discussion"
+    }
+   ]
+  }
+ ]
+}

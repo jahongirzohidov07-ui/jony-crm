@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_f",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "F",
+ "title": "CEFR Multilevel Mock - Speaking - Variant F",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "PART 1 - INTERVIEW (about 3-4 minutes; the timing is the academy's estimate, as no official specification was available). The examiner greets you, checks your name and your identity document, and then asks you short questions about your everyday life. There are three groups of questions with four questions in each group. Answer in one or two sentences at first, and in a little more detail as the questions get harder. Answer in English only. You may not prepare notes for this part.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  EXAMINER SCRIPT - PART 1 (INTERVIEW)\n\n[Text in square brackets is a direction to the examiner and is NOT read aloud. Read the lines in quotation marks exactly as printed. Do not help the candidate with vocabulary and do not comment on the quality of an answer. Timing: about 3-4 minutes in total - this figure is the academy's estimate, because no official specification was available.]\n\n[OPENING - not assessed. Check that the name on the register matches the candidate, then start the recorder.]\n\"Good morning / Good afternoon. My name is the examiner for today. Could you tell me your full name, please?\"\n\"Thank you. And could you show me your identity document, please?\"\n\"Thank you. This is the Jony Academy Multilevel Speaking test. There are three parts and the whole test takes about twelve to fifteen minutes. This first part lasts about three to four minutes. Please answer in English. Are you ready? Let us begin.\"\n\n[Ask ALL TWELVE questions below, in the printed order. Inside each group the questions get slightly harder: expect one or two sentences for the first two, and two or three sentences with a reason for the last two. If an answer is a single word, ask ONCE: \"Could you say a little more about that, please?\" Then move on. Do not let one answer run beyond about twenty-five seconds - close it politely with \"Thank you.\"]\n\n--- GROUP 1 - YOUR PHONE AND YOUR DAY ---\n 1. \"Do you keep your phone near you during the day?\"\n 2. \"What is the first thing you usually open on your phone in the morning?\"\n 3. \"Is there anything you prefer to do on paper rather than on a screen? Why?\"\n 4. \"How would your day be different if you left your phone at home?\"\n\n--- GROUP 2 - KEEPING IN TOUCH WITH PEOPLE ---\n 5. \"Who do you write to most often - your family or your friends?\"\n 6. \"Do you prefer to send a written message or to call someone? Why?\"\n 7. \"Tell me about someone you only see on a screen, not in person.\"\n 8. \"Is it easier or harder to say something important in a message than face to face? Why do you think so?\"\n\n--- GROUP 3 - FINDING THINGS OUT ONLINE ---\n 9. \"Where do you usually get your news from?\"\n10. \"What was the last thing you searched for on the internet?\"\n11. \"How do you decide whether something you read online is true?\"\n12. \"Are there any websites or apps you have stopped using? Tell me why.\"\n\n[CLOSING PART 1] \"Thank you. Now we will move on to Part 2.\"",
+     "min_words": 0,
+     "topic": "Speaking - Interview"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "PART 2 - LONG TURN / CUE CARD (about 3-4 minutes; the timing is the academy's estimate, as no official specification was available). You are given a topic card. You have ONE minute to prepare and you may write notes on the paper provided. Then you speak on the topic for one to two minutes. The examiner will tell you when the time is up and will then ask you two short follow-up questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  EXAMINER SCRIPT - PART 2 (LONG TURN, CUE CARD)\n\n[Text in square brackets is a direction to the examiner and is NOT read aloud. Timing: about 3-4 minutes in total - this figure is the academy's estimate, because no official specification was available.]\n\n[Hand the candidate the card below together with a sheet of paper and a pencil, then say:]\n\"Now I am going to give you a topic, and I would like you to talk about it for one to two minutes. Before you talk, you have one minute to think about what you are going to say. You may make notes on the paper if you wish. Do you understand? Here is your paper and a pencil, and here is your topic card.\"\n\n+---------------------------------------------------------------+\n|  CUE CARD - VARIANT F                                         |\n|                                                               |\n|  Describe a conversation you had with someone who was not     |\n|  in the same place as you - by phone, by video call or by     |\n|  messages.                                                    |\n|                                                               |\n|  You should say:                                              |\n|   - who you were talking to and where each of you was;        |\n|   - why you had that conversation at that moment;             |\n|   - what you talked about and how long it lasted;             |\n|                                                               |\n|  and explain how you felt afterwards, and whether the         |\n|  conversation would have been better face to face.            |\n+---------------------------------------------------------------+\n\n[Start the timer for ONE minute. Do not speak during the preparation minute. After exactly one minute say:]\n\"All right. Remember, you have one to two minutes for this. Do not worry if I stop you - I will tell you when the time is up. Could you start speaking now, please?\"\n\n[Let the candidate speak. Stop the candidate at TWO minutes with \"Thank you.\" If the candidate dries up before one minute, use one of these prompts ONCE, then let the candidate continue: \"And how did the other person react?\" / \"Tell me a little more about where you were at the time.\"]\n\n[ROUNDING-OFF - ask BOTH questions and accept short answers of one or two sentences:]\n  a) \"Do you speak to that person often?\"\n  b) \"Would you choose the same way of talking to them next time? Why?\"\n\n[Take the card, the paper and the pencil back, and say:]\n\"Thank you. Now we will move on to Part 3.\"",
+     "min_words": 0,
+     "topic": "Speaking - Long turn"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "PART 3 - DISCUSSION (about 4-5 minutes; the timing is the academy's estimate, as no official specification was available). The examiner asks you more general and more abstract questions connected with the topic of Part 2. Give full answers, explain your opinion and support it with reasons and examples. You may be asked to compare two situations, to speculate about the future, or to respond to a statement you do not agree with.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  EXAMINER SCRIPT - PART 3 (DISCUSSION)\n\n[Text in square brackets is a direction to the examiner and is NOT read aloud. Timing: about 4-5 minutes in total - this figure is the academy's estimate, because no official specification was available.]\n\n[Open with:]\n\"We have been talking about a conversation you had with someone who was somewhere else, and now I would like to ask you some more general questions about technology and the way people communicate. Take a moment to think before you answer, and please give full answers.\"\n\n[Ask the questions in the printed order. They move from the concrete to the abstract. Ask at least SIX; ask questions 7 and 8 only if the candidate is coping well and time allows. After each answer, use the PROBE in brackets if the answer was short, vague or unsupported - once only, then move on.]\n\n 1. \"How do people in your country usually keep in touch with relatives who live far away?\"\n    [PROBE: \"And has that changed since your parents were young?\"]\n\n 2. \"What are the advantages of writing a message instead of speaking to someone directly?\"\n    [PROBE: \"Can you give me an example of a message that would be difficult to send?\"]\n\n 3. \"Some people say that being reachable at any hour is a disadvantage rather than a benefit. How far do you agree?\"\n    [PROBE: \"Should employers be allowed to contact staff in the evening?\"]\n\n 4. \"Do you think people behave differently online from the way they behave in person? Why?\"\n    [PROBE: \"What do you think makes people bolder behind a screen?\"]\n\n 5. \"Who should decide what information is allowed to appear on the internet - governments, the companies that own the platforms, or the users themselves?\"\n    [PROBE: \"And what are the dangers of the answer you have just given?\"]\n\n 6. \"How much personal information is it reasonable to give away in exchange for a free service?\"\n    [PROBE: \"Would your answer be the same for a child's account?\"]\n\n 7. \"Some languages are used very little on the internet. What happens to a language that people rarely write online?\"\n    [PROBE: \"Is there anything a small country can do about that?\"]\n\n 8. \"If machines can translate speech instantly and perfectly in the future, what will be gained and what will be lost?\"\n    [PROBE: \"Would people still bother to learn a foreign language? Why?\"]\n\n[General prompts the examiner may use at any point: \"Why do you think that is?\" / \"Can you give me an example?\" / \"And what about older people?\" / \"Some people would disagree with you. What would you say to them?\"]\n\n[CLOSING] \"Thank you. That is the end of the speaking test.\"",
+     "min_words": 0,
+     "topic": "Speaking - Discussion"
+    }
+   ]
+  }
+ ]
+}

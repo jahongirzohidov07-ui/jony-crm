@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_i",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "I",
+ "title": "CEFR Multilevel Mock - Speaking - Variant I",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "PART 1 - INTERVIEW (about 3-4 minutes; the timing is the academy's estimate, as no official specification was available). The examiner greets you, checks your name and your identity document, and then asks you twelve short questions in three groups: your daily routine, sport and exercise, and food, sleep and keeping well. Answer the first questions in each group in one or two sentences, and the later ones in more detail with a reason or an example. Answer in English only. You may not prepare notes for this part.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  EXAMINER SCRIPT - PART 1 (INTERVIEW)\n\n[Examiner, to the candidate:] Good morning / Good afternoon. My name is the examiner for today. Could you tell me your full name, please? Thank you. And could you show me your identity document, please? Thank you. This part of the test lasts about three to four minutes. Please answer in English, and please do not read from any notes.\n\n[Note for the examiner: ask all twelve questions below, in the order given. Inside each cluster the questions rise slightly in difficulty: the first two want one or two sentences, the last two want three or four sentences with a reason or an example. Do not explain vocabulary and do not comment on the answers. If an answer is a single word, ask once: 'Could you say a little more about that, please?' Do not repeat that prompt within the same cluster.]\n\nCLUSTER 1 - YOUR DAILY ROUTINE (about 1 minute)\n[Say:] First, I would like to ask you about an ordinary day in your life.\n  1. What time do you usually wake up?\n  2. Do you have breakfast every morning?\n  3. Which part of the day do you feel most awake in, and why do you think that is?\n  4. Has your daily routine changed much over the last year? In what way?\n\nCLUSTER 2 - SPORT AND EXERCISE (about 1 minute)\n[Say:] Now let's talk about sport and exercise.\n  5. Do you do any sport or exercise?\n  6. Is there a sport that you enjoy watching?\n  7. Where do people in your town usually go if they want to exercise?\n  8. Tell me about a sport you would like to try one day, and say why it appeals to you.\n\nCLUSTER 3 - FOOD, SLEEP AND KEEPING WELL (about 1-2 minutes)\n[Say:] Finally in this part, I would like to ask you about staying healthy.\n  9. How many hours do you normally sleep?\n  10. Do you prefer home cooking or eating out?\n  11. What do you do when you start to feel tired in the middle of the day?\n  12. In your opinion, what is the hardest part of keeping a healthy lifestyle, and why?\n\n[At the end of Part 1 say:] Thank you. Now we will move on to Part 2.",
+     "min_words": 0,
+     "topic": "Speaking - Interview"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "PART 2 - LONG TURN / CUE CARD (about 3-4 minutes; the timing is the academy's estimate, as no official specification was available). You will be given a topic card. You have ONE minute to prepare and you may make notes on the paper provided. Then you must talk about the topic for one to two minutes. The examiner will tell you when to stop and will then ask you two short follow-up questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  EXAMINER SCRIPT - PART 2 (LONG TURN, CUE CARD)\n\n[Examiner, hand the candidate the task card together with a pencil and a sheet of paper, and say:] Now I am going to give you a topic, and I would like you to talk about it for one to two minutes. Before you talk, you have one minute to think about what you are going to say. You may make notes on the paper if you wish. Do you understand? Here is your topic card.\n\n--- CANDIDATE TASK CARD ---\nDescribe a habit you have taken up in order to feel healthier.\nYou should say:\n  - what the habit is and when you started it;\n  - why you decided to take it up;\n  - how easy or difficult it has been to keep it going;\nand explain what difference it has made to your daily life.\n--- END OF CARD ---\n\n[Start timing at once. After exactly one minute say:] All right. Remember, you have one to two minutes for this. Do not worry if I stop you; I will tell you when the time is up. Could you start speaking now, please?\n\n[Let the candidate speak. Do not interrupt to correct grammar or to supply vocabulary. If the candidate stops before one minute, say once: 'Is there anything else you would like to add?' Stop the candidate at two minutes with:] Thank you.\n\n[Then ask BOTH of these short rounding-off questions, and accept a brief answer to each:]\n  a) Would you recommend this habit to a friend of yours?\n  b) Is there another healthy habit you would like to start next?\n\n[Take the card, the pencil and the notes back, and say:] Thank you. Now we will move on to Part 3.",
+     "min_words": 0,
+     "topic": "Speaking - Long turn"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "PART 3 - DISCUSSION (about 4-5 minutes; the timing is the academy's estimate, as no official specification was available). The examiner asks you seven more general questions connected with the topic of Part 2: health, sport and the way people organise their days. The questions move from everyday facts towards broader ideas. Give full answers, explain your opinion, and support what you say with reasons and examples. You may be asked to compare, to speculate about the future, or to disagree politely with a statement.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  EXAMINER SCRIPT - PART 3 (DISCUSSION)\n\n[Examiner, say:] We have been talking about a healthy habit that you took up, and now I would like to ask you some more general questions about health, sport and the way people organise their days. Please give full answers and explain your ideas.\n\n[Note for the examiner: ask the questions in the order below, since they move from the concrete to the abstract. Ask at least six of the seven. After each answer, use the follow-up probe in brackets if the candidate has spoken for less than about twenty seconds. Do not offer opinions of your own and do not agree or disagree.]\n\n  1. What kinds of exercise are most popular among young people in your country?\n     [Probe: And what about people over fifty - do they do the same things?]\n  2. Do most families where you live cook at home, or do they buy ready-made food?\n     [Probe: Why do you think that is?]\n  3. How much do you think a person's job affects how healthy they are?\n     [Probe: Could you give me an example of a job like that?]\n  4. Should schools give more time to sport, even if that means less time for other subjects?\n     [Probe: And what would be lost if they did that?]\n  5. Whose responsibility is it to keep people healthy - the individual, the family, or the government?\n     [Probe: And if the individual will not take that responsibility, what then?]\n  6. Some people say that modern life makes it almost impossible to stay healthy. Would you agree with that?\n     [Probe: What exactly about modern life makes it harder?]\n  7. How do you think people's idea of a 'healthy life' might change over the next fifty years?\n     [Probe: Do you see that as a good change or a worrying one?]\n\n[General prompts the examiner may use at any point: 'Why do you think that?', 'Can you give me an example?', 'And is it the same in smaller towns?']\n\n[At the end say:] Thank you. That is the end of the speaking test.",
+     "min_words": 0,
+     "topic": "Speaking - Discussion"
+    }
+   ]
+  }
+ ]
+}

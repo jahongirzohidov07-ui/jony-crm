@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_j",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "J",
+ "title": "CEFR Multilevel Mock - Speaking - Variant J",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "PART 1 - INTERVIEW (about 3-4 minutes; this timing is the academy's estimate, as no official specification was available to us). The examiner greets you, checks your name and your identity document, and then asks you twelve short questions in three groups: about the place where you live, about shopping, and about celebrations. Answer in one or two sentences at first, then in a little more detail as the questions get harder. Answer in English only. You may not prepare notes for this part.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  EXAMINER SCRIPT - PART 1 (INTERVIEW)\n\n[Examiner, to the candidate:] Good morning / Good afternoon. I am your examiner for today. Could you tell me your full name, please? Thank you. And could I see your identity document, please? Thank you. This part of the test takes about three to four minutes. Please answer in English. There are no right or wrong answers here - just tell me about yourself.\n\n[The timing given here is the academy's estimate; no official specification was available to us.]\n\nCLUSTER 1 - THE PLACE WHERE YOU LIVE (about 1 minute)\n[Say:] First, I would like to ask you about your home and your neighbourhood.\n[Ask ALL FOUR questions, one at a time. Expect one or two sentences at first and a little more by question 4. If the candidate answers in one word, ask once: 'Could you say a little more about that, please?']\n  1. Do you live in a flat or in a house?\n  2. How long have you lived there?\n  3. What is there near your home - shops, parks, anything else?\n  4. What is the one thing you would change about the area where you live?\n\nCLUSTER 2 - SHOPPING (about 1 minute)\n[Say:] Now some questions about shopping.\n[Ask ALL FOUR questions. Expect two or three sentences for questions 7 and 8.]\n  5. Where do you usually buy your food?\n  6. Do you prefer shopping alone or with somebody else?\n  7. Do you ever buy things online? Tell me about the last thing you ordered.\n  8. Are the shops in your area open at convenient hours for you? Why, or why not?\n\nCLUSTER 3 - CELEBRATIONS (about 1-1.5 minutes)\n[Say:] And finally, some questions about celebrations.\n[Ask ALL FOUR questions. Expect three or four sentences for questions 11 and 12, with a reason or an example.]\n   9. Which celebration in the year do you enjoy most?\n  10. Do you usually celebrate at home or somewhere else?\n  11. What do people in your country normally give each other on a special day?\n  12. Is it important to invite a lot of guests to a celebration? Why do you think so?\n\n[At the end of Part 1 say:] Thank you. Now we will move on to Part 2.",
+     "min_words": 0,
+     "topic": "Speaking - Interview"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "PART 2 - LONG TURN / CUE CARD (about 3-4 minutes; this timing is the academy's estimate, as no official specification was available to us). You will be given a topic card. You have ONE minute to prepare, and you may make notes on the paper and pencil provided. Then you must talk about the topic for one to two minutes without interruption. The examiner will stop you when the time is up and will then ask you two short follow-up questions.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  EXAMINER SCRIPT - PART 2 (LONG TURN, CUE CARD)\n\n[Examiner, hand the candidate the card, a pencil and a sheet of paper, and say:] Now I am going to give you a topic, and I would like you to talk about it for one to two minutes. Before you talk, you have one minute to think about what you are going to say. You may make notes if you wish. Do you understand? Here is your topic card.\n\n[The timings given here are the academy's estimate; no official specification was available to us.]\n\n--- CANDIDATE TASK CARD ---\nDescribe a celebration or public event that took place in the town or city where you live.\nYou should say:\n  - what the celebration or event was, and when it happened;\n  - where in the town or city it took place;\n  - what people did there, and who you were with;\nand explain how that day changed the way the place felt to you.\n--- END OF CARD ---\n\n[Start timing. Do not speak during the preparation minute. After exactly one minute say:] All right. Remember, you have one to two minutes for this. Do not worry if I stop you - I will tell you when the time is up. Could you start speaking now, please?\n\n[Allow the candidate to speak for one to two minutes. Do not interrupt. If the candidate stops before one minute, use ONE prompt taken from the card, for example: 'And who were you with?' or 'And where exactly did this happen?' Stop the candidate at two minutes with:] Thank you.\n\n[Then ask BOTH rounding-off questions below, and accept a short answer of one or two sentences to each:]\n  a) Would you go to that event again next year?\n  b) Do many visitors from other places come to it?\n\n[Take the card, the paper and the pencil back and say:] Thank you. Now we will move on to Part 3.",
+     "min_words": 0,
+     "topic": "Speaking - Long turn"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "PART 3 - DISCUSSION (about 4-5 minutes; this timing is the academy's estimate, as no official specification was available to us). The examiner asks you more general questions connected with the topic of Part 2 - celebrations, city life, housing and shopping. Give full answers, explain your opinion, and support what you say with reasons and examples. You may be asked to compare, to speculate about the future, or to disagree politely with a statement.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  EXAMINER SCRIPT - PART 3 (DISCUSSION)\n\n[Examiner, say:] We have been talking about a celebration or public event in your town or city, and now I would like to ask you some more general questions about city life, homes, shopping and traditions. Please give full answers and explain your ideas.\n\n[The timing is the academy's estimate; no official specification was available to us. Ask SIX questions if the candidate speaks at length, and up to all SEVEN if the answers are short. Use the follow-up probe in brackets whenever an answer lasts less than about fifteen seconds.]\n\nFROM THE CONCRETE TO THE GENERAL\n  1. What makes a public celebration successful in a large city?\n     [Probe: Is it the organisation, the place, or the people who come?]\n  2. Where do people in your country usually meet when they want to spend time together - at home, in shops, or outdoors?\n     [Probe: Has that changed since your parents were young?]\n  3. Some people say city centres are now only for shopping and eating, and not for living in. Would you agree?\n     [Probe: What would have to change for families to want to live there?]\n  4. How does the kind of housing people live in affect the way they celebrate?\n     [Probe: Think of a small flat compared with a family house with a yard.]\n  5. Is it a problem that celebrations cost people so much money nowadays?\n     [Probe: Who decides how much should be spent - the family, or the society around it?]\n  6. Who should pay for public events in a city: the local authorities, businesses, or the people who attend?\n     [Probe: And what should a city do if it has very little money?]\n  7. Do you think traditional celebrations will survive in a hundred years' time, or will they disappear?\n     [Probe: What would be lost if they did disappear?]\n\n[General prompts the examiner may use at any point if an answer is too short: 'Why do you think that?', 'Can you give me an example?', 'And would everybody agree with you?', 'And what about people in smaller towns?']\n\n[At the end say:] Thank you. That is the end of the speaking test.",
+     "min_words": 0,
+     "topic": "Speaking - Discussion"
+    }
+   ]
+  }
+ ]
+}

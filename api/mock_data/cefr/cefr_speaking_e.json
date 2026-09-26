@@ -1,0 +1,56 @@
+{
+ "key": "mock_cefr_speaking_e",
+ "section": "speaking",
+ "skill": "speaking",
+ "kind": "mock",
+ "variant": "E",
+ "title": "CEFR Multilevel Mock - Speaking - Variant E",
+ "levels": [
+  "cefr"
+ ],
+ "paper_max": 9,
+ "parts": [
+  {
+   "title": "Part 1",
+   "instructions": "PART 1 - INTERVIEW (about 3-4 minutes; this timing is the academy's estimate, as no official specification was available). The examiner greets you, checks your name and your identity document, and then asks you short questions about familiar everyday topics. In this variant the topics are getting around your own area, holidays and time off, and places you have visited. Answer in English only. Give one or two sentences at first and then a little more detail with a reason or an example. You may not prepare notes for this part.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "1  EXAMINER SCRIPT - PART 1 (INTERVIEW)\n\n[Examiner, to the candidate:] Good morning / Good afternoon. My name is the examiner for today. Could you tell me your full name, please? Thank you. And could I see your identity document, please? Thank you. This part of the test takes about four minutes, which is our own estimate rather than an official figure. Please answer in English, and please speak clearly so that the recording picks up your voice.\n\n[Ask all twelve questions below, one at a time, in the order given. Keep your own turns short. Do not explain vocabulary and do not correct the candidate. If an answer is a single word, ask once only: 'Could you say a little more about that, please?' If the candidate has never travelled, accept an answer about a place they would like to go to and move on without comment.]\n\nCLUSTER 1 - GETTING AROUND WHERE YOU LIVE (about 1 minute)\n  1. How do you usually get from your home to the centre of your town or city?\n  2. Is there a place in your area that you walk to almost every week?\n  3. How easy is it to travel between your town and other towns nearby?\n  4. If a visitor came to your area for one day, where would you send them first, and why?\n\nCLUSTER 2 - HOLIDAYS AND TIME OFF (about 1 minute)\n  5. When do people in your country usually take their holidays?\n  6. Do you prefer a short break of two or three days, or a longer holiday? Why?\n  7. Who do you normally travel with - family, friends, or on your own?\n  8. What is the first thing you do when you arrive somewhere new?\n\nCLUSTER 3 - PLACES YOU HAVE VISITED (about 1-2 minutes)\n  9. Which place outside your home town have you visited most often?\n  10. Tell me about a journey you enjoyed. What made it enjoyable?\n  11. Do you take photographs when you travel? What do you do with them afterwards?\n  12. Is there a place you visited as a child that you would like to see again? Why?\n\n[At the end of Part 1 say:] Thank you. Now we will move on to Part 2.",
+     "min_words": 0,
+     "topic": "Speaking - Interview"
+    }
+   ]
+  },
+  {
+   "title": "Part 2",
+   "instructions": "PART 2 - LONG TURN / CUE CARD (about 3-4 minutes; this timing is the academy's estimate, as no official specification was available). You will be given a topic card. You have ONE minute to prepare, and you may make notes on the paper and pencil provided. You then speak about the topic on your own for one to two minutes. The examiner will stop you when the time is up and will ask you one or two short questions afterwards.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "2  EXAMINER SCRIPT - PART 2 (LONG TURN, CUE CARD)\n\n[Examiner, hand the candidate the card together with a pencil and a sheet of paper, and say:] Now I am going to give you a topic, and I would like you to talk about it for one to two minutes. Before you speak you have one minute to think about what you are going to say. You may make notes if you wish. Do you understand? Here is your topic card.\n\n--- CANDIDATE TASK CARD ---\nDescribe a place you have travelled to that felt very different from your home town.\nYou should say:\n  - where the place was and when you went there;\n  - who you went with and how you got there;\n  - what struck you as different when you arrived;\nand explain whether you would recommend that place to somebody else.\n--- END OF CARD ---\n\n[Start timing silently. After exactly one minute say:] All right. Remember, you have one to two minutes. Do not worry if I stop you - I will tell you when the time is up. Could you start speaking now, please?\n\n[Let the candidate speak without interruption. If the candidate stops before one minute, prompt once with: 'Is there anything else you could tell me about that?' Stop the candidate at two minutes with:] Thank you.\n\n[Then ask BOTH short rounding-off questions below and accept brief answers of one or two sentences:]\n  a) Would you go back to that place at a different time of year?\n  b) Did anybody at home ask you about the trip afterwards?\n\n[Take the card, the pencil and the notes back, and say:] Thank you. Now we will move on to Part 3.",
+     "min_words": 0,
+     "topic": "Speaking - Long turn"
+    }
+   ]
+  },
+  {
+   "title": "Part 3",
+   "instructions": "PART 3 - DISCUSSION (about 4-5 minutes; this timing is the academy's estimate, as no official specification was available). The examiner asks you more general questions connected with the topic of Part 2 - travel, holidays and the places people visit. The questions move from your own experience towards wider and more abstract ideas. Give full answers, explain your opinion, and support what you say with reasons and examples. You may be asked to compare, to speculate about the future, or to respond to a statement you do not agree with.",
+   "passage": "",
+   "script": "",
+   "questions": [
+    {
+     "type": "essay",
+     "q": "3  EXAMINER SCRIPT - PART 3 (DISCUSSION)\n\n[Examiner, say:] We have been talking about a place you travelled to, and now I would like to ask you some more general questions about travel and the places people visit. Please give full answers and explain your ideas.\n\n[Ask questions 1 to 7 in order. If an answer is short or thin, use the probe printed under that question once, then move on. Question 8 is spare and may be used if time allows.]\n\n  1. Why do you think people enjoy visiting places that are unfamiliar to them?\n     [Probe: And are there people who would rather go back to the same place every year? Why?]\n  2. What can a person learn from travelling that they cannot learn at home?\n     [Probe: Could you give me an example of something you learned that way?]\n  3. How has the way people plan their holidays changed since your parents were young?\n     [Probe: Has that made travel better or worse, in your view?]\n  4. Some towns depend almost completely on visitors for their income. What are the advantages and the disadvantages of that for the people who live there?\n     [Probe: Which of the two do you think matters more, and why?]\n  5. Should famous historical places limit the number of visitors allowed in each day?\n     [Probe: Who should decide on that limit - the government, the local people, or somebody else?]\n  6. Do you think travelling makes people more tolerant of other ways of life, or does it simply confirm what they already believed?\n     [Probe: What would have to be true of a trip for it to change somebody's mind?]\n  7. In fifty years' time, do you think people will travel more than they do now, or less?\n     [Probe: What would have to change for that to happen?]\n  8. [Spare] Some people say that reading about a country carefully is worth more than spending three days there. How far would you agree?\n     [Probe: Is there anything a book cannot give you?]\n\n[General prompts the examiner may use at any point: 'Why do you think that?', 'Can you give me an example?', 'And how about people in smaller towns, or older people?']\n\n[At the end say:] Thank you. That is the end of the speaking test.",
+     "min_words": 0,
+     "topic": "Speaking - Discussion"
+    }
+   ]
+  }
+ ]
+}

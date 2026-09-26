@@ -147,6 +147,7 @@ import teacher_app as _r_teacher_app
 import teachers as _r_teachers
 import timetable as _r_timetable
 import wheel as _r_wheel
+import hr_checklist as _r_hr_checklist
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -198,6 +199,7 @@ app.include_router(_r_teacher_app.router)
 app.include_router(_r_teachers.router)
 app.include_router(_r_timetable.router)
 app.include_router(_r_wheel.router)
+app.include_router(_r_hr_checklist.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:

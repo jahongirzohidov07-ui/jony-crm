@@ -358,6 +358,11 @@ function DiscountForm({
   ];
   const [kind, setKind] = useState(ALL_KINDS[0]?.key ?? "individual");
   const [percent, setPercent] = useState("");
+  // FOIZ YOKI SO'M (2026-09-26, Jahongir: "skidka ham foizli ham
+  // summali bo'lsin"). Baza ikkalasini ham saqlaydi; so'mli chegirma
+  // oylik hisobda guruh narxiga nisbatan foizga aylanadi.
+  const [mode, setMode] = useState<"percent" | "amount">("percent");
+  const [amount, setAmount] = useState("");
   const [reason, setReason] = useState("");
   // 2026-08-12: yashirin (individual) chegirma - o'quvchiga ko'rinmaydi
   const [hidden, setHidden] = useState(false);
@@ -428,8 +433,13 @@ function DiscountForm({
       setErr("Sababni yozing — chegirma sababsiz berilmaydi");
       return;
     }
-    if (!percent) {
+    if (mode === "percent" && !(Number(percent) > 0)) {
       setErr("Chegirma foizini kiriting");
+      return;
+    }
+    const som = Number(amount.replace(/\D/g, ""));
+    if (mode === "amount" && !(som > 0)) {
+      setErr("Chegirma summasini kiriting");
       return;
     }
     setSaving(true);
@@ -437,7 +447,8 @@ function DiscountForm({
       await api.post("/discounts", {
         student_id: studentId,
         kind,
-        percent: Number(percent),
+        percent: mode === "percent" ? Number(percent) : null,
+        amount: mode === "amount" ? som : null,
         reason: reason.trim(),
         start_date: start || null,
         end_date: end || null,
@@ -558,17 +569,48 @@ function DiscountForm({
           <>
           <div>
             <label className="block text-xs text-slate-500 mb-1">
-              Chegirma foizi
+              Chegirma miqdori
             </label>
-            <input
-              type="number"
-              value={percent}
-              onChange={(e) => setPercent(e.target.value)}
-              placeholder="10"
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
-            />
+            <div className="flex gap-2">
+              <div className="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-50 shrink-0">
+                {([["percent", "%"], ["amount", "so'm"]] as const).map(([k, t]) => (
+                  <button
+                    key={k}
+                    type="button"
+                    onClick={() => { setMode(k); setErr(""); }}
+                    className={`px-3 py-1.5 rounded-md text-sm font-medium ${
+                      mode === k ? "bg-white shadow text-slate-900" : "text-slate-500"}`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+              {mode === "percent" ? (
+                <input
+                  type="number"
+                  value={percent}
+                  onChange={(e) => setPercent(e.target.value)}
+                  placeholder="10"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                />
+              ) : (
+                <input
+                  inputMode="numeric"
+                  value={amount}
+                  onChange={(e) => {
+                    const d = e.target.value.replace(/\D/g, "");
+                    setAmount(d ? Number(d).toLocaleString("ru-RU") : "");
+                  }}
+                  placeholder="50 000"
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
+                />
+              )}
+            </div>
             <p className="text-[11px] text-slate-400 mt-1">
-              Xohlagan foizni yozishingiz mumkin — chegirma faqat
+              {mode === "percent"
+                ? "Oylik to'lovdan foiz."
+                : "Har oy to'lovdan shuncha so'm ayiriladi."}{" "}
+              Xohlagan miqdorni yozishingiz mumkin — chegirma faqat
               TASDIQLANGANDAN keyin ishlaydi. 50% dan oshig'ini
               asoschi tasdiqlaydi.
             </p>

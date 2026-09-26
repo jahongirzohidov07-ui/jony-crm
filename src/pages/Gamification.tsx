@@ -918,21 +918,33 @@ function PassMarkBox({ canAdmin }: { canAdmin: boolean }) {
  * Bo'lak o'chirilmaydi, "o'chirilgan" deb belgilanadi.
  */
 type WheelPrizeRow = {
-  id?: number; kind: "coin" | "discount"; value: number; weight: number;
+  id?: number; kind: "coin" | "discount" | "discount_sum"; value: number; weight: number;
   label: string; is_active: boolean; order_no: number; percent?: number;
 };
+type WheelMeta = {
+  expected_discount_percent: number; notify_from: number;
+  expected_discount_sum?: number; notify_from_sum?: number;
+};
+
+/** Bo'lak matni: foizli, so'mli (2026-09-26) yoki tanga. */
+function wheelPrizeText(r: { kind: string; value: number }) {
+  if (r.kind === "discount") return `${r.value}% chegirma`;
+  if (r.kind === "discount_sum")
+    return `${Number(r.value).toLocaleString("ru-RU")} so'm chegirma`;
+  return `${r.value} tanga`;
+}
 
 function WheelBox() {
   const { user } = useAuth();
   const isFounder = user?.role === "founder";
   const [rows, setRows] = useState<WheelPrizeRow[]>([]);
-  const [meta, setMeta] = useState<{ expected_discount_percent: number; notify_from: number } | null>(null);
+  const [meta, setMeta] = useState<WheelMeta | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function load() {
-    api.get<{ prizes: WheelPrizeRow[]; expected_discount_percent: number; notify_from: number }>("/wheel/prizes")
+    api.get<{ prizes: WheelPrizeRow[] } & WheelMeta>("/wheel/prizes")
       .then((r) => { setRows(r.prizes || []); setMeta(r); })
       .catch(() => {});
   }
@@ -944,6 +956,18 @@ function WheelBox() {
     r.is_active && total > 0 ? Math.round(Math.max(Number(r.weight) || 0, 0) * 1000 / total) / 10 : 0;
   const expected = active.reduce((s, r) =>
     s + (r.kind === "discount" && total > 0 ? Math.max(Number(r.weight) || 0, 0) / total * Number(r.value) : 0), 0);
+  const expectedSum = active.reduce((s, r) =>
+    s + (r.kind === "discount_sum" && total > 0 ? Math.max(Number(r.weight) || 0, 0) / total * Number(r.value) : 0), 0);
+  const isBig = (r: WheelPrizeRow) => !!meta && (
+    (r.kind === "discount" && r.value >= meta.notify_from)
+    || (r.kind === "discount_sum" && meta.notify_from_sum != null
+        && r.value >= meta.notify_from_sum));
+
+  function addRow() {
+    setRows([...rows, { kind: "discount_sum", value: 50000, weight: 1,
+                        label: "", is_active: true, order_no: rows.length }]);
+    setSaved(false);
+  }
 
   function upd(i: number, patch: Partial<WheelPrizeRow>) {
     setRows(rows.map((r, idx) => (idx === i ? { ...r, ...patch } : r)));
@@ -953,7 +977,7 @@ function WheelBox() {
   async function save() {
     setSaving(true); setError(null);
     try {
-      const r = await api.put<{ prizes: WheelPrizeRow[]; expected_discount_percent: number; notify_from: number }>(
+      const r = await api.put<{ prizes: WheelPrizeRow[] } & WheelMeta>(
         "/wheel/prizes",
         rows.map((x, i) => ({
           id: x.id, kind: x.kind, value: Number(x.value), weight: Number(x.weight),
@@ -992,8 +1016,29 @@ function WheelBox() {
             {rows.map((r, i) => (
               <tr key={r.id ?? i} className={`border-t border-slate-100 ${r.is_active ? "" : "opacity-50"}`}>
                 <td className="px-3 py-2 font-medium text-slate-800">
-                  {r.kind === "discount" ? `${r.value}% chegirma` : `${r.value} tanga`}
-                  {r.kind === "discount" && meta && r.value >= meta.notify_from && (
+                  {r.id == null && isFounder ? (
+                    // Yangi bo'lak: turi va qiymati tanlanadi. Saqlangan
+                    // bo'lak o'zgarmaydi — tarixdagi aylantirishlar unga
+                    // bog'langan; kerak bo'lmasa "faol" belgisi olinadi.
+                    <div className="flex items-center gap-2">
+                      <select value={r.kind}
+                              onChange={(e) => upd(i, {
+                                kind: e.target.value as WheelPrizeRow["kind"],
+                                value: e.target.value === "discount_sum" ? 50000 : 10 })}
+                              className="rounded-lg border border-slate-300 px-2 py-1 text-sm bg-white">
+                        <option value="discount_sum">so'm chegirma</option>
+                        <option value="discount">% chegirma</option>
+                        <option value="coin">tanga</option>
+                      </select>
+                      <input type="number" min={1}
+                             className="w-28 rounded-lg border border-slate-300 px-2 py-1 text-sm"
+                             value={r.value}
+                             onChange={(e) => upd(i, { value: Number(e.target.value) })} />
+                    </div>
+                  ) : (
+                    wheelPrizeText(r)
+                  )}
+                  {isBig(r) && (
                     <span className="ml-2 text-[11px] text-amber-700">asoschiga xabar</span>
                   )}
                 </td>
@@ -1015,14 +1060,23 @@ function WheelBox() {
       </div>
       <p className="text-sm text-slate-700 mt-3">
         O'rtacha xarajat: har aylantirishga birinchi oy to'lovining{" "}
-        <b>{Math.round(expected * 10) / 10}%</b>i.
-        {meta && ` 100% tushganda va ${meta.notify_from}% dan yuqorida asoschiga darrov Telegram boradi.`}
+        <b>{Math.round(expected * 10) / 10}%</b>i
+        {expectedSum > 0 && (
+          <> va <b>{Math.round(expectedSum).toLocaleString("ru-RU")} so'm</b></>
+        )}.
+        {meta && ` ${meta.notify_from}% dan`}
+        {meta?.notify_from_sum != null && ` yoki ${meta.notify_from_sum.toLocaleString("ru-RU")} so'mdan`}
+        {meta && " katta chegirma tushsa asoschiga darrov Telegram boradi."}
       </p>
       {isFounder ? (
         <div className="flex items-center gap-3 mt-3">
           <button onClick={save} disabled={saving}
                   className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60">
             {saving ? "Saqlanmoqda..." : "Saqlash"}
+          </button>
+          <button onClick={addRow} type="button"
+                  className="border border-slate-300 hover:bg-slate-50 rounded-lg px-3 py-2 text-sm">
+            + Sovg'a qo'shish
           </button>
           {saved && <span className="text-sm text-emerald-600">Saqlandi</span>}
         </div>

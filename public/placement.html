@@ -471,7 +471,9 @@
       ctx.fillStyle = (i % 2 === 0) ? '#fff' : '#7c2d12';
       ctx.font = (n > 8 ? '700 13px' : '700 15px') + ' system-ui, sans-serif';
       const p = prizes[i];
-      const t = p.kind === 'discount' ? (p.value + '%') : (p.value + ' tanga');
+      const t = p.kind === 'discount' ? (p.value + '%')
+        : p.kind === 'discount_sum' ? somShort(p.value)
+        : (p.value + ' tanga');
       ctx.fillText(t, R - 10, 0);
       ctx.restore();
     }
@@ -480,14 +482,22 @@
     ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 4; ctx.stroke();
   }
 
+  // So'mli chegirma (2026-09-26): g'ildirakda qisqa "50 ming", natijada
+  // to'liq "50 000 so'm chegirma".
+  function somShort(v) {
+    v = Number(v) || 0;
+    return ((v >= 1000 && v % 1000 === 0) ? (v / 1000) + ' ming' : v.toLocaleString('ru-RU')) + " so'm";
+  }
   function prizeText(p) {
     if (!p) return '—';
-    return p.kind === 'discount' ? (p.value + '% chegirma') : (p.value + ' tanga');
+    if (p.kind === 'discount') return p.value + '% chegirma';
+    if (p.kind === 'discount_sum') return Number(p.value).toLocaleString('ru-RU') + " so'm chegirma";
+    return p.value + ' tanga';
   }
 
   function howText(p) {
     if (!p) return '';
-    return p.kind === 'discount'
+    return (p.kind === 'discount' || p.kind === 'discount_sum')
       ? 'Guruhga yozilib, o\'qishni boshlaganingizda BIRINCHI OY to\'lovidan avtomat ayiriladi.'
       : 'Guruhga yozilganingizda Jony Student ilovasidagi balansingizga avtomat tushadi.';
   }

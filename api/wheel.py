@@ -236,8 +236,11 @@ def spin_for_session(db: Session, s):
               note=f"Baraban: {spin.prize_label} tushdi (spin #{spin.id})",
               branch_id=spin.branch_id)
     # Katta chegirma — asoschi darrov bilsin (tasdiqlangan qoida).
-    if (spin.prize_kind == "discount"
-            and int(spin.prize_value) >= roles.WHEEL_NOTIFY_FROM_PERCENT):
+    big = ((spin.prize_kind == "discount"
+            and int(spin.prize_value) >= roles.WHEEL_NOTIFY_FROM_PERCENT)
+           or (spin.prize_kind == "discount_sum"
+               and int(spin.prize_value) >= roles.WHEEL_NOTIFY_FROM_SUM))
+    if big:
         br = (db.query(models.Branch).get(spin.branch_id)
               if spin.branch_id else None)
         text = ("JONYOS — BARABAN\n\n"
@@ -319,7 +322,8 @@ def apply_for_student(db: Session, s, *, on: Optional[date] = None,
         out["did"] = "coins"
         changed = True
 
-    if spin.prize_kind == "discount" and spin.discount_id is None:
+    if (spin.prize_kind in roles.WHEEL_DISCOUNT_KINDS
+            and spin.discount_id is None):
         # Faollashtirish yo'lida (on berilgan) hisob HALI yozilmagan —
         # u chegirmani o'zi hisobga oladi. O'quvchi ALLAQACHON faol
         # bo'lsa (on yo'q) — bugungi oy va shu oy hisobini qayta yozish.
@@ -330,9 +334,14 @@ def apply_for_student(db: Session, s, *, on: Optional[date] = None,
         if on is not None:
             first = on
             last = _month_end(on, roles.WHEEL_DISCOUNT_MONTHS)
+            # Foizli yoki so'mli (2026-09-26). So'mli chegirma ODDIY
+            # yo'l bilan ishlaydi: _student_discount_percent uni guruh
+            # oyligiga nisbatan foizga aylantiradi.
+            is_sum = spin.prize_kind == "discount_sum"
             d = models.Discount(
                 student_id=s.id, kind="wheel",
-                percent=float(int(spin.prize_value)), amount=None,
+                percent=None if is_sum else float(int(spin.prize_value)),
+                amount=float(int(spin.prize_value)) if is_sum else None,
                 reason=(f"Baraban sovg'asi: {spin.prize_label} — faqat "
                         f"{first.strftime('%m.%Y')} oyi (lid testi)"),
                 start_date=first, end_date=last, status="active",
@@ -344,7 +353,9 @@ def apply_for_student(db: Session, s, *, on: Optional[date] = None,
             spin.applied_at = datetime.utcnow()
             audit.log(db, user, entity="discount", action="create",
                       entity_id=d.id, entity_label=s.full_name,
-                      new_value=f"Baraban {int(spin.prize_value)}%",
+                      new_value=(f"Baraban {roles.som_short(spin.prize_value)}"
+                                 if is_sum
+                                 else f"Baraban {int(spin.prize_value)}%"),
                       note=f"Baraban sovg'asi avtomat: {spin.prize_label}, "
                            f"{first.isoformat()} — {last.isoformat()} "
                            f"(spin #{spin.id})",
@@ -377,6 +388,7 @@ def lead_wheel_out(db: Session, lead) -> Optional[dict]:
 
 # ------------------------------------------------------------ API (xodim)
 class PrizeIn(BaseModel):
+    # kind: coin (tanga) | discount (foiz) | discount_sum (so'm)
     id: Optional[int] = None
     kind: str
     value: int
@@ -401,11 +413,16 @@ def list_prizes(db: Session = Depends(get_db),
                         if (tw and p.is_active) else 0.0)
         out.append(d)
     exp = 0.0
+    exp_sum = 0.0
     for p in rows:
         if p.is_active and p.kind == "discount" and tw:
             exp += max(float(p.weight or 0), 0) / tw * int(p.value)
+        if p.is_active and p.kind == "discount_sum" and tw:
+            exp_sum += max(float(p.weight or 0), 0) / tw * int(p.value)
     return {"prizes": out, "total_weight": tw,
             "expected_discount_percent": round(exp, 1),
+            "expected_discount_sum": round(exp_sum),
+            "notify_from_sum": roles.WHEEL_NOTIFY_FROM_SUM,
             "notify_from": roles.WHEEL_NOTIFY_FROM_PERCENT,
             "discount_months": roles.WHEEL_DISCOUNT_MONTHS}
 
@@ -416,10 +433,16 @@ def save_prizes(payload: List[PrizeIn], db: Session = Depends(get_db),
     """Faqat asoschi. Ro'yxatda YO'Q bo'lak o'chirilmaydi — is_active=0."""
     seen = set()
     for i, it in enumerate(payload):
-        if it.kind not in ("coin", "discount"):
+        if it.kind not in ("coin",) + roles.WHEEL_DISCOUNT_KINDS:
             raise HTTPException(400, f"Noto'g'ri tur: {it.kind}")
         if it.kind == "discount" and not (0 < it.value <= 100):
             raise HTTPException(400, "Chegirma 1..100% oralig'ida bo'lsin")
+        if it.kind == "discount_sum" and not (
+                roles.WHEEL_SUM_MIN <= it.value <= roles.WHEEL_SUM_MAX):
+            raise HTTPException(
+                400, f"So'm chegirma {roles.som_short(roles.WHEEL_SUM_MIN)}"
+                     f" .. {roles.som_short(roles.WHEEL_SUM_MAX)} "
+                     f"oralig'ida bo'lsin")
         if it.kind == "coin" and not (0 < it.value <= 10000):
             raise HTTPException(400, "Tanga 1..10000 oralig'ida bo'lsin")
         if it.weight < 0:
@@ -431,6 +454,8 @@ def save_prizes(payload: List[PrizeIn], db: Session = Depends(get_db),
         p.kind, p.value, p.weight = it.kind, int(it.value), float(it.weight)
         p.label = (it.label or "").strip() or (
             f"{it.value}% chegirma" if it.kind == "discount"
+            else f"{roles.som_short(it.value)} chegirma"
+            if it.kind == "discount_sum"
             else f"{it.value} tanga")
         p.is_active = 1 if it.is_active else 0
         p.order_no = int(it.order_no or i)

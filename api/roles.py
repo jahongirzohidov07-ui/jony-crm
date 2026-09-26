@@ -1489,6 +1489,18 @@ WHEEL_DEFAULT_PRIZES = [
 # Shu foizdan boshlab asoschiga darrov Telegram xabar boradi
 # (Jahongir tasdiqladi: avtomat qo'llanadi, lekin u bilib turadi).
 WHEEL_NOTIFY_FROM_PERCENT = 70
+# SO'M CHEGIRMA (2026-09-26, Jahongir: "skidka ham foizli ham summali
+# bo'lsin"). Baraban bo'lagi "discount_sum" — qiymat so'mda, birinchi
+# oy to'lovidan ayiriladi. Shu summadan boshlab asoschiga xabar.
+WHEEL_NOTIFY_FROM_SUM = 300_000
+WHEEL_SUM_MIN = 1_000
+WHEEL_SUM_MAX = 5_000_000
+WHEEL_DISCOUNT_KINDS = ("discount", "discount_sum")
+
+
+def som_short(v) -> str:
+    """50000 -> "50 000 so'm" (baraban yorlig'i uchun)."""
+    return f"{int(v):,}".replace(",", " ") + " so'm"
 # Baraban chegirmasi qancha oyga: faqat BIRINCHI oy (Jahongir
 # tasdiqladi — aks holda 100% tushgan bola butun kurs bepul o'qirdi).
 WHEEL_DISCOUNT_MONTHS = 1

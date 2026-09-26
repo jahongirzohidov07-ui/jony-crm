@@ -292,6 +292,29 @@ n_dsc4 = (db.query(models.Discount)
           .filter(models.Discount.student_id == st4.id).count())
 ck("bitta chegirma", n_dsc4, 1)
 
+print("\n=== 8b. SO'M CHEGIRMA (discount_sum) ===")
+L5 = mk_lead("Said Valiyev", "998905554433")
+s5 = mk_session(L5)
+r = c.post(f"/api/public/placement/{s5.token}/wheel/spin")
+sp5 = db.query(models.WheelSpin).get(r.json()["id"])
+force(sp5, "discount_sum", 60_000, "60 000 so'm chegirma")
+st5 = models.Student(full_name="Said Valiyev", branch_id=BID, group_id=GID,
+                     status="active", enrolled_date=FIRST,
+                     phone="+998 90 555 44 33")
+db.add(st5); db.commit()
+db.add(models.Payment(student_id=st5.id, amount=-480_000, kind="charge",
+                      period=PERIOD, note="Guruh — 12 dars", created_by=MC))
+db.commit()
+out5 = wheel.apply_for_student(db, st5, on=None)
+ck("qo'llandi (so'm)", out5 and out5["did"], "discount")
+d5 = (db.query(models.Discount)
+      .filter(models.Discount.student_id == st5.id).one())
+ck("summa yozildi", (d5.percent, d5.amount), (None, 60_000.0))
+ck("faqat shu oy", d5.end_date, wheel._month_end(roles.local_today(), 1))
+ck("hisob 480 000 -> 420 000", charge(st5.id), 420_000)
+out5b = wheel.apply_for_student(db, st5, on=None)
+ck("so'm: takror qo'llanmaydi", charge(st5.id), 420_000)
+
 print("\n=== 9. TELEGRAM: 70%/100% — ha, 10% — yo'q ===")
 SENT.clear()
 # Faqat 100% faol qoldiriladi
@@ -340,6 +363,27 @@ ck("faol bo'laklar 9 ta", len(wheel.active_prizes(db)), 9)
 r = c.put("/api/wheel/prizes", headers=HF,
           json=[dict(kind="discount", value=150, weight=1)])
 ck("150% rad etiladi", r.status_code, 400)
+r = c.put("/api/wheel/prizes", headers=HF,
+          json=[dict(kind="discount_sum", value=500, weight=1)])
+ck("500 so'm rad etiladi (juda kam)", r.status_code, 400)
+r = c.put("/api/wheel/prizes", headers=HF,
+          json=body + [dict(kind="discount_sum", value=50_000, weight=2)])
+ck("so'm bo'lak saqlandi", r.status_code, 200)
+new = [p for p in r.json()["prizes"] if p["kind"] == "discount_sum"]
+ck("yorliq avtomat", [p["label"] for p in new], ["50 000 so'm chegirma"])
+ck("o'rtacha so'm xarajati bor", r.json()["expected_discount_sum"] > 0, True)
+# Katta so'm chegirma — asoschiga xabar
+SENT.clear()
+L6 = mk_lead("Katta So'm", "998906667788")
+s6 = mk_session(L6)
+for p in db.query(models.WheelPrize).all():
+    p.is_active = 0
+db.add(models.WheelPrize(kind="discount_sum", value=400_000, weight=1,
+                         label="400 000 so'm chegirma", is_active=1))
+db.commit()
+r = c.post(f"/api/public/placement/{s6.token}/wheel/spin")
+ck("400 000 so'm tushdi", r.json()["prize"]["kind"], "discount_sum")
+ck("asoschiga xabar ketdi", len(SENT) >= 1, True)
 
 print("\n=== 11. LID RO'YXATIDA SOVG'A ===")
 r = c.get("/api/leads", headers=HA)

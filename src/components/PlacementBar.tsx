@@ -19,8 +19,11 @@ export function WheelBadge({ lead }: { lead: Any }) {
   const w = lead?.wheel;
   if (!w?.prize) return null;
   const p = w.prize;
-  const txt = p.kind === "discount" ? `${p.value}% chegirma` : `${p.value} tanga`;
-  const tip = p.kind === "discount"
+  const isDisc = p.kind === "discount" || p.kind === "discount_sum";
+  const txt = p.kind === "discount" ? `${p.value}% chegirma`
+    : p.kind === "discount_sum" ? `${Number(p.value).toLocaleString("ru-RU")} so'm chegirma`
+    : `${p.value} tanga`;
+  const tip = isDisc
     ? `Baraban: ${txt} — faqat BIRINCHI oyga, faollashganda avtomat${w.applied ? " (qo'llangan)" : ""}`
     : `Baraban: ${txt} — o'quvchi ochilganda avtomat${w.applied ? " (qo'llangan)" : ""}`;
   return (

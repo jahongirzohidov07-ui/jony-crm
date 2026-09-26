@@ -27198,6 +27198,619 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 37,
+   "title": "Writing Task 2: Namuna essay tahlili — 4 mezon bo'yicha baholash",
+   "grammar_topic": "Band 6 va Band 7.5 essaylarni solishtirib, har mezonga ball qo'yish",
+   "vocab_topic": "Baholash mezonlari amalda: 6.0 dan 7.0 ga qanday chiqiladi",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Jony Academy materiali — ikkala namuna essay ham bitta savolga Jony Academy tomonidan yozilgan; baholash rasmiy IELTS Writing Band Descriptors (May 2023) bo'yicha.",
+   "objectives": [
+    "36-darsda o'rganilgan 4 mezonni AMALDA qo'llash: essayga ball qo'yish.",
+    "Bir xil savolga yozilgan ikki essayni solishtirib, 6.0 va 7.5 farqini ko'z bilan ko'rish.",
+    "Har mezon uchun 3 tadan tekshiruv savolini yod olish (o'z essayini shu savollar bilan tekshirish).",
+    "Band 6 essaydagi aniq kamchiliklarni topib, ularni qaysi mezonga tegishli ekanini aytish.",
+    "Bitta zaif xatboshini 7.0 darajasiga ko'tarib qayta yozish."
+   ],
+   "materials": [
+    "Ikkala essay nusxasi (quyida) — har o'quvchiga, yonida bo'sh ustun: \"ball va sabab\".",
+    "36-darsdagi 4 mezon kartochkalari — doskada turadi.",
+    "Rasmiy Band Descriptors jadvali (ustozda), 6 va 7 qatorlari yonma-yon.",
+    "Har o'quvchining \"mening zaif mezonim\" varaqasi (36-darsdagi uyga vazifa)."
+   ],
+   "timeline": [
+    [
+     10,
+     "Takrorlash: 4 mezon",
+     "36-darsdagi kartochkalar, \"zaif mezonim\" varaqalari"
+    ],
+    [
+     10,
+     "Ball qanday qo'yiladi",
+     "O'rtacha hisobi; bitta zaif mezon butun bahoni tortadi"
+    ],
+    [
+     15,
+     "Mezon bo'yicha tekshiruv savollari",
+     "Har mezonga 3 savol — daftarga yoziladi"
+    ],
+    [
+     20,
+     "A essay (Band 6) o'qiladi va baholanadi",
+     "Har mezonga ball, sababi bilan"
+    ],
+    [
+     20,
+     "A essaydagi kamchiliklar",
+     "Aniq ibora, kamchilik, qaysi mezon"
+    ],
+    [
+     25,
+     "B essay (Band 7.5) va solishtirish",
+     "Mezon-mezon nima o'zgardi"
+    ],
+    [
+     15,
+     "6 dan 7 ga: xatboshini qayta yozish",
+     "Juftlikda, keyin doskada tekshiriladi"
+    ],
+    [
+     5,
+     "Xulosa va uyga vazifa",
+     "Har kim o'z essayiga ball qo'yadi"
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Imtihon tekshiruvchisi essayni o'qib chiqib, har mezonga ALOHIDA ball qo'yadi, keyin to'rttasining o'rtachasi olinadi. Masalan 7 + 6 + 7 + 6 = 26, o'rtachasi 6.5.",
+     "Shuning uchun BITTA zaif mezon butun bahoni pastga tortadi. Uchta mezonda 7.0, bittasida 5.0 bo'lsa — natija 6.5 dan oshmaydi.",
+     "Ballni \"yaxshi yozilganga o'xshaydi\" deb emas, JADVALGA qarab qo'yish kerak. Har mezon uchun uchta oddiy tekshiruv savoli bor (1-mashq) — shu savollarga javob berilsa, ball o'zidan chiqadi.",
+     "6.0 va 7.0 farqi katta emas, lekin ANIQ: 6 da fikr bor-u ochilmagan, bog'lovchi bor-u mexanik, murakkab gap bor-u xatoli. 7 da esa fikr ochilgan, bog'lovchi o'z joyida, murakkab gaplarning ko'pi xatosiz.",
+     "Bugungi ikkala essay BITTA savolga yozilgan va g'oyalari ham o'xshash. Farq faqat YOZILISHIDA — aynan shuning uchun solishtirish juda aniq ko'rinadi.",
+     "O'quvchi o'z essayini shu usulda baholay olsa, o'sish tezlashadi: u endi \"nimani tuzatishim kerak\" degan savolga aniq javob beradi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "4 mezonni eslating",
+      "Kartochkalar doskada",
+      "36-darsdan"
+     ],
+     [
+      "2-bosqich",
+      "O'rtachani ko'rsating",
+      "7+6+7+6 = 6.5",
+      "Bitta zaif mezon tortadi"
+     ],
+     [
+      "3-bosqich",
+      "Tekshiruv savollarini yozdiring",
+      "Har mezonga 3 ta",
+      "Daftarga"
+     ],
+     [
+      "4-bosqich",
+      "A essayni o'qing",
+      "Ovoz chiqarib, birga",
+      "Hali ball qo'ymang"
+     ],
+     [
+      "5-bosqich",
+      "Mezon-mezon ball qo'ying",
+      "Sababi bilan",
+      "Jadvalga qarab"
+     ],
+     [
+      "6-bosqich",
+      "B essayni solishtiring",
+      "Bir xil savol, boshqa daraja",
+      "Farqni o'quvchi topsin"
+     ],
+     [
+      "7-bosqich",
+      "Xatboshini ko'taring",
+      "A ning 2-xatboshisi",
+      "7.0 darajasiga"
+     ]
+    ],
+    "presentation": [
+     [
+      "Ball qanday chiqadi?",
+      "To'rt mezonning o'rtachasi: 7+6+7+6 = 26, 26 : 4 = 6.5."
+     ],
+     [
+      "Bitta mezonda 5.0 bo'lsa?",
+      "Umumiy ball keskin tushadi. Shuning uchun zaif mezon ustida ishlanadi."
+     ],
+     [
+      "Uzun essay ko'proq ball oladimi?",
+      "Yo'q. 250-280 so'z yetarli; uzunligi emas, sifati sanaladi."
+     ],
+     [
+      "A essay yomonmi?",
+      "Yomon emas — u 6.0. Savolga javob bergan, tushunarli. Faqat fikr ochilmagan va xatolar bor."
+     ],
+     [
+      "Nega \"Moreover\" ko'p bo'lsa yomon?",
+      "Bog'lovchi mexanik bo'lib qoladi. Jadvalda 7.0 uchun \"flexibly\" deyilgan — o'rinli va xilma-xil."
+     ],
+     [
+      "O'zimning essayimni o'zim baholay olamanmi?",
+      "Ha, 12 ta tekshiruv savoli bilan. Lekin ustoz bahosi bilan solishtirib turish kerak."
+     ],
+     [
+      "Grammatikam kuchsiz, nima qilay?",
+      "Avval xatosiz ODDIY gap yozing, keyin murakkabini qo'shing. 7.0 da \"error-free sentences are frequent\" deyilgan."
+     ]
+    ],
+    "notes": [
+     "Bu dars 36-darsning davomi: u yerda mezon TUSHUNTIRILGAN, bu yerda AMALDA qo'llanadi. 36-darssiz boshlamang.",
+     "Ballni ustoz aytib yubormasin — o'quvchilar o'zi qo'ysin, keyin solishtirilsin. Xato qo'yilgan ball ham foydali: sababi muhokama qilinadi.",
+     "A essay ataylab 6.0 darajasida yozilgan: xatolar tabiiy va tanish (he study, find job, Moreover takrori, \"It depends\" xulosasi). Bu — markaz talabalarida eng ko'p uchraydigan holat.",
+     "B essay o'sha savolga 7.5 darajasida yozilgan. DIQQAT: B dagi fikrlar A dagiga o'xshash — farq faqat ochib berilishi, bog'lanishi va tilida. Buni ta'kidlang: \"yangi g'oya o'ylab topish shart emas, borini to'g'ri yozish kerak\".",
+     "Oxirgi mashqda o'quvchilar A ning 2-xatboshisini qayta yozadi. Yaxshi variantlar doskaga yoziladi va guruh bilan tuzatiladi.",
+     "Uyga vazifada har kim o'z eski essayiga ball qo'yadi. Keyingi darslar shu natijaga qarab yo'naltiriladi."
+    ],
+    "mistakes": [
+     [
+      "Ballni umumiy taassurotga qarab qo'yish",
+      "Jadvalga qarab, mezon-mezon",
+      "Har mezon alohida"
+     ],
+     [
+      "Faqat grammatikaga qarash",
+      "To'rt mezon teng",
+      "Task Response ham 25%"
+     ],
+     [
+      "\"Ko'p bog'lovchi = yaxshi\" deb o'ylash",
+      "O'rinli bog'lovchi",
+      "Mexanik ishlatish 6.0 belgisi"
+     ],
+     [
+      "Fikrni aytib, tushuntirmaslik",
+      "Fikr, sabab, misol",
+      "7.0 talabi"
+     ],
+     [
+      "Xulosada fikrni yumshatish",
+      "Aniq pozitsiya",
+      "\"It depends\" — 6.0 belgisi"
+     ],
+     [
+      "Uzun so'z izlab, gapni buzish",
+      "Aniqlik birinchi",
+      "Noto'g'ri so'z ballni tushiradi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [],
+    "core": [],
+    "strong": [],
+    "super": [],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "1-mashq: Har mezonni qanday tekshiraman?",
+     "type": "Yozma, 10 daqiqa",
+     "instr": "Har mezon uchun uchta tekshiruv savoli. Daftarga yoziladi va har essaydan keyin ishlatiladi.",
+     "items": [
+      "Task Response (TR)",
+      "Coherence & Cohesion (CC)",
+      "Lexical Resource (LR)",
+      "Grammatical Range (GRA)"
+     ],
+     "answers": [
+      "1) Savolning hamma qismiga javob berildimi? 2) Fikr aniq aytildimi? 3) Har fikr sabab yoki misol bilan ochildimi?",
+      "1) 4 ta xatboshi bormi? 2) Har xatboshida bitta asosiy fikrmi? 3) Bog'lovchilar xilma-xil va o'z joyidami?",
+      "1) Bir xil so'z takrorlanmadimi? 2) Kam uchraydigan so'z bormi? 3) So'z birikmalari to'g'rimi?",
+      "1) Murakkab gaplar xilma-xilmi? 2) Xatosiz gaplar ko'pmi? 3) Tinish belgilari to'g'rimi?"
+     ],
+     "why": [
+      "Uchtasiga ham \"ha\" bo'lsa — 7.0.",
+      "Bitta katta xatboshi — darhol 5.0-6.0.",
+      "\"do a mistake\" kabi xato LR ni tushiradi.",
+      "Faqat oddiy gap — 5.0-6.0."
+     ],
+     "note": "Bu 12 savol — o'quvchining doimiy tekshiruv ro'yxati. Har yozilgan essaydan keyin shu ro'yxat bo'yicha o'zini tekshiradi.",
+     "layout": "pairs"
+    },
+    {
+     "title": "2-mashq: Ballni hisoblang",
+     "type": "Og'zaki, 5 daqiqa",
+     "instr": "To'rt mezon ballidan umumiy bahoni chiqaring.",
+     "items": [
+      "TR 6 · CC 6 · LR 6 · GRA 6",
+      "TR 7 · CC 7 · LR 6 · GRA 6",
+      "TR 7 · CC 7 · LR 7 · GRA 6",
+      "TR 5 · CC 7 · LR 7 · GRA 7",
+      "TR 8 · CC 7 · LR 7 · GRA 7",
+      "TR 6 · CC 6 · LR 7 · GRA 7"
+     ],
+     "answers": [
+      "6.0",
+      "6.5",
+      "6.5",
+      "6.5",
+      "7.0",
+      "6.5"
+     ],
+     "why": [
+      "Hamma mezon bir xil.",
+      "26 : 4 = 6.5.",
+      "27 : 4 = 6.75, pastga yaxlitlanadi.",
+      "Bitta zaif mezon butun bahoni tortdi.",
+      "29 : 4 = 7.25, pastga yaxlitlanadi.",
+      "Ikki mezonni ko'tarish kerak."
+     ],
+     "note": "Xulosa: 7.0 olish uchun BARCHA mezonda 7.0 ga yaqin bo'lish kerak. Bitta mezonni tashlab ketib bo'lmaydi.",
+     "layout": "qa"
+    },
+    {
+     "title": "3-mashq: Bu kamchilik nechanchi bandga tushiradi?",
+     "type": "Og'zaki, 7 daqiqa",
+     "instr": "Ustoz kamchilikni aytadi, o'quvchi mezon va bandni aytadi.",
+     "items": [
+      "Xulosada \"It depends on the situation\" deb yozilgan.",
+      "Har xatboshi \"Firstly\", \"Moreover\" bilan boshlangan.",
+      "\"He study\", \"a person who study\" — uchinchi shaxs -s yo'q.",
+      "\"find job\", \"good salary\" — artikl yo'q.",
+      "\"important\" so'zi essayda 5 marta.",
+      "Fikr aytilgan, lekin misol yo'q.",
+      "Essay 185 so'z.",
+      "Butun essay uchta uzun gapdan iborat."
+     ],
+     "answers": [
+      "TR 6.0",
+      "CC 6.0",
+      "GRA 6.0",
+      "GRA 6.0",
+      "LR 6.0",
+      "TR 6.0",
+      "TR 5.0",
+      "CC va GRA 5.0"
+     ],
+     "why": [
+      "Pozitsiya noaniq — 7.0 da fikr aniq.",
+      "Mexanik bog'lovchi.",
+      "Oddiy gapda xato.",
+      "Artikl xatosi takrorlanyapti.",
+      "Xilma-xillik yo'q.",
+      "\"Insufficiently developed\".",
+      "250 dan kam — jarima.",
+      "Xatboshi ham, xilma-xillik ham yo'q."
+     ],
+     "layout": "qa"
+    },
+    {
+     "title": "4-mashq: A dagi gapni B darajasiga ko'taring",
+     "type": "Yozma, juftlikda",
+     "instr": "Chapdagi zaif gapni o'ngdagidek qayta yozing (avval o'zlari urinib ko'rishsin).",
+     "items": [
+      "Moreover, science students find job easily and they get good salary.",
+      "The reason is that when a student likes his subject, he study better.",
+      "If there are no engineers, the country can not develop.",
+      "This is very important thing for family.",
+      "In this essay I will discuss both views."
+     ],
+     "answers": [
+      "Graduates in scientific fields also tend to find work quickly and to earn higher salaries.",
+      "Students who are genuinely interested in their subject tend to work harder and achieve better results.",
+      "Without a steady supply of engineers, a country's infrastructure is likely to deteriorate.",
+      "For many families, this financial security is the decisive consideration.",
+      "Kerak emas — olib tashlanadi"
+     ],
+     "why": [
+      "Artikl tuzatildi, \"moreover\" olib tashlandi, so'z kuchaytirildi.",
+      "-s xatosi ketdi, sifatlovchi ergash gap qo'shildi.",
+      "Shart \"without\" bilan qisqardi, lug'at kuchaydi.",
+      "Artikl, aniq ibora; bo'sh \"very important\" ketdi.",
+      "Bu gap ball qo'shmaydi, faqat so'z sarflaydi."
+     ],
+     "note": "Qoida: gapni uzaytirish emas, ANIQLASHTIRISH. Har tuzatishda \"qaysi mezon ko'tarildi\" deb aytilsin.",
+     "layout": "pairs"
+    },
+    {
+     "title": "5-mashq: Xatboshini qayta yozish",
+     "type": "Yozma, 12 daqiqa",
+     "instr": "A essayning 2-xatboshisini 7.0 darajasiga ko'taring: bitta asosiy fikr, sabab, misol, natija.",
+     "items": [
+      "Asosiy fikrni bitta gapda yozing (topic sentence).",
+      "Sababini yozing.",
+      "Misol qo'shing.",
+      "Natija yoki qarshi fikrga javob bering."
+     ],
+     "answers": [
+      "Students who choose subjects they enjoy are more likely to succeed.",
+      "When motivation comes from genuine interest, students put in more hours and give up less easily.",
+      "A student who loves history, for example, will read far beyond the reading list.",
+      "Such graduates often develop research skills that employers value, even outside their field."
+     ],
+     "why": [
+      "Xatboshining birinchi gapi.",
+      "Fikrni ochadi.",
+      "Aniq, jonli misol.",
+      "\"Bu kasb ish bermaydi\" degan e'tirozga javob."
+     ],
+     "note": "To'rt gap — to'liq xatboshi. Ko'proq yozish shart emas; shu tartib har body xatboshida takrorlanadi.",
+     "layout": "list"
+    }
+   ],
+   "readings": [
+    {
+     "title": "A ESSAY — Band 6.0 darajasi",
+     "qtype": "Bir xil savol, zaif yozilishi",
+     "source": "Jony Academy namuna essayi (o'qitish uchun ataylab 6.0 darajasida yozilgan, 199 so'z)",
+     "book_ref": "SAVOL: Some people think that university students should be free to choose any subject they like. Others believe students should only study subjects that are useful for the future, such as science and technology. Discuss both these views and give your own opinion.",
+     "text": [
+      "Nowadays, students in university can choose any subject which they want to study. Some people think this is good, but other people think students must study only useful subjects like science and technology. In this essay I will discuss both views and give my opinion.",
+      "Firstly, many people believe that students should study what they like. The reason is that when a student likes his subject, he study better and he is more happy. Moreover, a person who study art or history can also find job. Moreover, it is not fair to tell young people what they must do, because they are adults and they know their life.",
+      "On the other hand, some people think that only useful subjects are important. Firstly, the country needs engineers and doctors. If there are no engineers, the country can not develop and people will have many problem. Moreover, science students find job easily and they get good salary. This is very important thing for family.",
+      "In conclusion, there are advantages and disadvantages in both views. I think that maybe the government can support science subjects, but also students must be free to choose. It depends on the situation and on the student."
+     ],
+     "paraphrases": [
+      [
+       "university students",
+       "students in university (savoldan deyarli ko'chirilgan)"
+      ],
+      [
+       "free to choose any subject",
+       "can choose any subject which they want"
+      ],
+      [
+       "useful for the future",
+       "useful subjects (\"for the future\" tushib qolgan)"
+      ],
+      [
+       "give your own opinion",
+       "I think that maybe ... (noaniq)"
+      ]
+     ],
+     "glossary": [
+      "develop — rivojlanmoq",
+      "salary — maosh",
+      "advantages and disadvantages — foyda va zarar",
+      "it depends — bog'liq (xulosada ishlatilsa, noaniq pozitsiya belgisi)"
+     ],
+     "tasks": [
+      {
+       "title": "A essay — 4 mezon bo'yicha ball",
+       "type": "Jadval",
+       "instr": "Har mezonga ball va SABAB. Avval o'quvchilar qo'yadi, keyin solishtiriladi.",
+       "note": "O'rtacha: 6 + 6 + 6 + 5.5 = 23.5, 23.5 : 4 = 5.875 — ya'ni 6.0. Essay yomon emas: savolga javob bergan, tushunarli. Lekin to'rttala mezonda ham 7.0 ga yetmayapti.",
+       "layout": "grid",
+       "head": [
+        "Mezon",
+        "Ball",
+        "Nega shunday"
+       ],
+       "rows": [
+        [
+         "Task Response",
+         "6.0",
+         "Ikkala qarash ham bor ;; lekin fikrlar ochilmagan, misol yo'q ;; xulosada pozitsiya noaniq (\"It depends\") ;; 199 so'z — 250 dan kam"
+        ],
+        [
+         "Coherence & Cohesion",
+         "6.0",
+         "4 xatboshi bor, bu yaxshi ;; lekin \"Firstly/Moreover\" mexanik takrorlangan ;; xatboshi ichidagi tartib zaif"
+        ],
+        [
+         "Lexical Resource",
+         "6.0",
+         "Ma'no tushunarli ;; lekin \"important\", \"useful\", \"think\" takrorlanadi ;; kam uchraydigan so'z deyarli yo'q"
+        ],
+        [
+         "Grammatical Range",
+         "5.5",
+         "Oddiy gaplar asosan to'g'ri ;; lekin \"he study\", \"find job\", \"many problem\" — takroriy xato ;; murakkab gap kam"
+        ]
+       ]
+      },
+      {
+       "title": "A essaydagi aniq kamchiliklar",
+       "type": "Tahlil",
+       "instr": "Ibora, kamchilik, qaysi mezon.",
+       "items": [
+        "\"students in university can choose any subject which they want\"",
+        "\"In this essay I will discuss both views\"",
+        "\"he study better\", \"a person who study art\"",
+        "\"can also find job\", \"many problem\", \"very important thing\"",
+        "\"Moreover ... Moreover\" (ketma-ket)",
+        "\"Firstly\" ikkinchi xatboshida ham, uchinchisida ham",
+        "\"It depends on the situation\"",
+        "Butun essayda birorta ham misol yo'q"
+       ],
+       "answers": [
+        "Savol deyarli ko'chirilgan, o'z so'zi bilan aytilmagan",
+        "Bo'sh gap, ball qo'shmaydi",
+        "Uchinchi shaxs -s yo'q",
+        "Artikl va ko'plik xatosi",
+        "Bir xil bog'lovchi takrori",
+        "Tartib belgisi chalkash",
+        "Xulosada pozitsiya yo'qoladi",
+        "Fikrlar ochilmagan"
+       ],
+       "why": [
+        "LR va TR — paraphrase yo'q.",
+        "TR — so'z sarflanadi, fikr qo'shilmaydi.",
+        "GRA — takroriy oddiy xato.",
+        "GRA.",
+        "CC — mexanik.",
+        "CC.",
+        "TR — eng qimmat kamchilik.",
+        "TR — \"insufficiently developed\"."
+       ],
+       "note": "Diqqat: bu kamchiliklarning HAMMASI tuzatilishi oson. Yangi g'oya kerak emas — borini to'g'ri yozish kifoya. B essayda aynan shu ko'rsatiladi.",
+       "layout": "pairs"
+      }
+     ]
+    },
+    {
+     "title": "B ESSAY — Band 7.5 darajasi",
+     "qtype": "XUDDI SHU savol, kuchli yozilishi",
+     "source": "Jony Academy namuna essayi (267 so'z)",
+     "book_ref": "Savol A essay bilan bir xil. G'oyalar ham o'xshash — farq faqat ochib berilishi, bog'lanishi va tilida.",
+     "text": [
+      "Universities in many countries now allow undergraduates to select almost any course, while others argue that places should be reserved for subjects with obvious economic value, such as engineering or medicine. Although practical skills clearly matter, I believe that students learn best when they are allowed to follow their own interests.",
+      "Those who support free choice point to motivation. Students who are genuinely interested in their subject tend to work harder and to give up less easily, which is reflected in both their results and their willingness to keep studying. A student who loves history, for example, will read far beyond the reading list, and the research skills gained in that process are valued by employers in almost every sector. Restricting choice, by contrast, risks producing graduates who are qualified but unmotivated.",
+      "There is, however, a reasonable argument on the other side. Every economy depends on a steady supply of engineers, doctors and technicians, and without them infrastructure and healthcare quickly deteriorate. Graduates in these fields also tend to find work sooner and to earn more, which for many families is the decisive consideration when tuition fees are high. Countries that have allowed such shortages to develop have often been forced to recruit specialists from abroad at considerable expense.",
+      "In my view, these two positions can be reconciled. Rather than closing courses, governments can make shortage subjects more attractive through scholarships, paid internships and guaranteed employment schemes, leaving the final decision to the student. This approach protects the professions a country needs while respecting the simple fact that people rarely excel at work they did not choose."
+     ],
+     "paraphrases": [
+      [
+       "university students",
+       "undergraduates (bitta so'z bilan)"
+      ],
+      [
+       "free to choose any subject",
+       "select almost any course / free choice"
+      ],
+      [
+       "useful for the future",
+       "subjects with obvious economic value / shortage subjects"
+      ],
+      [
+       "give your own opinion",
+       "I believe / In my view"
+      ]
+     ],
+     "glossary": [
+      "undergraduate — bakalavr talabasi",
+      "reserved for — ajratilgan",
+      "deteriorate — yomonlashmoq",
+      "decisive consideration — hal qiluvchi omil",
+      "reconciled — murosaga keltirilgan",
+      "shortage subjects — kadr yetishmaydigan yo'nalishlar",
+      "excel — a'lo darajada ishlamoq"
+     ],
+     "tasks": [
+      {
+       "title": "B essay — 4 mezon bo'yicha ball",
+       "type": "Jadval",
+       "instr": "Endi shu essayga ball qo'ying va A bilan solishtiring.",
+       "note": "O'rtacha: 8 + 7.5 + 7.5 + 7.5 = 30.5, 30.5 : 4 = 7.625 — ya'ni 7.5. Diqqat: g'oyalar A dagi bilan bir xil (motivatsiya va iqtisod), faqat yozilishi boshqa.",
+       "layout": "grid",
+       "head": [
+        "Mezon",
+        "Ball",
+        "Nega shunday"
+       ],
+       "rows": [
+        [
+         "Task Response",
+         "8.0",
+         "Ikkala qarash ham to'liq ochilgan ;; har fikrda sabab va misol bor ;; pozitsiya kirishda ham, xulosada ham bir xil"
+        ],
+        [
+         "Coherence & Cohesion",
+         "7.5",
+         "Har xatboshida bitta fikr ;; bog'lovchilar xilma-xil va gap ichida ;; \"by contrast\", \"however\" o'z joyida"
+        ],
+        [
+         "Lexical Resource",
+         "7.5",
+         "undergraduates, deteriorate, decisive, reconciled ;; so'z birikmalari to'g'ri ;; takror yo'q"
+        ],
+        [
+         "Grammatical Range",
+         "7.5",
+         "Sifatlovchi ergash gap, gerundiy, \"Rather than ...\" qurilmasi ;; xatosiz gaplar ko'p"
+        ]
+       ]
+      },
+      {
+       "title": "A dan B ga — mezon bo'yicha nima o'zgardi?",
+       "type": "Tahlil",
+       "instr": "Eng muhim mashq: farqni o'quvchi o'zi aytsin.",
+       "items": [
+        "TR: A da \"students must be free\" deyilgan, sababi yo'q",
+        "TR: A da misol yo'q",
+        "TR: A xulosasi \"It depends\"",
+        "CC: A da \"Moreover\" ikki marta ketma-ket",
+        "CC: A da bog'lovchi doim gap boshida",
+        "LR: A da \"useful subjects\" takrori",
+        "LR: A da \"very important thing\"",
+        "GRA: A da \"he study\", \"find job\"",
+        "GRA: A da faqat if va because",
+        "Uzunlik: A 199 so'z"
+       ],
+       "answers": [
+        "B da motivatsiya, mehnat, natija, ish beruvchi — zanjir bilan ochilgan",
+        "B da \"A student who loves history ... will read far beyond the reading list\"",
+        "B xulosasida aniq taklif: stipendiya, amaliyot, ish kafolati",
+        "B da which, for example, by contrast, however, Rather than",
+        "B da gap ICHIDA: \"There is, however, a reasonable argument\"",
+        "B da subjects with obvious economic value, shortage subjects",
+        "B da \"the decisive consideration\"",
+        "B da \"Students who are genuinely interested ... tend to work harder\"",
+        "B da which, who, without them, Rather than ..., leaving ...",
+        "B 267 so'z"
+       ],
+       "why": [
+        "Fikr \"aytilgan\" emas, \"isbotlangan\".",
+        "Bitta aniq misol butun xatboshini ko'taradi.",
+        "Pozitsiya oxirigacha bir xil.",
+        "Xilma-xil va o'z joyida.",
+        "\"Flexibly\" — 7.0 talabi.",
+        "Bir tushuncha, uch xil ifoda.",
+        "Bo'sh sifat o'rniga aniq ibora.",
+        "Xato yo'q, ustiga ergash gap.",
+        "Qurilmalar xilma-xil.",
+        "A 250 dan kam — bu ham TR ni tushiradi."
+       ],
+       "note": "XULOSA (doskaga yoziladi): 6.0 dan 7.0 ga chiqish uchun YANGI G'OYA kerak emas. Kerak bo'lgani: har fikrga sabab va misol, bog'lovchini o'z joyida ishlatish, takrorlanadigan xatoni tuzatish.",
+       "layout": "pairs"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [],
+   "homework": [
+    {
+     "title": "O'z essayingga ball qo'y",
+     "type": "Yozma",
+     "instr": "Oldin yozgan essayingni ol (yoki yangi yoz). To'rt mezonga ball qo'y va HAR BALLGA bittadan sabab yoz.",
+     "answers": "Ustoz ballarni o'z bahosi bilan solishtiradi — farq katta bo'lsa, sababi muhokama qilinadi.",
+     "layout": "list"
+    },
+    {
+     "title": "A essayning 3-xatboshisini qayta yozing",
+     "type": "Yozma",
+     "instr": "5-mashqdagi tartib bilan: asosiy fikr, sabab, misol, natija. Kamida 4 gap.",
+     "answers": "Namuna — B essayning 3-xatboshisi.",
+     "layout": "list"
+    },
+    {
+     "title": "12 ta tekshiruv savoli",
+     "type": "Yozma",
+     "instr": "1-mashqdagi 12 savolni daftaringizga ko'chiring va har essaydan keyin shu ro'yxat bo'yicha o'zingizni tekshiring.",
+     "answers": "Keyingi darslarda shu ro'yxat ishlatiladi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "O'z essayiga ball",
+     "4 mezon, har biriga sabab",
+     "3 coin"
+    ],
+    [
+     "Xatboshini qayta yozish",
+     "4 gap, tartib bo'yicha",
+     "2 coin"
+    ],
+    [
+     "Tekshiruv savollari",
+     "12 savol ko'chirilgan",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

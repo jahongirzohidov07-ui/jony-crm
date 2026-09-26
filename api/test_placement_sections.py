@@ -286,5 +286,29 @@ ck("eski sessiyada ko'nikmalar bo'sh",
    [x["level"] for x in o["result"]["skills"] if x["key"] != "grammar"],
    [None, None, None])
 
+print("\n=== 11. JONY SCHOOL'GA EKSPORT (2026-09-26) ===")
+# Jahongir: "11-sinflarga lid qilib korgizdim ularni natijalarini ham
+# qoshib qo'y ozing endi topib Jony 360ga" — tugallanganlar JSON bo'lib
+# chiqadi, Jony School shu faylni o'qiydi.
+ex = client.get("/api/placement/export?days=30", headers=HDR)
+ck("eksport 200", ex.status_code, 200)
+exd = ex.json()
+ck("manba jonyos/placement", (exd["source"], exd["kind"]), ("jonyos", "placement"))
+ck("faqat tugallanganlar (finished_at bilan)",
+   all(r["finished_at"] for r in exd["rows"]), True)
+names = [r["name"] for r in exd["rows"]]
+ck("to'liq o'tgan lid ro'yxatda", any(n and n.startswith("Test Lid") for n in names), True)
+row = next((r for r in exd["rows"] if r["name"] == "Eski lid"), None)
+ck("eski sessiya (finished_at yo'q) chiqmaydi", row, None)
+row = next(r for r in exd["rows"] if (r["name"] or "").startswith("Test Lid"))
+ck("4 ko'nikma", [s["key"] for s in row["skills"]],
+   ["grammar", "vocab", "reading", "listening"])
+ck("grammatika mavzulari bor", len(row["topics"]) > 0, True)
+ck("mavzuda ok/n/pct", all({"topic", "ok", "n", "pct"} <= set(t) for t in row["topics"]), True)
+ck("daraja va unit", (row["level"] in E.PT_LEVELS, 1 <= row["unit"] <= 12), (True, True))
+ck("javoblar eksportga kirmaydi", "answers" in row, False)
+noauth = client.get("/api/placement/export")
+ck("ruxsatsiz — 401", noauth.status_code, 401)
+
 print("\n" + ("HAMMASI O'TDI" if not fails else "XATO: " + ", ".join(fails)))
 sys.exit(1 if fails else 0)

@@ -71,6 +71,24 @@ export default function PlacementBar({ leads, onChanged }: {
   }
   useEffect(() => { loadRows(); }, []);
 
+  /** Tugallangan diagnostikalarni JSON faylga — Jony School'dagi
+   *  "JonyOS diagnostikasini import" o'qiydi (ikki tizim alohida
+   *  bazada; parol ko'chirilmaydi, fayl ko'chiriladi). */
+  async function exportSchool() {
+    try {
+      const r = await api.get<Any>("/placement/export?days=30");
+      if (!r.count) { alert("Oxirgi 30 kunda tugallangan diagnostika yo'q"); return; }
+      const blob = new Blob([JSON.stringify(r, null, 1)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `jonyos_diagnostika_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    } catch {
+      alert("Eksport bo'lmadi — qayta urinib ko'ring");
+    }
+  }
+
   const done = rows.filter((r) => r.status === "done");
   const live = rows.filter((r) => r.status === "running" || r.status === "new");
 
@@ -88,6 +106,11 @@ export default function PlacementBar({ leads, onChanged }: {
         <button onClick={() => { setShowAll((v) => !v); loadRows(); }}
                 className="rounded-lg border border-indigo-200 bg-white px-3 py-1.5 text-sm text-indigo-800">
           Natijalar {done.length > 0 && `(${done.length})`}
+        </button>
+        <button onClick={exportSchool}
+                title="Oxirgi 30 kundagi tugallangan diagnostikalar JSON faylga — Jony School → Kompyuter testlari → 'JonyOS diagnostikasini import' orqali Jony 360 ga tushadi"
+                className="rounded-lg border border-indigo-200 bg-white px-3 py-1.5 text-sm text-indigo-800">
+          Jony School'ga eksport
         </button>
       </div>
       {live.length > 0 && (

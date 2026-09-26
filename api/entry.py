@@ -10680,3 +10680,51 @@ try:
     _seal_schema()
 except Exception:
     pass
+
+
+
+# =====================================================================
+#  DIAGNOSTIKA NATIJALARINI JONY SCHOOL'GA EKSPORT  (_PX_*, 2026-09-26)
+#
+#  Jahongir: "Jony Academy test filialida ... diagnostik testni berishga
+#  majbur boldim 11-sinflarga lid qilib korgizdim ularni natijalarini
+#  ham qoshib qo'y ozing endi topib Jony 360ga".
+#
+#  Ikki tizim alohida bazada. Parol/ulanish ko'chirilmaydi: JonyOS
+#  tugallangan diagnostika natijalarini JSON qilib beradi (Lidlar →
+#  Diagnostika → "Jony School'ga eksport"), Jony School o'sha faylni
+#  o'qib, o'quvchini ismi bo'yicha topadi va Jony 360 mavzu
+#  natijalariga yozadi. Hech narsa o'chirilmaydi.
+# =====================================================================
+@app.get("/api/placement/export")
+def pt_export(days: int = 30, branch_id: int | None = None,
+              db: Session = Depends(get_db),
+              user=Depends(require_role(*_PT_ROLES))):
+    """Oxirgi N kundagi TUGALLANGAN diagnostikalar — Jony School importi
+    uchun. Natija bo'limlar (grammatika/lug'at/reading/listening) va
+    grammatika mavzulari kesimida."""
+    since = _pt_now() - _pt_td(days=max(1, min(365, int(days or 30))))
+    q = (db.query(_PTS).filter(_PTS.status == "done",
+                               _PTS.finished_at >= since))
+    if branch_id:
+        q = q.filter(_PTS.branch_id == int(branch_id))
+    rows = []
+    for s in q.order_by(_PTS.finished_at.desc()).limit(500).all():
+        r = _pt_result(s)
+        rows.append({
+            "session_id": s.id, "lead_id": s.lead_id, "name": s.name,
+            "phone": s.phone, "branch_id": s.branch_id,
+            "finished_at": s.finished_at.isoformat() if s.finished_at else None,
+            "level": r.get("level"), "unit": r.get("unit"),
+            "overall": r.get("overall"), "score": r.get("score"),
+            "total": r.get("total"),
+            "skills": [{"key": x["key"], "level": x.get("level"),
+                        "pct": x.get("pct"), "n": x.get("n")}
+                       for x in r.get("skills") or []],
+            "topics": [{"level": t["level"], "unit": t["unit"],
+                        "topic": t["topic"], "ok": t["ok"], "n": t["n"],
+                        "pct": t["pct"]} for t in r.get("topics") or []],
+        })
+    return {"source": "jonyos", "kind": "placement",
+            "exported_at": _pt_now().isoformat(), "days": days,
+            "count": len(rows), "rows": rows}

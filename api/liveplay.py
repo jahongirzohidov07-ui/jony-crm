@@ -71,15 +71,29 @@ def _lesson(course: str, no: int) -> dict:
     raise HTTPException(404, "Dars topilmadi")
 
 
+def _plan_list(L: dict, one: str, many: str) -> list:
+    """Reja kalitining birlik va ko'plik shakli (2026-09-26).
+    IELTS 1.0-4.0 da bitta "reading"/"listening", IELTS 5.0 da bir necha
+    "readings"/"listenings" bor — avval faqat birligi o'qilardi, shuning
+    uchun IELTS 5.0 darslari ro'yxatda "reading yo'q" bo'lib ko'rinardi."""
+    v = L.get(many)
+    if isinstance(v, list) and v:
+        return v
+    v = L.get(one)
+    return [v] if v else []
+
+
 def _summary(L: dict) -> dict:
     V = L.get("vocab") or {}
+    lis = _plan_list(L, "listening", "listenings")
     return {
         "no": L["no"], "title": L["title"],
         "grammar_topic": L.get("grammar_topic"),
         "vocab_topic": L.get("vocab_topic"),
         "test_after": L.get("test_after") or "",
-        "audios": (L.get("listening") or {}).get("audios") or "",
-        "reading": bool(L.get("reading")),
+        "audios": ", ".join(
+            str(x.get("audios") or "") for x in lis if x.get("audios")),
+        "reading": bool(_plan_list(L, "reading", "readings")),
         "words": sum(len(V.get(t) or []) for t in ("core", "strong", "super")),
     }
 

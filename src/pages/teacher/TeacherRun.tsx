@@ -4,6 +4,9 @@ import {
   ArrowLeft, Check, ChevronRight, Monitor, MonitorOff, Users, Gamepad2, Flag, Timer as TimerIcon,
 } from "lucide-react";
 import { api } from "../../lib/api";
+// Mashqlarni reja ekranidagi bilan BIR XIL ko'rsatish uchun (2026-09-26):
+// grid/pairs/flow/mcq/tfng/match/qa/list ko'rinishlari shu komponentda.
+import { ExBody } from "../LessonPlans";
 
 /**
  * DARS REJIMI — "Darsni boshlash" (2026-09-18, Jahongir: "Dars paytida
@@ -18,14 +21,27 @@ import { api } from "../../lib/api";
  */
 
 type Stage = { title: string; min: number; desc: string; done: boolean; carried: boolean };
-type Ex = { title: string; type?: string; instr?: string; items?: string[]; answers?: string[] | string; note?: string; box?: string[] };
+type Ex = { title: string; type?: string; instr?: string; items?: string[]; answers?: string[] | string; note?: string; box?: string[]; why?: string[];
+  layout?: "grid" | "pairs" | "flow" | "mcq" | "tfng" | "match" | "qa" | "list";
+  head?: string[]; rows?: string[][] };
+/** IELTS 5.0 darslarida bitta darsda bir nechta reading/listening bor
+ * (readings / listenings), eski darslarda bittadan (reading / listening).
+ * Ikkalasi ham ko'rsatiladi — avval faqat birlik kalit o'qilardi, shuning
+ * uchun IELTS 5.0 ning 20 reading va 15 listeningi jonli darsda umuman
+ * ko'rinmasdi (2026-09-26). */
+type PlanReading = { title: string; qtype?: string; book_ref?: string; text?: string[];
+  glossary?: string[]; paraphrases?: [string, string][]; tasks?: Ex[] };
+type PlanListen = { title?: string; qtype?: string; audios?: string; audio?: string;
+  intro?: string[]; transcript?: string[]; tasks?: Ex[] };
 type Plan = {
   no: number; title: string; grammar_topic: string; vocab_topic: string;
   grammar: { intro: string[]; formulas: string[][]; presentation: [string, string][]; notes: string[]; mistakes: string[][] };
   vocab: { core: string[][]; strong: string[][]; super: string[][] };
   class_ex: Ex[];
-  reading?: { title: string; text: string[]; glossary: string[]; tasks: Ex[] };
-  listening?: { audios: string; intro: string[]; tasks: Ex[] };
+  reading?: PlanReading;
+  listening?: PlanListen;
+  readings?: PlanReading[];
+  listenings?: PlanListen[];
   homework_intro: string[]; homework: Ex[];
 };
 type Run = {
@@ -156,6 +172,9 @@ export default function TeacherRun() {
   const left = (cur?.min ?? 0) * 60 - elapsed;
   const over = left < 0;
   const big = proj ? "text-lg md:text-xl" : "text-sm";
+  // BOSQICH TUGADI — ovoz va tebranish (2026-09-26). Avval taymer faqat
+  // qizarardi: sinfga qarab turgan ustoz bosqich tugaganini bilmasdi.
+  useStageAlarm(run.current, left);
 
   return (
     <div className={`min-h-screen ${proj ? "bg-white" : "bg-slate-50"}`}>
@@ -300,16 +319,47 @@ export default function TeacherRun() {
             </Card>
           )}
           {P && tab === "class" && <ExList list={P.class_ex ?? []} proj={proj} show={showAns} setShow={setShowAns} prefix="c" big={big} />}
-          {P && tab === "reading" && (P.reading ? (
+          {P && tab === "reading" && (readings(P).length ? (
             <div className={`space-y-4 ${big}`}>
-              <Card title={P.reading.title}>{P.reading.text.map((p, i) => <p key={i} className="mb-2 leading-relaxed">{p}</p>)}
-                <div className="text-xs text-slate-500 bg-slate-50 rounded px-2 py-1 mt-2">{P.reading.glossary.join(" · ")}</div></Card>
-              <ExList list={P.reading.tasks} proj={proj} show={showAns} setShow={setShowAns} prefix="r" big={big} />
+              {readings(P).map((R, ri) => (
+                <div key={ri} className="space-y-3">
+                  <Card title={readings(P).length > 1 ? `${ri + 1}. ${R.title}` : R.title}>
+                    {R.qtype && <p className="text-xs text-slate-500 mb-2">{R.qtype}</p>}
+                    {(R.text ?? []).map((t, i) => <p key={i} className="mb-2 leading-relaxed">{t}</p>)}
+                    {(R.paraphrases ?? []).length > 0 && (
+                      <div className="mt-2 text-xs text-slate-600 bg-amber-50 border border-amber-200 rounded px-2 py-1">
+                        {(R.paraphrases ?? []).map((pp, i) => <div key={i}>{pp[0]} → {pp[1]}</div>)}
+                      </div>
+                    )}
+                    {(R.glossary ?? []).length > 0 && (
+                      <div className="text-xs text-slate-500 bg-slate-50 rounded px-2 py-1 mt-2">{(R.glossary ?? []).join(" · ")}</div>
+                    )}
+                  </Card>
+                  <ExList list={R.tasks ?? []} proj={proj} show={showAns} setShow={setShowAns} prefix={`r${ri}`} big={big} />
+                </div>
+              ))}
             </div>) : <p className="text-sm text-slate-500">Bu darsda reading yo'q.</p>)}
-          {P && tab === "listening" && (P.listening ? (
+          {P && tab === "listening" && (listenings(P).length ? (
             <div className={`space-y-4 ${big}`}>
-              <Card title={`Audio ${P.listening.audios}`}>{P.listening.intro.map((t, i) => <p key={i} className="mb-2">{t}</p>)}</Card>
-              <ExList list={P.listening.tasks} proj={proj} show={showAns} setShow={setShowAns} prefix="l" big={big} />
+              {listenings(P).map((Ls, li) => (
+                <div key={li} className="space-y-3">
+                  <Card title={Ls.title || (Ls.audios ? `Audio ${Ls.audios}` : `Listening ${li + 1}`)}>
+                    {Ls.qtype && <p className="text-xs text-slate-500 mb-2">{Ls.qtype}</p>}
+                    {Ls.audios && Ls.title && <p className="text-xs text-slate-500 mb-2">Audio: {Ls.audios}</p>}
+                    {(Ls.intro ?? []).map((t, i) => <p key={i} className="mb-2">{t}</p>)}
+                    {/* Transkript — faqat ustozga, proyektorda yashiriladi */}
+                    {!proj && (Ls.transcript ?? []).length > 0 && (
+                      <details className="mt-2">
+                        <summary className="text-xs text-brand-600 cursor-pointer">Transkript</summary>
+                        <div className="text-sm text-slate-600 mt-1 space-y-1">
+                          {(Ls.transcript ?? []).map((t, i) => <p key={i}>{t}</p>)}
+                        </div>
+                      </details>
+                    )}
+                  </Card>
+                  <ExList list={Ls.tasks ?? []} proj={proj} show={showAns} setShow={setShowAns} prefix={`l${li}`} big={big} />
+                </div>
+              ))}
             </div>) : <p className="text-sm text-slate-500">Bu darsda listening yo'q.</p>)}
           {P && tab === "home" && (
             <div className={`space-y-4 ${big}`}>
@@ -363,6 +413,51 @@ function fillBlank(item: string, answer: string): React.ReactNode {
   return <>{parts.map((p, k) => <span key={k}>{p}{k < parts.length - 1 && <span className="text-emerald-700 font-semibold border-b border-emerald-500 px-0.5">{answers[k] ?? answers[answers.length - 1]}</span>}</span>)}</>;
 }
 
+/** Bosqich vaqti tugaganda bir marta signal beradi: qisqa "bip" va
+ * telefonda tebranish. Bosqich almashganda qayta qurollanadi. Ovoz
+ * brauzer tomonidan to'silsa — jim o'tadi, xato chiqarmaydi. */
+function useStageAlarm(stageIdx: number, left: number) {
+  const fired = useRef<number | null>(null);
+  useEffect(() => {
+    if (left > 0 || fired.current === stageIdx) return;
+    fired.current = stageIdx;
+    try {
+      const Ctx = window.AudioContext
+        || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (Ctx) {
+        const ctx = new Ctx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.value = 880;
+        gain.gain.value = 0.15;
+        osc.connect(gain).connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.35);
+        setTimeout(() => ctx.close().catch(() => {}), 800);
+      }
+    } catch {
+      /* brauzer ovozga ruxsat bermadi — muhim emas */
+    }
+    try {
+      navigator.vibrate?.([200, 100, 200]);
+    } catch {
+      /* tebranishni qo'llamaydi */
+    }
+  }, [stageIdx, left]);
+  useEffect(() => { fired.current = null; }, [stageIdx]);
+}
+
+/** Eski (birlik) va yangi (ko'plik) reja kalitlarini bitta ro'yxatga
+ * keltiradi — IELTS 1.0-4.0 da "reading", IELTS 5.0 da "readings". */
+function readings(P: Plan): PlanReading[] {
+  if (P.readings && P.readings.length) return P.readings;
+  return P.reading ? [P.reading] : [];
+}
+function listenings(P: Plan): PlanListen[] {
+  if (P.listenings && P.listenings.length) return P.listenings;
+  return P.listening ? [P.listening] : [];
+}
+
 function ExList({ list, proj, show, setShow, prefix, big }: {
   list: Ex[]; proj: boolean; show: Record<string, boolean>;
   setShow: (v: Record<string, boolean>) => void; prefix: string; big: string;
@@ -387,7 +482,9 @@ function ExList({ list, proj, show, setShow, prefix, big }: {
             </div>
             {ex.instr && <p className="text-slate-700 mt-2">{ex.instr}</p>}
             {ex.box && <div className="text-xs bg-slate-50 rounded px-2 py-1 mt-2 text-slate-600">{ex.box.join(" · ")}</div>}
-            {ex.items && (
+            {/* Jadval/juftlik/oqim ko'rinishlari — reja ekranidagi bilan bir xil */}
+            {ex.layout ? <div className="mt-2"><ExBody ex={ex} show={on} /></div> : null}
+            {!ex.layout && ex.items && (
               <ol className="list-decimal pl-5 mt-2 space-y-0.5">
                 {ex.items.map((it, j) => {
                   const ans = on && Array.isArray(ex.answers) ? ex.answers[j] : undefined;
@@ -395,7 +492,7 @@ function ExList({ list, proj, show, setShow, prefix, big }: {
                 })}
               </ol>
             )}
-            {on && (!ex.items || !Array.isArray(ex.answers)) && ex.answers && (
+            {!ex.layout && on && (!ex.items || !Array.isArray(ex.answers)) && ex.answers && (
               <div className="text-emerald-700 mt-2">{Array.isArray(ex.answers) ? ex.answers.join("; ") : ex.answers}</div>
             )}
           </div>

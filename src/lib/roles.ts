@@ -379,6 +379,11 @@ export const TEACHER_MENU = [
   "/my-groups",
   "/my-students",
   "/my-schedule",
+  // DARS REJALARI (2026-09-26). PLANS_ACCESS ichida ustoz bor edi,
+  // lekin ustoz menyusi shu ochiq ro'yxat bo'yicha kesilgani uchun
+  // reja bandi baribir yo'qolib ketardi — ustoz dars rejalarini
+  // umuman ko'rmasdi. Endi ro'yxatda.
+  "/plans",
   "/my-books",
   "/my-exams",
   "/my-sessions",

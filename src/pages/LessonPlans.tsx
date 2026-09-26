@@ -19,7 +19,8 @@ type Level = { course: string; title: string; cefr: string; ready: boolean;
   ready_count: number; lessons: Summary[] };
 type LiveGroup = { id: number; name: string; students: { id: number; name: string }[] };
 
-type Ex = { title: string; type?: string; instr?: string; items?: string[];
+/** Mashq — jonli dars ekrani (TeacherRun) ham shu turni ishlatadi. */
+export type Ex = { title: string; type?: string; instr?: string; items?: string[];
   answers?: string[] | string; note?: string; box?: string[]; why?: string[];
   layout?: "grid" | "pairs" | "flow" | "mcq" | "tfng" | "match" | "qa" | "list";
   head?: string[]; rows?: string[][] };
@@ -497,7 +498,10 @@ function Cell({ text, answers, show }: { text: string; answers?: string[]; show:
 const TH = "text-left bg-brand-50 text-brand-800 border border-slate-200 px-3 py-2 font-semibold text-xs uppercase tracking-wide";
 const TD = "border border-slate-200 px-3 py-2 align-top text-slate-800";
 
-function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
+/** Mashq tanasi — layout bo'yicha jadval/juftlik/oqim ko'rinishi.
+ * TeacherRun (jonli dars) ham shu komponentni chaqiradi, shuning uchun
+ * ikkala ekranda mashq bir xil ko'rinadi (2026-09-26). */
+export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
   const items = ex.items ?? [];
   const answers = Array.isArray(ex.answers) ? ex.answers : undefined;
   const why = ex.why ?? [];

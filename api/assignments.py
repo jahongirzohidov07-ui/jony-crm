@@ -152,8 +152,21 @@ def _mcq(qs: list) -> list:
              "answer": q["correct"], "explain": q.get("explain")} for q in qs]
 
 
+def _readings(L: dict) -> list:
+    """Darsdagi barcha reading matnlari (2026-09-26). IELTS 5.0 da bitta
+    darsda bir nechta "readings" bor, eskilarida bitta "reading" — avval
+    faqat birligi o'qilardi, shuning uchun IELTS 5.0 da Reading
+    topshirig'ini yuborib bo'lmasdi."""
+    v = L.get("readings")
+    if isinstance(v, list) and v:
+        return v
+    v = L.get("reading")
+    return [v] if v else []
+
+
 def build_from_plan(L: dict, part: str) -> Optional[dict]:
-    """part: vocab | grammar | reading | hw:<i> | class:<i> | writing | speaking"""
+    """part: vocab | grammar | reading | reading:<i> | hw:<i> | class:<i>
+    | writing | speaking"""
     no = L["no"]
     if part == "vocab":
         return {"kind": "vocab_test", "skill": "vocab", "title": f"{no}-dars — lug'at testi (CORE 20)",
@@ -167,8 +180,12 @@ def build_from_plan(L: dict, part: str) -> Optional[dict]:
             qs = build_questions(L, "mixed", 20)
         return {"kind": "grammar_test", "skill": "grammar", "title": f"{no}-dars — grammatika testi",
                 "questions": _mcq(qs)}
-    if part == "reading" and L.get("reading"):
-        R = L["reading"]
+    if part == "reading" or part.startswith("reading:"):
+        rs = _readings(L)
+        i = int(part.split(":")[1]) if ":" in part else 0
+        if not (0 <= i < len(rs)):
+            return None
+        R = rs[i]
         qs = []
         for t in R.get("tasks", []):
             qs += _ex_to_questions(t)
@@ -263,10 +280,14 @@ def assignable(course: str, no: int, user=Depends(require_role(*roles.TEACHING_A
     L = _lesson(course, no)
     out = [{"part": "vocab", "label": "Lug'at testi (CORE 20) — avtomat", "auto": True},
            {"part": "grammar", "label": "Grammatika testi — avtomat", "auto": True}]
-    if L.get("reading"):
-        b = build_from_plan(L, "reading")
-        out.append({"part": "reading", "label": f"Reading: {L['reading']['title']}",
-                    "auto": bool(b and all(q["kind"] in AUTO_KINDS for q in b["questions"]))})
+    for i, R in enumerate(_readings(L)):
+        part = "reading" if i == 0 else f"reading:{i}"   # eski linklar buzilmasin
+        b = build_from_plan(L, part)
+        if not b:
+            continue
+        out.append({"part": part, "label": f"Reading: {R.get('title') or i + 1}",
+                    "auto": bool(all(q["kind"] in AUTO_KINDS
+                                     for q in b["questions"]))})
     for i, h in enumerate(L.get("homework", [])):
         b = build_from_plan(L, f"hw:{i}")
         if b:

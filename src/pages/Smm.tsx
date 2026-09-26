@@ -35,7 +35,7 @@ const TONE: Record<string, string> = {
   brown: "bg-yellow-800/20 text-yellow-900",
 };
 
-type Tab = "dashboard" | "calendar" | "plan" | "canalytics" | "inbox"
+type Tab = "dashboard" | "calendar" | "plan" | "board" | "canalytics" | "inbox"
   | "attribution" | "ideas" | "requests" | "brand" | "media" | "kb"
   | "report";
 
@@ -46,6 +46,7 @@ const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   // ko'zda ko'rinadigan jadval + ichida ssenariy + havoladan
   // avtomat natija.
   { key: "plan", label: "Kontent-plan", icon: Table2 },
+  { key: "board", label: "Holat doskasi", icon: Table2 },
   { key: "canalytics", label: "Kontent tahlili", icon: TrendingUp },
   { key: "inbox", label: "Murojaatlar", icon: MessageSquare },
   { key: "attribution", label: "Natija", icon: TrendingUp },
@@ -89,7 +90,10 @@ export default function Smm() {
   // O'CHIRILMAGAN — "Boshqa" tugmasi ostida turadi, ma'lumotlari joyida.
   // SMM bo'lmagan xodim (g'oya/so'rov yuboruvchi) uchun bo'limlar kam —
   // ularga hammasi avvalgidek ko'rinadi.
-  const MAIN: Tab[] = ["dashboard", "plan", "canalytics", "inbox"];
+  // 2026-09-26 (2): "Murojaatlar" tushunarsiz edi (Instagram ulanmagan,
+  // bo'sh turardi) — "Boshqa"ga o'tdi. O'rniga "Holat doskasi" (Kanban).
+  // Jahongir: "brendbookni qoldir" — Brend kitob asosiy qatorda.
+  const MAIN: Tab[] = ["dashboard", "plan", "board", "canalytics", "brand"];
   const primary = isSmm ? shown.filter((t) => MAIN.includes(t.key)) : shown;
   const extra = isSmm ? shown.filter((t) => !MAIN.includes(t.key)) : [];
   const extraActive = extra.some((t) => t.key === tab);
@@ -156,6 +160,7 @@ export default function Smm() {
       {tab === "dashboard" && <DashboardTab />}
       {tab === "calendar" && <CalendarTab />}
       {tab === "plan" && <ContentPlan />}
+      {tab === "board" && <BoardTab />}
       {tab === "canalytics" && <ContentAnalytics />}
       {tab === "inbox" && <InboxTab />}
       {tab === "attribution" && <AttributionTab />}
@@ -356,6 +361,326 @@ function ContentRowCard({
         </span>
       )}
     </button>
+  );
+}
+
+// ==================================================== Holat doskasi
+/* KANBAN (2026-09-26). Jahongir: "xuddi LID bolimidagiga oxshab har
+   bir kontentni holatni o'tkizadigan qilib qoyish kerak qaysi holatga
+   kelganini qo'lda surib o'tkizib qoya oladigan bo'lsa yaxshi
+   bo'ladi". Leads.tsx dagi kabi HTML5 drag&drop: kartani ustunga
+   tashlasangiz POST /content/{id}/status chaqiriladi (rozilik
+   tekshiruvi va audit backendda — bu yerda chetlab o'tilmaydi).
+   "Bekor qilingan" ustuni standart yashirin — ma'lumot o'chmaydi. */
+function BoardTab() {
+  const [meta, setMeta] = useState<ContentMeta | null>(null);
+  const [rows, setRows] = useState<ContentRow[] | null>(null);
+  const [dragId, setDragId] = useState<number | null>(null);
+  const [over, setOver] = useState<string | null>(null);
+  const [open, setOpen] = useState<number | null>(null);
+  const [platform, setPlatform] = useState("");
+  const [q, setQ] = useState("");
+  const [showCancelled, setShowCancelled] = useState(false);
+  const [err, setErr] = useState("");
+  const [ok, setOk] = useState("");
+  const [urgent, setUrgent] = useState(false);
+
+  // Oxirgi 60 kun + kelajak: eski yopilgan postlar doskani to'ldirmasin
+  const from = new Date(Date.now() - 60 * 86400000).toISOString().slice(0, 10);
+  const load = () => {
+    api
+      .get<ContentList>(`/content?date_from=${from}` +
+        (platform ? `&platform=${platform}` : ""))
+      .then((d) => setRows(d.rows))
+      .catch(() => setRows([]));
+  };
+  useEffect(() => {
+    api.get<ContentMeta>("/content-meta").then(setMeta);
+  }, []);
+  useEffect(load, [platform]);
+
+  if (!meta || !rows)
+    return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
+
+  const moveTo = async (c: ContentRow, status: string) => {
+    if (c.status === status) return;
+    const st = meta.statuses.find((s) => s.key === status);
+    const prev = rows;
+    // Darrov ko'chadi (optimistik), xato bo'lsa joyiga qaytadi
+    setRows(rows.map((r) => r.id === c.id
+      ? { ...r, status, status_label: st?.label || status,
+          tone: st?.tone || r.tone }
+      : r));
+    setErr("");
+    try {
+      await api.post(`/content/${c.id}/status`, { status });
+      load();
+    } catch (e) {
+      setRows(prev);
+      setErr(`«${c.title}»: ` +
+        (e instanceof Error ? e.message : "holat o'zgarmadi"));
+    }
+  };
+
+  const needle = q.trim().toLowerCase();
+  const shownRows = needle
+    ? rows.filter((r) => (r.title || "").toLowerCase().includes(needle)
+        || (r.owner || "").toLowerCase().includes(needle))
+    : rows;
+  const cols = meta.statuses.filter(
+    (s) => showCancelled || s.key !== "cancelled");
+  const cancelledCount = rows.filter((r) => r.status === "cancelled").length;
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-2 mb-3">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Qidirish: mavzu yoki mas'ul"
+          className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm w-56"
+        />
+        <select
+          className="rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm bg-white"
+          value={platform}
+          onChange={(e) => setPlatform(e.target.value)}
+        >
+          <option value="">Barcha platformalar</option>
+          {meta.platforms.map((p) => (
+            <option key={p.key} value={p.key}>{p.label}</option>
+          ))}
+        </select>
+        <label className="flex items-center gap-1.5 text-xs text-slate-500">
+          <input type="checkbox" checked={showCancelled}
+            onChange={(e) => setShowCancelled(e.target.checked)} />
+          Bekor qilinganlar ({cancelledCount})
+        </label>
+        <div className="flex-1" />
+        <span className="text-xs text-slate-400">
+          Kartani sichqoncha bilan kerakli ustunga suring
+        </span>
+        <button
+          onClick={() => setUrgent(true)}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium"
+        >
+          <AlertTriangle size={14} /> Favqulodda o'zgarish
+        </button>
+      </div>
+      {urgent && (
+        <UrgentChange
+          rows={rows.filter((r) => r.status !== "cancelled")}
+          platforms={meta.platforms}
+          onClose={() => setUrgent(false)}
+          onDone={(m) => { setUrgent(false); setErr(""); setOk(m); load(); }}
+        />
+      )}
+      {ok && (
+        <div className="mb-3 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200 text-[13px] text-emerald-800 flex items-start gap-2">
+          <span className="flex-1">{ok}</span>
+          <button onClick={() => setOk("")}><X size={14} /></button>
+        </div>
+      )}
+      {err && (
+        <div className="mb-3 px-3 py-2 rounded-lg bg-red-50 border border-red-200 text-[13px] text-red-700 flex items-start gap-2">
+          <span className="flex-1">{err}</span>
+          <button onClick={() => setErr("")}><X size={14} /></button>
+        </div>
+      )}
+
+      <div className="flex gap-3 overflow-x-auto pb-4">
+        {cols.map((st) => {
+          const items = shownRows.filter((r) => r.status === st.key);
+          return (
+            <div
+              key={st.key}
+              data-col={st.key}
+              onDragOver={(e) => { e.preventDefault(); setOver(st.key); }}
+              onDragLeave={() => setOver((s) => (s === st.key ? null : s))}
+              onDrop={(e) => {
+                e.preventDefault();
+                setOver(null);
+                const c = rows.find((r) => r.id === dragId);
+                if (c) moveTo(c, st.key);
+                setDragId(null);
+              }}
+              className={`w-60 shrink-0 rounded-xl p-2 transition ${
+                over === st.key
+                  ? "bg-brand-50/70 ring-2 ring-brand-300" : "bg-slate-50"
+              }`}
+            >
+              <div className="flex items-center justify-between px-1.5 py-1.5 mb-1">
+                <span className={`rounded-md px-2 py-0.5 text-xs font-semibold ${
+                  TONE[st.tone] || TONE.slate}`}>
+                  {st.label}
+                </span>
+                <span className="text-xs font-medium text-slate-400">
+                  {items.length}
+                </span>
+              </div>
+              <div className="space-y-2 min-h-[60px]">
+                {items.map((c) => (
+                  <div
+                    key={c.id}
+                    draggable
+                    onDragStart={(e) => {
+                      setDragId(c.id);
+                      e.dataTransfer.effectAllowed = "move";
+                    }}
+                    onDragEnd={() => setDragId(null)}
+                    onClick={() => setOpen(c.id)}
+                    className={`cursor-grab active:cursor-grabbing rounded-lg border p-2.5 text-left bg-white hover:border-brand-400 transition ${
+                      dragId === c.id ? "opacity-40" : ""
+                    } ${c.blocked ? "border-red-200" : "border-slate-200"}`}
+                  >
+                    <p className="text-[13px] font-medium text-slate-800 leading-snug">
+                      {c.title}
+                    </p>
+                    <p className="text-[11px] text-slate-400 mt-1">
+                      {c.planned_date ? formatDate(c.planned_date) : "Sanasiz"}
+                      {c.planned_time ? ` · ${c.planned_time}` : ""}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-1 mt-1.5">
+                      {c.priority === "urgent" && (
+                        <span className="px-1.5 py-0.5 rounded text-[10px] bg-red-600 text-white">
+                          Favqulodda
+                        </span>
+                      )}
+                      <span className={`px-1.5 py-0.5 rounded text-[10px] ${
+                        TONE[c.platform_tone] || TONE.slate}`}>
+                        {c.platform_label}
+                      </span>
+                      {c.owner && (
+                        <span className="text-[10px] text-slate-500">{c.owner}</span>
+                      )}
+                      {c.warnings.length > 0 && (
+                        <span className="flex items-center gap-0.5 text-[10px] text-red-600"
+                          title={c.warnings.map((w) => w.text).join("\n")}>
+                          <AlertTriangle size={10} /> {c.warnings.length}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+                {items.length === 0 && (
+                  <p className="text-xs text-slate-300 text-center py-4">Bo'sh</p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {open !== null && (
+        <ContentCard id={open} onClose={() => { setOpen(null); load(); }} />
+      )}
+    </div>
+  );
+}
+
+/** Favqulodda o'zgarish oynasi: yangi post / ko'chirish / bekor qilish.
+ *  Sabab majburiy — backend (/api/smm/urgent) ham tekshiradi. */
+function UrgentChange({
+  rows, platforms, onClose, onDone,
+}: {
+  rows: ContentRow[];
+  platforms: { key: string; label: string }[];
+  onClose: () => void;
+  onDone: (msg: string) => void;
+}) {
+  const today = new Date().toISOString().slice(0, 10);
+  const [action, setAction] = useState<"add" | "move" | "cancel">("add");
+  const [title, setTitle] = useState("");
+  const [platform, setPlatform] = useState("instagram");
+  const [cid, setCid] = useState<number | "">("");
+  const [pd, setPd] = useState(today);
+  const [time, setTime] = useState("");
+  const [reason, setReason] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const submit = async () => {
+    setErr("");
+    if (reason.trim().length < 3) { setErr("Sababini yozing"); return; }
+    if (action === "add" && !title.trim()) { setErr("Mavzuni yozing"); return; }
+    if (action !== "add" && !cid) { setErr("Postni tanlang"); return; }
+    setBusy(true);
+    try {
+      await api.post("/smm/urgent", {
+        action, reason, title, platform,
+        content_id: cid || null,
+        planned_date: pd, planned_time: time || null,
+      });
+      onDone(action === "add" ? "Favqulodda post qo'shildi"
+        : action === "move" ? "Post ko'chirildi" : "Post bekor qilindi");
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally { setBusy(false); }
+  };
+
+  const inp = "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm";
+  return (
+    <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center p-4"
+      onClick={onClose}>
+      <div className="bg-white rounded-2xl w-full max-w-md p-5 space-y-3"
+        onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-slate-900">Favqulodda o'zgarish</h3>
+          <button onClick={onClose}><X size={16} /></button>
+        </div>
+        <div className="flex gap-1.5">
+          {([["add", "Yangi post"], ["move", "Ko'chirish"],
+             ["cancel", "Bekor qilish"]] as const).map(([k, l]) => (
+            <button key={k} onClick={() => setAction(k)}
+              className={`flex-1 px-2 py-1.5 rounded-lg text-sm border ${
+                action === k ? "border-red-300 bg-red-50 text-red-700 font-medium"
+                  : "border-slate-200 text-slate-600"}`}>
+              {l}
+            </button>
+          ))}
+        </div>
+        {action === "add" ? (
+          <>
+            <input className={inp} placeholder="Post mavzusi"
+              value={title} onChange={(e) => setTitle(e.target.value)} />
+            <select className={inp} value={platform}
+              onChange={(e) => setPlatform(e.target.value)}>
+              {platforms.map((p) => (
+                <option key={p.key} value={p.key}>{p.label}</option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <select className={inp} value={cid}
+            onChange={(e) => setCid(e.target.value ? Number(e.target.value) : "")}>
+            <option value="">Postni tanlang…</option>
+            {rows.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.planned_date ? formatDate(r.planned_date) + " · " : ""}{r.title}
+              </option>
+            ))}
+          </select>
+        )}
+        {action !== "cancel" && (
+          <div className="flex gap-2">
+            <input type="date" className={inp} value={pd}
+              onChange={(e) => setPd(e.target.value)} />
+            <Time24Input value={time} onChange={(e) => setTime(e.target.value)} />
+          </div>
+        )}
+        <textarea className={inp} rows={2}
+          placeholder="Sabab (majburiy): nega reja o'zgaryapti?"
+          value={reason} onChange={(e) => setReason(e.target.value)} />
+        {err && <p className="text-sm text-red-600">{err}</p>}
+        <button onClick={submit} disabled={busy}
+          className="w-full py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium disabled:opacity-50">
+          {busy ? "Saqlanmoqda…" : "Tasdiqlash"}
+        </button>
+        <p className="text-[11px] text-slate-400">
+          Hech narsa o'chmaydi: eski sana va holat tarixda qoladi,
+          rahbar auditda ko'radi.
+        </p>
+      </div>
+    </div>
   );
 }
 

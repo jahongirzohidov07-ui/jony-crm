@@ -909,6 +909,17 @@ try:
 except Exception:
     pass
 
+# Avgust 2026 test kontent-rejasidagi kechikkan postlar bekor qilinsin
+# (O'CHIRILMAYDI; bir martalik). 2026-09-26, Jahongir: "avgust oyidagi
+# kontent plandagi kechikkanlarni olib tashla".
+try:
+    from sqlalchemy.orm import Session as _VS19
+    from content import cancel_aug_test_content as _catc
+    with _VS19(engine) as _db19:
+        _catc(_db19)
+except Exception:
+    pass
+
 # Nomzodning lavozimi va fani izoh matnidan alohida maydonga
 # ko'chirilsin (bir martalik, 2026-08-15)
 try:

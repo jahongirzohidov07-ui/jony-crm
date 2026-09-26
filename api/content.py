@@ -2536,3 +2536,150 @@ def import_plan(payload: dict = Body(...),
     db.commit()
     return {"added": len(made), "skipped": len(skipped), "bad": bad,
             "year": y, "month": m}
+
+
+# =====================================================================
+#  AVGUST TEST REJASINI YOPISH (2026-09-26)
+#
+#  Jahongir: "avgust oyidagi kontent plandagi kechikkanlarni olib
+#  tashla uni men shunchaki tekshirish uchun qilganman".
+#
+#  O'CHIRILMAYDI ("hech narsa o'chirilmasin"). Avgust 2026 dagi,
+#  hali chiqmagan (ochiq holatdagi) kontentlar "cancelled" holatiga
+#  o'tadi: ro'yxat, doska va "Kechikkanlar" ogohlantirishidan chiqadi.
+#  Har biriga ContentVersion(field="status") yoziladi — eski holat
+#  tarixda turadi, "Holat doskasi"da "Bekor qilinganlar"ni yoqib
+#  istalganini qaytarib surish mumkin. Bir martalik (SeedMark).
+# =====================================================================
+_AUG_TEST_KEY = "smm_aug2026_test_cancel_v1"
+_AUG_TEST_NOTE = ("Avgust test rejasi — asoschi so'rovi bilan bekor "
+                  "qilindi (2026-09-26). O'chirilmagan.")
+
+
+def cancel_aug_test_content(db: Session) -> int:
+    import common as _cm
+    if _cm._seed_done(db, _AUG_TEST_KEY):
+        return 0
+    n = 0
+    try:
+        rows = (db.query(models.Content)
+                .filter(models.Content.planned_date >= date(2026, 8, 1),
+                        models.Content.planned_date <= date(2026, 8, 31),
+                        ~models.Content.status.in_(
+                            list(roles.CONTENT_LIVE) + ["cancelled"]))
+                .all())
+        for c in rows:
+            db.add(models.ContentVersion(
+                content_id=c.id, field="status", old_value=c.status,
+                new_value="cancelled", changed_by="Tizim (avgust test)"))
+            c.status = "cancelled"
+            c.note = ((c.note + "\n") if c.note else "") + _AUG_TEST_NOTE
+            n += 1
+        db.commit()
+    except Exception:
+        db.rollback()
+        return 0
+    try:
+        if n:
+            audit.log(db, None, entity="content", action="update",
+                      note=f"Avgust 2026 test kontent-rejasidan {n} ta "
+                           "kechikkan post bekor qilindi (o'chirilmadi)",
+                      commit=True)
+    except Exception:
+        db.rollback()
+    _cm._seed_mark(db, _AUG_TEST_KEY)
+    return n
+
+
+# =====================================================================
+#  FAVQULODDA O'ZGARISH (2026-09-26)
+#
+#  Jahongir: "SMM manager ozi ham kontent planga ozgarishlar
+#  favqulotta ozgarishlar qosha olsin".
+#
+#  Bitta tugma, uch xil ish:
+#    add    — rejada yo'q shoshilinch post qo'shish (masalan bugunga)
+#    move   — mavjud postni boshqa kunga surish
+#    cancel — postni bekor qilish (o'chirilmaydi)
+#  Sabab MAJBURIY. Hammasi priority="urgent" belgisi, ContentVersion
+#  (field="urgent") va audit bilan — keyin "nega reja o'zgardi?"
+#  degan savolga javob bor.
+# =====================================================================
+@router.post("/api/smm/urgent")
+def smm_urgent_change(
+    payload: dict = Body(...),
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SMM_ACCESS)),
+):
+    action = (payload.get("action") or "").strip()
+    reason = (payload.get("reason") or "").strip()
+    if action not in ("add", "move", "cancel"):
+        raise HTTPException(400, "Amal: add / move / cancel")
+    if len(reason) < 3:
+        raise HTTPException(400, "Favqulodda o'zgarish sababini yozing")
+
+    def _d(v):
+        try:
+            return date.fromisoformat(str(v)[:10]) if v else None
+        except ValueError:
+            raise HTTPException(400, "Sana noto'g'ri")
+
+    if action == "add":
+        title = (payload.get("title") or "").strip()
+        if not title:
+            raise HTTPException(400, "Post mavzusini yozing")
+        pd = _d(payload.get("planned_date")) or roles.local_today()
+        platform = payload.get("platform") or "instagram"
+        if platform not in roles.PLATFORM_LABELS:
+            platform = "instagram"
+        c = models.Content(
+            title=title, planned_date=pd,
+            planned_time=(payload.get("planned_time") or None),
+            platform=platform, status="idea", priority="urgent",
+            branch_id=payload.get("branch_id") or user.branch_id,
+            owner_id=user.id, created_by=user.full_name,
+            note=f"FAVQULODDA: {reason}")
+        db.add(c)
+        db.commit()
+        db.refresh(c)
+        c.content_id = _content_code(c)
+        db.add(models.ContentVersion(
+            content_id=c.id, field="urgent", old_value=None,
+            new_value=f"Qo'shildi: {reason}", changed_by=user.full_name))
+        db.commit()
+    else:
+        cid = payload.get("content_id")
+        c = db.query(models.Content).get(int(cid)) if cid else None
+        if not c:
+            raise HTTPException(404, "Kontent topilmadi")
+        if action == "move":
+            nd = _d(payload.get("planned_date"))
+            if not nd:
+                raise HTTPException(400, "Yangi sanani tanlang")
+            db.add(models.ContentMove(
+                content_id=c.id, from_date=c.planned_date, to_date=nd,
+                reason=f"FAVQULODDA: {reason}", moved_by=user.full_name))
+            db.add(models.ContentVersion(
+                content_id=c.id, field="urgent",
+                old_value=c.planned_date.isoformat() if c.planned_date else None,
+                new_value=f"Ko'chirildi {nd.isoformat()}: {reason}",
+                changed_by=user.full_name))
+            c.planned_date = nd
+            if payload.get("planned_time"):
+                c.planned_time = payload.get("planned_time")
+        else:
+            db.add(models.ContentVersion(
+                content_id=c.id, field="urgent", old_value=c.status,
+                new_value=f"Bekor qilindi: {reason}",
+                changed_by=user.full_name))
+            c.status = "cancelled"
+        c.priority = "urgent"
+        c.note = ((c.note + "\n") if c.note else "") + f"FAVQULODDA: {reason}"
+        db.commit()
+
+    audit.log(db, user, entity="content", action="urgent", entity_id=c.id,
+              entity_label=c.title, new_value=action,
+              note=f"Favqulodda o'zgarish ({action}): {reason}",
+              branch_id=c.branch_id)
+    db.commit()
+    return _content_out(db, c, full=True)

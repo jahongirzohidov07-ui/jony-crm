@@ -1248,9 +1248,11 @@ def dashboard_v2(branch_id: int | None = None,
             1 for p in pays if firsts.get(p.student_id) == p.created_at
         )
 
+    # O'quvchi/ota-ona hisoblari xodim emas (2026-09-26)
     staff_count = scope_to_branch(
         db.query(models.User), models.User, user, branch_id
-    ).filter(models.User.is_active == 1).count()
+    ).filter(models.User.is_active == 1,
+             models.User.role.notin_(tuple(roles.EXTERNAL_ROLES))).count()
 
     # 2026-08-15: ilgari HAR O'QUVCHIGA alohida balans so'rovi ketardi —
     # 700 o'quvchi = 700 so'rov, Dashboard shu sababdan sekin edi.

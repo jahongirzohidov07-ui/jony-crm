@@ -1064,7 +1064,8 @@ def hr_dates(
     rows = _staff_dates(db, user, days=max(1, min(days, 366)))
 
     staff = scope_to_branch(db.query(models.User), models.User, user).filter(
-        models.User.is_active == 1).all()
+        models.User.is_active == 1,
+        models.User.role.notin_(tuple(roles.EXTERNAL_ROLES))).all()
     no_birth = [u.full_name for u in staff if not u.birth_date]
     no_hired = [u.full_name for u in staff if not u.hired_date]
 
@@ -2514,8 +2515,10 @@ def hr_overview(db: Session = Depends(get_db),
     today = roles.local_today()
     soon = today + timedelta(days=roles.DOCUMENT_WARN_DAYS)
 
+    # O'quvchi/ota-ona hisoblari xodim emas (2026-09-26)
     staff = db.query(models.User).filter(
-        models.User.is_active == 1).count()
+        models.User.is_active == 1,
+        models.User.role.notin_(tuple(roles.EXTERNAL_ROLES))).count()
     open_vac = db.query(models.Vacancy).filter(
         models.Vacancy.status.in_(tuple(roles.VACANCY_OPEN_STATES))
     ).count() if hasattr(roles, "VACANCY_OPEN_STATES") else 0

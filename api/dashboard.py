@@ -82,9 +82,11 @@ def dashboard(
             1 for p in pays if firsts.get(p.student_id) == p.created_at
         )
 
+    # O'quvchi/ota-ona hisoblari xodim emas (2026-09-26)
     staff_count = scope_to_branch(
         db.query(models.User), models.User, user, branch_id
-    ).filter(models.User.is_active == 1).count()
+    ).filter(models.User.is_active == 1,
+             models.User.role.notin_(tuple(roles.EXTERNAL_ROLES))).count()
 
     _bal = _balances_bulk(db, student_ids)
     total_debt = sum(b for b in _bal.values() if b < 0)

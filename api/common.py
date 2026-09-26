@@ -4547,11 +4547,18 @@ def _my_hr_cards(db: Session, user: models.User,
     hired = [c for c in cands if c.stage == "hired"]
     open_vac = db.query(models.Vacancy).filter(
         models.Vacancy.status == "open").count()
-    staff = db.query(models.User).filter(models.User.is_active == 1).count()
+    # Faqat XODIMLAR (2026-09-26, Jahongir: "dashboarda xodimlar
+    # notogri korinyabdi hrga faqat xodimlar ko'rinsin o'quvchilar ham
+    # qoshilib ketgan"). O'quvchi va ota-onaning ham ilova hisobi
+    # (users) bor — ular xodim emas.
+    staff_q = db.query(models.User).filter(
+        models.User.is_active == 1,
+        models.User.role.notin_(tuple(roles.EXTERNAL_ROLES)))
+    staff = staff_q.count()
 
     # Onboardingi tugamagan xodimlar
     unfinished = 0
-    for u in db.query(models.User).filter(models.User.is_active == 1).all():
+    for u in staff_q.all():
         rows = _onboarding_rows(db, u.id)
         if any(r["done"] for r in rows) and not all(r["done"] for r in rows):
             unfinished += 1
@@ -4907,7 +4914,8 @@ def _staff_dates(db: Session, user: models.User, *,
     Bugundan boshlab `days` kun ichidagilari, eng yaqini birinchi."""
     today = date.today()
     staff = scope_to_branch(db.query(models.User), models.User, user).filter(
-        models.User.is_active == 1).all()
+        models.User.is_active == 1,
+        models.User.role.notin_(tuple(roles.EXTERNAL_ROLES))).all()
 
     rows = []
     for u in staff:

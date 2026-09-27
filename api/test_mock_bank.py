@@ -29,6 +29,7 @@ if os.path.exists(_DB):
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
+import json                                         # noqa: E402
 import models                                       # noqa: E402
 import exam_online                                  # noqa: E402
 import mock_seed                                    # noqa: E402
@@ -280,6 +281,36 @@ ck("akademiya Reading bazasi bilan aralashmaydi",
 ck("challenge uchun avtomat band yo'q (savol soni har xil)",
    exam_online.mock_band(exam_online._load(chrow.parts), 30, 40), None)
 
+
+print(chr(10) + "=== G. ESKI SHABLONLARGA KO'NIKMA BELGISI ===")
+# Ko'nikma belgisi 2026-09-26 da qo'shilgan; undan oldin yozilgan
+# shablonlarda u yo'q va "Mock testlar" jadvali noto'g'ri guruhlanardi
+# (CEFR bo'limlari yo'qolib, IELTS "?" bo'lib chiqardi).
+ck("sarlavhadan ko'nikma aniqlanadi",
+   [mock_seed.skill_from_template(lv, t) for lv, t in [
+       ("ielts_graduation", "IELTS Mock - Listening - Variant A"),
+       ("cefr", "CEFR Multilevel Mock - Reading - Variant B"),
+       ("ielts_intro", "Reading Challenge - Day 3 (3 matn)"),
+       ("cefr", "CEFR Multilevel Mock - Speaking - Variant J"),
+   ]],
+   ["ielts_listening", "cefr_reading", "challenge25_reading", "cefr_speaking"])
+
+_rows = db.query(models.ExamTemplate).filter_by(kind="mock").all()
+for _t in _rows[:6]:
+    _p = exam_online._load(_t.parts)
+    for _x in _p:
+        _x.pop("skill", None)
+    _t.parts = json.dumps(_p, ensure_ascii=False)
+db.commit()
+ck("belgisiz shablon guruhlanmaydi",
+   exam_online._mock_section(exam_online._load(
+       db.query(models.ExamTemplate).filter_by(kind="mock").first().parts)) or "?",
+   "?")
+ck("migratsiya belgini tiklaydi", mock_seed.backfill_skills(db) >= 1, True)
+ck("tiklangach guruhlash to'g'ri",
+   sorted({s["section"] for b in exam_online.mock_banks(db, _G())
+           for s in b["sections"]}),
+   ["listening", "reading", "speaking", "writing"])
 db.close()
 print(f"\nJAMI XATO: {len(fails)} {fails[:8]}")
 sys.exit(1 if fails else 0)

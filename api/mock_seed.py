@@ -70,6 +70,48 @@ def _files() -> list:
     return out
 
 
+def skill_from_template(level, title) -> str:
+    """Shablon sarlavhasi va darajasidan ko'nikma belgisi.
+
+    Eski yozuvlarda bo'limlarda "skill" maydoni yo'q edi (u 2026-09-26
+    da qo'shildi), shuning uchun ular guruhlashda bir-biriga qo'shilib
+    ketardi: CEFR bo'limlari yo'qolib, IELTS "?" bo'lib chiqardi.
+    """
+    t = (title or "").lower()
+    if "challenge" in t:
+        bank = "challenge25"
+    elif (level or "") == "cefr":
+        bank = "cefr"
+    else:
+        bank = "ielts"
+    for sec in ("listening", "reading", "writing", "speaking"):
+        if sec in t:
+            return f"{bank}_{sec}"
+    return ""
+
+
+def backfill_skills(db: Session) -> int:
+    """Eski mock shablonlariga ko'nikma belgisini yozadi."""
+    import exam_online as _eo
+    n = 0
+    for t in (db.query(models.ExamTemplate)
+              .filter(models.ExamTemplate.kind == "mock").all()):
+        parts = _eo._load(t.parts)
+        if not parts or all((p.get("skill") or "").strip() for p in parts):
+            continue
+        sk = skill_from_template(t.level, t.title)
+        if not sk:
+            continue
+        for part in parts:
+            if not (part.get("skill") or "").strip():
+                part["skill"] = sk
+        t.parts = json.dumps(parts, ensure_ascii=False)
+        n += 1
+    if n:
+        db.commit()
+    return n
+
+
 def seed_mocks(db: Session) -> None:
     """Mock shablonlarini bazaga bir marta yozadi. Kalit belgilangach
     qayta yozilmaydi — examinerlar boshlig'i CRM'da o'zi tahrirlaydi."""
@@ -100,6 +142,18 @@ def seed_mocks(db: Session) -> None:
         except Exception as e:          # noqa: BLE001
             db.rollback()
             print(f"[seed] eski CEFR Speaking: {e}")
+
+    # KO'NIKMA BELGISINI TO'LDIRISH (2026-09-27). Bazadagi eski
+    # shablonlarda bu maydon yo'q — ularsiz "Mock testlar" jadvali
+    # noto'g'ri guruhlanardi. Har startda tekshiriladi (arzon:
+    # belgisi bor yozuvlar chetlab o'tiladi).
+    try:
+        n = backfill_skills(db)
+        if n:
+            print(f"[seed] mock shablonlariga ko'nikma belgisi: {n}")
+    except Exception as e:          # noqa: BLE001
+        db.rollback()
+        print(f"[seed] ko'nikma belgisi: {e}")
 
     for tpl in _files():
         parts = None

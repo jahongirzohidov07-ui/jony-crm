@@ -523,6 +523,103 @@ def _validate_tpl(p: TemplateIn):
         raise HTTPException(400, "Nomini yozing")
 
 
+# ---------------------------------------------------- mock bazalari
+# Jahongir (2026-09-27): "mock testlarni imtihon bo'limiga o'tkazasan
+# IELTS va CEFR nikini". Bir joyda: qaysi bazada nechta variant bor,
+# nechta savol avtomat tekshiriladi va NATIJA QANDAY CHIQADI —
+# kamchiliklar yashirin qolmasin.
+_BANK_LABELS = {
+    "ielts": "IELTS Academic",
+    "cefr": "CEFR Multilevel",
+    "challenge25": "Reading Challenge (25 kun)",
+}
+
+# Har bo'lim qanday baholanadi. "auto" — tizim o'zi chiqaradi.
+_GRADING = {
+    ("ielts", "listening"): (
+        True, "Xom ball (40 tadan) rasmiy IELTS jadvali bo'yicha "
+              "bandga o'giriladi va guruh jadvaliga o'zi tushadi."),
+    ("ielts", "reading"): (
+        True, "Xom ball (40 tadan) rasmiy Academic Reading jadvali "
+              "bo'yicha bandga o'giriladi."),
+    ("ielts", "writing"): (
+        False, "Examiner o'qib bandni (0-9) qog'oz balida kiritadi."),
+    ("ielts", "speaking"): (
+        False, "Yuzma-yuz o'tkaziladi, band (0-9) qo'lda kiritiladi."),
+    ("cefr", "listening"): (
+        False, "RASMIY USUL — Rasch metodi: ball savollar kalibrovkasiga "
+               "va guruh statistikasiga bog'liq, qat'iy jadval yo'q. "
+               "Tizim faqat TAXMINIY daraja ko'rsatadi (C1 28-35, "
+               "B2 18-27, B1 10-17), ballni examiner qo'yadi."),
+    ("cefr", "reading"): (
+        False, "Tinglab tushunish bilan bir xil: Rasch metodi, taxminiy "
+               "daraja ko'rsatiladi, ballni examiner qo'yadi."),
+    ("cefr", "writing"): (
+        False, "Uch topshiriq: 1.1 (0-5) + 1.2 (0-6) + Part 2 (0-6) = "
+               "17 xom ball. To'liq xom ball -> ball jadvali hali yo'q "
+               "(ma'lumi: 8 -> 45, 12 -> 57), shuning uchun ballni "
+               "examiner kiritadi."),
+    ("cefr", "speaking"): (
+        False, "8 element = 21 xom ball; rasmiy jadval bo'yicha 0-75 "
+               "ball. Jadval shablon ichida, ballni examiner kiritadi."),
+    ("challenge25", "reading"): (
+        False, "Savollar avtomat tekshiriladi, lekin to'plamlarda savol "
+               "soni har xil (13 tadan 83 tagacha) — 40 ballik IELTS "
+               "jadvali to'g'ri kelmaydi, shuning uchun band "
+               "yozilmaydi. Xom ball examinerda ko'rinadi."),
+}
+
+
+@router.get("/api/mock-banks")
+def mock_banks(db: Session = Depends(get_db),
+               user=Depends(require_role(*RESULT_ROLES))):
+    """Mock bazalarining qisqacha ko'rinishi: qaysi imtihon, qaysi
+    bo'lim, nechta variant, nechta avtomat savol va natija qanday
+    chiqadi."""
+    rows = (db.query(models.ExamTemplate)
+            .filter(models.ExamTemplate.kind == "mock",
+                    models.ExamTemplate.is_active == 1).all())
+    banks: dict = {}
+    for t in rows:
+        parts = _load(t.parts)
+        skill = _mock_section(parts)
+        bank, _, sec = skill.partition("_")
+        if not sec:
+            bank, sec = "ielts", skill or "?"
+        b = banks.setdefault(bank, {})
+        s = b.setdefault(sec, {"variants": set(), "levels": set(),
+                               "qs": [], "paper_max": set()})
+        s["variants"].add(t.variant or "A")
+        if t.level:
+            s["levels"].add(t.level)
+        s["paper_max"].add(float(t.paper_max or 0))
+        n = sum(1 for q in _questions(parts) if q.get("type") != "essay")
+        s["qs"].append(n)
+    out = []
+    for bank in sorted(banks):
+        secs = []
+        for sec in sorted(banks[bank]):
+            s = banks[bank][sec]
+            auto, note = _GRADING.get((bank, sec), (False, ""))
+            qs = s["qs"] or [0]
+            secs.append({
+                "section": sec,
+                "variants": sorted(s["variants"]),
+                "levels": sorted(s["levels"]),
+                # To'plamlarda savol soni har xil bo'lishi mumkin
+                # (challenge25) — shuning uchun oralig'i ham beriladi
+                "questions": min(qs),
+                "questions_max": max(qs),
+                "paper_max": max(s["paper_max"]) if s["paper_max"] else 0,
+                "auto": auto,
+                "grading": note,
+            })
+        out.append({"bank": bank,
+                    "label": _BANK_LABELS.get(bank, bank),
+                    "sections": secs})
+    return out
+
+
 @router.get("/api/exam-templates")
 def list_templates(level: Optional[str] = None, kind: Optional[str] = None,
                    db: Session = Depends(get_db),

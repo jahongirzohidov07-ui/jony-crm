@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { ClipboardCheck } from "lucide-react";
+import { ClipboardCheck, Check, Hand } from "lucide-react";
+import { api } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
   EXAM_VIEW, EXAM_ACCESS, EXAM_EDIT, EXAM_ORDER_ACCEPT, can,
@@ -23,7 +24,121 @@ import { ExamsTab, AnalysisTab } from "./Audit";
  *   Buyurtmalar       — ustozlardan kelgan imtihon so'rovlari
  *   Test bazasi       — savollar banki (mock, unit, mid, end)
  */
-type Tab = "exams" | "analysis" | "orders" | "bank";
+type Tab = "exams" | "analysis" | "orders" | "bank" | "mock";
+
+/** Mock bazalari: qaysi imtihon, qaysi bo'lim, natija qanday chiqadi. */
+type MockSection = {
+  section: string;
+  variants: string[];
+  levels: string[];
+  questions: number;
+  questions_max: number;
+  paper_max: number;
+  auto: boolean;
+  grading: string;
+};
+type MockBank = { bank: string; label: string; sections: MockSection[] };
+
+const SEC_LABEL: Record<string, string> = {
+  listening: "Listening",
+  reading: "Reading",
+  writing: "Writing",
+  speaking: "Speaking",
+};
+
+/**
+ * MOCK TESTLAR (2026-09-27, Jahongir: "mock testlarni imtihon
+ * bo'limiga o'tkazasan IELTS va CEFR nikini").
+ *
+ * Bu yerda har bazaning natijasi QANDAY chiqishi ochiq yozilgan —
+ * qaysi bo'lim avtomat bandga o'giriladi, qaysinisini examiner
+ * qo'lda qo'yadi va nima uchun. Kamchilik yashirin qolmasin.
+ */
+function MockTab() {
+  const [rows, setRows] = useState<MockBank[] | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    api
+      .get<MockBank[]>("/mock-banks")
+      .then(setRows)
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  }, []);
+
+  if (err) return <p className="text-sm text-rose-600 py-6">{err}</p>;
+  if (!rows) return <p className="text-sm text-slate-400 py-6">Yuklanmoqda…</p>;
+  if (!rows.length) {
+    return (
+      <p className="text-sm text-slate-500 py-6">
+        Mock shablonlari hali bazaga yozilmagan.
+      </p>
+    );
+  }
+
+  return (
+    <div className="space-y-5">
+      <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
+        Mockni o'tkazish uchun: guruhni oching → <b>Imtihonlar</b> →
+        "Yangi test" → turi <b>Mock test</b> → test qatoridan
+        <b> online link</b> oching va shu yerdagi variantlardan birini
+        tanlang. Listening bo'lsa skriptni examiner ovoz chiqarib o'qiydi.
+      </p>
+
+      {rows.map((b) => (
+        <div key={b.bank} className="border border-slate-200 rounded-xl bg-white overflow-hidden">
+          <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+            <h2 className="font-semibold text-slate-800">{b.label}</h2>
+          </div>
+          <table className="w-full text-sm">
+            <thead className="text-slate-500 text-xs uppercase">
+              <tr>
+                <th className="text-left px-4 py-2 font-medium">Bo'lim</th>
+                <th className="text-right px-3 py-2 font-medium">Variant</th>
+                <th className="text-right px-3 py-2 font-medium">Savol</th>
+                <th className="text-left px-4 py-2 font-medium">Natija qanday chiqadi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {b.sections.map((s) => (
+                <tr key={s.section} className="border-t border-slate-100 align-top">
+                  <td className="px-4 py-3 font-medium text-slate-800 whitespace-nowrap">
+                    {SEC_LABEL[s.section] || s.section}
+                  </td>
+                  <td className="px-3 py-3 text-right text-slate-600">
+                    {s.variants.length}
+                    <span className="text-slate-400 text-xs ml-1">
+                      ({s.variants[0]}–{s.variants[s.variants.length - 1]})
+                    </span>
+                  </td>
+                  <td className="px-3 py-3 text-right text-slate-600 whitespace-nowrap">
+                    {s.questions === 0
+                      ? <span className="text-slate-400">qog'ozda</span>
+                      : s.questions === s.questions_max
+                        ? s.questions
+                        : `${s.questions}–${s.questions_max}`}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium mr-2 ${
+                        s.auto
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "bg-amber-50 text-amber-700"
+                      }`}
+                    >
+                      {s.auto ? <Check size={11} /> : <Hand size={11} />}
+                      {s.auto ? "avtomat" : "examiner qo'yadi"}
+                    </span>
+                    <span className="text-slate-600">{s.grading}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function ExamsHub() {
   const { user } = useAuth();
@@ -38,6 +153,7 @@ export default function ExamsHub() {
     { key: "exams", label: "Imtihonlar", show: showExams },
     { key: "analysis", label: "Imtihon tahlili", show: showExams },
     { key: "orders", label: "Buyurtmalar", show: showOrders },
+    { key: "mock", label: "Mock testlar", show: showExams },
     { key: "bank", label: "Test bazasi", show: showBank },
   ];
   const visible = tabs.filter((t) => t.show);
@@ -93,6 +209,7 @@ export default function ExamsHub() {
       {tab === "exams" && <ExamsTab branchId={branchId} />}
       {tab === "analysis" && <AnalysisTab branchId={branchId} />}
       {tab === "orders" && <ExamOrderQueueTab />}
+      {tab === "mock" && <MockTab />}
       {tab === "bank" && <ExamBankTab canEdit={can(user?.role, EXAM_EDIT)} />}
     </div>
   );

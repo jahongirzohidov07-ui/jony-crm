@@ -50,8 +50,25 @@ LR_LEVELS = [
     ("B1 dan quyi", 0, 9),
 ]
 
-# Yozma ish: ekspert ballari o'rtachasi (0-36) -> yakuniy ball (0-75)
-WRITING_TABLE = [
+# ----------------------------------------------------------- yozma ish
+# DIQQAT — IKKI XIL FORMAT BOR (2026-09-27 da aniqlandi).
+#
+# ESKI format (2023 hujjatida tasvirlangan): 1-topshiriq 12 ball +
+# 2-topshiriq 24 ball = 36 xom ball. Quyidagi WRITING_OLD_TABLE
+# aynan shunga tegishli.
+#
+# YANGI format (2025-yil avgust "piloting" dan boshlab, hozir
+# amalda): uchta topshiriq —
+#   Task 1.1  do'stga norasmiy xat, ~50 so'z,      B1,  0-5 ball
+#   Task 1.2  rasmiy javob xati, 120-150 so'z,     B2,  0-6 ball
+#   Part 2    onlayn muhokama posti, 180-200 so'z, C1,  0-6 ball
+# jami 17 xom ball.
+#
+# YANGI FORMATNING to'liq xom ball -> standart ball jadvali menda
+# YO'Q. Bizda faqat rasmiy namuna javoblardagi ikkita tayanch nuqta
+# bor (quyida WRITING_NEW_ANCHORS). Shuning uchun oraliq qiymatlar
+# TAXMIN QILINMAYDI — noto'g'ri raqam bermaslik uchun None qaytadi.
+WRITING_OLD_TABLE = [
     (35.1, 36.0, 75), (34.1, 35.0, 74), (33.1, 34.0, 73), (32.6, 33.0, 72),
     (32.1, 32.5, 71), (31.6, 32.0, 70), (31.1, 31.5, 69), (30.6, 31.0, 68),
     (30.1, 30.5, 67), (29.1, 30.0, 66), (28.1, 29.0, 65), (27.1, 28.0, 64),
@@ -70,7 +87,19 @@ WRITING_TABLE = [
     (2.6, 3.0, 15), (2.1, 2.5, 14), (1.6, 2.0, 13), (1.1, 1.5, 12),
     (0.6, 1.0, 11), (0.1, 0.5, 10),
 ]
-WRITING_RAW_MAX = 36.0
+WRITING_OLD_RAW_MAX = 36.0
+
+# Yangi format: topshiriq -> maksimal ball
+WRITING_NEW_PARTS = [("1.1", 5, "B1", "~50 so'z"),
+                     ("1.2", 6, "B2", "120-150 so'z"),
+                     ("2", 6, "C1", "180-200 so'z")]
+WRITING_NEW_RAW_MAX = sum(p[1] for p in WRITING_NEW_PARTS)      # 17
+
+# Rasmiy namuna javoblardan olingan tayanch nuqtalar
+# ("Sample responses with examiner comments"):
+#   4+2+2 = 8  -> standart 45, daraja B1
+#   5+3+4 = 12 -> standart 57, daraja B2
+WRITING_NEW_ANCHORS = {8: 45, 12: 57}
 
 # Gapirish: 8 baholanadigan element (1-3, 4-6, 7 -> 0-5 dan; 8 -> 0-6)
 # = 21 xom ball. Jadval CHIZIQLI EMAS, shuning uchun aynan shu
@@ -99,20 +128,53 @@ def level_of(score) -> Optional[str]:
     return LEVELS[0][0] if s > 0 else LEVELS[-1][0]
 
 
-def writing_score(raw) -> Optional[int]:
-    """Yozma ish: ekspert ballari o'rtachasi (0-36) -> 0-75."""
+def writing_score_old(raw) -> Optional[int]:
+    """ESKI format (1-topshiriq 12 + 2-topshiriq 24 = 36) xom balldan
+    0-75. Yangi uch topshiriqli formatga YARAMAYDI."""
     try:
         r = float(raw)
     except (TypeError, ValueError):
         return None
     if r <= 0:
         return 0
-    if r > WRITING_RAW_MAX:
+    if r > WRITING_OLD_RAW_MAX:
         return 75
-    for lo, hi, sc in WRITING_TABLE:
+    for lo, hi, sc in WRITING_OLD_TABLE:
         if lo <= r <= hi:
             return sc
     return 0
+
+
+def writing_score_new(raw) -> Optional[int]:
+    """YANGI format (1.1 + 1.2 + 2 = 17) xom balldan standart ball.
+
+    To'liq rasmiy jadval hali qo'limizda yo'q — faqat namuna
+    javoblardagi tayanch nuqtalar aniq. Boshqa qiymatlarda None
+    qaytadi: taxminiy raqam berish o'quvchining darajasini xato
+    ko'rsatib qo'yishi mumkin. Jadval kelgach shu yerga qo'yiladi."""
+    try:
+        r = float(raw)
+    except (TypeError, ValueError):
+        return None
+    if r <= 0:
+        return 0
+    return WRITING_NEW_ANCHORS.get(int(r) if float(r).is_integer() else None)
+
+
+def writing_info(raw) -> dict:
+    """Yangi format uchun examinerga ko'rsatiladigan ma'lumot."""
+    sc = writing_score_new(raw)
+    return {
+        "raw": raw,
+        "raw_max": WRITING_NEW_RAW_MAX,
+        "score": sc,
+        "level": level_of(sc) if sc is not None else None,
+        "exact": sc is not None,
+        "note": ("Rasmiy jadval bo'yicha" if sc is not None else
+                 "Yangi format uchun to'liq xom ball -> standart ball "
+                 "jadvali hali yo'q. Ma'lum nuqtalar: 8 -> 45 (B1), "
+                 "12 -> 57 (B2)."),
+    }
 
 
 def speaking_score(raw) -> Optional[int]:

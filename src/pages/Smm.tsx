@@ -17,6 +17,7 @@ import { useAuth } from "../lib/AuthContext";
 import { Time24Input } from "../components/Time24Input";
 import { ContentPlan, ContentAnalytics } from "../components/ContentPlan";
 import { InstagramPanel } from "../components/InstagramPanel";
+import { InstagramAudience } from "../components/InstagramAudience";
 import { VideoCheck } from "../components/VideoCheck";
 import {
   SMM_ACCESS, IDEA_SUBMIT, CONTENT_REQUESTER, INBOX_ACCESS, can,
@@ -41,7 +42,7 @@ const TONE: Record<string, string> = {
 type Any = any;
 
 type Tab = "dashboard" | "calendar" | "plan" | "board" | "canalytics"
-  | "instagram" | "inbox"
+  | "instagram" | "audience" | "inbox"
   | "attribution" | "ideas" | "requests" | "brand" | "media" | "kb"
   | "report";
 
@@ -55,6 +56,8 @@ const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: "board", label: "Holat doskasi", icon: Table2 },
   { key: "canalytics", label: "Kontent tahlili", icon: TrendingUp },
   { key: "instagram", label: "Instagram", icon: Image },
+  // 2026-09-27: jins, yosh, shahar, faol soatlar — chiroyli grafiklar
+  { key: "audience", label: "Auditoriya", icon: TrendingUp },
   { key: "inbox", label: "Murojaatlar", icon: MessageSquare },
   { key: "attribution", label: "Natija", icon: TrendingUp },
   { key: "ideas", label: "G'oyalar", icon: Lightbulb },
@@ -106,7 +109,7 @@ export default function Smm() {
   // Jahongir: "brendbookni qoldir" — Brend kitob asosiy qatorda.
   // Instagram (2026-09-26): "telegramdan kora bizga instagram muhim".
   const MAIN: Tab[] = ["dashboard", "plan", "board", "canalytics",
-                       "instagram", "brand"];
+                       "instagram", "audience", "brand"];
   const primary = isSmm ? shown.filter((t) => MAIN.includes(t.key)) : shown;
   const extra = isSmm ? shown.filter((t) => !MAIN.includes(t.key)) : [];
   const extraActive = extra.some((t) => t.key === tab);
@@ -175,6 +178,7 @@ export default function Smm() {
       {tab === "plan" && <ContentPlan />}
       {tab === "board" && <BoardTab />}
       {tab === "instagram" && <InstagramPanel />}
+      {tab === "audience" && <InstagramAudience />}
       {tab === "canalytics" && <ContentAnalytics />}
       {tab === "inbox" && <InboxTab />}
       {tab === "attribution" && <AttributionTab />}

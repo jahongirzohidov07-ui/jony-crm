@@ -150,6 +150,7 @@ import wheel as _r_wheel
 import hr_checklist as _r_hr_checklist
 import ig_connect as _r_ig_connect
 import video_check as _r_video_check
+import ig_audience as _r_ig_audience
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -204,6 +205,7 @@ app.include_router(_r_wheel.router)
 app.include_router(_r_hr_checklist.router)
 app.include_router(_r_ig_connect.router)
 app.include_router(_r_video_check.router)
+app.include_router(_r_ig_audience.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:

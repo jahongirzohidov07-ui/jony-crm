@@ -308,10 +308,21 @@ export function InstagramPanel() {
                   <td className="px-2 py-2 text-right">{n(p.comments)}</td>
                   <td className="px-2 py-2 text-right">{n(p.saves)}</td>
                   <td className="px-2 py-2 text-right">{n(p.shares)}</td>
-                  <td className="px-2 py-2 text-right text-emerald-700 font-medium">
-                    {p.follows ? `+${n(p.follows)}` : "0"}
-                  </td>
-                  <td className="px-2 py-2 text-right">{n(p.profile_visits)}</td>
+                  {String(p.type || "").toUpperCase() === "VIDEO" && !p.follows && !p.profile_visits ? (
+                    <>
+                      <td className="px-2 py-2 text-right text-slate-300 cursor-help"
+                        title="Meta reels uchun «obuna» va «profilga o'tish» raqamini API orqali bermaydi. Reels ta'siri «Auditoriya» bo'limida kunlik obunachi o'sishida ko'rinadi.">—</td>
+                      <td className="px-2 py-2 text-right text-slate-300 cursor-help"
+                        title="Meta reels uchun bu raqamni API orqali bermaydi">—</td>
+                    </>
+                  ) : (
+                    <>
+                      <td className="px-2 py-2 text-right text-emerald-700 font-medium">
+                        {p.follows ? `+${n(p.follows)}` : "0"}
+                      </td>
+                      <td className="px-2 py-2 text-right">{n(p.profile_visits)}</td>
+                    </>
+                  )}
                   <td className="px-2 py-2 text-right font-medium">{p.leads || "—"}</td>
                   <td className="px-2 py-2 text-right font-semibold text-brand-700">
                     {p.sales || "—"}

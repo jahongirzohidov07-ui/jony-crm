@@ -55,6 +55,38 @@ body {
   min-height: 100dvh;
 }
 
+/* MOCK — QAT'IY TARTIB (2026-09-27, Jahongir: "boshqa joyga ham chiqshi
+   mumkinmas ... rasmga olish ham"). src/components/StrictExam.tsx.
+   jony-away — o'quvchi test oynasidan chiqdi / to'liq ekrandan chiqdi /
+   kengaytma topildi: imtihon matni xiralashadi (shu payt olingan ekran
+   rasmida o'qilmaydi), ustida faqat to'siq oynasi (data-jony-ui="guard")
+   aniq turadi. jony-strict / jony-noprint — imtihon qog'ozga chiqmaydi. */
+html.jony-away body > *:not([data-jony-ui="guard"]),
+html.jony-away > *:not(head):not(body) {
+  filter: blur(18px) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  /* Faqat xira emas — yashirin: brauzerning AI paneli / ekran o'quvchi
+     sahifa matnini (innerText, accessibility) shu payt ololmaydi.
+     Audio to'xtamaydi, aylantirish joyi saqlanadi (2026-09-27 ko'rigi).
+     html ga to'g'ridan-to'g'ri qo'shilgan kengaytma qatlamlari ham. */
+  visibility: hidden !important;
+}
+html.jony-noprint body > * {
+  visibility: hidden !important;
+}
+@media print {
+  html.jony-strict body > * {
+    display: none !important;
+  }
+  html.jony-strict body::before {
+    content: "Mock testni chop etib bo'lmaydi";
+    display: block;
+    padding: 2rem;
+    font: 600 18px sans-serif;
+  }
+}
+
 /* Pastdagi tab panellari iPhone'ning "home indicator" chizig'i
    ostida qolib ketmasligi uchun xavfsiz zona. */
 .pb-safe {

@@ -60,6 +60,27 @@ _HITS: dict = {}
 _MAX_PER_HOUR = 300                # bitta sinf bitta Wi-Fi (bitta IP) dan kiradi
 COUNTDOWN_SEC = 10                 # "Start"dan keyin teskari sanoq
 AWAY_LIMIT_DEFAULT = 5             # sahifadan chiqishga ruxsat (undan keyin chetlatiladi)
+# MOCK — QAT'IY TARTIB (2026-09-27, Jahongir: "mock test faqat kompyuterda
+# ishlanadi bizda telda mumkinmas, boshqa joyga ham chiqshi mumkinmas
+# qatiy tizim bo'lishi kerak"). Examiner chegara qo'ymagan bo'lsa mockda
+# 2 marta chiqishga ruxsat — 3-chisida chetlatiladi. Unit / mid / end
+# testlar avvalgidek (telefon ham mumkin, AWAY_LIMIT_DEFAULT).
+MOCK_AWAY_LIMIT = 2
+MOBILE_MSG = "Mock test faqat kompyuterda ishlanadi"
+MOBILE_UA_RE = re.compile(
+    r"Android|iPhone|iPad|iPod|Mobile|Tablet|Silk|Kindle|IEMobile|Opera Mini",
+    re.I)
+# Chiqish sababi (sahifa /away ga yuboradi) — chetlatish izohida examinerga
+AWAY_REASONS = {
+    "tab": "boshqa varaqqa o'tdi",
+    "blur": "boshqa oyna yoki ilovaga o'tdi",
+    "fullscreen": "to'liq ekrandan chiqdi",
+    "extension": "brauzer kengaytmasi aniqlandi",
+    "printscreen": "ekran rasmini olishga urindi",
+    "devtools": "dasturchi vositalarini ochdi",
+}
+NOFS_NOTE = "To'liq ekran ishlamadi (brauzer ruxsat bermadi)"
+AWAY_EIDS_KEEP = 40
 # O'TISH (mid) VA YAKUNIY (end) TESTLAR 100 BALLIK (2026-09-25,
 # Jahongir: "o'tish testi midterm end of course maks ball 100
 # bo'ladi"). Unit testlarda esa maksimal ball savollar soniga teng
@@ -1192,11 +1213,15 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
             "ends_at": _iso(o.ends_at),
             "duration_min": o.duration_min,
             "in_progress": sum(1 for s in subs if s.status == "in_progress"),
-            "away_limit": o.away_limit,
+            # Mockda examiner belgilamagan bo'lsa — 2 (Start oynasida shu
+            # son turadi, 2026-09-27)
+            "away_limit": away_limit_of(o, exam),
             "live": [
                 {"id": s.id,
                  "name": s.typed_name or names.get(s.student_id) or "—",
-                 "away_count": s.away_count or 0, "away_sec": s.away_sec or 0}
+                 "away_count": s.away_count or 0, "away_sec": s.away_sec or 0,
+                 # masalan "To'liq ekran ishlamadi" (mock, 2026-09-27)
+                 "note": s.note}
                 for s in subs if s.status == "in_progress"
             ],
             "expelled": [
@@ -1323,7 +1348,8 @@ def start_online(exam_id: int, payload: StartIn, db: Session = Depends(get_db),
     if payload.away_limit is not None:
         o.away_limit = max(0, min(50, payload.away_limit))
     elif o.away_limit is None:
-        o.away_limit = AWAY_LIMIT_DEFAULT
+        # Mockda qat'iy: 2 marta (2026-09-27)
+        o.away_limit = MOCK_AWAY_LIMIT if is_strict(exam) else AWAY_LIMIT_DEFAULT
     o.started_at = now + timedelta(seconds=cd)
     o.ends_at = o.started_at + timedelta(minutes=payload.minutes)
     o.is_open = 1
@@ -1534,10 +1560,15 @@ def public_exam(token: str, db: Session = Depends(get_db)):
     is_open = bool(o.is_open) and _exam_open_for_results(exam)
     state = timer_state(o)
     parts = _load(o.parts)
+    strict = is_strict(exam)
     return {
         "title": exam.title or roles.exam_title(exam.kind, exam.unit_no),
         "group": group.name if group else "",
         "date": exam.date.isoformat() if exam.date else None,
+        # Qat'iy tartib (faqat mock, 2026-09-27): kompyuterda, to'liq
+        # ekranda; chiqish chegarasi sahifadagi qoidalarda ko'rinadi
+        "strict": strict,
+        "away_limit": away_limit_of(o, exam) if strict else None,
         "is_open": is_open,
         "state": state if is_open else "closed",
         "server_now": _iso(datetime.utcnow()),
@@ -1567,6 +1598,19 @@ class SaveIn(BaseModel):
 class AwayIn(BaseModel):
     key: str
     seconds: int = 0
+    # tab | blur | fullscreen | extension | printscreen | devtools
+    # (mockning qat'iy tartibi yuboradi, 2026-09-27; boshqalarida yo'q)
+    reason: Optional[str] = None
+    # Quyidagilar ham faqat mockda (2026-09-27):
+    # eid — hodisa kodi: internet uzilib sahifa qayta yuborsa, ikki
+    #   marta sanalmaydi;
+    # extend — o'sha chiqishning davomi (qaytgach qolgan soniyalar):
+    #   away_sec ga qo'shiladi, soni oshmaydi;
+    # flag="nofs" — brauzer to'liq ekranga ruxsat bermadi: sanalmaydi,
+    #   examiner jonli ro'yxatda ko'radi.
+    eid: Optional[str] = None
+    extend: bool = False
+    flag: Optional[str] = None
 
 
 class SubmitIn(BaseModel):
@@ -1582,6 +1626,60 @@ class SubmitIn(BaseModel):
 def _client_ip(request: Request) -> str:
     return ((request.headers.get("x-forwarded-for") or "").split(",")[0].strip()
             or (request.client.host if request.client else ""))
+
+
+def is_strict(exam) -> bool:
+    """Qat'iy tartib (kompyuterda, to'liq ekran, 2 marta chiqish) — faqat
+    MOCK testlarda (2026-09-27)."""
+    return (getattr(exam, "kind", None) or "") == "mock"
+
+
+def is_mobile_ua(request: Request) -> bool:
+    return bool(MOBILE_UA_RE.search(request.headers.get("user-agent") or ""))
+
+
+def deny_mobile(request: Request) -> None:
+    """Telefon / planshetdan mock boshlanmaydi. Asosiy tekshiruv sahifada
+    (iPad o'zini Mac deb tanitadi — uni faqat brauzer ajratadi), bu —
+    ikkinchi qavat."""
+    if is_mobile_ua(request):
+        raise HTTPException(403, MOBILE_MSG)
+
+
+def away_limit_of(o, exam) -> Optional[int]:
+    """Amaldagi chiqish chegarasi: examiner belgilagani, belgilamagan
+    bo'lsa mockda MOCK_AWAY_LIMIT, boshqalarida chegara yo'q."""
+    if o.away_limit is not None:
+        return o.away_limit
+    return MOCK_AWAY_LIMIT if is_strict(exam) else None
+
+
+def deny_retake(db: Session, exam, student_id) -> None:
+    """MOCK: ro'yxatdagi o'quvchi ikkinchi marta kira olmaydi (2026-09-27).
+
+    Aks holda chetlatilgan (yoki 2 marta qoidabuzarlik qilgan) o'quvchi
+    maxfiy oyna / boshqa brauzerda havolani qayta ochib, ismini yana
+    tanlab, toza hisob bilan davom etardi — "3-qoidabuzarlikda
+    chetlatiladi" hech narsani anglatmasdi. Ro'yxatdan istalgan ismni
+    tanlash mumkinligi uchun davom etayotgan topshiriqning kaliti ham
+    berilmaydi: o'sha kompyuterda davom etadi yoki examiner eski
+    yozuvni rad etadi ("Rad etish") — shunda qayta kira oladi.
+    Ro'yxatda yo'q (yozilgan) ism — student_id yo'q, examiner o'zi
+    biriktiradi, bu yerda tekshirilmaydi."""
+    if student_id is None:
+        return
+    subs = (db.query(models.ExamSubmission)
+            .filter(models.ExamSubmission.exam_id == exam.id,
+                    models.ExamSubmission.student_id == student_id).all())
+    st = {s.status for s in subs}
+    if "expelled" in st:
+        raise HTTPException(403, "Siz bu testdan chetlatilgansiz")
+    if st & {"placed", "duplicate"}:
+        raise HTTPException(409, "Siz bu testni allaqachon topshirgansiz")
+    if "in_progress" in st:
+        raise HTTPException(409, "Siz bu testni boshqa kompyuter yoki "
+                                 "brauzerda boshlagansiz — o'sha yerda davom "
+                                 "eting yoki examinerga murojaat qiling")
 
 
 def _identify(db: Session, exam, student_id, name, photo):
@@ -1710,11 +1808,15 @@ def public_begin(token: str, payload: BeginIn, request: Request,
         raise HTTPException(429, "Juda ko'p urinish — birozdan keyin qayta "
                                  "urinib ko'ring")
     o, exam = _public(db, token)
+    if is_strict(exam):
+        deny_mobile(request)       # mock faqat kompyuterda (2026-09-27)
     if not o.is_open or not _exam_open_for_results(exam) or \
             timer_state(o) == "finished":
         raise HTTPException(410, "Test yopilgan")
     student_id, typed, photo = _identify(db, exam, payload.student_id,
                                          payload.name, payload.photo)
+    if is_strict(exam):
+        deny_retake(db, exam, student_id)
     sub = models.ExamSubmission(
         exam_id=exam.id, student_id=student_id, typed_name=typed,
         photo=photo, answers="{}", status="in_progress", ip=ip[:64],
@@ -1753,13 +1855,49 @@ def public_away(token: str, payload: AwayIn, db: Session = Depends(get_db)):
     s = _sub_by_key(db, exam, payload.key)
     if s.status != "in_progress" or not _can_answer(o):
         return {"ok": True}
+    # Mockda examiner chegara qo'ymagan bo'lsa ham 2 (2026-09-27)
+    limit = away_limit_of(o, exam)
+
+    def state(**extra):
+        return {"ok": True, "away_count": s.away_count or 0,
+                "away_limit": limit,
+                "left": (limit - (s.away_count or 0)) if limit else None,
+                **extra}
+
+    # Qayta yuborilgan hodisa (internet uzilgan edi) — ikkinchi marta
+    # sanalmaydi (2026-09-27)
+    eid = (payload.eid or "").strip()[:40]
+    if eid:
+        try:
+            seen = json.loads(s.away_eids or "[]")
+            seen = seen if isinstance(seen, list) else []
+        except Exception:
+            seen = []
+        if eid in seen:
+            return state(duplicate=True)
+        s.away_eids = json.dumps((seen + [eid])[-AWAY_EIDS_KEEP:])
+    if (payload.flag or "") == "nofs":
+        # Sanalmaydi — examiner jonli ro'yxatda ko'radi
+        if not s.note:
+            s.note = NOFS_NOTE
+        db.commit()
+        return state()
+    secs = max(0, min(3600, int(payload.seconds or 0)))
+    if payload.extend:
+        # O'sha chiqishning davomi: vaqti qo'shiladi, soni oshmaydi
+        s.away_sec = (s.away_sec or 0) + secs
+        db.commit()
+        return state()
     s.away_count = (s.away_count or 0) + 1
-    s.away_sec = (s.away_sec or 0) + max(0, min(3600, int(payload.seconds or 0)))
+    s.away_sec = (s.away_sec or 0) + secs
     db.commit()
-    limit = o.away_limit
     if limit and s.away_count > limit:
-        expel(db, exam, s, f"Sahifadan {s.away_count} marta chiqdi "
-                           f"(ruxsat: {limit})")
+        why = f"Sahifadan {s.away_count} marta chiqdi (ruxsat: {limit})"
+        # Chetlatishga olib kelgan chiqish sababi — examiner ko'rsin
+        reason = AWAY_REASONS.get((payload.reason or "").strip().lower())
+        if reason:
+            why += f" — oxirgisi: {reason}"
+        expel(db, exam, s, why)
         return {"ok": True, "away_count": s.away_count, "expelled": True}
     return {"ok": True, "away_count": s.away_count,
             "away_limit": limit, "left": (limit - s.away_count) if limit else None}
@@ -1784,7 +1922,10 @@ def public_submit(token: str, payload: SubmitIn, request: Request,
             _finalize(db, o, exam, s, answers)
         return {"ok": True, "paper_max": o.paper_max or 0,
                 "pending": s.status not in ("placed",)}
-    # Eski tartib (kalitsiz): faqat test ketayotganda
+    # Eski tartib (kalitsiz): faqat test ketayotganda. Mock telefondan
+    # bu yo'l bilan ham topshirilmaydi (2026-09-27)
+    if is_strict(exam):
+        deny_mobile(request)
     ip = _client_ip(request)
     if not _rate_ok(ip or "?"):
         raise HTTPException(429, "Juda ko'p urinish — birozdan keyin qayta "
@@ -1793,6 +1934,8 @@ def public_submit(token: str, payload: SubmitIn, request: Request,
         raise HTTPException(410, "Test yopilgan")
     student_id, typed, photo = _identify(db, exam, payload.student_id,
                                          payload.name, payload.photo)
+    if is_strict(exam):
+        deny_retake(db, exam, student_id)   # kalitsiz yo'l ham (2026-09-27)
     sub = models.ExamSubmission(
         exam_id=exam.id, student_id=student_id, typed_name=typed, photo=photo,
         status="in_progress", ip=ip[:64], online_max=o.online_max or 0,
@@ -1965,10 +2108,13 @@ def student_exam_state(token: str, db: Session = Depends(get_db),
                                  if my.submitted_at else None),
                 "pending": my.status not in ("placed",),
                 "paper_max": o.paper_max or 0}
+    strict = is_strict(exam)
     return {
         "title": exam.title or roles.exam_title(exam.kind, exam.unit_no),
         "group": group.name if group else "",
         "date": exam.date.isoformat() if exam.date else None,
+        "strict": strict,                      # faqat mock (2026-09-27)
+        "away_limit": away_limit_of(o, exam) if strict else None,
         "is_open": is_open, "state": state,
         "server_now": _iso(datetime.utcnow()),
         "starts_at": _iso(o.started_at), "ends_at": _iso(o.ends_at),
@@ -1995,6 +2141,8 @@ def student_exam_begin(token: str, payload: AppBeginIn, request: Request,
     yozuv ochilmaydi)."""
     s = _student_me(db, user)
     o, exam = _student_online(db, token, s)
+    if is_strict(exam):
+        deny_mobile(request)       # mock faqat kompyuterda (2026-09-27)
     ip = _client_ip(request)
     if not _rate_ok(ip or "?"):
         raise HTTPException(429, "Juda ko'p urinish — birozdan keyin qayta "

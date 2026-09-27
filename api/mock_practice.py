@@ -33,7 +33,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timedelta
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -46,6 +46,7 @@ from database import get_db
 from exam_online import (GRACE_SEC, ESSAY_MAX_CHARS, _BANK_LABELS,
                          _BANK_ORDER, _GRADING, _PRACTICE_BANKS,
                          _answer_sheet, _iso, _load, _load_dict,
+                         deny_mobile,
                          _mock_section, _norm, _opt_label, _qmap,
                          _questions, _tpl_skill, grade, mock_band,
                          public_parts)
@@ -419,10 +420,15 @@ class StartIn(BaseModel):
 
 
 @router.post("/api/mock-practice")
-def start(payload: StartIn, db: Session = Depends(get_db),
+def start(payload: StartIn, request: Request, db: Session = Depends(get_db),
           user=Depends(require_role(*roles.MOCK_PRACTICE))):
     """Yangi urinish. Bir vaqtda bittasi: boshlangani bo'lsa o'sha
-    qaytadi. Ustozlarga bir variant 30 kunda bir marta."""
+    qaytadi. Ustozlarga bir variant 30 kunda bir marta.
+
+    Mock faqat kompyuterda (2026-09-27, Jahongir: "mock test faqat
+    kompyuterda ishlanadi bizda telda mumkinmas") — telefon/planshetdan
+    boshlanmaydi. Asosiy tekshiruv sahifada, bu ikkinchi qavat."""
+    deny_mobile(request)
     ck = canon_title(payload.content_key)
     for p in (db.query(models.MockPractice)
               .filter(models.MockPractice.user_id == user.id,

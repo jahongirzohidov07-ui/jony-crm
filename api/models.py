@@ -4352,6 +4352,10 @@ class ExamSubmission(Base):
     # boshqa ilovaga o'tsa — necha marta va jami necha soniya.
     away_count = Column(Integer, nullable=False, default=0)
     away_sec = Column(Integer, nullable=False, default=0)
+    # MOCK QAT'IY TARTIBI (2026-09-27): sahifa qoidabuzarlikni internet
+    # uzilsa ham qayta-qayta yuboradi — bir hodisa ikki marta
+    # sanalmasin, oxirgi ~40 ta hodisa kodi (JSON ro'yxat)
+    away_eids = Column(Text, nullable=True)
     # Chetlatish sababi (chegaradan oshdi yoki examiner chetlatdi)
     note = Column(String, nullable=True)
     ip = Column(String, nullable=True)

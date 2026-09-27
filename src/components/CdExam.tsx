@@ -217,6 +217,7 @@ function Passage({
           uning joylashuvini surib yubormasin */}
       {sel && !readOnly ? createPortal(
         <div
+          data-jony-ui=""
           role="toolbar"
           aria-label="Matnni belgilash"
           className="fixed z-[86] flex items-center gap-1 rounded-lg bg-slate-900 p-1 shadow-lg"
@@ -637,9 +638,12 @@ export function CdExam({
   // Imtihon ekrani document.body ga, z-80 da chiziladi: JonyOS ilovasi
   // ichida (/app/p/...) pastki .jos-tabs paneli (fixed, z-50) navigatorni
   // yopib qo'ymasin — navigator bo'limlar orasidagi yagona yo'l.
-  // Qatlamlar: imtihon 80 < MockIssueDialog 85 < "Belgilash" 86 < rasm 88.
+  // Qatlamlar: imtihon 80 < MockIssueDialog 85 < "Belgilash" 86 < rasm 88
+  // < qat'iy tartib to'sig'i 100 (StrictExam.tsx).
+  // data-jony-ui — body ga ilovaning o'zi chizgan qatlam, brauzer
+  // kengaytmasi emas (mockning qat'iy tartibi, 2026-09-27).
   return createPortal(
-    <div className="fixed inset-0 z-[80] flex flex-col bg-slate-100 text-slate-900">
+    <div data-jony-ui="exam" className="fixed inset-0 z-[80] flex flex-col bg-slate-100 text-slate-900">
       {watermark ? <Watermark text={watermark} /> : null}
 
       {/* ---------------- tepa: nom | taymer | sozlamalar, topshirish */}

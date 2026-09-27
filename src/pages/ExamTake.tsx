@@ -3,6 +3,11 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { BrandIcon } from "../components/BrandIcon";
 import { type PaperPart } from "../components/ExamPaper";
 import { CdExam } from "../components/CdExam";
+import {
+  ExtensionProbe, ExtensionWarning, MOBILE_TITLE, MobileBlock, StrictOverlay,
+  StrictRules, foreignMsg, useNoTranslate, useStrictEnv, useStrictGuard,
+  type Violation,
+} from "../components/StrictExam";
 import { useAuth } from "../lib/AuthContext";
 import { getToken } from "../lib/api";
 
@@ -26,6 +31,9 @@ type PublicExam = {
   title: string;
   group: string;
   date: string | null;
+  /** Mock — qat'iy tartib: kompyuterda, to'liq ekranda (2026-09-27) */
+  strict?: boolean;
+  away_limit?: number | null;
   is_open: boolean;
   state: State;
   server_now: string;
@@ -290,10 +298,137 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
     return () => clearInterval(t);
   }, [done, key, state, answers, pub, kickOut]);
 
+  // MOCK — QAT'IY TARTIB (2026-09-27, Jahongir: "mock test faqat
+  // kompyuterda ishlanadi bizda telda mumkinmas, boshqa joyga ham chiqshi
+  // mumkinmas qatiy tizim bo'lishi kerak"). Telefon/planshetda ochilmaydi;
+  // to'liq ekran; har bir chiqish (varaq, oyna, to'liq ekran, kengaytma,
+  // PrintScreen) — bitta qoidabuzarlik, sababi bilan /away ga ketadi,
+  // chegara oshsa server chetlatadi. Unit / mid / end — avvalgidek.
+  const strict = !!exam?.strict;
+  // Tarjima sahifa OCHILISHI BILAN o'chadi (test turi hali noma'lum) —
+  // Chrome rasm bosqichini tarjima qilib ulgurmasin; mock bo'lmasa
+  // qaytariladi (2026-09-27 ko'rigi)
+  useNoTranslate(!exam || strict);
+  const running =
+    !!key && !done && !expelled && state === "running" && (exam?.parts.length ?? 0) > 0;
+  // Test ketayotganda qayta tekshirilmaydi (sensorli noutbukdan klaviatura
+  // ajratilsa test yo'qolib, nazorat o'chib qolmasin)
+  const env = useStrictEnv(!running);
+  const mobile = env.blocked;
+
+  // QOIDABUZARLIKLAR NAVBATI (2026-09-27 ko'rigi): /away yetib bormasa
+  // (Wi-Fi o'chirilgan, internet uzilgan) — yo'qolmaydi, localStorage'da
+  // turadi va server "qabul qildim" demaguncha qayta yuboriladi. eid
+  // bilan: takror yuborilsa server ikki marta sanamaydi.
+  type QItem = Violation & { flag?: "nofs" };
+  const qKey = `exam:${token}:strict-queue`;
+  const queue = useRef<QItem[] | null>(null);
+  const readQ = useCallback((): QItem[] => {
+    if (queue.current === null) {
+      const v = store(qKey);
+      queue.current = Array.isArray(v) ? (v as QItem[]) : [];
+    }
+    return queue.current;
+  }, [qKey]);
+  const writeQ = useCallback(
+    (q: QItem[]) => {
+      queue.current = q;
+      store(qKey, q);
+    },
+    [qKey]
+  );
+  const keyRef = useRef(key);
+  useEffect(() => {
+    keyRef.current = key;
+  }, [key]);
+  const flushing = useRef(false);
+  const flush = useCallback(async () => {
+    const k = keyRef.current;
+    if (flushing.current || !k) return;
+    flushing.current = true;
+    try {
+      for (;;) {
+        const it = readQ()[0];
+        if (!it) break;
+        let r: Response;
+        try {
+          r = await fetch(`${pub}/away`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              key: k,
+              seconds: it.seconds,
+              reason: it.reason,
+              eid: it.eid,
+              extend: !!it.extend,
+              flag: it.flag ?? null,
+            }),
+          });
+        } catch {
+          break; // internet yo'q — keyinroq
+        }
+        if (r.status >= 500 || r.status === 429) break;
+        const j = await r.json().catch(() => ({}));
+        // 2xx — qabul qilindi; 4xx (kalit eskirgan) — qayta yuborishdan
+        // foyda yo'q. Ikkalasida ham navbatdan olinadi
+        writeQ(readQ().filter((x) => x.eid !== it.eid));
+        if (r.ok && j?.expelled) {
+          writeQ([]);
+          kickOut();
+          break;
+        }
+        if (r.ok && !it.flag && j?.left != null) setAwayLeft(j.left as number);
+      }
+    } finally {
+      flushing.current = false;
+    }
+  }, [pub, readQ, writeQ, kickOut]);
+  const enqueue = useCallback(
+    (it: QItem) => {
+      const q = readQ();
+      if (!q.some((x) => x.eid === it.eid)) writeQ([...q, it]);
+      void flush();
+    },
+    [readQ, writeQ, flush]
+  );
+  // Qayta urinish: internet qaytganda, har 10 soniyada, sahifa ochilganda
+  useEffect(() => {
+    if (!strict || !key || done || expelled) return;
+    void flush();
+    const on = () => void flush();
+    window.addEventListener("online", on);
+    const t = window.setInterval(on, 10000);
+    return () => {
+      window.removeEventListener("online", on);
+      window.clearInterval(t);
+    };
+  }, [strict, key, done, expelled, flush]);
+  useEffect(() => {
+    if (done || expelled) writeQ([]);
+  }, [done, expelled, writeQ]);
+
+  const guard = useStrictGuard({
+    enabled: strict && !mobile,
+    active: strict && !mobile && running,
+    storageKey: `exam:${token}`,
+    onViolation: (v) => enqueue(v),
+  });
+
+  // Brauzer to'liq ekranga ruxsat bermadi — sanalmaydi, lekin examiner
+  // jonli ro'yxatda ko'radi (bir marta)
+  useEffect(() => {
+    if (!strict || !running || !guard.fsRefused) return;
+    const f = `exam:${token}:nofs`;
+    if (store(f)) return;
+    store(f, true);
+    enqueue({ eid: `nofs-${key}`, reason: "fullscreen", seconds: 0, extend: false, flag: "nofs" });
+  }, [strict, running, guard.fsRefused, token, key, enqueue]);
+
   // SAHIFADAN CHIQISH QAYDI (2026-09-23, Jahongir). O'quvchi boshqa
   // ilovaga o'tsa — necha marta va qancha vaqtga chiqqani yoziladi.
+  // Mockda bu ish useStrictGuard'da (yuqorida).
   useEffect(() => {
-    if (done || !key || state !== "running") return;
+    if (strict || done || !key || state !== "running") return;
     let left = 0;
     const onChange = () => {
       if (document.visibilityState === "hidden") {
@@ -318,7 +453,7 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
     };
     document.addEventListener("visibilitychange", onChange);
     return () => document.removeEventListener("visibilitychange", onChange);
-  }, [done, key, state, pub, kickOut]);
+  }, [strict, done, key, state, pub, kickOut]);
 
   // Vaqt tugadi — belgilanganlari bilan avtomatik topshiriladi
   useEffect(() => {
@@ -350,6 +485,21 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   }
 
   async function begin() {
+    if (strict) {
+      // Mock: planshet (burilgan bo'lishi mumkin) / kengaytma bo'lsa
+      // boshlanmaydi; to'liq ekran shu bosishda (await'dan oldin)
+      // so'raladi — brauzer faqat bosishga ruxsat beradi
+      if (env.recheck()) {
+        setError(MOBILE_TITLE);
+        return;
+      }
+      const now = guard.rescan();
+      if (now.length || guard.seen.length) {
+        setError(foreignMsg(now.length ? now : guard.seen));
+        return;
+      }
+      guard.enterFs();
+    }
     setSending(true);
     setError(null);
     try {
@@ -383,10 +533,12 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   }
 
   function manualSubmit() {
+    // Mockda confirm oynasi "oynadan chiqish" deb sanalmasin
+    const ask = strict ? guard.confirmSafe : (m: string) => confirm(m);
     if (
       exam &&
       answered < exam.q_count &&
-      !confirm(
+      !ask(
         `${exam.q_count - answered} ta savolga javob berilmagan. Baribir topshirasizmi?`
       )
     )
@@ -398,8 +550,10 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   // brauzerida ochib yuboradi — u yerda skrinshotni to'sib bo'lmaydi.
   // Androidda shu tugma ilovani to'g'ridan-to'g'ri ochadi; ilova
   // o'rnatilmagan bo'lsa sahifaning o'zi qolaveradi.
+  // Mock telefonda umuman ochilmaydi — ilova havolasi ham kerak emas
   const androidLink =
     !inApp &&
+    !strict &&
     typeof navigator !== "undefined" &&
     /Android/i.test(navigator.userAgent) &&
     !(window as unknown as { JonyApp?: unknown }).JonyApp
@@ -457,6 +611,14 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   //    imtihonga qaytadi) yoki mehmon tartibi (ilovada hisobi yo'q).
   if (!inApp && user?.role === "student")
     return <Navigate to={`/student/exam/${encodeURIComponent(token)}`} replace />;
+  // Mock — faqat kompyuterda (2026-09-27). Topshirilgan / chetlatilgan
+  // bo'lsa yakun ekrani telefonda ham ko'rinaveradi.
+  if (strict && mobile && !done && !expelled)
+    return shell(
+      <div className={card}>
+        <MobileBlock framed={env.framed && !env.mobile} />
+      </div>
+    );
   if (!inApp && !guest && !key && !done)
     return shell(
       <div className={`${card} text-center`}>
@@ -652,13 +814,20 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
             onChange={(e) => onPhoto(e.target.files?.[0])}
           />
         </label>
+        {strict ? (
+          <div className="mt-3 space-y-2">
+            <StrictRules limit={exam.away_limit} />
+            <ExtensionWarning list={guard.seen} />
+            <ExtensionProbe />
+          </div>
+        ) : null}
         {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
         <button
-          disabled={!photo || sending}
+          disabled={!photo || sending || (strict && guard.seen.length > 0)}
           onClick={begin}
           className="w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-3 text-sm font-semibold disabled:opacity-50"
         >
-          {sending ? "Kirilmoqda..." : "Tayyorman"}
+          {sending ? "Kirilmoqda..." : strict ? "Tayyorman — to'liq ekranga o'tish" : "Tayyorman"}
         </button>
         {!inApp && (
           <button onClick={() => setStep("who")} className="w-full mt-2 text-sm text-slate-500">
@@ -699,6 +868,23 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
             ) : null}
           </>
         )}
+        {/* Mock: kutish paytida tayyorgarlik (ilovada davom etayotgan
+            topshiriqda "Tayyorman" bosilmaydi — to'liq ekran shu yerda) */}
+        {strict && exam.state !== "finished" ? (
+          <div className="mt-5 space-y-2 text-left">
+            <ExtensionWarning list={guard.seen} />
+            {!guard.fsOn && !guard.fsRefused ? (
+              <button
+                type="button"
+                onClick={guard.enterFs}
+                className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-2.5 text-sm font-semibold"
+              >
+                To'liq ekranga o'tish
+              </button>
+            ) : null}
+            <StrictRules limit={exam.away_limit} />
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -709,14 +895,23 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   // IELTS niki"). Butun ekran: tepada taymer, bo'limma-bo'lim, pastda
   // savol raqamlari. Saqlash / chiqish / topshirish mantiqi o'zgarmadi.
   const awayWarn = awayLeft != null && awayLeft <= 2;
+  // Mockda aniqroq: "left" — yana nechta chiqishga ruxsat bor
+  const awayText = strict
+    ? (awayLeft ?? 0) > 0
+      ? `Qoidabuzarlik qayd qilindi: yana ${awayLeft} marta ruxsat bor, keyingisida chetlatilasiz`
+      : "Oxirgi ogohlantirish: yana bir qoidabuzarlik — testdan chetlatilasiz"
+    : (awayLeft ?? 0) > 0
+      ? `Yana ${awayLeft} marta chiqsangiz — chetlatilasiz`
+      : "Yana chiqsangiz — chetlatilasiz";
+  const fsNote = strict && guard.fsRefused;
   const notice =
-    awayWarn || error || (androidLink && !done) ? (
+    awayWarn || error || fsNote || (androidLink && !done) ? (
       <>
-        {awayWarn ? (
-          <span className="font-medium">
-            {(awayLeft ?? 0) > 0
-              ? `Yana ${awayLeft} marta chiqsangiz — chetlatilasiz`
-              : "Yana chiqsangiz — chetlatilasiz"}
+        {awayWarn ? <span className="font-medium">{awayText}</span> : null}
+        {fsNote ? (
+          <span>
+            Brauzer to'liq ekranga ruxsat bermadi — test oddiy oynada davom etadi,
+            boshqa oynaga o'tish baribir qoidabuzarlik.
           </span>
         ) : null}
         {error ? <span className="text-red-600">{error}</span> : null}
@@ -728,20 +923,27 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
       </>
     ) : null;
   return (
-    <CdExam
-      parts={exam.parts}
-      answers={answers}
-      onChange={(qid, v) => setAnswers({ ...answers, [qid]: v })}
-      title={exam.title}
-      subtitle={`${exam.group}${inApp ? " · Jony Student" : " · Jony Academy"}`}
-      endsIn={endsIn}
-      answered={answered}
-      total={exam.q_count}
-      onSubmit={manualSubmit}
-      sending={sending}
-      notice={notice}
-      watermark={who ? `${who} · ${exam.title}` : undefined}
-      storageKey={`exam:${token}`}
-    />
+    <>
+      <CdExam
+        parts={exam.parts}
+        answers={answers}
+        onChange={(qid, v) => setAnswers({ ...answers, [qid]: v })}
+        title={exam.title}
+        subtitle={`${exam.group}${inApp ? " · Jony Student" : " · Jony Academy"}`}
+        endsIn={endsIn}
+        answered={answered}
+        total={exam.q_count}
+        onSubmit={manualSubmit}
+        sending={sending}
+        notice={notice}
+        // Suv belgisi (ism) QOLADI — telefon bilan olingan suratga qarshi
+        // asosiy vosita (2026-09-23, mockda ham)
+        watermark={who ? `${who} · ${exam.title}` : undefined}
+        storageKey={`exam:${token}`}
+      />
+      {strict ? (
+        <StrictOverlay guard={guard} info={awayWarn ? awayText : undefined} />
+      ) : null}
+    </>
   );
 }

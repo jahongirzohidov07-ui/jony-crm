@@ -13,6 +13,13 @@ import { AnswerSheetTable, type AnswerRow } from "../components/ExamOnline";
 import {
   MockIssueDialog, IssueStatusBadge, type IssueTarget,
 } from "../components/MockIssueDialog";
+import {
+  MobileBlock, REASON_TEXT, StrictOverlay, useStrictEnv, useStrictGuard,
+} from "../components/StrictExam";
+
+/** Xodim urinishida ruxsat etilgan qoidabuzarlik — 3-chisida urinish
+ * avtomatik topshiriladi (o'quvchi mockidagi 2 bilan bir xil). */
+const PRACTICE_AWAY_LIMIT = 2;
 
 /**
  * MOCKNI O'ZI YECHISH — bitta urinish (2026-09-27).
@@ -29,6 +36,13 @@ import {
  * Listening'da audio yo'q bo'lsa "Tinglash" tugmasi skriptni serverdan
  * oladi va brauzer ovozi bilan (en-GB) BIR MARTA o'qib beradi — matn
  * ekranga chiqmaydi. Har savol yonida bayroqcha: "savolda xato bor".
+ *
+ * QAT'IY TARTIB (2026-09-27, Jahongir: "mock test faqat kompyuterda
+ * ishlanadi ... boshqa joyga ham chiqshi mumkinmas qatiy tizim bo'lishi
+ * kerak") — xodim urinishi ham doim qat'iy: telefonda ochilmaydi, to'liq
+ * ekran, kengaytma / tarjima / nusxa o'chiq. Chiqishlar shu brauzerda
+ * sanaladi (serverga yozilmaydi), 3-chisida urinish o'zi topshiriladi.
+ * Suv belgisi yo'q (bugun olib tashlangan) — shunday qoladi.
  */
 
 type Any = Record<string, unknown>;
@@ -325,6 +339,41 @@ export default function MockPracticeTake() {
     if (run && endsIn !== null && endsIn <= 0) submit(true);
   }, [run, endsIn, submit]);
 
+  // QAT'IY TARTIB — chiqishlar shu brauzerda sanaladi (serverga
+  // yozilmaydi); PRACTICE_AWAY_LIMIT dan oshsa urinish o'zi topshiriladi
+  const env = useStrictEnv(!run);
+  const mobile = env.blocked;
+  const keyV = `mockp:${id}:viol`;
+  const [viol, setViol] = useState<number>(() => Number(store(keyV)) || 0);
+  const violRef = useRef(viol);
+  const [strictEnd, setStrictEnd] = useState<string | null>(null);
+  const submitRef = useRef(submit);
+  useEffect(() => {
+    submitRef.current = submit;
+  }, [submit]);
+  const guard = useStrictGuard({
+    enabled: !mobile && !review,
+    active: !mobile && !!run && !review,
+    storageKey: `mockp:${id}`,
+    onViolation: ({ reason, extend }) => {
+      // extend — o'sha chiqishning davomi (vaqti), yangi qoidabuzarlik emas
+      if (extend) return;
+      const n = violRef.current + 1;
+      violRef.current = n;
+      setViol(n);
+      store(keyV, n);
+      if (n > PRACTICE_AWAY_LIMIT) {
+        setStrictEnd(
+          `${n}-qoidabuzarlik (${REASON_TEXT[reason]}) — urinish avtomatik topshirildi.`
+        );
+        submitRef.current(false);
+      }
+    },
+  });
+  useEffect(() => {
+    if (review) store(keyV, null);
+  }, [review, keyV]);
+
   const qCount = useMemo(
     () => (run?.parts || []).reduce((a, p) => a + p.questions.length, 0),
     [run]
@@ -336,7 +385,8 @@ export default function MockPracticeTake() {
   function manualSubmit() {
     if (
       answered < qCount &&
-      !confirm(`${qCount - answered} ta savolga javob berilmagan. Baribir topshirasizmi?`)
+      // confirm oynasi "oynadan chiqish" deb sanalmasin
+      !guard.confirmSafe(`${qCount - answered} ta savolga javob berilmagan. Baribir topshirasizmi?`)
     )
       return;
     submit(false);
@@ -417,6 +467,11 @@ export default function MockPracticeTake() {
     return (
       <div className="max-w-2xl mx-auto space-y-4 pb-10">
         {back}
+        {strictEnd ? (
+          <p className="text-sm font-medium text-red-700 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+            {strictEnd}
+          </p>
+        ) : null}
         <div className="bg-white rounded-2xl border border-slate-200 p-5">
           <p className="text-xs text-slate-500">
             {review.title || review.content_key}
@@ -527,14 +582,40 @@ export default function MockPracticeTake() {
 
   if (!run) return <div className="max-w-2xl mx-auto text-sm text-slate-400">Yuklanmoqda...</div>;
 
+  // Mock faqat kompyuterda (2026-09-27) — natijani telefonda ko'rish mumkin
+  if (mobile)
+    return (
+      <div className="max-w-2xl mx-auto">
+        {back}
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 mt-3">
+          <MobileBlock framed={env.framed && !env.mobile} />
+        </div>
+      </div>
+    );
+
   // ------------------------------------------------ test
   // KOMPYUTERDAGI IELTS KO'RINISHI (2026-09-27) — o'quvchi ko'radigan
   // aynan o'sha ekran (CdExam). "Savolda xato bor" bayrog'i va
   // "Tinglash" tugmasi avvalgidek; "Keyinroq ko'rish" — alohida narsa.
   const scriptParts = new Set(run.script_parts || []);
+  const left = PRACTICE_AWAY_LIMIT - viol;
+  const violText =
+    viol > 0
+      ? left > 0
+        ? `Qoidabuzarlik qayd qilindi (${viol}): yana ${left} marta ruxsat bor, keyingisida urinish avtomatik topshiriladi`
+        : "Oxirgi ogohlantirish: yana bir qoidabuzarlik — urinish avtomatik topshiriladi"
+      : null;
+  const fsNote = guard.fsRefused;
   const notice =
-    run.tpl_changed || ttsErr || error ? (
+    run.tpl_changed || ttsErr || error || violText || fsNote ? (
       <>
+        {violText ? <span className="font-medium">{violText}</span> : null}
+        {fsNote ? (
+          <span>
+            Brauzer to'liq ekranga ruxsat bermadi — test oddiy oynada davom etadi,
+            boshqa oynaga o'tish baribir qoidabuzarlik.
+          </span>
+        ) : null}
         {run.tpl_changed ? (
           <span>
             Bu test siz boshlagandan keyin tahrirlandi — natija yangi kalit bo'yicha hisoblanadi.
@@ -619,7 +700,16 @@ export default function MockPracticeTake() {
       {/* Imtihon qatlami document.body da z-80 (JonyOS pastki paneli
           z-50 dan yuqori). Dialog ham body ga, z-85 qatlam ichida —
           imtihon ustida turadi. MockIssueDialog o'zi o'zgarmadi. */}
-      {dialog ? createPortal(<div className="relative z-[85]">{dialog}</div>, document.body) : null}
+      {/* data-jony-ui — ilovaning o'z qatlami, kengaytma emas (2026-09-27) */}
+      {dialog
+        ? createPortal(
+            <div data-jony-ui="" className="relative z-[85]">
+              {dialog}
+            </div>,
+            document.body
+          )
+        : null}
+      <StrictOverlay guard={guard} info={violText ?? undefined} />
     </>
   );
 }

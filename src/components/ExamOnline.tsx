@@ -83,7 +83,14 @@ export type OnlineData = {
     /** Sahifadan chiqishga ruxsat (undan oshsa — chetlatish) */
     away_limit: number | null;
     /** Hozir yechayotganlar va ularning chiqib ketishlari */
-    live: { id: number; name: string; away_count: number; away_sec: number }[];
+    live: {
+      id: number;
+      name: string;
+      away_count: number;
+      away_sec: number;
+      /** Mock: masalan "To'liq ekran ishlamadi" (2026-09-27) */
+      note?: string | null;
+    }[];
     expelled: { id: number; name: string; note: string | null }[];
   } | null;
   group_level: string | null;
@@ -398,8 +405,10 @@ function TimerControls({
                   <span className="text-amber-700">
                     ⚠ {x.away_count} marta chiqdi
                     {data.away_limit ? ` / ${data.away_limit}` : ""}
+                    {x.away_sec ? ` · ${x.away_sec} s` : ""}
                   </span>
                 ) : null}
+                {x.note ? <span className="text-rose-700">⛶ {x.note}</span> : null}
                 {canManage && (
                   <button
                     disabled={busy}

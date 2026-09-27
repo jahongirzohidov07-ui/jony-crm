@@ -119,6 +119,7 @@ export function Figure({ src, className = "" }: { src: string; className?: strin
       {open
         ? createPortal(
             <div
+              data-jony-ui=""
               role="dialog"
               aria-modal="true"
               aria-label="Rasm"

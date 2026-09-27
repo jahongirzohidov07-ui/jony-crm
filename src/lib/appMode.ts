@@ -25,6 +25,12 @@ export function detectAppMode() {
         window.location.pathname.startsWith("/student")) {
       sessionStorage.setItem(KEY, "student");
     }
+    // JonyOS xodim ilovasi (2026-09-27): jonyos.webmanifest start_url
+    // = /app?pwa=1. Login'dan keyin xodim shu ilovaga qaytadi.
+    if (p.get("pwa") === "1" &&
+        window.location.pathname.startsWith("/app")) {
+      sessionStorage.setItem(KEY, "staff");
+    }
   } catch {
     /* sessionStorage yopiq bo'lsa - shunchaki rejimsiz davom etadi */
   }
@@ -34,6 +40,15 @@ export function detectAppMode() {
 export function isStudentApp(): boolean {
   try {
     return sessionStorage.getItem(KEY) === "student";
+  } catch {
+    return false;
+  }
+}
+
+/** Bu oyna JonyOS xodim ilovasi sifatida ochilganmi (2026-09-27). */
+export function isStaffApp(): boolean {
+  try {
+    return sessionStorage.getItem(KEY) === "staff";
   } catch {
     return false;
   }

@@ -180,6 +180,14 @@ const TeacherVocab = lazy(() => import("./pages/teacher/TeacherVocab"));
 const TeacherMore = lazy(() => import("./pages/teacher/TeacherMore"));
 const TeacherProfile = lazy(() => import("./pages/teacher/TeacherProfile"));
 import { GuideProvider } from "./components/guide/GuideProvider";
+// JonyOS — XODIM ILOVASI (2026-09-27): rolga qarab, telefon uchun
+const AppLayout = lazy(() => import("./pages/app/AppLayout"));
+const AppHome = lazy(() => import("./pages/app/AppHome"));
+const AppTasks = lazy(() => import("./pages/app/AppTasks"));
+const AppMenu = lazy(() => import("./pages/app/AppMenu"));
+const AppProfile = lazy(() => import("./pages/app/AppProfile"));
+const AppAlerts = lazy(() => import("./pages/app/AppAlerts"));
+const AppEmbed = lazy(() => import("./pages/app/AppEmbed"));
 
 function PageLoader() {
   const { pathname } = useLocation();
@@ -223,6 +231,72 @@ function RouteBoundary({ children }: { children: React.ReactNode }) {
     </ErrorBoundary>
   );
 }
+
+/** XODIM SAHIFALARI — bir ro'yxat, ikki qobiq (2026-09-27): xodimlar
+ * paneli ("/", yon menyu bilan) va JonyOS xodim ilovasi ("/app/p/...",
+ * telefon sarlavhasi bilan). Ro'yxat ikki joyda takrorlanmasin deb
+ * bitta bo'lakka chiqarildi. */
+const staffRoutes = (
+  <>
+    <Route index element={<Dashboard />} />
+    <Route path="leads" element={<Leads />} />
+    <Route path="students" element={<Students />} />
+    <Route path="students/:id" element={<StudentDetail />} />
+    <Route path="groups" element={<Groups />} />
+    <Route path="groups/:id" element={<GroupDetail />} />
+    <Route path="my-exams" element={<MyExams />} />
+    <Route path="my-sessions" element={<MySessions />} />
+    <Route path="my-finance" element={<MyFinance />} />
+    <Route path="support-schedule" element={<SupportSchedule />} />
+    <Route path="plan" element={<Plan />} />
+    <Route path="teachers" element={<Teachers />} />
+    <Route path="finance" element={<Moliya />} />
+    <Route path="reports" element={<Reports />} />
+    <Route path="analytics" element={<Analitika />} />
+    <Route path="advisor" element={<Advisor />} />
+    <Route path="library" element={<Library />} />
+    <Route path="development" element={<Development />} />
+    <Route
+      path="development/stats"
+      element={<DevelopmentAdmin />}
+    />
+    <Route path="ceo" element={<Ceo />} />
+    <Route path="complaints" element={<Complaints />} />
+    <Route path="audit" element={<Audit />} />
+    {/* IMTIHONLAR — Audit ichidan alohida bo'limga chiqdi (2026-09-26) */}
+    <Route path="exam" element={<ExamsHub />} />
+    <Route path="timetable" element={<TimetableGrid />} />
+    <Route path="archive" element={<Archive />} />
+    {/* Adminlar mashqi (2026-09-25) */}
+    <Route path="mashq" element={<Drill />} />
+    <Route path="discounts" element={<DiscountsPage />} />
+    <Route path="plans" element={<LessonPlans />} />
+    <Route path="learning" element={<LearningReport />} />
+    <Route path="plans/:course" element={<LessonPlans />} />
+    <Route path="plans/:course/:no" element={<LessonPlans />} />
+    <Route path="tasks" element={<Tasks />} />
+    <Route path="inventory" element={<Inventory />} />
+    <Route path="events" element={<Events />} />
+    <Route path="academic" element={<Academic />} />
+    <Route path="hr" element={<Hr />} />
+    <Route path="namunali" element={<Namunali />} />
+    <Route path="marketing" element={<Marketing />} />
+    <Route path="gamification" element={<Gamification />} />
+    <Route path="branches" element={<Branches />} />
+    <Route path="users" element={<Users />} />
+    <Route path="my-results" element={<MyResults />} />
+    <Route path="my-groups" element={<MyGroups />} />
+    <Route path="my-students" element={<MyStudents />} />
+    <Route path="my-schedule" element={<MySchedule />} />
+    <Route path="my-books" element={<MyBooks />} />
+    <Route path="permissions" element={<Permissions />} />
+    <Route path="settings" element={<Settings />} />
+    <Route path="profile" element={<MyProfile />} />
+    <Route path="my-coins" element={<MyCoins />} />
+    <Route path="my-career" element={<MyCareer />} />
+    <Route path="smm" element={<Smm />} />
+  </>
+);
 
 function AppRoutes() {
   return (
@@ -363,6 +437,25 @@ function AppRoutes() {
           <Route path="more" element={<TeacherMore />} />
           <Route path="profile" element={<TeacherProfile />} />
         </Route>
+        {/* JonyOS xodim ilovasi — har xodim faqat o'z bo'limlarini ko'radi
+            (ro'yxat paneldagi menyu bilan bir manbadan: navItems.ts) */}
+        <Route
+          path="/app"
+          element={
+            <RequireAuth>
+              <AppLayout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<AppHome />} />
+          <Route path="tasks" element={<AppTasks />} />
+          <Route path="menu" element={<AppMenu />} />
+          <Route path="profile" element={<AppProfile />} />
+          <Route path="alerts" element={<AppAlerts />} />
+          <Route path="p" element={<AppEmbed />}>
+            {staffRoutes}
+          </Route>
+        </Route>
         <Route
           path="/"
           element={
@@ -376,63 +469,7 @@ function AppRoutes() {
             </RequireStaff>
           }
         >
-          <Route index element={<Dashboard />} />
-          <Route path="leads" element={<Leads />} />
-          <Route path="students" element={<Students />} />
-          <Route path="students/:id" element={<StudentDetail />} />
-          <Route path="groups" element={<Groups />} />
-          <Route path="groups/:id" element={<GroupDetail />} />
-          <Route path="my-exams" element={<MyExams />} />
-          <Route path="my-sessions" element={<MySessions />} />
-          <Route path="my-finance" element={<MyFinance />} />
-          <Route path="support-schedule" element={<SupportSchedule />} />
-          <Route path="plan" element={<Plan />} />
-          <Route path="teachers" element={<Teachers />} />
-          <Route path="finance" element={<Moliya />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="analytics" element={<Analitika />} />
-          <Route path="advisor" element={<Advisor />} />
-          <Route path="library" element={<Library />} />
-          <Route path="development" element={<Development />} />
-          <Route
-            path="development/stats"
-            element={<DevelopmentAdmin />}
-          />
-          <Route path="ceo" element={<Ceo />} />
-          <Route path="complaints" element={<Complaints />} />
-          <Route path="audit" element={<Audit />} />
-          {/* IMTIHONLAR — Audit ichidan alohida bo'limga chiqdi (2026-09-26) */}
-          <Route path="exam" element={<ExamsHub />} />
-          <Route path="timetable" element={<TimetableGrid />} />
-          <Route path="archive" element={<Archive />} />
-          {/* Adminlar mashqi (2026-09-25) */}
-          <Route path="mashq" element={<Drill />} />
-          <Route path="discounts" element={<DiscountsPage />} />
-          <Route path="plans" element={<LessonPlans />} />
-          <Route path="learning" element={<LearningReport />} />
-          <Route path="plans/:course" element={<LessonPlans />} />
-          <Route path="plans/:course/:no" element={<LessonPlans />} />
-          <Route path="tasks" element={<Tasks />} />
-          <Route path="inventory" element={<Inventory />} />
-          <Route path="events" element={<Events />} />
-          <Route path="academic" element={<Academic />} />
-          <Route path="hr" element={<Hr />} />
-          <Route path="namunali" element={<Namunali />} />
-          <Route path="marketing" element={<Marketing />} />
-          <Route path="gamification" element={<Gamification />} />
-          <Route path="branches" element={<Branches />} />
-          <Route path="users" element={<Users />} />
-          <Route path="my-results" element={<MyResults />} />
-          <Route path="my-groups" element={<MyGroups />} />
-          <Route path="my-students" element={<MyStudents />} />
-          <Route path="my-schedule" element={<MySchedule />} />
-          <Route path="my-books" element={<MyBooks />} />
-          <Route path="permissions" element={<Permissions />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="profile" element={<MyProfile />} />
-          <Route path="my-coins" element={<MyCoins />} />
-          <Route path="my-career" element={<MyCareer />} />
-          <Route path="smm" element={<Smm />} />
+          {staffRoutes}
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

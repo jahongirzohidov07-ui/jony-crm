@@ -1,0 +1,19 @@
+{
+  "id": "/app",
+  "name": "JonyOS",
+  "short_name": "JonyOS",
+  "description": "Jony Academy xodimlari uchun: har kimga o'z bo'limlari, vazifalar va bugungi ish",
+  "start_url": "/app?pwa=1",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FDF8FF",
+  "theme_color": "#FDF8FF",
+  "orientation": "portrait",
+  "lang": "uz",
+  "icons": [
+    { "src": "/pwa-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

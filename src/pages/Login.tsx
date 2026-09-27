@@ -6,7 +6,7 @@ import { BrandIcon, BrandLockup } from "../components/BrandIcon";
 import { useAuth } from "../lib/AuthContext";
 import { api } from "../lib/api";
 import { PasswordInput } from "../components/PasswordInput";
-import { isStudentApp } from "../lib/appMode";
+import { isStudentApp, isStaffApp } from "../lib/appMode";
 
 export default function Login() {
   const { login, loading, error, logout } = useAuth();
@@ -65,9 +65,12 @@ export default function Login() {
       const dest =
         u?.role === "student"
           ? (next.startsWith("/student/") ? next : "/student")
-          : u?.role === "teacher" || u?.role === "support_teacher"
-            ? "/teacher"
-            : "/";
+          // JonyOS xodim ilovasidan kirilgan bo'lsa — ilovaga qaytadi
+          : isStaffApp() && u?.role !== "parent"
+            ? "/app"
+            : u?.role === "teacher" || u?.role === "support_teacher"
+              ? "/teacher"
+              : "/";
       navigate(dest, { replace: true });
     } catch {
       // error is surfaced via context

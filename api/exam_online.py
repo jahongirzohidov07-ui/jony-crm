@@ -573,6 +573,39 @@ _GRADING = {
 }
 
 
+class MarkIn(BaseModel):
+    skill: str
+    # ielts_* va cefr_speaking uchun: mezon/element ballari
+    marks: Optional[list] = None
+    # cefr_writing uchun: [{"marks": [4 ta], "words": N}, ...]
+    tasks: Optional[list] = None
+
+
+@router.get("/api/mock-schemes")
+def mock_schemes(user=Depends(require_role(*RESULT_ROLES))):
+    """Baholash sxemalari: qaysi mezonlar, har biri necha balldan.
+    Examiner formasi shundan quriladi."""
+    import mock_marking
+    return mock_marking.SCHEMES
+
+
+@router.post("/api/mock-score")
+def mock_score(payload: MarkIn, user=Depends(require_role(*RESULT_ROLES))):
+    """MEZON BALLARIDAN YAKUNIY BALL (2026-09-27, Jahongir:
+    "Examinerga iloji boricha kam ish qoldir").
+
+    Examiner har mezonga baho qo'yadi, yakuniy ballni rasmiy jadval
+    bo'yicha tizim hisoblaydi — qo'lda hisoblash va xato qilish
+    o'rniga."""
+    import mock_marking
+    res = mock_marking.compute(payload.skill,
+                               {"marks": payload.marks,
+                                "tasks": payload.tasks})
+    if res is None:
+        raise HTTPException(400, "Baholash sxemasi yoki ballar noto'g'ri")
+    return res
+
+
 @router.get("/api/mock-banks")
 def mock_banks(db: Session = Depends(get_db),
                user=Depends(require_role(*RESULT_ROLES))):

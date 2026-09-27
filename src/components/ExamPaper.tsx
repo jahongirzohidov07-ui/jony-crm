@@ -1,5 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { Runs } from "./ExamText";
+import { questionRuns } from "../lib/examFormat";
 
 /**
  * SAVOLLAR VARAG'I — umumiy chizuvchi (2026-09-27).
@@ -285,12 +287,13 @@ export function QuestionInput({
   );
 }
 
-/** Savol matni (raqami bilan). */
+/** Savol matni (raqami bilan) — Cambridge'dagidek raqam qalin, bo'sh joy
+ *  nuqtali chiziq (2026-09-27). */
 export function QuestionText({ q }: { q: PaperQ }) {
   return (
-    <p className="text-sm text-slate-800 mb-2 whitespace-pre-line">
-      <span className="font-semibold text-slate-500 mr-1.5">{q.n}.</span>
-      {q.q}
+    <p className="text-sm text-slate-900 mb-2 whitespace-pre-line leading-relaxed">
+      <span className="font-bold mr-2">{q.n}</span>
+      <Runs runs={questionRuns(q.q)} />
     </p>
   );
 }

@@ -8,6 +8,8 @@ import {
   Figure, QuestionInput, QuestionText, Watermark, isAnswered,
   type PaperAnswers, type PaperPart, type PaperQ, type PaperValue,
 } from "./ExamPaper";
+import { InstructionGroup } from "./ExamText";
+import { groupText, parseInstructions, passageBlocks, placeGroups, type Group } from "../lib/examFormat";
 
 /**
  * KOMPYUTERDAGI IELTS KO'RINISHI (2026-09-27).
@@ -170,17 +172,31 @@ function Passage({
     };
   }, [measure, readOnly]);
 
-  const segs = useMemo(() => {
-    const out: { t: string; m: boolean }[] = [];
-    let pos = 0;
+  // Cambridge ko'rinishi (2026-09-27): sarlavha katta qalin, kirish
+  // kursiv, paragraf harflari qalin chap chetda. Bo'laklar matnni to'liq
+  // qoplaydi va bo'sh qatorlar ham DOM'da (yashirin) qoladi — belgilash
+  // o'rinlari (offsetOf, Range.toString) avvalgidek butun matn bo'yicha.
+  const blocks = useMemo(() => passageBlocks(text), [text]);
+
+  /** [a, b) oralig'i — belgilangan joylari <mark> bilan. */
+  const slice = (a: number, b: number, key: string): ReactNode[] => {
+    const out: ReactNode[] = [];
+    let pos = a;
     for (const [s, e] of clean) {
-      if (s > pos) out.push({ t: text.slice(pos, s), m: false });
-      out.push({ t: text.slice(s, e), m: true });
-      pos = e;
+      if (e <= a || s >= b) continue;
+      const s2 = Math.max(s, a);
+      const e2 = Math.min(e, b);
+      if (s2 > pos) out.push(<Fragment key={`${key}t${pos}`}>{text.slice(pos, s2)}</Fragment>);
+      out.push(
+        <mark key={`${key}m${s2}`} className="bg-yellow-200 text-inherit rounded-sm">
+          {text.slice(s2, e2)}
+        </mark>
+      );
+      pos = e2;
     }
-    if (pos < text.length) out.push({ t: text.slice(pos), m: false });
+    if (pos < b) out.push(<Fragment key={`${key}t${pos}`}>{text.slice(pos, b)}</Fragment>);
     return out;
-  }, [text, clean]);
+  };
 
   const overlaps = sel ? clean.some(([s, e]) => s < sel.e && e > sel.s) : false;
 
@@ -199,19 +215,54 @@ function Passage({
 
   return (
     <>
-      <div
-        ref={ref}
-        className="text-[15px] text-slate-800 whitespace-pre-line leading-relaxed"
-      >
-        {segs.map((g, i) =>
-          g.m ? (
-            <mark key={i} className="bg-yellow-200 text-inherit rounded-sm">
-              {g.t}
-            </mark>
-          ) : (
-            <Fragment key={i}>{g.t}</Fragment>
-          )
-        )}
+      <div ref={ref} className="text-[15px] text-slate-800 leading-relaxed">
+        {blocks.map((b, i) => {
+          const k = `b${i}`;
+          switch (b.k) {
+            case "sep":
+              return (
+                <span key={k} className="hidden">
+                  {slice(b.s, b.e, k)}
+                </span>
+              );
+            case "title":
+              return (
+                <h3
+                  key={k}
+                  className="font-serif text-[1.65em] leading-tight font-bold text-center text-slate-900 mb-2 whitespace-pre-line"
+                >
+                  {slice(b.s, b.e, k)}
+                </h3>
+              );
+            case "sub":
+              return (
+                <p
+                  key={k}
+                  className="italic text-center text-slate-600 max-w-[34rem] mx-auto mb-5 whitespace-pre-line"
+                >
+                  {slice(b.s, b.e, k)}
+                </p>
+              );
+            case "label":
+              return (
+                <div key={k} className="flex gap-3 mb-3.5">
+                  <span className="w-5 shrink-0 font-sans font-bold text-slate-900">
+                    {slice(b.s, b.l, `${k}l`)}
+                    <span className="hidden">{slice(b.l, b.b, `${k}w`)}</span>
+                  </span>
+                  <div className="flex-1 min-w-0 font-serif whitespace-pre-line">
+                    {slice(b.b, b.e, `${k}p`)}
+                  </div>
+                </div>
+              );
+            default:
+              return (
+                <p key={k} className="font-serif mb-3.5 whitespace-pre-line">
+                  {slice(b.s, b.e, k)}
+                </p>
+              );
+          }
+        })}
       </div>
       {/* Tugma document.body ga chiziladi — shrift o'lchami (zoom)
           uning joylashuvini surib yubormasin */}
@@ -315,6 +366,29 @@ export function CdExam({
   const [showSettings, setShowSettings] = useState(false);
   const qRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const navScroll = useRef<HTMLDivElement>(null);
+
+  // Ko'rsatma guruhlari (Cambridge): "Questions 8–13" o'z savollari OLDIDA.
+  // Raqamlar savollarga to'liq mos kelmasa — hammasi bo'lim boshida, asl
+  // tartibda (placeGroups). Bo'lim rasmi (ExamBank'dagi "A–G rasmlar
+  // jadvali") uni tilga olgan guruhdan keyin chiqadi.
+  const plans = useMemo(
+    () =>
+      parts.map((p) => {
+        const { intro, at } = placeGroups(parseInstructions(p.instructions), p.questions);
+        let imgAt: number | null = null;
+        if (p.image && at.size) {
+          const keys = [...at.keys()].sort((a, b) => a - b);
+          const hit = keys.find((n) =>
+            (at.get(n) || []).some((g: Group) =>
+              /\b(map|plan|diagram|pictures?|photos?|images?|chart|graph|table|below)\b/i.test(groupText(g))
+            )
+          );
+          imgAt = hit ?? keys[keys.length - 1];
+        }
+        return { intro, at, imgAt };
+      }),
+    [parts]
+  );
 
   useEffect(() => writeLS(reviewKey, review), [reviewKey, review]);
   useEffect(() => writeLS(hlKey, hl), [hlKey, hl]);
@@ -478,15 +552,36 @@ export function CdExam({
     />
   );
 
+  /** Shu savoldan boshlanadigan ko'rsatma guruh(lar)i (+ bo'lim rasmi). */
+  const groupsAt = (pi: number, q: PaperQ) => {
+    const gs = plans[pi]?.at.get(q.n) || [];
+    if (!gs.length) return null;
+    const p = parts[pi];
+    return (
+      <div className="pt-4 space-y-4">
+        {gs.map((g, i) => (
+          <InstructionGroup key={i} g={g} />
+        ))}
+        {p?.image && plans[pi]?.imgAt === q.n ? <Figure src={p.image} /> : null}
+      </div>
+    );
+  };
+
   const partIntro = (p: PaperPart, pi: number, withImage = true) => (
     <div className="mb-4">
-      <h2 className="font-bold text-slate-900">{p.title}</h2>
-      {p.instructions && (
-        <p className="text-sm text-slate-600 mt-1 whitespace-pre-line">{p.instructions}</p>
-      )}
+      <h2 className="font-bold uppercase tracking-wider text-slate-900">{p.title}</h2>
+      {plans[pi]?.intro.length ? (
+        <div className="mt-2 space-y-4">
+          {plans[pi].intro.map((g, i) => (
+            <InstructionGroup key={i} g={g} skipHeading={p.title} />
+          ))}
+        </div>
+      ) : null}
       {p.audio_url && <audio controls src={p.audio_url} className="w-full mt-3" />}
       {renderPartExtra ? renderPartExtra(p, pi) : null}
-      {withImage && p.image ? <Figure src={p.image} className="mt-3" /> : null}
+      {withImage && p.image && plans[pi]?.imgAt == null ? (
+        <Figure src={p.image} className="mt-3" />
+      ) : null}
     </div>
   );
 
@@ -525,7 +620,9 @@ export function CdExam({
           >
             <div style={{ zoom }} className="px-4 sm:px-6 py-5">
               <div className="flex items-center gap-2 mb-3">
-                <h2 className="flex-1 min-w-0 font-bold text-slate-900">{p.title}</h2>
+                <h2 className="flex-1 min-w-0 font-bold uppercase tracking-wider text-slate-900">
+                  {p.title}
+                </h2>
                 {spans.length && !readOnly ? (
                   <button
                     type="button"
@@ -556,15 +653,18 @@ export function CdExam({
             <div style={{ zoom }} className="px-4 sm:px-6 py-5">
               {partIntro(p, pi)}
               <div className="space-y-4">
-                {p.questions.map((q) =>
-                  qWrap(
-                    q,
-                    <>
-                      {questionHead(q)}
-                      {answerInput(q)}
-                    </>
-                  )
-                )}
+                {p.questions.map((q) => (
+                  <Fragment key={q.id}>
+                    {groupsAt(pi, q)}
+                    {qWrap(
+                      q,
+                      <>
+                        {questionHead(q)}
+                        {answerInput(q)}
+                      </>
+                    )}
+                  </Fragment>
+                ))}
               </div>
             </div>
           </div>
@@ -585,7 +685,10 @@ export function CdExam({
               {partIntro(p, pi)}
               <div className="space-y-4">
                 {p.questions.map((q) => (
-                  <div key={q.id}>{questionHead(q)}</div>
+                  <Fragment key={q.id}>
+                    {groupsAt(pi, q)}
+                    <div>{questionHead(q)}</div>
+                  </Fragment>
                 ))}
               </div>
             </div>
@@ -618,15 +721,18 @@ export function CdExam({
         <div style={{ zoom }} className="max-w-3xl mx-auto px-4 sm:px-6 py-5">
           {partIntro(p, pi)}
           <div className="space-y-4">
-            {p.questions.map((q) =>
-              qWrap(
-                q,
-                <>
-                  {questionHead(q)}
-                  {answerInput(q)}
-                </>
-              )
-            )}
+            {p.questions.map((q) => (
+              <Fragment key={q.id}>
+                {groupsAt(pi, q)}
+                {qWrap(
+                  q,
+                  <>
+                    {questionHead(q)}
+                    {answerInput(q)}
+                  </>
+                )}
+              </Fragment>
+            ))}
           </div>
         </div>
       </div>

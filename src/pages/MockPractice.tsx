@@ -4,7 +4,7 @@ import { FlaskConical, Lock, Play, X, Flag as FlagIcon } from "lucide-react";
 import { api } from "../lib/api";
 import { pushToast } from "../lib/toast";
 import { useAuth } from "../lib/AuthContext";
-import { MOCK_LIMITED, MOCK_PRACTICE, can } from "../lib/roles";
+import { MOCK_LIMITED, MOCK_PRACTICE, MOCK_STRICT_EXEMPT, can } from "../lib/roles";
 import { IssueStatusBadge, issueKindLabel } from "../components/MockIssueDialog";
 import {
   ExtensionProbe, ExtensionWarning, MobileBlock, StrictRules, exitFs,
@@ -193,12 +193,14 @@ export default function MockPractice() {
   // yoqilgan bo'lsa boshlanmaydi, "Boshlash" to'liq ekranga o'tkazadi
   const env = useStrictEnv();
   const mobile = env.blocked;
-  const checking = !!pick && !mobile;
+  // Asoschi — qat'iy tartibsiz (roles.ts MOCK_STRICT_EXEMPT)
+  const exempt = can(user?.role, MOCK_STRICT_EXEMPT);
+  const checking = !!pick && !mobile && !exempt;
   const ext = useForeignNodes(checking);
   // Tarjima sahifa OCHILISHI BILAN o'chadi, faqat oyna ochilganda emas:
   // Chrome "doim tarjima qil" bilan ro'yxatni oldinroq tarjima qilib
   // qo'ysa, boshlash hech qachon ruxsat etilmasdi (2026-09-27 ko'rigi)
-  useNoTranslate(true);
+  useNoTranslate(!exempt);
 
   useEffect(() => {
     if (!can(user?.role, MOCK_PRACTICE)) return;
@@ -222,10 +224,12 @@ export default function MockPractice() {
 
   async function start() {
     if (!pick || mobile || env.recheck()) return;
-    if (ext.rescan().length || ext.seen.length) return;
-    // To'liq ekran — shu bosishda, await'dan oldin (brauzer faqat
-    // bosishga ruxsat beradi); ruxsat bo'lmasa test baribir boshlanadi
-    requestFs();
+    if (!exempt) {
+      if (ext.rescan().length || ext.seen.length) return;
+      // To'liq ekran — shu bosishda, await'dan oldin (brauzer faqat
+      // bosishga ruxsat beradi); ruxsat bo'lmasa test baribir boshlanadi
+      requestFs();
+    }
     setBusy(true);
     try {
       const r = await api.post<{ id: number; resumed?: boolean; content_key?: string }>(
@@ -248,7 +252,7 @@ export default function MockPractice() {
   function choose(it: Item) {
     if (it.my_open) {
       // Davom etayotgan urinish — to'liq ekranda davom etadi
-      if (!mobile) requestFs();
+      if (!mobile && !exempt) requestFs();
       nav(`/mock-practice/${it.my_open}`);
       return;
     }
@@ -520,6 +524,21 @@ export default function MockPractice() {
               <div className="rounded-xl bg-slate-50 px-3 py-4">
                 <MobileBlock framed={env.framed && !env.mobile} />
               </div>
+            ) : exempt ? (
+              <>
+                <p className="text-xs text-slate-600 bg-slate-50 rounded-lg px-3 py-2 mb-3">
+                  Asoschi rejimi: qat'iy tartib sizga qo'llanmaydi — skrinshot olish va
+                  boshqa oynaga o'tish mumkin. Xodim va o'quvchilarda u ishlaydi.
+                </p>
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={start}
+                  className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-xl py-3 text-sm font-semibold disabled:opacity-60"
+                >
+                  {busy ? "Boshlanmoqda..." : "Boshlash"}
+                </button>
+              </>
             ) : (
               <>
                 <div className="space-y-2 mb-3">

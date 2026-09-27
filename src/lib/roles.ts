@@ -248,6 +248,14 @@ export const MOCK_PRACTICE = [
 export const MOCK_LIMITED = [TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT];
 export const MOCK_ISSUE_VIEW = [FOUNDER, EXAMINER, HEAD_EXAMINER, BRANCH_MANAGER];
 export const MOCK_ISSUE_TRIAGE = [FOUNDER, BRANCH_MANAGER, HEAD_EXAMINER];
+/**
+ * "Mock sinab ko'rish"da QAT'IY TARTIB qo'llanmaydiganlar (2026-09-27,
+ * Jahongir: "hech bo'lmasa menga ruxsat bersin xatoliklarni senga
+ * korsatishim kerakku") — skrinshot, boshqa oynaga o'tish, kengaytma
+ * sanalmaydi. Faqat brauzer tomoni: sinovdagi qoidabuzarliklar serverga
+ * yozilmaydi. O'quvchi imtihoniga (/t/...) ta'sir qilmaydi.
+ */
+export const MOCK_STRICT_EXEMPT = [FOUNDER];
 
 export const SUPPORT_ACCESS = [
   ...FULL_ACCESS,

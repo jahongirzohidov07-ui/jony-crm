@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Flag as FlagIcon, Volume2, Square } from "lucide-react";
 import { api, getActiveRole, getToken } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
-import { MOCK_LIMITED, can } from "../lib/roles";
+import { MOCK_LIMITED, MOCK_STRICT_EXEMPT, can } from "../lib/roles";
 import {
   type PaperAnswers, type PaperPart, type PaperQ,
 } from "../components/ExamPaper";
@@ -351,9 +351,12 @@ export default function MockPracticeTake() {
   useEffect(() => {
     submitRef.current = submit;
   }, [submit]);
+  // Asoschi — qat'iy tartibsiz: xatolarni skrinshot qilib yuborishi kerak
+  // (roles.ts MOCK_STRICT_EXEMPT). Telefon cheklovi baribir qoladi.
+  const exempt = can(user?.role, MOCK_STRICT_EXEMPT);
   const guard = useStrictGuard({
-    enabled: !mobile && !review,
-    active: !mobile && !!run && !review,
+    enabled: !mobile && !review && !exempt,
+    active: !mobile && !!run && !review && !exempt,
     storageKey: `mockp:${id}`,
     onViolation: ({ reason, extend }) => {
       // extend — o'sha chiqishning davomi (vaqti), yangi qoidabuzarlik emas
@@ -600,15 +603,21 @@ export default function MockPracticeTake() {
   const scriptParts = new Set(run.script_parts || []);
   const left = PRACTICE_AWAY_LIMIT - viol;
   const violText =
-    viol > 0
+    viol > 0 && !exempt
       ? left > 0
         ? `Qoidabuzarlik qayd qilindi (${viol}): yana ${left} marta ruxsat bor, keyingisida urinish avtomatik topshiriladi`
         : "Oxirgi ogohlantirish: yana bir qoidabuzarlik — urinish avtomatik topshiriladi"
       : null;
-  const fsNote = guard.fsRefused;
+  const fsNote = guard.on && guard.fsRefused;
   const notice =
-    run.tpl_changed || ttsErr || error || violText || fsNote ? (
+    run.tpl_changed || ttsErr || error || violText || fsNote || exempt ? (
       <>
+        {exempt ? (
+          <span>
+            Asoschi rejimi: qat'iy tartib sizga qo'llanmaydi — skrinshot olish va boshqa
+            oynaga o'tish mumkin.
+          </span>
+        ) : null}
         {violText ? <span className="font-medium">{violText}</span> : null}
         {fsNote ? (
           <span>

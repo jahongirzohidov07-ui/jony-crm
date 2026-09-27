@@ -249,5 +249,24 @@ ck("coin bir marta", db.query(models.CoinEntry).filter(models.CoinEntry.source =
 db.close()
 ck("PIN bo'shadi", c.post("/api/live/join", json={"code": g["code"], "nickname": "Yusuf"}).status_code, 404)
 
+# MAXSUS KAHOOT SAVOLLARI (2026-09-27): darsda "kahoot" bo'lsa o'yin shundan tuziladi,
+# to'g'ri javob — options[0]; yetmasa eski avtomatik savollar bilan to'ldiriladi.
+import liveplay                                    # noqa: E402
+base = liveplay._lesson("ielts_1_0", 5)
+kq = [{"kind": "grammar" if i < 12 else "vocab", "q": f"Maxsus savol {i}?",
+       "options": [f"TO'G'RI {i}", f"xato A{i}", f"xato B{i}", f"xato C{i}"], "explain": "izoh"}
+      for i in range(20)]
+L2 = dict(base, kahoot=kq)
+qs = liveplay.build_questions(L2, "mixed", 20, seed=3)
+ck("kahoot: 20 ta maxsus savol", (len(qs), all(q["prompt"].startswith("Maxsus") for q in qs)), (20, True))
+ck("kahoot: to'g'ri javob options[0]", all(q["options"][q["correct"]].startswith("TO'G'RI") for q in qs), True)
+ck("kahoot: explain saqlanadi", qs[0]["explain"], "izoh")
+qg = liveplay.build_questions(L2, "grammar", 20, seed=3)
+ck("kahoot grammar: avval 12 maxsus, keyin eski bilan to'ldiriladi",
+   (sum(q["prompt"].startswith("Maxsus") for q in qg), len(qg) >= 12), (12, True))
+ck("kahoot: vocab rejimi o'zgarmagan", any(q["prompt"].startswith("Maxsus") for q in
+   liveplay.build_questions(L2, "vocab", 20, seed=3)), False)
+ck("kahootsiz dars eskicha", len(liveplay.build_questions(base, "mixed", 20, seed=3)) > 0, True)
+
 print("\nJAMI XATO:", len(fails), fails)
 sys.exit(1 if fails else 0)

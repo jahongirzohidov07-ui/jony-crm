@@ -273,8 +273,36 @@ def _grammar_questions(rnd, L) -> list:
     return out
 
 
+def _kahoot_questions(rnd, L, kind=None) -> list:
+    """Darsga maxsus yozilgan Kahoot savollari (2026-09-27, Jahongir: "hamma
+    kahoot bir xil, aynan o'sha mavzulardan kahoot test bo'lishi kerak").
+    Avtomatik savollar mashq javoblaridan yig'ilardi va mavzuni sinamasdi.
+    Format: {"kind", "q", "sub"?, "options": [TO'G'RI, 3 ta xato], "explain"?}."""
+    out = []
+    for k in L.get("kahoot") or []:
+        if kind and k.get("kind") != kind:
+            continue
+        opts = list(k.get("options") or [])
+        if len(opts) < 2 or not k.get("q"):
+            continue
+        out.append(_mk(rnd, k.get("kind") or "grammar", k["q"], opts[0], opts[1:],
+                       explain=k.get("explain"), sub=k.get("sub")))
+    rnd.shuffle(out)
+    return out
+
+
 def build_questions(L: dict, mode: str, count: int, seed=None) -> list:
     rnd = random.Random(seed)
+    if L.get("kahoot") and mode in ("mixed", "grammar"):
+        # Maxsus savollar birinchi; yetmasa eski avtomatik savollar bilan to'ldiriladi
+        qs = _kahoot_questions(rnd, L, None if mode == "mixed" else "grammar")
+        if len(qs) < count:
+            seen = {q["prompt"] for q in qs}
+            old = _grammar_questions(rnd, L) if mode == "grammar" else \
+                _vocab_questions(rnd, (L.get("vocab") or {}).get("core") or [])
+            qs += [q for q in old if q["prompt"] not in seen][:count - len(qs)]
+        if qs:
+            return qs[:count]
     V = L.get("vocab") or {}
     core = V.get("core") or []
     strong = V.get("strong") or []

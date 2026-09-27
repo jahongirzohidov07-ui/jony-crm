@@ -917,7 +917,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda). Kitobda 1-dars uchun reading yo'q — bu qo'shimcha."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I ___ my key. I can't open the door now.",
+     "sub": "Present Perfect",
+     "options": [
+      "have lost",
+      "has lost",
+      "have lose",
+      "am lost"
+     ],
+     "explain": "Natija hozir (eshikni ocholmayman) → have + V3; lose – lost – lost."
+    },
+    {
+     "kind": "grammar",
+     "q": "My brother has never ___ sushi.",
+     "sub": "Present Perfect",
+     "options": [
+      "eaten",
+      "ate",
+      "eat",
+      "eating"
+     ],
+     "explain": "has + V3: eat – ate – EATEN."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "She has finished her work.",
+      "She have finished her work.",
+      "She has finish her work.",
+      "She have finish her work."
+     ],
+     "explain": "She → HAS; asosiy fe'l V3 shaklda: finished."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I have went to the market.",
+      "I have gone to the market.",
+      "We have bought a new car.",
+      "He has broken his phone."
+     ],
+     "explain": "go – went – GONE: have + V3 → have gone. «have went» — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ you ever ___ to Samarkand?",
+     "sub": "Savol shakli",
+     "options": [
+      "Have / been",
+      "Has / been",
+      "Have / went",
+      "Did / been"
+     ],
+     "explain": "Savol: Have + you + V3? «been to» = borib kelgan."
+    },
+    {
+     "kind": "grammar",
+     "q": "Inkor shaklini tanlang: «We have finished the project.»",
+     "sub": "Inkor",
+     "options": [
+      "We haven't finished the project.",
+      "We hasn't finished the project.",
+      "We haven't finish the project.",
+      "We didn't finished the project."
+     ],
+     "explain": "Inkor: haven't + V3; we → have."
+    },
+    {
+     "kind": "grammar",
+     "q": "Has Aziz called you? — Yes, he ___.",
+     "sub": "Qisqa javob",
+     "options": [
+      "has",
+      "have",
+      "does",
+      "did"
+     ],
+     "explain": "Has…? savoliga qisqa javob: Yes, he has / No, he hasn't."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «U hech qachon samolyotda uchmagan.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "She has never flown on a plane.",
+      "She has never flew on a plane.",
+      "She have never flown on a plane.",
+      "She hasn't never flown on a plane."
+     ],
+     "explain": "She → has; never has va V3 orasida; fly – flew – FLOWN. Ikki inkor (hasn't never) — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Ali isn't here. He ___ to London. He comes back next week.",
+     "sub": "been / gone",
+     "options": [
+      "has gone",
+      "has been",
+      "have gone",
+      "has went"
+     ],
+     "explain": "Hali qaytmagan (hozir u yerda) → has gone to. «has been to» = borib kelgan."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ him yesterday at school.",
+     "sub": "yesterday bor!",
+     "options": [
+      "saw",
+      "have seen",
+      "has seen",
+      "have saw"
+     ],
+     "explain": "«yesterday» — vaqt aniq → Present Perfect emas, Past Simple: saw."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi holatda Present Perfect ishlatiladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "O'tgan ish, natijasi hozir muhim, vaqti aytilmagan",
+      "Ish aniq o'tgan vaqtda bo'lgan (yesterday)",
+      "Ish ayni paytda bo'lyapti",
+      "Ish kelajakda bo'ladi"
+     ],
+     "explain": "Present Perfect — o'tgan ish, lekin natija HOZIR muhim; vaqt aytilmaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "So'z tartibi: ever / you / have / eaten / plov?",
+     "sub": "So'z tartibi",
+     "options": [
+      "Have you ever eaten plov?",
+      "Have ever you eaten plov?",
+      "You have ever eaten plov?",
+      "Ever have you eaten plov?"
+     ],
+     "explain": "Savol: Have + S + ever + V3? → Have you ever eaten plov?"
+    },
+    {
+     "kind": "vocab",
+     "q": "write – wrote – ___",
+     "sub": "V3 shaklini tanlang",
+     "options": [
+      "written",
+      "wrote",
+      "writed",
+      "writing"
+     ],
+     "explain": "write – wrote – WRITTEN (noto'g'ri fe'l)."
+    },
+    {
+     "kind": "vocab",
+     "q": "buy – ___ – ___",
+     "sub": "V2 va V3",
+     "options": [
+      "bought – bought",
+      "buyed – buyed",
+      "brought – brought",
+      "bought – buyed"
+     ],
+     "explain": "buy (sotib olmoq) – bought – bought. «brought» — bring (olib kelmoq) fe'lidan."
+    },
+    {
+     "kind": "vocab",
+     "q": "Oops! I have ___ my glass. There is water on the floor.",
+     "sub": "Kontekst",
+     "options": [
+      "broken",
+      "broke",
+      "breaked",
+      "break"
+     ],
+     "explain": "have + V3: break – broke – BROKEN (sindirmoq)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Antonim: find (topmoq) ↔ ?",
+     "sub": "Antonimni toping",
+     "options": [
+      "lose",
+      "leave",
+      "forget",
+      "catch"
+     ],
+     "explain": "find – topmoq, lose – yo'qotmoq (lost – lost)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Our team has ___ the match! We are the champions!",
+     "sub": "Kontekst",
+     "options": [
+      "won",
+      "win",
+      "winned",
+      "wan"
+     ],
+     "explain": "win (yutmoq) – won – WON."
+    },
+    {
+     "kind": "vocab",
+     "q": "«tark etmoq; qoldirmoq» — qaysi fe'l?",
+     "sub": "Ma'no",
+     "options": [
+      "leave – left – left",
+      "live – lived – lived",
+      "lose – lost – lost",
+      "let – let – let"
+     ],
+     "explain": "leave – left – left = tark etmoq, qoldirmoq. live — yashamoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Which verb is the SAME in V1, V2 and V3?",
+     "sub": "Uchala shakl bir xil",
+     "options": [
+      "put",
+      "take",
+      "give",
+      "speak"
+     ],
+     "explain": "put – put – put. take – took – taken, give – gave – given, speak – spoke – spoken."
+    },
+    {
+     "kind": "vocab",
+     "q": "I have ___ this book three times. I love it!",
+     "sub": "Kontekst",
+     "options": [
+      "read",
+      "readed",
+      "red",
+      "reading"
+     ],
+     "explain": "read – read – read: yozilishi bir xil, V2/V3 [red] deb o'qiladi."
+    }
+   ]
   },
   {
    "no": 2,
@@ -1765,6 +2007,248 @@
      "CORE 20 + tarjima, 1.5 daqiqa",
      "1 coin"
     ]
+   ],
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I ___ Dubai in 2023.",
+     "sub": "PP yoki Past Simple?",
+     "options": [
+      "visited",
+      "have visited",
+      "has visited",
+      "have visit"
+     ],
+     "explain": "«in 2023» — vaqt aniq → Past Simple: visited."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ you ever ___ a newborn baby in your arms?",
+     "sub": "Tajriba savoli",
+     "options": [
+      "Have / held",
+      "Did / hold",
+      "Have / hold",
+      "Did / held"
+     ],
+     "explain": "«ever» — tajriba savoli → Present Perfect: Have you ever held…? (hold – held – held)."
+    },
+    {
+     "kind": "grammar",
+     "q": "When ___ you ___ in Tashkent?",
+     "sub": "When savoli",
+     "options": [
+      "did / arrive",
+      "have / arrived",
+      "did / arrived",
+      "have / arrive"
+     ],
+     "explain": "«When» — vaqt so'raladi → Past Simple: When did you arrive?"
+    },
+    {
+     "kind": "grammar",
+     "q": "My sister ___ born in 2010.",
+     "sub": "Tug'ilish",
+     "options": [
+      "was",
+      "has been",
+      "is",
+      "have been"
+     ],
+     "explain": "Tug'ilish — har doim Past Simple: I was born, she was born."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I have seen him yesterday.",
+      "I saw him yesterday.",
+      "I have seen him today.",
+      "I have never seen him."
+     ],
+     "explain": "«yesterday» — tugagan vaqt → Past Simple: I saw him yesterday."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi vaqt ifodasi Present Perfect bilan ishlatiladi?",
+     "sub": "Vaqt so'zlari",
+     "options": [
+      "so far",
+      "yesterday",
+      "two days ago",
+      "in 2019"
+     ],
+     "explain": "so far, today, this week — tugamagan davr → PP. yesterday, ago, in 2019 → Past Simple."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Men kecha kechqurun unga qo'ng'iroq qildim.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "I called her last night.",
+      "I have called her last night.",
+      "I have call her last night.",
+      "I call her last night."
+     ],
+     "explain": "«last night» — tugagan vaqt → Past Simple: I called."
+    },
+    {
+     "kind": "grammar",
+     "q": "Have you ever been to Dubai? — Yes. — When ___ you go?",
+     "sub": "Tafsilot",
+     "options": [
+      "did",
+      "have",
+      "do",
+      "has"
+     ],
+     "explain": "Birinchi savol PP, tafsilot (qachon?) — Past Simple: When did you go?"
+    },
+    {
+     "kind": "grammar",
+     "q": "My aunt ___ a baby girl two weeks ago.",
+     "sub": "ago bor!",
+     "options": [
+      "had",
+      "has had",
+      "have had",
+      "has"
+     ],
+     "explain": "«ago» — aniq o'tgan vaqt → Past Simple: had."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "We went to Japan in 2020.",
+      "We have gone to Japan in 2020.",
+      "We have been to Japan in 2020.",
+      "We have went to Japan in 2020."
+     ],
+     "explain": "«in 2020» — aniq vaqt → Past Simple: We went."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Siz hech qachon sushi yeganmisiz?»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "Have you ever eaten sushi?",
+      "Did you ever eaten sushi?",
+      "Have you ever ate sushi?",
+      "Do you ever eaten sushi?"
+     ],
+     "explain": "Tajriba savoli → Have you ever + V3? (eat – ate – eaten)."
+    },
+    {
+     "kind": "grammar",
+     "q": "ago, yesterday, last week bilan qaysi zamon ishlatiladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Past Simple",
+      "Present Perfect",
+      "Present Continuous",
+      "Future Simple"
+     ],
+     "explain": "Aniq tugagan vaqt (ago, yesterday, last…) → Past Simple."
+    },
+    {
+     "kind": "vocab",
+     "q": "A woman who helps mothers give birth is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "midwife",
+      "widow",
+      "toddler",
+      "godparent"
+     ],
+     "explain": "midwife — doya, akusherka."
+    },
+    {
+     "kind": "vocab",
+     "q": "Two babies born at the same time to one mother are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "twins",
+      "infants",
+      "newlyweds",
+      "toddlers"
+     ],
+     "explain": "twins — egizaklar."
+    },
+    {
+     "kind": "vocab",
+     "q": "Collocation: to ___ birth to a baby",
+     "sub": "Kollokatsiya",
+     "options": [
+      "give",
+      "make",
+      "take",
+      "do"
+     ],
+     "explain": "give birth — tug'moq: She gave birth to twins."
+    },
+    {
+     "kind": "vocab",
+     "q": "A baby born before the due date is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "premature",
+      "pregnant",
+      "healthy",
+      "newborn"
+     ],
+     "explain": "premature — vaqtidan oldin tug'ilgan. due date — tug'ish sanasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A child of 1–3 years who is learning to walk is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "toddler",
+      "newborn",
+      "twin",
+      "midwife"
+     ],
+     "explain": "toddler — endi yurayotgan bola (1–3 yosh)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Mothers sing a ___ to help babies fall asleep.",
+     "sub": "Kontekst",
+     "options": [
+      "lullaby",
+      "cradle",
+      "nappy",
+      "pram"
+     ],
+     "explain": "lullaby — alla. cradle — beshik, nappy — tagliq, pram — aravacha."
+    },
+    {
+     "kind": "vocab",
+     "q": "Before babies can walk, they ___ on the floor.",
+     "sub": "Kontekst",
+     "options": [
+      "crawl",
+      "weigh",
+      "raise",
+      "name"
+     ],
+     "explain": "crawl — emaklamoq. Keyin first steps — ilk qadamlar."
+    },
+    {
+     "kind": "vocab",
+     "q": "«pram / stroller» nima?",
+     "sub": "O'zbekcha ma'no",
+     "options": [
+      "bolalar aravachasi",
+      "beshik",
+      "tagliq",
+      "bolalar karavoti"
+     ],
+     "explain": "pram / stroller — bolalar aravachasi. cradle — beshik, cot — karavot."
+    }
    ]
   },
   {
@@ -2606,6 +3090,248 @@
      "CORE 20 + tarjima, 1.5 daqiqa",
      "1 coin"
     ]
+   ],
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I have lived in Tashkent ___ 2015.",
+     "sub": "since / for",
+     "options": [
+      "since",
+      "for",
+      "from",
+      "ago"
+     ],
+     "explain": "2015 — boshlanish NUQTASI → since."
+    },
+    {
+     "kind": "grammar",
+     "q": "My parents have been married ___ twenty years.",
+     "sub": "since / for",
+     "options": [
+      "for",
+      "since",
+      "during",
+      "ago"
+     ],
+     "explain": "twenty years — DAVR → for."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ have you known your best friend? — Since school.",
+     "sub": "Savol so'zi",
+     "options": [
+      "How long",
+      "How much",
+      "How many",
+      "When"
+     ],
+     "explain": "Qancha vaqtdan beri? → How long + have/has + S + V3?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi so'z SINCE bilan ishlatiladi?",
+     "sub": "since + nuqta",
+     "options": [
+      "Monday",
+      "two hours",
+      "a long time",
+      "ten years"
+     ],
+     "explain": "since + nuqta (Monday, 2012). Davr (two hours, ten years) → for."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi so'z FOR bilan ishlatiladi?",
+     "sub": "for + davr",
+     "options": [
+      "three months",
+      "2020",
+      "last summer",
+      "my birthday"
+     ],
+     "explain": "for + davr (three months). 2020, last summer — nuqta → since."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I have lived here since three years.",
+      "I have lived here for three years.",
+      "I have lived here since 2023.",
+      "She has worked here for a long time."
+     ],
+     "explain": "three years — davr → for, since emas."
+    },
+    {
+     "kind": "grammar",
+     "q": "She can't come to the wedding because she ___ a cold.",
+     "sub": "because + PP",
+     "options": [
+      "has caught",
+      "have caught",
+      "has catch",
+      "is caught"
+     ],
+     "explain": "Hozirgi holat sababi o'tgan ishda → because + has + V3 (catch – caught – caught)."
+    },
+    {
+     "kind": "grammar",
+     "q": "How long ___ you ___ him? — Since 2018.",
+     "sub": "How long",
+     "options": [
+      "have / known",
+      "do / know",
+      "are / knowing",
+      "did / know"
+     ],
+     "explain": "Hozir ham davom etyapti + since → Present Perfect: How long have you known…?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Men uni dushanbadan beri ko'rmadim.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "I haven't seen him since Monday.",
+      "I haven't seen him for Monday.",
+      "I didn't see him since Monday.",
+      "I don't see him since Monday."
+     ],
+     "explain": "Inkor PP + since + nuqta: I haven't seen him since Monday."
+    },
+    {
+     "kind": "grammar",
+     "q": "It's two years ___ we got married.",
+     "sub": "It's … since",
+     "options": [
+      "since",
+      "for",
+      "ago",
+      "before"
+     ],
+     "explain": "It's + davr + since + Past Simple: It's two years since we got married."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ here since 2020.",
+     "sub": "since bilan zamon",
+     "options": [
+      "have lived",
+      "live",
+      "am living",
+      "lived"
+     ],
+     "explain": "since/for bilan hozirgacha davom → Present Perfect: have lived."
+    },
+    {
+     "kind": "grammar",
+     "q": "He is happy because he ___ a new job.",
+     "sub": "because + PP",
+     "options": [
+      "has found",
+      "have found",
+      "has find",
+      "is found"
+     ],
+     "explain": "Hozir xursand — sababi: has + V3 (find – found – found)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The woman getting married at a wedding is the ___.",
+     "sub": "Ma'no",
+     "options": [
+      "bride",
+      "groom",
+      "best man",
+      "widow"
+     ],
+     "explain": "bride — kelin, groom — kuyov, best man — kuyov jo'rasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Collocation: to ___ married",
+     "sub": "Kollokatsiya",
+     "options": [
+      "get",
+      "make",
+      "do",
+      "take"
+     ],
+     "explain": "get married — turmush qurmoq: They got married in 2019."
+    },
+    {
+     "kind": "vocab",
+     "q": "A holiday that newlyweds take after the wedding is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "honeymoon",
+      "reception",
+      "ceremony",
+      "proposal"
+     ],
+     "explain": "honeymoon — asal oyi."
+    },
+    {
+     "kind": "vocab",
+     "q": "He asked her to marry him. He ___ to her.",
+     "sub": "Kontekst",
+     "options": [
+      "proposed",
+      "engaged",
+      "married",
+      "settled"
+     ],
+     "explain": "propose (to smb) — turmush taklif qilmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "The day each year when you remember your wedding is an ___.",
+     "sub": "Ma'no",
+     "options": [
+      "anniversary",
+      "engagement",
+      "invitation",
+      "honeymoon"
+     ],
+     "explain": "anniversary — (nikoh) yilligi."
+    },
+    {
+     "kind": "vocab",
+     "q": "«in-laws» kimlar?",
+     "sub": "O'zbekcha ma'no",
+     "options": [
+      "turmush o'rtog'ining oilasi",
+      "kelin dugonalari",
+      "to'y mehmonlari",
+      "yangi turmush qurganlar"
+     ],
+     "explain": "in-laws — qaynota-qaynona, turmush o'rtog'i oilasi. mother-in-law — qaynona."
+    },
+    {
+     "kind": "vocab",
+     "q": "We sent 300 wedding ___ to our guests.",
+     "sub": "Kontekst",
+     "options": [
+      "invitations",
+      "vows",
+      "toasts",
+      "proposals"
+     ],
+     "explain": "invitation — taklifnoma. vows — nikoh va'dasi, toast — qadah so'zi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A husband or a wife is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "spouse",
+      "couple",
+      "guest",
+      "matchmaker"
+     ],
+     "explain": "spouse — juft (er yoki xotin). couple — er-xotin (ikkalasi)."
+    }
    ]
   },
   {
@@ -3439,6 +4165,248 @@
      "20 so'z tarjimasiga qarab inglizchasi, 3 daqiqa (kitob normativi)",
      "1 coin"
     ]
+   ],
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I haven't finished my homework ___.",
+     "sub": "yet / already / just / still",
+     "options": [
+      "yet",
+      "already",
+      "just",
+      "ever"
+     ],
+     "explain": "YET — inkor va savolda, GAP OXIRIDA: I haven't finished yet."
+    },
+    {
+     "kind": "grammar",
+     "q": "She has ___ left. You missed her by one minute!",
+     "sub": "yet / already / just / still",
+     "options": [
+      "just",
+      "yet",
+      "still",
+      "ever"
+     ],
+     "explain": "JUST — hozirgina: has + just + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "I have already done it.",
+      "I have yet done it.",
+      "I have done already it.",
+      "I have still done it."
+     ],
+     "explain": "ALREADY — have va V3 orasida: I have already done it."
+    },
+    {
+     "kind": "grammar",
+     "q": "Has the bus arrived ___?",
+     "sub": "Savol",
+     "options": [
+      "yet",
+      "still",
+      "just",
+      "ever since"
+     ],
+     "explain": "Savolda «hali?» → YET, gap oxirida: Has the bus arrived yet?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "She just has left.",
+      "She has just left.",
+      "He has already gone.",
+      "I still haven't called him."
+     ],
+     "explain": "JUST have'dan KEYIN keladi: She has just left."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ called my grandmother. I feel bad!",
+     "sub": "still",
+     "options": [
+      "still haven't",
+      "haven't still",
+      "still didn't",
+      "not still have"
+     ],
+     "explain": "STILL — inkorda, have'dan OLDIN: I still haven't called."
+    },
+    {
+     "kind": "grammar",
+     "q": "So'z tartibi: has / just / the film / started",
+     "sub": "So'z tartibi",
+     "options": [
+      "The film has just started.",
+      "The film just has started.",
+      "The film has started just.",
+      "Just the film has started."
+     ],
+     "explain": "S + has + just + V3: The film has just started."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi so'z inkor va savolda GAP OXIRIDA keladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "yet",
+      "already",
+      "just",
+      "still"
+     ],
+     "explain": "YET — gap oxirida (inkor/savol). already, just — have va V3 orasida; still — have'dan oldin."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Men allaqachon oyligimni sarflab bo'ldim.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "I've already spent my salary.",
+      "I've yet spent my salary.",
+      "I already spent my salary yet.",
+      "I've still spent my salary."
+     ],
+     "explain": "allaqachon = ALREADY, have va V3 orasida."
+    },
+    {
+     "kind": "grammar",
+     "q": "«Siz hali tugatdingizmi?» — to'g'ri savolni tanlang.",
+     "sub": "Savol shakli",
+     "options": [
+      "Have you finished yet?",
+      "Has you finished yet?",
+      "Have you finish yet?",
+      "Have you yet finished?"
+     ],
+     "explain": "Have + you + V3 + yet? — yet gap oxirida."
+    },
+    {
+     "kind": "grammar",
+     "q": "What has he ___ done? — He has just gone out.",
+     "sub": "Savol",
+     "options": [
+      "just",
+      "yet",
+      "still",
+      "since"
+     ],
+     "explain": "«Hozirgina nima qildi?» → What has he just done?"
+    },
+    {
+     "kind": "grammar",
+     "q": "ALREADY gapda qayerda turadi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "have/has va V3 orasida",
+      "gap oxirida, inkorda",
+      "have'dan oldin, inkorda",
+      "gap boshida, savolda"
+     ],
+     "explain": "S + have/has + ALREADY + V3: I've already eaten."
+    },
+    {
+     "kind": "vocab",
+     "q": "Her grandfather ___ away last year. We miss him.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "passed",
+      "died",
+      "gave",
+      "took"
+     ],
+     "explain": "pass away — olamdan o'tmoq (hurmatli ibora)."
+    },
+    {
+     "kind": "vocab",
+     "q": "A woman whose husband has died is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "widow",
+      "widower",
+      "orphan",
+      "bride"
+     ],
+     "explain": "widow — beva ayol; widower — beva erkak."
+    },
+    {
+     "kind": "vocab",
+     "q": "A child whose parents have died is an ___.",
+     "sub": "Ma'no",
+     "options": [
+      "orphan",
+      "infant",
+      "survivor",
+      "widow"
+     ],
+     "explain": "orphan — yetim."
+    },
+    {
+     "kind": "vocab",
+     "q": "People bring flowers to the ___ in the cemetery.",
+     "sub": "Kontekst",
+     "options": [
+      "grave",
+      "will",
+      "obituary",
+      "eulogy"
+     ],
+     "explain": "grave — qabr. will — vasiyatnoma, obituary — ta'ziyanoma."
+    },
+    {
+     "kind": "vocab",
+     "q": "We send our ___ to the family. (ta'ziya)",
+     "sub": "Kontekst",
+     "options": [
+      "condolences",
+      "congratulations",
+      "vows",
+      "invitations"
+     ],
+     "explain": "condolences — ta'ziya. congratulations — tabrik (xursandchilikda)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Before he died, he wrote a ___ and left his house to his son.",
+     "sub": "Kontekst",
+     "options": [
+      "will",
+      "grave",
+      "memorial",
+      "eulogy"
+     ],
+     "explain": "will — vasiyatnoma. inherit — meros olmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "«grief» ma'nosi?",
+     "sub": "O'zbekcha ma'no",
+     "options": [
+      "qayg'u, g'am",
+      "meros",
+      "qabriston",
+      "dafn"
+     ],
+     "explain": "grief — qayg'u, g'am. inheritance — meros, cemetery — qabriston, burial — dafn."
+    },
+    {
+     "kind": "vocab",
+     "q": "Three people died in the accident, but one person ___.",
+     "sub": "Kontekst",
+     "options": [
+      "survived",
+      "mourned",
+      "inherited",
+      "buried"
+     ],
+     "explain": "survive — omon qolmoq; survivor — omon qolgan odam."
+    }
    ]
   },
   {
@@ -4389,7 +5357,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "They ___ for the bus for 30 minutes.",
+     "sub": "PPC",
+     "options": [
+      "have been waiting",
+      "have been wait",
+      "has been waiting",
+      "are waiting"
+     ],
+     "explain": "PPC: have + been + V-ing; they → have."
+    },
+    {
+     "kind": "grammar",
+     "q": "It ___ since morning. Take an umbrella!",
+     "sub": "PPC",
+     "options": [
+      "has been raining",
+      "is raining",
+      "have been raining",
+      "has been rain"
+     ],
+     "explain": "since bilan Present Continuous emas → has been raining."
+    },
+    {
+     "kind": "grammar",
+     "q": "How long ___ you ___ English?",
+     "sub": "How long",
+     "options": [
+      "have / been learning",
+      "are / learning",
+      "have / been learn",
+      "do / learning"
+     ],
+     "explain": "How long + have + S + been + V-ing?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I have been knowing him for years.",
+      "I have known him for years.",
+      "She has been working all day.",
+      "We have been living here since 2019."
+     ],
+     "explain": "know — holat fe'li, continuous'da ishlatilmaydi: I have known him."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi fe'l Continuous shaklda ishlatilmaydi?",
+     "sub": "Holat fe'li",
+     "options": [
+      "know",
+      "run",
+      "wait",
+      "study"
+     ],
+     "explain": "Holat fe'llari (know, like, be, have=ega bo'lmoq) continuous'da ishlatilmaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'm tired because I ___.",
+     "sub": "Iz ko'rinadi",
+     "options": [
+      "have been running",
+      "have been run",
+      "has been running",
+      "am been running"
+     ],
+     "explain": "Charchoq — jarayonning izi → I have been running."
+    },
+    {
+     "kind": "grammar",
+     "q": "Inkor shaklini tanlang: «She has been singing.»",
+     "sub": "Inkor",
+     "options": [
+      "She hasn't been singing.",
+      "She hasn't being singing.",
+      "She isn't been singing.",
+      "She haven't been singing."
+     ],
+     "explain": "Inkor: hasn't + been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "Savol shaklini tanlang: «They have been playing football.»",
+     "sub": "Savol",
+     "options": [
+      "Have they been playing football?",
+      "Has they been playing football?",
+      "Are they been playing football?",
+      "Have they being playing football?"
+     ],
+     "explain": "Savol: Have + they + been + V-ing?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Present Perfect Continuous formulasi qaysi?",
+     "sub": "Formula",
+     "options": [
+      "have/has + been + V-ing",
+      "have/has + V3",
+      "am/is/are + V-ing",
+      "had + been + V-ing"
+     ],
+     "explain": "PPC = have/has + been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Ertalabdan beri boshim og'riyapti.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "My head has been hurting since morning.",
+      "My head is hurting since morning.",
+      "My head has been hurt since morning.",
+      "My head have been hurting since morning."
+     ],
+     "explain": "since + hozirgacha davom → has been + V-ing (hurting)."
+    },
+    {
+     "kind": "grammar",
+     "q": "She has been ___ all day. Her eyes are red.",
+     "sub": "been + V-ing",
+     "options": [
+      "crying",
+      "cried",
+      "cry",
+      "cries"
+     ],
+     "explain": "been dan keyin V-ing: has been crying."
+    },
+    {
+     "kind": "grammar",
+     "q": "My brother ___ in the gym for two hours.",
+     "sub": "PPC",
+     "options": [
+      "has been training",
+      "have been training",
+      "has been trained",
+      "is training"
+     ],
+     "explain": "He → has; davomiylik (for two hours) → has been training."
+    },
+    {
+     "kind": "vocab",
+     "q": "You wear a watch on your ___.",
+     "sub": "Kontekst",
+     "options": [
+      "wrist",
+      "ankle",
+      "knee",
+      "chin"
+     ],
+     "explain": "wrist — bilak (qo'l bo'g'imi)."
+    },
+    {
+     "kind": "vocab",
+     "q": "We hear with our ___.",
+     "sub": "Kontekst",
+     "options": [
+      "ears",
+      "eyes",
+      "lips",
+      "cheeks"
+     ],
+     "explain": "ear — quloq; eye — ko'z, lip — lab, cheek — yanoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "The joint in the middle of your arm is your ___.",
+     "sub": "Ma'no",
+     "options": [
+      "elbow",
+      "knee",
+      "ankle",
+      "hip"
+     ],
+     "explain": "elbow — tirsak. knee — tizza (oyoqda)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The joint in the middle of your leg is your ___.",
+     "sub": "Ma'no",
+     "options": [
+      "knee",
+      "elbow",
+      "wrist",
+      "heel"
+     ],
+     "explain": "knee — tizza."
+    },
+    {
+     "kind": "vocab",
+     "q": "«jimjiloq» inglizcha qanday?",
+     "sub": "Tarjima",
+     "options": [
+      "little finger",
+      "thumb",
+      "ring finger",
+      "index finger"
+     ],
+     "explain": "little finger — jimjiloq; thumb — bosh barmoq, ring finger — nomsiz barmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "The back part of your foot is your ___.",
+     "sub": "Ma'no",
+     "options": [
+      "heel",
+      "toe",
+      "calf",
+      "thigh"
+     ],
+     "explain": "heel — tovon; toe — oyoq barmog'i."
+    },
+    {
+     "kind": "vocab",
+     "q": "The part of your face above your eyes is your ___.",
+     "sub": "Ma'no",
+     "options": [
+      "forehead",
+      "chin",
+      "cheek",
+      "neck"
+     ],
+     "explain": "forehead — peshona; chin — iyak."
+    },
+    {
+     "kind": "vocab",
+     "q": "Ko'plik: one tooth → two ___; one foot → two ___",
+     "sub": "Ko'plik shakli",
+     "options": [
+      "teeth / feet",
+      "tooths / foots",
+      "teeth / foots",
+      "tooths / feet"
+     ],
+     "explain": "tooth → teeth, foot → feet (noto'g'ri ko'plik)."
+    }
+   ]
   },
   {
    "no": 6,
@@ -5324,7 +6534,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "She ___ ten books this summer.",
+     "sub": "PP yoki PPC?",
+     "options": [
+      "has read",
+      "has been reading",
+      "have read",
+      "has been read"
+     ],
+     "explain": "Son (ten books) → natija → Present Perfect: has read."
+    },
+    {
+     "kind": "grammar",
+     "q": "She ___ that book all day. She's still on page 50.",
+     "sub": "PP yoki PPC?",
+     "options": [
+      "has been reading",
+      "has read",
+      "have been reading",
+      "is read"
+     ],
+     "explain": "all day + hali tugamagan jarayon → PPC: has been reading."
+    },
+    {
+     "kind": "grammar",
+     "q": "How many T-shirts ___ you ___ today?",
+     "sub": "How many",
+     "options": [
+      "have / bought",
+      "have / been buying",
+      "has / bought",
+      "are / buying"
+     ],
+     "explain": "How many? → son → Present Perfect: have bought."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ this coat for five years.",
+     "sub": "Holat fe'li",
+     "options": [
+      "have had",
+      "have been having",
+      "has had",
+      "am having"
+     ],
+     "explain": "have (ega bo'lmoq) — holat fe'li → faqat PP: I have had."
+    },
+    {
+     "kind": "grammar",
+     "q": "Look! I ___ three new shirts today. Here they are!",
+     "sub": "Natija",
+     "options": [
+      "have bought",
+      "have been buying",
+      "has bought",
+      "have buy"
+     ],
+     "explain": "Son va natija ko'rinadi → Present Perfect: have bought."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'm hot because I ___ in the garden for two hours.",
+     "sub": "Jarayon",
+     "options": [
+      "have been working",
+      "have been work",
+      "has been working",
+      "am working"
+     ],
+     "explain": "Jarayon + davomiylik (for two hours) → have been working."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I've been having this jacket for years.",
+      "I've had this jacket for years.",
+      "She's been shopping all morning.",
+      "He's bought two shirts."
+     ],
+     "explain": "have = ega bo'lmoq — holat fe'li: I've had this jacket."
+    },
+    {
+     "kind": "grammar",
+     "q": "«How many?» savoliga qaysi zamon mos?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Present Perfect",
+      "Present Perfect Continuous",
+      "Present Continuous",
+      "Past Continuous"
+     ],
+     "explain": "How many → son/natija → Present Perfect."
+    },
+    {
+     "kind": "grammar",
+     "q": "«How long?» + davom etayotgan jarayon → qaysi zamon?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Present Perfect Continuous",
+      "Present Perfect (son bilan)",
+      "Past Simple",
+      "Present Simple"
+     ],
+     "explain": "How long + jarayon → PPC: How long have you been waiting?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Men kun bo'yi emaillar yozyapman.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "I've been writing emails all day.",
+      "I've been wrote emails all day.",
+      "I'm writing emails all day since.",
+      "I've writing emails all day."
+     ],
+     "explain": "Kun bo'yi davom etgan jarayon → have been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "She has ___ her work. Now she can go home.",
+     "sub": "Tugagan ish",
+     "options": [
+      "finished",
+      "been finishing",
+      "finish",
+      "finishing"
+     ],
+     "explain": "Ish tugagan, natija hozir → PP: has finished."
+    },
+    {
+     "kind": "grammar",
+     "q": "How long ___ you ___ these shoes? — Since my birthday.",
+     "sub": "Holat fe'li",
+     "options": [
+      "have / had",
+      "have / been having",
+      "has / had",
+      "did / have"
+     ],
+     "explain": "have (ega bo'lmoq) — holat fe'li → PP: How long have you had…?"
+    },
+    {
+     "kind": "vocab",
+     "q": "You wear ___ on your hands in winter.",
+     "sub": "Kontekst",
+     "options": [
+      "gloves",
+      "socks",
+      "boots",
+      "tights"
+     ],
+     "explain": "gloves — qo'lqoplar; socks — paypoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "It's cold. Wear a ___ around your neck.",
+     "sub": "Kontekst",
+     "options": [
+      "scarf",
+      "belt",
+      "bracelet",
+      "cap"
+     ],
+     "explain": "scarf — sharf, ro'mol."
+    },
+    {
+     "kind": "vocab",
+     "q": "Men often wear a suit and a ___ to work.",
+     "sub": "Kontekst",
+     "options": [
+      "tie",
+      "skirt",
+      "tights",
+      "blouse"
+     ],
+     "explain": "tie — galstuk."
+    },
+    {
+     "kind": "vocab",
+     "q": "You wear ___ in bed at night.",
+     "sub": "Kontekst",
+     "options": [
+      "pyjamas",
+      "trainers",
+      "a raincoat",
+      "high heels"
+     ],
+     "explain": "pyjamas — pijama."
+    },
+    {
+     "kind": "vocab",
+     "q": "Put on your ___. It's raining!",
+     "sub": "Kontekst",
+     "options": [
+      "raincoat",
+      "sunglasses",
+      "sandals",
+      "shorts"
+     ],
+     "explain": "raincoat — plash (yomg'irpo'sh)."
+    },
+    {
+     "kind": "vocab",
+     "q": "«hamyon» (erkaklar) inglizcha qanday?",
+     "sub": "Tarjima",
+     "options": [
+      "wallet",
+      "handbag",
+      "belt",
+      "watch"
+     ],
+     "explain": "wallet — hamyon; handbag — ayollar sumkasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "You wear a ___ to keep your trousers up.",
+     "sub": "Kontekst",
+     "options": [
+      "belt",
+      "tie",
+      "scarf",
+      "cardigan"
+     ],
+     "explain": "belt — kamar."
+    },
+    {
+     "kind": "vocab",
+     "q": "At school, all the students wear the same ___.",
+     "sub": "Kontekst",
+     "options": [
+      "uniform",
+      "pyjamas",
+      "slippers",
+      "necklace"
+     ],
+     "explain": "uniform — forma."
+    }
+   ]
   },
   {
    "no": 7,
@@ -6237,7 +7689,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 21–25 — uyga."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "My brother is ___ than me.",
+     "sub": "Comparative",
+     "options": [
+      "taller",
+      "more tall",
+      "tallest",
+      "more taller"
+     ],
+     "explain": "1 bo'g'inli sifat → -er + than: taller than."
+    },
+    {
+     "kind": "grammar",
+     "q": "Maths is ___ than English.",
+     "sub": "Comparative",
+     "options": [
+      "more difficult",
+      "difficulter",
+      "most difficult",
+      "more difficulter"
+     ],
+     "explain": "2+ bo'g'in → more + adj + than."
+    },
+    {
+     "kind": "grammar",
+     "q": "My English is ___ than yours.",
+     "sub": "Istisno",
+     "options": [
+      "better",
+      "gooder",
+      "more good",
+      "best"
+     ],
+     "explain": "good → better → the best (istisno)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "He is taller that me.",
+      "He is taller than me.",
+      "She is slimmer than her sister.",
+      "Your hat is more stylish than mine."
+     ],
+     "explain": "Solishtirishda THAN: taller than me. «that» — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "She is as ___ as her mother.",
+     "sub": "as … as",
+     "options": [
+      "tall",
+      "taller",
+      "tallest",
+      "more tall"
+     ],
+     "explain": "Tenglik: as + ODDIY sifat + as."
+    },
+    {
+     "kind": "grammar",
+     "q": "big → ?",
+     "sub": "Comparative shakl",
+     "options": [
+      "bigger",
+      "biger",
+      "more big",
+      "biggest"
+     ],
+     "explain": "Undosh-unli-undosh → oxirgi undosh ikkilanadi: big → bigger."
+    },
+    {
+     "kind": "grammar",
+     "q": "easy → ?",
+     "sub": "Comparative shakl",
+     "options": [
+      "easier",
+      "easyer",
+      "more easy",
+      "easiest"
+     ],
+     "explain": "-y bilan tugagan: y → i + er: easy → easier."
+    },
+    {
+     "kind": "grammar",
+     "q": "A lemon isn't ___ an orange.",
+     "sub": "not as … as",
+     "options": [
+      "as sweet as",
+      "as sweeter as",
+      "so sweeter than",
+      "sweet as than"
+     ],
+     "explain": "Teng emas: not as + adj + as."
+    },
+    {
+     "kind": "grammar",
+     "q": "He is ___ taller than his brother.",
+     "sub": "Kuchaytirish",
+     "options": [
+      "much",
+      "very",
+      "more",
+      "most"
+     ],
+     "explain": "Comparative oldidan much / a lot / a bit: much taller. «very taller» — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Sening uying biznikidan kattaroq.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "Your house is bigger than ours.",
+      "Your house is more big than ours.",
+      "Your house is biggest than ours.",
+      "Your house is bigger that ours."
+     ],
+     "explain": "big → bigger + than."
+    },
+    {
+     "kind": "grammar",
+     "q": "My old phone was bad, but this one is ___.",
+     "sub": "Istisno",
+     "options": [
+      "worse",
+      "badder",
+      "more bad",
+      "worst"
+     ],
+     "explain": "bad → worse → the worst (istisno)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "Tashkent is bigger than Samarkand.",
+      "Tashkent is more bigger than Samarkand.",
+      "Tashkent is biger than Samarkand.",
+      "Tashkent is big than Samarkand."
+     ],
+     "explain": "bigger than; more + -er birga ishlatilmaydi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Antonim: slim ↔ ?",
+     "sub": "Antonimni toping",
+     "options": [
+      "plump",
+      "slender",
+      "skinny",
+      "fit"
+     ],
+     "explain": "slim — ozg'in; plump — to'ladan kelgan. slender, skinny — sinonimlar."
+    },
+    {
+     "kind": "vocab",
+     "q": "A man with no hair on his head is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "bald",
+      "blond",
+      "curly",
+      "freckled"
+     ],
+     "explain": "bald — kal."
+    },
+    {
+     "kind": "vocab",
+     "q": "«kelishgan» (erkak haqida) inglizcha qanday?",
+     "sub": "Tarjima",
+     "options": [
+      "handsome",
+      "plump",
+      "bald",
+      "skinny"
+     ],
+     "explain": "handsome — kelishgan (erkak); beautiful — chiroyli (ayol)."
+    },
+    {
+     "kind": "vocab",
+     "q": "She has lots of small brown spots on her face. She is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "freckled",
+      "wavy",
+      "rosy",
+      "trendy"
+     ],
+     "explain": "freckled — sepkilli."
+    },
+    {
+     "kind": "vocab",
+     "q": "He goes to the gym every day. He is very ___.",
+     "sub": "Kontekst",
+     "options": [
+      "muscular",
+      "plump",
+      "bald",
+      "skinny"
+     ],
+     "explain": "muscular — mushakdor, baquvvat."
+    },
+    {
+     "kind": "vocab",
+     "q": "My grandmother is 70, but she looks 50. She looks very ___.",
+     "sub": "Kontekst",
+     "options": [
+      "youthful",
+      "ordinary",
+      "overweight",
+      "stocky"
+     ],
+     "explain": "youthful — yosh ko'rinadigan."
+    },
+    {
+     "kind": "vocab",
+     "q": "Antonim: curly hair ↔ ___ hair",
+     "sub": "Antonimni toping",
+     "options": [
+      "straight",
+      "thick",
+      "grey",
+      "blonde"
+     ],
+     "explain": "curly — jingalak, straight — tekis soch."
+    },
+    {
+     "kind": "vocab",
+     "q": "He isn't tall, and he isn't short. He is of ___.",
+     "sub": "Kontekst",
+     "options": [
+      "medium height",
+      "medium weight",
+      "middle long",
+      "average tall"
+     ],
+     "explain": "medium height — o'rta bo'yli."
+    }
+   ]
   },
   {
    "no": 8,
@@ -7149,7 +8843,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 22–24 — uyga."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "Everest is ___ mountain in the world.",
+     "sub": "Superlative",
+     "options": [
+      "the highest",
+      "the higher",
+      "highest",
+      "the most high"
+     ],
+     "explain": "1 bo'g'in → the + adj-est: the highest."
+    },
+    {
+     "kind": "grammar",
+     "q": "She is the ___ student in our group.",
+     "sub": "Istisno",
+     "options": [
+      "best",
+      "goodest",
+      "better",
+      "most good"
+     ],
+     "explain": "good → better → the best."
+    },
+    {
+     "kind": "grammar",
+     "q": "This is the best film I ___.",
+     "sub": "the best … ever",
+     "options": [
+      "have ever seen",
+      "ever saw have",
+      "had ever see",
+      "have ever saw"
+     ],
+     "explain": "the + superlative + I have ever + V3 (see – saw – seen)."
+    },
+    {
+     "kind": "grammar",
+     "q": "He is the oldest ___ all my friends.",
+     "sub": "in / of",
+     "options": [
+      "of",
+      "in",
+      "from",
+      "than"
+     ],
+     "explain": "of + all: the oldest of all my friends."
+    },
+    {
+     "kind": "grammar",
+     "q": "She is the kindest student ___ the class.",
+     "sub": "in / of",
+     "options": [
+      "in",
+      "of",
+      "from",
+      "at"
+     ],
+     "explain": "Joy/guruh → IN: in the class, in the world."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "He is most intelligent student.",
+      "He is the most intelligent student.",
+      "She is the kindest girl in the class.",
+      "It's the worst day of my life."
+     ],
+     "explain": "Superlative oldidan THE kerak: the most intelligent."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tashkent is one of the biggest ___ in Asia.",
+     "sub": "one of the …",
+     "options": [
+      "cities",
+      "city",
+      "citys",
+      "a city"
+     ],
+     "explain": "one of the + superlative + KO'PLIK: one of the biggest cities."
+    },
+    {
+     "kind": "grammar",
+     "q": "famous → ?",
+     "sub": "Superlative shakl",
+     "options": [
+      "the most famous",
+      "the famousest",
+      "the more famous",
+      "the most famousest"
+     ],
+     "explain": "2+ bo'g'in → the most + adj."
+    },
+    {
+     "kind": "grammar",
+     "q": "bad → ?",
+     "sub": "Superlative shakl",
+     "options": [
+      "the worst",
+      "the baddest",
+      "the worse",
+      "the most bad"
+     ],
+     "explain": "bad → worse → the worst (istisno)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «U hammadan katta.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "He is the oldest of all.",
+      "He is the older of all.",
+      "He is oldest in all.",
+      "He is the most old of all."
+     ],
+     "explain": "old → the oldest; «hammadan» → of all."
+    },
+    {
+     "kind": "grammar",
+     "q": "funny → ?",
+     "sub": "Superlative shakl",
+     "options": [
+      "the funniest",
+      "the funnyest",
+      "the most funniest",
+      "the funnier"
+     ],
+     "explain": "-y → i + est: the funniest."
+    },
+    {
+     "kind": "grammar",
+     "q": "Superlative qachon ishlatiladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "3 va undan ko'p narsa ichida ENG ekanini aytganda",
+      "Ikki narsani solishtirganda",
+      "Ikki narsa teng bo'lganda",
+      "Faqat odamlar haqida gapirganda"
+     ],
+     "explain": "Superlative — guruh ichida ENG: the tallest in the class. Ikki narsa → comparative."
+    },
+    {
+     "kind": "vocab",
+     "q": "He always tells the truth. He is ___.",
+     "sub": "Kontekst",
+     "options": [
+      "honest",
+      "talkative",
+      "shy",
+      "ambitious"
+     ],
+     "explain": "honest — rostgo'y, halol."
+    },
+    {
+     "kind": "vocab",
+     "q": "She never arrives late. She is very ___.",
+     "sub": "Kontekst",
+     "options": [
+      "punctual",
+      "generous",
+      "curious",
+      "creative"
+     ],
+     "explain": "punctual — vaqtida keladigan."
+    },
+    {
+     "kind": "vocab",
+     "q": "Antonim: shy ↔ ?",
+     "sub": "Antonimni toping",
+     "options": [
+      "outgoing",
+      "modest",
+      "calm",
+      "patient"
+     ],
+     "explain": "shy — uyatchan; outgoing — kirishimli, ochiq."
+    },
+    {
+     "kind": "vocab",
+     "q": "He often buys gifts for everyone. He is ___.",
+     "sub": "Kontekst",
+     "options": [
+      "generous",
+      "punctual",
+      "curious",
+      "mature"
+     ],
+     "explain": "generous — sahiy."
+    },
+    {
+     "kind": "vocab",
+     "q": "She can wait for a long time and never gets angry. She is ___.",
+     "sub": "Kontekst",
+     "options": [
+      "patient",
+      "talkative",
+      "ambitious",
+      "energetic"
+     ],
+     "explain": "patient — sabrli."
+    },
+    {
+     "kind": "vocab",
+     "q": "Sinonim: modest = ?",
+     "sub": "Sinonimni toping",
+     "options": [
+      "humble",
+      "proud",
+      "confident",
+      "loyal"
+     ],
+     "explain": "modest = humble — kamtar."
+    },
+    {
+     "kind": "vocab",
+     "q": "Uzbek people love having guests. They are very ___.",
+     "sub": "Kontekst",
+     "options": [
+      "hospitable",
+      "punctual",
+      "industrious",
+      "flexible"
+     ],
+     "explain": "hospitable — mehmondo'st."
+    },
+    {
+     "kind": "vocab",
+     "q": "He talks a lot, all the time. He is ___.",
+     "sub": "Kontekst",
+     "options": [
+      "talkative",
+      "shy",
+      "calm",
+      "modest"
+     ],
+     "explain": "talkative — sergap."
+    }
+   ]
   },
   {
    "no": 9,
@@ -8065,7 +10001,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 26–29 — uyga."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "By the time I arrived, they ___ already ___.",
+     "sub": "Past Perfect",
+     "options": [
+      "had / left",
+      "have / left",
+      "had / leave",
+      "did / left"
+     ],
+     "explain": "Oldingi ish (ular ketgan) → had + V3: had already left."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "She had went to the hospital.",
+      "She had gone to the hospital.",
+      "He had never been ill before.",
+      "They had left before I came."
+     ],
+     "explain": "had + V3: go – went – GONE → had gone."
+    },
+    {
+     "kind": "grammar",
+     "q": "Had you finished when I called? — Yes, I ___.",
+     "sub": "Qisqa javob",
+     "options": [
+      "had",
+      "did",
+      "have",
+      "was"
+     ],
+     "explain": "Had…? → Yes, I had / No, I hadn't."
+    },
+    {
+     "kind": "grammar",
+     "q": "Past Perfect formulasi qaysi?",
+     "sub": "Formula",
+     "options": [
+      "had + V3",
+      "have/has + V3",
+      "had + V-ing",
+      "was/were + V3"
+     ],
+     "explain": "Past Perfect = had + V3 (hamma shaxs uchun had)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Inkor shaklini tanlang: «I had taken my medicine.»",
+     "sub": "Inkor",
+     "options": [
+      "I hadn't taken my medicine.",
+      "I hadn't took my medicine.",
+      "I didn't had taken my medicine.",
+      "I hadn't take my medicine."
+     ],
+     "explain": "Inkor: hadn't + V3 (take – took – TAKEN)."
+    },
+    {
+     "kind": "grammar",
+     "q": "The pharmacy closed early because they ___ all the medicine.",
+     "sub": "Sabab",
+     "options": [
+      "had sold",
+      "have sold",
+      "had sell",
+      "has sold"
+     ],
+     "explain": "O'tgandagi ikki ishdan oldingisi → had + V3 (sell – sold – sold)."
+    },
+    {
+     "kind": "grammar",
+     "q": "She had never ___ a doctor before that day.",
+     "sub": "never … before",
+     "options": [
+      "visited",
+      "visit",
+      "visiting",
+      "visits"
+     ],
+     "explain": "had never + V3 + before: had never visited."
+    },
+    {
+     "kind": "grammar",
+     "q": "Past Perfect qachon ishlatiladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "O'tgandagi ikki ishdan OLDINGISI uchun",
+      "Hozirgi natija uchun",
+      "Kelajakdagi reja uchun",
+      "Hozir davom etayotgan ish uchun"
+     ],
+     "explain": "Past Perfect — o'tgandan ham oldin: ikki o'tgan ishdan birinchisi."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Men kelguncha ular allaqachon ketishgan edi.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "By the time I came, they had already left.",
+      "By the time I came, they have already left.",
+      "By the time I had come, they already leave.",
+      "By the time I came, they already had leave."
+     ],
+     "explain": "By the time + Past Simple, S + had + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ you ___ breakfast before you took the pill?",
+     "sub": "Savol shakli",
+     "options": [
+      "Had / eaten",
+      "Have / eaten",
+      "Had / ate",
+      "Did / eaten"
+     ],
+     "explain": "Savol: Had + S + V3? (eat – ate – EATEN)."
+    },
+    {
+     "kind": "grammar",
+     "q": "When I got to the clinic, the doctor ___ home.",
+     "sub": "Past Perfect",
+     "options": [
+      "had gone",
+      "has gone",
+      "had go",
+      "have gone"
+     ],
+     "explain": "Men yetib borishdan OLDIN doktor ketgan → had gone."
+    },
+    {
+     "kind": "grammar",
+     "q": "Bitta o'tgan ish: «I ___ breakfast at 8 yesterday.»",
+     "sub": "PP yoki Past Simple?",
+     "options": [
+      "ate",
+      "had eaten",
+      "have eaten",
+      "had eat"
+     ],
+     "explain": "Faqat bitta o'tgan ish bo'lsa — Past Simple: I ate."
+    },
+    {
+     "kind": "vocab",
+     "q": "I have a high ___. It's 39°C.",
+     "sub": "Kontekst",
+     "options": [
+      "temperature",
+      "cough",
+      "headache",
+      "pain"
+     ],
+     "explain": "temperature / fever — isitma."
+    },
+    {
+     "kind": "vocab",
+     "q": "Collocation: to ___ a cold",
+     "sub": "Kollokatsiya",
+     "options": [
+      "catch",
+      "take",
+      "make",
+      "do"
+     ],
+     "explain": "catch a cold — shamollab qolmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "The doctor gave me a ___ for some medicine.",
+     "sub": "Kontekst",
+     "options": [
+      "prescription",
+      "diagnosis",
+      "symptom",
+      "check-up"
+     ],
+     "explain": "prescription — retsept (dori uchun)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Flu is ___: other people can catch it from you.",
+     "sub": "Ma'no",
+     "options": [
+      "contagious",
+      "chronic",
+      "healthy",
+      "acute"
+     ],
+     "explain": "contagious — yuqumli."
+    },
+    {
+     "kind": "vocab",
+     "q": "After a week in bed, he ___ and went back to work.",
+     "sub": "Kontekst",
+     "options": [
+      "recovered",
+      "infected",
+      "prescribed",
+      "prevented"
+     ],
+     "explain": "recover — sog'aymoq; recovery — sog'ayish."
+    },
+    {
+     "kind": "vocab",
+     "q": "Antonim: healthy ↔ ?",
+     "sub": "Antonimni toping",
+     "options": [
+      "ill",
+      "fit",
+      "well",
+      "strong"
+     ],
+     "explain": "healthy — sog'lom; ill — kasal. fit, well, strong — sinonimga yaqin."
+    },
+    {
+     "kind": "vocab",
+     "q": "An illness that lasts for many years is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "chronic",
+      "acute",
+      "contagious",
+      "mental"
+     ],
+     "explain": "chronic — surunkali; acute — o'tkir (qisqa, kuchli)."
+    },
+    {
+     "kind": "vocab",
+     "q": "«symptom» ma'nosi?",
+     "sub": "O'zbekcha ma'no",
+     "options": [
+      "alomat",
+      "tashxis",
+      "retsept",
+      "davolash"
+     ],
+     "explain": "symptom — alomat; diagnosis — tashxis, treatment — davolash."
+    }
+   ]
   },
   {
    "no": 10,
@@ -8972,7 +11150,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 29–30 — uyga."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "By 2030, I ___ university.",
+     "sub": "Future Perfect",
+     "options": [
+      "will have finished",
+      "will finished",
+      "will have finish",
+      "have finished"
+     ],
+     "explain": "Kelajak nuqtagacha tugagan ish → will have + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "By the time you ___, the film will have started.",
+     "sub": "by the time",
+     "options": [
+      "arrive",
+      "will arrive",
+      "arrived",
+      "will have arrived"
+     ],
+     "explain": "by the time + Present Simple (will emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "She ___ left by then.",
+     "sub": "will have",
+     "options": [
+      "will have",
+      "will has",
+      "will had",
+      "has will"
+     ],
+     "explain": "will dan keyin doim HAVE (hamma shaxs uchun)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Inkor shaklini tanlang: «They will have finished by Monday.»",
+     "sub": "Inkor",
+     "options": [
+      "They won't have finished by Monday.",
+      "They won't has finished by Monday.",
+      "They will haven't finished by Monday.",
+      "They don't will have finished by Monday."
+     ],
+     "explain": "Inkor: won't have + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ you ___ your homework by 8 pm?",
+     "sub": "Savol shakli",
+     "options": [
+      "Will / have finished",
+      "Will / have finish",
+      "Have / will finished",
+      "Will / finished"
+     ],
+     "explain": "Savol: Will + S + have + V3?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I will have finish by Monday.",
+      "I will have finished by Monday.",
+      "She will have arrived by now.",
+      "We won't have eaten by then."
+     ],
+     "explain": "will have + V3: finished."
+    },
+    {
+     "kind": "grammar",
+     "q": "Next year my parents ___ married for 25 years.",
+     "sub": "Future Perfect",
+     "options": [
+      "will have been",
+      "will have be",
+      "will been",
+      "have been will"
+     ],
+     "explain": "will have + V3 (be – was – BEEN): will have been married."
+    },
+    {
+     "kind": "grammar",
+     "q": "Future Perfect qachon ishlatiladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Kelajakdagi nuqtaga kelib TUGAGAN ish uchun",
+      "O'tgandagi ikki ishdan oldingisi uchun",
+      "Hozirgi odat uchun",
+      "Hozir bo'layotgan ish uchun"
+     ],
+     "explain": "Future Perfect — kelajak nuqtagacha tugallangan ish: by 2030 I will have finished."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Sen kelguncha men ovqat pishirib bo'laman.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "By the time you come, I will have cooked dinner.",
+      "By the time you will come, I will have cooked dinner.",
+      "By the time you come, I have cooked dinner.",
+      "By the time you come, I will cooked dinner."
+     ],
+     "explain": "By the time + Present Simple, S + will have + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "It's 9 pm. She ___ home by now.",
+     "sub": "Taxmin",
+     "options": [
+      "will have arrived",
+      "will have arrive",
+      "has will arrived",
+      "will arrived"
+     ],
+     "explain": "Hozirgacha tugagan bo'lsa kerak (taxmin) → will have + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi so'z Future Perfect bilan ko'p ishlatiladi?",
+     "sub": "Vaqt so'zlari",
+     "options": [
+      "by (by 2030, by Monday)",
+      "yesterday",
+      "ago",
+      "last week"
+     ],
+     "explain": "Future Perfect: by + vaqt, by then, by the time."
+    },
+    {
+     "kind": "grammar",
+     "q": "Future Perfect formulasi qaysi?",
+     "sub": "Formula",
+     "options": [
+      "will + have + V3",
+      "will + be + V-ing",
+      "had + V3",
+      "will + V1"
+     ],
+     "explain": "Future Perfect = will have + V3."
+    },
+    {
+     "kind": "vocab",
+     "q": "I passed the exam I was worried about! Now I feel ___.",
+     "sub": "Kontekst",
+     "options": [
+      "relieved",
+      "bored",
+      "guilty",
+      "lonely"
+     ],
+     "explain": "relieved — yengil tortgan (xavotir ketdi)."
+    },
+    {
+     "kind": "vocab",
+     "q": "She lives alone and has no friends. She feels ___.",
+     "sub": "Kontekst",
+     "options": [
+      "lonely",
+      "relieved",
+      "proud",
+      "excited"
+     ],
+     "explain": "lonely — yolg'iz (his)."
+    },
+    {
+     "kind": "vocab",
+     "q": "I broke my mum's cup and didn't tell her. I feel ___.",
+     "sub": "Kontekst",
+     "options": [
+      "guilty",
+      "grateful",
+      "content",
+      "excited"
+     ],
+     "explain": "guilty — aybdor; guilt — aybdorlik hissi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Thank you so much for your help! I'm very ___.",
+     "sub": "Kontekst",
+     "options": [
+      "grateful",
+      "jealous",
+      "anxious",
+      "bored"
+     ],
+     "explain": "grateful — minnatdor; gratitude — minnatdorlik."
+    },
+    {
+     "kind": "vocab",
+     "q": "My son won the competition. I'm so ___ of him!",
+     "sub": "Kollokatsiya",
+     "options": [
+      "proud",
+      "embarrassed",
+      "guilty",
+      "tired"
+     ],
+     "explain": "proud of — faxrlanmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Antonim: calm ↔ ?",
+     "sub": "Antonimni toping",
+     "options": [
+      "nervous",
+      "relaxed",
+      "content",
+      "relieved"
+     ],
+     "explain": "calm — xotirjam; nervous — asabiy, hayajonlangan."
+    },
+    {
+     "kind": "vocab",
+     "q": "I fell over in front of the whole class. I was so ___.",
+     "sub": "Kontekst",
+     "options": [
+      "embarrassed",
+      "grateful",
+      "content",
+      "proud"
+     ],
+     "explain": "embarrassed — xijolat bo'lgan."
+    },
+    {
+     "kind": "vocab",
+     "q": "«hafsalasi pir bo'lgan» inglizcha qanday?",
+     "sub": "Tarjima",
+     "options": [
+      "disappointed",
+      "confused",
+      "surprised",
+      "relieved"
+     ],
+     "explain": "disappointed — hafsalasi pir bo'lgan; confused — gangigan."
+    }
+   ]
   },
   {
    "no": 11,
@@ -9877,7 +12297,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 31–32 — uyga."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "Before he visited Japan, he ___ never tasted sushi.",
+     "sub": "before",
+     "options": [
+      "had",
+      "has",
+      "have",
+      "did"
+     ],
+     "explain": "Before + Past Simple, S + had + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "After I ___ my work, I went for a walk.",
+     "sub": "after",
+     "options": [
+      "had finished",
+      "have finished",
+      "will finish",
+      "had finish"
+     ],
+     "explain": "After + Past Perfect (oldingi ish), keyin Past Simple."
+    },
+    {
+     "kind": "grammar",
+     "q": "As soon as I ___, I'll call you.",
+     "sub": "as soon as",
+     "options": [
+      "finish",
+      "will finish",
+      "finished",
+      "will have finished"
+     ],
+     "explain": "Kelajak: As soon as + Present Simple, will…"
+    },
+    {
+     "kind": "grammar",
+     "q": "By the time we got there, the shop ___.",
+     "sub": "by the time (o'tgan)",
+     "options": [
+      "had closed",
+      "has closed",
+      "will have closed",
+      "closes"
+     ],
+     "explain": "By the time + Past Simple, S + had + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "By the time you ___, I will have cooked dinner.",
+     "sub": "by the time (kelajak)",
+     "options": [
+      "arrive",
+      "will arrive",
+      "arrived",
+      "had arrived"
+     ],
+     "explain": "By the time + Present Simple, S + will have + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "I haven't seen her ___ we graduated.",
+     "sub": "since",
+     "options": [
+      "since",
+      "for",
+      "after",
+      "by the time"
+     ],
+     "explain": "Present Perfect + since + Past Simple."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "My friend is from Spanish.",
+      "My friend is from Spain.",
+      "My friend is Spanish.",
+      "My friend speaks Spanish."
+     ],
+     "explain": "from + MAMLAKAT (from Spain); millat va til — Spanish (bosh harf bilan)."
+    },
+    {
+     "kind": "grammar",
+     "q": "As soon as I saw the teacher, I ___ into the class.",
+     "sub": "as soon as (o'tgan)",
+     "options": [
+      "ran",
+      "had run",
+      "run",
+      "will run"
+     ],
+     "explain": "O'tgan: As soon as + Past Simple, Past Simple."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi bog'lovchi «Present Perfect + ___ + Past Simple» tuzilmasida keladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "since",
+      "as soon as",
+      "by the time",
+      "before"
+     ],
+     "explain": "I haven't seen her SINCE we graduated."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Ishimni tugatganimdan keyin sayrga chiqdim.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "After I had finished my work, I went for a walk.",
+      "After I finished my work, I had gone for a walk.",
+      "After I have finished my work, I went for a walk.",
+      "After I had finish my work, I went for a walk."
+     ],
+     "explain": "After + had + V3 (oldingi), Past Simple (keyingi)."
+    },
+    {
+     "kind": "grammar",
+     "q": "I haven't seen him ___ three years.",
+     "sub": "since / for",
+     "options": [
+      "for",
+      "since",
+      "before",
+      "after"
+     ],
+     "explain": "three years — davr → for. since + nuqta (since 2023)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "By the time you arrive, we will have eaten.",
+      "By the time you will arrive, we will have eaten.",
+      "By the time you arrive, we have eaten.",
+      "By the time you will arrive, we eat."
+     ],
+     "explain": "by the time + Present Simple; kelajak natija → will have + V3."
+    },
+    {
+     "kind": "vocab",
+     "q": "People from Japan are ___.",
+     "sub": "Millat",
+     "options": [
+      "Japanese",
+      "Japanian",
+      "Japanish",
+      "Japans"
+     ],
+     "explain": "Japan – Japanese."
+    },
+    {
+     "kind": "vocab",
+     "q": "the Netherlands → nationality?",
+     "sub": "Millat",
+     "options": [
+      "Dutch",
+      "Netherlish",
+      "Danish",
+      "Hollandian"
+     ],
+     "explain": "the Netherlands – Dutch (golland). Danish — Daniya."
+    },
+    {
+     "kind": "vocab",
+     "q": "In Germany, people speak ___.",
+     "sub": "Til",
+     "options": [
+      "German",
+      "Germanish",
+      "Germany",
+      "Dutch"
+     ],
+     "explain": "Germany – German (nemis)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Switzerland → nationality?",
+     "sub": "Millat",
+     "options": [
+      "Swiss",
+      "Swedish",
+      "Switzish",
+      "Swizzer"
+     ],
+     "explain": "Switzerland – Swiss. Swedish — Sweden (Shvetsiya)."
+    },
+    {
+     "kind": "vocab",
+     "q": "I am from Uzbekistan. I am ___.",
+     "sub": "Millat",
+     "options": [
+      "Uzbek",
+      "Uzbeki",
+      "Uzbekish",
+      "Uzbekan"
+     ],
+     "explain": "Uzbekistan – Uzbek (o'zbek)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Greece → nationality?",
+     "sub": "Millat",
+     "options": [
+      "Greek",
+      "Greecish",
+      "Greekian",
+      "Greecean"
+     ],
+     "explain": "Greece – Greek (yunon)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Thai food comes from ___.",
+     "sub": "Mamlakat",
+     "options": [
+      "Thailand",
+      "Taiwan",
+      "Turkey",
+      "Tajikistan"
+     ],
+     "explain": "Thailand – Thai (tay)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Denmark → nationality?",
+     "sub": "Millat",
+     "options": [
+      "Danish",
+      "Denmarkish",
+      "Dutch",
+      "Denish"
+     ],
+     "explain": "Denmark – Danish. Dutch — the Netherlands."
+    }
+   ]
   },
   {
    "no": 12,
@@ -10830,7 +13492,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "They ___ for hours by the time he came.",
+     "sub": "Past Perfect Continuous",
+     "options": [
+      "had been waiting",
+      "had been wait",
+      "have been waiting",
+      "had waiting"
+     ],
+     "explain": "O'tgan nuqtagacha davom etgan jarayon → had been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "The ground was wet because it ___.",
+     "sub": "Sabab (iz)",
+     "options": [
+      "had been raining",
+      "has been raining",
+      "had been rain",
+      "was been raining"
+     ],
+     "explain": "O'tgandagi iz → had been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "How long ___ you ___ when the bus came?",
+     "sub": "How long",
+     "options": [
+      "had / been waiting",
+      "have / been waiting",
+      "had / been wait",
+      "did / waiting"
+     ],
+     "explain": "O'tgan nuqta (when the bus came) → How long had you been waiting?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I had been knowing him for years.",
+      "I had known him for years.",
+      "It had been snowing all night.",
+      "We had been walking for an hour."
+     ],
+     "explain": "know — holat fe'li, continuous emas: I had known him."
+    },
+    {
+     "kind": "grammar",
+     "q": "Past Perfect Continuous formulasi qaysi?",
+     "sub": "Formula",
+     "options": [
+      "had + been + V-ing",
+      "have/has + been + V-ing",
+      "had + V3",
+      "was/were + V-ing"
+     ],
+     "explain": "PPC (o'tgan) = had been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "Inkor shaklini tanlang: «She had been working.»",
+     "sub": "Inkor",
+     "options": [
+      "She hadn't been working.",
+      "She hadn't being working.",
+      "She wasn't been working.",
+      "She didn't had been working."
+     ],
+     "explain": "Inkor: hadn't been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "She had been working here ___ three years.",
+     "sub": "since / for",
+     "options": [
+      "for",
+      "since",
+      "during",
+      "ago"
+     ],
+     "explain": "three years — davr → for."
+    },
+    {
+     "kind": "grammar",
+     "q": "Look outside! It ___ snowing since morning.",
+     "sub": "has been / had been",
+     "options": [
+      "has been",
+      "had been",
+      "have been",
+      "was been"
+     ],
+     "explain": "Hozirgacha davom (look outside!) → has been; o'tgan nuqtagacha → had been."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «U kelganda biz ikki soatdan beri kutayotgan edik.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "We had been waiting for two hours when he came.",
+      "We have been waiting for two hours when he came.",
+      "We had been wait for two hours when he came.",
+      "We were been waiting for two hours when he came."
+     ],
+     "explain": "O'tgan nuqtagacha davomiylik → had been + V-ing + for."
+    },
+    {
+     "kind": "grammar",
+     "q": "Her eyes were red because she ___.",
+     "sub": "Sabab (iz)",
+     "options": [
+      "had been crying",
+      "has been crying",
+      "had been cry",
+      "had crying"
+     ],
+     "explain": "O'tgandagi iz → had been crying."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ it been raining for a long time when you left?",
+     "sub": "Savol shakli",
+     "options": [
+      "Had",
+      "Has",
+      "Was",
+      "Did"
+     ],
+     "explain": "Savol: Had + S + been + V-ing?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Past Perfect Continuous nimani bildiradi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "O'tgan nuqtagacha davom etgan jarayonni",
+      "Hozirgacha davom etayotgan jarayonni",
+      "Kelajakda tugaydigan ishni",
+      "O'tgandagi qisqa bir ishni"
+     ],
+     "explain": "had been + V-ing — o'tgandagi bir nuqtagacha DAVOM ETGAN jarayon."
+    },
+    {
+     "kind": "vocab",
+     "q": "Small balls of ice falling from the sky are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "hail",
+      "frost",
+      "fog",
+      "mist"
+     ],
+     "explain": "hail — do'l; frost — qirov, fog/mist — tuman."
+    },
+    {
+     "kind": "vocab",
+     "q": "A long time with no rain is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "drought",
+      "downpour",
+      "heatwave",
+      "blizzard"
+     ],
+     "explain": "drought — qurg'oqchilik; heatwave — jazirama davri."
+    },
+    {
+     "kind": "vocab",
+     "q": "After the rain, we saw a beautiful ___ in the sky.",
+     "sub": "Kontekst",
+     "options": [
+      "rainbow",
+      "thunder",
+      "hail",
+      "drought"
+     ],
+     "explain": "rainbow — kamalak."
+    },
+    {
+     "kind": "vocab",
+     "q": "A very heavy rain is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "downpour",
+      "drizzle",
+      "mist",
+      "breeze"
+     ],
+     "explain": "downpour — jala; drizzle — shivalab yog'ayotgan yomg'ir."
+    },
+    {
+     "kind": "vocab",
+     "q": "A snowstorm with very strong wind is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "blizzard",
+      "drought",
+      "rainbow",
+      "drizzle"
+     ],
+     "explain": "blizzard — qor bo'roni."
+    },
+    {
+     "kind": "vocab",
+     "q": "Antonim: humid ↔ ?",
+     "sub": "Antonimni toping",
+     "options": [
+      "dry",
+      "muggy",
+      "wet",
+      "foggy"
+     ],
+     "explain": "humid — nam; dry — quruq. muggy — dim (sinonimga yaqin)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The sky is completely grey with clouds. It's ___.",
+     "sub": "Kontekst",
+     "options": [
+      "overcast",
+      "sunny",
+      "breezy",
+      "dry"
+     ],
+     "explain": "overcast — to'la bulutli."
+    },
+    {
+     "kind": "vocab",
+     "q": "On TV, I watched the weather ___ for tomorrow.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "forecast",
+      "temperature",
+      "degree",
+      "thunder"
+     ],
+     "explain": "weather forecast — ob-havo ma'lumoti."
+    }
+   ]
   },
   {
    "no": 13,
@@ -11772,7 +14676,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "By 2027, I ___ English for 3 years.",
+     "sub": "Future Perfect Continuous",
+     "options": [
+      "will have been studying",
+      "will have been study",
+      "will be studied",
+      "have been studying"
+     ],
+     "explain": "Kelajak nuqtagacha davomiylik → will have been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I will have been knowing him for 10 years.",
+      "I will have known him for 10 years.",
+      "She will have been working here for a year.",
+      "By June, we will have finished."
+     ],
+     "explain": "know — holat fe'li: will have known, continuous emas."
+    },
+    {
+     "kind": "grammar",
+     "q": "By the time you ___, I will have been waiting for an hour.",
+     "sub": "by the time",
+     "options": [
+      "come",
+      "will come",
+      "came",
+      "will have come"
+     ],
+     "explain": "by the time + Present Simple: By the time you come…"
+    },
+    {
+     "kind": "grammar",
+     "q": "Future Perfect Continuous formulasi qaysi?",
+     "sub": "Formula",
+     "options": [
+      "will + have + been + V-ing",
+      "will + have + V3",
+      "will + be + V-ing",
+      "had + been + V-ing"
+     ],
+     "explain": "FPC = will have been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "Perfect zamonlarda SIMPLE va CONTINUOUS farqi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Simple — natija/son; Continuous — jarayon/qancha vaqt",
+      "Simple — jarayon; Continuous — natija",
+      "Simple — faqat o'tgan; Continuous — kelajak",
+      "Hech qanday farqi yo'q"
+     ],
+     "explain": "Qoida bitta: SIMPLE = natija/son; CONTINUOUS = jarayon/qancha vaqt."
+    },
+    {
+     "kind": "grammar",
+     "q": "Yesterday, by noon, I ___ three letters.",
+     "sub": "Takror: Past Perfect",
+     "options": [
+      "had written",
+      "had been writing",
+      "will have been writing",
+      "have been writing"
+     ],
+     "explain": "O'tgan nuqta + son (three letters) → natija → had + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "My sister is ___ than me.",
+     "sub": "Takror: Comparative",
+     "options": [
+      "more intelligent",
+      "intelligenter",
+      "most intelligent",
+      "more intelligenter"
+     ],
+     "explain": "3 bo'g'in → more + adj + than."
+    },
+    {
+     "kind": "grammar",
+     "q": "This is ___ day of my life!",
+     "sub": "Takror: Superlative",
+     "options": [
+      "the best",
+      "the better",
+      "the goodest",
+      "best"
+     ],
+     "explain": "good → better → THE BEST."
+    },
+    {
+     "kind": "grammar",
+     "q": "When I got home, my mum ___ dinner.",
+     "sub": "Takror: Past Perfect",
+     "options": [
+      "had already cooked",
+      "has already cooked",
+      "had already cook",
+      "already had cooking"
+     ],
+     "explain": "Men kelishimdan OLDIN → had + already + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "It ___ for hours when we left the house.",
+     "sub": "Takror: Past Perfect Continuous",
+     "options": [
+      "had been raining",
+      "has been raining",
+      "had been rain",
+      "will have been raining"
+     ],
+     "explain": "O'tgan nuqtagacha davom etgan jarayon → had been + V-ing."
+    },
+    {
+     "kind": "grammar",
+     "q": "As soon as I ___ home, I'll call you.",
+     "sub": "Takror: as soon as",
+     "options": [
+      "get",
+      "will get",
+      "got",
+      "had got"
+     ],
+     "explain": "Kelajak: As soon as + Present Simple, will…"
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Kelasi oyga kelib, men bu yerda bir yildan beri ishlayotgan bo'laman.»",
+     "sub": "Tarjima qiling",
+     "options": [
+      "By next month, I will have been working here for a year.",
+      "By next month, I have been working here for a year.",
+      "By next month, I will be working here since a year.",
+      "By next month, I had been working here for a year."
+     ],
+     "explain": "Kelajak nuqta + davomiylik → will have been + V-ing + for."
+    },
+    {
+     "kind": "grammar",
+     "q": "By 2030, she ___ from university.",
+     "sub": "Takror: Future Perfect",
+     "options": [
+      "will have graduated",
+      "will have graduate",
+      "has graduated",
+      "will graduated"
+     ],
+     "explain": "Kelajak nuqtagacha tugagan ish → will have + V3."
+    },
+    {
+     "kind": "vocab",
+     "q": "I've read 50 pages so ___. Only 20 more to go!",
+     "sub": "Vaqt ifodasi",
+     "options": [
+      "far",
+      "now",
+      "long",
+      "ever"
+     ],
+     "explain": "so far — hozirgacha."
+    },
+    {
+     "kind": "vocab",
+     "q": "I haven't seen you for ___! How are you?",
+     "sub": "Vaqt ifodasi",
+     "options": [
+      "ages",
+      "lately",
+      "meanwhile",
+      "once"
+     ],
+     "explain": "for ages — juda uzoq vaqt."
+    },
+    {
+     "kind": "vocab",
+     "q": "«oxir-oqibat» inglizcha qanday?",
+     "sub": "Tarjima",
+     "options": [
+      "eventually",
+      "previously",
+      "meanwhile",
+      "afterwards"
+     ],
+     "explain": "eventually — oxir-oqibat; previously — avvalroq, meanwhile — ayni paytda."
+    },
+    {
+     "kind": "vocab",
+     "q": "He called me ___ he got home. (…bilanoq)",
+     "sub": "Bog'lovchi",
+     "options": [
+      "as soon as",
+      "ever since",
+      "so far",
+      "by then"
+     ],
+     "explain": "as soon as — …bilanoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Sinonim: lately = ?",
+     "sub": "Sinonimni toping",
+     "options": [
+      "recently",
+      "finally",
+      "previously",
+      "at last"
+     ],
+     "explain": "lately = recently — oxirgi paytlarda."
+    },
+    {
+     "kind": "vocab",
+     "q": "I have been to London only ___ — in 2022.",
+     "sub": "Kontekst",
+     "options": [
+      "once",
+      "twice",
+      "several times",
+      "ever"
+     ],
+     "explain": "once — bir marta; twice — ikki marta."
+    },
+    {
+     "kind": "vocab",
+     "q": "Winning the Olympic gold medal was his greatest ___.",
+     "sub": "Kontekst",
+     "options": [
+      "achievement",
+      "lifetime",
+      "previously",
+      "meanwhile"
+     ],
+     "explain": "achievement — yutuq."
+    }
+   ]
   },
   {
    "no": 14,
@@ -12687,7 +15833,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 34–40 — uyga (tanlab)."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "___ the police catch the thief yesterday?",
+     "sub": "Umumiy savol (Past Simple)",
+     "options": [
+      "Did",
+      "Do",
+      "Was",
+      "Has"
+     ],
+     "explain": "«yesterday» — Past Simple. Umumiy savol: Did + ega + V1 (catch)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Where ___ you live?",
+     "sub": "Maxsus savol",
+     "options": [
+      "do",
+      "are",
+      "does",
+      "is"
+     ],
+     "explain": "Wh + yordamchi + ega + fe'l. you → do: Where do you live?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "Ega savoli",
+     "options": [
+      "Who stole the car?",
+      "Who did steal the car?",
+      "Who did stole the car?",
+      "Who steal the car?"
+     ],
+     "explain": "Ega haqida savol (Who/What) — yordamchisiz: Who + V2 (stole)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "Did she went home?",
+      "Did she go home?",
+      "Where did she go?",
+      "Has she gone home?"
+     ],
+     "explain": "did dan keyin fe'l 1-shaklda: Did she go home? (went emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "What ___ this word mean?",
+     "sub": "Maxsus savol (Present Simple)",
+     "options": [
+      "does",
+      "do",
+      "is",
+      "are"
+     ],
+     "explain": "this word — u (3-shaxs birlik) → does + V1: What does this word mean?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Has anyone ___ the robber?",
+     "sub": "Umumiy savol (Present Perfect)",
+     "options": [
+      "seen",
+      "saw",
+      "see",
+      "seeing"
+     ],
+     "explain": "Perfect savol: Has + ega + V3. see – saw – seen → seen."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima qiling: «Politsiya o'g'rini qachon tutdi?»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "When did the police catch the thief?",
+      "When the police caught the thief?",
+      "When did the police caught the thief?",
+      "When does the police catch the thief?"
+     ],
+     "explain": "O'tgan zamon maxsus savol: When + did + ega + V1 (catch)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Who ___ the window? — Tom broke it.",
+     "sub": "Ega savoli",
+     "options": [
+      "broke",
+      "did broke",
+      "breaked",
+      "was break"
+     ],
+     "explain": "Ega savoli — yordamchisiz, fe'l V2: Who broke the window?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Who are you waiting ___?",
+     "sub": "Predlogli savol",
+     "options": [
+      "for",
+      "to",
+      "at",
+      "on"
+     ],
+     "explain": "wait for — kutmoq. Predlog savol oxirida qoladi: Who are you waiting for?"
+    },
+    {
+     "kind": "grammar",
+     "q": "___ you come with us to the court tomorrow?",
+     "sub": "Umumiy savol (Future)",
+     "options": [
+      "Will",
+      "Did",
+      "Have",
+      "Were"
+     ],
+     "explain": "«tomorrow» — kelajak: Will + ega + V1? (Will you come...?)"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi savolda so'z tartibi TO'G'RI?",
+     "sub": "So'z tartibi",
+     "options": [
+      "Why has she called the police?",
+      "Why she has called the police?",
+      "Why has called she the police?",
+      "Why she called has the police?"
+     ],
+     "explain": "Maxsus savol: Wh + yordamchi (has) + ega (she) + V3 (called)."
+    },
+    {
+     "kind": "grammar",
+     "q": "«You are a witness.» Umumiy savolga aylantiring.",
+     "sub": "Savol shaklini tanlang",
+     "options": [
+      "Are you a witness?",
+      "Do you are a witness?",
+      "You are a witness?",
+      "Is you a witness?"
+     ],
+     "explain": "to be bilan savol: yordamchi (are) egadan OLDINGA chiqadi: Are you...?"
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who steals things from shops is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "shoplifter",
+      "burglar",
+      "murderer",
+      "witness"
+     ],
+     "explain": "shoplifter — do'kondan o'g'irlovchi. burglar — uy o'g'risi, murderer — qotil."
+    },
+    {
+     "kind": "vocab",
+     "q": "A burglar ___ our house last night and took the TV.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "broke into",
+      "broke up",
+      "broke down",
+      "broke out"
+     ],
+     "explain": "break into — buzib kirmoq. break down — buzilmoq, break up — ajrashmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "The driver had to ___ a fine for speeding.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "pay",
+      "do",
+      "make",
+      "give"
+     ],
+     "explain": "pay a fine — jarima to'lamoq. Doim «pay» bilan."
+    },
+    {
+     "kind": "vocab",
+     "q": "Qaysi so'z «guilty» ning ANTONIMI?",
+     "sub": "Antonim",
+     "options": [
+      "innocent",
+      "criminal",
+      "suspect",
+      "victim"
+     ],
+     "explain": "guilty — aybdor, innocent — aybsiz. suspect — gumondor, victim — jabrlanuvchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Three men ___ a bank in the city centre.",
+     "sub": "rob yoki steal?",
+     "options": [
+      "robbed",
+      "stole",
+      "stolen",
+      "thieved"
+     ],
+     "explain": "rob — kimnidir/joyni (bankni) talamoq; steal — narsani (pulni) o'g'irlamoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who sees a crime and tells the police about it is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "witness",
+      "victim",
+      "judge",
+      "suspect"
+     ],
+     "explain": "witness — guvoh. victim — jabrlanuvchi, judge — sudya."
+    },
+    {
+     "kind": "vocab",
+     "q": "«dalil» — inglizcha qanday?",
+     "sub": "Tarjima qiling",
+     "options": [
+      "evidence",
+      "punishment",
+      "court",
+      "arrest"
+     ],
+     "explain": "evidence — dalil. punishment — jazo, court — sud, arrest — hibsga olmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "The police ___ the man and took him to the police station.",
+     "sub": "Kontekst",
+     "options": [
+      "arrested",
+      "attacked",
+      "murdered",
+      "kidnapped"
+     ],
+     "explain": "arrest — hibsga olmoq: politsiya odamni ushlab bo'limga olib ketadi."
+    }
+   ]
   },
   {
    "no": 15,
@@ -13584,7 +16972,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 41–45 — uyga (tanlab)."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "If I ___ the lottery, I would travel around the world.",
+     "sub": "Type 2",
+     "options": [
+      "won",
+      "win",
+      "would win",
+      "have won"
+     ],
+     "explain": "Type 2: If + Past Simple (won), would + V1. if-gapda would bo'lmaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "If I had studied harder, I ___ the exam.",
+     "sub": "Type 3",
+     "options": [
+      "would have passed",
+      "would passed",
+      "will have passed",
+      "had passed"
+     ],
+     "explain": "Type 3: If + Past Perfect, would have + V3 (passed)."
+    },
+    {
+     "kind": "grammar",
+     "q": "If I ___ you, I would book the ticket now.",
+     "sub": "If I were you",
+     "options": [
+      "were",
+      "am",
+      "be",
+      "would be"
+     ],
+     "explain": "Maslahat iborasi: If I were you, I would... (hamma shaxs uchun were)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "If I would have money, I would buy a ticket.",
+      "If I had money, I would buy a ticket.",
+      "I would buy a ticket if I had money.",
+      "If I were rich, I would travel more."
+     ],
+     "explain": "if-gapda would ishlatilmaydi: If I had money, I would buy a ticket."
+    },
+    {
+     "kind": "grammar",
+     "q": "They would have caught the train if they ___ on time.",
+     "sub": "Type 3 (teskari)",
+     "options": [
+      "had arrived",
+      "arrived",
+      "would arrive",
+      "have arrived"
+     ],
+     "explain": "would have caught — Type 3, demak if-qismida Past Perfect: had arrived."
+    },
+    {
+     "kind": "grammar",
+     "q": "I would have ___ to Samarkand, but I missed the bus.",
+     "sub": "would have + V3",
+     "options": [
+      "gone",
+      "went",
+      "go",
+      "going"
+     ],
+     "explain": "would have + V3: go – went – gone → would have gone."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Vaqtim bo'lsa, Buxoroga borardim» (lekin vaqtim yo'q).",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "If I had time, I would go to Bukhara.",
+      "If I have time, I would go to Bukhara.",
+      "If I had time, I will go to Bukhara.",
+      "If I would have time, I will go to Bukhara."
+     ],
+     "explain": "Hozirgi xayoliy holat — Type 2: If + Past Simple (had), would + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi holatda Type 3 ishlatiladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "O'tganda bo'lmagan ish (endi o'zgartirib bo'lmaydi)",
+      "Hozirgi xayoliy, real bo'lmagan holat",
+      "Kelajakdagi real reja",
+      "Har doim to'g'ri bo'ladigan fakt"
+     ],
+     "explain": "Type 3 — o'tmish haqida afsus: If I had..., I would have + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "What would you do if you ___ your passport abroad?",
+     "sub": "Type 2 savol",
+     "options": [
+      "lost",
+      "lose",
+      "had lose",
+      "would lose"
+     ],
+     "explain": "What would you do if + Past Simple? lose – lost → lost."
+    },
+    {
+     "kind": "grammar",
+     "q": "If she had more time, she ___ around the world.",
+     "sub": "Type 2",
+     "options": [
+      "would travel",
+      "will travel",
+      "would have travel",
+      "travels"
+     ],
+     "explain": "if + Past Simple (had) → asosiy gapda would + V1: would travel."
+    },
+    {
+     "kind": "grammar",
+     "q": "If we had left earlier, we ___ have caught the flight.",
+     "sub": "could / might",
+     "options": [
+      "might",
+      "will",
+      "would to",
+      "can"
+     ],
+     "explain": "Type 3 da would o'rniga might/could: might have caught (ehtimol ulgurardik)."
+    },
+    {
+     "kind": "grammar",
+     "q": "«If I had booked a hotel, I wouldn't have slept at the airport.» Bu qaysi tur?",
+     "sub": "Turini aniqlang",
+     "options": [
+      "Type 3 — o'tgan, bo'lmagan ish",
+      "Type 2 — hozirgi xayoliy",
+      "Type 1 — real kelajak",
+      "Type 0 — umumiy fakt"
+     ],
+     "explain": "had booked (Past Perfect) + wouldn't have slept (would have + V3) = Type 3."
+    },
+    {
+     "kind": "vocab",
+     "q": "You need a ___ pass to get on the plane.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "boarding",
+      "landing",
+      "check",
+      "travel"
+     ],
+     "explain": "boarding pass — bortga chiqish taloni."
+    },
+    {
+     "kind": "vocab",
+     "q": "Our plane will take ___ at 7 a.m.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "off",
+      "on",
+      "up",
+      "out"
+     ],
+     "explain": "take off — (samolyot) uchmoq. Qo'nmoq — land."
+    },
+    {
+     "kind": "vocab",
+     "q": "The place you are travelling to is your ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "destination",
+      "luggage",
+      "souvenir",
+      "border"
+     ],
+     "explain": "destination — manzil (boradigan joy). luggage — yuk, border — chegara."
+    },
+    {
+     "kind": "vocab",
+     "q": "We ___ in at the hotel at 2 p.m. and got our room key.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "checked",
+      "set",
+      "saw",
+      "took"
+     ],
+     "explain": "check in — mehmonxona/aeroportda ro'yxatdan o'tmoq. Chiqishda — check out."
+    },
+    {
+     "kind": "vocab",
+     "q": "«turar joy» (mehmonxona, kvartira) — inglizcha?",
+     "sub": "Tarjima qiling",
+     "options": [
+      "accommodation",
+      "itinerary",
+      "transportation",
+      "destination"
+     ],
+     "explain": "accommodation — turar joy. itinerary — sayohat rejasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "I bought a small ___ for my mum in Istanbul — a fridge magnet.",
+     "sub": "Kontekst",
+     "options": [
+      "souvenir",
+      "fare",
+      "visa",
+      "route"
+     ],
+     "explain": "souvenir — esdalik sovg'a. fare — yo'l haqi, route — yo'nalish."
+    },
+    {
+     "kind": "vocab",
+     "q": "The money you pay for a bus or train journey is the ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "fare",
+      "fine",
+      "tip",
+      "bill"
+     ],
+     "explain": "fare — yo'l haqi. fine — jarima, bill — restoran hisobi."
+    },
+    {
+     "kind": "vocab",
+     "q": "We went to the airport to ___ our friends off.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "see",
+      "set",
+      "take",
+      "check"
+     ],
+     "explain": "see off — kuzatib qo'ymoq. set off — o'zing yo'lga chiqmoq."
+    }
+   ]
   },
   {
    "no": 16,
@@ -14490,7 +18120,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 46–50 — uyga (tanlab)."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "___ the lesson, please don't use your phone.",
+     "sub": "During yoki While?",
+     "options": [
+      "During",
+      "While",
+      "When",
+      "Unless"
+     ],
+     "explain": "«the lesson» — ot. During + ot: during the lesson."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ I was cooking, my brother was washing the dishes.",
+     "sub": "During yoki While?",
+     "options": [
+      "While",
+      "During",
+      "Unless",
+      "For"
+     ],
+     "explain": "Keyin gap keladi (I was cooking) → While + ega + fe'l."
+    },
+    {
+     "kind": "grammar",
+     "q": "She fell asleep ___ watching the film.",
+     "sub": "While + V-ing",
+     "options": [
+      "while",
+      "during",
+      "unless",
+      "for"
+     ],
+     "explain": "while + V-ing ham mumkin: while watching. during + V-ing — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "Unless you don't eat, you'll be hungry.",
+      "Unless you eat, you'll be hungry.",
+      "If you don't eat, you'll be hungry.",
+      "You'll be hungry if you don't eat."
+     ],
+     "explain": "unless = if ... not. Undan keyin yana inkor qo'yilmaydi: Unless you eat..."
+    },
+    {
+     "kind": "grammar",
+     "q": "I won't go out ___ it stops raining.",
+     "sub": "If yoki Unless?",
+     "options": [
+      "unless",
+      "if",
+      "while",
+      "during"
+     ],
+     "explain": "Yomg'ir TO'XTAMASA chiqmayman → unless (= if it doesn't stop)."
+    },
+    {
+     "kind": "grammar",
+     "q": "If it ___ tomorrow, we'll eat inside.",
+     "sub": "1-tur shart",
+     "options": [
+      "rains",
+      "will rain",
+      "rained",
+      "raining"
+     ],
+     "explain": "If + Present Simple, will + V1. if-gapda will bo'lmaydi: If it rains..."
+    },
+    {
+     "kind": "grammar",
+     "q": "«Unless» ning ma'nosi qaysi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "if ... not",
+      "when",
+      "while ... not",
+      "so that"
+     ],
+     "explain": "unless = if ... not (agar ...masa): Unless you hurry = If you don't hurry."
+    },
+    {
+     "kind": "grammar",
+     "q": "We'll order pizza unless the restaurant ___ closed.",
+     "sub": "Unless + Present Simple",
+     "options": [
+      "is",
+      "will be",
+      "isn't",
+      "be"
+     ],
+     "explain": "unless + tasdiq, Present Simple: unless it is closed (yopiq bo'lmasa)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Tushlik payti u menga qo'ng'iroq qildi.»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "He called me during lunch.",
+      "He called me while lunch.",
+      "He called me during I had lunch.",
+      "He called me unless lunch."
+     ],
+     "explain": "«lunch» — ot, shuning uchun during lunch. while dan keyin gap keladi."
+    },
+    {
+     "kind": "grammar",
+     "q": "DURING dan keyin nima keladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Ot (the winter, the meal)",
+      "Gap (ega + fe'l)",
+      "Faqat will + V1",
+      "Faqat sifat"
+     ],
+     "explain": "During + ot/ot birikma: during the winter, during the meal."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "While we were eating, the lights went out.",
+      "During we were eating, the lights went out.",
+      "While the meal, the lights went out.",
+      "During eating we were, the lights went out."
+     ],
+     "explain": "Gap (we were eating) oldidan while; ot (the meal) oldidan during."
+    },
+    {
+     "kind": "grammar",
+     "q": "You won't lose weight ___ you eat less sugar.",
+     "sub": "If yoki Unless?",
+     "options": [
+      "unless",
+      "if",
+      "while",
+      "during"
+     ],
+     "explain": "Kamroq shakar YEMASANG ozmaysan → unless (= if you don't eat less)."
+    },
+    {
+     "kind": "vocab",
+     "q": "At the end of the meal, we asked the waiter for the ___.",
+     "sub": "Kontekst",
+     "options": [
+      "bill",
+      "menu",
+      "recipe",
+      "dish"
+     ],
+     "explain": "bill — restorandagi hisob. menu — menyu (ovqat oldidan so'raladi)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Ice cream is a popular ___ after the main course.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "dessert",
+      "starter",
+      "beverage",
+      "spice"
+     ],
+     "explain": "dessert — shirinlik (oxirida). starter — ishtahaochar (boshida)."
+    },
+    {
+     "kind": "vocab",
+     "q": "First, ___ up the onions into small pieces.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "chop",
+      "dig",
+      "heat",
+      "fill"
+     ],
+     "explain": "chop up — maydalab to'g'ramoq. heat up — isitmoq, fill up — to'ldirmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Food that is not cooked is ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "raw",
+      "fried",
+      "boiled",
+      "grilled"
+     ],
+     "explain": "raw — xom. fried — qovurilgan, boiled — qaynatilgan, grilled — panjarada."
+    },
+    {
+     "kind": "vocab",
+     "q": "«masalliq» — inglizcha?",
+     "sub": "Tarjima qiling",
+     "options": [
+      "ingredient",
+      "recipe",
+      "nutrient",
+      "cuisine"
+     ],
+     "explain": "ingredient — masalliq. recipe — retsept, nutrient — ozuqa moddasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Plov is a famous ___ of Uzbek cuisine.",
+     "sub": "Kontekst",
+     "options": [
+      "dish",
+      "bill",
+      "menu",
+      "diet"
+     ],
+     "explain": "dish — taom (bitta ovqat turi). diet — parhez."
+    },
+    {
+     "kind": "vocab",
+     "q": "The food is ready. Let's dig ___!",
+     "sub": "Frazali fe'l",
+     "options": [
+      "in",
+      "up",
+      "off",
+      "out"
+     ],
+     "explain": "dig in — ovqatni boshlamoq (yeyishga kirishmoq)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Qaysi so'z «crispy» ga ma'nodosh?",
+     "sub": "Sinonim",
+     "options": [
+      "crunchy",
+      "creamy",
+      "raw",
+      "boiled"
+     ],
+     "explain": "crispy = crunchy — qarsildoq. creamy — qaymoqli, yumshoq."
+    }
+   ]
   },
   {
    "no": 17,
@@ -15400,7 +19272,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 51–55 — uyga (tanlab)."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "Could you tell me where the library ___?",
+     "sub": "Bilvosita savol",
+     "options": [
+      "is",
+      "is it",
+      "does",
+      "are"
+     ],
+     "explain": "Bilvosita savolda ega fe'ldan OLDIN: where the library is."
+    },
+    {
+     "kind": "grammar",
+     "q": "Do you know when the lesson ___?",
+     "sub": "Bilvosita savol",
+     "options": [
+      "starts",
+      "does start",
+      "start",
+      "does it start"
+     ],
+     "explain": "does yo'qoladi, fe'lga -s qo'shiladi: when the lesson starts."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "Can you tell me what she said?",
+      "Can you tell me what did she say?",
+      "Can you tell me what she say?",
+      "Can you tell me what said she?"
+     ],
+     "explain": "did yo'qoladi, fe'l V2 ga o'tadi: what she said."
+    },
+    {
+     "kind": "grammar",
+     "q": "Do you know ___ the lab is open today?",
+     "sub": "Yes/No → if",
+     "options": [
+      "if",
+      "what",
+      "does",
+      "is"
+     ],
+     "explain": "Yes/No savol bilvosita bo'lsa → if/whether: Do you know if the lab is open?"
+    },
+    {
+     "kind": "grammar",
+     "q": "I wonder why the teacher ___ late.",
+     "sub": "I wonder...",
+     "options": [
+      "is",
+      "is she",
+      "does",
+      "be"
+     ],
+     "explain": "I wonder + Wh + ega + fe'l: why the teacher is late."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "Do you know where can I buy a ruler?",
+      "Do you know where I can buy a ruler?",
+      "Could you tell me where the gym is?",
+      "I wonder if he is a teacher."
+     ],
+     "explain": "can egadan keyin turadi: where I can buy a ruler."
+    },
+    {
+     "kind": "grammar",
+     "q": "«What time does the film start?» → Could you tell me ___?",
+     "sub": "Bilvositaga aylantiring",
+     "options": [
+      "what time the film starts",
+      "what time does the film start",
+      "what time the film does start",
+      "what time starts the film"
+     ],
+     "explain": "does tushadi, ega + fe'l-s: what time the film starts."
+    },
+    {
+     "kind": "grammar",
+     "q": "«Is the canteen open?» → Do you know ___?",
+     "sub": "Bilvositaga aylantiring",
+     "options": [
+      "if the canteen is open",
+      "is the canteen open",
+      "if is the canteen open",
+      "the canteen is open"
+     ],
+     "explain": "Yes/No savol → if + ega + fe'l: if the canteen is open."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap oxiriga SO'ROQ emas, NUQTA (.) qo'yiladi?",
+     "sub": "Tinish belgisi",
+     "options": [
+      "I wonder where my notebook is",
+      "Do you know where my notebook is",
+      "Could you tell me where my notebook is",
+      "Can you tell me where my notebook is"
+     ],
+     "explain": "I wonder... — darak gap, oxirida nuqta. Could you / Do you... — savol, «?»."
+    },
+    {
+     "kind": "grammar",
+     "q": "Can you remember what the homework ___?",
+     "sub": "O'tgan zamon",
+     "options": [
+      "was",
+      "was it",
+      "did",
+      "were it"
+     ],
+     "explain": "Bilvosita savolda: what + ega (the homework) + fe'l (was)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Direktor qayerdaligini bilasizmi?»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "Do you know where the principal is?",
+      "Do you know where is the principal?",
+      "Do you know where the principal does?",
+      "Do you know where does the principal is?"
+     ],
+     "explain": "Do you know + where + ega + is. «where is the principal» — to'g'ri savol tartibi, bu yerda xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Bilvosita savolda Present Simple dagi «does» ga nima bo'ladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Tushib qoladi, fe'lga -s qo'shiladi",
+      "Qoladi, fe'l o'zgarmaydi",
+      "«did» ga aylanadi",
+      "Egadan oldin turadi"
+     ],
+     "explain": "When does it start? → Do you know when it starts? (does tushdi, start + s)."
+    },
+    {
+     "kind": "vocab",
+     "q": "You use a ___ to draw straight lines.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "ruler",
+      "eraser",
+      "marker",
+      "calculator"
+     ],
+     "explain": "ruler — chizg'ich. eraser — o'chirg'ich."
+    },
+    {
+     "kind": "vocab",
+     "q": "The list of your lessons for each day of the week is your ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "timetable",
+      "textbook",
+      "bulletin board",
+      "notebook"
+     ],
+     "explain": "timetable — dars jadvali. bulletin board — e'lonlar taxtasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "The head of a school is the ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "principal",
+      "librarian",
+      "janitor",
+      "coach"
+     ],
+     "explain": "principal / headteacher — direktor. janitor — farrosh, coach — murabbiy."
+    },
+    {
+     "kind": "vocab",
+     "q": "We do science experiments in the ___.",
+     "sub": "Kontekst",
+     "options": [
+      "lab",
+      "gym",
+      "canteen",
+      "playground"
+     ],
+     "explain": "lab (laboratory) — laboratoriya, tajribalar shu yerda."
+    },
+    {
+     "kind": "vocab",
+     "q": "«PE» qaysi fan?",
+     "sub": "Ma'nosini tanlang",
+     "options": [
+      "jismoniy tarbiya",
+      "informatika",
+      "tabiiy fanlar",
+      "tasviriy san'at"
+     ],
+     "explain": "PE = physical education — jismoniy tarbiya. informatika — computer science."
+    },
+    {
+     "kind": "vocab",
+     "q": "A student in the same class as you is your ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "classmate",
+      "tutor",
+      "counsellor",
+      "principal"
+     ],
+     "explain": "classmate — sinfdosh. tutor — repetitor, counsellor — maslahatchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Please clean the ___ — the teacher needs to write on it with a marker.",
+     "sub": "Kontekst",
+     "options": [
+      "whiteboard",
+      "desk",
+      "ruler",
+      "backpack"
+     ],
+     "explain": "whiteboard — oq doska, marker bilan yoziladi. blackboard — bo'r bilan."
+    },
+    {
+     "kind": "vocab",
+     "q": "We have lunch in the school ___.",
+     "sub": "Kontekst",
+     "options": [
+      "canteen",
+      "library",
+      "auditorium",
+      "laboratory"
+     ],
+     "explain": "canteen / cafeteria — maktab oshxonasi."
+    }
+   ]
   },
   {
    "no": 18,
@@ -16337,7 +20451,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I wish I ___ more money for this jacket.",
+     "sub": "wish + Past Simple",
+     "options": [
+      "had",
+      "have",
+      "would have",
+      "will have"
+     ],
+     "explain": "Hozirgi holat boshqacha bo'lishini xohlash: wish + Past Simple (had)."
+    },
+    {
+     "kind": "grammar",
+     "q": "I wish I ___ taller.",
+     "sub": "wish + were",
+     "options": [
+      "were",
+      "am",
+      "would be",
+      "be"
+     ],
+     "explain": "wish + were (hamma shaxs uchun). O'zing haqida would ishlatilmaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "I wish I ___ so much yesterday — now I have no money.",
+     "sub": "wish + Past Perfect",
+     "options": [
+      "hadn't spent",
+      "didn't spend",
+      "don't spend",
+      "wouldn't spend"
+     ],
+     "explain": "O'tgan ishdan afsus (yesterday) → wish + Past Perfect: hadn't spent."
+    },
+    {
+     "kind": "grammar",
+     "q": "I wish the shop assistant ___ stop talking on the phone!",
+     "sub": "wish + would",
+     "options": [
+      "would",
+      "will",
+      "is",
+      "does"
+     ],
+     "explain": "Boshqa odam o'zgarishini xohlash (norozilik): wish + S + would + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "She wishes she ___ go to the sale, but she's at work.",
+     "sub": "wish + could",
+     "options": [
+      "could",
+      "can",
+      "will",
+      "does"
+     ],
+     "explain": "Qila olmayotgan ishni qila olishni xohlash: wish + could + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I wish I can buy that phone.",
+      "I wish I could buy that phone.",
+      "I wish I had bought that phone.",
+      "I wish I had that phone."
+     ],
+     "explain": "wish dan keyin can emas, could: I wish I could buy..."
+    },
+    {
+     "kind": "grammar",
+     "q": "I wish ___ speak to the manager, please.",
+     "sub": "Rasmiy: wish + to",
+     "options": [
+      "to",
+      "for",
+      "that",
+      "of"
+     ],
+     "explain": "Rasmiy «xohlamoq» ma'nosida: wish + to + V1 (I wish to speak...)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Qaniydi o'sha ko'ylakni sotib olmaganimda.»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "I wish I hadn't bought that shirt.",
+      "I wish I didn't buy that shirt.",
+      "I wish I don't buy that shirt.",
+      "I wish I wouldn't buy that shirt."
+     ],
+     "explain": "O'tgan ishdan afsus → wish + Past Perfect: hadn't bought."
+    },
+    {
+     "kind": "grammar",
+     "q": "«I wish + Past Perfect» qachon ishlatiladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "O'tgan ishdan afsuslanganda",
+      "Hozirgi holatni o'zgartirmoqchi bo'lganda",
+      "Boshqa odam o'zgarishini xohlaganda",
+      "Rasmiy iltimos qilganda"
+     ],
+     "explain": "Past Perfect — o'tmish: I wish I hadn't eaten so much cake."
+    },
+    {
+     "kind": "grammar",
+     "q": "I wish it ___ raining right now — I want to stay at home.",
+     "sub": "wish + Past Continuous",
+     "options": [
+      "were",
+      "is",
+      "would",
+      "has been"
+     ],
+     "explain": "Hozir bo'layotgan ish: wish + Past Continuous (were raining)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "I wish my brother would help me with the shopping.",
+      "I wish my brother helps me with the shopping.",
+      "I wish my brother will help me with the shopping.",
+      "I wish my brother would helped me with the shopping."
+     ],
+     "explain": "Boshqa odamdan norozilik: wish + S + would + V1 (help)."
+    },
+    {
+     "kind": "grammar",
+     "q": "My sister wishes she ___ the red dress yesterday.",
+     "sub": "wish + Past Perfect",
+     "options": [
+      "had tried on",
+      "tried on",
+      "has tried on",
+      "would try on"
+     ],
+     "explain": "«yesterday» — o'tgan ish → wish + had + V3: had tried on."
+    },
+    {
+     "kind": "vocab",
+     "q": "You can try on clothes in the ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "fitting room",
+      "checkout",
+      "trolley",
+      "receipt"
+     ],
+     "explain": "fitting room — kiyib ko'rish xonasi. checkout — kassa."
+    },
+    {
+     "kind": "vocab",
+     "q": "Keep the ___ — you need it if you want a refund.",
+     "sub": "Kontekst",
+     "options": [
+      "receipt",
+      "discount",
+      "brand",
+      "queue"
+     ],
+     "explain": "receipt — chek. Pulni qaytarish (refund) uchun chek kerak."
+    },
+    {
+     "kind": "vocab",
+     "q": "Only 50,000 som for these shoes? What a ___!",
+     "sub": "Kontekst",
+     "options": [
+      "bargain",
+      "warranty",
+      "budget",
+      "refund"
+     ],
+     "explain": "bargain — arzon, foydali xarid."
+    },
+    {
+     "kind": "vocab",
+     "q": "The jacket was too small, so I ___ it and got my money back.",
+     "sub": "Kontekst",
+     "options": [
+      "returned",
+      "borrowed",
+      "exchanged",
+      "delivered"
+     ],
+     "explain": "return — qaytarmoq (pul qaytadi). exchange — boshqasiga almashtirmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Looking at things in shop windows without buying is ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "window shopping",
+      "clearance sale",
+      "online shopping",
+      "delivery"
+     ],
+     "explain": "window shopping — sotib olmasdan do'kon oynasidan tomosha qilish."
+    },
+    {
+     "kind": "vocab",
+     "q": "There was a long ___ at the checkout, so we waited 20 minutes.",
+     "sub": "Kontekst",
+     "options": [
+      "queue",
+      "coupon",
+      "catalogue",
+      "product"
+     ],
+     "explain": "queue — navbat. coupon — kupon."
+    },
+    {
+     "kind": "vocab",
+     "q": "«chegirma» — inglizcha?",
+     "sub": "Tarjima qiling",
+     "options": [
+      "discount",
+      "receipt",
+      "refund",
+      "warranty"
+     ],
+     "explain": "discount — chegirma. refund — pulni qaytarish, warranty — kafolat."
+    },
+    {
+     "kind": "vocab",
+     "q": "This phone has a two-year ___ — if it breaks, they'll fix it for free.",
+     "sub": "Kontekst",
+     "options": [
+      "warranty",
+      "bargain",
+      "budget",
+      "brand"
+     ],
+     "explain": "warranty / guarantee — kafolat."
+    }
+   ]
   },
   {
    "no": 19,
@@ -17270,7 +21626,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "He went to the gym ___ work out.",
+     "sub": "Maqsad",
+     "options": [
+      "to",
+      "for",
+      "for to",
+      "so that"
+     ],
+     "explain": "Maqsad (nima uchun?) → to + V1: to work out."
+    },
+    {
+     "kind": "grammar",
+     "q": "I went to the shop ___ bread.",
+     "sub": "for + ot",
+     "options": [
+      "for",
+      "to",
+      "for to",
+      "in order to"
+     ],
+     "explain": "Keyin OT (bread) keladi → for + ot. Fe'l bo'lsa: to buy bread."
+    },
+    {
+     "kind": "grammar",
+     "q": "She studies hard ___ order to pass the exam.",
+     "sub": "in order to",
+     "options": [
+      "in",
+      "for",
+      "so",
+      "on"
+     ],
+     "explain": "Rasmiyroq shakl: in order to + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "I saved money so ___ I could buy a laptop.",
+     "sub": "so that + gap",
+     "options": [
+      "that",
+      "as",
+      "to",
+      "for"
+     ],
+     "explain": "so that + ega + could/can: so that I could buy..."
+    },
+    {
+     "kind": "grammar",
+     "q": "I whispered so as ___ wake the baby.",
+     "sub": "Inkor maqsad",
+     "options": [
+      "not to",
+      "to not",
+      "don't",
+      "not"
+     ],
+     "explain": "Inkor: so as not to / in order not to + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I called him for asking a question.",
+      "I called him to ask a question.",
+      "I went to the market for some apples.",
+      "He left early so as to catch the bus."
+     ],
+     "explain": "Odamning maqsadi → to + V1: to ask. «for asking» — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «U poyezdga ulgurish uchun erta chiqdi.»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "He left early to catch the train.",
+      "He left early for catch the train.",
+      "He left early for catching the train.",
+      "He left early that catch the train."
+     ],
+     "explain": "«...uchun» (maqsad) + fe'l → to + V1: to catch."
+    },
+    {
+     "kind": "grammar",
+     "q": "«so that» dan keyin nima keladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Gap: ega + can/could/will + V1",
+      "to + V1",
+      "Faqat ot",
+      "V-ing"
+     ],
+     "explain": "so that + to'liq gap: so that I could buy a laptop."
+    },
+    {
+     "kind": "grammar",
+     "q": "I left early in order ___ be late.",
+     "sub": "Inkor maqsad",
+     "options": [
+      "not to",
+      "to not",
+      "don't",
+      "no to"
+     ],
+     "explain": "in order not to + V1 — ...maslik uchun. «to not» — yozmada xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "I went to the bank to get some cash.",
+      "I went to the bank for get some cash.",
+      "I went to the bank for to get some cash.",
+      "I went to the bank getting some cash."
+     ],
+     "explain": "Maqsad + fe'l → to + V1: to get. «for to» — hech qachon."
+    },
+    {
+     "kind": "grammar",
+     "q": "My mum works hard so that we ___ go to a good school.",
+     "sub": "so that + modal",
+     "options": [
+      "can",
+      "to",
+      "for",
+      "going"
+     ],
+     "explain": "so that + ega (we) + can + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "«Why did you go to the library?» — «___ some books.»",
+     "sub": "Qisqa javob",
+     "options": [
+      "To borrow",
+      "For borrow",
+      "For borrowing",
+      "So that borrow"
+     ],
+     "explain": "Why? savoliga maqsad javobi: To + V1 (To borrow some books)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Everyone came to the party ___ Ali — he was ill.",
+     "sub": "Chalkash so'zlar",
+     "options": [
+      "except",
+      "accept",
+      "expect",
+      "exempt"
+     ],
+     "explain": "except — ...dan tashqari. accept — qabul qilmoq, expect — kutmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Can you ___ me some money until Friday?",
+     "sub": "borrow yoki lend?",
+     "options": [
+      "lend",
+      "borrow",
+      "lent",
+      "borrowed"
+     ],
+     "explain": "lend — qarzga BERMOQ (lend me). borrow — qarzga OLMOQ (borrow from)."
+    },
+    {
+     "kind": "vocab",
+     "q": "My brother is taller ___ me.",
+     "sub": "than yoki then?",
+     "options": [
+      "than",
+      "then",
+      "that",
+      "as"
+     ],
+     "explain": "than — taqqoslash (...dan). then — keyin."
+    },
+    {
+     "kind": "vocab",
+     "q": "Can I give you some ___? Don't stay up late before the exam.",
+     "sub": "advice yoki advise?",
+     "options": [
+      "advice",
+      "advise",
+      "advices",
+      "adviser"
+     ],
+     "explain": "advice — ot (maslahat), sanalmaydi. advise — fe'l (maslahat bermoq)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Ice cream is my favourite ___.",
+     "sub": "Chalkash so'zlar",
+     "options": [
+      "dessert",
+      "desert",
+      "deserve",
+      "dissert"
+     ],
+     "explain": "dessert (ss) — shirinlik. desert (s) — cho'l."
+    },
+    {
+     "kind": "vocab",
+     "q": "Smoking can ___ your health.",
+     "sub": "affect yoki effect?",
+     "options": [
+      "affect",
+      "effect",
+      "afford",
+      "effort"
+     ],
+     "explain": "affect — fe'l (ta'sir qilmoq). effect — ot (ta'sir, natija)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The library is very ___ — nobody is talking.",
+     "sub": "quiet yoki quite?",
+     "options": [
+      "quiet",
+      "quite",
+      "quit",
+      "quietly"
+     ],
+     "explain": "quiet — jim, sokin. quite — ancha, juda."
+    },
+    {
+     "kind": "vocab",
+     "q": "These trousers are too ___ — I need a belt.",
+     "sub": "lose yoki loose?",
+     "options": [
+      "loose",
+      "lose",
+      "loss",
+      "lost"
+     ],
+     "explain": "loose — bo'sh, keng. lose — yo'qotmoq."
+    }
+   ]
   },
   {
    "no": 20,
@@ -18176,7 +22774,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 66–70 — uyga (tanlab)."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "You ___ smoke in the building. It's against the rules.",
+     "sub": "Taqiq",
+     "options": [
+      "mustn't",
+      "don't have to",
+      "needn't",
+      "don't must"
+     ],
+     "explain": "Taqiq (mumkin emas) → mustn't. don't have to / needn't — shart emas."
+    },
+    {
+     "kind": "grammar",
+     "q": "I must ___ now — my bus is leaving.",
+     "sub": "must + V1",
+     "options": [
+      "go",
+      "to go",
+      "going",
+      "goes"
+     ],
+     "explain": "must dan keyin to qo'yilmaydi: must + V1 (go)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tomorrow is Sunday, so I ___ get up early.",
+     "sub": "Shart emas",
+     "options": [
+      "don't have to",
+      "mustn't",
+      "haven't to",
+      "don't must"
+     ],
+     "explain": "Ixtiyoriy, majbur emas → don't have to. mustn't — taqiq bo'lardi."
+    },
+    {
+     "kind": "grammar",
+     "q": "She ___ pay the rent on the first day of every month.",
+     "sub": "have to / has to",
+     "options": [
+      "has to",
+      "have to",
+      "has",
+      "must to"
+     ],
+     "explain": "she → has to + V1. «must to» — xato (to kerak emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "You ___ apologise to your neighbour — it's the right thing to do.",
+     "sub": "Maslahat",
+     "options": [
+      "should",
+      "mustn't",
+      "don't have to",
+      "needn't"
+     ],
+     "explain": "Maslahat, to'g'ri ish → should + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "She has to not pay the deposit.",
+      "She doesn't have to pay the deposit.",
+      "She has to pay the deposit.",
+      "Does she have to pay the deposit?"
+     ],
+     "explain": "have to inkori do/does bilan: She doesn't have to pay."
+    },
+    {
+     "kind": "grammar",
+     "q": "Last year we ___ paint the whole flat ourselves.",
+     "sub": "O'tgan zamon",
+     "options": [
+      "had to",
+      "must",
+      "have to",
+      "musted"
+     ],
+     "explain": "must ning o'tgan shakli yo'q → had to (Last year — o'tgan)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Erta kelishing shart emas.»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "You needn't come early.",
+      "You mustn't come early.",
+      "You need come early.",
+      "You don't need come early."
+     ],
+     "explain": "needn't + V1 = shart emas. mustn't — taqiq (mumkin emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ you have to work on Saturdays?",
+     "sub": "Savol shakli",
+     "options": [
+      "Do",
+      "Must",
+      "Have",
+      "Are"
+     ],
+     "explain": "have to savoli do/does bilan: Do you have to work...?"
+    },
+    {
+     "kind": "grammar",
+     "q": "MUSTN'T nimani bildiradi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Taqiq — qilish mumkin emas",
+      "Shart emas — ixtiyoriy",
+      "Maslahat — qilgan ma'qul",
+      "O'tgan majburiyat"
+     ],
+     "explain": "mustn't = taqiq: You mustn't touch the wires."
+    },
+    {
+     "kind": "grammar",
+     "q": "The lift is broken, so we'll ___ use the stairs.",
+     "sub": "Kelajak majburiyat",
+     "options": [
+      "have to",
+      "must",
+      "should to",
+      "need"
+     ],
+     "explain": "will dan keyin must bo'lmaydi → will have to + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "Should I ___ the landlord about the broken window?",
+     "sub": "Should savol",
+     "options": [
+      "call",
+      "to call",
+      "calling",
+      "called"
+     ],
+     "explain": "Should + ega + V1? (to qo'yilmaydi)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The person who owns the flat and gets the rent is the ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "landlord",
+      "tenant",
+      "neighbour",
+      "janitor"
+     ],
+     "explain": "landlord — uy egasi (ijaraga beruvchi). tenant — ijarachi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who pays rent to live in a flat is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "tenant",
+      "landlord",
+      "neighbour",
+      "guest"
+     ],
+     "explain": "tenant — ijarachi (ijara haqi to'laydi)."
+    },
+    {
+     "kind": "vocab",
+     "q": "We keep old boxes in the ___ under the house.",
+     "sub": "Kontekst",
+     "options": [
+      "basement",
+      "attic",
+      "balcony",
+      "roof"
+     ],
+     "explain": "basement — yerto'la (pastda). attic — chordoq (tom ostida)."
+    },
+    {
+     "kind": "vocab",
+     "q": "A very tall building in a big city is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "skyscraper",
+      "cottage",
+      "villa",
+      "basement"
+     ],
+     "explain": "skyscraper — osmono'par bino. cottage — kichik qishloq uyi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Before you move in, you pay a ___; you get it back when you leave.",
+     "sub": "Kontekst",
+     "options": [
+      "deposit",
+      "mortgage",
+      "rent",
+      "renovation"
+     ],
+     "explain": "deposit — garov puli (qaytariladi). mortgage — ipoteka."
+    },
+    {
+     "kind": "vocab",
+     "q": "«ta'mirlash» — inglizcha?",
+     "sub": "Tarjima qiling",
+     "options": [
+      "renovation",
+      "foundation",
+      "inspection",
+      "residential"
+     ],
+     "explain": "renovation — ta'mirlash. foundation — poydevor, inspection — tekshiruv."
+    },
+    {
+     "kind": "vocab",
+     "q": "Smoke goes out of the house through the ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "chimney",
+      "gutter",
+      "hallway",
+      "foyer"
+     ],
+     "explain": "chimney — mo'ri. gutter — tarnov."
+    },
+    {
+     "kind": "vocab",
+     "q": "Don't forget to ___ the door when you leave.",
+     "sub": "Kontekst",
+     "options": [
+      "lock",
+      "rent",
+      "lease",
+      "renovate"
+     ],
+     "explain": "lock — qulflamoq."
+    }
+   ]
   },
   {
    "no": 21,
@@ -19093,7 +23933,249 @@
      }
     ],
     "book_ref": "Jony Academy matni (sinfda); kitob Topic 71–75 — uyga (tanlab)."
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "English ___ spoken in many countries.",
+     "sub": "Present Simple Passive",
+     "options": [
+      "is",
+      "are",
+      "be",
+      "does"
+     ],
+     "explain": "English — birlik, hozir: is + V3 (spoken)."
+    },
+    {
+     "kind": "grammar",
+     "q": "«Khamsa» was ___ by Alisher Navoi.",
+     "sub": "Past Simple Passive",
+     "options": [
+      "written",
+      "wrote",
+      "write",
+      "writing"
+     ],
+     "explain": "Passive: be + V3. write – wrote – written."
+    },
+    {
+     "kind": "grammar",
+     "q": "Alisher Navoi ___ born in 1441.",
+     "sub": "was born",
+     "options": [
+      "was",
+      "is",
+      "were",
+      "has"
+     ],
+     "explain": "Tug'ilgan yil — o'tgan: was born (he → was)."
+    },
+    {
+     "kind": "grammar",
+     "q": "The new hospital ___ next year.",
+     "sub": "Future Simple Passive",
+     "options": [
+      "will be built",
+      "will build",
+      "was built",
+      "is building"
+     ],
+     "explain": "Kelajak passive: will be + V3. Kasalxona o'zi qurmaydi — uni quradi."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "He born in Tashkent in 2010.",
+      "He was born in Tashkent in 2010.",
+      "My sister was born in May.",
+      "Where were you born?"
+     ],
+     "explain": "«tug'ilmoq» — doim be born: He was born..."
+    },
+    {
+     "kind": "grammar",
+     "q": "Active → Passive: «People speak Uzbek here.»",
+     "sub": "Passive'ga aylantiring",
+     "options": [
+      "Uzbek is spoken here.",
+      "Uzbek is speak here.",
+      "Uzbek spoken here.",
+      "Uzbek was spoken here."
+     ],
+     "explain": "Present Simple → is + V3: Uzbek is spoken here."
+    },
+    {
+     "kind": "grammar",
+     "q": "The letter ___ sent yesterday.",
+     "sub": "Inkor",
+     "options": [
+      "wasn't",
+      "didn't",
+      "isn't",
+      "weren't"
+     ],
+     "explain": "Passive inkor: was + not + V3. yesterday → wasn't sent."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ Navoi born in Herat?",
+     "sub": "Savol",
+     "options": [
+      "Was",
+      "Did",
+      "Is",
+      "Were"
+     ],
+     "explain": "Passive savol: Be + ega + V3? Navoi (u) → Was..."
+    },
+    {
+     "kind": "grammar",
+     "q": "Children ___ taught to read in primary school.",
+     "sub": "Present Simple Passive",
+     "options": [
+      "are",
+      "is",
+      "be",
+      "were been"
+     ],
+     "explain": "Children — ko'plik, umumiy fakt: are + V3 (taught)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Passive gapda «by» qachon ishlatiladi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Ishni kim bajarganini aytish kerak bo'lsa",
+      "Vaqtni ko'rsatish uchun",
+      "Joyni ko'rsatish uchun",
+      "Har doim, hamma passive gapda"
+     ],
+     "explain": "by + bajaruvchi: written by Navoi. Bajaruvchi muhim bo'lmasa, tushiriladi."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Meni buvim tarbiyalab o'stirgan.» (passive)",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "I was brought up by my grandmother.",
+      "I brought up by my grandmother.",
+      "I was bring up by my grandmother.",
+      "I am brought up from my grandmother."
+     ],
+     "explain": "was + V3 (brought up) + by + bajaruvchi."
+    },
+    {
+     "kind": "grammar",
+     "q": "Every year, thousands of babies ___ in this hospital.",
+     "sub": "Present Simple Passive",
+     "options": [
+      "are born",
+      "born",
+      "are bearing",
+      "is born"
+     ],
+     "explain": "babies — ko'plik, har yili → are born."
+    },
+    {
+     "kind": "vocab",
+     "q": "A child between one and three years old is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "toddler",
+      "teenager",
+      "infant",
+      "senior citizen"
+     ],
+     "explain": "toddler — 1–3 yoshli kichkintoy. infant — go'dak (1 yoshgacha)."
+    },
+    {
+     "kind": "vocab",
+     "q": "At 60 or 65, people usually ___ and stop working.",
+     "sub": "Kontekst",
+     "options": [
+      "retire",
+      "grow up",
+      "bring up",
+      "raise"
+     ],
+     "explain": "retire — nafaqaga chiqmoq. retirement — nafaqa davri."
+    },
+    {
+     "kind": "vocab",
+     "q": "A person between 13 and 19 years old is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "teenager",
+      "toddler",
+      "adult",
+      "infant"
+     ],
+     "explain": "teenager — o'smir (thirTEEN – nineTEEN)."
+    },
+    {
+     "kind": "vocab",
+     "q": "My grandparents ___ me up in Samarkand.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "brought",
+      "grew",
+      "gave",
+      "took"
+     ],
+     "explain": "bring up — tarbiyalab o'stirmoq: brought me up. grow up — o'zing ulg'aymoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "«bolalik» — inglizcha?",
+     "sub": "Tarjima qiling",
+     "options": [
+      "childhood",
+      "adulthood",
+      "infancy",
+      "parenting"
+     ],
+     "explain": "childhood — bolalik. infancy — go'daklik, adulthood — voyaga yetganlik."
+    },
+    {
+     "kind": "vocab",
+     "q": "Getting your first job is an important ___ in life.",
+     "sub": "Kontekst",
+     "options": [
+      "milestone",
+      "generation",
+      "puberty",
+      "wisdom"
+     ],
+     "explain": "milestone — hayotdagi muhim bosqich."
+    },
+    {
+     "kind": "vocab",
+     "q": "Old people often have a lot of ___ — they know a lot about life.",
+     "sub": "Kontekst",
+     "options": [
+      "wisdom",
+      "puberty",
+      "infancy",
+      "growth spurt"
+     ],
+     "explain": "wisdom — donolik."
+    },
+    {
+     "kind": "vocab",
+     "q": "Qaysi so'z «childhood» ga qarama-qarshi?",
+     "sub": "Antonim",
+     "options": [
+      "adulthood",
+      "infancy",
+      "kindergarten",
+      "toddler"
+     ],
+     "explain": "childhood — bolalik ↔ adulthood — voyaga yetganlik."
+    }
+   ]
   },
   {
    "no": 22,
@@ -20039,7 +25121,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "The new bank ___ built right now.",
+     "sub": "Present Continuous Passive",
+     "options": [
+      "is being",
+      "is been",
+      "being",
+      "has being"
+     ],
+     "explain": "Hozir bajarilayotgan: is + being + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "At 5 p.m. yesterday, the money ___ counted.",
+     "sub": "Past Continuous Passive",
+     "options": [
+      "was being",
+      "is being",
+      "was been",
+      "were being"
+     ],
+     "explain": "O'tgan paytda jarayon: was + being + V3. money — birlik → was."
+    },
+    {
+     "kind": "grammar",
+     "q": "The road is being ___ at the moment.",
+     "sub": "be + being + V3",
+     "options": [
+      "repaired",
+      "repair",
+      "repairing",
+      "repairs"
+     ],
+     "explain": "being dan keyin V3: repaired."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "The house is building now.",
+      "The house is being built now.",
+      "The house was being built in May.",
+      "The house will be built soon."
+     ],
+     "explain": "Uy o'zi qurmaydi → passive: is being built."
+    },
+    {
+     "kind": "grammar",
+     "q": "Is your salary ___ paid on time this month?",
+     "sub": "Savol",
+     "options": [
+      "being",
+      "been",
+      "be",
+      "was"
+     ],
+     "explain": "Continuous Passive savol: Is + ega + being + V3?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The money isn't being ___ wisely.",
+     "sub": "Inkor",
+     "options": [
+      "spent",
+      "spend",
+      "spending",
+      "spended"
+     ],
+     "explain": "spend – spent – spent. isn't being + V3 (spent)."
+    },
+    {
+     "kind": "grammar",
+     "q": "In our company, salaries ___ paid on the 10th of every month.",
+     "sub": "Simple yoki Continuous?",
+     "options": [
+      "are",
+      "are being",
+      "is being",
+      "is"
+     ],
+     "explain": "Har oy takrorlanadi → Present Simple Passive: are paid."
+    },
+    {
+     "kind": "grammar",
+     "q": "The new ATM ___ opened next week.",
+     "sub": "Kelajak",
+     "options": [
+      "will be",
+      "will be being",
+      "is been",
+      "will being"
+     ],
+     "explain": "Future Continuous Passive ishlatilmaydi → will be + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Kasalxona qurilayotgan edi.»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "The hospital was being built.",
+      "The hospital was built.",
+      "The hospital is being built.",
+      "The hospital was building."
+     ],
+     "explain": "«...ayotgan edi» — Past Continuous Passive: was being + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "Active → Passive: «They are counting the money.»",
+     "sub": "Passive'ga aylantiring",
+     "options": [
+      "The money is being counted.",
+      "The money is counted.",
+      "The money is been counted.",
+      "The money being counted."
+     ],
+     "explain": "are counting (hozir) → is being counted."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "The coins were being collected when I arrived.",
+      "The coins were been collected when I arrived.",
+      "The coins was being collected when I arrived.",
+      "The coins were being collect when I arrived."
+     ],
+     "explain": "coins — ko'plik: were + being + V3 (collected)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Continuous Passive formulasi qaysi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "be + being + V3",
+      "be + been + V3",
+      "have + being + V3",
+      "be + V-ing"
+     ],
+     "explain": "is/are/was/were + being + V3. «being» o'zgarmaydi."
+    },
+    {
+     "kind": "vocab",
+     "q": "You can take cash from an ___ at any time of day.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "ATM",
+      "income",
+      "interest",
+      "wage"
+     ],
+     "explain": "ATM — bankomat."
+    },
+    {
+     "kind": "vocab",
+     "q": "The money you get every month from your job is your ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "salary",
+      "loan",
+      "debt",
+      "savings"
+     ],
+     "explain": "salary — oylik maosh. loan — kredit, debt — qarz."
+    },
+    {
+     "kind": "vocab",
+     "q": "If you borrow money from a bank, you get a ___.",
+     "sub": "Kontekst",
+     "options": [
+      "loan",
+      "profit",
+      "revenue",
+      "deposit"
+     ],
+     "explain": "loan — kredit, ssuda (bankdan olingan qarz)."
+    },
+    {
+     "kind": "vocab",
+     "q": "How many som for one dollar? Check the ___ rate.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "exchange",
+      "interest",
+      "credit",
+      "income"
+     ],
+     "explain": "exchange rate — valyuta kursi. interest rate — foiz stavkasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Qaysi so'z «save (money)» ga qarama-qarshi?",
+     "sub": "Antonim",
+     "options": [
+      "spend",
+      "earn",
+      "invest",
+      "deposit"
+     ],
+     "explain": "save — tejamoq ↔ spend — sarflamoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "«foyda» (sotuvdan keyin qolgan pul) — inglizcha?",
+     "sub": "Tarjima qiling",
+     "options": [
+      "profit",
+      "revenue",
+      "interest",
+      "wage"
+     ],
+     "explain": "profit — foyda. revenue — tushum, interest — foiz."
+    },
+    {
+     "kind": "vocab",
+     "q": "He wants to ___ his money in a new café and get a profit.",
+     "sub": "Kontekst",
+     "options": [
+      "invest",
+      "withdraw",
+      "borrow",
+      "owe"
+     ],
+     "explain": "invest — sarmoya kiritmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "I want to ___ some money from my bank account.",
+     "sub": "Kontekst",
+     "options": [
+      "withdraw",
+      "deposit",
+      "earn",
+      "lend"
+     ],
+     "explain": "withdraw — hisobdan pul yechmoq. deposit — hisobga pul qo'ymoq."
+    }
+   ]
   },
   {
    "no": 23,
@@ -20981,7 +26305,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "The road has been ___ because of the snow.",
+     "sub": "Present Perfect Passive",
+     "options": [
+      "closed",
+      "close",
+      "closing",
+      "closes"
+     ],
+     "explain": "has been + V3: has been closed (yopilgan — hozir ham yopiq)."
+    },
+    {
+     "kind": "grammar",
+     "q": "The road ___ repaired yet.",
+     "sub": "Inkor",
+     "options": [
+      "hasn't been",
+      "hasn't",
+      "isn't been",
+      "didn't been"
+     ],
+     "explain": "Perfect Passive inkor: hasn't been + V3. «yet» — Perfect belgisi."
+    },
+    {
+     "kind": "grammar",
+     "q": "By 2020, the bridge ___ built.",
+     "sub": "Past Perfect Passive",
+     "options": [
+      "had been",
+      "has been",
+      "had",
+      "was being"
+     ],
+     "explain": "O'tgan nuqtagacha (By 2020) tugagan → had been + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "By 2050, the new highway will ___ built.",
+     "sub": "Future Perfect Passive",
+     "options": [
+      "have been",
+      "has been",
+      "be being",
+      "had been"
+     ],
+     "explain": "Kelajak nuqtagacha: will have been + V3. will dan keyin «has» emas."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ the car been fixed?",
+     "sub": "Savol",
+     "options": [
+      "Has",
+      "Is",
+      "Did",
+      "Was"
+     ],
+     "explain": "Perfect Passive savol: Has + ega + been + V3?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "The road has repaired.",
+      "The road has been repaired.",
+      "The tunnel had been closed.",
+      "A new bridge has been built."
+     ],
+     "explain": "Yo'l o'zi ta'mirlamaydi → been kerak: has been repaired."
+    },
+    {
+     "kind": "grammar",
+     "q": "Active → Passive: «They have closed the tunnel.»",
+     "sub": "Passive'ga aylantiring",
+     "options": [
+      "The tunnel has been closed.",
+      "The tunnel has been close.",
+      "The tunnel is been closed.",
+      "The tunnel have been closed."
+     ],
+     "explain": "have closed → has been closed (tunnel — birlik, V3)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Mashina hali tuzatilmagan.»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "The car hasn't been fixed yet.",
+      "The car hasn't fixed yet.",
+      "The car isn't been fixed yet.",
+      "The car didn't been fixed yet."
+     ],
+     "explain": "hasn't been + V3 (fixed) + yet."
+    },
+    {
+     "kind": "grammar",
+     "q": "«Ko'prik qurib bo'lingan (natija hozir).» Qaysi gap?",
+     "sub": "Passive oilasi",
+     "options": [
+      "The bridge has been built.",
+      "The bridge is built every year.",
+      "The bridge is being built.",
+      "The bridge was building."
+     ],
+     "explain": "Natija hozir → Present Perfect Passive: has been built. is being built — hali qurilyapti."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "To'g'ri gapni tanlang",
+     "options": [
+      "The road will have been finished by May.",
+      "The road will has been finished by May.",
+      "The road will have be finished by May.",
+      "The road will been finished by May."
+     ],
+     "explain": "Future Perfect Passive: will have been + V3."
+    },
+    {
+     "kind": "grammar",
+     "q": "Two cars ___ damaged in the accident.",
+     "sub": "Present Perfect Passive",
+     "options": [
+      "have been",
+      "has been",
+      "have",
+      "are been"
+     ],
+     "explain": "cars — ko'plik → have been + V3 (damaged)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Perfect Passive formulasi qaysi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "have/has/had + been + V3",
+      "have/has + being + V3",
+      "be + been + V3",
+      "have + V3"
+     ],
+     "explain": "have/has/had/will have + been + V3. «been» o'zgarmaydi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Cars move very slowly in a traffic ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "jam",
+      "lane",
+      "sign",
+      "exit"
+     ],
+     "explain": "traffic jam — tirbandlik."
+    },
+    {
+     "kind": "vocab",
+     "q": "The busy time when everyone goes to work is ___ hour.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "rush",
+      "run",
+      "hurry",
+      "quick"
+     ],
+     "explain": "rush hour — tig'iz vaqt."
+    },
+    {
+     "kind": "vocab",
+     "q": "I can't drive — my tyre is ___. There's no air in it.",
+     "sub": "Kontekst",
+     "options": [
+      "flat",
+      "broken",
+      "empty",
+      "short"
+     ],
+     "explain": "flat tyre — teshilgan (havosi chiqqan) g'ildirak."
+    },
+    {
+     "kind": "vocab",
+     "q": "We ran ___ of petrol on the highway.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "out",
+      "off",
+      "over",
+      "down"
+     ],
+     "explain": "run out of petrol — benzin tugab qolmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "The police asked the driver to pull ___ at the side of the road.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "over",
+      "on",
+      "through",
+      "under"
+     ],
+     "explain": "pull over — yo'l chetiga to'xtamoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Don't ___ on a bend — it's dangerous to pass other cars there.",
+     "sub": "Kontekst",
+     "options": [
+      "overtake",
+      "merge",
+      "honk",
+      "brake"
+     ],
+     "explain": "overtake — quvib o'tmoq (boshqa mashinadan o'tib ketmoq)."
+    },
+    {
+     "kind": "vocab",
+     "q": "A road that you must pay to use is a ___ road.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "toll",
+      "service",
+      "ring",
+      "side"
+     ],
+     "explain": "toll road — pullik yo'l."
+    },
+    {
+     "kind": "vocab",
+     "q": "«aylanma yo'l» — inglizcha?",
+     "sub": "Tarjima qiling",
+     "options": [
+      "detour",
+      "lane",
+      "highway",
+      "tunnel"
+     ],
+     "explain": "detour — aylanma yo'l. lane — yo'l qatori (polosa)."
+    }
+   ]
   },
   {
    "no": 24,
@@ -21909,7 +27475,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I was ___ during the long bus journey.",
+     "sub": "-ed yoki -ing?",
+     "options": [
+      "bored",
+      "boring",
+      "bore",
+      "boredly"
+     ],
+     "explain": "Men nima HIS qildim → -ed: bored (zerikdim)."
+    },
+    {
+     "kind": "grammar",
+     "q": "The flight was very ___ — twelve hours!",
+     "sub": "-ed yoki -ing?",
+     "options": [
+      "tiring",
+      "tired",
+      "tire",
+      "tiredly"
+     ],
+     "explain": "Parvoz QANDAY (charchatadi) → -ing: tiring."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'm ___ in trains and old cars.",
+     "sub": "-ed + in",
+     "options": [
+      "interested",
+      "interesting",
+      "interest",
+      "interests"
+     ],
+     "explain": "Mening qiziqishim → interested in."
+    },
+    {
+     "kind": "grammar",
+     "q": "Riding a camel was an ___ experience.",
+     "sub": "Ot oldida",
+     "options": [
+      "exciting",
+      "excited",
+      "excite",
+      "excitedly"
+     ],
+     "explain": "Tajriba QANDAY → -ing: an exciting experience."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I am boring in this lesson.",
+      "This lesson is boring.",
+      "I am bored in this lesson.",
+      "He is bored with the metro."
+     ],
+     "explain": "O'z hissing → -ed: I am bored. «I am boring» = men zerikarli odamman."
+    },
+    {
+     "kind": "grammar",
+     "q": "«He is boring.» Bu nimani bildiradi?",
+     "sub": "Ma'nosini tanlang",
+     "options": [
+      "U zeriktiradigan odam",
+      "U zerikib qolgan",
+      "U charchagan",
+      "U hayajonlangan"
+     ],
+     "explain": "-ing — boshqalarga his uyg'otadi: boring = zerikarli. U zerikdi = He is bored."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'm tired ___ traffic every morning.",
+     "sub": "Predlog",
+     "options": [
+      "of",
+      "in",
+      "at",
+      "on"
+     ],
+     "explain": "tired of — ...dan charchamoq (bezor bo'lmoq)."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'm worried ___ missing the train.",
+     "sub": "Predlog",
+     "options": [
+      "about",
+      "for",
+      "in",
+      "on"
+     ],
+     "explain": "worried about — ...dan xavotirlanmoq."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: «Metro juda gavjum edi va men asabiylashdim.»",
+     "sub": "To'g'ri tarjimani tanlang",
+     "options": [
+      "The metro was crowded and I was annoyed.",
+      "The metro was crowded and I was annoying.",
+      "The metro was crowding and I was annoyed.",
+      "The metro crowded and I was annoying."
+     ],
+     "explain": "Men his qildim → annoyed (-ed). crowded — gavjum."
+    },
+    {
+     "kind": "grammar",
+     "q": "-ING bilan tugaydigan sifat nimani bildiradi?",
+     "sub": "Qoidani tanlang",
+     "options": [
+      "Narsa/odam qanday — his uyg'otadi",
+      "Odam o'zi nima his qiladi",
+      "O'tgan zamondagi ish",
+      "Hozir bo'layotgan ish"
+     ],
+     "explain": "-ing — xususiyat (boring film); -ed — his (I'm bored)."
+    },
+    {
+     "kind": "grammar",
+     "q": "The news about the new metro line was ___.",
+     "sub": "-ed yoki -ing?",
+     "options": [
+      "surprising",
+      "surprised",
+      "surprise",
+      "surprisedly"
+     ],
+     "explain": "Yangilik QANDAY → -ing: surprising (hayratlanarli)."
+    },
+    {
+     "kind": "grammar",
+     "q": "My little brother is ___ of flying.",
+     "sub": "-ed + of",
+     "options": [
+      "frightened",
+      "frightening",
+      "fright",
+      "frighten"
+     ],
+     "explain": "Uning hissi (qo'rqadi) → frightened of."
+    },
+    {
+     "kind": "vocab",
+     "q": "This is our stop. Let's get ___ the bus.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "off",
+      "out",
+      "down",
+      "away"
+     ],
+     "explain": "get off — avtobus/poyezddan tushmoq. Taksidan — get out of."
+    },
+    {
+     "kind": "vocab",
+     "q": "We got ___ the taxi and told the driver the address.",
+     "sub": "Frazali fe'l",
+     "options": [
+      "into",
+      "on",
+      "onto",
+      "up"
+     ],
+     "explain": "get in / into — mashina/taksiga o'tirmoq. Avtobusga — get on."
+    },
+    {
+     "kind": "vocab",
+     "q": "A big vehicle that carries goods is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "lorry",
+      "limousine",
+      "scooter",
+      "tram"
+     ],
+     "explain": "lorry / truck — yuk mashinasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who travels on a bus or train (not the driver) is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "passenger",
+      "pilot",
+      "guide",
+      "driver"
+     ],
+     "explain": "passenger — yo'lovchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "I ___ to work by metro every day.",
+     "sub": "Kontekst",
+     "options": [
+      "commute",
+      "cruise",
+      "sail",
+      "ride on"
+     ],
+     "explain": "commute — ishga/o'qishga har kuni qatnamoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Buses, trams and the metro are ___ transport.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "public",
+      "private",
+      "personal",
+      "own"
+     ],
+     "explain": "public transport — jamoat transporti."
+    },
+    {
+     "kind": "vocab",
+     "q": "A boat that takes cars and people across a river or sea is a ___.",
+     "sub": "Ma'no bo'yicha",
+     "options": [
+      "ferry",
+      "yacht",
+      "canoe",
+      "jet ski"
+     ],
+     "explain": "ferry — parom (mashina va odamlarni olib o'tadi)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Our flight left three hours late because of a flight ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "delay",
+      "departure",
+      "arrival",
+      "exit"
+     ],
+     "explain": "flight delay — reys kechikishi."
+    }
+   ]
   },
   {
    "no": 25,
@@ -22862,7 +28670,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I taught ___ to swim.",
+     "sub": "O'zlik olmoshi",
+     "options": [
+      "myself",
+      "me",
+      "I",
+      "mine"
+     ],
+     "explain": "Ega va ob'ekt bir odam → myself."
+    },
+    {
+     "kind": "grammar",
+     "q": "They helped ___ to the snacks.",
+     "sub": "O'zlik olmoshi",
+     "options": [
+      "themselves",
+      "theirselves",
+      "themself",
+      "them"
+     ],
+     "explain": "they → themselves. «theirselves» degan so'z yo'q."
+    },
+    {
+     "kind": "grammar",
+     "q": "She cut ___ while she was cooking.",
+     "sub": "O'zlik olmoshi",
+     "options": [
+      "herself",
+      "her",
+      "himself",
+      "itself"
+     ],
+     "explain": "she → herself (o'zini kesib oldi)."
+    },
+    {
+     "kind": "grammar",
+     "q": "My grandfather lives by ___.",
+     "sub": "by + self",
+     "options": [
+      "himself",
+      "him",
+      "his",
+      "he"
+     ],
+     "explain": "by + o'zlik olmoshi = yolg'iz: by himself."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I feel myself tired today.",
+      "I feel tired today.",
+      "We enjoyed ourselves at the party.",
+      "She did it by herself."
+     ],
+     "explain": "feel dan keyin o'zlik olmoshi kerak emas: I feel tired."
+    },
+    {
+     "kind": "grammar",
+     "q": "Ibn Sina and Beruni wrote letters to ___.",
+     "sub": "Bir-biriga",
+     "options": [
+      "each other",
+      "themselves",
+      "ourselves",
+      "theirselves"
+     ],
+     "explain": "Biri ikkinchisiga → each other. themselves — har biri o'ziga."
+    },
+    {
+     "kind": "grammar",
+     "q": "«Can I take a cake?» — «Of course, help ___!»",
+     "sub": "Ibora",
+     "options": [
+      "yourself",
+      "myself",
+      "you",
+      "yours"
+     ],
+     "explain": "help yourself — o'zingiz oling (mehmonga)."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ Samarkand last summer.",
+     "sub": "Takror: Past Simple",
+     "options": [
+      "visited",
+      "have visited",
+      "has visited",
+      "visit"
+     ],
+     "explain": "«last summer» — aniq o'tgan vaqt → Past Simple (visited)."
+    },
+    {
+     "kind": "grammar",
+     "q": "This school ___ in 2015.",
+     "sub": "Takror: Passive",
+     "options": [
+      "was built",
+      "built",
+      "has built",
+      "is building"
+     ],
+     "explain": "Maktab o'zi qurmaydi → passive, 2015 → was built."
+    },
+    {
+     "kind": "grammar",
+     "q": "If I ___ rich, I would buy a house for my parents.",
+     "sub": "Takror: Type 2",
+     "options": [
+      "were",
+      "am",
+      "will be",
+      "would be"
+     ],
+     "explain": "Type 2: If + Past Simple (were), would + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "The metro is ___ than the bus.",
+     "sub": "Takror: Comparative",
+     "options": [
+      "faster",
+      "more fast",
+      "fastest",
+      "more faster"
+     ],
+     "explain": "Qisqa sifat: fast → faster than. «more faster» — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Do you know where ___?",
+     "sub": "Takror: Bilvosita savol",
+     "options": [
+      "the station is",
+      "is the station",
+      "the station does",
+      "does the station"
+     ],
+     "explain": "Bilvosita savol: ega + fe'l (the station is)."
+    },
+    {
+     "kind": "grammar",
+     "q": "You ___ park here — it's not allowed.",
+     "sub": "Takror: Modal",
+     "options": [
+      "mustn't",
+      "don't have to",
+      "needn't",
+      "shouldn't to"
+     ],
+     "explain": "Ruxsat yo'q (taqiq) → mustn't."
+    },
+    {
+     "kind": "vocab",
+     "q": "My grandfather ___ away last year. We miss him a lot.",
+     "sub": "Takror (4-dars)",
+     "options": [
+      "passed",
+      "took",
+      "gave",
+      "got"
+     ],
+     "explain": "pass away — olamdan o'tmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "I'm so ___ — the exam is over and I passed!",
+     "sub": "Takror (10-dars)",
+     "options": [
+      "relieved",
+      "anxious",
+      "reliable",
+      "attractive"
+     ],
+     "explain": "relieved — yengil tortgan. anxious — xavotirda."
+    },
+    {
+     "kind": "vocab",
+     "q": "Ali always does his work on time. He is very ___.",
+     "sub": "Takror (8-dars)",
+     "options": [
+      "reliable",
+      "anxious",
+      "slim",
+      "innocent"
+     ],
+     "explain": "reliable — ishonchli."
+    },
+    {
+     "kind": "vocab",
+     "q": "The doctor gave me a ___ for some medicine.",
+     "sub": "Takror (9-dars)",
+     "options": [
+      "prescription",
+      "refund",
+      "deposit",
+      "forecast"
+     ],
+     "explain": "prescription — dori retsepti."
+    },
+    {
+     "kind": "vocab",
+     "q": "«hozirgacha» — inglizcha?",
+     "sub": "Takror (13-dars)",
+     "options": [
+      "so far",
+      "as soon as",
+      "by the time",
+      "since"
+     ],
+     "explain": "so far — hozirgacha. as soon as — ...bilanoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "A long time with no rain is a ___.",
+     "sub": "Takror (12-dars)",
+     "options": [
+      "drought",
+      "forecast",
+      "storm",
+      "anniversary"
+     ],
+     "explain": "drought — qurg'oqchilik. forecast — ob-havo ma'lumoti."
+    },
+    {
+     "kind": "vocab",
+     "q": "Our parents' wedding ___ is on 5 May — 25 years together!",
+     "sub": "Takror (3-dars)",
+     "options": [
+      "anniversary",
+      "birthday",
+      "achievement",
+      "milestone"
+     ],
+     "explain": "anniversary — yillik (to'y yilligi)."
+    }
+   ]
   }
  ]
 }

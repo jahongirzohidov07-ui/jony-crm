@@ -956,7 +956,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "It's ___ to learn a new language in one week.",
+     "sub": "Prefiks: inkor",
+     "options": [
+      "impossible",
+      "unpossible",
+      "inpossible",
+      "dispossible"
+     ],
+     "explain": "p harfi oldida inkor prefiksi im- bo'ladi: impossible, immature, imbalance."
+    },
+    {
+     "kind": "grammar",
+     "q": "The exam timetable is ___ this term — it changes every week.",
+     "sub": "Prefiks: inkor",
+     "options": [
+      "irregular",
+      "unregular",
+      "inregular",
+      "disregular"
+     ],
+     "explain": "r harfi oldida ir- ishlatiladi: irregular, irresponsible."
+    },
+    {
+     "kind": "grammar",
+     "q": "Driving without a licence is ___ in Uzbekistan.",
+     "sub": "Prefiks: inkor",
+     "options": [
+      "illegal",
+      "inlegal",
+      "unlegal",
+      "dislegal"
+     ],
+     "explain": "l harfi oldida il- ishlatiladi: illegal, illogical."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ the teacher's question, so my answer was wrong.",
+     "sub": "Prefiks: noto'g'ri",
+     "options": [
+      "misunderstood",
+      "disunderstood",
+      "ununderstood",
+      "reunderstood"
+     ],
+     "explain": "\"Noto'g'ri\" ma'nosi — mis-: misunderstand, misspell. dis- bu yerda ishlamaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi prefiks \"QAYTA\" ma'nosini beradi? (___write, ___read)",
+     "sub": "Prefiks ma'nosi",
+     "options": [
+      "re-",
+      "pre-",
+      "de-",
+      "mis-"
+     ],
+     "explain": "re- = qayta (rewrite, re-read); pre- = oldin; de- = pastga/yo'qotish; mis- = noto'g'ri."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "My brother is unemploy.",
+      "My brother is unemployed.",
+      "My sister is bilingual.",
+      "This task is impossible."
+     ],
+     "explain": "Prefiks + to'g'ri turkum kerak: unemployed (sifat). \"is unemploy\" — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Many graduates are ___: they get very little money for hard work.",
+     "sub": "Prefiks: ortiqcha / kam",
+     "options": [
+      "underpaid",
+      "overpaid",
+      "prepaid",
+      "repaid"
+     ],
+     "explain": "under- = kam, yetarli emas: underpaid (kam haq to'langan). over- = ortiqcha."
+    },
+    {
+     "kind": "grammar",
+     "q": "A person who speaks two languages fluently is ___.",
+     "sub": "Prefiks: son",
+     "options": [
+      "bilingual",
+      "trilingual",
+      "monolingual",
+      "semilingual"
+     ],
+     "explain": "bi- = ikki (bilingual), tri- = uch, mono- = bir, semi- = yarim."
+    },
+    {
+     "kind": "grammar",
+     "q": "happy (sifat) → unhappy. \"unhappy\" qaysi so'z turkumi?",
+     "sub": "Qoida",
+     "options": [
+      "sifat — turkum o'zgarmaydi",
+      "ot",
+      "fe'l",
+      "ravish"
+     ],
+     "explain": "Prefiks faqat ma'noni o'zgartiradi, turkumni emas. Turkumni suffiks o'zgartiradi (2-dars)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi so'z TO'G'RI yozilgan?",
+     "sub": "Imlo",
+     "options": [
+      "irresponsible",
+      "inresponsible",
+      "unresponsible",
+      "disresponsible"
+     ],
+     "explain": "responsible r bilan boshlanadi → ir-: irresponsible (mas'uliyatsiz)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Students from 20 countries study here — the school is ___.",
+     "sub": "Prefiks: son",
+     "options": [
+      "multicultural",
+      "monocultural",
+      "bicultural",
+      "subcultural"
+     ],
+     "explain": "multi- = ko'p: multicultural (ko'p madaniyatli). mono- = bir, bi- = ikki."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Men bu fikrga qo'shilmayman.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "I disagree with this idea.",
+      "I unagree with this idea.",
+      "I misagree with this idea.",
+      "I nonagree with this idea."
+     ],
+     "explain": "agree fe'lining inkori — dis-: disagree (shuningdek dislike, disappear)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Maths and English are ___ subjects — every student must take them.",
+     "sub": "Kontekst",
+     "options": [
+      "compulsory",
+      "optional",
+      "extracurricular",
+      "vocational"
+     ],
+     "explain": "compulsory = majburiy. optional = ixtiyoriy; extracurricular = darsdan tashqari."
+    },
+    {
+     "kind": "vocab",
+     "q": "She won a ___, so she doesn't pay tuition fees.",
+     "sub": "Kontekst",
+     "options": [
+      "scholarship",
+      "curriculum",
+      "seminar",
+      "syllabus"
+     ],
+     "explain": "scholarship = stipendiya/grant — o'qish to'lovini qoplaydi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Copying someone else's work and saying it's yours is called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "plagiarism",
+      "literacy",
+      "assessment",
+      "attendance"
+     ],
+     "explain": "plagiarism = plagiat, birovning ishini o'ziniki qilib ko'rsatish."
+    },
+    {
+     "kind": "vocab",
+     "q": "Students studying for a first (bachelor's) degree are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "undergraduates",
+      "postgraduates",
+      "lecturers",
+      "tutors"
+     ],
+     "explain": "undergraduate = bakalavr talabasi; postgraduate = magistr/doktorant; lecturer = o'qituvchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "He decided to ___ of university in his second year.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "drop out",
+      "enrol",
+      "graduate",
+      "attend"
+     ],
+     "explain": "drop out of university = o'qishni tashlamoq. \"of\" bilan faqat drop out mos."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"savodxonlik\" — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "literacy",
+      "literature",
+      "legacy",
+      "lecture"
+     ],
+     "explain": "literacy = savodxonlik; literature = adabiyot; lecture = ma'ruza."
+    },
+    {
+     "kind": "vocab",
+     "q": "Learning facts by heart without understanding them is ___ learning.",
+     "sub": "Ma'no",
+     "options": [
+      "rote",
+      "distance",
+      "critical",
+      "vocational"
+     ],
+     "explain": "rote learning = quruq yodlash. distance learning = masofaviy ta'lim."
+    },
+    {
+     "kind": "vocab",
+     "q": "You need to ___ on the course before 1 September.",
+     "sub": "Kontekst",
+     "options": [
+      "enrol",
+      "graduate",
+      "drop out",
+      "lecture"
+     ],
+     "explain": "enrol on a course = kursga yozilmoq (qabul bo'lmoq)."
+    }
+   ]
   },
   {
    "no": 2,
@@ -1909,7 +2151,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "Money doesn't always bring ___.",
+     "sub": "Suffiks: ot",
+     "options": [
+      "happiness",
+      "happyness",
+      "happily",
+      "happy"
+     ],
+     "explain": "bring dan keyin OT kerak: happy + -ness, y → i: happiness."
+    },
+    {
+     "kind": "grammar",
+     "q": "The road was icy, so she drove very ___.",
+     "sub": "Suffiks: ravish",
+     "options": [
+      "carefully",
+      "carefuly",
+      "carefull",
+      "careful"
+     ],
+     "explain": "Fe'lni (drove) ravish ta'riflaydi: careful + -ly = carefully (ikki l)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi so'z TO'G'RI yozilgan?",
+     "sub": "Imlo",
+     "options": [
+      "environmentally",
+      "environmentaly",
+      "enviromentally",
+      "environmentlly"
+     ],
+     "explain": "-al + -ly = -ally: environmental → environmentally."
+    },
+    {
+     "kind": "grammar",
+     "q": "My uncle protects nature and plants trees. He is an ___.",
+     "sub": "Suffiks: odam",
+     "options": [
+      "environmentalist",
+      "environmental",
+      "environmentally",
+      "environment"
+     ],
+     "explain": "Odamni -ist yasaydi: environmentalist. environmental — sifat."
+    },
+    {
+     "kind": "grammar",
+     "q": "sustain → sustainable → ___ (OT)",
+     "sub": "So'z oilasi",
+     "options": [
+      "sustainability",
+      "sustainably",
+      "sustainful",
+      "sustainless"
+     ],
+     "explain": "sustainable (sifat) + -ity = sustainability (ot). sustainably — ravish."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi suffiks OT yasaydi?",
+     "sub": "Qoida",
+     "options": [
+      "-ness",
+      "-ful",
+      "-ly",
+      "-en"
+     ],
+     "explain": "-ness ot yasaydi (kindness). -ful — sifat, -ly — ravish, -en — fe'l."
+    },
+    {
+     "kind": "grammar",
+     "q": "The city plans to ___ this road (make it wider).",
+     "sub": "Suffiks: fe'l",
+     "options": [
+      "widen",
+      "widely",
+      "wideness",
+      "widthen"
+     ],
+     "explain": "-en fe'l yasaydi: wide → widen, strong → strengthen."
+    },
+    {
+     "kind": "grammar",
+     "q": "The ___ of the new park took two years.",
+     "sub": "Suffiks: ot",
+     "options": [
+      "creation",
+      "creatation",
+      "createment",
+      "creative"
+     ],
+     "explain": "create + -tion: oxirgi e tushadi → creation. creative — sifat."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "It was a beautifull day.",
+      "The river is polluted.",
+      "Plastic bags are harmful.",
+      "He looked at me hopelessly."
+     ],
+     "explain": "-ful har doim bitta l bilan: beautiful, careful."
+    },
+    {
+     "kind": "grammar",
+     "q": "Factories are ___ the river with chemicals.",
+     "sub": "Suffiks: -ed / -ing",
+     "options": [
+      "polluting",
+      "polluted",
+      "pollution",
+      "pollutant"
+     ],
+     "explain": "are + V-ing (davom etayotgan harakat): polluting. polluted — ifloslangan (sifat)."
+    },
+    {
+     "kind": "grammar",
+     "q": "This river is too ___ to swim in.",
+     "sub": "Suffiks: sifat",
+     "options": [
+      "dangerous",
+      "danger",
+      "dangerously",
+      "endanger"
+     ],
+     "explain": "too + SIFAT: danger + -ous = dangerous."
+    },
+    {
+     "kind": "grammar",
+     "q": "Children need ___ at school. (friend)",
+     "sub": "Suffiks: ot",
+     "options": [
+      "friendship",
+      "friendhood",
+      "friendness",
+      "friendment"
+     ],
+     "explain": "friend + -ship = friendship (do'stlik). childhood, lekin friendship."
+    },
+    {
+     "kind": "vocab",
+     "q": "Cutting down forests on a large scale is called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "deforestation",
+      "reforestation",
+      "conservation",
+      "degradation"
+     ],
+     "explain": "de- = yo'qotish: deforestation. reforestation — o'rmonni qayta tiklash."
+    },
+    {
+     "kind": "vocab",
+     "q": "Solar and wind power are ___ sources of energy.",
+     "sub": "Kontekst",
+     "options": [
+      "renewable",
+      "endangered",
+      "harmful",
+      "wasteful"
+     ],
+     "explain": "renewable = qayta tiklanuvchi (tugamaydigan) energiya."
+    },
+    {
+     "kind": "vocab",
+     "q": "Animals that may soon disappear forever are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "endangered",
+      "extinct",
+      "renewable",
+      "biodegradable"
+     ],
+     "explain": "endangered = yo'qolib borayotgan. extinct = allaqachon yo'q bo'lgan."
+    },
+    {
+     "kind": "vocab",
+     "q": "Coal, oil and gas are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "fossil fuels",
+      "greenhouse gases",
+      "carbon footprints",
+      "ecosystems"
+     ],
+     "explain": "fossil fuels = qazilma yoqilg'i (ko'mir, neft, gaz)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The total amount of CO2 one person produces is their carbon ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "footprint",
+      "neutral",
+      "emission",
+      "warming"
+     ],
+     "explain": "carbon footprint = uglerod izi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Paper bags are ___: they break down naturally in the soil.",
+     "sub": "Ma'no",
+     "options": [
+      "biodegradable",
+      "contaminated",
+      "endangered",
+      "wasteful"
+     ],
+     "explain": "biodegradable = tabiiy parchalanadigan."
+    },
+    {
+     "kind": "vocab",
+     "q": "Water ___ is a big problem in Central Asia — there isn't enough.",
+     "sub": "Kontekst",
+     "options": [
+      "scarcity",
+      "consumption",
+      "awareness",
+      "preservation"
+     ],
+     "explain": "scarcity = tanqislik (yetishmaslik); scarce = kam."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"mas'uliyat\" — inglizcha (OT)?",
+     "sub": "Tarjima",
+     "options": [
+      "responsibility",
+      "responsible",
+      "respond",
+      "response"
+     ],
+     "explain": "responsibility — ot; responsible — sifat (mas'ul)."
+    }
+   ]
   },
   {
    "no": 3,
@@ -2856,7 +3340,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "You ___ study harder if you want a 6.5.",
+     "sub": "Ought to",
+     "options": [
+      "ought to",
+      "ought",
+      "oughts to",
+      "ought for"
+     ],
+     "explain": "ought dan keyin doim TO + V1: ought to study."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'm free tomorrow, so I ___ help you.",
+     "sub": "Be able to (kelajak)",
+     "options": [
+      "will be able to",
+      "will can",
+      "can will",
+      "will able to"
+     ],
+     "explain": "can'ning kelajak shakli yo'q → will be able to."
+    },
+    {
+     "kind": "grammar",
+     "q": "She ___ swim when she was five.",
+     "sub": "Could / be able to",
+     "options": [
+      "could",
+      "can",
+      "is able to",
+      "has been able to"
+     ],
+     "explain": "O'tgan zamondagi umumiy qobiliyat → could."
+    },
+    {
+     "kind": "grammar",
+     "q": "The building was on fire, but everyone ___ escape.",
+     "sub": "Could vs was able to",
+     "options": [
+      "was able to",
+      "could",
+      "can",
+      "ought to"
+     ],
+     "explain": "Bitta aniq holatda uddalash → was able to (managed to). could — umumiy qobiliyat."
+    },
+    {
+     "kind": "grammar",
+     "q": "You ___ be rude to your teachers.",
+     "sub": "Ought to — inkor",
+     "options": [
+      "ought not to",
+      "don't ought to",
+      "not ought to",
+      "ought no to"
+     ],
+     "explain": "Inkor: ought NOT to + V1 (oughtn't to). do/don't ishlatilmaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "Since I bought a laptop, I ___ work from home.",
+     "sub": "Be able to (perfect)",
+     "options": [
+      "have been able to",
+      "have could",
+      "have can",
+      "had can"
+     ],
+     "explain": "Present Perfect'da can yo'q → have been able to."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ I to call her now? (rasmiy)",
+     "sub": "Ought to — savol",
+     "options": [
+      "Ought",
+      "Should",
+      "Must",
+      "Can"
+     ],
+     "explain": "Ought + S + TO + V1? Should/Must/Can dan keyin \"to\" kelmaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "He oughts to see a doctor.",
+      "They weren't able to come.",
+      "You ought to rest.",
+      "I'll be able to code by June."
+     ],
+     "explain": "Modal fe'l -s olmaydi: He ought to (oughts emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Ular kecha kela olmadi.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "They weren't able to come yesterday.",
+      "They didn't able to come yesterday.",
+      "They weren't able come yesterday.",
+      "They aren't able to come yesterday."
+     ],
+     "explain": "O'tgan inkor: weren't able TO + V1. able oldidan did ishlatilmaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "can (qila olmoq) fe'lining KELAJAK zamon shakli qaysi?",
+     "sub": "Qoida",
+     "options": [
+      "will be able to",
+      "will can",
+      "would can",
+      "shall can"
+     ],
+     "explain": "can faqat Present; kelajakda → will be able to."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"I managed to fix it\" = I ___ fix it.",
+     "sub": "Ma'no",
+     "options": [
+      "was able to",
+      "could",
+      "ought to",
+      "must"
+     ],
+     "explain": "managed to = was able to (aniq holatda uddaladi)."
+    },
+    {
+     "kind": "grammar",
+     "q": "ought to ma'nosi qaysi modalga eng yaqin?",
+     "sub": "Qoida",
+     "options": [
+      "should",
+      "must",
+      "can",
+      "may"
+     ],
+     "explain": "ought to = should (maslahat, to'g'ri bo'ladi), biroz rasmiyroq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Old phones that nobody uses any more are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "obsolete",
+      "cutting-edge",
+      "user-friendly",
+      "virtual"
+     ],
+     "explain": "obsolete = eskirgan. cutting-edge = eng ilg'or."
+    },
+    {
+     "kind": "vocab",
+     "q": "Spending too many hours online can lead to social ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "isolation",
+      "connectivity",
+      "literacy",
+      "breakthrough"
+     ],
+     "explain": "social isolation = ijtimoiy yakkalanish."
+    },
+    {
+     "kind": "vocab",
+     "q": "Bullying people on the internet is called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "cyberbullying",
+      "surveillance",
+      "misinformation",
+      "multitasking"
+     ],
+     "explain": "cyberbullying = kiberbulling (internetda tahqirlash)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The gap between people with and without internet access is the digital ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "divide",
+      "footprint",
+      "literacy",
+      "device"
+     ],
+     "explain": "digital divide = raqamli tafovut. digital footprint = raqamli iz."
+    },
+    {
+     "kind": "vocab",
+     "q": "This app is very ___ — even my grandmother can use it.",
+     "sub": "Kontekst",
+     "options": [
+      "user-friendly",
+      "obsolete",
+      "virtual",
+      "cutting-edge"
+     ],
+     "explain": "user-friendly = foydalanish oson, qulay."
+    },
+    {
+     "kind": "vocab",
+     "q": "Doing several things at the same time is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "multitasking",
+      "telecommuting",
+      "surveillance",
+      "automation"
+     ],
+     "explain": "multitasking = bir vaqtda ko'p ish qilish; telecommuting = masofaviy ish."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"maxfiylik\" (shaxsiy ma'lumot) — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "privacy",
+      "piracy",
+      "priority",
+      "property"
+     ],
+     "explain": "privacy = maxfiylik, shaxsiy hayot daxlsizligi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Scientists have made a major ___ in cancer research.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "breakthrough",
+      "addiction",
+      "device",
+      "screen time"
+     ],
+     "explain": "make a breakthrough = katta yutuqqa erishmoq."
+    }
+   ]
   },
   {
    "no": 4,
@@ -3806,7 +4532,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "Look at those dark clouds! It ___ rain.",
+     "sub": "Dalilli bashorat",
+     "options": [
+      "is going to",
+      "rains",
+      "is due to",
+      "is to"
+     ],
+     "explain": "Hozirgi dalilga (bulut) asoslangan bashorat → be going to."
+    },
+    {
+     "kind": "grammar",
+     "q": "The train ___ at 9 a.m. every day.",
+     "sub": "Jadval",
+     "options": [
+      "leaves",
+      "is leaving",
+      "is going to leave",
+      "will be leave"
+     ],
+     "explain": "Jadval (poyezd, dars) → Present Simple: The train leaves at 9."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ my boss at 10 tomorrow — it's in my calendar.",
+     "sub": "Kelishilgan reja",
+     "options": [
+      "am meeting",
+      "meet",
+      "will meeting",
+      "am meet"
+     ],
+     "explain": "Vaqti kelishilgan reja → Present Continuous: I'm meeting."
+    },
+    {
+     "kind": "grammar",
+     "q": "Hurry up! The film ___ start.",
+     "sub": "Juda yaqin kelajak",
+     "options": [
+      "is about to",
+      "is about",
+      "is about starting",
+      "about to"
+     ],
+     "explain": "be about TO + V1 = hozir-hozir bo'ladi."
+    },
+    {
+     "kind": "grammar",
+     "q": "The meeting ___ start at 10 a.m.",
+     "sub": "Belgilangan vaqt",
+     "options": [
+      "is due to",
+      "is due",
+      "due to",
+      "is due for"
+     ],
+     "explain": "be due TO + V1 = belgilangan vaqtda bo'ladi."
+    },
+    {
+     "kind": "grammar",
+     "q": "The President ___ visit Samarkand next week. (rasmiy yangilik)",
+     "sub": "Be to",
+     "options": [
+      "is to",
+      "is",
+      "to",
+      "is being"
+     ],
+     "explain": "Rasmiy reja (yangiliklar) → be to + V1: is to visit."
+    },
+    {
+     "kind": "grammar",
+     "q": "He trains every single day. He ___ succeed.",
+     "sub": "Yuqori ishonch",
+     "options": [
+      "is bound to",
+      "is bound",
+      "bound to",
+      "is binding to"
+     ],
+     "explain": "be bound to + V1 = albatta bo'ladi (katta ishonch)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "He is likely succeed.",
+      "They are likely to win.",
+      "The bus leaves at 7.",
+      "She is about to leave."
+     ],
+     "explain": "be likely TO + V1: He is likely to succeed."
+    },
+    {
+     "kind": "grammar",
+     "q": "Poyezd yoki dars JADVALI uchun qaysi shakl ishlatiladi?",
+     "sub": "Qoida",
+     "options": [
+      "Present Simple",
+      "Present Continuous",
+      "be going to",
+      "be about to"
+     ],
+     "explain": "Jadval → Present Simple (The class starts at 2)."
+    },
+    {
+     "kind": "grammar",
+     "q": "It is unlikely ___ tomorrow.",
+     "sub": "Be unlikely to",
+     "options": [
+      "to snow",
+      "snow",
+      "snowing",
+      "that snow"
+     ],
+     "explain": "be (un)likely TO + V1: unlikely to snow."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"U hozir ketmoqchi (bir daqiqada).\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "She is about to leave.",
+      "She is about leaving.",
+      "She is due leaving.",
+      "She is to about leave."
+     ],
+     "explain": "Juda yaqin kelajak: be about to + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "Writing Task 1: Sales are expected ___ by 20% next year.",
+     "sub": "Kelajak (grafik)",
+     "options": [
+      "to rise",
+      "rising",
+      "rise",
+      "to rising"
+     ],
+     "explain": "be expected TO + V1: are expected to rise."
+    },
+    {
+     "kind": "vocab",
+     "q": "Working too hard for too long can cause ___.",
+     "sub": "Ma'no",
+     "options": [
+      "burnout",
+      "promotion",
+      "recruitment",
+      "overtime"
+     ],
+     "explain": "burnout = holdan toyish (ruhiy va jismoniy)."
+    },
+    {
+     "kind": "vocab",
+     "q": "She got a ___ and is now the manager.",
+     "sub": "Kontekst",
+     "options": [
+      "promotion",
+      "redundancy",
+      "resignation",
+      "vacancy"
+     ],
+     "explain": "promotion = lavozim ko'tarilishi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A healthy balance between your job and personal life is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "work-life balance",
+      "job satisfaction",
+      "job security",
+      "workload"
+     ],
+     "explain": "work-life balance = ish va shaxsiy hayot muvozanati."
+    },
+    {
+     "kind": "vocab",
+     "q": "He has no boss — he works for himself. He is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "self-employed",
+      "unemployed",
+      "an employee",
+      "retired"
+     ],
+     "explain": "self-employed = o'zi uchun ishlaydi. unemployed = ishsiz."
+    },
+    {
+     "kind": "vocab",
+     "q": "There is a ___ for an English teacher at our school — apply now!",
+     "sub": "Kontekst",
+     "options": [
+      "vacancy",
+      "redundancy",
+      "pension",
+      "commute"
+     ],
+     "explain": "vacancy = bo'sh ish o'rni."
+    },
+    {
+     "kind": "vocab",
+     "q": "Many students do ___ at companies to get work experience.",
+     "sub": "Kontekst",
+     "options": [
+      "internships",
+      "retirements",
+      "redundancies",
+      "burnouts"
+     ],
+     "explain": "internship = amaliyot (stajirovka)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The ___ pays the salary; the employee does the work.",
+     "sub": "employer / employee",
+     "options": [
+      "employer",
+      "applicant",
+      "colleague",
+      "candidate"
+     ],
+     "explain": "employer = ish beruvchi; employee = xodim."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"muddat\" (ishni topshirish muddati) — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "deadline",
+      "headline",
+      "timeline",
+      "lifeline"
+     ],
+     "explain": "deadline = oxirgi muddat; headline = sarlavha."
+    }
+   ]
   },
   {
    "no": 5,
@@ -4764,7 +5732,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "___ the heavy rain, we stayed at home.",
+     "sub": "Sabab",
+     "options": [
+      "Because of",
+      "Because",
+      "Despite",
+      "In order to"
+     ],
+     "explain": "because of + OT (the rain). because dan keyin to'liq gap keladi."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ being injured, he won the match.",
+     "sub": "Yon berish",
+     "options": [
+      "Despite",
+      "Although",
+      "Because of",
+      "In spite"
+     ],
+     "explain": "despite + V-ing/ot. although + to'liq gap; in spite dan keyin OF kerak."
+    },
+    {
+     "kind": "grammar",
+     "q": "He trains every day ___ win the championship.",
+     "sub": "Maqsad",
+     "options": [
+      "in order to",
+      "for",
+      "because of",
+      "despite"
+     ],
+     "explain": "Maqsad + fe'l → in order to + V1. \"for win\" — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda so'z tartibi TO'G'RI?",
+     "sub": "Tarz → joy → vaqt",
+     "options": [
+      "He trained hard in Belgrade yesterday.",
+      "He trained yesterday in Belgrade hard.",
+      "He trained in Belgrade hard yesterday.",
+      "He trained yesterday hard in Belgrade."
+     ],
+     "explain": "Tartib: tarz (hard) → joy (in Belgrade) → vaqt (yesterday)."
+    },
+    {
+     "kind": "grammar",
+     "q": "The match was cancelled ___ bad weather.",
+     "sub": "Sabab",
+     "options": [
+      "due to",
+      "due",
+      "because",
+      "in order to"
+     ],
+     "explain": "due TO + ot = ... sababli. because dan keyin gap kerak (because the weather was bad)."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ fire, use the stairs, not the lift.",
+     "sub": "Shart",
+     "options": [
+      "In case of",
+      "In case",
+      "Despite of",
+      "Due"
+     ],
+     "explain": "Ogohlantirishlarda: in case OF + ot = ... bo'lsa (yuz bersa)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "Despite he was tired, he finished.",
+      "Despite being tired, he finished.",
+      "Although he was tired, he finished.",
+      "In spite of the pain, he finished."
+     ],
+     "explain": "despite dan keyin to'liq gap kelmaydi: despite being tired / although he was tired."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"because of\" dan keyin nima keladi?",
+     "sub": "Qoida",
+     "options": [
+      "ot (the rain)",
+      "to'liq gap (it rained)",
+      "V1 (rain)",
+      "to + V1 (to rain)"
+     ],
+     "explain": "because of / due to / thanks to + OT; because + to'liq gap."
+    },
+    {
+     "kind": "grammar",
+     "q": "She plays tennis ___ a real professional.",
+     "sub": "Tarz",
+     "options": [
+      "like",
+      "alike",
+      "likely",
+      "such"
+     ],
+     "explain": "Tarz: like + ot = ...dek (like a professional)."
+    },
+    {
+     "kind": "grammar",
+     "q": "A good diet decides your health ___ a great extent.",
+     "sub": "Daraja",
+     "options": [
+      "to",
+      "in",
+      "at",
+      "with"
+     ],
+     "explain": "Daraja iborasi: to a great extent = katta darajada."
+    },
+    {
+     "kind": "grammar",
+     "q": "I visit my grandparents in the village ___ a while.",
+     "sub": "Takrorlik",
+     "options": [
+      "once in",
+      "one in",
+      "once at",
+      "one time in"
+     ],
+     "explain": "once in a while = vaqti-vaqti bilan, ba'zan."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"U kasallik sababli sportni tark etdi.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "He retired due to illness.",
+      "He retired due illness.",
+      "He retired because illness.",
+      "He retired despite illness."
+     ],
+     "explain": "Sabab: due to + ot (due to illness). because dan keyin \"of\" kerak edi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A lifestyle with very little physical activity is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "sedentary",
+      "balanced",
+      "active",
+      "chronic"
+     ],
+     "explain": "sedentary lifestyle = kam harakat turmush tarzi."
+    },
+    {
+     "kind": "vocab",
+     "q": "An illness that lasts for a very long time is a ___ illness.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "chronic",
+      "mental",
+      "preventive",
+      "sedentary"
+     ],
+     "explain": "chronic illness = surunkali kasallik."
+    },
+    {
+     "kind": "vocab",
+     "q": "The condition of being very overweight is called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "obesity",
+      "nutrition",
+      "stamina",
+      "recovery"
+     ],
+     "explain": "obesity = semizlik."
+    },
+    {
+     "kind": "vocab",
+     "q": "In Japan, ___ is over 84 years — people live very long.",
+     "sub": "Kontekst",
+     "options": [
+      "life expectancy",
+      "well-being",
+      "quality of life",
+      "retirement age"
+     ],
+     "explain": "life expectancy = o'rtacha umr ko'rish davomiyligi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Vaccination is an example of ___ medicine.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "preventive",
+      "chronic",
+      "sedentary",
+      "mental"
+     ],
+     "explain": "preventive medicine = profilaktik (oldini oluvchi) tibbiyot."
+    },
+    {
+     "kind": "vocab",
+     "q": "Old people can be more ___ infections. (moyil)",
+     "sub": "Kollokatsiya",
+     "options": [
+      "susceptible to",
+      "sensitive of",
+      "affected with",
+      "careful to"
+     ],
+     "explain": "susceptible to = ...ga moyil (kasallikka tez chalinadigan)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Pensions for the elderly increase the tax ___ on workers.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "burden",
+      "balance",
+      "deprivation",
+      "prevention"
+     ],
+     "explain": "tax burden = soliq yuki."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"uyqusizlik\" — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "sleep deprivation",
+      "sleep prevention",
+      "sleep addiction",
+      "sleep intolerance"
+     ],
+     "explain": "sleep deprivation = uyqusizlik (yetarli uxlamaslik)."
+    }
+   ]
   },
   {
    "no": 6,
@@ -5713,7 +6923,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "He ___ stay out late on Fridays.",
+     "sub": "Be allowed to",
+     "options": [
+      "is allowed to",
+      "is allowed",
+      "allows to",
+      "is allow to"
+     ],
+     "explain": "be + allowed TO + V1: He is allowed to stay."
+    },
+    {
+     "kind": "grammar",
+     "q": "Students ___ wear uniforms at this school.",
+     "sub": "Be supposed to",
+     "options": [
+      "are supposed to",
+      "are supposed",
+      "suppose to",
+      "are supposing to"
+     ],
+     "explain": "be + supposed TO + V1 = qoida bo'yicha shunday bo'lishi kerak."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ go to the cinema yesterday because I'd done my homework.",
+     "sub": "O'tgan ruxsat",
+     "options": [
+      "was allowed to",
+      "can",
+      "am allowed to",
+      "could to"
+     ],
+     "explain": "O'tgan zamondagi ruxsat → was allowed to + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "Sign in a hospital: \"Smoking is not ___.\"",
+     "sub": "Rasmiy taqiq",
+     "options": [
+      "permitted",
+      "permitted to",
+      "permit",
+      "permitting"
+     ],
+     "explain": "Ega OT bo'lsa (smoking) oxirida \"to\" yo'q: Smoking is not permitted."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ call you yesterday, but I forgot. Sorry!",
+     "sub": "Was supposed to",
+     "options": [
+      "was supposed to",
+      "am supposed to",
+      "suppose to",
+      "supposed"
+     ],
+     "explain": "was supposed to = qilishim kerak edi (lekin qilmadim)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "You suppose to be here at 9.",
+      "You are supposed to be here at 9.",
+      "We weren't allowed to talk.",
+      "They were permitted to enter."
+     ],
+     "explain": "be yordamchisi shart: You ARE supposed to..."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ we allowed to leave early today?",
+     "sub": "Savol shakli",
+     "options": [
+      "Are",
+      "Do",
+      "Have",
+      "Can"
+     ],
+     "explain": "Savol: Be + S + allowed to + V1? → Are we allowed to leave?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Next year you ___ drive — you'll be 18.",
+     "sub": "Kelajakdagi ruxsat",
+     "options": [
+      "will be allowed to",
+      "will can",
+      "will allowed to",
+      "are allowing to"
+     ],
+     "explain": "can'ning kelajagi yo'q → will be allowed to."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"This film is supposed to be good.\" — ma'nosi?",
+     "sub": "Ma'no",
+     "options": [
+      "Deyishlaricha, film yaxshi.",
+      "Film yaxshi bo'lishi shart.",
+      "Filmga ruxsat berilgan.",
+      "Film umuman yaxshi emas."
+     ],
+     "explain": "be supposed to be = \"deyishadi, aytishlaricha\"."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"They let him go.\" = \"He ___ go.\"",
+     "sub": "let = allow",
+     "options": [
+      "was allowed to",
+      "was let to",
+      "allowed to",
+      "was allowing"
+     ],
+     "explain": "let + odam + V1 = odam + was allowed TO + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qonun va rasmiy qoidalar uchun eng mos shakl qaysi?",
+     "sub": "Qoida",
+     "options": [
+      "be permitted to",
+      "be supposed to",
+      "be able to",
+      "be about to"
+     ],
+     "explain": "permitted — rasmiy ruxsat (qonun, e'lon); allowed — og'zaki."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Mahbuslarga gazeta o'qishga ruxsat berilmagan edi.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "Prisoners weren't allowed to read newspapers.",
+      "Prisoners didn't allowed to read newspapers.",
+      "Prisoners weren't allowed read newspapers.",
+      "Prisoners weren't allow to read newspapers."
+     ],
+     "explain": "Inkor: weren't + allowed (V3) + TO + V1."
+    },
+    {
+     "kind": "vocab",
+     "q": "Treating people unfairly because of their race or gender is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "discrimination",
+      "citizenship",
+      "legislation",
+      "reconciliation"
+     ],
+     "explain": "discrimination = kamsitish."
+    },
+    {
+     "kind": "vocab",
+     "q": "People who always follow the law are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "law-abiding",
+      "guilty",
+      "lawless",
+      "oppressed"
+     ],
+     "explain": "law-abiding = qonunga bo'ysunuvchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "The right to say what you think in public is freedom of ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "speech",
+      "vote",
+      "justice",
+      "liberty"
+     ],
+     "explain": "freedom of speech = so'z erkinligi."
+    },
+    {
+     "kind": "vocab",
+     "q": "In South Africa, ___ separated people by race until 1994.",
+     "sub": "Kontekst",
+     "options": [
+      "apartheid",
+      "amnesty",
+      "democracy",
+      "curfew"
+     ],
+     "explain": "apartheid = irqiy ajratish siyosati (JAR, 1948–1994)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The country decided to ___ the death penalty (end it by law).",
+     "sub": "Ma'no",
+     "options": [
+      "abolish",
+      "obey",
+      "vote",
+      "release"
+     ],
+     "explain": "abolish = (qonunni) bekor qilmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "The jury decided he was not ___, so he went home free.",
+     "sub": "Kontekst",
+     "options": [
+      "guilty",
+      "innocent",
+      "law-abiding",
+      "released"
+     ],
+     "explain": "not guilty = aybsiz deb topildi → ozod."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"qonunni buzmoq\" = ___ the law",
+     "sub": "Kollokatsiya",
+     "options": [
+      "break",
+      "obey",
+      "abolish",
+      "release"
+     ],
+     "explain": "break the law = qonunni buzmoq; obey the law = bo'ysunmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Nobody may be outside after 10 p.m. — there is a ___.",
+     "sub": "Kontekst",
+     "options": [
+      "curfew",
+      "jury",
+      "trial",
+      "permit"
+     ],
+     "explain": "curfew = komendantlik soati (kechqurun chiqish taqiqi)."
+    }
+   ]
   },
   {
    "no": 7,
@@ -6653,7 +8105,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "___ Amu Darya is a long river.",
+     "sub": "Daryo nomlari",
+     "options": [
+      "The",
+      "A",
+      "An",
+      "(artiklsiz)"
+     ],
+     "explain": "Daryo nomlari THE bilan: the Amu Darya, the Nile."
+    },
+    {
+     "kind": "grammar",
+     "q": "Uzbekistan is in ___.",
+     "sub": "Qit'a nomlari",
+     "options": [
+      "Asia",
+      "the Asia",
+      "an Asia",
+      "the Asian"
+     ],
+     "explain": "Qit'a va davlat nomlari artiklsiz: Uzbekistan, Asia."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tashkent is ___ biggest city in Central Asia.",
+     "sub": "Superlativ",
+     "options": [
+      "the",
+      "a",
+      "(artiklsiz)",
+      "an"
+     ],
+     "explain": "Superlativ oldida doim THE: the biggest."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI? (jazo muddatini o'tamoqda)",
+     "sub": "Vazifa ma'nosi",
+     "options": [
+      "He is in prison for theft.",
+      "He is in the prison for theft.",
+      "He is at the prison for theft.",
+      "He is in prisons for theft."
+     ],
+     "explain": "Vazifa ma'nosida the'siz: in prison, go to school, go to bed."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI? (umumiy ma'no)",
+     "sub": "Umumiy ma'no",
+     "options": [
+      "Life in cities is hard.",
+      "The life in the cities is hard.",
+      "The life in cities is hard.",
+      "Life in cities are hard."
+     ],
+     "explain": "Umumiy ma'nodagi otlar artiklsiz: Life, cities. life — birlik → is."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi birida THE TO'G'RI ishlatilgan?",
+     "sub": "Davlat nomlari",
+     "options": [
+      "the Netherlands",
+      "the France",
+      "the Tashkent",
+      "the Lake Baikal"
+     ],
+     "explain": "Ko'plik va United/Republic/Kingdom davlatlar → the: the Netherlands, the UK."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi nomga THE qo'yilMAYDI?",
+     "sub": "Geografiya",
+     "options": [
+      "Mount Everest",
+      "Tian Shan (tog' tizmasi)",
+      "Pacific (okean)",
+      "Kyzylkum (cho'l)"
+     ],
+     "explain": "Cho'qqilar the'siz (Mount Everest); tog' tizmasi, okean, cho'l — the bilan."
+    },
+    {
+     "kind": "grammar",
+     "q": "I saw a man in the street. ___ man was very tall.",
+     "sub": "Ikkinchi marta",
+     "options": [
+      "The",
+      "A",
+      "An",
+      "(artiklsiz)"
+     ],
+     "explain": "Birinchi marta a, ikkinchi marta (ma'lum bo'ldi) → the."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "The Uzbekistan is a beautiful country.",
+      "The UK is an island country.",
+      "The sun rises in the east.",
+      "We visited the Registan."
+     ],
+     "explain": "Davlat nomi artiklsiz: Uzbekistan. (the UK — istisno: Kingdom)."
+    },
+    {
+     "kind": "grammar",
+     "q": "We have ___ same teacher as last year.",
+     "sub": "the same / the only",
+     "options": [
+      "the",
+      "a",
+      "(artiklsiz)",
+      "an"
+     ],
+     "explain": "the same, the only, the first, the last — doim THE bilan."
+    },
+    {
+     "kind": "grammar",
+     "q": "It is the tallest building in ___ world.",
+     "sub": "Yagona narsalar",
+     "options": [
+      "the",
+      "a",
+      "(artiklsiz)",
+      "an"
+     ],
+     "explain": "Yagona narsalar THE bilan: the world, the sun, the internet."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi qoida TO'G'RI?",
+     "sub": "Qoida",
+     "options": [
+      "Daryolar → the (the Nile)",
+      "Ko'llar → the (the Lake Baikal)",
+      "Shaharlar → the (the Tashkent)",
+      "Qit'alar → the (the Asia)"
+     ],
+     "explain": "Daryolar the bilan; ko'l, shahar, qit'a — artiklsiz."
+    },
+    {
+     "kind": "vocab",
+     "q": "The process of more and more people moving to live in cities is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "urbanisation",
+      "isolation",
+      "congestion",
+      "reforestation"
+     ],
+     "explain": "urbanisation = urbanizatsiya (shaharlashuv)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Traffic ___ is a big problem in Tashkent at rush hour.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "congestion",
+      "density",
+      "sprawl",
+      "infrastructure"
+     ],
+     "explain": "traffic congestion = transport tirbandligi."
+    },
+    {
+     "kind": "vocab",
+     "q": "An area where people live on the edge of a big city is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "suburb",
+      "metropolis",
+      "landmark",
+      "valley"
+     ],
+     "explain": "suburb = shahar chekkasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Roads, bridges and water pipes are part of a city's ___.",
+     "sub": "Ma'no",
+     "options": [
+      "infrastructure",
+      "landmark",
+      "neighbourhood",
+      "hustle and bustle"
+     ],
+     "explain": "infrastructure = infratuzilma (yo'l, ko'prik, quvur)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The Registan is Samarkand's most famous ___.",
+     "sub": "Kontekst",
+     "options": [
+      "landmark",
+      "suburb",
+      "border",
+      "region"
+     ],
+     "explain": "landmark = diqqatga sazovor joy."
+    },
+    {
+     "kind": "vocab",
+     "q": "Qaysi so'z \"urban\" ning ANTONIMI?",
+     "sub": "Antonim",
+     "options": [
+      "rural",
+      "urbanised",
+      "crowded",
+      "metropolitan"
+     ],
+     "explain": "urban = shaharga oid; rural = qishloqqa oid."
+    },
+    {
+     "kind": "vocab",
+     "q": "The ___ of living in London is very high — rent, food, transport.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "cost",
+      "value",
+      "amount",
+      "rate"
+     ],
+     "explain": "cost of living = yashash xarajatlari."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"ko'chmanchi\" (xalq) — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "nomadic",
+      "tranquil",
+      "rural",
+      "settled"
+     ],
+     "explain": "nomadic = ko'chmanchi; settled = o'troq."
+    }
+   ]
   },
   {
    "no": 8,
@@ -7591,7 +9285,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "It's very late. You ___ go home now.",
+     "sub": "Had better",
+     "options": [
+      "had better",
+      "had better to",
+      "have better",
+      "better to"
+     ],
+     "explain": "had better + V1 (to'siz): You had better go."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'm tired. I ___ stay home tonight.",
+     "sub": "Would rather",
+     "options": [
+      "would rather",
+      "would rather to",
+      "had rather",
+      "would better"
+     ],
+     "explain": "would rather + V1 (to'siz) = afzal ko'raman."
+    },
+    {
+     "kind": "grammar",
+     "q": "She prefers tea ___ coffee.",
+     "sub": "Prefer ... to",
+     "options": [
+      "to",
+      "than",
+      "from",
+      "that"
+     ],
+     "explain": "prefer A TO B: prefers tea to coffee (than emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'd rather you ___ that photo online.",
+     "sub": "Would rather + boshqa ega",
+     "options": [
+      "didn't post",
+      "don't post",
+      "not post",
+      "won't post"
+     ],
+     "explain": "would rather + boshqa ega + PAST SIMPLE (hozir haqida): you didn't post."
+    },
+    {
+     "kind": "grammar",
+     "q": "I prefer ___ to watching TV.",
+     "sub": "Prefer + V-ing",
+     "options": [
+      "reading",
+      "read",
+      "to read",
+      "reads"
+     ],
+     "explain": "prefer + V-ing + to + V-ing: prefer reading to watching."
+    },
+    {
+     "kind": "grammar",
+     "q": "I prefer to stream music ___ buy CDs.",
+     "sub": "Prefer to ... rather than",
+     "options": [
+      "rather than",
+      "than",
+      "to",
+      "instead"
+     ],
+     "explain": "prefer + to V1 + RATHER THAN + V1."
+    },
+    {
+     "kind": "grammar",
+     "q": "You'd better ___ late again!",
+     "sub": "Had better — inkor",
+     "options": [
+      "not be",
+      "not to be",
+      "don't be",
+      "be not"
+     ],
+     "explain": "Inkor: had better NOT + V1 (to'siz)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I would rather to stay here.",
+      "I'd rather read than watch TV.",
+      "You'd better leave now.",
+      "She prefers dogs to cats."
+     ],
+     "explain": "would rather dan keyin \"to\" yo'q: I would rather stay."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"You'd better go\" — 'd nimaning qisqartmasi?",
+     "sub": "Qisqa shakl",
+     "options": [
+      "had",
+      "would",
+      "did",
+      "could"
+     ],
+     "explain": "You'd better = You HAD better. (I'd rather = I WOULD rather.)"
+    },
+    {
+     "kind": "grammar",
+     "q": "It's raining. I'd rather ___ a taxi than walk.",
+     "sub": "Would rather ... than",
+     "options": [
+      "take",
+      "taking",
+      "to take",
+      "took"
+     ],
+     "explain": "would rather + V1 + than + V1: take a taxi than walk."
+    },
+    {
+     "kind": "grammar",
+     "q": "At the concert: \"I'd prefer ___ near the stage.\"",
+     "sub": "Would prefer",
+     "options": [
+      "to sit",
+      "sit",
+      "sat",
+      "to sitting"
+     ],
+     "explain": "would prefer + TO V1 (aniq holat, muloyim)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Yaxshisi hozir ket, aks holda kech qolasan.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "You'd better go now.",
+      "You'd rather go now.",
+      "You prefer go now.",
+      "You better to go now."
+     ],
+     "explain": "Ogohlantirish/tavsiya → had better + V1. would rather = afzal ko'rish."
+    },
+    {
+     "kind": "vocab",
+     "q": "Newspapers full of celebrity gossip are called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "tabloids",
+      "albums",
+      "genres",
+      "royalties"
+     ],
+     "explain": "tabloid = sariq matbuot (shov-shuvli gazeta)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Photographers who follow celebrities everywhere are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "paparazzi",
+      "songwriters",
+      "spectators",
+      "record labels"
+     ],
+     "explain": "paparazzi = mashhurlarni ta'qib qiluvchi fotograflar."
+    },
+    {
+     "kind": "vocab",
+     "q": "Money a singer receives each time their song is played is called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "royalties",
+      "subscriptions",
+      "box office",
+      "advertising"
+     ],
+     "explain": "royalties = mualliflik to'lovlari (royalti)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The legal right to own a song, film or book is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "copyright",
+      "censorship",
+      "privacy",
+      "bias"
+     ],
+     "explain": "copyright = mualliflik huquqi."
+    },
+    {
+     "kind": "vocab",
+     "q": "The video went ___ — 10 million views in one day!",
+     "sub": "Kollokatsiya",
+     "options": [
+      "viral",
+      "biased",
+      "objective",
+      "live"
+     ],
+     "explain": "go viral = tez tarqalmoq (internetda)."
+    },
+    {
+     "kind": "vocab",
+     "q": "When the government controls what the media can show, it's ___.",
+     "sub": "Ma'no",
+     "options": [
+      "censorship",
+      "sensationalism",
+      "broadcast",
+      "streaming"
+     ],
+     "explain": "censorship = senzura."
+    },
+    {
+     "kind": "vocab",
+     "q": "Taking photos of a star at home without permission is an ___ of privacy.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "invasion",
+      "invention",
+      "intervention",
+      "inflation"
+     ],
+     "explain": "invasion of privacy = shaxsiy hayotga aralashish."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"qo'shiq matni\" — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "lyrics",
+      "lines",
+      "letters",
+      "labels"
+     ],
+     "explain": "lyrics = qo'shiq so'zlari (matni)."
+    }
+   ]
   },
   {
    "no": 9,
@@ -8534,7 +10470,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I saw him ___ the street. (boshidan oxirigacha ko'rdim)",
+     "sub": "See + O + V1",
+     "options": [
+      "cross",
+      "to cross",
+      "crossed",
+      "crosses"
+     ],
+     "explain": "To'liq harakat → see + ob'ekt + V1: I saw him cross. Aktivda \"to\" yo'q."
+    },
+    {
+     "kind": "grammar",
+     "q": "I heard the bell ___ at exactly 8 o'clock.",
+     "sub": "Hear + O + V1",
+     "options": [
+      "ring",
+      "to ring",
+      "rang",
+      "rings"
+     ],
+     "explain": "hear + ob'ekt + V1 (to'liq): heard the bell ring."
+    },
+    {
+     "kind": "grammar",
+     "q": "When I passed the park, I saw them ___ football. (jarayonda)",
+     "sub": "See + O + V-ing",
+     "options": [
+      "playing",
+      "to play",
+      "played",
+      "plays"
+     ],
+     "explain": "Davom etayotgan harakatning bir qismini ko'rdim → V-ing: saw them playing."
+    },
+    {
+     "kind": "grammar",
+     "q": "He was seen ___ the building at midnight.",
+     "sub": "Passiv",
+     "options": [
+      "to leave",
+      "leave",
+      "left",
+      "leaves"
+     ],
+     "explain": "Passivda V1 → TO + V1: He was seen to leave."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "I saw him to cross the road.",
+      "I saw him cross the road.",
+      "I saw him crossing the road.",
+      "He was seen to cross the road."
+     ],
+     "explain": "Aktivda see + O + V1 (to'siz). \"to\" faqat passivda: was seen to cross."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"I saw him cross\" va \"I saw him crossing\" farqi?",
+     "sub": "Qoida",
+     "options": [
+      "V1 — to'liq harakat; V-ing — jarayon",
+      "V1 — jarayon; V-ing — to'liq harakat",
+      "Farqi yo'q",
+      "Ikkalasi ham xato"
+     ],
+     "explain": "V1 — nima bo'ldi (boshidan oxirigacha); V-ing — nima bo'layotgan edi (bir lahza)."
+    },
+    {
+     "kind": "grammar",
+     "q": "I watched Chagaev ___ out his opponent in the 5th round.",
+     "sub": "Watch + O + V1",
+     "options": [
+      "knock",
+      "to knock",
+      "knocked",
+      "knocks"
+     ],
+     "explain": "To'liq harakat (nokaut): watch + ob'ekt + V1 → knock out."
+    },
+    {
+     "kind": "grammar",
+     "q": "I noticed a man ___ outside my house for an hour.",
+     "sub": "Notice + O + V-ing",
+     "options": [
+      "standing",
+      "to stand",
+      "stood",
+      "stands"
+     ],
+     "explain": "Uzoq davom etgan jarayon → notice + O + V-ing: a man standing."
+    },
+    {
+     "kind": "grammar",
+     "q": "During the earthquake I felt the ground ___.",
+     "sub": "Feel + O + V1",
+     "options": [
+      "shake",
+      "to shake",
+      "shook",
+      "shaken"
+     ],
+     "explain": "feel + ob'ekt + V1 (yoki V-ing). \"to\" va V2/V3 ishlatilmaydi."
+    },
+    {
+     "kind": "grammar",
+     "q": "The boxer was heard ___ at the referee.",
+     "sub": "Passiv + V-ing",
+     "options": [
+      "shouting",
+      "shout",
+      "shouted",
+      "shouts"
+     ],
+     "explain": "Passivda V-ing o'zgarmaydi: was heard shouting (yoki was heard to shout)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Uni o'n raund davomida bokslashayotganini tomosha qildim.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "I watched him boxing for ten rounds.",
+      "I watched him to box for ten rounds.",
+      "I watched him boxed for ten rounds.",
+      "I watched to him boxing for ten rounds."
+     ],
+     "explain": "Jarayon → watch + O + V-ing: watched him boxing."
+    },
+    {
+     "kind": "grammar",
+     "q": "We often see eagles ___ over these mountains. (odat)",
+     "sub": "See + O + V1 (odat)",
+     "options": [
+      "fly",
+      "to fly",
+      "flew",
+      "flown"
+     ],
+     "explain": "Takroriy odat → see + ob'ekt + V1: see eagles fly."
+    },
+    {
+     "kind": "vocab",
+     "q": "A team or fighter that most people expect to lose is the ___.",
+     "sub": "Ma'no",
+     "options": [
+      "underdog",
+      "rival",
+      "referee",
+      "sponsor"
+     ],
+     "explain": "underdog = kuchsiz hisoblangan tomon."
+    },
+    {
+     "kind": "vocab",
+     "q": "He lost the title last year, but this year he made a great ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "comeback",
+      "knockout",
+      "record",
+      "defeat"
+     ],
+     "explain": "make a comeback = kuchli qaytish."
+    },
+    {
+     "kind": "vocab",
+     "q": "The ___ stopped the fight after the third knockdown.",
+     "sub": "Kontekst",
+     "options": [
+      "referee",
+      "sponsor",
+      "spectator",
+      "medal"
+     ],
+     "explain": "referee = hakam (jangni to'xtatadi)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Fair play and respect for your opponent is called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "sportsmanship",
+      "stamina",
+      "doping",
+      "pressure"
+     ],
+     "explain": "sportsmanship = sportcha xulq (halollik, hurmat)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Taking illegal drugs to perform better in sport is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "doping",
+      "training",
+      "qualifying",
+      "sponsoring"
+     ],
+     "explain": "doping = taqiqlangan dori-darmon qabul qilish."
+    },
+    {
+     "kind": "vocab",
+     "q": "The ability to keep going for a long time without getting tired is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "stamina",
+      "injury",
+      "pressure",
+      "title"
+     ],
+     "explain": "stamina = chidamlilik."
+    },
+    {
+     "kind": "vocab",
+     "q": "He has never lost a professional fight — he is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "unbeaten",
+      "amateur",
+      "retired",
+      "competitive"
+     ],
+     "explain": "unbeaten / undefeated = mag'lubiyatsiz."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"unvonni himoya qilmoq\" = ___ a title",
+     "sub": "Kollokatsiya",
+     "options": [
+      "defend",
+      "protect",
+      "cover",
+      "save"
+     ],
+     "explain": "defend a title = unvonni himoya qilmoq (sport kollokatsiyasi)."
+    }
+   ]
   },
   {
    "no": 10,
@@ -9478,7 +11656,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "These shoes are nice. I'll take the red ___.",
+     "sub": "Ones",
+     "options": [
+      "ones",
+      "one",
+      "them",
+      "it"
+     ],
+     "explain": "Ko'plik ot (shoes) o'rnida → ones: the red ones."
+    },
+    {
+     "kind": "grammar",
+     "q": "He is ___ I was talking about.",
+     "sub": "The one",
+     "options": [
+      "the one",
+      "one",
+      "a one",
+      "ones"
+     ],
+     "explain": "Aniq, ma'lum shaxs (relative clause bilan) → the one."
+    },
+    {
+     "kind": "grammar",
+     "q": "I need a pen. Have you got ___?",
+     "sub": "One (noaniq)",
+     "options": [
+      "one",
+      "the one",
+      "ones",
+      "it"
+     ],
+     "explain": "Noaniq, istalgan bittasi → one (= a pen)."
+    },
+    {
+     "kind": "grammar",
+     "q": "This bag is too small. Can you show me ___ one?",
+     "sub": "Another / other",
+     "options": [
+      "another",
+      "other",
+      "the others",
+      "others"
+     ],
+     "explain": "Yana bir boshqasi → another one. \"other one\" — xato."
+    },
+    {
+     "kind": "grammar",
+     "q": "I have two brothers. One is a doctor; ___ is a teacher.",
+     "sub": "The other",
+     "options": [
+      "the other",
+      "another",
+      "other",
+      "others"
+     ],
+     "explain": "Ikkitadan qolgan bittasi → the other."
+    },
+    {
+     "kind": "grammar",
+     "q": "Some people love brands; ___ don't care about them.",
+     "sub": "Others",
+     "options": [
+      "others",
+      "the other",
+      "another",
+      "other"
+     ],
+     "explain": "Some people ... others ... = ba'zilar ... boshqalar ..."
+    },
+    {
+     "kind": "grammar",
+     "q": "Do you want some milk? — Yes, I'd like ___.",
+     "sub": "Sanalmas ot",
+     "options": [
+      "some",
+      "one",
+      "the one",
+      "ones"
+     ],
+     "explain": "one faqat sanaladigan ot o'rnida; sanalmas (milk) → some."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "Show me other one, please.",
+      "Show me another one, please.",
+      "I'll take the blue one.",
+      "Which one do you prefer?"
+     ],
+     "explain": "\"other one\" yolg'iz ishlatilmaydi: another one yoki the other one."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ one do you prefer — the black or the white?",
+     "sub": "Savol",
+     "options": [
+      "Which",
+      "What",
+      "Who",
+      "Whose"
+     ],
+     "explain": "Tanlov orasidan → Which one?"
+    },
+    {
+     "kind": "grammar",
+     "q": "I'll buy this jacket; ___ are too expensive. (qolgan hammasi)",
+     "sub": "The others",
+     "options": [
+      "the others",
+      "others",
+      "the other",
+      "another"
+     ],
+     "explain": "Qolganlarning hammasi (ko'plik, aniq) → the others."
+    },
+    {
+     "kind": "grammar",
+     "q": "Formal Writing: \"___ should always save some money.\" (har bir odam)",
+     "sub": "One = umumiy odam",
+     "options": [
+      "One",
+      "The one",
+      "Ones",
+      "A one"
+     ],
+     "explain": "Rasmiy yozuvda one = umumiy odam: One should save money."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Kattarog'i bormi?\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "Have you got a bigger one?",
+      "Have you got the bigger?",
+      "Have you got bigger one?",
+      "Have you got a bigger ones?"
+     ],
+     "explain": "Sifat + one: a bigger one (birlik, noaniq)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Buying things you didn't plan to buy is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "impulse buying",
+      "window shopping",
+      "brand loyalty",
+      "value for money"
+     ],
+     "explain": "impulse buying = o'ylamay (to'satdan) xarid qilish."
+    },
+    {
+     "kind": "vocab",
+     "q": "Only 50,000 so'm for these jeans — what a ___!",
+     "sub": "Kontekst",
+     "options": [
+      "bargain",
+      "luxury",
+      "counterfeit",
+      "refund"
+     ],
+     "explain": "bargain = arzon, foydali xarid."
+    },
+    {
+     "kind": "vocab",
+     "q": "A fake Gucci bag sold at the bazaar is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "counterfeit",
+      "vintage",
+      "luxury",
+      "sustainable"
+     ],
+     "explain": "counterfeit = soxta (qalbaki)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Cheap clothes made quickly and thrown away after a few months are ___.",
+     "sub": "Ma'no",
+     "options": [
+      "fast fashion",
+      "sustainable fashion",
+      "second-hand",
+      "vintage"
+     ],
+     "explain": "fast fashion = tez moda (arzon, tez almashadigan kiyim)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Money you can spend after paying taxes and basic needs is ___ income.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "disposable",
+      "affordable",
+      "inclusive",
+      "ethical"
+     ],
+     "explain": "disposable income = erkin sarflasa bo'ladigan daromad."
+    },
+    {
+     "kind": "vocab",
+     "q": "The phone was broken, so the shop gave me a ___.",
+     "sub": "Kontekst",
+     "options": [
+      "refund",
+      "bargain",
+      "trend",
+      "label"
+     ],
+     "explain": "refund = pulni qaytarish."
+    },
+    {
+     "kind": "vocab",
+     "q": "Always buying the same brand is called brand ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "loyalty",
+      "awareness",
+      "placement",
+      "campaign"
+     ],
+     "explain": "brand loyalty = brendga sodiqlik."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"hamyonbop\" — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "affordable",
+      "available",
+      "reliable",
+      "valuable"
+     ],
+     "explain": "affordable = hamyonbop (narxi qo'l yetadigan)."
+    }
+   ]
   },
   {
    "no": 11,
@@ -10428,7 +12848,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "It was Marie Curie ___ discovered radium.",
+     "sub": "It-cleft (shaxs)",
+     "options": [
+      "who",
+      "which",
+      "whom",
+      "what"
+     ],
+     "explain": "It-cleft'da shaxsga urg'u → who (yoki that)."
+    },
+    {
+     "kind": "grammar",
+     "q": "It was in 1898 ___ radium was discovered.",
+     "sub": "It-cleft (vaqt)",
+     "options": [
+      "that",
+      "when",
+      "which",
+      "where"
+     ],
+     "explain": "It-cleft'da vaqt/joy/narsa → THAT (when emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "What I need now ___ a long holiday.",
+     "sub": "What-clause",
+     "options": [
+      "is",
+      "are",
+      "be",
+      "am"
+     ],
+     "explain": "What-clause'dan keyin fe'l birlikda: What I need IS..."
+    },
+    {
+     "kind": "grammar",
+     "q": "I ___ like this film! It's brilliant.",
+     "sub": "Emphatic do",
+     "options": [
+      "do",
+      "am",
+      "does",
+      "doing"
+     ],
+     "explain": "Urg'u: do/does/did + V1. I → do: I do like."
+    },
+    {
+     "kind": "grammar",
+     "q": "Yesterday she ___ finish all her work, I promise!",
+     "sub": "Emphatic did",
+     "options": [
+      "did",
+      "does",
+      "done",
+      "do"
+     ],
+     "explain": "O'tgan zamonda urg'u: did + V1 (did finish)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Before 1903, never ___ a woman won a Nobel Prize.",
+     "sub": "Inkor fronting",
+     "options": [
+      "had",
+      "has",
+      "did",
+      "was"
+     ],
+     "explain": "Never gap boshida → inversiya; 1903 dan oldin → Past Perfect: had a woman won."
+    },
+    {
+     "kind": "grammar",
+     "q": "Not only ___ one Nobel Prize, but she won two.",
+     "sub": "Not only + inversiya",
+     "options": [
+      "did she win",
+      "she won",
+      "she did win",
+      "does she win"
+     ],
+     "explain": "Not only gap boshida → yordamchi + ega: did she win."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "It was John that he broke the window.",
+      "It was John who broke the window.",
+      "What I want is to rest.",
+      "Never had I seen such a thing."
+     ],
+     "explain": "Cleft'da ega takrorlanmaydi: It was John who/that broke..."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap WHAT-CLAUSE (urg'u) ga misol?",
+     "sub": "Tuzilma",
+     "options": [
+      "What she discovered was a new element.",
+      "She discovered a new element.",
+      "Did she discover a new element?",
+      "Which element did she discover?"
+     ],
+     "explain": "What + S + V + is/was + URG'U: What she discovered was..."
+    },
+    {
+     "kind": "grammar",
+     "q": "Emphatic DO (I do like...) qaysi zamonlarda ishlatiladi?",
+     "sub": "Qoida",
+     "options": [
+      "Present Simple va Past Simple",
+      "Barcha zamonlarda",
+      "Faqat Future Simple",
+      "Faqat Present Perfect"
+     ],
+     "explain": "do/does/did + V1 — faqat Present va Past Simple'da."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"Honesty matters most.\" → It is ___ matters most.",
+     "sub": "It-cleft (narsa)",
+     "options": [
+      "honesty that",
+      "honesty what",
+      "honesty where",
+      "that honesty"
+     ],
+     "explain": "It is + URG'U + that + qolgan qism: It is honesty that matters."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Menga kerak narsa — dam olish.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "What I need is a rest.",
+      "What I need are a rest.",
+      "That I need is a rest.",
+      "What do I need is a rest."
+     ],
+     "explain": "What + S + V (savol tartibi emas) + is + urg'u."
+    },
+    {
+     "kind": "vocab",
+     "q": "An idea that scientists test in an experiment is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "hypothesis",
+      "evidence",
+      "laboratory",
+      "patent"
+     ],
+     "explain": "hypothesis = gipoteza (sinaladigan faraz)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Facts that show something is true are called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "evidence",
+      "curiosity",
+      "funding",
+      "ethics"
+     ],
+     "explain": "evidence = dalil (sanalmaydi: some evidence)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Marie Curie was a ___ in the study of radioactivity — one of the first.",
+     "sub": "Kontekst",
+     "options": [
+      "pioneer",
+      "patent",
+      "peer review",
+      "trial"
+     ],
+     "explain": "pioneer = kashshof (birinchilardan)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Before a study is published, other scientists check it. This is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "peer review",
+      "trial and error",
+      "X-ray",
+      "funding"
+     ],
+     "explain": "peer review = hamkasblar ekspert tekshiruvi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Research can't continue without money. It needs ___.",
+     "sub": "Kontekst",
+     "options": [
+      "funding",
+      "discovery",
+      "precision",
+      "radiation"
+     ],
+     "explain": "funding = moliyalashtirish."
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who doubts new claims until they see proof is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "sceptical",
+      "curious",
+      "precise",
+      "academic"
+     ],
+     "explain": "sceptical = shubha bilan qaraydigan (British spelling)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Curie managed to ___ radium from a mineral.",
+     "sub": "Kontekst",
+     "options": [
+      "isolate",
+      "invent",
+      "publish",
+      "reward"
+     ],
+     "explain": "isolate a substance = moddani ajratib olmoq. Element ixtiro qilinmaydi (invent emas)."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"qiziquvchanlik\" — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "curiosity",
+      "creativity",
+      "currency",
+      "courtesy"
+     ],
+     "explain": "curiosity = qiziquvchanlik."
+    }
+   ]
   },
   {
    "no": 12,
@@ -11363,7 +14025,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "The more you read, ___ you learn.",
+     "sub": "The more, the more",
+     "options": [
+      "the more",
+      "more",
+      "the most",
+      "much more"
+     ],
+     "explain": "Ikkala qismda ham THE + comparative: the more ..., the more ..."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ you work, the more you achieve.",
+     "sub": "The + comparative",
+     "options": [
+      "The harder",
+      "Harder",
+      "The hardest",
+      "The more hard"
+     ],
+     "explain": "The + comparative (harder) + ega + fe'l."
+    },
+    {
+     "kind": "grammar",
+     "q": "The poor ___ getting poorer every year.",
+     "sub": "The + sifat = guruh",
+     "options": [
+      "are",
+      "is",
+      "am",
+      "be"
+     ],
+     "explain": "the + sifat = odamlar guruhi → fe'l KO'PLIKDA: The poor are."
+    },
+    {
+     "kind": "grammar",
+     "q": "When should we start? — The sooner, ___.",
+     "sub": "Qisqa shakl",
+     "options": [
+      "the better",
+      "better",
+      "the best",
+      "the good"
+     ],
+     "explain": "Qisqa shakl: The sooner, the better (ikkalasida the + comparative)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "The more faster, the better.",
+      "The faster, the better.",
+      "The more, the merrier.",
+      "The elderly need care."
+     ],
+     "explain": "Ikki comparative birga kelmaydi: The faster (more faster emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "The less you worry, ___ you feel.",
+     "sub": "The less ..., the better ...",
+     "options": [
+      "the better",
+      "the good",
+      "better",
+      "the best"
+     ],
+     "explain": "the less ..., the better ... — ikkinchi qismda ham THE + comparative."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "sub": "So'z tartibi",
+     "options": [
+      "The more money you save, the richer you become.",
+      "More money you save, richer you become.",
+      "The more money you save, richer you become.",
+      "The most money you save, the richest you become."
+     ],
+     "explain": "The + comparative (+ ot) + ega + fe'l, the + comparative + ..."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ often need special medical care. (keksalar)",
+     "sub": "The + sifat",
+     "options": [
+      "The elderly",
+      "The elderlies",
+      "Elderly",
+      "An elderly"
+     ],
+     "explain": "the + sifat = guruh: the elderly (-s qo'shilmaydi)."
+    },
+    {
+     "kind": "grammar",
+     "q": "The harder you work, the more you ___. (umumiy haqiqat)",
+     "sub": "Zamon",
+     "options": [
+      "achieve",
+      "achieving",
+      "achieved",
+      "to achieve"
+     ],
+     "explain": "Umumiy haqiqat → Present Simple: the more you achieve."
+    },
+    {
+     "kind": "grammar",
+     "q": "The more a country invests in education, ___ poverty it has.",
+     "sub": "The less",
+     "options": [
+      "the less",
+      "less",
+      "the least",
+      "the fewer"
+     ],
+     "explain": "poverty sanalmaydi → less; ikkinchi qismda THE: the less poverty."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"the poor\" nimani bildiradi?",
+     "sub": "Ma'no",
+     "options": [
+      "barcha kambag'allar (guruh)",
+      "bitta kambag'al odam",
+      "kambag'al narsa",
+      "kambag'allik (mavhum ot)"
+     ],
+     "explain": "the poor = kambag'allar (guruh). Bitta odam — the poor man."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Qancha tez boshlasak, shuncha tez tugatamiz.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "The sooner we start, the sooner we finish.",
+      "Sooner we start, sooner we finish.",
+      "The sooner we will start, the sooner we finish.",
+      "The soon we start, the soon we finish."
+     ],
+     "explain": "The + comparative ikkala qismda; kelajak ma'nosida ham Present Simple."
+    },
+    {
+     "kind": "vocab",
+     "q": "Small loans to poor people to start a business are called ___.",
+     "sub": "Ma'no",
+     "options": [
+      "microcredit",
+      "welfare",
+      "subsidy",
+      "charity"
+     ],
+     "explain": "microcredit = mikrokredit (kichik qarz)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Poverty causes poor health, which causes more poverty. This is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "vicious circle",
+      "poverty line",
+      "wealth gap",
+      "living wage"
+     ],
+     "explain": "vicious circle = yopiq (yomon) halqa."
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who lends money at very high interest is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "moneylender",
+      "collateral",
+      "subsidy",
+      "humanitarian"
+     ],
+     "explain": "moneylender = sudxo'r."
+    },
+    {
+     "kind": "vocab",
+     "q": "Something valuable you promise to give the bank if you can't repay is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "collateral",
+      "interest rate",
+      "repayment rate",
+      "welfare"
+     ],
+     "explain": "collateral = garov."
+    },
+    {
+     "kind": "vocab",
+     "q": "People who earn less than $2 a day live below the ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "poverty line",
+      "living wage",
+      "standard of living",
+      "wealth gap"
+     ],
+     "explain": "below the poverty line = qashshoqlik chegarasidan past."
+    },
+    {
+     "kind": "vocab",
+     "q": "A serious lack of food across a whole region is a ___.",
+     "sub": "Ma'no",
+     "options": [
+      "famine",
+      "prosperity",
+      "redistribution",
+      "welfare"
+     ],
+     "explain": "famine = ocharchilik."
+    },
+    {
+     "kind": "vocab",
+     "q": "The difference between the rich and the poor is the wealth ___.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "gap",
+      "line",
+      "rate",
+      "aid"
+     ],
+     "explain": "wealth gap = boylik tafovuti."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"turmush darajasi\" — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "standard of living",
+      "cost of living",
+      "living wage",
+      "quality of care"
+     ],
+     "explain": "standard of living = turmush darajasi; cost of living = yashash xarajati."
+    }
+   ]
   },
   {
    "no": 13,
@@ -12308,7 +15212,249 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "Take an umbrella in case it ___.",
+     "sub": "In case + Present",
+     "options": [
+      "rains",
+      "will rain",
+      "raining",
+      "is going rain"
+     ],
+     "explain": "in case dan keyin kelasi zamon emas → Present Simple: in case it rains."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ the teacher didn't know the answer — and she knows everything!",
+     "sub": "Even (hatto)",
+     "options": [
+      "Even",
+      "Even though",
+      "Even if",
+      "In case"
+     ],
+     "explain": "Even + ot/ega = hatto ... ham. Even though/if dan keyin to'liq gap kerak."
+    },
+    {
+     "kind": "grammar",
+     "q": "She smiled ___ she was very tired.",
+     "sub": "Even though (haqiqat)",
+     "options": [
+      "even though",
+      "even",
+      "in case",
+      "as long as"
+     ],
+     "explain": "Haqiqat bo'lgan qarama-qarshilik → even though (garchi ... bo'lsa ham)."
+    },
+    {
+     "kind": "grammar",
+     "q": "I'll travel next summer ___ it's expensive — I don't care.",
+     "sub": "Even if (faraz)",
+     "options": [
+      "even if",
+      "even",
+      "in case",
+      "provided"
+     ],
+     "explain": "Faraz (agar ... bo'lsa ham) → even if."
+    },
+    {
+     "kind": "grammar",
+     "q": "___ fire, use the stairs.",
+     "sub": "In case of + ot",
+     "options": [
+      "In case of",
+      "In case",
+      "Even if",
+      "As long as"
+     ],
+     "explain": "In case OF + ot (ogohlantirish yozuvlari): In case of fire."
+    },
+    {
+     "kind": "grammar",
+     "q": "You can stay at my place ___ you're quiet.",
+     "sub": "As long as (shart)",
+     "options": [
+      "as long as",
+      "in case",
+      "even",
+      "even though"
+     ],
+     "explain": "as long as = faqat ... sharti bilan."
+    },
+    {
+     "kind": "grammar",
+     "q": "Provided you ___ your work, you can go out.",
+     "sub": "Provided + Present",
+     "options": [
+      "finish",
+      "will finish",
+      "finished",
+      "finishing"
+     ],
+     "explain": "provided / as long as / in case dan keyin Present Simple (will emas)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "sub": "Xatoni toping",
+     "options": [
+      "Even he was tired, he smiled.",
+      "Even though he was tired, he smiled.",
+      "Even he didn't know it.",
+      "I'll go even if it rains."
+     ],
+     "explain": "Gap oldida \"even\" yolg'iz kelmaydi → Even though he was tired..."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"I'll take a map in case I get lost.\" — ma'nosi?",
+     "sub": "In case vs if",
+     "options": [
+      "Adashishim mumkin deb, xaritani oldindan olaman.",
+      "Faqat adashsam, keyin xarita olaman.",
+      "Adashmaslik sharti bilan xarita olaman.",
+      "Adashsam ham xarita olmayman."
+     ],
+     "explain": "in case = ehtiyot uchun OLDINDAN; if = shart bajarilgandan keyin."
+    },
+    {
+     "kind": "grammar",
+     "q": "Providing you ___ a ticket, you can enter the stadium.",
+     "sub": "Providing + Present",
+     "options": [
+      "have",
+      "will have",
+      "had",
+      "having"
+     ],
+     "explain": "providing (that) + Present Simple: Providing you have a ticket..."
+    },
+    {
+     "kind": "grammar",
+     "q": "\"as long as / provided\" ma'nosi qaysi so'zga eng yaqin?",
+     "sub": "Qoida",
+     "options": [
+      "if (faqat shu shart bilan)",
+      "although",
+      "because",
+      "unless"
+     ],
+     "explain": "as long as / provided / providing = if (faqat shu shart bajarilsa)."
+    },
+    {
+     "kind": "grammar",
+     "q": "Tarjima: \"Yomg'ir yog'ib qolsa deb, soyabon ol.\"",
+     "sub": "Tarjima qiling",
+     "options": [
+      "Take an umbrella in case it rains.",
+      "Take an umbrella if it will rain.",
+      "Take an umbrella in case of it rains.",
+      "Take an umbrella even it rains."
+     ],
+     "explain": "Ehtiyot uchun oldindan → in case + Present Simple."
+    },
+    {
+     "kind": "vocab",
+     "q": "A detailed plan of a journey (places, dates, times) is an ___.",
+     "sub": "Ma'no",
+     "options": [
+      "itinerary",
+      "accommodation",
+      "embassy",
+      "expedition"
+     ],
+     "explain": "itinerary = sayohat rejasi (marshrut)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Hotels, hostels and guesthouses are types of ___.",
+     "sub": "Ma'no",
+     "options": [
+      "accommodation",
+      "destination",
+      "souvenir",
+      "hospitality"
+     ],
+     "explain": "accommodation = turar joy."
+    },
+    {
+     "kind": "vocab",
+     "q": "You need a ___ to enter many countries, so apply at the embassy.",
+     "sub": "Kontekst",
+     "options": [
+      "visa",
+      "souvenir",
+      "caravan",
+      "hazard"
+     ],
+     "explain": "visa = viza (elchixonadan olinadi)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Feeling confused in a new country with a very different way of life is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "culture shock",
+      "homesick",
+      "pilgrimage",
+      "quarantine"
+     ],
+     "explain": "culture shock = madaniy shok. homesick = uyni sog'inish."
+    },
+    {
+     "kind": "vocab",
+     "q": "Uzbek people are famous for their ___ — they welcome guests warmly.",
+     "sub": "Kontekst",
+     "options": [
+      "hospitality",
+      "accommodation",
+      "pilgrimage",
+      "navigation"
+     ],
+     "explain": "hospitality = mehmondo'stlik."
+    },
+    {
+     "kind": "vocab",
+     "q": "Buy travel ___ in case you get ill abroad.",
+     "sub": "Kollokatsiya",
+     "options": [
+      "insurance",
+      "itinerary",
+      "embassy",
+      "destination"
+     ],
+     "explain": "travel insurance = sayohat sug'urtasi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Travel that protects nature and local people is ___.",
+     "sub": "Ma'no",
+     "options": [
+      "eco-tourism",
+      "mass tourism",
+      "budget travel",
+      "pilgrimage"
+     ],
+     "explain": "eco-tourism = ekoturizm (tabiatni asrovchi sayohat)."
+    },
+    {
+     "kind": "vocab",
+     "q": "\"esdalik sovg'a\" — inglizcha?",
+     "sub": "Tarjima",
+     "options": [
+      "souvenir",
+      "survivor",
+      "supervisor",
+      "surrender"
+     ],
+     "explain": "souvenir = esdalik sovg'a."
+    }
+   ]
   },
   {
    "no": 14,
@@ -13265,7 +16411,241 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "Tom bought a new car last week. ___ loves it very much.",
+     "options": [
+      "He",
+      "It",
+      "They",
+      "She"
+     ],
+     "explain": "Anaphoric reference: He = Tom (shaxs), it = car. Shaxs uchun he, narsa uchun it.",
+     "sub": "Anaphoric reference"
+    },
+    {
+     "kind": "grammar",
+     "q": "A: I like apples. B: ___",
+     "options": [
+      "So do I.",
+      "So I do.",
+      "Neither do I.",
+      "So am I."
+     ],
+     "explain": "Substitution: So + yordamchi + ega. 'like' — Present Simple, yordamchi do: So do I.",
+     "sub": "'Men ham' — substitution"
+    },
+    {
+     "kind": "grammar",
+     "q": "A: I don't like horror films. B: ___",
+     "options": [
+      "Neither do I.",
+      "So do I.",
+      "Neither I do.",
+      "Neither am I."
+     ],
+     "explain": "Inkor gapga qo'shilish: Neither + yordamchi + ega. don't like → Neither do I.",
+     "sub": "Inkorga qo'shilish"
+    },
+    {
+     "kind": "grammar",
+     "q": "I need a pen. Have you got a blue ___?",
+     "options": [
+      "one",
+      "ones",
+      "it",
+      "that"
+     ],
+     "explain": "Birlik ot (a pen) o'rniga sifat + one: a blue one. ones — ko'plik uchun.",
+     "sub": "Substitution: one / ones"
+    },
+    {
+     "kind": "grammar",
+     "q": "She likes green tea, but I ___.",
+     "options": [
+      "don't",
+      "don't like",
+      "don't it",
+      "am not"
+     ],
+     "explain": "Ellipsis: takror fe'l va ob'ekt tushadi — I don't (like green tea). 'I don't like' — to'liq emas, xato.",
+     "sub": "Ellipsis"
+    },
+    {
+     "kind": "grammar",
+     "q": "A: Can you come to the party on Saturday? B: Yes, I ___.",
+     "options": [
+      "can",
+      "can come it",
+      "do",
+      "am"
+     ],
+     "explain": "Ellipsis: savoldagi yordamchi qaytariladi, fe'l tushadi — Yes, I can (come).",
+     "sub": "Qisqa javob — ellipsis"
+    },
+    {
+     "kind": "grammar",
+     "q": "A: Do you think it will rain tomorrow? B: I hope ___.",
+     "options": [
+      "not",
+      "no",
+      "don't",
+      "not it"
+     ],
+     "explain": "Substitution: I hope not = I hope it won't rain. Ijobiysi: I think so / I hope so.",
+     "sub": "Substitution: so / not"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "Tom bought a car. It loves it.",
+      "Tom bought a car. He loves it.",
+      "My bag is heavier than hers.",
+      "She likes tea. I don't."
+     ],
+     "explain": "Tom — shaxs, shuning uchun 'He loves it'. 'It loves it' — xato ishora.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "Prices rose sharply in 2025. ___ surprised everyone.",
+     "options": [
+      "This",
+      "These",
+      "Those",
+      "Them"
+     ],
+     "explain": "Yozma matnda oldingi gapdagi fikrga (birlik) ishora — This. These/those — ko'plik.",
+     "sub": "Demonstratives"
+    },
+    {
+     "kind": "grammar",
+     "q": "My house is bigger than ___. (= her house)",
+     "options": [
+      "hers",
+      "her",
+      "she",
+      "her's"
+     ],
+     "explain": "Comparative reference: hers = her house. her's — apostrof bilan yozilmaydi.",
+     "sub": "Comparative reference"
+    },
+    {
+     "kind": "grammar",
+     "q": "When ___ arrived, Tom sat down near the window.",
+     "options": [
+      "he",
+      "him",
+      "his",
+      "it"
+     ],
+     "explain": "Cataphoric reference: he keyin keladigan Tom ga ishora qiladi; ega o'rnida — he.",
+     "sub": "Cataphoric: he = Tom"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi misol EXOPHORIC reference?",
+     "options": [
+      "Look at that! (osmonga ishora qilib)",
+      "Tom bought a car. He loves it.",
+      "I like apples. So do I.",
+      "My house is bigger than hers."
+     ],
+     "explain": "Exophoric — matndan TASHQARIDAGI vaziyatga ishora: 'that' osmondagi narsani bildiradi.",
+     "sub": "Qoidani tanlang"
+    },
+    {
+     "kind": "vocab",
+     "q": "Someone who speaks two languages equally well is ___.",
+     "options": [
+      "bilingual",
+      "monolingual",
+      "a linguist",
+      "a native speaker"
+     ],
+     "explain": "bilingual — ikki tilli. linguist — tilshunos olim, monolingual — bir tilli."
+    },
+    {
+     "kind": "vocab",
+     "q": "Uzbek is my mother ___ — I learned it at home as a child.",
+     "options": [
+      "tongue",
+      "mouth",
+      "voice",
+      "speech"
+     ],
+     "explain": "mother tongue — ona tili. Kollokatsiya: mother tongue."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Actions speak louder than words' is a well-known ___.",
+     "options": [
+      "proverb",
+      "dialect",
+      "manuscript",
+      "commentary"
+     ],
+     "explain": "proverb — maqol: qisqa, hammaga ma'lum dono gap."
+    },
+    {
+     "kind": "vocab",
+     "q": "The ability to read and write is called ___.",
+     "options": [
+      "literacy",
+      "fluency",
+      "literature",
+      "linguistics"
+     ],
+     "explain": "literacy — savodxonlik. fluency — ravonlik, literature — adabiyot."
+    },
+    {
+     "kind": "vocab",
+     "q": "The study of where words come from is ___.",
+     "options": [
+      "etymology",
+      "syntax",
+      "rhetoric",
+      "calligraphy"
+     ],
+     "explain": "etymology — so'zlarning kelib chiqishi. syntax — gap tuzilishi, calligraphy — xattotlik."
+    },
+    {
+     "kind": "vocab",
+     "q": "Tourists often face a language ___ when they can't speak the local language.",
+     "options": [
+      "barrier",
+      "border",
+      "fence",
+      "door"
+     ],
+     "explain": "language barrier — til to'sig'i. Kollokatsiya: language barrier."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Her voice was music to his ears.' — this comparison without 'like' is a ___.",
+     "options": [
+      "metaphor",
+      "syntax",
+      "prose",
+      "plot"
+     ],
+     "explain": "metaphor — ko'chma ma'no: bir narsani 'like/as'siz boshqasiga tenglashtirish."
+    },
+    {
+     "kind": "vocab",
+     "q": "English is often a ___ — a common language for people with different mother tongues.",
+     "options": [
+      "lingua franca",
+      "minority language",
+      "dialect",
+      "mother tongue"
+     ],
+     "explain": "lingua franca — turli tilli odamlar orasidagi umumiy aloqa tili."
+    }
+   ]
   },
   {
    "no": 15,
@@ -14219,7 +17599,242 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "The soup tastes ___. Can I have some more?",
+     "options": [
+      "delicious",
+      "deliciously",
+      "deliciousness",
+      "more deliciously"
+     ],
+     "explain": "taste — linking verb, undan keyin SIFAT keladi: tastes delicious. Ravish (-ly) emas.",
+     "sub": "Linking verb + sifat"
+    },
+    {
+     "kind": "grammar",
+     "q": "You look ___ today. Did you sleep badly?",
+     "options": [
+      "tired",
+      "tiredly",
+      "tiring",
+      "to tired"
+     ],
+     "explain": "look (ko'rinmoq) — holat, keyin sifat: look tired. tiring — charchatadigan (boshqa ma'no).",
+     "sub": "Linking verb + sifat"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "options": [
+      "I feel bad about it.",
+      "I feel badly about it.",
+      "I feel badness about it.",
+      "I am feel bad about it."
+     ],
+     "explain": "feel + SIFAT: I feel bad. 'feel badly' — ravish, bu darsda xato.",
+     "sub": "To'g'ri gapni tanlang"
+    },
+    {
+     "kind": "grammar",
+     "q": "That ___ a good idea! Let's do it.",
+     "options": [
+      "sounds like",
+      "sound like",
+      "sounds as",
+      "sounds likely"
+     ],
+     "explain": "sound + like + OT: It sounds like a good idea. That — birlik, shuning uchun sounds.",
+     "sub": "sound like + ot"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "She looks sadly.",
+      "She looked at me sadly.",
+      "She looks sad.",
+      "He remained calm."
+     ],
+     "explain": "look (holat) + sifat: She looks sad. 'looked at me sadly' — harakat, ravish to'g'ri.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "He became ___ when he heard the news.",
+     "options": [
+      "angry",
+      "angrily",
+      "to angry",
+      "anger"
+     ],
+     "explain": "become + SIFAT (to yo'q): became angry. become + ot ham mumkin: became a doctor.",
+     "sub": "O'zgarish: become"
+    },
+    {
+     "kind": "grammar",
+     "q": "She looked ___ at the old letter for a long time.",
+     "options": [
+      "carefully",
+      "careful",
+      "care",
+      "carefulness"
+     ],
+     "explain": "look AT — harakat (qaramoq), shuning uchun RAVISH: looked carefully. Holat bo'lsa — sifat.",
+     "sub": "Holat yoki harakat?"
+    },
+    {
+     "kind": "grammar",
+     "q": "When the doctor gave the bad news, she turned ___.",
+     "options": [
+      "pale",
+      "palely",
+      "paleness",
+      "to pale"
+     ],
+     "explain": "turn — o'zgarish fe'li, keyin sifat: turned pale (rangi oqardi).",
+     "sub": "O'zgarish: turn"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi fe'l O'ZGARISHni bildiradi?",
+     "options": [
+      "become",
+      "seem",
+      "remain",
+      "smell"
+     ],
+     "explain": "O'zgarish: become, get, grow, turn. seem/remain — holat, smell — sezgi.",
+     "sub": "Qoidani tanlang"
+    },
+    {
+     "kind": "grammar",
+     "q": "He seems ___ ill. He hasn't eaten anything all day.",
+     "options": [
+      "to be",
+      "be",
+      "being",
+      "is"
+     ],
+     "explain": "seem/appear + to be: He seems to be ill. Yoki qisqa: He seems ill.",
+     "sub": "seem + to be"
+    },
+    {
+     "kind": "grammar",
+     "q": "Despite the pressure, the team stayed ___.",
+     "options": [
+      "calm",
+      "calmly",
+      "calmness",
+      "to calm"
+     ],
+     "explain": "stay/remain — holat fe'li + sifat: stayed calm (xotirjam qoldi).",
+     "sub": "Holat: stay / remain"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "options": [
+      "They became friends at university.",
+      "They became to friends at university.",
+      "They got friends at university.",
+      "They turned friends at university."
+     ],
+     "explain": "become + OT mumkin: became friends. get/grow/turn odatda faqat sifat bilan.",
+     "sub": "To'g'ri gapni tanlang"
+    },
+    {
+     "kind": "vocab",
+     "q": "Not being able to sleep at night is called ___.",
+     "options": [
+      "insomnia",
+      "burnout",
+      "stigma",
+      "therapy"
+     ],
+     "explain": "insomnia — uyqusizlik. burnout — kuyib bitish, stigma — ijtimoiy tamg'a."
+    },
+    {
+     "kind": "vocab",
+     "q": "How do you ___ with stress before exams?",
+     "options": [
+      "cope",
+      "handle",
+      "solve",
+      "control"
+     ],
+     "explain": "cope WITH — bardosh bermoq. handle/solve/control 'with'siz ishlatiladi."
+    },
+    {
+     "kind": "vocab",
+     "q": "After working 70 hours a week for a year, he had ___ — no energy left at all.",
+     "options": [
+      "burnout",
+      "self-esteem",
+      "empathy",
+      "mindfulness"
+     ],
+     "explain": "burnout — ortiqcha ishdan kuyib bitish, butunlay holsizlanish."
+    },
+    {
+     "kind": "vocab",
+     "q": "The ability to understand and share other people's feelings is ___.",
+     "options": [
+      "empathy",
+      "resilience",
+      "anxiety",
+      "stigma"
+     ],
+     "explain": "empathy — hamdardlik. resilience — matonat, anxiety — xavotir."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Resilient' ma'nosi?",
+     "options": [
+      "matonatli",
+      "xavotirli",
+      "tushkun",
+      "yolg'iz"
+     ],
+     "explain": "resilient — matonatli: qiyinchilikdan keyin tez o'nglanadigan.",
+     "sub": "O'zbekcha ma'no"
+    },
+    {
+     "kind": "vocab",
+     "q": "Low ___ means you don't value yourself enough.",
+     "options": [
+      "self-esteem",
+      "wellbeing",
+      "counselling",
+      "awareness"
+     ],
+     "explain": "self-esteem — o'z-o'zini hurmat, o'ziga baho. Low self-esteem — o'ziga past baho."
+    },
+    {
+     "kind": "vocab",
+     "q": "Many people don't ask for help because of the ___ around mental illness.",
+     "options": [
+      "stigma",
+      "awareness",
+      "therapy",
+      "peer support"
+     ],
+     "explain": "stigma — ijtimoiy uyat, tamg'a; odamlarni yordam so'rashdan to'xtatadi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A doctor who treats mental illness and can prescribe medicine is a ___.",
+     "options": [
+      "psychiatrist",
+      "psychologist",
+      "therapist",
+      "counsellor"
+     ],
+     "explain": "psychiatrist — shifokor, dori yoza oladi. psychologist/counsellor — suhbat orqali yordam beradi."
+    }
+   ]
   },
   {
    "no": 16,
@@ -15165,7 +18780,244 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "'I work hard,' he said. → He said he ___ hard.",
+     "options": [
+      "worked",
+      "is working",
+      "had worked",
+      "working"
+     ],
+     "explain": "Backshift: Present Simple → Past Simple. work → worked.",
+     "sub": "Present Simple → Past Simple"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I am studying,' she said. → She said she ___.",
+     "options": [
+      "was studying",
+      "were studying",
+      "had studying",
+      "has been studying"
+     ],
+     "explain": "Present Continuous → Past Continuous: am studying → was studying (she → was).",
+     "sub": "Present Continuous → ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "'We have finished,' they said. → They said they ___ finished.",
+     "options": [
+      "had",
+      "have",
+      "has",
+      "were"
+     ],
+     "explain": "Present Perfect → Past Perfect: have finished → had finished.",
+     "sub": "Present Perfect → ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I lost my key,' Aziz said. → Aziz said he ___ his key.",
+     "options": [
+      "had lost",
+      "has lost",
+      "have lost",
+      "was lost"
+     ],
+     "explain": "Past Simple → Past Perfect: lost → had lost.",
+     "sub": "Past Simple → ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I will call you,' she said to me. → She said she ___ me.",
+     "options": [
+      "would call",
+      "will call",
+      "calls",
+      "would called"
+     ],
+     "explain": "will → would + V1: would call. 'would called' — V1 kerak.",
+     "sub": "will → would"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I can swim,' he said. → He said he ___ swim.",
+     "options": [
+      "could",
+      "can",
+      "may",
+      "must"
+     ],
+     "explain": "can → could: He said he could swim.",
+     "sub": "can → could"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "options": [
+      "He told me he was tired.",
+      "He said me he was tired.",
+      "He told he was tired.",
+      "He told to me he was tired."
+     ],
+     "explain": "tell + KIMGA (to'g'ridan): told me. say ob'ektsiz: He said he was tired.",
+     "sub": "say yoki tell?"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I'll see you here tomorrow.' → She told me she would see me there ___.",
+     "options": [
+      "the next day",
+      "tomorrow",
+      "yesterday",
+      "the day before"
+     ],
+     "explain": "Vaqt so'zi o'zgaradi: tomorrow → the next / the following day; here → there.",
+     "sub": "Vaqt so'zlari"
+    },
+    {
+     "kind": "grammar",
+     "q": "Reported speech'da 'now' nimaga o'zgaradi?",
+     "options": [
+      "then",
+      "today",
+      "there",
+      "that"
+     ],
+     "explain": "now → then; today → that day; here → there; this → that.",
+     "sub": "Vaqt so'zlari"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "He said me that he was tired.",
+      "She said she would come.",
+      "He told me he had finished.",
+      "They said they were tired."
+     ],
+     "explain": "say dan keyin shaxs kelmaydi: He told me / He said (that)...",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I may come,' she said. → She said she ___ come.",
+     "options": [
+      "might",
+      "may be",
+      "must",
+      "would to"
+     ],
+     "explain": "may → might: She said she might come.",
+     "sub": "may → might"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I was watching TV,' he said. → He said he ___ TV.",
+     "options": [
+      "had been watching",
+      "has been watching",
+      "was watched",
+      "had watching"
+     ],
+     "explain": "Past Continuous → Past Perfect Continuous: had been + V-ing.",
+     "sub": "Past Continuous → ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi holatda backshift SHART EMAS?",
+     "options": [
+      "Umumiy haqiqat: 'The Earth goes round the Sun.'",
+      "Reporting fe'l 'said' bo'lsa",
+      "Ichki gapda 'will' bo'lsa",
+      "Ichki gapda 'I' bo'lsa"
+     ],
+     "explain": "Umumiy haqiqat hozir ham to'g'ri — zamon o'zgarmasligi mumkin: She said the Earth goes round the Sun.",
+     "sub": "Qoidani tanlang"
+    },
+    {
+     "kind": "vocab",
+     "q": "The difference in ideas between young and old people is the generation ___.",
+     "options": [
+      "gap",
+      "barrier",
+      "bond",
+      "distance"
+     ],
+     "explain": "generation gap — avlodlar orasidagi tafovut."
+    },
+    {
+     "kind": "vocab",
+     "q": "A family with parents, children, grandparents and aunts living together is an ___ family.",
+     "options": [
+      "extended",
+      "nuclear",
+      "single",
+      "elderly"
+     ],
+     "explain": "extended family — katta oila. nuclear family — faqat ota-ona va bolalar."
+    },
+    {
+     "kind": "vocab",
+     "q": "My brothers and sisters are my ___.",
+     "options": [
+      "siblings",
+      "ancestors",
+      "parents",
+      "elders"
+     ],
+     "explain": "sibling — aka-uka, opa-singil. ancestor — ajdod."
+    },
+    {
+     "kind": "vocab",
+     "q": "The person who earns money for the whole family is the ___.",
+     "options": [
+      "breadwinner",
+      "role model",
+      "household",
+      "orphan"
+     ],
+     "explain": "breadwinner — oila boquvchisi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A child whose parents have died is an ___.",
+     "options": [
+      "orphan",
+      "widow",
+      "elder",
+      "heir"
+     ],
+     "explain": "orphan — yetim. widow — beva ayol (eri vafot etgan)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Qaysi so'z 'strict' so'zining ANTONIMI?",
+     "options": [
+      "lenient",
+      "dependent",
+      "paternal",
+      "elderly"
+     ],
+     "explain": "strict — qattiqqo'l, lenient — yumshoq (ota-ona haqida).",
+     "sub": "Antonim"
+    },
+    {
+     "kind": "vocab",
+     "q": "'Upbringing' ma'nosi?",
+     "options": [
+      "tarbiya (bolalikdagi)",
+      "avlod",
+      "meros",
+      "xonadon"
+     ],
+     "explain": "upbringing — bolalikda olingan tarbiya: a strict upbringing.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   },
   {
    "no": 17,
@@ -16108,7 +19960,243 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "'Do you like coffee?' he asked. → He asked ___ I liked coffee.",
+     "options": [
+      "if",
+      "that",
+      "did",
+      "do"
+     ],
+     "explain": "Yes/No savol → asked + if/whether + ega + fe'l. that — darak gap uchun.",
+     "sub": "Yes/No savol"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Where do you live?' → She asked where ___.",
+     "options": [
+      "I lived",
+      "did I live",
+      "I did live",
+      "do I live"
+     ],
+     "explain": "Wh-savol → darak tartibi: where + I + lived. do/did tushadi.",
+     "sub": "Wh-savol: so'z tartibi"
+    },
+    {
+     "kind": "grammar",
+     "q": "'What is your name?' → The teacher asked what ___.",
+     "options": [
+      "my name was",
+      "was my name",
+      "is my name",
+      "my name is it"
+     ],
+     "explain": "Inversiya yo'qoladi: what + my name (ega) + was (fe'l).",
+     "sub": "Wh-savol: so'z tartibi"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Why did he leave early?' → They asked why he ___ early.",
+     "options": [
+      "had left",
+      "did leave",
+      "has left",
+      "leaves"
+     ],
+     "explain": "did leave (Past) → had left (Past Perfect), did tushadi.",
+     "sub": "Past → Past Perfect"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Will he come?' they asked. → They asked if he ___.",
+     "options": [
+      "would come",
+      "will come",
+      "would comes",
+      "comes"
+     ],
+     "explain": "will → would + V1: They asked if he would come.",
+     "sub": "will → would"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "options": [
+      "He asked me if I liked coffee.",
+      "He asked me did I like coffee.",
+      "He asked me that I liked coffee.",
+      "He asked me if did I like coffee."
+     ],
+     "explain": "asked + if + ega + V2. did va savol tartibi yo'qoladi; that — savol uchun emas.",
+     "sub": "To'g'ri gapni tanlang"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "The teacher asked what was my name.",
+      "The teacher asked what my name was.",
+      "She asked where I lived.",
+      "They asked if he would come."
+     ],
+     "explain": "Reported savolda ega fe'ldan OLDIN: what my name was. 'what was my name' — savol tartibi.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "'How can I do this?' → She asked how she ___ that.",
+     "options": [
+      "could do",
+      "can do",
+      "could she do",
+      "did do"
+     ],
+     "explain": "can → could, darak tartibi: how she could do. 'could she do' — savol tartibi.",
+     "sub": "Wh-savol + modal"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Are you busy?' she asked. → She asked ___ I was busy.",
+     "options": [
+      "whether",
+      "that",
+      "what",
+      "do"
+     ],
+     "explain": "Yes/No savol → if / whether. are → was.",
+     "sub": "if / whether"
+    },
+    {
+     "kind": "grammar",
+     "q": "Reported savolda nima YO'QOLADI?",
+     "options": [
+      "do/does/did va savol belgisi (?)",
+      "ega (subject)",
+      "asosiy fe'l",
+      "if / whether"
+     ],
+     "explain": "Reported savol — darak gap: do/does/did yordamchisi va '?' tushadi, ega + fe'l tartibi.",
+     "sub": "Qoidani tanlang"
+    },
+    {
+     "kind": "grammar",
+     "q": "'When did the Samanid dynasty begin?' → The student asked when the Samanid dynasty ___.",
+     "options": [
+      "had begun",
+      "did begin",
+      "has begun",
+      "begins"
+     ],
+     "explain": "did begin → had begun (Past Perfect); did tushadi, darak tartibi.",
+     "sub": "Wh-savol: Past → Past Perfect"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Have you visited Bukhara?' → My friend wanted to know ___ Bukhara.",
+     "options": [
+      "if I had visited",
+      "if had I visited",
+      "did I visit",
+      "that I had visited"
+     ],
+     "explain": "wanted to know + if + ega + had V3. Present Perfect → Past Perfect.",
+     "sub": "wanted to know + if"
+    },
+    {
+     "kind": "vocab",
+     "q": "A series of rulers from the same family, e.g. the Timurids, is a ___.",
+     "options": [
+      "dynasty",
+      "empire",
+      "century",
+      "chronicle"
+     ],
+     "explain": "dynasty — sulola: bir oiladan chiqqan hukmdorlar. empire — imperiya (davlat)."
+    },
+    {
+     "kind": "vocab",
+     "q": "An old object made by people long ago and found by archaeologists is an ___.",
+     "options": [
+      "artefact",
+      "evidence",
+      "era",
+      "heritage"
+     ],
+     "explain": "artefact — tarixiy buyum (BrE yozilishi). evidence — dalil, sanalmaydi (an evidence xato)."
+    },
+    {
+     "kind": "vocab",
+     "q": "A letter written by Amir Temur himself is a ___ source.",
+     "options": [
+      "primary",
+      "secondary",
+      "modern",
+      "second-hand"
+     ],
+     "explain": "primary source — birlamchi manba (o'sha davrdagi odam yozgan). secondary — keyinroq yozilgan tahlil."
+    },
+    {
+     "kind": "vocab",
+     "q": "Qaysi so'z 'reliable' so'zining ANTONIMI?",
+     "options": [
+      "unreliable",
+      "authentic",
+      "ancient",
+      "medieval"
+     ],
+     "explain": "reliable — ishonchli, unreliable — ishonchsiz.",
+     "sub": "Antonim"
+    },
+    {
+     "kind": "vocab",
+     "q": "The ___ Road connected China with Europe and passed through Samarkand.",
+     "options": [
+      "Silk",
+      "Cotton",
+      "Gold",
+      "Stone"
+     ],
+     "explain": "Silk Road — Ipak yo'li: Xitoy va Yevropa orasidagi savdo yo'li."
+    },
+    {
+     "kind": "vocab",
+     "q": "Historians must ___ facts before they publish them.",
+     "options": [
+      "verify",
+      "conquer",
+      "memorise",
+      "decline"
+     ],
+     "explain": "verify — tekshirib tasdiqlamoq. conquer — zabt etmoq, decline — tanazzulga yuz tutmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "To learn a text by heart is to ___ it.",
+     "options": [
+      "memorise",
+      "compile",
+      "verify",
+      "restore"
+     ],
+     "explain": "memorise — yod olmoq (BrE: -ise). compile — to'plab tuzmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Legacy' ma'nosi?",
+     "options": [
+      "meros (qoldirilgan iz)",
+      "tanazzul",
+      "sulola",
+      "yilnoma"
+     ],
+     "explain": "legacy — kishi yoki davr qoldirgan iz, meros: Ulugbek's legacy.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   },
   {
    "no": 18,
@@ -17086,7 +21174,242 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "'Open the window,' he said. → He told me ___ the window.",
+     "options": [
+      "to open",
+      "open",
+      "opening",
+      "that open"
+     ],
+     "explain": "Buyruq → told + KIMGA + to + V1: told me to open.",
+     "sub": "Buyruq: told + to V1"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Don't shout,' she said. → She told me ___.",
+     "options": [
+      "not to shout",
+      "to not shout",
+      "don't shout",
+      "not shouting"
+     ],
+     "explain": "Taqiq → told + KIMGA + NOT TO + V1. 'to not' — bu darsda xato tartib.",
+     "sub": "Taqiq: not to"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Let's take a break,' she said. → She suggested ___ a break.",
+     "options": [
+      "taking",
+      "to take",
+      "me to take",
+      "take"
+     ],
+     "explain": "suggest + V-ing (ob'ektsiz): suggested taking. Yoki: suggested that we take.",
+     "sub": "Taklif: suggest"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gap TO'G'RI?",
+     "options": [
+      "He advised me to drink more water.",
+      "He advised to drink more water.",
+      "He advised me drink more water.",
+      "He advised me drinking more water."
+     ],
+     "explain": "Maslahat → advised + KIMGA + to + V1: advised me to drink.",
+     "sub": "To'g'ri gapni tanlang"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Please sit down,' the teacher said. → The teacher ___ us to sit down.",
+     "options": [
+      "asked",
+      "said",
+      "suggested",
+      "said to"
+     ],
+     "explain": "Iltimos → asked + KIMGA + to V1. say + ob'ekt + to V1 — xato; suggest + to V1 — xato.",
+     "sub": "Iltimos: asked"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I'll help you,' he said. → He ___ to help me.",
+     "options": [
+      "offered",
+      "told",
+      "suggested",
+      "advised"
+     ],
+     "explain": "O'zi bajaradigan ish → offered + to V1 (ob'ektsiz): He offered to help me.",
+     "sub": "offer / promise / refuse"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "He suggested me to take a break.",
+      "He suggested taking a break.",
+      "She reminded me to call my mum.",
+      "They warned us not to swim."
+     ],
+     "explain": "suggest + ob'ekt + to V1 bo'lmaydi: He suggested taking a break / that I take a break.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Don't touch it — it's hot!' → He ___ me not to touch it.",
+     "options": [
+      "warned",
+      "said",
+      "suggested",
+      "refused"
+     ],
+     "explain": "Ogohlantirish → warned + KIMGA + not to V1.",
+     "sub": "Taqiq: warned"
+    },
+    {
+     "kind": "grammar",
+     "q": "'I won't go,' she said. → She ___ to go.",
+     "options": [
+      "refused",
+      "denied",
+      "told",
+      "suggested"
+     ],
+     "explain": "Rad etish → refused + to V1: She refused to go. deny + V-ing bilan ishlatiladi.",
+     "sub": "refuse + to V1"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi fe'ldan keyin odatda OB'EKTsiz 'to + V1' keladi (ishni o'zi qiladi)?",
+     "options": [
+      "promise",
+      "tell",
+      "advise",
+      "remind"
+     ],
+     "explain": "promised to come — o'zi keladi. tell/advise/remind + KIMGA + to V1.",
+     "sub": "Qoidani tanlang"
+    },
+    {
+     "kind": "grammar",
+     "q": "'You should see a doctor,' my mum said. → My mum ___ me to see a doctor.",
+     "options": [
+      "advised",
+      "suggested",
+      "said",
+      "offered"
+     ],
+     "explain": "should → maslahat: advised + me + to V1. suggest me to — xato.",
+     "sub": "Maslahat: advised"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Finish the report by Friday!' → The manager ___ us to finish the report by Friday.",
+     "options": [
+      "ordered",
+      "suggested",
+      "said",
+      "offered"
+     ],
+     "explain": "Qat'iy buyruq → ordered + KIMGA + to V1.",
+     "sub": "Buyruq: ordered"
+    },
+    {
+     "kind": "grammar",
+     "q": "The coach encouraged the team ___ harder.",
+     "options": [
+      "to try",
+      "try",
+      "trying",
+      "for trying"
+     ],
+     "explain": "encourage + KIMGA + to V1: encouraged the team to try.",
+     "sub": "encourage + O + to V1"
+    },
+    {
+     "kind": "vocab",
+     "q": "A good leader doesn't do everything alone; she ___ tasks to her team.",
+     "options": [
+      "delegates",
+      "micromanages",
+      "resigns",
+      "recruits"
+     ],
+     "explain": "delegate — ishni boshqalarga topshirmoq (vakolat bermoq)."
+    },
+    {
+     "kind": "vocab",
+     "q": "A manager who controls every small detail of your work likes to ___.",
+     "options": [
+      "micromanage",
+      "delegate",
+      "empower",
+      "cooperate"
+     ],
+     "explain": "micromanage — mayda-chuydagacha nazorat qilmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "When everyone in the meeting finally agrees, they reach a ___.",
+     "options": [
+      "consensus",
+      "hierarchy",
+      "vision",
+      "morale"
+     ],
+     "explain": "reach a consensus — umumiy kelishuvga kelmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "Team ___ was low after they lost three matches in a row.",
+     "options": [
+      "morale",
+      "moral",
+      "mentor",
+      "motive"
+     ],
+     "explain": "morale — jamoa ruhi, kayfiyati. moral — axloqiy (boshqa so'z!)."
+    },
+    {
+     "kind": "vocab",
+     "q": "She decided to ___ from her job because of the stress.",
+     "options": [
+      "resign",
+      "promote",
+      "recruit",
+      "delegate"
+     ],
+     "explain": "resign (from) — iste'foga chiqmoq, ishdan ketmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "A leader who makes quick, firm decisions is ___.",
+     "options": [
+      "decisive",
+      "hesitant",
+      "adaptable",
+      "accountable"
+     ],
+     "explain": "decisive — qat'iyatli. hesitant — ikkilanuvchi (antonim)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Lead by ___: do what you want your team to do.",
+     "options": [
+      "example",
+      "vision",
+      "feedback",
+      "strategy"
+     ],
+     "explain": "lead by example — shaxsiy namuna bilan yetaklamoq."
+    }
+   ]
   },
   {
    "no": 19,
@@ -18051,7 +22374,242 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "I'm looking ___ my keys. Have you seen them?",
+     "options": [
+      "for",
+      "after",
+      "into",
+      "up to"
+     ],
+     "explain": "look for — qidirmoq. look after — qaramoq, look into — tekshirmoq.",
+     "sub": "look + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "She looks ___ her little brother while her parents are at work.",
+     "options": [
+      "after",
+      "for",
+      "into",
+      "over"
+     ],
+     "explain": "look after — g'amxo'rlik qilmoq, qarab turmoq.",
+     "sub": "look + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "I don't know this word. I'll look ___ in the dictionary.",
+     "options": [
+      "it up",
+      "up it",
+      "it up to",
+      "after it"
+     ],
+     "explain": "look up ajraladi; olmosh FAQAT o'rtada: look it up. 'look up it' — xato.",
+     "sub": "Olmosh qayerda?"
+    },
+    {
+     "kind": "grammar",
+     "q": "I look forward to ___ you next week.",
+     "options": [
+      "seeing",
+      "see",
+      "saw",
+      "be seeing"
+     ],
+     "explain": "look forward TO + V-ing: to — predlog, shuning uchun seeing.",
+     "sub": "look forward to + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "I really look ___ my grandfather — he is so wise and kind.",
+     "options": [
+      "up to",
+      "up",
+      "down on",
+      "into"
+     ],
+     "explain": "look up TO — hurmat qilmoq. look up — lug'atdan qidirmoq, look down on — mensimaslik.",
+     "sub": "Hurmat qilmoq"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "Police are looking the case into.",
+      "Police are looking into the case.",
+      "You can look the word up.",
+      "She looks after her grandmother."
+     ],
+     "explain": "look into ajralmaydi: looking into the case.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "Rich people shouldn't look ___ poor people.",
+     "options": [
+      "down on",
+      "up to",
+      "out",
+      "forward to"
+     ],
+     "explain": "look down on — past nazar bilan qaramoq, mensimaslik.",
+     "sub": "look + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "___! There's a car coming!",
+     "options": [
+      "Look out",
+      "Look up",
+      "Look over",
+      "Look into"
+     ],
+     "explain": "Look out! — Ehtiyot bo'l! (xavf haqida ogohlantirish).",
+     "sub": "look + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Could you look ___ my essay before I send it to the teacher?",
+     "options": [
+      "over",
+      "after",
+      "up to",
+      "down on"
+     ],
+     "explain": "look over — ko'zdan kechirmoq (hujjat, insho).",
+     "sub": "look + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi phrasal verb AJRALADI (olmosh o'rtaga kiradi)?",
+     "options": [
+      "look up (a word)",
+      "look after",
+      "look for",
+      "look into"
+     ],
+     "explain": "look up ajraladi: look it up. look after/for/into — ajralmaydi: look after her.",
+     "sub": "Qoidani tanlang"
+    },
+    {
+     "kind": "grammar",
+     "q": "When she looks back ___ her childhood, she always smiles.",
+     "options": [
+      "on",
+      "for",
+      "after",
+      "up"
+     ],
+     "explain": "look back on — o'tmishni eslamoq.",
+     "sub": "look back + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "'Javobingizni intiqlik bilan kutaman' — to'g'ri tarjima?",
+     "options": [
+      "I look forward to hearing from you.",
+      "I look forward to hear from you.",
+      "I look for to hearing from you.",
+      "I look forward hearing from you."
+     ],
+     "explain": "look forward to + V-ing: to hearing. Rasmiy xatning oxirida ishlatiladi.",
+     "sub": "Tarjima qiling"
+    },
+    {
+     "kind": "vocab",
+     "q": "The Mona Lisa is a ___ — one of the greatest works of art.",
+     "options": [
+      "masterpiece",
+      "manuscript",
+      "stanza",
+      "satire"
+     ],
+     "explain": "masterpiece — shoh asar."
+    },
+    {
+     "kind": "vocab",
+     "q": "The main character of a story is the ___.",
+     "options": [
+      "protagonist",
+      "playwright",
+      "critic",
+      "novelist"
+     ],
+     "explain": "protagonist — bosh qahramon. playwright — dramaturg, critic — tanqidchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A group of lines in a poem is called a ___.",
+     "options": [
+      "stanza",
+      "prose",
+      "novel",
+      "canon"
+     ],
+     "explain": "stanza — she'rdagi band. prose — nasr (she'r emas)."
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who writes plays for the theatre is a ___.",
+     "options": [
+      "playwright",
+      "novelist",
+      "critic",
+      "poet"
+     ],
+     "explain": "playwright — dramaturg. novelist — roman yozuvchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Writing that makes fun of politicians or society is ___.",
+     "options": [
+      "satire",
+      "imagery",
+      "rhyme",
+      "verse"
+     ],
+     "explain": "satire — satira: jamiyat kamchiliklarini kulgili tarzda tanqid qilish."
+    },
+    {
+     "kind": "vocab",
+     "q": "A book of poems by many different writers is an ___.",
+     "options": [
+      "anthology",
+      "exhibition",
+      "audience",
+      "interpretation"
+     ],
+     "explain": "anthology — to'plam (antologiya)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Some Jadid writers faced ___: they were arrested and their books were banned.",
+     "options": [
+      "persecution",
+      "inspiration",
+      "publication",
+      "imagery"
+     ],
+     "explain": "persecution — ta'qib. inspiration — ilhom, publication — nashr."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Inspire' ma'nosi?",
+     "options": [
+      "ilhomlantirmoq",
+      "tasvirlamoq",
+      "nashr etmoq",
+      "talqin qilmoq"
+     ],
+     "explain": "inspire — ilhomlantirmoq; inspiration — ilhom.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   },
   {
    "no": 20,
@@ -19025,7 +23583,242 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "She got ___ the taxi and left.",
+     "options": [
+      "in",
+      "on",
+      "off",
+      "over"
+     ],
+     "explain": "Taksi, mashina (kichik) → get in / get out of. Avtobus, poyezd → get on / off.",
+     "sub": "Transport: in yoki on?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Hurry! We need to get ___ the bus now.",
+     "options": [
+      "on",
+      "in",
+      "over",
+      "by"
+     ],
+     "explain": "Avtobus, poyezd, samolyot → get on (chiqmoq) / get off (tushmoq).",
+     "sub": "Transport: in yoki on?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Do you get ___ with your classmates?",
+     "options": [
+      "along",
+      "over",
+      "through",
+      "by"
+     ],
+     "explain": "get along with — yaxshi chiqishmoq (= get on with).",
+     "sub": "Munosabat"
+    },
+    {
+     "kind": "grammar",
+     "q": "It took her two weeks to get ___ the flu.",
+     "options": [
+      "over",
+      "by",
+      "away",
+      "on"
+     ],
+     "explain": "get over + kasallik/ayriliq — tuzalmoq, yengib o'tmoq. 'get over from' — xato.",
+     "sub": "Qiyinchilik"
+    },
+    {
+     "kind": "grammar",
+     "q": "Many students get ___ on very little money.",
+     "options": [
+      "by",
+      "over",
+      "away",
+      "ahead"
+     ],
+     "explain": "get by (on) — kam pul bilan kun ko'rmoq.",
+     "sub": "Qiyinchilik"
+    },
+    {
+     "kind": "grammar",
+     "q": "We need to get rid ___ this old sofa.",
+     "options": [
+      "of",
+      "from",
+      "off",
+      "with"
+     ],
+     "explain": "get rid OF — qutulmoq. Boshqa predlog bo'lmaydi.",
+     "sub": "get rid + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "She got off the taxi.",
+      "She got out of the taxi.",
+      "He got off the train.",
+      "We got on the plane."
+     ],
+     "explain": "Taksidan tushmoq — get out of the taxi. get off — avtobus, poyezd uchun.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "Enough talking. Let's get ___ business.",
+     "options": [
+      "down to",
+      "down",
+      "on to",
+      "over to"
+     ],
+     "explain": "get down TO — jiddiy kirishmoq: Let's get down to business.",
+     "sub": "Ish"
+    },
+    {
+     "kind": "grammar",
+     "q": "He cheated in the exam, but he didn't get away ___ it — the teacher saw him.",
+     "options": [
+      "with",
+      "from",
+      "of",
+      "by"
+     ],
+     "explain": "get away WITH — yomon ish qilib jazosiz qolmoq.",
+     "sub": "get away + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "I called him ten times but couldn't get ___ to him.",
+     "options": [
+      "through",
+      "over",
+      "across",
+      "by"
+     ],
+     "explain": "get through to + KIM — (telefonda) bog'lanmoq.",
+     "sub": "Bog'lanish"
+    },
+    {
+     "kind": "grammar",
+     "q": "He is a clever scientist, but he can't get his ideas ___ to students.",
+     "options": [
+      "across",
+      "along",
+      "away",
+      "ahead"
+     ],
+     "explain": "get + FIKR + across — fikrni tushuntirib yetkazmoq.",
+     "sub": "Tushuntirish"
+    },
+    {
+     "kind": "grammar",
+     "q": "Our family gets ___ every Friday for plov.",
+     "options": [
+      "together",
+      "along",
+      "by",
+      "through"
+     ],
+     "explain": "get together — yig'ilmoq, uchrashmoq.",
+     "sub": "Munosabat"
+    },
+    {
+     "kind": "vocab",
+     "q": "After a big ___, the two friends didn't talk for a week.",
+     "options": [
+      "argument",
+      "support",
+      "loyalty",
+      "trust"
+     ],
+     "explain": "argument — janjal, bahs."
+    },
+    {
+     "kind": "vocab",
+     "q": "After the argument, they finally ___ and became friends again.",
+     "options": [
+      "reconciled",
+      "betrayed",
+      "isolated",
+      "overcame"
+     ],
+     "explain": "reconcile — yarashmoq. betray — xiyonat qilmoq."
+    },
+    {
+     "kind": "vocab",
+     "q": "He told her secret to everyone. It was a ___.",
+     "options": [
+      "betrayal",
+      "loyalty",
+      "rivalry",
+      "support"
+     ],
+     "explain": "betrayal — xiyonat. loyalty — sadoqat (antonim)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Losing the final was a ___, but she came back stronger.",
+     "options": [
+      "setback",
+      "comeback",
+      "rally",
+      "boycott"
+     ],
+     "explain": "setback — muvaffaqiyatsizlik, orqaga ketish. comeback — qaytish."
+    },
+    {
+     "kind": "vocab",
+     "q": "Treating people unfairly because of their skin colour is ___.",
+     "options": [
+      "racism",
+      "rivalry",
+      "loyalty",
+      "isolation"
+     ],
+     "explain": "racism — irqchilik."
+    },
+    {
+     "kind": "vocab",
+     "q": "The difference between what men and women earn is the pay ___.",
+     "options": [
+      "gap",
+      "barrier",
+      "level",
+      "rate"
+     ],
+     "explain": "pay gap — maosh tafovuti."
+    },
+    {
+     "kind": "vocab",
+     "q": "Someone from a poor family with few chances in life is ___.",
+     "options": [
+      "underprivileged",
+      "independent",
+      "isolated",
+      "loyal"
+     ],
+     "explain": "underprivileged — imkoniyati cheklangan, kambag'al."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Resilience' ma'nosi?",
+     "options": [
+      "matonat",
+      "raqobat",
+      "xiyonat",
+      "yakkalanish"
+     ],
+     "explain": "resilience — matonat: qiyinchilikdan keyin tiklanish qobiliyati.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   },
   {
    "no": 21,
@@ -19987,7 +24780,242 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "The plane took ___ at 3 p.m. and landed in Istanbul at 7.",
+     "options": [
+      "off",
+      "up",
+      "over",
+      "on"
+     ],
+     "explain": "take off — samolyot havoga ko'tarilmoq.",
+     "sub": "take + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "It's hot in here. Take your jacket ___.",
+     "options": [
+      "off",
+      "out",
+      "up",
+      "over"
+     ],
+     "explain": "take off + kiyim — yechmoq (↔ put on).",
+     "sub": "take + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "He takes ___ his father — they both have dark eyes and love football.",
+     "options": [
+      "after",
+      "to",
+      "on",
+      "over"
+     ],
+     "explain": "take after — ota-onaga o'xshamoq. Ajralmaydi, bitta zarracha.",
+     "sub": "take + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "I've taken up ___ this year.",
+     "options": [
+      "swimming",
+      "to swim",
+      "swim",
+      "swam"
+     ],
+     "explain": "take up + V-ing (hobbi boshlamoq): taken up swimming.",
+     "sub": "take up + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "She took ___ too much work and now she's exhausted.",
+     "options": [
+      "on",
+      "over",
+      "after",
+      "off"
+     ],
+     "explain": "take on — mas'uliyatni zimmaga olmoq. take over — nazoratni olmoq.",
+     "sub": "take + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "When the director retired, his daughter took ___ the company.",
+     "options": [
+      "over",
+      "up",
+      "off",
+      "after"
+     ],
+     "explain": "take over — boshqaruvni (nazoratni) o'z qo'liga olmoq.",
+     "sub": "take + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "Take off it.",
+      "Take it off.",
+      "He took the phone apart.",
+      "She took down the notes."
+     ],
+     "explain": "Olmosh zarrachadan OLDIN: Take it off. 'Take off it' — xato.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "The lecture was so fast that I couldn't take ___ all the information.",
+     "options": [
+      "in",
+      "on",
+      "after",
+      "over"
+     ],
+     "explain": "take in — tushunib, o'zlashtirib olmoq.",
+     "sub": "take + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Sorry, I was wrong. I take ___ what I said.",
+     "options": [
+      "back",
+      "off",
+      "after",
+      "up"
+     ],
+     "explain": "take back — gapidan qaytmoq; narsani qaytarib olmoq.",
+     "sub": "take + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Don't take your parents for ___ — they do so much for you.",
+     "options": [
+      "granted",
+      "grant",
+      "granting",
+      "given"
+     ],
+     "explain": "take for granted — qadrlamaslik (odatiy deb bilmoq).",
+     "sub": "Ibora"
+    },
+    {
+     "kind": "grammar",
+     "q": "She tried flying once and took ___ it immediately — she loved it.",
+     "options": [
+      "to",
+      "after",
+      "over",
+      "off"
+     ],
+     "explain": "take to — tezda yoqtirib qolmoq.",
+     "sub": "take + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "'take off' qaysi ma'noni BILDIRMAYDI?",
+     "options": [
+      "mas'uliyatni zimmaga olmoq",
+      "samolyot havoga ko'tarilmoq",
+      "kiyimni yechmoq",
+      "biznes tez ommalashmoq"
+     ],
+     "explain": "Mas'uliyat olmoq — take on. take off: uchmoq, yechmoq, tez ommalashmoq.",
+     "sub": "Qoidani tanlang"
+    },
+    {
+     "kind": "vocab",
+     "q": "A person trained to travel into space is an ___.",
+     "options": [
+      "astronaut",
+      "engineer",
+      "crew",
+      "satellite"
+     ],
+     "explain": "astronaut — astronavt (kosmonavt)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The Moon travels around the Earth in an ___.",
+     "options": [
+      "orbit",
+      "atmosphere",
+      "universe",
+      "gravity"
+     ],
+     "explain": "orbit — orbita: bir jism boshqasi atrofida aylanadigan yo'l."
+    },
+    {
+     "kind": "vocab",
+     "q": "In space, astronauts float because of ___.",
+     "options": [
+      "weightlessness",
+      "gravity",
+      "oxygen",
+      "re-entry"
+     ],
+     "explain": "weightlessness — vaznsizlik. gravity — tortish kuchi, u pastga tortadi."
+    },
+    {
+     "kind": "vocab",
+     "q": "'10, 9, 8 ... 1 — lift-off!' This is the ___.",
+     "options": [
+      "countdown",
+      "splashdown",
+      "landing",
+      "mission"
+     ],
+     "explain": "countdown — teskari sanoq (uchishdan oldin)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Old satellites and broken rocket parts in orbit are called space ___.",
+     "options": [
+      "debris",
+      "tourism",
+      "station",
+      "race"
+     ],
+     "explain": "space debris — kosmik chiqindi."
+    },
+    {
+     "kind": "vocab",
+     "q": "The competition between the USA and the USSR to explore space was the space ___.",
+     "options": [
+      "race",
+      "war",
+      "match",
+      "station"
+     ],
+     "explain": "space race — kosmik poyga (Sovuq urush davrida)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Gagarin's rocket took ___ from Baikonur in 1961.",
+     "options": [
+      "off",
+      "up",
+      "over",
+      "in"
+     ],
+     "explain": "take off — uchib ketmoq (raketa, samolyot)."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Lunar' ma'nosi?",
+     "options": [
+      "Oyga oid",
+      "Quyoshga oid",
+      "Yerga oid",
+      "Marsga oid"
+     ],
+     "explain": "lunar — Oyga oid: lunar module — Oy moduli.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   },
   {
    "no": 22,
@@ -20944,7 +25972,242 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "She didn't want to go, so she made ___ an excuse.",
+     "options": [
+      "up",
+      "out",
+      "for",
+      "of"
+     ],
+     "explain": "make up — to'qib chiqarmoq (hikoya, bahona): made up an excuse.",
+     "sub": "make + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "He worked at weekends to make up ___ lost time.",
+     "options": [
+      "for",
+      "with",
+      "to",
+      "of"
+     ],
+     "explain": "make up FOR — qoplamoq (yo'qotilgan narsani).",
+     "sub": "make up + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "It was dark and I couldn't make ___ the number on the bus.",
+     "options": [
+      "out",
+      "up",
+      "for",
+      "of"
+     ],
+     "explain": "make out — zo'rg'a ko'rib/eshitib tushunmoq.",
+     "sub": "make + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The book 'Harry Potter' was made ___ a film.",
+     "options": [
+      "into",
+      "to",
+      "up",
+      "for"
+     ],
+     "explain": "make X INTO Y — aylantirmoq: was made into a film.",
+     "sub": "make + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "What do you make ___ his new business plan?",
+     "options": [
+      "of",
+      "about",
+      "for",
+      "out"
+     ],
+     "explain": "What do you make OF…? — …haqida nima deb o'ylaysan?",
+     "sub": "Fikr so'rash"
+    },
+    {
+     "kind": "grammar",
+     "q": "We had no sugar, so we had to make do ___ honey.",
+     "options": [
+      "with",
+      "by",
+      "for",
+      "of"
+     ],
+     "explain": "make do WITH — bor narsa bilan qanoat qilmoq.",
+     "sub": "make do + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The thief made ___ the money before the police arrived.",
+     "options": [
+      "off with",
+      "out with",
+      "up with",
+      "for with"
+     ],
+     "explain": "make off with — o'g'irlab qochmoq.",
+     "sub": "make + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "What do you make about his plan?",
+      "What do you make of his plan?",
+      "They made up after the argument.",
+      "Women make up 60% of the staff."
+     ],
+     "explain": "Fikr so'rash — make OF: What do you make of his plan?",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "Good weather makes ___ a nice trip.",
+     "options": [
+      "for",
+      "up",
+      "out",
+      "into"
+     ],
+     "explain": "make for — sabab bo'lmoq, olib kelmoq: makes for a nice trip.",
+     "sub": "make + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "'make up' qaysi ma'noni BILDIRMAYDI?",
+     "options": [
+      "yo'qotishni qoplamoq",
+      "to'qib chiqarmoq",
+      "yarashmoq",
+      "tashkil etmoq"
+     ],
+     "explain": "Qoplamoq — make up FOR. make up: to'qimoq, yarashmoq, tashkil etmoq (60% of…).",
+     "sub": "Qoidani tanlang"
+    },
+    {
+     "kind": "grammar",
+     "q": "He made himself out ___ a hero, but in fact he did nothing.",
+     "options": [
+      "to be",
+      "be",
+      "being",
+      "for"
+     ],
+     "explain": "make oneself out TO BE — o'zini boshqacha ko'rsatmoq.",
+     "sub": "make out to be"
+    },
+    {
+     "kind": "grammar",
+     "q": "They made ___ the old house completely — now it looks brand new.",
+     "options": [
+      "over",
+      "into",
+      "for",
+      "of"
+     ],
+     "explain": "make over — butunlay o'zgartirmoq, yangilamoq (makeover).",
+     "sub": "make + ?"
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who starts their own business is an ___.",
+     "options": [
+      "entrepreneur",
+      "investor",
+      "employee",
+      "customer"
+     ],
+     "explain": "entrepreneur — tadbirkor. investor — pul tikuvchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "If a company can't pay its debts, it goes ___.",
+     "options": [
+      "bankrupt",
+      "bankruptcy",
+      "profit",
+      "broke up"
+     ],
+     "explain": "go bankrupt — bankrot bo'lmoq. bankruptcy — ot (bankrotlik)."
+    },
+    {
+     "kind": "vocab",
+     "q": "The money a company keeps after paying all its costs is ___.",
+     "options": [
+      "profit",
+      "revenue",
+      "loan",
+      "budget"
+     ],
+     "explain": "profit — sof foyda. revenue — umumiy tushum (xarajatlardan oldin)."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Toy Story 2' is the ___ to 'Toy Story'.",
+     "options": [
+      "sequel",
+      "storyboard",
+      "franchise",
+      "merger"
+     ],
+     "explain": "sequel — filmning davomi."
+    },
+    {
+     "kind": "vocab",
+     "q": "When two companies join together to form one company, it is a ___.",
+     "options": [
+      "merger",
+      "acquisition",
+      "monopoly",
+      "partnership"
+     ],
+     "explain": "merger — birlashish. acquisition — bir kompaniya boshqasini sotib olishi."
+    },
+    {
+     "kind": "vocab",
+     "q": "The money a film earns in cinemas is its box ___.",
+     "options": [
+      "office",
+      "sales",
+      "market",
+      "income"
+     ],
+     "explain": "box office — kassa daromadi."
+    },
+    {
+     "kind": "vocab",
+     "q": "A company that controls the whole market with no competitors has a ___.",
+     "options": [
+      "monopoly",
+      "franchise",
+      "sequel",
+      "shareholder"
+     ],
+     "explain": "monopoly — monopoliya: raqobatchisiz yakka hukmronlik."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Risk-taker' ma'nosi?",
+     "options": [
+      "tavakkalchi",
+      "raqobatchi",
+      "aksiyador",
+      "mijoz"
+     ],
+     "explain": "risk-taker — tavakkal qilishdan qo'rqmaydigan odam.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   },
   {
    "no": 23,
@@ -21900,7 +27163,242 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "Please turn ___ the TV when you leave the room.",
+     "options": [
+      "off",
+      "down",
+      "up",
+      "over"
+     ],
+     "explain": "turn off — o'chirmoq. turn down — ovozni pasaytirmoq.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The music is too loud. Please turn it ___.",
+     "options": [
+      "down",
+      "up",
+      "on",
+      "into"
+     ],
+     "explain": "Ovozni pasaytirmoq — turn down; olmosh o'rtada: turn it down.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "She was offered a job in London, but she turned it ___.",
+     "options": [
+      "down",
+      "up",
+      "off",
+      "out"
+     ],
+     "explain": "turn down + taklif — rad etmoq.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The party started at 7, but he turned ___ at 10.",
+     "options": [
+      "up",
+      "down",
+      "on",
+      "over"
+     ],
+     "explain": "turn up — (kechikib, kutilmaganda) kelmoq.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Everyone thought the story was false, but it turned out ___ true.",
+     "options": [
+      "to be",
+      "be",
+      "being",
+      "as"
+     ],
+     "explain": "turn out TO BE — …bo'lib chiqmoq.",
+     "sub": "turn out + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "In the fairy tale, the frog turned ___ a prince.",
+     "options": [
+      "into",
+      "to",
+      "up",
+      "out"
+     ],
+     "explain": "turn INTO — aylanmoq. 'turned to a prince' — xato.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "Turn off it.",
+      "Turn it off.",
+      "She turned the job down.",
+      "It turned out to be true."
+     ],
+     "explain": "Olmosh zarrachadan oldin: Turn it off.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "We had to turn ___ because of the storm and go home.",
+     "options": [
+      "back",
+      "over",
+      "in",
+      "up"
+     ],
+     "explain": "turn back — orqaga qaytmoq.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Students must turn ___ their reports by Friday.",
+     "options": [
+      "in",
+      "on",
+      "out",
+      "up"
+     ],
+     "explain": "turn in — (ish, hisobot) topshirmoq.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The car hit a tree and turned ___ twice.",
+     "options": [
+      "over",
+      "out",
+      "into",
+      "back"
+     ],
+     "explain": "turn over — ag'darilmoq.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The players didn't like the coach's decisions, and the team turned ___ him.",
+     "options": [
+      "against",
+      "into",
+      "over",
+      "out"
+     ],
+     "explain": "turn against — qarshi chiqmoq.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The company was losing money, but the new manager turned it ___ in a year.",
+     "options": [
+      "around",
+      "against",
+      "into",
+      "up"
+     ],
+     "explain": "turn around — (vaziyatni) yaxshilamoq, o'nglamoq.",
+     "sub": "turn + ?"
+    },
+    {
+     "kind": "vocab",
+     "q": "The snow leopard is an ___ species — very few are left in the wild.",
+     "options": [
+      "endangered",
+      "extinct",
+      "illegal",
+      "ancient"
+     ],
+     "explain": "endangered — yo'qolib ketish xavfida. extinct — butunlay yo'qolgan."
+    },
+    {
+     "kind": "vocab",
+     "q": "The natural home of an animal is its ___.",
+     "options": [
+      "habitat",
+      "captivity",
+      "biodiversity",
+      "pollution"
+     ],
+     "explain": "habitat — yashash muhiti."
+    },
+    {
+     "kind": "vocab",
+     "q": "Killing animals illegally, for example for their skin, is ___.",
+     "options": [
+      "poaching",
+      "conservation",
+      "reforestation",
+      "observation"
+     ],
+     "explain": "poaching — brakonerlik; poacher — brakoner."
+    },
+    {
+     "kind": "vocab",
+     "q": "Cutting down large areas of forest is ___.",
+     "options": [
+      "deforestation",
+      "reforestation",
+      "biodiversity",
+      "sanctuary"
+     ],
+     "explain": "deforestation — o'rmonlarni kesish. reforestation — qayta tiklash (antonim)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Animals in zoos live in ___, not in the wild.",
+     "options": [
+      "captivity",
+      "wildlife",
+      "extinction",
+      "biodiversity"
+     ],
+     "explain": "captivity — asirlik, qafasda saqlash."
+    },
+    {
+     "kind": "vocab",
+     "q": "The variety of plants and animals in one place is ___.",
+     "options": [
+      "biodiversity",
+      "habitat",
+      "deforestation",
+      "wildlife"
+     ],
+     "explain": "biodiversity — biologik xilma-xillik."
+    },
+    {
+     "kind": "vocab",
+     "q": "Jane Goodall saw chimpanzees catch termites with sticks. This is called tool ___.",
+     "options": [
+      "use",
+      "trade",
+      "waste",
+      "rights"
+     ],
+     "explain": "tool use — qurol ishlatish (hayvonlarda)."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Conservation' ma'nosi?",
+     "options": [
+      "tabiatni muhofaza qilish",
+      "o'rmonlarni kesish",
+      "noqonuniy savdo",
+      "iqlim o'zgarishi"
+     ],
+     "explain": "conservation — tabiatni muhofaza qilish.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   },
   {
    "no": 24,
@@ -22856,7 +28354,242 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "We set ___ early in the morning to avoid the traffic.",
+     "options": [
+      "off",
+      "up",
+      "in",
+      "back"
+     ],
+     "explain": "set off — yo'lga chiqmoq.",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "She set out ___ a novel before she was 30.",
+     "options": [
+      "to write",
+      "writing",
+      "write",
+      "for writing"
+     ],
+     "explain": "set out TO + V1 — maqsad qilib kirishmoq. 'set out writing' — xato.",
+     "sub": "set out + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "My uncle set ___ his own business in Tashkent in 2019.",
+     "options": [
+      "up",
+      "off",
+      "in",
+      "out"
+     ],
+     "explain": "set up — tashkil qilmoq (business, company).",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Winter has set ___ — it's cold and snowy now.",
+     "options": [
+      "in",
+      "on",
+      "up",
+      "off"
+     ],
+     "explain": "set in — (qish, yomg'ir) boshlanib, qaror topmoq.",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The storm set ___ construction by three weeks.",
+     "options": [
+      "back",
+      "up",
+      "aside",
+      "in"
+     ],
+     "explain": "set back — kechiktirmoq, orqaga surmoq. Ot: setback.",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "She sets ___ some money every month for her studies.",
+     "options": [
+      "aside",
+      "off",
+      "in",
+      "back"
+     ],
+     "explain": "set aside — ajratib qo'ymoq (pul, vaqt).",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The smoke from the kitchen set ___ the fire alarm.",
+     "options": [
+      "off",
+      "up",
+      "out",
+      "in"
+     ],
+     "explain": "set off — (signal) ishga tushirmoq, qo'zg'atmoq.",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "Winter has set on.",
+      "Winter has set in.",
+      "They set up a new business.",
+      "We set off for the airport."
+     ],
+     "explain": "Qish boshlandi — set IN. 'set on' — xato.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "He wrote his memories and set them ___ on paper.",
+     "options": [
+      "down",
+      "aside",
+      "off",
+      "back"
+     ],
+     "explain": "set down — yozib qo'ymoq (qog'ozga tushirmoq).",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The postman was set ___ by two angry dogs.",
+     "options": [
+      "upon",
+      "off",
+      "against",
+      "in"
+     ],
+     "explain": "be set upon — hujumga uchramoq.",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Her parents were set ___ the idea of her studying abroad.",
+     "options": [
+      "against",
+      "upon",
+      "off",
+      "aside"
+     ],
+     "explain": "be set against — qat'iy qarshi bo'lmoq.",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "When the teacher gave the task, he set ___ work immediately.",
+     "options": [
+      "to",
+      "up",
+      "in",
+      "off"
+     ],
+     "explain": "set to (work) — ishtiyoq bilan kirishmoq.",
+     "sub": "set + ?"
+    },
+    {
+     "kind": "vocab",
+     "q": "In a democracy, citizens ___ in elections.",
+     "options": [
+      "vote",
+      "govern",
+      "tax",
+      "reform"
+     ],
+     "explain": "vote — ovoz bermoq: vote in elections."
+    },
+    {
+     "kind": "vocab",
+     "q": "The national song of a country is its ___.",
+     "options": [
+      "anthem",
+      "flag",
+      "constitution",
+      "propaganda"
+     ],
+     "explain": "anthem — madhiya."
+    },
+    {
+     "kind": "vocab",
+     "q": "The main law of a country is its ___.",
+     "options": [
+      "constitution",
+      "parliament",
+      "sovereignty",
+      "election"
+     ],
+     "explain": "constitution — konstitutsiya (asosiy qonun)."
+    },
+    {
+     "kind": "vocab",
+     "q": "Paying taxes and voting are examples of civic ___.",
+     "options": [
+      "duty",
+      "pride",
+      "identity",
+      "reform"
+     ],
+     "explain": "civic duty — fuqarolik burchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Uzbek is the ___ language of Uzbekistan.",
+     "options": [
+      "official",
+      "minority",
+      "foreign",
+      "global"
+     ],
+     "explain": "official language — davlat tili."
+    },
+    {
+     "kind": "vocab",
+     "q": "A person who leaves their own country to live abroad is an ___.",
+     "options": [
+      "emigrant",
+      "immigrant",
+      "citizen",
+      "senator"
+     ],
+     "explain": "emigrant — o'z yurtidan ketuvchi. immigrant — boshqa yurtga kelib yashovchi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Using public money for yourself is ___.",
+     "options": [
+      "corruption",
+      "sovereignty",
+      "patriotism",
+      "democracy"
+     ],
+     "explain": "corruption — korrupsiya."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Patriotism' ma'nosi?",
+     "options": [
+      "vatanparvarlik",
+      "fuqarolik",
+      "mustaqillik",
+      "islohot"
+     ],
+     "explain": "patriotism — vatanparvarlik; patriotic — vatanparvar.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   },
   {
    "no": 25,
@@ -23827,7 +29560,243 @@
       ]
      }
     ]
-   }
+   },
+   "kahoot": [
+    {
+     "kind": "grammar",
+     "q": "It's cold outside. Put ___ your coat.",
+     "options": [
+      "on",
+      "off",
+      "out",
+      "up"
+     ],
+     "explain": "put on + kiyim — kiymoq (↔ take off).",
+     "sub": "put + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "They put ___ the meeting until Monday because the boss was ill.",
+     "options": [
+      "off",
+      "out",
+      "on",
+      "up"
+     ],
+     "explain": "put off — kechiktirmoq, keyinga surmoq.",
+     "sub": "put + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "I can't put up ___ this noise any more!",
+     "options": [
+      "with",
+      "for",
+      "to",
+      "on"
+     ],
+     "explain": "put up WITH — chidamoq, toqat qilmoq.",
+     "sub": "put up + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "The firefighters put ___ the fire in ten minutes.",
+     "options": [
+      "out",
+      "off",
+      "down",
+      "away"
+     ],
+     "explain": "put out — (olov) o'chirmoq. 'put off the fire' — xato.",
+     "sub": "put + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "He put ___ a lot of effort and got band 6.5.",
+     "options": [
+      "in",
+      "on",
+      "up",
+      "out"
+     ],
+     "explain": "put in + mehnat/vaqt — sarflamoq. 'put on effort' — xato.",
+     "sub": "put + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi gapda XATO bor?",
+     "options": [
+      "Stop putting off to study.",
+      "Stop putting off studying.",
+      "Put it on.",
+      "They put up a tent in the garden."
+     ],
+     "explain": "put off + V-ing: putting off studying.",
+     "sub": "Xatoni toping"
+    },
+    {
+     "kind": "grammar",
+     "q": "(telefonda) Can you put me ___ to the manager, please?",
+     "options": [
+      "through",
+      "across",
+      "up",
+      "together"
+     ],
+     "explain": "put through (to) — telefonda ulamoq.",
+     "sub": "put + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "She put ___ a team of five for the project.",
+     "options": [
+      "together",
+      "aside",
+      "up",
+      "through"
+     ],
+     "explain": "put together — yig'moq (jamoa, reja).",
+     "sub": "put + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Don't put people ___ — everyone makes mistakes.",
+     "options": [
+      "down",
+      "off",
+      "out",
+      "aside"
+     ],
+     "explain": "put someone down — kamsitmoq.",
+     "sub": "put + ?"
+    },
+    {
+     "kind": "grammar",
+     "q": "Olmosh bilan qaysi gap TO'G'RI?",
+     "options": [
+      "Put it on.",
+      "Put on it.",
+      "Turn off it.",
+      "Look up it."
+     ],
+     "explain": "Ajraladigan phrasal verbda olmosh o'rtada: put it on, turn it off, look it up.",
+     "sub": "Takror: olmosh o'rni"
+    },
+    {
+     "kind": "grammar",
+     "q": "Qaysi juftlik TO'G'RI?",
+     "options": [
+      "set up — tashkil qilmoq",
+      "make up for — to'qib chiqarmoq",
+      "get over — chidamoq",
+      "look into — hurmat qilmoq"
+     ],
+     "explain": "make up for — qoplamoq, get over — yengib o'tmoq, look into — tekshirmoq.",
+     "sub": "Takror: kurs phrasal verblari"
+    },
+    {
+     "kind": "grammar",
+     "q": "Taklifni RAD ETMOQ qaysi phrasal verb?",
+     "options": [
+      "turn down",
+      "turn up",
+      "set off",
+      "take in"
+     ],
+     "explain": "turn down an offer — rad etmoq. turn up — kelmoq, set off — yo'lga chiqmoq.",
+     "sub": "Takror: turn"
+    },
+    {
+     "kind": "grammar",
+     "q": "I look forward ___ from the university soon.",
+     "options": [
+      "to hearing",
+      "to hear",
+      "hearing",
+      "for hearing"
+     ],
+     "explain": "look forward TO + V-ing: to hearing.",
+     "sub": "Takror: look"
+    },
+    {
+     "kind": "vocab",
+     "q": "Money given to a good student to pay for their studies is a ___.",
+     "options": [
+      "scholarship",
+      "tuition fee",
+      "degree",
+      "deadline"
+     ],
+     "explain": "scholarship — grant, stipendiya. tuition fee — o'quvchi to'laydigan pul."
+    },
+    {
+     "kind": "vocab",
+     "q": "Always leaving your work until later is ___.",
+     "options": [
+      "procrastination",
+      "self-discipline",
+      "ambition",
+      "revision"
+     ],
+     "explain": "procrastination — ishni paysalga solish. self-discipline — antonim."
+    },
+    {
+     "kind": "vocab",
+     "q": "A practice exam before the real IELTS is a ___ exam.",
+     "options": [
+      "mock",
+      "placement",
+      "entrance",
+      "final"
+     ],
+     "explain": "mock exam — sinov imtihoni. placement test — darajani aniqlash testi."
+    },
+    {
+     "kind": "vocab",
+     "q": "The last day to finish your work is the ___.",
+     "options": [
+      "deadline",
+      "degree",
+      "graduate",
+      "admission"
+     ],
+     "explain": "deadline — muddat, oxirgi kun."
+    },
+    {
+     "kind": "vocab",
+     "q": "The money you pay a university for your course is tuition ___.",
+     "options": [
+      "fees",
+      "bills",
+      "salaries",
+      "grants"
+     ],
+     "explain": "tuition fees — o'qish to'lovi."
+    },
+    {
+     "kind": "vocab",
+     "q": "Learning new skills throughout your whole life is ___ learning.",
+     "options": [
+      "lifelong",
+      "online",
+      "vocational",
+      "long-life"
+     ],
+     "explain": "lifelong learning — umrbod o'qish."
+    },
+    {
+     "kind": "vocab",
+     "q": "'Ambitious' ma'nosi?",
+     "options": [
+      "katta maqsadli, intiluvchan",
+      "dangasa",
+      "xavotirli",
+      "kamtar"
+     ],
+     "explain": "ambitious — katta maqsadlarga intiluvchan; ambition — intilish.",
+     "sub": "O'zbekcha ma'no"
+    }
+   ]
   }
  ]
 }

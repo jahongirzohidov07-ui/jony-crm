@@ -261,6 +261,18 @@ def audit(db: Session) -> str:
     return f"faol: {body} | yashirin: {hidden}"
 
 
+def _strict_col(db: Session) -> str:
+    """Qat'iy rejim ustuni jonli bazada bormi (2026-09-27). Vercel
+    loglarida sxema/migratsiya qatorlari ba'zan yo'qoladi, [mock-audit]
+    esa har sovuq startda ko'rinadi — tekshiruv shu qatorda turadi."""
+    try:
+        db.query(models.ExamSubmission.away_eids).limit(1).all()
+        return "bor"
+    except Exception as e:      # noqa: BLE001
+        db.rollback()
+        return f"YO'Q ({type(e).__name__})"
+
+
 def audit_off(db: Session, titles: set, limit: int = 40) -> str:
     """Seed nomi bilan, lekin FAOL EMAS yozuvlar (dublikat emas): ularni
     kimdir ataylab o'chirgan — examiner yoki bir martalik migratsiya.
@@ -488,6 +500,6 @@ def seed_mocks(db: Session) -> None:
         print(f"[seed] yetishmagan mock shablonlari yozildi: {added}")
     try:
         print(f"[mock-audit] {audit(db)}")
-        print(f"[mock-audit] {audit_off(db, titles)}")
+        print(f"[mock-audit] {audit_off(db, titles)} | away_eids: {_strict_col(db)}")
     except Exception as e:      # noqa: BLE001
         print(f"[mock-audit] xato: {e}")

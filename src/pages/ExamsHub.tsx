@@ -37,7 +37,13 @@ type MockSection = {
   auto: boolean;
   grading: string;
 };
-type MockBank = { bank: string; label: string; sections: MockSection[] };
+type MockBank = {
+  bank: string;
+  label: string;
+  /** Mock EMAS — mashq to'plami (Challenge 25): band qo'yilmaydi. */
+  practice: boolean;
+  sections: MockSection[];
+};
 
 const SEC_LABEL: Record<string, string> = {
   listening: "Listening",
@@ -75,6 +81,9 @@ function MockTab() {
     );
   }
 
+  const mocks = rows.filter((b) => !b.practice);
+  const practice = rows.filter((b) => b.practice);
+
   return (
     <div className="space-y-5">
       <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
@@ -84,7 +93,7 @@ function MockTab() {
         tanlang. Listening bo'lsa skriptni examiner ovoz chiqarib o'qiydi.
       </p>
 
-      {rows.map((b) => (
+      {mocks.map((b) => (
         <div key={b.bank} className="border border-slate-200 rounded-xl bg-white overflow-hidden">
           <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-200">
             <h2 className="font-semibold text-slate-800">{b.label}</h2>
@@ -136,6 +145,48 @@ function MockTab() {
           </table>
         </div>
       ))}
+
+      {/* MASHQ TO'PLAMLARI — mock emas (Jahongir: "challenge 25 nima
+          qilyabdi bu mock emasku shunchaki mashq edi"). Ro'yxatdan
+          olib tashlanmadi, chunki ustozlar uni test qilib beradi —
+          lekin mock imtihon bilan bir qatorga qo'yilmaydi. */}
+      {practice.length > 0 && (
+        <div className="pt-1">
+          <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">
+            Mashq to'plamlari — mock imtihon emas
+          </p>
+          {practice.map((b) => (
+            <div key={b.bank} className="border border-slate-200 rounded-xl bg-slate-50/60 overflow-hidden">
+              <div className="px-4 py-2.5 border-b border-slate-200">
+                <h2 className="font-semibold text-slate-600">{b.label}</h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  To'liq imtihon tuzilishi emas: faqat Reading savollari.
+                  Band qo'yilmaydi, xom ball va javoblar varaqasi chiqadi.
+                </p>
+              </div>
+              <table className="w-full text-sm">
+                <tbody>
+                  {b.sections.map((s) => (
+                    <tr key={s.section} className="border-t border-slate-100 align-top">
+                      <td className="px-4 py-2.5 font-medium text-slate-700 whitespace-nowrap">
+                        {SEC_LABEL[s.section] || s.section}
+                      </td>
+                      <td className="px-3 py-2.5 text-right text-slate-600 whitespace-nowrap">
+                        {s.variants.length} to'plam
+                      </td>
+                      <td className="px-3 py-2.5 text-right text-slate-600 whitespace-nowrap">
+                        {s.questions === s.questions_max
+                          ? `${s.questions} savol`
+                          : `${s.questions}–${s.questions_max} savol`}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

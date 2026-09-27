@@ -533,6 +533,10 @@ _BANK_LABELS = {
     "cefr": "CEFR Multilevel",
     "challenge25": "Reading Challenge (25 kun)",
 }
+# Mock imtihon EMAS — mashq to'plami: band qo'yilmaydi, bo'limlari
+# to'liq imtihon tuzilishini bermaydi.
+_PRACTICE_BANKS = {"challenge25"}
+_BANK_ORDER = {"ielts": 0, "cefr": 1}
 
 # Har bo'lim qanday baholanadi. "auto" — tizim o'zi chiqaradi.
 _GRADING = {
@@ -631,8 +635,17 @@ def mock_banks(db: Session = Depends(get_db),
         s["paper_max"].add(float(t.paper_max or 0))
         n = sum(1 for q in _questions(parts) if q.get("type") != "essay")
         s["qs"].append(n)
+    # BANKLAR TARTIBI va MASHQ AJRATILISHI (2026-09-27).
+    #
+    # Jahongir: "challenge 25 nima qilyabdi bu mock emasku shunchaki
+    # mashq edi". To'g'ri — Challenge 25 bu IELTS Reading savollari
+    # to'plami, mock imtihon emas va band qo'yilmaydi. Shuning uchun
+    # u "practice" deb belgilanadi va ro'yxatda mocklardan keyin,
+    # alohida ko'rsatiladi. Bazadan o'chirilmaydi: ustozlar uni
+    # avvalgidek test qilib bera oladi.
     out = []
-    for bank in sorted(banks):
+    for bank in sorted(banks, key=lambda b: (b in _PRACTICE_BANKS,
+                                             _BANK_ORDER.get(b, 9), b)):
         secs = []
         for sec in sorted(banks[bank]):
             s = banks[bank][sec]
@@ -652,6 +665,7 @@ def mock_banks(db: Session = Depends(get_db),
             })
         out.append({"bank": bank,
                     "label": _BANK_LABELS.get(bank, bank),
+                    "practice": bank in _PRACTICE_BANKS,
                     "sections": secs})
     return out
 

@@ -155,29 +155,42 @@ def seed_mocks(db: Session) -> None:
         db.rollback()
         print(f"[seed] ko'nikma belgisi: {e}")
 
+    # SHABLONLARNI BAZAGA MOSLASH (2026-09-27).
+    #
+    # Ilgari bu yerda faqat "kalit belgilanganmi" deb qaralardi. Kalit
+    # bir marta belgilangach, yozuvning bazada BOR-YO'QLIGI boshqa
+    # tekshirilmasdi — shuning uchun yozilmay qolgan yoki keyin
+    # o'chib ketgan shablon hech qachon qaytib kelmasdi. Jahongir
+    # buni ko'rdi: "nega bu yerda IELTS da faqat listening turibdi,
+    # qolgani qani".
+    #
+    # Endi har startda bazadagi (daraja, sarlavha) juftliklari BITTA
+    # so'rov bilan o'qiladi va yetishmagani yoziladi. Kalit faqat
+    # tarix uchun qoladi, hech narsani to'sib qo'ymaydi.
+    have = {(lv, ti) for lv, ti in
+            db.query(models.ExamTemplate.level, models.ExamTemplate.title)
+            .filter(models.ExamTemplate.kind == "mock").all()}
+    added = 0
     for tpl in _files():
         parts = None
         for level in (tpl.get("levels") or [None]):
-            key = f"{tpl['key']}_{level or 'all'}"
-            if _seed_done(db, key):
+            if (level, tpl["title"]) in have:
                 continue
-            exists = db.query(models.ExamTemplate).filter(
-                models.ExamTemplate.level == level,
-                models.ExamTemplate.kind == "mock",
-                models.ExamTemplate.title == tpl["title"]).first()
-            if not exists:
-                if parts is None:
-                    parts = _eo.clean_parts(tpl["parts"])
-                db.add(models.ExamTemplate(
-                    level=level,
-                    kind="mock",
-                    unit_no=None,
-                    title=tpl["title"],
-                    parts=json.dumps(parts, ensure_ascii=False),
-                    paper_max=float(tpl.get("paper_max") or 0),
-                    variant=tpl.get("variant") or "A",
-                    subject="english",
-                    is_active=1,
-                    created_by="JonyOS"))
-                db.commit()
-            _seed_mark(db, key)
+            if parts is None:
+                parts = _eo.clean_parts(tpl["parts"])
+            db.add(models.ExamTemplate(
+                level=level,
+                kind="mock",
+                unit_no=None,
+                title=tpl["title"],
+                parts=json.dumps(parts, ensure_ascii=False),
+                paper_max=float(tpl.get("paper_max") or 0),
+                variant=tpl.get("variant") or "A",
+                subject="english",
+                is_active=1,
+                created_by="JonyOS"))
+            have.add((level, tpl["title"]))
+            added += 1
+        db.commit()
+    if added:
+        print(f"[seed] yetishmagan mock shablonlari yozildi: {added}")

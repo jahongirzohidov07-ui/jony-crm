@@ -16409,6 +16409,1144 @@
      "2 coin"
     ]
    ]
+  },
+  {
+   "no": 19,
+   "title": "Writing Task 1 (1): Task 1 bilan tanishuv va 4 baholash mezoni",
+   "grammar_topic": "Academic Writing Task 1: talablar (150 so'z, 20 daqiqa), savol turlari va examiner baholaydigan 4 mezon",
+   "vocab_topic": "Task 1 tili: grafik, jadval, jarayon va xaritani tasvirlash uchun asosiy so'zlar",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Ustoz bergan slaydlar: \"Mastering IELTS Writing: Task 1 (Academic)\", 1–14-slaydlar (Section 1: General Overview).",
+   "objectives": [
+    "Task 1 ning asosiy talablarini bilish: kamida 150 so'z, 20 daqiqa, Task 2 ning yarmicha ball, fikr emas — ma'lumotni tasvirlash.",
+    "Task 1 savolini ko'rib, turini aniqlash: grafik (line, bar, pie), jadval, jarayon (process) yoki xarita (map); bir nechta grafik ham bo'lishi mumkin.",
+    "Examiner baholaydigan 4 mezonni o'z so'zi bilan tushuntira olish: Task Achievement, Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy.",
+    "Band 7 uchun har mezonda nima kerakligini bilish — ayniqsa aniq OVERVIEW (umumiy tendensiya) va asosiy xususiyatlarni tanlash.",
+    "Namuna javobda har mezon qayerda ko'rinishini topa olish."
+   ],
+   "materials": [
+    "Slaydlar 1–14 (quyidagi Reading bo'limida ikki rasm) — proyektorda ko'rsatiladi.",
+    "Namuna javob (Jony Academy) va uning jadvali — har o'quvchiga chop etilgan, to'rt rangli marker bilan (har mezonga bitta rang).",
+    "Doskada to'rt ustun: TA — CC — LR — GRA; dars davomida har ustunga misollar yozib boriladi.",
+    "Soat: Task 1 uchun 20 daqiqa normasi doskaga yoziladi."
+   ],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Savol: \"Task 2 ni bilasiz. Task 1 undan nimasi bilan farq qiladi?\" — javoblar doskaga."
+    ],
+    [
+     15,
+     "Task 1 nima? (slaydlar 1–3)",
+     "150 so'z, 20 daqiqa, yarim ball, grafik / jadval / jarayon / xarita. O'quvchilar daftarga 5 ta asosiy faktni yozadi."
+    ],
+    [
+     15,
+     "To'rt misol (slaydlar 4–7)",
+     "Har misolda: bu qaysi tur? vaqt bormi? nimani solishtirish kerak? (1-mashq bilan birga)."
+    ],
+    [
+     20,
+     "To'rt mezon (slaydlar 8–13)",
+     "Har mezon: rasmiy talab → \"boshqacha aytganda\" → bitta tipik xato. Doskadagi to'rt ustun to'ldiriladi."
+    ],
+    [
+     10,
+     "Band descriptor xulosasi (slayd 14)",
+     "O'quvchilar har mezondan bittadan eng muhim talabni tanlab aytadi."
+    ],
+    [
+     20,
+     "Namuna javob tahlili",
+     "Jony Academy namunasi o'qiladi; o'quvchilar to'rt rang bilan mezonlarni belgilaydi."
+    ],
+    [
+     25,
+     "Sinf mashqlari",
+     "2-mashq (qaysi mezon?) va 3-mashq (Task 1 da nima bo'lmaydi?)."
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "Uyga: jadval bo'yicha kirish + overview va mezonlar ro'yxati bilan o'z-o'zini tekshirish."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Academic Writing Task 1 — grafik, jadval, jarayon yoki xarita berilgan qisqa hisobot. Kamida 150 so'z, tavsiya etilgan vaqt 20 daqiqa. Task 2 ikki barobar ko'p ball beradi, shuning uchun Task 1 ga 20 daqiqadan ortiq vaqt sarflamang.",
+     "Savol har doim bir xil ko'rsatma bilan tugaydi: \"Summarise the information by selecting and reporting the main features, and make comparisons where relevant.\" Ya'ni uchta ish: 1) ASOSIY xususiyatlarni TANLASH (hamma raqamni emas); 2) ularni tasvirlash; 3) solishtirish.",
+     "To'rt tur: grafik (line, bar, pie), jadval, jarayon (process) va xarita (map). Ba'zan ikkita grafik yoki grafik + jadval birga beriladi (slayd 4 dagi Yaman va Italiya pie chartlari).",
+     "Task 1 da FIKR yo'q: \"I think\", \"in my opinion\", sabab va taxminlar (\"because people are lazier now\") yozilmaydi. Faqat ko'rsatilgan ma'lumot.",
+     "TASK ACHIEVEMENT: savoldagi hamma narsani qamrash, aniq OVERVIEW (umumiy tendensiya yoki eng katta farq) va asosiy xususiyatlarni aniq tasvirlash. Overview'siz javob odatda Band 5 dan oshmaydi.",
+     "COHERENCE AND COHESION: mantiqiy tartib (kirish → overview → tafsilotlar) va bog'lovchilar (however, whereas, by contrast, at this point) — lekin ortiqcha emas.",
+     "LEXICAL RESOURCE: sinonimlar va aniqlik (\"nice\" emas, \"a sharp rise\"), kollokatsiyalar (\"rise sharply\", \"a slight fall\"). Bir so'zni takrorlamaslik uchun paraphrase.",
+     "GRAMMATICAL RANGE AND ACCURACY: oddiy va murakkab gaplar aralash, gaplarning yarmidan ko'pi xatosiz, vergul va nuqta to'g'ri."
+    ],
+    "formulas": [
+     [
+      "Task Achievement",
+      "Hammasini qamrash, aniq overview, asosiy xususiyatlar",
+      "\"Overall, TV viewing fell sharply, while social media became the most popular activity.\"",
+      "Overview yo'q; hamma raqamni ketma-ket sanash"
+     ],
+     [
+      "Coherence and Cohesion",
+      "Mantiqiy tartib, bog'lovchilar",
+      "\"By contrast, ...\", \"Over the following decade, however, ...\"",
+      "Har gapni \"Also\" bilan boshlash"
+     ],
+     [
+      "Lexical Resource",
+      "Sinonim, aniqlik, kollokatsiya",
+      "\"more than tripled\", \"remained minor\"",
+      "\"The number is big\", bir so'zni 5 marta takrorlash"
+     ],
+     [
+      "Grammatical Range and Accuracy",
+      "Murakkab gaplar + xatosizlik",
+      "\"..., which was three times the figure for social media\"",
+      "Faqat qisqa gaplar; zamon xatolari"
+     ]
+    ],
+    "presentation": [
+     [
+      "150 so'zdan ko'p yozsam ball oshadimi?",
+      "Yo'q. 160–190 so'z yetarli. Uzunroq javob — ko'proq xato ehtimoli va Task 2 ga kam vaqt."
+     ],
+     [
+      "Hamma raqamni yozishim kerakmi?",
+      "Yo'q. \"Selecting\" — tanlash. Eng katta, eng kichik, eng ko'p o'zgargan va istisnolarni yozing."
+     ],
+     [
+      "Xulosa (conclusion) yozamanmi?",
+      "Task 1 da overview yetarli. Fikrli xulosa yozmang."
+     ],
+     [
+      "Nega bunday bo'lganini tushuntirsam-chi?",
+      "Kerak emas va xato: grafikda sabab ko'rsatilmagan. Bu Task Achievement ni pasaytiradi."
+     ],
+     [
+      "Overview qayerda turadi?",
+      "Odatda kirishdan keyin, ikkinchi xatboshida — examiner uni darhol ko'radi (keyingi darsda batafsil)."
+     ],
+     [
+      "Qaysi mezon eng muhim?",
+      "To'rttasi teng (har biri 25%). Lekin Task 1 da eng ko'p ball overview va tanlash (Task Achievement) da yo'qotiladi."
+     ]
+    ],
+    "notes": [
+     "Bu dars — Writing Task 1 turkumining kirishi. Slaydlar ingliz tilida; har slayddan keyin o'quvchi o'z so'zi bilan o'zbekcha yoki inglizcha qayta aytsin.",
+     "To'rt mezonni devorga ilib qo'ying — keyingi Writing darslarida har tekshiruv shu to'rt ustun bo'yicha bo'ladi.",
+     "Namuna javobdagi ma'lumotlar mashq uchun to'qilgan; o'quvchilarga buni aytib qo'ying."
+    ],
+    "mistakes": [
+     [
+      "Overview yozmaslik",
+      "\"Overall, ...\" bilan 1–2 gap",
+      "Task Achievement Band 5 dan oshmaydi"
+     ],
+     [
+      "Hamma raqamni ketma-ket yozish",
+      "Asosiy xususiyatlarni tanlash",
+      "\"Selecting\" talabi bajarilmaydi"
+     ],
+     [
+      "Sabab va fikr qo'shish",
+      "Faqat grafikdagi ma'lumot",
+      "Task 1 da fikr so'ralmaydi"
+     ],
+     [
+      "Savolni so'zma-so'z ko'chirish",
+      "Paraphrase: \"shows\" → \"compares\"",
+      "Ko'chirilgan so'zlar sanalmaydi"
+     ],
+     [
+      "150 so'zdan kam yozish",
+      "160–190 so'z",
+      "Ball kamayadi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE — Task 1 ning har javobida keladigan so'zlar; STRONG — solishtirish va o'zgarish; SUPER — Band 7 uchun aniq iboralar.",
+     "Har so'z bilan namuna jadval (quyida) haqida bitta gap tuzing."
+    ],
+    "core": [
+     [
+      "illustrate",
+      "ko'rsatmoq, tasvirlamoq",
+      "The table illustrates how young people spent their free time.",
+      "Jadval yoshlar bo'sh vaqtini qanday o'tkazganini ko'rsatadi.",
+      "ˈɪləstreɪt"
+     ],
+     [
+      "compare",
+      "solishtirmoq",
+      "The chart compares four leisure activities.",
+      "Diagramma to'rt mashg'ulotni solishtiradi.",
+      "kəmˈpeə"
+     ],
+     [
+      "figure",
+      "raqam, ko'rsatkich",
+      "The figure for social media tripled.",
+      "Ijtimoiy tarmoqlar ko'rsatkichi uch baravar oshdi.",
+      "ˈfɪɡə"
+     ],
+     [
+      "proportion",
+      "ulush",
+      "A large proportion of students chose sport.",
+      "Talabalarning katta qismi sportni tanladi.",
+      "prəˈpɔːʃən"
+     ],
+     [
+      "overall",
+      "umuman olganda",
+      "Overall, television became less popular.",
+      "Umuman olganda, televizor kamroq mashhur bo'ldi.",
+      "ˌəʊvərˈɔːl"
+     ],
+     [
+      "increase",
+      "oshmoq; o'sish",
+      "Time online increased significantly.",
+      "Internetdagi vaqt sezilarli oshdi.",
+      "ɪnˈkriːs"
+     ],
+     [
+      "decrease",
+      "kamaymoq; kamayish",
+      "Reading time decreased slightly.",
+      "Kitob o'qish vaqti biroz kamaydi.",
+      "dɪˈkriːs"
+     ],
+     [
+      "whereas",
+      "holbuki, ... esa",
+      "TV fell, whereas social media rose.",
+      "Televizor kamaydi, ijtimoiy tarmoqlar esa oshdi.",
+      "weərˈæz"
+     ],
+     [
+      "respectively",
+      "mos ravishda",
+      "The figures were 5 and 6 hours respectively.",
+      "Ko'rsatkichlar mos ravishda 5 va 6 soat edi.",
+      "rɪˈspektɪvli"
+     ],
+     [
+      "period",
+      "davr",
+      "Over the period, sport changed little.",
+      "Bu davr mobaynida sport kam o'zgardi.",
+      "ˈpɪəriəd"
+     ]
+    ],
+    "strong": [
+     [
+      "significantly",
+      "sezilarli darajada",
+      "Social media use grew significantly.",
+      "Ijtimoiy tarmoqdan foydalanish sezilarli oshdi.",
+      "sɪɡˈnɪfɪkəntli"
+     ],
+     [
+      "slightly",
+      "biroz",
+      "Sport rose slightly, from 5 to 6 hours.",
+      "Sport biroz oshdi, 5 dan 6 soatga.",
+      "ˈslaɪtli"
+     ],
+     [
+      "by contrast",
+      "aksincha",
+      "By contrast, reading became less common.",
+      "Aksincha, kitob o'qish kamaydi.",
+      "baɪ ˈkɒntrɑːst"
+     ],
+     [
+      "overtake",
+      "quvib o'tmoq",
+      "Social media overtook television in 2025.",
+      "2025 yilda ijtimoiy tarmoqlar televizorni quvib o'tdi.",
+      "ˌəʊvəˈteɪk"
+     ],
+     [
+      "remain",
+      "qolmoq, o'zgarmay turmoq",
+      "Sport remained a minor activity.",
+      "Sport kichik mashg'ulot bo'lib qoldi.",
+      "rɪˈmeɪn"
+     ],
+     [
+      "least / most popular",
+      "eng kam / eng ko'p mashhur",
+      "Reading was the least popular pastime.",
+      "Kitob o'qish eng kam mashhur mashg'ulot edi.",
+      "liːst ˈpɒpjələ"
+     ]
+    ],
+    "super": [
+     [
+      "more than tripled",
+      "uch baravardan ko'proq oshdi",
+      "Time online more than tripled.",
+      "Internetdagi vaqt uch baravardan ko'proq oshdi.",
+      "mɔː ðən ˈtrɪpld"
+     ],
+     [
+      "the most striking change",
+      "eng ko'zga tashlanadigan o'zgarish",
+      "The most striking change was the fall in TV viewing.",
+      "Eng ko'zga tashlanadigan o'zgarish — televizor ko'rishning kamayishi.",
+      "ˈstraɪkɪŋ"
+     ],
+     [
+      "three times the figure for",
+      "... ko'rsatkichidan uch barobar",
+      "It was three times the figure for sport.",
+      "Bu sport ko'rsatkichidan uch barobar edi.",
+      "θriː taɪmz"
+     ],
+     [
+      "a reversal in",
+      "... da teskari o'zgarish",
+      "There was a reversal in the popularity of TV and social media.",
+      "Televizor va ijtimoiy tarmoqlar mashhurligida teskari o'zgarish bo'ldi.",
+      "rɪˈvɜːsl"
+     ]
+    ],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "1-mashq: Bu qaysi tur? Vaqt bormi?",
+     "type": "Og'zaki",
+     "instr": "Ustoz savol boshini o'qiydi. O'quvchilar ayting: 1) turi (line / bar / pie / table / process / map); 2) vaqt o'zgarishi bormi; 3) asosan nimani solishtirish kerak.",
+     "items": [
+      "The graph shows the number of visitors to three museums in London between 2000 and 2020.",
+      "The pie charts give information about the ages of the populations of Yemen and Italy in 2000 and projections for 2050.",
+      "The table gives information about the underground railway systems in six cities.",
+      "The two maps show an island before and after the construction of some tourist facilities.",
+      "The diagrams show the stages and equipment used in the cement-making process.",
+      "The bar chart compares the average monthly rainfall in four cities."
+     ],
+     "answers": [
+      "line graph — vaqt bor; muzeylar o'zgarishi va solishtiruvi",
+      "pie chart (bir nechta) — vaqt bor (2000 → 2050); yosh guruhlari ulushi, ikki davlat",
+      "table — vaqt yo'q; shaharlar orasidagi farq",
+      "map — \"oldin va keyin\"; nima qo'shildi, nima o'zgardi",
+      "process — vaqt emas, BOSQICHLAR; boshi va oxiri",
+      "bar chart — vaqt yo'q; shaharlar orasidagi farq"
+     ],
+     "why": [
+      "\"between 2000 and 2020\" — vaqt oralig'i, line graph odatiy.",
+      "Slayd 4 dagi misol. Ikki davlat + ikki yil = to'rtta pie; solishtirish ikki yo'nalishda.",
+      "Slayd 5 dagi misol. Raqamlar ustunlarda; eng katta va eng kichikni tanlash kerak.",
+      "Slayd 6 dagi misol. Xaritada — joylashuv va o'zgarish tili (was built, was replaced).",
+      "Slayd 7 dagi misol. Jarayonda passiv (is heated, is mixed) va bosqich bog'lovchilari.",
+      "Vaqt yo'q — o'sish/kamayish emas, solishtirish tili (higher than, the lowest)."
+     ],
+     "layout": "qa"
+    },
+    {
+     "title": "2-mashq: Bu xato qaysi mezonga ta'sir qiladi?",
+     "type": "Og'zaki, doskadagi to'rt ustun bilan",
+     "instr": "Ustoz xatoni o'qiydi. O'quvchi mezonni aytadi (TA / CC / LR / GRA) va qanday tuzatishni aytadi.",
+     "items": [
+      "Javobda umumiy tendensiya (overview) yo'q.",
+      "\"The number of people was very big and it was nice.\"",
+      "\"In 2015 young people watches TV 12 hours.\"",
+      "Hamma gap \"Also, ...\" bilan boshlanadi.",
+      "\"I think young people are lazy now, so they use social media.\"",
+      "Javob faqat qisqa oddiy gaplardan iborat, bitta ham murakkab gap yo'q.",
+      "Oxirgi yildagi ma'lumot umuman tilga olinmagan.",
+      "Xatboshilar yo'q — butun javob bitta blok."
+     ],
+     "answers": [
+      "TA",
+      "LR",
+      "GRA",
+      "CC",
+      "TA",
+      "GRA",
+      "TA",
+      "CC"
+     ],
+     "why": [
+      "Overview — Task Achievement ning asosiy talabi.",
+      "\"very big\", \"nice\" — aniq emas; \"a significant number\", \"the highest figure\".",
+      "Zamon va moslashuv: \"watched\"; raqamdan keyin \"hours a week\".",
+      "Bog'lovchilar xilma-xil va o'rinli bo'lishi kerak: however, whereas, by contrast.",
+      "Fikr va sabab — Task 1 talabiga zid.",
+      "Band 7 uchun \"a variety of complex structures\" kerak.",
+      "\"Covers all requirements\" — hamma asosiy ma'lumotni qamrash.",
+      "Xatboshilar mantiqiy tartibni ko'rsatadi (kirish → overview → tafsilot)."
+     ],
+     "layout": "qa"
+    },
+    {
+     "title": "3-mashq: Task 1 da bu gap o'rinlimi?",
+     "type": "Og'zaki",
+     "instr": "Har gapga \"ha\" yoki \"yo'q\" deng va sababini ayting.",
+     "items": [
+      "\"Overall, the most striking change was the fall in television viewing.\"",
+      "\"In my opinion, social media is dangerous for teenagers.\"",
+      "\"This is probably because smartphones became cheaper.\"",
+      "\"Reading was the least popular pastime in both years.\"",
+      "\"To sum up, I believe people should read more books.\"",
+      "\"Time spent on sport rose slightly, from 5 to 6 hours.\""
+     ],
+     "answers": [
+      "ha",
+      "yo'q",
+      "yo'q",
+      "ha",
+      "yo'q",
+      "ha"
+     ],
+     "why": [
+      "Overview — asosiy tendensiya, raqamsiz.",
+      "Fikr — Task 1 da so'ralmaydi.",
+      "Sabab grafikda yo'q — taxmin.",
+      "Solishtirish va asosiy xususiyat.",
+      "Fikrli xulosa — Task 2 uslubi.",
+      "Aniq tafsilot raqam bilan."
+     ],
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Slaydlar 1–7: Task 1 nima? To'rt misol",
+     "qtype": "Slaydlar — ustoz ko'rsatadi",
+     "source": "Ustoz bergan slaydlar (Section 1: General Overview)",
+     "book_ref": "1–3: kurs va Task 1 ning asosiy talablari; 4–7: to'rt misol — pie charts, table, maps, process.",
+     "image": "ielts6_19_slides_1_7.jpg",
+     "tasks": []
+    },
+    {
+     "title": "Slaydlar 8–14: Examiner nimani baholaydi?",
+     "qtype": "Slaydlar — ustoz ko'rsatadi",
+     "source": "Ustoz bergan slaydlar (Lecture 4: What do you want from me?)",
+     "book_ref": "9: to'rt mezon; 10–13: har mezon — rasmiy talab va \"in other words\"; 14: band descriptorlar xulosasi.",
+     "image": "ielts6_19_slides_8_14.jpg",
+     "tasks": []
+    },
+    {
+     "title": "NAMUNA JAVOB — to'rt mezon qayerda ko'rinadi",
+     "qtype": "Table — to'liq javob (Jony Academy)",
+     "source": "Jony Academy namuna javobi (163 so'z; ma'lumotlar mashq uchun to'qilgan)",
+     "book_ref": "SAVOL: The table below shows the average number of hours per week that young people in one city spent on four leisure activities in 2015 and 2025. Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+     "text": [
+      "The table compares the average number of hours per week that young people in one city spent on four leisure activities in 2015 and 2025.",
+      "Overall, the most striking change was a reversal in the popularity of television and social media: watching TV fell sharply, while social media became by far the most time-consuming activity. By contrast, the time given to sport and reading changed very little.",
+      "In 2015, young people spent 12 hours a week watching television, which was three times the figure for social media (4 hours). Over the following decade, however, television viewing dropped to just 5 hours, whereas time on social media more than tripled to 14 hours, overtaking every other activity.",
+      "Sport and reading remained minor activities in both years. Time spent on sport rose slightly, from 5 to 6 hours, while reading was the least popular pastime throughout, falling from 3 hours to only 2 hours a week, the lowest figure in the table for either year."
+     ],
+     "glossary": [
+      "leisure activity — bo'sh vaqt mashg'uloti",
+      "reversal — teskari o'zgarish",
+      "time-consuming — ko'p vaqt oladigan",
+      "overtake — quvib o'tmoq",
+      "minor — kichik, ahamiyati kam",
+      "pastime — ermak, mashg'ulot"
+     ],
+     "paraphrases": [
+      [
+       "The table below shows",
+       "The table compares"
+      ],
+      [
+       "the number of hours",
+       "the figure for, time given to, time spent on"
+      ],
+      [
+       "leisure activities",
+       "activity, pastime"
+      ],
+      [
+       "make comparisons",
+       "three times the figure for, whereas, by contrast"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Ma'lumotlar jadvali (o'quvchiga savol bilan birga beriladi)",
+       "type": "Average hours per week",
+       "instr": "Avval jadvalni o'qing va eng katta ikki o'zgarishni o'zingiz toping; keyin namuna javobni o'qing.",
+       "items": [],
+       "answers": [],
+       "why": [],
+       "layout": "grid",
+       "head": [
+        "Activity",
+        "2015",
+        "2025"
+       ],
+       "rows": [
+        [
+         "Watching TV",
+         "12",
+         "5"
+        ],
+        [
+         "Social media",
+         "4",
+         "14"
+        ],
+        [
+         "Sport",
+         "5",
+         "6"
+        ],
+        [
+         "Reading books",
+         "3",
+         "2"
+        ]
+       ]
+      },
+      {
+       "title": "Namunada to'rt mezonni toping",
+       "type": "To'rt rang bilan belgilash",
+       "instr": "Har savolga namunadan misol keltiring.",
+       "items": [
+        "Qaysi xatboshi OVERVIEW? Unda raqam bormi?",
+        "Savoldagi \"shows\" kirishda nima bilan almashtirilgan?",
+        "Qarama-qarshilikni ko'rsatuvchi 4 ta bog'lovchini toping.",
+        "\"the number of hours\" o'rniga ishlatilgan 3 ta ifoda.",
+        "Bitta murakkab gap (which / whereas bilan) toping.",
+        "Nega sport va kitob o'qish bitta xatboshida?"
+       ],
+       "answers": [
+        "2-xatboshi; raqam yo'q",
+        "compares",
+        "By contrast, however, whereas, while",
+        "the figure for, time given to, time spent on",
+        "\"..., which was three times the figure for social media\" yoki \"..., whereas time on social media more than tripled...\"",
+        "Ikkalasi ham kam o'zgargan — o'xshash ma'lumotlar bitta guruhga"
+       ],
+       "why": [
+        "Task Achievement: overview — umumiy tendensiya, tafsilotsiz.",
+        "Lexical Resource: savolni ko'chirmaslik.",
+        "Coherence and Cohesion: bog'lovchilar xilma-xil.",
+        "Lexical Resource: takrordan qochish.",
+        "Grammatical Range: murakkab gaplar.",
+        "Coherence: mantiqiy guruhlash — keyingi darsning asosiy mavzusi."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [
+    "Bugun Task 1 nima ekanini va examiner qaysi to'rt narsaga qarashini bildik. Uyda birinchi marta o'zingiz kirish va overview yozasiz.",
+    "Birinchi vazifa — quyidagi jadval uchun kirish (1 gap) va overview (2 gap) yozing: \"The table shows the percentage of households in one town that owned four devices in 2005 and 2025: landline phone 90% → 30%; laptop 25% → 80%; smartphone 5% → 95%; DVD player 60% → 10%.\" 10 daqiqa.",
+    "Ikkinchi vazifa — yozganingizni to'rt mezon bo'yicha o'zingiz tekshiring: overview bormi (TA)? savol so'zlari ko'chirilmaganmi (LR)? bog'lovchi bormi (CC)? zamon to'g'rimi (GRA)?",
+    "Uchinchi vazifa — CORE va STRONG so'zlardan 8 tasi bilan namuna jadval haqida 8 gap."
+   ],
+   "homework": [
+    {
+     "title": "Kirish + overview (qurilmalar jadvali)",
+     "type": "Yozma",
+     "instr": "1 gap kirish (paraphrase), 2 gap overview (raqamsiz). 10 daqiqa.",
+     "answers": "Namuna: \"The table compares the proportion of households in a town that owned four types of device in 2005 and 2025. Overall, smartphones and laptops became almost universal, while landline phones and DVD players declined dramatically; the smartphone showed the greatest change of all.\"",
+     "layout": "list"
+    },
+    {
+     "title": "To'rt mezon bo'yicha o'z-o'zini tekshirish",
+     "type": "Yozma",
+     "instr": "Javobingiz ostiga TA / CC / LR / GRA — har biriga bitta \"bor\" yoki \"yo'q\" va sabab.",
+     "answers": "Ustoz keyingi darsda ikki o'quvchining tekshiruvini sinf bilan solishtiradi.",
+     "layout": "list"
+    },
+    {
+     "title": "8 ta gap — Task 1 so'zlari bilan",
+     "type": "Yozma",
+     "instr": "CORE va STRONG ro'yxatidan 8 so'z, har biri bilan namuna jadval haqida bitta gap.",
+     "answers": "Har gapda raqam yoki solishtirish bo'lsin.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Kirish + overview",
+     "overview raqamsiz, savol ko'chirilmagan",
+     "2 coin"
+    ],
+    [
+     "To'rt mezon tekshiruvi",
+     "har mezonga sabab bilan",
+     "1 coin"
+    ],
+    [
+     "8 ta gap",
+     "8 so'z to'g'ri ishlatilgan",
+     "1 coin"
+    ]
+   ]
+  },
+  {
+   "no": 20,
+   "title": "Writing Task 1 (2): 4 savol turi, 4 xatboshili formula va reja",
+   "grammar_topic": "Task 1 ning 4 savol turi (vaqtli grafik, solishtirma grafik, jarayon, xarita), har savolga yaroqli 4 xatboshili formula va 1–2 daqiqalik reja",
+   "vocab_topic": "Tendensiya tili: rise, fall, peak, remain stable, fluctuate + ravishlar (sharply, steadily, slightly)",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Ustoz bergan slaydlar: \"Mastering IELTS Writing: Task 1 (Academic)\", 15–20-slaydlar (Section 2: Approaching the response).",
+   "objectives": [
+    "Task 1 savolini 4 turdan biriga ajratish: vaqt o'zgarishi bor grafik, vaqtsiz solishtirma grafik, jarayon, xarita.",
+    "Har savol turiga yaroqli 4 xatboshili formulani qo'llash: 1) kirish, 2) overview, 3) birinchi guruh tafsilotlar, 4) ikkinchi guruh tafsilotlar.",
+    "Overview va summary farqini bilish: ikkalasini ham yozmaslik, lekin bittasini albatta yozish — overview ikkinchi xatboshida.",
+    "Ma'lumotlarni 3- va 4-xatboshiga mantiqiy GURUHLASH: o'xshash tendensiya, kategoriya, bosqich yoki xarita qismi bo'yicha.",
+    "1–2 daqiqada qisqa belgilar bilan reja tuzish (↑ ↓ ++ →) va rejadan to'liq javob yozish."
+   ],
+   "materials": [
+    "Slaydlar 15–20 (quyidagi Reading bo'limida) — proyektorda.",
+    "Jony Academy line graph'i (sport turlari, 2010–2020) — chop etilgan yoki ekranda.",
+    "Doskada formula: PARA 1 Introduction / PARA 2 Overview / PARA 3 Key details (1) / PARA 4 Key details (2).",
+    "Doskada belgilar lug'ati: ↑ oshdi, ↓ kamaydi, ++ yuqori va barqaror, → keyin, ≈ o'zgarmadi, pk cho'qqi.",
+    "Taymer: har reja uchun 2 daqiqa."
+   ],
+   "timeline": [
+    [
+     5,
+     "Takrorlash",
+     "19-dars: to'rt mezon va overview nima uchun kerak — 3 savol bilan."
+    ],
+    [
+     15,
+     "4 savol turi (slaydlar 15–16)",
+     "Vaqtli grafik, solishtirma grafik, jarayon, xarita; har biriga qanday til kerak (1-mashq)."
+    ],
+    [
+     15,
+     "Formula (slayd 17)",
+     "4 xatboshi; overview yoki summary — ikkalasi emas, bittasi albatta; nega overview ikkinchi xatboshida."
+    ],
+    [
+     15,
+     "Nega reja kerak (slaydlar 18–20)",
+     "Reja vaqt tejaydi; slayd 20 dagi belgilarni birga \"ochish\" (3-mashq)."
+    ],
+    [
+     20,
+     "Namuna: grafik → reja → javob",
+     "Jony Academy line graph'i; ustoz doskada reja tuzadi; namuna javob o'qiladi, xatboshilar formula bilan solishtiriladi."
+    ],
+    [
+     25,
+     "Sinf mashqlari",
+     "2-mashq (guruhlash) va 4-mashq (xatboshilarni tartiblash)."
+    ],
+    [
+     15,
+     "Taymer: uchta reja",
+     "Slaydlar 4–7 dagi uchta misol uchun har biriga 2 daqiqada reja; juftlik solishtiradi."
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "Uyga: berilgan ma'lumotdan to'liq javob, 20 daqiqa."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Task 1 savollari 4 turga bo'linadi (slayd 16): 1) VAQTLI GRAFIK — yillar yoki oylar bo'yicha o'zgarish (line graph, ba'zan bar/table); 2) SOLISHTIRMA GRAFIK — vaqt yo'q, faqat kategoriyalar farqi (pie, bar, table); 3) JARAYON (process) — bosqichlar; 4) XARITA (map) — joy va o'zgarish.",
+     "Tur tilni belgilaydi: vaqtli grafikda o'zgarish tili (rose, fell, peaked, remained stable); solishtirmada solishtirish tili (higher than, twice as many, the largest proportion); jarayonda passiv va ketma-ketlik (is heated, after that, finally); xaritada joylashuv va o'zgarish (was built, was replaced, to the north of).",
+     "FORMULA (slayd 17) — Task 2 dan farqli, har qanday Task 1 savoliga bir xil: PARA 1 — kirish (savolni paraphrase qilish, 1 gap); PARA 2 — overview (eng muhim 2 ta umumiy xususiyat, raqamsiz); PARA 3 — birinchi guruh tafsilotlar; PARA 4 — ikkinchi guruh tafsilotlar.",
+     "Overview yoki summary: oxirida summary yozish ham mumkin, lekin ikkita qoida bor — IKKALASINI HECH QACHON yozmang, BITTASINI HAR DOIM yozing. Biz overview'ni ikkinchi xatboshida yozamiz: examiner eng muhim Task Achievement talabini birinchi qatorlardayoq ko'radi.",
+     "Overview uchun savol: \"Agar grafikni 5 soniya ko'rsam, nimani eslab qolaman?\" — eng katta/eng kichik, asosiy tendensiya (oshdi/kamaydi), eng katta o'zgarish, umumiy naqsh.",
+     "GURUHLASH — 3- va 4-xatboshining sifati: o'xshash tendensiyalar birga (oshganlar / kamayganlar), yoki yuqori va past kategoriyalar, yoki jarayonning birinchi va ikkinchi yarmi, yoki xaritaning shimoli va janubi. Har chiziqqa alohida xatboshi — xato.",
+     "REJA (slaydlar 18–20) 1–2 daqiqa: turini aniqlang → overview uchun 2 ta asosiy fikrni belgilar bilan yozing → P3 va P4 guruhlarini belgilang. Reja faqat siz uchun: \"R↑ // F++ // B, S ↑→↓\" yetarli.",
+     "Vaqt: 2 daqiqa reja + 15 daqiqa yozish + 3 daqiqa tekshirish = 20 daqiqa."
+    ],
+    "formulas": [
+     [
+      "PARA 1 — Introduction",
+      "Savolni paraphrase (1 gap)",
+      "\"The line graph illustrates how many students ... took part in four sports between 2010 and 2020.\"",
+      "Savolni so'zma-so'z ko'chirmang"
+     ],
+     [
+      "PARA 2 — Overview",
+      "2 ta asosiy umumiy xususiyat, raqamsiz",
+      "\"Overall, football was the most popular sport throughout..., whereas basketball and swimming rose at first but then declined.\"",
+      "Raqam va detal yozmang"
+     ],
+     [
+      "PARA 3 — Key details (1)",
+      "Birinchi guruh + raqamlar",
+      "Football + Running (yuqori / o'sib borgan)",
+      "Guruh mantiqiy bo'lsin"
+     ],
+     [
+      "PARA 4 — Key details (2)",
+      "Ikkinchi guruh + raqamlar",
+      "Basketball + Swimming (bir xil naqsh: cho'qqi 2016)",
+      "Har chiziqqa alohida xatboshi emas"
+     ]
+    ],
+    "presentation": [
+     [
+      "Summary va overview farqi nima?",
+      "Overview — ikkinchi xatboshida umumiy tendensiya; summary — oxirida xuddi shunday xulosa. Bittasi yetarli, ikkalasi takror."
+     ],
+     [
+      "Kirish necha gap?",
+      "Bitta gap yetarli: savolni paraphrase qiling (shows → illustrates / compares; between 2010 and 2020 → over a ten-year period)."
+     ],
+     [
+      "Guruhni qanday tanlayman?",
+      "O'xshash tendensiyali ma'lumotlarni birga qo'ying. Rejada doira bilan belgilang."
+     ],
+     [
+      "Reja yozishga vaqt yo'q-ku?",
+      "Reja vaqtni tejaydi: 2 daqiqa rejasiz yozilgan javob ko'pincha 5 daqiqa qayta yozishga olib keladi."
+     ],
+     [
+      "Jarayon va xaritada ham shu formula?",
+      "Ha. Jarayonda P3 — birinchi yarim bosqichlar, P4 — ikkinchi yarim; xaritada P3 — nima o'zgardi, P4 — nima qo'shildi yoki boshqa qism."
+     ],
+     [
+      "Hamma raqamni yozamanmi?",
+      "Yo'q. Boshlanish, oxir, cho'qqi va eng katta farqlar yetarli."
+     ]
+    ],
+    "notes": [
+     "Slayd 20 dagi rejani o'quvchilar \"Umm... what?!\" deb qabul qiladi — maqsad shu: reja faqat yozuvchi uchun. 3-mashqda belgilarni birga gapga aylantiring.",
+     "Keyingi Writing darslarida har javob shu formula bo'yicha tekshiriladi: 4 xatboshi, overview ikkinchi o'rinda, guruhlash mantiqiy.",
+     "Namuna grafikdagi ma'lumotlar mashq uchun to'qilgan."
+    ],
+    "mistakes": [
+     [
+      "Overview ham, summary ham yozish",
+      "Faqat overview (PARA 2)",
+      "Takror — so'z va vaqt isrof"
+     ],
+     [
+      "Overview'da raqamlar",
+      "Faqat umumiy tendensiya",
+      "Raqamlar P3–P4 ga"
+     ],
+     [
+      "Har chiziqqa alohida xatboshi",
+      "Mantiqiy 2 guruh",
+      "Coherence pasayadi"
+     ],
+     [
+      "Rejasiz boshlash",
+      "2 daqiqa reja",
+      "O'rtada adashib qolish"
+     ],
+     [
+      "Vaqtli grafikda solishtirish tilini ishlatmaslik",
+      "whereas, by contrast, respectively",
+      "\"Make comparisons\" talabi bajarilmaydi"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE — o'zgarish fe'llari; STRONG — ravishlar va otlar; SUPER — Band 7 iboralari.",
+     "Namuna grafikdagi har chiziq uchun CORE fe'l + STRONG ravish bilan bitta gap tuzing."
+    ],
+    "core": [
+     [
+      "rise / rose / risen",
+      "oshmoq",
+      "Running rose steadily throughout the decade.",
+      "Yugurish o'n yil davomida bir tekis oshdi.",
+      "raɪz"
+     ],
+     [
+      "fall / fell / fallen",
+      "kamaymoq, tushmoq",
+      "Swimming fell sharply after 2016.",
+      "2016 dan keyin suzish keskin kamaydi.",
+      "fɔːl"
+     ],
+     [
+      "climb",
+      "ko'tarilmoq",
+      "Basketball climbed to 330 students.",
+      "Basketbol 330 talabagacha ko'tarildi.",
+      "klaɪm"
+     ],
+     [
+      "decline",
+      "pasaymoq; pasayish",
+      "Both sports declined after 2016.",
+      "Ikkala sport ham 2016 dan keyin pasaydi.",
+      "dɪˈklaɪn"
+     ],
+     [
+      "peak",
+      "cho'qqiga chiqmoq; cho'qqi",
+      "Basketball peaked in 2016.",
+      "Basketbol 2016 da cho'qqiga chiqdi.",
+      "piːk"
+     ],
+     [
+      "remain stable",
+      "barqaror qolmoq",
+      "Football remained stable at around 430.",
+      "Futbol 430 atrofida barqaror qoldi.",
+      "rɪˈmeɪn ˈsteɪbl"
+     ],
+     [
+      "reach",
+      "yetmoq",
+      "Running reached 400 by 2020.",
+      "Yugurish 2020 ga kelib 400 ga yetdi.",
+      "riːtʃ"
+     ],
+     [
+      "trend",
+      "tendensiya",
+      "The overall trend was upward.",
+      "Umumiy tendensiya o'sish tomon edi.",
+      "trend"
+     ],
+     [
+      "participant",
+      "ishtirokchi",
+      "There were only 90 participants in 2010.",
+      "2010 da atigi 90 ishtirokchi bor edi.",
+      "pɑːˈtɪsɪpənt"
+     ],
+     [
+      "throughout",
+      "davomida, butun ... bo'yi",
+      "Football was the most popular throughout the period.",
+      "Futbol butun davr bo'yi eng mashhur edi.",
+      "θruːˈaʊt"
+     ]
+    ],
+    "strong": [
+     [
+      "sharply",
+      "keskin",
+      "Participation fell sharply.",
+      "Ishtirok keskin kamaydi.",
+      "ˈʃɑːpli"
+     ],
+     [
+      "steadily",
+      "bir tekis",
+      "Running grew steadily every year.",
+      "Yugurish har yili bir tekis o'sdi.",
+      "ˈstedɪli"
+     ],
+     [
+      "dramatically",
+      "juda keskin",
+      "Swimming dropped dramatically.",
+      "Suzish juda keskin tushdi.",
+      "drəˈmætɪkli"
+     ],
+     [
+      "gradually",
+      "asta-sekin",
+      "The figure rose gradually.",
+      "Ko'rsatkich asta-sekin oshdi.",
+      "ˈɡrædʒuəli"
+     ],
+     [
+      "fluctuate",
+      "tebranmoq, o'zgarib turmoq",
+      "Football fluctuated slightly around 430.",
+      "Futbol 430 atrofida biroz tebrandi.",
+      "ˈflʌktʃueɪt"
+     ],
+     [
+      "level off",
+      "barqarorlashmoq",
+      "Basketball levelled off between 2014 and 2016.",
+      "Basketbol 2014–2016 da barqarorlashdi.",
+      "ˈlevl ɒf"
+     ]
+    ],
+    "super": [
+     [
+      "followed a similar pattern",
+      "o'xshash naqshda o'zgardi",
+      "Basketball and swimming followed a similar pattern.",
+      "Basketbol va suzish o'xshash naqshda o'zgardi.",
+      "ˈpætn"
+     ],
+     [
+      "remarkably stable",
+      "ajablanarli darajada barqaror",
+      "The figure stayed remarkably stable.",
+      "Ko'rsatkich ajablanarli darajada barqaror qoldi.",
+      "rɪˈmɑːkəbli"
+     ],
+     [
+      "ending the decade at",
+      "o'n yillikni ... bilan yakunlab",
+      "Swimming fell, ending the decade at 120.",
+      "Suzish kamayib, o'n yillikni 120 bilan yakunladi.",
+      "ˈdekeɪd"
+     ],
+     [
+      "by contrast",
+      "aksincha",
+      "Running, by contrast, grew every year.",
+      "Yugurish esa, aksincha, har yili o'sdi.",
+      "ˈkɒntrɑːst"
+     ]
+    ],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "1-mashq: To'rt turdan qaysi biri? Qanday til kerak?",
+     "type": "Og'zaki",
+     "instr": "Har savolga: tur (vaqtli grafik / solishtirma grafik / jarayon / xarita) va asosiy til (o'zgarish / solishtirish / passiv + ketma-ketlik / joylashuv).",
+     "items": [
+      "The graph shows car ownership in three countries from 1990 to 2020.",
+      "The pie chart shows how a university spent its budget in 2024.",
+      "The diagram shows how chocolate is produced.",
+      "The maps show a town centre in 1995 and today.",
+      "The bar chart shows the number of international students in five countries in 2022.",
+      "The table shows the monthly sales of three smartphone brands from January to June."
+     ],
+     "answers": [
+      "vaqtli grafik — o'zgarish tili",
+      "solishtirma grafik — solishtirish tili (the largest proportion)",
+      "jarayon — passiv + ketma-ketlik",
+      "xarita — joylashuv va o'zgarish (was replaced, was built)",
+      "solishtirma grafik — solishtirish tili",
+      "vaqtli (jadval bo'lsa ham) — o'zgarish + solishtirish"
+     ],
+     "why": [
+      "\"from 1990 to 2020\" — vaqt.",
+      "Bitta yil — vaqt o'zgarishi yo'q.",
+      "\"how ... is produced\" — bosqichlar.",
+      "Ikki davr xaritasi — nima o'zgargan.",
+      "Bitta yil, besh davlat — kategoriyalar farqi.",
+      "Oylar bo'yicha — jadval ham vaqtli bo'lishi mumkin. Turni jadval yoki grafik emas, VAQT belgilaydi."
+     ],
+     "layout": "qa"
+    },
+    {
+     "title": "2-mashq: Guruhlash — P3 va P4 ga nima tushadi?",
+     "type": "Juftlikda",
+     "instr": "Har ma'lumotlar to'plami uchun P3 va P4 guruhini taklif qiling va sababini ayting.",
+     "items": [
+      "Line graph, 4 chiziq: A va C oshgan, B va D kamaygan.",
+      "Pie chart: 6 ta xarajat turi — uchtasi katta (30%, 25%, 20%), uchtasi kichik (10%, 8%, 7%).",
+      "Process: 8 bosqich — 1–4 zavodda, 5–8 do'konda.",
+      "Map: shimoliy qismda park va maktab qurilgan, janubiy qismda fermalar uy-joyga aylangan.",
+      "Table: 6 shahar metrosi — ikkitasi eng eski va eng uzun, ikkitasi eng yangi va eng qisqa."
+     ],
+     "answers": [
+      "P3: A + C (oshganlar); P4: B + D (kamayganlar)",
+      "P3: uchta katta ulush; P4: uchta kichik ulush",
+      "P3: 1–4 bosqich; P4: 5–8 bosqich",
+      "P3: shimoliy qism; P4: janubiy qism",
+      "P3: eski va katta tizimlar; P4: yangi va kichik tizimlar"
+     ],
+     "why": [
+      "O'xshash tendensiya — bitta xatboshida.",
+      "Kattalik bo'yicha guruh — solishtirish oson.",
+      "Jarayonning tabiiy ikki yarmi.",
+      "Xaritada joy bo'yicha guruhlash eng tabiiy.",
+      "Slayd 5 dagi jadval kabi: xususiyatlar bo'yicha ikki guruh."
+     ],
+     "layout": "qa"
+    },
+    {
+     "title": "3-mashq: Rejani \"ochish\" (slayd 20)",
+     "type": "Og'zaki",
+     "instr": "Slayd 20 dagi reja belgilarini to'liq gapga aylantiring. R = Running, F = Football, B = Basketball, S = Swimming.",
+     "items": [
+      "R ↑",
+      "F ++",
+      "B + → ↓",
+      "S ↑ → ↓",
+      "P3: R + S",
+      "P4: F + B"
+     ],
+     "answers": [
+      "Running increased.",
+      "Football was high throughout / remained the most popular.",
+      "Basketball stayed high at first, then declined.",
+      "Swimming rose at first, then fell.",
+      "Paragraph 3 describes running and swimming.",
+      "Paragraph 4 describes football and basketball."
+     ],
+     "why": [
+      "↑ — oshish.",
+      "++ — yuqori va barqaror.",
+      "+ → ↓ — avval yuqori, keyin kamayish.",
+      "↑ → ↓ — avval o'sish, keyin kamayish.",
+      "Reja guruhlarni ham ko'rsatadi.",
+      "Ikkinchi guruh — alohida xatboshi."
+     ],
+     "note": "Belgilar har o'quvchida har xil bo'lishi mumkin — asosiysi, 2 daqiqada tushunarli bo'lsin.",
+     "layout": "qa"
+    },
+    {
+     "title": "4-mashq: Xatboshilarni formula bo'yicha tartiblang",
+     "type": "Juftlikda",
+     "instr": "Ustoz namuna javobning 4 xatboshisini aralash tartibda o'qiydi (yoki qirqilgan tasmalar beradi). To'g'ri tartibni tiklang va har birining nomini ayting.",
+     "items": [
+      "\"Basketball and swimming followed a very similar pattern...\"",
+      "\"The line graph illustrates how many students...\"",
+      "\"Football attracted around 420 students in 2010...\"",
+      "\"Overall, football was the most popular sport...\""
+     ],
+     "answers": [
+      "PARA 4 — key details (2)",
+      "PARA 1 — introduction",
+      "PARA 3 — key details (1)",
+      "PARA 2 — overview"
+     ],
+     "why": [
+      "Ikkinchi guruh: bir xil naqshdagi ikki sport.",
+      "Savolning paraphrase'i.",
+      "Birinchi guruh: yuqori va o'sib borgan sportlar, raqamlar bilan.",
+      "Umumiy tendensiya, raqamsiz."
+     ],
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Slaydlar 15–20: Savol turlari, formula va reja",
+     "qtype": "Slaydlar — ustoz ko'rsatadi",
+     "source": "Ustoz bergan slaydlar (Section 2: Approaching the response — Lecture 5, 7)",
+     "book_ref": "16: to'rt savol turi; 17: har savolga formula (4 xatboshi, overview yoki summary); 18–20: nega reja kerak va reja namunasi.",
+     "image": "ielts6_20_slides_15_20.jpg",
+     "tasks": []
+    },
+    {
+     "title": "NAMUNA: grafik → reja → javob",
+     "qtype": "Line graph — to'liq javob (Jony Academy)",
+     "source": "Jony Academy namuna javobi (160 so'z; grafik ma'lumotlari mashq uchun to'qilgan)",
+     "book_ref": "SAVOL: The graph below shows the number of students taking part in four sports at a university between 2010 and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.  |  REJA (2 daqiqa): O: F ++ (tepada, ≈) // R ↑↑ (90 → 400) // B, S ↑ → ↓ (pk 2016). P3: F + R. P4: B + S.",
+     "image": "ielts6_20_sports_chart.png",
+     "text": [
+      "The line graph illustrates how many students at one university took part in four sports — football, running, basketball and swimming — between 2010 and 2020.",
+      "Overall, football was the most popular sport throughout the period and its numbers remained almost unchanged. Running showed the most dramatic growth, becoming nearly as popular as football by 2020, whereas basketball and swimming both rose at first but then declined sharply.",
+      "Football attracted around 420 students in 2010, and this figure stayed remarkably stable, finishing the decade at 445. Running, by contrast, began as the least popular activity, with only 90 participants, but it grew steadily every year, reaching 400 by 2020.",
+      "Basketball and swimming followed a very similar pattern. Participation in basketball climbed from 200 to a peak of 330 in 2016, and swimming rose from 150 to 260 over the same period. After 2016, however, both fell dramatically, ending the decade at 150 and 120 respectively, lower than their starting points."
+     ],
+     "glossary": [
+      "take part in — qatnashmoq",
+      "throughout the period — butun davr bo'yi",
+      "attract — jalb qilmoq",
+      "participation — ishtirok",
+      "starting point — boshlang'ich nuqta",
+      "respectively — mos ravishda"
+     ],
+     "paraphrases": [
+      [
+       "The graph below shows",
+       "The line graph illustrates"
+      ],
+      [
+       "the number of students taking part in",
+       "how many students ... took part in"
+      ],
+      [
+       "between 2010 and 2020",
+       "the decade / the period"
+      ],
+      [
+       "four sports",
+       "football, running, basketball and swimming"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Namunani formula bilan tekshiring",
+       "type": "Og'zaki",
+       "instr": "Grafik va rejaga qarab javob bering.",
+       "items": [
+        "Overview'dagi ikki asosiy fikr qaysi?",
+        "Nega football va running bitta xatboshida?",
+        "Nega basketball va swimming bitta xatboshida?",
+        "\"respectively\" nimani bildiradi?",
+        "Rejadagi \"pk 2016\" javobning qaysi gapida?",
+        "Javobda summary (oxirgi xulosa) bormi? Nega?"
+       ],
+       "answers": [
+        "Football eng mashhur va barqaror; running eng tez o'sgan, basketball va swimming avval o'sib keyin kamaygan",
+        "Ikkalasi 2020 da eng yuqori ikkita; biri barqaror, biri o'sgan — qarama-qarshilik bilan (by contrast)",
+        "Bir xil naqsh: 2016 gacha o'sish, keyin keskin tushish",
+        "150 — basketball, 120 — swimming (tartib bilan)",
+        "\"climbed from 200 to a peak of 330 in 2016\"",
+        "Yo'q — overview bor, ikkalasi kerak emas"
+       ],
+       "why": [
+        "Overview — raqamsiz, 2 ta umumiy xususiyat.",
+        "Guruhlash: 2020 dagi eng yuqori ikki sport; \"by contrast\" farqni ko'rsatadi.",
+        "\"followed a very similar pattern\" — guruh sababi aniq aytilgan.",
+        "Ikki raqamni bitta gapda berish usuli.",
+        "Reja belgisi → aniq gap.",
+        "Slayd 17: NEVER write both, ALWAYS write one."
+       ],
+       "layout": "qa"
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [
+    "Bugun har qanday Task 1 savoliga yaroqli formulani o'rgandik: kirish, overview, ikki guruh tafsilot — va 2 daqiqalik reja. Uyda birinchi to'liq javobingizni yozasiz.",
+    "Birinchi vazifa — to'liq javob, 20 daqiqa (2 reja + 15 yozish + 3 tekshirish): \"The graph shows the average price of a cinema ticket and a monthly streaming subscription in one country, 2014–2024: cinema £8 → £9 → £11 → £12 (2014, 2017, 2020, 2024); streaming £6 → £8 → £9 → £13.\" Avval rejani yozing, keyin 4 xatboshi.",
+    "Ikkinchi vazifa — slaydlar 4–7 dagi to'rt misoldan ikkitasiga faqat REJA (2 daqiqadan): overview uchun 2 fikr va P3/P4 guruhlari.",
+    "Uchinchi vazifa — CORE fe'llar + STRONG ravishlar bilan sport grafigi haqida 6 gap (har sport uchun kamida bitta)."
+   ],
+   "homework": [
+    {
+     "title": "To'liq javob: kino va streaming narxi",
+     "type": "Yozma",
+     "instr": "Reja + 4 xatboshi, 160–190 so'z, 20 daqiqa. Overview ikkinchi xatboshida, raqamsiz.",
+     "answers": "Namuna overview: \"Overall, both prices increased over the decade, but streaming rose more quickly and overtook the cinema ticket by the end of the period.\" Guruhlash: P3 — 2014–2020 (kino qimmatroq, farq kamayib bordi), P4 — 2024 (streaming o'zib ketdi).",
+     "layout": "list"
+    },
+    {
+     "title": "Ikki reja (slaydlar 4–7 dan)",
+     "type": "Yozma",
+     "instr": "Har biriga 2 daqiqa: tur, overview uchun 2 fikr, P3/P4 guruhlari — belgilar bilan.",
+     "answers": "Ustoz keyingi darsda rejalarni sinfda solishtiradi.",
+     "layout": "list"
+    },
+    {
+     "title": "6 ta gap — tendensiya tili",
+     "type": "Yozma",
+     "instr": "Fe'l + ravish: \"rose steadily\", \"fell sharply\", \"remained stable\".",
+     "answers": "Har gapda raqam va yil bo'lsin.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "To'liq javob (kino/streaming)",
+     "4 xatboshi, overview raqamsiz, 160+ so'z",
+     "3 coin"
+    ],
+    [
+     "Ikki reja",
+     "overview + guruhlar belgilangan",
+     "1 coin"
+    ],
+    [
+     "6 ta gap",
+     "fe'l + ravish to'g'ri",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

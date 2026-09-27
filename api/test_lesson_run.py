@@ -76,12 +76,12 @@ ck("faqat o'z guruhi", [x["group"] for x in it], ["IELTS A1"])
 ck("reja bog'lanmagan", it[0]["plan"], None)
 ck("uy vazifasini bajarmagan", it[0]["homework_missing"], ["Aziz Karimov"])
 ck("yordam kerak (past baho)", [h["name"] for h in it[0]["help_needed"]], ["Bobur Aliyev"])
-# 2026-09-27: IELTS 6.0 (Foundation) to'liq tayyor bo'ldi — ro'yxatda; 7.0 hali tayyor emas
-ck("kurslar ro'yxati (faqat tayyor)", [x["course"] for x in r.json()["courses"]], ["ielts_1_0", "ielts_2_0", "ielts_3_0", "ielts_4_0", "ielts_5_0", "ielts_6_0"])
+# 2026-09-27: IELTS 6.0 va 7.0 to'liq tayyor — ro'yxatda; tayyor emas misoli — mavjud bo'lmagan ielts_8_0
+ck("kurslar ro'yxati (faqat tayyor)", [x["course"] for x in r.json()["courses"]], ["ielts_1_0", "ielts_2_0", "ielts_3_0", "ielts_4_0", "ielts_5_0", "ielts_6_0", "ielts_7_0"])
 ck("rejasiz boshlab bo'lmaydi", c.post(f"/api/lessons/{CUR}/run", headers=T).status_code, 400)
 
 # --- guruhni rejaga bog'lash
-ck("tayyor bo'lmagan daraja", c.put(f"/api/groups/{G1}/plan", json={"course": "ielts_7_0"}, headers=T).status_code, 400)
+ck("tayyor bo'lmagan daraja", c.put(f"/api/groups/{G1}/plan", json={"course": "ielts_8_0"}, headers=T).status_code, 400)
 ck("boshqa ustoz guruhi", c.put(f"/api/groups/{G2}/plan", json={"course": "ielts_1_0"}, headers=T).status_code, 403)
 r = c.put(f"/api/groups/{G1}/plan", json={"course": "ielts_1_0", "next_lesson_no": 7}, headers=T)
 ck("bog'landi 7-dars", (r.status_code, r.json()["next_lesson_no"], "PRESENT CONTINUOUS" in r.json()["next_title"]), (200, 7, True))

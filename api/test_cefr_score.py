@@ -46,23 +46,43 @@ ck("chegaralar uzluksiz",
    ["B1 dan quyi", "B1", "B1", "B2", "B2", "C1"])
 
 # ----------------------------------------------------------------- B
-print("\n=== B. YOZMA ISH (0-36 -> 0-75) ===")
-ck("36 xom -> 75", C.writing_score(36), 75)
-ck("0 xom -> 0", C.writing_score(0), 0)
-ck("hujjatdagi qatorlar",
-   (C.writing_score(35.5), C.writing_score(28.5), C.writing_score(20.3),
-    C.writing_score(12.4), C.writing_score(0.3)),
+print(chr(10) + "=== B1. YOZMA ISH — ESKI FORMAT (0-36 -> 0-75) ===")
+ck("36 xom -> 75", C.writing_score_old(36), 75)
+ck("0 xom -> 0", C.writing_score_old(0), 0)
+ck("2023 hujjatidagi qatorlar",
+   (C.writing_score_old(35.5), C.writing_score_old(28.5),
+    C.writing_score_old(20.3), C.writing_score_old(12.4),
+    C.writing_score_old(0.3)),
    (75, 65, 50, 34, 10))
 prev, mono = -1, True
 for i in range(0, 361):
-    v = C.writing_score(i / 10)
+    v = C.writing_score_old(i / 10)
     if v < prev:
         mono = False
     prev = v
 ck("monoton (0.0 dan 36.0 gacha)", mono, True)
-ck("1-topshiriq 12 + 2-topshiriq 24 = 36", C.WRITING_RAW_MAX, 36.0)
+ck("eski format: 12 + 24 = 36", C.WRITING_OLD_RAW_MAX, 36.0)
 
-# ----------------------------------------------------------------- C
+print(chr(10) + "=== B2. YOZMA ISH — YANGI FORMAT (1.1 + 1.2 + 2 = 17) ===")
+ck("uch topshiriq, maksimal 17",
+   ([p[1] for p in C.WRITING_NEW_PARTS], C.WRITING_NEW_RAW_MAX),
+   ([5, 6, 6], 17))
+ck("topshiriq darajalari B1 / B2 / C1",
+   [p[2] for p in C.WRITING_NEW_PARTS], ["B1", "B2", "C1"])
+ck("namuna 1: 8 xom -> 45, B1",
+   (C.writing_score_new(8), C.level_of(C.writing_score_new(8))), (45, "B1"))
+ck("namuna 2: 12 xom -> 57, B2",
+   (C.writing_score_new(12), C.level_of(C.writing_score_new(12))), (57, "B2"))
+ck("0 -> 0", C.writing_score_new(0), 0)
+ck("noma'lum xom ball — None (xato raqam berilmaydi)",
+   (C.writing_score_new(9), C.writing_score_new(15)), (None, None))
+ck("writing_info: aniq nuqtada exact=True",
+   (C.writing_info(12)["score"], C.writing_info(12)["exact"]), (57, True))
+ck("writing_info: noma'lumda exact=False va izoh bor",
+   (C.writing_info(9)["exact"], "jadval" in C.writing_info(9)["note"]),
+   (False, True))
+ck("eski jadval yangi formatga ishlatilmaydi",
+   C.writing_score_old(8) != C.writing_score_new(8), True)
 print("\n=== C. GAPIRISH (0-21 -> 0-75) ===")
 ck("21 xom -> 75", C.speaking_score(21), 75)
 ck("0 xom -> 0", C.speaking_score(0), 0)

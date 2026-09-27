@@ -6,7 +6,6 @@ import { api, getActiveRole, getToken } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { MOCK_LIMITED, can } from "../lib/roles";
 import {
-  Watermark,
   type PaperAnswers, type PaperPart, type PaperQ,
 } from "../components/ExamPaper";
 import { CdExam } from "../components/CdExam";
@@ -366,7 +365,6 @@ export default function MockPracticeTake() {
     setPlaying(null);
   }
 
-  const who = user?.full_name || "";
   const back = (
     <Link to="/mock-practice" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700">
       <ArrowLeft size={15} /> Mock sinab ko'rish
@@ -418,7 +416,6 @@ export default function MockPracticeTake() {
     const wrong = review.detail.filter((d) => d.ok === false).length;
     return (
       <div className="max-w-2xl mx-auto space-y-4 pb-10">
-        {who ? <Watermark text={`${who} · ${review.title || review.content_key || ""}`} /> : null}
         {back}
         <div className="bg-white rounded-2xl border border-slate-200 p-5">
           <p className="text-xs text-slate-500">
@@ -582,7 +579,9 @@ export default function MockPracticeTake() {
         total={qCount}
         onSubmit={manualSubmit}
         sending={sending}
-        watermark={who ? `${who} · ${run.title}` : undefined}
+        // Suv belgisi YO'Q (2026-09-27, Jahongir: "orqadagi yozuvchalarni
+        // olib tashla") — xodim o'zi uchun sinaydi, matnni o'qishga
+        // xalaqit berardi. O'quvchi imtihonida (ExamTake) u qoladi.
         storageKey={`mockp:${id}`}
         renderQuestionAction={(q: PaperQ) => flagBtn({ id: q.id, n: q.n, q: q.q })}
         renderPartExtra={(p, pi) =>

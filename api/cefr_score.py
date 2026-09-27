@@ -116,6 +116,104 @@ SPEAKING_TABLE = [
 SPEAKING_RAW_MAX = 21.0
 
 
+# ------------------------------------- yozma ish: rasmiy mezonlar
+# Manba: uzbmb.uz "B2 Baholash mezoni (yozma ish)" va
+# "C1 Baholash mezoni (yozma ish)" (2026-09-27 da yuklab olindi).
+#
+# Har topshiriq TO'RT mezon bo'yicha 1-4 balldan baholanadi, ya'ni
+# topshiriq uchun xom ball 0-16. Keyin rasmiy "Konversiya shkalasi"
+# bo'yicha 1.25 ga ko'paytiriladi (1 = 1,3 ... 8 = 10,0 ... 16 = 20,0).
+WRITING_CRITERIA_B2 = [
+    "Topshiriq talablarining bajarilganligi",
+    "Leksika",
+    "Grammatika",
+    "Bog'lanish va matn yaxlitligi",
+]
+WRITING_CRITERIA_C1 = [
+    "Topshiriqning bajarilishi",
+    "Leksik qamrov va aniqlik",
+    "Grammatik qamrov va aniqlik",
+    "Bog'lanish va matn yaxlitligi",
+]
+WRITING_TASK_RAW_MAX = 16          # 4 mezon x 4 ball
+WRITING_CONVERT = 1.25             # rasmiy konversiya shkalasi
+WRITING_TASK_MAX = 20.0            # 16 * 1.25
+
+# Hajm uchun jarima (umumiy balldan ayiriladi). 150 so'zlik topshiriq
+# uchun: 135-120 -> 1, 119-105 -> 2, 104-90 -> 3, 89-75 -> 4.
+WRITING_LENGTH_PENALTY = [(120, 135, 1), (105, 119, 2),
+                          (90, 104, 3), (75, 89, 4)]
+# Tekshirilmaydigan hollar (mavzudan chekinish, 75 so'zdan kam,
+# plagiat) — avtomat minimal ball.
+WRITING_MIN_SCORE = 0.6
+
+
+def _round_half_up(x: float, digits: int = 1) -> float:
+    """Yarimni yuqoriga yaxlitlaydi (rasmiy jadvaldagidek)."""
+    from decimal import Decimal, ROUND_HALF_UP
+    q = Decimal(1).scaleb(-digits)
+    return float(Decimal(repr(x)).quantize(q, rounding=ROUND_HALF_UP))
+
+
+def writing_task_convert(raw) -> Optional[float]:
+    """Topshiriq xom bali (0-16) -> konversiya shkalasi bo'yicha ball
+    (0-20). Rasmiy jadval: ko'paytiruvchi 1.25."""
+    try:
+        r = float(raw)
+    except (TypeError, ValueError):
+        return None
+    if r < 0:
+        return None
+    r = min(r, WRITING_TASK_RAW_MAX)
+    # Rasmiy jadvalda yarim yuqoriga yaxlitlanadi (1 -> 1,3 va
+    # 13 -> 16,3). Python'ning round() i yarimni JUFTGA yaxlitlaydi
+    # va 1.2 / 16.2 berib qo'yadi, shuning uchun qo'lda yaxlitlanadi.
+    return _round_half_up(r * WRITING_CONVERT, 1)
+
+
+def writing_length_penalty(words) -> int:
+    """Hajm uchun jarima bali (0-4). 75 so'zdan kam bo'lsa jarima
+    emas — ish umuman tekshirilmaydi (WRITING_MIN_SCORE)."""
+    try:
+        w = int(words)
+    except (TypeError, ValueError):
+        return 0
+    for lo, hi, pen in WRITING_LENGTH_PENALTY:
+        if lo <= w <= hi:
+            return pen
+    return 0
+
+
+def writing_task_score(marks: list, words=None) -> dict:
+    """Bitta topshiriq: 4 mezon bahosidan (har biri 1-4) yakuniy ball.
+
+    marks — [topshiriq, leksika, grammatika, bog'lanish].
+    words — yozilgan so'z soni (hajm jarimasi uchun, ixtiyoriy).
+    """
+    vals = []
+    for m in marks or []:
+        try:
+            vals.append(max(0, min(4, int(m))))
+        except (TypeError, ValueError):
+            pass
+    raw = sum(vals)
+    conv = writing_task_convert(raw) or 0.0
+    pen = writing_length_penalty(words) if words is not None else 0
+    too_short = words is not None and int(words or 0) < 75
+    final = (WRITING_MIN_SCORE if too_short
+             else max(0.0, _round_half_up(conv - pen, 1)))
+    return {
+        "marks": vals,
+        "raw": raw,
+        "raw_max": WRITING_TASK_RAW_MAX,
+        "converted": conv,
+        "penalty": pen,
+        "too_short": too_short,
+        "score": final,
+        "score_max": WRITING_TASK_MAX,
+    }
+
+
 def level_of(score) -> Optional[str]:
     """0-75 balldan CEFR darajasi."""
     try:

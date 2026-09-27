@@ -555,18 +555,21 @@ _GRADING = {
         False, "Tinglab tushunish bilan bir xil: Rasch metodi, taxminiy "
                "daraja ko'rsatiladi, ballni examiner qo'yadi."),
     ("cefr", "writing"): (
-        False, "Uch topshiriq: 1.1 (0-5) + 1.2 (0-6) + Part 2 (0-6) = "
-               "17 xom ball. To'liq xom ball -> ball jadvali hali yo'q "
-               "(ma'lumi: 8 -> 45, 12 -> 57), shuning uchun ballni "
+        False, "Rasmiy mezon (uzbmb.uz): har topshiriq 4 mezon bo'yicha "
+               "1-4 balldan = 0-16 xom ball, konversiya x1.25 bilan "
+               "0-20 ball. Hajm jarimasi: 135-120 so'z -1, 119-105 -2, "
+               "104-90 -3, 89-75 -4; 75 dan kam yoki mavzudan chetda "
+               "bo'lsa ish tekshirilmaydi (0.6). Yakuniy ballni "
                "examiner kiritadi."),
     ("cefr", "speaking"): (
         False, "8 element = 21 xom ball; rasmiy jadval bo'yicha 0-75 "
                "ball. Jadval shablon ichida, ballni examiner kiritadi."),
     ("challenge25", "reading"): (
-        False, "Savollar avtomat tekshiriladi, lekin to'plamlarda savol "
-               "soni har xil (13 tadan 83 tagacha) — 40 ballik IELTS "
-               "jadvali to'g'ri kelmaydi, shuning uchun band "
-               "yozilmaydi. Xom ball examinerda ko'rinadi."),
+        False, "IELTS Reading savollari to'plami — MASHQ uchun, band "
+               "qo'yilmaydi (egasining qarori). Savollar avtomat "
+               "tekshiriladi, xom ball va javoblar varaqasi examinerda "
+               "ko'rinadi. To'plamlarda savol soni har xil (13 tadan "
+               "83 tagacha)."),
 }
 
 

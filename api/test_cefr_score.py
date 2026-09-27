@@ -83,6 +83,32 @@ ck("writing_info: noma'lumda exact=False va izoh bor",
    (False, True))
 ck("eski jadval yangi formatga ishlatilmaydi",
    C.writing_score_old(8) != C.writing_score_new(8), True)
+print(chr(10) + "=== B3. YOZMA ISH — RASMIY MEZONLAR (uzbmb.uz) ===")
+RASMIY = {1: 1.3, 2: 2.5, 3: 3.8, 4: 5.0, 5: 6.3, 6: 7.5, 7: 8.8, 8: 10.0,
+          9: 11.3, 10: 12.5, 11: 13.8, 12: 15.0, 13: 16.3, 14: 17.5,
+          15: 18.8, 16: 20.0}
+ck("konversiya shkalasi 16 qatorda aynan mos",
+   [k for k, v in RASMIY.items() if C.writing_task_convert(k) != v], [])
+ck("4 mezon x 4 ball = 16 xom", C.WRITING_TASK_RAW_MAX, 16)
+ck("topshiriq maksimali 20", C.WRITING_TASK_MAX, 20.0)
+ck("mezonlar to'rttadan",
+   (len(C.WRITING_CRITERIA_B2), len(C.WRITING_CRITERIA_C1)), (4, 4))
+ck("to'liq ball: [4,4,4,4] -> 20.0",
+   C.writing_task_score([4, 4, 4, 4], 160)["score"], 20.0)
+# Hajm jarimasi: 135-120 -> 1, 119-105 -> 2, 104-90 -> 3, 89-75 -> 4
+ck("hajm jarimasi chegaralari",
+   [C.writing_length_penalty(w) for w in (150, 135, 120, 119, 105, 104, 90, 89, 75, 74)],
+   [0, 1, 1, 2, 2, 3, 3, 4, 4, 0])
+ck("jarima umumiy balldan ayiriladi",
+   C.writing_task_score([2, 2, 2, 2], 128)["score"], 9.0)
+# 75 so'zdan kam — ish tekshirilmaydi, avtomat minimal ball
+ck("75 so'zdan kam -> 0.6 (tekshirilmaydi)",
+   (C.writing_task_score([4, 3, 3, 3], 60)["score"],
+    C.writing_task_score([4, 3, 3, 3], 60)["too_short"]),
+   (0.6, True))
+ck("baho 4 dan oshmaydi, 0 dan tushmaydi",
+   C.writing_task_score([9, -2, 4, 4], 200)["marks"], [4, 0, 4, 4])
+
 print("\n=== C. GAPIRISH (0-21 -> 0-75) ===")
 ck("21 xom -> 75", C.speaking_score(21), 75)
 ck("0 xom -> 0", C.speaking_score(0), 0)

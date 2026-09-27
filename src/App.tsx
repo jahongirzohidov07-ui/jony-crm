@@ -76,6 +76,8 @@ const Apply = lazy(() => import("./pages/Apply"));
 const ExamTake = lazy(() => import("./pages/ExamTake"));
 // Do'st ko'radigan marketing sahifasi — loginsiz (2026-08-28)
 const Referral = lazy(() => import("./pages/Referral"));
+// Ochiq ariza sahifasi jonyos.uz/ariza — loginsiz (2026-09-27)
+const Ariza = lazy(() => import("./pages/Ariza"));
 const ParentHome = lazy(() => import("./pages/ParentHome"));
 const ParentPayments = lazy(() => import("./pages/ParentPayments"));
 const ParentGamification = lazy(() => import("./pages/ParentGamification"));
@@ -260,6 +262,8 @@ function AppRoutes() {
         />
         {/* Referal havolasi: jonyos.uz/r/JONY-XXXXX — loginsiz */}
         <Route path="/r/:code" element={<Referral />} />
+        {/* Ochiq ariza: jonyos.uz/ariza — tanlangan filial lidlariga */}
+        <Route path="/ariza" element={<Ariza />} />
         <Route path="/parent/:token" element={<Parent />}>
           <Route index element={<ParentHome />} />
           <Route path="payments" element={<ParentPayments />} />

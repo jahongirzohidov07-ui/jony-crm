@@ -124,6 +124,42 @@ ck("ro'yxatda website lidlari bor", len(web) >= 3, True)
 ck("manba nomi", roles.LEAD_SOURCE_LABELS["website"],
    "Sayt (jonyacademy.uz)")
 
+print("\n=== 9. jonyos.uz/ariza sahifasi (2026-09-27) ===")
+import leads as _leads  # noqa: E402
+_leads._WEB_LEAD_HITS.clear()
+base = {"form": "ariza", "first_name": " Aziza ", "last_name": "Rahimova",
+        "phone": "+998 93 555 11 22", "branch_id": B2,
+        "language": "Nemis tili", "utm_source": "ig",
+        "utm_medium": "social", "utm_content": "link_in_bio",
+        "page": "https://jonyos.uz/ariza"}
+r = c.post("/api/public/lead", json={**base, "branch_id": None})
+ck("filialsiz -> 400", (r.status_code, "Filial" in r.json().get("detail", "")),
+   (400, True))
+r = c.post("/api/public/lead", json={**base, "language": ""})
+ck("tilsiz -> 400", r.status_code, 400)
+r = c.post("/api/public/lead", json=base)
+ck("ariza qabul", r.status_code, 200)
+ck("tanlangan filial qaytdi", r.json().get("branch"), "Zafar")
+db = SessionLocal()
+al = db.query(models.Lead).get(r.json()["lead_id"])
+ck("ism + familiya birlashdi", al.full_name, "Aziza Rahimova")
+ck("tanlangan filial lidlariga tushdi", al.branch_id, B2)
+ck("Instagram bio -> manba instagram", al.source, "instagram")
+ck("izohda til bor", "Nemis tili" in (al.note or ""), True)
+ck("izohda ariza sahifasi", "jonyos.uz/ariza" in (al.note or ""), True)
+ck("UTM medium ham yozildi", "ig / social" in (al.note or ""), True)
+ck("kim kiritgani", al.created_by, "Ariza sahifasi")
+t2 = [t for t in db.query(models.Task).all()
+      if t.title.startswith("Yangi ariza: Aziza")]
+ck("filial xodimiga vazifa", bool(t2), True)
+db.close()
+r = c.post("/api/public/lead", json={**base, "phone": "+998 94 777 00 11",
+                                     "first_name": "Tolib", "utm_source": ""})
+db = SessionLocal()
+ck("UTM siz -> manba website",
+   db.query(models.Lead).get(r.json()["lead_id"]).source, "website")
+db.close()
+
 print()
 if fails:
     print(f"XATOLAR ({len(fails)}): " + ", ".join(fails))

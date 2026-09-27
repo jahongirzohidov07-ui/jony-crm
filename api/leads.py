@@ -101,6 +101,14 @@ def public_lead(payload: dict, request: Request,
         return {"ok": True}
 
     full_name = " ".join(_s("full_name", 120).split())
+    if not full_name:
+        # jonyos.uz/ariza: ism va familiya alohida maydonda keladi
+        full_name = " ".join(
+            (_s("first_name", 60) + " " + _s("last_name", 60)).split())
+    # "ariza" — JonyOS'ning o'z ariza sahifasi (2026-09-27, Jahongir:
+    # "eski CRMda buni o'zgartirib ... professional qilib ... qaysi
+    # filial va tilni tanlaydi tamom"). Eski modme.uz formasi o'rniga.
+    form = _s("form", 20).lower()
     phone = _s("phone", 40)
     digits = "".join(ch for ch in phone if ch.isdigit())
     if len(full_name) < 3:
@@ -141,11 +149,27 @@ def public_lead(payload: dict, request: Request,
         if d and d[-9:] == tail:
             return {"ok": True, "duplicate": True, "lead_id": l.id}
 
-    course = _s("course", 120)
+    course = _s("course", 120) or _s("language", 120)
     page = _s("page", 200)
     utm = _s("utm_source", 80)
+    utm_medium = _s("utm_medium", 80)
     extra = _s("note", 500)
-    note_lines = ["Sayt orqali ariza (jonyacademy.uz)"]
+    if form == "ariza" and not branch:
+        raise HTTPException(400, "Filialni tanlang")
+    if form == "ariza" and not course:
+        raise HTTPException(400, "Qaysi tilni o'rganmoqchisiz — tanlang")
+    # Manba: ariza sahifasi Instagram bio yoki Telegramdan ochilgan
+    # bo'lsa, lid manbasi shu tarmoq (analitikada to'g'ri ko'rinsin).
+    # Sayt formasining eski xatti-harakati o'zgarmaydi (website).
+    source = "website"
+    if form == "ariza":
+        u = utm.lower()
+        if u in ("ig", "insta") or u.startswith("instagram"):
+            source = "instagram"
+        elif u in ("tg",) or u.startswith("telegram"):
+            source = "telegram"
+    note_lines = (["Ariza sahifasi (jonyos.uz/ariza)"] if form == "ariza"
+                  else ["Sayt orqali ariza (jonyacademy.uz)"])
     if course:
         note_lines.append(f"Yo'nalish: {course}")
     if branch:
@@ -155,7 +179,8 @@ def public_lead(payload: dict, request: Request,
     if page:
         note_lines.append(f"Sahifa: {page}")
     if utm:
-        note_lines.append(f"UTM: {utm}")
+        note_lines.append(f"UTM: {utm}"
+                          + (f" / {utm_medium}" if utm_medium else ""))
     # Qaysi postdan kelgani (2026-09-26): ?c=, utm_content, promo-kod
     # yoki sahifa havolasidan avtomat topiladi
     src_content = None
@@ -174,12 +199,12 @@ def public_lead(payload: dict, request: Request,
     lead = models.Lead(
         full_name=full_name,
         phone=phone,
-        source="website",
-        stage=roles.LEAD_SOURCE_DEFAULT_STAGE.get("website", "new"),
+        source=source,
+        stage=roles.LEAD_SOURCE_DEFAULT_STAGE.get(source, "new"),
         branch_id=branch.id if branch else None,
         note="\n".join(note_lines),
         content_id=src_content.id if src_content else None,
-        created_by="Sayt")
+        created_by="Ariza sahifasi" if form == "ariza" else "Sayt")
     db.add(lead); db.commit(); db.refresh(lead)
     _ensure_public_id(db, "lead", lead)
     db.commit()
@@ -187,7 +212,8 @@ def public_lead(payload: dict, request: Request,
     # Ariza javobsiz qolmasin: filial administratoriga vazifa.
     try:
         _hr_task(db,
-                 title=f"Saytdan ariza: {full_name} ({lead.public_id or lead.id})",
+                 title=(("Yangi ariza: " if form == "ariza" else "Saytdan ariza: ")
+                        + f"{full_name} ({lead.public_id or lead.id})"),
                  body=("\n".join(note_lines)
                        + f"\nTelefon: {phone}\n"
                          "Iltimos, bugunning o'zida qo'ng'iroq qiling."),

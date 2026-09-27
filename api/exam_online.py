@@ -798,8 +798,29 @@ def _qmap(parts: list) -> dict:
     return m
 
 
+def _cefr_info(parts: list, sub: models.ExamSubmission) -> Optional[dict]:
+    """CEFR Multilevel mockida TAXMINIY daraja (2026-09-27).
+
+    Rasmiy hujjatga ko'ra tinglab tushunish va o'qish Rasch metodi
+    bilan hisoblanadi — aniq ball savollar kalibrovkasiga va guruh
+    statistikasiga bog'liq, shuning uchun qat'iy jadval yo'q. Hujjat
+    faqat taxminiy to'g'ri javoblar sonini beradi; examiner shuni
+    ko'rib darajani o'zi qo'yadi."""
+    sec = _mock_section(parts)
+    if sec not in ("cefr_listening", "cefr_reading"):
+        return None
+    if not (sub.online_max or 0):
+        return None
+    try:
+        from cefr_score import lr_approx
+        return lr_approx(sub.online_score or 0, int(sub.online_max))
+    except Exception:          # noqa: BLE001
+        return None
+
+
 def _sub_out(s: models.ExamSubmission, names: dict,
-             qmap: Optional[dict] = None) -> dict:
+             qmap: Optional[dict] = None,
+             cefr: Optional[dict] = None) -> dict:
     return {
         "id": s.id, "student_id": s.student_id,
         "student_name": names.get(s.student_id) if s.student_id else None,
@@ -813,6 +834,8 @@ def _sub_out(s: models.ExamSubmission, names: dict,
         "note": s.note,
         "photo": s.photo,
         "detail": _answer_sheet(_load(s.detail), qmap or {}),
+        # CEFR mockida taxminiy daraja (boshqa testlarda None)
+        "cefr": cefr,
     }
 
 
@@ -902,7 +925,9 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
             "can_publish": user.role in PUBLISH_ROLES,
             "hidden": not can_see,
             "templates": templates,
-            "submissions": [_sub_out(s, names, qmap) for s in subs]}
+            "submissions": [
+                _sub_out(s, names, qmap, _cefr_info(o_parts, s))
+                for s in subs]}
 
 
 @router.post("/api/exams/{exam_id}/online")

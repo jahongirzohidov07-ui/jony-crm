@@ -236,9 +236,16 @@ LEVELS = [
 
 
 def to_scale(raw: float) -> int:
-    """Xom ballni (0-21) 0-75 shkalasiga keltiradi."""
-    raw = max(0.0, min(float(raw), float(RAW_MAX)))
-    return int(round(raw / RAW_MAX * SCALE_MAX))
+    """Xom ballni (0-21) 0-75 shkalasiga keltiradi.
+
+    2026-09-27: ilgari chiziqli formula (raw / 21 * 75) ishlatilardi,
+    lekin RASMIY shkala chiziqli emas — past ballarda farq 8 ballgacha
+    yetardi (xom 3: rasmiy 19, chiziqli 11), ya'ni o'quvchiga darajasi
+    boridan past ko'rsatilardi. Endi rasmiy jadval (cefr_score).
+    """
+    from cefr_score import speaking_score
+    v = speaking_score(max(0.0, min(float(raw), float(RAW_MAX))))
+    return int(v if v is not None else 0)
 
 
 def level_of(score: int) -> tuple[str, str]:

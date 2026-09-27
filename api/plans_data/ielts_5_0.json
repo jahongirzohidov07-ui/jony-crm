@@ -27480,13 +27480,15 @@
   },
   {
    "no": 35,
-   "title": "Mock natijalari tahlili: xatodan bandga",
-   "grammar_topic": "Examiner javoblar varaqasini savol-savol o'qish va har xatoni sababiga ajratish",
-   "vocab_topic": "Xom ball va band, xato sabablari, mavzu bo'yicha naqsh, ikki haftalik aniq reja",
+   "title": "Full Mock: to'liq imtihon va natijalar tahlili",
+   "grammar_topic": "To'liq mockni o'tkazish (Listening 30, Reading 60, Writing 60 daqiqa — havola orqali kompyuterda) va examiner javoblar varaqasini savol-savol o'qib, har xatoni sababiga ajratish",
+   "vocab_topic": "Imtihonni o'tkazish tartibi, xom ball va band, xato sabablari, mavzu bo'yicha naqsh, ikki haftalik aniq reja",
    "duration": 120,
    "test_after": "",
-   "book_ref": "Jony Academy CRM mock bazasi — guruh test ekranidagi examiner javoblar varaqasi (har savol bo'yicha: o'quvchining javobi, to'g'ri javob, mavzu belgisi); band rasmiy xom ball — band jadvali bo'yicha avtomatik qo'yiladi.",
+   "book_ref": "Jony Academy CRM mock bazasi — mock havolasi guruh test ekranidan ochiladi, Listening skriptini examiner ovoz chiqarib o'qiydi; examiner javoblar varaqasi har savol bo'yicha uchta narsani ko'rsatadi (o'quvchining javobi, to'g'ri javob, mavzu belgisi); band rasmiy xom ball — band jadvali bo'yicha avtomatik qo'yiladi.",
    "objectives": [
+    "To'liq mockni tartib bilan o'tkazish: xona va ekran tayyorligi, qoidalarni e'lon qilish, Listening skriptini o'qish, tugatgan o'quvchi bilan ishlash.",
+    "To'liq qog'oz bitta 120 daqiqalik darsga sig'masligini bilish: Listening 30, Reading 60, Writing 60 daqiqa — bu dars o'sha qog'ozning ramkasi.",
     "O'z natijasini rostgo'ylik bilan o'qish: xom ball, band va qaysi bo'lim o'rtachani pastga tortgani.",
     "Examiner javoblar varaqasidagi HAR bir xato javobni olti sababdan bittasiga ajratish.",
     "Xatolarni tizim ko'rsatadigan mavzu belgisi bo'yicha guruhlab, o'zining NAQSHINI ko'rish (13 ta alohida xato emas, 3-4 ta naqsh).",
@@ -27495,8 +27497,13 @@
     "\"Ko'proq mashq qilaman\" degan bo'sh rejani raqamli maqsadga aylantirish."
    ],
    "materials": [
-    "Proyektor yoki katta ekran — examiner javoblar varaqasi butun dars davomida OCHIQ turadi (guruh test ekrani orqali).",
-    "Har o'quvchining o'z natijasi: xom ball, band va bo'lim bo'yicha taqsimot (ustoz dars boshlanishidan oldin ochib qo'yadi).",
+    "Chop etilgan ism ro'yxati: kim qaysi kompyuterda o'tirgani yoziladi, tugatgan o'quvchi yoniga belgi qo'yiladi.",
+    "Ustoz ekranida ochilgan examiner Listening skripti — faqat ustozda turadi, proyektorga chiqarilmaydi va o'quvchiga ko'rsatilmaydi.",
+    "Har stolda zaxira bo'sh qog'oz va qalam: Listening paytida ism, raqam va sanalar qoralama qilinadi.",
+    "Xonada ko'rinadigan soat yoki doskadagi vaqt yozuvi — qolgan vaqt muntazam yangilanib turadi.",
+    "Doskaga oldindan yozilgan xona qoidalari: telefon sumkada, sahifadan chiqish tizimda sanaladi, savol bo'lsa qo'l ko'tariladi.",
+    "Proyektor yoki katta ekran — tahlil qismida examiner javoblar varaqasi OCHIQ turadi (guruh test ekrani orqali).",
+    "Har o'quvchining o'z natijasi: xom ball, band va bo'lim bo'yicha taqsimot (ustoz tahlil qismidan oldin ochib qo'yadi).",
     "Har o'quvchiga chop etilgan \"Olti sabab\" jadvali — har xato yonida belgilash uchun bo'sh ustunli.",
     "Doskada yoki devorda: xom ball — band jadvali, Listening va Reading alohida ustun bo'lib turadi.",
     "Har o'quvchiga \"Ikki haftalik reja\" varaqasi — 6 qatorli, oxirida ustoz imzosi uchun joy.",
@@ -27504,53 +27511,82 @@
    ],
    "timeline": [
     [
-     10,
-     "Kirish: natijani ochish",
+     8,
+     "Mock oldidan: xona va ekran tayyorligi",
+     "Kompyuterlar tekshiriladi, havola guruh test ekranidan ochiladi, examiner skripti ustoz ekranida turadi, ism ro'yxati va zaxira qog'oz tarqatiladi"
+    ],
+    [
+     4,
+     "Joylashtirish va xona qoidalari",
+     "Ism ro'yxati bo'yicha o'tqaziladi; telefon sumkaga; sahifadan chiqish sanalishi ovoz chiqarib aytiladi"
+    ],
+    [
+     8,
+     "Listeningni o'tkazish: skript o'qiladi",
+     "Examiner Part 1-4 ni ovoz chiqarib BIR MARTA o'qiydi; skript faqat examiner ekranida"
+    ],
+    [
+     5,
+     "Reading va Writing yurganda ustoz",
+     "Xona kuzatiladi, mazmun bo'yicha yordam berilmaydi, qolgan vaqt doskaga yozib boriladi"
+    ],
+    [
+     5,
+     "Tugatgan o'quvchi va natijaning tushishi",
+     "Xom ball avtomatik bandga aylanib guruh jurnaliga tushadi; examiner javoblar varaqasi ochiladi"
+    ],
+    [
+     6,
+     "Natijani ochish",
      "Har o'quvchi o'z xom bali va bandini daftariga yozadi, qaysi bo'lim past ekanini aytadi"
     ],
     [
-     10,
+     8,
      "Xom ball — band jadvali",
-     "Doskada ikkala jadval; bitta savol yarim bandni ko'tarishi ko'rsatiladi"
+     "Doskada ikkala jadval; bitta savol yarim bandni ko'tarishi ko'rsatiladi (2-mashq)"
     ],
     [
-     15,
+     12,
      "Olti sabab tanishtiriladi",
-     "Har sababga bittadan tanish misol; sabablar jadvali tarqatiladi"
+     "Har sababga bittadan tanish misol; sabablar jadvali tarqatiladi (1-mashq)"
     ],
     [
-     20,
+     14,
      "Javoblar varaqasi: Listening",
      "Ekranda savol-savol o'qiladi, har xatoga sabab raqami belgilanadi"
     ],
     [
-     15,
+     10,
      "Javoblar varaqasi: Reading",
      "Xuddi shu tartibda, passage bo'yicha ketma-ket"
     ],
     [
-     15,
+     12,
      "Mavzu belgisi bo'yicha guruhlash",
-     "Xatolar mavzuga ko'ra saralanadi, naqsh topiladi"
-    ],
-    [
-     20,
-     "Ikki haftalik reja yoziladi",
-     "Har kim o'zining eng katta ikki sababiga qarab yozadi"
+     "Xatolar mavzuga ko'ra saralanadi, naqsh topiladi (3-mashq)"
     ],
     [
      10,
-     "Juftlikda rejani tekshirish",
-     "Juftlik \"nima, qancha, qachon\" bormi deb tekshiradi"
+     "Naqshdan aniq rejaga",
+     "Har naqsh \"nima, qancha, qachon, kim tekshiradi\" ga aylantiriladi (4-mashq)"
     ],
     [
-     5,
+     12,
+     "Ikki haftalik reja va juftlikda tekshirish",
+     "Har kim 6 qatorni o'z raqamlari bilan to'ldiradi, juftlik o'qib beradi (5-mashq)"
+    ],
+    [
+     6,
      "Xulosa va uyga vazifa",
-     "Reja ustozga ko'rsatiladi, xatolar daftari uyda to'ldiriladi"
+     "Reja ustozga ko'rsatiladi va imzolanadi, xatolar daftari uyda to'ldiriladi"
     ]
    ],
    "grammar": {
     "intro": [
+     "Bu dars ikki qismdan iborat: avval to'liq mock o'tkaziladi, keyin natijalar savol-savol tahlil qilinadi. Yangi mavzu o'rganilmaydi — bugun bilim o'lchanadi va o'lchov rejaga aylantiriladi.",
+     "Mockni examiner guruh test ekranidan havola orqali ochadi, o'quvchilar kompyuterda ishlaydi. Listening 30 daqiqa, Reading 60 daqiqa, Writing 60 daqiqa — jami 150 daqiqa. Ya'ni to'liq qog'oz bitta 120 daqiqalik darsga sig'maydi: u shu slotdan tashqarida yoki bir necha o'tirishda ishlanadi, bu dars esa uning ramkasi.",
+     "Listeningda yozuv qo'yilmaydi: skriptni EXAMINER ovoz chiqarib o'qiydi, bir marta va bir tekis tezlikda. Skript faqat examiner ekranida turadi va hech qachon o'quvchiga ko'rsatilmaydi.",
+     "Xona qoidasi: telefon sumkada, stolda emas. Sahifadan chiqib boshqa oynaga o'tish tizimda sanaladi va examiner ko'radi. Savol bo'lsa qo'l ko'tariladi.",
      "Mock natijasi ikki raqamdan iborat: XOM BALL (40 tadan nechtasi to'g'ri) va BAND (0 dan 9 gacha). Tizim xom ballni rasmiy jadval bo'yicha avtomatik bandga aylantiradi va guruh jurnaliga band yozadi.",
      "Listening va Reading jadvallari BIR XIL EMAS. Masalan 26 ta to'g'ri javob: Listeningda 6.5, Academic Readingda 6.0. Shuning uchun \"ikkalasida 26 ta topdim, demak bir xil\" deyish noto'g'ri.",
      "Band zinapoya kabi ko'tariladi: ba'zan bitta savol butun bandni o'zgartiradi. Listeningda 29 ta = 6.5, 30 ta = 7.0. Ya'ni bitta savol — yarim band. Buni bilgan o'quvchi bo'sh javob qoldirmaydi.",
@@ -27559,60 +27595,100 @@
      "Sabab davoni belgilaydi: \"eshitmadim\" uchun ko'proq tinglash kerak, \"xato yozdim\" uchun esa imlo va raqam diktanti — bu butunlay boshqa mashq va bir hafta ichida natija beradi.",
      "Examiner javoblar varaqasi har savol uchun uchta narsani ko'rsatadi: o'quvchi nima yozgan, to'g'ri javob nima edi va savolning MAVZU BELGISI. Mavzu belgisi bo'yicha saralansa, 13 ta alohida xato 3 ta naqshga aylanadi: masalan \"Part 1 raqam va sana\", \"Matching Headings\", \"Passage 3 oxirgi savollari\".",
      "Naqsh ko'ringandan keyingina reja yoziladi. Reja aniq bo'lishi shart: nima qilinadi, qancha, qaysi kuni, kim tekshiradi va ikki haftadan keyin qaysi raqam o'zgarishi kerak.",
-     "Listening mockda skriptni examiner ovoz chiqarib o'qigan, skript faqat ustozda turadi va o'quvchiga ko'rsatilmaydi. Shuning uchun \"audioni yana eshitaman\" deb bo'lmaydi — tahlil javoblar varaqasi orqali qilinadi.",
+     "Listening skripti examiner ovozida bir marta o'qilgani uchun \"audioni yana eshitaman\" deb bo'lmaydi — tahlil faqat javoblar varaqasi orqali qilinadi.",
      "Har mock uchun 5 ta variant (A-E) bor va havola ochilganda tizim qismlarni variantlar orasida aralashtiradi. Ya'ni bitta varaqni yodlab qo'yib bo'lmaydi — faqat ko'nikma o'sadi."
     ],
     "formulas": [
      [
       "1-bosqich",
-      "Natijani ekranda oching",
+      "Xona va ekranni tayyorlang",
+      "Kompyuterlar, havola, examiner skripti, ism ro'yxati",
+      "O'quvchilar kirishidan oldin bajariladi"
+     ],
+     [
+      "2-bosqich",
+      "Qoidalarni ovoz chiqarib e'lon qiling",
+      "Telefon sumkada, sahifadan chiqish sanaladi, qo'l ko'tariladi",
+      "Testdan keyin aytilgan qoida — kech qolgan qoida"
+     ],
+     [
+      "3-bosqich",
+      "Listening skriptini o'qing",
+      "Part 1-4, bir marta, bir tekis tezlikda",
+      "Skript o'quvchiga hech qachon ko'rsatilmaydi"
+     ],
+     [
+      "4-bosqich",
+      "Reading va Writing davomida kuzating",
+      "Qolgan vaqt doskaga yozib boriladi",
+      "Savol mazmuni bo'yicha yordam berilmaydi"
+     ],
+     [
+      "5-bosqich",
+      "Natija va javoblar varaqasini oching",
       "Xom ball va band yonma-yon",
       "Hech kim boshqaning bandini o'qimaydi"
      ],
      [
-      "2-bosqich",
+      "6-bosqich",
       "Band jadvalini ko'rsating",
       "Listening 29 = 6.5, 30 = 7.0",
       "Bitta savol — yarim band"
      ],
      [
-      "3-bosqich",
+      "7-bosqich",
       "Olti sababni yozdiring",
       "Daftarga raqamlab",
-      "Butun dars shu raqamlar bilan ishlanadi"
+      "Tahlilning qolgani shu raqamlar bilan ishlanadi"
      ],
      [
-      "4-bosqich",
+      "8-bosqich",
       "Listening xatolarini o'qing",
       "Savol raqami, yozilgan javob, to'g'ri javob",
       "Har xatoga sabab raqami qo'yiladi"
      ],
      [
-      "5-bosqich",
+      "9-bosqich",
       "Reading xatolarini o'qing",
       "Xuddi shu tartibda",
       "Passage bo'yicha ketma-ket"
      ],
      [
-      "6-bosqich",
+      "10-bosqich",
       "Mavzu belgisi bo'yicha saralang",
       "Bir xil belgili xatolarni yoniga yig'ing",
       "Naqsh aynan shu yerda ko'rinadi"
      ],
      [
-      "7-bosqich",
+      "11-bosqich",
       "Ikki katta sababni tanlang",
       "Eng ko'p takrorlangan ikkitasi",
       "Ikkitadan ko'p olinmaydi"
      ],
      [
-      "8-bosqich",
+      "12-bosqich",
       "Rejani yozdiring",
       "6 qator, raqam bilan",
       "Ustoz har rejani o'qib imzolaydi"
      ]
     ],
     "presentation": [
+     [
+      "To'liq mock bitta darsga sig'adimi?",
+      "Yo'q. Listening 30, Reading 60, Writing 60 daqiqa — jami 150 daqiqa. Qog'oz shu darsdan tashqarida yoki bir necha o'tirishda ishlanadi; bu dars esa uning ramkasi: o'tkazish va tahlil."
+     ],
+     [
+      "Testni kim ochadi?",
+      "Examiner guruh test ekranidan havolani ochadi, o'quvchi kompyuterda ishlaydi. Havolani o'quvchi o'zi qidirmaydi."
+     ],
+     [
+      "Listeningni kim o'qiydi?",
+      "Examiner. Yozuv yo'q: skript bir marta, bir tekis tezlikda ovoz chiqarib o'qiladi va faqat examiner ekranida turadi."
+     ],
+     [
+      "Sahifadan chiqib ketsam nima bo'ladi?",
+      "Tizim buni sanaydi va examiner ko'radi. Telefon sumkada turadi, savol bo'lsa qo'l ko'tariladi."
+     ],
      [
       "Xom ball nima, band nima?",
       "Xom ball — 40 tadan nechta to'g'ri javob. Band — shu xom ballning rasmiy jadval bo'yicha 0-9 dagi qiymati. Jurnalga band tushadi."
@@ -27655,7 +27731,10 @@
      ]
     ],
     "notes": [
-     "Bu dars mock testdan KEYIN o'tiladi va examiner javoblar varaqasi ekranda ochiq turishi shart. Varaqasiz bu darsni boshlamang — tahlil qiladigan material bo'lmaydi.",
+     "Bu dars to'liq mockning RAMKASI: o'tkazish tartibi va natijalar tahlili. Qog'ozning o'zi (Listening 30 + Reading 60 + Writing 60 = 150 daqiqa) shu 120 daqiqaga sig'maydi — u dars slotidan tashqarida yoki bir necha o'tirishda ishlanadi. Rejaning birinchi qismi mock kuni, ikkinchi qismi natija chiqqanidan keyin o'qiladi.",
+     "Tahlil qismini examiner javoblar varaqasi ekranda ochiq turganda boshlang. Varaqasiz boshlamang — tahlil qiladigan material bo'lmaydi.",
+     "Listening skriptini ikki marta o'qimang va tezlashtirmang. Bir marta, bir tekis tezlikda — ikkinchi o'qish natijani soxtalashtiradi va keyingi tahlilni ma'nosiz qiladi.",
+     "Test yurganda savolning mazmuni bo'yicha yordam bermang. Texnik savolga (ekran, havola, tugma) yordam beriladi, savolning javobiga — hech qachon.",
      "Ballarni ovoz chiqarib e'lon qilmang va o'quvchilarni bir-biri bilan solishtirmang. Har kim faqat o'z varaqasi bilan ishlaydi; taqqoslash o'zining oldingi natijasi bilan qilinadi.",
      "Ustoz \"bu xatoning sababi bu\" deb aytib yubormasin. Sababni o'quvchi o'zi tanlaydi — faqat u o'sha paytda nima bo'lganini biladi. Ustoz savol beradi: \"yozolmadingmi, yoki eshitmadingmi?\".",
      "Eng qimmat sabab — 6-raqam (\"bilardim, lekin o'zgartirdim\"). Agar bir o'quvchida bu ikki martadan ko'p bo'lsa, unga qat'iy qoida beriladi: birinchi javob qoladi, o'zgartirish faqat matndan aniq dalil topilganda.",
@@ -27699,6 +27778,11 @@
       "Listening va Reading jadvalini aralashtirish",
       "Ikki alohida jadval",
       "26 ta to'g'ri javob: L 6.5, R 6.0"
+     ],
+     [
+      "Test paytida sahifadan chiqib telefonni ko'rish",
+      "Sahifa tark etilmaydi, telefon sumkada",
+      "Tizim sanaydi va examiner ko'radi"
      ]
     ]
    },
@@ -27712,7 +27796,7 @@
    "class_ex": [
     {
      "title": "1-mashq: Bu xato qaysi sababdan?",
-     "type": "Og'zaki va yozma, 12 daqiqa",
+     "type": "Og'zaki va yozma, 10 daqiqa",
      "instr": "Ustoz xato javobni o'qiydi, o'quvchi olti sababdan bittasini raqami bilan aytadi. Har javobdan keyin \"demak nima qilish kerak\" deb so'raladi.",
      "items": [
       "To'g'ri javob \"20th September\", o'quvchi \"20 September\" yozgan.",
@@ -27761,7 +27845,7 @@
     },
     {
      "title": "2-mashq: Xom balldan bandga",
-     "type": "Og'zaki, 8 daqiqa",
+     "type": "Og'zaki, 6 daqiqa",
      "instr": "Doskadagi jadvalga qarab bandni ayting. Diqqat: Listening va Reading ustunlari boshqa.",
      "items": [
       "Listening 24 / 40",
@@ -27810,7 +27894,7 @@
     },
     {
      "title": "3-mashq: Xatolarni mavzu bo'yicha guruhlash",
-     "type": "Jadval, 12 daqiqa",
+     "type": "Jadval, 10 daqiqa",
      "instr": "Namuna o'quvchi: Listening 23 / 40 = 6.0, Reading 19 / 40 = 5.5. Jami 38 ta xato. Ekrandagi mavzu belgisi bo'yicha saralaymiz.",
      "note": "38 ta alohida xato emas — 8 ta guruh, va guruhlarning ortida atigi 4 ta sabab turibdi. Eng katta ikkitasi: savol turini noto'g'ri tushunish (13 xato) va vaqt yetmasligi (8 xato). Reja aynan shu ikkitasiga yoziladi, qolganiga emas.",
      "layout": "grid",
@@ -27873,7 +27957,7 @@
     },
     {
      "title": "4-mashq: Naqshdan haftalik rejaga",
-     "type": "Yozma, juftlikda, 12 daqiqa",
+     "type": "Yozma, juftlikda, 8 daqiqa",
      "instr": "Chapdagi naqshni o'ngdagidek ANIQ rejaga aylantiring. Har rejada bo'lishi shart: nima, qancha, qaysi kuni, kim tekshiradi.",
      "items": [
       "Listening Part 1 da 5 ta raqam va sana xatosi.",
@@ -27907,7 +27991,7 @@
     },
     {
      "title": "5-mashq: Mening ikki haftalik rejam",
-     "type": "Yozma, 15 daqiqa",
+     "type": "Yozma, 10 daqiqa",
      "instr": "Har kim reja varaqasidagi 6 qatorni to'ldiradi. O'ng ustunda namuna (Aziz ismli o'quvchi). Namunani ko'chirmang — o'z raqamlaringizni yozing.",
      "items": [
       "1-qator. Natijam: Listening ___ / 40 = band ___ ; Reading ___ / 40 = band ___",
@@ -27940,7 +28024,7 @@
    "readings": [],
    "listenings": [],
    "homework_intro": [
-    "Bugun biz sinfda javoblar varaqasini savol-savol o'qib chiqdik va har xatoga sabab qo'ydik — uyda xuddi shu ishni oxirigacha, HAMMA xato bo'yicha qilasiz.",
+    "Bugun siz to'liq mockni topshirdingiz va sinfda javoblar varaqasini savol-savol o'qib, har xatoga sabab qo'ydik — uyda xuddi shu ishni oxirigacha, HAMMA xato bo'yicha qilasiz.",
     "Birinchi vazifa \"Xatolar daftari\": har xato uchun beshta ustun — savol raqami, sizning javobingiz, to'g'ri javob, mavzu belgisi va sabab raqami; oxirida har sabab nechta marta chiqqanini sanaysiz, bunga 25-30 daqiqa yetadi.",
     "Ikkinchi vazifa — ikki haftalik rejani toza varaqqa ko'chirish: 6 qator, har qatorda aniq raqam, kunlik mashqning soati va haftalik mashqning kuni yozilgan bo'lsin, yana 15 daqiqa.",
     "Uchinchi vazifa eng zaif mavzudan 10 savol: javobning yonida albatta DALILI bo'lsin — Listeningda qaysi so'z eshitilgan, Readingda matnning qaysi qatori.",

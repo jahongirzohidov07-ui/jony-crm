@@ -45,6 +45,8 @@ from database import get_db
 router = APIRouter()
 
 K_CACHE = "instagram_audience_cache"
+# Kesh formati o'zgarsa raqam oshiriladi — eski kesh darrov yangilanadi
+CACHE_V = 2
 TTL_S = 6 * 3600
 TASHKENT = 5          # UTC+5, yozgi vaqt yo'q
 BUDGET_S = 20.0
@@ -172,13 +174,23 @@ def fetch_from_meta(db: Session) -> dict:
             f"demo_{bd}", f"{uid}/insights", metric="follower_demographics",
             period="lifetime", metric_type="total_value", breakdown=bd))
 
-    out["online_hours"] = _online(call(
-        "online", f"{uid}/insights", metric="online_followers",
-        period="lifetime"))
-
     now = datetime.utcnow()
     until = int(now.timestamp())
     since = int((now - timedelta(days=28)).timestamp())
+
+    # online_followers: since/until berilmasa Meta faqat oxirgi 1-2 kunni
+    # qaytaradi, ular esa odatda hali BO'SH ({}). Shuning uchun 29 kunlik
+    # oraliq so'raymiz; baribir bo'sh bo'lsa — oraliqsiz qayta.
+    oh = _online(call(
+        "online", f"{uid}/insights", metric="online_followers",
+        period="lifetime",
+        since=int((now - timedelta(days=29)).timestamp()), until=until))
+    if not oh:
+        oh = _online(call("online_2", f"{uid}/insights",
+                          metric="online_followers", period="lifetime"))
+    if not oh and "online" not in errors:
+        errors["online"] = "Meta onlayn soatlarni bo'sh qaytardi"
+    out["online_hours"] = oh
     out["reach_daily"] = _series(call(
         "reach_daily", f"{uid}/insights", metric="reach", period="day",
         since=since, until=until))
@@ -206,6 +218,7 @@ def fetch_from_meta(db: Session) -> dict:
     out["follows"] = fmap.get("FOLLOWER")
     out["unfollows"] = fmap.get("NON_FOLLOWER")
     out["errors"] = errors
+    out["v"] = CACHE_V
     out["fetched_at"] = now.isoformat(timespec="seconds")
     return out
 
@@ -348,7 +361,7 @@ def ig_audience(refresh: int = 0, db: Session = Depends(get_db),
         try:
             age = (datetime.utcnow() - datetime.fromisoformat(
                 cached.get("fetched_at"))).total_seconds()
-            fresh = age < TTL_S
+            fresh = age < TTL_S and cached.get("v") == CACHE_V
         except Exception:
             fresh = False
     meta = cached if (cached and fresh) else None

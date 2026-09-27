@@ -41,7 +41,21 @@ const flag = (cc: string) =>
     : "🌍";
 const fmt = (n: number | null | undefined) =>
   n == null ? "—" : Math.round(n).toLocaleString("ru-RU").replace(/,/g, " ");
-const pct = (a: number, b: number) => (b ? Math.round((100 * a) / b) : 0);
+// 1% dan kichik bo'lsa 0 emas, bir kasr bilan (0.4%) — "0%" chalg'itardi
+const pct = (a: number, b: number) => {
+  if (!b) return 0;
+  const v = (100 * a) / b;
+  return v > 0 && v < 1 ? Math.round(v * 10) / 10 : Math.round(v);
+};
+// Meta shaharlarni inglizcha beradi
+const CITY: Record<string, string> = {
+  Tashkent: "Toshkent", Yangier: "Yangiyer", Khonobod: "Xonobod",
+  Gulistan: "Guliston", Samarkand: "Samarqand", Bukhara: "Buxoro",
+  Fergana: "Farg'ona", Andijan: "Andijon", Kokand: "Qo'qon",
+  Chirchiq: "Chirchiq", Olmaliq: "Olmaliq", Qarshi: "Qarshi",
+  Nukus: "Nukus", Jizzakh: "Jizzax", Termez: "Termiz", Navoi: "Navoiy",
+  Urgench: "Urganch", Moscow: "Moskva", Angren: "Angren",
+};
 
 function useCountUp(target: number, ms = 1100) {
   const [v, setV] = useState(0);
@@ -142,8 +156,10 @@ export function InstagramAudience() {
   const age = [...(d.age || [])].sort((a: Any, b: Any) =>
     String(a.key).localeCompare(String(b.key)));
   const ageTop = (d.age || [])[0]?.key;
-  const cities = (d.city || []).slice(0, 8).map((x: Any) => ({
-    name: String(x.key).split(",")[0], value: x.value }));
+  const cities = (d.city || []).slice(0, 8).map((x: Any) => {
+    const nm = String(x.key).split(",")[0].trim();
+    return { name: CITY[nm] || nm, value: x.value };
+  });
   const cTot = (d.city || []).reduce((s: number, x: Any) => s + x.value, 0);
   const countries = (d.country || []).slice(0, 6);
   const coTot = (d.country || []).reduce((s: number, x: Any) => s + x.value, 0);
@@ -343,7 +359,7 @@ export function InstagramAudience() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        ) : <Empty text="Meta onlayn soatlarni hali bermadi (odatda 100+ obunachida ochiladi)" />}
+        ) : <Empty text={`Meta onlayn soatlarni bermadi${d.errors?.online ? ` — ${d.errors.online}` : ""}. «Yangilash» ni bosib qayta urinib ko'ring.`} />}
       </Card>
 
       {/* ---------- kunlik dinamika ---------- */}

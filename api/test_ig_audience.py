@@ -191,6 +191,40 @@ oh2 = ia._online({"data": [{"values": [{
     "end_time": "2026-12-20T08:00:00+0000", "value": {"8": 100, "9": 1}}]}]})
 ck("qishda PST 08:00 -> Toshkent 21:00", max(range(24), key=lambda i: oh2[i]), 21)
 
+print("\n=== 6. ONLAYN: 29 KUNLIK ORALIQ BILAN SO'RALADI ===")
+SEEN = []
+
+
+def fake2(url):
+    q = {k: v[0] for k, v in parse_qs(urlparse(url).query).items()}
+    if q.get("metric") == "online_followers":
+        SEEN.append(q)
+        if "since" not in q:          # oraliqsiz — oxirgi kunlar bo'sh
+            return {"data": [{"values": [
+                {"end_time": "2026-09-27T07:00:00+0000", "value": {}}]}]}
+        return {"data": [{"values": [
+            {"end_time": "2026-09-20T07:00:00+0000",
+             "value": {"8": 500, "9": 10}},
+            {"end_time": "2026-09-27T07:00:00+0000", "value": {}}]}]}
+    return fake(url)
+
+
+ig.HTTP["get"] = fake2
+r = c.get("/api/smm/instagram/audience?refresh=1", headers=HS)
+d2 = r.json()
+ck("onlayn soatlar keldi (bo'sh kunlar hisobga olinmadi)",
+   max(range(24), key=lambda i: d2["online_hours"][i]), 20)
+ck("since/until bilan so'raldi", "since" in SEEN[0], True)
+# Eski formatdagi kesh (v yo'q) darrov yangilanadi
+import json as _json  # noqa: E402
+old = _json.loads(ig._s(db, ia.K_CACHE) or "{}")
+old.pop("v", None)
+ig._set(db, ia.K_CACHE, _json.dumps(old), "t")
+db.commit()
+SEEN.clear()
+c.get("/api/smm/instagram/audience", headers=HS)
+ck("eski kesh (versiyasiz) qayta so'raldi", len(SEEN) > 0, True)
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))
 sys.exit(1 if fails else 0)

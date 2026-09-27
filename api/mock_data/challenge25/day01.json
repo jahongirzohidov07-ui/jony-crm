@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Studies at Yale University have shown that a positive attitude can lengthen someone's lifespan by approximately ....................",
+     "q": "Studies at Yale University have shown that a positive attitude can lengthen someone's lifespan by approximately ....................",
      "answer": [
       "seven years",
       "7 years"
@@ -30,7 +30,7 @@
     },
     {
      "type": "text",
-     "q": "2  As a result of an eight-year study on .................... male subjects of a certain age ...",
+     "q": "As a result of an eight-year study on .................... male subjects of a certain age ...",
      "answer": [
       "670"
      ],
@@ -38,7 +38,7 @@
     },
     {
      "type": "text",
-     "q": "3  ... they have noted differences in the .................... among positive and negative thinkers.",
+     "q": "... they have noted differences in the .................... among positive and negative thinkers.",
      "answer": [
       "lung function"
      ],
@@ -46,7 +46,7 @@
     },
     {
      "type": "text",
-     "q": "4  This discovery has led them to conclude that positive thinking makes the body's entire .................... stronger, which, in turn, reduces ageing.",
+     "q": "This discovery has led them to conclude that positive thinking makes the body's entire .................... stronger, which, in turn, reduces ageing.",
      "answer": [
       "immune system"
      ],
@@ -54,7 +54,7 @@
     },
     {
      "type": "text",
-     "q": "5  Rosalind Wright cites some early research on .................... in support of this view.",
+     "q": "Rosalind Wright cites some early research on .................... in support of this view.",
      "answer": [
       "heart patients"
      ],
@@ -62,87 +62,87 @@
     },
     {
      "type": "choice",
-     "q": "6  The writer's reference to Sigmund Freud illustrates the point that",
+     "q": "The writer's reference to Sigmund Freud illustrates the point that",
      "options": [
-      "A optimists have an unrealistic view of life.",
-      "B long life is also linked to diet and exercise.",
-      "C excessive optimism may have negative consequences.",
-      "D optimism has not been considered a worthy research topic.",
-      "E a hectic lifestyle can lead to poor health.",
-      "F happiness is not linked to material wealth and comfort.",
-      "G levels of optimism can decrease with age.",
-      "H optimism can have a positive effect on pessimists."
+      "optimists have an unrealistic view of life.",
+      "long life is also linked to diet and exercise.",
+      "excessive optimism may have negative consequences.",
+      "optimism has not been considered a worthy research topic.",
+      "a hectic lifestyle can lead to poor health.",
+      "happiness is not linked to material wealth and comfort.",
+      "levels of optimism can decrease with age.",
+      "optimism can have a positive effect on pessimists."
      ],
      "answer": 3,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "7  According to Brice Pitt of Imperial College, London,",
+     "q": "According to Brice Pitt of Imperial College, London,",
      "options": [
-      "A optimists have an unrealistic view of life.",
-      "B long life is also linked to diet and exercise.",
-      "C excessive optimism may have negative consequences.",
-      "D optimism has not been considered a worthy research topic.",
-      "E a hectic lifestyle can lead to poor health.",
-      "F happiness is not linked to material wealth and comfort.",
-      "G levels of optimism can decrease with age.",
-      "H optimism can have a positive effect on pessimists."
+      "optimists have an unrealistic view of life.",
+      "long life is also linked to diet and exercise.",
+      "excessive optimism may have negative consequences.",
+      "optimism has not been considered a worthy research topic.",
+      "a hectic lifestyle can lead to poor health.",
+      "happiness is not linked to material wealth and comfort.",
+      "levels of optimism can decrease with age.",
+      "optimism can have a positive effect on pessimists."
      ],
      "answer": 0,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "8  Researchers at the Henley Centre have shown that",
+     "q": "Researchers at the Henley Centre have shown that",
      "options": [
-      "A optimists have an unrealistic view of life.",
-      "B long life is also linked to diet and exercise.",
-      "C excessive optimism may have negative consequences.",
-      "D optimism has not been considered a worthy research topic.",
-      "E a hectic lifestyle can lead to poor health.",
-      "F happiness is not linked to material wealth and comfort.",
-      "G levels of optimism can decrease with age.",
-      "H optimism can have a positive effect on pessimists."
+      "optimists have an unrealistic view of life.",
+      "long life is also linked to diet and exercise.",
+      "excessive optimism may have negative consequences.",
+      "optimism has not been considered a worthy research topic.",
+      "a hectic lifestyle can lead to poor health.",
+      "happiness is not linked to material wealth and comfort.",
+      "levels of optimism can decrease with age.",
+      "optimism can have a positive effect on pessimists."
      ],
      "answer": 5,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "9  The 1995 Adweek survey found that across the USA",
+     "q": "The 1995 Adweek survey found that across the USA",
      "options": [
-      "A optimists have an unrealistic view of life.",
-      "B long life is also linked to diet and exercise.",
-      "C excessive optimism may have negative consequences.",
-      "D optimism has not been considered a worthy research topic.",
-      "E a hectic lifestyle can lead to poor health.",
-      "F happiness is not linked to material wealth and comfort.",
-      "G levels of optimism can decrease with age.",
-      "H optimism can have a positive effect on pessimists."
+      "optimists have an unrealistic view of life.",
+      "long life is also linked to diet and exercise.",
+      "excessive optimism may have negative consequences.",
+      "optimism has not been considered a worthy research topic.",
+      "a hectic lifestyle can lead to poor health.",
+      "happiness is not linked to material wealth and comfort.",
+      "levels of optimism can decrease with age.",
+      "optimism can have a positive effect on pessimists."
      ],
      "answer": 6,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "10  The psychotherapist Lynn Myers suggests that",
+     "q": "The psychotherapist Lynn Myers suggests that",
      "options": [
-      "A optimists have an unrealistic view of life.",
-      "B long life is also linked to diet and exercise.",
-      "C excessive optimism may have negative consequences.",
-      "D optimism has not been considered a worthy research topic.",
-      "E a hectic lifestyle can lead to poor health.",
-      "F happiness is not linked to material wealth and comfort.",
-      "G levels of optimism can decrease with age.",
-      "H optimism can have a positive effect on pessimists."
+      "optimists have an unrealistic view of life.",
+      "long life is also linked to diet and exercise.",
+      "excessive optimism may have negative consequences.",
+      "optimism has not been considered a worthy research topic.",
+      "a hectic lifestyle can lead to poor health.",
+      "happiness is not linked to material wealth and comfort.",
+      "levels of optimism can decrease with age.",
+      "optimism can have a positive effect on pessimists."
      ],
      "answer": 2,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "11  It has been known for some time that there is a link between optimism and good health.",
+     "q": "It has been known for some time that there is a link between optimism and good health.",
      "options": [
       "YES",
       "NO",
@@ -153,7 +153,7 @@
     },
     {
      "type": "choice",
-     "q": "12  Optimists have better personal relationships with others than pessimists.",
+     "q": "Optimists have better personal relationships with others than pessimists.",
      "options": [
       "YES",
       "NO",
@@ -164,7 +164,7 @@
     },
     {
      "type": "choice",
-     "q": "13  People who live to be over ninety-five are known to take the same amount of regular exercise.",
+     "q": "People who live to be over ninety-five are known to take the same amount of regular exercise.",
      "options": [
       "YES",
       "NO",
@@ -183,7 +183,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  how an organism turns a basic material into something incredibly strong",
+     "q": "how an organism turns a basic material into something incredibly strong",
      "options": [
       "A",
       "B",
@@ -200,7 +200,7 @@
     },
     {
      "type": "choice",
-     "q": "15  a claim that biomimetics has had limited commercial impact so far",
+     "q": "a claim that biomimetics has had limited commercial impact so far",
      "options": [
       "A",
       "B",
@@ -217,7 +217,7 @@
     },
     {
      "type": "choice",
-     "q": "16  a difficulty that led to researcher's accidental discovery",
+     "q": "a difficulty that led to researcher's accidental discovery",
      "options": [
       "A",
       "B",
@@ -234,7 +234,7 @@
     },
     {
      "type": "choice",
-     "q": "17  an example of nature being far more efficient than a common household object",
+     "q": "an example of nature being far more efficient than a common household object",
      "options": [
       "A",
       "B",
@@ -251,7 +251,7 @@
     },
     {
      "type": "choice",
-     "q": "18  an ancient specimen that inspired a modern innovation",
+     "q": "an ancient specimen that inspired a modern innovation",
      "options": [
       "A",
       "B",
@@ -268,7 +268,7 @@
     },
     {
      "type": "choice",
-     "q": "19  situations where it is preferable to replace a human with a machine",
+     "q": "situations where it is preferable to replace a human with a machine",
      "options": [
       "A",
       "B",
@@ -285,7 +285,7 @@
     },
     {
      "type": "choice",
-     "q": "20  All living things provide something useful for humans to discover.",
+     "q": "All living things provide something useful for humans to discover.",
      "options": [
       "A",
       "B",
@@ -297,7 +297,7 @@
     },
     {
      "type": "choice",
-     "q": "21  Natural designs are sometimes impossible for people to copy.",
+     "q": "Natural designs are sometimes impossible for people to copy.",
      "options": [
       "A",
       "B",
@@ -309,7 +309,7 @@
     },
     {
      "type": "choice",
-     "q": "22  Biomimetics achieves nothing unless it has a practical application.",
+     "q": "Biomimetics achieves nothing unless it has a practical application.",
      "options": [
       "A",
       "B",
@@ -321,7 +321,7 @@
     },
     {
      "type": "text",
-     "q": "23  Andrew Parker is studying the shiny surface of diatoms in order to develop ....................",
+     "q": "Andrew Parker is studying the shiny surface of diatoms in order to develop ....................",
      "answer": [
       "cosmetics"
      ],
@@ -329,7 +329,7 @@
     },
     {
      "type": "text",
-     "q": "24  Paint companies are interested in the way some .................... get their colour.",
+     "q": "Paint companies are interested in the way some .................... get their colour.",
      "answer": [
       "birds"
      ],
@@ -337,7 +337,7 @@
     },
     {
      "type": "text",
-     "q": "25  Bombardier beetles protect themselves by shooting hot .................... at their enemies.",
+     "q": "Bombardier beetles protect themselves by shooting hot .................... at their enemies.",
      "answer": [
       "chemicals"
      ],
@@ -345,7 +345,7 @@
     },
     {
      "type": "text",
-     "q": "26  One scientist is studying the .................... to build a tiny robot that can help people in danger.",
+     "q": "One scientist is studying the .................... to build a tiny robot that can help people in danger.",
      "answer": [
       "fly"
      ],
@@ -361,7 +361,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  In order to stay in the market, companies today need to concentrate their efforts on finding genuinely original products.",
+     "q": "In order to stay in the market, companies today need to concentrate their efforts on finding genuinely original products.",
      "options": [
       "YES",
       "NO",
@@ -372,7 +372,7 @@
     },
     {
      "type": "choice",
-     "q": "28  Disruptive innovations often pose serious threats to even successful, well-established companies.",
+     "q": "Disruptive innovations often pose serious threats to even successful, well-established companies.",
      "options": [
       "YES",
       "NO",
@@ -383,7 +383,7 @@
     },
     {
      "type": "choice",
-     "q": "29  A key stage in the development of sustaining innovations involves research into the strengths and weaknesses of competitor's products.",
+     "q": "A key stage in the development of sustaining innovations involves research into the strengths and weaknesses of competitor's products.",
      "options": [
       "YES",
       "NO",
@@ -394,7 +394,7 @@
     },
     {
      "type": "choice",
-     "q": "30  Manufacturers today are able to compete with innovations over shorter time periods than in the past.",
+     "q": "Manufacturers today are able to compete with innovations over shorter time periods than in the past.",
      "options": [
       "YES",
       "NO",
@@ -405,7 +405,7 @@
     },
     {
      "type": "choice",
-     "q": "31  It is hard to tell what the long-term result of any innovation might be.",
+     "q": "It is hard to tell what the long-term result of any innovation might be.",
      "options": [
       "YES",
       "NO",
@@ -416,7 +416,7 @@
     },
     {
      "type": "choice",
-     "q": "32  the need for companies to cater for ever more specialised sets of customers",
+     "q": "the need for companies to cater for ever more specialised sets of customers",
      "options": [
       "A",
       "B",
@@ -429,7 +429,7 @@
     },
     {
      "type": "choice",
-     "q": "33  an explanation for the recent upward trend in the US economy.",
+     "q": "an explanation for the recent upward trend in the US economy.",
      "options": [
       "A",
       "B",
@@ -442,7 +442,7 @@
     },
     {
      "type": "choice",
-     "q": "34  an example of company personnel who resisted innovation",
+     "q": "an example of company personnel who resisted innovation",
      "options": [
       "A",
       "B",
@@ -455,7 +455,7 @@
     },
     {
      "type": "choice",
-     "q": "35  a shift in the way many companies are organising their budgets.",
+     "q": "a shift in the way many companies are organising their budgets.",
      "options": [
       "A",
       "B",
@@ -468,7 +468,7 @@
     },
     {
      "type": "text",
-     "q": "36  (Operational innovations) Being innovative in the way existing business .................... are carried out",
+     "q": "(Operational innovations) Being innovative in the way existing business .................... are carried out",
      "answer": [
       "processes"
      ],
@@ -476,7 +476,7 @@
     },
     {
      "type": "text",
-     "q": "37  (Wal-Mart) Moving goods by system known as: ....................",
+     "q": "(Wal-Mart) Moving goods by system known as: ....................",
      "answer": [
       "cross-docking",
       "cross docking",
@@ -486,7 +486,7 @@
     },
     {
      "type": "text",
-     "q": "38  (Tetra Pak) .................... innovations - developing new approaches to meeting needs of existing markets",
+     "q": "(Tetra Pak) .................... innovations - developing new approaches to meeting needs of existing markets",
      "answer": [
       "strategic"
      ],
@@ -494,7 +494,7 @@
     },
     {
      "type": "text",
-     "q": "39  (Air Liquide) .................... innovations - identifying and meeting new types of customer needs",
+     "q": "(Air Liquide) .................... innovations - identifying and meeting new types of customer needs",
      "answer": [
       "demand"
      ],
@@ -502,7 +502,7 @@
     },
     {
      "type": "text",
-     "q": "40  (Air Liquide) Offering customers .................... to go with the main product",
+     "q": "(Air Liquide) Offering customers .................... to go with the main product",
      "answer": [
       "management services"
      ],

@@ -18,7 +18,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Gap (1)",
+     "q": "Gap (1)",
      "answer": [
       "carry"
      ],
@@ -26,7 +26,7 @@
     },
     {
      "type": "text",
-     "q": "2  Gap (2)",
+     "q": "Gap (2)",
      "answer": [
       "time"
      ],
@@ -34,7 +34,7 @@
     },
     {
      "type": "text",
-     "q": "3  Gap (3)",
+     "q": "Gap (3)",
      "answer": [
       "robot"
      ],
@@ -42,7 +42,7 @@
     },
     {
      "type": "text",
-     "q": "4  Gap (4)",
+     "q": "Gap (4)",
      "answer": [
       "moves"
      ],
@@ -50,7 +50,7 @@
     },
     {
      "type": "text",
-     "q": "5  Gap (5)",
+     "q": "Gap (5)",
      "answer": [
       "afraid"
      ],
@@ -58,7 +58,7 @@
     },
     {
      "type": "text",
-     "q": "6  Gap (6)",
+     "q": "Gap (6)",
      "answer": [
       "staff"
      ],
@@ -74,7 +74,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "7  CodeSeed Junior",
+     "q": "CodeSeed Junior",
      "options": [
       "A",
       "B",
@@ -92,7 +92,7 @@
     },
     {
      "type": "choice",
-     "q": "8  Lingua Loop",
+     "q": "Lingua Loop",
      "options": [
       "A",
       "B",
@@ -110,7 +110,7 @@
     },
     {
      "type": "choice",
-     "q": "9  Ustoz Panel",
+     "q": "Ustoz Panel",
      "options": [
       "A",
       "B",
@@ -128,7 +128,7 @@
     },
     {
      "type": "choice",
-     "q": "10  NightOwl Tutoring",
+     "q": "NightOwl Tutoring",
      "options": [
       "A",
       "B",
@@ -146,7 +146,7 @@
     },
     {
      "type": "choice",
-     "q": "11  Qadam Repair Bench",
+     "q": "Qadam Repair Bench",
      "options": [
       "A",
       "B",
@@ -164,7 +164,7 @@
     },
     {
      "type": "choice",
-     "q": "12  Silk Road Digital Library",
+     "q": "Silk Road Digital Library",
      "options": [
       "A",
       "B",
@@ -182,7 +182,7 @@
     },
     {
      "type": "choice",
-     "q": "13  Bright Future Exam Lab",
+     "q": "Bright Future Exam Lab",
      "options": [
       "A",
       "B",
@@ -200,7 +200,7 @@
     },
     {
      "type": "choice",
-     "q": "14  ScreenBreak Workshop",
+     "q": "ScreenBreak Workshop",
      "options": [
       "A",
       "B",
@@ -226,7 +226,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "15  Paragraph I",
+     "q": "Paragraph I",
      "options": [
       "A",
       "B",
@@ -242,7 +242,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Paragraph II",
+     "q": "Paragraph II",
      "options": [
       "A",
       "B",
@@ -258,7 +258,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Paragraph III",
+     "q": "Paragraph III",
      "options": [
       "A",
       "B",
@@ -274,7 +274,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Paragraph IV",
+     "q": "Paragraph IV",
      "options": [
       "A",
       "B",
@@ -290,7 +290,7 @@
     },
     {
      "type": "choice",
-     "q": "19  Paragraph V",
+     "q": "Paragraph V",
      "options": [
       "A",
       "B",
@@ -306,7 +306,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Paragraph VI",
+     "q": "Paragraph VI",
      "options": [
       "A",
       "B",
@@ -330,7 +330,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "21  What surprised Mr Aliyev most during the year of the ban?",
+     "q": "What surprised Mr Aliyev most during the year of the ban?",
      "options": [
       "Parents wrote letters of complaint to the school.",
       "Many of the parents who complained later supported the rule.",
@@ -342,7 +342,7 @@
     },
     {
      "type": "choice",
-     "q": "22  Why did the researchers decide not to use examination results?",
+     "q": "Why did the researchers decide not to use examination results?",
      "options": [
       "They believed that too many other things could change them in one year.",
       "They were not allowed to see them.",
@@ -354,7 +354,7 @@
     },
     {
      "type": "choice",
-     "q": "23  What did the study find out about interruptions during lessons?",
+     "q": "What did the study find out about interruptions during lessons?",
      "options": [
       "They happened far less often than before the ban.",
       "They stopped completely in the second term.",
@@ -366,7 +366,7 @@
     },
     {
      "type": "choice",
-     "q": "24  According to Dr Yusupova, the shared classroom tablet was valuable because",
+     "q": "According to Dr Yusupova, the shared classroom tablet was valuable because",
      "options": [
       "it cost less than thirty separate devices.",
       "it stopped students from reaching the internet.",
@@ -378,55 +378,55 @@
     },
     {
      "type": "choice",
-     "q": "25  Mr Aliyev expected that some parents would complain about the new rule.",
+     "q": "Mr Aliyev expected that some parents would complain about the new rule.",
      "options": [
-      "A) True",
-      "B) False",
-      "C) No Information"
+      "True",
+      "False",
+      "No Information"
      ],
      "answer": 0,
      "topic": "Reading - True/False/No Information"
     },
     {
      "type": "choice",
-     "q": "26  More than half of the parents who complained later changed their minds.",
+     "q": "More than half of the parents who complained later changed their minds.",
      "options": [
-      "A) True",
-      "B) False",
-      "C) No Information"
+      "True",
+      "False",
+      "No Information"
      ],
      "answer": 1,
      "topic": "Reading - True/False/No Information"
     },
     {
      "type": "choice",
-     "q": "27  The number of books borrowed from the library more than doubled.",
+     "q": "The number of books borrowed from the library more than doubled.",
      "options": [
-      "A) True",
-      "B) False",
-      "C) No Information"
+      "True",
+      "False",
+      "No Information"
      ],
      "answer": 0,
      "topic": "Reading - True/False/No Information"
     },
     {
      "type": "choice",
-     "q": "28  Dr Yusupova has carried out the same study in other schools.",
+     "q": "Dr Yusupova has carried out the same study in other schools.",
      "options": [
-      "A) True",
-      "B) False",
-      "C) No Information"
+      "True",
+      "False",
+      "No Information"
      ],
      "answer": 2,
      "topic": "Reading - True/False/No Information"
     },
     {
      "type": "choice",
-     "q": "29  Every student at the lyceum must now hand in a phone at the gate.",
+     "q": "Every student at the lyceum must now hand in a phone at the gate.",
      "options": [
-      "A) True",
-      "B) False",
-      "C) No Information"
+      "True",
+      "False",
+      "No Information"
      ],
      "answer": 1,
      "topic": "Reading - True/False/No Information"
@@ -441,7 +441,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "30  The system stops asking about a skill when the estimate for it crosses a threshold that is usually set at ________ per cent.",
+     "q": "The system stops asking about a skill when the estimate for it crosses a threshold that is usually set at ________ per cent.",
      "answer": [
       "95",
       "95 per cent",
@@ -451,7 +451,7 @@
     },
     {
      "type": "text",
-     "q": "31  In mathematics, classes using adaptive practice gained the equivalent of ________ extra months of progress.",
+     "q": "In mathematics, classes using adaptive practice gained the equivalent of ________ extra months of progress.",
      "answer": [
       "five",
       "5",
@@ -462,7 +462,7 @@
     },
     {
      "type": "text",
-     "q": "32  Dr Ismoilova describes the machine as infinitely patient but completely ________.",
+     "q": "Dr Ismoilova describes the machine as infinitely patient but completely ________.",
      "answer": [
       "incurious"
      ],
@@ -470,7 +470,7 @@
     },
     {
      "type": "text",
-     "q": "33  Only ________ of the schools in the study could say who was allowed to look at the records that the software produced.",
+     "q": "Only ________ of the schools in the study could say who was allowed to look at the records that the software produced.",
      "answer": [
       "six",
       "6",
@@ -481,7 +481,7 @@
     },
     {
      "type": "choice",
-     "q": "34  What does the writer say about the strongest students in the study?",
+     "q": "What does the writer say about the strongest students in the study?",
      "options": [
       "They refused to use the software.",
       "They gained least, because they could already choose their own next step.",
@@ -493,7 +493,7 @@
     },
     {
      "type": "choice",
-     "q": "35  Which statement best expresses the writer's overall view?",
+     "q": "Which statement best expresses the writer's overall view?",
      "options": [
       "Adaptive software should replace teachers in every subject that can be tested.",
       "Adaptive software has failed and schools should stop buying it.",

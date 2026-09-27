@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  People can visit Ascension easily today.",
+     "q": "People can visit Ascension easily today.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  The mid-Atlantic ridge continues to experience volcanic activity.",
+     "q": "The mid-Atlantic ridge continues to experience volcanic activity.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  João da Nova Castella was the first to call his discovery Ascension Island.",
+     "q": "João da Nova Castella was the first to call his discovery Ascension Island.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  When the island was discovered, its center contained more life than the area near the sea.",
+     "q": "When the island was discovered, its center contained more life than the area near the sea.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "choice",
-     "q": "5  The Portuguese military wanted to use the island as a base.",
+     "q": "The Portuguese military wanted to use the island as a base.",
      "options": [
       "TRUE",
       "FALSE",
@@ -76,7 +76,7 @@
     },
     {
      "type": "choice",
-     "q": "6  In the 19th century, Ascension Island acted as an important port for naval supplies.",
+     "q": "In the 19th century, Ascension Island acted as an important port for naval supplies.",
      "options": [
       "TRUE",
       "FALSE",
@@ -87,7 +87,7 @@
     },
     {
      "type": "choice",
-     "q": "7  The British imported fresh water to Ascension Island from southern Africa.",
+     "q": "The British imported fresh water to Ascension Island from southern Africa.",
      "options": [
       "TRUE",
       "FALSE",
@@ -98,7 +98,7 @@
     },
     {
      "type": "choice",
-     "q": "8  When it rained on Ascension Island, the water quickly dried up.",
+     "q": "When it rained on Ascension Island, the water quickly dried up.",
      "options": [
       "TRUE",
       "FALSE",
@@ -109,7 +109,7 @@
     },
     {
      "type": "text",
-     "q": "9  Darwin’s plan – before his 1836 visit, Darwin had limited ………. of what he might find",
+     "q": "Darwin’s plan – before his 1836 visit, Darwin had limited ………. of what he might find",
      "answer": [
       "expectations"
      ],
@@ -117,7 +117,7 @@
     },
     {
      "type": "text",
-     "q": "10  Darwin’s plan – after his arrival, Darwin saw the ………. of the island and so devised a plan",
+     "q": "Darwin’s plan – after his arrival, Darwin saw the ………. of the island and so devised a plan",
      "answer": [
       "potential"
      ],
@@ -125,7 +125,7 @@
     },
     {
      "type": "text",
-     "q": "11  Joseph Hooker’s implementation – on an expedition to explore the area around ………. , Hooker visited Ascension",
+     "q": "Joseph Hooker’s implementation – on an expedition to explore the area around ………. , Hooker visited Ascension",
      "answer": [
       "Antarctica"
      ],
@@ -133,7 +133,7 @@
     },
     {
      "type": "text",
-     "q": "12  Joseph Hooker’s implementation – trees were planted on Ascension to lessen the ………. of rainwater",
+     "q": "Joseph Hooker’s implementation – trees were planted on Ascension to lessen the ………. of rainwater",
      "answer": [
       "evaporation"
      ],
@@ -141,7 +141,7 @@
     },
     {
      "type": "text",
-     "q": "13  Joseph Hooker’s implementation – from the 1850s, plants were brought to Ascension from ………. around the world",
+     "q": "Joseph Hooker’s implementation – from the 1850s, plants were brought to Ascension from ………. around the world",
      "answer": [
       "gardens"
      ],
@@ -149,7 +149,7 @@
     },
     {
      "type": "text",
-     "q": "14  Results of the plan today – the cloud forest traps moisture contained in the ………. which blows off the ocean",
+     "q": "Results of the plan today – the cloud forest traps moisture contained in the ………. which blows off the ocean",
      "answer": [
       "mist"
      ],
@@ -157,7 +157,7 @@
     },
     {
      "type": "text",
-     "q": "15  Results of the plan today – the cloud forest is a successful man-made ……….",
+     "q": "Results of the plan today – the cloud forest is a successful man-made ……….",
      "answer": [
       "ecosystem"
      ],
@@ -165,7 +165,7 @@
     },
     {
      "type": "text",
-     "q": "16  Results of the plan today – according to Dr Dave Wilkinson, the ideas learned from Ascension may be applicable to life in future human ………. on Mars.",
+     "q": "Results of the plan today – according to Dr Dave Wilkinson, the ideas learned from Ascension may be applicable to life in future human ………. on Mars.",
      "answer": [
       "colonies"
      ],
@@ -181,7 +181,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "17  a list of factors which have resulted in some damage to Great Zimbabwe",
+     "q": "a list of factors which have resulted in some damage to Great Zimbabwe",
      "options": [
       "A",
       "B",
@@ -196,7 +196,7 @@
     },
     {
      "type": "choice",
-     "q": "18  reference to the high status of some of the original inhabitants",
+     "q": "reference to the high status of some of the original inhabitants",
      "options": [
       "A",
       "B",
@@ -211,7 +211,7 @@
     },
     {
      "type": "choice",
-     "q": "19  proof of the former commercial significance of Great Zimbabwe",
+     "q": "proof of the former commercial significance of Great Zimbabwe",
      "options": [
       "A",
       "B",
@@ -226,7 +226,7 @@
     },
     {
      "type": "choice",
-     "q": "20  an indication of the global importance attached to Great Zimbabwe nowadays",
+     "q": "an indication of the global importance attached to Great Zimbabwe nowadays",
      "options": [
       "A",
       "B",
@@ -241,7 +241,7 @@
     },
     {
      "type": "choice",
-     "q": "21  mention of the authority currently responsible for the area",
+     "q": "mention of the authority currently responsible for the area",
      "options": [
       "A",
       "B",
@@ -256,7 +256,7 @@
     },
     {
      "type": "choice",
-     "q": "22  an overview of the layout of the archaeological site",
+     "q": "an overview of the layout of the archaeological site",
      "options": [
       "A",
       "B",
@@ -271,7 +271,7 @@
     },
     {
      "type": "choice",
-     "q": "23  a reference to the quality of comparable buildings in other places",
+     "q": "a reference to the quality of comparable buildings in other places",
      "options": [
       "A",
       "B",
@@ -286,7 +286,7 @@
     },
     {
      "type": "choice",
-     "q": "24  theories about the eventual desertion of Great Zimbabwe",
+     "q": "theories about the eventual desertion of Great Zimbabwe",
      "options": [
       "A",
       "B",
@@ -301,7 +301,7 @@
     },
     {
      "type": "choice",
-     "q": "25  Its outer walls are curved.",
+     "q": "Its outer walls are curved.",
      "options": [
       "A",
       "B",
@@ -312,7 +312,7 @@
     },
     {
      "type": "choice",
-     "q": "26  Part of it may have been used for ceremonies.",
+     "q": "Part of it may have been used for ceremonies.",
      "options": [
       "A",
       "B",
@@ -323,7 +323,7 @@
     },
     {
      "type": "choice",
-     "q": "27  Some of its buildings feature geometric patterns.",
+     "q": "Some of its buildings feature geometric patterns.",
      "options": [
       "A",
       "B",
@@ -334,7 +334,7 @@
     },
     {
      "type": "choice",
-     "q": "28  It includes a structure that could have been used for storage.",
+     "q": "It includes a structure that could have been used for storage.",
      "options": [
       "A",
       "B",
@@ -345,7 +345,7 @@
     },
     {
      "type": "text",
-     "q": "29  An image based on the bird sculptures found at Great Zimbabwe now appears on the national ………… .",
+     "q": "An image based on the bird sculptures found at Great Zimbabwe now appears on the national ………… .",
      "answer": [
       "flag"
      ],
@@ -353,7 +353,7 @@
     },
     {
      "type": "text",
-     "q": "30  The impact of nature on Great Zimbabwe, as well as that of ………… , needs to be carefully managed.",
+     "q": "The impact of nature on Great Zimbabwe, as well as that of ………… , needs to be carefully managed.",
      "answer": [
       "tourism"
      ],
@@ -361,7 +361,7 @@
     },
     {
      "type": "text",
-     "q": "31  When choosing methods of conservation for Great Zimbabwe, it is important to adopt global ………… .",
+     "q": "When choosing methods of conservation for Great Zimbabwe, it is important to adopt global ………… .",
      "answer": [
       "standards"
      ],
@@ -369,7 +369,7 @@
     },
     {
      "type": "text",
-     "q": "32  A small part of Great Zimbabwe’s income comes from selling tickets and ………… .",
+     "q": "A small part of Great Zimbabwe’s income comes from selling tickets and ………… .",
      "answer": [
       "publications"
      ],
@@ -385,7 +385,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "33  What does the writer say about families in which the parents speak different languages?",
+     "q": "What does the writer say about families in which the parents speak different languages?",
      "options": [
       "They constantly research ways to help their children learn both languages.",
       "They realise the importance of their role in their children's language learning.",
@@ -397,7 +397,7 @@
     },
     {
      "type": "choice",
-     "q": "34  The writer uses the term 'received wisdom' in the first paragraph to illustrate that",
+     "q": "The writer uses the term 'received wisdom' in the first paragraph to illustrate that",
      "options": [
       "the success of OPOL depends on the languages spoken by the parents.",
       "OPOL fails if the parents are not consistent in its use.",
@@ -409,7 +409,7 @@
     },
     {
      "type": "choice",
-     "q": "35  The mothers who took part in the writer's research",
+     "q": "The mothers who took part in the writer's research",
      "options": [
       "compensated for the fact that their children were exposed to more English than Japanese.",
       "took their children's language learning more seriously than their partners did.",
@@ -421,7 +421,7 @@
     },
     {
      "type": "choice",
-     "q": "36  The writer says that the children in her study",
+     "q": "The writer says that the children in her study",
      "options": [
       "preferred to use Japanese exclusively for communicating with their mothers.",
       "understood their mothers better as their knowledge of Japanese increased.",
@@ -433,7 +433,7 @@
     },
     {
      "type": "choice",
-     "q": "37  What does the writer suggest about correcting children who are learning to be bilingual?",
+     "q": "What does the writer suggest about correcting children who are learning to be bilingual?",
      "options": [
       "It is usually avoided if it causes bad feeling.",
       "Parents tend to prioritise it over maintaining a conversation.",
@@ -445,7 +445,7 @@
     },
     {
      "type": "choice",
-     "q": "38  The writer gives the 'ice cream' example to show that",
+     "q": "The writer gives the 'ice cream' example to show that",
      "options": [
       "bilingual children find the use of borrowed words less confusing than other children.",
       "bilingual children like to test their parents with words they know to be wrong.",
@@ -457,7 +457,7 @@
     },
     {
      "type": "choice",
-     "q": "39  Faced with her little brother's ………….. to let her play with his toys, a young bilingual child …",
+     "q": "Faced with her little brother's ………….. to let her play with his toys, a young bilingual child …",
      "options": [
       "request",
       "attempts",
@@ -475,7 +475,7 @@
     },
     {
      "type": "choice",
-     "q": "40  … used all of her communication ………….. to change his mind.",
+     "q": "… used all of her communication ………….. to change his mind.",
      "options": [
       "request",
       "attempts",
@@ -493,7 +493,7 @@
     },
     {
      "type": "choice",
-     "q": "41  First, she expressed her ………….. in gentler, more polite language, and pretended to be about to cry.",
+     "q": "First, she expressed her ………….. in gentler, more polite language, and pretended to be about to cry.",
      "options": [
       "request",
       "attempts",
@@ -511,7 +511,7 @@
     },
     {
      "type": "choice",
-     "q": "42  Having switched from English to Japanese, she exploited ………….. of Japanese culture, …",
+     "q": "Having switched from English to Japanese, she exploited ………….. of Japanese culture, …",
      "options": [
       "request",
       "attempts",
@@ -529,7 +529,7 @@
     },
     {
      "type": "choice",
-     "q": "43  … such as reminding him of his ………….. to her as her brother.",
+     "q": "… such as reminding him of his ………….. to her as her brother.",
      "options": [
       "request",
       "attempts",
@@ -547,7 +547,7 @@
     },
     {
      "type": "choice",
-     "q": "44  She succeeded in her ………….. to convince him.",
+     "q": "She succeeded in her ………….. to convince him.",
      "options": [
       "request",
       "attempts",
@@ -565,7 +565,7 @@
     },
     {
      "type": "choice",
-     "q": "45  Even people who speak only one language know how to adapt their way of communicating according to the situation.",
+     "q": "Even people who speak only one language know how to adapt their way of communicating according to the situation.",
      "options": [
       "YES",
       "NO",
@@ -576,7 +576,7 @@
     },
     {
      "type": "choice",
-     "q": "46  People who grow up in OPOL families will go on to use this approach with their own children.",
+     "q": "People who grow up in OPOL families will go on to use this approach with their own children.",
      "options": [
       "YES",
       "NO",
@@ -587,7 +587,7 @@
     },
     {
      "type": "choice",
-     "q": "47  The reason the OPOL approach is favoured by many parents is that it encourages them to switch languages when necessary.",
+     "q": "The reason the OPOL approach is favoured by many parents is that it encourages them to switch languages when necessary.",
      "options": [
       "YES",
       "NO",
@@ -598,7 +598,7 @@
     },
     {
      "type": "choice",
-     "q": "48  Bilingual children who mix languages eventually develop a preference for one of the languages.",
+     "q": "Bilingual children who mix languages eventually develop a preference for one of the languages.",
      "options": [
       "YES",
       "NO",
@@ -609,7 +609,7 @@
     },
     {
      "type": "choice",
-     "q": "49  The OPOL approach may restrict people's capacity to be resourceful in their use of language.",
+     "q": "The OPOL approach may restrict people's capacity to be resourceful in their use of language.",
      "options": [
       "YES",
       "NO",

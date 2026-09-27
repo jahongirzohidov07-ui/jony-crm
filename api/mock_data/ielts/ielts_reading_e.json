@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Redfern's dispenser could distinguish a real penny from objects of a similar shape.",
+     "q": "Redfern's dispenser could distinguish a real penny from objects of a similar shape.",
      "options": [
       "TRUE",
       "FALSE",
@@ -30,7 +30,7 @@
     },
     {
      "type": "choice",
-     "q": "2  Redfern's machines were installed on railway platforms before they appeared on piers.",
+     "q": "Redfern's machines were installed on railway platforms before they appeared on piers.",
      "options": [
       "TRUE",
       "FALSE",
@@ -41,7 +41,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Brayton and Sons earned most of their profit from the chocolate sold in their machines.",
+     "q": "Brayton and Sons earned most of their profit from the chocolate sold in their machines.",
      "options": [
       "TRUE",
       "FALSE",
@@ -52,7 +52,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Brayton and Sons took on extra staff to refill their machines after 1911.",
+     "q": "Brayton and Sons took on extra staff to refill their machines after 1911.",
      "options": [
       "TRUE",
       "FALSE",
@@ -63,7 +63,7 @@
     },
     {
      "type": "choice",
-     "q": "5  The Vending Trades Association's estimate of losses in 1958 was made public as soon as it was produced.",
+     "q": "The Vending Trades Association's estimate of losses in 1958 was made public as soon as it was produced.",
      "options": [
       "TRUE",
       "FALSE",
@@ -74,7 +74,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Measures designed to defeat slugs made machines more expensive to produce.",
+     "q": "Measures designed to defeat slugs made machines more expensive to produce.",
      "options": [
       "TRUE",
       "FALSE",
@@ -85,7 +85,7 @@
     },
     {
      "type": "choice",
-     "q": "7  Machines in Japan offer a wider range of goods than machines in Britain.",
+     "q": "Machines in Japan offer a wider range of goods than machines in Britain.",
      "options": [
       "TRUE",
       "FALSE",
@@ -96,7 +96,7 @@
     },
     {
      "type": "text",
-     "q": "8  Early machines were placed where customers were obliged to ____________.",
+     "q": "Early machines were placed where customers were obliged to ____________.",
      "answer": [
       "wait"
      ],
@@ -104,7 +104,7 @@
     },
     {
      "type": "text",
-     "q": "9  A machine's earnings depend more on the ____________ of the building it stands in than on what it sells.",
+     "q": "A machine's earnings depend more on the ____________ of the building it stands in than on what it sells.",
      "answer": [
       "timetable"
      ],
@@ -112,7 +112,7 @@
     },
     {
      "type": "text",
-     "q": "10  Brayton and Sons regarded their machines mainly as a form of ____________.",
+     "q": "Brayton and Sons regarded their machines mainly as a form of ____________.",
      "answer": [
       "advertising"
      ],
@@ -120,7 +120,7 @@
     },
     {
      "type": "text",
-     "q": "11  The industry was saved by ____________, which allowed machines to sell cold drinks.",
+     "q": "The industry was saved by ____________, which allowed machines to sell cold drinks.",
      "answer": [
       "refrigeration"
      ],
@@ -128,7 +128,7 @@
     },
     {
      "type": "text",
-     "q": "12  After the war, a machine in a corridor was far cheaper than a staffed ____________.",
+     "q": "After the war, a machine in a corridor was far cheaper than a staffed ____________.",
      "answer": [
       "canteen"
      ],
@@ -136,7 +136,7 @@
     },
     {
      "type": "text",
-     "q": "13  About two fifths of the cost of a vended item is the ____________ made to restock the machine.",
+     "q": "About two fifths of the cost of a vended item is the ____________ made to restock the machine.",
      "answer": [
       "journey"
      ],
@@ -152,7 +152,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  a comparison of the different legal arrangements that are available",
+     "q": "a comparison of the different legal arrangements that are available",
      "options": [
       "A",
       "B",
@@ -168,7 +168,7 @@
     },
     {
      "type": "choice",
-     "q": "15  a reference to a change in the tax treatment of a sale",
+     "q": "a reference to a change in the tax treatment of a sale",
      "options": [
       "A",
       "B",
@@ -184,7 +184,7 @@
     },
     {
      "type": "choice",
-     "q": "16  an example of a company that trains the people who represent its staff",
+     "q": "an example of a company that trains the people who represent its staff",
      "options": [
       "A",
       "B",
@@ -200,7 +200,7 @@
     },
     {
      "type": "choice",
-     "q": "17  figures comparing the present number of employee-owned firms with the number in an earlier period",
+     "q": "figures comparing the present number of employee-owned firms with the number in an earlier period",
      "options": [
       "A",
       "B",
@@ -216,7 +216,7 @@
     },
     {
      "type": "choice",
-     "q": "18  an account of how one particular firm came to be owned by its workforce",
+     "q": "an account of how one particular firm came to be owned by its workforce",
      "options": [
       "A",
       "B",
@@ -232,7 +232,7 @@
     },
     {
      "type": "choice",
-     "q": "19  a warning about the financial exposure of employee owners",
+     "q": "a warning about the financial exposure of employee owners",
      "options": [
       "A",
       "B",
@@ -248,7 +248,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Employee-owned firms keep people in work by reducing what those people earn.",
+     "q": "Employee-owned firms keep people in work by reducing what those people earn.",
      "options": [
       "A",
       "B",
@@ -260,7 +260,7 @@
     },
     {
      "type": "choice",
-     "q": "21  The benefits of the model are confined to organisations below a certain size.",
+     "q": "The benefits of the model are confined to organisations below a certain size.",
      "options": [
       "A",
       "B",
@@ -272,7 +272,7 @@
     },
     {
      "type": "choice",
-     "q": "22  Improvements in performance depend on employees having a genuine say.",
+     "q": "Improvements in performance depend on employees having a genuine say.",
      "options": [
       "A",
       "B",
@@ -284,7 +284,7 @@
     },
     {
      "type": "choice",
-     "q": "23  Employee owners stand to lose everything if their company collapses.",
+     "q": "Employee owners stand to lose everything if their company collapses.",
      "options": [
       "A",
       "B",
@@ -296,7 +296,7 @@
     },
     {
      "type": "text",
-     "q": "24  Ferreira's study found an average productivity gain of about ____________.",
+     "q": "Ferreira's study found an average productivity gain of about ____________.",
      "answer": [
       "four per cent",
       "4 per cent",
@@ -308,7 +308,7 @@
     },
     {
      "type": "text",
-     "q": "25  Since 2014, owners who sell a controlling stake to an employee trust have been exempt from ____________.",
+     "q": "Since 2014, owners who sell a controlling stake to an employee trust have been exempt from ____________.",
      "answer": [
       "capital gains tax"
      ],
@@ -316,7 +316,7 @@
     },
     {
      "type": "text",
-     "q": "26  At Calderbank Engineering, elected representatives take a course in reading ____________ before joining the board.",
+     "q": "At Calderbank Engineering, elected representatives take a course in reading ____________ before joining the board.",
      "answer": [
       "company accounts",
       "accounts"
@@ -333,7 +333,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  The writer accepts that prices which move with demand can serve a useful purpose.",
+     "q": "The writer accepts that prices which move with demand can serve a useful purpose.",
      "options": [
       "YES",
       "NO",
@@ -344,7 +344,7 @@
     },
     {
      "type": "choice",
-     "q": "28  The Fairline audit established that the price differences it found were caused by personalisation.",
+     "q": "The Fairline audit established that the price differences it found were caused by personalisation.",
      "options": [
       "YES",
       "NO",
@@ -355,7 +355,7 @@
     },
     {
      "type": "choice",
-     "q": "29  The writer believes shoppers are now expected to behave like professional traders.",
+     "q": "The writer believes shoppers are now expected to behave like professional traders.",
      "options": [
       "YES",
       "NO",
@@ -366,7 +366,7 @@
     },
     {
      "type": "choice",
-     "q": "30  Supermarkets in Europe alter their prices more frequently than those in North America.",
+     "q": "Supermarkets in Europe alter their prices more frequently than those in North America.",
      "options": [
       "YES",
       "NO",
@@ -377,7 +377,7 @@
     },
     {
      "type": "choice",
-     "q": "31  The writer regards the money lost by consumers as the most damaging effect of the practice.",
+     "q": "The writer regards the money lost by consumers as the most damaging effect of the practice.",
      "options": [
       "YES",
       "NO",
@@ -388,7 +388,7 @@
     },
     {
      "type": "choice",
-     "q": "32  The writer believes that younger shoppers are affected by personalised pricing more than older ones.",
+     "q": "The writer believes that younger shoppers are affected by personalised pricing more than older ones.",
      "options": [
       "YES",
       "NO",
@@ -399,115 +399,115 @@
     },
     {
      "type": "choice",
-     "q": "33  According to the first paragraph, the important change in modern pricing is that a price now describes",
+     "q": "According to the first paragraph, the important change in modern pricing is that a price now describes",
      "options": [
-      "A  the cost of producing the goods.",
-      "B  the buyer as much as the product.",
-      "C  the condition of the wider economy.",
-      "D  the quality of what is being sold."
+      "the cost of producing the goods.",
+      "the buyer as much as the product.",
+      "the condition of the wider economy.",
+      "the quality of what is being sold."
      ],
      "answer": 1,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "34  The writer's main objection to the economists' defence of variable pricing is that",
+     "q": "The writer's main objection to the economists' defence of variable pricing is that",
      "options": [
-      "A  it has never been tested outside the travel industry.",
-      "B  it takes no account of the effect on sellers.",
-      "C  it assumes buyers can see how prices are decided.",
-      "D  it applies only to customers on low incomes."
+      "it has never been tested outside the travel industry.",
+      "it takes no account of the effect on sellers.",
+      "it assumes buyers can see how prices are decided.",
+      "it applies only to customers on low incomes."
      ],
      "answer": 2,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "35  What does the writer consider the chief cost of personalised pricing for ordinary shoppers?",
+     "q": "What does the writer consider the chief cost of personalised pricing for ordinary shoppers?",
      "options": [
-      "A  the time and attention required to stay alert",
-      "B  a noticeable rise in their average bills",
-      "C  the withdrawal of discounts for loyal customers",
-      "D  the closure of small independent retailers"
+      "the time and attention required to stay alert",
+      "a noticeable rise in their average bills",
+      "the withdrawal of discounts for loyal customers",
+      "the closure of small independent retailers"
      ],
      "answer": 0,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "36  The writer describes the remedy he favours as",
+     "q": "The writer describes the remedy he favours as",
      "options": [
-      "A  a complete ban on automated repricing.",
-      "B  a return to prices fixed by law.",
-      "C  a tax on personalised offers.",
-      "D  a modest requirement to declare what is happening."
+      "a complete ban on automated repricing.",
+      "a return to prices fixed by law.",
+      "a tax on personalised offers.",
+      "a modest requirement to declare what is happening."
      ],
      "answer": 3,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "37  Gap 37 in the summary above",
+     "q": "Gap 37 in the summary above",
      "options": [
-      "A  casino",
-      "B  compare",
-      "C  competition",
-      "D  disclosure",
-      "E  regulation",
-      "F  profit",
-      "G  vigilance",
-      "H  trust",
-      "I  bargain",
-      "J  advertising"
+      "casino",
+      "compare",
+      "competition",
+      "disclosure",
+      "regulation",
+      "profit",
+      "vigilance",
+      "trust",
+      "bargain",
+      "advertising"
      ],
      "answer": 1,
      "topic": "Reading · Summary completion (word box)"
     },
     {
      "type": "choice",
-     "q": "38  Gap 38 in the summary above",
+     "q": "Gap 38 in the summary above",
      "options": [
-      "A  casino",
-      "B  compare",
-      "C  competition",
-      "D  disclosure",
-      "E  regulation",
-      "F  profit",
-      "G  vigilance",
-      "H  trust",
-      "I  bargain",
-      "J  advertising"
+      "casino",
+      "compare",
+      "competition",
+      "disclosure",
+      "regulation",
+      "profit",
+      "vigilance",
+      "trust",
+      "bargain",
+      "advertising"
      ],
      "answer": 2,
      "topic": "Reading · Summary completion (word box)"
     },
     {
      "type": "choice",
-     "q": "39  Gap 39 in the summary above",
+     "q": "Gap 39 in the summary above",
      "options": [
-      "A  casino",
-      "B  compare",
-      "C  competition",
-      "D  disclosure",
-      "E  regulation",
-      "F  profit",
-      "G  vigilance",
-      "H  trust",
-      "I  bargain",
-      "J  advertising"
+      "casino",
+      "compare",
+      "competition",
+      "disclosure",
+      "regulation",
+      "profit",
+      "vigilance",
+      "trust",
+      "bargain",
+      "advertising"
      ],
      "answer": 3,
      "topic": "Reading · Summary completion (word box)"
     },
     {
      "type": "multi",
-     "q": "40  Which TWO of the following uses of variable pricing does the writer accept as legitimate? Choose TWO letters, A-E.",
+     "q": "Which TWO of the following uses of variable pricing does the writer accept as legitimate? Choose TWO letters, A-E.",
      "options": [
-      "A  reducing the fare on a seat that would otherwise go unsold",
-      "B  charging long-standing customers more than new ones",
-      "C  raising ticket prices so that resellers do not take the difference",
-      "D  hiding the standard price from shoppers",
-      "E  matching a rival's increase automatically"
+      "reducing the fare on a seat that would otherwise go unsold",
+      "charging long-standing customers more than new ones",
+      "raising ticket prices so that resellers do not take the difference",
+      "hiding the standard price from shoppers",
+      "matching a rival's increase automatically"
      ],
      "answer": [
       0,

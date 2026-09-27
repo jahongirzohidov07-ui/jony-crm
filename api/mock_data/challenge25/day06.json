@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Damage caused by fire is worse than that caused by flood.",
+     "q": "Damage caused by fire is worse than that caused by flood.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  The flood peaks at almost 1500 cubic meters every eight years.",
+     "q": "The flood peaks at almost 1500 cubic meters every eight years.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Contribution of sediments delivered by tributaries has little impact.",
+     "q": "Contribution of sediments delivered by tributaries has little impact.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Decreasing number of chubs is always caused by introducing of trout since mid 20th century.",
+     "q": "Decreasing number of chubs is always caused by introducing of trout since mid 20th century.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "choice",
-     "q": "5  It seemed that the artificial flood in 1996 had achieved success partly at the very beginning.",
+     "q": "It seemed that the artificial flood in 1996 had achieved success partly at the very beginning.",
      "options": [
       "TRUE",
       "FALSE",
@@ -76,7 +76,7 @@
     },
     {
      "type": "choice",
-     "q": "6  In fact, the yield of artificial flood water is smaller than an average natural flood at present.",
+     "q": "In fact, the yield of artificial flood water is smaller than an average natural flood at present.",
      "options": [
       "TRUE",
       "FALSE",
@@ -87,7 +87,7 @@
     },
     {
      "type": "choice",
-     "q": "7  Mighty floods drove fast moving flows with clean and high quality water.",
+     "q": "Mighty floods drove fast moving flows with clean and high quality water.",
      "options": [
       "TRUE",
       "FALSE",
@@ -98,7 +98,7 @@
     },
     {
      "type": "text",
-     "q": "8  The snow from far Wyoming would melt in the season of ......... and caused a flood flow peak in Colorado river.",
+     "q": "The snow from far Wyoming would melt in the season of ......... and caused a flood flow peak in Colorado river.",
      "answer": [
       "spring",
       "the spring"
@@ -107,7 +107,7 @@
     },
     {
      "type": "text",
-     "q": "9  In the four decades after people built the Glen Canyon dam, it only could gather ......... together from tiny, undammed tributaries.",
+     "q": "In the four decades after people built the Glen Canyon dam, it only could gather ......... together from tiny, undammed tributaries.",
      "answer": [
       "sediment",
       "the sediment"
@@ -116,7 +116,7 @@
     },
     {
      "type": "text",
-     "q": "10  Then, several species disappeared including Colorado pike-minnow, ......... and the round-tail chub.",
+     "q": "Then, several species disappeared including Colorado pike-minnow, ......... and the round-tail chub.",
      "answer": [
       "razorback sucker",
       "the razorback sucker"
@@ -125,7 +125,7 @@
     },
     {
      "type": "text",
-     "q": "11  Meanwhile, some moved in such as fathead minnows, channel catfish and .........",
+     "q": "Meanwhile, some moved in such as fathead minnows, channel catfish and .........",
      "answer": [
       "common carp"
      ],
@@ -133,7 +133,7 @@
     },
     {
      "type": "text",
-     "q": "12  ... which poses great threat to the chubs because it has poor ......... away from predators.",
+     "q": "... which poses great threat to the chubs because it has poor ......... away from predators.",
      "answer": [
       "visibility"
      ],
@@ -141,7 +141,7 @@
     },
     {
      "type": "text",
-     "q": "13  In addition, the volume of ......... available behind the dam was too low to rebuild the bars and flooding became more serious.",
+     "q": "In addition, the volume of ......... available behind the dam was too low to rebuild the bars and flooding became more serious.",
      "answer": [
       "sand"
      ],
@@ -157,7 +157,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  Paragraph A",
+     "q": "Paragraph A",
      "options": [
       "i  Why better food helps students' learning",
       "ii  Becoming the headmaster of Msekeni",
@@ -176,7 +176,7 @@
     },
     {
      "type": "choice",
-     "q": "15  Paragraph B",
+     "q": "Paragraph B",
      "options": [
       "i  Why better food helps students' learning",
       "ii  Becoming the headmaster of Msekeni",
@@ -195,7 +195,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Paragraph C",
+     "q": "Paragraph C",
      "options": [
       "i  Why better food helps students' learning",
       "ii  Becoming the headmaster of Msekeni",
@@ -214,7 +214,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Paragraph D",
+     "q": "Paragraph D",
      "options": [
       "i  Why better food helps students' learning",
       "ii  Becoming the headmaster of Msekeni",
@@ -233,7 +233,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Paragraph E",
+     "q": "Paragraph E",
      "options": [
       "i  Why better food helps students' learning",
       "ii  Becoming the headmaster of Msekeni",
@@ -252,7 +252,7 @@
     },
     {
      "type": "choice",
-     "q": "19  Paragraph F",
+     "q": "Paragraph F",
      "options": [
       "i  Why better food helps students' learning",
       "ii  Becoming the headmaster of Msekeni",
@@ -271,7 +271,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Paragraph G",
+     "q": "Paragraph G",
      "options": [
       "i  Why better food helps students' learning",
       "ii  Becoming the headmaster of Msekeni",
@@ -290,7 +290,7 @@
     },
     {
      "type": "text",
-     "q": "21  In Kumanda's school ......... are given to girls after the end of the school day.",
+     "q": "In Kumanda's school ......... are given to girls after the end of the school day.",
      "answer": [
       "extra snacks",
       "snacks"
@@ -299,7 +299,7 @@
     },
     {
      "type": "text",
-     "q": "22  Many children from poor families were sent to collect ......... from the field.",
+     "q": "Many children from poor families were sent to collect ......... from the field.",
      "answer": [
       "firewood"
      ],
@@ -307,7 +307,7 @@
     },
     {
      "type": "text",
-     "q": "23  Thanks to the free food program, ......... of students passed the test.",
+     "q": "Thanks to the free food program, ......... of students passed the test.",
      "answer": [
       "85%",
       "85 percent",
@@ -317,7 +317,7 @@
     },
     {
      "type": "text",
-     "q": "24  The modern human is ......... bigger than before after the industrial revolution.",
+     "q": "The modern human is ......... bigger than before after the industrial revolution.",
      "answer": [
       "50%",
       "50 percent",
@@ -327,14 +327,14 @@
     },
     {
      "type": "multi",
-     "q": "25-26  Choose TWO letters, A-F. Which TWO of the following statements are true?",
+     "q": "Choose TWO letters, A-F. Which TWO of the following statements are true?",
      "options": [
-      "A  Some children are taught in the open air.",
-      "B  Bernard Kumanda became the headmaster in 1991.",
-      "C  No new staffs were recruited when attendance rose.",
-      "D  Girls are often treated equally with boys in Malawi.",
-      "E  Scientists have devised ways to detect the most underfed students in school.",
-      "F  WHO is worried about malnutrition among kids in developing countries."
+      "Some children are taught in the open air.",
+      "Bernard Kumanda became the headmaster in 1991.",
+      "No new staffs were recruited when attendance rose.",
+      "Girls are often treated equally with boys in Malawi.",
+      "Scientists have devised ways to detect the most underfed students in school.",
+      "WHO is worried about malnutrition among kids in developing countries."
      ],
      "answer": [
       0,
@@ -352,139 +352,139 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  Appointments with an alternative practitioner",
+     "q": "Appointments with an alternative practitioner",
      "options": [
-      "A  should easily be understood",
-      "B  should improve by itself",
-      "C  should not involve any mysticism",
-      "D  ought to last a minimum length of time.",
-      "E  needs to be treated at the right time.",
-      "F  should give more recognition.",
-      "G  can earn valuable money.",
-      "H  do not rely on any specific treatment"
+      "should easily be understood",
+      "should improve by itself",
+      "should not involve any mysticism",
+      "ought to last a minimum length of time.",
+      "needs to be treated at the right time.",
+      "should give more recognition.",
+      "can earn valuable money.",
+      "do not rely on any specific treatment"
      ],
      "answer": 3,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "28  An alternative practitioner's description of the treatment",
+     "q": "An alternative practitioner's description of the treatment",
      "options": [
-      "A  should easily be understood",
-      "B  should improve by itself",
-      "C  should not involve any mysticism",
-      "D  ought to last a minimum length of time.",
-      "E  needs to be treated at the right time.",
-      "F  should give more recognition.",
-      "G  can earn valuable money.",
-      "H  do not rely on any specific treatment"
+      "should easily be understood",
+      "should improve by itself",
+      "should not involve any mysticism",
+      "ought to last a minimum length of time.",
+      "needs to be treated at the right time.",
+      "should give more recognition.",
+      "can earn valuable money.",
+      "do not rely on any specific treatment"
      ],
      "answer": 0,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "29  An alternative practitioner who has faith in what he does",
+     "q": "An alternative practitioner who has faith in what he does",
      "options": [
-      "A  should easily be understood",
-      "B  should improve by itself",
-      "C  should not involve any mysticism",
-      "D  ought to last a minimum length of time.",
-      "E  needs to be treated at the right time.",
-      "F  should give more recognition.",
-      "G  can earn valuable money.",
-      "H  do not rely on any specific treatment"
+      "should easily be understood",
+      "should improve by itself",
+      "should not involve any mysticism",
+      "ought to last a minimum length of time.",
+      "needs to be treated at the right time.",
+      "should give more recognition.",
+      "can earn valuable money.",
+      "do not rely on any specific treatment"
      ],
      "answer": 6,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "30  The illness of patients convinced of alternative practice",
+     "q": "The illness of patients convinced of alternative practice",
      "options": [
-      "A  should easily be understood",
-      "B  should improve by itself",
-      "C  should not involve any mysticism",
-      "D  ought to last a minimum length of time.",
-      "E  needs to be treated at the right time.",
-      "F  should give more recognition.",
-      "G  can earn valuable money.",
-      "H  do not rely on any specific treatment"
+      "should easily be understood",
+      "should improve by itself",
+      "should not involve any mysticism",
+      "ought to last a minimum length of time.",
+      "needs to be treated at the right time.",
+      "should give more recognition.",
+      "can earn valuable money.",
+      "do not rely on any specific treatment"
      ],
      "answer": 1,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "31  Improvements of patients receiving alternative practice",
+     "q": "Improvements of patients receiving alternative practice",
      "options": [
-      "A  should easily be understood",
-      "B  should improve by itself",
-      "C  should not involve any mysticism",
-      "D  ought to last a minimum length of time.",
-      "E  needs to be treated at the right time.",
-      "F  should give more recognition.",
-      "G  can earn valuable money.",
-      "H  do not rely on any specific treatment"
+      "should easily be understood",
+      "should improve by itself",
+      "should not involve any mysticism",
+      "ought to last a minimum length of time.",
+      "needs to be treated at the right time.",
+      "should give more recognition.",
+      "can earn valuable money.",
+      "do not rely on any specific treatment"
      ],
      "answer": 7,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "32  Conventional medical doctors (who is aware of placebo)",
+     "q": "Conventional medical doctors (who is aware of placebo)",
      "options": [
-      "A  should easily be understood",
-      "B  should improve by itself",
-      "C  should not involve any mysticism",
-      "D  ought to last a minimum length of time.",
-      "E  needs to be treated at the right time.",
-      "F  should give more recognition.",
-      "G  can earn valuable money.",
-      "H  do not rely on any specific treatment"
+      "should easily be understood",
+      "should improve by itself",
+      "should not involve any mysticism",
+      "ought to last a minimum length of time.",
+      "needs to be treated at the right time.",
+      "should give more recognition.",
+      "can earn valuable money.",
+      "do not rely on any specific treatment"
      ],
      "answer": 5,
      "topic": "Reading - Matching sentence endings"
     },
     {
      "type": "choice",
-     "q": "33  In the fifth paragraph, the writer uses the example of anger and sadness to illustrate that",
+     "q": "In the fifth paragraph, the writer uses the example of anger and sadness to illustrate that",
      "options": [
-      "A  People's feeling could affect their physical behaviour",
-      "B  Scientists don't understand how the mind influences the body.",
-      "C  Research on the placebo effect is very limited",
-      "D  How placebo achieves its effect is yet to be understood."
+      "People's feeling could affect their physical behaviour",
+      "Scientists don't understand how the mind influences the body.",
+      "Research on the placebo effect is very limited",
+      "How placebo achieves its effect is yet to be understood."
      ],
      "answer": 0,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "34  Research on pain control attracts most of the attention because",
+     "q": "Research on pain control attracts most of the attention because",
      "options": [
-      "A  Scientists have discovered that endorphins can help to reduce pain.",
-      "B  Only a limited number of researchers gain relevant experience",
-      "C  Pain reducing agents might also be involved in the placebo effect.",
-      "D  Patients often experience pain and like to complain about it"
+      "Scientists have discovered that endorphins can help to reduce pain.",
+      "Only a limited number of researchers gain relevant experience",
+      "Pain reducing agents might also be involved in the placebo effect.",
+      "Patients often experience pain and like to complain about it"
      ],
      "answer": 3,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "35  Fabrizio Benedetti's research on endorphins indicates that",
+     "q": "Fabrizio Benedetti's research on endorphins indicates that",
      "options": [
-      "A  They are widely used to regulate pain.",
-      "B  They can be produced by willful thoughts",
-      "C  They can be neutralized by introducing naloxone.",
-      "D  Their pain-relieving effects do not last long enough."
+      "They are widely used to regulate pain.",
+      "They can be produced by willful thoughts",
+      "They can be neutralized by introducing naloxone.",
+      "Their pain-relieving effects do not last long enough."
      ],
      "answer": 2,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "36  There is enough information for scientists to fully understand the placebo effect.",
+     "q": "There is enough information for scientists to fully understand the placebo effect.",
      "options": [
       "YES",
       "NO",
@@ -495,7 +495,7 @@
     },
     {
      "type": "choice",
-     "q": "37  A London based researcher discovered that red pills should be taken off the market.",
+     "q": "A London based researcher discovered that red pills should be taken off the market.",
      "options": [
       "YES",
       "NO",
@@ -506,7 +506,7 @@
     },
     {
      "type": "choice",
-     "q": "38  People's preference for brands would also have an effect on their healing.",
+     "q": "People's preference for brands would also have an effect on their healing.",
      "options": [
       "YES",
       "NO",
@@ -517,7 +517,7 @@
     },
     {
      "type": "choice",
-     "q": "39  Medical doctors have a range of views of the newly introduced drug of chlorpromazine.",
+     "q": "Medical doctors have a range of views of the newly introduced drug of chlorpromazine.",
      "options": [
       "YES",
       "NO",
@@ -528,7 +528,7 @@
     },
     {
      "type": "choice",
-     "q": "40  Alternative practitioners are seldom known for applying the placebo effect.",
+     "q": "Alternative practitioners are seldom known for applying the placebo effect.",
      "options": [
       "YES",
       "NO",

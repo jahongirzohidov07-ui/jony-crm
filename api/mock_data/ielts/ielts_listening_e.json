@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Surname:",
+     "q": "Surname:",
      "answer": [
       "Quilter",
       "QUILTER"
@@ -28,7 +28,7 @@
     },
     {
      "type": "text",
-     "q": "2  Type of business: ____",
+     "q": "Type of business: ____",
      "answer": [
       "jewellery",
       "jewelry"
@@ -37,7 +37,7 @@
     },
     {
      "type": "text",
-     "q": "3  Pitch size required: ____ metres",
+     "q": "Pitch size required: ____ metres",
      "answer": [
       "3",
       "three"
@@ -46,7 +46,7 @@
     },
     {
      "type": "text",
-     "q": "4  First market booked: ____ March",
+     "q": "First market booked: ____ March",
      "answer": [
       "14",
       "14th",
@@ -56,7 +56,7 @@
     },
     {
      "type": "text",
-     "q": "5  Charge for the day: £____",
+     "q": "Charge for the day: £____",
      "answer": [
       "42",
       "42.00",
@@ -66,7 +66,7 @@
     },
     {
      "type": "text",
-     "q": "6  Deposit payable on booking: £____",
+     "q": "Deposit payable on booking: £____",
      "answer": [
       "15",
       "15.00",
@@ -76,7 +76,7 @@
     },
     {
      "type": "text",
-     "q": "7  Service needed on the pitch: ____",
+     "q": "Service needed on the pitch: ____",
      "answer": [
       "electricity"
      ],
@@ -84,7 +84,7 @@
     },
     {
      "type": "text",
-     "q": "8  Traders may start setting up at: ____ am",
+     "q": "Traders may start setting up at: ____ am",
      "answer": [
       "7.30",
       "7:30",
@@ -95,7 +95,7 @@
     },
     {
      "type": "text",
-     "q": "9  Traders must enter by the ____ gate",
+     "q": "Traders must enter by the ____ gate",
      "answer": [
       "north"
      ],
@@ -103,7 +103,7 @@
     },
     {
      "type": "text",
-     "q": "10  Heard about the market from a ____",
+     "q": "Heard about the market from a ____",
      "answer": [
       "podcast"
      ],
@@ -113,46 +113,46 @@
   },
   {
    "title": "Part 2",
-   "instructions": "Questions 11-13: Choose the correct letter, A, B or C.\n\nQuestions 14-16: Who deals with each matter at the Business Yard? Choose THREE answers from the list and write the correct letter, A-F, next to Questions 14-16. The people are: A  the site manager;  B  the duty caretaker;  C  the finance office;  D  the tenants' committee;  E  the security desk;  F  the café manager.\n\nQuestions 17-20: Label the site plan below. Write the correct letter, A-H, next to Questions 17-20. The lettered places on the plan are described as follows: A is the small hut immediately to the LEFT of the main gate; B is the small hut immediately to the RIGHT of the main gate; C is the room at the LEFT-HAND end of the ground floor of the Old Mill Building; D is the room at the RIGHT-HAND end of the ground floor of the Old Mill Building; E is the open area directly BEHIND the Old Mill Building, on its north side; F is the open yard between the gate and the building, on the WEST side of the central path; G is the open yard between the gate and the building, on the EAST side of the central path; H is the low single-storey block in the far right-hand corner of the site, beyond the car park.",
+   "instructions": "Questions 11-13: Choose the correct letter, A, B or C.\n\nQuestions 14-16: Who deals with each matter at the Business Yard? Choose THREE answers from the list and write the correct letter, A-F, next to Questions 14-16. The people are: A  the site manager;  B  the duty caretaker;  C  the finance office;  D  the tenants' committee;  E  the security desk;  F  the café manager.\n\nQuestions 17-20: Label the site plan below. Write the correct letter, A-H, next to Questions 17-20.",
    "passage": "",
    "script": "Now turn to Part 2. You will hear a talk given to new tenants at a business centre called Harrow Bank Business Yard. First you have some time to look at Questions 11 to 20. Now listen carefully and answer Questions 11 to 20.\n\nGood afternoon, everyone, and welcome to Harrow Bank Business Yard. I'm Tessa Underwood and I look after lettings here. Before I take you round the site, let me say a few words about the place and about how things work.\n\nPeople often ask about the name. Because the big building in the middle is called the Old Mill, almost everybody assumes this was once a flour mill, and there is a furniture factory in the town with a similar name, which adds to the confusion. In fact neither is right. For most of the last century this was a printing works, turning out timetables and catalogues for the railway companies.\n\nNow, what's different this year? I know some of you signed up because you'd heard rumours about cheaper rent. I'm sorry to say the monthly rent is exactly what it was last year — the board discussed a reduction and decided against it. Parking, too, is unchanged: two pounds a day, paid through the machine by the car park. The real change, and I think it's the one that matters most to small firms, is that the yard now stays open until ten at night instead of closing at six. So if your best working hours are in the evening, you can use them.\n\nOne small administrative point. Meeting rooms used to be booked at reception, and a few of you have been leaving notes there, which is why two of you turned up for the same room last Tuesday. Reception no longer keeps the diary. Nor do we take bookings by phone, whatever the old leaflet says. Everything now goes through the app, which you'll be sent a link to this evening. And yes, the café manager takes sandwich orders, but that is all she takes.\n\nWhile we're on practicalities, let me tell you who to go to when something goes wrong, because tenants waste an extraordinary amount of time asking the wrong person. If your heating stops working, or a tap is dripping, or a door won't lock, don't email me and don't ring the site manager — the duty caretaker is here from seven until seven and will deal with it, usually the same day. Questions about money are different. If an invoice looks wrong, or you want to change the date your payment leaves your account, that's the finance office, upstairs in the Old Mill; they answer within two working days. And if you want to put on an event — a launch party, a market, a film night in the courtyard — the decision isn't mine. The tenants' committee meets on the first Monday of the month — the first Tuesday, sorry, they changed it in the spring — and they approve or refuse every application for the courtyard themselves.\n\nRight, the site. Imagine you're standing at the main gate, looking north up the central path towards the Old Mill Building. There's a small hut on either side of you. The one on your left is the security desk, staffed overnight. The one on your right is where you leave your bicycle — it takes about twenty bikes and the code changes monthly.\n\nWalk up the path to the Old Mill. On the ground floor there are two large rooms, one at each end. At the right-hand end is — sorry, I nearly said the kitchen, but the kitchen is on the first floor. The right-hand room is the post room. The print room, with the big copiers and the guillotine, is at the other end, the left-hand end of the ground floor.\n\nIf you carry on round the building, the whole area behind it, on the north side, is the loading bay. Lorries reverse in there, so please don't park.\n\nFinally, the meeting pods. People always look for them inside the Old Mill and they aren't there. They're in the low single-storey block right over in the far corner on your right, past the car park. Six pods, all bookable by the hour.\n\nThat's the tour in words; now let's go and walk it.\n\nThat is the end of Part 2. You now have half a minute to check your answers.",
    "questions": [
     {
      "type": "choice",
-     "q": "11  The Old Mill Building was originally",
+     "q": "The Old Mill Building was originally",
      "options": [
-      "A  a flour mill.",
-      "B  a printing works.",
-      "C  a furniture factory."
+      "a flour mill.",
+      "a printing works.",
+      "a furniture factory."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "12  What has changed at the Business Yard this year?",
+     "q": "What has changed at the Business Yard this year?",
      "options": [
-      "A  the opening hours",
-      "B  the monthly rent",
-      "C  the cost of parking"
+      "the opening hours",
+      "the monthly rent",
+      "the cost of parking"
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "13  Meeting rooms must now be booked",
+     "q": "Meeting rooms must now be booked",
      "options": [
-      "A  at reception.",
-      "B  by telephone.",
-      "C  through the app."
+      "at reception.",
+      "by telephone.",
+      "through the app."
      ],
      "answer": 2,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "14  a heating fault in your unit",
+     "q": "a heating fault in your unit",
      "options": [
       "A",
       "B",
@@ -166,7 +166,7 @@
     },
     {
      "type": "choice",
-     "q": "15  a query about an invoice",
+     "q": "a query about an invoice",
      "options": [
       "A",
       "B",
@@ -180,7 +180,7 @@
     },
     {
      "type": "choice",
-     "q": "16  permission to hold an event in the courtyard",
+     "q": "permission to hold an event in the courtyard",
      "options": [
       "A",
       "B",
@@ -194,7 +194,7 @@
     },
     {
      "type": "choice",
-     "q": "17  bike store",
+     "q": "bike store",
      "options": [
       "A",
       "B",
@@ -206,11 +206,12 @@
       "H"
      ],
      "answer": 1,
-     "topic": "Listening · Map labelling"
+     "topic": "Listening · Map labelling",
+     "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTYwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZmlsbD0iI2ZmZmZmZiIvPgo8dGV4dCB4PSIzODUiIHk9IjQyIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+SGFycm93IEJhbmsgQnVzaW5lc3MgWWFyZDwvdGV4dD4KPGcgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9IiMxMTEiPgo8bGluZSB4MT0iNzUwIiB5MT0iMTI1IiB4Mj0iNzUwIiB5Mj0iODAiLz4KPHBvbHlnb24gcG9pbnRzPSI3NTAsNjggNzQxLDg4IDc1OSw4OCIgc3Ryb2tlPSJub25lIi8+CjwvZz4KPHRleHQgeD0iNzUwIiB5PSIxNDgiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTExIj5OPC90ZXh0Pgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMyI+Cjxwb2x5bGluZSBwb2ludHM9IjM2MCw1MjAgNzAsNTIwIDcwLDcwIDcwMCw3MCA3MDAsNTIwIDQ0MCw1MjAiLz4KPC9nPgo8cmVjdCB4PSIzNTIiIHk9IjUxMiIgd2lkdGg9IjEwIiBoZWlnaHQ9IjE2IiBmaWxsPSIjMzMzIi8+CjxyZWN0IHg9IjQzOCIgeT0iNTEyIiB3aWR0aD0iMTAiIGhlaWdodD0iMTYiIGZpbGw9IiMzMzMiLz4KPHRleHQgeD0iNDAwIiB5PSI1NDgiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTExIj5NYWluIGdhdGU8L3RleHQ+CjxyZWN0IHg9IjM3NSIgeT0iMjYyIiB3aWR0aD0iNTAiIGhlaWdodD0iMjU4IiBmaWxsPSIjZTZlNmU2IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+Cjx0ZXh0IHg9IjAiIHk9IjAiIGZvbnQtc2l6ZT0iMTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxMTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQwNSwzOTUpIHJvdGF0ZSgtOTApIj5DZW50cmFsIHBhdGg8L3RleHQ+CjxnIGZpbGw9IiNlY2VjZWMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIj4KPHJlY3QgeD0iMzA1IiB5PSI0NjUiIHdpZHRoPSI0NSIgaGVpZ2h0PSI0NSIvPgo8cmVjdCB4PSI0NTAiIHk9IjQ2NSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjQ1Ii8+CjwvZz4KPGcgZmlsbD0iI2Y1ZjVmNSIgc3Ryb2tlPSIjNTU1IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNyA1Ij4KPHJlY3QgeD0iMTYwIiB5PSIyODAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMTcwIi8+CjxyZWN0IHg9IjQ0MCIgeT0iMjgwIiB3aWR0aD0iMTI1IiBoZWlnaHQ9IjE3MCIvPgo8cmVjdCB4PSIyMTAiIHk9Ijg1IiB3aWR0aD0iMzcwIiBoZWlnaHQ9Ijc4Ii8+CjwvZz4KPHJlY3QgeD0iNTg1IiB5PSIyODAiIHdpZHRoPSIxMTIiIGhlaWdodD0iMTcwIiBmaWxsPSIjZWNlY2VjIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiIvPgo8ZyBzdHJva2U9IiM3NzciIHN0cm9rZS13aWR0aD0iMS41Ij4KPGxpbmUgeDE9IjU4NSIgeTE9IjMxMiIgeDI9IjYxNSIgeTI9IjMxMiIvPgo8bGluZSB4MT0iNTg1IiB5MT0iMzQ0IiB4Mj0iNjE1IiB5Mj0iMzQ0Ii8+CjxsaW5lIHgxPSI1ODUiIHkxPSIzNzYiIHgyPSI2MTUiIHkyPSIzNzYiLz4KPGxpbmUgeDE9IjU4NSIgeTE9IjQwOCIgeDI9IjYxNSIgeTI9IjQwOCIvPgo8bGluZSB4MT0iNjY3IiB5MT0iMzEyIiB4Mj0iNjk3IiB5Mj0iMzEyIi8+CjxsaW5lIHgxPSI2NjciIHkxPSIzNDQiIHgyPSI2OTciIHkyPSIzNDQiLz4KPGxpbmUgeDE9IjY2NyIgeTE9IjM3NiIgeDI9IjY5NyIgeTI9IjM3NiIvPgo8bGluZSB4MT0iNjY3IiB5MT0iNDA4IiB4Mj0iNjk3IiB5Mj0iNDA4Ii8+CjwvZz4KPHRleHQgeD0iNjQxIiB5PSIzNzAiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTExIj5DYXI8L3RleHQ+Cjx0ZXh0IHg9IjY0MSIgeT0iMzg4IiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+cGFyazwvdGV4dD4KPHJlY3QgeD0iNjI1IiB5PSI4NSIgd2lkdGg9IjcwIiBoZWlnaHQ9Ijc4IiBmaWxsPSIjZGNkY2RjIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiIvPgo8cmVjdCB4PSIyMTAiIHk9IjE3NSIgd2lkdGg9IjM4MCIgaGVpZ2h0PSI4NyIgZmlsbD0iI2UwZTBlMCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGcgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiPgo8bGluZSB4MT0iMzAwIiB5MT0iMTc1IiB4Mj0iMzAwIiB5Mj0iMjYyIi8+CjxsaW5lIHgxPSI1MDAiIHkxPSIxNzUiIHgyPSI1MDAiIHkyPSIyNjIiLz4KPC9nPgo8bGluZSB4MT0iMzgyIiB5MT0iMjYyIiB4Mj0iNDE4IiB5Mj0iMjYyIiBzdHJva2U9IiNlNmU2ZTYiIHN0cm9rZS13aWR0aD0iNCIvPgo8dGV4dCB4PSI0MDAiIHk9IjIxMiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxMTEiPk9sZCBNaWxsIEJ1aWxkaW5nPC90ZXh0Pgo8dGV4dCB4PSI0MDAiIHk9IjIzNiIgZm9udC1zaXplPSIxNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+KGdyb3VuZCBmbG9vcik8L3RleHQ+CjxnIGZpbGw9IiNkOWQ5ZDkiIHN0cm9rZT0iIzk5OSIgc3Ryb2tlLXdpZHRoPSIxIj4KPGNpcmNsZSBjeD0iMTA1IiBjeT0iMTMwIiByPSIxNCIvPgo8Y2lyY2xlIGN4PSIxMjAiIGN5PSIyMzAiIHI9IjE0Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjMzMCIgcj0iMTQiLz4KPGNpcmNsZSBjeD0iMTE4IiBjeT0iNDMwIiByPSIxNCIvPgo8L2c+CjxnIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTExIj4KPGNpcmNsZSBjeD0iMzI3IiBjeT0iNDg3IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iMzI3IiB5PSI0OTMiPkE8L3RleHQ+CjxjaXJjbGUgY3g9IjQ3MiIgY3k9IjQ4NyIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjQ3MiIgeT0iNDkzIj5CPC90ZXh0Pgo8Y2lyY2xlIGN4PSIyNTUiIGN5PSIyMTgiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPgo8dGV4dCB4PSIyNTUiIHk9IjIyNCI+QzwvdGV4dD4KPGNpcmNsZSBjeD0iNTQ1IiBjeT0iMjE4IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iNTQ1IiB5PSIyMjQiPkQ8L3RleHQ+CjxjaXJjbGUgY3g9IjM5NSIgY3k9IjEyNCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjM5NSIgeT0iMTMwIj5FPC90ZXh0Pgo8Y2lyY2xlIGN4PSIyNjAiIGN5PSIzNjUiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPgo8dGV4dCB4PSIyNjAiIHk9IjM3MSI+RjwvdGV4dD4KPGNpcmNsZSBjeD0iNTAyIiBjeT0iMzY1IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iNTAyIiB5PSIzNzEiPkc8L3RleHQ+CjxjaXJjbGUgY3g9IjY2MCIgY3k9IjEyNCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjY2MCIgeT0iMTMwIj5IPC90ZXh0Pgo8L2c+Cjwvc3ZnPg=="
     },
     {
      "type": "choice",
-     "q": "18  print room",
+     "q": "print room",
      "options": [
       "A",
       "B",
@@ -226,7 +227,7 @@
     },
     {
      "type": "choice",
-     "q": "19  loading bay",
+     "q": "loading bay",
      "options": [
       "A",
       "B",
@@ -242,7 +243,7 @@
     },
     {
      "type": "choice",
-     "q": "20  meeting pods",
+     "q": "meeting pods",
      "options": [
       "A",
       "B",
@@ -266,51 +267,51 @@
    "questions": [
     {
      "type": "choice",
-     "q": "21  Why did the students limit their study to one street?",
+     "q": "Why did the students limit their study to one street?",
      "options": [
-      "A  Their tutor advised them to.",
-      "B  Too few businesses replied to them.",
-      "C  The street data was easier to compare."
+      "Their tutor advised them to.",
+      "Too few businesses replied to them.",
+      "The street data was easier to compare."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "22  What surprised Callum about his findings?",
+     "q": "What surprised Callum about his findings?",
      "options": [
-      "A  Older customers used the card most.",
-      "B  The card attracted visitors from outside the town.",
-      "C  The shop owners strongly disagreed with one another."
+      "Older customers used the card most.",
+      "The card attracted visitors from outside the town.",
+      "The shop owners strongly disagreed with one another."
      ],
      "answer": 2,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "23  What is Dr Naylor's main criticism of the questionnaire?",
+     "q": "What is Dr Naylor's main criticism of the questionnaire?",
      "options": [
-      "A  It is too long.",
-      "B  It contains leading questions.",
-      "C  It excludes people without a card."
+      "It is too long.",
+      "It contains leading questions.",
+      "It excludes people without a card."
      ],
      "answer": 2,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "24  What does Dr Naylor advise about the till data?",
+     "q": "What does Dr Naylor advise about the till data?",
      "options": [
-      "A  request monthly summaries instead",
-      "B  continue asking for weekly totals",
-      "C  leave the sales figures out completely"
+      "request monthly summaries instead",
+      "continue asking for weekly totals",
+      "leave the sales figures out completely"
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "25  the council's footfall counts",
+     "q": "the council's footfall counts",
      "options": [
       "A",
       "B",
@@ -324,7 +325,7 @@
     },
     {
      "type": "choice",
-     "q": "26  the Chamber of Commerce survey",
+     "q": "the Chamber of Commerce survey",
      "options": [
       "A",
       "B",
@@ -338,7 +339,7 @@
     },
     {
      "type": "choice",
-     "q": "27  the shops' own till records",
+     "q": "the shops' own till records",
      "options": [
       "A",
       "B",
@@ -352,7 +353,7 @@
     },
     {
      "type": "text",
-     "q": "28  In the introduction, Priya will summarise published research on ____.",
+     "q": "In the introduction, Priya will summarise published research on ____.",
      "answer": [
       "customer retention",
       "retention"
@@ -361,7 +362,7 @@
     },
     {
      "type": "text",
-     "q": "29  The main graph should show how ____ changed over the year.",
+     "q": "The main graph should show how ____ changed over the year.",
      "answer": [
       "average spend"
      ],
@@ -369,7 +370,7 @@
     },
     {
      "type": "text",
-     "q": "30  Before any interviews take place, the students must submit the ____.",
+     "q": "Before any interviews take place, the students must submit the ____.",
      "answer": [
       "consent forms",
       "consent form"
@@ -386,7 +387,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "31  Origins — the first industry to rely on subscriptions was ____.",
+     "q": "Origins — the first industry to rely on subscriptions was ____.",
      "answer": [
       "publishing"
      ],
@@ -394,7 +395,7 @@
     },
     {
      "type": "text",
-     "q": "32  From the early 2000s, software firms stopped selling ____.",
+     "q": "From the early 2000s, software firms stopped selling ____.",
      "answer": [
       "licences",
       "licenses",
@@ -405,7 +406,7 @@
     },
     {
      "type": "text",
-     "q": "33  Benefit for firms: revenue becomes ____.",
+     "q": "Benefit for firms: revenue becomes ____.",
      "answer": [
       "predictable"
      ],
@@ -413,7 +414,7 @@
     },
     {
      "type": "text",
-     "q": "34  Stable income makes it easier to plan ____.",
+     "q": "Stable income makes it easier to plan ____.",
      "answer": [
       "investment"
      ],
@@ -421,7 +422,7 @@
     },
     {
      "type": "text",
-     "q": "35  Keeping a customer costs about a ____ of the cost of finding a new one.",
+     "q": "Keeping a customer costs about a ____ of the cost of finding a new one.",
      "answer": [
       "fifth"
      ],
@@ -429,7 +430,7 @@
     },
     {
      "type": "text",
-     "q": "36  Benefit for customers: they want ____ rather than ownership.",
+     "q": "Benefit for customers: they want ____ rather than ownership.",
      "answer": [
       "access"
      ],
@@ -437,7 +438,7 @@
     },
     {
      "type": "text",
-     "q": "37  There is no large ____ at the start.",
+     "q": "There is no large ____ at the start.",
      "answer": [
       "payment"
      ],
@@ -445,7 +446,7 @@
     },
     {
      "type": "text",
-     "q": "38  Key measure of a firm's health: the ____ rate.",
+     "q": "Key measure of a firm's health: the ____ rate.",
      "answer": [
       "churn"
      ],
@@ -453,7 +454,7 @@
     },
     {
      "type": "text",
-     "q": "39  Consumer problem caused by too many subscriptions: subscription ____.",
+     "q": "Consumer problem caused by too many subscriptions: subscription ____.",
      "answer": [
       "fatigue"
      ],
@@ -461,7 +462,7 @@
     },
     {
      "type": "text",
-     "q": "40  Regulators now require firms to offer a simple ____ route.",
+     "q": "Regulators now require firms to offer a simple ____ route.",
      "answer": [
       "cancellation"
      ],

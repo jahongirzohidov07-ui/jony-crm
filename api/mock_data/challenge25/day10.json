@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  The first picnics in 18th-century France were held in parks.",
+     "q": "The first picnics in 18th-century France were held in parks.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  People who attended early French picnics were expected to bring food or help with the expense.",
+     "q": "People who attended early French picnics were expected to bring food or help with the expense.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  The hosts of early French picnics often asked their guests to play music.",
+     "q": "The hosts of early French picnics often asked their guests to play music.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  The picnic was brought to England by aristocrats escaping the French Revolution.",
+     "q": "The picnic was brought to England by aristocrats escaping the French Revolution.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Many complaints were received about the noise at the first English picnics.",
+     "q": "Many complaints were received about the noise at the first English picnics.",
      "options": [
       "TRUE",
       "FALSE",
@@ -76,7 +76,7 @@
     },
     {
      "type": "choice",
-     "q": "6  People who wanted to join the Pic Nic Society had to have the approval of existing members.",
+     "q": "People who wanted to join the Pic Nic Society had to have the approval of existing members.",
      "options": [
       "TRUE",
       "FALSE",
@@ -87,7 +87,7 @@
     },
     {
      "type": "choice",
-     "q": "7  The picnics held by the Pic Nic Society were extravagant events.",
+     "q": "The picnics held by the Pic Nic Society were extravagant events.",
      "options": [
       "TRUE",
       "FALSE",
@@ -98,7 +98,7 @@
     },
     {
      "type": "choice",
-     "q": "8  The picnics given by the Pic Nic Society took place in theatres.",
+     "q": "The picnics given by the Pic Nic Society took place in theatres.",
      "options": [
       "TRUE",
       "FALSE",
@@ -109,7 +109,7 @@
     },
     {
      "type": "text",
-     "q": "9  In England: in the 1800s, picnics began to be held …………",
+     "q": "In England: in the 1800s, picnics began to be held …………",
      "answer": [
       "outside"
      ],
@@ -117,7 +117,7 @@
     },
     {
      "type": "text",
-     "q": "10  In England: picnics no longer usually included ………… for entertainment.",
+     "q": "In England: picnics no longer usually included ………… for entertainment.",
      "answer": [
       "music"
      ],
@@ -125,7 +125,7 @@
     },
     {
      "type": "text",
-     "q": "11  In the USA: picnics were a favourite activity for people living in …………",
+     "q": "In the USA: picnics were a favourite activity for people living in …………",
      "answer": [
       "cities"
      ],
@@ -133,7 +133,7 @@
     },
     {
      "type": "text",
-     "q": "12  In the USA: American ………… of picnics were different from those by English artists",
+     "q": "In the USA: American ………… of picnics were different from those by English artists",
      "answer": [
       "paintings"
      ],
@@ -141,7 +141,7 @@
     },
     {
      "type": "text",
-     "q": "13  Return to France: indoor picnics were still preferred by members of the …………",
+     "q": "Return to France: indoor picnics were still preferred by members of the …………",
      "answer": [
       "aristocracy"
      ],
@@ -149,7 +149,7 @@
     },
     {
      "type": "text",
-     "q": "14  20th century onwards: new kinds of ………… meant that picnics in the countryside became more common",
+     "q": "20th century onwards: new kinds of ………… meant that picnics in the countryside became more common",
      "answer": [
       "transport"
      ],
@@ -157,7 +157,7 @@
     },
     {
      "type": "text",
-     "q": "15  20th century onwards: ………… designed especially for use by picnickers were widely sold",
+     "q": "20th century onwards: ………… designed especially for use by picnickers were widely sold",
      "answer": [
       "baskets"
      ],
@@ -165,7 +165,7 @@
     },
     {
      "type": "text",
-     "q": "16  20th century onwards: there is now greater ………… in the food that is used for picnics.",
+     "q": "20th century onwards: there is now greater ………… in the food that is used for picnics.",
      "answer": [
       "variety"
      ],
@@ -181,7 +181,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "17  Paragraph A",
+     "q": "Paragraph A",
      "options": [
       "Comparing two planets",
       "A surprisingly small moon",
@@ -197,7 +197,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Paragraph B",
+     "q": "Paragraph B",
      "options": [
       "Comparing two planets",
       "A surprisingly small moon",
@@ -213,7 +213,7 @@
     },
     {
      "type": "choice",
-     "q": "19  Paragraph C",
+     "q": "Paragraph C",
      "options": [
       "Comparing two planets",
       "A surprisingly small moon",
@@ -229,7 +229,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Paragraph D",
+     "q": "Paragraph D",
      "options": [
       "Comparing two planets",
       "A surprisingly small moon",
@@ -245,7 +245,7 @@
     },
     {
      "type": "choice",
-     "q": "21  Paragraph E",
+     "q": "Paragraph E",
      "options": [
       "Comparing two planets",
       "A surprisingly small moon",
@@ -261,7 +261,7 @@
     },
     {
      "type": "choice",
-     "q": "22  Paragraph F",
+     "q": "Paragraph F",
      "options": [
       "Comparing two planets",
       "A surprisingly small moon",
@@ -277,7 +277,7 @@
     },
     {
      "type": "choice",
-     "q": "23  Galileo's observations of Saturn were influenced by",
+     "q": "Galileo's observations of Saturn were influenced by",
      "options": [
       "the frequency of his attempts.",
       "the quality of his experiment.",
@@ -289,7 +289,7 @@
     },
     {
      "type": "choice",
-     "q": "24  The writer suggests that scientists are interested in Titan because",
+     "q": "The writer suggests that scientists are interested in Titan because",
      "options": [
       "it is larger than Earth, although less dense.",
       "its atmosphere may contain oxygen.",
@@ -301,7 +301,7 @@
     },
     {
      "type": "choice",
-     "q": "25  The writer uses the phrase 'no walk in the park' because life forms in Titan would",
+     "q": "The writer uses the phrase 'no walk in the park' because life forms in Titan would",
      "options": [
       "probably exist in water.",
       "be less developed than life forms on Earth.",
@@ -313,7 +313,7 @@
     },
     {
      "type": "choice",
-     "q": "26  How does the writer compare Saturn and Jupiter?",
+     "q": "How does the writer compare Saturn and Jupiter?",
      "options": [
       "Saturn gives off more heat than Jupiter.",
       "Jupiter is less dense than Saturn.",
@@ -325,7 +325,7 @@
     },
     {
      "type": "text",
-     "q": "27  The Cassini-Huygens probe has produced clearer ………… of Saturn.",
+     "q": "The Cassini-Huygens probe has produced clearer ………… of Saturn.",
      "answer": [
       "photographs"
      ],
@@ -333,7 +333,7 @@
     },
     {
      "type": "text",
-     "q": "28  However, it may take up to ………… before all the data from the probe has been analysed.",
+     "q": "However, it may take up to ………… before all the data from the probe has been analysed.",
      "answer": [
       "40 years",
       "forty years"
@@ -342,7 +342,7 @@
     },
     {
      "type": "text",
-     "q": "29  It is expected that this data will assist in the investigation of the way ………… function, and the nature of other planets and stars.",
+     "q": "It is expected that this data will assist in the investigation of the way ………… function, and the nature of other planets and stars.",
      "answer": [
       "weather systems"
      ],
@@ -358,7 +358,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "30  a prediction of the future risk of salt to water supplies",
+     "q": "a prediction of the future risk of salt to water supplies",
      "options": [
       "A",
       "B",
@@ -374,7 +374,7 @@
     },
     {
      "type": "choice",
-     "q": "31  the reason why technologies must be combined to be effective",
+     "q": "the reason why technologies must be combined to be effective",
      "options": [
       "A",
       "B",
@@ -390,7 +390,7 @@
     },
     {
      "type": "choice",
-     "q": "32  a reference to the recent improvements in the accuracy of airborne electromagnetics",
+     "q": "a reference to the recent improvements in the accuracy of airborne electromagnetics",
      "options": [
       "A",
       "B",
@@ -406,7 +406,7 @@
     },
     {
      "type": "choice",
-     "q": "33  the organization of concerned farmers into an official body",
+     "q": "the organization of concerned farmers into an official body",
      "options": [
       "A",
       "B",
@@ -422,7 +422,7 @@
     },
     {
      "type": "choice",
-     "q": "34  the estimated length of time salinity is likely to be a problem",
+     "q": "the estimated length of time salinity is likely to be a problem",
      "options": [
       "A",
       "B",
@@ -438,7 +438,7 @@
     },
     {
      "type": "choice",
-     "q": "35  a summary of stages in a proposed plan of action to combat the salt problem",
+     "q": "a summary of stages in a proposed plan of action to combat the salt problem",
      "options": [
       "A",
       "B",
@@ -454,7 +454,7 @@
     },
     {
      "type": "choice",
-     "q": "36  the possibility that current re-vegetation practices are a waste of time",
+     "q": "the possibility that current re-vegetation practices are a waste of time",
      "options": [
       "A",
       "B",
@@ -470,7 +470,7 @@
     },
     {
      "type": "choice",
-     "q": "37  Electromagnetic surveys",
+     "q": "Electromagnetic surveys",
      "options": [
       "A",
       "B",
@@ -482,7 +482,7 @@
     },
     {
      "type": "choice",
-     "q": "38  Radiometric analysis",
+     "q": "Radiometric analysis",
      "options": [
       "A",
       "B",
@@ -494,7 +494,7 @@
     },
     {
      "type": "choice",
-     "q": "39  Airborne electromagnetics",
+     "q": "Airborne electromagnetics",
      "options": [
       "A",
       "B",
@@ -506,7 +506,7 @@
     },
     {
      "type": "choice",
-     "q": "40  What link does the writer make between salt and gold?",
+     "q": "What link does the writer make between salt and gold?",
      "options": [
       "They can both be found in the same locations.",
       "Both have been found to have an impact on the landscape.",
@@ -518,7 +518,7 @@
     },
     {
      "type": "choice",
-     "q": "41  What is the 'process' referred to in Section B?",
+     "q": "What is the 'process' referred to in Section B?",
      "options": [
       "the killing of vegetation by salt",
       "salt's ability to travel below ground",
@@ -530,7 +530,7 @@
     },
     {
      "type": "choice",
-     "q": "42  According to Angus Howell, one problem in the fight against salinity is that",
+     "q": "According to Angus Howell, one problem in the fight against salinity is that",
      "options": [
       "not enough farmers are concerned about the fight.",
       "farmers' requests for help have been ignored.",
@@ -542,7 +542,7 @@
     },
     {
      "type": "choice",
-     "q": "43  Which of the following best describes the writer's view of the salinity problem in Australia?",
+     "q": "Which of the following best describes the writer's view of the salinity problem in Australia?",
      "options": [
       "Farmers are fighting an enemy that moves secretly and hides well",
       "Farmers have been able to contain this enemy in a small area.",
@@ -562,7 +562,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "44  High-level workers tend to react positively to stress",
+     "q": "High-level workers tend to react positively to stress",
      "options": [
       "A",
       "B",
@@ -574,7 +574,7 @@
     },
     {
      "type": "choice",
-     "q": "45  Stress levels are increased by trying to please customers",
+     "q": "Stress levels are increased by trying to please customers",
      "options": [
       "A",
       "B",
@@ -586,7 +586,7 @@
     },
     {
      "type": "choice",
-     "q": "46  Support from other workers may relieve stress",
+     "q": "Support from other workers may relieve stress",
      "options": [
       "A",
       "B",
@@ -598,7 +598,7 @@
     },
     {
      "type": "choice",
-     "q": "47  Lack of independence at work is often responsible for stress",
+     "q": "Lack of independence at work is often responsible for stress",
      "options": [
       "A",
       "B",
@@ -610,7 +610,7 @@
     },
     {
      "type": "choice",
-     "q": "48  Workers commonly expect their workloads to lessen over time",
+     "q": "Workers commonly expect their workloads to lessen over time",
      "options": [
       "A",
       "B",
@@ -622,7 +622,7 @@
     },
     {
      "type": "choice",
-     "q": "49  Which of the following is NOT mentioned by Neil Plumridge as an indication that his workload is too heavy?",
+     "q": "Which of the following is NOT mentioned by Neil Plumridge as an indication that his workload is too heavy?",
      "options": [
       "an inability to keep to his schedule",
       "inattention to family celebrations",
@@ -634,7 +634,7 @@
     },
     {
      "type": "choice",
-     "q": "50  Which method of lessening work stress is NOT suggested by Neil Plumridge?",
+     "q": "Which method of lessening work stress is NOT suggested by Neil Plumridge?",
      "options": [
       "rethinking ideas of what can be achieved",
       "extending the deadline for completing the task",
@@ -646,7 +646,7 @@
     },
     {
      "type": "choice",
-     "q": "51  According to Jan Elsner, meditation offers a method of",
+     "q": "According to Jan Elsner, meditation offers a method of",
      "options": [
       "taking a worker's mind off his troubles",
       "changing physical response to stress",
@@ -658,7 +658,7 @@
     },
     {
      "type": "text",
-     "q": "52  Statistics on workers' compensation show that people take more time off work due to stress than for any other ………… at work.",
+     "q": "Statistics on workers' compensation show that people take more time off work due to stress than for any other ………… at work.",
      "answer": [
       "injury",
       "workplace injury"
@@ -667,7 +667,7 @@
     },
     {
      "type": "text",
-     "q": "53  On average, workers who take time off because of stress stay away for …………",
+     "q": "On average, workers who take time off because of stress stay away for …………",
      "answer": [
       "16.6 weeks"
      ],
@@ -675,7 +675,7 @@
     },
     {
      "type": "text",
-     "q": "54  While the number of insurance claims due to stress amount to only ………… of the total, they account for a much higher proportion of the cost of claims payments.",
+     "q": "While the number of insurance claims due to stress amount to only ………… of the total, they account for a much higher proportion of the cost of claims payments.",
      "answer": [
       "7%",
       "7 per cent",
@@ -685,7 +685,7 @@
     },
     {
      "type": "text",
-     "q": "55  Experts believe that seeking to relieve stress through physical therapies such as sport or ………… may be less effective",
+     "q": "Experts believe that seeking to relieve stress through physical therapies such as sport or ………… may be less effective",
      "answer": [
       "a massage",
       "massage"
@@ -694,7 +694,7 @@
     },
     {
      "type": "text",
-     "q": "56  … may be less effective than simply reviewing your …………",
+     "q": "… may be less effective than simply reviewing your …………",
      "answer": [
       "workloads",
       "workload"
@@ -711,7 +711,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "57  Apart from the processing need to collect seeds in an effort to protect certain plants from …………",
+     "q": "Apart from the processing need to collect seeds in an effort to protect certain plants from …………",
      "answer": [
       "extinction"
      ],
@@ -719,7 +719,7 @@
     },
     {
      "type": "text",
-     "q": "58  seed hunting also makes an important contribution to the development of potential ………… or …………",
+     "q": "seed hunting also makes an important contribution to the development of potential ………… or …………",
      "answer": [
       "drugs or crops",
       "crops or drugs",
@@ -731,7 +731,7 @@
     },
     {
      "type": "text",
-     "q": "59  Botanists and gardeners were some of the ………… in the hunt for seeds.",
+     "q": "Botanists and gardeners were some of the ………… in the hunt for seeds.",
      "answer": [
       "pioneers"
      ],
@@ -739,7 +739,7 @@
     },
     {
      "type": "text",
-     "q": "60  One of these, called …………, was so keen that he personally provided funding for trips to collect seeds.",
+     "q": "One of these, called …………, was so keen that he personally provided funding for trips to collect seeds.",
      "answer": [
       "Sir Joseph Banks",
       "Joseph Banks",
@@ -749,7 +749,7 @@
     },
     {
      "type": "text",
-     "q": "61  Present-day seed hunters employed by the Millennium Seed Bank bring back seeds which are then stored in the ………… beneath the bank's headquarters at Wakehurst Place.",
+     "q": "Present-day seed hunters employed by the Millennium Seed Bank bring back seeds which are then stored in the ………… beneath the bank's headquarters at Wakehurst Place.",
      "answer": [
       "underground vaults",
       "vaults"
@@ -758,7 +758,7 @@
     },
     {
      "type": "text",
-     "q": "62  These seeds play a vital role in the re-construction of ………… and also in various fields of scientific research.",
+     "q": "These seeds play a vital role in the re-construction of ………… and also in various fields of scientific research.",
      "answer": [
       "damaged environments",
       "environments"
@@ -767,7 +767,7 @@
     },
     {
      "type": "choice",
-     "q": "63  The reasons for collecting seeds have changed over the years.",
+     "q": "The reasons for collecting seeds have changed over the years.",
      "options": [
       "TRUE",
       "FALSE",
@@ -778,7 +778,7 @@
     },
     {
      "type": "choice",
-     "q": "64  The Millennium Seed Bank was the first wild plant repository to be set up.",
+     "q": "The Millennium Seed Bank was the first wild plant repository to be set up.",
      "options": [
       "TRUE",
       "FALSE",
@@ -789,7 +789,7 @@
     },
     {
      "type": "choice",
-     "q": "65  A major threat to plant species is posed by the increasing spread of farmland.",
+     "q": "A major threat to plant species is posed by the increasing spread of farmland.",
      "options": [
       "TRUE",
       "FALSE",
@@ -800,7 +800,7 @@
     },
     {
      "type": "choice",
-     "q": "66  The World Conservation Union has been restricted in its work by lack of resources.",
+     "q": "The World Conservation Union has been restricted in its work by lack of resources.",
      "options": [
       "TRUE",
       "FALSE",
@@ -811,7 +811,7 @@
     },
     {
      "type": "choice",
-     "q": "67  The methods of seed conservation resemble those used in agriculture.",
+     "q": "The methods of seed conservation resemble those used in agriculture.",
      "options": [
       "TRUE",
       "FALSE",
@@ -822,7 +822,7 @@
     },
     {
      "type": "choice",
-     "q": "68  Seed banks will only be successful if the technology improves.",
+     "q": "Seed banks will only be successful if the technology improves.",
      "options": [
       "TRUE",
       "FALSE",
@@ -833,7 +833,7 @@
     },
     {
      "type": "multi",
-     "q": "69  Which TWO of the following uses of plants are mentioned by the writer? Choose TWO letters, A-E.",
+     "q": "Which TWO of the following uses of plants are mentioned by the writer? Choose TWO letters, A-E.",
      "options": [
       "to improve air quality",
       "as a source of energy",
@@ -857,7 +857,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "70  a reference to the significance of dreams on artists' work",
+     "q": "a reference to the significance of dreams on artists' work",
      "options": [
       "A",
       "B",
@@ -872,7 +872,7 @@
     },
     {
      "type": "choice",
-     "q": "71  a concern about the usefulness of dream research",
+     "q": "a concern about the usefulness of dream research",
      "options": [
       "A",
       "B",
@@ -887,7 +887,7 @@
     },
     {
      "type": "choice",
-     "q": "72  the types of living creatures that have REM sleep",
+     "q": "the types of living creatures that have REM sleep",
      "options": [
       "A",
       "B",
@@ -902,7 +902,7 @@
     },
     {
      "type": "choice",
-     "q": "73  research results linking dreams to psychological well-being",
+     "q": "research results linking dreams to psychological well-being",
      "options": [
       "A",
       "B",
@@ -917,7 +917,7 @@
     },
     {
      "type": "choice",
-     "q": "74  an account of how modern research tools have strengthened Freud's theory",
+     "q": "an account of how modern research tools have strengthened Freud's theory",
      "options": [
       "A",
       "B",
@@ -932,7 +932,7 @@
     },
     {
      "type": "choice",
-     "q": "75  In ancient times, people thought that dreams",
+     "q": "In ancient times, people thought that dreams",
      "options": [
       "sent messages to the gods.",
       "helped resolve conflict.",
@@ -944,7 +944,7 @@
     },
     {
      "type": "choice",
-     "q": "76  According to the passage, which of the following happens during REM sleep time?",
+     "q": "According to the passage, which of the following happens during REM sleep time?",
      "options": [
       "People rarely dream.",
       "People's dreams become confused",
@@ -956,7 +956,7 @@
     },
     {
      "type": "choice",
-     "q": "77  What explanation is suggested in paragraph E for lack of a clear narrative in dreams?",
+     "q": "What explanation is suggested in paragraph E for lack of a clear narrative in dreams?",
      "options": [
       "Some dreams occur in non-REM sleep.",
       "Some dreams are generated in different areas of the brain.",
@@ -968,7 +968,7 @@
     },
     {
      "type": "choice",
-     "q": "78  According to the passage, which area of the brain helps people find solutions to difficult situations through their dreams?",
+     "q": "According to the passage, which area of the brain helps people find solutions to difficult situations through their dreams?",
      "options": [
       "the anterior cingulate cortex",
       "the pons",
@@ -980,7 +980,7 @@
     },
     {
      "type": "choice",
-     "q": "79  Technology shows there is a link between dreams and the areas of the brain that deal with feelings.",
+     "q": "Technology shows there is a link between dreams and the areas of the brain that deal with feelings.",
      "options": [
       "A",
       "B",
@@ -995,7 +995,7 @@
     },
     {
      "type": "choice",
-     "q": "80  Dreams are meaningless pictures created by the brain.",
+     "q": "Dreams are meaningless pictures created by the brain.",
      "options": [
       "A",
       "B",
@@ -1010,7 +1010,7 @@
     },
     {
      "type": "choice",
-     "q": "81  Dreaming is a method of calming strong feelings.",
+     "q": "Dreaming is a method of calming strong feelings.",
      "options": [
       "A",
       "B",
@@ -1025,7 +1025,7 @@
     },
     {
      "type": "choice",
-     "q": "82  Our dreams can show us unexpected things about ourselves.",
+     "q": "Our dreams can show us unexpected things about ourselves.",
      "options": [
       "A",
       "B",
@@ -1040,7 +1040,7 @@
     },
     {
      "type": "choice",
-     "q": "83  Dreams may be a result of maintaining an essential body function.",
+     "q": "Dreams may be a result of maintaining an essential body function.",
      "options": [
       "A",
       "B",

@@ -21,63 +21,63 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  What point is made about traditional marketing in the first paragraph?",
+     "q": "What point is made about traditional marketing in the first paragraph?",
      "options": [
-      "A  It can be influenced by population growth.",
-      "B  It considers the long-term needs of society.",
-      "C  It may be unsuited to a time of global problems.",
-      "D  It leads to environmental destruction."
+      "It can be influenced by population growth.",
+      "It considers the long-term needs of society.",
+      "It may be unsuited to a time of global problems.",
+      "It leads to environmental destruction."
      ],
      "answer": 2,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "2  According to the writer, disposable bottles were introduced in the soft drinks industry",
+     "q": "According to the writer, disposable bottles were introduced in the soft drinks industry",
      "options": [
-      "A  to meet consumer demand.",
-      "B  to reduce damage to bottles.",
-      "C  because they are biodegradable.",
-      "D  because they are more efficient."
+      "to meet consumer demand.",
+      "to reduce damage to bottles.",
+      "because they are biodegradable.",
+      "because they are more efficient."
      ],
      "answer": 0,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "3  In the sixth paragraph, what does the writer give as the main reason for criticisms of The Body Shop?",
+     "q": "In the sixth paragraph, what does the writer give as the main reason for criticisms of The Body Shop?",
      "options": [
-      "A  The company's profits have decreased.",
-      "B  The company has lost money to other businesses.",
-      "C  The company is less concerned with social issues than it appears to be.",
-      "D  The company uses fewer natural ingredients than it says it does."
+      "The company's profits have decreased.",
+      "The company has lost money to other businesses.",
+      "The company is less concerned with social issues than it appears to be.",
+      "The company uses fewer natural ingredients than it says it does."
      ],
      "answer": 2,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "4  In the seventh paragraph, what objection is made to cause-related marketing?",
+     "q": "In the seventh paragraph, what objection is made to cause-related marketing?",
      "options": [
-      "A  It is practised in a restricted way.",
-      "B  It is sometimes aimed at only one charity for a short time.",
-      "C  It is practised in order to improve the company's image.",
-      "D  It is likely to discourage people from donating straight to charity."
+      "It is practised in a restricted way.",
+      "It is sometimes aimed at only one charity for a short time.",
+      "It is practised in order to improve the company's image.",
+      "It is likely to discourage people from donating straight to charity."
      ],
      "answer": 3,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "multi",
-     "q": "5-7  Choose THREE correct letters, A-G. Which THREE of the following are part of the societal marketing concept?",
+     "q": "Choose THREE correct letters, A-G. Which THREE of the following are part of the societal marketing concept?",
      "options": [
-      "A  Assessing the requirements of customers",
-      "B  Imitating competitor practices",
-      "C  Informing consumers about products",
-      "D  Considering community welfare issues",
-      "E  Promoting items which are profitable",
-      "F  Managing differing requirements in competitive welfare",
-      "G  Involving managers in selling the products"
+      "Assessing the requirements of customers",
+      "Imitating competitor practices",
+      "Informing consumers about products",
+      "Considering community welfare issues",
+      "Promoting items which are profitable",
+      "Managing differing requirements in competitive welfare",
+      "Involving managers in selling the products"
      ],
      "answer": [
       0,
@@ -88,15 +88,15 @@
     },
     {
      "type": "multi",
-     "q": "8-10  Choose THREE correct letters, A-G. Which THREE of the following does the writer suggest were the reason for the success of Ben & Jerry's?",
+     "q": "Choose THREE correct letters, A-G. Which THREE of the following does the writer suggest were the reason for the success of Ben & Jerry's?",
      "options": [
-      "A  Product names were very popular.",
-      "B  New tastes were introduced.",
-      "C  Funds were given to worthy organisations.",
-      "D  The company organized social events.",
-      "E  All workers were treated equally.",
-      "F  Fairness was a factor in salary levels.",
-      "G  Some shops were staffed by volunteers."
+      "Product names were very popular.",
+      "New tastes were introduced.",
+      "Funds were given to worthy organisations.",
+      "The company organized social events.",
+      "All workers were treated equally.",
+      "Fairness was a factor in salary levels.",
+      "Some shops were staffed by volunteers."
      ],
      "answer": [
       1,
@@ -107,15 +107,15 @@
     },
     {
      "type": "multi",
-     "q": "11-13  Choose THREE correct letters, A-G. Which THREE things show that The Body Shop is an example of the societal marketing practice?",
+     "q": "Choose THREE correct letters, A-G. Which THREE things show that The Body Shop is an example of the societal marketing practice?",
      "options": [
-      "A  Products are sold in small plastic bottles.",
-      "B  Products are made from natural ingredients.",
-      "C  Social and environmental organisations are consulted on company practice.",
-      "D  Some of the income is given to social organisations.",
-      "E  The product containers can be recycled.",
-      "F  They have trained other companies in environmentally friendly practices.",
-      "G  The company is disapproved of by the mainstream beauty industry."
+      "Products are sold in small plastic bottles.",
+      "Products are made from natural ingredients.",
+      "Social and environmental organisations are consulted on company practice.",
+      "Some of the income is given to social organisations.",
+      "The product containers can be recycled.",
+      "They have trained other companies in environmentally friendly practices.",
+      "The company is disapproved of by the mainstream beauty industry."
      ],
      "answer": [
       1,
@@ -134,7 +134,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  Paragraph A",
+     "q": "Paragraph A",
      "options": [
       "i  the symbolic status of the Mbuti",
       "ii  new methods of agriculture",
@@ -149,7 +149,7 @@
     },
     {
      "type": "choice",
-     "q": "15  Paragraph B",
+     "q": "Paragraph B",
      "options": [
       "i  the symbolic status of the Mbuti",
       "ii  new methods of agriculture",
@@ -164,7 +164,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Paragraph C",
+     "q": "Paragraph C",
      "options": [
       "i  the symbolic status of the Mbuti",
       "ii  new methods of agriculture",
@@ -179,7 +179,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Paragraph D",
+     "q": "Paragraph D",
      "options": [
       "i  the symbolic status of the Mbuti",
       "ii  new methods of agriculture",
@@ -194,7 +194,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Paragraph E",
+     "q": "Paragraph E",
      "options": [
       "i  the symbolic status of the Mbuti",
       "ii  new methods of agriculture",
@@ -209,7 +209,7 @@
     },
     {
      "type": "choice",
-     "q": "19  they depend on another group to fulfill certain needs.",
+     "q": "they depend on another group to fulfill certain needs.",
      "options": [
       "A",
       "B",
@@ -220,7 +220,7 @@
     },
     {
      "type": "choice",
-     "q": "20  their lives generally follow a pattern.",
+     "q": "their lives generally follow a pattern.",
      "options": [
       "A",
       "B",
@@ -231,7 +231,7 @@
     },
     {
      "type": "choice",
-     "q": "21  they have probably inhabited the forest for two thousand years",
+     "q": "they have probably inhabited the forest for two thousand years",
      "options": [
       "A",
       "B",
@@ -242,7 +242,7 @@
     },
     {
      "type": "choice",
-     "q": "22  their superior forest-management abilities are generally acknowledged.",
+     "q": "their superior forest-management abilities are generally acknowledged.",
      "options": [
       "A",
       "B",
@@ -253,7 +253,7 @@
     },
     {
      "type": "text",
-     "q": "23  For every square kilometre of forest there are under ........ inhabitants.",
+     "q": "For every square kilometre of forest there are under ........ inhabitants.",
      "answer": [
       "three",
       "3"
@@ -262,7 +262,7 @@
     },
     {
      "type": "text",
-     "q": "24  Mbuti occasionally provide villagers with luxuries such as ........ .",
+     "q": "Mbuti occasionally provide villagers with luxuries such as ........ .",
      "answer": [
       "honey"
      ],
@@ -270,7 +270,7 @@
     },
     {
      "type": "text",
-     "q": "25  When trading goods, Mbuti and the villagers do not often use ........ .",
+     "q": "When trading goods, Mbuti and the villagers do not often use ........ .",
      "answer": [
       "cash"
      ],
@@ -278,7 +278,7 @@
     },
     {
      "type": "text",
-     "q": "26  Mbuti have the priority over the villagers' king at celebrations taking place at the time of the ........ .",
+     "q": "Mbuti have the priority over the villagers' king at celebrations taking place at the time of the ........ .",
      "answer": [
       "harvest"
      ],
@@ -294,55 +294,55 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  In the writer's view, the fact that 'the function of the individual machines is never defined' (paragraph 2)",
+     "q": "In the writer's view, the fact that 'the function of the individual machines is never defined' (paragraph 2)",
      "options": [
-      "A  emphasises the fantasy element of the film.",
-      "B  makes the film too complicated.",
-      "C  strengthens the main idea of the film.",
-      "D  weakens the plot of the film."
+      "emphasises the fantasy element of the film.",
+      "makes the film too complicated.",
+      "strengthens the main idea of the film.",
+      "weakens the plot of the film."
      ],
      "answer": 2,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "28  According to the writer, in what is the industry in Metropolis like the multinational corporations of the present?",
+     "q": "According to the writer, in what is the industry in Metropolis like the multinational corporations of the present?",
      "options": [
-      "A  Both have gone totally out of control.",
-      "B  Both exploit science and new technologies.",
-      "C  One person governs both systems.",
-      "D  Their main concern is the continuation of the system."
+      "Both have gone totally out of control.",
+      "Both exploit science and new technologies.",
+      "One person governs both systems.",
+      "Their main concern is the continuation of the system."
      ],
      "answer": 3,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "29  The writer's main purpose in writing this article is",
+     "q": "The writer's main purpose in writing this article is",
      "options": [
-      "A  to connect the film to present-day situations.",
-      "B  to criticise the behaviour of film-makers during the 1930s.",
-      "C  to discuss recent critical views of the film.",
-      "D  to recommend the film Metropolis to viewers."
+      "to connect the film to present-day situations.",
+      "to criticise the behaviour of film-makers during the 1930s.",
+      "to discuss recent critical views of the film.",
+      "to recommend the film Metropolis to viewers."
      ],
      "answer": 0,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "30  Which statement best summarises the writer's attitude to the film Metropolis?",
+     "q": "Which statement best summarises the writer's attitude to the film Metropolis?",
      "options": [
-      "A  The film is a perfect work of art.",
-      "B  The film is too cynical.",
-      "C  It is a great film which could have been even better.",
-      "D  It is a weak film with some good parts."
+      "The film is a perfect work of art.",
+      "The film is too cynical.",
+      "It is a great film which could have been even better.",
+      "It is a weak film with some good parts."
      ],
      "answer": 2,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "31  The character of Fredersen was based on an industrialist Lang met in America in 1924.",
+     "q": "The character of Fredersen was based on an industrialist Lang met in America in 1924.",
      "options": [
       "YES",
       "NO",
@@ -353,7 +353,7 @@
     },
     {
      "type": "choice",
-     "q": "32  The imagery of Metropolis is superior to its storyline.",
+     "q": "The imagery of Metropolis is superior to its storyline.",
      "options": [
       "YES",
       "NO",
@@ -364,7 +364,7 @@
     },
     {
      "type": "choice",
-     "q": "33  Thea von Harbou and Fritz Lang divorced because of von Harbou's decision to remain in Germany.",
+     "q": "Thea von Harbou and Fritz Lang divorced because of von Harbou's decision to remain in Germany.",
      "options": [
       "YES",
       "NO",
@@ -375,114 +375,114 @@
     },
     {
      "type": "choice",
-     "q": "34  The writer of the article values the film Metropolis for its ........ .",
+     "q": "The writer of the article values the film Metropolis for its ........ .",
      "options": [
-      "A  machines",
-      "B  governments",
-      "C  functions",
-      "D  abstract",
-      "E  graphic",
-      "F  social vision",
-      "G  storyline",
-      "H  animals",
-      "I  power",
-      "J  purpose",
-      "K  organisation"
+      "machines",
+      "governments",
+      "functions",
+      "abstract",
+      "graphic",
+      "social vision",
+      "storyline",
+      "animals",
+      "power",
+      "purpose",
+      "organisation"
      ],
      "answer": 5,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "35  ... it portrays people who have become like ........ .",
+     "q": "... it portrays people who have become like ........ .",
      "options": [
-      "A  machines",
-      "B  governments",
-      "C  functions",
-      "D  abstract",
-      "E  graphic",
-      "F  social vision",
-      "G  storyline",
-      "H  animals",
-      "I  power",
-      "J  purpose",
-      "K  organisation"
+      "machines",
+      "governments",
+      "functions",
+      "abstract",
+      "graphic",
+      "social vision",
+      "storyline",
+      "animals",
+      "power",
+      "purpose",
+      "organisation"
      ],
      "answer": 0,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "36  The people in the film are controlled by a dictatorial ........ ,",
+     "q": "The people in the film are controlled by a dictatorial ........ ,",
      "options": [
-      "A  machines",
-      "B  governments",
-      "C  functions",
-      "D  abstract",
-      "E  graphic",
-      "F  social vision",
-      "G  storyline",
-      "H  animals",
-      "I  power",
-      "J  purpose",
-      "K  organisation"
+      "machines",
+      "governments",
+      "functions",
+      "abstract",
+      "graphic",
+      "social vision",
+      "storyline",
+      "animals",
+      "power",
+      "purpose",
+      "organisation"
      ],
      "answer": 10,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "37  ... which is only interested in money and in ........ .",
+     "q": "... which is only interested in money and in ........ .",
      "options": [
-      "A  machines",
-      "B  governments",
-      "C  functions",
-      "D  abstract",
-      "E  graphic",
-      "F  social vision",
-      "G  storyline",
-      "H  animals",
-      "I  power",
-      "J  purpose",
-      "K  organisation"
+      "machines",
+      "governments",
+      "functions",
+      "abstract",
+      "graphic",
+      "social vision",
+      "storyline",
+      "animals",
+      "power",
+      "purpose",
+      "organisation"
      ],
      "answer": 8,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "38  ... because the ........ of the machines are never fully described,",
+     "q": "... because the ........ of the machines are never fully described,",
      "options": [
-      "A  machines",
-      "B  governments",
-      "C  functions",
-      "D  abstract",
-      "E  graphic",
-      "F  social vision",
-      "G  storyline",
-      "H  animals",
-      "I  power",
-      "J  purpose",
-      "K  organisation"
+      "machines",
+      "governments",
+      "functions",
+      "abstract",
+      "graphic",
+      "social vision",
+      "storyline",
+      "animals",
+      "power",
+      "purpose",
+      "organisation"
      ],
      "answer": 2,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "39  ... Lang's vision of the future is highly ........ .",
+     "q": "... Lang's vision of the future is highly ........ .",
      "options": [
-      "A  machines",
-      "B  governments",
-      "C  functions",
-      "D  abstract",
-      "E  graphic",
-      "F  social vision",
-      "G  storyline",
-      "H  animals",
-      "I  power",
-      "J  purpose",
-      "K  organisation"
+      "machines",
+      "governments",
+      "functions",
+      "abstract",
+      "graphic",
+      "social vision",
+      "storyline",
+      "animals",
+      "power",
+      "purpose",
+      "organisation"
      ],
      "answer": 3,
      "topic": "Reading - Summary completion"

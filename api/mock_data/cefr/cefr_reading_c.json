@@ -18,7 +18,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Gap (1): \"... now count the carbon ________ of every flight.\"",
+     "q": "Gap (1): \"... now count the carbon ________ of every flight.\"",
      "answer": [
       "cost"
      ],
@@ -26,7 +26,7 @@
     },
     {
      "type": "text",
-     "q": "2  Gap (2): \"... arrives in another city ________ soon after breakfast.\"",
+     "q": "Gap (2): \"... arrives in another city ________ soon after breakfast.\"",
      "answer": [
       "centre"
      ],
@@ -34,7 +34,7 @@
     },
     {
      "type": "text",
-     "q": "3  Gap (3): \"... nobody has to sit awake in the middle of the ________.\"",
+     "q": "Gap (3): \"... nobody has to sit awake in the middle of the ________.\"",
      "answer": [
       "night"
      ],
@@ -42,7 +42,7 @@
     },
     {
      "type": "text",
-     "q": "4  Gap (4): \"Beds are not always cheap, yet ________ for them rises every winter.\"",
+     "q": "Gap (4): \"Beds are not always cheap, yet ________ for them rises every winter.\"",
      "answer": [
       "demand"
      ],
@@ -50,7 +50,7 @@
     },
     {
      "type": "text",
-     "q": "5  Gap (5): \"... a sleeper needs expensive ________ at night, while a plane needs none.\"",
+     "q": "Gap (5): \"... a sleeper needs expensive ________ at night, while a plane needs none.\"",
      "answer": [
       "staff"
      ],
@@ -58,7 +58,7 @@
     },
     {
      "type": "text",
-     "q": "6  Gap (6): \"... the staff who bring ________ to the cabin door in the morning ...\"",
+     "q": "Gap (6): \"... the staff who bring ________ to the cabin door in the morning ...\"",
      "answer": [
       "breakfast"
      ],
@@ -74,7 +74,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "7  Karaboya Wetland Centre",
+     "q": "Karaboya Wetland Centre",
      "options": [
       "A",
       "B",
@@ -92,7 +92,7 @@
     },
     {
      "type": "choice",
-     "q": "8  Aksu Mountain Lodge",
+     "q": "Aksu Mountain Lodge",
      "options": [
       "A",
       "B",
@@ -110,7 +110,7 @@
     },
     {
      "type": "choice",
-     "q": "9  Green Wheels Cycle Hire",
+     "q": "Green Wheels Cycle Hire",
      "options": [
       "A",
       "B",
@@ -128,7 +128,7 @@
     },
     {
      "type": "choice",
-     "q": "10  Tandir Village Homestay",
+     "q": "Tandir Village Homestay",
      "options": [
       "A",
       "B",
@@ -146,7 +146,7 @@
     },
     {
      "type": "choice",
-     "q": "11  Riverside Clean-Up Weekend",
+     "q": "Riverside Clean-Up Weekend",
      "options": [
       "A",
       "B",
@@ -164,7 +164,7 @@
     },
     {
      "type": "choice",
-     "q": "12  Deniz Coast Kayak School",
+     "q": "Deniz Coast Kayak School",
      "options": [
       "A",
       "B",
@@ -182,7 +182,7 @@
     },
     {
      "type": "choice",
-     "q": "13  Starlight Desert Camp",
+     "q": "Starlight Desert Camp",
      "options": [
       "A",
       "B",
@@ -200,7 +200,7 @@
     },
     {
      "type": "choice",
-     "q": "14  Pine Forest Tree Nursery",
+     "q": "Pine Forest Tree Nursery",
      "options": [
       "A",
       "B",
@@ -226,7 +226,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "15  Paragraph I",
+     "q": "Paragraph I",
      "options": [
       "A",
       "B",
@@ -242,7 +242,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Paragraph II",
+     "q": "Paragraph II",
      "options": [
       "A",
       "B",
@@ -258,7 +258,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Paragraph III",
+     "q": "Paragraph III",
      "options": [
       "A",
       "B",
@@ -274,7 +274,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Paragraph IV",
+     "q": "Paragraph IV",
      "options": [
       "A",
       "B",
@@ -290,7 +290,7 @@
     },
     {
      "type": "choice",
-     "q": "19  Paragraph V",
+     "q": "Paragraph V",
      "options": [
       "A",
       "B",
@@ -306,7 +306,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Paragraph VI",
+     "q": "Paragraph VI",
      "options": [
       "A",
       "B",
@@ -330,7 +330,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "21  According to the first paragraph, cargo sailing ships are being built again mainly because",
+     "q": "According to the first paragraph, cargo sailing ships are being built again mainly because",
      "options": [
       "shipping companies want to preserve traditional skills.",
       "the financial situation has altered.",
@@ -342,7 +342,7 @@
     },
     {
      "type": "choice",
-     "q": "22  Why was fuel used at sea not taxed in the past?",
+     "q": "Why was fuel used at sea not taxed in the past?",
      "options": [
       "Ships produced very little pollution at that time.",
       "Ports refused to collect the money.",
@@ -354,7 +354,7 @@
     },
     {
      "type": "choice",
-     "q": "23  What does the writer say about the route the Aurelia follows?",
+     "q": "What does the writer say about the route the Aurelia follows?",
      "options": [
       "It is always the shortest possible line between two ports.",
       "The captain chooses it personally every morning.",
@@ -366,7 +366,7 @@
     },
     {
      "type": "choice",
-     "q": "24  In the last paragraph, the writer suggests that the main value of sailing freighters is that they",
+     "q": "In the last paragraph, the writer suggests that the main value of sailing freighters is that they",
      "options": [
       "encourage much larger companies to adopt wind technology.",
       "will soon replace container ships on most routes.",
@@ -378,7 +378,7 @@
     },
     {
      "type": "choice",
-     "q": "25  The Aurelia can carry more than one thousand tonnes of cargo.",
+     "q": "The Aurelia can carry more than one thousand tonnes of cargo.",
      "options": [
       "True",
       "False",
@@ -389,7 +389,7 @@
     },
     {
      "type": "choice",
-     "q": "26  The Aurelia's wing sails are adjusted by hand by members of the crew.",
+     "q": "The Aurelia's wing sails are adjusted by hand by members of the crew.",
      "options": [
       "True",
       "False",
@@ -400,7 +400,7 @@
     },
     {
      "type": "choice",
-     "q": "27  The crew of the Aurelia are paid more than crews on diesel-powered ships.",
+     "q": "The crew of the Aurelia are paid more than crews on diesel-powered ships.",
      "options": [
       "True",
       "False",
@@ -411,7 +411,7 @@
     },
     {
      "type": "choice",
-     "q": "28  The cooperative has sometimes had to send the Aurelia to sea with no cargo on board.",
+     "q": "The cooperative has sometimes had to send the Aurelia to sea with no cargo on board.",
      "options": [
       "True",
       "False",
@@ -422,7 +422,7 @@
     },
     {
      "type": "choice",
-     "q": "29  Rotor sails fitted to ordinary tankers reduce the amount of fuel those ships use.",
+     "q": "Rotor sails fitted to ordinary tankers reduce the amount of fuel those ships use.",
      "options": [
       "True",
       "False",
@@ -441,7 +441,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "30  The charitable trust bought Glen Raigh in ________ .",
+     "q": "The charitable trust bought Glen Raigh in ________ .",
      "answer": [
       "2004"
      ],
@@ -449,7 +449,7 @@
     },
     {
      "type": "text",
-     "q": "31  Before the peat was rewetted, the valley released about ________ tonnes of carbon dioxide a year.",
+     "q": "Before the peat was rewetted, the valley released about ________ tonnes of carbon dioxide a year.",
      "answer": [
       "9,000",
       "9000"
@@ -458,7 +458,7 @@
     },
     {
      "type": "text",
-     "q": "32  The estate today provides work for ________ people.",
+     "q": "The estate today provides work for ________ people.",
      "answer": [
       "nineteen",
       "19"
@@ -467,7 +467,7 @@
     },
     {
      "type": "text",
-     "q": "33  About ________ per cent of the valley's income comes from tourism.",
+     "q": "About ________ per cent of the valley's income comes from tourism.",
      "answer": [
       "sixty",
       "60"
@@ -476,7 +476,7 @@
     },
     {
      "type": "choice",
-     "q": "34  The writer uses the phrase \"a green desert\" in order to emphasise that the landscape",
+     "q": "The writer uses the phrase \"a green desert\" in order to emphasise that the landscape",
      "options": [
       "received very little rainfall during the year.",
       "held very little life in spite of its green appearance.",
@@ -488,7 +488,7 @@
     },
     {
      "type": "choice",
-     "q": "35  In the final paragraph, the writer concludes that the Glen Raigh project mainly proves that",
+     "q": "In the final paragraph, the writer concludes that the Glen Raigh project mainly proves that",
      "options": [
       "rewilding is more profitable than farming in every region.",
       "historic landscapes can be restored with great accuracy.",

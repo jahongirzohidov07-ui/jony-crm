@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Mardle informed archaeologists about the timbers immediately after finding them.",
+     "q": "Mardle informed archaeologists about the timbers immediately after finding them.",
      "options": [
       "TRUE",
       "FALSE",
@@ -30,7 +30,7 @@
     },
     {
      "type": "choice",
-     "q": "2  All of the trackways so far identified in the Neldram Fens have been excavated.",
+     "q": "All of the trackways so far identified in the Neldram Fens have been excavated.",
      "options": [
       "TRUE",
       "FALSE",
@@ -41,7 +41,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Rail-and-plank trackways were built without the use of any fastenings.",
+     "q": "Rail-and-plank trackways were built without the use of any fastenings.",
      "options": [
       "TRUE",
       "FALSE",
@@ -52,7 +52,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Oak was harder to split into planks than birch was.",
+     "q": "Oak was harder to split into planks than birch was.",
      "options": [
       "TRUE",
       "FALSE",
@@ -63,7 +63,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Wood taken from the fen starts to deteriorate very soon after it is exposed to the air.",
+     "q": "Wood taken from the fen starts to deteriorate very soon after it is exposed to the air.",
      "options": [
       "TRUE",
       "FALSE",
@@ -74,7 +74,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Tree-ring dating showed that the Harrow Path had been lengthened over several generations.",
+     "q": "Tree-ring dating showed that the Harrow Path had been lengthened over several generations.",
      "options": [
       "TRUE",
       "FALSE",
@@ -85,7 +85,7 @@
     },
     {
      "type": "choice",
-     "q": "7  The amber beads recovered from beneath one trackway were made in the local area.",
+     "q": "The amber beads recovered from beneath one trackway were made in the local area.",
      "options": [
       "TRUE",
       "FALSE",
@@ -96,7 +96,7 @@
     },
     {
      "type": "text",
-     "q": "8  To build a trackway of the rail-and-plank type, workers first drove pairs of pointed ............ into the peat at an angle so that they crossed, forming a line of cradles.",
+     "q": "To build a trackway of the rail-and-plank type, workers first drove pairs of pointed ............ into the peat at an angle so that they crossed, forming a line of cradles.",
      "answer": [
       "pegs"
      ],
@@ -104,7 +104,7 @@
     },
     {
      "type": "text",
-     "q": "9  Long ............ made of birch or alder were then dropped into the cradles, and split oak planks were laid across them to give a surface about a metre wide.",
+     "q": "Long ............ made of birch or alder were then dropped into the cradles, and split oak planks were laid across them to give a surface about a metre wide.",
      "answer": [
       "rails"
      ],
@@ -112,7 +112,7 @@
     },
     {
      "type": "text",
-     "q": "10  The timber has survived because waterlogged peat contains almost no ............ , without which the organisms that destroy wood cannot function.",
+     "q": "The timber has survived because waterlogged peat contains almost no ............ , without which the organisms that destroy wood cannot function.",
      "answer": [
       "oxygen"
      ],
@@ -120,7 +120,7 @@
     },
     {
      "type": "text",
-     "q": "11  Working from a chronology built out of 1,400 oak timbers, Dr Seren Vaill showed that the trees used for the ............ , the longest of the routes, were all felled in a single spring.",
+     "q": "Working from a chronology built out of 1,400 oak timbers, Dr Seren Vaill showed that the trees used for the ............ , the longest of the routes, were all felled in a single spring.",
      "answer": [
       "Harrow Path"
      ],
@@ -128,7 +128,7 @@
     },
     {
      "type": "text",
-     "q": "12  The hazel pegs were all of a very uniform age, which is evidence for the practice of ............ .",
+     "q": "The hazel pegs were all of a very uniform age, which is evidence for the practice of ............ .",
      "answer": [
       "coppicing"
      ],
@@ -136,7 +136,7 @@
     },
     {
      "type": "text",
-     "q": "13  The trackways are now at risk because pumped ............ for arable farming has lowered the water table by over a metre since the 1950s.",
+     "q": "The trackways are now at risk because pumped ............ for arable farming has lowered the water table by over a metre since the 1950s.",
      "answer": [
       "drainage"
      ],
@@ -152,7 +152,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  an account of how the wreck was originally discovered",
+     "q": "an account of how the wreck was originally discovered",
      "options": [
       "A",
       "B",
@@ -168,7 +168,7 @@
     },
     {
      "type": "choice",
-     "q": "15  an explanation of why a wreck yields better dating evidence than a settlement does",
+     "q": "an explanation of why a wreck yields better dating evidence than a settlement does",
      "options": [
       "A",
       "B",
@@ -184,7 +184,7 @@
     },
     {
      "type": "choice",
-     "q": "16  reference to the qualifications needed to work on sites of this kind",
+     "q": "reference to the qualifications needed to work on sites of this kind",
      "options": [
       "A",
       "B",
@@ -200,7 +200,7 @@
     },
     {
      "type": "choice",
-     "q": "17  a comparison of the time required by older and newer recording methods",
+     "q": "a comparison of the time required by older and newer recording methods",
      "options": [
       "A",
       "B",
@@ -216,7 +216,7 @@
     },
     {
      "type": "choice",
-     "q": "18  mention of how long a single conservation treatment lasted",
+     "q": "mention of how long a single conservation treatment lasted",
      "options": [
       "A",
       "B",
@@ -232,7 +232,7 @@
     },
     {
      "type": "choice",
-     "q": "19  an argument that people outside the profession have a necessary role",
+     "q": "an argument that people outside the profession have a necessary role",
      "options": [
       "A",
       "B",
@@ -248,7 +248,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Warmer winters are allowing a destructive creature to extend its range.",
+     "q": "Warmer winters are allowing a destructive creature to extend its range.",
      "options": [
       "A",
       "B",
@@ -260,7 +260,7 @@
     },
     {
      "type": "choice",
-     "q": "21  Digging up a site can only ever be done once, so it should be avoided where possible.",
+     "q": "Digging up a site can only ever be done once, so it should be avoided where possible.",
      "options": [
       "A",
       "B",
@@ -272,7 +272,7 @@
     },
     {
      "type": "choice",
-     "q": "22  There is already more recovered material than local institutions can look after.",
+     "q": "There is already more recovered material than local institutions can look after.",
      "options": [
       "A",
       "B",
@@ -284,7 +284,7 @@
     },
     {
      "type": "choice",
-     "q": "23  Non-specialists can be taught to produce records that are genuinely useful.",
+     "q": "Non-specialists can be taught to produce records that are genuinely useful.",
      "options": [
       "A",
       "B",
@@ -296,7 +296,7 @@
     },
     {
      "type": "choice",
-     "q": "24  The cargo of Varlen 1 is unusually useful to historians because",
+     "q": "The cargo of Varlen 1 is unusually useful to historians because",
      "options": [
       "A",
       "B",
@@ -310,7 +310,7 @@
     },
     {
      "type": "choice",
-     "q": "25  Preserving the site where it lies has involved",
+     "q": "Preserving the site where it lies has involved",
      "options": [
       "A",
       "B",
@@ -324,7 +324,7 @@
     },
     {
      "type": "choice",
-     "q": "26  Photographing the trench from a camera grid produces",
+     "q": "Photographing the trench from a camera grid produces",
      "options": [
       "A",
       "B",
@@ -346,7 +346,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  The preference for leaving ruins unrepaired is a comparatively recent cultural attitude.",
+     "q": "The preference for leaving ruins unrepaired is a comparatively recent cultural attitude.",
      "options": [
       "YES",
       "NO",
@@ -357,7 +357,7 @@
     },
     {
      "type": "choice",
-     "q": "28  The most serious argument against rebuilding is that it destroys evidence that later researchers would need.",
+     "q": "The most serious argument against rebuilding is that it destroys evidence that later researchers would need.",
      "options": [
       "YES",
       "NO",
@@ -368,7 +368,7 @@
     },
     {
      "type": "choice",
-     "q": "29  On an actual site, the difference between consolidation and reconstruction is easy to draw.",
+     "q": "On an actual site, the difference between consolidation and reconstruction is easy to draw.",
      "options": [
       "YES",
       "NO",
@@ -379,18 +379,7 @@
     },
     {
      "type": "choice",
-     "q": "30  Most national authorities now insist that reconstruction work be reversible.",
-     "options": [
-      "YES",
-      "NO",
-      "NOT GIVEN"
-     ],
-     "answer": 2,
-     "topic": "Reading · YNNG"
-    },
-    {
-     "type": "choice",
-     "q": "31  Digital reconstructions attract larger audiences than physical ones do.",
+     "q": "Most national authorities now insist that reconstruction work be reversible.",
      "options": [
       "YES",
       "NO",
@@ -401,7 +390,18 @@
     },
     {
      "type": "choice",
-     "q": "32  Ordinary visitors are unable to grasp that a reconstruction is only one possible interpretation.",
+     "q": "Digital reconstructions attract larger audiences than physical ones do.",
+     "options": [
+      "YES",
+      "NO",
+      "NOT GIVEN"
+     ],
+     "answer": 2,
+     "topic": "Reading · YNNG"
+    },
+    {
+     "type": "choice",
+     "q": "Ordinary visitors are unable to grasp that a reconstruction is only one possible interpretation.",
      "options": [
       "YES",
       "NO",
@@ -412,43 +412,43 @@
     },
     {
      "type": "choice",
-     "q": "33  In the first paragraph, the writer uses the Perrin Gate in order to argue that",
+     "q": "In the first paragraph, the writer uses the Perrin Gate in order to argue that",
      "options": [
-      "A  visitors to heritage sites are routinely misled about what they are seeing.",
-      "B  the real failure lies in how the information is presented, not in the rebuilding itself.",
-      "C  most of the stonework at reconstructed sites turns out to be modern.",
-      "D  photography has altered the way people experience old monuments."
+      "visitors to heritage sites are routinely misled about what they are seeing.",
+      "the real failure lies in how the information is presented, not in the rebuilding itself.",
+      "most of the stonework at reconstructed sites turns out to be modern.",
+      "photography has altered the way people experience old monuments."
      ],
      "answer": 1,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "34  What does the writer suggest about the declaration made by the Antiquarian Society of Marle in 1874?",
+     "q": "What does the writer suggest about the declaration made by the Antiquarian Society of Marle in 1874?",
      "options": [
-      "A  It was based on a careful survey of damaged buildings.",
-      "B  It expressed a matter of taste in the language of a rule.",
-      "C  It was disregarded by the conservators of the time.",
-      "D  It described a way of treating ruins that was already centuries old."
+      "It was based on a careful survey of damaged buildings.",
+      "It expressed a matter of taste in the language of a rule.",
+      "It was disregarded by the conservators of the time.",
+      "It described a way of treating ruins that was already centuries old."
      ],
      "answer": 1,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "35  The writer's main objection to the 1930s work at Orenhall is that",
+     "q": "The writer's main objection to the 1930s work at Orenhall is that",
      "options": [
-      "A  the materials used are visibly different from the original ones.",
-      "B  it was carried out without proper records of the excavation being kept.",
-      "C  it made permanent an arrangement based on evidence that was later discredited.",
-      "D  it cost far more than the site could reasonably afford."
+      "the materials used are visibly different from the original ones.",
+      "it was carried out without proper records of the excavation being kept.",
+      "it made permanent an arrangement based on evidence that was later discredited.",
+      "it cost far more than the site could reasonably afford."
      ],
      "answer": 2,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "36  The first serious objection is that rebuilding normally requires digging, which destroys the ............ that later researchers would depend on.",
+     "q": "The first serious objection is that rebuilding normally requires digging, which destroys the ............ that later researchers would depend on.",
      "options": [
       "A",
       "B",
@@ -466,7 +466,7 @@
     },
     {
      "type": "choice",
-     "q": "37  The second is that a finished structure cannot be ............ in the way that a drawing or a report can.",
+     "q": "The second is that a finished structure cannot be ............ in the way that a drawing or a report can.",
      "options": [
       "A",
       "B",
@@ -484,7 +484,7 @@
     },
     {
      "type": "choice",
-     "q": "38  The writer nevertheless accepts that there is a real case for rebuilding, since a low line of rubble means nothing to most visitors and heritage sites depend for their ............ on the people they attract.",
+     "q": "The writer nevertheless accepts that there is a real case for rebuilding, since a low line of rubble means nothing to most visitors and heritage sites depend for their ............ on the people they attract.",
      "options": [
       "A",
       "B",
@@ -502,7 +502,7 @@
     },
     {
      "type": "choice",
-     "q": "39  He therefore supports work that re-uses original material, makes new material obvious, and above all remains ............ , so that a better-informed generation can take it down.",
+     "q": "He therefore supports work that re-uses original material, makes new material obvious, and above all remains ............ , so that a better-informed generation can take it down.",
      "options": [
       "A",
       "B",
@@ -520,13 +520,13 @@
     },
     {
      "type": "multi",
-     "q": "40  Which TWO weaknesses of digital reconstruction does the writer identify? Choose TWO letters, A-E.",
+     "q": "Which TWO weaknesses of digital reconstruction does the writer identify? Choose TWO letters, A-E.",
      "options": [
-      "A  It cannot present more than one version of a building.",
-      "B  The files it produces may become impossible to open in future.",
-      "C  It requires money on a continuing basis if it is to be maintained.",
-      "D  It is less accurate than rebuilding in stone.",
-      "E  Visitors find it harder to understand than a physical structure."
+      "It cannot present more than one version of a building.",
+      "The files it produces may become impossible to open in future.",
+      "It requires money on a continuing basis if it is to be maintained.",
+      "It is less accurate than rebuilding in stone.",
+      "Visitors find it harder to understand than a physical structure."
      ],
      "answer": [
       1,

@@ -18,7 +18,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Do you know what time the last ferry back from the island leaves?",
+     "q": "Do you know what time the last ferry back from the island leaves?",
      "options": [
       "At half past six, I believe.",
       "It's about nine kilometres long.",
@@ -29,7 +29,7 @@
     },
     {
      "type": "choice",
-     "q": "2  I'm sorry, but the coastal path is closed for repairs this week.",
+     "q": "I'm sorry, but the coastal path is closed for repairs this week.",
      "options": [
       "Thank you, I'll take two.",
       "It was built in 1954.",
@@ -40,7 +40,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Shall we put the plastic bottles in the recycling bin or in the green one?",
+     "q": "Shall we put the plastic bottles in the recycling bin or in the green one?",
      "options": [
       "The trip lasted four days.",
       "In the recycling bin, definitely.",
@@ -51,7 +51,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Your suitcase is a little over the weight limit, I'm afraid.",
+     "q": "Your suitcase is a little over the weight limit, I'm afraid.",
      "options": [
       "Could I move something into my hand luggage?",
       "Yes, it's a window seat.",
@@ -62,7 +62,7 @@
     },
     {
      "type": "choice",
-     "q": "5  How was the train journey through the mountains?",
+     "q": "How was the train journey through the mountains?",
      "options": [
       "About forty pounds return.",
       "No, I haven't packed yet.",
@@ -73,7 +73,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Do you mind if I open the window? It's rather warm in this carriage.",
+     "q": "Do you mind if I open the window? It's rather warm in this carriage.",
      "options": [
       "I booked it online last night.",
       "Not at all, go ahead.",
@@ -84,7 +84,7 @@
     },
     {
      "type": "choice",
-     "q": "7  Why did the council decide to plant so many trees along the river?",
+     "q": "Why did the council decide to plant so many trees along the river?",
      "options": [
       "Next Tuesday afternoon, I think.",
       "They cost about twelve pounds each.",
@@ -95,7 +95,7 @@
     },
     {
      "type": "choice",
-     "q": "8  You should have booked the eco-lodge earlier - it's completely full now.",
+     "q": "You should have booked the eco-lodge earlier - it's completely full now.",
      "options": [
       "I know - I should have sorted it out weeks ago.",
       "There's a swimming pool and a gym.",
@@ -114,7 +114,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "9  Meeting point: outside the visitor ________ , next to the main car park",
+     "q": "Meeting point: outside the visitor ________ , next to the main car park",
      "answer": [
       "centre",
       "center"
@@ -123,7 +123,7 @@
     },
     {
      "type": "text",
-     "q": "10  Date: Saturday the ________ of April, starting at 9 a.m.",
+     "q": "Date: Saturday the ________ of April, starting at 9 a.m.",
      "answer": [
       "18",
       "18th",
@@ -133,7 +133,7 @@
     },
     {
      "type": "text",
-     "q": "11  Volunteers must bring waterproof ________ (gloves are provided)",
+     "q": "Volunteers must bring waterproof ________ (gloves are provided)",
      "answer": [
       "boots"
      ],
@@ -141,7 +141,7 @@
     },
     {
      "type": "text",
-     "q": "12  Lunch will be served in the old ________ behind the bird garden",
+     "q": "Lunch will be served in the old ________ behind the bird garden",
      "answer": [
       "barn"
      ],
@@ -149,7 +149,7 @@
     },
     {
      "type": "text",
-     "q": "13  Every team is given a ________ for writing down the rubbish they collect",
+     "q": "Every team is given a ________ for writing down the rubbish they collect",
      "answer": [
       "notebook"
      ],
@@ -157,7 +157,7 @@
     },
     {
      "type": "text",
-     "q": "14  Cost of the day: ________ pounds per person (includes the minibus)",
+     "q": "Cost of the day: ________ pounds per person (includes the minibus)",
      "answer": [
       "4",
       "four"
@@ -174,7 +174,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "15  Speaker 1",
+     "q": "Speaker 1",
      "options": [
       "A",
       "B",
@@ -188,7 +188,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Speaker 2",
+     "q": "Speaker 2",
      "options": [
       "A",
       "B",
@@ -202,7 +202,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Speaker 3",
+     "q": "Speaker 3",
      "options": [
       "A",
       "B",
@@ -216,7 +216,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Speaker 4",
+     "q": "Speaker 4",
      "options": [
       "A",
       "B",
@@ -232,13 +232,13 @@
   },
   {
    "title": "Part 4",
-   "instructions": "You will hear someone giving a talk. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use.\n\nMAP OF SILVERBROOK COUNTRY PARK (north is at the top)\nThe main entrance is at the bottom of the map. A straight path, the Long Walk, runs north from the entrance to the lake. Halfway along the Long Walk, on the right-hand side, there is a very old oak tree. The lake is at the top of the map, with a small island in the middle of it and reed beds along its northern shore. A footbridge crosses the eastern end of the lake.\nThe eight marked positions are:\nA  beside the path, immediately on the LEFT as you come through the main entrance\nB  beside the path, immediately on the RIGHT as you come through the main entrance\nC  on the LEFT of the Long Walk, opposite the old oak tree\nD  on the RIGHT of the Long Walk, just beyond the old oak tree\nE  at the WESTERN end of the lake\nF  on the island in the middle of the lake\nG  at the EASTERN end of the lake, beside the footbridge\nH  in the far NORTHERN corner of the park, beyond the reed beds",
+   "instructions": "You will hear someone giving a talk. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use.",
    "passage": "",
    "script": "EXAMINER (read aloud): Part Four. You will hear a park ranger giving a talk to a group of visitors. Label the places, nineteen to twenty-three, on the map, using the letters A to H. There are THREE extra options which you do not need to use. You now have thirty seconds to look at the map. You will hear the talk twice.\n\n[Pause 30 seconds]\n\nRANGER: Good afternoon and welcome to Silverbrook Country Park. Before we set off, let me show you where everything is on this map, because the park is a good deal bigger than it looks.\n\nYou came in through the main entrance at the bottom of the map. As you came through the gate you will have noticed two small wooden buildings, one on each side of the path. The one on your left, as you walk in, is the cycle store - that is where you leave your bicycles, and it is free. The building on your right, directly across the path from it, is the cafe. So: bicycles on the left, cake on the right. Easy to remember.\n\nFrom the entrance, the straight path running north is called the Long Walk. Follow it for about ten minutes and, on your right-hand side, you will come to a very old oak tree - it is nearly four hundred years old and you really cannot miss it. Just beyond the oak, on that same side of the path, stands our big information board with all the walking routes on it. Now, I know some of you have been here before and will remember the board standing on the left of the path, opposite the oak. We moved it last spring because the grass there turned to mud, so please look for it just past the tree, on the right.\n\nCarry on north and the Long Walk brings you to the lake. At the western end of the lake there is a wooden jetty where the rowing boats are tied up. Do be careful not to walk to the eastern end looking for the boats - the eastern end is where the footbridge crosses, and there is no jetty there at all. And the small island in the middle of the lake has nothing on it at all - we leave that one to the ducks.\n\nAnd finally, the bird hide, which is what most of you have come for. Go round the lake, keep the reed beds on your left, and keep walking until you reach the very far northern corner of the park. The hide is there, well past the reed beds, where it is nice and quiet. It is a fifteen-minute walk from the lake, so do allow yourselves time.\n\n[Repeat the whole talk]\n\nThat is the end of Part Four.",
    "questions": [
     {
      "type": "choice",
-     "q": "19  the bird hide",
+     "q": "the bird hide",
      "options": [
       "A",
       "B",
@@ -250,11 +250,12 @@
       "H"
      ],
      "answer": 7,
-     "topic": "Listening - Map labelling"
+     "topic": "Listening - Map labelling",
+     "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTYwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZmlsbD0iI2ZmZmZmZiIvPgo8dGV4dCB4PSI0MDAiIHk9IjMxIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+U2lsdmVyYnJvb2sgQ291bnRyeSBQYXJrPC90ZXh0Pgo8cmVjdCB4PSI0MCIgeT0iNDUiIHdpZHRoPSI3MjAiIGhlaWdodD0iNDcwIiBmaWxsPSIjZjRmNGY0Ii8+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1saW5lY2FwPSJidXR0Ij4KPHBvbHlsaW5lIHBvaW50cz0iNDAwLDUyMiA0MDAsMzAwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMjIiLz4KPHBvbHlsaW5lIHBvaW50cz0iMTQwLDMwMCA2MDAsMzAwIDYwMCw4MCA5NSw4MCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIyIi8+Cjxwb2x5bGluZSBwb2ludHM9IjQwMCw1MjIgNDAwLDMwMCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjE4Ii8+Cjxwb2x5bGluZSBwb2ludHM9IjE0MCwzMDAgNjAwLDMwMCA2MDAsODAgOTUsODAiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxOCIvPgo8L2c+CjxlbGxpcHNlIGN4PSIzODAiIGN5PSIyMDUiIHJ4PSIyNTAiIHJ5PSI3OCIgZmlsbD0iI2NmZTZmNSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz4KPGVsbGlwc2UgY3g9IjM4MCIgY3k9IjIxNSIgcng9IjQyIiByeT0iMjAiIGZpbGw9IiNlMmUyZTIiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxnIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9Im5vbmUiPgo8cGF0aCBkPSJNMjc2IDE1NSBWMTQxIE0yODQgMTU1IFYxNDQgTTMwNiAxNTUgVjE0MSBNMzE0IDE1NSBWMTQ0IE0zMzYgMTU1IFYxNDEgTTM0NCAxNTUgVjE0NCBNMzY2IDE1NSBWMTQxIE0zNzQgMTU1IFYxNDQgTTM5NiAxNTUgVjE0MSBNNDA0IDE1NSBWMTQ0IE00MjYgMTU1IFYxNDEgTTQzNCAxNTUgVjE0NCBNNDU2IDE1NSBWMTQxIE00NjQgMTU1IFYxNDQgTTQ4NiAxNTUgVjE0MSBNNDk0IDE1NSBWMTQ0Ii8+CjwvZz4KPGcgZmlsbD0iIzU1NSI+CjxlbGxpcHNlIGN4PSIyNzYiIGN5PSIxNDEiIHJ4PSIyLjUiIHJ5PSI1Ii8+PGVsbGlwc2UgY3g9IjI4NCIgY3k9IjE0NCIgcng9IjIuNSIgcnk9IjUiLz4KPGVsbGlwc2UgY3g9IjMwNiIgY3k9IjE0MSIgcng9IjIuNSIgcnk9IjUiLz48ZWxsaXBzZSBjeD0iMzE0IiBjeT0iMTQ0IiByeD0iMi41IiByeT0iNSIvPgo8ZWxsaXBzZSBjeD0iMzM2IiBjeT0iMTQxIiByeD0iMi41IiByeT0iNSIvPjxlbGxpcHNlIGN4PSIzNDQiIGN5PSIxNDQiIHJ4PSIyLjUiIHJ5PSI1Ii8+CjxlbGxpcHNlIGN4PSIzNjYiIGN5PSIxNDEiIHJ4PSIyLjUiIHJ5PSI1Ii8+PGVsbGlwc2UgY3g9IjM3NCIgY3k9IjE0NCIgcng9IjIuNSIgcnk9IjUiLz4KPGVsbGlwc2UgY3g9IjM5NiIgY3k9IjE0MSIgcng9IjIuNSIgcnk9IjUiLz48ZWxsaXBzZSBjeD0iNDA0IiBjeT0iMTQ0IiByeD0iMi41IiByeT0iNSIvPgo8ZWxsaXBzZSBjeD0iNDI2IiBjeT0iMTQxIiByeD0iMi41IiByeT0iNSIvPjxlbGxpcHNlIGN4PSI0MzQiIGN5PSIxNDQiIHJ4PSIyLjUiIHJ5PSI1Ii8+CjxlbGxpcHNlIGN4PSI0NTYiIGN5PSIxNDEiIHJ4PSIyLjUiIHJ5PSI1Ii8+PGVsbGlwc2UgY3g9IjQ2NCIgY3k9IjE0NCIgcng9IjIuNSIgcnk9IjUiLz4KPGVsbGlwc2UgY3g9IjQ4NiIgY3k9IjE0MSIgcng9IjIuNSIgcnk9IjUiLz48ZWxsaXBzZSBjeD0iNDk0IiBjeT0iMTQ0IiByeD0iMi41IiByeT0iNSIvPgo8L2c+CjxyZWN0IHg9IjU4OSIgeT0iMTU4IiB3aWR0aD0iMjIiIGhlaWdodD0iOTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxnIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIj4KPGxpbmUgeDE9IjU4OSIgeTE9IjE2OCIgeDI9IjYxMSIgeTI9IjE2OCIvPgo8bGluZSB4MT0iNTg5IiB5MT0iMTc4IiB4Mj0iNjExIiB5Mj0iMTc4Ii8+CjxsaW5lIHgxPSI1ODkiIHkxPSIxODgiIHgyPSI2MTEiIHkyPSIxODgiLz4KPGxpbmUgeDE9IjU4OSIgeTE9IjE5OCIgeDI9IjYxMSIgeTI9IjE5OCIvPgo8bGluZSB4MT0iNTg5IiB5MT0iMjA4IiB4Mj0iNjExIiB5Mj0iMjA4Ii8+CjxsaW5lIHgxPSI1ODkiIHkxPSIyMTgiIHgyPSI2MTEiIHkyPSIyMTgiLz4KPGxpbmUgeDE9IjU4OSIgeTE9IjIyOCIgeDI9IjYxMSIgeTI9IjIyOCIvPgo8bGluZSB4MT0iNTg5IiB5MT0iMjM4IiB4Mj0iNjExIiB5Mj0iMjM4Ii8+CjwvZz4KPGxpbmUgeDE9IjQ0NSIgeTE9IjQwOCIgeDI9IjQ0NSIgeTI9IjQyMCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGNpcmNsZSBjeD0iNDQ1IiBjeT0iMzk2IiByPSIxNCIgZmlsbD0iI2Q2ZDZkNiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz4KPGNpcmNsZSBjeD0iNDM3IiBjeT0iMzkxIiByPSI1IiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPgo8Y2lyY2xlIGN4PSI0NTIiIGN5PSIzOTkiIHI9IjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+CjxnIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiMxMTEiPgo8dGV4dCB4PSIzODUiIHk9IjE3NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zdHlsZT0iaXRhbGljIj5yZWVkIGJlZHM8L3RleHQ+Cjx0ZXh0IHg9IjIxNSIgeT0iMjE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5MYWtlPC90ZXh0Pgo8dGV4dCB4PSIzODAiIHk9IjI1OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zdHlsZT0iaXRhbGljIj5pc2xhbmQ8L3RleHQ+Cjx0ZXh0IHg9IjYxNyIgeT0iMTUyIj5mb290YnJpZGdlPC90ZXh0Pgo8dGV4dCB4PSI0NjciIHk9IjQwMiI+b2xkIG9hayB0cmVlPC90ZXh0Pgo8dGV4dCB4PSIzODAiIHk9IjQ1NSIgdGV4dC1hbmNob3I9ImVuZCI+TG9uZyBXYWxrPC90ZXh0Pgo8dGV4dCB4PSI0MDAiIHk9IjU0NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPk1haW4gZW50cmFuY2U8L3RleHQ+CjwvZz4KPHBhdGggZD0iTTM4OSA1MTUgSDQwIFY0NSBINzYwIFY1MTUgSDQxMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMzgyIiB5PSI1MDkiIHdpZHRoPSI3IiBoZWlnaHQ9IjEyIiBmaWxsPSIjMzMzIi8+CjxyZWN0IHg9IjQxMSIgeT0iNTA5IiB3aWR0aD0iNyIgaGVpZ2h0PSIxMiIgZmlsbD0iIzMzMyIvPgo8Zz4KPHRleHQgeD0iNzIwIiB5PSI2NiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxMTEiPk48L3RleHQ+Cjxwb2x5Z29uIHBvaW50cz0iNzIwLDcyIDcxMSw5MiA3MjksOTIiIGZpbGw9IiMzMzMiLz4KPGxpbmUgeDE9IjcyMCIgeTE9IjkyIiB4Mj0iNzIwIiB5Mj0iMTMwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMyIvPgo8L2c+CjxnIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTExIj4KPGNpcmNsZSBjeD0iMzU1IiBjeT0iNDg4IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iMzU1IiB5PSI0OTQiPkE8L3RleHQ+CjxjaXJjbGUgY3g9IjQ0NSIgY3k9IjQ4OCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjQ0NSIgeT0iNDk0Ij5CPC90ZXh0Pgo8Y2lyY2xlIGN4PSIzNTUiIGN5PSIzOTYiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPgo8dGV4dCB4PSIzNTUiIHk9IjQwMiI+QzwvdGV4dD4KPGNpcmNsZSBjeD0iNDQ1IiBjeT0iMzQ1IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iNDQ1IiB5PSIzNTEiPkQ8L3RleHQ+CjxjaXJjbGUgY3g9IjEwMiIgY3k9IjIwNSIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjEwMiIgeT0iMjExIj5FPC90ZXh0Pgo8Y2lyY2xlIGN4PSIzODAiIGN5PSIyMTUiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPgo8dGV4dCB4PSIzODAiIHk9IjIyMSI+RjwvdGV4dD4KPGNpcmNsZSBjeD0iNjYyIiBjeT0iMjA1IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iNjYyIiB5PSIyMTEiPkc8L3RleHQ+CjxjaXJjbGUgY3g9IjcyIiBjeT0iODAiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPgo8dGV4dCB4PSI3MiIgeT0iODYiPkg8L3RleHQ+CjwvZz4KPC9zdmc+"
     },
     {
      "type": "choice",
-     "q": "20  the cafe",
+     "q": "the cafe",
      "options": [
       "A",
       "B",
@@ -270,7 +271,7 @@
     },
     {
      "type": "choice",
-     "q": "21  the cycle store",
+     "q": "the cycle store",
      "options": [
       "A",
       "B",
@@ -286,7 +287,7 @@
     },
     {
      "type": "choice",
-     "q": "22  the information board",
+     "q": "the information board",
      "options": [
       "A",
       "B",
@@ -302,7 +303,7 @@
     },
     {
      "type": "choice",
-     "q": "23  the jetty for the rowing boats",
+     "q": "the jetty for the rowing boats",
      "options": [
       "A",
       "B",
@@ -326,7 +327,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "24  What is the main subject of the students' project?",
+     "q": "What is the main subject of the students' project?",
      "options": [
       "the effects of tourism on a coastal town",
       "how a coastal town is protecting itself from rising sea levels",
@@ -337,7 +338,7 @@
     },
     {
      "type": "choice",
-     "q": "25  Why did Oliver give up his first idea?",
+     "q": "Why did Oliver give up his first idea?",
      "options": [
       "His teacher told him the subject was too wide.",
       "He could not find enough published information.",
@@ -348,7 +349,7 @@
     },
     {
      "type": "choice",
-     "q": "26  How will the students travel to Pebblehaven?",
+     "q": "How will the students travel to Pebblehaven?",
      "options": [
       "by train",
       "by coach",
@@ -359,7 +360,7 @@
     },
     {
      "type": "choice",
-     "q": "27  What does Madina say about the interviews?",
+     "q": "What does Madina say about the interviews?",
      "options": [
       "They should be done early in the day.",
       "They should all be recorded.",
@@ -370,7 +371,7 @@
     },
     {
      "type": "choice",
-     "q": "28  What surprised Oliver about the results of the questionnaires?",
+     "q": "What surprised Oliver about the results of the questionnaires?",
      "options": [
       "how many people complained about litter and parking",
       "that the residents disagreed with the shopkeepers",
@@ -381,7 +382,7 @@
     },
     {
      "type": "choice",
-     "q": "29  What do the students agree to do next?",
+     "q": "What do the students agree to do next?",
      "options": [
       "start writing the report that evening",
       "send out more questionnaires",
@@ -400,7 +401,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "30  The expression 'slow travel' was borrowed from an Italian campaign about ________ .",
+     "q": "The expression 'slow travel' was borrowed from an Italian campaign about ________ .",
      "answer": [
       "food"
      ],
@@ -408,7 +409,7 @@
     },
     {
      "type": "text",
-     "q": "31  The researchers the lecturer trusts most say a slow trip means staying in one place for at least a ________ .",
+     "q": "The researchers the lecturer trusts most say a slow trip means staying in one place for at least a ________ .",
      "answer": [
       "month"
      ],
@@ -416,7 +417,7 @@
     },
     {
      "type": "text",
-     "q": "32  About three quarters of the emissions produced by tourism come from ________ .",
+     "q": "About three quarters of the emissions produced by tourism come from ________ .",
      "answer": [
       "transport"
      ],
@@ -424,7 +425,7 @@
     },
     {
      "type": "text",
-     "q": "33  Long-stay visitors spend roughly three times as much in local ________ as weekend visitors do.",
+     "q": "Long-stay visitors spend roughly three times as much in local ________ as weekend visitors do.",
      "answer": [
       "businesses"
      ],
@@ -432,7 +433,7 @@
     },
     {
      "type": "text",
-     "q": "34  The real obstacle to slow travel is not money but ________ .",
+     "q": "The real obstacle to slow travel is not money but ________ .",
      "answer": [
       "time"
      ],
@@ -440,7 +441,7 @@
     },
     {
      "type": "text",
-     "q": "35  The lecturer recommends that governments should cut the ________ charged on rail tickets.",
+     "q": "The lecturer recommends that governments should cut the ________ charged on rail tickets.",
      "answer": [
       "taxes"
      ],

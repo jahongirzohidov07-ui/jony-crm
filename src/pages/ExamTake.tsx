@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { BrandIcon } from "../components/BrandIcon";
-import { ExamPaper, Watermark, type PaperPart } from "../components/ExamPaper";
+import { type PaperPart } from "../components/ExamPaper";
+import { CdExam } from "../components/CdExam";
 import { useAuth } from "../lib/AuthContext";
 import { getToken } from "../lib/api";
 
@@ -68,12 +69,6 @@ function shrink(file: File): Promise<string> {
     img.onerror = () => reject(new Error("Rasmni o'qib bo'lmadi"));
     img.src = url;
   });
-}
-
-function mmss(sec: number) {
-  const s = Math.max(0, Math.ceil(sec));
-  const m = Math.floor(s / 60);
-  return `${m}:${String(s % 60).padStart(2, "0")}`;
 }
 
 type Me = { id: number; name: string };
@@ -709,51 +704,44 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   }
 
   // ------------------------------------------------ test
-  const low = endsIn !== null && endsIn <= 60;
-  return shell(
-    <div className="space-y-4 pb-24">
-      {who ? <Watermark text={`${who} · ${exam.title}`} /> : null}
-      {/* Savollar chizuvchisi ExamPaper.tsx ga ko'chdi (2026-09-27) —
-          xodimlar mock sahifasi ham aynan shuni ishlatadi. Bu yerdagi
-          saqlash / chiqish / ro'yxat mantiqi o'zgarmadi. */}
-      <ExamPaper
-        parts={exam.parts}
-        answers={answers}
-        onChange={(qid, v) => setAnswers({ ...answers, [qid]: v })}
-      />
-
-      <div className="fixed bottom-0 inset-x-0 bg-white/95 border-t border-slate-200 px-4 py-3">
-        <div className="max-w-2xl mx-auto flex items-center gap-3">
-          {endsIn !== null && (
-            <span
-              className={`text-lg font-bold tabular-nums ${
-                low ? "text-red-600" : "text-slate-800"
-              }`}
-              title="Qolgan vaqt"
-            >
-              ⏱ {mmss(endsIn)}
-            </span>
-          )}
-          <span className="text-sm text-slate-500 whitespace-nowrap">
-            {answered} / {exam.q_count}
+  // KOMPYUTERDAGI IELTS KO'RINISHI (2026-09-27, Jahongir: "readingda
+  // esa chap tomonda text, ong tomonda esa savollar turishi kerak ...
+  // IELTS niki"). Butun ekran: tepada taymer, bo'limma-bo'lim, pastda
+  // savol raqamlari. Saqlash / chiqish / topshirish mantiqi o'zgarmadi.
+  const awayWarn = awayLeft != null && awayLeft <= 2;
+  const notice =
+    awayWarn || error || (androidLink && !done) ? (
+      <>
+        {awayWarn ? (
+          <span className="font-medium">
+            {(awayLeft ?? 0) > 0
+              ? `Yana ${awayLeft} marta chiqsangiz — chetlatilasiz`
+              : "Yana chiqsangiz — chetlatilasiz"}
           </span>
-          {awayLeft != null && awayLeft <= 2 && (
-            <span className="text-[11px] text-amber-700 whitespace-nowrap">
-              {awayLeft > 0
-                ? `Yana ${awayLeft} marta chiqsangiz — chetlatilasiz`
-                : "Yana chiqsangiz — chetlatilasiz"}
-            </span>
-          )}
-          {error && <span className="text-xs text-red-600 flex-1 truncate">{error}</span>}
-          <button
-            onClick={manualSubmit}
-            disabled={sending}
-            className="ml-auto bg-brand-600 hover:bg-brand-700 text-white rounded-xl px-6 py-2.5 text-sm font-semibold disabled:opacity-60"
-          >
-            {sending ? "Yuborilmoqda..." : "Topshirish"}
-          </button>
-        </div>
-      </div>
-    </div>
+        ) : null}
+        {error ? <span className="text-red-600">{error}</span> : null}
+        {androidLink && !done ? (
+          <a href={androidLink} className="underline font-medium">
+            📱 Jony Imtihon ilovasida ochish
+          </a>
+        ) : null}
+      </>
+    ) : null;
+  return (
+    <CdExam
+      parts={exam.parts}
+      answers={answers}
+      onChange={(qid, v) => setAnswers({ ...answers, [qid]: v })}
+      title={exam.title}
+      subtitle={`${exam.group}${inApp ? " · Jony Student" : " · Jony Academy"}`}
+      endsIn={endsIn}
+      answered={answered}
+      total={exam.q_count}
+      onSubmit={manualSubmit}
+      sending={sending}
+      notice={notice}
+      watermark={who ? `${who} · ${exam.title}` : undefined}
+      storageKey={`exam:${token}`}
+    />
   );
 }

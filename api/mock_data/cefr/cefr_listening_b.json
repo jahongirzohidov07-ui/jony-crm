@@ -18,7 +18,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  \"Have you finished uploading your project to the college portal yet?\"",
+     "q": "\"Have you finished uploading your project to the college portal yet?\"",
      "options": [
       "No, the file was too large, so I'm compressing it now.",
       "Yes, the portal is on the second floor.",
@@ -29,7 +29,7 @@
     },
     {
      "type": "choice",
-     "q": "2  \"Why don't we revise for the computing test together this evening?\"",
+     "q": "\"Why don't we revise for the computing test together this evening?\"",
      "options": [
       "It was built in nineteen ninety-eight.",
       "That's a good idea. Shall we meet at six?",
@@ -40,7 +40,7 @@
     },
     {
      "type": "choice",
-     "q": "3  \"I'm afraid the interactive whiteboard in room twelve isn't working.\"",
+     "q": "\"I'm afraid the interactive whiteboard in room twelve isn't working.\"",
      "options": [
       "Yes, I bought it last summer.",
       "She teaches maths on Tuesdays.",
@@ -51,7 +51,7 @@
     },
     {
      "type": "choice",
-     "q": "4  \"How long does the online coding course last?\"",
+     "q": "\"How long does the online coding course last?\"",
      "options": [
       "It costs nothing at all.",
       "About twelve weeks, I think.",
@@ -62,7 +62,7 @@
     },
     {
      "type": "choice",
-     "q": "5  \"Could you remind me of the password for the student Wi-Fi?\"",
+     "q": "\"Could you remind me of the password for the student Wi-Fi?\"",
      "options": [
       "It's written on the card next to the printer.",
       "I'm sorry, I can't remember when it opened.",
@@ -73,7 +73,7 @@
     },
     {
      "type": "choice",
-     "q": "6  \"Your presentation slides look far too crowded.\"",
+     "q": "\"Your presentation slides look far too crowded.\"",
      "options": [
       "The train leaves at half past nine.",
       "Yes, she's a very good presenter.",
@@ -84,7 +84,7 @@
     },
     {
      "type": "choice",
-     "q": "7  \"Do you mind if I record the lecture on my phone?\"",
+     "q": "\"Do you mind if I record the lecture on my phone?\"",
      "options": [
       "It's much colder than it was yesterday.",
       "Not at all, as long as you don't share it online.",
@@ -95,7 +95,7 @@
     },
     {
      "type": "choice",
-     "q": "8  \"What a shame you missed the robotics workshop.\"",
+     "q": "\"What a shame you missed the robotics workshop.\"",
      "options": [
       "Yes, I'd really been looking forward to it.",
       "It's on the left, just past the library.",
@@ -114,7 +114,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "9  Location: Hartwell Building, ......... floor",
+     "q": "Location: Hartwell Building, ......... floor",
      "answer": [
       "third",
       "3rd",
@@ -124,7 +124,7 @@
     },
     {
      "type": "text",
-     "q": "10  Weekday opening: 8 a.m. until ......... p.m.",
+     "q": "Weekday opening: 8 a.m. until ......... p.m.",
      "answer": [
       "nine",
       "9"
@@ -133,7 +133,7 @@
     },
     {
      "type": "text",
-     "q": "11  To borrow equipment, bring your ......... card",
+     "q": "To borrow equipment, bring your ......... card",
      "answer": [
       "library"
      ],
@@ -141,7 +141,7 @@
     },
     {
      "type": "text",
-     "q": "12  Busiest course this term: .........",
+     "q": "Busiest course this term: .........",
      "answer": [
       "animation"
      ],
@@ -149,7 +149,7 @@
     },
     {
      "type": "text",
-     "q": "13  Length of each workshop: ......... minutes",
+     "q": "Length of each workshop: ......... minutes",
      "answer": [
       "ninety",
       "90"
@@ -158,7 +158,7 @@
     },
     {
      "type": "text",
-     "q": "14  If the website is down, book by sending an .........",
+     "q": "If the website is down, book by sending an .........",
      "answer": [
       "email",
       "e-mail"
@@ -175,7 +175,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "15  Speaker One (Malika)",
+     "q": "Speaker One (Malika)",
      "options": [
       "A",
       "B",
@@ -189,7 +189,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Speaker Two (Sardor)",
+     "q": "Speaker Two (Sardor)",
      "options": [
       "A",
       "B",
@@ -203,7 +203,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Speaker Three (Nigora)",
+     "q": "Speaker Three (Nigora)",
      "options": [
       "A",
       "B",
@@ -217,7 +217,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Speaker Four (Bekzod)",
+     "q": "Speaker Four (Bekzod)",
      "options": [
       "A",
       "B",
@@ -233,13 +233,13 @@
   },
   {
    "title": "Part 4",
-   "instructions": "You will hear someone giving a talk about the ground floor of the Innovation Block. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use.\n\nMAP - GROUND FLOOR, INNOVATION BLOCK\nThe entrance is at the bottom of the map. One straight corridor runs from the entrance up to the far wall, where the staircase is.\nOn the LEFT of the corridor, from the entrance upwards: A, B, C, D.\nOn the RIGHT of the corridor, from the entrance upwards: E, F, G, H.\nThe reception desk is just inside the entrance on the right, before E. The staircase is at the top of the corridor, between D and H.",
+   "instructions": "You will hear someone giving a talk about the ground floor of the Innovation Block. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use.",
    "passage": "",
    "script": "EXAMINER: Part Four. You will hear someone giving a talk. Label the places, nineteen to twenty-three, on the map, A to H. There are THREE extra options which you do not need to use. You now have thirty seconds to look at the map.\n[PAUSE 30 SECONDS]\n\nGUIDE (Tom Whitfield): Right, everybody, gather round - this is the ground floor of our Innovation Block, and I will walk you through it before you go off on your own.\nYou are standing at the entrance, at the bottom of the map. One long corridor runs straight ahead of you to the far wall, and there are four rooms on each side. Reception is just here on your right as you come in, and the staircase is right at the top, at the end of the corridor.\nLet us start with the noisiest room, the three-D printing room. Turn left as soon as you come through the door: it is the very first room on the left-hand side of the corridor. You will hear the machines before you see them.\nNow cross the corridor. Directly opposite the three-D printing room, on the right-hand side, just past the reception desk, is the language lab. First door on the right, then - thirty headsets and a very strict rule about food.\nNext, the charging point, and please listen carefully, because this one has moved. For two years it was beside reception, and half the college still goes there out of habit. It is not there any more. It is now right at the top of the corridor on the right, the last space before you reach the staircase.\nStraight across from the charging point, on the left-hand side of the corridor, is the quiet study pod. It is the furthest room on the left, next to the stairs, and it is the one place in this building where you must not talk.\nAnd finally the repair cafe, where you bring your broken laptops and phones on Wednesdays. Stay on the right-hand side and walk up towards the stairs: the repair cafe is the room immediately before the charging point. Third room on the right, directly below the charging point and directly above the second room on that side.\nThat is the tour. Take a map with you, and I will see you back here at four.\n\nEXAMINER: Now listen again.\n[THE TALK IS READ A SECOND TIME]\nEXAMINER: That is the end of Part Four.",
    "questions": [
     {
      "type": "choice",
-     "q": "19  The 3D printing room",
+     "q": "The 3D printing room",
      "options": [
       "A",
       "B",
@@ -251,11 +251,12 @@
       "H"
      ],
      "answer": 0,
-     "topic": "Listening - Map labelling"
+     "topic": "Listening - Map labelling",
+     "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTYwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCI+CjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI4MDAiIGhlaWdodD0iNTYwIiBmaWxsPSIjZmZmZmZmIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMzgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTExIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiI+SW5ub3ZhdGlvbiBCbG9jayAtIEdyb3VuZCBGbG9vcjwvdGV4dD4KPHJlY3QgeD0iOTAiIHk9IjYwIiB3aWR0aD0iMjQwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VlZWVlZSIvPgo8cmVjdCB4PSI0NzAiIHk9IjYwIiB3aWR0aD0iMjQwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VlZWVlZSIvPgo8cmVjdCB4PSI5MCIgeT0iMTYwIiB3aWR0aD0iMjQwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjZWVlZWVlIi8+CjxyZWN0IHg9IjQ3MCIgeT0iMTYwIiB3aWR0aD0iMjQwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjZWVlZWVlIi8+CjxyZWN0IHg9IjkwIiB5PSIyNTAiIHdpZHRoPSIyNDAiIGhlaWdodD0iOTAiIGZpbGw9IiNlZWVlZWUiLz4KPHJlY3QgeD0iNDcwIiB5PSIyNTAiIHdpZHRoPSIyNDAiIGhlaWdodD0iOTAiIGZpbGw9IiNlZWVlZWUiLz4KPHJlY3QgeD0iOTAiIHk9IjM0MCIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI5MCIgZmlsbD0iI2VlZWVlZSIvPgo8cmVjdCB4PSI0NzAiIHk9IjM0MCIgd2lkdGg9IjI0MCIgaGVpZ2h0PSI5MCIgZmlsbD0iI2VlZWVlZSIvPgo8cmVjdCB4PSIzMzAiIHk9IjYwIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjZDlkOWQ5IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiIvPgo8bGluZSB4MT0iMzMwIiB5MT0iNzAiIHgyPSI0NzAiIHkyPSI3MCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8bGluZSB4MT0iMzMwIiB5MT0iODAiIHgyPSI0NzAiIHkyPSI4MCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8bGluZSB4MT0iMzMwIiB5MT0iOTAiIHgyPSI0NzAiIHkyPSI5MCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8bGluZSB4MT0iMzMwIiB5MT0iMTAwIiB4Mj0iNDcwIiB5Mj0iMTAwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+Cjx0ZXh0IHg9IjQwMCIgeT0iMTM0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE1IiBmaWxsPSIjMTExIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiI+U3RhaXJjYXNlPC90ZXh0Pgo8cGF0aCBkPSJNMzYwIDUxMCBMOTAgNTEwIEw5MCA2MCBMNzEwIDYwIEw3MTAgNTEwIEw0NDAgNTEwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgo8bGluZSB4MT0iOTAiIHkxPSIxNjAiIHgyPSIzMzAiIHkyPSIxNjAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSI0NzAiIHkxPSIxNjAiIHgyPSI3MTAiIHkyPSIxNjAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSI5MCIgeTE9IjI1MCIgeDI9IjMzMCIgeTI9IjI1MCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGxpbmUgeDE9IjQ3MCIgeTE9IjI1MCIgeDI9IjcxMCIgeTI9IjI1MCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGxpbmUgeDE9IjkwIiB5MT0iMzQwIiB4Mj0iMzMwIiB5Mj0iMzQwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMyIvPgo8bGluZSB4MT0iNDcwIiB5MT0iMzQwIiB4Mj0iNzEwIiB5Mj0iMzQwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMyIvPgo8bGluZSB4MT0iOTAiIHkxPSI0MzAiIHgyPSIzMzAiIHkyPSI0MzAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSI0NzAiIHkxPSI0MzAiIHgyPSI3MTAiIHkyPSI0MzAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSIzMzAiIHkxPSI2MCIgeDI9IjMzMCIgeTI9IjExNSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGxpbmUgeDE9IjMzMCIgeTE9IjE0NSIgeDI9IjMzMCIgeTI9IjIwNSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGxpbmUgeDE9IjMzMCIgeTE9IjIzNSIgeDI9IjMzMCIgeTI9IjI5NSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGxpbmUgeDE9IjMzMCIgeTE9IjMyNSIgeDI9IjMzMCIgeTI9IjM4NSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGxpbmUgeDE9IjMzMCIgeTE9IjQxNSIgeDI9IjMzMCIgeTI9IjQzMCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPGxpbmUgeDE9IjMzMCIgeTE9IjExNSIgeDI9IjMwMCIgeTI9IjEyMSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8bGluZSB4MT0iMzMwIiB5MT0iMjA1IiB4Mj0iMzAwIiB5Mj0iMjExIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+CjxsaW5lIHgxPSIzMzAiIHkxPSIyOTUiIHgyPSIzMDAiIHkyPSIzMDEiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KPGxpbmUgeDE9IjMzMCIgeTE9IjM4NSIgeDI9IjMwMCIgeTI9IjM5MSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8bGluZSB4MT0iNDcwIiB5MT0iNjAiIHgyPSI0NzAiIHkyPSIxMTUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSI0NzAiIHkxPSIxNDUiIHgyPSI0NzAiIHkyPSIyMDUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSI0NzAiIHkxPSIyMzUiIHgyPSI0NzAiIHkyPSIyOTUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSI0NzAiIHkxPSIzMjUiIHgyPSI0NzAiIHkyPSIzODUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSI0NzAiIHkxPSI0MTUiIHgyPSI0NzAiIHkyPSI0MzAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxsaW5lIHgxPSI0NzAiIHkxPSIxMTUiIHgyPSI1MDAiIHkyPSIxMjEiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KPGxpbmUgeDE9IjQ3MCIgeTE9IjIwNSIgeDI9IjUwMCIgeTI9IjIxMSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8bGluZSB4MT0iNDcwIiB5MT0iMjk1IiB4Mj0iNTAwIiB5Mj0iMzAxIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+CjxsaW5lIHgxPSI0NzAiIHkxPSIzODUiIHgyPSI1MDAiIHkyPSIzOTEiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KPHRleHQgeD0iNDAwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxMTEiIHRyYW5zZm9ybT0icm90YXRlKC05MCA0MDAgMzAwKSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkNvcnJpZG9yPC90ZXh0Pgo8cmVjdCB4PSI0OTAiIHk9IjQ1MiIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIzNCIgZmlsbD0iI2NmY2ZjZiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iNTY1IiB5PSI0NzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxMTEiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIj5SZWNlcHRpb248L3RleHQ+CjxsaW5lIHgxPSIzNjAiIHkxPSI1MTAiIHgyPSIzNjAiIHkyPSI0OTgiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxsaW5lIHgxPSI0NDAiIHkxPSI1MTAiIHgyPSI0NDAiIHkyPSI0OTgiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik00MDAgNTE2IEwzOTIgNTMwIEw0MDggNTMwIFoiIGZpbGw9IiMzMzMiLz4KPGxpbmUgeDE9IjQwMCIgeTE9IjUyOCIgeDI9IjQwMCIgeTI9IjUzOCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiLz4KPHRleHQgeD0iNDAwIiB5PSI1NTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTExIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiI+RW50cmFuY2U8L3RleHQ+CjxjaXJjbGUgY3g9IjIxMCIgY3k9IjM4NSIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjIxMCIgeT0iMzkxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkE8L3RleHQ+CjxjaXJjbGUgY3g9IjIxMCIgY3k9IjI5NSIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjIxMCIgeT0iMzAxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkI8L3RleHQ+CjxjaXJjbGUgY3g9IjIxMCIgY3k9IjIwNSIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjIxMCIgeT0iMjExIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkM8L3RleHQ+CjxjaXJjbGUgY3g9IjIxMCIgY3k9IjExMCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjIxMCIgeT0iMTE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkQ8L3RleHQ+CjxjaXJjbGUgY3g9IjU5MCIgY3k9IjM4NSIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjU5MCIgeT0iMzkxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkU8L3RleHQ+CjxjaXJjbGUgY3g9IjU5MCIgY3k9IjI5NSIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjU5MCIgeT0iMzAxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkY8L3RleHQ+CjxjaXJjbGUgY3g9IjU5MCIgY3k9IjIwNSIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjU5MCIgeT0iMjExIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkc8L3RleHQ+CjxjaXJjbGUgY3g9IjU5MCIgY3k9IjExMCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjU5MCIgeT0iMTE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPkg8L3RleHQ+Cjwvc3ZnPg=="
     },
     {
      "type": "choice",
-     "q": "20  The language lab",
+     "q": "The language lab",
      "options": [
       "A",
       "B",
@@ -271,7 +272,7 @@
     },
     {
      "type": "choice",
-     "q": "21  The charging point",
+     "q": "The charging point",
      "options": [
       "A",
       "B",
@@ -287,7 +288,7 @@
     },
     {
      "type": "choice",
-     "q": "22  The quiet study pod",
+     "q": "The quiet study pod",
      "options": [
       "A",
       "B",
@@ -303,7 +304,7 @@
     },
     {
      "type": "choice",
-     "q": "23  The repair cafe",
+     "q": "The repair cafe",
      "options": [
       "A",
       "B",
@@ -327,7 +328,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "24  Why is Dilnoza worried about her project?",
+     "q": "Why is Dilnoza worried about her project?",
      "options": [
       "She cannot make the survey software work.",
       "She has not collected enough answers.",
@@ -338,7 +339,7 @@
     },
     {
      "type": "choice",
-     "q": "25  What does Mr Harding tell her to do first?",
+     "q": "What does Mr Harding tell her to do first?",
      "options": [
       "choose the few questions she will analyse",
       "ask a classmate to help her",
@@ -349,7 +350,7 @@
     },
     {
      "type": "choice",
-     "q": "26  What went wrong in Dilnoza's last presentation?",
+     "q": "What went wrong in Dilnoza's last presentation?",
      "options": [
       "Her slides would not open.",
       "She ran out of time.",
@@ -360,7 +361,7 @@
     },
     {
      "type": "choice",
-     "q": "27  What does Mr Harding advise her to do with her slides?",
+     "q": "What does Mr Harding advise her to do with her slides?",
      "options": [
       "add more photographs to them",
       "print handouts of them for the audience",
@@ -371,7 +372,7 @@
     },
     {
      "type": "choice",
-     "q": "28  When must the final version of the project be uploaded?",
+     "q": "When must the final version of the project be uploaded?",
      "options": [
       "Tuesday the 14th",
       "Thursday the 16th",
@@ -382,7 +383,7 @@
     },
     {
      "type": "choice",
-     "q": "29  What does Mr Harding agree to lend Dilnoza?",
+     "q": "What does Mr Harding agree to lend Dilnoza?",
      "options": [
       "a microphone",
       "a laptop",
@@ -401,7 +402,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "30  Early teaching machines were designed to give every student instant .........",
+     "q": "Early teaching machines were designed to give every student instant .........",
      "answer": [
       "feedback"
      ],
@@ -409,7 +410,7 @@
     },
     {
      "type": "text",
-     "q": "31  Their second promise was that each learner could work at his or her own .........",
+     "q": "Their second promise was that each learner could work at his or her own .........",
      "answer": [
       "pace"
      ],
@@ -417,7 +418,7 @@
     },
     {
      "type": "text",
-     "q": "32  When tablets were used for short activities, reports showed that ......... improved.",
+     "q": "When tablets were used for short activities, reports showed that ......... improved.",
      "answer": [
       "motivation"
      ],
@@ -425,7 +426,7 @@
     },
     {
      "type": "text",
-     "q": "33  In rural schools the biggest barrier was the lack of reliable .........",
+     "q": "In rural schools the biggest barrier was the lack of reliable .........",
      "answer": [
       "electricity"
      ],
@@ -433,7 +434,7 @@
     },
     {
      "type": "text",
-     "q": "34  Screen work only helped when it was balanced with regular .........",
+     "q": "Screen work only helped when it was balanced with regular .........",
      "answer": [
       "discussion"
      ],
@@ -441,7 +442,7 @@
     },
     {
      "type": "text",
-     "q": "35  Conclusion: technology should ......... the teacher, not replace the teacher.",
+     "q": "Conclusion: technology should ......... the teacher, not replace the teacher.",
      "answer": [
       "support"
      ],

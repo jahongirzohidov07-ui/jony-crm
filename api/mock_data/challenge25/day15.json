@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Yang Zhifa and his brothers were creating a .......... when they made their discovery",
+     "q": "Yang Zhifa and his brothers were creating a .......... when they made their discovery",
      "answer": [
       "well"
      ],
@@ -29,7 +29,7 @@
     },
     {
      "type": "text",
-     "q": "2  Together with the terracotta head they found a metal ..........",
+     "q": "Together with the terracotta head they found a metal ..........",
      "answer": [
       "arrowhead"
      ],
@@ -37,7 +37,7 @@
     },
     {
      "type": "text",
-     "q": "3  Zhao Kangmin put the terracotta pieces into a .......... and took them to the museum",
+     "q": "Zhao Kangmin put the terracotta pieces into a .......... and took them to the museum",
      "answer": [
       "truck"
      ],
@@ -45,7 +45,7 @@
     },
     {
      "type": "text",
-     "q": "4  a .......... became aware of the site and wrote about it",
+     "q": "a .......... became aware of the site and wrote about it",
      "answer": [
       "journalist"
      ],
@@ -53,7 +53,7 @@
     },
     {
      "type": "text",
-     "q": "5  Pit one: warriors and numerous ..........",
+     "q": "Pit one: warriors and numerous ..........",
      "answer": [
       "swords"
      ],
@@ -61,7 +61,7 @@
     },
     {
      "type": "text",
-     "q": "6  Pit two: warriors, chariots and ..........",
+     "q": "Pit two: warriors, chariots and ..........",
      "answer": [
       "horses"
      ],
@@ -69,7 +69,7 @@
     },
     {
      "type": "text",
-     "q": "7  mass produced in a number of ..........",
+     "q": "mass produced in a number of ..........",
      "answer": [
       "workshops"
      ],
@@ -77,7 +77,7 @@
     },
     {
      "type": "text",
-     "q": "8  the .......... of individual figures completed by hand to make them look different",
+     "q": "the .......... of individual figures completed by hand to make them look different",
      "answer": [
       "face",
       "faces"
@@ -86,7 +86,7 @@
     },
     {
      "type": "choice",
-     "q": "9  Yang Zhifa and his brothers realised immediately that their discovery was important.",
+     "q": "Yang Zhifa and his brothers realised immediately that their discovery was important.",
      "options": [
       "TRUE",
       "FALSE",
@@ -97,7 +97,7 @@
     },
     {
      "type": "choice",
-     "q": "10  When Zhao Kangmin arrived at the site, he knew he had been right to be concerned.",
+     "q": "When Zhao Kangmin arrived at the site, he knew he had been right to be concerned.",
      "options": [
       "TRUE",
       "FALSE",
@@ -108,7 +108,7 @@
     },
     {
      "type": "choice",
-     "q": "11  Yang and his brothers carried out Zhao's order straight away.",
+     "q": "Yang and his brothers carried out Zhao's order straight away.",
      "options": [
       "TRUE",
       "FALSE",
@@ -119,7 +119,7 @@
     },
     {
      "type": "choice",
-     "q": "12  After he had assembled two terracotta figures, Zhao sent other people to continue digging.",
+     "q": "After he had assembled two terracotta figures, Zhao sent other people to continue digging.",
      "options": [
       "TRUE",
       "FALSE",
@@ -130,7 +130,7 @@
     },
     {
      "type": "choice",
-     "q": "13  The government sent archaeologists from every part of China to work on the site.",
+     "q": "The government sent archaeologists from every part of China to work on the site.",
      "options": [
       "TRUE",
       "FALSE",
@@ -141,7 +141,7 @@
     },
     {
      "type": "choice",
-     "q": "14  The figures found in the third pit represented the leaders of the emperor's army.",
+     "q": "The figures found in the third pit represented the leaders of the emperor's army.",
      "options": [
       "TRUE",
       "FALSE",
@@ -152,7 +152,7 @@
     },
     {
      "type": "choice",
-     "q": "15  Extensive research was carried out to discover how excavation would affect the paint on the figures.",
+     "q": "Extensive research was carried out to discover how excavation would affect the paint on the figures.",
      "options": [
       "TRUE",
       "FALSE",
@@ -163,7 +163,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Large groups of tourists need special permission to visit the site.",
+     "q": "Large groups of tourists need special permission to visit the site.",
      "options": [
       "TRUE",
       "FALSE",
@@ -182,157 +182,157 @@
    "questions": [
     {
      "type": "choice",
-     "q": "17  How did the TV programme Johnny Go Home affect attitudes to youth homelessness in Britain?",
+     "q": "How did the TV programme Johnny Go Home affect attitudes to youth homelessness in Britain?",
      "options": [
-      "A It raised awareness of the issue on a wide scale.",
-      "B It led to official measures to deal with the situation.",
-      "C It discouraged many young people from leaving home.",
-      "D It made people aware of the real causes of the problem."
+      "It raised awareness of the issue on a wide scale.",
+      "It led to official measures to deal with the situation.",
+      "It discouraged many young people from leaving home.",
+      "It made people aware of the real causes of the problem."
      ],
      "answer": 0,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "18  Comparison of homelessness in different regions is difficult, partly because of variations in",
+     "q": "Comparison of homelessness in different regions is difficult, partly because of variations in",
      "options": [
-      "A the places homeless children go to.",
-      "B government responses.",
-      "C economic structures.",
-      "D the work done by voluntary agencies."
+      "the places homeless children go to.",
+      "government responses.",
+      "economic structures.",
+      "the work done by voluntary agencies."
      ],
      "answer": 2,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "19  Why is the lack of agreed statistics on homelessness a problem?",
+     "q": "Why is the lack of agreed statistics on homelessness a problem?",
      "options": [
-      "A Accounts of the problem by the press are ineffective.",
-      "B Policy makers may not respond appropriately to the situation.",
-      "C Academic commentary on the issue becomes unclear.",
-      "D Agencies may not be able to provide funding."
+      "Accounts of the problem by the press are ineffective.",
+      "Policy makers may not respond appropriately to the situation.",
+      "Academic commentary on the issue becomes unclear.",
+      "Agencies may not be able to provide funding."
      ],
      "answer": 1,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "20  The lack of statistics on homelessness may partly be caused by",
+     "q": "The lack of statistics on homelessness may partly be caused by",
      "options": [
-      "A disagreement over the type of data needed.",
-      "B reluctance of the homeless to identify themselves.",
-      "C lack of time to carry out surveys.",
-      "D difficulty in identifying the homeless."
+      "disagreement over the type of data needed.",
+      "reluctance of the homeless to identify themselves.",
+      "lack of time to carry out surveys.",
+      "difficulty in identifying the homeless."
      ],
      "answer": 3,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "21  The writer describes the criteria for classifying someone as homeless in Britain to illustrate",
+     "q": "The writer describes the criteria for classifying someone as homeless in Britain to illustrate",
      "options": [
-      "A the different ways of collecting statistics.",
-      "B the fact that too many people are defined as homeless.",
-      "C the variation there is in different parts of the country.",
-      "D the fact that official statistics may be misleading."
+      "the different ways of collecting statistics.",
+      "the fact that too many people are defined as homeless.",
+      "the variation there is in different parts of the country.",
+      "the fact that official statistics may be misleading."
      ],
      "answer": 3,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "22  Firstly, the reduction in .......... was caused by changes in the housing market",
+     "q": "Firstly, the reduction in .......... was caused by changes in the housing market",
      "options": [
-      "A demographic explanations",
-      "B government support",
-      "C bank loans",
-      "D solutions",
-      "E money owed",
-      "F economic explanations",
-      "G personal explanations",
-      "H structural explanations",
-      "I income",
-      "J property to rent"
+      "demographic explanations",
+      "government support",
+      "bank loans",
+      "solutions",
+      "money owed",
+      "economic explanations",
+      "personal explanations",
+      "structural explanations",
+      "income",
+      "property to rent"
      ],
      "answer": 9,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "23  ... and is one of a number of .......... for youth homelessness.",
+     "q": "... and is one of a number of .......... for youth homelessness.",
      "options": [
-      "A demographic explanations",
-      "B government support",
-      "C bank loans",
-      "D solutions",
-      "E money owed",
-      "F economic explanations",
-      "G personal explanations",
-      "H structural explanations",
-      "I income",
-      "J property to rent"
+      "demographic explanations",
+      "government support",
+      "bank loans",
+      "solutions",
+      "money owed",
+      "economic explanations",
+      "personal explanations",
+      "structural explanations",
+      "income",
+      "property to rent"
      ],
      "answer": 7,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "24  There may also be .......... for developments, such as the increased demand for single-person accommodation.",
+     "q": "There may also be .......... for developments, such as the increased demand for single-person accommodation.",
      "options": [
-      "A demographic explanations",
-      "B government support",
-      "C bank loans",
-      "D solutions",
-      "E money owed",
-      "F economic explanations",
-      "G personal explanations",
-      "H structural explanations",
-      "I income",
-      "J property to rent"
+      "demographic explanations",
+      "government support",
+      "bank loans",
+      "solutions",
+      "money owed",
+      "economic explanations",
+      "personal explanations",
+      "structural explanations",
+      "income",
+      "property to rent"
      ],
      "answer": 0,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "25  Thirdly, some young people may find it difficult to get state benefits, and do not have jobs. These are .......... for homelessness.",
+     "q": "Thirdly, some young people may find it difficult to get state benefits, and do not have jobs. These are .......... for homelessness.",
      "options": [
-      "A demographic explanations",
-      "B government support",
-      "C bank loans",
-      "D solutions",
-      "E money owed",
-      "F economic explanations",
-      "G personal explanations",
-      "H structural explanations",
-      "I income",
-      "J property to rent"
+      "demographic explanations",
+      "government support",
+      "bank loans",
+      "solutions",
+      "money owed",
+      "economic explanations",
+      "personal explanations",
+      "structural explanations",
+      "income",
+      "property to rent"
      ],
      "answer": 5,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "26  Lastly, factors such as crime and mental illness are examples of ..........",
+     "q": "Lastly, factors such as crime and mental illness are examples of ..........",
      "options": [
-      "A demographic explanations",
-      "B government support",
-      "C bank loans",
-      "D solutions",
-      "E money owed",
-      "F economic explanations",
-      "G personal explanations",
-      "H structural explanations",
-      "I income",
-      "J property to rent"
+      "demographic explanations",
+      "government support",
+      "bank loans",
+      "solutions",
+      "money owed",
+      "economic explanations",
+      "personal explanations",
+      "structural explanations",
+      "income",
+      "property to rent"
      ],
      "answer": 6,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "27  The 'political' model is unpopular among academics.",
+     "q": "The 'political' model is unpopular among academics.",
      "options": [
       "YES",
       "NO",
@@ -343,7 +343,7 @@
     },
     {
      "type": "choice",
-     "q": "28  The 'political' model may lead to young homeless people being regarded as having hardly any control over their lives.",
+     "q": "The 'political' model may lead to young homeless people being regarded as having hardly any control over their lives.",
      "options": [
       "YES",
       "NO",
@@ -354,7 +354,7 @@
     },
     {
      "type": "choice",
-     "q": "29  The disadvantages of the 'individual culpability' model far outweigh the advantages.",
+     "q": "The disadvantages of the 'individual culpability' model far outweigh the advantages.",
      "options": [
       "YES",
       "NO",
@@ -365,7 +365,7 @@
     },
     {
      "type": "choice",
-     "q": "30  The 'child' model is an accurate representation of the situation of many young homeless people.",
+     "q": "The 'child' model is an accurate representation of the situation of many young homeless people.",
      "options": [
       "YES",
       "NO",

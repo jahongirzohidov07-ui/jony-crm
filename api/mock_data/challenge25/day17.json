@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Donald Johanson was uncertain about the nature of the elbow bone he found in Afar.",
+     "q": "Donald Johanson was uncertain about the nature of the elbow bone he found in Afar.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  Several bones were found by Donald Johanson at the same site in Afar.",
+     "q": "Several bones were found by Donald Johanson at the same site in Afar.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  The experts realised the importance of the discovery at Afar.",
+     "q": "The experts realised the importance of the discovery at Afar.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  It was the upper part of the skeleton that had suffered the least damage.",
+     "q": "It was the upper part of the skeleton that had suffered the least damage.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "choice",
-     "q": "5  The skeleton's measurements helped Johanson's team to decide if it was male or female.",
+     "q": "The skeleton's measurements helped Johanson's team to decide if it was male or female.",
      "options": [
       "TRUE",
       "FALSE",
@@ -76,7 +76,7 @@
     },
     {
      "type": "text",
-     "q": "6  upright movement possibly started among the .......... of trees",
+     "q": "upright movement possibly started among the .......... of trees",
      "answer": [
       "branches"
      ],
@@ -84,7 +84,7 @@
     },
     {
      "type": "text",
-     "q": "7  probably moved to the .......... in search of food",
+     "q": "probably moved to the .......... in search of food",
      "answer": [
       "ground"
      ],
@@ -92,7 +92,7 @@
     },
     {
      "type": "text",
-     "q": "8  analysis of food in the .......... of the skeletons of early humans shows changes in their diet",
+     "q": "analysis of food in the .......... of the skeletons of early humans shows changes in their diet",
      "answer": [
       "teeth"
      ],
@@ -100,7 +100,7 @@
     },
     {
      "type": "text",
-     "q": "9  it is likely that meat and grasses were substituted for ..........",
+     "q": "it is likely that meat and grasses were substituted for ..........",
      "answer": [
       "fruit"
      ],
@@ -108,7 +108,7 @@
     },
     {
      "type": "text",
-     "q": "10  .......... that were located close to Lucy suggest these were also part of her diet",
+     "q": ".......... that were located close to Lucy suggest these were also part of her diet",
      "answer": [
       "eggs"
      ],
@@ -116,7 +116,7 @@
     },
     {
      "type": "text",
-     "q": "11  .......... that were found had marks on them, possibly made by tools used for eating",
+     "q": ".......... that were found had marks on them, possibly made by tools used for eating",
      "answer": [
       "bones"
      ],
@@ -124,7 +124,7 @@
     },
     {
      "type": "text",
-     "q": "12  modern-day humans have a longer .......... than Lucy did",
+     "q": "modern-day humans have a longer .......... than Lucy did",
      "answer": [
       "childhood"
      ],
@@ -132,7 +132,7 @@
     },
     {
      "type": "text",
-     "q": "13  the .......... of modern-day humans appear to develop later than Lucy's did",
+     "q": "the .......... of modern-day humans appear to develop later than Lucy's did",
      "answer": [
       "brains"
      ],

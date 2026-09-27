@@ -86,6 +86,78 @@ def canon_title(title) -> str:
     return _DUP_RE.sub("", (title or "").strip())
 
 
+FIGURES_SPEC = os.path.join(DIR, "_figures.json")
+
+
+def _sha(v) -> str:
+    import hashlib
+    return hashlib.sha1(str(v or "").encode("utf-8")).hexdigest()[:16]
+
+
+def apply_figures(db: Session) -> int:
+    """RASMLAR (2026-09-27, Jahongir: "listeningda map debsan qani map",
+    "bar Chartingni rasmi qani").
+
+    Listening xarita/plan savollari va Writing Task 1 grafiklari ilgari
+    faqat SO'Z bilan tasvirlangan edi. mock_data fayllarida endi rasm
+    (SVG) va tavsifsiz matn bor; seed esa bazadagi mavjud shablonni
+    qayta yozmaydi — shuning uchun o'zgarish shu yerda ko'chiriladi.
+
+    mock_data/_figures.json: [{"title", "part", "q", "old": {"instructions":
+    sha, "passage": sha, "q": sha}}] — "old" eski (tavsifli) matnning
+    xeshi. Matn faqat bazada aynan o'sha eski holida turgan bo'lsa
+    almashtiriladi: examiner o'zgartirgan matnga tegilmaydi. Rasm esa
+    savol matni fayldagiga mos bo'lsa qo'shiladi (buzmaydigan o'zgarish).
+    Faqat faol, tizim yaratgan (JonyOS) shablonlar. Commit chaqiruvchida.
+    """
+    import exam_online as _eo
+    if not os.path.exists(FIGURES_SPEC):
+        return 0
+    with open(FIGURES_SPEC, encoding="utf-8") as fh:
+        spec = json.load(fh)
+    by_title = {tpl["title"]: tpl for tpl in _files()}
+    n = 0
+    for s in spec:
+        tpl = by_title.get(s.get("title"))
+        if not tpl:
+            continue
+        src_parts = _eo.clean_parts(tpl["parts"])
+        pi, qi, old = int(s["part"]), int(s["q"]), s.get("old") or {}
+        if pi >= len(src_parts) or qi >= len(src_parts[pi]["questions"]):
+            continue
+        src_p, src_q = src_parts[pi], src_parts[pi]["questions"][qi]
+        rows = (db.query(models.ExamTemplate)
+                .filter(models.ExamTemplate.kind == "mock",
+                        models.ExamTemplate.is_active == 1,
+                        models.ExamTemplate.created_by == "JonyOS").all())
+        for t in rows:
+            if canon_title(t.title) != s["title"]:
+                continue
+            parts = _eo._load(t.parts)
+            if pi >= len(parts) or qi >= len(parts[pi].get("questions") or []):
+                continue
+            p, q = parts[pi], parts[pi]["questions"][qi]
+            changed = False
+            for fld in ("instructions", "passage"):
+                if (old.get(fld) and _sha(p.get(fld)) == old[fld]
+                        and (p.get(fld) or "") != (src_p.get(fld) or "")):
+                    p[fld] = src_p.get(fld) or ""
+                    changed = True
+            cur_q = _eo.strip_q_prefix(q.get("q"))
+            if (old.get("q") and _sha(cur_q) == old["q"]
+                    and cur_q != src_q["q"]):
+                q["q"] = src_q["q"]
+                changed = True
+            if (src_q.get("image") and not q.get("image")
+                    and _eo.strip_q_prefix(q.get("q")) == src_q["q"]):
+                q["image"] = src_q["image"]
+                changed = True
+            if changed:
+                t.parts = json.dumps(parts, ensure_ascii=False)
+                n += 1
+    return n
+
+
 def retire_old_speaking(db: Session) -> int:
     """ESKI 3 QISMLI CEFR SPEAKING nomini bo'shatadi (2026-09-27).
 
@@ -141,9 +213,15 @@ def restore_hidden(db: Session, titles: set) -> int:
     har doim. Commit chaqiruvchida.
     """
     groups = defaultdict(list)
-    for t in (db.query(models.ExamTemplate)
-              .filter(models.ExamTemplate.kind == "mock")
-              .order_by(models.ExamTemplate.id).all()):
+    # Faqat kerakli ustunlar: "parts" (~30 KB) 1800+ yashirin nusxa uchun
+    # har startda Postgres'dan tortilmasin.
+    from sqlalchemy.orm import load_only
+    T = models.ExamTemplate
+    for t in (db.query(T)
+              .options(load_only(T.id, T.level, T.title, T.variant,
+                                 T.is_active, T.created_by))
+              .filter(T.kind == "mock")
+              .order_by(T.id).all()):
         c = canon_title(t.title)
         if (t.created_by or "") == "JonyOS" and c not in titles:
             continue
@@ -240,11 +318,18 @@ def skill_from_template(level, title) -> str:
 
 
 def backfill_skills(db: Session) -> int:
-    """Eski mock shablonlariga ko'nikma belgisini yozadi."""
+    """Eski mock shablonlariga ko'nikma belgisini yozadi.
+
+    Faqat FAOL shablonlar (2026-09-27): bazada 1800 dan ortiq yashirin
+    "(dublikat)" nusxa bor (seed va dublikat qoidasi loopining qoldig'i)
+    — har sovuq startda ularning har birini (~30 KB) o'qish o'nlab MB
+    bo'lardi. Yashirin nusxa tiklansa, keyingi startda shu yerda
+    to'ldiriladi."""
     import exam_online as _eo
     n = 0
     for t in (db.query(models.ExamTemplate)
-              .filter(models.ExamTemplate.kind == "mock").all()):
+              .filter(models.ExamTemplate.kind == "mock",
+                      models.ExamTemplate.is_active == 1).all()):
         parts = _eo._load(t.parts)
         if not parts or all((p.get("skill") or "").strip() for p in parts):
             continue
@@ -291,6 +376,43 @@ def seed_mocks(db: Session) -> None:
         except Exception as e:          # noqa: BLE001
             db.rollback()
             print(f"[seed] eski CEFR Speaking: {e}")
+
+    # TAKRORLANGAN RAQAM VA HARF (bir martalik, 2026-09-27, Jahongir
+    # skrinshoti: "11. 11 The land ..." va "A A a reservoir."). Bazadagi
+    # faol mock shablonlaridan savol raqami va variant harfi prefiksi
+    # olib tashlanadi (exam_online.strip_prefixes). Idempotent: ikki
+    # instansiya bir vaqtda ishlatsa ham natija bir xil.
+    if not _seed_done(db, "mock_prefix_strip_v1"):
+        try:
+            n = 0
+            for t in (db.query(models.ExamTemplate)
+                      .filter(models.ExamTemplate.kind == "mock",
+                              models.ExamTemplate.is_active == 1).all()):
+                parts = _eo._load(t.parts)
+                new = _eo.strip_prefixes(parts)
+                if new != parts:
+                    t.parts = json.dumps(new, ensure_ascii=False)
+                    n += 1
+            db.commit()
+            _seed_mark(db, "mock_prefix_strip_v1")
+            print(f"[seed] mock savol/variant prefikslari tozalandi: {n}")
+        except Exception as e:          # noqa: BLE001
+            db.rollback()
+            print(f"[seed] mock prefikslari: {e}")
+
+    # RASMLAR (bir martalik, 2026-09-27): listening xarita/plan va
+    # Writing Task 1 grafiklari bazadagi shablonlarga ko'chiriladi.
+    # Prefiks tozalashdan KEYIN — savol matni tozalangan holda
+    # solishtiriladi.
+    if not _seed_done(db, "mock_figures_v1"):
+        try:
+            n = apply_figures(db)
+            db.commit()
+            _seed_mark(db, "mock_figures_v1")
+            print(f"[seed] mock rasmlari (xarita, grafik) qo'shildi: {n}")
+        except Exception as e:          # noqa: BLE001
+            db.rollback()
+            print(f"[seed] mock rasmlari: {e}")
 
     # KO'NIKMA BELGISINI TO'LDIRISH (2026-09-27). Bazadagi eski
     # shablonlarda bu maydon yo'q — ularsiz "Mock testlar" jadvali

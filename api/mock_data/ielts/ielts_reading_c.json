@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Early carrier bicycles were built to take loads of around fifty kilograms.",
+     "q": "Early carrier bicycles were built to take loads of around fifty kilograms.",
      "options": [
       "TRUE",
       "FALSE",
@@ -30,7 +30,7 @@
     },
     {
      "type": "choice",
-     "q": "2  After 1945 the trade bicycle went out of use in every European country.",
+     "q": "After 1945 the trade bicycle went out of use in every European country.",
      "options": [
       "TRUE",
       "FALSE",
@@ -41,7 +41,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Verdel's 2018 study was paid for by the companies that owned the vans.",
+     "q": "Verdel's 2018 study was paid for by the companies that owned the vans.",
      "options": [
       "TRUE",
       "FALSE",
@@ -52,7 +52,7 @@
     },
     {
      "type": "choice",
-     "q": "4  The heaviest cargo cycles can carry more than three times the load a long john typically takes.",
+     "q": "The heaviest cargo cycles can carry more than three times the load a long john typically takes.",
      "options": [
       "TRUE",
       "FALSE",
@@ -63,7 +63,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Cold conditions can reduce the distance a battery will cover.",
+     "q": "Cold conditions can reduce the distance a battery will cover.",
      "options": [
       "TRUE",
       "FALSE",
@@ -74,7 +74,7 @@
     },
     {
      "type": "choice",
-     "q": "6  On a long john the handlebars are fixed directly to the front wheel.",
+     "q": "On a long john the handlebars are fixed directly to the front wheel.",
      "options": [
       "TRUE",
       "FALSE",
@@ -85,7 +85,7 @@
     },
     {
      "type": "text",
-     "q": "7  Six vans replaced by eleven cargo bicycles working from a rented ............, a small warehouse beside the harbour",
+     "q": "Six vans replaced by eleven cargo bicycles working from a rented ............, a small warehouse beside the harbour",
      "answer": [
       "microhub"
      ],
@@ -93,7 +93,7 @@
     },
     {
      "type": "text",
-     "q": "8  Parcels were brought to this building every morning by ............",
+     "q": "Parcels were brought to this building every morning by ............",
      "answer": [
       "lorry"
      ],
@@ -101,7 +101,7 @@
     },
     {
      "type": "text",
-     "q": "9  Deliveries per hour increased from 5.2 to ............",
+     "q": "Deliveries per hour increased from 5.2 to ............",
      "answer": [
       "8.6"
      ],
@@ -109,7 +109,7 @@
     },
     {
      "type": "text",
-     "q": "10  Most of the money saved was absorbed by the ............ of the building",
+     "q": "Most of the money saved was absorbed by the ............ of the building",
      "answer": [
       "rent"
      ],
@@ -117,7 +117,7 @@
     },
     {
      "type": "text",
-     "q": "11  Which workers in Haldersund were absent through illness more often in winter?",
+     "q": "Which workers in Haldersund were absent through illness more often in winter?",
      "answer": [
       "cycle couriers",
       "couriers"
@@ -126,7 +126,7 @@
     },
     {
      "type": "text",
-     "q": "12  What feature of the landscape defeats all but the strongest motors?",
+     "q": "What feature of the landscape defeats all but the strongest motors?",
      "answer": [
       "hills"
      ],
@@ -134,7 +134,7 @@
     },
     {
      "type": "text",
-     "q": "13  According to the final paragraph, what does the industry want instead of new technology?",
+     "q": "According to the final paragraph, what does the industry want instead of new technology?",
      "answer": [
       "rules",
       "agreed standards"
@@ -151,7 +151,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  Paragraph A",
+     "q": "Paragraph A",
      "options": [
       "i  Turning a by-product into a resource",
       "ii  A simple barrier with a large effect",
@@ -170,7 +170,7 @@
     },
     {
      "type": "choice",
-     "q": "15  Paragraph B",
+     "q": "Paragraph B",
      "options": [
       "i  Turning a by-product into a resource",
       "ii  A simple barrier with a large effect",
@@ -189,7 +189,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Paragraph C",
+     "q": "Paragraph C",
      "options": [
       "i  Turning a by-product into a resource",
       "ii  A simple barrier with a large effect",
@@ -208,7 +208,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Paragraph D",
+     "q": "Paragraph D",
      "options": [
       "i  Turning a by-product into a resource",
       "ii  A simple barrier with a large effect",
@@ -227,7 +227,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Paragraph E",
+     "q": "Paragraph E",
      "options": [
       "i  Turning a by-product into a resource",
       "ii  A simple barrier with a large effect",
@@ -246,7 +246,7 @@
     },
     {
      "type": "choice",
-     "q": "19  Paragraph F",
+     "q": "Paragraph F",
      "options": [
       "i  Turning a by-product into a resource",
       "ii  A simple barrier with a large effect",
@@ -265,7 +265,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Paragraph G",
+     "q": "Paragraph G",
      "options": [
       "i  Turning a by-product into a resource",
       "ii  A simple barrier with a large effect",
@@ -284,7 +284,7 @@
     },
     {
      "type": "choice",
-     "q": "21  Paragraph H",
+     "q": "Paragraph H",
      "options": [
       "i  Turning a by-product into a resource",
       "ii  A simple barrier with a large effect",
@@ -303,85 +303,85 @@
     },
     {
      "type": "choice",
-     "q": "22  Air struggles to carry heat away once rack ............ passes a certain point.",
+     "q": "Air struggles to carry heat away once rack ............ passes a certain point.",
      "options": [
-      "A  density",
-      "B  dust",
-      "C  electricity",
-      "D  fluid",
-      "E  humidity",
-      "F  plumbing",
-      "G  pumps",
-      "H  salt",
-      "I  servers",
-      "J  water"
+      "density",
+      "dust",
+      "electricity",
+      "fluid",
+      "humidity",
+      "plumbing",
+      "pumps",
+      "salt",
+      "servers",
+      "water"
      ],
      "answer": 0,
      "topic": "Reading · Summary completion (word box)"
     },
     {
      "type": "choice",
-     "q": "23  Whole boards may be lowered into a tank of non-conducting ............ .",
+     "q": "Whole boards may be lowered into a tank of non-conducting ............ .",
      "options": [
-      "A  density",
-      "B  dust",
-      "C  electricity",
-      "D  fluid",
-      "E  humidity",
-      "F  plumbing",
-      "G  pumps",
-      "H  salt",
-      "I  servers",
-      "J  water"
+      "density",
+      "dust",
+      "electricity",
+      "fluid",
+      "humidity",
+      "plumbing",
+      "pumps",
+      "salt",
+      "servers",
+      "water"
      ],
      "answer": 3,
      "topic": "Reading · Summary completion (word box)"
     },
     {
      "type": "choice",
-     "q": "24  Evaporative towers cut the ............ a site needs.",
+     "q": "Evaporative towers cut the ............ a site needs.",
      "options": [
-      "A  density",
-      "B  dust",
-      "C  electricity",
-      "D  fluid",
-      "E  humidity",
-      "F  plumbing",
-      "G  pumps",
-      "H  salt",
-      "I  servers",
-      "J  water"
+      "density",
+      "dust",
+      "electricity",
+      "fluid",
+      "humidity",
+      "plumbing",
+      "pumps",
+      "salt",
+      "servers",
+      "water"
      ],
      "answer": 2,
      "topic": "Reading · Summary completion (word box)"
     },
     {
      "type": "choice",
-     "q": "25  Evaporative towers consume very large quantities of ............ .",
+     "q": "Evaporative towers consume very large quantities of ............ .",
      "options": [
-      "A  density",
-      "B  dust",
-      "C  electricity",
-      "D  fluid",
-      "E  humidity",
-      "F  plumbing",
-      "G  pumps",
-      "H  salt",
-      "I  servers",
-      "J  water"
+      "density",
+      "dust",
+      "electricity",
+      "fluid",
+      "humidity",
+      "plumbing",
+      "pumps",
+      "salt",
+      "servers",
+      "water"
      ],
      "answer": 9,
      "topic": "Reading · Summary completion (word box)"
     },
     {
      "type": "multi",
-     "q": "26  Which TWO difficulties does the writer mention in connection with supplying waste heat to district heating networks? Choose TWO letters, A-E.",
+     "q": "Which TWO difficulties does the writer mention in connection with supplying waste heat to district heating networks? Choose TWO letters, A-E.",
      "options": [
-      "A  The heat leaves the building at too low a temperature.",
-      "B  Planning consent for the pipework is hard to obtain.",
-      "C  The need for heating falls away in summer.",
-      "D  Heat networks are generally too far from large sites.",
-      "E  People living nearby complain about the noise."
+      "The heat leaves the building at too low a temperature.",
+      "Planning consent for the pipework is hard to obtain.",
+      "The need for heating falls away in summer.",
+      "Heat networks are generally too far from large sites.",
+      "People living nearby complain about the noise."
      ],
      "answer": [
       0,
@@ -400,7 +400,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  People outside the profession tend to read a design life as a guarantee.",
+     "q": "People outside the profession tend to read a design life as a guarantee.",
      "options": [
       "YES",
       "NO",
@@ -411,7 +411,7 @@
     },
     {
      "type": "choice",
-     "q": "28  Designing for a longer life brings a structure's environmental cost forward in time.",
+     "q": "Designing for a longer life brings a structure's environmental cost forward in time.",
      "options": [
       "YES",
       "NO",
@@ -422,7 +422,7 @@
     },
     {
      "type": "choice",
-     "q": "29  Most bridges are taken out of service because their materials have decayed.",
+     "q": "Most bridges are taken out of service because their materials have decayed.",
      "options": [
       "YES",
       "NO",
@@ -433,7 +433,7 @@
     },
     {
      "type": "choice",
-     "q": "30  Enkvist's study would have been more useful had it covered a longer period.",
+     "q": "Enkvist's study would have been more useful had it covered a longer period.",
      "options": [
       "YES",
       "NO",
@@ -444,7 +444,7 @@
     },
     {
      "type": "choice",
-     "q": "31  Raghunathan's concern about future funding is exaggerated.",
+     "q": "Raghunathan's concern about future funding is exaggerated.",
      "options": [
       "YES",
       "NO",
@@ -455,7 +455,7 @@
     },
     {
      "type": "choice",
-     "q": "32  A large part of the monitoring data collected from bridges has never been looked at.",
+     "q": "A large part of the monitoring data collected from bridges has never been looked at.",
      "options": [
       "YES",
       "NO",
@@ -466,55 +466,55 @@
     },
     {
      "type": "choice",
-     "q": "33  Components that are expected to wear out should be built so that they can be exchanged.",
+     "q": "Components that are expected to wear out should be built so that they can be exchanged.",
      "options": [
-      "A  Marta Enkvist",
-      "B  Tomás Belan",
-      "C  Priya Raghunathan",
-      "D  Ivor Keel"
+      "Marta Enkvist",
+      "Tomás Belan",
+      "Priya Raghunathan",
+      "Ivor Keel"
      ],
      "answer": 1,
      "topic": "Reading · Matching features"
     },
     {
      "type": "choice",
-     "q": "34  The reasons structures are removed are rarely the ones designers prepare for.",
+     "q": "The reasons structures are removed are rarely the ones designers prepare for.",
      "options": [
-      "A  Marta Enkvist",
-      "B  Tomás Belan",
-      "C  Priya Raghunathan",
-      "D  Ivor Keel"
+      "Marta Enkvist",
+      "Tomás Belan",
+      "Priya Raghunathan",
+      "Ivor Keel"
      ],
      "answer": 0,
      "topic": "Reading · Matching features"
     },
     {
      "type": "choice",
-     "q": "35  Money set aside for upkeep is likely to be withdrawn when finances are tight.",
+     "q": "Money set aside for upkeep is likely to be withdrawn when finances are tight.",
      "options": [
-      "A  Marta Enkvist",
-      "B  Tomás Belan",
-      "C  Priya Raghunathan",
-      "D  Ivor Keel"
+      "Marta Enkvist",
+      "Tomás Belan",
+      "Priya Raghunathan",
+      "Ivor Keel"
      ],
      "answer": 2,
      "topic": "Reading · Matching features"
     },
     {
      "type": "choice",
-     "q": "36  How much life a structure has left should be worked out from measurements taken on site.",
+     "q": "How much life a structure has left should be worked out from measurements taken on site.",
      "options": [
-      "A  Marta Enkvist",
-      "B  Tomás Belan",
-      "C  Priya Raghunathan",
-      "D  Ivor Keel"
+      "Marta Enkvist",
+      "Tomás Belan",
+      "Priya Raghunathan",
+      "Ivor Keel"
      ],
      "answer": 3,
      "topic": "Reading · Matching features"
     },
     {
      "type": "text",
-     "q": "37  Belan recommends the use of ............ elements, which are expected to corrode and are then replaced.",
+     "q": "Belan recommends the use of ............ elements, which are expected to corrode and are then replaced.",
      "answer": [
       "sacrificial"
      ],
@@ -522,7 +522,7 @@
     },
     {
      "type": "text",
-     "q": "38  For the writer, the useful measure of a structure is how cheaply it can be ............ .",
+     "q": "For the writer, the useful measure of a structure is how cheaply it can be ............ .",
      "answer": [
       "changed"
      ],
@@ -530,24 +530,24 @@
     },
     {
      "type": "choice",
-     "q": "39  What does the writer say about the figures for design life given in codes?",
+     "q": "What does the writer say about the figures for design life given in codes?",
      "options": [
-      "A  They are deliberately cautious in order to protect designers.",
-      "B  They express a probability rather than a promise.",
-      "C  They rest on outdated assumptions about traffic loads.",
-      "D  They are normally exceeded by a wide margin."
+      "They are deliberately cautious in order to protect designers.",
+      "They express a probability rather than a promise.",
+      "They rest on outdated assumptions about traffic loads.",
+      "They are normally exceeded by a wide margin."
      ],
      "answer": 1,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "40  Which statement best sums up the writer's conclusion?",
+     "q": "Which statement best sums up the writer's conclusion?",
      "options": [
-      "A  Structures should be built more heavily than the codes require.",
-      "B  Monitoring technology will settle the argument within a generation.",
-      "C  Designers should aim at ease of alteration rather than maximum longevity.",
-      "D  Design lives should be shortened so that less material is used."
+      "Structures should be built more heavily than the codes require.",
+      "Monitoring technology will settle the argument within a generation.",
+      "Designers should aim at ease of alteration rather than maximum longevity.",
+      "Design lives should be shortened so that less material is used."
      ],
      "answer": 2,
      "topic": "Reading · Multiple choice"

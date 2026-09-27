@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  In Europe, some ski resorts now offer summer activities during the winter months.",
+     "q": "In Europe, some ski resorts now offer summer activities during the winter months.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  In parts of the United States, fires have prevented tourists from visiting some park areas.",
+     "q": "In parts of the United States, fires have prevented tourists from visiting some park areas.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  The financial consequences of global warming on the tourism industry in 2002 was US$578 billion.",
+     "q": "The financial consequences of global warming on the tourism industry in 2002 was US$578 billion.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Global warming has caused the closure of some Australian ski resorts.",
+     "q": "Global warming has caused the closure of some Australian ski resorts.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "text",
-     "q": "5  The …………… is the area of tourism which is suffering most as a result of coral reef damage.",
+     "q": "The …………… is the area of tourism which is suffering most as a result of coral reef damage.",
      "answer": [
       "diving industry",
       "the diving industry",
@@ -75,7 +75,7 @@
     },
     {
      "type": "text",
-     "q": "6  Warmer water ultimately changes the appearance of coral to the point where it becomes ……………",
+     "q": "Warmer water ultimately changes the appearance of coral to the point where it becomes ……………",
      "answer": [
       "colourless",
       "colorless"
@@ -84,7 +84,7 @@
     },
     {
      "type": "text",
-     "q": "7  International scientists predict that global temperatures will have increased by at least …………… degrees Fahrenheit by the next century.",
+     "q": "International scientists predict that global temperatures will have increased by at least …………… degrees Fahrenheit by the next century.",
      "answer": [
       "two",
       "2"
@@ -93,7 +93,7 @@
     },
     {
      "type": "text",
-     "q": "8  Experts believe that this century will see the extinction of ……………",
+     "q": "Experts believe that this century will see the extinction of ……………",
      "answer": [
       "polar bears",
       "the polar bears",
@@ -103,7 +103,7 @@
     },
     {
      "type": "choice",
-     "q": "9  The technology required to extend the skiing season is too expensive for some businesses.",
+     "q": "The technology required to extend the skiing season is too expensive for some businesses.",
      "options": [
       "A",
       "B",
@@ -118,7 +118,7 @@
     },
     {
      "type": "choice",
-     "q": "10  It is difficult to know exactly which weather conditions are caused by global warming.",
+     "q": "It is difficult to know exactly which weather conditions are caused by global warming.",
      "options": [
       "A",
       "B",
@@ -133,7 +133,7 @@
     },
     {
      "type": "choice",
-     "q": "11  Tourists have observed changes in the environment over time.",
+     "q": "Tourists have observed changes in the environment over time.",
      "options": [
       "A",
       "B",
@@ -148,7 +148,7 @@
     },
     {
      "type": "choice",
-     "q": "12  The change in the climate will mean that some locations near sea level will no longer exist.",
+     "q": "The change in the climate will mean that some locations near sea level will no longer exist.",
      "options": [
       "A",
       "B",
@@ -163,7 +163,7 @@
     },
     {
      "type": "choice",
-     "q": "13  Temperature changes have forced holiday complexes to cut down on certain types of activities.",
+     "q": "Temperature changes have forced holiday complexes to cut down on certain types of activities.",
      "options": [
       "A",
       "B",
@@ -186,7 +186,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  an explanation of the methodology behind Binet’s tests",
+     "q": "an explanation of the methodology behind Binet’s tests",
      "options": [
       "A",
       "B",
@@ -203,7 +203,7 @@
     },
     {
      "type": "choice",
-     "q": "15  a discussion of intelligence as a single measurable characteristic",
+     "q": "a discussion of intelligence as a single measurable characteristic",
      "options": [
       "A",
       "B",
@@ -220,7 +220,7 @@
     },
     {
      "type": "choice",
-     "q": "16  reasons for inadequacy of IQ tests",
+     "q": "reasons for inadequacy of IQ tests",
      "options": [
       "A",
       "B",
@@ -237,7 +237,7 @@
     },
     {
      "type": "choice",
-     "q": "17  The writer’s purpose in the passage is to",
+     "q": "The writer’s purpose in the passage is to",
      "options": [
       "describe the history of IQ tests.",
       "discuss the limitations of IQ tests.",
@@ -249,7 +249,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Alfred Binet’s tests compared children of the same age in order to",
+     "q": "Alfred Binet’s tests compared children of the same age in order to",
      "options": [
       "identify children not performing satisfactorily.",
       "identify the most intelligent children.",
@@ -261,7 +261,7 @@
     },
     {
      "type": "choice",
-     "q": "19  The tests that Binet designed were",
+     "q": "The tests that Binet designed were",
      "options": [
       "based on reading skills.",
       "based on mathematical skills.",
@@ -273,7 +273,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Recent studies of intellect look at intelligence as",
+     "q": "Recent studies of intellect look at intelligence as",
      "options": [
       "a single factor.",
       "a factor impossible to assess.",
@@ -285,7 +285,7 @@
     },
     {
      "type": "choice",
-     "q": "21  Alfred Binet believed that intelligence could not be measured.",
+     "q": "Alfred Binet believed that intelligence could not be measured.",
      "options": [
       "YES",
       "NO",
@@ -296,7 +296,7 @@
     },
     {
      "type": "choice",
-     "q": "22  Binet’s tests were intended for use only in the schools of Paris.",
+     "q": "Binet’s tests were intended for use only in the schools of Paris.",
      "options": [
       "YES",
       "NO",
@@ -307,7 +307,7 @@
     },
     {
      "type": "choice",
-     "q": "23  Binet’s tests were used by armies for purposes different to his original intention.",
+     "q": "Binet’s tests were used by armies for purposes different to his original intention.",
      "options": [
       "YES",
       "NO",
@@ -318,7 +318,7 @@
     },
     {
      "type": "choice",
-     "q": "24  Intelligence can be measured like any other human characteristic.",
+     "q": "Intelligence can be measured like any other human characteristic.",
      "options": [
       "YES",
       "NO",
@@ -329,7 +329,7 @@
     },
     {
      "type": "choice",
-     "q": "25  We should assess children’s separate abilities and learning capacity, not intelligence.",
+     "q": "We should assess children’s separate abilities and learning capacity, not intelligence.",
      "options": [
       "YES",
       "NO",
@@ -340,7 +340,7 @@
     },
     {
      "type": "choice",
-     "q": "26  Intelligence tests accurately identify gifted and able children.",
+     "q": "Intelligence tests accurately identify gifted and able children.",
      "options": [
       "YES",
       "NO",
@@ -359,7 +359,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  Too few companies understand how to evaluate fashionable management theories.",
+     "q": "Too few companies understand how to evaluate fashionable management theories.",
      "options": [
       "YES",
       "NO",
@@ -370,7 +370,7 @@
     },
     {
      "type": "choice",
-     "q": "28  Certain practices should always be followed when coping with unstable situations.",
+     "q": "Certain practices should always be followed when coping with unstable situations.",
      "options": [
       "YES",
       "NO",
@@ -381,7 +381,7 @@
     },
     {
      "type": "choice",
-     "q": "29  It is important that the development of ideas should lead to improvements in the company’s financial position.",
+     "q": "It is important that the development of ideas should lead to improvements in the company’s financial position.",
      "options": [
       "YES",
       "NO",
@@ -392,7 +392,7 @@
     },
     {
      "type": "choice",
-     "q": "30  The structuring of a database should be decided by all its users.",
+     "q": "The structuring of a database should be decided by all its users.",
      "options": [
       "YES",
       "NO",
@@ -403,7 +403,7 @@
     },
     {
      "type": "choice",
-     "q": "31  More training needs to be provided to help managers assess the usefulness of new information.",
+     "q": "More training needs to be provided to help managers assess the usefulness of new information.",
      "options": [
       "YES",
       "NO",
@@ -414,7 +414,7 @@
     },
     {
      "type": "choice",
-     "q": "32  Any major change should be introduce all at once.",
+     "q": "Any major change should be introduce all at once.",
      "options": [
       "YES",
       "NO",
@@ -425,7 +425,7 @@
     },
     {
      "type": "choice",
-     "q": "33  Companies can benefit from using different strategies with different customers.",
+     "q": "Companies can benefit from using different strategies with different customers.",
      "options": [
       "YES",
       "NO",
@@ -436,7 +436,7 @@
     },
     {
      "type": "choice",
-     "q": "34  The activities which are common to all companies are best kept in-house.",
+     "q": "The activities which are common to all companies are best kept in-house.",
      "options": [
       "YES",
       "NO",
@@ -447,7 +447,7 @@
     },
     {
      "type": "choice",
-     "q": "35  examples of qualities required when co-operating with other companies",
+     "q": "examples of qualities required when co-operating with other companies",
      "options": [
       "A",
       "B",
@@ -465,7 +465,7 @@
     },
     {
      "type": "choice",
-     "q": "36  examples of business activities where all staff should follow the same practices",
+     "q": "examples of business activities where all staff should follow the same practices",
      "options": [
       "A",
       "B",
@@ -483,7 +483,7 @@
     },
     {
      "type": "choice",
-     "q": "37  examples of alternative employment patterns within a company",
+     "q": "examples of alternative employment patterns within a company",
      "options": [
       "A",
       "B",
@@ -501,7 +501,7 @@
     },
     {
      "type": "choice",
-     "q": "38  a basis for deciding whether a company should carry out an activity itself or ask an outside company to do it",
+     "q": "a basis for deciding whether a company should carry out an activity itself or ask an outside company to do it",
      "options": [
       "A",
       "B",
@@ -519,7 +519,7 @@
     },
     {
      "type": "choice",
-     "q": "39  an example of how information can be shared by a company and its customers",
+     "q": "an example of how information can be shared by a company and its customers",
      "options": [
       "A",
       "B",
@@ -537,7 +537,7 @@
     },
     {
      "type": "choice",
-     "q": "40  a reason why customers might continue to buy from the same companies",
+     "q": "a reason why customers might continue to buy from the same companies",
      "options": [
       "A",
       "B",

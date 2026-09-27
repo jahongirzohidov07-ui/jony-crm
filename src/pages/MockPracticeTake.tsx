@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Flag as FlagIcon, Volume2, Square } from "lucide-react";
 import { api, getActiveRole, getToken } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { MOCK_LIMITED, can } from "../lib/roles";
 import {
-  ExamPaper, Watermark,
+  Watermark,
   type PaperAnswers, type PaperPart, type PaperQ,
 } from "../components/ExamPaper";
+import { CdExam } from "../components/CdExam";
 import { AnswerSheetTable, type AnswerRow } from "../components/ExamOnline";
 import {
   MockIssueDialog, IssueStatusBadge, type IssueTarget,
@@ -78,12 +80,6 @@ type Review = {
 
 function isReview(d: Any): boolean {
   return d.status === "submitted" || Array.isArray(d.detail);
-}
-
-function mmss(sec: number) {
-  const s = Math.max(0, Math.ceil(sec));
-  const m = Math.floor(s / 60);
-  return `${m}:${String(s % 60).padStart(2, "0")}`;
 }
 
 function store(key: string, val?: unknown) {
@@ -535,39 +531,59 @@ export default function MockPracticeTake() {
   if (!run) return <div className="max-w-2xl mx-auto text-sm text-slate-400">Yuklanmoqda...</div>;
 
   // ------------------------------------------------ test
-  const low = endsIn !== null && endsIn <= 60;
+  // KOMPYUTERDAGI IELTS KO'RINISHI (2026-09-27) — o'quvchi ko'radigan
+  // aynan o'sha ekran (CdExam). "Savolda xato bor" bayrog'i va
+  // "Tinglash" tugmasi avvalgidek; "Keyinroq ko'rish" — alohida narsa.
   const scriptParts = new Set(run.script_parts || []);
-  return (
-    <div className="max-w-2xl mx-auto space-y-4">
-      {who ? <Watermark text={`${who} · ${run.title}`} /> : null}
-      <div className="flex items-center gap-3">
-        {back}
-        <div className="flex-1" />
-        <button
-          type="button"
-          onClick={() => setFlagFor({ t: { id: null } })}
-          className="text-xs text-amber-700 hover:underline"
-        >
-          Test haqida xabar
-        </button>
-      </div>
-      <div className="bg-white rounded-2xl border border-slate-200 px-5 py-3">
-        <p className="font-bold text-slate-900">{run.title}</p>
-        <p className="text-xs text-slate-500">
-          {qCount} ta savol · {run.ends_at ? "vaqtli" : "vaqtsiz"} · natija faqat sizga ko'rinadi
-        </p>
+  const notice =
+    run.tpl_changed || ttsErr || error ? (
+      <>
         {run.tpl_changed ? (
-          <p className="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-2">
+          <span>
             Bu test siz boshlagandan keyin tahrirlandi — natija yangi kalit bo'yicha hisoblanadi.
-          </p>
+          </span>
         ) : null}
-        {ttsErr && <p className="text-xs text-red-600 mt-2">{ttsErr}</p>}
-      </div>
-
-      <ExamPaper
+        {ttsErr ? <span className="text-red-600">{ttsErr}</span> : null}
+        {error ? <span className="text-red-600">{error}</span> : null}
+      </>
+    ) : null;
+  return (
+    <>
+      <CdExam
         parts={run.parts}
         answers={answers}
         onChange={(qid, v) => setAnswers((a) => ({ ...a, [qid]: v }))}
+        title={run.title}
+        subtitle={`${qCount} ta savol · ${run.ends_at ? "vaqtli" : "vaqtsiz"} · natija faqat sizga ko'rinadi`}
+        headerLeft={
+          <Link
+            to="/mock-practice"
+            title="Mock sinab ko'rish"
+            aria-label="Mock sinab ko'rish sahifasiga qaytish"
+            className="shrink-0 rounded-lg border border-slate-200 p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+          >
+            <ArrowLeft size={16} />
+          </Link>
+        }
+        headerRight={
+          <button
+            type="button"
+            onClick={() => setFlagFor({ t: { id: null } })}
+            title="Test haqida xabar"
+            className="inline-flex items-center gap-1 rounded-lg px-1.5 py-1 text-xs text-amber-700 hover:bg-amber-50"
+          >
+            <FlagIcon size={14} />
+            <span className="hidden md:inline">Test haqida xabar</span>
+          </button>
+        }
+        notice={notice}
+        endsIn={endsIn}
+        answered={answered}
+        total={qCount}
+        onSubmit={manualSubmit}
+        sending={sending}
+        watermark={who ? `${who} · ${run.title}` : undefined}
+        storageKey={`mockp:${id}`}
         renderQuestionAction={(q: PaperQ) => flagBtn({ id: q.id, n: q.n, q: q.q })}
         renderPartExtra={(p, pi) =>
           !p.audio_url && scriptParts.has(pi) ? (
@@ -601,31 +617,10 @@ export default function MockPracticeTake() {
           ) : null
         }
       />
-
-      <div className="sticky bottom-0 z-40 bg-white/95 border border-slate-200 rounded-xl px-4 py-3 shadow-lg">
-        <div className="flex items-center gap-3">
-          {endsIn !== null && (
-            <span
-              className={`text-lg font-bold tabular-nums ${low ? "text-red-600" : "text-slate-800"}`}
-              title="Qolgan vaqt"
-            >
-              ⏱ {mmss(endsIn)}
-            </span>
-          )}
-          <span className="text-sm text-slate-500 whitespace-nowrap">
-            {answered} / {qCount}
-          </span>
-          {error && <span className="text-xs text-red-600 flex-1 truncate">{error}</span>}
-          <button
-            onClick={manualSubmit}
-            disabled={sending}
-            className="ml-auto bg-brand-600 hover:bg-brand-700 text-white rounded-xl px-6 py-2.5 text-sm font-semibold disabled:opacity-60"
-          >
-            {sending ? "Yuborilmoqda..." : "Topshirish"}
-          </button>
-        </div>
-      </div>
-      {dialog}
-    </div>
+      {/* Imtihon qatlami document.body da z-80 (JonyOS pastki paneli
+          z-50 dan yuqori). Dialog ham body ga, z-85 qatlam ichida —
+          imtihon ustida turadi. MockIssueDialog o'zi o'zgarmadi. */}
+      {dialog ? createPortal(<div className="relative z-[85]">{dialog}</div>, document.body) : null}
+    </>
   );
 }

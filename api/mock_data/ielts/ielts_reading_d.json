@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  The first come, first served principle can be used by people who do not speak the same language.",
+     "q": "The first come, first served principle can be used by people who do not speak the same language.",
      "options": [
       "TRUE",
       "FALSE",
@@ -30,7 +30,7 @@
     },
     {
      "type": "choice",
-     "q": "2  Virtual queues were introduced in order to reduce the cost of employing staff.",
+     "q": "Virtual queues were introduced in order to reduce the cost of employing staff.",
      "options": [
       "TRUE",
       "FALSE",
@@ -41,7 +41,7 @@
     },
     {
      "type": "choice",
-     "q": "3  People in a virtual queue report greater annoyance than people in a visible line who wait for the same length of time.",
+     "q": "People in a virtual queue report greater annoyance than people in a visible line who wait for the same length of time.",
      "options": [
       "TRUE",
       "FALSE",
@@ -52,7 +52,7 @@
     },
     {
      "type": "choice",
-     "q": "4  In Callander's experiment, people standing further back in the queue objected as often as those immediately behind the intruder.",
+     "q": "In Callander's experiment, people standing further back in the queue objected as often as those immediately behind the intruder.",
      "options": [
       "TRUE",
       "FALSE",
@@ -63,7 +63,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Attempts to remove Callander's assistants by physical means occurred in more than a quarter of the queues they entered.",
+     "q": "Attempts to remove Callander's assistants by physical means occurred in more than a quarter of the queues they entered.",
      "options": [
       "TRUE",
       "FALSE",
@@ -74,7 +74,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Assistants carrying a single item were accepted more often than those who were rejoining a line.",
+     "q": "Assistants carrying a single item were accepted more often than those who were rejoining a line.",
      "options": [
       "TRUE",
       "FALSE",
@@ -85,7 +85,7 @@
     },
     {
      "type": "text",
-     "q": "7  Telephone service centre: the silence on hold was replaced by a regular announcement of each caller's ..............",
+     "q": "Telephone service centre: the silence on hold was replaced by a regular announcement of each caller's ..............",
      "answer": [
       "position"
      ],
@@ -93,7 +93,7 @@
     },
     {
      "type": "text",
-     "q": "8  Telephone service centre: complaints about waiting dropped by a ..............",
+     "q": "Telephone service centre: complaints about waiting dropped by a ..............",
      "answer": [
       "third",
       "a third"
@@ -102,7 +102,7 @@
     },
     {
      "type": "text",
-     "q": "9  Parallel system: there is a separate line at every ..............",
+     "q": "Parallel system: there is a separate line at every ..............",
      "answer": [
       "service point"
      ],
@@ -110,7 +110,7 @@
     },
     {
      "type": "text",
-     "q": "10  Parallel system: a late arrival may be served first after choosing a ..............",
+     "q": "Parallel system: a late arrival may be served first after choosing a ..............",
      "answer": [
       "faster line"
      ],
@@ -118,7 +118,7 @@
     },
     {
      "type": "text",
-     "q": "11  Serpentine system: it is fairer, and cuts the .............. in waiting times.",
+     "q": "Serpentine system: it is fairer, and cuts the .............. in waiting times.",
      "answer": [
       "variation"
      ],
@@ -126,7 +126,7 @@
     },
     {
      "type": "text",
-     "q": "12  Serpentine system - drawback: customers estimate the delay from the .............. of the line they can see.",
+     "q": "Serpentine system - drawback: customers estimate the delay from the .............. of the line they can see.",
      "answer": [
       "length"
      ],
@@ -134,7 +134,7 @@
     },
     {
      "type": "text",
-     "q": "13  Denford Associates survey: orderliness showed no link with a country's ..............",
+     "q": "Denford Associates survey: orderliness showed no link with a country's ..............",
      "answer": [
       "wealth"
      ],
@@ -150,7 +150,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  a comparison of the effects of three different listening conditions",
+     "q": "a comparison of the effects of three different listening conditions",
      "options": [
       "A",
       "B",
@@ -166,7 +166,7 @@
     },
     {
      "type": "choice",
-     "q": "15  a reference to the proportion of employees who work in open-plan space",
+     "q": "a reference to the proportion of employees who work in open-plan space",
      "options": [
       "A",
       "B",
@@ -182,7 +182,7 @@
     },
     {
      "type": "choice",
-     "q": "16  an explanation of why making a workplace quieter may not solve the problem",
+     "q": "an explanation of why making a workplace quieter may not solve the problem",
      "options": [
       "A",
       "B",
@@ -198,7 +198,7 @@
     },
     {
      "type": "choice",
-     "q": "17  the claim that a workplace rule depends on the conduct of senior staff",
+     "q": "the claim that a workplace rule depends on the conduct of senior staff",
      "options": [
       "A",
       "B",
@@ -214,7 +214,7 @@
     },
     {
      "type": "choice",
-     "q": "18  a description of how the length of colleagues' discussions altered after a move",
+     "q": "a description of how the length of colleagues' discussions altered after a move",
      "options": [
       "A",
       "B",
@@ -230,7 +230,7 @@
     },
     {
      "type": "choice",
-     "q": "19  mention of the influence of experience on resistance to interruption",
+     "q": "mention of the influence of experience on resistance to interruption",
      "options": [
       "A",
       "B",
@@ -246,7 +246,7 @@
     },
     {
      "type": "choice",
-     "q": "20  found that skilled workers were less affected by interruption than beginners",
+     "q": "found that skilled workers were less affected by interruption than beginners",
      "options": [
       "A",
       "B",
@@ -259,7 +259,7 @@
     },
     {
      "type": "choice",
-     "q": "21  showed experimentally that whether speech can be understood matters more than how loud it is",
+     "q": "showed experimentally that whether speech can be understood matters more than how loud it is",
      "options": [
       "A",
       "B",
@@ -272,7 +272,7 @@
     },
     {
      "type": "choice",
-     "q": "22  recommends adding sound to a workplace rather than taking it away",
+     "q": "recommends adding sound to a workplace rather than taking it away",
      "options": [
       "A",
       "B",
@@ -285,7 +285,7 @@
     },
     {
      "type": "choice",
-     "q": "23  found that lengthy discussions moved into a different setting after a change of layout",
+     "q": "found that lengthy discussions moved into a different setting after a change of layout",
      "options": [
       "A",
       "B",
@@ -298,7 +298,7 @@
     },
     {
      "type": "choice",
-     "q": "24  Hallbrook Insurance asked its staff to keep two mornings a week of .............. in the main office.",
+     "q": "Hallbrook Insurance asked its staff to keep two mornings a week of .............. in the main office.",
      "options": [
       "A",
       "B",
@@ -316,7 +316,7 @@
     },
     {
      "type": "choice",
-     "q": "25  Employees said that their .............. had got better.",
+     "q": "Employees said that their .............. had got better.",
      "options": [
       "A",
       "B",
@@ -334,7 +334,7 @@
     },
     {
      "type": "choice",
-     "q": "26  Satisfaction at work depends far less on the measured level of noise than on how much .............. people feel they have over the space around them.",
+     "q": "Satisfaction at work depends far less on the measured level of noise than on how much .............. people feel they have over the space around them.",
      "options": [
       "A",
       "B",
@@ -360,7 +360,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  The writer accepts that governments have decent reasons for collecting information about wellbeing.",
+     "q": "The writer accepts that governments have decent reasons for collecting information about wellbeing.",
      "options": [
       "YES",
       "NO",
@@ -371,7 +371,7 @@
     },
     {
      "type": "choice",
-     "q": "28  The writer believes that gross domestic product should no longer be published.",
+     "q": "The writer believes that gross domestic product should no longer be published.",
      "options": [
       "YES",
       "NO",
@@ -382,7 +382,7 @@
     },
     {
      "type": "choice",
-     "q": "29  Better question wording has removed the differences in the way people use the scale.",
+     "q": "Better question wording has removed the differences in the way people use the scale.",
      "options": [
       "YES",
       "NO",
@@ -393,7 +393,7 @@
     },
     {
      "type": "choice",
-     "q": "30  Small changes in national averages are treated as more significant than they deserve.",
+     "q": "Small changes in national averages are treated as more significant than they deserve.",
      "options": [
       "YES",
       "NO",
@@ -404,7 +404,7 @@
     },
     {
      "type": "choice",
-     "q": "31  Chance influences on individual answers are cancelled out when the sample is very large.",
+     "q": "Chance influences on individual answers are cancelled out when the sample is very large.",
      "options": [
       "YES",
       "NO",
@@ -415,7 +415,7 @@
     },
     {
      "type": "choice",
-     "q": "32  Ministers who prefer cheap policies are being deliberately dishonest with the public.",
+     "q": "Ministers who prefer cheap policies are being deliberately dishonest with the public.",
      "options": [
       "YES",
       "NO",
@@ -426,7 +426,7 @@
     },
     {
      "type": "choice",
-     "q": "33  Several governments have already adopted the kind of dashboard the writer proposes.",
+     "q": "Several governments have already adopted the kind of dashboard the writer proposes.",
      "options": [
       "YES",
       "NO",
@@ -437,49 +437,49 @@
     },
     {
      "type": "choice",
-     "q": "34  In the fourth paragraph, the writer's main point about the nought-to-ten scale is that",
+     "q": "In the fourth paragraph, the writer's main point about the nought-to-ten scale is that",
      "options": [
-      "A  respondents in wealthy countries almost all choose the number eight.",
-      "B  movements in the average are usually caused by mistakes in data collection.",
-      "C  its upper limit prevents it from recording further progress in wealthy countries.",
-      "D  it ought to be replaced by a measure of economic output."
+      "respondents in wealthy countries almost all choose the number eight.",
+      "movements in the average are usually caused by mistakes in data collection.",
+      "its upper limit prevents it from recording further progress in wealthy countries.",
+      "it ought to be replaced by a measure of economic output."
      ],
      "answer": 2,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "35  The writer mentions short courses of treatment for mild anxiety in order to",
+     "q": "The writer mentions short courses of treatment for mild anxiety in order to",
      "options": [
-      "A  show that mental health services are seriously underfunded.",
-      "B  illustrate how a quickly measured gain may be chosen over a more valuable one.",
-      "C  argue that such treatment has little lasting effect on patients.",
-      "D  explain why rebuilding poor housing costs so much."
+      "show that mental health services are seriously underfunded.",
+      "illustrate how a quickly measured gain may be chosen over a more valuable one.",
+      "argue that such treatment has little lasting effect on patients.",
+      "explain why rebuilding poor housing costs so much."
      ],
      "answer": 1,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "36  What does the writer concede about the ability of the scores to predict behaviour?",
+     "q": "What does the writer concede about the ability of the scores to predict behaviour?",
      "options": [
-      "A  It has been exaggerated by those who defend the surveys.",
-      "B  It proves that the scores measure how well people's lives are going.",
-      "C  It is stronger for health outcomes than for decisions about work.",
-      "D  It shows that the question captures something genuine and lasting."
+      "It has been exaggerated by those who defend the surveys.",
+      "It proves that the scores measure how well people's lives are going.",
+      "It is stronger for health outcomes than for decisions about work.",
+      "It shows that the question captures something genuine and lasting."
      ],
      "answer": 3,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "multi",
-     "q": "37  Which TWO recommendations does the writer make about the publication of wellbeing figures? Choose TWO letters, A-E.",
+     "q": "Which TWO recommendations does the writer make about the publication of wellbeing figures? Choose TWO letters, A-E.",
      "options": [
-      "A  a single composite index should be published each year",
-      "B  the share of people with the lowest scores should be reported",
-      "C  national surveys of life satisfaction should be discontinued",
-      "D  several separate indicators should be given instead of one headline figure",
-      "E  all interviews should be carried out online rather than face to face"
+      "a single composite index should be published each year",
+      "the share of people with the lowest scores should be reported",
+      "national surveys of life satisfaction should be discontinued",
+      "several separate indicators should be given instead of one headline figure",
+      "all interviews should be carried out online rather than face to face"
      ],
      "answer": [
       1,
@@ -490,7 +490,7 @@
     },
     {
      "type": "text",
-     "q": "38  What term do researchers use for the process by which people redefine the scale after becoming seriously ill?",
+     "q": "What term do researchers use for the process by which people redefine the scale after becoming seriously ill?",
      "answer": [
       "response shift"
      ],
@@ -498,7 +498,7 @@
     },
     {
      "type": "text",
-     "q": "39  What kind of influences on answers does the writer say a large sample cannot remove?",
+     "q": "What kind of influences on answers does the writer say a large sample cannot remove?",
      "answer": [
       "systematic",
       "systematic influences"
@@ -507,7 +507,7 @@
     },
     {
      "type": "text",
-     "q": "40  What does the writer say should be reported instead of the average?",
+     "q": "What does the writer say should be reported instead of the average?",
      "answer": [
       "distribution",
       "the distribution"

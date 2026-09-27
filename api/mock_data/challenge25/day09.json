@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Business competition drives food consumption.",
+     "q": "Business competition drives food consumption.",
      "options": [
       "A",
       "B",
@@ -38,7 +38,7 @@
     },
     {
      "type": "choice",
-     "q": "2  Cheaper food production has led to increased food consumption.",
+     "q": "Cheaper food production has led to increased food consumption.",
      "options": [
       "A",
       "B",
@@ -55,7 +55,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Improved technology makes work less physically demanding.",
+     "q": "Improved technology makes work less physically demanding.",
      "options": [
       "A",
       "B",
@@ -72,7 +72,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Obesity is a serious illness.",
+     "q": "Obesity is a serious illness.",
      "options": [
       "A",
       "B",
@@ -89,7 +89,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Many Americans are physically active only during their working hours.",
+     "q": "Many Americans are physically active only during their working hours.",
      "options": [
       "A",
       "B",
@@ -106,7 +106,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Obese people often consider medical treatment to be unnecessary.",
+     "q": "Obese people often consider medical treatment to be unnecessary.",
      "options": [
       "A",
       "B",
@@ -123,7 +123,7 @@
     },
     {
      "type": "choice",
-     "q": "7  Obesity is more prevalent in the US than anywhere else.",
+     "q": "Obesity is more prevalent in the US than anywhere else.",
      "options": [
       "A",
       "B",
@@ -140,7 +140,7 @@
     },
     {
      "type": "choice",
-     "q": "8  The number of obese Americans has doubled in 40 years.",
+     "q": "The number of obese Americans has doubled in 40 years.",
      "options": [
       "A",
       "B",
@@ -157,7 +157,7 @@
     },
     {
      "type": "choice",
-     "q": "9  The US produces a large food surplus.",
+     "q": "The US produces a large food surplus.",
      "options": [
       "YES",
       "NO",
@@ -168,7 +168,7 @@
     },
     {
      "type": "choice",
-     "q": "10  Large companies can impose their marketing on schools.",
+     "q": "Large companies can impose their marketing on schools.",
      "options": [
       "YES",
       "NO",
@@ -179,7 +179,7 @@
     },
     {
      "type": "choice",
-     "q": "11  Since 1970, the use of sweeteners by the average American has decreased slightly.",
+     "q": "Since 1970, the use of sweeteners by the average American has decreased slightly.",
      "options": [
       "YES",
       "NO",
@@ -190,7 +190,7 @@
     },
     {
      "type": "choice",
-     "q": "12  Direct and indirect medical expenses resulting from obesity are the same.",
+     "q": "Direct and indirect medical expenses resulting from obesity are the same.",
      "options": [
       "YES",
       "NO",
@@ -201,7 +201,7 @@
     },
     {
      "type": "choice",
-     "q": "13  These days, exercising is time-consuming and costs money.",
+     "q": "These days, exercising is time-consuming and costs money.",
      "options": [
       "YES",
       "NO",

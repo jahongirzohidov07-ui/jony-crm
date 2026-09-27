@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Britain has a greater number of moth species than of bumblebee species.",
+     "q": "Britain has a greater number of moth species than of bumblebee species.",
      "options": [
       "TRUE",
       "FALSE",
@@ -30,7 +30,7 @@
     },
     {
      "type": "choice",
-     "q": "2  Vance expected her cameras in the Ravensmoor Valley to record a large number of moth visits.",
+     "q": "Vance expected her cameras in the Ravensmoor Valley to record a large number of moth visits.",
      "options": [
       "TRUE",
       "FALSE",
@@ -41,7 +41,7 @@
     },
     {
      "type": "choice",
-     "q": "3  The rate of moth visits Vance recorded on hawthorn was similar to the rate of daytime visits to the same hedge.",
+     "q": "The rate of moth visits Vance recorded on hawthorn was similar to the rate of daytime visits to the same hedge.",
      "options": [
       "TRUE",
       "FALSE",
@@ -52,7 +52,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Bees deliberately gather pollen in order to take it back to the nest.",
+     "q": "Bees deliberately gather pollen in order to take it back to the nest.",
      "options": [
       "TRUE",
       "FALSE",
@@ -63,7 +63,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Moths carry most of the pollen they pick up on their legs.",
+     "q": "Moths carry most of the pollen they pick up on their legs.",
      "options": [
       "TRUE",
       "FALSE",
@@ -74,7 +74,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Moth-pollinated flowers produce larger quantities of nectar than bee-pollinated flowers.",
+     "q": "Moth-pollinated flowers produce larger quantities of nectar than bee-pollinated flowers.",
      "options": [
       "TRUE",
       "FALSE",
@@ -85,7 +85,7 @@
     },
     {
      "type": "choice",
-     "q": "7  Okonjo believes that artificial light drives moths out of the area altogether.",
+     "q": "Okonjo believes that artificial light drives moths out of the area altogether.",
      "options": [
       "TRUE",
       "FALSE",
@@ -96,7 +96,7 @@
     },
     {
      "type": "text",
-     "q": "8  the flowers are usually …………… in colour",
+     "q": "the flowers are usually …………… in colour",
      "answer": [
       "pale"
      ],
@@ -104,7 +104,7 @@
     },
     {
      "type": "text",
-     "q": "9  nectar is held deep inside a long narrow tube known as the ……………",
+     "q": "nectar is held deep inside a long narrow tube known as the ……………",
      "answer": [
       "corolla",
       "the corolla"
@@ -113,7 +113,7 @@
     },
     {
      "type": "text",
-     "q": "10  the strongest scent is released within an hour of ……………",
+     "q": "the strongest scent is released within an hour of ……………",
      "answer": [
       "sunset"
      ],
@@ -121,7 +121,7 @@
     },
     {
      "type": "text",
-     "q": "11  …………… growing beneath the lamps produced about a third fewer seeds",
+     "q": "…………… growing beneath the lamps produced about a third fewer seeds",
      "answer": [
       "red campion"
      ],
@@ -129,7 +129,7 @@
     },
     {
      "type": "text",
-     "q": "12  delay the mowing of verges and field margins until ……………",
+     "q": "delay the mowing of verges and field margins until ……………",
      "answer": [
       "September"
      ],
@@ -137,7 +137,7 @@
     },
     {
      "type": "text",
-     "q": "13  replace white LEDs with …………… lamps",
+     "q": "replace white LEDs with …………… lamps",
      "answer": [
       "amber"
      ],
@@ -153,7 +153,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  a comparison of the cost of two different ways of improving water quality",
+     "q": "a comparison of the cost of two different ways of improving water quality",
      "options": [
       "A",
       "B",
@@ -169,7 +169,7 @@
     },
     {
      "type": "choice",
-     "q": "15  a description of how young mussels are deliberately brought into contact with host fish",
+     "q": "a description of how young mussels are deliberately brought into contact with host fish",
      "options": [
       "A",
       "B",
@@ -185,7 +185,7 @@
     },
     {
      "type": "choice",
-     "q": "16  reference to a historical practice that targeted the mussel directly",
+     "q": "reference to a historical practice that targeted the mussel directly",
      "options": [
       "A",
       "B",
@@ -201,7 +201,7 @@
     },
     {
      "type": "choice",
-     "q": "17  an explanation of why mussels from different rivers should not be mixed",
+     "q": "an explanation of why mussels from different rivers should not be mixed",
      "options": [
       "A",
       "B",
@@ -217,7 +217,7 @@
     },
     {
      "type": "choice",
-     "q": "18  figures showing how few larvae ever become adults",
+     "q": "figures showing how few larvae ever become adults",
      "options": [
       "A",
       "B",
@@ -233,7 +233,7 @@
     },
     {
      "type": "choice",
-     "q": "19  a measurement that is now used to select suitable release sites",
+     "q": "a measurement that is now used to select suitable release sites",
      "options": [
       "A",
       "B",
@@ -249,7 +249,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Repairing habitat should come before producing more mussels.",
+     "q": "Repairing habitat should come before producing more mussels.",
      "options": [
       "A",
       "B",
@@ -262,7 +262,7 @@
     },
     {
      "type": "choice",
-     "q": "21  Rearing mussels in captivity greatly increases the proportion of young that survive.",
+     "q": "Rearing mussels in captivity greatly increases the proportion of young that survive.",
      "options": [
       "A",
       "B",
@@ -275,7 +275,7 @@
     },
     {
      "type": "choice",
-     "q": "22  Restoration work can be justified in purely financial terms.",
+     "q": "Restoration work can be justified in purely financial terms.",
      "options": [
       "A",
       "B",
@@ -288,7 +288,7 @@
     },
     {
      "type": "choice",
-     "q": "23  Conditions inside the river bed itself must be tested before any mussels are released.",
+     "q": "Conditions inside the river bed itself must be tested before any mussels are released.",
      "options": [
       "A",
       "B",
@@ -301,7 +301,7 @@
     },
     {
      "type": "text",
-     "q": "24  A single adult mussel can clean as much as …………… of water every day.",
+     "q": "A single adult mussel can clean as much as …………… of water every day.",
      "answer": [
       "forty litres",
       "40 litres",
@@ -312,7 +312,7 @@
     },
     {
      "type": "text",
-     "q": "25  During the winter a glochidium remains attached to a …………… of its host fish.",
+     "q": "During the winter a glochidium remains attached to a …………… of its host fish.",
      "answer": [
       "gill filament",
       "gill filaments"
@@ -321,7 +321,7 @@
     },
     {
      "type": "text",
-     "q": "26  Reay describes hatchery work as a …………… , because in his view it fails to address the underlying cause of the decline.",
+     "q": "Reay describes hatchery work as a …………… , because in his view it fails to address the underlying cause of the decline.",
      "answer": [
       "hospital"
      ],
@@ -337,7 +337,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  The animals the public names as endangered have generally been chosen deliberately by organisations.",
+     "q": "The animals the public names as endangered have generally been chosen deliberately by organisations.",
      "options": [
       "YES",
       "NO",
@@ -348,7 +348,7 @@
     },
     {
      "type": "choice",
-     "q": "28  The reserves Krauss studied failed to protect the large mammals for which they were designed.",
+     "q": "The reserves Krauss studied failed to protect the large mammals for which they were designed.",
      "options": [
       "YES",
       "NO",
@@ -359,7 +359,7 @@
     },
     {
      "type": "choice",
-     "q": "29  If flagship campaigns were given up, the money they currently raise would be spent on less familiar species instead.",
+     "q": "If flagship campaigns were given up, the money they currently raise would be spent on less familiar species instead.",
      "options": [
       "YES",
       "NO",
@@ -370,7 +370,7 @@
     },
     {
      "type": "choice",
-     "q": "30  The writer regards the effect of flagships on public understanding as more damaging than their effect on budgets.",
+     "q": "The writer regards the effect of flagships on public understanding as more damaging than their effect on budgets.",
      "options": [
       "YES",
       "NO",
@@ -381,7 +381,7 @@
     },
     {
      "type": "choice",
-     "q": "31  Public opposition to reintroducing predators has grown stronger over the past decade.",
+     "q": "Public opposition to reintroducing predators has grown stronger over the past decade.",
      "options": [
       "YES",
       "NO",
@@ -392,61 +392,61 @@
     },
     {
      "type": "choice",
-     "q": "32  What does the writer say about the claim that a flagship species acts as an umbrella?",
+     "q": "What does the writer say about the claim that a flagship species acts as an umbrella?",
      "options": [
-      "A  It has seldom been checked against evidence.",
-      "B  It is rejected by most conservation organisations.",
-      "C  It applies only to species that require large territories.",
-      "D  It was invented in the 1980s by professional fundraisers."
+      "It has seldom been checked against evidence.",
+      "It is rejected by most conservation organisations.",
+      "It applies only to species that require large territories.",
+      "It was invented in the 1980s by professional fundraisers."
      ],
      "answer": 0,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "33  According to Krauss's findings, amphibians and restricted-range plants were left outside the reserves mainly because",
+     "q": "According to Krauss's findings, amphibians and restricted-range plants were left outside the reserves mainly because",
      "options": [
-      "A  the boundaries had been drawn too tightly around the target species.",
-      "B  they occur in habitats that large mammals tend to avoid.",
-      "C  planners had no accurate information about where they lived.",
-      "D  they were not considered worth protecting at the time."
+      "the boundaries had been drawn too tightly around the target species.",
+      "they occur in habitats that large mammals tend to avoid.",
+      "planners had no accurate information about where they lived.",
+      "they were not considered worth protecting at the time."
      ],
      "answer": 1,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "34  The writer's objection to the way conservation funding is distributed is that",
+     "q": "The writer's objection to the way conservation funding is distributed is that",
      "options": [
-      "A  the total sums involved are far too small.",
-      "B  governments refuse to fund work on individual species.",
-      "C  a very small number of species absorbs most of the money.",
-      "D  the species receiving money are not genuinely at risk."
+      "the total sums involved are far too small.",
+      "governments refuse to fund work on individual species.",
+      "a very small number of species absorbs most of the money.",
+      "the species receiving money are not genuinely at risk."
      ],
      "answer": 2,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "35  The writer argues that flagship campaigns lead the public to expect conservation to consist of",
+     "q": "The writer argues that flagship campaigns lead the public to expect conservation to consist of",
      "options": [
-      "A  the creation of new protected areas.",
-      "B  the rescue of individual animals.",
-      "C  the reintroduction of large predators.",
-      "D  the funding of scientific research."
+      "the creation of new protected areas.",
+      "the rescue of individual animals.",
+      "the reintroduction of large predators.",
+      "the funding of scientific research."
      ],
      "answer": 1,
      "topic": "Reading · Multiple choice"
     },
     {
      "type": "multi",
-     "q": "36  Which TWO characteristics does the writer say a better kind of flagship species would have? Choose TWO letters, A-E.",
+     "q": "Which TWO characteristics does the writer say a better kind of flagship species would have? Choose TWO letters, A-E.",
      "options": [
-      "A  It creates or maintains habitat that other species depend on.",
-      "B  It is already familiar to the general public.",
-      "C  It can be bred easily in captivity.",
-      "D  It carries out a process such as seed dispersal.",
-      "E  It is found in a large number of countries."
+      "It creates or maintains habitat that other species depend on.",
+      "It is already familiar to the general public.",
+      "It can be bred easily in captivity.",
+      "It carries out a process such as seed dispersal.",
+      "It is found in a large number of countries."
      ],
      "answer": [
       0,
@@ -457,72 +457,72 @@
     },
     {
      "type": "choice",
-     "q": "37  The writer accepts that appeals built around a single appealing animal are unusually effective at attracting ……………",
+     "q": "The writer accepts that appeals built around a single appealing animal are unusually effective at attracting ……………",
      "options": [
-      "A  donations",
-      "B  honesty",
-      "C  processes",
-      "D  function",
-      "E  predators",
-      "F  tourists",
-      "G  habitats",
-      "H  publicity",
-      "I  budgets",
-      "J  captivity"
+      "donations",
+      "honesty",
+      "processes",
+      "function",
+      "predators",
+      "tourists",
+      "habitats",
+      "publicity",
+      "budgets",
+      "captivity"
      ],
      "answer": 0,
      "topic": "Reading · Summary completion (word list)"
     },
     {
      "type": "choice",
-     "q": "38  The real objection is that a flagship is selected for its appearance rather than for its ecological ……………",
+     "q": "The real objection is that a flagship is selected for its appearance rather than for its ecological ……………",
      "options": [
-      "A  donations",
-      "B  honesty",
-      "C  processes",
-      "D  function",
-      "E  predators",
-      "F  tourists",
-      "G  habitats",
-      "H  publicity",
-      "I  budgets",
-      "J  captivity"
+      "donations",
+      "honesty",
+      "processes",
+      "function",
+      "predators",
+      "tourists",
+      "habitats",
+      "publicity",
+      "budgets",
+      "captivity"
      ],
      "answer": 3,
      "topic": "Reading · Summary completion (word list)"
     },
     {
      "type": "choice",
-     "q": "39  A better approach would be to choose species whose own activities supply the …………… that many other organisms occupy",
+     "q": "A better approach would be to choose species whose own activities supply the …………… that many other organisms occupy",
      "options": [
-      "A  donations",
-      "B  honesty",
-      "C  processes",
-      "D  function",
-      "E  predators",
-      "F  tourists",
-      "G  habitats",
-      "H  publicity",
-      "I  budgets",
-      "J  captivity"
+      "donations",
+      "honesty",
+      "processes",
+      "function",
+      "predators",
+      "tourists",
+      "habitats",
+      "publicity",
+      "budgets",
+      "captivity"
      ],
      "answer": 6,
      "topic": "Reading · Summary completion (word list)"
     },
     {
      "type": "choice",
-     "q": "40  The writer concludes that what matters is whether the choice is made with ……………",
+     "q": "The writer concludes that what matters is whether the choice is made with ……………",
      "options": [
-      "A  donations",
-      "B  honesty",
-      "C  processes",
-      "D  function",
-      "E  predators",
-      "F  tourists",
-      "G  habitats",
-      "H  publicity",
-      "I  budgets",
-      "J  captivity"
+      "donations",
+      "honesty",
+      "processes",
+      "function",
+      "predators",
+      "tourists",
+      "habitats",
+      "publicity",
+      "budgets",
+      "captivity"
      ],
      "answer": 1,
      "topic": "Reading · Summary completion (word list)"

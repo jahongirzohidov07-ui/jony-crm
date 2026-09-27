@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Cyriacus was unable to research his journeys before he left.",
+     "q": "Cyriacus was unable to research his journeys before he left.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  Cyriacus was inspired to begin travelling by a Roman ruin in his city.",
+     "q": "Cyriacus was inspired to begin travelling by a Roman ruin in his city.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  The Roman Emperor Trajan built the city of Ancona.",
+     "q": "The Roman Emperor Trajan built the city of Ancona.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Respect for ancient architecture was widespread in the 15th century.",
+     "q": "Respect for ancient architecture was widespread in the 15th century.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Cyriacus's experience as a merchant gave him skills he needed to investigate the ancient world.",
+     "q": "Cyriacus's experience as a merchant gave him skills he needed to investigate the ancient world.",
      "options": [
       "TRUE",
       "FALSE",
@@ -76,7 +76,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Before leaving on his journey, Cyriacus studied ancient languages.",
+     "q": "Before leaving on his journey, Cyriacus studied ancient languages.",
      "options": [
       "TRUE",
       "FALSE",
@@ -87,7 +87,7 @@
     },
     {
      "type": "choice",
-     "q": "7  Travelling by sea in the 15th century was easier than travelling on land.",
+     "q": "Travelling by sea in the 15th century was easier than travelling on land.",
      "options": [
       "TRUE",
       "FALSE",
@@ -98,7 +98,7 @@
     },
     {
      "type": "choice",
-     "q": "8  Cyriacus tried to make his fellow sea travelers more comfortable.",
+     "q": "Cyriacus tried to make his fellow sea travelers more comfortable.",
      "options": [
       "TRUE",
       "FALSE",
@@ -109,7 +109,7 @@
     },
     {
      "type": "text",
-     "q": "9  The city of Cyzicus - The wealth of the city had come from 9 ....................",
+     "q": "The city of Cyzicus - The wealth of the city had come from 9 ....................",
      "answer": [
       "commerce"
      ],
@@ -117,7 +117,7 @@
     },
     {
      "type": "text",
-     "q": "10  The city of Cyzicus - 10 .................... to the ancient city ruins not available when visited by Cyriacus",
+     "q": "The city of Cyzicus - 10 .................... to the ancient city ruins not available when visited by Cyriacus",
      "answer": [
       "guidebook"
      ],
@@ -125,7 +125,7 @@
     },
     {
      "type": "text",
-     "q": "11  The city of Cyzicus - The city was destroyed by a powerful 11 .................... in AD 123",
+     "q": "The city of Cyzicus - The city was destroyed by a powerful 11 .................... in AD 123",
      "answer": [
       "earthquake"
      ],
@@ -133,7 +133,7 @@
     },
     {
      "type": "text",
-     "q": "12  The city of Cyzicus - A year later Emperor Hadrian supported a 12 .................... to rebuild the city",
+     "q": "The city of Cyzicus - A year later Emperor Hadrian supported a 12 .................... to rebuild the city",
      "answer": [
       "campaign"
      ],
@@ -141,7 +141,7 @@
     },
     {
      "type": "text",
-     "q": "13  The city of Cyzicus - A temple to Jupiter was built - helped by an especially large 13 .................... from Emperor Hadrian",
+     "q": "The city of Cyzicus - A temple to Jupiter was built - helped by an especially large 13 .................... from Emperor Hadrian",
      "answer": [
       "donation"
      ],
@@ -149,7 +149,7 @@
     },
     {
      "type": "text",
-     "q": "14  The city of Cyzicus - Cyriacus found part of the temple, which was built in the time of Emperor Hadrian, and made drawings of the 14 .................... to the temple and its decorative carvings",
+     "q": "The city of Cyzicus - Cyriacus found part of the temple, which was built in the time of Emperor Hadrian, and made drawings of the 14 .................... to the temple and its decorative carvings",
      "answer": [
       "doorway"
      ],
@@ -157,7 +157,7 @@
     },
     {
      "type": "text",
-     "q": "15  The sanctuary of Delphi - By the 15th century Delphi had almost disappeared due to natural disasters and 15 ....................",
+     "q": "The sanctuary of Delphi - By the 15th century Delphi had almost disappeared due to natural disasters and 15 ....................",
      "answer": [
       "war"
      ],
@@ -165,7 +165,7 @@
     },
     {
      "type": "text",
-     "q": "16  The sanctuary of Delphi - Cyriacus found a 16 .................... above Delphi",
+     "q": "The sanctuary of Delphi - Cyriacus found a 16 .................... above Delphi",
      "answer": [
       "theatre",
       "theater"

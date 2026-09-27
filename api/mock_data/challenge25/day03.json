@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  It had financial problems.",
+     "q": "It had financial problems.",
      "options": [
       "A",
       "B",
@@ -36,7 +36,7 @@
     },
     {
      "type": "choice",
-     "q": "2  People who would be affected by it opposed it.",
+     "q": "People who would be affected by it opposed it.",
      "options": [
       "A",
       "B",
@@ -51,7 +51,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Isambard Kingdom Brunel was not responsible for it.",
+     "q": "Isambard Kingdom Brunel was not responsible for it.",
      "options": [
       "A",
       "B",
@@ -66,7 +66,7 @@
     },
     {
      "type": "choice",
-     "q": "4  It was taken out of service shortly after completion.",
+     "q": "It was taken out of service shortly after completion.",
      "options": [
       "A",
       "B",
@@ -81,7 +81,7 @@
     },
     {
      "type": "choice",
-     "q": "5  It was finished without Isambard Kingdom Brunel.",
+     "q": "It was finished without Isambard Kingdom Brunel.",
      "options": [
       "A",
       "B",
@@ -96,7 +96,7 @@
     },
     {
      "type": "choice",
-     "q": "6  It was repeatedly delayed.",
+     "q": "It was repeatedly delayed.",
      "options": [
       "A",
       "B",
@@ -111,7 +111,7 @@
     },
     {
      "type": "choice",
-     "q": "7  an example of Isambard Kingdom Brunel's persuasive powers",
+     "q": "an example of Isambard Kingdom Brunel's persuasive powers",
      "options": [
       "A",
       "B",
@@ -128,7 +128,7 @@
     },
     {
      "type": "choice",
-     "q": "8  a reference to one of Isambard Kingdom Brunel's designs becoming the generally accepted model of its type",
+     "q": "a reference to one of Isambard Kingdom Brunel's designs becoming the generally accepted model of its type",
      "options": [
       "A",
       "B",
@@ -145,7 +145,7 @@
     },
     {
      "type": "choice",
-     "q": "9  how one of Isambard Kingdom Brunel's ships was used for a purpose he had not intended",
+     "q": "how one of Isambard Kingdom Brunel's ships was used for a purpose he had not intended",
      "options": [
       "A",
       "B",
@@ -162,7 +162,7 @@
     },
     {
      "type": "choice",
-     "q": "10  a reason why one of Isambard Kingdom Brunel's ships was unprofitable",
+     "q": "a reason why one of Isambard Kingdom Brunel's ships was unprofitable",
      "options": [
       "A",
       "B",
@@ -179,7 +179,7 @@
     },
     {
      "type": "text",
-     "q": "11  The Great Eastern was originally intended to carry passengers to ............",
+     "q": "The Great Eastern was originally intended to carry passengers to ............",
      "answer": [
       "Australia"
      ],
@@ -187,7 +187,7 @@
     },
     {
      "type": "text",
-     "q": "12  It became less viable commercially as a result of the construction of the ............",
+     "q": "It became less viable commercially as a result of the construction of the ............",
      "answer": [
       "Suez Canal",
       "the Suez Canal"
@@ -196,7 +196,7 @@
     },
     {
      "type": "text",
-     "q": "13  It was bought for use in laying ............",
+     "q": "It was bought for use in laying ............",
      "answer": [
       "telegraphic cable"
      ],
@@ -212,7 +212,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "14  Which country buys metal waste from the USA?",
+     "q": "Which country buys metal waste from the USA?",
      "answer": [
       "Japan"
      ],
@@ -220,7 +220,7 @@
     },
     {
      "type": "text",
-     "q": "15  Which part of the USA has most space left for landfills?",
+     "q": "Which part of the USA has most space left for landfills?",
      "answer": [
       "Western states",
       "the Western states"
@@ -229,7 +229,7 @@
     },
     {
      "type": "text",
-     "q": "16  What is the main objection to burning waste?",
+     "q": "What is the main objection to burning waste?",
      "answer": [
       "air pollution",
       "the air pollution"
@@ -238,7 +238,7 @@
     },
     {
      "type": "text",
-     "q": "17  Which product is cheaper to recycle than to produce from raw materials?",
+     "q": "Which product is cheaper to recycle than to produce from raw materials?",
      "answer": [
       "steel",
       "recycling steel"
@@ -247,7 +247,7 @@
     },
     {
      "type": "text",
-     "q": "18  What is the largest component of the landfills?",
+     "q": "What is the largest component of the landfills?",
      "answer": [
       "paper"
      ],
@@ -255,7 +255,7 @@
     },
     {
      "type": "text",
-     "q": "19  What percentage of waste do most US towns recycle?",
+     "q": "What percentage of waste do most US towns recycle?",
      "answer": [
       "17 per cent",
       "17 percent",
@@ -266,7 +266,7 @@
     },
     {
      "type": "choice",
-     "q": "20  The USA should burn more of its waste.",
+     "q": "The USA should burn more of its waste.",
      "options": [
       "YES",
       "NO",
@@ -277,7 +277,7 @@
     },
     {
      "type": "choice",
-     "q": "21  People in Seattle recycle because they have to pay for unrecycled waste.",
+     "q": "People in Seattle recycle because they have to pay for unrecycled waste.",
      "options": [
       "YES",
       "NO",
@@ -288,7 +288,7 @@
     },
     {
      "type": "choice",
-     "q": "22  There is no system reinforcing the recycling laws in Los Angeles.",
+     "q": "There is no system reinforcing the recycling laws in Los Angeles.",
      "options": [
       "YES",
       "NO",
@@ -299,7 +299,7 @@
     },
     {
      "type": "choice",
-     "q": "23  Germany is the country with the most advanced recycling laws.",
+     "q": "Germany is the country with the most advanced recycling laws.",
      "options": [
       "YES",
       "NO",
@@ -310,7 +310,7 @@
     },
     {
      "type": "choice",
-     "q": "24  Some German manufactures made false claims about recycling their packaging.",
+     "q": "Some German manufactures made false claims about recycling their packaging.",
      "options": [
       "YES",
       "NO",
@@ -321,7 +321,7 @@
     },
     {
      "type": "choice",
-     "q": "25  Given time, the recycling systems in the USA will be able to cope with the amounts of waste produced.",
+     "q": "Given time, the recycling systems in the USA will be able to cope with the amounts of waste produced.",
      "options": [
       "YES",
       "NO",
@@ -332,7 +332,7 @@
     },
     {
      "type": "choice",
-     "q": "26  People in Seattle reacted to recycling more enthusiastically than expected.",
+     "q": "People in Seattle reacted to recycling more enthusiastically than expected.",
      "options": [
       "YES",
       "NO",
@@ -351,55 +351,55 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  The writer thinks that recent technological advances in academic research have brought about",
+     "q": "The writer thinks that recent technological advances in academic research have brought about",
      "options": [
-      "A  more equality among institutions.",
-      "B  more institutional publications.",
-      "C  the publication of more specialised journals.",
-      "D  the production of more original documents."
+      "more equality among institutions.",
+      "more institutional publications.",
+      "the publication of more specialised journals.",
+      "the production of more original documents."
      ],
      "answer": 0,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "28  The writer says that the historians today tend to think of themselves as people",
+     "q": "The writer says that the historians today tend to think of themselves as people",
      "options": [
-      "A  who are highly competitive.",
-      "B  who work collaboratively with colleagues.",
-      "C  who are socially and professionally isolated.",
-      "D  who are different from their popular image."
+      "who are highly competitive.",
+      "who work collaboratively with colleagues.",
+      "who are socially and professionally isolated.",
+      "who are different from their popular image."
      ],
      "answer": 2,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "29  The writer refers to his own particular research project as an example of",
+     "q": "The writer refers to his own particular research project as an example of",
      "options": [
-      "A  why historians have special technological needs.",
-      "B  the reasons for the discovery of modern technologies.",
-      "C  the contrast between old-style research methods and newer ones.",
-      "D  how new technology can be used in research in many academic fields."
+      "why historians have special technological needs.",
+      "the reasons for the discovery of modern technologies.",
+      "the contrast between old-style research methods and newer ones.",
+      "how new technology can be used in research in many academic fields."
      ],
      "answer": 3,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "30  Why does the writer say the recording of video-conferencing meetings is useful?",
+     "q": "Why does the writer say the recording of video-conferencing meetings is useful?",
      "options": [
-      "A  It makes participants more careful of what they say.",
-      "B  It allows later research into how the project was carried out.",
-      "C  It provides evidence of the researcher's technological skills.",
-      "D  It eliminates the need for using printed or graphic images."
+      "It makes participants more careful of what they say.",
+      "It allows later research into how the project was carried out.",
+      "It provides evidence of the researcher's technological skills.",
+      "It eliminates the need for using printed or graphic images."
      ],
      "answer": 1,
      "topic": "Reading - Multiple choice"
     },
     {
      "type": "choice",
-     "q": "31  Some technological advances can help reduce the loneliness of certain higher level students.",
+     "q": "Some technological advances can help reduce the loneliness of certain higher level students.",
      "options": [
       "YES",
       "NO",
@@ -410,7 +410,7 @@
     },
     {
      "type": "choice",
-     "q": "32  Video-conferencing is especially useful for consultations between students and teachers.",
+     "q": "Video-conferencing is especially useful for consultations between students and teachers.",
      "options": [
       "YES",
       "NO",
@@ -421,7 +421,7 @@
     },
     {
      "type": "choice",
-     "q": "33  An interactive website is more suitable for students than for high level research work.",
+     "q": "An interactive website is more suitable for students than for high level research work.",
      "options": [
       "YES",
       "NO",
@@ -432,7 +432,7 @@
     },
     {
      "type": "choice",
-     "q": "34  Wiki publications are not regarded by academics as very reliable.",
+     "q": "Wiki publications are not regarded by academics as very reliable.",
      "options": [
       "YES",
       "NO",
@@ -443,114 +443,114 @@
     },
     {
      "type": "choice",
-     "q": "35  New technologies may in the future result in a ............ of the ways in which teaching and research are carried out.",
+     "q": "New technologies may in the future result in a ............ of the ways in which teaching and research are carried out.",
      "options": [
-      "A  cautious",
-      "B  determination",
-      "C  categories",
-      "D  transformation",
-      "E  contributions",
-      "F  qualified",
-      "G  ownership",
-      "H  continuation",
-      "I  insupportable",
-      "J  confident",
-      "K  guidelines"
+      "cautious",
+      "determination",
+      "categories",
+      "transformation",
+      "contributions",
+      "qualified",
+      "ownership",
+      "continuation",
+      "insupportable",
+      "confident",
+      "guidelines"
      ],
      "answer": 3,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "36  However, there will be difficulties, such as disagreements over the ............ of the materials produced by a collective effort.",
+     "q": "However, there will be difficulties, such as disagreements over the ............ of the materials produced by a collective effort.",
      "options": [
-      "A  cautious",
-      "B  determination",
-      "C  categories",
-      "D  transformation",
-      "E  contributions",
-      "F  qualified",
-      "G  ownership",
-      "H  continuation",
-      "I  insupportable",
-      "J  confident",
-      "K  guidelines"
+      "cautious",
+      "determination",
+      "categories",
+      "transformation",
+      "contributions",
+      "qualified",
+      "ownership",
+      "continuation",
+      "insupportable",
+      "confident",
+      "guidelines"
      ],
      "answer": 6,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "37  Also, with ............ from a number of people, it may be hard to maintain high standards.",
+     "q": "Also, with ............ from a number of people, it may be hard to maintain high standards.",
      "options": [
-      "A  cautious",
-      "B  determination",
-      "C  categories",
-      "D  transformation",
-      "E  contributions",
-      "F  qualified",
-      "G  ownership",
-      "H  continuation",
-      "I  insupportable",
-      "J  confident",
-      "K  guidelines"
+      "cautious",
+      "determination",
+      "categories",
+      "transformation",
+      "contributions",
+      "qualified",
+      "ownership",
+      "continuation",
+      "insupportable",
+      "confident",
+      "guidelines"
      ],
      "answer": 4,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "38  More, ............ participants in projects may not be at ease with the new technologies",
+     "q": "More, ............ participants in projects may not be at ease with the new technologies",
      "options": [
-      "A  cautious",
-      "B  determination",
-      "C  categories",
-      "D  transformation",
-      "E  contributions",
-      "F  qualified",
-      "G  ownership",
-      "H  continuation",
-      "I  insupportable",
-      "J  confident",
-      "K  guidelines"
+      "cautious",
+      "determination",
+      "categories",
+      "transformation",
+      "contributions",
+      "qualified",
+      "ownership",
+      "continuation",
+      "insupportable",
+      "confident",
+      "guidelines"
      ],
      "answer": 0,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "39  and may not feel ............ certain aspects of video-conferencing.",
+     "q": "and may not feel ............ certain aspects of video-conferencing.",
      "options": [
-      "A  cautious",
-      "B  determination",
-      "C  categories",
-      "D  transformation",
-      "E  contributions",
-      "F  qualified",
-      "G  ownership",
-      "H  continuation",
-      "I  insupportable",
-      "J  confident",
-      "K  guidelines"
+      "cautious",
+      "determination",
+      "categories",
+      "transformation",
+      "contributions",
+      "qualified",
+      "ownership",
+      "continuation",
+      "insupportable",
+      "confident",
+      "guidelines"
      ],
      "answer": 9,
      "topic": "Reading - Summary completion"
     },
     {
      "type": "choice",
-     "q": "40  In fact, new ............ for personal interaction might be called for.",
+     "q": "In fact, new ............ for personal interaction might be called for.",
      "options": [
-      "A  cautious",
-      "B  determination",
-      "C  categories",
-      "D  transformation",
-      "E  contributions",
-      "F  qualified",
-      "G  ownership",
-      "H  continuation",
-      "I  insupportable",
-      "J  confident",
-      "K  guidelines"
+      "cautious",
+      "determination",
+      "categories",
+      "transformation",
+      "contributions",
+      "qualified",
+      "ownership",
+      "continuation",
+      "insupportable",
+      "confident",
+      "guidelines"
      ],
      "answer": 10,
      "topic": "Reading - Summary completion"

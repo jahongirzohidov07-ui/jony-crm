@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  City transport developed slower than other means of communication.",
+     "q": "City transport developed slower than other means of communication.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  The pollution caused by city transport has been largely ignored.",
+     "q": "The pollution caused by city transport has been largely ignored.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Most states in America have taken actions to reduce vehicle growth.",
+     "q": "Most states in America have taken actions to reduce vehicle growth.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Public transport is particularly difficult to use on steep hills.",
+     "q": "Public transport is particularly difficult to use on steep hills.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Private cars are much more convenient for those who tend to buy a lot things during shopping.",
+     "q": "Private cars are much more convenient for those who tend to buy a lot things during shopping.",
      "options": [
       "TRUE",
       "FALSE",
@@ -76,7 +76,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Government should impose compulsory restrictions on car use.",
+     "q": "Government should impose compulsory restrictions on car use.",
      "options": [
       "TRUE",
       "FALSE",
@@ -87,7 +87,7 @@
     },
     {
      "type": "choice",
-     "q": "7  It is likely to be resisted by both individuals and manufacturers.",
+     "q": "It is likely to be resisted by both individuals and manufacturers.",
      "options": [
       "A",
       "B",
@@ -98,7 +98,7 @@
     },
     {
      "type": "choice",
-     "q": "8  It can run at high speed in cities.",
+     "q": "It can run at high speed in cities.",
      "options": [
       "A",
       "B",
@@ -109,7 +109,7 @@
     },
     {
      "type": "choice",
-     "q": "9  It is not necessary to share with the general public.",
+     "q": "It is not necessary to share with the general public.",
      "options": [
       "A",
       "B",
@@ -120,7 +120,7 @@
     },
     {
      "type": "choice",
-     "q": "10  It is always controlled by a computer.",
+     "q": "It is always controlled by a computer.",
      "options": [
       "A",
       "B",
@@ -131,7 +131,7 @@
     },
     {
      "type": "choice",
-     "q": "11  It can run on existing roads.",
+     "q": "It can run on existing roads.",
      "options": [
       "A",
       "B",
@@ -142,7 +142,7 @@
     },
     {
      "type": "choice",
-     "q": "12  It can be bought by private buyers.",
+     "q": "It can be bought by private buyers.",
      "options": [
       "A",
       "B",
@@ -153,7 +153,7 @@
     },
     {
      "type": "multi",
-     "q": "13  Choose THREE letters, A-G. Which THREE of the following are advantages of the new transport system?",
+     "q": "Choose THREE letters, A-G. Which THREE of the following are advantages of the new transport system?",
      "options": [
       "economy",
       "space",
@@ -180,7 +180,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "14  some collect to protect certain species from ......",
+     "q": "some collect to protect certain species from ......",
      "answer": [
       "extinction"
      ],
@@ -188,7 +188,7 @@
     },
     {
      "type": "text",
-     "q": "15  others collect seeds for their potential to produce ......",
+     "q": "others collect seeds for their potential to produce ......",
      "answer": [
       "drugs or crops",
       "the drugs or crops"
@@ -197,7 +197,7 @@
     },
     {
      "type": "text",
-     "q": "16  The ...... of them included both gardeners and botanists",
+     "q": "The ...... of them included both gardeners and botanists",
      "answer": [
       "pioneers",
       "the pioneers"
@@ -206,7 +206,7 @@
     },
     {
      "type": "text",
-     "q": "17  such as ......, who sponsored collectors out of his own pocket",
+     "q": "such as ......, who sponsored collectors out of his own pocket",
      "answer": [
       "Joseph Banks",
       "Sir Joseph Banks",
@@ -216,7 +216,7 @@
     },
     {
      "type": "text",
-     "q": "18  where seeds are all stored in the ...... at low temperature",
+     "q": "where seeds are all stored in the ...... at low temperature",
      "answer": [
       "underground vaults",
       "its underground vaults"
@@ -225,7 +225,7 @@
     },
     {
      "type": "choice",
-     "q": "19  The reason to collect seeds is different from the past.",
+     "q": "The reason to collect seeds is different from the past.",
      "options": [
       "TRUE",
       "FALSE",
@@ -236,7 +236,7 @@
     },
     {
      "type": "choice",
-     "q": "20  The Millennium Seed Bank is one of the earliest seed banks.",
+     "q": "The Millennium Seed Bank is one of the earliest seed banks.",
      "options": [
       "TRUE",
       "FALSE",
@@ -247,7 +247,7 @@
     },
     {
      "type": "choice",
-     "q": "21  A major reason for plant species extinction is farmland expansion.",
+     "q": "A major reason for plant species extinction is farmland expansion.",
      "options": [
       "TRUE",
       "FALSE",
@@ -258,7 +258,7 @@
     },
     {
      "type": "choice",
-     "q": "22  The method scientists use to store seeds is similar to that used by farmers.",
+     "q": "The method scientists use to store seeds is similar to that used by farmers.",
      "options": [
       "TRUE",
       "FALSE",
@@ -269,7 +269,7 @@
     },
     {
      "type": "choice",
-     "q": "23  Technological development is the only hope to save plant species.",
+     "q": "Technological development is the only hope to save plant species.",
      "options": [
       "TRUE",
       "FALSE",
@@ -280,7 +280,7 @@
     },
     {
      "type": "choice",
-     "q": "24  The works of seed conservation are often limited by insufficient financial resources.",
+     "q": "The works of seed conservation are often limited by insufficient financial resources.",
      "options": [
       "TRUE",
       "FALSE",
@@ -291,7 +291,7 @@
     },
     {
      "type": "multi",
-     "q": "25-26  Choose TWO letters, A-E. Which TWO of the following are provided by plants to the human world?",
+     "q": "Choose TWO letters, A-E. Which TWO of the following are provided by plants to the human world?",
      "options": [
       "food",
       "artefact",
@@ -315,7 +315,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  The title of the debate is not unbiased.",
+     "q": "The title of the debate is not unbiased.",
      "options": [
       "TRUE",
       "FALSE",
@@ -326,7 +326,7 @@
     },
     {
      "type": "choice",
-     "q": "28  All the scientists invited to the debate were from the field of medicine.",
+     "q": "All the scientists invited to the debate were from the field of medicine.",
      "options": [
       "TRUE",
       "FALSE",
@@ -337,7 +337,7 @@
     },
     {
      "type": "choice",
-     "q": "29  The message those scientists who conducted the survey were sending was people shouldn’t take risks.",
+     "q": "The message those scientists who conducted the survey were sending was people shouldn’t take risks.",
      "options": [
       "TRUE",
       "FALSE",
@@ -348,7 +348,7 @@
     },
     {
      "type": "choice",
-     "q": "30  All the 40 listed technologies are riskier than other technologies.",
+     "q": "All the 40 listed technologies are riskier than other technologies.",
      "options": [
       "TRUE",
       "FALSE",
@@ -359,7 +359,7 @@
     },
     {
      "type": "choice",
-     "q": "31  It was worth taking the risks to invent antibiotics.",
+     "q": "It was worth taking the risks to invent antibiotics.",
      "options": [
       "TRUE",
       "FALSE",
@@ -370,7 +370,7 @@
     },
     {
      "type": "choice",
-     "q": "32  All the other inventions on the list were also judged by the precautionary principle.",
+     "q": "All the other inventions on the list were also judged by the precautionary principle.",
      "options": [
       "TRUE",
       "FALSE",
@@ -381,7 +381,7 @@
     },
     {
      "type": "text",
-     "q": "33  people should also the consideration of the ......",
+     "q": "people should also the consideration of the ......",
      "answer": [
       "consumer’s choice",
       "consumer's choice",
@@ -393,7 +393,7 @@
     },
     {
      "type": "text",
-     "q": "34  along with the usual consideration of ......",
+     "q": "along with the usual consideration of ......",
      "answer": [
       "risk and benefit"
      ],
@@ -401,7 +401,7 @@
     },
     {
      "type": "text",
-     "q": "35  people still enjoy ...... for the excitement it provides",
+     "q": "people still enjoy ...... for the excitement it provides",
      "answer": [
       "skiing"
      ],
@@ -409,7 +409,7 @@
     },
     {
      "type": "text",
-     "q": "36  experts believe that future population desperately needs ......",
+     "q": "experts believe that future population desperately needs ......",
      "answer": [
       "GM crops"
      ],
@@ -417,7 +417,7 @@
     },
     {
      "type": "text",
-     "q": "37  have not been directed towards increasing the yield of ......",
+     "q": "have not been directed towards increasing the yield of ......",
      "answer": [
       "wheat and rice",
       "rice and wheat"
@@ -426,7 +426,7 @@
     },
     {
      "type": "text",
-     "q": "38  but to reduce the cost of ......",
+     "q": "but to reduce the cost of ......",
      "answer": [
       "production"
      ],
@@ -434,7 +434,7 @@
     },
     {
      "type": "text",
-     "q": "39  has often led people to ...... science",
+     "q": "has often led people to ...... science",
      "answer": [
       "mistrust"
      ],
@@ -442,7 +442,7 @@
     },
     {
      "type": "choice",
-     "q": "40  What is the main theme of the passage?",
+     "q": "What is the main theme of the passage?",
      "options": [
       "people have the right to doubt science and technologies",
       "the precautionary principle could have prevented the development of science and technology",

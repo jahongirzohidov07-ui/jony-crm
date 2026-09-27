@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Surname: ....................",
+     "q": "Surname: ....................",
      "answer": [
       "Redfern"
      ],
@@ -27,7 +27,7 @@
     },
     {
      "type": "text",
-     "q": "2  Address: .................... Marlow Gardens, Ashcombe",
+     "q": "Address: .................... Marlow Gardens, Ashcombe",
      "answer": [
       "14",
       "fourteen"
@@ -36,7 +36,7 @@
     },
     {
      "type": "text",
-     "q": "3  Postcode: ....................",
+     "q": "Postcode: ....................",
      "answer": [
       "BS7 4QL",
       "BS74QL"
@@ -45,7 +45,7 @@
     },
     {
      "type": "text",
-     "q": "4  Mobile number: ....................",
+     "q": "Mobile number: ....................",
      "answer": [
       "07811 620394",
       "07811620394"
@@ -54,7 +54,7 @@
     },
     {
      "type": "text",
-     "q": "5  Current job: ....................",
+     "q": "Current job: ....................",
      "answer": [
       "teaching assistant"
      ],
@@ -62,7 +62,7 @@
     },
     {
      "type": "text",
-     "q": "6  Day she is available each week: ....................",
+     "q": "Day she is available each week: ....................",
      "answer": [
       "Thursday"
      ],
@@ -70,7 +70,7 @@
     },
     {
      "type": "text",
-     "q": "7  Activity she would prefer to offer: ....................",
+     "q": "Activity she would prefer to offer: ....................",
      "answer": [
       "gardening"
      ],
@@ -78,7 +78,7 @@
     },
     {
      "type": "text",
-     "q": "8  Date of the induction course: ....................",
+     "q": "Date of the induction course: ....................",
      "answer": [
       "12 March",
       "12th March",
@@ -89,7 +89,7 @@
     },
     {
      "type": "text",
-     "q": "9  Cost of the background check: £....................",
+     "q": "Cost of the background check: £....................",
      "answer": [
       "18",
       "£18",
@@ -99,7 +99,7 @@
     },
     {
      "type": "text",
-     "q": "10  Proof of identity she must bring: her ....................",
+     "q": "Proof of identity she must bring: her ....................",
      "answer": [
       "passport"
      ],
@@ -109,57 +109,57 @@
   },
   {
    "title": "Part 2",
-   "instructions": "Questions 11-14\nChoose the correct letter, A, B or C.\n\nQuestions 15-20\nLabel the plan below. Write the correct letter, A-H, next to Questions 15-20.\nThe plan shows the ground floor of the building. You come in through the main entrance at the front; the reception desk is directly in front of you, and one straight corridor runs from reception to the back door. Four rooms lie on the left-hand side of the corridor: A is the first room on the left (nearest the entrance), B is the second room on the left, C is the third room on the left, and D is the last room on the left (at the back, beside the back door). Four rooms lie on the right-hand side of the corridor: E is the first room on the right (nearest the entrance, directly opposite A), F is the second room on the right, G is the third room on the right, and H is the last room on the right (at the back).",
+   "instructions": "Questions 11-14\nChoose the correct letter, A, B or C.\n\nQuestions 15-20\nLabel the plan below.\nWrite the correct letter, A-H, next to Questions 15-20.",
    "passage": "",
    "script": "NARRATOR: Part 2. You will hear the manager of a new community centre giving a short talk to a group of visitors. First you have some time to look at questions 11 to 20. [pause] Now listen carefully and answer questions 11 to 20.\n\nMANAGER: Good afternoon everybody, and welcome to the Ashcombe Wellbeing Hub. My name's Ravi and I run the place. Before I take you round, let me tell you what this building is and how it works, because almost everything people assume about us turns out to be wrong.\n\nLet's start with the building itself. Nearly every visitor walks through that door and asks whether this was the old school. It wasn't - the school stood on the other side of the park and was knocked down in the nineteen-nineties. And no, we're not the old library either; the library is very much alive and it's two doors along on your left. What this actually was, right up until two thousand and eleven, was Ashcombe fire station. In the main hall you can still see the hook where the bell hung.\n\nNow, money, because people always want to know. The general assumption is that the council paid for all of this. The council sold us the building for one pound, which was generous, but the two point three million pounds that the refurbishment cost came almost entirely from a national health charity, who ran a competition for disused public buildings and, to our astonishment, we won it. Local residents raised about fourteen thousand - sorry, forty thousand pounds, and that bought all the furniture.\n\nThe third thing is who comes. When we drew up the plans, we expected our typical visitor to be a woman over seventy, and plenty of them do come, in very much the numbers we predicted. Young families started coming too, rather more of them than we had expected, and that pleased us enormously. But the genuine surprise - and I say this as somebody who has run community centres for twenty years - has been the men. Men are now very nearly half of our regular visitors. In my previous job it was about one in nine. The woodwork group and the repair cafe must have something to do with it.\n\nAnd one piece of practical advice, if you're thinking of coming back as a visitor rather than on a tour. Please don't try to book online. The booking system exists only for our paid courses, and you certainly don't have to sign up for one of those in order to use the building. Just turn up on a Wednesday. Wednesday is our open day: every room is staffed and every group is running.\n\nRight. The ground floor is simple. You come in at the front; the reception desk is straight ahead, and behind it one straight corridor runs the whole length of the building to the back door. On your left there are four rooms - A, B, C and D, with A nearest the entrance and D at the far end. On your right there are another four - E, F, G and H, E nearest the entrance and H at the very back.\n\nLet's begin on the right-hand side. The very first door on your right, as soon as you pass reception, is the cafe. It's at the front so that people can see in from the street.\n\nThe quiet room is the opposite case. Nobody speaks above a whisper in there and phones have to be switched off, so we put it as far from the cafe as the building allows: it's on the left, the very last room on that side, right next to the back door.\n\nThe toy library is the first room on your left, directly opposite the cafe, so that parents can keep an eye on the pushchairs.\n\nCounselling next. We have two counsellors here three days a week, and their office is on the right, the third door down - that's between the store room and the music room.\n\nThe cookery room is on the left, the second door - no, sorry, the third door on that side, directly opposite the counselling office. The second room on the left, by the way, is the staff office.\n\nAnd finally the music room, which is the last room on the right, at the very back of the building, because of the noise.\n\nRight - shall we make a start?",
    "questions": [
     {
      "type": "choice",
-     "q": "11  Before it became a community centre, the building was",
+     "q": "Before it became a community centre, the building was",
      "options": [
-      "A  a school.",
-      "B  a library.",
-      "C  a fire station."
+      "a school.",
+      "a library.",
+      "a fire station."
      ],
      "answer": 2,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "12  Most of the money for the refurbishment came from",
+     "q": "Most of the money for the refurbishment came from",
      "options": [
-      "A  the local council.",
-      "B  a national charity.",
-      "C  donations by residents."
+      "the local council.",
+      "a national charity.",
+      "donations by residents."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "13  What has most surprised the speaker since the centre opened?",
+     "q": "What has most surprised the speaker since the centre opened?",
      "options": [
-      "A  the number of men who attend",
-      "B  the number of young families who attend",
-      "C  the number of visitors aged over seventy"
+      "the number of men who attend",
+      "the number of young families who attend",
+      "the number of visitors aged over seventy"
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "14  The speaker advises new visitors to",
+     "q": "The speaker advises new visitors to",
      "options": [
-      "A  reserve a place using the website.",
-      "B  come along on a Wednesday.",
-      "C  sign up for one of the paid courses."
+      "reserve a place using the website.",
+      "come along on a Wednesday.",
+      "sign up for one of the paid courses."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "15  the cafe",
+     "q": "the cafe",
      "options": [
       "A",
       "B",
@@ -171,11 +171,12 @@
       "H"
      ],
      "answer": 4,
-     "topic": "Listening · Plan labelling"
+     "topic": "Listening · Plan labelling",
+     "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTYwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI4MDAiIGhlaWdodD0iNTYwIiBmaWxsPSIjZmZmZmZmIi8+PHRleHQgeD0iNDAwIiB5PSIzNiIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxMTEiPkFzaGNvbWJlIFdlbGxiZWluZyBIdWIgLSBHcm91bmQgRmxvb3I8L3RleHQ+PHJlY3QgeD0iMzYwIiB5PSI5MCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjMyMCIgZmlsbD0iI2ZmZmZmZiIvPjxyZWN0IHg9IjIwMCIgeT0iNDEwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjZjRmNGY0Ii8+PGcgZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiPjxyZWN0IHg9IjIwMCIgeT0iOTAiIHdpZHRoPSIxNjAiIGhlaWdodD0iODAiLz48cmVjdCB4PSIyMDAiIHk9IjE3MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI4MCIvPjxyZWN0IHg9IjIwMCIgeT0iMjUwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIi8+PHJlY3QgeD0iMjAwIiB5PSIzMzAiIHdpZHRoPSIxNjAiIGhlaWdodD0iODAiLz48cmVjdCB4PSI0NDAiIHk9IjkwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIi8+PHJlY3QgeD0iNDQwIiB5PSIxNzAiIHdpZHRoPSIxNjAiIGhlaWdodD0iODAiLz48cmVjdCB4PSI0NDAiIHk9IjI1MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI4MCIvPjxyZWN0IHg9IjQ0MCIgeT0iMzMwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIi8+PC9nPjxnIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIj48bGluZSB4MT0iMzYwIiB5MT0iOTAiIHgyPSIzNzAiIHkyPSI5MCIvPjxsaW5lIHgxPSI0MzAiIHkxPSI5MCIgeDI9IjQ0MCIgeTI9IjkwIi8+PGxpbmUgeDE9IjIwMCIgeTE9IjQxMCIgeDI9IjIwMCIgeTI9IjUwMCIvPjxsaW5lIHgxPSI2MDAiIHkxPSI0MTAiIHgyPSI2MDAiIHkyPSI1MDAiLz48bGluZSB4MT0iMTk5IiB5MT0iNTAwIiB4Mj0iMzcwIiB5Mj0iNTAwIi8+PGxpbmUgeDE9IjQzMCIgeTE9IjUwMCIgeDI9IjYwMSIgeTI9IjUwMCIvPjwvZz48ZyBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iNSI+PGxpbmUgeDE9IjM2MCIgeTE9IjExNSIgeDI9IjM2MCIgeTI9IjE0NSIvPjxsaW5lIHgxPSIzNjAiIHkxPSIxOTUiIHgyPSIzNjAiIHkyPSIyMjUiLz48bGluZSB4MT0iMzYwIiB5MT0iMjc1IiB4Mj0iMzYwIiB5Mj0iMzA1Ii8+PGxpbmUgeDE9IjM2MCIgeTE9IjM1NSIgeDI9IjM2MCIgeTI9IjM4NSIvPjxsaW5lIHgxPSI0NDAiIHkxPSIxMTUiIHgyPSI0NDAiIHkyPSIxNDUiLz48bGluZSB4MT0iNDQwIiB5MT0iMTk1IiB4Mj0iNDQwIiB5Mj0iMjI1Ii8+PGxpbmUgeDE9IjQ0MCIgeTE9IjI3NSIgeDI9IjQ0MCIgeTI9IjMwNSIvPjxsaW5lIHgxPSI0NDAiIHkxPSIzNTUiIHgyPSI0NDAiIHkyPSIzODUiLz48L2c+PHJlY3QgeD0iMzQ1IiB5PSI0MjgiIHdpZHRoPSIxMTAiIGhlaWdodD0iMzAiIGZpbGw9IiNkMGQwZDAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNDAwIiB5PSI0NDkiIGZvbnQtc2l6ZT0iMTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxMTEiPlJlY2VwdGlvbjwvdGV4dD48dGV4dCB4PSI0MDAiIHk9IjI1NSIgZm9udC1zaXplPSIxNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzMzMyIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDQwMCAyNTApIj5Db3JyaWRvcjwvdGV4dD48dGV4dCB4PSI0MDAiIHk9Ijc4IiBmb250LXNpemU9IjE1IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+QmFjayBkb29yPC90ZXh0PjxwYXRoIGQ9Ik00MDAgNTI4IEw0MDAgNTEyIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0zOTMgNTE2IEw0MDAgNTA1IEw0MDcgNTE2IFoiIGZpbGw9IiMxMTEiLz48dGV4dCB4PSI0MDAiIHk9IjU0OCIgZm9udC1zaXplPSIxNSIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxMTEiPk1haW4gZW50cmFuY2U8L3RleHQ+PGcgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxMTEiPjxjaXJjbGUgY3g9IjI4MCIgY3k9IjEzMCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iMjgwIiB5PSIxMzYiPkQ8L3RleHQ+PGNpcmNsZSBjeD0iMjgwIiBjeT0iMjEwIiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSIyODAiIHk9IjIxNiI+QzwvdGV4dD48Y2lyY2xlIGN4PSIyODAiIGN5PSIyOTAiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjI4MCIgeT0iMjk2Ij5CPC90ZXh0PjxjaXJjbGUgY3g9IjI4MCIgY3k9IjM3MCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iMjgwIiB5PSIzNzYiPkE8L3RleHQ+PGNpcmNsZSBjeD0iNTIwIiBjeT0iMTMwIiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1MjAiIHk9IjEzNiI+SDwvdGV4dD48Y2lyY2xlIGN4PSI1MjAiIGN5PSIyMTAiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjUyMCIgeT0iMjE2Ij5HPC90ZXh0PjxjaXJjbGUgY3g9IjUyMCIgY3k9IjI5MCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNTIwIiB5PSIyOTYiPkY8L3RleHQ+PGNpcmNsZSBjeD0iNTIwIiBjeT0iMzcwIiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1MjAiIHk9IjM3NiI+RTwvdGV4dD48L2c+PC9zdmc+"
     },
     {
      "type": "choice",
-     "q": "16  the quiet room",
+     "q": "the quiet room",
      "options": [
       "A",
       "B",
@@ -191,7 +192,7 @@
     },
     {
      "type": "choice",
-     "q": "17  the toy library",
+     "q": "the toy library",
      "options": [
       "A",
       "B",
@@ -207,7 +208,7 @@
     },
     {
      "type": "choice",
-     "q": "18  the counselling office",
+     "q": "the counselling office",
      "options": [
       "A",
       "B",
@@ -223,7 +224,7 @@
     },
     {
      "type": "choice",
-     "q": "19  the cookery room",
+     "q": "the cookery room",
      "options": [
       "A",
       "B",
@@ -239,7 +240,7 @@
     },
     {
      "type": "choice",
-     "q": "20  the music room",
+     "q": "the music room",
      "options": [
       "A",
       "B",
@@ -263,51 +264,51 @@
    "questions": [
     {
      "type": "choice",
-     "q": "21  What was the main problem with the pilot study?",
+     "q": "What was the main problem with the pilot study?",
      "options": [
-      "A  Too few people passed the observation point.",
-      "B  The two observers recorded the same events differently.",
-      "C  The recording equipment did not work properly."
+      "Too few people passed the observation point.",
+      "The two observers recorded the same events differently.",
+      "The recording equipment did not work properly."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "22  Why are the students moving their observations to the late afternoon?",
+     "q": "Why are the students moving their observations to the late afternoon?",
      "options": [
-      "A  The shopping centre is busier then.",
-      "B  Both students are free at that time.",
-      "C  The flow of people is more consistent then."
+      "The shopping centre is busier then.",
+      "Both students are free at that time.",
+      "The flow of people is more consistent then."
      ],
      "answer": 2,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "23  What does Dr Halvorsen advise about the questionnaire?",
+     "q": "What does Dr Halvorsen advise about the questionnaire?",
      "options": [
-      "A  It should contain far fewer items.",
-      "B  It should include some open questions.",
-      "C  It should be available in other languages."
+      "It should contain far fewer items.",
+      "It should include some open questions.",
+      "It should be available in other languages."
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "24  What will happen to the video recordings?",
+     "q": "What will happen to the video recordings?",
      "options": [
-      "A  They will be stored for twelve months.",
-      "B  They will be destroyed as soon as they are coded.",
-      "C  They will be re-coded at a later date."
+      "They will be stored for twelve months.",
+      "They will be destroyed as soon as they are coded.",
+      "They will be re-coded at a later date."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "25  Luka",
+     "q": "Luka",
      "options": [
       "A",
       "B",
@@ -321,7 +322,7 @@
     },
     {
      "type": "choice",
-     "q": "26  Nadia",
+     "q": "Nadia",
      "options": [
       "A",
       "B",
@@ -335,7 +336,7 @@
     },
     {
      "type": "choice",
-     "q": "27  Dr Halvorsen",
+     "q": "Dr Halvorsen",
      "options": [
       "A",
       "B",
@@ -349,7 +350,7 @@
     },
     {
      "type": "text",
-     "q": "28  The students will compare their results with an earlier field study carried out in ....................",
+     "q": "The students will compare their results with an earlier field study carried out in ....................",
      "answer": [
       "Norwich"
      ],
@@ -357,7 +358,7 @@
     },
     {
      "type": "text",
-     "q": "29  Dr Halvorsen warns that most published research in this area has used .................... settings.",
+     "q": "Dr Halvorsen warns that most published research in this area has used .................... settings.",
      "answer": [
       "laboratory"
      ],
@@ -365,7 +366,7 @@
     },
     {
      "type": "text",
-     "q": "30  The report must end with a full discussion of the study's ....................",
+     "q": "The report must end with a full discussion of the study's ....................",
      "answer": [
       "limitations"
      ],
@@ -381,7 +382,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "31  Loneliness is the distress caused by a gap between the .................... a person wants and those the person actually has.",
+     "q": "Loneliness is the distress caused by a gap between the .................... a person wants and those the person actually has.",
      "answer": [
       "relationships"
      ],
@@ -389,7 +390,7 @@
     },
     {
      "type": "text",
-     "q": "32  Loneliness must not be confused with ...................., which is chosen and is usually restorative.",
+     "q": "Loneliness must not be confused with ...................., which is chosen and is usually restorative.",
      "answer": [
       "solitude"
      ],
@@ -397,7 +398,7 @@
     },
     {
      "type": "text",
-     "q": "33  Early direct questions failed because of the .................... attached to admitting loneliness.",
+     "q": "Early direct questions failed because of the .................... attached to admitting loneliness.",
      "answer": [
       "stigma"
      ],
@@ -405,7 +406,7 @@
     },
     {
      "type": "text",
-     "q": "34  Modern scales avoid the word 'lonely' and ask instead about ....................",
+     "q": "Modern scales avoid the word 'lonely' and ask instead about ....................",
      "answer": [
       "belonging"
      ],
@@ -413,7 +414,7 @@
     },
     {
      "type": "text",
-     "q": "35  The best replicated health effect is on the quality of a person's ....................",
+     "q": "The best replicated health effect is on the quality of a person's ....................",
      "answer": [
       "sleep"
      ],
@@ -421,7 +422,7 @@
     },
     {
      "type": "text",
-     "q": "36  Lonely people show raised levels of the stress hormone ....................",
+     "q": "Lonely people show raised levels of the stress hormone ....................",
      "answer": [
       "cortisol"
      ],
@@ -429,7 +430,7 @@
     },
     {
      "type": "text",
-     "q": "37  The effect on the .................... system has been compared to the effect of smoking.",
+     "q": "The effect on the .................... system has been compared to the effect of smoking.",
      "answer": [
       "immune"
      ],
@@ -437,7 +438,7 @@
     },
     {
      "type": "text",
-     "q": "38  In cities, frequent .................... prevents friendships from maturing.",
+     "q": "In cities, frequent .................... prevents friendships from maturing.",
      "answer": [
       "relocation"
      ],
@@ -445,7 +446,7 @@
     },
     {
      "type": "text",
-     "q": "39  Among 'third places', the biggest loss reported in the survey was ....................",
+     "q": "Among 'third places', the biggest loss reported in the survey was ....................",
      "answer": [
       "libraries"
      ],
@@ -453,7 +454,7 @@
     },
     {
      "type": "text",
-     "q": "40  The most successful schemes give the participant a ...................., not simply company.",
+     "q": "The most successful schemes give the participant a ...................., not simply company.",
      "answer": [
       "purpose"
      ],

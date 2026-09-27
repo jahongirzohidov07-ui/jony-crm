@@ -18,7 +18,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Would you mind covering the front desk while I pop out for lunch?",
+     "q": "Would you mind covering the front desk while I pop out for lunch?",
      "options": [
       "Not at all - take your time.",
       "Yes, I minded it very much.",
@@ -29,7 +29,7 @@
     },
     {
      "type": "choice",
-     "q": "2  I'm afraid the printer has jammed again.",
+     "q": "I'm afraid the printer has jammed again.",
      "options": [
       "Congratulations on the new job.",
       "Shall I ring the maintenance team?",
@@ -40,7 +40,7 @@
     },
     {
      "type": "choice",
-     "q": "3  How long have you been working in the warehouse?",
+     "q": "How long have you been working in the warehouse?",
      "options": [
       "It is about three kilometres away.",
       "Yes, I work extremely hard.",
@@ -51,7 +51,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Sorry I'm late - the bus broke down on the ring road.",
+     "q": "Sorry I'm late - the bus broke down on the ring road.",
      "options": [
       "Don't worry, we've only just started.",
       "Yes, please put it on the top shelf.",
@@ -62,7 +62,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Could you tell me where I can find the staff canteen?",
+     "q": "Could you tell me where I can find the staff canteen?",
      "options": [
       "I usually have soup and a roll.",
       "It's on the ground floor, next to the lifts.",
@@ -73,7 +73,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Shall we order some sandwiches for the meeting?",
+     "q": "Shall we order some sandwiches for the meeting?",
      "options": [
       "The meeting was very useful, thanks.",
       "No, I've already met him twice.",
@@ -84,7 +84,7 @@
     },
     {
      "type": "choice",
-     "q": "7  What do you think of the new shift system?",
+     "q": "What do you think of the new shift system?",
      "options": [
       "I think it suits the early risers better.",
       "I thought about it at about six.",
@@ -95,7 +95,7 @@
     },
     {
      "type": "choice",
-     "q": "8  Do you happen to know whether Tuesday's training has been cancelled?",
+     "q": "Do you happen to know whether Tuesday's training has been cancelled?",
      "options": [
       "I trained for nearly two hours.",
       "No, it's still going ahead as far as I know.",
@@ -114,7 +114,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "9  The Skills Swap is now held every ____________ evening.",
+     "q": "The Skills Swap is now held every ____________ evening.",
      "answer": [
       "Thursday",
       "Thursdays"
@@ -123,7 +123,7 @@
     },
     {
      "type": "text",
-     "q": "10  The first Skills Swap evening took place in ____________ .",
+     "q": "The first Skills Swap evening took place in ____________ .",
      "answer": [
       "2019"
      ],
@@ -131,7 +131,7 @@
     },
     {
      "type": "text",
-     "q": "11  From now on members will meet in the ____________ on the first floor.",
+     "q": "From now on members will meet in the ____________ on the first floor.",
      "answer": [
       "workshop"
      ],
@@ -139,7 +139,7 @@
     },
     {
      "type": "text",
-     "q": "12  Each session now lasts ____________ minutes.",
+     "q": "Each session now lasts ____________ minutes.",
      "answer": [
       "90",
       "ninety"
@@ -148,7 +148,7 @@
     },
     {
      "type": "text",
-     "q": "13  Bring a ____________ of your own to the first session.",
+     "q": "Bring a ____________ of your own to the first session.",
      "answer": [
       "notebook"
      ],
@@ -156,7 +156,7 @@
     },
     {
      "type": "text",
-     "q": "14  From September the yearly subscription is ____________ pounds.",
+     "q": "From September the yearly subscription is ____________ pounds.",
      "answer": [
       "12",
       "twelve"
@@ -173,7 +173,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "15  Speaker 1",
+     "q": "Speaker 1",
      "options": [
       "A",
       "B",
@@ -187,7 +187,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Speaker 2",
+     "q": "Speaker 2",
      "options": [
       "A",
       "B",
@@ -201,7 +201,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Speaker 3",
+     "q": "Speaker 3",
      "options": [
       "A",
       "B",
@@ -215,7 +215,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Speaker 4",
+     "q": "Speaker 4",
      "options": [
       "A",
       "B",
@@ -231,13 +231,13 @@
   },
   {
    "title": "Part 4",
-   "instructions": "You will hear someone giving a talk. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use. Mark your answers on the answer sheet.\n\nMAP: MEADOWGATE BUSINESS PARK\nThe main gate is at the bottom (south) of the map. Willow Road runs straight from the main gate to the top (north) of the map. There are four plots on the west side of Willow Road (the left-hand side as you come in through the gate) and four plots on the east side (the right-hand side).\nWest side, from south to north:  A - B - C - D\nEast side, from south to north:  E - F - G - H",
+   "instructions": "You will hear someone giving a talk. Label the places (19-23) on the map (A-H). There are THREE extra options which you do not need to use. Mark your answers on the answer sheet.",
    "passage": "",
    "script": "EXAMINER: Part Four. You will hear someone giving a talk. Label the places, nineteen to twenty-three, on the map, A to H. There are THREE extra options which you do not need to use. You now have thirty seconds to look at the map.\n\n[30 seconds]\n\nEXAMINER: Now listen carefully. You will hear the talk twice.\n\nTOUR GUIDE (woman, brisk and friendly): Good morning, everybody, and welcome to Meadowgate Business Park. Before we set off on the walking tour, let me take you through the map you have all been given, so that nobody gets lost between here and the coffee.\n\nLook at the map. You are standing at the main gate, right at the bottom of the map, at the south end of the site. The road running straight ahead of you from south to north is Willow Road. There are four plots on the left-hand side, that is the west side of the road, and four plots on the right-hand side, the east side. They are marked A to H.\n\nNow, the first building on your left, immediately inside the gate, is reception, where you all signed in this morning. I will not ask you to label that one; you know where it is by now.\n\nLet us start with the staff car park. I know that one or two of you have been leaving your cars on the grass verge by the gate, and we would much rather you did not. The staff car park is the next plot along on the west side, directly north of reception. So, as you look up the road from the gate, it sits immediately behind the reception building.\n\nNow look across the road. Opposite the staff car park, on the east side of Willow Road, and in fact the very first thing on your right as you come through the gate, is the cycle shelter. It is fully covered, there is a pump fixed to the wall, and there is usually room for about thirty bikes.\n\nCarry on northwards. The next plot on your right, just past the cycle shelter, is the post room. Parcels and letters for every company on the park are delivered there, and you collect them yourselves between eight and ten.\n\nBack to the west side. The third plot along, the one between the staff car park and the storage yard, is the canteen. Now, I should mention that for years the canteen was right at the far end of the park, next door to the training centre, and everybody complained about the walk. It moved down here in January so that it is closer to the gate, and the complaints have stopped.\n\nBeyond the canteen, at the northern end of the west side, is the storage yard, which is closed to visitors, and on the east side the third plot along is the boiler house. Please do not go into either of those.\n\nThat leaves the training centre. It is the very last plot on the east side, right at the north end of the park, directly across the road from the storage yard. If you walk past the boiler house and keep going until the road simply stops, the training centre is on your right.\n\nRight then. Coats on, and we will start at the cycle shelter.\n\nEXAMINER: Now listen again.\n\n[The talk is repeated.]\n\nEXAMINER: That is the end of Part Four.",
    "questions": [
     {
      "type": "choice",
-     "q": "19  the staff car park",
+     "q": "the staff car park",
      "options": [
       "A",
       "B",
@@ -249,11 +249,12 @@
       "H"
      ],
      "answer": 1,
-     "topic": "Listening - Map labelling"
+     "topic": "Listening - Map labelling",
+     "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTYwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI4MDAiIGhlaWdodD0iNTYwIiBmaWxsPSIjZmZmZmZmIi8+PHRleHQgeD0iNDAwIiB5PSI0MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxMTEiPk1lYWRvd2dhdGUgQnVzaW5lc3MgUGFyazwvdGV4dD48cGF0aCBkPSJNMzcwIDUwMCBMMTMwIDUwMCBMMTMwIDgwIEw2NzAgODAgTDY3MCA1MDAgTDQzMCA1MDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSI4IDUiLz48cmVjdCB4PSIzNzAiIHk9Ijk1IiB3aWR0aD0iNjAiIGhlaWdodD0iNDIwIiBmaWxsPSIjZjdmN2Y3IiBzdHJva2U9Im5vbmUiLz48bGluZSB4MT0iMzcwIiB5MT0iOTUiIHgyPSIzNzAiIHkyPSI1MTUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PGxpbmUgeDE9IjQzMCIgeTE9Ijk1IiB4Mj0iNDMwIiB5Mj0iNTE1IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIzNzAiIHkxPSI5NSIgeDI9IjQzMCIgeTI9Ijk1IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMyIvPjx0ZXh0IHRyYW5zZm9ybT0idHJhbnNsYXRlKDQwNiAzMDApIHJvdGF0ZSgtOTApIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE3IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzMzMyI+V2lsbG93IFJvYWQ8L3RleHQ+PHJlY3QgeD0iMzYwIiB5PSI0OTQiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMiIgZmlsbD0iIzMzMyIvPjxyZWN0IHg9IjQzMCIgeT0iNDk0IiB3aWR0aD0iMTAiIGhlaWdodD0iMTIiIGZpbGw9IiMzMzMiLz48dGV4dCB4PSI0MDAiIHk9IjUzOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNyIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxMTEiPk1haW4gZ2F0ZTwvdGV4dD48cmVjdCB4PSIxNjAiIHk9IjQwNSIgd2lkdGg9IjE5MCIgaGVpZ2h0PSI4MCIgZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSIyNTUiIGN5PSI0NDUiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjI1NSIgeT0iNDUxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSI+QTwvdGV4dD48cmVjdCB4PSIxNjAiIHk9IjMwNSIgd2lkdGg9IjE5MCIgaGVpZ2h0PSI4MCIgZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSIyNTUiIGN5PSIzNDUiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjI1NSIgeT0iMzUxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSI+QjwvdGV4dD48cmVjdCB4PSIxNjAiIHk9IjIwNSIgd2lkdGg9IjE5MCIgaGVpZ2h0PSI4MCIgZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSIyNTUiIGN5PSIyNDUiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjI1NSIgeT0iMjUxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSI+QzwvdGV4dD48cmVjdCB4PSIxNjAiIHk9IjEwNSIgd2lkdGg9IjE5MCIgaGVpZ2h0PSI4MCIgZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSIyNTUiIGN5PSIxNDUiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjI1NSIgeT0iMTUxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSI+RDwvdGV4dD48cmVjdCB4PSI0NTAiIHk9IjMwNSIgd2lkdGg9IjE5MCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNlNmU2ZTYiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iNTQ1IiBjeT0iMzk1IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1NDUiIHk9IjQwMSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxMTEiPkU8L3RleHQ+PHJlY3QgeD0iNDUwIiB5PSIyNTAiIHdpZHRoPSIxOTAiIGhlaWdodD0iNDgiIGZpbGw9IiNlNmU2ZTYiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iNTQ1IiBjeT0iMjc0IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1NDUiIHk9IjI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxMTEiPkY8L3RleHQ+PHJlY3QgeD0iNDUwIiB5PSIxOTYiIHdpZHRoPSIxOTAiIGhlaWdodD0iNDYiIGZpbGw9IiNlNmU2ZTYiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iNTQ1IiBjeT0iMjE5IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1NDUiIHk9IjIyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxMTEiPkc8L3RleHQ+PHJlY3QgeD0iNDUwIiB5PSIxMDUiIHdpZHRoPSIxOTAiIGhlaWdodD0iODAiIGZpbGw9IiNlNmU2ZTYiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iNTQ1IiBjeT0iMTQ1IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1NDUiIHk9IjE1MSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxMTEiPkg8L3RleHQ+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzMwIDE1MCkiPjxsaW5lIHgxPSIwIiB5MT0iNDAiIHgyPSIwIiB5Mj0iLTEwIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0wIC0yNiBMLTEwIC02IEwxMCAtNiBaIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iMCIgeT0iLTM0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzExMSI+TjwvdGV4dD48L2c+PC9zdmc+"
     },
     {
      "type": "choice",
-     "q": "20  the post room",
+     "q": "the post room",
      "options": [
       "A",
       "B",
@@ -269,7 +270,7 @@
     },
     {
      "type": "choice",
-     "q": "21  the training centre",
+     "q": "the training centre",
      "options": [
       "A",
       "B",
@@ -285,7 +286,7 @@
     },
     {
      "type": "choice",
-     "q": "22  the canteen",
+     "q": "the canteen",
      "options": [
       "A",
       "B",
@@ -301,7 +302,7 @@
     },
     {
      "type": "choice",
-     "q": "23  the cycle shelter",
+     "q": "the cycle shelter",
      "options": [
       "A",
       "B",
@@ -325,7 +326,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "24  What is Ruth's main concern about the trial?",
+     "q": "What is Ruth's main concern about the trial?",
      "options": [
       "the number of days she must spend at home",
       "the particular days she has been given",
@@ -336,7 +337,7 @@
     },
     {
      "type": "choice",
-     "q": "25  When will the decision about the trial be announced?",
+     "q": "When will the decision about the trial be announced?",
      "options": [
       "in October",
       "in March",
@@ -347,7 +348,7 @@
     },
     {
      "type": "choice",
-     "q": "26  How far in advance can a desk be booked?",
+     "q": "How far in advance can a desk be booked?",
      "options": [
       "the evening before",
       "a week ahead",
@@ -358,7 +359,7 @@
     },
     {
      "type": "choice",
-     "q": "27  What does Gareth say he dislikes most about the new desk arrangement?",
+     "q": "What does Gareth say he dislikes most about the new desk arrangement?",
      "options": [
       "having only one screen",
       "carrying his own equipment around",
@@ -369,7 +370,7 @@
     },
     {
      "type": "choice",
-     "q": "28  What has Gareth decided to do about Friday's meeting?",
+     "q": "What has Gareth decided to do about Friday's meeting?",
      "options": [
       "speak at it himself",
       "stay away from it completely",
@@ -380,7 +381,7 @@
     },
     {
      "type": "choice",
-     "q": "29  What does Gareth think is the greatest risk of the trial?",
+     "q": "What does Gareth think is the greatest risk of the trial?",
      "options": [
       "New employees will find it harder to get help.",
       "Staff will end up working longer hours.",
@@ -399,7 +400,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "30  In the sixteenth century the word 'lunch' meant a thick piece of ____________ .",
+     "q": "In the sixteenth century the word 'lunch' meant a thick piece of ____________ .",
      "answer": [
       "bread"
      ],
@@ -407,7 +408,7 @@
     },
     {
      "type": "text",
-     "q": "31  Before the nineteenth century most people ate their main meal at ____________ .",
+     "q": "Before the nineteenth century most people ate their main meal at ____________ .",
      "answer": [
       "midday",
       "mid-day"
@@ -416,7 +417,7 @@
     },
     {
      "type": "text",
-     "q": "32  Factory work moved the main meal of the day to the ____________ .",
+     "q": "Factory work moved the main meal of the day to the ____________ .",
      "answer": [
       "evening"
      ],
@@ -424,7 +425,7 @@
     },
     {
      "type": "text",
-     "q": "33  In most early canteens the food was paid for by the ____________ .",
+     "q": "In most early canteens the food was paid for by the ____________ .",
      "answer": [
       "employer",
       "employers"
@@ -433,7 +434,7 @@
     },
     {
      "type": "text",
-     "q": "34  Staff who took a real break showed better ____________ in the afternoon.",
+     "q": "Staff who took a real break showed better ____________ in the afternoon.",
      "answer": [
       "concentration"
      ],
@@ -441,7 +442,7 @@
     },
     {
      "type": "text",
-     "q": "35  About half of office workers today still eat their lunch at their ____________ .",
+     "q": "About half of office workers today still eat their lunch at their ____________ .",
      "answer": [
       "desk",
       "desks"

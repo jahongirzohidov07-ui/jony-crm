@@ -18,7 +18,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Gap (1)",
+     "q": "Gap (1)",
      "answer": [
       "meeting"
      ],
@@ -26,7 +26,7 @@
     },
     {
      "type": "text",
-     "q": "2  Gap (2)",
+     "q": "Gap (2)",
      "answer": [
       "board"
      ],
@@ -34,7 +34,7 @@
     },
     {
      "type": "text",
-     "q": "3  Gap (3)",
+     "q": "Gap (3)",
      "answer": [
       "staff"
      ],
@@ -42,7 +42,7 @@
     },
     {
      "type": "text",
-     "q": "4  Gap (4)",
+     "q": "Gap (4)",
      "answer": [
       "orders"
      ],
@@ -50,7 +50,7 @@
     },
     {
      "type": "text",
-     "q": "5  Gap (5)",
+     "q": "Gap (5)",
      "answer": [
       "minutes"
      ],
@@ -58,7 +58,7 @@
     },
     {
      "type": "text",
-     "q": "6  Gap (6)",
+     "q": "Gap (6)",
      "answer": [
       "workshop"
      ],
@@ -74,7 +74,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "7  Text 7 (Navbahor Bakery)",
+     "q": "Text 7 (Navbahor Bakery)",
      "options": [
       "A",
       "B",
@@ -92,7 +92,7 @@
     },
     {
      "type": "choice",
-     "q": "8  Text 8 (Greenline Gardens)",
+     "q": "Text 8 (Greenline Gardens)",
      "options": [
       "A",
       "B",
@@ -110,7 +110,7 @@
     },
     {
      "type": "choice",
-     "q": "9  Text 9 (Orizon Call Centre)",
+     "q": "Text 9 (Orizon Call Centre)",
      "options": [
       "A",
       "B",
@@ -128,7 +128,7 @@
     },
     {
      "type": "choice",
-     "q": "10  Text 10 (Kitobxon Bookshop)",
+     "q": "Text 10 (Kitobxon Bookshop)",
      "options": [
       "A",
       "B",
@@ -146,7 +146,7 @@
     },
     {
      "type": "choice",
-     "q": "11  Text 11 (Silk Road Hotel)",
+     "q": "Text 11 (Silk Road Hotel)",
      "options": [
       "A",
       "B",
@@ -164,7 +164,7 @@
     },
     {
      "type": "choice",
-     "q": "12  Text 12 (Baraka Logistics)",
+     "q": "Text 12 (Baraka Logistics)",
      "options": [
       "A",
       "B",
@@ -182,7 +182,7 @@
     },
     {
      "type": "choice",
-     "q": "13  Text 13 (Shifo Clinic)",
+     "q": "Text 13 (Shifo Clinic)",
      "options": [
       "A",
       "B",
@@ -200,7 +200,7 @@
     },
     {
      "type": "choice",
-     "q": "14  Text 14 (Tech Ona Repairs)",
+     "q": "Text 14 (Tech Ona Repairs)",
      "options": [
       "A",
       "B",
@@ -226,7 +226,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "15  Paragraph I",
+     "q": "Paragraph I",
      "options": [
       "A",
       "B",
@@ -242,7 +242,7 @@
     },
     {
      "type": "choice",
-     "q": "16  Paragraph II",
+     "q": "Paragraph II",
      "options": [
       "A",
       "B",
@@ -258,7 +258,7 @@
     },
     {
      "type": "choice",
-     "q": "17  Paragraph III",
+     "q": "Paragraph III",
      "options": [
       "A",
       "B",
@@ -274,7 +274,7 @@
     },
     {
      "type": "choice",
-     "q": "18  Paragraph IV",
+     "q": "Paragraph IV",
      "options": [
       "A",
       "B",
@@ -290,7 +290,7 @@
     },
     {
      "type": "choice",
-     "q": "19  Paragraph V",
+     "q": "Paragraph V",
      "options": [
       "A",
       "B",
@@ -306,7 +306,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Paragraph VI",
+     "q": "Paragraph VI",
      "options": [
       "A",
       "B",
@@ -330,7 +330,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "21  Why did Nodira decide against increasing wages?",
+     "q": "Why did Nodira decide against increasing wages?",
      "options": [
       "Wages at the factory were already higher than those paid in Tashkent.",
       "The company could not easily afford to pay more.",
@@ -342,7 +342,7 @@
     },
     {
      "type": "choice",
-     "q": "22  What did the factory learn during the first weeks of the trial?",
+     "q": "What did the factory learn during the first weeks of the trial?",
      "options": [
       "Some regular tasks had not been necessary at all.",
       "Meetings moved to Tuesday proved more useful than the Friday ones.",
@@ -354,7 +354,7 @@
     },
     {
      "type": "choice",
-     "q": "23  How did Nodira deal with complaints from customers abroad?",
+     "q": "How did Nodira deal with complaints from customers abroad?",
      "options": [
       "She allowed the sales team to return to a five-day week.",
       "She asked those customers to make contact on Thursday instead.",
@@ -366,7 +366,7 @@
     },
     {
      "type": "choice",
-     "q": "24  Which result of the trial interested Nodira most?",
+     "q": "Which result of the trial interested Nodira most?",
      "options": [
       "The fall in the number of days lost through illness.",
       "The nineteen per cent increase in output per hour.",
@@ -378,7 +378,7 @@
     },
     {
      "type": "choice",
-     "q": "25  Before the trial, skilled machine operators usually left the factory after about a year and a half.",
+     "q": "Before the trial, skilled machine operators usually left the factory after about a year and a half.",
      "options": [
       "True",
       "False",
@@ -389,7 +389,7 @@
     },
     {
      "type": "choice",
-     "q": "26  Employees received less money for working four days a week.",
+     "q": "Employees received less money for working four days a week.",
      "options": [
       "True",
       "False",
@@ -400,7 +400,7 @@
     },
     {
      "type": "choice",
-     "q": "27  The accounts department found the new timetable easier to manage than the sales team did.",
+     "q": "The accounts department found the new timetable easier to manage than the sales team did.",
      "options": [
       "True",
       "False",
@@ -411,7 +411,7 @@
     },
     {
      "type": "choice",
-     "q": "28  Nodira had worked in a Tashkent factory before joining Alpomish Tools.",
+     "q": "Nodira had worked in a Tashkent factory before joining Alpomish Tools.",
      "options": [
       "True",
       "False",
@@ -422,7 +422,7 @@
     },
     {
      "type": "choice",
-     "q": "29  Total output rose only a little because the machines were already working near their limit.",
+     "q": "Total output rose only a little because the machines were already working near their limit.",
      "options": [
       "True",
       "False",
@@ -441,7 +441,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "30  Work that keeps existing things from falling apart becomes visible only in its ____________ .",
+     "q": "Work that keeps existing things from falling apart becomes visible only in its ____________ .",
      "answer": [
       "absence"
      ],
@@ -449,7 +449,7 @@
     },
     {
      "type": "text",
-     "q": "31  Researchers use the term ____________ work for the remembering, noticing and rewriting that holds a team together.",
+     "q": "Researchers use the term ____________ work for the remembering, noticing and rewriting that holds a team together.",
      "answer": [
       "coordination"
      ],
@@ -457,7 +457,7 @@
     },
     {
      "type": "text",
-     "q": "32  After an experienced administrator retires, the real effect arrives three or ____________ months later.",
+     "q": "After an experienced administrator retires, the real effect arrives three or ____________ months later.",
      "answer": [
       "four",
       "4"
@@ -466,7 +466,7 @@
     },
     {
      "type": "text",
-     "q": "33  In a small number of firms, experience of maintenance has been made a condition of ____________ .",
+     "q": "In a small number of firms, experience of maintenance has been made a condition of ____________ .",
      "answer": [
       "promotion"
      ],
@@ -474,7 +474,7 @@
     },
     {
      "type": "choice",
-     "q": "34  According to the text, when is a manager's temptation to move resources away from maintenance strongest?",
+     "q": "According to the text, when is a manager's temptation to move resources away from maintenance strongest?",
      "options": [
       "When an experienced administrator has recently retired.",
       "When maintenance is being done well and nothing appears to be at risk.",
@@ -486,7 +486,7 @@
     },
     {
      "type": "choice",
-     "q": "35  What does the writer suggest in the final paragraph?",
+     "q": "What does the writer suggest in the final paragraph?",
      "options": [
       "Innovation deserves less admiration than any other kind of work.",
       "Maintenance will in time become more interesting than creative work.",

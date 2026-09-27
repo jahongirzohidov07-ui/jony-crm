@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  The builders of Gobekli Tepe used tools made of iron.",
+     "q": "The builders of Gobekli Tepe used tools made of iron.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  Pillars were carved from stone at a quarry and then taken to Gobekli Tepe.",
+     "q": "Pillars were carved from stone at a quarry and then taken to Gobekli Tepe.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  The arrangement of the pillars in rings is thought to relate to the seasons of the year.",
+     "q": "The arrangement of the pillars in rings is thought to relate to the seasons of the year.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Specially trained workers carved the animals on the stones.",
+     "q": "Specially trained workers carved the animals on the stones.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "choice",
-     "q": "5  The stone carvings of creatures at Gobekli Tepe are similar to those found at other sites from the same period.",
+     "q": "The stone carvings of creatures at Gobekli Tepe are similar to those found at other sites from the same period.",
      "options": [
       "TRUE",
       "FALSE",
@@ -76,7 +76,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Until the 1990s, archaeologists believed that the Gobekli Tepe site was of little importance.",
+     "q": "Until the 1990s, archaeologists believed that the Gobekli Tepe site was of little importance.",
      "options": [
       "TRUE",
       "FALSE",
@@ -87,7 +87,7 @@
     },
     {
      "type": "choice",
-     "q": "7  Klaus Schmidt thought that the hill at Gobekli Tepe was formed naturally.",
+     "q": "Klaus Schmidt thought that the hill at Gobekli Tepe was formed naturally.",
      "options": [
       "TRUE",
       "FALSE",
@@ -98,7 +98,7 @@
     },
     {
      "type": "choice",
-     "q": "8  Archaeologists had to get permission before they could start studying the Gobekli Tepe site.",
+     "q": "Archaeologists had to get permission before they could start studying the Gobekli Tepe site.",
      "options": [
       "TRUE",
       "FALSE",
@@ -109,7 +109,7 @@
     },
     {
      "type": "text",
-     "q": "9  the kind of bird shown on many stones suggests the site may have been a .........",
+     "q": "the kind of bird shown on many stones suggests the site may have been a .........",
      "answer": [
       "cemetery"
      ],
@@ -117,7 +117,7 @@
     },
     {
      "type": "text",
-     "q": "10  it is impossible to know why the site was constructed because there's no ......... on the stones",
+     "q": "it is impossible to know why the site was constructed because there's no ......... on the stones",
      "answer": [
       "writing"
      ],
@@ -125,7 +125,7 @@
     },
     {
      "type": "text",
-     "q": "11  no remains of houses have been found to indicate a permanent .........",
+     "q": "no remains of houses have been found to indicate a permanent .........",
      "answer": [
       "settlement"
      ],
@@ -133,7 +133,7 @@
     },
     {
      "type": "text",
-     "q": "12  many pieces of animal ......... have been found indicating an abundance of wild animals",
+     "q": "many pieces of animal ......... have been found indicating an abundance of wild animals",
      "answer": [
       "bones"
      ],
@@ -141,7 +141,7 @@
     },
     {
      "type": "text",
-     "q": "13  Gobekli Tepe was in a region where ......... as well as fruit were easy to find",
+     "q": "Gobekli Tepe was in a region where ......... as well as fruit were easy to find",
      "answer": [
       "nuts"
      ],
@@ -149,7 +149,7 @@
     },
     {
      "type": "text",
-     "q": "14  after the ......... of Gobekli Tepe many people chose to remain in the region",
+     "q": "after the ......... of Gobekli Tepe many people chose to remain in the region",
      "answer": [
       "construction"
      ],
@@ -157,7 +157,7 @@
     },
     {
      "type": "text",
-     "q": "15  an early form of ......... was grown near Gobekli Tepe",
+     "q": "an early form of ......... was grown near Gobekli Tepe",
      "answer": [
       "wheat"
      ],
@@ -165,7 +165,7 @@
     },
     {
      "type": "text",
-     "q": "16  domesticated ......... were kept at a place nearby",
+     "q": "domesticated ......... were kept at a place nearby",
      "answer": [
       "pigs"
      ],
@@ -181,7 +181,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "17  the physiological mechanism which controls the body's sleep patterns",
+     "q": "the physiological mechanism which controls the body's sleep patterns",
      "options": [
       "A",
       "B",
@@ -192,7 +192,7 @@
     },
     {
      "type": "choice",
-     "q": "18  an observation that some creatures may have no need for sleep",
+     "q": "an observation that some creatures may have no need for sleep",
      "options": [
       "A",
       "B",
@@ -203,7 +203,7 @@
     },
     {
      "type": "choice",
-     "q": "19  data indicating the dangers of extended periods of sleeplessness",
+     "q": "data indicating the dangers of extended periods of sleeplessness",
      "options": [
       "A",
       "B",
@@ -214,7 +214,7 @@
     },
     {
      "type": "choice",
-     "q": "20  an animal behaviour which could serve as a basis for modifying human sleep patterns",
+     "q": "an animal behaviour which could serve as a basis for modifying human sleep patterns",
      "options": [
       "A",
       "B",
@@ -225,7 +225,7 @@
     },
     {
      "type": "text",
-     "q": "21  Movement and wakefulness in young orcas assist them in maintaining .........",
+     "q": "Movement and wakefulness in young orcas assist them in maintaining .........",
      "answer": [
       "body temperature"
      ],
@@ -233,7 +233,7 @@
     },
     {
      "type": "text",
-     "q": "22  New orca mothers need to be awake in order to protect their young from .........",
+     "q": "New orca mothers need to be awake in order to protect their young from .........",
      "answer": [
       "sharks"
      ],
@@ -241,7 +241,7 @@
     },
     {
      "type": "text",
-     "q": "23  Sleep deprivation experiments on ......... have shown that animals die without adequate sleep.",
+     "q": "Sleep deprivation experiments on ......... have shown that animals die without adequate sleep.",
      "answer": [
       "laboratory rats",
       "rats"
@@ -250,7 +250,7 @@
     },
     {
      "type": "text",
-     "q": "24  Scientists have not yet worked out why almost all animals sleep with .........",
+     "q": "Scientists have not yet worked out why almost all animals sleep with .........",
      "answer": [
       "closed eyes"
      ],
@@ -258,7 +258,7 @@
     },
     {
      "type": "text",
-     "q": "25  For humans, sleep is vital for the efficient functioning of the .........",
+     "q": "For humans, sleep is vital for the efficient functioning of the .........",
      "answer": [
       "brain",
       "human brain"
@@ -267,7 +267,7 @@
     },
     {
      "type": "text",
-     "q": "26  During periods of ......... Swainson's thrushes experience severe sleep deprivation.",
+     "q": "During periods of ......... Swainson's thrushes experience severe sleep deprivation.",
      "answer": [
       "migration"
      ],
@@ -275,7 +275,7 @@
     },
     {
      "type": "choice",
-     "q": "27  mention of the potential use of chemicals to reduce sleep periods",
+     "q": "mention of the potential use of chemicals to reduce sleep periods",
      "options": [
       "A",
       "B",
@@ -290,7 +290,7 @@
     },
     {
      "type": "choice",
-     "q": "28  reference to a lack of expert consensus regarding the behaviour of certain types of animal",
+     "q": "reference to a lack of expert consensus regarding the behaviour of certain types of animal",
      "options": [
       "A",
       "B",
@@ -305,7 +305,7 @@
     },
     {
      "type": "choice",
-     "q": "29  an example of an animal which continues to function normally during its sleep periods",
+     "q": "an example of an animal which continues to function normally during its sleep periods",
      "options": [
       "A",
       "B",
@@ -328,7 +328,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "30  What can be found in the first paragraph?",
+     "q": "What can be found in the first paragraph?",
      "options": [
       "the reasoning behind Meltzoff and Moore's view",
       "the public reactions to Meltzoff and Moore's findings",
@@ -340,7 +340,7 @@
     },
     {
      "type": "choice",
-     "q": "31  In the second paragraph, regarding Meltzoff and Moore's work, what is the writer referring to with the phrase 'spreading ever since, in fine but disfiguring lines'?",
+     "q": "In the second paragraph, regarding Meltzoff and Moore's work, what is the writer referring to with the phrase 'spreading ever since, in fine but disfiguring lines'?",
      "options": [
       "mounting awareness of deficiencies in it",
       "rising numbers of publications covering it",
@@ -352,7 +352,7 @@
     },
     {
      "type": "choice",
-     "q": "32  According to the writer, what does evidence from older infants suggest?",
+     "q": "According to the writer, what does evidence from older infants suggest?",
      "options": [
       "Older babies may not be as focused on adult faces as newborn babies",
       "Certain facial gestures could take longer than others for infants to learn",
@@ -364,7 +364,7 @@
     },
     {
      "type": "choice",
-     "q": "33  What do the experiments on 'mirror experience' suggest?",
+     "q": "What do the experiments on 'mirror experience' suggest?",
      "options": [
       "We intuitively associate gestures with the emotions they correspond to",
       "We find it hard to copy an image of a gesture without sufficient practice",
@@ -376,7 +376,7 @@
     },
     {
      "type": "choice",
-     "q": "34  The word 'this' in the fourth paragraph refers to",
+     "q": "The word 'this' in the fourth paragraph refers to",
      "options": [
       "changing attitudes towards Meltzoff and Moore's work",
       "experts choosing to disregard clear scientific evidence",
@@ -388,7 +388,7 @@
     },
     {
      "type": "choice",
-     "q": "35  The success of the Homo imitans theory is, in part, due to the high quality of Meltzoff's .........",
+     "q": "The success of the Homo imitans theory is, in part, due to the high quality of Meltzoff's .........",
      "options": [
       "consistency",
       "challenge",
@@ -405,7 +405,7 @@
     },
     {
      "type": "choice",
-     "q": "36  Particularly for parents, there was also great ......... in the notion of babies imitating their facial expressions.",
+     "q": "Particularly for parents, there was also great ......... in the notion of babies imitating their facial expressions.",
      "options": [
       "consistency",
       "challenge",
@@ -422,7 +422,7 @@
     },
     {
      "type": "choice",
-     "q": "37  Then, as the concept of an imitation instinct came to form the basis of other genetic theories, scientists may have felt a certain ......... to question it.",
+     "q": "Then, as the concept of an imitation instinct came to form the basis of other genetic theories, scientists may have felt a certain ......... to question it.",
      "options": [
       "consistency",
       "challenge",
@@ -439,7 +439,7 @@
     },
     {
      "type": "choice",
-     "q": "38  These factors, combined with the ......... of carrying out studies on newborns ...",
+     "q": "These factors, combined with the ......... of carrying out studies on newborns ...",
      "options": [
       "consistency",
       "challenge",
@@ -456,7 +456,7 @@
     },
     {
      "type": "choice",
-     "q": "39  ... and a certain lack of ......... in how the experiments were conducted ...",
+     "q": "... and a certain lack of ......... in how the experiments were conducted ...",
      "options": [
       "consistency",
       "challenge",
@@ -473,7 +473,7 @@
     },
     {
      "type": "choice",
-     "q": "40  Virginia Slaughter and her team used reliable methodology in their research.",
+     "q": "Virginia Slaughter and her team used reliable methodology in their research.",
      "options": [
       "YES",
       "NO",
@@ -484,7 +484,7 @@
     },
     {
      "type": "choice",
-     "q": "41  Slaughter's team were surprised by evidence showing babies' ability to imitate tongue protrusion.",
+     "q": "Slaughter's team were surprised by evidence showing babies' ability to imitate tongue protrusion.",
      "options": [
       "YES",
       "NO",
@@ -495,7 +495,7 @@
     },
     {
      "type": "choice",
-     "q": "42  The findings of the Queensland study proved unconvincing.",
+     "q": "The findings of the Queensland study proved unconvincing.",
      "options": [
       "YES",
       "NO",
@@ -506,7 +506,7 @@
     },
     {
      "type": "choice",
-     "q": "43  The results of the Birkbeck study suggest that copying babies' expressions teaches them to imitate a range of physical actions.",
+     "q": "The results of the Birkbeck study suggest that copying babies' expressions teaches them to imitate a range of physical actions.",
      "options": [
       "YES",
       "NO",
@@ -517,7 +517,7 @@
     },
     {
      "type": "choice",
-     "q": "44  It has become evident that verbal input can help children to imitate adults' behaviours.",
+     "q": "It has become evident that verbal input can help children to imitate adults' behaviours.",
      "options": [
       "YES",
       "NO",
@@ -528,7 +528,7 @@
     },
     {
      "type": "choice",
-     "q": "45  The first gestures which children imitate via 'mirror experience' may vary depending on their culture.",
+     "q": "The first gestures which children imitate via 'mirror experience' may vary depending on their culture.",
      "options": [
       "YES",
       "NO",

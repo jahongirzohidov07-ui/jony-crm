@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  being expensive",
+     "q": "being expensive",
      "options": [
       "A",
       "B",
@@ -33,7 +33,7 @@
     },
     {
      "type": "choice",
-     "q": "2  adds flavor to food",
+     "q": "adds flavor to food",
      "options": [
       "A",
       "B",
@@ -45,7 +45,7 @@
     },
     {
      "type": "choice",
-     "q": "3  used as currency",
+     "q": "used as currency",
      "options": [
       "A",
       "B",
@@ -57,7 +57,7 @@
     },
     {
      "type": "choice",
-     "q": "4  being see-through",
+     "q": "being see-through",
      "options": [
       "A",
       "B",
@@ -69,7 +69,7 @@
     },
     {
      "type": "choice",
-     "q": "5  referred to by Herman Melville",
+     "q": "referred to by Herman Melville",
      "options": [
       "A",
       "B",
@@ -81,7 +81,7 @@
     },
     {
      "type": "choice",
-     "q": "6  produces sweet smell",
+     "q": "produces sweet smell",
      "options": [
       "A",
       "B",
@@ -93,7 +93,7 @@
     },
     {
      "type": "text",
-     "q": "7  Sperm whales can't digest the .......... of the squids.",
+     "q": "Sperm whales can't digest the .......... of the squids.",
      "answer": [
       "beaks",
       "beak"
@@ -102,7 +102,7 @@
     },
     {
      "type": "text",
-     "q": "8  Sperm whales drive the irritants out of their intestines by ..........",
+     "q": "Sperm whales drive the irritants out of their intestines by ..........",
      "answer": [
       "vomiting",
       "vomit"
@@ -111,7 +111,7 @@
     },
     {
      "type": "text",
-     "q": "9  The vomit of sperm whales gradually .......... on contact of air before having pleasant smell.",
+     "q": "The vomit of sperm whales gradually .......... on contact of air before having pleasant smell.",
      "answer": [
       "hardens",
       "harden"
@@ -120,7 +120,7 @@
     },
     {
      "type": "choice",
-     "q": "10  Most ambergris comes from the dead whales today.",
+     "q": "Most ambergris comes from the dead whales today.",
      "options": [
       "TRUE",
       "FALSE",
@@ -131,7 +131,7 @@
     },
     {
      "type": "choice",
-     "q": "11  Ambergris is becoming more expensive than before.",
+     "q": "Ambergris is becoming more expensive than before.",
      "options": [
       "TRUE",
       "FALSE",
@@ -142,7 +142,7 @@
     },
     {
      "type": "choice",
-     "q": "12  Ambergris is still a popular ingredient in perfume production today.",
+     "q": "Ambergris is still a popular ingredient in perfume production today.",
      "options": [
       "TRUE",
       "FALSE",
@@ -153,7 +153,7 @@
     },
     {
      "type": "choice",
-     "q": "13  New uses of ambergris have been discovered recently.",
+     "q": "New uses of ambergris have been discovered recently.",
      "options": [
       "TRUE",
       "FALSE",
@@ -172,7 +172,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  an example of a craftsman's unsuccessful claim to ownership of his work",
+     "q": "an example of a craftsman's unsuccessful claim to ownership of his work",
      "options": [
       "A",
       "B",
@@ -186,7 +186,7 @@
     },
     {
      "type": "choice",
-     "q": "15  an example of how trends in art can change attitudes to an earlier work",
+     "q": "an example of how trends in art can change attitudes to an earlier work",
      "options": [
       "A",
       "B",
@@ -200,7 +200,7 @@
     },
     {
      "type": "choice",
-     "q": "16  the original function of a particular type of art",
+     "q": "the original function of a particular type of art",
      "options": [
       "A",
       "B",
@@ -214,7 +214,7 @@
     },
     {
      "type": "choice",
-     "q": "17  ways of assessing whether or not an object is art",
+     "q": "ways of assessing whether or not an object is art",
      "options": [
       "A",
       "B",
@@ -228,7 +228,7 @@
     },
     {
      "type": "choice",
-     "q": "18  how artists deal with the less interesting aspects of their work",
+     "q": "how artists deal with the less interesting aspects of their work",
      "options": [
       "A",
       "B",
@@ -242,7 +242,7 @@
     },
     {
      "type": "choice",
-     "q": "19  Nineteenth century sculptors admired the speed and realism of life-casting.",
+     "q": "Nineteenth century sculptors admired the speed and realism of life-casting.",
      "options": [
       "YES",
       "NO",
@@ -253,7 +253,7 @@
     },
     {
      "type": "choice",
-     "q": "20  Rodin believed the quality of life-casting would improve if a shower process were used.",
+     "q": "Rodin believed the quality of life-casting would improve if a shower process were used.",
      "options": [
       "YES",
       "NO",
@@ -264,7 +264,7 @@
     },
     {
      "type": "choice",
-     "q": "21  The importance of painting has decreased with the development of colour photography.",
+     "q": "The importance of painting has decreased with the development of colour photography.",
      "options": [
       "YES",
       "NO",
@@ -275,7 +275,7 @@
     },
     {
      "type": "choice",
-     "q": "22  Life-casting requires more skill than sculpture does.",
+     "q": "Life-casting requires more skill than sculpture does.",
      "options": [
       "YES",
       "NO",
@@ -286,7 +286,7 @@
     },
     {
      "type": "choice",
-     "q": "23  New art encourages us to look at earlier work in a fresh way.",
+     "q": "New art encourages us to look at earlier work in a fresh way.",
      "options": [
       "YES",
       "NO",
@@ -297,7 +297,7 @@
     },
     {
      "type": "choice",
-     "q": "24  The intended meaning of a work of art can get lost over time.",
+     "q": "The intended meaning of a work of art can get lost over time.",
      "options": [
       "YES",
       "NO",
@@ -308,7 +308,7 @@
     },
     {
      "type": "choice",
-     "q": "25  The most noticeable contrast in the cast of the giant's hand is between the",
+     "q": "The most noticeable contrast in the cast of the giant's hand is between the",
      "options": [
       "dirt and decoration.",
       "size and realism.",
@@ -320,7 +320,7 @@
     },
     {
      "type": "choice",
-     "q": "26  According to the writer, the importance of any artistic object lies in",
+     "q": "According to the writer, the importance of any artistic object lies in",
      "options": [
       "the artist's intentions.",
       "the artist's beliefs.",
@@ -340,7 +340,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  There is a lack of factual information on literacy levels in rural Australia.",
+     "q": "There is a lack of factual information on literacy levels in rural Australia.",
      "options": [
       "YES",
       "NO",
@@ -351,7 +351,7 @@
     },
     {
      "type": "choice",
-     "q": "28  The rural areas of Australia are very similar to each other.",
+     "q": "The rural areas of Australia are very similar to each other.",
      "options": [
       "YES",
       "NO",
@@ -362,7 +362,7 @@
     },
     {
      "type": "choice",
-     "q": "29  Most businesses in rural areas are family-run.",
+     "q": "Most businesses in rural areas are family-run.",
      "options": [
       "YES",
       "NO",
@@ -373,7 +373,7 @@
     },
     {
      "type": "choice",
-     "q": "30  Women who can read and write have a wide choice of jobs in rural areas.",
+     "q": "Women who can read and write have a wide choice of jobs in rural areas.",
      "options": [
       "YES",
       "NO",
@@ -384,7 +384,7 @@
     },
     {
      "type": "choice",
-     "q": "31  In some rural areas, industrial jobs are popular.",
+     "q": "In some rural areas, industrial jobs are popular.",
      "options": [
       "YES",
       "NO",
@@ -395,7 +395,7 @@
     },
     {
      "type": "choice",
-     "q": "32  Children in urban areas stay on at school longer than children in rural areas.",
+     "q": "Children in urban areas stay on at school longer than children in rural areas.",
      "options": [
       "YES",
       "NO",
@@ -406,7 +406,7 @@
     },
     {
      "type": "choice",
-     "q": "33  how an economic recession may aggravate the problems caused by low levels of literacy",
+     "q": "how an economic recession may aggravate the problems caused by low levels of literacy",
      "options": [
       "A",
       "B",
@@ -421,7 +421,7 @@
     },
     {
      "type": "choice",
-     "q": "34  measures which individuals may take to hide the fact that they have poor literacy skills",
+     "q": "measures which individuals may take to hide the fact that they have poor literacy skills",
      "options": [
       "A",
       "B",
@@ -436,7 +436,7 @@
     },
     {
      "type": "choice",
-     "q": "35  examples of things that rural workers may need to read",
+     "q": "examples of things that rural workers may need to read",
      "options": [
       "A",
       "B",
@@ -451,7 +451,7 @@
     },
     {
      "type": "choice",
-     "q": "36  the ways literacy problems can affect people over the course of their working life",
+     "q": "the ways literacy problems can affect people over the course of their working life",
      "options": [
       "A",
       "B",
@@ -466,7 +466,7 @@
     },
     {
      "type": "choice",
-     "q": "37  a reference to youngsters encouraging each other to leave school early",
+     "q": "a reference to youngsters encouraging each other to leave school early",
      "options": [
       "A",
       "B",
@@ -481,7 +481,7 @@
     },
     {
      "type": "multi",
-     "q": "38-40  Choose THREE correct letters, A-G. Which THREE of the following areas are explored by the writer of this article?",
+     "q": "Choose THREE correct letters, A-G. Which THREE of the following areas are explored by the writer of this article?",
      "options": [
       "the effectiveness of tuition for literacy problems",
       "reasons why employment prospects can be limited for workers with literacy problems",

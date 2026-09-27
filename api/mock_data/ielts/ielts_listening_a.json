@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Surname: ....................",
+     "q": "Surname: ....................",
      "answer": [
       "Whitcombe"
      ],
@@ -27,7 +27,7 @@
     },
     {
      "type": "text",
-     "q": "2  Occupation: ....................",
+     "q": "Occupation: ....................",
      "answer": [
       "plumber"
      ],
@@ -35,7 +35,7 @@
     },
     {
      "type": "text",
-     "q": "3  Address: 27 .................... Avenue",
+     "q": "Address: 27 .................... Avenue",
      "answer": [
       "Larchfield"
      ],
@@ -43,7 +43,7 @@
     },
     {
      "type": "text",
-     "q": "4  Survey site chosen: .................... Bridge",
+     "q": "Survey site chosen: .................... Bridge",
      "answer": [
       "Bramley"
      ],
@@ -51,7 +51,7 @@
     },
     {
      "type": "text",
-     "q": "5  Evening available: ....................",
+     "q": "Evening available: ....................",
      "answer": [
       "Thursday",
       "Thursdays"
@@ -60,7 +60,7 @@
     },
     {
      "type": "text",
-     "q": "6  Date of training session: .................... March",
+     "q": "Date of training session: .................... March",
      "answer": [
       "12",
       "12th",
@@ -70,7 +70,7 @@
     },
     {
      "type": "text",
-     "q": "7  Refundable deposit on equipment: £....................",
+     "q": "Refundable deposit on equipment: £....................",
      "answer": [
       "45",
       "£45",
@@ -80,7 +80,7 @@
     },
     {
      "type": "text",
-     "q": "8  Must bring a torch and a pair of ....................",
+     "q": "Must bring a torch and a pair of ....................",
      "answer": [
       "gloves"
      ],
@@ -88,7 +88,7 @@
     },
     {
      "type": "text",
-     "q": "9  Length of one survey: .................... minutes",
+     "q": "Length of one survey: .................... minutes",
      "answer": [
       "90",
       "ninety"
@@ -97,7 +97,7 @@
     },
     {
      "type": "text",
-     "q": "10  Heard about the scheme from a poster in the ....................",
+     "q": "Heard about the scheme from a poster in the ....................",
      "answer": [
       "library"
      ],
@@ -107,46 +107,46 @@
   },
   {
    "title": "Part 2",
-   "instructions": "Questions 11-13\nChoose the correct letter, A, B or C.\n\nQuestions 14-16\nWhen is the best time of year to see each of the following?\nChoose THREE answers from the list and write the correct letter, A-F, next to Questions 14-16.\nA  January     B  March     C  May     D  July     E  September     F  November\n\nQuestions 17-20\nLabel the map below. Write the correct letter, A-H, next to Questions 17-20.\nThe lettered positions on the map of Thornmere Wetlands are as follows. The entrance and car park are at the southern end of the reserve. A is a small building on the western side of the car park, beside the gate in its north-western corner. B is on the eastern side of the car park. A main path runs due north from the car park to a T-junction with the northern path. C is beside the main path, halfway along it, on the western side. D is beside the main path, halfway along it, on the eastern side. The northern path runs east to west across the top of the reserve. E is at the western end of the northern path, at the edge of the lake. F is at the eastern end of the northern path. G is out on the lake shore at the far north of the reserve, midway between the western and eastern ends of the northern path, reached by a short spur running north. H is in the south-eastern corner of the reserve, beyond the boundary hedge.",
+   "instructions": "Questions 11-13\nChoose the correct letter, A, B or C.\n\nQuestions 14-16\nWhen is the best time of year to see each of the following?\nChoose THREE answers from the list and write the correct letter, A-F, next to Questions 14-16.\nA  January     B  March     C  May     D  July     E  September     F  November\n\nQuestions 17-20\nLabel the map below. Write the correct letter, A-H, next to Questions 17-20.",
    "passage": "",
    "script": "Part Two. You will hear a warden giving a short introductory talk to a group of visitors at a nature reserve. First, you have some time to look at questions eleven to twenty. Now listen carefully and answer questions eleven to twenty.\n\nWARDEN: Good afternoon, everyone, and welcome to Thornmere Wetlands. I'm Iris, the senior warden here.\n\nLet me start with a bit of history, because almost everybody gets this wrong. Visitors look at all this open water and assume Thornmere was built as a reservoir. It wasn't. Others have read that it's drowned farmland, and it's true there was a farm on the eastern edge until the nineteen fifties - but the basin itself is not farmland either. The whole of this site is a gravel quarry. They dug here for thirty years, the machines stopped in nineteen eighty-one, and the water arrived on its own.\n\nNow, we read all the comment cards, and I want to be open about what people tell us. Every year somebody writes about the prices in the cafe, and yes, the cake is expensive. We've had a handful of letters asking for more signs along the trails. But the complaint we receive more than any other, by a very long way, is about the condition of the paths. They flood, they're muddy from October to April, and we know. The boardwalk being built this winter is our answer.\n\nA word about dogs. Dogs are welcome here - we're one of the few reserves in the county that says so. You don't need a permit, and there's no need to leave them in the car. But they must stay on the eastern path. That's the only route where they're allowed, because the ground-nesting birds are all on the western side.\n\nRight - what can you see, and when? People get the timings wrong so often that I say this in every talk.\n\nWater voles first. Visitors turn up in mid-July with cameras and see nothing at all. July is exactly when the vegetation along the ditches is tallest and the animals are hidden. If water voles are what you want, come in May, when the new growth is still short and they're feeding out in the open.\n\nDragonflies are different. There are a few on the wing from late spring onwards, but for the emperor dragonflies - the big ones that patrol over the main lake - July is the month.\n\nAnd our wintering geese. People always say January, and there certainly are geese in January. But the real spectacle isn't the birds sitting on the water in midwinter; it's the arrival, when several thousand come in over the ridge at dusk - and that happens in November.\n\nNow, the map on the back of your leaflet. Let me talk you round it, because two of the buildings have moved since it was printed.\n\nYou came in through the car park at the southern end. The cafe, by the way, is the large building on the eastern side of the car park. As you leave by the gate in the north-western corner, there's a low wooden building immediately on your left, on the western side of the car park. That's the volunteers' hut.\n\nFrom there the main path runs due north. About halfway along, on your left - sorry, on your right, the eastern side - you'll find the dragonfly pond, a shallow pool we dug three years ago. Don't confuse it with the reedbed directly opposite, on the western side of the path.\n\nAt the top, the main path meets the northern path in a T-junction. Turn left and follow the northern path to its western end, and you'll come to the bird tower, standing right at the water's edge.\n\nFinally, the otter hide. The old leaflets show it at the eastern end of the northern path, and that is wrong - we moved it two years ago. It now sits out on the lake shore at the far north of the reserve, midway between the western and eastern ends of that path. Take the short spur that leads north and you'll walk straight into it.\n\nOne last thing: follow the boundary hedge to the south-eastern corner and just beyond it you'll see the ruins of that old farm, outside the reserve.\n\nPlease be back at the car park by half past four. Thank you.\n\nThat is the end of Part Two. You now have half a minute to check your answers.",
    "questions": [
     {
      "type": "choice",
-     "q": "11  The land now occupied by the reserve was originally",
+     "q": "The land now occupied by the reserve was originally",
      "options": [
-      "A  a reservoir.",
-      "B  a gravel quarry.",
-      "C  farmland."
+      "a reservoir.",
+      "a gravel quarry.",
+      "farmland."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "12  What do visitors complain about most often?",
+     "q": "What do visitors complain about most often?",
      "options": [
-      "A  the cost of the cafe",
-      "B  the shortage of signs",
-      "C  the condition of the paths"
+      "the cost of the cafe",
+      "the shortage of signs",
+      "the condition of the paths"
      ],
      "answer": 2,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "13  Visitors who bring dogs must",
+     "q": "Visitors who bring dogs must",
      "options": [
-      "A  keep to the eastern path.",
-      "B  obtain a permit in advance.",
-      "C  leave the dogs in their car."
+      "keep to the eastern path.",
+      "obtain a permit in advance.",
+      "leave the dogs in their car."
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "14  water voles",
+     "q": "water voles",
      "options": [
       "A",
       "B",
@@ -160,7 +160,7 @@
     },
     {
      "type": "choice",
-     "q": "15  emperor dragonflies",
+     "q": "emperor dragonflies",
      "options": [
       "A",
       "B",
@@ -174,7 +174,7 @@
     },
     {
      "type": "choice",
-     "q": "16  wintering geese",
+     "q": "wintering geese",
      "options": [
       "A",
       "B",
@@ -188,7 +188,7 @@
     },
     {
      "type": "choice",
-     "q": "17  the volunteers' hut",
+     "q": "the volunteers' hut",
      "options": [
       "A",
       "B",
@@ -200,11 +200,12 @@
       "H"
      ],
      "answer": 0,
-     "topic": "Listening · Map labelling"
+     "topic": "Listening · Map labelling",
+     "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTYwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI4MDAiIGhlaWdodD0iNTYwIiBmaWxsPSIjZmZmZmZmIi8+CiAgPHRleHQgeD0iNDAwIiB5PSIzOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxMTEiPlRob3JubWVyZSBXZXRsYW5kczwvdGV4dD4KICA8ZyBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiI+CiAgICA8bGluZSB4MT0iNzYwIiB5MT0iMTE4IiB4Mj0iNzYwIiB5Mj0iNzgiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iNzYwLDcwIDc1Miw4NiA3NjgsODYiIGZpbGw9IiMzMzMiLz4KICA8L2c+CiAgPHRleHQgeD0iNzYwIiB5PSI2MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNyIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxMTEiPk48L3RleHQ+CiAgPHJlY3QgeD0iNTAiIHk9IjYwIiB3aWR0aD0iNjcwIiBoZWlnaHQ9IjQ0NSIgZmlsbD0iI2ZhZmFmYSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjcgNCIvPgogIDxwYXRoIGQ9Ik0gNjUsNzUgTCA3MDUsNzUgTCA3MDUsMTUwIFEgNjAwLDE2MiA0ODAsMTU0IFEgNDAwLDE0OCAzMjAsMTU4IFEgMjIwLDE3OCAxODAsMTkwIFEgMTUyLDIwMCAxNTAsMjQwIFEgMTQyLDI4MiAxMDQsMjg2IFEgNjUsMjg4IDY1LDI0MCBaIiBmaWxsPSIjZDZlOWY1IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjU2MCIgeT0iMTE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjIwIiBmb250LXN0eWxlPSJpdGFsaWMiIGZpbGw9IiMzMzMiPkxBS0U8L3RleHQ+CiAgPHJlY3QgeD0iMTU2IiB5PSIyMDgiIHdpZHRoPSI0OTAiIGhlaWdodD0iMTQiIGZpbGw9IiNlM2UzZTMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cmVjdCB4PSIzOTQiIHk9IjE1OCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjUxIiBmaWxsPSIjZTNlM2UzIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPHJlY3QgeD0iMzk1IiB5PSIyMDUiIHdpZHRoPSIxMiIgaGVpZ2h0PSI4IiBmaWxsPSIjZTNlM2UzIi8+CiAgPHJlY3QgeD0iMjkzIiB5PSIyMjEiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxODAiIGZpbGw9IiNlM2UzZTMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8cmVjdCB4PSIyOTQiIHk9IjIxNSIgd2lkdGg9IjEyIiBoZWlnaHQ9IjkiIGZpbGw9IiNlM2UzZTMiLz4KICA8dGV4dCB4PSI1MjAiIHk9IjI0MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzMzMyI+bm9ydGhlcm4gcGF0aDwvdGV4dD4KICA8dGV4dCB4PSIzMTYiIHk9IjI3MCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzMzMyI+bWFpbiBwYXRoPC90ZXh0PgogIDxyZWN0IHg9IjI4NSIgeT0iNDAwIiB3aWR0aD0iMjQwIiBoZWlnaHQ9IjcwIiBmaWxsPSIjZWVlZWVlIi8+CiAgPHBhdGggZD0iTSAzMDgsNDAwIEwgNTI1LDQwMCBMIDUyNSw0NzAgTCAyODUsNDcwIEwgMjg1LDQwMCBMIDI5Miw0MDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMzE2IiB5PSIzOTMiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMzMzMiPmdhdGU8L3RleHQ+CiAgPHRleHQgeD0iNDA1IiB5PSI0NDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMzMzIj5DQVIgUEFSSzwvdGV4dD4KICA8cmVjdCB4PSIzODUiIHk9IjQ2OCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjZWVlZWVlIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPHJlY3QgeD0iMzg2IiB5PSI0NjYiIHdpZHRoPSIzOCIgaGVpZ2h0PSI2IiBmaWxsPSIjZWVlZWVlIi8+CiAgPHRleHQgeD0iMzc1IiB5PSI1MzUiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMzMzIj5FTlRSQU5DRTwvdGV4dD4KICA8dGV4dCB4PSI3MTIiIHk9IjUyNyIgdGV4dC1hbmNob3I9ImVuZCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzMzMyI+Ym91bmRhcnkgaGVkZ2U8L3RleHQ+CiAgPHJlY3QgeD0iMjIyIiB5PSI0MDQiIHdpZHRoPSI0NiIgaGVpZ2h0PSIzNiIgZmlsbD0iI2Q5ZDlkOSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxyZWN0IHg9IjU0MCIgeT0iNDA1IiB3aWR0aD0iNTYiIGhlaWdodD0iNjAiIGZpbGw9IiNkOWQ5ZDkiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8ZyBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0iI2ZmZmZmZiI+CiAgICA8Y2lyY2xlIGN4PSIyNDUiIGN5PSI0MjIiIHI9IjE2Ii8+CiAgICA8Y2lyY2xlIGN4PSI1NjgiIGN5PSI0MzUiIHI9IjE2Ii8+CiAgICA8Y2lyY2xlIGN4PSIyNTUiIGN5PSIzMTEiIHI9IjE2Ii8+CiAgICA8Y2lyY2xlIGN4PSIzNDUiIGN5PSIzMTEiIHI9IjE2Ii8+CiAgICA8Y2lyY2xlIGN4PSIxNDAiIGN5PSIyMTUiIHI9IjE2Ii8+CiAgICA8Y2lyY2xlIGN4PSI2NjIiIGN5PSIyMTUiIHI9IjE2Ii8+CiAgICA8Y2lyY2xlIGN4PSI0MDEiIGN5PSIxNTAiIHI9IjE2Ii8+CiAgICA8Y2lyY2xlIGN4PSI3NTUiIGN5PSI1MzAiIHI9IjE2Ii8+CiAgPC9nPgogIDxnIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTExIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4KICAgIDx0ZXh0IHg9IjI0NSIgeT0iNDI4Ij5BPC90ZXh0PgogICAgPHRleHQgeD0iNTY4IiB5PSI0NDEiPkI8L3RleHQ+CiAgICA8dGV4dCB4PSIyNTUiIHk9IjMxNyI+QzwvdGV4dD4KICAgIDx0ZXh0IHg9IjM0NSIgeT0iMzE3Ij5EPC90ZXh0PgogICAgPHRleHQgeD0iMTQwIiB5PSIyMjEiPkU8L3RleHQ+CiAgICA8dGV4dCB4PSI2NjIiIHk9IjIyMSI+RjwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwMSIgeT0iMTU2Ij5HPC90ZXh0PgogICAgPHRleHQgeD0iNzU1IiB5PSI1MzYiPkg8L3RleHQ+CiAgPC9nPgo8L3N2Zz4="
     },
     {
      "type": "choice",
-     "q": "18  the dragonfly pond",
+     "q": "the dragonfly pond",
      "options": [
       "A",
       "B",
@@ -220,7 +221,7 @@
     },
     {
      "type": "choice",
-     "q": "19  the bird tower",
+     "q": "the bird tower",
      "options": [
       "A",
       "B",
@@ -236,7 +237,7 @@
     },
     {
      "type": "choice",
-     "q": "20  the otter hide",
+     "q": "the otter hide",
      "options": [
       "A",
       "B",
@@ -260,51 +261,51 @@
    "questions": [
     {
      "type": "choice",
-     "q": "21  Tom decided to study moths rather than butterflies mainly because",
+     "q": "Tom decided to study moths rather than butterflies mainly because",
      "options": [
-      "A  moths are easier to identify.",
-      "B  moths are more numerous in cities.",
-      "C  moths have been largely ignored by other researchers."
+      "moths are easier to identify.",
+      "moths are more numerous in cities.",
+      "moths have been largely ignored by other researchers."
      ],
      "answer": 2,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "22  What was wrong with the students' first trapping method?",
+     "q": "What was wrong with the students' first trapping method?",
      "options": [
-      "A  It drew insects in from far outside the study site.",
-      "B  It injured the insects that were caught.",
-      "C  It was too expensive to repeat."
+      "It drew insects in from far outside the study site.",
+      "It injured the insects that were caught.",
+      "It was too expensive to repeat."
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "23  What does Dr Alcott say the students must change?",
+     "q": "What does Dr Alcott say the students must change?",
      "options": [
-      "A  the number of sites they use",
-      "B  the statistical test they have applied",
-      "C  the length of the study period"
+      "the number of sites they use",
+      "the statistical test they have applied",
+      "the length of the study period"
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "24  What do they decide to do about weather data?",
+     "q": "What do they decide to do about weather data?",
      "options": [
-      "A  buy sensors of their own",
-      "B  carry on using the national weather station",
-      "C  borrow equipment from the department"
+      "buy sensors of their own",
+      "carry on using the national weather station",
+      "borrow equipment from the department"
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "25  Redhill Allotments",
+     "q": "Redhill Allotments",
      "options": [
       "A",
       "B",
@@ -317,7 +318,7 @@
     },
     {
      "type": "choice",
-     "q": "26  Carver Street Gardens",
+     "q": "Carver Street Gardens",
      "options": [
       "A",
       "B",
@@ -330,7 +331,7 @@
     },
     {
      "type": "choice",
-     "q": "27  Priory Park",
+     "q": "Priory Park",
      "options": [
       "A",
       "B",
@@ -343,7 +344,7 @@
     },
     {
      "type": "text",
-     "q": "28  In the final report, Tom will be responsible for the ....................",
+     "q": "In the final report, Tom will be responsible for the ....................",
      "answer": [
       "analysis"
      ],
@@ -351,7 +352,7 @@
     },
     {
      "type": "text",
-     "q": "29  Dr Alcott says published research identifies .................... as the greatest threat to urban moths.",
+     "q": "Dr Alcott says published research identifies .................... as the greatest threat to urban moths.",
      "answer": [
       "lighting"
      ],
@@ -359,7 +360,7 @@
     },
     {
      "type": "text",
-     "q": "30  The department requires every field report to contain a section on ....................",
+     "q": "The department requires every field report to contain a section on ....................",
      "answer": [
       "ethics"
      ],
@@ -375,7 +376,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "31  Chemistry: luciferin reacts with oxygen, and the reaction is speeded up by an ....................",
+     "q": "Chemistry: luciferin reacts with oxygen, and the reaction is speeded up by an ....................",
      "answer": [
       "enzyme"
      ],
@@ -383,7 +384,7 @@
     },
     {
      "type": "text",
-     "q": "32  Colour: deep-sea light is nearly always .................... , the colour that travels furthest through seawater.",
+     "q": "Colour: deep-sea light is nearly always .................... , the colour that travels furthest through seawater.",
      "answer": [
       "blue"
      ],
@@ -391,7 +392,7 @@
     },
     {
      "type": "text",
-     "q": "33  Camouflage (counter-illumination): light organs underneath mean that no .................... can be seen from below.",
+     "q": "Camouflage (counter-illumination): light organs underneath mean that no .................... can be seen from below.",
      "answer": [
       "shadow"
      ],
@@ -399,7 +400,7 @@
     },
     {
      "type": "text",
-     "q": "34  Defence: attacked squid release a glowing cloud instead of ....................",
+     "q": "Defence: attacked squid release a glowing cloud instead of ....................",
      "answer": [
       "ink"
      ],
@@ -407,7 +408,7 @@
     },
     {
      "type": "text",
-     "q": "35  Hunting: the anglerfish's glowing lure draws .................... towards its mouth.",
+     "q": "Hunting: the anglerfish's glowing lure draws .................... towards its mouth.",
      "answer": [
       "prey"
      ],
@@ -415,7 +416,7 @@
     },
     {
      "type": "text",
-     "q": "36  Many fish make no light themselves but keep .................... inside special organs.",
+     "q": "Many fish make no light themselves but keep .................... inside special organs.",
      "answer": [
       "bacteria"
      ],
@@ -423,7 +424,7 @@
     },
     {
      "type": "text",
-     "q": "37  'Burglar alarm': the flashing display attracts a larger .................... , which may attack the jellyfish's attacker.",
+     "q": "'Burglar alarm': the flashing display attracts a larger .................... , which may attack the jellyfish's attacker.",
      "answer": [
       "predator"
      ],
@@ -431,7 +432,7 @@
     },
     {
      "type": "text",
-     "q": "38  Research problem: nets .................... the animals, so their light organs stop working.",
+     "q": "Research problem: nets .................... the animals, so their light organs stop working.",
      "answer": [
       "damage"
      ],
@@ -439,7 +440,7 @@
     },
     {
      "type": "text",
-     "q": "39  Modern teams prefer to use remotely operated ....................",
+     "q": "Modern teams prefer to use remotely operated ....................",
      "answer": [
       "vehicles"
      ],
@@ -447,7 +448,7 @@
     },
     {
      "type": "text",
-     "q": "40  Medical use: a tumour that would otherwise be invisible becomes .................... in a laboratory image.",
+     "q": "Medical use: a tumour that would otherwise be invisible becomes .................... in a laboratory image.",
      "answer": [
       "visible"
      ],

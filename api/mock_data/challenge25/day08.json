@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Babies and some animals produce laughter which sounds similar.",
+     "q": "Babies and some animals produce laughter which sounds similar.",
      "options": [
       "A",
       "B",
@@ -33,7 +33,7 @@
     },
     {
      "type": "choice",
-     "q": "2  Primates are not the only animals who produce laughter.",
+     "q": "Primates are not the only animals who produce laughter.",
      "options": [
       "A",
       "B",
@@ -45,7 +45,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Laughter can be used to show that we feel safe and secure with others.",
+     "q": "Laughter can be used to show that we feel safe and secure with others.",
      "options": [
       "A",
       "B",
@@ -57,7 +57,7 @@
     },
     {
      "type": "choice",
-     "q": "4  Most human laughter is not a response to a humorous situation.",
+     "q": "Most human laughter is not a response to a humorous situation.",
      "options": [
       "A",
       "B",
@@ -69,7 +69,7 @@
     },
     {
      "type": "choice",
-     "q": "5  Animal laughter evolved before human laughter.",
+     "q": "Animal laughter evolved before human laughter.",
      "options": [
       "A",
       "B",
@@ -81,7 +81,7 @@
     },
     {
      "type": "choice",
-     "q": "6  Laughter is a social activity.",
+     "q": "Laughter is a social activity.",
      "options": [
       "A",
       "B",
@@ -93,7 +93,7 @@
     },
     {
      "type": "choice",
-     "q": "7  Some scientists believe that laughter first developed out of 7 ...........",
+     "q": "Some scientists believe that laughter first developed out of 7 ...........",
      "options": [
       "combat",
       "chirps",
@@ -112,7 +112,7 @@
     },
     {
      "type": "choice",
-     "q": "8  Research has revealed that human and chimp laughter may have the same 8 ...........",
+     "q": "Research has revealed that human and chimp laughter may have the same 8 ...........",
      "options": [
       "combat",
       "chirps",
@@ -131,7 +131,7 @@
     },
     {
      "type": "choice",
-     "q": "9  Scientists have long been aware that 9 ........... laugh, but it now appears that laughter might be more widespread than once thought.",
+     "q": "Scientists have long been aware that 9 ........... laugh, but it now appears that laughter might be more widespread than once thought.",
      "options": [
       "combat",
       "chirps",
@@ -150,7 +150,7 @@
     },
     {
      "type": "choice",
-     "q": "10  It seems that laughter may result from the 10 ........... we feel with another person.",
+     "q": "It seems that laughter may result from the 10 ........... we feel with another person.",
      "options": [
       "combat",
       "chirps",
@@ -169,7 +169,7 @@
     },
     {
      "type": "choice",
-     "q": "11  Both men and women laugh more when they are with members of the same sex.",
+     "q": "Both men and women laugh more when they are with members of the same sex.",
      "options": [
       "TRUE",
       "FALSE",
@@ -180,7 +180,7 @@
     },
     {
      "type": "choice",
-     "q": "12  Primates lack sufficient breath control to be able to produce laughs the way humans do.",
+     "q": "Primates lack sufficient breath control to be able to produce laughs the way humans do.",
      "options": [
       "TRUE",
       "FALSE",
@@ -191,7 +191,7 @@
     },
     {
      "type": "choice",
-     "q": "13  Chimpanzees produce laughter in a wider range of situations than rats do.",
+     "q": "Chimpanzees produce laughter in a wider range of situations than rats do.",
      "options": [
       "TRUE",
       "FALSE",
@@ -210,7 +210,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "14  the reason for the deployment of a variety of investigative methods",
+     "q": "the reason for the deployment of a variety of investigative methods",
      "options": [
       "A",
       "B",
@@ -225,7 +225,7 @@
     },
     {
      "type": "choice",
-     "q": "15  an example of an unexpected find",
+     "q": "an example of an unexpected find",
      "options": [
       "A",
       "B",
@@ -240,7 +240,7 @@
     },
     {
      "type": "choice",
-     "q": "16  how the surface of the site was surveyed from above",
+     "q": "how the surface of the site was surveyed from above",
      "options": [
       "A",
       "B",
@@ -255,7 +255,7 @@
     },
     {
      "type": "choice",
-     "q": "17  the reason why experts are interested in the site",
+     "q": "the reason why experts are interested in the site",
      "options": [
       "A",
       "B",
@@ -270,7 +270,7 @@
     },
     {
      "type": "text",
-     "q": "18  They started by taking photographs of the site from the ground and then from a distance in a 18 ...........",
+     "q": "They started by taking photographs of the site from the ground and then from a distance in a 18 ...........",
      "answer": [
       "hot-air balloon",
       "hot air balloon",
@@ -280,7 +280,7 @@
     },
     {
      "type": "text",
-     "q": "19  These variations occur when the 19 ........... in buried structures have changed direction as a result of great heat.",
+     "q": "These variations occur when the 19 ........... in buried structures have changed direction as a result of great heat.",
      "answer": [
       "iron particles",
       "the iron particles"
@@ -289,7 +289,7 @@
     },
     {
      "type": "text",
-     "q": "20  They line up with the surrounding magnetic field just as a 20 ........... would do.",
+     "q": "They line up with the surrounding magnetic field just as a 20 ........... would do.",
      "answer": [
       "compass needle",
       "a compass needle",
@@ -299,7 +299,7 @@
     },
     {
      "type": "text",
-     "q": "21  This uses a 21 ........... to fire electrical pulses into the earth.",
+     "q": "This uses a 21 ........... to fire electrical pulses into the earth.",
      "answer": [
       "thin metal probe",
       "metal probe",
@@ -309,7 +309,7 @@
     },
     {
      "type": "text",
-     "q": "22  The principle is that building materials like 22 ........... and stone do not conduct electricity well,",
+     "q": "The principle is that building materials like 22 ........... and stone do not conduct electricity well,",
      "answer": [
       "mudbrick",
       "mud brick",
@@ -319,7 +319,7 @@
     },
     {
      "type": "text",
-     "q": "23  while 23 ........... does this much more effectively.",
+     "q": "while 23 ........... does this much more effectively.",
      "answer": [
       "damp soil",
       "looser damp soil",
@@ -330,7 +330,7 @@
     },
     {
      "type": "text",
-     "q": "24  This technique is mainly employed during the 24 ..........., when conditions are more favourable.",
+     "q": "This technique is mainly employed during the 24 ..........., when conditions are more favourable.",
      "answer": [
       "spring season",
       "spring",
@@ -340,7 +340,7 @@
     },
     {
      "type": "text",
-     "q": "25  Resistivity is mainly being used to 25 ........... some images generated by the magnetometer.",
+     "q": "Resistivity is mainly being used to 25 ........... some images generated by the magnetometer.",
      "answer": [
       "clarify"
      ],
@@ -348,7 +348,7 @@
     },
     {
      "type": "choice",
-     "q": "26  How do modern remote-sensing techniques help at the Pteria site?",
+     "q": "How do modern remote-sensing techniques help at the Pteria site?",
      "options": [
       "They detect minute buried objects for the archaeologists to dig up.",
       "They pinpoint key areas, which would be worth investigating closely.",
@@ -368,7 +368,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "27  In the second paragraph, the expression “conscience time” refers to the fact that the owners",
+     "q": "In the second paragraph, the expression “conscience time” refers to the fact that the owners",
      "options": [
       "wish they had not bought the power tool.",
       "want to make sure the tool is stored safely.",
@@ -380,7 +380,7 @@
     },
     {
      "type": "choice",
-     "q": "28  Jonathan Chapman uses the word “narrative” in the third paragraph to refer to the fact that the owner",
+     "q": "Jonathan Chapman uses the word “narrative” in the third paragraph to refer to the fact that the owner",
      "options": [
       "told a story about how the item was bought.",
       "was aware of how the item had come into being.",
@@ -392,7 +392,7 @@
     },
     {
      "type": "choice",
-     "q": "29  In the third paragraph, the writer suggests that mass-produced goods are",
+     "q": "In the third paragraph, the writer suggests that mass-produced goods are",
      "options": [
       "inferior in quality.",
       "less likely to be kept for a long time.",
@@ -404,7 +404,7 @@
     },
     {
      "type": "choice",
-     "q": "30  Lack of personal connection to goods is described as producing",
+     "q": "Lack of personal connection to goods is described as producing",
      "options": [
       "a belief that older goods are superior.",
       "an attraction to well-designed packaging.",
@@ -416,7 +416,7 @@
     },
     {
      "type": "choice",
-     "q": "31  Jeans and teddy bears are given as examples of goods which",
+     "q": "Jeans and teddy bears are given as examples of goods which",
      "options": [
       "have been very well designed.",
       "take a long time to show wear.",
@@ -428,7 +428,7 @@
     },
     {
      "type": "choice",
-     "q": "32  People often buy goods that they make little use of.",
+     "q": "People often buy goods that they make little use of.",
      "options": [
       "TRUE",
       "FALSE",
@@ -439,7 +439,7 @@
     },
     {
      "type": "choice",
-     "q": "33  Understanding the reasons for buying goods will help to explain why waste occurs.",
+     "q": "Understanding the reasons for buying goods will help to explain why waste occurs.",
      "options": [
       "TRUE",
       "FALSE",
@@ -450,7 +450,7 @@
     },
     {
      "type": "choice",
-     "q": "34  People already rent more goods than they buy.",
+     "q": "People already rent more goods than they buy.",
      "options": [
       "TRUE",
       "FALSE",
@@ -461,7 +461,7 @@
     },
     {
      "type": "choice",
-     "q": "35  Companies will charge less to repair goods in the future.",
+     "q": "Companies will charge less to repair goods in the future.",
      "options": [
       "TRUE",
       "FALSE",
@@ -472,7 +472,7 @@
     },
     {
      "type": "choice",
-     "q": "36  He states that we should use less energy for things such as lighting or 36 ...........",
+     "q": "He states that we should use less energy for things such as lighting or 36 ...........",
      "options": [
       "mobile phones",
       "clothing",
@@ -489,7 +489,7 @@
     },
     {
      "type": "choice",
-     "q": "37  and buy 37 ........... that will not need to be moved across long distances.",
+     "q": "and buy 37 ........... that will not need to be moved across long distances.",
      "options": [
       "mobile phones",
       "clothing",
@@ -506,7 +506,7 @@
     },
     {
      "type": "choice",
-     "q": "38  Some expensive items such as 38 ........... could be shared,",
+     "q": "Some expensive items such as 38 ........... could be shared,",
      "options": [
       "mobile phones",
       "clothing",
@@ -523,7 +523,7 @@
     },
     {
      "type": "choice",
-     "q": "39  and others which may be less expensive but which are not needed often, such as 39 ..........., could be rented instead of being purchased.",
+     "q": "and others which may be less expensive but which are not needed often, such as 39 ..........., could be rented instead of being purchased.",
      "options": [
       "mobile phones",
       "clothing",
@@ -540,7 +540,7 @@
     },
     {
      "type": "choice",
-     "q": "40  He believes that manufacturers will need to design high-technology items such as 40 ........... so that they can be recycled more easily.",
+     "q": "He believes that manufacturers will need to design high-technology items such as 40 ........... so that they can be recycled more easily.",
      "options": [
       "mobile phones",
       "clothing",

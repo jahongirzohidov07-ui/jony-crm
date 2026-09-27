@@ -21,7 +21,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "1  Construction of tall buildings in New York City started in the twentieth century.",
+     "q": "Construction of tall buildings in New York City started in the twentieth century.",
      "options": [
       "TRUE",
       "FALSE",
@@ -32,7 +32,7 @@
     },
     {
      "type": "choice",
-     "q": "2  An important force in the development of Manhattan's skyscrapers was the increasing price of land.",
+     "q": "An important force in the development of Manhattan's skyscrapers was the increasing price of land.",
      "options": [
       "TRUE",
       "FALSE",
@@ -43,7 +43,7 @@
     },
     {
      "type": "choice",
-     "q": "3  Chicago was a better place to build skyscrapers than New York.",
+     "q": "Chicago was a better place to build skyscrapers than New York.",
      "options": [
       "TRUE",
       "FALSE",
@@ -54,7 +54,7 @@
     },
     {
      "type": "choice",
-     "q": "4  The New York World Building took four years to complete.",
+     "q": "The New York World Building took four years to complete.",
      "options": [
       "TRUE",
       "FALSE",
@@ -65,7 +65,7 @@
     },
     {
      "type": "choice",
-     "q": "5  In 1912, the Woolworth Building was visited as often as the Statue of Liberty.",
+     "q": "In 1912, the Woolworth Building was visited as often as the Statue of Liberty.",
      "options": [
       "TRUE",
       "FALSE",
@@ -76,7 +76,7 @@
     },
     {
      "type": "choice",
-     "q": "6  In its early years, the Empire State Building was a commercial failure.",
+     "q": "In its early years, the Empire State Building was a commercial failure.",
      "options": [
       "TRUE",
       "FALSE",
@@ -87,7 +87,7 @@
     },
     {
      "type": "choice",
-     "q": "7  The Empire State Building was the first skyscraper to be featured in a film.",
+     "q": "The Empire State Building was the first skyscraper to be featured in a film.",
      "options": [
       "TRUE",
       "FALSE",
@@ -98,7 +98,7 @@
     },
     {
      "type": "choice",
-     "q": "8  Le Corbusier is frequently considered responsible for changing New York's architecture.",
+     "q": "Le Corbusier is frequently considered responsible for changing New York's architecture.",
      "options": [
       "TRUE",
       "FALSE",
@@ -109,7 +109,7 @@
     },
     {
      "type": "text",
-     "q": "9  1854 - Elisha Otis introduced New Yorkers to a new invention - a ............ for elevators.",
+     "q": "1854 - Elisha Otis introduced New Yorkers to a new invention - a ............ for elevators.",
      "answer": [
       "brake"
      ],
@@ -117,7 +117,7 @@
     },
     {
      "type": "text",
-     "q": "10  1855 - Henry Bessemer created a way of making ............ that was sturdy and inexpensive.",
+     "q": "1855 - Henry Bessemer created a way of making ............ that was sturdy and inexpensive.",
      "answer": [
       "steel"
      ],
@@ -125,7 +125,7 @@
     },
     {
      "type": "text",
-     "q": "11  1916 - New ............ required that the upper floors of buildings were smaller in area than the lower floors.",
+     "q": "1916 - New ............ required that the upper floors of buildings were smaller in area than the lower floors.",
      "answer": [
       "laws"
      ],
@@ -133,7 +133,7 @@
     },
     {
      "type": "text",
-     "q": "12  1928 - Some of the decorations on the Chrysler Building looked like ............ parts.",
+     "q": "1928 - Some of the decorations on the Chrysler Building looked like ............ parts.",
      "answer": [
       "automobile"
      ],
@@ -141,7 +141,7 @@
     },
     {
      "type": "text",
-     "q": "13  1945 - An aeroplane lost in ............ hit the Empire State Building.",
+     "q": "1945 - An aeroplane lost in ............ hit the Empire State Building.",
      "answer": [
       "fog"
      ],
@@ -149,7 +149,7 @@
     },
     {
      "type": "text",
-     "q": "14  After 1945 - New buildings featured straight lines as well as shiny ............",
+     "q": "After 1945 - New buildings featured straight lines as well as shiny ............",
      "answer": [
       "surfaces"
      ],
@@ -157,7 +157,7 @@
     },
     {
      "type": "text",
-     "q": "15  1958 - The shape of the Seagram Building was a ............ for other office blocks in New York.",
+     "q": "1958 - The shape of the Seagram Building was a ............ for other office blocks in New York.",
      "answer": [
       "model"
      ],
@@ -165,7 +165,7 @@
     },
     {
      "type": "text",
-     "q": "16  Today - Despite its tall buildings, New York is still an ideal place for ............",
+     "q": "Today - Despite its tall buildings, New York is still an ideal place for ............",
      "answer": [
       "walking"
      ],
@@ -181,7 +181,7 @@
    "questions": [
     {
      "type": "choice",
-     "q": "17  an example of how sleeplessness can influence a person accused of a crime",
+     "q": "an example of how sleeplessness can influence a person accused of a crime",
      "options": [
       "A",
       "B",
@@ -196,7 +196,7 @@
     },
     {
      "type": "choice",
-     "q": "18  a description of recordings of different types of brain activity during sleep",
+     "q": "a description of recordings of different types of brain activity during sleep",
      "options": [
       "A",
       "B",
@@ -211,7 +211,7 @@
     },
     {
      "type": "choice",
-     "q": "19  a description of how present-day society interrupts sleep",
+     "q": "a description of how present-day society interrupts sleep",
      "options": [
       "A",
       "B",
@@ -226,7 +226,7 @@
     },
     {
      "type": "choice",
-     "q": "20  information about the relationship between being overweight and sleep",
+     "q": "information about the relationship between being overweight and sleep",
      "options": [
       "A",
       "B",
@@ -241,7 +241,7 @@
     },
     {
      "type": "choice",
-     "q": "21  a suggestion that medication is an ineffective solution for sleeping problems",
+     "q": "a suggestion that medication is an ineffective solution for sleeping problems",
      "options": [
       "A",
       "B",
@@ -256,7 +256,7 @@
     },
     {
      "type": "choice",
-     "q": "22  a discovery that changed ideas about how sleep is understood",
+     "q": "a discovery that changed ideas about how sleep is understood",
      "options": [
       "A",
       "B",
@@ -271,7 +271,7 @@
     },
     {
      "type": "choice",
-     "q": "23  examples of the life-threatening consequences of inadequate sleep",
+     "q": "examples of the life-threatening consequences of inadequate sleep",
      "options": [
       "A",
       "B",
@@ -286,7 +286,7 @@
     },
     {
      "type": "multi",
-     "q": "24 and 25  Choose TWO letters, A-E. Which TWO of these statements describe characteristics of NREM sleep?",
+     "q": "Choose TWO letters, A-E. Which TWO of these statements describe characteristics of NREM sleep?",
      "options": [
       "NREM sleep is important for maintaining brain function.",
       "NREM sleep consists of two distinct parts.",
@@ -302,7 +302,7 @@
     },
     {
      "type": "multi",
-     "q": "26 and 27  Choose TWO letters, A-E. Which TWO of these statements describe the characteristics of REM sleep?",
+     "q": "Choose TWO letters, A-E. Which TWO of these statements describe the characteristics of REM sleep?",
      "options": [
       "The REM stage is the longest phase of sleep.",
       "REM sleep can be identified by an unusual physical feature.",
@@ -318,7 +318,7 @@
     },
     {
      "type": "text",
-     "q": "28  According to the CDC, lack of sleep leads to ............ which is often a factor in car crashes.",
+     "q": "According to the CDC, lack of sleep leads to ............ which is often a factor in car crashes.",
      "answer": [
       "fatigue"
      ],
@@ -326,7 +326,7 @@
     },
     {
      "type": "text",
-     "q": "29  The most common sleep disorder in the U.S. is ............",
+     "q": "The most common sleep disorder in the U.S. is ............",
      "answer": [
       "insomnia"
      ],
@@ -334,7 +334,7 @@
     },
     {
      "type": "text",
-     "q": "30  The brain responds to any type of ............ by activating a built-in alarm.",
+     "q": "The brain responds to any type of ............ by activating a built-in alarm.",
      "answer": [
       "emergency"
      ],
@@ -342,7 +342,7 @@
     },
     {
      "type": "text",
-     "q": "31  Researchers claim that routinely sleep-deprived people are more likely to be obese and suffer from illnesses like ............",
+     "q": "Researchers claim that routinely sleep-deprived people are more likely to be obese and suffer from illnesses like ............",
      "answer": [
       "depression"
      ],
@@ -350,7 +350,7 @@
     },
     {
      "type": "text",
-     "q": "32  The processing of new memories is crucially linked to our ............ during sleep.",
+     "q": "The processing of new memories is crucially linked to our ............ during sleep.",
      "answer": [
       "dreams"
      ],

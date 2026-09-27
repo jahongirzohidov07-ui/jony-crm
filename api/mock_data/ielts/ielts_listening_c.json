@@ -19,7 +19,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "1  Surname:",
+     "q": "Surname:",
      "answer": [
       "Pardoe",
       "PARDOE"
@@ -28,7 +28,7 @@
     },
     {
      "type": "text",
-     "q": "2  Type of membership chosen:",
+     "q": "Type of membership chosen:",
      "answer": [
       "evening",
       "Evening"
@@ -37,7 +37,7 @@
     },
     {
      "type": "text",
-     "q": "3  Cost per month: £",
+     "q": "Cost per month: £",
      "answer": [
       "34",
       "£34",
@@ -47,7 +47,7 @@
     },
     {
      "type": "text",
-     "q": "4  Date of induction session:",
+     "q": "Date of induction session:",
      "answer": [
       "12 May",
       "12th May",
@@ -58,7 +58,7 @@
     },
     {
      "type": "text",
-     "q": "5  Workshop the member wants to learn:",
+     "q": "Workshop the member wants to learn:",
      "answer": [
       "welding",
       "Welding"
@@ -67,7 +67,7 @@
     },
     {
      "type": "text",
-     "q": "6  Member must bring her own:",
+     "q": "Member must bring her own:",
      "answer": [
       "goggles",
       "Goggles"
@@ -76,7 +76,7 @@
     },
     {
      "type": "text",
-     "q": "7  Storage locker number:",
+     "q": "Storage locker number:",
      "answer": [
       "47",
       "forty-seven"
@@ -85,7 +85,7 @@
     },
     {
      "type": "text",
-     "q": "8  Access code will be sent by:",
+     "q": "Access code will be sent by:",
      "answer": [
       "text",
       "SMS"
@@ -94,7 +94,7 @@
     },
     {
      "type": "text",
-     "q": "9  Nearest car park is behind the:",
+     "q": "Nearest car park is behind the:",
      "answer": [
       "library",
       "Library"
@@ -103,7 +103,7 @@
     },
     {
      "type": "text",
-     "q": "10  Discount is now offered to:",
+     "q": "Discount is now offered to:",
      "answer": [
       "volunteers",
       "volunteer"
@@ -114,88 +114,88 @@
   },
   {
    "title": "Part 2",
-   "instructions": "Questions 11-13\n\nChoose the correct letter, A, B or C.\n\nQuestions 14-16\n\nWhich feature is mentioned in connection with each of the following bicycle models?\n\nChoose THREE answers from the list A-F and write the correct letter next to Questions 14-16.\n\nA  a step-through frame\nB  a longer-range battery\nC  a child seat\nD  puncture-proof tyres\nE  a folding frame\nF  a cargo rack\n\nQuestions 17-20\n\nLabel the map below. Write the correct letter, A-H, next to Questions 17-20.\n\nThe map shows the central square of Halford Point Technology Park. The lettered locations are as follows:\nA is at the north end of the main path, beside the bus stop.\nB is directly opposite the main entrance, on the far side of the square.\nC is on the west side of the square, between the cafe and the pond.\nD is at the south-east corner, next to the delivery gate.\nE is in the middle of the square, beside the fountain.\nF is behind the main building, next to the bicycle racks.\nG is at the west end of the staff car park, beside the recycling bins.\nH is at the top of the steps that lead up to the sports hall.",
+   "instructions": "Questions 11-13\n\nChoose the correct letter, A, B or C.\n\nQuestions 14-16\n\nWhich feature is mentioned in connection with each of the following bicycle models?\n\nChoose THREE answers from the list A-F and write the correct letter next to Questions 14-16.\n\nA  a step-through frame\nB  a longer-range battery\nC  a child seat\nD  puncture-proof tyres\nE  a folding frame\nF  a cargo rack\n\nQuestions 17-20\n\nLabel the map below. Write the correct letter, A-H, next to Questions 17-20.",
    "passage": "",
    "script": "You will hear a talk given by the travel coordinator of a technology park about its bicycle hire scheme. First, you have some time to look at questions 11 to 20.\n\nNow listen carefully and answer questions 11 to 20.\n\nROSIE: Good afternoon, everyone, and welcome to Halford Point. My name is Rosie Kandel and I coordinate transport across the park. I've got ten minutes to tell you how our bicycle hire scheme works, which models we run, and where everything is.\n\nFirst, a bit of history. People often assume we launched the scheme for environmental reasons, and of course cutting our emissions is a welcome side effect. Several of you emailed to ask whether it began as a staff health initiative, because we do now run cycling clubs. But neither of those was the trigger. The plain truth is that by that spring our car park had simply run out of spaces, and building a second one would have cost more than the entire scheme has cost in six years. So it was a parking problem, and bicycles were the cheapest answer.\n\nNow, what surprised us in the first twelve months. We had budgeted for a heavy morning peak, with people riding in from the station between eight and nine, and we did get that - although it was smaller than predicted. We also assumed most riders would be experienced cyclists, and in fact roughly a third had not ridden since school, which we should probably have anticipated. No, the genuine surprise, the thing none of us had modelled, was the time of day. Our busiest period, by a clear margin, turned out to be the middle of the day - lunchtime trips out to the retail park and back.\n\nAnd looking ahead. There have been persistent rumours that the hire charge is going up in September, and I can tell you today that that is not happening this year - the price is frozen until at least next April. What is changing on the first of September is who can use the bikes. Until now you have needed a park pass, which means staff and contractors only. From September the scheme opens up, and anyone living in the surrounding area will be able to hire a bike from our stands. We expect it to be busy, so please do book ahead.\n\nRight - the three models, because people get them confused. The Skylark is our entry-level bike, and it was chosen specifically with occasional riders in mind. The key thing about it is the step-through frame - there's no crossbar, so you don't have to lift your leg over anything. It's the one I recommend to nervous riders.\n\nThe Bramble is for the long runs - out to the reservoir, or over to the Eastfield site. We did consider giving the Bramble solid tyres, and in the end that idea went to a different model. What the Bramble has is a much larger battery, which will take you about ninety kilometres on one charge.\n\nAnd the Tor is the workhorse. It's the heaviest of the three, and it's the one that got the puncture-proof tyres, because it spends most of its life on the gravel track along the canal, where we were repairing three or four flats a week.\n\nNow, locations, and please do mark these on the map in your pack.\n\nThe repair station - where you'll find pumps, spanners and the tool board - is right at the west end of the staff car park, beside the recycling bins. Some of you will remember it used to be by the pond; that site is now the flower stall.\n\nThe charging hub, where the batteries are swapped, is tucked away behind the main building, immediately next to the bicycle racks. It's covered, so you can do it in the rain.\n\nStaff showers and lockers are at the top of the steps leading up to the sports hall. Do use them - they're rarely busy before nine.\n\nAnd finally the helmet kiosk. We originally planned to put it at the south-east corner by the delivery gate, but the lorries made that impossible, so it now sits right in the middle of the square, beside the fountain. You can't miss it.\n\nThat is the end of Part 2. You now have half a minute to check your answers.",
    "questions": [
     {
      "type": "choice",
-     "q": "11  Why was the bicycle hire scheme originally introduced?",
+     "q": "Why was the bicycle hire scheme originally introduced?",
      "options": [
-      "A  because the car park was full",
-      "B  to reduce the park's carbon emissions",
-      "C  to improve the health of staff"
+      "because the car park was full",
+      "to reduce the park's carbon emissions",
+      "to improve the health of staff"
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "12  What surprised the organisers during the first year?",
+     "q": "What surprised the organisers during the first year?",
      "options": [
-      "A  the size of the morning peak from the station",
-      "B  the time of day when most trips were made",
-      "C  how many riders were inexperienced"
+      "the size of the morning peak from the station",
+      "the time of day when most trips were made",
+      "how many riders were inexperienced"
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "13  What will change in September?",
+     "q": "What will change in September?",
      "options": [
-      "A  The hire charge will increase.",
-      "B  The scheme will be open to local residents.",
-      "C  Advance booking will no longer be needed."
+      "The hire charge will increase.",
+      "The scheme will be open to local residents.",
+      "Advance booking will no longer be needed."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "14  the Skylark",
+     "q": "the Skylark",
      "options": [
-      "A  a step-through frame",
-      "B  a longer-range battery",
-      "C  a child seat",
-      "D  puncture-proof tyres",
-      "E  a folding frame",
-      "F  a cargo rack"
+      "a step-through frame",
+      "a longer-range battery",
+      "a child seat",
+      "puncture-proof tyres",
+      "a folding frame",
+      "a cargo rack"
      ],
      "answer": 0,
      "topic": "Listening · Matching"
     },
     {
      "type": "choice",
-     "q": "15  the Bramble",
+     "q": "the Bramble",
      "options": [
-      "A  a step-through frame",
-      "B  a longer-range battery",
-      "C  a child seat",
-      "D  puncture-proof tyres",
-      "E  a folding frame",
-      "F  a cargo rack"
+      "a step-through frame",
+      "a longer-range battery",
+      "a child seat",
+      "puncture-proof tyres",
+      "a folding frame",
+      "a cargo rack"
      ],
      "answer": 1,
      "topic": "Listening · Matching"
     },
     {
      "type": "choice",
-     "q": "16  the Tor",
+     "q": "the Tor",
      "options": [
-      "A  a step-through frame",
-      "B  a longer-range battery",
-      "C  a child seat",
-      "D  puncture-proof tyres",
-      "E  a folding frame",
-      "F  a cargo rack"
+      "a step-through frame",
+      "a longer-range battery",
+      "a child seat",
+      "puncture-proof tyres",
+      "a folding frame",
+      "a cargo rack"
      ],
      "answer": 3,
      "topic": "Listening · Matching"
     },
     {
      "type": "choice",
-     "q": "17  repair station",
+     "q": "repair station",
      "options": [
       "A",
       "B",
@@ -207,11 +207,12 @@
       "H"
      ],
      "answer": 6,
-     "topic": "Listening · Map labelling"
+     "topic": "Listening · Map labelling",
+     "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTYwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjU2MCIgZmlsbD0iI2ZmZmZmZiIvPgo8dGV4dCB4PSI0MDAiIHk9IjMwIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+SGFsZm9yZCBQb2ludCBUZWNobm9sb2d5IFBhcms8L3RleHQ+CjxnIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIj4KPGxpbmUgeDE9Ijc1MCIgeTE9IjEwOCIgeDI9Ijc1MCIgeTI9IjYyIi8+CjwvZz4KPHBvbHlnb24gcG9pbnRzPSI3NTAsNTYgNzQxLDc4IDc1OSw3OCIgZmlsbD0iIzMzMyIvPgo8dGV4dCB4PSI3NTAiIHk9IjUyIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+TjwvdGV4dD4KPHJlY3QgeD0iMTMwIiB5PSI0NSIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI2MyIgZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iMjIwIiB5PSI4MiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+U3BvcnRzIGhhbGw8L3RleHQ+CjxyZWN0IHg9IjI1MCIgeT0iMTA4IiB3aWR0aD0iNTAiIGhlaWdodD0iNDIiIGZpbGw9IiNmMmYyZjIiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KPGcgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSI+CjxsaW5lIHgxPSIyNTAiIHkxPSIxMTUiIHgyPSIzMDAiIHkyPSIxMTUiLz4KPGxpbmUgeDE9IjI1MCIgeTE9IjEyMiIgeDI9IjMwMCIgeTI9IjEyMiIvPgo8bGluZSB4MT0iMjUwIiB5MT0iMTI5IiB4Mj0iMzAwIiB5Mj0iMTI5Ii8+CjxsaW5lIHgxPSIyNTAiIHkxPSIxMzYiIHgyPSIzMDAiIHkyPSIxMzYiLz4KPGxpbmUgeDE9IjI1MCIgeTE9IjE0MyIgeDI9IjMwMCIgeTI9IjE0MyIvPgo8L2c+Cjx0ZXh0IHg9IjMwOCIgeT0iMTQwIiBmb250LXNpemU9IjE1IiBmaWxsPSIjMTExIj5TdGVwczwvdGV4dD4KPHJlY3QgeD0iMzgwIiB5PSI1NSIgd2lkdGg9IjMwIiBoZWlnaHQ9Ijk1IiBmaWxsPSIjZjJmMmYyIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+Cjx0ZXh0IHg9IjQyMCIgeT0iMTMwIiBmb250LXNpemU9IjE1IiBmaWxsPSIjMTExIj5NYWluIHBhdGg8L3RleHQ+CjxyZWN0IHg9IjQyNCIgeT0iNTIiIHdpZHRoPSI4MCIgaGVpZ2h0PSIzMiIgZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz4KPHRleHQgeD0iNDY0IiB5PSI3MyIgZm9udC1zaXplPSIxNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+QnVzIHN0b3A8L3RleHQ+CjxyZWN0IHg9IjEwMCIgeT0iMTYwIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjcyIiBmaWxsPSIjZTZlNmU2IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMiIvPgo8dGV4dCB4PSIxNjAiIHk9IjIwMSIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+Q2FmZTwvdGV4dD4KPGVsbGlwc2UgY3g9IjE2NSIgY3k9IjMzMCIgcng9IjYyIiByeT0iMzAiIGZpbGw9IiNjZmU2ZjUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjE2NSIgeT0iMzM1IiBmb250LXNpemU9IjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTExIj5Qb25kPC90ZXh0Pgo8cmVjdCB4PSIyNTAiIHk9IjE1MCIgd2lkdGg9IjI5MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNmN2Y3ZjciIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjQwMCIgY3k9IjI2MiIgcj0iMjYiIGZpbGw9IiNjZmU2ZjUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjQwMCIgY3k9IjI2MiIgcj0iOCIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8dGV4dCB4PSI0MDAiIHk9IjMxMCIgZm9udC1zaXplPSIxNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+Rm91bnRhaW48L3RleHQ+Cjx0ZXh0IHg9IjM4MCIgeT0iMzc1IiBmb250LXNpemU9IjE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNTU1IiBmb250LXN0eWxlPSJpdGFsaWMiPkNlbnRyYWwgc3F1YXJlPC90ZXh0Pgo8cmVjdCB4PSI1OTAiIHk9IjE2MCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxNzAiIGZpbGw9IiNlNmU2ZTYiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxyZWN0IHg9IjU4NyIgeT0iMTk4IiB3aWR0aD0iNiIgaGVpZ2h0PSIzNCIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8cG9seWdvbiBwb2ludHM9IjU4NSwyMTUgNTcxLDIwNyA1NzEsMjIzIiBmaWxsPSIjMzMzIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMjExIiBmb250LXNpemU9IjE1IiBmaWxsPSIjMTExIj5NYWluPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjIyOSIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzExMSI+ZW50cmFuY2U8L3RleHQ+Cjx0ZXh0IHg9IjY0MCIgeT0iMjg1IiBmb250LXNpemU9IjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTExIj5NYWluPC90ZXh0Pgo8dGV4dCB4PSI2NDAiIHk9IjMwNCIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+YnVpbGRpbmc8L3RleHQ+CjxnIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIj4KPGxpbmUgeDE9IjcwNiIgeTE9IjE4NSIgeDI9Ijc0MCIgeTI9IjE4NSIvPgo8bGluZSB4MT0iNzA2IiB5MT0iMjAwIiB4Mj0iNzQwIiB5Mj0iMjAwIi8+CjxsaW5lIHgxPSI3MDYiIHkxPSIyMTUiIHgyPSI3NDAiIHkyPSIyMTUiLz4KPGxpbmUgeDE9IjcwNiIgeTE9IjIzMCIgeDI9Ijc0MCIgeTI9IjIzMCIvPgo8bGluZSB4MT0iNzA2IiB5MT0iMjQ1IiB4Mj0iNzQwIiB5Mj0iMjQ1Ii8+CjxsaW5lIHgxPSI3MDYiIHkxPSIyNjAiIHgyPSI3NDAiIHkyPSIyNjAiLz4KPGxpbmUgeDE9IjcyMyIgeTE9IjE4MCIgeDI9IjcyMyIgeTI9IjI2NSIvPgo8L2c+Cjx0ZXh0IHg9IjcyOCIgeT0iMjkyIiBmb250LXNpemU9IjE1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTExIj5CaWN5Y2xlPC90ZXh0Pgo8dGV4dCB4PSI3MjgiIHk9IjMxMCIgZm9udC1zaXplPSIxNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+cmFja3M8L3RleHQ+CjxyZWN0IHg9IjU0MCIgeT0iMzUwIiB3aWR0aD0iMjYwIiBoZWlnaHQ9IjM2IiBmaWxsPSIjZGNkY2RjIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+CjxnIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIzIj4KPGxpbmUgeDE9IjU0NiIgeTE9IjM1MiIgeDI9IjU0NiIgeTI9IjM4NCIvPgo8bGluZSB4MT0iNTU0IiB5MT0iMzUyIiB4Mj0iNTU0IiB5Mj0iMzg0Ii8+CjwvZz4KPHRleHQgeD0iNTYwIiB5PSI0MTAiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxMTEiPkRlbGl2ZXJ5IGdhdGU8L3RleHQ+CjxyZWN0IHg9IjM4MCIgeT0iMzkwIiB3aWR0aD0iMzAiIGhlaWdodD0iNDAiIGZpbGw9IiNmMmYyZjIiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KPHJlY3QgeD0iNDAiIHk9IjQzMCIgd2lkdGg9IjQ4MCIgaGVpZ2h0PSIxMTAiIGZpbGw9IiNlZWVlZWUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxnIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiPgo8bGluZSB4MT0iMjQwIiB5MT0iNDMwIiB4Mj0iMjQwIiB5Mj0iNDY1Ii8+CjxsaW5lIHgxPSIyNzAiIHkxPSI0MzAiIHgyPSIyNzAiIHkyPSI0NjUiLz4KPGxpbmUgeDE9IjMwMCIgeTE9IjQzMCIgeDI9IjMwMCIgeTI9IjQ2NSIvPgo8bGluZSB4MT0iMzMwIiB5MT0iNDMwIiB4Mj0iMzMwIiB5Mj0iNDY1Ii8+CjxsaW5lIHgxPSIzNjAiIHkxPSI0MzAiIHgyPSIzNjAiIHkyPSI0NjUiLz4KPGxpbmUgeDE9IjQzMCIgeTE9IjQzMCIgeDI9IjQzMCIgeTI9IjQ2NSIvPgo8bGluZSB4MT0iNDYwIiB5MT0iNDMwIiB4Mj0iNDYwIiB5Mj0iNDY1Ii8+CjxsaW5lIHgxPSI0OTAiIHkxPSI0MzAiIHgyPSI0OTAiIHkyPSI0NjUiLz4KPC9nPgo8cmVjdCB4PSI1NSIgeT0iNDQ0IiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9IiNiZGJkYmQiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KPHJlY3QgeD0iODAiIHk9IjQ0NCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSIjYmRiZGJkIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+Cjx0ZXh0IHg9IjExMCIgeT0iNDYwIiBmb250LXNpemU9IjE1IiBmaWxsPSIjMTExIj5SZWN5Y2xpbmcgYmluczwvdGV4dD4KPHRleHQgeD0iMzMwIiB5PSI1MTAiIGZvbnQtc2l6ZT0iMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMxMTEiPlN0YWZmIGNhciBwYXJrPC90ZXh0Pgo8ZyBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzExMSI+CjxjaXJjbGUgY3g9IjM5NSIgY3k9IjcyIiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSIzOTUiIHk9Ijc4Ij5BPC90ZXh0Pgo8Y2lyY2xlIGN4PSIyNzQiIGN5PSIyMTUiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjI3NCIgeT0iMjIxIj5CPC90ZXh0Pgo8Y2lyY2xlIGN4PSIxNzgiIGN5PSIyNjYiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjE3OCIgeT0iMjcyIj5DPC90ZXh0Pgo8Y2lyY2xlIGN4PSI1MTYiIGN5PSIzNjYiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjUxNiIgeT0iMzcyIj5EPC90ZXh0Pgo8Y2lyY2xlIGN4PSI0NTIiIGN5PSIyNjIiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjQ1MiIgeT0iMjY4Ij5FPC90ZXh0Pgo8Y2lyY2xlIGN4PSI3NzAiIGN5PSIyMjIiIHI9IjE2IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc3MCIgeT0iMjI4Ij5GPC90ZXh0Pgo8Y2lyY2xlIGN4PSI3MiIgY3k9IjUwMCIgcj0iMTYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzExMSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzIiIHk9IjUwNiI+RzwvdGV4dD4KPGNpcmNsZSBjeD0iMjMwIiBjeT0iMTI0IiByPSIxNiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTExIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSIyMzAiIHk9IjEzMCI+SDwvdGV4dD4KPC9nPgo8L3N2Zz4="
     },
     {
      "type": "choice",
-     "q": "18  charging hub",
+     "q": "charging hub",
      "options": [
       "A",
       "B",
@@ -227,7 +228,7 @@
     },
     {
      "type": "choice",
-     "q": "19  staff showers",
+     "q": "staff showers",
      "options": [
       "A",
       "B",
@@ -243,7 +244,7 @@
     },
     {
      "type": "choice",
-     "q": "20  helmet kiosk",
+     "q": "helmet kiosk",
      "options": [
       "A",
       "B",
@@ -267,93 +268,93 @@
    "questions": [
     {
      "type": "choice",
-     "q": "21  Why did the students change their project topic?",
+     "q": "Why did the students change their project topic?",
      "options": [
-      "A  The equipment they needed was unavailable.",
-      "B  Another group was working on the same idea.",
-      "C  Their tutor advised them against it."
+      "The equipment they needed was unavailable.",
+      "Another group was working on the same idea.",
+      "Their tutor advised them against it."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "22  According to Marcus, the main weakness of existing commercial sensors is",
+     "q": "According to Marcus, the main weakness of existing commercial sensors is",
      "options": [
-      "A  their purchase price.",
-      "B  their need for frequent recalibration.",
-      "C  their physical size."
+      "their purchase price.",
+      "their need for frequent recalibration.",
+      "their physical size."
      ],
      "answer": 1,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "23  What does Dr Finlay advise the students to do?",
+     "q": "What does Dr Finlay advise the students to do?",
      "options": [
-      "A  measure fewer variables",
-      "B  carry out all testing in the laboratory first",
-      "C  request data from the water company"
+      "measure fewer variables",
+      "carry out all testing in the laboratory first",
+      "request data from the water company"
      ],
      "answer": 0,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "24  What have the students decided to use for the sensor housing?",
+     "q": "What have the students decided to use for the sensor housing?",
      "options": [
-      "A  a 3D-printed case",
-      "B  a waterproof box bought ready-made",
-      "C  a piece of recycled pipe"
+      "a 3D-printed case",
+      "a waterproof box bought ready-made",
+      "a piece of recycled pipe"
      ],
      "answer": 2,
      "topic": "Listening · Multiple choice"
     },
     {
      "type": "choice",
-     "q": "25  stainless steel",
+     "q": "stainless steel",
      "options": [
-      "A  It is too expensive to buy in quantity.",
-      "B  It performs poorly in cold water.",
-      "C  It cannot be obtained locally.",
-      "D  It needs specialist tools to shape.",
-      "E  It breaks down in sunlight.",
-      "F  It adds too much weight."
+      "It is too expensive to buy in quantity.",
+      "It performs poorly in cold water.",
+      "It cannot be obtained locally.",
+      "It needs specialist tools to shape.",
+      "It breaks down in sunlight.",
+      "It adds too much weight."
      ],
      "answer": 3,
      "topic": "Listening · Matching"
     },
     {
      "type": "choice",
-     "q": "26  nylon",
+     "q": "nylon",
      "options": [
-      "A  It is too expensive to buy in quantity.",
-      "B  It performs poorly in cold water.",
-      "C  It cannot be obtained locally.",
-      "D  It needs specialist tools to shape.",
-      "E  It breaks down in sunlight.",
-      "F  It adds too much weight."
+      "It is too expensive to buy in quantity.",
+      "It performs poorly in cold water.",
+      "It cannot be obtained locally.",
+      "It needs specialist tools to shape.",
+      "It breaks down in sunlight.",
+      "It adds too much weight."
      ],
      "answer": 4,
      "topic": "Listening · Matching"
     },
     {
      "type": "choice",
-     "q": "27  copper",
+     "q": "copper",
      "options": [
-      "A  It is too expensive to buy in quantity.",
-      "B  It performs poorly in cold water.",
-      "C  It cannot be obtained locally.",
-      "D  It needs specialist tools to shape.",
-      "E  It breaks down in sunlight.",
-      "F  It adds too much weight."
+      "It is too expensive to buy in quantity.",
+      "It performs poorly in cold water.",
+      "It cannot be obtained locally.",
+      "It needs specialist tools to shape.",
+      "It breaks down in sunlight.",
+      "It adds too much weight."
      ],
      "answer": 0,
      "topic": "Listening · Matching"
     },
     {
      "type": "text",
-     "q": "28  The students will borrow a ............ from the geography department.",
+     "q": "The students will borrow a ............ from the geography department.",
      "answer": [
       "flow meter",
       "flowmeter",
@@ -363,7 +364,7 @@
     },
     {
      "type": "text",
-     "q": "29  Readings will be sent to the base station once every ............ .",
+     "q": "Readings will be sent to the base station once every ............ .",
      "answer": [
       "six hours",
       "6 hours"
@@ -372,7 +373,7 @@
     },
     {
      "type": "text",
-     "q": "30  Every draft of the report must now include a section on ............ .",
+     "q": "Every draft of the report must now include a section on ............ .",
      "answer": [
       "risk assessment",
       "risk-assessment"
@@ -389,7 +390,7 @@
    "questions": [
     {
      "type": "text",
-     "q": "31  The first mechanical cooling system was designed to control the ............ in a printing works.",
+     "q": "The first mechanical cooling system was designed to control the ............ in a printing works.",
      "answer": [
       "humidity"
      ],
@@ -397,7 +398,7 @@
     },
     {
      "type": "text",
-     "q": "32  In hot climates, cooling can use over half of a tower's ............ .",
+     "q": "In hot climates, cooling can use over half of a tower's ............ .",
      "answer": [
       "electricity"
      ],
@@ -405,7 +406,7 @@
     },
     {
      "type": "text",
-     "q": "33  Fixed shades are most effective on the ............ side of a building.",
+     "q": "Fixed shades are most effective on the ............ side of a building.",
      "answer": [
       "south"
      ],
@@ -413,7 +414,7 @@
     },
     {
      "type": "text",
-     "q": "34  On east and west walls, the shades need to ............ during the day.",
+     "q": "On east and west walls, the shades need to ............ during the day.",
      "answer": [
       "rotate"
      ],
@@ -421,7 +422,7 @@
     },
     {
      "type": "text",
-     "q": "35  In the stack effect, warm air leaves through a central ............ .",
+     "q": "In the stack effect, warm air leaves through a central ............ .",
      "answer": [
       "shaft"
      ],
@@ -429,7 +430,7 @@
     },
     {
      "type": "text",
-     "q": "36  Outdoor air is normally cool enough for this only at ............ .",
+     "q": "Outdoor air is normally cool enough for this only at ............ .",
      "answer": [
       "night"
      ],
@@ -437,7 +438,7 @@
     },
     {
      "type": "text",
-     "q": "37  In city centres the main obstacle to opening windows is ............ .",
+     "q": "In city centres the main obstacle to opening windows is ............ .",
      "answer": [
       "noise"
      ],
@@ -445,7 +446,7 @@
     },
     {
      "type": "text",
-     "q": "38  Traditional hot-climate buildings had thick walls made of ............ .",
+     "q": "Traditional hot-climate buildings had thick walls made of ............ .",
      "answer": [
       "stone"
      ],
@@ -453,7 +454,7 @@
     },
     {
      "type": "text",
-     "q": "39  In the Harrowgate tower, the wax in the pipes turns into a ............ during the day.",
+     "q": "In the Harrowgate tower, the wax in the pipes turns into a ............ during the day.",
      "answer": [
       "liquid"
      ],
@@ -461,7 +462,7 @@
     },
     {
      "type": "text",
-     "q": "40  The main barrier to wider use is the additional ............ of construction.",
+     "q": "The main barrier to wider use is the additional ............ of construction.",
      "answer": [
       "cost"
      ],

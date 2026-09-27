@@ -118,6 +118,52 @@ def _questions(parts: list):
 IMAGE_MAX_CHARS = 300_000          # savol rasmi (data URL) ~220KB
 ESSAY_MAX_CHARS = 12_000           # Writing javobi (~1500 so'z)
 
+# TAKRORLANGAN RAQAM VA HARF (2026-09-27, Jahongir skrinshoti:
+# "11. 11 The land ..." va "A A a reservoir."). Mock bazasi matnlarida
+# savol raqami va variant harfi matnning ICHIDA yozilgan edi, ekran esa
+# ularni o'zi qo'shadi. Faqat aniq naqsh olib tashlanadi: raqamdan keyin
+# ikki bo'shliq yoki nuqta/qavs ("11  The", "24 and 25  Choose",
+# "3. What"); variant harfi esa faqat HAMMA variant ketma-ket A, B, C ...
+# bilan boshlansa. "1998 was ..." yoki "3.5 million" kabi oddiy matnga
+# tegilmaydi.
+_QNUM_RE = re.compile(
+    r"^\s*\d{1,3}(?:\s*(?:-|–|and)\s*\d{1,3})?(?:\s{2,}|[.)]\s+)")
+_OPT_LETTERS = "ABCDEFGHIJKLMNOP"
+
+
+def strip_q_prefix(text) -> str:
+    s = str(text or "")
+    t = _QNUM_RE.sub("", s, count=1)
+    return t if t.strip() else s
+
+
+def strip_opt_prefixes(opts):
+    if not opts or len(opts) > len(_OPT_LETTERS):
+        return opts
+    pats = [re.compile(r"^%s(?:\)\s*|\.\s+|\s+)" % _OPT_LETTERS[i])
+            for i in range(len(opts))]
+    if not all(isinstance(o, str) and pats[i].match(o)
+               for i, o in enumerate(opts)):
+        return opts
+    new = [pats[i].sub("", o, count=1) for i, o in enumerate(opts)]
+    return new if all(x.strip() for x in new) else opts
+
+
+def strip_prefixes(parts: list) -> list:
+    """Bo'limlar nusxasi — savol raqami va variant harfi takrorlanmasin."""
+    out = []
+    for p in parts or []:
+        qs = []
+        for q in p.get("questions") or []:
+            q2 = dict(q)
+            if "q" in q2:
+                q2["q"] = strip_q_prefix(q2.get("q"))
+            if q2.get("options"):
+                q2["options"] = strip_opt_prefixes(list(q2["options"]))
+            qs.append(q2)
+        out.append({**p, "questions": qs})
+    return out
+
 
 def _clean_image(v, where: str):
     """Savol rasmi: yuklangan (data:image/…) yoki loyihadagi statik fayl
@@ -146,7 +192,7 @@ def clean_parts(parts) -> list:
         for q in p.get("questions") or []:
             n += 1
             typ = q.get("type") or "choice"
-            text = str(q.get("q") or "").strip()
+            text = strip_q_prefix(str(q.get("q") or "").strip()).strip()
             qid = str(q.get("id") or "").strip() or f"q{n}"
             while qid in seen:
                 qid = f"{qid}_{n}"
@@ -162,8 +208,9 @@ def clean_parts(parts) -> list:
             if img:
                 item["image"] = img
             if typ == "choice":
-                opts = [str(o).strip() for o in (q.get("options") or [])
-                        if str(o).strip()]
+                opts = strip_opt_prefixes(
+                    [str(o).strip() for o in (q.get("options") or [])
+                     if str(o).strip()])
                 if len(opts) < 2:
                     raise HTTPException(
                         400, f"{n}-savol: kamida 2 ta variant kerak")
@@ -186,8 +233,9 @@ def clean_parts(parts) -> list:
                 # KO'P JAVOBLI (2026-09-26, IELTS mock): "Choose TWO
                 # letters, A-E" — o'quvchi bir nechta variantni belgilaydi,
                 # hammasi to'g'ri bo'lsagina 1 ball beriladi.
-                opts = [str(o).strip() for o in (q.get("options") or [])
-                        if str(o).strip()]
+                opts = strip_opt_prefixes(
+                    [str(o).strip() for o in (q.get("options") or [])
+                     if str(o).strip()])
                 if len(opts) < 3:
                     raise HTTPException(
                         400, f"{n}-savol: kamida 3 ta variant kerak")
@@ -240,9 +288,11 @@ def clean_parts(parts) -> list:
 
 
 def public_parts(parts: list) -> list:
-    """O'quvchiga boradigan nusxa — to'g'ri javoblarsiz."""
+    """O'quvchiga boradigan nusxa — to'g'ri javoblarsiz. Prefikslar shu
+    yerda ham tozalanadi: tuzatishdan oldin ochilgan linklarning
+    nusxasida ular hali saqlangan."""
     out = []
-    for p in parts:
+    for p in strip_prefixes(parts):
         out.append({
             **{k: p.get(k) for k in ("title", "instructions", "passage",
                                      "audio_url", "image")},
@@ -1028,7 +1078,7 @@ def _opt_label(opts: list, i: int) -> str:
 
 def _qmap(parts: list) -> dict:
     m = {}
-    for p in parts:
+    for p in strip_prefixes(parts):
         for q in p.get("questions") or []:
             m[q["id"]] = {**q, "part": p.get("title")}
     return m

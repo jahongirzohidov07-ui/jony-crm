@@ -31,6 +31,7 @@ export const ROUTE_GEM: Record<string, string> = {
   "/learning": "trend",
   "/plans": "notebook",
   "/exam": "exam",
+  "/mock-practice": "spark",
   "/smm": "insta",
   "/marketing": "mega",
   "/users": "usergear",

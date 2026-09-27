@@ -179,7 +179,14 @@ export function buildNav(
   // va support menyusi pastda qayta yig'iladi — band o'sha ikki
   // ro'yxatda ham bor.
   const mockItem = { to: "/mock-practice", label: "Mock sinab ko'rish", icon: FlaskConical };
-  if (can(user?.role, MOCK_PRACTICE)) {
+  // 2026-09-27, Jahongir: "mock testni sinab ko'rish bu asosiyda
+  // turmasin imtihonlar bo'limida bor yetadi". Imtihonlar bo'limini
+  // ko'radiganlarga (asoschi, filial/o'quv rahbari, examinerlar...)
+  // yon menyuda alohida band chiqmaydi — Imtihonlar ichidagi "O'zim
+  // sinab ko'raman" tugmasi orqali kiradi. Imtihonlarga kira olmaydigan
+  // ustoz va supportda esa bu yagona yo'l, shuning uchun ularda qoladi.
+  const seesExams = can(user?.role, EXAM_VIEW) && user?.role !== TEACHER;
+  if (can(user?.role, MOCK_PRACTICE) && !seesExams) {
     items = [...items, mockItem];
   }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu

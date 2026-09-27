@@ -10,7 +10,7 @@ import { Gem, Glyph } from "./Gem";
 const GROUPS: { title: string; paths: string[] }[] = [
   { title: "Kundalik ish", paths: ["/timetable", "/my-schedule", "/support-schedule", "/leads", "/students", "/groups",
     "/my-groups", "/my-students", "/my-sessions", "/teachers", "/events", "/inventory"] },
-  { title: "O'quv jarayoni", paths: ["/academic", "/learning", "/plans", "/exam", "/my-exams", "/my-books", "/library",
+  { title: "O'quv jarayoni", paths: ["/academic", "/learning", "/plans", "/exam", "/mock-practice", "/my-exams", "/my-books", "/library",
     "/gamification", "/archive", "/complaints"] },
   { title: "Moliya va hisobotlar", paths: ["/finance", "/my-finance", "/reports", "/analytics", "/my-results", "/my-coins"] },
   { title: "Marketing", paths: ["/smm", "/marketing"] },

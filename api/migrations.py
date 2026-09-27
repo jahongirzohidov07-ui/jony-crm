@@ -174,6 +174,13 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_asub_assignment_student "
         "ON assignment_submissions (assignment_id, student_id)",
     ]),
+    # 2026-09-27: mock qat'iy rejimi — chiqishlar eid'lari (bir chiqish
+    # ikki marta sanalmasin). Avtomat qo'riqchi ham qo'shadi, lekin
+    # jonli loglarda buni tasdiqlab bo'lmadi — shu qator kafolat
+    # (ustun bo'lsa "duplicate column" bilan o'tib ketadi).
+    ("0020_exam_away_eids", [
+        "ALTER TABLE exam_submissions ADD COLUMN away_eids TEXT",
+    ]),
 ]
 
 
@@ -200,6 +207,7 @@ def run(db) -> list:
                 break
         db.add(models.SchemaMigration(version=version))
         db.commit()
+        print("[migratsiya] %s: %s" % (version, err or "ok"))
         results.append((version, err))
         if err:
             try:

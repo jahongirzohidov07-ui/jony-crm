@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { NavLink, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../lib/AuthContext";
 import { api, getGlobalBranch, type Branch } from "../../lib/api";
 import { can, TASK_ACCESS } from "../../lib/roles";
@@ -31,7 +31,6 @@ export const useApp = () => useContext(AppCtx);
  */
 export default function AppLayout() {
   const { user } = useAuth();
-  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   // Sinov filiali — "Mashq" bandi faqat shunda (paneldagi bilan bir xil)
@@ -86,12 +85,11 @@ export default function AppLayout() {
   if (user.role === "student") return <Navigate to="/student" replace />;
   if (user.role === "parent") return <Navigate to="/" replace />;
 
-  const embedded = pathname.startsWith("/app/p");
-
-  // Ilova ichida ochilgan panel sahifasidagi havolalar ilovadan
-  // chiqib ketmasin: "/students/5" → "/app/p/students/5".
+  // Ilova ichida ochilgan sahifalardagi havolalar ilovadan chiqib
+  // ketmasin: "/students/5" → "/app/p/students/5", "/teacher/check" →
+  // "/app/t/check".
   function onClickCapture(e: React.MouseEvent) {
-    if (!embedded || e.defaultPrevented || e.button !== 0 ||
+    if (e.defaultPrevented || e.button !== 0 ||
         e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const a = (e.target as HTMLElement).closest("a");
     if (!a || (a.target && a.target !== "_self") || a.hasAttribute("download")) return;

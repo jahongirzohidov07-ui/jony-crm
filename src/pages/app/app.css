@@ -149,3 +149,26 @@
 @keyframes josSk{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .jos svg.gem{display:block;flex:none;filter:drop-shadow(0 6px 9px color-mix(in srgb,var(--gc) 40%,transparent))}
 @media (prefers-reduced-motion: reduce){.jos *{animation:none!important;transition:none!important}}
+
+/* =====================================================================
+   USTOZ ISHI (sobiq Jony Teacher) — o'sha sahifalar, JonyOS kiyimida
+   (2026-09-27). Faqat .jos-t ichida — paneldagi sahifalarga ta'sir yo'q.
+   ===================================================================== */
+.jos-t{padding-bottom:calc(env(safe-area-inset-bottom) + 100px)}
+.jos-t .bg-gradient-to-br.from-brand-700{background:linear-gradient(135deg,#2F80FF,#7B5CFF 60%,#FF4FB3)!important;
+  border-radius:0 0 30px 30px;box-shadow:0 20px 34px -22px #7B5CFFcc;padding-top:calc(env(safe-area-inset-top) + 22px)!important}
+.jos-t .bg-white.rounded-xl,.jos-t .bg-white.rounded-2xl{border-color:transparent!important;border-radius:20px!important;box-shadow:0 12px 24px -18px #0007!important}
+.jos-t .bg-white.rounded-lg{border-radius:14px!important}
+.jos-t .bg-amber-50.rounded-xl,.jos-t .bg-red-50.rounded-xl,.jos-t .bg-emerald-50.rounded-xl{border-radius:20px!important;box-shadow:0 10px 22px -18px #0006}
+.jos-t .bg-brand-600{background:linear-gradient(135deg,#2F80FF,#7B5CFF)!important;box-shadow:0 12px 22px -12px #2F80FF}
+.jos-t .bg-brand-50{background:#E3EEFF!important}
+.jos-t .text-brand-600,.jos-t .text-brand-700{color:#2F6BFF!important}
+.jos-t .bg-emerald-600{background:linear-gradient(135deg,#12C26B,#00C9A7)!important}
+.jos-t .rounded-xl.w-11,.jos-t .rounded-xl.w-10{border-radius:14px!important}
+.jos-t h1{font-family:Unbounded,Manrope,sans-serif;letter-spacing:-.02em}
+.jos-t button{transition:transform .15s}
+.jos-t button:active{transform:scale(.97)}
+/* "Saqlash" paneli (yo'qlama, soat) — JonyOS pastki menyusidan yuqorida turadi */
+.jos-t .fixed[class*="bottom-[60px]"]{bottom:calc(env(safe-area-inset-bottom) + 80px)!important;
+  max-width:520px;margin:0 auto;background:linear-gradient(to top,#FDF8FF,#FDF8FFee 60%,transparent)!important}
+.jos-t .fixed[class*="bottom-[60px]"] button{border-radius:16px}

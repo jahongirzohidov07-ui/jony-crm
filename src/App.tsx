@@ -167,7 +167,6 @@ const StudentGrammarPlay = lazy(
 );
 // Jony Teacher — ustozning O'Z ilovasi (telefon uchun: yo'qlama,
 // jadval, barcha bo'limlar).
-const TeacherLayout = lazy(() => import("./pages/teacher/TeacherLayout"));
 const TeacherSalary = lazy(() => import("./pages/teacher/TeacherSalary"));
 const TeacherFinancePage = lazy(() => import("./pages/teacher/TeacherFinance"));
 const TeacherToday = lazy(() => import("./pages/teacher/TeacherToday"));
@@ -177,8 +176,6 @@ const TeacherRun = lazy(() => import("./pages/teacher/TeacherRun"));
 const TeacherWeek = lazy(() => import("./pages/teacher/TeacherWeek"));
 const TeacherSession = lazy(() => import("./pages/teacher/TeacherSession"));
 const TeacherVocab = lazy(() => import("./pages/teacher/TeacherVocab"));
-const TeacherMore = lazy(() => import("./pages/teacher/TeacherMore"));
-const TeacherProfile = lazy(() => import("./pages/teacher/TeacherProfile"));
 import { GuideProvider } from "./components/guide/GuideProvider";
 // JonyOS — XODIM ILOVASI (2026-09-27): rolga qarab, telefon uchun
 const AppLayout = lazy(() => import("./pages/app/AppLayout"));
@@ -188,6 +185,7 @@ const AppMenu = lazy(() => import("./pages/app/AppMenu"));
 const AppProfile = lazy(() => import("./pages/app/AppProfile"));
 const AppAlerts = lazy(() => import("./pages/app/AppAlerts"));
 const AppEmbed = lazy(() => import("./pages/app/AppEmbed"));
+const AppTeacher = lazy(() => import("./pages/app/AppTeacher"));
 
 function PageLoader() {
   const { pathname } = useLocation();
@@ -199,6 +197,16 @@ function PageLoader() {
       <p className="text-sm text-slate-400">Yuklanmoqda…</p>
     </div>
   );
+}
+
+/** Eski Jony Teacher manzillari -> JonyOS ichidagi o'rni (2026-09-27). */
+function TeacherRedirect() {
+  const { pathname, search } = useLocation();
+  const rest = pathname.replace(/^\/teacher/, "");
+  const to = rest === "/more" ? "/app/menu"
+    : rest === "/profile" ? "/app/profile"
+    : "/app/t" + rest;
+  return <Navigate to={to + search} replace />;
 }
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -414,29 +422,11 @@ function AppRoutes() {
           <Route path="certificates" element={<StudentCertificates />} />
           <Route path="profile" element={<StudentProfile />} />
         </Route>
-        {/* Jony Teacher — ustoz ilovasi (telefon). Xodimlar paneli
-            (Layout) o'chirilmadi: "To'liq panelga o'tish" tugmasi
-            orqali ochiladi. */}
-        <Route
-          path="/teacher"
-          element={
-            <RequireAuth>
-              <TeacherLayout />
-            </RequireAuth>
-          }
-        >
-          <Route index element={<TeacherToday />} />
-          <Route path="week" element={<TeacherWeek />} />
-          <Route path="lesson/:id" element={<TeacherLesson />} />
-          <Route path="check" element={<TeacherCheck />} />
-          <Route path="check/:sid" element={<TeacherCheck />} />
-          <Route path="session" element={<TeacherSession />} />
-          <Route path="vocab" element={<TeacherVocab />} />
-          <Route path="salary" element={<TeacherSalary />} />
-          <Route path="finance" element={<TeacherFinancePage />} />
-          <Route path="more" element={<TeacherMore />} />
-          <Route path="profile" element={<TeacherProfile />} />
-        </Route>
+        {/* JONY TEACHER endi JonyOS ichida (2026-09-27, Jahongir: "Jony
+            Teacher va JonyOS xodimlar uchun bitta programma bo'laversin").
+            Eski manzil (o'rnatilgan ilova, xatcho'p, Telegram havolasi)
+            yangisiga olib boradi: /teacher/lesson/5 -> /app/t/lesson/5. */}
+        <Route path="/teacher/*" element={<TeacherRedirect />} />
         {/* JonyOS xodim ilovasi — har xodim faqat o'z bo'limlarini ko'radi
             (ro'yxat paneldagi menyu bilan bir manbadan: navItems.ts) */}
         <Route
@@ -452,6 +442,18 @@ function AppRoutes() {
           <Route path="menu" element={<AppMenu />} />
           <Route path="profile" element={<AppProfile />} />
           <Route path="alerts" element={<AppAlerts />} />
+          {/* Ustoz va support ishi — sobiq Jony Teacher (2026-09-27) */}
+          <Route path="t" element={<AppTeacher />}>
+            <Route index element={<TeacherToday />} />
+            <Route path="week" element={<TeacherWeek />} />
+            <Route path="lesson/:id" element={<TeacherLesson />} />
+            <Route path="check" element={<TeacherCheck />} />
+            <Route path="check/:sid" element={<TeacherCheck />} />
+            <Route path="session" element={<TeacherSession />} />
+            <Route path="vocab" element={<TeacherVocab />} />
+            <Route path="salary" element={<TeacherSalary />} />
+            <Route path="finance" element={<TeacherFinancePage />} />
+          </Route>
           <Route path="p" element={<AppEmbed />}>
             {staffRoutes}
           </Route>

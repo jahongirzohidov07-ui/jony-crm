@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../lib/AuthContext";
 import { api, type DashboardStats, type MyDashboard } from "../../lib/api";
 import { can, CASH_ACCESS, FINANCE_ACCESS, roleLabel } from "../../lib/roles";
 import { formatSom } from "../../lib/format";
 import { useApp } from "./AppLayout";
-import { appHref, gemFor } from "./appNav";
+import { appHref, gemFor, TEACHER_ROLES } from "./appNav";
 import { Gem, Glyph } from "./Gem";
 
 const MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul",
@@ -47,6 +47,7 @@ export default function AppHome() {
   const [alerts, setAlerts] = useState(0);
 
   useEffect(() => {
+    if (TEACHER_ROLES.includes(user?.role || "")) return;
     let alive = true;
     api.get<MyDashboard>("/me/dashboard")
       .then((x) => {
@@ -67,6 +68,8 @@ export default function AppHome() {
   const first = name.split(/\s+/)[0] || name;
   const quick = nav.filter((i) => i.to !== "/").slice(0, 7);
   const money = can(user?.role, FINANCE_ACCESS) || can(user?.role, CASH_ACCESS);
+  // Ustoz/support bosh sahifasi — bugungi darslar (sobiq Jony Teacher)
+  if (TEACHER_ROLES.includes(user?.role || "")) return <Navigate to="/app/t" replace />;
 
   return (
     <div className="jos-page">
@@ -129,10 +132,10 @@ export default function AppHome() {
 
       {d?.teacher && d.teacher.alerts.length > 0 && (
         <>
-          <div className="jos-sect"><b>Diqqat talab qiladi</b><Link to="/teacher">Yo'qlama →</Link></div>
+          <div className="jos-sect"><b>Diqqat talab qiladi</b><Link to="/app/t">Yo'qlama →</Link></div>
           <div className="jos-list">
             {d.teacher.alerts.slice(0, 5).map((a, i) => (
-              <Link key={i} to={a.student_id ? appHref(`/students/${a.student_id}`) : "/teacher"} className="jos-it">
+              <Link key={i} to={a.student_id ? appHref(`/students/${a.student_id}`) : "/app/t"} className="jos-it">
                 <Gem name={a.tone === "red" ? "warn" : "bell"} size={38} />
                 <div className="m">
                   <b>{a.student || a.group || a.label}</b>

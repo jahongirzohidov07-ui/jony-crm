@@ -66,7 +66,7 @@ export default function TeacherToday() {
         <div className="max-w-md mx-auto">
           <div className="flex items-center gap-2 mb-4 opacity-90">
             <BrandIcon size={18} className="rounded-md" />
-            <span className="text-sm font-medium">Jony Teacher</span>
+            <span className="text-sm font-medium">JonyOS</span>
           </div>
           <h1 className="text-xl font-semibold">{d.teacher}</h1>
           <p className="text-sm opacity-90 mt-0.5">

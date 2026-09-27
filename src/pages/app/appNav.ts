@@ -60,7 +60,7 @@ export function gemFor(to: string): string {
 }
 
 /** Ilovadan TASHQARIDA ochiladigan manzillar (o'z qobig'i bor). */
-const OWN_SHELL = new Set(["/teacher", "/student", "/parent", "/t", "/live",
+const OWN_SHELL = new Set(["/student", "/parent", "/t", "/live",
   "/teacher-run", "/play", "/apply", "/ariza", "/r", "/login", "/app", "/api"]);
 
 /** Panel manzilini ilova ichidagi manzilga aylantiradi:
@@ -69,6 +69,13 @@ export function appHref(to: string): string {
   if (!to.startsWith("/") || to.startsWith("//")) return to;
   const first = "/" + to.slice(1).split(/[/?#]/)[0];
   if (OWN_SHELL.has(first)) return to;
+  // Sobiq Jony Teacher — endi ilova ichida (2026-09-27)
+  if (first === "/teacher") {
+    const rest = to.slice("/teacher".length);
+    if (rest.startsWith("/more")) return "/app/menu";
+    if (rest.startsWith("/profile")) return "/app/profile";
+    return "/app/t" + rest;
+  }
   if (first === "/") return "/app" + to.slice(1);
   // Vazifalar — ilovaning o'z (telefon uchun qurilgan) sahifasi
   if (to === "/tasks") return "/app/tasks";
@@ -79,6 +86,9 @@ export function appHref(to: string): string {
 export function isPanelPath(path: string): boolean {
   return path.startsWith("/") && !path.startsWith("//") && appHref(path) !== path;
 }
+
+/** Ustoz ishi (yo'qlama, jadval, soat) ilovasi bor lavozimlar. */
+export const TEACHER_ROLES = ["teacher", "support_teacher"];
 
 export interface AppTab {
   to: string;
@@ -98,8 +108,8 @@ const FAB_BY_ROLE: Record<string, { to: string; label: string; gem: string }> = 
   administrator: { to: "/leads", label: "Lidlar", gem: "target" },
   smm_manager: { to: "/smm", label: "SMM", gem: "insta" },
   academic_head: { to: "/academic", label: "O'quv", gem: "cap" },
-  teacher: { to: "/teacher", label: "Yo'qlama", gem: "check" },
-  support_teacher: { to: "/teacher", label: "Yo'qlama", gem: "check" },
+  teacher: { to: "/plans", label: "Rejalar", gem: "notebook" },
+  support_teacher: { to: "/teacher/session", label: "Soat", gem: "timer" },
   head_support: { to: "/support-schedule", label: "Yuklama", gem: "clock" },
   examiner: { to: "/exam", label: "Imtihon", gem: "exam" },
   head_examiner: { to: "/exam", label: "Imtihon", gem: "exam" },
@@ -120,8 +130,20 @@ export function buildTabs(role: string, nav: NavItem[], hasTasks: boolean): {
   const allowed = new Set(nav.map((i) => i.to));
   const f = FAB_BY_ROLE[role];
   let fab: AppTab | null = null;
-  if (f && (f.to === "/teacher" || allowed.has(f.to))) {
+  if (f && ((f.to.startsWith("/teacher") && TEACHER_ROLES.includes(role)) || allowed.has(f.to))) {
     fab = { to: appHref(f.to), label: f.label, gem: f.gem };
+  }
+  // USTOZ va SUPPORT: kuni darsdan boshlanadi (sobiq Jony Teacher tartibi)
+  if (TEACHER_ROLES.includes(role)) {
+    const tabs: AppTab[] = [
+      { to: "/app/t", label: "Bugun", gem: "home", end: true },
+      { to: "/app/t/week", label: "Jadval", gem: "cal" },
+      hasTasks
+        ? { to: "/app/tasks", label: "Vazifalar", gem: "task" }
+        : { to: "/app/profile", label: "Profil", gem: "user" },
+      { to: "/app/menu", label: "Bo'limlar", gem: "grid" },
+    ];
+    return { tabs, fab };
   }
   const second = ["/timetable", "/my-schedule", "/leads", "/students",
     "/events", "/hr", "/exam", "/inventory", "/smm"]

@@ -27,8 +27,11 @@ export function detectAppMode() {
     }
     // JonyOS xodim ilovasi (2026-09-27): jonyos.webmanifest start_url
     // = /app?pwa=1. Login'dan keyin xodim shu ilovaga qaytadi.
+    // Eski o'rnatilgan "Jony Teacher" ham (start_url /teacher?pwa=1)
+    // endi JonyOS xodim ilovasi.
     if (p.get("pwa") === "1" &&
-        window.location.pathname.startsWith("/app")) {
+        (window.location.pathname.startsWith("/app") ||
+         window.location.pathname.startsWith("/teacher"))) {
       sessionStorage.setItem(KEY, "staff");
     }
   } catch {

@@ -37,7 +37,18 @@ export default function AppMenu() {
   });
   const rest = items.filter((i) => !used.has(i.to));
   if (rest.length) sections.push({ title: "Boshqa", list: rest });
-  const isTeacher = user?.role === "teacher" || user?.role === "support_teacher";
+  const isTeacher = user?.role === "teacher";
+  const isSupport = user?.role === "support_teacher";
+  // Sobiq Jony Teacher bo'limlari (2026-09-27) — faqat ustoz/supportga
+  const teacherItems: { to: string; label: string; gem: string }[] = [
+    { to: "/app/t", label: "Bugungi darslar", gem: "home" },
+    { to: "/app/t/week", label: "Haftalik jadval", gem: "cal" },
+    ...(isTeacher ? [{ to: "/app/t/check", label: "Tekshirish", gem: "exam" },
+                     { to: "/app/t/vocab", label: "Lug'at unitlari", gem: "book" }] : []),
+    ...(isSupport ? [{ to: "/app/t/session", label: "Soat belgilash", gem: "timer" }] : []),
+    { to: "/app/t/salary", label: "Darslarim va oyligim", gem: "cash" },
+    { to: "/app/t/finance", label: "Oylik tarixi", gem: "wallet" },
+  ];
   let n = 0;
 
   return (
@@ -50,6 +61,20 @@ export default function AppMenu() {
         <input className="jos-input" style={{ paddingLeft: 38, background: "#fff", boxShadow: "0 8px 18px -14px #0006" }}
                value={q} onChange={(e) => setQ(e.target.value)} placeholder="Bo'lim qidirish…" />
       </div>
+
+      {(isTeacher || isSupport) && !q.trim() && (
+        <div>
+          <div className="jos-sect"><b>Ustoz ishi</b></div>
+          <div className="jos-grid">
+            {teacherItems.map((i) => (
+              <Link key={i.to} to={i.to} className="jos-cell" style={{ animationDelay: `${Math.min(n++, 16) * 30}ms` }}>
+                <Gem name={i.gem} size={54} />
+                {i.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {sections.filter((s) => s.list.length).map((s) => (
         <div key={s.title}>
@@ -70,9 +95,6 @@ export default function AppMenu() {
       <div className="jos-list">
         <Link to="/app/tasks" className="jos-it"><Gem name="task" size={38} /><div className="m"><b>Vazifalarim</b><small>Ochiq va kechikkan ishlar</small></div></Link>
         <Link to="/app/alerts" className="jos-it"><Gem name="bell" size={38} /><div className="m"><b>Bildirishnomalar</b><small>Sizga tegishli xabarlar</small></div></Link>
-        {isTeacher && (
-          <Link to="/teacher" className="jos-it"><Gem name="check" size={38} /><div className="m"><b>Jony Teacher</b><small>Yo'qlama va bugungi darslar</small></div></Link>
-        )}
         <Link to="/app/profile" className="jos-it"><Gem name="user" size={38} /><div className="m"><b>Profil</b><small>Lavozim, filial, parol, chiqish</small></div></Link>
       </div>
     </div>

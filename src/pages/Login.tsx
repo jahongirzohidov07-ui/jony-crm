@@ -65,12 +65,13 @@ export default function Login() {
       const dest =
         u?.role === "student"
           ? (next.startsWith("/student/") ? next : "/student")
-          // JonyOS xodim ilovasidan kirilgan bo'lsa — ilovaga qaytadi
-          : isStaffApp() && u?.role !== "parent"
+          // JonyOS xodim ilovasidan kirilgan bo'lsa — ilovaga qaytadi.
+          // Ustoz/support ham JonyOS'ga tushadi (sobiq Jony Teacher
+          // endi uning ichida, 2026-09-27).
+          : (isStaffApp() && u?.role !== "parent") ||
+              u?.role === "teacher" || u?.role === "support_teacher"
             ? "/app"
-            : u?.role === "teacher" || u?.role === "support_teacher"
-              ? "/teacher"
-              : "/";
+            : "/";
       navigate(dest, { replace: true });
     } catch {
       // error is surfaced via context

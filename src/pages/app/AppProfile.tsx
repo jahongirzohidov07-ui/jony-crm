@@ -31,8 +31,6 @@ export default function AppProfile() {
   const roles = [...(user?.roles ?? [])];
   if (curRole && !roles.some((r) => r.key === curRole)) roles.push({ key: curRole, label: roleLabel(curRole) });
 
-  const isTeacher = user?.role === "teacher" || user?.role === "support_teacher";
-
   return (
     <div className="jos-page">
       <div className="jos-hero t3" style={{ textAlign: "center", paddingTop: 24 }}>
@@ -88,10 +86,6 @@ export default function AppProfile() {
       <div className="jos-list">
         <Link to="/app/p/profile" className="jos-it"><Gem name="lock" size={38} />
           <div className="m"><b>Shaxsiy ma'lumotlar va parol</b><small>Login, parol, Telegram</small></div></Link>
-        {isTeacher && (
-          <Link to="/teacher" className="jos-it"><Gem name="check" size={38} />
-            <div className="m"><b>Jony Teacher</b><small>Yo'qlama va bugungi darslar</small></div></Link>
-        )}
         <a href="/" className="jos-it"><Gem name="open" size={38} />
           <div className="m"><b>To'liq panel (kompyuter ko'rinishi)</b><small>Barcha jadval va hisobotlar</small></div></a>
         <button className="jos-it" onClick={() => { logout(); navigate("/login", { replace: true }); }}>

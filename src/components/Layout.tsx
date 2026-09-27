@@ -508,17 +508,6 @@ export default function Layout() {
                   JonyOS ilova (telefon)
                 </Link>
               )}
-              {(user?.role === "teacher" ||
-                user?.role === "support_teacher") && (
-                <Link
-                  to="/teacher"
-                  onClick={() => setProfileOpen(false)}
-                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
-                >
-                  <Smartphone size={15} />
-                  Telefon ko'rinishiga qaytish
-                </Link>
-              )}
               <button
                 onClick={onLogout}
                 className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"

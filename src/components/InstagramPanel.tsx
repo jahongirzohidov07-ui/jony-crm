@@ -269,7 +269,7 @@ export function InstagramPanel() {
       )}
       {posts.length > 0 && (
         <div className="rounded-xl border border-slate-200 bg-white overflow-x-auto">
-          <table className="w-full text-[13px]">
+          <table className="w-full text-[13px] whitespace-nowrap">
             <thead className="bg-slate-50 text-slate-500 text-[11px] uppercase">
               <tr>
                 <th className="text-left px-3 py-2">Sana</th>
@@ -294,10 +294,11 @@ export function InstagramPanel() {
                   <td className="px-3 py-2 whitespace-nowrap text-slate-500">
                     {p.posted_at ? formatDate(p.posted_at.slice(0, 10)) : "—"}
                   </td>
-                  <td className="px-3 py-2 max-w-[260px]">
+                  <td className="px-3 py-2 w-[260px] max-w-[260px]">
                     <a href={p.permalink} target="_blank" rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-slate-800 hover:text-brand-700">
-                      <span className="truncate">{p.caption || p.type}</span>
+                      title={p.caption || p.type}
+                      className="flex w-full min-w-0 items-center gap-1 text-slate-800 hover:text-brand-700">
+                      <span className="block min-w-0 flex-1 truncate">{p.caption || p.type}</span>
                       <ExternalLink size={11} className="shrink-0" />
                     </a>
                   </td>
@@ -318,11 +319,13 @@ export function InstagramPanel() {
                   <td className="px-2 py-2 text-right">
                     {p.revenue ? n(Math.round(p.revenue)) : "—"}
                   </td>
-                  <td className="px-3 py-2 text-[12px]">
+                  <td className="px-3 py-2 text-[12px] w-[240px] max-w-[240px]">
                     {p.content_title ? (
-                      <span className="inline-flex items-center gap-1 text-slate-700">
-                        <Link2 size={11} /> {p.content_title}
-                        <span className="text-slate-400">({p.link_note})</span>
+                      <span className="flex min-w-0 items-center gap-1 text-slate-700"
+                        title={`${p.content_title} (${p.link_note})`}>
+                        <Link2 size={11} className="shrink-0" />
+                        <span className="block min-w-0 truncate">{p.content_title}</span>
+                        <span className="shrink-0 text-slate-400">({p.link_note})</span>
                       </span>
                     ) : <span className="text-slate-400">—</span>}
                   </td>

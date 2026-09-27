@@ -226,6 +226,29 @@ export const EXAM_VIEW = [
   BRANCH_MANAGER, ACADEMIC_HEAD, TEACHER,
 ];
 
+/**
+ * MOCKNI O'ZI YECHIB KO'RISH + SAVOL XATOLARI (2026-09-27, Jahongir:
+ * "faqat guruhda emas, boshqalar ham o'zi kirib ishlaydigan bo'lsa
+ * yaxshi bo'lardi mock testni xodimlargayam koproq ustozlarga ular ham
+ * experience qilib xatolarni aytadida").
+ *
+ * api/roles.py dagi MOCK_* bilan AYNAN bir xil. Ro'yxatlar ataylab
+ * yoyib yozilgan (...spread emas) — test ikki tomonni oddiy regex
+ * bilan solishtira olsin:
+ *   MOCK_PRACTICE     = FULL_ACCESS + o'quv bo'limi + examinerlar
+ *   MOCK_LIMITED      = 30 kunda 1 urinish va kalit himoyasi tushadiganlar
+ *   MOCK_ISSUE_VIEW   = EXAM_ACCESS + EXAM_EDIT (takrorsiz)
+ *   MOCK_ISSUE_TRIAGE = EXAM_EDIT
+ * Sotuv va administratorlar yo'q: har urinish kalitni ochadi.
+ */
+export const MOCK_PRACTICE = [
+  FOUNDER, BRANCH_MANAGER, ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER,
+  HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER,
+];
+export const MOCK_LIMITED = [TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT];
+export const MOCK_ISSUE_VIEW = [FOUNDER, EXAMINER, HEAD_EXAMINER, BRANCH_MANAGER];
+export const MOCK_ISSUE_TRIAGE = [FOUNDER, BRANCH_MANAGER, HEAD_EXAMINER];
+
 export const SUPPORT_ACCESS = [
   ...FULL_ACCESS,
   ACADEMIC_HEAD, SUPPORT_TEACHER, HEAD_SUPPORT,
@@ -386,6 +409,9 @@ export const TEACHER_MENU = [
   "/plans",
   "/my-books",
   "/my-exams",
+  // MOCKNI O'ZI SINAB KO'RISH (2026-09-27). Ro'yxatda bo'lmasa, band
+  // MOCK_PRACTICE ruxsatiga qaramay ustoz menyusidan kesilib ketadi.
+  "/mock-practice",
   "/my-sessions",
   "/my-finance",
   "/my-results",

@@ -164,7 +164,6 @@ export function AnswerSheetButton({
   const [onlyWrong, setOnlyWrong] = useState(false);
   const wrong = s.detail.filter((d) => !d.ok).length;
   const rows = onlyWrong ? s.detail.filter((d) => !d.ok) : s.detail;
-  let lastPart: string | null = null;
   return (
     <>
       <button
@@ -219,74 +218,113 @@ export function AnswerSheetButton({
                 <X size={18} />
               </button>
             </div>
-            <div className="p-4 space-y-2">
-              {rows.map((d) => {
-                const head = d.part && d.part !== lastPart ? d.part : null;
-                lastPart = d.part;
-                return (
-                  <div key={d.id}>
-                    {head && (
-                      <p className="text-xs font-semibold text-slate-500 uppercase mt-3 mb-1">
-                        {head}
-                      </p>
-                    )}
-                    <div
-                      className={`rounded-lg border px-3 py-2 text-sm ${
-                        d.ok ? "border-emerald-200 bg-emerald-50/40" : "border-rose-200 bg-rose-50/50"
-                      }`}
-                    >
-                      <p className="text-slate-800 whitespace-pre-line">
-                        <span className={`font-semibold mr-1.5 ${
-                          d.ok === null ? "text-slate-400"
-                            : d.ok ? "text-emerald-600" : "text-rose-600"
-                        }`}>
-                          {d.ok === null ? "✎" : d.ok ? "✓" : "✗"} {d.n}.
-                        </span>
-                        {d.image && (
-                          <img src={d.image} alt="" className="inline-block h-10 rounded mr-2 align-middle" />
-                        )}
-                        {d.q ||
-                          (d.has_image ? (
-                            !d.image && <span className="text-slate-400">(rasmli savol)</span>
-                          ) : (
-                            <span className="text-slate-400">(audio / matndagi bo'sh joy)</span>
-                          ))}
-                      </p>
-                      <p className="mt-1 text-xs">
-                        <span className="text-slate-500">Javobi: </span>
-                        <span className={
-                          d.ok === null
-                            ? "text-slate-700 whitespace-pre-line block mt-1 bg-slate-50 rounded-lg p-2 border border-slate-200"
-                            : d.ok ? "text-emerald-700 font-medium" : "text-rose-700 font-medium"
-                        }>
-                          {d.given_text ?? <i className="text-slate-400 font-normal">javob bermagan</i>}
-                        </span>
-                        {d.ok === false && (
-                          <>
-                            <span className="text-slate-400 mx-1.5">·</span>
-                            <span className="text-slate-500">To'g'risi: </span>
-                            <span className="text-emerald-700 font-medium">{d.correct}</span>
-                          </>
-                        )}
-                        {d.topic && (
-                          <span className="ml-2 inline-block rounded-full bg-slate-100 text-slate-600 px-2 py-0.5 text-[11px]"
-                                title="Mavzu">
-                            {d.topic}
-                          </span>
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-              {rows.length === 0 && (
-                <p className="text-sm text-slate-400 text-center py-6">Xato yo'q</p>
-              )}
-            </div>
+            <AnswerSheetTable detail={rows} />
           </div>
         </div>
       )}
     </>
+  );
+}
+
+export type AnswerRow = OnlineSubmission["detail"][number];
+
+/** JAVOB VARAG'I JADVALI (2026-09-27). AnswerSheetButton ichidan
+ *  ajratib olindi — xodim mockni o'zi yechgach (MockPracticeTake) ham
+ *  AYNAN shu varaqni ko'radi va har qatordan "xato bor" deb xabar
+ *  bera oladi (rowAction). Examiner ko'rinishi o'zgarmadi.
+ *
+ *  keyHiddenText — server kalitni yashirgan qatorlarda (correct bo'sh)
+ *  "To'g'risi:" yonida chiqadigan izoh. Berilmasa — avvalgidek. */
+export function AnswerSheetTable({
+  detail,
+  rowAction,
+  keyHiddenText,
+}: {
+  detail: AnswerRow[];
+  rowAction?: (d: AnswerRow) => React.ReactNode;
+  keyHiddenText?: string;
+}) {
+  let lastPart: string | null = null;
+  return (
+    <div className="p-4 space-y-2">
+      {detail.map((d) => {
+        const head = d.part && d.part !== lastPart ? d.part : null;
+        lastPart = d.part;
+        const act = rowAction ? rowAction(d) : null;
+        return (
+          <div key={d.id}>
+            {head && (
+              <p className="text-xs font-semibold text-slate-500 uppercase mt-3 mb-1">
+                {head}
+              </p>
+            )}
+            <div
+              className={`rounded-lg border px-3 py-2 text-sm ${
+                d.ok ? "border-emerald-200 bg-emerald-50/40" : "border-rose-200 bg-rose-50/50"
+              }`}
+            >
+              {(() => {
+                const text = (
+                  <p className={`text-slate-800 whitespace-pre-line${act ? " flex-1 min-w-0" : ""}`}>
+                    <span className={`font-semibold mr-1.5 ${
+                      d.ok === null ? "text-slate-400"
+                        : d.ok ? "text-emerald-600" : "text-rose-600"
+                    }`}>
+                      {d.ok === null ? "✎" : d.ok ? "✓" : "✗"} {d.n}.
+                    </span>
+                    {d.image && (
+                      <img src={d.image} alt="" className="inline-block h-10 rounded mr-2 align-middle" />
+                    )}
+                    {d.q ||
+                      (d.has_image ? (
+                        !d.image && <span className="text-slate-400">(rasmli savol)</span>
+                      ) : (
+                        <span className="text-slate-400">(audio / matndagi bo'sh joy)</span>
+                      ))}
+                  </p>
+                );
+                return act ? (
+                  <div className="flex items-start gap-2">
+                    {text}
+                    <div className="shrink-0">{act}</div>
+                  </div>
+                ) : text;
+              })()}
+              <p className="mt-1 text-xs">
+                <span className="text-slate-500">Javobi: </span>
+                <span className={
+                  d.ok === null
+                    ? "text-slate-700 whitespace-pre-line block mt-1 bg-slate-50 rounded-lg p-2 border border-slate-200"
+                    : d.ok ? "text-emerald-700 font-medium" : "text-rose-700 font-medium"
+                }>
+                  {d.given_text ?? <i className="text-slate-400 font-normal">javob bermagan</i>}
+                </span>
+                {d.ok === false && (
+                  <>
+                    <span className="text-slate-400 mx-1.5">·</span>
+                    <span className="text-slate-500">To'g'risi: </span>
+                    {keyHiddenText && !d.correct ? (
+                      <i className="text-slate-400">{keyHiddenText}</i>
+                    ) : (
+                      <span className="text-emerald-700 font-medium">{d.correct}</span>
+                    )}
+                  </>
+                )}
+                {d.topic && (
+                  <span className="ml-2 inline-block rounded-full bg-slate-100 text-slate-600 px-2 py-0.5 text-[11px]"
+                        title="Mavzu">
+                    {d.topic}
+                  </span>
+                )}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+      {detail.length === 0 && (
+        <p className="text-sm text-slate-400 text-center py-6">Xato yo'q</p>
+      )}
+    </div>
   );
 }
 

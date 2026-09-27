@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { ClipboardCheck, Check, Hand } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ClipboardCheck, Check, Hand, FlaskConical } from "lucide-react";
 import { api } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
   EXAM_VIEW, EXAM_ACCESS, EXAM_EDIT, EXAM_ORDER_ACCEPT, can,
+  MOCK_PRACTICE, MOCK_ISSUE_VIEW, MOCK_ISSUE_TRIAGE,
 } from "../lib/roles";
 import { BranchPicker } from "../components/BranchPicker";
-import { ExamBankTab } from "../components/ExamBank";
+import { ExamBankTab, type BankFocus } from "../components/ExamBank";
+import { MockIssues } from "../components/MockIssues";
 import { ExamOrderQueueTab } from "./MyExams";
 import { ExamsTab, AnalysisTab } from "./Audit";
 
@@ -24,7 +27,7 @@ import { ExamsTab, AnalysisTab } from "./Audit";
  *   Buyurtmalar       — ustozlardan kelgan imtihon so'rovlari
  *   Test bazasi       — savollar banki (mock, unit, mid, end)
  */
-type Tab = "exams" | "analysis" | "orders" | "bank" | "mock";
+type Tab = "exams" | "analysis" | "orders" | "bank" | "mock" | "issues";
 
 /** Mock bazalari: qaysi imtihon, qaysi bo'lim, natija qanday chiqadi. */
 type MockSection = {
@@ -60,7 +63,7 @@ const SEC_LABEL: Record<string, string> = {
  * qaysi bo'lim avtomat bandga o'giriladi, qaysinisini examiner
  * qo'lda qo'yadi va nima uchun. Kamchilik yashirin qolmasin.
  */
-function MockTab() {
+function MockTab({ canTry }: { canTry: boolean }) {
   const [rows, setRows] = useState<MockBank[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
@@ -92,6 +95,24 @@ function MockTab() {
         <b> online link</b> oching va shu yerdagi variantlardan birini
         tanlang. Listening bo'lsa skriptni examiner ovoz chiqarib o'qiydi.
       </p>
+
+      {/* O'ZIM SINAB KO'RAMAN (2026-09-27, Jahongir: "faqat guruhda
+          emas, boshqalar ham o'zi kirib ishlaydigan bo'lsa yaxshi
+          bo'lardi mock testni xodimlargayam koproq ustozlarga ular ham
+          experience qilib xatolarni aytadida") */}
+      {canTry && (
+        <Link
+          to="/mock-practice"
+          className="flex items-center gap-3 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 hover:bg-brand-100/60"
+        >
+          <FlaskConical size={18} className="text-brand-600 shrink-0" />
+          <span className="flex-1 text-sm text-slate-700">
+            <b>O'zim sinab ko'raman</b> — mockni o'quvchidek yechib ko'ring,
+            savollardagi xatolarni examinerga ayting. Natija hech qayerga yozilmaydi.
+          </span>
+          <span className="text-sm font-medium text-brand-700">→</span>
+        </Link>
+      )}
 
       {mocks.map((b) => (
         <div key={b.bank} className="border border-slate-200 rounded-xl bg-white overflow-hidden">
@@ -199,6 +220,20 @@ export default function ExamsHub() {
   const showExams = can(user?.role, EXAM_VIEW);
   const showOrders = can(user?.role, EXAM_ORDER_ACCEPT);
   const showBank = can(user?.role, EXAM_ACCESS) || can(user?.role, EXAM_EDIT);
+  // SAVOL XATOLARI (2026-09-27): xodimlar mockni o'zi yechib yuborgan
+  // "savolda xato bor" xabarlari. Soni tab yonida turadi.
+  const showIssues = can(user?.role, MOCK_ISSUE_VIEW);
+  const [issueCount, setIssueCount] = useState<number | null>(null);
+  const [focus, setFocus] = useState<BankFocus | null>(null);
+  function loadCount() {
+    if (!showIssues) return;
+    api
+      .fresh<{ open: number }>("/mock-issues/count")
+      .then((r) => setIssueCount(r?.open ?? 0))
+      .catch(() => {});
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(loadCount, [showIssues]);
 
   const tabs: { key: Tab; label: string; show: boolean }[] = [
     { key: "exams", label: "Imtihonlar", show: showExams },
@@ -206,6 +241,11 @@ export default function ExamsHub() {
     { key: "orders", label: "Buyurtmalar", show: showOrders },
     { key: "mock", label: "Mock testlar", show: showExams },
     { key: "bank", label: "Test bazasi", show: showBank },
+    {
+      key: "issues",
+      label: issueCount != null ? `Savol xatolari (${issueCount})` : "Savol xatolari",
+      show: showIssues,
+    },
   ];
   const visible = tabs.filter((t) => t.show);
   const firstKey = visible.length ? visible[0].key : null;
@@ -260,8 +300,29 @@ export default function ExamsHub() {
       {tab === "exams" && <ExamsTab branchId={branchId} />}
       {tab === "analysis" && <AnalysisTab branchId={branchId} />}
       {tab === "orders" && <ExamOrderQueueTab />}
-      {tab === "mock" && <MockTab />}
-      {tab === "bank" && <ExamBankTab canEdit={can(user?.role, EXAM_EDIT)} />}
+      {tab === "mock" && <MockTab canTry={can(user?.role, MOCK_PRACTICE)} />}
+      {tab === "bank" && (
+        <ExamBankTab
+          canEdit={can(user?.role, EXAM_EDIT)}
+          focus={focus}
+          onFocusDone={(saved) => {
+            setFocus(null);
+            if (saved) loadCount();
+            // Tuzatib bo'lgach navbatga qaytadi
+            if (showIssues) setTab("issues");
+          }}
+        />
+      )}
+      {tab === "issues" && (
+        <MockIssues
+          canTriage={can(user?.role, MOCK_ISSUE_TRIAGE)}
+          onChanged={loadCount}
+          onFix={(f) => {
+            setFocus(f);
+            setTab("bank");
+          }}
+        />
+      )}
     </div>
   );
 }

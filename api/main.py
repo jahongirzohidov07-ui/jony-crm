@@ -119,6 +119,8 @@ import examiners as _r_examiners
 import exams as _r_exams
 # Online test — link orqali (2026-09-18)
 import exam_online as _r_exam_online
+# Xodimlar mock testni o'zi yechib ko'radi (2026-09-27)
+import mock_practice as _r_mock_practice
 import finance as _r_finance
 import gamification as _r_gamification
 import liveplay as _r_liveplay
@@ -174,6 +176,7 @@ app.include_router(_r_drill.router)
 app.include_router(_r_examiners.router)
 app.include_router(_r_exams.router)
 app.include_router(_r_exam_online.router)
+app.include_router(_r_mock_practice.router)
 app.include_router(_r_finance.router)
 app.include_router(_r_gamification.router)
 app.include_router(_r_liveplay.router)

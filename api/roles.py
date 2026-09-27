@@ -389,6 +389,21 @@ EXAM_APPROVE = EXAM_ACCESS
 # examinerlar boshlig'iga qo'shib ber"). Oddiy examiner va ustozda yo'q.
 EXAM_EDIT = [FOUNDER, BRANCH_MANAGER, HEAD_EXAMINER]
 
+# ---- Xodimlar mock mashqi (2026-09-27) --------------------------------
+# Jahongir: "boshqalar ham o'zi kirib ishlaydigan bo'lsa yaxshi bo'lardi
+# mock testni xodimlargayam koproq ustozlarga ular ham experience qilib
+# xatolarni aytadida". Sotuv va administratorlar ATAYLAB yo'q: har
+# urinish javob kalitlarini ochadi (egasi keyin qo'shishi mumkin).
+# src/lib/roles.ts dagi bir xil nomli ro'yxatlar bilan mos bo'lishi shart.
+MOCK_PRACTICE = FULL_ACCESS + [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER,
+                               HEAD_SUPPORT, EXAMINER, HEAD_EXAMINER]
+# Ustozlar: 30 kunda bir variant + javob kalitini cheklab ko'rsatish
+# ("ustozlar aynan testga tayyorlash" xavfi — exam_online.mix_parts).
+MOCK_LIMITED = [TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT]
+# Savol xatolari ro'yxatini ko'radi / tuzatadi
+MOCK_ISSUE_VIEW = list(dict.fromkeys(EXAM_ACCESS + EXAM_EDIT))
+MOCK_ISSUE_TRIAGE = EXAM_EDIT
+
 # ---- Support teacher --------------------------------------------------
 SUPPORT_ACCESS = FULL_ACCESS + [ACADEMIC_HEAD, SUPPORT_TEACHER,
                                 HEAD_SUPPORT]

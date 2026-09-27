@@ -25,6 +25,9 @@ const StudentDetail = lazy(() => import("./pages/StudentDetail"));
 const Groups = lazy(() => import("./pages/Groups"));
 const GroupDetail = lazy(() => import("./pages/GroupDetail"));
 const MyExams = lazy(() => import("./pages/MyExams"));
+// MOCKNI O'ZI SINAB KO'RISH (2026-09-27) — xodimlar uchun
+const MockPractice = lazy(() => import("./pages/MockPractice"));
+const MockPracticeTake = lazy(() => import("./pages/MockPracticeTake"));
 const MySessions = lazy(() => import("./pages/MySessions"));
 const MyFinance = lazy(() => import("./pages/MyFinance"));
 const SupportSchedule = lazy(() => import("./pages/SupportSchedule"));
@@ -253,6 +256,9 @@ const staffRoutes = (
     <Route path="groups" element={<Groups />} />
     <Route path="groups/:id" element={<GroupDetail />} />
     <Route path="my-exams" element={<MyExams />} />
+    {/* MOCK SINAB KO'RISH (2026-09-27) — xodim va ustozlar o'zi */}
+    <Route path="mock-practice" element={<MockPractice />} />
+    <Route path="mock-practice/:id" element={<MockPracticeTake />} />
     <Route path="my-sessions" element={<MySessions />} />
     <Route path="my-finance" element={<MyFinance />} />
     <Route path="support-schedule" element={<SupportSchedule />} />

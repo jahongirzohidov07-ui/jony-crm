@@ -5,7 +5,7 @@ import {
   GraduationCap as AcademicIcon, CalendarDays, Archive as ArchiveIcon,
   ClipboardCheck, Timer, Package, Coins, MessageSquareWarning,
   Settings as SettingsIcon, Sparkles, BookOpen, Clapperboard, PartyPopper,
-  Award, UserCog,
+  Award, UserCog, FlaskConical,
 } from "lucide-react";
 import {
   SUPPORT_TT_VIEW, SCHEDULE_VIEW, FOUNDER, STAFF_VIEWERS, LEAD_ACCESS,
@@ -13,6 +13,7 @@ import {
   CONDUCT_VIEW, MARKETING_ACCESS, AUDIT_VIEW, ACADEMIC_VIEW, can,
   INVENTORY_VIEW, CASH_ACCESS, STUDENT, PARENT, TEACHER, SUPPORT_TEACHER,
   TEACHER_MENU, SMM_MANAGER, EVENTS_ACCESS, EVENT_MANAGER, EXAM_VIEW,
+  MOCK_PRACTICE,
 } from "../lib/roles";
 
 /**
@@ -171,6 +172,16 @@ export function buildNav(
     items = [...items,
       { to: "/exam", label: "Imtihonlar", icon: ClipboardCheck }];
   }
+  // MOCKNI O'ZI SINAB KO'RISH (2026-09-27, Jahongir: "faqat guruhda
+  // emas, boshqalar ham o'zi kirib ishlaydigan bo'lsa yaxshi bo'lardi
+  // mock testni xodimlargayam koproq ustozlarga ular ham experience
+  // qilib xatolarni aytadida"; administratorlarga kerak emas). Ustoz
+  // va support menyusi pastda qayta yig'iladi — band o'sha ikki
+  // ro'yxatda ham bor.
+  const mockItem = { to: "/mock-practice", label: "Mock sinab ko'rish", icon: FlaskConical };
+  if (can(user?.role, MOCK_PRACTICE)) {
+    items = [...items, mockItem];
+  }
   // SMM - kontent quvuri: g'oyadan natijagacha. HR menejeriga bu
   // bo'lim kerak emas — uning ishi odamlar, kontent emas.
   // SMM endi Marketing ICHIDA (tab). Marketingga kirolmaydigan, lekin
@@ -268,6 +279,7 @@ export function buildNav(
       { to: "/my-schedule", label: "Darslarim", icon: CalendarDays },
       { to: "/my-books", label: "Kitob buyurtma", icon: BookMarked },
       { to: "/my-exams", label: "Imtihon buyurtma", icon: ClipboardCheck },
+      mockItem,
       // MOLIYA (2026-09-05, Jahongir: "ustozlarda moliya bo'limi
       // qo'shilib ... oyliklar tarixi bo'lsin") — oylar bo'yicha tarix
       { to: "/my-finance", label: "Moliya", icon: Wallet },
@@ -288,6 +300,7 @@ export function buildNav(
       { to: "/my-sessions", label: "Darslarim va oyligim", icon: Timer },
       { to: "/my-finance", label: "Moliya", icon: Wallet },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
+      mockItem,
     ];
   }
   return items;

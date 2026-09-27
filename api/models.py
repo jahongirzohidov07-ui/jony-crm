@@ -1,7 +1,7 @@
 from datetime import datetime, date
 from sqlalchemy import (
     Column, Integer, String, Float, Date, DateTime, ForeignKey, Text,
-    event, UniqueConstraint,
+    event, UniqueConstraint, Index,
 )
 from sqlalchemy.orm import relationship, deferred
 from database import Base
@@ -4358,6 +4358,85 @@ class ExamSubmission(Base):
     submitted_at = Column(DateTime, default=datetime.utcnow)
     placed_by = Column(String, nullable=True)
     placed_at = Column(DateTime, nullable=True)
+
+
+# ------------------------------------------------ XODIMLAR MOCK MASHQI
+# 2026-09-27, Jahongir: "faqat guruhda emas, boshqalar ham o'zi kirib
+# ishlaydigan bo'lsa yaxshi bo'lardi mock testni xodimlargayam koproq
+# ustozlarga ular ham experience qilib xatolarni aytadida".
+#
+# Ikki jadval ATAYLAB alohida: xodim urinishi Exam / ExamOnline /
+# ExamSubmission / ExamResult ga HECH QACHON yozilmaydi — natija,
+# coin, XP, examiner maoshi va mavzu tahlili bunga tegmaydi.
+# template_id — FK EMAS: delete_template shablonni butunlay o'chiradi,
+# urinish esa content_key (canon_title) orqali boshqa nusxaga o'tadi.
+
+class MockPractice(Base):
+    """Xodimning mock testni o'zi yechib ko'rishi (natija faqat o'ziga)."""
+    __tablename__ = "mock_practice"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    user_name = Column(String, nullable=True)            # nusxa
+    template_id = Column(Integer, nullable=False, index=True)   # FK yo'q
+    content_key = Column(String, nullable=False, index=True)    # canon_title
+    skill = Column(String(40), nullable=True)            # ielts_listening …
+    variant = Column(String(4), nullable=True)
+    # Urinish paytida shablon tahrirlansa — sahifada izoh chiqadi
+    tpl_updated_at = Column(DateTime, nullable=True)
+    answers = Column(Text, default="{}")                 # JSON {qid: javob}
+    detail = Column(Text, nullable=True)                 # grade() natijasi
+    score = Column(Float, nullable=True)
+    max_score = Column(Float, nullable=True)
+    band = Column(Float, nullable=True)                  # IELTS L/R
+    cefr = Column(Text, nullable=True)                   # JSON lr_approx (taxminiy)
+    script_opened = Column(String, nullable=True)        # "0,2" — TTS skriptlar
+    # in_progress | submitted
+    status = Column(String, nullable=False, default="in_progress", index=True)
+    duration_min = Column(Integer, nullable=True)
+    started_at = Column(DateTime, nullable=True)
+    ends_at = Column(DateTime, nullable=True)
+    submitted_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    __table_args__ = (Index("ix_mock_practice_user_key",
+                            "user_id", "content_key", "created_at"),)
+
+
+class MockIssue(Base):
+    """Savoldagi xato haqida xabar: kalit xato, ikki javob, imlo …
+    Examinerlar boshlig'i ko'rib "tuzatildi / rad etildi" qiladi."""
+    __tablename__ = "mock_issue"
+
+    id = Column(Integer, primary_key=True)
+    content_key = Column(String, nullable=False, index=True)
+    template_id = Column(Integer, nullable=True, index=True)   # FK yo'q
+    skill = Column(String(40), nullable=True)
+    variant = Column(String(4), nullable=True)
+    qid = Column(String, nullable=True)                  # NULL = butun bo'lim
+    q_n = Column(Integer, nullable=True)
+    part_title = Column(String, nullable=True)
+    # Xabar paytidagi savol {q, options, answer, type} — FAQAT serverda
+    q_snapshot = Column(Text, nullable=True)
+    q_hash = Column(String(16), nullable=True)           # "o'zgargan" belgisi
+    # answer_key | two_answers | typo | unclear | script_audio | other
+    kind = Column(String, nullable=False)
+    comment = Column(Text, nullable=True)                # <= 1000
+    suggested = Column(String(300), nullable=True)
+    given = Column(String(200), nullable=True)           # xabarchining javobi
+    during_test = Column(Integer, default=0)
+    practice_id = Column(Integer, nullable=True, index=True)   # FK yo'q
+    reporter_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    reporter_name = Column(String, nullable=True)
+    # open | fixed | rejected | duplicate
+    status = Column(String, nullable=False, default="open", index=True)
+    resolution_note = Column(String, nullable=True)
+    resolved_by = Column(String, nullable=True)
+    resolved_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    __table_args__ = (Index("ix_mock_issue_status_key",
+                            "status", "content_key", "qid"),)
 
 
 class DrillTask(Base):

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { BrandIcon } from "../components/BrandIcon";
+import { ExamPaper, Watermark, type PaperPart } from "../components/ExamPaper";
 import { useAuth } from "../lib/AuthContext";
 import { getToken } from "../lib/api";
 
@@ -18,26 +19,7 @@ import { getToken } from "../lib/api";
  * Havola: https://jonyos.uz/t/<token>
  */
 
-type Q = {
-  id: string;
-  n: number;
-  type: "choice" | "text" | "multi" | "essay";
-  q: string;
-  options?: string[];
-  image?: string | null;
-  /** multi — nechta variant belgilanishi kerak ("Choose TWO letters") */
-  pick?: number | null;
-  /** essay — eng kam so'z (IELTS Writing: 150 / 250) */
-  min_words?: number | null;
-};
-type Part = {
-  title: string;
-  instructions?: string;
-  passage?: string;
-  audio_url?: string | null;
-  image?: string | null;
-  questions: Q[];
-};
+type Part = PaperPart;
 type State = "waiting" | "countdown" | "running" | "finished" | "closed";
 type PublicExam = {
   title: string;
@@ -55,8 +37,6 @@ type PublicExam = {
   parts: Part[];
 };
 type Done = { paper_max: number; pending: boolean; auto?: boolean };
-
-const LETTERS = "ABCDEFGH";
 
 function store(key: string, val?: unknown) {
   try {
@@ -88,33 +68,6 @@ function shrink(file: File): Promise<string> {
     img.onerror = () => reject(new Error("Rasmni o'qib bo'lmadi"));
     img.src = url;
   });
-}
-
-/** SUV BELGISI (2026-09-23, Jahongir: "ismiga suv belgi qo'shchi").
- *  Savollar ustida o'quvchining ismi xira takrorlanib turadi —
- *  skrinshot tarqalsa, kimdan chiqqani ko'rinib turadi. Bosishga
- *  xalaqit bermaydi (pointer-events yo'q). */
-function Watermark({ text }: { text: string }) {
-  const rows = Array.from({ length: 16 });
-  return (
-    <div
-      aria-hidden
-      className="fixed inset-0 z-30 overflow-hidden pointer-events-none select-none"
-    >
-      <div className="absolute -inset-1/4 rotate-[-24deg]">
-        {rows.map((_, i) => (
-          <div
-            key={i}
-            className="whitespace-nowrap text-slate-900/[0.09] text-[15px] font-semibold tracking-wide py-6"
-          >
-            {Array.from({ length: 8 })
-              .map(() => text)
-              .join("     •     ")}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 }
 
 function mmss(sec: number) {
@@ -760,150 +713,14 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   return shell(
     <div className="space-y-4 pb-24">
       {who ? <Watermark text={`${who} · ${exam.title}`} /> : null}
-      {exam.parts.map((p, pi) => (
-        <div key={pi} className={card}>
-          <h2 className="font-bold text-slate-900">{p.title}</h2>
-          {p.instructions && (
-            <p className="text-sm text-slate-600 mt-1 whitespace-pre-line">{p.instructions}</p>
-          )}
-          {p.audio_url && <audio controls src={p.audio_url} className="w-full mt-3" />}
-          {p.image && (
-            <img src={p.image} alt="" className="mt-3 w-full max-w-xl rounded-lg border border-slate-200" />
-          )}
-          {p.passage && (
-            <div className="mt-3 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 whitespace-pre-line leading-relaxed">
-              {p.passage}
-            </div>
-          )}
-          <div className="mt-4 space-y-5">
-            {p.questions.map((q) => (
-              <div key={q.id}>
-                {q.image && (
-                  <img
-                    src={q.image}
-                    alt=""
-                    className="max-h-40 max-w-full rounded-lg border border-slate-200 mb-2"
-                  />
-                )}
-                <p className="text-sm text-slate-800 mb-2 whitespace-pre-line">
-                  <span className="font-semibold text-slate-500 mr-1.5">{q.n}.</span>
-                  {q.q}
-                </p>
-                {q.type === "essay" ? (
-                  // IELTS Writing — kompyuterda yoziladi, examiner o'qib
-                  // baholaydi. So'z sanagichi CD IELTS'dagidek pastda turadi.
-                  (() => {
-                    const txt = String(answers[q.id] ?? "");
-                    const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
-                    const need = q.min_words || 0;
-                    return (
-                      <div>
-                        <textarea
-                          className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm leading-relaxed min-h-[16rem]"
-                          value={txt}
-                          spellCheck={false}
-                          placeholder="Javobingizni shu yerga yozing"
-                          onChange={(e) =>
-                            setAnswers({ ...answers, [q.id]: e.target.value })
-                          }
-                        />
-                        <div className="mt-1 flex items-center justify-between text-xs">
-                          <span
-                            className={
-                              need && words < need
-                                ? "text-amber-600 font-medium"
-                                : "text-slate-500"
-                            }
-                          >
-                            {words} so'z{need ? ` · kamida ${need}` : ""}
-                          </span>
-                          {need && words < need ? (
-                            <span className="text-amber-600">
-                              Yana {need - words} so'z kerak
-                            </span>
-                          ) : null}
-                        </div>
-                      </div>
-                    );
-                  })()
-                ) : q.type === "multi" ? (
-                  // "Choose TWO letters, A-E" — bir nechta variant belgilanadi.
-                  // Kerakligidan ortiq belgilansa eng eskisi o'chadi.
-                  (() => {
-                    const cur: number[] = Array.isArray(answers[q.id])
-                      ? (answers[q.id] as number[])
-                      : [];
-                    const need = q.pick || 2;
-                    const toggle = (oi: number) => {
-                      const has = cur.includes(oi);
-                      let next = has ? cur.filter((x) => x !== oi) : [...cur, oi];
-                      if (next.length > need) next = next.slice(next.length - need);
-                      setAnswers({ ...answers, [q.id]: next });
-                    };
-                    return (
-                      <div>
-                        <p className="text-xs text-slate-500 mb-1.5">
-                          {need} ta variant belgilang ({cur.length}/{need})
-                        </p>
-                        <div className="grid gap-1.5">
-                          {(q.options || []).map((o, oi) => (
-                            <button
-                              key={oi}
-                              onClick={() => toggle(oi)}
-                              className={`text-left rounded-xl border px-3 py-2.5 text-sm transition ${
-                                cur.includes(oi)
-                                  ? "border-brand-500 bg-brand-50 text-brand-800 font-medium"
-                                  : "border-slate-200 text-slate-700 hover:border-slate-300"
-                              }`}
-                            >
-                              <span className="font-semibold mr-2">{LETTERS[oi]}</span>
-                              {o !== LETTERS[oi] && o}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })()
-                ) : q.type === "choice" ? (
-                  // Faqat harfli variantlar (rasmdan tanlash) — bir qatorda
-                  <div
-                    className={
-                      (q.options || []).every((o, i) => o === LETTERS[i])
-                        ? "flex flex-wrap gap-1.5"
-                        : "grid gap-1.5"
-                    }
-                  >
-                    {(q.options || []).map((o, oi) => (
-                      <button
-                        key={oi}
-                        onClick={() => setAnswers({ ...answers, [q.id]: oi })}
-                        className={`text-left rounded-xl border px-3 py-2.5 text-sm transition ${
-                          answers[q.id] === oi
-                            ? "border-brand-500 bg-brand-50 text-brand-800 font-medium"
-                            : "border-slate-200 text-slate-700 hover:border-slate-300"
-                        }`}
-                      >
-                        <span className="font-semibold mr-2">{LETTERS[oi]}</span>
-                        {o !== LETTERS[oi] && o}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <input
-                    className="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm"
-                    value={String(answers[q.id] ?? "")}
-                    autoCapitalize="off"
-                    autoCorrect="off"
-                    spellCheck={false}
-                    placeholder="Javobni yozing"
-                    onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.value })}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+      {/* Savollar chizuvchisi ExamPaper.tsx ga ko'chdi (2026-09-27) —
+          xodimlar mock sahifasi ham aynan shuni ishlatadi. Bu yerdagi
+          saqlash / chiqish / ro'yxat mantiqi o'zgarmadi. */}
+      <ExamPaper
+        parts={exam.parts}
+        answers={answers}
+        onChange={(qid, v) => setAnswers({ ...answers, [qid]: v })}
+      />
 
       <div className="fixed bottom-0 inset-x-0 bg-white/95 border-t border-slate-200 px-4 py-3">
         <div className="max-w-2xl mx-auto flex items-center gap-3">

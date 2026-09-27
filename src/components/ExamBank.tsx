@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, X, ChevronUp, ChevronDown } from "lucide-react";
 import { api } from "../lib/api";
+import { pushToast } from "../lib/toast";
 import { SUBJECTS, SUBJECT_LEVELS, levelLabel, subjectLabel } from "../lib/subjects";
 import { EXAM_KINDS, UNIT_COUNT, examKindLabel } from "../lib/exams";
 
@@ -94,7 +95,40 @@ function blankPart(i: number): Part {
   return { title: `Part ${i}`, instructions: "", passage: "", audio_url: null, questions: [] };
 }
 
-export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
+/** SAVOL XATOSINI TUZATISH (2026-09-27). "Savol xatolari" tabidagi
+ *  "Tuzatish" shu bilan Test bazasiga o'tadi: qaysi shablon, qaysi
+ *  savol (belgilab ko'rsatiladi) va saqlanganda qaysi xabarlar
+ *  "tuzatildi" bo'ladi. notes — xodimlar yozgan izohlar, savol ustida. */
+export type BankFocus = {
+  tid: number;
+  qid: string | null;
+  issueIds: number[];
+  notes?: {
+    name?: string | null;
+    text?: string | null;
+    suggested?: string | null;
+    given?: string | null;
+  }[];
+};
+
+type SaveResult = {
+  synced?: (number | { id: number; level?: string | null })[];
+  diverged?: (number | { id: number; level?: string | null })[];
+  /** Farq qilgan nusxalar darajasi bilan (yashirin qatorlar ham) */
+  diverged_rows?: { id: number; level?: string | null }[];
+  resolved?: number;
+};
+
+export function ExamBankTab({
+  canEdit,
+  focus,
+  onFocusDone,
+}: {
+  canEdit: boolean;
+  focus?: BankFocus | null;
+  /** Fokus bilan ochilgan tahrir yopilganda (saqlangan yoki yo'q) */
+  onFocusDone?: (saved: boolean) => void;
+}) {
   const [all, setAll] = useState<Tpl[]>([]);
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState<Tpl | null>(null);
@@ -117,7 +151,28 @@ export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
   }
   useEffect(load, [showHidden]);
 
-  async function open(t: Tpl | null) {
+  // "Savol xatolari" dan kelgan bo'lsa — o'sha shablon darrov ochiladi
+  const [focused, setFocused] = useState<BankFocus | null>(null);
+  useEffect(() => {
+    if (!focus) return;
+    setFocused(focus);
+    open({ id: focus.tid }).catch(() => {
+      setFocused(null);
+      onFocusDone?.(false);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focus]);
+
+  function closeEditor(saved: boolean) {
+    setEdit(null);
+    if (saved) load();
+    if (focused) {
+      setFocused(null);
+      onFocusDone?.(saved);
+    }
+  }
+
+  async function open(t: { id: number } | null) {
     if (!t) {
       setEdit({
         id: 0, level: "step1", kind: "unit", unit_no: 1, title: "",
@@ -243,11 +298,12 @@ export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
         <TemplateEditor
           tpl={edit}
           readOnly={!canEdit}
-          onClose={() => setEdit(null)}
-          onSaved={() => {
-            setEdit(null);
-            load();
-          }}
+          focusQid={focused && focused.tid === edit.id ? focused.qid : null}
+          issues={focused && focused.tid === edit.id ? focused.notes || [] : []}
+          issueIds={focused && focused.tid === edit.id ? focused.issueIds : []}
+          lookup={all}
+          onClose={() => closeEditor(false)}
+          onSaved={() => closeEditor(true)}
         />
       )}
     </div>
@@ -257,15 +313,41 @@ export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
 function TemplateEditor({
   tpl,
   readOnly,
+  focusQid = null,
+  issues = [],
+  issueIds = [],
+  lookup = [],
   onClose,
   onSaved,
 }: {
   tpl: Tpl;
   readOnly: boolean;
+  /** Belgilab ko'rsatiladigan savol (Savol xatolari -> Tuzatish) */
+  focusQid?: string | null;
+  /** Shu savol haqidagi xodim izohlari — savol ustida turadi */
+  issues?: NonNullable<BankFocus["notes"]>;
+  /** Saqlanganda "tuzatildi" bo'ladigan xabarlar */
+  issueIds?: number[];
+  /** Nusxalar (daraja) nomini ko'rsatish uchun — bazadagi ro'yxat */
+  lookup?: Tpl[];
   onClose: () => void;
   onSaved: () => void;
 }) {
   const [f, setF] = useState<Tpl>(tpl);
+  // Mock nusxalari (2026-09-27): bir mock har daraja uchun alohida
+  // yozilgan (IELTS — 3 ta). Tuzatish sukut bo'yicha tahrirdan OLDIN
+  // aynan bir xil bo'lgan nusxalarga ham o'tadi; farq qiladiganlari
+  // tegilmaydi va ro'yxati ko'rsatiladi.
+  const isMock = tpl.kind === "mock";
+  const [syncSiblings, setSyncSiblings] = useState(true);
+  useEffect(() => {
+    if (!focusQid) return;
+    // Modal chizilib bo'lgach savolga aylantiramiz
+    const t = window.setTimeout(() => {
+      document.getElementById(`q-${focusQid}`)?.scrollIntoView({ block: "center", behavior: "smooth" });
+    }, 150);
+    return () => window.clearTimeout(t);
+  }, [focusQid]);
   const [parts, setParts] = useState<Part[]>(
     (tpl.parts || []).map((p) => ({
       ...p,
@@ -313,8 +395,36 @@ function TemplateEditor({
         subject: f.subject || "english",
         parts,
       };
-      if (f.id) await api.put(`/exam-templates/${f.id}`, body);
-      else await api.post("/exam-templates", body);
+      if (f.id) {
+        // Mock: boshqa daraja nusxalariga ham (tahrirdan oldin bir xil
+        // bo'lganlariga) + "Savol xatolari"dan kelgan bo'lsa xabarlarni
+        // yopish (2026-09-27)
+        const r = await api.put<SaveResult>(`/exam-templates/${f.id}`, {
+          ...body,
+          sync_siblings: isMock && syncSiblings,
+          ...(issueIds.length ? { resolve_issue_ids: issueIds } : {}),
+        });
+        const synced = r?.synced || [];
+        const diverged = r?.diverged || [];
+        if (isMock && (synced.length || diverged.length || r?.resolved)) {
+          const name = (x: number | { id: number; level?: string | null }) => {
+            const id = typeof x === "number" ? x : x.id;
+            const lv = (typeof x === "number" ? null : x.level)
+              ?? r?.diverged_rows?.find((d) => d.id === id)?.level
+              ?? lookup.find((t) => t.id === id)?.level;
+            return `#${id}${lv ? ` (${levelLabel(lv) || lv})` : ""}`;
+          };
+          const msg = [
+            "Saqlandi",
+            synced.length ? `${synced.length} ta nusxa ham yangilandi` : "",
+            diverged.length
+              ? `${diverged.length} ta nusxa farq qiladi, tegilmadi: ${diverged.map(name).join(", ")}`
+              : "",
+            r?.resolved ? `${r.resolved} ta xabar tuzatildi` : "",
+          ].filter(Boolean).join(" · ");
+          pushToast(msg, diverged.length ? "info" : "success", diverged.length ? 15000 : 6000);
+        }
+      } else await api.post("/exam-templates", body);
       onSaved();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
@@ -335,13 +445,36 @@ function TemplateEditor({
           </button>
         </div>
 
+        {/* Butun test haqidagi xabar (savolga bog'lanmagan) — tepada */}
+        {!focusQid && issues.length > 0 && (
+          <div className="mb-4 rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 space-y-1">
+            <p className="text-[11px] font-semibold text-amber-800 uppercase">Xodimlar xabari (butun test)</p>
+            {issues.map((c, ci) => (
+              <p key={ci} className="text-xs text-slate-700">
+                <b>{c.name || "—"}</b>{c.text ? `: ${c.text}` : ""}
+                {c.suggested ? <span className="text-emerald-700"> · taklif: {c.suggested}</span> : null}
+              </p>
+            ))}
+          </div>
+        )}
+
         <fieldset disabled={readOnly} className="space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <label className="col-span-2 text-xs text-slate-500">
               Nomi
-              <input className={inp} value={f.title}
+              <input className={inp + (isMock && f.id ? " bg-slate-50 text-slate-600" : "")}
+                     value={f.title}
+                     readOnly={isMock && !!f.id}
                      onChange={(e) => setF({ ...f, title: e.target.value })}
                      placeholder="Step 1 · Unit 1 Progress Test" />
+              {/* Mock nomi o'zgartirilmaydi (2026-09-27): seed mocklarni
+                  NOMI bo'yicha topadi — nom o'zgarsa, keyingi ishga
+                  tushishda eski matn yangi yozuv bo'lib qayta qo'shiladi. */}
+              {isMock && !!f.id && (
+                <span className="block text-[11px] text-slate-400 mt-0.5">
+                  Mock nomi o'zgartirilmaydi — tizim mocklarni nomi bo'yicha taniydi.
+                </span>
+              )}
             </label>
             <label className="text-xs text-slate-500">
               Daraja
@@ -362,7 +495,10 @@ function TemplateEditor({
               Turi
               <select className={inp + " bg-white"} value={f.kind}
                       onChange={(e) => setF({ ...f, kind: e.target.value })}>
-                {ONLINE_KINDS.map((k) => (
+                {/* Mock shablonida ro'yxat to'liq (2026-09-27): ilgari "mock"
+                    ro'yxatda yo'q edi va tanlagich uni "Unit test" qilib
+                    ko'rsatardi. */}
+                {(f.kind === "mock" ? EXAM_KINDS : ONLINE_KINDS).map((k) => (
                   <option key={k.key} value={k.key}>{k.label}</option>
                 ))}
               </select>
@@ -474,8 +610,27 @@ function TemplateEditor({
               <div className="mt-3 space-y-3">
                 {p.questions.map((q, qi) => {
                   n += 1;
+                  const focused = !!focusQid && q.id === focusQid;
                   return (
-                    <div key={qi} className="bg-white border border-slate-200 rounded-lg p-2.5">
+                    <div key={qi} id={q.id ? `q-${q.id}` : undefined}
+                         className={`bg-white border rounded-lg p-2.5 ${
+                           focused ? "border-amber-400 ring-2 ring-amber-300" : "border-slate-200"
+                         }`}>
+                      {focused && issues.length > 0 && (
+                        <div className="mb-2 rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 space-y-1">
+                          <p className="text-[11px] font-semibold text-amber-800 uppercase">
+                            Xodimlar xabari
+                          </p>
+                          {issues.map((c, ci) => (
+                            <p key={ci} className="text-xs text-slate-700">
+                              <b>{c.name || "—"}</b>
+                              {c.text ? `: ${c.text}` : ""}
+                              {c.given ? <span className="text-slate-500"> · javobi: {c.given}</span> : null}
+                              {c.suggested ? <span className="text-emerald-700"> · taklif: {c.suggested}</span> : null}
+                            </p>
+                          ))}
+                        </div>
+                      )}
                       <div className="flex items-start gap-2">
                         <span className="text-xs font-semibold text-slate-400 pt-2 w-6">{n}.</span>
                         <input className={inp} value={q.q} placeholder="Savol matni"
@@ -665,10 +820,20 @@ function TemplateEditor({
             )}
           </span>
           {!readOnly && (
-            <button onClick={save} disabled={saving}
-                    className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-5 py-2 text-sm font-medium disabled:opacity-60">
-              {saving ? "Saqlanmoqda..." : "Saqlash"}
-            </button>
+            <span className="flex items-center gap-3">
+              {isMock && !!f.id && (
+                <label className="text-xs text-slate-600 flex items-center gap-1.5"
+                       title="Shu mockning boshqa daraja nusxalari — tahrirdan oldin aynan bir xil bo'lganlariga ham yoziladi">
+                  <input type="checkbox" checked={syncSiblings}
+                         onChange={(e) => setSyncSiblings(e.target.checked)} />
+                  Boshqa daraja nusxalariga ham
+                </label>
+              )}
+              <button onClick={save} disabled={saving}
+                      className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-5 py-2 text-sm font-medium disabled:opacity-60">
+                {saving ? "Saqlanmoqda..." : issueIds.length ? "Saqlash va tuzatildi" : "Saqlash"}
+              </button>
+            </span>
           )}
         </div>
       </div>

@@ -476,6 +476,13 @@ class TemplateIn(BaseModel):
     is_active: bool = True
     variant: Optional[str] = None      # A/B/C/D/E (bo'sh = A)
     subject: Optional[str] = None      # english (bo'sh) / math / …
+    # XODIMLAR MOCK MASHQI (2026-09-27, Jahongir: "ustozlarga ular ham
+    # experience qilib xatolarni aytadida"). Seed har mock faylini 3
+    # darajaga yozadi — tuzatish qolgan daraja nusxalariga ham tushsin
+    # (faqat tahrirdan oldin AYNAN bir xil bo'lganlariga) va shu
+    # tuzatish bilan yopilgan xodim xabarlari "tuzatildi" bo'lsin.
+    sync_siblings: bool = False
+    resolve_issue_ids: Optional[List[int]] = None
 
 
 def _clean_subject(v) -> Optional[str]:
@@ -768,6 +775,9 @@ def update_template(tid: int, payload: TemplateIn,
     if not t:
         raise HTTPException(404, "Test topilmadi")
     _validate_tpl(payload)
+    # Tahrirdan OLDINGI holat — daraja nusxalari shu bilan solishtiriladi
+    old_parts = _load(t.parts)
+    old_title, old_variant, old_subj = t.title, (t.variant or "A"), _subj(t)
     t.level = payload.level or None
     t.kind = payload.kind
     t.unit_no = payload.unit_no if payload.kind == "unit" else None
@@ -782,7 +792,60 @@ def update_template(tid: int, payload: TemplateIn,
     db.commit()
     audit.log(db, user, entity="exam_template", action="update",
               entity_id=t.id, entity_label=t.title, commit=True)
-    return {**_tpl_summary(t), "parts": _load(t.parts)}
+    synced, diverged = [], []
+    if t.kind == "mock" and payload.sync_siblings:
+        # DARAJA NUSXALARI (2026-09-27): seed bitta faylni ielts_intro /
+        # foundation / graduation ga alohida qator qilib yozadi. Tuzatish
+        # faqat tahrirdan oldin shu qator bilan AYNAN bir xil bo'lgan
+        # nusxalarga ko'chiriladi; boshqacha tahrirlangani "diverged"
+        # bo'lib qaytadi va tegilmaydi. Yashirin "(dublikat)" qatorlar
+        # ham kiradi (canon_title).
+        from mock_seed import canon_title
+        key = canon_title(old_title)
+        new_parts = _load(t.parts)
+        for sib in (db.query(models.ExamTemplate)
+                    .filter(models.ExamTemplate.kind == "mock",
+                            models.ExamTemplate.id != t.id)
+                    .order_by(models.ExamTemplate.id).all()):
+            if canon_title(sib.title) != key or \
+                    (sib.variant or "A") != old_variant or \
+                    _subj(sib) != old_subj:
+                continue
+            sp = _load(sib.parts)
+            if sp == new_parts:
+                continue
+            if sp != old_parts:
+                diverged.append(sib)
+                continue
+            sib.parts = t.parts
+            synced.append(sib.id)
+            audit.log(db, user, entity="exam_template", action="sync",
+                      entity_id=sib.id, entity_label=sib.title,
+                      note=f"#{t.id} tahriridan nusxa")
+        db.commit()
+    resolved = 0
+    if payload.resolve_issue_ids:
+        now = datetime.utcnow()
+        ids = sorted({int(x) for x in payload.resolve_issue_ids})[:500]
+        for i in (db.query(models.MockIssue)
+                  .filter(models.MockIssue.id.in_(ids),
+                          models.MockIssue.status == "open").all()):
+            i.status = "fixed"
+            i.resolved_by = user.full_name
+            i.resolved_at = now
+            resolved += 1
+        if resolved:
+            audit.log(db, user, entity="mock_issue", action="fixed",
+                      entity_id=t.id, entity_label=t.title,
+                      note=f"shablon tahriri bilan {resolved} ta xabar yopildi")
+        db.commit()
+    return {**_tpl_summary(t), "parts": _load(t.parts),
+            "synced": synced, "diverged": [s.id for s in diverged],
+            "diverged_rows": [{"id": s.id, "level": s.level,
+                               "variant": s.variant or "A",
+                               "is_active": bool(s.is_active)}
+                              for s in diverged],
+            "resolved": resolved}
 
 
 @router.delete("/api/exam-templates/{tid}")

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import {
   BookMarked, BookOpen, CalendarDays, ChevronRight, ClipboardCheck, ClipboardList,
   Layers, MessageSquareWarning, PieChart, Timer, TrendingUp, Trophy, Wallet,
-  Users,
+  Users, FlaskConical,
 } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
 import { setActiveRole, getActiveRole } from "../../lib/api";
@@ -51,6 +51,13 @@ const SECTIONS = [
         hint: "O'quvchilaringiz uchun kitob" },
       { to: "/my-exams", label: "Imtihon buyurtma", icon: ClipboardCheck,
         hint: "Unit / mock test so'rash" },
+      // MOCKNI O'ZI SINAB KO'RISH (2026-09-27, Jahongir: "faqat guruhda
+      // emas, boshqalar ham o'zi kirib ishlaydigan bo'lsa yaxshi
+      // bo'lardi mock testni xodimlargayam koproq ustozlarga ular ham
+      // experience qilib xatolarni aytadida"). Ustoz va support login
+      // qilganda shu ilovaga tushadi — band bu yerda bo'lmasa topilmaydi.
+      { to: "/mock-practice", label: "Mock sinab ko'rish", icon: FlaskConical,
+        hint: "Mockni o'zingiz yeching, savol xatolarini ayting" },
       { to: "/teacher/vocab", label: "Lug'at unitlari", icon: BookMarked,
         hint: "Unit topshirganini tasdiqlash (100%)" },
     ],

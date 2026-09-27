@@ -96,7 +96,7 @@ export default function Ariza() {
     }
   }
 
-  const brand = <a className="ariza-brand" href="/ariza" aria-label="Jony Academy"><BrandIcon size={48} /><span>JONY ACADEMY</span></a>;
+  const brand = <a className="ariza-brand" href={window.location.pathname + window.location.search} aria-label="Jony Academy"><BrandIcon size={48} /><span>JONY ACADEMY</span></a>;
 
   return (
     <div className="ariza-page">

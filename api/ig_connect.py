@@ -309,7 +309,7 @@ def _parse_ins(it: dict) -> dict | None:
 
 def sync(db: Session, days: int | None = 60, auto_create: bool = True,
          who: str = "avtomat", full: bool = False,
-         create_days: int = 60, budget_s: float = 45.0) -> dict:
+         create_days: int = 60, budget_s: float = 15.0) -> dict:
     """days — shuncha kunlik postlar yangilanadi. full=True — akkauntdagi
     HAMMA postlar (2026-09-26, Jahongir: "hamma JonyAcademy kanalidagi
     videolar statistikasi menda korinsa"). Vaqt chegarasi (budget_s)
@@ -404,10 +404,11 @@ def sync(db: Session, days: int | None = 60, auto_create: bool = True,
                 _set(db, K_CURSOR, "", who)
                 _set(db, K_FULL_DONE, now.isoformat(timespec="seconds"), who)
             break
+        if full:
+            _set(db, K_CURSOR, nxt, who)
+            db.commit()
         if _t.time() - t0 > budget_s:
             partial = True
-            if full:
-                _set(db, K_CURSOR, nxt, who)
             break
         try:
             page = HTTP["get"](nxt)
@@ -455,8 +456,8 @@ def cron_sync(db: Session) -> dict:
     if not tok:
         return {"ok": False, "note": "token yo'q"}
     if not _s(db, K_FULL_DONE):
-        return sync(db, full=True, who="cron")
-    return sync(db, days=30, who="cron")
+        return sync(db, full=True, who="cron", budget_s=10)
+    return sync(db, days=30, who="cron", budget_s=10)
 
 
 # ------------------------------------------------------------ API
@@ -533,7 +534,7 @@ def ig_set_token(payload: dict = Body(...), db: Session = Depends(get_db),
     _set(db, K_CURSOR, "", user.full_name)
     _set(db, K_FULL_DONE, "", user.full_name)
     db.commit()
-    res = sync(db, who=user.full_name, full=True)
+    res = sync(db, who=user.full_name, full=True, budget_s=12)
     return {"ok": True, "username": info.get("username"),
             "account_id": info["user_id"], "sync": res}
 
@@ -776,7 +777,7 @@ def ig_oauth_callback(code: str | None = None, state: str | None = None,
         _set(db, K_CURSOR, "", u.full_name)
         _set(db, K_FULL_DONE, "", u.full_name)
         db.commit()
-        sync(db, who=u.full_name, full=True)
+        sync(db, who=u.full_name, full=True, budget_s=6)
     except Exception:
         db.rollback()
     return RedirectResponse(back + "&ig=ok", 302)

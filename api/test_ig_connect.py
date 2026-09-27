@@ -271,6 +271,39 @@ ck("insights media bilan birga keldi (alohida so'rov yo'q)",
 ck("raqamlar yozildi", db.query(models.IgMedia).filter_by(ig_id="n7")
    .first().views, 70)
 
+print("\n=== 8. VERCEL 30 s CHEGARASI ===")
+import inspect  # noqa: E402
+ck("standart budjet 30 s dan ancha kam (<=20)",
+   inspect.signature(ig.sync).parameters["budget_s"].default <= 20, True)
+# Funksiya o'rtada o'ldirilsa ham davom joyi yo'qolmasin: har sahifadan
+# keyin cursor saqlanadi (budjet oshmagan bo'lsa ham)
+db.query(models.IntegrationSetting).filter(models.IntegrationSetting.key.in_(
+    [ig.K_CURSOR, ig.K_FULL_DONE])).update({"value": ""},
+                                            synchronize_session=False)
+db.commit()
+SEEN_CUR = []
+_orig_get = big_get
+
+
+def kill_after_first(url):
+    if "after=50" in url:
+        SEEN_CUR.append(ig._s(db, ig.K_CURSOR))
+        raise KeyboardInterrupt("Vercel funksiyani to'xtatdi")
+    return _orig_get(url)
+
+
+ig.HTTP["get"] = kill_after_first
+try:
+    ig.sync(db, full=True)
+except KeyboardInterrupt:
+    db.rollback()
+ck("o'ldirilishdan oldin cursor allaqachon saqlangan",
+   bool(SEEN_CUR and "after=50" in SEEN_CUR[0]), True)
+ig.HTTP["get"] = big_get
+r3 = ig.sync(db, full=True)
+ck("keyingi safar o'sha joydan davom etib tugadi",
+   (r3["partial"], bool(ig._s(db, ig.K_FULL_DONE))), (False, True))
+
 print("\n" + ("HAMMASI OK" if not fails
               else f"{len(fails)} ta XATO: {fails}"))
 sys.exit(1 if fails else 0)

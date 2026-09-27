@@ -176,6 +176,19 @@ def plan_media(name: str, db: Session = Depends(get_db),
                         headers={"Cache-Control": "private, max-age=86400"})
 
 
+@router.get("/api/plan-media-link/{name}")
+def plan_media_link(name: str, db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.PLANS_ACCESS))):
+    """Media Cloudflare R2 da bo'lsa — ruxsat tekshirilgach 2 soatlik
+    imzolangan havola (2026-09-27: Vercel 225 MB chegarasi sababli media
+    bundle'dan chiqariladi). R2 sozlanmagan bo'lsa url=None va frontend
+    eski /api/plan-media/ yo'liga qaytadi."""
+    if not re.fullmatch(r"[a-z0-9_]+\.(jpg|png|pdf|mp3)", name or ""):
+        raise HTTPException(404, "Topilmadi")
+    import r2
+    return {"url": r2.presign("GET", name) if r2.enabled() else None}
+
+
 @router.get("/api/plans/{course}/{no}")
 def get_plan(course: str, no: int, db: Session = Depends(get_db),
              user=Depends(require_role(*roles.PLANS_ACCESS))):

@@ -136,6 +136,19 @@ _a = c.get("/api/plan-media/ielts5_03_dubai_palm.mp3", headers=T)
 ck("5.0 listening audiosi ustozga ochiladi", (_a.status_code, _a.headers.get("content-type"), len(_a.content) < 4_400_000), (200, "audio/mpeg", True))
 ck("audio tokensiz yopiq", c.get("/api/plan-media/ielts5_03_dubai_palm.mp3").status_code in (401, 403), True)
 ck("supportga audio yopiq", c.get("/api/plan-media/ielts5_03_dubai_palm.mp3", headers=tok("sup")).status_code, 403)
+# Cloudflare R2 havolasi (2026-09-27): sozlanmagan — url yo'q (frontend eski
+# yo'lga qaytadi); sozlangan — 2 soatlik imzolangan havola; ruxsat o'sha-o'sha
+ck("R2 yo'q — havola None", c.get("/api/plan-media-link/ielts5_03_dubai_palm.mp3", headers=T).json(), {"url": None})
+ck("havola tokensiz yopiq", c.get("/api/plan-media-link/ielts5_03_dubai_palm.mp3").status_code in (401, 403), True)
+ck("supportga havola yopiq", c.get("/api/plan-media-link/ielts5_03_dubai_palm.mp3", headers=tok("sup")).status_code, 403)
+ck("havola nomi tekshiriladi", c.get("/api/plan-media-link/..%2Fielts_1_0.json", headers=T).status_code, 404)
+_r2env = dict(R2_ACCOUNT_ID="acc", R2_ACCESS_KEY_ID="AK", R2_SECRET_ACCESS_KEY="SK", R2_BUCKET="media")
+os.environ.update(_r2env)
+_l = c.get("/api/plan-media-link/ielts5_03_dubai_palm.mp3", headers=T).json()["url"] or ""
+for _k in _r2env:
+    del os.environ[_k]
+ck("R2 bor — imzolangan havola", (_l.startswith("https://acc.r2.cloudflarestorage.com/media/ielts5_03_dubai_palm.mp3?"),
+                                  "X-Amz-Expires=7200" in _l, "X-Amz-Signature=" in _l, "SK" not in _l), (True, True, True, True))
 for _u in ("sup", "exam", "adm"):
     ck(f"{_u}: dars rejalari yopiq", c.get("/api/plans", headers=tok(_u)).status_code, 403)
 ck("me: ingliz ustozi bayrog'i", c.get("/api/me", headers=T).json().get("english_teacher"), True)

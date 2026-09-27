@@ -761,20 +761,34 @@ function Paraphrases({ rows }: { rows: [string, string][] }) {
   );
 }
 
-/** Himoyalangan material rasmi: token bilan yuklab, blob sifatida
- * ko'rsatiladi (ochiq havola yo'q). */
-function AuthImage({ name, alt }: { name: string; alt: string }) {
+/** Himoyalangan material manzili. Avval R2 dagi imzolangan (2 soatlik)
+ * havola so'raladi; R2 sozlanmagan bo'lsa — eski yo'l: token bilan
+ * yuklab, blob sifatida (2026-09-27). */
+function useMediaUrl(name: string): [string | null, boolean] {
   const [url, setUrl] = useState<string | null>(null);
   const [bad, setBad] = useState(false);
   useEffect(() => {
     let u: string | null = null;
+    let alive = true;
     const token = getToken();
-    fetch(`/api/plan-media/${name}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
-      .then((r) => { if (!r.ok) throw new Error(); return r.blob(); })
-      .then((b) => { u = URL.createObjectURL(b); setUrl(u); })
-      .catch(() => setBad(true));
-    return () => { if (u) URL.revokeObjectURL(u); };
+    const headers: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
+    fetch(`/api/plan-media-link/${name}`, { headers })
+      .then((r) => (r.ok ? r.json() : { url: null }))
+      .catch(() => ({ url: null }))
+      .then((j: { url: string | null }) => {
+        if (j.url) { if (alive) setUrl(j.url); return; }
+        return fetch(`/api/plan-media/${name}`, { headers })
+          .then((r) => { if (!r.ok) throw new Error(); return r.blob(); })
+          .then((b) => { u = URL.createObjectURL(b); if (alive) setUrl(u); });
+      })
+      .catch(() => { if (alive) setBad(true); });
+    return () => { alive = false; if (u) URL.revokeObjectURL(u); };
   }, [name]);
+  return [url, bad];
+}
+
+function AuthImage({ name, alt }: { name: string; alt: string }) {
+  const [url, bad] = useMediaUrl(name);
   if (bad) return <p className="text-xs text-rose-600">Materialni yuklab bo'lmadi.</p>;
   if (!url) return <p className="text-xs text-slate-400">Yuklanmoqda…</p>;
   return <img src={url} alt={alt} className="w-full max-w-3xl rounded-lg border border-slate-200" />;
@@ -782,17 +796,7 @@ function AuthImage({ name, alt }: { name: string; alt: string }) {
 
 /** Ustoz bergan listening audiosi: AuthImage kabi token bilan yuklanadi. */
 function AuthAudio({ name }: { name: string }) {
-  const [url, setUrl] = useState<string | null>(null);
-  const [bad, setBad] = useState(false);
-  useEffect(() => {
-    let u: string | null = null;
-    const token = getToken();
-    fetch(`/api/plan-media/${name}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
-      .then((r) => { if (!r.ok) throw new Error(); return r.blob(); })
-      .then((b) => { u = URL.createObjectURL(b); setUrl(u); })
-      .catch(() => setBad(true));
-    return () => { if (u) URL.revokeObjectURL(u); };
-  }, [name]);
+  const [url, bad] = useMediaUrl(name);
   if (bad) return <p className="text-xs text-rose-600">Audioni yuklab bo'lmadi.</p>;
   if (!url) return <p className="text-xs text-slate-400">Audio yuklanmoqda…</p>;
   return <audio controls preload="metadata" src={url} className="w-full max-w-xl" controlsList="nodownload" />;

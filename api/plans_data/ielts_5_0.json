@@ -22529,12 +22529,13 @@
   {
    "no": 29,
    "title": "Reading: Passage 3 (Combination)",
-   "grammar_topic": "Passage 3 — aralash savollar: Multiple choice + Matching sentence endings + Yes / No / Not Given",
+   "grammar_topic": "Passage 3 — aralash savollar: Multiple choice + Matching sentence endings + Yes / No / Not Given (+ skill: Dealing with unknown words)",
    "vocab_topic": "Arxitektura va shahar",
    "duration": 120,
    "test_after": "",
    "book_ref": "Jony Academy materiali — ustoz matnlari (#33 The Pompidou Centre, #34 The man who tried to destroy Paris) va mualliflik matnlari.",
    "objectives": [
+    "Notanish so'z bilan ishlash (Dealing with unknown words): avval so'z savolga kerakmi — keyin so'z turi, kontekstdagi iz va so'z qismlari orqali ma'noni lug'atsiz taxmin qilish.",
     "Passage 3 ning eng qiyin uch turini bitta matnda ishlash: MCQ (muallif maqsadi), sentence endings, Yes/No/Not Given.",
     "\"What is the writer's main purpose in paragraph X?\" savolini yechish: xatboshi NIMA QILADI — tushuntiradimi, tanqid qiladimi, taqqoslaydimi?",
     "Matching sentence endings da grammatika + ma'no bo'yicha variantlarni o'chirish.",
@@ -22547,7 +22548,8 @@
     "\"The Sydney Opera House\" va \"The Eiffel Tower: from eyesore to icon\" matnlari savollari va glossary bilan — har o'quvchiga bittadan nusxa; bu darsda audio yo'q, Listening bosqichi shu ikki yengilroq (Band 4–5) matn bilan to'ldiriladi.",
     "\"Learning to love concrete\" uy vazifasi varaqasi — har o'quvchiga bitta nusxa, javobsiz; dars oxirida tarqatiladi, sinfda ochilmaydi; orqa tomonida \"MCQ / sentence endings / Yes-No-Not Given uchun necha daqiqa ketdi\" deb yoziladigan uchta bo'sh qator qoldiring.",
     "Doskada qo'ng'iroqdan oldin ikki narsa tayyor tursin: xatboshi vazifasi so'zlari — tasvirlash, tushuntirish, taqqoslash, tanqid, baholash, misol keltirish (sinf mashqi ham, ikkinchi uy vazifasi ham shu ro'yxatdan ishlaydi); yonida Passage 3 vaqt rejasi: MCQ 7 + endings 5 + Y/N/NG 6 + tekshirish 2 = 20 daqiqa. Ikkalasi dars oxirigacha o'chirilmaydi.",
-    "\"Xatboshi nima qiladi?\" mashqi uchun ustoz varag'i — Pompidou matnining to'rt xatboshisi bo'yicha birinchi va oxirgi gap juftliklari chop etilgan (og'zaki o'qiladi, o'quvchiga berilmaydi); #33 ning A–F oxirlari qalin qog'ozga yozib qirqilgan tasmalar — har juftlikka bitta to'plam (ikkita tasma ortiqcha qoladi); har o'quvchida xatolar daftari, qalam va ikki rangli marker: biri muallif bahosi so'zlari (fortunately, hideous, an enormous achievement), ikkinchisi matndagi paraphrase uchun."
+    "\"Xatboshi nima qiladi?\" mashqi uchun ustoz varag'i — Pompidou matnining to'rt xatboshisi bo'yicha birinchi va oxirgi gap juftliklari chop etilgan (og'zaki o'qiladi, o'quvchiga berilmaydi); #33 ning A–F oxirlari qalin qog'ozga yozib qirqilgan tasmalar — har juftlikka bitta to'plam (ikkita tasma ortiqcha qoladi); har o'quvchida xatolar daftari, qalam va ikki rangli marker: biri muallif bahosi so'zlari (fortunately, hideous, an enormous achievement), ikkinchisi matndagi paraphrase uchun.",
+    "Skill bosqichi uchun doskada to'rt qadam yozilib tursin: 1) Kerakmi? 2) So'z turi 3) Kontekstdagi iz (but / yet / just / such as / everywhere) 4) So'z qismlari (un-, -able, -ment, -ist, -ly). Mashqdagi gaplar ustoz tomonidan o'qiladi — Pompidou matni hali tarqatilmaydi."
    ],
    "timeline": [
     [
@@ -22562,13 +22564,13 @@
     ],
     [
      15,
-     "Sinf mashqi",
-     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
+     "Skill: Dealing with unknown words",
+     "Pompidou matnidan olingan gaplar bilan to'rt qadam: kerakmi? — so'z turi — kontekstdagi iz — so'z qismlari. Keyin Pompidou matni tarqatiladi."
     ],
     [
-     10,
-     "Paraphrase mashqi",
-     "Matndagi va savoldagi so'zlar jadvali; o'quvchilar ovoz chiqarib topadi"
+     15,
+     "Sinf mashqi",
+     "Savol turiga oid mashq birga bajariladi, har javob izohlanadi"
     ],
     [
      20,
@@ -22586,7 +22588,7 @@
      "Vaqt bilan (IELTS tezligi), keyin tahlil"
     ],
     [
-     15,
+     10,
      "Tahlil",
      "Xatolar daftari: har xato javob sababi bilan yoziladi"
     ],
@@ -22598,6 +22600,7 @@
    ],
    "grammar": {
     "intro": [
+     "SKILL — Dealing with unknown words (Pompidou matnidan oldin, 15 daqiqa). Passage 3 da notanish so'z albatta chiqadi. To'rt qadam: 1) bu so'z savolga javob berish uchun kerakmi — ko'pincha yo'q, o'tkazib yuboring; 2) so'z turi — gapdagi o'rniga qarab (\"a ___ moment\" — sifat); 3) kontekstdagi iz — but/yet (qarama-qarshilik), just (izoh), such as/everywhere (misol), sinonim; 4) so'z qismlari — un- (emas), -able (qilsa bo'ladi), -ment (ot), -ist (odam), -ly (ravish).",
      "Passage 3 — eng uzun va eng qiyin matn. Ko'pincha muallif fikri va maqsadi so'raladi, faktlar kamroq.",
      "MCQ \"about the Xth paragraph\" — savol qaysi xatboshini aytsa, faqat shu xatboshini o'qing. Javob tartibda (ALWAYS).",
      "\"Main purpose\" savoli: xatboshining vazifasini aniqlang. Masalan, xatboshi \"critics swiftly changed their tune\" bilan tugasa — maqsad: fikr nega o'zgarganini ko'rsatish. Faqat bir detalni aytgan variant — tuzoq.",
@@ -22677,6 +22680,11 @@
     ],
     "mistakes": [
      [
+      "Har notanish so'zda to'xtab qolish",
+      "Avval \"kerakmi?\" deb so'rash",
+      "Passage 3 ga vaqt yetmaydi"
+     ],
+     [
       "Butun matnda MCQ javobini qidirish",
       "Ko'rsatilgan xatboshini o'qish",
       "\"in the third paragraph\""
@@ -22738,6 +22746,121 @@
     }
    ],
    "readings": [
+    {
+     "title": "Skill: Dealing with unknown words",
+     "qtype": "Ko'nikma — Pompidou matnidan oldin (15 daqiqa)",
+     "source": "Jony Academy — skill bosqichi; misollar #33 \"The Pompidou Centre\" matnidan",
+     "book_ref": "Passage 3 da har o'quvchi notanish so'zga duch keladi. Maqsad — lug'atsiz davom etish: avval so'z kerakmi, keyin so'z turi, keyin kontekst, oxirida so'z qismlari. Mashqlar Pompidou matnini ochmasdan, faqat berilgan gaplar bilan ishlanadi.",
+     "tasks": [
+      {
+       "title": "1-qadam: Bu so'z kerakmi?",
+       "type": "Og'zaki",
+       "instr": "Savolni o'qing, keyin so'zni. Agar savolga javob berish uchun so'z kerak bo'lmasa — o'tkazib yuboring. Savol: \"How did the critics' opinion of the Pompidou change?\"",
+       "items": [
+        "\"After six difficult years, with 25,000 drawings, seven lawsuits, battles over budgets...\" — lawsuits",
+        "\"The Pompidou Centre had been rubbished by the critics while it was being built\" — rubbished",
+        "\"...just a lattice of steel beams and pipes\" — lattice",
+        "\"...with its success, the critics swiftly changed their tune\" — changed their tune"
+       ],
+       "answers": [
+        "kerak emas",
+        "kerak",
+        "kerak emas",
+        "kerak"
+       ],
+       "why": [
+        "Savol tanqidchilar fikri haqida. Qurilish qiyinchiliklari ro'yxatidagi bitta so'z javobga ta'sir qilmaydi.",
+        "Tanqidchilar qurilish paytida nima qilgani — javobning birinchi yarmi. Bu so'zni tushunish shart.",
+        "Binoning tuzilishi haqida — savolga aloqasi yo'q.",
+        "Javobning ikkinchi yarmi: muvaffaqiyatdan keyin fikr o'zgardi."
+       ],
+       "note": "Asosiy qoida: notanish so'zlarning ko'pchiligi savolga kerak emas. Har biriga 1 daqiqa sarflasangiz, Passage 3 ga vaqt yetmaydi.",
+       "layout": "qa"
+      },
+      {
+       "title": "2-qadam: So'z turi",
+       "type": "Og'zaki",
+       "instr": "Ma'nosini bilmasangiz ham, gapdagi o'rniga qarab so'z turini ayting: ot, fe'l, sifat yoki ravish.",
+       "items": [
+        "\"...to design one of the most prestigious buildings of its day\" — prestigious",
+        "\"Yet the opening was a downbeat moment\" — downbeat",
+        "\"The image of the Pompidou pervaded popular culture in the 1970s\" — pervaded",
+        "\"...it has proved immensely influential\" — immensely"
+       ],
+       "answers": [
+        "sifat",
+        "sifat",
+        "fe'l (o'tgan zamon)",
+        "ravish"
+       ],
+       "why": [
+        "\"the most ___ buildings\" — \"the most\" va ot orasida sifat turadi.",
+        "\"a ___ moment\" — artikl va ot orasida sifat.",
+        "Ega (\"The image\") dan keyin, \"-ed\" bilan — o'tgan zamondagi fe'l.",
+        "\"-ly\" bilan tugaydi va \"influential\" (sifat) ni kuchaytiradi — ravish."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "3-qadam: Kontekstdan ma'no",
+       "type": "Og'zaki",
+       "instr": "So'zning atrofidagi gaplarga qarang: qarama-qarshilik (but, yet, however), izoh (just, that is), misol (such as, everywhere) yoki sabab. Ma'noni o'zbekcha 1–2 so'z bilan ayting va qaysi \"iz\" yordam berganini ko'rsating.",
+       "items": [
+        "\"Young, unknown architects, they had been chosen from a field of nearly 700 to design one of the most prestigious buildings of its day.\" — prestigious",
+        "\"The Pompidou Centre had been rubbished by the critics while it was being built... with its success, the critics swiftly changed their tune.\" — rubbished",
+        "\"Yet the opening was a downbeat moment. ...there was no more work in prospect for the architects, and their partnership had effectively broken down.\" — downbeat",
+        "\"The image of the Pompidou pervaded popular culture in the 1970s, making appearances everywhere - on record-album covers and a table lamp...\" — pervaded",
+        "\"Other buildings may now challenge it for the title of Europe's most outlandish work of architecture... still seems extreme.\" — outlandish",
+        "\"...it is hard to call it a building when there is no façade, just a lattice of steel beams and pipes...\" — façade"
+       ],
+       "answers": [
+        "nufuzli, obro'li",
+        "qattiq tanqid qilingan",
+        "tushkun, quvonchsiz",
+        "hamma joyga tarqaldi",
+        "juda g'alati",
+        "binoning old devori"
+       ],
+       "why": [
+        "Iz — tanlov: 700 ta raqib ichidan tanlangan. Demak, bino juda muhim va hurmatli.",
+        "Iz — qarama-qarshilik: keyin tanqidchilar \"fikrini o'zgartirdi\" va bino muvaffaqiyat qozondi. Demak, avval yomon gapirishgan.",
+        "Iz — \"Yet\" va keyingi sabablar: ish yo'q, hamkorlik buzilgan. Kayfiyat yomon.",
+        "Iz — misollar: \"everywhere\", albom muqovalari, chiroq, film. Hamma joyda paydo bo'lgan.",
+        "Iz — sinonim: gap oxirida \"still seems extreme\". Outlandish ≈ extreme, g'ayrioddiy.",
+        "Iz — \"just\" bilan qarama-qarshilik: façade yo'q, faqat panjara bor. Demak, façade — binoning odatiy tashqi devori."
+       ],
+       "note": "Ma'noni aniq tarjima qilish shart emas. \"Yaxshi yoki yomon?\", \"ko'p yoki kam?\" darajasida tushunish ko'pincha savolga yetarli.",
+       "layout": "qa"
+      },
+      {
+       "title": "4-qadam: So'z qismlari",
+       "type": "Og'zaki",
+       "instr": "So'zni qismlarga bo'ling: prefiks + o'zak + suffiks. Har qism ma'noga nima qo'shadi?",
+       "items": [
+        "uninterrupted",
+        "movable",
+        "refinement",
+        "traditionalists",
+        "innovatively"
+       ],
+       "answers": [
+        "un- + interrupt + -ed = to'xtovsiz, bo'linmagan",
+        "move + -able = siljitsa bo'ladigan",
+        "refine + -ment = nafislik, puxtalik (ot)",
+        "tradition + -al + -ist + -s = an'anaparastlar (odamlar)",
+        "innovate + -ive + -ly = yangicha usulda (ravish)"
+       ],
+       "why": [
+        "un- — \"emas\"; \"uninterrupted space\" — ustunlar bilan bo'linmagan bo'sh joy.",
+        "-able — \"qilsa bo'ladi\": movable walls — suriladigan devorlar.",
+        "-ment — fe'ldan ot yasaydi.",
+        "-ist — odam; ko'plikda \"-s\". Matnda ular binoni \"ugly attack\" deb bilgan.",
+        "-ly — ravish; \"innovatively designed\" — yangicha loyihalangan."
+       ],
+       "layout": "qa"
+      }
+     ]
+    },
     {
      "title": "Reading #33. The Pompidou Centre",
      "qtype": "Passage 3: MCQ (1–4) + Sentence endings (5–8) + Yes/No/Not Given (9–14)",

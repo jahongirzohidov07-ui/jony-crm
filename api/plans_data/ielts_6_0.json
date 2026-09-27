@@ -1,0 +1,1138 @@
+{
+ "course": "ielts_6_0",
+ "title": "IELTS 6.0 - IELTS FOUNDATION",
+ "cefr": "B2+",
+ "lessons": [
+  {
+   "no": 1,
+   "title": "Unit 1 Reading — Passage 1: True / False / Not Given + Table completion",
+   "grammar_topic": "Savol turlari juftligi: TRUE / FALSE / NOT GIVEN + Table completion (Passage 1)",
+   "vocab_topic": "Unit 1 (Starting somewhere new) — chet elda o'qish, madaniyat shoki",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Complete IELTS Bands 5–6.5: Student's Book, Unit 1, 10–12-betlar (Reading Section 1); Workbook, Unit 1, 8–9-betlar. Practice 1–3 — Jony Academy matnlari.",
+   "objectives": [
+    "Bitta passage'da ikki savol turi kelganda har guruh matnning qaysi qismiga tegishli ekanini 1 daqiqada aniqlash (\"xarita\" usuli).",
+    "TRUE, FALSE va NOT GIVEN ni isbot bilan ajratish: har javob uchun matndagi gapni ko'rsatish.",
+    "NOT GIVEN tuzog'ini tanish: mavzu matnda bor, lekin aynan savoldagi ma'lumot yo'q.",
+    "Jadval sarlavhasi va ustun nomlaridan foydalanib kerakli xatboshini tez topish.",
+    "Jadvalga so'zni so'z chegarasi (NO MORE THAN TWO/THREE WORDS), so'z turi va imlosiga rioya qilib yozish."
+   ],
+   "materials": [
+    "Student's Book, Unit 1, 10–12-betlar (Reading Section 1: \"Australian culture and culture shock\") — sinfda birga ishlanadi.",
+    "Workbook, Unit 1, 8–9-betlar (\"Third culture kids\") — mustaqil mashq.",
+    "Practice 1–3 matnlari chop etilgan varaqlar (har o'quvchiga) — pastdagi Reading bo'limidan.",
+    "Soat yoki taymer: Passage 1 uchun 17–20 daqiqa normasi doskaga yoziladi.",
+    "Doskada ikki ustun: \"T/F/NG → matnning qaysi qismi?\" va \"Jadval → qaysi xatboshilar?\""
+   ],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Salomlashish. Savol: \"Chet elda yashashning eng qiyin tomoni nima?\" — 3–4 o'quvchi javob beradi (SB 1-mashq ro'yxatidan)."
+    ],
+    [
+     10,
+     "Savol turlari juftligi",
+     "Ustoz doskada: bitta passage — ikki savol guruhi; xarita usuli; T/F/NG va jadval qoidalari; tipik xatolar."
+    ],
+    [
+     10,
+     "Sinf mashqi",
+     "Ko'k xatboshi bo'yicha 3 ta T/F/NG (SB 4-mashq) va jadval bo'shliqlarining so'z turini oldindan aytish."
+    ],
+    [
+     25,
+     "Student's Book: Culture shock",
+     "Q1–13 birga ishlanadi: har javob uchun matndagi gap va paraphrase juftligi aytiladi."
+    ],
+    [
+     20,
+     "Workbook: Third culture kids",
+     "17 daqiqa mustaqil, keyin javoblar izoh bilan tekshiriladi."
+    ],
+    [
+     20,
+     "Practice 1",
+     "\"Settling in\" — 15 daqiqa vaqt bilan, keyin tahlil."
+    ],
+    [
+     20,
+     "Practice 2",
+     "\"Living with a host family\" — 15 daqiqa, xatolar daftariga yoziladi."
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "Practice 3 va 30-Day Reading Challenge uyga; xatolar daftari to'ldiriladi."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "IELTS 6.0 darajasida bitta passage'da odatda ikki yoki uch xil savol turi keladi. Passage 1 da eng ko'p uchraydigan juftlik — TRUE / FALSE / NOT GIVEN va jadval (table) to'ldirish.",
+     "Birinchi qadam — XARITA. Matnni o'qishdan oldin ikkala savol guruhiga 1 daqiqa ko'z yugurtiring va har guruh matnning qaysi qismiga tegishli ekanini taxmin qiling. Student's Book'da 1–6 savollar Avstraliya qadriyatlari haqida, 7–13 esa madaniyat shokining to'rt bosqichi haqida.",
+     "Jadval sarlavhasi va ustun nomlari qaysi xatboshilarni o'qish kerakligini aytadi: \"THE STAGES OF CULTURE SHOCK\" — faqat bosqichlar tasvirlangan xatboshilar. Butun matnni qayta o'qish shart emas.",
+     "T/F/NG: savoldagi kalit so'zni (ism, raqam, noyob so'z) belgilang va matndan toping. Ma'no bir xil — TRUE; matn qarshisini aytadi — FALSE; matnda bu ma'lumot yo'q — NOT GIVEN. Savollar matn tartibida keladi.",
+     "NOT GIVEN tuzog'i: mavzu matnda bor, lekin aynan savoldagi da'vo yo'q. Masalan, matnda \"circumstances\" so'zi bor, lekin \"ustozlar o'quvchining shaxsiy hayotiga qiziqadi\" degan gap yo'q.",
+     "Jadval: avval so'z chegarasini o'qing (NO MORE THAN TWO WORDS — ikki so'zdan oshmasin), keyin har bo'shliq uchun so'z turini aniqlang (ot, sifat, fe'l, raqam). Javob matndan aynan ko'chiriladi, imlosi o'zgartirilmaydi.",
+     "Vaqt: Passage 1 ga 17–20 daqiqa. Qiyin savolda 2 daqiqadan ko'p to'xtamang — belgilab, keyingi guruhga o'ting va oxirida qayting."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Ikkala savol guruhini ko'zdan kechiring",
+      "1–6 T/F/NG, 7–13 jadval",
+      "Matnni qismlarga bo'lasiz"
+     ],
+     [
+      "2-bosqich",
+      "Jadval sarlavhasini o'qing",
+      "\"The stages of...\"",
+      "Qaysi xatboshilar kerakligini ko'rsatadi"
+     ],
+     [
+      "3-bosqich",
+      "T/F/NG kalit so'zlarini belgilang",
+      "teachers, first names, financial",
+      "Matnda tez topiladi"
+     ],
+     [
+      "4-bosqich",
+      "T/F/NG ni tartib bilan ishlang",
+      "isbot gapni belgilang",
+      "Javoblar matn tartibida"
+     ],
+     [
+      "5-bosqich",
+      "Jadval bo'shlig'i turini aniqlang",
+      "ot / sifat / raqam / vaqt",
+      "Noto'g'ri so'z turi darrov seziladi"
+     ],
+     [
+      "6-bosqich",
+      "Javobni matndan aynan ko'chiring",
+      "problem-solving skills",
+      "Imlo va so'z chegarasini tekshiring"
+     ]
+    ],
+    "presentation": [
+     [
+      "Qaysi guruhdan boshlayman?",
+      "Odatda tartib bilan: avval 1–6, keyin 7–13. Lekin boshlashdan oldin ikkalasiga ham qarab chiqing."
+     ],
+     [
+      "FALSE va NOT GIVEN ni qanday ajrataman?",
+      "FALSE — matn qarshi ma'lumot beradi (isbot gap bor). NOT GIVEN — isbot gap umuman yo'q."
+     ],
+     [
+      "Savoldagi so'z matnda bor. Demak TRUE-mi?",
+      "Yo'q. So'z bir xil bo'lishi ma'no bir xil degani emas. Butun da'voni tekshiring."
+     ],
+     [
+      "Jadvaldagi javoblar ham tartibdami?",
+      "Odatda (USUALLY) ha — jadval qatorlari matn tartibida boradi."
+     ],
+     [
+      "\"problem-solving skills\" necha so'z?",
+      "Ikki so'z: chiziqcha bilan yozilgan so'z bitta so'z hisoblanadi."
+     ],
+     [
+      "Javobni o'z so'zim bilan yozsam bo'ladimi?",
+      "Yo'q. Jadvalga faqat matndagi so'z, aynan o'sha shaklda yoziladi."
+     ]
+    ],
+    "notes": [
+     "Bu kursning asosiy yangiligi — savol turlarining KOMBINATSIYASI. 5.0 da har savol turini alohida o'rgandik; endi bitta passage'da ularni birga yechamiz.",
+     "Har javobdan keyin ikki savol bering: \"isbot qaysi gapda?\" va \"savoldagi qaysi so'z matnda qanday aytilgan?\"",
+     "Kuchli o'quvchilarga: xaritani 1 daqiqada chizib, 1–6 va 7–13 matnning qaysi xatboshilariga to'g'ri kelishini oldindan aytish."
+    ],
+    "mistakes": [
+     [
+      "Butun matnni har savol uchun qaytadan o'qish",
+      "Xarita usuli",
+      "Vaqt yetmay qoladi"
+     ],
+     [
+      "So'z bir xil bo'lgani uchun TRUE deyish",
+      "Ma'noni solishtirish",
+      "Tuzoq aynan shunda"
+     ],
+     [
+      "NOT GIVEN o'rniga FALSE yozish",
+      "Qarshi isbot gapni qidirish",
+      "Isbot yo'q bo'lsa — NOT GIVEN"
+     ],
+     [
+      "So'z chegarasini buzish (\"their initial enthusiasm\")",
+      "enthusiasm",
+      "Uch so'z — 0 ball"
+     ],
+     [
+      "Imloni o'zgartirish yoki ko'plik qo'shimchasini tashlab ketish",
+      "Matndan aynan ko'chirish",
+      "\"clue\" o'rniga \"clues\" kerak bo'lishi mumkin"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE — madaniyat shoki va chet elga ko'chish mavzusidagi asosiy so'zlar; STRONG — his-tuyg'u va moslashish; SUPER — akademik iboralar.",
+     "Har so'z bilan o'quvchi o'z hayotidan bitta gap tuzsin: \"When I first moved to Tashkent, I felt homesick.\""
+    ],
+    "core": [
+     [
+      "adjust (to)",
+      "moslashmoq",
+      "It took me a month to adjust to the new timetable.",
+      "Yangi jadvalga moslashishim uchun bir oy kerak bo'ldi.",
+      "əˈdʒʌst"
+     ],
+     [
+      "culture shock",
+      "madaniyat shoki",
+      "Almost every student experiences culture shock at first.",
+      "Deyarli har bir talaba avval madaniyat shokini boshdan kechiradi.",
+      "ˈkʌltʃə ʃɒk"
+     ],
+     [
+      "newcomer",
+      "yangi kelgan odam",
+      "The club organises a welcome party for newcomers.",
+      "Klub yangi kelganlar uchun kutib olish kechasini tashkil qiladi.",
+      "ˈnjuːkʌmə"
+     ],
+     [
+      "homesick",
+      "uyini sog'ingan",
+      "She felt homesick during her first winter abroad.",
+      "U chet eldagi birinchi qishida uyini sog'indi.",
+      "ˈhəʊmsɪk"
+     ],
+     [
+      "independence",
+      "mustaqillik",
+      "Living alone taught him independence.",
+      "Yolg'iz yashash unga mustaqillikni o'rgatdi.",
+      "ˌɪndɪˈpendəns"
+     ],
+     [
+      "privacy",
+      "shaxsiy hayot daxlsizligi",
+      "People here value their privacy.",
+      "Bu yerda odamlar shaxsiy hayotini qadrlaydi.",
+      "ˈprɪvəsi"
+     ],
+     [
+      "custom",
+      "odat, urf",
+      "Shaking hands is a common custom.",
+      "Qo'l berib ko'rishish keng tarqalgan odat.",
+      "ˈkʌstəm"
+     ],
+     [
+      "enthusiasm",
+      "ishtiyoq",
+      "Her enthusiasm disappeared after the first exam.",
+      "Birinchi imtihondan keyin uning ishtiyoqi so'ndi.",
+      "ɪnˈθjuːziæzəm"
+     ],
+     [
+      "support",
+      "yordam, qo'llab-quvvatlash",
+      "The university offers support for international students.",
+      "Universitet xorijiy talabalarga yordam beradi.",
+      "səˈpɔːt"
+     ],
+     [
+      "familiar",
+      "tanish",
+      "After a few months, the city felt familiar.",
+      "Bir necha oydan keyin shahar tanish bo'lib qoldi.",
+      "fəˈmɪliə"
+     ]
+    ],
+    "strong": [
+     [
+      "frustration",
+      "asabiylik, hafsala pirligi",
+      "Frustration is normal in the second stage.",
+      "Ikkinchi bosqichda asabiylik tabiiy holat.",
+      "frʌˈstreɪʃən"
+     ],
+     [
+      "irritable",
+      "tez jahli chiqadigan",
+      "Lack of sleep made him irritable.",
+      "Uyqusizlik uni jizzaki qilib qo'ydi.",
+      "ˈɪrɪtəbl"
+     ],
+     [
+      "withdrawn",
+      "odamovi, o'ziga yopiq",
+      "New students sometimes become withdrawn.",
+      "Yangi talabalar ba'zan o'zini chetga oladi.",
+      "wɪðˈdrɔːn"
+     ],
+     [
+      "reject",
+      "rad etmoq",
+      "At first she rejected the local food.",
+      "Avvaliga u mahalliy taomni rad etdi.",
+      "rɪˈdʒekt"
+     ],
+     [
+      "adaptation",
+      "moslashuv",
+      "Adaptation takes time and patience.",
+      "Moslashuv vaqt va sabr talab qiladi.",
+      "ˌædæpˈteɪʃən"
+     ],
+     [
+      "resent",
+      "ranjimoq, yoqtirmaslik",
+      "Some people resent personal questions.",
+      "Ba'zi odamlar shaxsiy savollardan ranjiydi.",
+      "rɪˈzent"
+     ]
+    ],
+    "super": [
+     [
+      "give rise to",
+      "sabab bo'lmoq",
+      "Different values may give rise to misunderstandings.",
+      "Turli qadriyatlar tushunmovchilikka sabab bo'lishi mumkin.",
+      "ɡɪv raɪz tə"
+     ],
+     [
+      "be accustomed to",
+      "ko'nikkan bo'lmoq",
+      "I was accustomed to eating late.",
+      "Men kech ovqatlanishga ko'nikkan edim.",
+      "əˈkʌstəmd"
+     ],
+     [
+      "cross-cultural",
+      "madaniyatlararo",
+      "Cross-cultural skills are valued by employers.",
+      "Madaniyatlararo ko'nikmalar ish beruvchilar tomonidan qadrlanadi.",
+      "ˌkrɒsˈkʌltʃərəl"
+     ],
+     [
+      "subtle",
+      "nozik, sezilmas",
+      "There are subtle differences between the two cultures.",
+      "Ikki madaniyat orasida nozik farqlar bor.",
+      "ˈsʌtl"
+     ]
+    ],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Ko'k xatboshi: uchta savol (SB, 4-mashq)",
+     "type": "TRUE / FALSE / NOT GIVEN",
+     "instr": "Faqat matnning birinchi (ko'k) xatboshisini o'qing. Har javob uchun isbot gapni ayting.",
+     "items": [
+      "Culture shock affects most people who spend time living in another country.",
+      "Culture shock affects certain types of people more quickly than others.",
+      "Culture shock only affects how people feel."
+     ],
+     "answers": [
+      "TRUE",
+      "NOT GIVEN",
+      "FALSE"
+     ],
+     "why": [
+      "\"Almost everyone who studies, lives or works abroad has problems\". \"Most people\" = \"almost everyone\".",
+      "Kimga tezroq ta'sir qilishi haqida hech narsa yo'q. Mavzu bor, da'vo yo'q — NOT GIVEN.",
+      "Ta'rifda \"physical and emotional discomfort\" — faqat his-tuyg'u emas, jismoniy ham. \"Only\" so'zi javobni FALSE qiladi."
+     ],
+     "note": "Uchinchi savoldagi \"only\" ni doskada doiraga oling: cheklovchi so'zlar ko'pincha FALSE ga olib keladi.",
+     "layout": "tfng"
+    },
+    {
+     "title": "Bo'shliq turini oldindan aytish (SB, 6-mashq)",
+     "type": "Og'zaki",
+     "instr": "7–13 savollarga javob bermasdan, har bo'shliqqa qanday so'z kerakligini ayting.",
+     "items": [
+      "7 — 1-bosqichning nomi",
+      "8 — \"They notice the ___ between different nationalities\"",
+      "9 — \"for up to ___\"",
+      "10 — \"lose the ___ they had at the beginning\"",
+      "11 — \"understand some ___ which they had not previously observed\"",
+      "12 — \"They learn ___ for dealing with difficulties\"",
+      "13 — 4-bosqichning nomi"
+     ],
+     "answers": [
+      "ot (nom)",
+      "ko'plikdagi ot",
+      "vaqt miqdori",
+      "ot (his-tuyg'u)",
+      "ko'plikdagi ot",
+      "ot (ko'nikma)",
+      "ot (nom)"
+     ],
+     "why": [
+      "Jadvalda 2- va 3-bosqich nomlari berilgan — 1- va 4-bosqich nomi matndan topiladi.",
+      "\"the ___ between\" — orasidagi narsa: farq yoki o'xshashlik; \"notice the\" dan keyin ot.",
+      "\"up to\" dan keyin vaqt: kun, hafta, oy.",
+      "\"lose the ___ they had\" — boshida bor bo'lgan narsa, ya'ni kayfiyat yoki his.",
+      "\"some ___ which\" — sanaladigan ot ko'plikda.",
+      "\"learn ___ for dealing with\" — ko'nikma yoki usul.",
+      "Oxirgi bosqich nomi — oxirgi xatboshida."
+     ],
+     "layout": "qa"
+    }
+   ],
+   "readings": [
+    {
+     "title": "Student's Book: Australian culture and culture shock",
+     "qtype": "T/F/NG (1–6) + Table completion (7–13)",
+     "source": "Complete IELTS 5–6.5, Student's Book, Unit 1 — sinfda tushuntirish",
+     "book_ref": "Student's Book, 10–12-betlar. Kitob sahifalari quyida rasm sifatida berilgan.",
+     "image": "ielts6_01_culture_shock.jpg",
+     "paraphrases": [
+      [
+       "suggest alternatives",
+       "give them a number of options"
+      ],
+      [
+       "rather than offer one solution",
+       "will not tell students what to do"
+      ],
+      [
+       "so that everyone feels their status is similar",
+       "treating everyone equally"
+      ],
+      [
+       "study all the time",
+       "doing nothing but study"
+      ],
+      [
+       "receive positive comments",
+       "may be critical of (qarshi ma'no)"
+      ],
+      [
+       "people you do not know well",
+       "only discussed with close friends (qarshi ma'no)"
+      ],
+      [
+       "up to",
+       "may last from ... to"
+      ],
+      [
+       "lose the enthusiasm",
+       "the initial enthusiasm turns into irritation"
+      ],
+      [
+       "not previously observed",
+       "passed by unnoticed earlier"
+      ],
+      [
+       "annoyed them before",
+       "bothered them so much previously"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "TRUE — matn xuddi shu ma'noni aytadi; FALSE — matn qarshisini aytadi; NOT GIVEN — matnda bu haqida ma'lumot yo'q. Tagiga chizilgan so'zlar (teachers, circumstances, first names, study all the time, financial, older) matnda joyni topishga yordam beradi.",
+       "items": [
+        "Australian teachers will suggest alternatives to students rather than offer one solution.",
+        "In Australia, teachers will show interest in students' personal circumstances.",
+        "Australians use people's first names so that everyone feels their status is similar.",
+        "Students who study all the time may receive positive comments from their colleagues.",
+        "It is acceptable to discuss financial issues with people you do not know well.",
+        "Younger Australians tend to be friendlier than older Australians."
+       ],
+       "answers": [
+        "TRUE",
+        "NOT GIVEN",
+        "TRUE",
+        "FALSE",
+        "FALSE",
+        "NOT GIVEN"
+       ],
+       "why": [
+        "\"Will not tell students what to do, but will give them a number of options\". \"Suggest alternatives\" = \"give a number of options\".",
+        "\"Circumstances\" so'zi matnda bor, lekin ustozlarning qiziqishi haqida emas — o'quvchi o'zi eng yaxshi yo'lni tanlashi haqida. Tuzoq: so'z bor, da'vo yo'q.",
+        "\"Uncomfortable with differences in status ... treating everyone equally. An illustration of this is that most adult Australians call each other by their first names\".",
+        "\"Some students may be critical of others who they perceive as doing nothing but study\". \"Positive comments\" — \"critical\" ning teskarisi.",
+        "\"Financial matters ... are only discussed with close friends\". Notanish odam bilan — qabul qilinmaydi.",
+        "Yosh va keksa avstraliyaliklarning do'stonaligi solishtirilmaydi. \"Older people\" faqat yoshini so'rash odobsizligi haqida."
+       ],
+       "note": "2- va 6-savol — darsning asosiy NOT GIVEN namunasi. O'quvchi \"isbot gapni ko'rsat\" deganda ko'rsata olmasa, javob NOT GIVEN.",
+       "layout": "tfng"
+      },
+      {
+       "title": "Questions 7–13",
+       "type": "Complete the table below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+       "instr": "Jadval sarlavhasi — \"The stages of culture shock\": faqat Kohls modeli tasvirlangan oxirgi to'rt xatboshini o'qing.",
+       "items": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+       ],
+       "answers": [
+        "honeymoon",
+        "similarities",
+        "a month",
+        "(initial) enthusiasm",
+        "(subtle) cultural clues",
+        "problem-solving skills",
+        "adaptation"
+       ],
+       "why": [
+        "\"This is often referred to as the 'honeymoon' stage\". Bosqich nomi — bitta so'z.",
+        "\"It is the similarities that stand out\". \"Notice\" = \"stand out\". \"Differences\" emas — tuzoq!",
+        "\"May last from a couple of weeks to a month\". \"Up to\" — eng ko'p muddat, ya'ni oy.",
+        "\"The initial enthusiasm turns into irritation\". \"Initial enthusiasm\" ham to'g'ri — ikki so'z.",
+        "\"Interpret some of the subtle cultural clues which passed by unnoticed earlier\". \"Subtle cultural clues\" — uch so'z, shuning uchun \"cultural clues\".",
+        "\"They begin to develop problem-solving skills\". Chiziqchali so'z bitta so'z hisoblanadi.",
+        "\"In the fourth stage, newcomers undergo a process of adaptation\"."
+       ],
+       "note": "8-savolda ko'p o'quvchi \"differences\" yozadi, chunki 2-bosqichda farqlar haqida gap bor. Jadval qatoriga qarang — bu 1-bosqich.",
+       "layout": "grid",
+       "head": [
+        "Stage",
+        "Name",
+        "Newcomers' reaction to problems"
+       ],
+       "rows": [
+        [
+         "Stage 1",
+         "(7)",
+         "They notice the (8) between different nationalities and cultures. ;; They may experience this stage for up to (9)."
+        ],
+        [
+         "Stage 2",
+         "Rejection",
+         "They reject the new culture and lose the (10) they had at the beginning."
+        ],
+        [
+         "Stage 3",
+         "Adjustment and reorientation",
+         "They can understand some (11) which they had not previously observed. ;; They learn (12) for dealing with difficulties."
+        ],
+        [
+         "Stage 4",
+         "(13)",
+         "They enjoy some of the customs that annoyed them before."
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Workbook: Third culture kids",
+     "qtype": "T/F/NG (1–6) + Table completion (7–13)",
+     "source": "Complete IELTS 5–6.5, Workbook, Unit 1 — mustaqil mashq",
+     "book_ref": "Workbook, 8–9-betlar. 17 daqiqa. Jadvalda so'z chegarasi — NO MORE THAN THREE WORDS.",
+     "image": "ielts6_01_third_culture_kids.jpg",
+     "paraphrases": [
+      [
+       "careers",
+       "international careers are becoming commonplace"
+      ],
+      [
+       "studied children in several countries",
+       "spent a year researching expatriates in India (qarshi ma'no)"
+      ],
+      [
+       "a mixture of two parents' cultures",
+       "different from either the first or second cultures (qarshi ma'no)"
+      ],
+      [
+       "know how different people see life",
+       "learned the very different ways people see life"
+      ],
+      [
+       "cause fear",
+       "create fear"
+      ],
+      [
+       "despite similarities",
+       "they are alike"
+      ],
+      [
+       "a great deal of mobility",
+       "a high degree of mobility"
+      ],
+      [
+       "be considered wrong",
+       "rethink our traditional ways"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Kirish savoli",
+       "type": "Choose A, B or C",
+       "instr": "Sarlavha va birinchi uch xatboshini o'qing. \"Third culture kids\" kimlar?",
+       "items": [
+        "1 Who are 'third culture kids'? A) children whose parents keep moving from country to country B) children living in a country neither of their parents come from C) children who have just arrived in a culture that is new to them"
+       ],
+       "answers": [
+        "B"
+       ],
+       "why": [
+        "\"Children who spend a significant portion of their developmental years in a culture outside their parents' passport culture(s)\". A — ko'chib yurish sharti emas; C — \"just arrived\" emas, ko'p yillar."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Questions 1–6",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "TRUE — matn xuddi shu ma'noni aytadi; FALSE — matn qarshisini aytadi; NOT GIVEN — matnda bu haqida ma'lumot yo'q.",
+       "items": [
+        "There is a close connection between careers and the number of TCKs.",
+        "An increasing number of people describe themselves as TCKs.",
+        "Ruth Hill Useem studied children in several countries.",
+        "Ruth Hill Useem defined the third culture as a mixture of two parents' original cultures.",
+        "Brice Royer feels that he has benefited greatly from living in many different countries.",
+        "Elizabeth Dunbar felt that she had a culture that was different from most people's."
+       ],
+       "answers": [
+        "TRUE",
+        "NOT GIVEN",
+        "FALSE",
+        "FALSE",
+        "NOT GIVEN",
+        "TRUE"
+       ],
+       "why": [
+        "\"In a world where international careers are becoming commonplace, the phenomenon of TCKs ... is increasing\". Xalqaro kasblar ko'paygani sari TCK ham ko'payadi.",
+        "TCK soni o'sayotgani aytilgan, lekin odamlar o'zini TCK deb ATASHI haqida gap yo'q.",
+        "\"She spent a year researching expatriates in India\" — bitta davlat.",
+        "\"Formed a culture ... different from either the first or second cultures\" — aralashma emas, boshqa madaniyat.",
+        "Brice haqida faqat qayerda yashagani va hazili bor. U foyda ko'rgani haqida o'zi hech narsa demaydi. Keyingi xatbosh umumiy ATCK'lar haqida.",
+        "\"The hidden cultural diversity of her life remained invisible\" — uning madaniyati boshqalarnikidan farq qilardi, lekin buni hech kim ko'rmasdi."
+       ],
+       "note": "5-savol — kuchli tuzoq: keyingi xatboshida \"priceless gifts\" bor, lekin u Brice haqida emas. Da'vo aynan kim haqida ekanini tekshiring.",
+       "layout": "tfng"
+      },
+      {
+       "title": "Questions 7–13",
+       "type": "Complete the table below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+       "instr": "Jadval ustunlari: Area → Advantage → Possible result. Javoblar matnning ikkinchi yarmida, tartib bilan.",
+       "items": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+       ],
+       "answers": [
+        "see life",
+        "fear",
+        "(a) cultural clash",
+        "mobility",
+        "cross-cultural kids / CCKs",
+        "diversity and identity",
+        "shared experience"
+       ],
+       "why": [
+        "\"They have also learned the very different ways people see life\".",
+        "\"That same thinking can create fear for those who see the world from a more traditional world view\".",
+        "\"There may be a cultural clash going on because ... they are alike\". \"Despite similarities\" = \"they are alike\".",
+        "\"Accompanied by a high degree of mobility\". \"A great deal of\" = \"a high degree of\".",
+        "\"Issues other cross-cultural kids (CCKs) may also face\". \"Problems\" = \"issues\".",
+        "\"We need to rethink our traditional ways of defining diversity and identity\". Uch so'z — chegara ichida.",
+        "\"'Culture' may be something defined by shared experience rather than shared nationality\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "Area",
+        "Advantage for ATCKs",
+        "Possible result"
+       ],
+       "rows": [
+        [
+         "Friendships",
+         "know how different people (7)",
+         "can act as bridges between worlds that are usually separate"
+        ],
+        [
+         "Business",
+         "creative thinking",
+         "may cause (8) among certain people ;; can lead to (9) despite similarities"
+        ],
+        [
+         "Whole experience",
+         "knowledge of many cultural worlds and a great deal of (10)",
+         "can teach us about problems faced by (11) of all kinds ;; current ideas of what both (12) mean may be considered wrong ;; belief that culture depends on (13)"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Practice 1: Settling in",
+     "qtype": "T/F/NG (1–6) + Table completion (7–13)",
+     "source": "Jony Academy — yangi matn (Passage 1 darajasi)",
+     "text": [
+      "Every September, thousands of students arrive at universities in countries where they have never lived before. For many of them, the first few weeks are the hardest part of their entire degree. A survey carried out in 2019 found that nearly two thirds of first-year international students felt lonely during their first term, although most said that the feeling had faded by the end of the year.",
+      "Universities have responded by creating a range of support services. The most common is the 'welcome week', a programme of events that takes place before classes begin. New arrivals are met at the airport, shown around the campus and given help with practical tasks such as opening a bank account and registering with a doctor. Attendance is not compulsory, but staff report that students who miss it tend to ask for help later, and often with more serious problems.",
+      "Another popular idea is the buddy scheme, in which each newcomer is paired with a student who has already completed a year at the university. The buddy is not a teacher or a counsellor; their role is simply to answer everyday questions and to introduce the newcomer to other people. At one university in the north of England, where the scheme was introduced in 2008, buddies receive a short training course but no payment.",
+      "Language can be a barrier even for students with high test scores. Academic English is very different from the English of textbooks, and many students are surprised by the speed of lectures and the amount of informal vocabulary they hear. For this reason, most universities offer free academic writing workshops, which are usually held in the evening so that they do not clash with lectures.",
+      "Finally, counselling services have expanded. In the past, students tended to visit a counsellor only when they were in serious difficulty. Today, many universities encourage early contact, and some run group sessions in which students discuss homesickness openly. According to counsellors, simply hearing that others share the same feelings is often enough to reduce anxiety."
+     ],
+     "glossary": [
+      "fade — so'nmoq, yo'qolib bormoq",
+      "compulsory — majburiy",
+      "buddy — hamroh, yo'l ko'rsatuvchi do'st",
+      "counsellor — psixolog-maslahatchi",
+      "clash (with) — vaqti to'g'ri kelib qolmoq",
+      "anxiety — xavotir"
+     ],
+     "paraphrases": [
+      [
+       "most",
+       "nearly two thirds"
+      ],
+      [
+       "still felt lonely at the end",
+       "the feeling had faded by the end of the year (qarshi ma'no)"
+      ],
+      [
+       "must attend",
+       "attendance is not compulsory (qarshi ma'no)"
+      ],
+      [
+       "at least one year of experience",
+       "has already completed a year"
+      ],
+      [
+       "are not paid",
+       "no payment"
+      ],
+      [
+       "everyday questions",
+       "answer everyday questions"
+      ],
+      [
+       "talk about homesickness",
+       "discuss homesickness openly"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "TRUE — matn xuddi shu ma'noni aytadi; FALSE — matn qarshisini aytadi; NOT GIVEN — matnda bu haqida ma'lumot yo'q. Savollar 1–3-xatboshilarga tegishli.",
+       "items": [
+        "Most first-year international students in the survey reported feeling lonely at first.",
+        "Most students said they still felt lonely at the end of their first year.",
+        "New international students are required to attend welcome week.",
+        "Students who miss welcome week are more likely to leave university early.",
+        "Buddies are students who have spent at least one year at the university.",
+        "The buddy scheme at the university in the north of England was started by students."
+       ],
+       "answers": [
+        "TRUE",
+        "FALSE",
+        "FALSE",
+        "NOT GIVEN",
+        "TRUE",
+        "NOT GIVEN"
+       ],
+       "why": [
+        "\"Nearly two thirds of first-year international students felt lonely during their first term\". \"Most\" = \"nearly two thirds\".",
+        "\"Most said that the feeling had faded by the end of the year\" — yil oxirida yolg'izlik yo'qolgan.",
+        "\"Attendance is not compulsory\". \"Required\" = \"compulsory\" — teskari ma'no.",
+        "Matnda ular keyinroq va jiddiyroq muammo bilan yordam so'rashi aytilgan. Universitetni tashlab ketish haqida gap yo'q.",
+        "\"Paired with a student who has already completed a year at the university\".",
+        "Faqat qachon boshlangani (2008) aytilgan, kim boshlagani — yo'q."
+       ],
+       "layout": "tfng"
+      },
+      {
+       "title": "Questions 7–13",
+       "type": "Complete the table below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+       "instr": "Jadval to'rt xizmat bo'yicha tuzilgan — har qator bitta xatboshiga to'g'ri keladi (2–5-xatboshilar).",
+       "items": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+       ],
+       "answers": [
+        "bank account",
+        "classes",
+        "everyday",
+        "training course",
+        "academic",
+        "evening",
+        "group"
+       ],
+       "why": [
+        "\"Practical tasks such as opening a bank account\".",
+        "\"Takes place before classes begin\".",
+        "\"Their role is simply to answer everyday questions\".",
+        "\"Buddies receive a short training course but no payment\". Jadvalda \"short\" allaqachon bor — faqat \"training course\" yoziladi.",
+        "\"Free academic writing workshops\".",
+        "\"Usually held in the evening\".",
+        "\"Some run group sessions in which students discuss homesickness openly\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "Service",
+        "What it involves",
+        "Details"
+       ],
+       "rows": [
+        [
+         "Welcome week",
+         "help with practical tasks, e.g. opening a (7)",
+         "takes place before (8) begin"
+        ],
+        [
+         "Buddy scheme",
+         "a second-year student answers (9) questions",
+         "buddies get a short (10) but are not paid"
+        ],
+        [
+         "Writing workshops",
+         "help with (11) English",
+         "held in the (12)"
+        ],
+        [
+         "Counselling",
+         "(13) sessions about homesickness",
+         "hearing others' feelings reduces anxiety"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Practice 2: Living with a host family",
+     "qtype": "T/F/NG (1–6) + Table completion (7–13)",
+     "source": "Jony Academy — yangi matn (Passage 1 darajasi)",
+     "text": [
+      "For many language students, a host family is their first real contact with a new culture. Instead of living in a student residence, the student rents a room in an ordinary family home, usually with meals included. Agencies that arrange these stays say that demand has doubled in the last decade, mainly from students aged between sixteen and twenty-five.",
+      "The arrangement has obvious advantages. Students hear the language every day, often in situations that no classroom can reproduce, such as family arguments or conversations about television programmes. Research by one large network of language schools suggests that students who live with families make faster progress in speaking than those in residences, although there was no difference in their writing scores.",
+      "However, the experience is not always easy. The most common complaint concerns food. Meal times vary greatly between cultures, and a student who is used to eating dinner at nine in the evening may find that their host family eats at six. Portions, too, can come as a surprise, in both directions.",
+      "A second area of difficulty is house rules. Many families expect guests to tell them if they will be home late, to limit the length of their showers and to keep their room tidy. Students often see these rules as a sign that they are not trusted, while families see them simply as normal behaviour in a shared home.",
+      "Agencies recommend that both sides discuss their expectations on the first evening. Some provide a written checklist covering meals, visitors, laundry and the use of the kitchen. Where problems continue, the student can ask to move to another family, but agencies report that fewer than one in ten stays end early."
+     ],
+     "glossary": [
+      "residence — talabalar yotoqxonasi",
+      "decade — o'n yillik",
+      "reproduce — qayta yaratmoq",
+      "portion — ovqat ulushi (porsiya)",
+      "trust — ishonmoq",
+      "laundry — kir yuvish"
+     ],
+     "paraphrases": [
+      [
+       "usually include meals",
+       "usually with meals included"
+      ],
+      [
+       "older than twenty-five",
+       "aged between sixteen and twenty-five (qarshi ma'no)"
+      ],
+      [
+       "helps speaking more",
+       "make faster progress in speaking"
+      ],
+      [
+       "better writing results",
+       "no difference in their writing scores (qarshi ma'no)"
+      ],
+      [
+       "different meal times",
+       "meal times vary greatly"
+      ],
+      [
+       "be home late",
+       "tell them if they will be home late"
+      ],
+      [
+       "on the first evening",
+       "discuss their expectations on the first evening"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "TRUE — matn xuddi shu ma'noni aytadi; FALSE — matn qarshisini aytadi; NOT GIVEN — matnda bu haqida ma'lumot yo'q.",
+       "items": [
+        "Host family stays usually include meals.",
+        "Most students who stay with host families are older than twenty-five.",
+        "Living with a family helps students' speaking more than living in a residence.",
+        "Students who live with families also get better writing results.",
+        "The research on speaking progress was carried out in several countries.",
+        "The most common complaint about host families concerns the cost."
+       ],
+       "answers": [
+        "TRUE",
+        "FALSE",
+        "TRUE",
+        "FALSE",
+        "NOT GIVEN",
+        "FALSE"
+       ],
+       "why": [
+        "\"Usually with meals included\".",
+        "\"Mainly from students aged between sixteen and twenty-five\" — asosan 25 yoshgacha.",
+        "\"Make faster progress in speaking than those in residences\".",
+        "\"There was no difference in their writing scores\".",
+        "Tadqiqot qaysi davlatlarda o'tkazilgani aytilmagan.",
+        "\"The most common complaint concerns food\" — narx emas, ovqat. Matn boshqa narsani aytadi, demak FALSE."
+       ],
+       "note": "6-savolni NOT GIVEN bilan solishtiring: matnda \"eng ko'p shikoyat\" aniq ko'rsatilgan (food). Savol boshqa narsani eng ko'p deydi — bu qarama-qarshilik, ya'ni FALSE.",
+       "layout": "tfng"
+      },
+      {
+       "title": "Questions 7–13",
+       "type": "Complete the table below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+       "instr": "Jadval 3–5-xatboshilarga tegishli. Har bo'shliq uchun so'z turini oldindan aniqlang.",
+       "items": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+       ],
+       "answers": [
+        "meal times",
+        "portions",
+        "late",
+        "showers",
+        "trusted",
+        "evening",
+        "checklist"
+       ],
+       "why": [
+        "\"Meal times vary greatly between cultures\". \"Different\" = \"vary\".",
+        "\"Portions, too, can come as a surprise\".",
+        "\"Tell them if they will be home late\".",
+        "\"Limit the length of their showers\".",
+        "\"Students often see these rules as a sign that they are not trusted\".",
+        "\"Discuss their expectations on the first evening\".",
+        "\"Some provide a written checklist\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "Problem area",
+        "Details"
+       ],
+       "rows": [
+        [
+         "Food",
+         "different (7) between cultures ;; the size of (8) may be surprising"
+        ],
+        [
+         "House rules",
+         "tell the family if you will be home (9) ;; limit the length of (10) ;; students may feel they are not (11)"
+        ],
+        [
+         "Solutions",
+         "discuss expectations on the first (12) ;; some agencies give a written (13)"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Practice 3 (uyga): Coming home — reverse culture shock",
+     "qtype": "T/F/NG (1–6) + Table completion (7–13)",
+     "source": "Jony Academy — yangi matn (Passage 1 darajasi), uy vazifasi",
+     "text": [
+      "Most people expect to find life abroad difficult. Far fewer expect to struggle when they return home. Yet psychologists say that 'reverse culture shock' is common among students, aid workers and business people who have spent more than six months overseas, and that it can be more upsetting than the original experience because it is so unexpected.",
+      "The problem is that both the traveller and their home have changed. Friends have new jobs and new interests, prices have risen, and even the traveller's own language may contain new expressions. Meanwhile, the returnee has developed different habits and opinions. A study of 300 Japanese employees returning from postings in the United States found that almost half felt they no longer fitted in at their company.",
+      "Researchers usually describe reverse culture shock in three stages. The first is sometimes called 'disengagement'. It begins before the journey home, when the traveller starts saying goodbye and thinking about what they will miss. Many people report feeling tired and emotional during this period.",
+      "The second stage, the 'initial euphoria', follows arrival. Returnees enjoy seeing their family and eating familiar food, and this pleasure may last for a few days. It ends when they realise that other people are only briefly interested in their stories. A former volunteer who had worked in Ghana described how her friends 'listened for about five minutes and then changed the subject'.",
+      "The third stage, 'irritability and hostility', is the hardest. Returnees may criticise their own country and feel lonely even among old friends. Experts advise them to join groups of people who have also lived abroad and to keep using the skills they gained overseas, such as a foreign language. With time, most reach a final balance in which they value both cultures."
+     ],
+     "glossary": [
+      "reverse — teskari",
+      "upsetting — xafa qiluvchi, og'ir",
+      "returnee — vataniga qaytgan odam",
+      "posting — xizmat safari (chet elga ishga yuborish)",
+      "euphoria — haddan tashqari xursandchilik",
+      "hostility — dushmanlik, adovat"
+     ],
+     "paraphrases": [
+      [
+       "several years",
+       "more than six months (qarshi ma'no)"
+      ],
+      [
+       "more upsetting",
+       "can be more upsetting than the original experience"
+      ],
+      [
+       "they have changed as well as their home",
+       "both the traveller and their home have changed"
+      ],
+      [
+       "prices have fallen",
+       "prices have risen (qarshi ma'no)"
+      ],
+      [
+       "felt tired",
+       "feeling tired and emotional"
+      ],
+      [
+       "for a short time",
+       "may last for a few days"
+      ],
+      [
+       "complain about their country",
+       "criticise their own country"
+      ]
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–6",
+       "type": "TRUE / FALSE / NOT GIVEN",
+       "instr": "TRUE — matn xuddi shu ma'noni aytadi; FALSE — matn qarshisini aytadi; NOT GIVEN — matnda bu haqida ma'lumot yo'q. 12 daqiqa.",
+       "items": [
+        "Reverse culture shock only affects people who have lived abroad for several years.",
+        "Reverse culture shock can be more upsetting than culture shock abroad.",
+        "Returnees often find that they have changed as well as their home country.",
+        "Returnees often find that prices at home have fallen.",
+        "The Japanese employees in the study had all worked in the United States for over a year.",
+        "Almost half of the Japanese employees left their company after returning."
+       ],
+       "answers": [
+        "FALSE",
+        "TRUE",
+        "TRUE",
+        "FALSE",
+        "NOT GIVEN",
+        "NOT GIVEN"
+       ],
+       "why": [
+        "\"More than six months overseas\" — bir necha yil shart emas. \"Only\" javobni FALSE qiladi.",
+        "\"It can be more upsetting than the original experience\".",
+        "\"Both the traveller and their home have changed\".",
+        "\"Prices have risen\" — teskari.",
+        "Xodimlar AQShda qancha ishlagani aytilmagan.",
+        "\"Felt they no longer fitted in\" — o'zini begona his qilgan, lekin ishdan ketgani aytilmagan. Kuchli NOT GIVEN tuzog'i."
+       ],
+       "layout": "tfng"
+      },
+      {
+       "title": "Questions 7–13",
+       "type": "Complete the table below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+       "instr": "Jadval \"stages\" haqida — 3–5-xatboshilarni o'qing.",
+       "items": [
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+       ],
+       "answers": [
+        "disengagement",
+        "tired",
+        "euphoria",
+        "a few days",
+        "(their) stories",
+        "criticise",
+        "lived abroad"
+       ],
+       "why": [
+        "\"The first is sometimes called 'disengagement'\".",
+        "\"Many people report feeling tired and emotional\" — \"emotional\" jadvalda bor, bo'shliq \"tired\".",
+        "\"The second stage, the 'initial euphoria'\" — \"initial\" jadvalda bor.",
+        "\"This pleasure may last for a few days\".",
+        "\"Other people are only briefly interested in their stories\".",
+        "\"Returnees may criticise their own country\". Britancha imlo — matndagidek yoziladi.",
+        "\"Join groups of people who have also lived abroad\"."
+       ],
+       "layout": "grid",
+       "head": [
+        "Stage",
+        "Name",
+        "What happens"
+       ],
+       "rows": [
+        [
+         "1",
+         "(7)",
+         "begins before the journey home ;; people feel (8) and emotional"
+        ],
+        [
+         "2",
+         "initial (9)",
+         "pleasure lasts for (10) ;; ends when others are only briefly interested in their (11)"
+        ],
+        [
+         "3",
+         "irritability and hostility",
+         "returnees may (12) their own country ;; advice: join groups of people who have also (13)"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "listenings": [],
+   "homework_intro": [
+    "Bugun bitta passage'da ikki savol turini birga yechdik: avval xarita, keyin T/F/NG, keyin jadval. Uyda xuddi shu tartibda yolg'iz ishlaysiz.",
+    "Birinchi vazifa — Practice 3 \"Coming home\": 17 daqiqa vaqt oling, 13 ta savolga javob bering va har T/F/NG javobi yoniga isbot gapni yozing (masalan, \"2-xatbosh, 3-gap\").",
+    "Ikkinchi vazifa — 30-Day Reading Challenge'dan Day 16 (Questions 1–6, T/F/NG) va Day 25 (Questions 1–5, table completion). Javoblarni kitob oxiridagi kalit bilan tekshiring.",
+    "Uchinchi vazifa — xatolar daftari: bugungi barcha xato javoblarni yozing — savol, to'g'ri javob va nega xato qilganingiz (\"so'z bor edi, da'vo yo'q edi\", \"so'z chegarasini buzdim\" va h.k.)."
+   ],
+   "homework": [
+    {
+     "title": "Practice 3: \"Coming home\"",
+     "type": "Reading",
+     "instr": "17 daqiqada 13 savol; T/F/NG uchun isbot gap yoziladi.",
+     "answers": "Javoblar Reading bo'limida izoh bilan.",
+     "layout": "list"
+    },
+    {
+     "title": "30-Day Reading Challenge: Day 16 va Day 25",
+     "type": "Reading",
+     "instr": "Day 16 — Q1–6 (T/F/NG); Day 25 — Q1–5 (table completion).",
+     "answers": "Kitob oxiridagi kalit bilan tekshiriladi; ustoz 2 ta javobni isbot bilan so'raydi.",
+     "layout": "list"
+    },
+    {
+     "title": "Xatolar daftari",
+     "type": "Yozma",
+     "instr": "Bugungi xato javoblar: savol — to'g'ri javob — xato sababi.",
+     "answers": "Sababsiz qator qabul qilinmaydi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Practice 3 (uyga)",
+     "13 dan 10 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "30-Day Challenge: Day 16 + Day 25",
+     "11 dan 8 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Xatolar daftari",
+     "har xato sababi bilan",
+     "1 coin"
+    ]
+   ]
+  }
+ ]
+}

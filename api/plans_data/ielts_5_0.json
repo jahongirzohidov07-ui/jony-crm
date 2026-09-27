@@ -22535,7 +22535,7 @@
    "test_after": "",
    "book_ref": "Jony Academy materiali — ustoz matnlari (#33 The Pompidou Centre, #34 The man who tried to destroy Paris) va mualliflik matnlari.",
    "objectives": [
-    "Notanish so'z bilan ishlash (Dealing with unknown words): avval so'z savolga kerakmi — keyin so'z turi, kontekstdagi iz va so'z qismlari orqali ma'noni lug'atsiz taxmin qilish.",
+    "Notanish so'z bilan ishlash (Dealing with unknown words — meaning from context): \"uggy\" mashqi orqali so'z turini qo'shimcha va gapdagi o'rnidan, ma'nosini esa atrofdagi gaplardan lug'atsiz topish; avval so'z savolga kerakmi, deb so'rash.",
     "Passage 3 ning eng qiyin uch turini bitta matnda ishlash: MCQ (muallif maqsadi), sentence endings, Yes/No/Not Given.",
     "\"What is the writer's main purpose in paragraph X?\" savolini yechish: xatboshi NIMA QILADI — tushuntiradimi, tanqid qiladimi, taqqoslaydimi?",
     "Matching sentence endings da grammatika + ma'no bo'yicha variantlarni o'chirish.",
@@ -22549,7 +22549,7 @@
     "\"Learning to love concrete\" uy vazifasi varaqasi — har o'quvchiga bitta nusxa, javobsiz; dars oxirida tarqatiladi, sinfda ochilmaydi; orqa tomonida \"MCQ / sentence endings / Yes-No-Not Given uchun necha daqiqa ketdi\" deb yoziladigan uchta bo'sh qator qoldiring.",
     "Doskada qo'ng'iroqdan oldin ikki narsa tayyor tursin: xatboshi vazifasi so'zlari — tasvirlash, tushuntirish, taqqoslash, tanqid, baholash, misol keltirish (sinf mashqi ham, ikkinchi uy vazifasi ham shu ro'yxatdan ishlaydi); yonida Passage 3 vaqt rejasi: MCQ 7 + endings 5 + Y/N/NG 6 + tekshirish 2 = 20 daqiqa. Ikkalasi dars oxirigacha o'chirilmaydi.",
     "\"Xatboshi nima qiladi?\" mashqi uchun ustoz varag'i — Pompidou matnining to'rt xatboshisi bo'yicha birinchi va oxirgi gap juftliklari chop etilgan (og'zaki o'qiladi, o'quvchiga berilmaydi); #33 ning A–F oxirlari qalin qog'ozga yozib qirqilgan tasmalar — har juftlikka bitta to'plam (ikkita tasma ortiqcha qoladi); har o'quvchida xatolar daftari, qalam va ikki rangli marker: biri muallif bahosi so'zlari (fortunately, hideous, an enormous achievement), ikkinchisi matndagi paraphrase uchun.",
-    "Skill bosqichi uchun doskada to'rt qadam yozilib tursin: 1) Kerakmi? 2) So'z turi 3) Kontekstdagi iz (but / yet / just / such as / everywhere) 4) So'z qismlari (un-, -able, -ment, -ist, -ly). Mashqdagi gaplar ustoz tomonidan o'qiladi — Pompidou matni hali tarqatilmaydi."
+    "Skill bosqichi uchun doskada to'rt ustun: SO'Z TURI — BELGI (was / to / -ly / -ies) — IZ GAP — MA'NO. \"Uggy\" gaplari va blick/florp/zemmy to'plamlari ustoz tomonidan o'qiladi yoki ekranga chiqariladi; Pompidou matni hali tarqatilmaydi."
    ],
    "timeline": [
     [
@@ -22563,9 +22563,9 @@
      "Ustoz doskada: qoida, bosqichlar, tipik xatolar"
     ],
     [
-     15,
+     20,
      "Skill: Dealing with unknown words",
-     "Pompidou matnidan olingan gaplar bilan to'rt qadam: kerakmi? — so'z turi — kontekstdagi iz — so'z qismlari. Keyin Pompidou matni tarqatiladi."
+     "\"Uggy\" mashqi birga (so'z turi + iz gap + ma'no) → blick va florp juftlikda → zemmy mustaqil → Pompidou matnidan: kerakmi? va kontekstdan ma'no. Keyin Pompidou matni tarqatiladi."
     ],
     [
      15,
@@ -22578,7 +22578,7 @@
      "Mustaqil bajariladi, keyin javoblar izoh bilan tekshiriladi"
     ],
     [
-     15,
+     10,
      "Listening",
      "Skript ustoz tomonidan o'qiladi yoki audio qo'yiladi, keyin transkript bilan tekshiriladi"
     ],
@@ -22600,7 +22600,7 @@
    ],
    "grammar": {
     "intro": [
-     "SKILL — Dealing with unknown words (Pompidou matnidan oldin, 15 daqiqa). Passage 3 da notanish so'z albatta chiqadi. To'rt qadam: 1) bu so'z savolga javob berish uchun kerakmi — ko'pincha yo'q, o'tkazib yuboring; 2) so'z turi — gapdagi o'rniga qarab (\"a ___ moment\" — sifat); 3) kontekstdagi iz — but/yet (qarama-qarshilik), just (izoh), such as/everywhere (misol), sinonim; 4) so'z qismlari — un- (emas), -able (qilsa bo'ladi), -ment (ot), -ist (odam), -ly (ravish).",
+     "SKILL — Dealing with unknown words (Pompidou matnidan oldin, 20 daqiqa). Kitobdagi \"uggy\" mashqi bilan tushuntiriladi: \"uggy\" — mavjud bo'lmagan so'z, u o'quvchi bilmaydigan so'z o'rnida turadi. Ma'nosini bilmasak ham ikki narsa yordam beradi. 1) SO'Z TURI — qo'shimcha va gapdagi o'rni: \"was uggy\" — sifat, \"to uggy\" — fe'l, \"uggily\" — ravish, \"uggies of\" — ot. 2) MA'NO — atrofdagi iz: \"didn't get a single note wrong\" → flawless; \"bought a house there\" → settle; \"I wasn't expecting it\" → abruptly; \"almost English, but sometimes\" → traces. Keyin blick, florp, zemmy to'plamlari va Pompidou matnidagi haqiqiy so'zlar. Imtihonda birinchi savol: bu so'z javob uchun kerakmi? Ko'pincha yo'q — o'tkazib yuboring.",
      "Passage 3 — eng uzun va eng qiyin matn. Ko'pincha muallif fikri va maqsadi so'raladi, faktlar kamroq.",
      "MCQ \"about the Xth paragraph\" — savol qaysi xatboshini aytsa, faqat shu xatboshini o'qing. Javob tartibda (ALWAYS).",
      "\"Main purpose\" savoli: xatboshining vazifasini aniqlang. Masalan, xatboshi \"critics swiftly changed their tune\" bilan tugasa — maqsad: fikr nega o'zgarganini ko'rsatish. Faqat bir detalni aytgan variant — tuzoq.",
@@ -22748,14 +22748,112 @@
    "readings": [
     {
      "title": "Skill: Dealing with unknown words",
-     "qtype": "Ko'nikma — Pompidou matnidan oldin (15 daqiqa)",
-     "source": "Jony Academy — skill bosqichi; misollar #33 \"The Pompidou Centre\" matnidan",
-     "book_ref": "Passage 3 da har o'quvchi notanish so'zga duch keladi. Maqsad — lug'atsiz davom etish: avval so'z kerakmi, keyin so'z turi, keyin kontekst, oxirida so'z qismlari. Mashqlar Pompidou matnini ochmasdan, faqat berilgan gaplar bilan ishlanadi.",
+     "qtype": "Ko'nikma — Pompidou matnidan oldin (20 daqiqa)",
+     "source": "Jony Academy — skill bosqichi: \"uggy\" mashqi + 3 ta qo'shimcha to'plam + Pompidou matnida qo'llash",
+     "book_ref": "Asosiy g'oya: notanish so'zni lug'atsiz tushunish. \"Uggy\" — mavjud bo'lmagan so'z, u o'quvchi bilmaydigan har qanday so'z o'rnida turadi. Ma'nosini bilmasak ham, 1) qo'shimchasi va gapdagi o'rni so'z turini aytadi, 2) atrofdagi gaplar ma'nosini aytadi. Tartib: \"uggy\" (birga) → blick, florp, zemmy (juftlikda) → Pompidou matnidan haqiqiy so'zlar.",
      "tasks": [
       {
-       "title": "1-qadam: Bu so'z kerakmi?",
+       "title": "1-mashq: \"uggy\" — so'z turi va ma'no (kitobdagi mashq, birga)",
+       "type": "Meaning from context — \"uggy\"",
+       "instr": "Avval so'rang: \"trace, settle, flawless, abruptly\" so'zlarini bilasizmi? Lug'atga qaramang. Keyin to'rt gapda \"uggy\" qaysi so'z turi ekanini, ma'nosini va ro'yxatdagi qaysi so'z mos kelishini toping.",
+       "items": [
+        "1 Anne's piano playing was uggy — she didn't get a single note wrong.",
+        "2 After moving around between many different countries, we decided to uggy in Canada, and bought a house there.",
+        "3 It came as a shock when the play ended so uggily — I wasn't expecting it to end there.",
+        "4 Mario's English is so good you could almost think he was English, but sometimes you can hear uggies of an Italian accent."
+       ],
+       "answers": [
+        "sifat → flawless (xatosiz, benuqson)",
+        "fe'l → settle (o'rnashmoq, joylashib qolmoq)",
+        "ravish → abruptly (to'satdan, kutilmaganda)",
+        "ot (ko'plik) → traces (iz, sezilar-sezilmas belgi)"
+       ],
+       "why": [
+        "\"was ___\" — bog'lovchi fe'ldan keyin sifat. Iz: \"didn't get a single note wrong\" — birorta xato yo'q.",
+        "\"to ___\" — fe'lning boshlang'ich shakli. Iz: \"moving around\" ga qarama-qarshi va \"bought a house\" — bir joyda qolish.",
+        "\"-ily\" — ravish qo'shimchasi, \"ended\" fe'lini tasvirlaydi. Iz: \"a shock\", \"I wasn't expecting it\" — kutilmagan.",
+        "\"-ies\" — ko'plik, \"hear ___ of\" — ot. Iz: \"almost English, but sometimes\" — juda oz, sezilar-sezilmas."
+       ],
+       "note": "Doskada to'rt ustun: SO'Z TURI — QAYSI BELGI (was / to / -ly / -ies) — IZ GAP — MA'NO. O'quvchilar har gapda ikkala savolga javob berishi shart: \"qaysi so'z turi?\" va \"qaysi gap yordam berdi?\"",
+       "layout": "qa"
+      },
+      {
+       "title": "2-mashq: \"blick\" (juftlikda)",
+       "type": "Meaning from context — \"blick\"",
+       "instr": "Gaplarda mavjud bo'lmagan so'z bor — u siz bilmaydigan so'z o'rnida turibdi. 1) So'z turini toping: fe'l, sifat, ot yoki ravish (qo'shimchasi va gapdagi o'rniga qarab). 2) Kontekstdan ma'nosini taxmin qiling. 3) Ro'yxatdagi qaysi haqiqiy so'z mos keladi? Ro'yxat: abandon, shortage, gradually, reluctant.",
+       "items": [
+        "1 The villagers had to blick their homes when the river flooded, and they never returned.",
+        "2 There is a serious blick of doctors in rural areas, so patients often wait for weeks.",
+        "3 The ice blickly melted during the spring, a little more each day.",
+        "4 He was blick to lend me his car — he only agreed after I promised to fill the tank."
+       ],
+       "answers": [
+        "fe'l → abandon (tashlab ketmoq)",
+        "ot → shortage (tanqislik, yetishmovchilik)",
+        "ravish → gradually (asta-sekin)",
+        "sifat → reluctant (istamay, ikkilanib)"
+       ],
+       "why": [
+        "\"had to ___ their homes\" — fe'l. Iz: \"they never returned\" — butunlay tashlab ketishgan.",
+        "\"a serious ___ of doctors\" — artikl va sifatdan keyin ot. Iz: \"patients wait for weeks\" — shifokor yetmaydi.",
+        "\"-ly\" — ravish. Iz: \"a little more each day\" — sekin-asta.",
+        "\"was ___ to\" — sifat. Iz: \"only agreed after I promised\" — xohlamagan."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "3-mashq: \"florp\" (juftlikda)",
+       "type": "Meaning from context — \"florp\"",
+       "instr": "Gaplarda mavjud bo'lmagan so'z bor — u siz bilmaydigan so'z o'rnida turibdi. 1) So'z turini toping: fe'l, sifat, ot yoki ravish (qo'shimchasi va gapdagi o'rniga qarab). 2) Kontekstdan ma'nosini taxmin qiling. 3) Ro'yxatdagi qaysi haqiqiy so'z mos keladi? Ro'yxat: thrive, fragile, drought, deliberately.",
+       "items": [
+        "1 These plants florp in dry, sunny conditions and grow twice as fast as other species.",
+        "2 Pack the glasses carefully — they are very florp and break easily.",
+        "3 After three years of florp, the lake had almost disappeared and farmers lost their crops.",
+        "4 She florply left the door open so that the cat could come in at night."
+       ],
+       "answers": [
+        "fe'l → thrive (gullab-yashnamoq, yaxshi o'smoq)",
+        "sifat → fragile (mo'rt, tez sinadigan)",
+        "ot → drought (qurg'oqchilik)",
+        "ravish → deliberately (ataylab)"
+       ],
+       "why": [
+        "\"These plants ___ in\" — egadan keyin fe'l. Iz: \"grow twice as fast\" — juda yaxshi o'sadi.",
+        "\"are very ___\" — \"very\" dan keyin sifat. Iz: \"break easily\".",
+        "\"three years of ___\" — \"of\" dan keyin ot. Iz: ko'l qurigan, hosil nobud — suvsizlik.",
+        "\"-ly\" — ravish. Iz: \"so that the cat could come in\" — maqsad bilan, ataylab."
+       ],
+       "layout": "qa"
+      },
+      {
+       "title": "4-mashq: \"zemmy\" — IELTS matnidagi kabi gaplar (mustaqil, 3 daqiqa)",
+       "type": "Meaning from context — \"zemmy\"",
+       "instr": "Gaplarda mavjud bo'lmagan so'z bor — u siz bilmaydigan so'z o'rnida turibdi. 1) So'z turini toping: fe'l, sifat, ot yoki ravish (qo'shimchasi va gapdagi o'rniga qarab). 2) Kontekstdan ma'nosini taxmin qiling. 3) Ro'yxatdagi qaysi haqiqiy so'z mos keladi? Ro'yxat: scarce, emerge, consequence, rapidly.",
+       "items": [
+        "1 Clean water is zemmy in the region, so every litre is carefully rationed.",
+        "2 New evidence began to zemmy only after the documents were made public.",
+        "3 Rising sea levels are one zemmy of global warming.",
+        "4 The city's population grew zemmily, doubling in just ten years."
+       ],
+       "answers": [
+        "sifat → scarce (kam, tanqis)",
+        "fe'l → emerge (paydo bo'lmoq, yuzaga chiqmoq)",
+        "ot → consequence (oqibat)",
+        "ravish → rapidly (tez)"
+       ],
+       "why": [
+        "\"is ___\" — sifat. Iz: \"every litre is carefully rationed\" — suv kam.",
+        "\"began to ___\" — fe'l. Iz: \"only after the documents were made public\" — oshkor bo'ldi.",
+        "\"one ___ of\" — ot. Iz: \"of global warming\" — natija, oqibat.",
+        "\"-ly\" — ravish. Iz: \"doubling in just ten years\" — juda tez."
+       ],
+       "layout": "qa",
+       "note": "Bu to'plam imtihon matnlariga eng yaqin: so'z turi qo'shimchadan, ma'no esa gapning ikkinchi yarmidan topiladi."
+      },
+      {
+       "title": "5-mashq: Pompidou matnida — bu so'z kerakmi?",
        "type": "Og'zaki",
-       "instr": "Savolni o'qing, keyin so'zni. Agar savolga javob berish uchun so'z kerak bo'lmasa — o'tkazib yuboring. Savol: \"How did the critics' opinion of the Pompidou change?\"",
+       "instr": "Endi haqiqiy matn. Savol: \"How did the critics' opinion of the Pompidou change?\" Har so'z uchun ayting: savolga javob berish uchun uni tushunish kerakmi? Kerak bo'lmasa — o'tkazib yuboring.",
        "items": [
         "\"After six difficult years, with 25,000 drawings, seven lawsuits, battles over budgets...\" — lawsuits",
         "\"The Pompidou Centre had been rubbished by the critics while it was being built\" — rubbished",
@@ -22770,41 +22868,17 @@
        ],
        "why": [
         "Savol tanqidchilar fikri haqida. Qurilish qiyinchiliklari ro'yxatidagi bitta so'z javobga ta'sir qilmaydi.",
-        "Tanqidchilar qurilish paytida nima qilgani — javobning birinchi yarmi. Bu so'zni tushunish shart.",
+        "Tanqidchilar qurilish paytida nima qilgani — javobning birinchi yarmi.",
         "Binoning tuzilishi haqida — savolga aloqasi yo'q.",
         "Javobning ikkinchi yarmi: muvaffaqiyatdan keyin fikr o'zgardi."
        ],
-       "note": "Asosiy qoida: notanish so'zlarning ko'pchiligi savolga kerak emas. Har biriga 1 daqiqa sarflasangiz, Passage 3 ga vaqt yetmaydi.",
+       "note": "Notanish so'zlarning ko'pchiligi savolga kerak emas. \"Uggy\" usuli faqat KERAK bo'lgan so'zga qo'llanadi.",
        "layout": "qa"
       },
       {
-       "title": "2-qadam: So'z turi",
+       "title": "6-mashq: Pompidou matnida — kontekstdan ma'no",
        "type": "Og'zaki",
-       "instr": "Ma'nosini bilmasangiz ham, gapdagi o'rniga qarab so'z turini ayting: ot, fe'l, sifat yoki ravish.",
-       "items": [
-        "\"...to design one of the most prestigious buildings of its day\" — prestigious",
-        "\"Yet the opening was a downbeat moment\" — downbeat",
-        "\"The image of the Pompidou pervaded popular culture in the 1970s\" — pervaded",
-        "\"...it has proved immensely influential\" — immensely"
-       ],
-       "answers": [
-        "sifat",
-        "sifat",
-        "fe'l (o'tgan zamon)",
-        "ravish"
-       ],
-       "why": [
-        "\"the most ___ buildings\" — \"the most\" va ot orasida sifat turadi.",
-        "\"a ___ moment\" — artikl va ot orasida sifat.",
-        "Ega (\"The image\") dan keyin, \"-ed\" bilan — o'tgan zamondagi fe'l.",
-        "\"-ly\" bilan tugaydi va \"influential\" (sifat) ni kuchaytiradi — ravish."
-       ],
-       "layout": "qa"
-      },
-      {
-       "title": "3-qadam: Kontekstdan ma'no",
-       "type": "Og'zaki",
-       "instr": "So'zning atrofidagi gaplarga qarang: qarama-qarshilik (but, yet, however), izoh (just, that is), misol (such as, everywhere) yoki sabab. Ma'noni o'zbekcha 1–2 so'z bilan ayting va qaysi \"iz\" yordam berganini ko'rsating.",
+       "instr": "\"Uggy\" usulini haqiqiy so'zga qo'llang: avval so'z turi, keyin iz gap (qarama-qarshilik: but/yet; izoh: just; misol: everywhere, such as; sinonim). Ma'noni o'zbekcha 1–2 so'z bilan ayting.",
        "items": [
         "\"Young, unknown architects, they had been chosen from a field of nearly 700 to design one of the most prestigious buildings of its day.\" — prestigious",
         "\"The Pompidou Centre had been rubbished by the critics while it was being built... with its success, the critics swiftly changed their tune.\" — rubbished",
@@ -22814,49 +22888,22 @@
         "\"...it is hard to call it a building when there is no façade, just a lattice of steel beams and pipes...\" — façade"
        ],
        "answers": [
-        "nufuzli, obro'li",
-        "qattiq tanqid qilingan",
-        "tushkun, quvonchsiz",
-        "hamma joyga tarqaldi",
-        "juda g'alati",
-        "binoning old devori"
+        "sifat — nufuzli, obro'li",
+        "fe'l — qattiq tanqid qilingan",
+        "sifat — tushkun, quvonchsiz",
+        "fe'l — hamma joyga tarqaldi",
+        "sifat — juda g'alati",
+        "ot — binoning old devori"
        ],
        "why": [
-        "Iz — tanlov: 700 ta raqib ichidan tanlangan. Demak, bino juda muhim va hurmatli.",
-        "Iz — qarama-qarshilik: keyin tanqidchilar \"fikrini o'zgartirdi\" va bino muvaffaqiyat qozondi. Demak, avval yomon gapirishgan.",
-        "Iz — \"Yet\" va keyingi sabablar: ish yo'q, hamkorlik buzilgan. Kayfiyat yomon.",
-        "Iz — misollar: \"everywhere\", albom muqovalari, chiroq, film. Hamma joyda paydo bo'lgan.",
-        "Iz — sinonim: gap oxirida \"still seems extreme\". Outlandish ≈ extreme, g'ayrioddiy.",
-        "Iz — \"just\" bilan qarama-qarshilik: façade yo'q, faqat panjara bor. Demak, façade — binoning odatiy tashqi devori."
+        "\"the most ___ buildings\" — sifat. Iz — tanlov: 700 ta raqib ichidan tanlangan.",
+        "\"had been ___ by the critics\" — fe'l (passiv). Iz — qarama-qarshilik: keyin tanqidchilar \"fikrini o'zgartirdi\".",
+        "\"a ___ moment\" — sifat. Iz — \"Yet\" va keyingi sabablar: ish yo'q, hamkorlik buzilgan.",
+        "Egadan keyin \"-ed\" — o'tgan zamon fe'li. Iz — misollar: \"everywhere\", albom muqovalari, chiroq.",
+        "\"most ___ work\" — sifat. Iz — sinonim: gap oxirida \"still seems extreme\".",
+        "\"no ___\" — ot. Iz — \"just\" bilan qarama-qarshilik: façade yo'q, faqat panjara bor."
        ],
-       "note": "Ma'noni aniq tarjima qilish shart emas. \"Yaxshi yoki yomon?\", \"ko'p yoki kam?\" darajasida tushunish ko'pincha savolga yetarli.",
-       "layout": "qa"
-      },
-      {
-       "title": "4-qadam: So'z qismlari",
-       "type": "Og'zaki",
-       "instr": "So'zni qismlarga bo'ling: prefiks + o'zak + suffiks. Har qism ma'noga nima qo'shadi?",
-       "items": [
-        "uninterrupted",
-        "movable",
-        "refinement",
-        "traditionalists",
-        "innovatively"
-       ],
-       "answers": [
-        "un- + interrupt + -ed = to'xtovsiz, bo'linmagan",
-        "move + -able = siljitsa bo'ladigan",
-        "refine + -ment = nafislik, puxtalik (ot)",
-        "tradition + -al + -ist + -s = an'anaparastlar (odamlar)",
-        "innovate + -ive + -ly = yangicha usulda (ravish)"
-       ],
-       "why": [
-        "un- — \"emas\"; \"uninterrupted space\" — ustunlar bilan bo'linmagan bo'sh joy.",
-        "-able — \"qilsa bo'ladi\": movable walls — suriladigan devorlar.",
-        "-ment — fe'ldan ot yasaydi.",
-        "-ist — odam; ko'plikda \"-s\". Matnda ular binoni \"ugly attack\" deb bilgan.",
-        "-ly — ravish; \"innovatively designed\" — yangicha loyihalangan."
-       ],
+       "note": "Aniq tarjima shart emas: \"yaxshi yoki yomon?\", \"ko'p yoki kam?\" darajasida tushunish ko'pincha savolga yetarli.",
        "layout": "qa"
       }
      ]
@@ -23639,7 +23686,8 @@
     "Birinchi vazifa — 5-matn \"Learning to love concrete\": soatga qarab 15 daqiqa qo'ying, avval ikkita MCQ ni, keyin sentence endingsni, oxirida Yes / No / Not Given ni ishlang va har javob yoniga matndagi isbot gapni qisqa ko'chirib qo'ying.",
     "Ikkinchisi — \"Xatboshi vazifalari\": Le Corbusier matnining 8 xatboshisiga doskadagi ro'yxatdan bittadan vazifa so'zini yozasiz (tasvirlash, tushuntirish, taqqoslash, tanqid, baholash, misol) — 8 qator; uchinchisi — \"Muallif fikri daftari\": Pompidou va Le Corbusier matnlaridan muallif fikrini bildirgan 10 ta so'z yoki iborani, har birining yoniga qaysi xatboshidan olinganini yozasiz; bu ikkalasi birga 20 daqiqacha oladi.",
     "Eng ko'p qilinadigan xato — \"main purpose\" savolida xatboshining bitta detalini tanlash: variant matnda bor bo'lsa ham, savol xatboshi NIMA QILISHINI so'raydi, shuning uchun avval vazifa so'zini o'zingiz ayting, keyin variantni tanlang.",
-    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz: \"Learning to love concrete\" javoblarini birga tekshiramiz, men MCQ 2 — \"main purpose\" savolining isbotini va muallif fikri daftaringizdan bir nechta iborani so'rayman."
+    "Uchala vazifani ham keyingi dars boshida daftar ochiq holda stolga qo'yasiz: \"Learning to love concrete\" javoblarini birga tekshiramiz, men MCQ 2 — \"main purpose\" savolining isbotini va muallif fikri daftaringizdan bir nechta iborani so'rayman.",
+    "Qo'shimcha vazifa — o'zingiz \"uggy\" mashqini tuzasiz: bitta to'qima so'z, u bilan 4 ta gap (fe'l, sifat, ot, ravish), har gapda iz bo'lsin. Keyingi darsda sherigingiz yechadi."
    ],
    "homework": [
     {
@@ -23661,6 +23709,13 @@
      "type": "Yozma",
      "instr": "Pompidou va Le Corbusier matnlaridan muallif fikrini bildirgan 10 ta so'z/iborani yozing (masalan: fortunately, hideous, an enormous achievement).",
      "answers": "10 ta ibora, qaysi xatboshidan ekani bilan.",
+     "layout": "list"
+    },
+    {
+     "title": "O'zingiz \"uggy\" mashqini tuzing",
+     "type": "Yozma",
+     "instr": "O'zingiz mavjud bo'lmagan bitta so'z o'ylab toping va u bilan 4 ta gap yozing: fe'l, sifat, ot va ravish sifatida. Har gapda ma'noni topishga yordam beradigan iz bo'lsin. Pastiga javoblar ro'yxatini yozing.",
+     "answers": "Keyingi darsda juftlar almashib yechadi: sherigingiz so'z turini ham, ma'nosini ham topa olishi kerak.",
      "layout": "list"
     }
    ],

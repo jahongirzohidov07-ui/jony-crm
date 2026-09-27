@@ -1,0 +1,227 @@
+{
+ "course": "ielts_6_0",
+ "title": "IELTS 6.0 - IELTS FOUNDATION",
+ "outline": true,
+ "lessons": [
+  {
+   "no": 1,
+   "title": "Unit 1 Reading — Passage 1: True / False / Not Given + Table completion",
+   "grammar_topic": "Unit 1 Reading — Passage 1: True / False / Not Given + Table completion",
+   "vocab_topic": "Unit 1 (Starting somewhere new)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 2,
+   "title": "Unit 1 Listening — Section 1: Form completion + Multiple choice",
+   "grammar_topic": "Unit 1 Listening — Section 1: Form completion + Multiple choice",
+   "vocab_topic": "Unit 1 (Starting somewhere new)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 3,
+   "title": "Unit 2 Reading — Passage 2: Matching headings + Multiple choice (TWO letters)",
+   "grammar_topic": "Unit 2 Reading — Passage 2: Matching headings + Multiple choice (TWO letters)",
+   "vocab_topic": "Unit 2 (It's good for you!)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 4,
+   "title": "Unit 2 Listening — Section 2: Multiple choice + Map labelling",
+   "grammar_topic": "Unit 2 Listening — Section 2: Multiple choice + Map labelling",
+   "vocab_topic": "Unit 2 (It's good for you!)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 5,
+   "title": "Unit 3 Reading — Passage 3: Yes / No / Not Given + Summary (word list) + Multiple choice",
+   "grammar_topic": "Unit 3 Reading — Passage 3: Yes / No / Not Given + Summary (word list) + Multiple choice",
+   "vocab_topic": "Unit 3 (Getting the message across)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 6,
+   "title": "Unit 3 Listening — Section 3: Multiple choice (TWO letters) + Matching + Short answer",
+   "grammar_topic": "Unit 3 Listening — Section 3: Multiple choice (TWO letters) + Matching + Short answer",
+   "vocab_topic": "Unit 3 (Getting the message across)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 7,
+   "title": "Unit 4 Reading — Passage 1: True / False / Not Given + Note completion + Short answer",
+   "grammar_topic": "Unit 4 Reading — Passage 1: True / False / Not Given + Note completion + Short answer",
+   "vocab_topic": "Unit 4 (New media)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 8,
+   "title": "Unit 4 Listening — Section 4: Sentence completion + Flow chart",
+   "grammar_topic": "Unit 4 Listening — Section 4: Sentence completion + Flow chart",
+   "vocab_topic": "Unit 4 (New media)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 9,
+   "title": "Unit 5 Reading — Passage 2: Matching information + Matching features + Summary completion",
+   "grammar_topic": "Unit 5 Reading — Passage 2: Matching information + Matching features + Summary completion",
+   "vocab_topic": "Unit 5 (The world in our hands)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 10,
+   "title": "Unit 5 Listening — Section 1: Note completion + Table completion",
+   "grammar_topic": "Unit 5 Listening — Section 1: Note completion + Table completion",
+   "vocab_topic": "Unit 5 (The world in our hands)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 11,
+   "title": "Unit 6 Reading — Passage 1: Diagram labelling + True / False / Not Given + Flow chart",
+   "grammar_topic": "Unit 6 Reading — Passage 1: Diagram labelling + True / False / Not Given + Flow chart",
+   "vocab_topic": "Unit 6 (Making money, spending money)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 12,
+   "title": "Unit 6 Listening — Section 2: Matching + Diagram labelling",
+   "grammar_topic": "Unit 6 Listening — Section 2: Matching + Diagram labelling",
+   "vocab_topic": "Unit 6 (Making money, spending money)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 13,
+   "title": "Unit 7 Reading — Passage 2: Matching headings + Matching features + Sentence completion",
+   "grammar_topic": "Unit 7 Reading — Passage 2: Matching headings + Matching features + Sentence completion",
+   "vocab_topic": "Unit 7 (Relationships)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 14,
+   "title": "Unit 7 Listening — Section 3: Multiple choice + Flow chart",
+   "grammar_topic": "Unit 7 Listening — Section 3: Multiple choice + Flow chart",
+   "vocab_topic": "Unit 7 (Relationships)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 15,
+   "title": "Unit 8 Reading — Passage 3: Multiple choice + Yes / No / Not Given + Sentence endings",
+   "grammar_topic": "Unit 8 Reading — Passage 3: Multiple choice + Yes / No / Not Given + Sentence endings",
+   "vocab_topic": "Unit 8 (Fashion and design)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 16,
+   "title": "Unit 8 Listening — Section 4: Sentence completion (lecture)",
+   "grammar_topic": "Unit 8 Listening — Section 4: Sentence completion (lecture)",
+   "vocab_topic": "Unit 8 (Fashion and design)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 17,
+   "title": "Unit 9 Reading — To'liq Reading: 3 passage, 40 savol, 60 daqiqa",
+   "grammar_topic": "Unit 9 Reading — To'liq Reading: 3 passage, 40 savol, 60 daqiqa",
+   "vocab_topic": "Unit 9 (Practice test 1)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 18,
+   "title": "Unit 9 Listening — To'liq Listening: 4 section, 40 savol",
+   "grammar_topic": "Unit 9 Listening — To'liq Listening: 4 section, 40 savol",
+   "vocab_topic": "Unit 9 (Practice test 1)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 19,
+   "title": "Unit 10 Reading — To'liq Reading: 3 passage, 40 savol, 60 daqiqa",
+   "grammar_topic": "Unit 10 Reading — To'liq Reading: 3 passage, 40 savol, 60 daqiqa",
+   "vocab_topic": "Unit 10 (Practice test 2 + tahlil)",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  },
+  {
+   "no": 20,
+   "title": "Unit 10 Listening — To'liq Listening: 4 section, 40 savol",
+   "grammar_topic": "Unit 10 Listening — To'liq Listening: 4 section, 40 savol",
+   "vocab_topic": "Unit 10 (Practice test 2 + tahlil)",
+   "audios": "",
+   "reading": false,
+   "test_after": "",
+   "words": 0,
+   "writing": ""
+  }
+ ]
+}

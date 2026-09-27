@@ -70,7 +70,7 @@ type Review = {
   issues?: MyIssue[];
   tpl_changed?: boolean;
   submitted_at?: string | null;
-  /** Ustozlarda: 60% dan kam javob berilgan — kalit butunlay yashirilgan */
+  /** Ustozlarda: 60% dan kam javob yoki 50% dan kam to'g'ri — kalit butunlay yashirilgan */
   key_hidden?: boolean;
   answered?: number;
   auto_count?: number;
@@ -480,13 +480,15 @@ export default function MockPracticeTake() {
             Natija hech qayerga yozilmaydi — faqat o'zingiz ko'rasiz.
             {limited
               ? " To'g'ri javob faqat siz javob berib, xato qilgan savollarda ko'rinadi" +
-                " (savollarning 60% dan kamiga javob berilgan bo'lsa — umuman ko'rinmaydi)."
+                " — agar savollarning kamida 60% iga javob bergan va kamida yarmini" +
+                " to'g'ri topgan bo'lsangiz."
               : ""}
           </p>
           {review.key_hidden ? (
             <p className="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-2">
               {review.auto_count
-                ? `${review.auto_count} ta savoldan ${review.answered ?? 0} tasiga javob berilgan — `
+                ? `${review.auto_count} ta savoldan ${review.answered ?? 0} tasiga javob berilgan` +
+                  (review.score != null ? `, ${review.score} tasi to'g'ri` : "") + " — "
                 : ""}
               to'g'ri javoblar ko'rsatilmaydi.
             </p>

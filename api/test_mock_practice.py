@@ -316,13 +316,51 @@ ck("CEFR: IELTS band yo'q", rv_c["band"], None)
 
 # ============================================================ 4. KALIT HIMOYASI
 print("\n=== 4. KALIT HIMOYASI ===")
-det = {d["id"]: d for d in rv["detail"]}
-ck("ustoz: xato belgilanganda to'g'ri javob ko'rinadi", det["L2"]["correct"],
+# T1: 8/12 belgilangan, lekin faqat 5/12 to'g'ri (50% dan past). 2026-09-27
+# xavfsizlik ko'rigidan keyin kalit faqat HAQIQIY urinishda ochiladi —
+# aks holda hamma savolga tasodifiy javob belgilab butun kalitni olish
+# mumkin edi.
+ck("ustoz: 5/12 to'g'ri (50% dan past) — kalit yopiq", rv["key_hidden"], True)
+ck("ustoz: past natijada hech bir kalit ko'rinmaydi",
+   [d["id"] for d in rv["detail"] if d["correct"] is not None], [])
+
+# Alohida shablonlar: boshqa bo'limlardagi signal/katalog hisoblariga
+# ta'sir qilmasin.
+GUARD_PARTS = exam_online.clean_parts([
+    {"title": "Part 1", "skill": "ielts_reading", "passage": "Guard passage.",
+     "questions": [_ch(f"G{i}", f"Guard {i}?", 2) for i in range(1, 5)]},
+])
+GUARD_OK, GUARD_JUNK = ("Kalit Mock · Reading — Variant G",
+                        "Kalit Mock · Reading — Variant J")
+for ttl in (GUARD_OK, GUARD_JUNK):
+    db.add(models.ExamTemplate(level="ielts_graduation", kind="mock",
+                               title=ttl, variant=ttl[-1],
+                               parts=json.dumps(GUARD_PARTS, ensure_ascii=False),
+                               subject="english", is_active=1,
+                               created_by="Examiner"))
+db.commit()
+
+# Haqiqiy urinish: 3/4 to'g'ri (75%) — xato qilingan savolda kalit ko'rinadi
+pg = client.post("/api/mock-practice", headers=T2,
+                 json={"content_key": GUARD_OK}).json()["id"]
+rg = client.post(f"/api/mock-practice/{pg}/submit", headers=T2,
+                 json={"answers": {"G1": 2, "G2": 2, "G3": 2, "G4": 1}}).json()
+dg = {d["id"]: d for d in rg["detail"]}
+ck("ustoz: 3/4 (75%) — kalit ochiq", rg["key_hidden"], False)
+ck("ustoz: xato belgilanganda to'g'ri javob ko'rinadi", dg["G4"]["correct"],
    "C) green")
-ck("ustoz: belgilanmaganda ko'rinmaydi", det["L9"]["correct"], None)
 ck("ustoz: to'g'ri belgilanganda odatiy varaq (frontend yashiradi)",
-   (det["L1"]["ok"], det["L1"]["correct"]), (True, "C) green"))
-ck("ustoz: 8/12 belgilangan — kalit yopilmagan", rv["key_hidden"], False)
+   (dg["G1"]["ok"], dg["G1"]["correct"]), (True, "C) green"))
+
+# Tasodifiy javoblar: hammasi belgilangan (100%), hammasi xato — kalit yopiq
+pj = client.post("/api/mock-practice", headers=T2,
+                 json={"content_key": GUARD_JUNK}).json()["id"]
+rj = client.post(f"/api/mock-practice/{pj}/submit", headers=T2,
+                 json={"answers": {f"G{i}": 0 for i in range(1, 5)}}).json()
+ck("tasodifiy javoblar: 100% belgilangan, lekin kalit yopiq",
+   (rj["answered"], rj["auto_count"], rj["key_hidden"]), (4, 4, True))
+ck("tasodifiy javoblar: hech bir kalit ko'rinmaydi",
+   [d["id"] for d in rj["detail"] if d["correct"] is not None], [])
 
 r = client.post("/api/mock-practice", headers=SUP,
                 json={"content_key": SMALL_KEY})
@@ -459,6 +497,13 @@ ck("T1 o'z xabarida rad etilgan va izoh",
    (myi[0]["status"], myi[0]["resolution_note"]),
    ("rejected", "Kalit to'g'ri: C"))
 ck("mening xabarlarimda kalit yo'q", "answer" in bad_keys(myi), False)
+# Eskirgan ro'yxatdan qayta bosish yopilgan xabarni qayta yozmaydi
+r = client.put(f"/api/mock-issues/{I_L2}", headers=HE,
+               json={"status": "duplicate", "note": "eski oyna"})
+ck("yopilgan xabarga qayta bosish — 409", r.status_code, 409)
+myi = client.get("/api/mock-issues/mine", headers=T1).json()
+ck("holat va izoh o'zgarmadi", (myi[0]["status"], myi[0]["resolution_note"]),
+   ("rejected", "Kalit to'g'ri: C"))
 
 # ============================================================ 9. TUZATISH
 print("\n=== 9. SHABLON TAHRIRI + NUSXALAR ===")
@@ -542,6 +587,24 @@ ck("hech nusxa qolmasa 410",
 ck("o'chgan testni boshlab bo'lmaydi (410)",
    client.post("/api/mock-practice", headers=HE,
                json={"content_key": SMALL_KEY}).status_code, 410)
+
+# Vaqtsiz urinish ochiq qolgan paytda testi o'chirilsa — foydalanuvchi
+# mockdan qulflanib qolmasin (2026-09-27 ko'rik)
+orph = models.ExamTemplate(level="ielts_graduation", kind="mock",
+                           title="Yetim Mock · Reading — Variant Y",
+                           variant="Y",
+                           parts=json.dumps(GUARD_PARTS, ensure_ascii=False),
+                           subject="english", is_active=1, created_by="Examiner")
+db.add(orph)
+db.commit()
+po = client.post("/api/mock-practice", headers=EX,
+                 json={"content_key": orph.title, "timed": False}).json()["id"]
+client.delete(f"/api/exam-templates/{orph.id}", headers=HE)
+r = client.post("/api/mock-practice", headers=EX,
+                json={"content_key": CEFR_KEY})
+ck("yetim urinish yangisini to'smaydi",
+   (r.status_code, r.json().get("resumed"), r.json().get("id") != po),
+   (200, False, True))
 
 # ============================================================ 12. KUNLIK CHEK
 print("\n=== 7c. KUNIGA 30 TA XABAR ===")

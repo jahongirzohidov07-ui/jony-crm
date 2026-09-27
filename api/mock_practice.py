@@ -61,6 +61,7 @@ DURATION = {
 }
 LIMIT_DAYS = 30                 # ustoz bir variantni necha kunda bir marta
 KEY_MIN_ANSWERED = 0.6          # shundan kam belgilansa kalit ko'rsatilmaydi
+KEY_MIN_SCORE = 0.5             # natija shundan past bo'lsa ham ko'rsatilmaydi
 ISSUE_DAY_CAP = 30              # bir xodim bir kunda nechta xabar
 SIGNAL_DAYS = 90                # xato foizi qancha kunlik urinishlardan
 SUSPECT_MIN_ATTEMPTS = 3
@@ -309,8 +310,14 @@ def _review(db: Session, p: models.MockPractice, user, tpl) -> dict:
     auto = [d for d in sheet if d.get("ok") is not None]
     answered = sum(1 for d in auto if _answered(d.get("given")))
     ratio = (answered / len(auto)) if auto else 1.0
+    right = (sum(1 for d in auto if d.get("ok")) / len(auto)) if auto else 1.0
     limited = _limited(user)
-    hide_all = limited and ratio < KEY_MIN_ANSWERED
+    # Faqat "javob berilgan" sharti yetmaydi (2026-09-27 xavfsizlik
+    # ko'rigi): hamma savolga tasodifiy javob belgilab topshirilsa,
+    # hammasi xato bo'ladi va butun kalit bir urinishda ochilardi.
+    # Shuning uchun kalit faqat HAQIQIY urinishda ko'rsatiladi — natija
+    # kamida KEY_MIN_SCORE bo'lsa. Tasodifiy javoblar bunga yetmaydi.
+    hide_all = limited and (ratio < KEY_MIN_ANSWERED or right < KEY_MIN_SCORE)
     if limited:
         for d in sheet:
             if hide_all or not _answered(d.get("given")):
@@ -422,6 +429,17 @@ def start(payload: StartIn, db: Session = Depends(get_db),
                       models.MockPractice.status == "in_progress")
               .order_by(models.MockPractice.id).all()):
         if _expire_if_due(db, p, orphan_ok=True):
+            continue
+        # Vaqtsiz urinish (Speaking yoki timed=false) testi o'chirilgan
+        # bo'lsa, u hech qachon yopilmas va foydalanuvchi mockdan butunlay
+        # qulflanib qolardi (2026-09-27 ko'rik) — bunday urinish yopiladi.
+        try:
+            _tpl_for(db, p)
+        except HTTPException:
+            db.rollback()
+            p.status = "submitted"
+            p.submitted_at = datetime.utcnow()
+            db.commit()
             continue
         return {"id": p.id, "resumed": True, "content_key": p.content_key}
     if _limited(user):
@@ -854,6 +872,12 @@ def triage(iid: int, payload: TriageIn, db: Session = Depends(get_db),
     i = db.query(models.MockIssue).get(iid)
     if not i:
         raise HTTPException(404, "Xabar topilmadi")
+    # Eskirgan ro'yxatdan bosilgan tugma allaqachon yopilgan xabarni
+    # qayta yozmasin va shu savolga keyin kelgan yangi xabarlarni ham
+    # ko'r-ko'rona yopmasin (2026-09-27 ko'rik).
+    if i.status != "open":
+        raise HTTPException(409, "Bu xabar allaqachon yopilgan — "
+                                 "ro'yxatni yangilang")
     q = db.query(models.MockIssue).filter(
         models.MockIssue.content_key == i.content_key,
         models.MockIssue.status == "open")

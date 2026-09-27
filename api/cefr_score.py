@@ -329,3 +329,33 @@ def overall(scores: list) -> Optional[dict]:
         return None
     avg = round(sum(vals) / len(vals), 1)
     return {"score": avg, "level": level_of(avg), "sections": len(vals)}
+
+
+# --------------------------------------------------------------------
+# YOZMA ISH — YANGI FORMAT BAHOLASH SHKALASI (2026-09-27)
+#
+# Manba: Jahongir bergan "rating scales.pdf" — Bilimni baholash
+# agentligining YANGI 3 topshiriqli yozma ish shkalalari. Bu shkala
+# HOLISTIK: examiner har topshiriqqa 4 mezon emas, BITTA baho qo'yadi
+# va har baho aniq CEFR darajasiga bog'langan.
+#
+# Shu hujjat WRITING_NEW_PARTS dagi 5 + 6 + 6 = 17 maksimalni tasdiqladi.
+WRITING_NEW_BANDS = {
+    "1.1": [(5, "B2 yoki undan yuqori"), (4, "Yuqori B1"),
+            (3, "Quyi B1"), (2, "A2"), (1, "A1 yoki quyi"),
+            (0, "yozilmagan / mavzuga aloqasiz")],
+    "1.2": [(6, "C2"), (5, "C1"), (4, "Yuqori B2"), (3, "Quyi B2"),
+            (2, "B1"), (1, "A2"),
+            (0, "baholab bo'ladigan til yo'q")],
+    "2": [(6, "C2"), (5, "C1"), (4, "Yuqori B2"), (3, "Quyi B2"),
+          (2, "B1"), (1, "A2"),
+          (0, "baholab bo'ladigan til yo'q")],
+}
+
+
+def writing_new_band_level(part: str, mark) -> str:
+    """Bitta topshiriq bahosi qaysi CEFR darajasini bildiradi."""
+    for b, label in WRITING_NEW_BANDS.get(part, []):
+        if mark is not None and mark >= b:
+            return label
+    return ""

@@ -83,22 +83,32 @@ ck("yakuniy 75 ballik jadval yo'qligi aytiladi",
 
 # ----------------------------------------------------------------- D
 print("\n=== D. SXEMALAR (examiner formasi uchun) ===")
-ck("to'rtta sxema", sorted(M.SCHEMES),
-   ["cefr_speaking", "cefr_writing", "ielts_speaking", "ielts_writing"])
+ck("beshta sxema", sorted(M.SCHEMES),
+   ["cefr_speaking", "cefr_writing", "cefr_writing_old",
+    "ielts_speaking", "ielts_writing"])
 bad = [k for k, sch in M.SCHEMES.items()
        if not sch.get("criteria") or not sch.get("label")]
 ck("har sxemada mezonlar va nom bor", bad, [])
 ck("IELTS mezonlari 9 balldan, yarim qadam",
    [(c["max"], c["step"]) for c in M.SCHEMES["ielts_writing"]["criteria"]],
    [(9, 0.5)] * 4)
-ck("CEFR yozma mezonlari 4 balldan",
-   [c["max"] for c in M.SCHEMES["cefr_writing"]["criteria"]], [4, 4, 4, 4])
+ck("CEFR yozma (yangi) mezonlari 5 / 6 / 6",
+   [c["max"] for c in M.SCHEMES["cefr_writing"]["criteria"]], [5, 6, 6])
+ck("har mezonda baho izohlari bor (examiner ko'rsin)",
+   [len(c["bands"]) for c in M.SCHEMES["cefr_writing"]["criteria"]],
+   [6, 7, 7])
+ck("eski format mezonlari 4 balldan",
+   [c["max"] for c in M.SCHEMES["cefr_writing_old"]["criteria"]],
+   [4, 4, 4, 4])
 
 # ----------------------------------------------------------------- E
 print("\n=== E. NOTO'G'RI KIRISHDA XATO RAQAM BERILMAYDI ===")
 ck("noma'lum sxema — None", M.compute("boshqa", {"marks": [7, 7, 7, 7]}), None)
 ck("bo'sh ballar — None", M.compute("ielts_writing", {"marks": []}), None)
-ck("bo'sh topshiriq — None", M.compute("cefr_writing", {"tasks": []}), None)
+ck("bo'sh topshiriq — None",
+   M.compute("cefr_writing_old", {"tasks": []}), None)
+ck("yangi formatda ballar yetishmasa — None",
+   M.compute("cefr_writing", {"marks": [4, 2]}), None)
 ck("compute IELTS uchun ishlaydi",
    M.compute("ielts_speaking", {"marks": [6, 6, 7, 7]})["band"], 6.5)
 ck("compute CEFR speaking uchun ishlaydi",

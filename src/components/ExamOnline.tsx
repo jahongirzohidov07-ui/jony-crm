@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Copy, Check, Link2, Lock, Unlock, X } from "lucide-react";
+import { Copy, Check, Link2, Lock, Unlock, X, Calculator } from "lucide-react";
 import { api } from "../lib/api";
 import { levelLabel } from "../lib/subjects";
+import { MarkCalculator } from "./MarkCalculator";
 
 /**
  * ONLINE TEST — guruh testining linki (2026-09-18).
@@ -798,6 +799,8 @@ export function OnlineBelow({
 }) {
   const [paper, setPaper] = useState<Record<number, string>>({});
   const [pick, setPick] = useState<Record<number, string>>({});
+  // Qaysi o'quvchi uchun baholash kalkulyatori ochiq (2026-09-27)
+  const [calcFor, setCalcFor] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -882,18 +885,34 @@ export function OnlineBelow({
                       </AnswerSheetButton>
                     </td>
                     <td className="px-4 py-2">
-                      <input
-                        type="number"
-                        min={0}
-                        max={o.paper_max}
-                        disabled={!data.can_manage}
-                        className="w-20 rounded-lg border border-slate-300 px-2 py-1 text-sm"
-                        value={p}
-                        placeholder="—"
-                        onChange={(e) =>
-                          setPaper({ ...paper, [s.student_id!]: e.target.value })
-                        }
-                      />
+                      <div className="flex items-center gap-1.5">
+                        <input
+                          type="number"
+                          min={0}
+                          max={o.paper_max}
+                          disabled={!data.can_manage}
+                          className="w-20 rounded-lg border border-slate-300 px-2 py-1 text-sm"
+                          value={p}
+                          placeholder="—"
+                          onChange={(e) =>
+                            setPaper({ ...paper, [s.student_id!]: e.target.value })
+                          }
+                        />
+                        {/* Examiner yakuniy ballni o'zi hisoblamasin:
+                            mezonlarni qo'yadi, tizim jadval bo'yicha
+                            chiqaradi (Jahongir: "Examinerga iloji
+                            boricha kam ish qoldir"). */}
+                        {data.can_manage && (
+                          <button
+                            type="button"
+                            onClick={() => setCalcFor(s.student_id!)}
+                            title="Mezonlar bo'yicha hisoblash"
+                            className="text-slate-400 hover:text-brand-600 p-1 rounded"
+                          >
+                            <Calculator size={15} />
+                          </button>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-2 text-right font-medium text-slate-800 whitespace-nowrap">
                       {total != null ? (
@@ -910,6 +929,20 @@ export function OnlineBelow({
             </tbody>
           </table>
         </div>
+      )}
+
+      {calcFor != null && (
+        <MarkCalculator
+          templateTitle={o.template_title}
+          paperMax={o.paper_max}
+          studentName={
+            placed.find((s) => s.student_id === calcFor)?.student_name ?? null
+          }
+          onApply={(v) =>
+            setPaper((prev) => ({ ...prev, [calcFor]: String(v) }))
+          }
+          onClose={() => setCalcFor(null)}
+        />
       )}
 
       {below.length > 0 && (

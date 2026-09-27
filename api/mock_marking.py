@@ -43,6 +43,11 @@ CEFR_SPEAKING_ITEMS = [
 ]
 CEFR_WRITING_TASKS = ["1-topshiriq", "2-topshiriq"]
 
+# YANGI (3 topshiriqli) yozma ish formati uchun tayanch nuqtalar:
+# 0 -> 0, 8 -> 45, 12 -> 57, 17 -> 75. Oradagi qiymatlar rasmiy
+# jadvalda yo'q, shuning uchun ular TAXMINIY deb belgilanadi.
+_W_NEW_ANCHORS = sorted({0: 0, 17: 75, **C.WRITING_NEW_ANCHORS}.items())
+
 
 def ielts_band(marks: list) -> Optional[dict]:
     """To'rt mezon bahosidan (har biri 0-9) IELTS bandi.
@@ -111,6 +116,52 @@ def cefr_speaking(items: list) -> Optional[dict]:
     }
 
 
+def cefr_writing_new(marks: list) -> Optional[dict]:
+    """CEFR Multilevel YOZMA ISH — yangi 3 topshiriqli format.
+
+    Examiner har topshiriqqa BITTA holistik baho qo'yadi (1.1 -> 0-5,
+    1.2 -> 0-6, 2 -> 0-6; jami 17). Manba: "rating scales.pdf".
+
+    Xom balldan 75 ballik shkalaga o'tkazishning TO'LIQ rasmiy jadvali
+    hali qo'limizda yo'q — faqat namuna javoblardagi 8 -> 45 va
+    12 -> 57 aniq. Shuning uchun boshqa qiymatlarda ball TAXMINIY deb
+    belgilanadi (exact=False) va examiner yakuniy raqamni o'zi qo'yadi.
+    Taxminni butunlay bermaslik ham noto'g'ri bo'lardi: examiner
+    baribir biror raqam yozishi kerak, hech bo'lmasa tayanch bo'lsin.
+    """
+    vals, tasks = [], []
+    for (name, mx, _lv, _len), m in zip(C.WRITING_NEW_PARTS, marks or []):
+        try:
+            v = max(0, min(mx, int(m)))
+        except (TypeError, ValueError):
+            return None
+        vals.append(v)
+        tasks.append({"part": name, "mark": v, "max": mx,
+                      "level": C.writing_new_band_level(name, v)})
+    if len(vals) != len(C.WRITING_NEW_PARTS):
+        return None
+    raw = sum(vals)
+    info = C.writing_info(raw)
+    score, exact = info.get("score"), bool(info.get("exact"))
+    if score is None:                       # tayanch nuqtalar orasida
+        for i in range(len(_W_NEW_ANCHORS) - 1):
+            x0, y0 = _W_NEW_ANCHORS[i]
+            x1, y1 = _W_NEW_ANCHORS[i + 1]
+            if x0 <= raw <= x1:
+                score = int(round(y0 + (y1 - y0) * (raw - x0) / (x1 - x0)))
+                break
+    return {
+        "tasks": tasks,
+        "raw": raw,
+        "raw_max": C.WRITING_NEW_RAW_MAX,
+        "score": score,
+        "score_max": int(C.SCALE_MAX),
+        "level": C.level_of(score) if score is not None else None,
+        "exact": exact,
+        "note": info.get("note") if not exact else "Rasmiy namuna javobi bilan bir xil nuqta.",
+    }
+
+
 SCHEMES = {
     "ielts_writing": {
         "label": "IELTS Writing",
@@ -137,7 +188,19 @@ SCHEMES = {
         "note": "8 element = 0-21 xom ball, rasmiy jadval bo'yicha 0-75.",
     },
     "cefr_writing": {
-        "label": "CEFR Multilevel Writing",
+        "label": "CEFR Multilevel Writing (yangi, 3 topshiriq)",
+        "kind": "criteria",
+        "criteria": [{"name": f"Part {n} ({ln})", "max": mx, "step": 1,
+                      "bands": [{"mark": b, "level": lb}
+                                for b, lb in C.WRITING_NEW_BANDS[n]]}
+                     for n, mx, _lv, ln in C.WRITING_NEW_PARTS],
+        "result": "score75",
+        "note": ("Har topshiriqqa bitta baho (1.1 -> 0-5, 1.2 va 2 -> "
+                 "0-6). Jami 17 xom ball. Manba: rasmiy baholash "
+                 "shkalalari."),
+    },
+    "cefr_writing_old": {
+        "label": "CEFR Writing (eski, 2 topshiriqli format)",
         "kind": "tasks",
         "criteria": [{"name": n, "max": 4, "step": 1}
                      for n in C.WRITING_CRITERIA_B2],
@@ -157,5 +220,7 @@ def compute(skill: str, payload: dict) -> Optional[dict]:
     if s == "cefr_speaking":
         return cefr_speaking((payload or {}).get("marks"))
     if s == "cefr_writing":
+        return cefr_writing_new((payload or {}).get("marks"))
+    if s == "cefr_writing_old":
         return cefr_writing((payload or {}).get("tasks"))
     return None

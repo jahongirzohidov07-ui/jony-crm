@@ -1133,6 +1133,685 @@
      "1 coin"
     ]
    ]
+  },
+  {
+   "no": 2,
+   "title": "Unit 1 Listening — Section 1: Form completion + Multiple choice",
+   "grammar_topic": "Section 1 kombinatsiyasi: Form completion + Multiple choice (A, B, C)",
+   "vocab_topic": "Unit 1 (Starting somewhere new) — klubga a'zo bo'lish, shahar haqida so'rovnoma",
+   "duration": 120,
+   "test_after": "",
+   "book_ref": "Complete IELTS Bands 5–6.5: Student's Book, Unit 1, 8–9-betlar (Listening Section 1, CD1 Track 1–2); Workbook, Unit 1, 6-bet (Listening Section 1, Track 2).",
+   "objectives": [
+    "Section 1 da ikki savol turi (forma + MCQ) kelganda tayyorlanish vaqtini ikkiga bo'lish: forma bo'shliqlari turini aniqlash va MCQ kalit g'oyasini belgilash.",
+    "Harflab aytilgan ism va manzillarni (F-double O, A-N-G-L-E-S-E-A) va telefon raqamlarini xatosiz yozish.",
+    "Tuzoqni (distractor) tanish: gapiruvchi avval bir ma'lumotni aytib, keyin boshqasini beradi (Kuala Lumpur → Malaysian).",
+    "MCQ da uch variantning hammasi eshitilishini bilish va savoldagi vaqt yoki shartga mos kelganini tanlash (last year / now / next year).",
+    "Javobni transfer qilishda imlo, raqam va so'z chegarasini tekshirish."
+   ],
+   "materials": [
+    "Student's Book, Unit 1, 8–9-betlar — savollar sahifasi (quyida rasm) va CD1 Track 1–2 audiosi.",
+    "Workbook, Unit 1, 6-bet — savollar sahifasi va Track 2 audiosi (imtihon rejimi, bir marta).",
+    "Recording script rasmlari — faqat ustozda; tekshiruvdan keyin ekranga chiqariladi.",
+    "Kolonka yoki quloqchin; audio platformadan ochiladi (internetni oldindan tekshiring).",
+    "Doskada ingliz alifbosi va \"double / oh / triple\" qoidasi — harflash mashqi uchun."
+   ],
+   "timeline": [
+    [
+     5,
+     "Kirish",
+     "Savol: \"Klubga yoki kursga yozilganda qanday ma'lumot so'raladi?\" — o'quvchilar ro'yxat tuzadi (ism, yosh, manzil, telefon, kasb)."
+    ],
+    [
+     10,
+     "Section 1 kombinatsiyasi",
+     "Ustoz doskada: tayyorlanish vaqtini ikkiga bo'lish; forma — ma'lumot turi; MCQ — kalit g'oya; tuzoqlar."
+    ],
+    [
+     15,
+     "Sinf mashqi",
+     "Harflash va raqam diktanti, keyin \"qaysi vaqt?\" tuzoq mashqi."
+    ],
+    [
+     25,
+     "Student's Book: Track 1–2",
+     "30 soniya tayyorlanish → Track 1 (Q1–5) → 30 soniya → Track 2 (Q6–10) → javoblar izoh bilan."
+    ],
+    [
+     25,
+     "Workbook: Track 2",
+     "Imtihon rejimi: 1-mashq (A/B/C), tayyorlanish, audio bir marta, 10 savol."
+    ],
+    [
+     15,
+     "Skript bilan qayta tinglash",
+     "Xato qilingan savollarning joyi skriptda topiladi; tuzoq gap belgilanadi."
+    ],
+    [
+     15,
+     "Tahlil",
+     "Xatolar sababi: imlo / raqam / tuzoq / paraphrase — har biri xatolar daftariga."
+    ],
+    [
+     10,
+     "Xulosa va vazifa",
+     "Uyga: harflash ovozli normativi va WB audiosi bilan mustaqil mashq."
+    ]
+   ],
+   "grammar": {
+    "intro": [
+     "Section 1 — ikki kishi o'rtasidagi kundalik suhbat (klubga yozilish, so'rovnoma, bron qilish). Faqat shu section'da boshida misol (example) beriladi. 6.0 darajasida Section 1 odatda ikki savol turidan iborat: forma yoki note completion va multiple choice.",
+     "Tayyorlanish vaqti qisqa, shuning uchun uni ikkiga bo'ling. Forma uchun: har bo'shliqqa qanday ma'lumot kerak — millat, raqam, ism, kasb, qiziqish. MCQ uchun: har savolning kalit g'oyasini tagiga chizing (\"problem for Jenny\", \"members NOW\", \"how often\", \"most frequent\", \"main purpose\").",
+     "Ism va manzillar ko'pincha harflab aytiladi: \"F-double O\" = FOO. Raqamlarda \"oh\" = 0, \"double\" = ikki marta. Raqamni har doim son bilan yozing, so'z bilan emas.",
+     "TUZOQ (distractor): gapiruvchi avval bir ma'lumotni aytadi, keyin boshqasini beradi yoki tuzatadi. Jenny \"Kuala Lumpur\" va \"United States\" ni aytadi, lekin formada so'ralgan millat — \"Malaysian\". Birinchi eshitgan so'zni darhol yozmang — gap oxirigacha tinglang.",
+     "MCQ: uch variantning hammasi odatda audioda eshitiladi. To'g'risi — savoldagi shartga mos kelgani. \"How many members does the club have NOW?\" — 30 (o'tgan yil), 50 (hozir), 80 (keyingi yil). Kalit so'z: \"currently\" = now.",
+     "Javob savoldagi so'z bilan emas, paraphrase bilan keladi: \"once every two weeks\" = \"every second Thursday\"; \"most frequent\" = \"the usual thing\".",
+     "Oxirida transfer: imlo, ko'plik \"-s\", so'z chegarasi (ONE WORD AND/OR A NUMBER) — shu uch narsa ko'p ball olib qo'yadi."
+    ],
+    "formulas": [
+     [
+      "1-bosqich",
+      "Forma bo'shliqlari turini yozing",
+      "millat / raqam / kasb",
+      "Nimani kutishni bilasiz"
+     ],
+     [
+      "2-bosqich",
+      "MCQ kalit g'oyasini belgilang",
+      "\"NOW\", \"how often\", \"main purpose\"",
+      "Qaysi gap kerakligini sezasiz"
+     ],
+     [
+      "3-bosqich",
+      "Harflashni yozib boring",
+      "A-N-G-L-E-S-E-A",
+      "Imlo xatosi — 0 ball"
+     ],
+     [
+      "4-bosqich",
+      "Tuzoqqa e'tibor",
+      "Kuala Lumpur → Malaysian",
+      "Birinchi so'z har doim javob emas"
+     ],
+     [
+      "5-bosqich",
+      "MCQ: variantlarni vaqt/shart bo'yicha ajrating",
+      "30 / 50 / 80",
+      "Hammasi eshitiladi"
+     ],
+     [
+      "6-bosqich",
+      "Transfer va tekshiruv",
+      "raqam son bilan, -s",
+      "Mayda xatolar ball olib qo'yadi"
+     ]
+    ],
+    "presentation": [
+     [
+      "Harflashda adashib qoldim. Nima qilaman?",
+      "Eshitganingizni yozing va keyingi savolga o'ting. To'xtab qolsangiz, keyingi javob ham o'tib ketadi."
+     ],
+     [
+      "\"Double\" nima degani?",
+      "Harf yoki raqam ikki marta: \"double O\" = OO, \"double seven\" = 77."
+     ],
+     [
+      "Formada \"Road\" yozilgan. Men ham yozamanmi?",
+      "Yo'q. Formada bor so'zni takrorlamang — faqat bo'shliqqa kerak qismni yozing (\"13 Anglesea\")."
+     ],
+     [
+      "MCQ da uchala variant ham eshitildi.",
+      "Bu normal. Savoldagi shartni qayta o'qing: hozirmi, eng ko'pmi, asosiy maqsadmi?"
+     ],
+     [
+      "Raqamni so'z bilan yozsam bo'ladimi?",
+      "Bo'ladi, lekin xato ehtimoli ko'p. Son bilan yozing: 040 422 9160."
+     ],
+     [
+      "Forma va MCQ orasida pauza bo'ladimi?",
+      "Ha, odatda qisqa pauza va yangi ko'rsatma. Shu paytda Q6–10 ni yana bir marta ko'zdan kechiring."
+     ]
+    ],
+    "notes": [
+     "5.0 da forma va MCQ ni alohida o'rgangan edik. Endi ular bitta section'da ketma-ket keladi — o'tish paytida adashmaslik asosiy ko'nikma.",
+     "Tekshiruvda har javobdan keyin skriptdan aynan o'sha gapni ekranga chiqaring va tuzoq gapni boshqa rang bilan ko'rsating.",
+     "Kuchli o'quvchilarga: Workbook audiosini 1.25 tezlikda tinglash yoki skriptni yopib, tuzoq gaplarni xotiradan aytish."
+    ],
+    "mistakes": [
+     [
+      "\"Kuala Lumpur\" yoki \"American\" yozish",
+      "Malaysian",
+      "Formada millat so'ralgan, shahar emas"
+     ],
+     [
+      "\"13 Anglesea Road\" — uch so'z va raqam",
+      "13 Anglesea",
+      "\"Road\" formada bor, chegara buziladi"
+     ],
+     [
+      "\"80 members\" (MCQ 7)",
+      "50 — currently",
+      "Savol hozirgi holat haqida"
+     ],
+     [
+      "\"once a week\" (MCQ 8)",
+      "every second Thursday = once every two weeks",
+      "Paraphrase ni tushunmaslik"
+     ],
+     [
+      "\"Couldon\", \"Coundan\"",
+      "Coundon",
+      "Harflashni oxirigacha tinglash kerak: O-N, E-N emas"
+     ]
+    ]
+   },
+   "vocab": {
+    "how": [
+     "CORE — forma va so'rovnomalarda keladigan so'zlar; STRONG — shahar hayotini baholash; SUPER — suhbatdagi paraphrase iboralari.",
+     "Har o'quvchi o'z ma'lumotlari bilan mini-forma to'ldiradi va sherigiga harflab aytadi."
+    ],
+    "core": [
+     [
+      "nationality",
+      "millat, fuqarolik",
+      "What nationality are you? — I'm Uzbek.",
+      "Siz qaysi millatdansiz? — O'zbekman.",
+      "ˌnæʃəˈnæləti"
+     ],
+     [
+      "occupation",
+      "kasb",
+      "Please write your occupation on the form.",
+      "Formaga kasbingizni yozing.",
+      "ˌɒkjuˈpeɪʃən"
+     ],
+     [
+      "postcode",
+      "pochta indeksi",
+      "Just the first part of the postcode will do.",
+      "Indeksning faqat birinchi qismi yetarli.",
+      "ˈpəʊstkəʊd"
+     ],
+     [
+      "member",
+      "a'zo",
+      "The club has about fifty members.",
+      "Klubning ellikka yaqin a'zosi bor.",
+      "ˈmembə"
+     ],
+     [
+      "join",
+      "qo'shilmoq, a'zo bo'lmoq",
+      "I'd like to join the social club.",
+      "Men ijtimoiy klubga a'zo bo'lmoqchiman.",
+      "dʒɔɪn"
+     ],
+     [
+      "contract",
+      "shartnoma",
+      "He came to work on a six-month contract.",
+      "U olti oylik shartnoma bilan ishga keldi.",
+      "ˈkɒntrækt"
+     ],
+     [
+      "public transport",
+      "jamoat transporti",
+      "Public transport is cheap in this city.",
+      "Bu shaharda jamoat transporti arzon.",
+      "ˈpʌblɪk ˈtrænspɔːt"
+     ],
+     [
+      "facilities",
+      "sharoitlar, inshootlar",
+      "The sports facilities are excellent.",
+      "Sport inshootlari a'lo darajada.",
+      "fəˈsɪlətiz"
+     ],
+     [
+      "litter",
+      "axlat (ko'chadagi)",
+      "There is less litter than I expected.",
+      "Men kutgandan kamroq axlat bor.",
+      "ˈlɪtə"
+     ],
+     [
+      "regular",
+      "muntazam",
+      "Does the club hold regular meetings?",
+      "Klub muntazam yig'ilish o'tkazadimi?",
+      "ˈreɡjələ"
+     ]
+    ],
+    "strong": [
+     [
+      "temporary",
+      "vaqtinchalik",
+      "I'm doing a temporary job at the moment.",
+      "Hozir vaqtinchalik ishda ishlayapman.",
+      "ˈtemprəri"
+     ],
+     [
+      "slang",
+      "jargon, so'zlashuv tili",
+      "Local slang can be hard to understand.",
+      "Mahalliy jargonni tushunish qiyin bo'lishi mumkin.",
+      "slæŋ"
+     ],
+     [
+      "adequate",
+      "yetarli",
+      "Is public transport adequate for you?",
+      "Jamoat transporti siz uchun yetarlimi?",
+      "ˈædɪkwət"
+     ],
+     [
+      "outing",
+      "sayr, ekskursiya",
+      "The club organises outings around Sydney.",
+      "Klub Sidney bo'ylab sayrlar tashkil qiladi.",
+      "ˈaʊtɪŋ"
+     ],
+     [
+      "efficiently",
+      "samarali",
+      "The police deal with crime efficiently.",
+      "Politsiya jinoyat bilan samarali kurashadi.",
+      "ɪˈfɪʃəntli"
+     ],
+     [
+      "recommend",
+      "tavsiya qilmoq",
+      "A friend recommended this club to me.",
+      "Bir do'stim menga bu klubni tavsiya qildi.",
+      "ˌrekəˈmend"
+     ]
+    ],
+    "super": [
+     [
+      "settle in",
+      "joylashib olmoq, ko'nikmoq",
+      "I arrived early to settle in a bit.",
+      "Biroz ko'nikib olish uchun erta keldim.",
+      "ˈsetl ɪn"
+     ],
+     [
+      "mix in with",
+      "aralashmoq, til topishmoq",
+      "The club helps you mix in with local people.",
+      "Klub mahalliy odamlar bilan til topishga yordam beradi.",
+      "mɪks ɪn wɪð"
+     ],
+     [
+      "every second (Thursday)",
+      "har ikki haftada bir (payshanba)",
+      "We meet every second Thursday.",
+      "Biz har ikki haftada, payshanba kuni yig'ilamiz.",
+      "ˈevri ˈsekənd"
+     ],
+     [
+      "to form a view",
+      "fikrga kelmoq",
+      "I haven't been here long enough to form a view.",
+      "Fikrga kelish uchun bu yerda yetarlicha bo'lmadim.",
+      "fɔːm ə vjuː"
+     ]
+    ],
+    "normativ": []
+   },
+   "class_ex": [
+    {
+     "title": "Harflash va raqam diktanti",
+     "type": "Og'zaki → yozma",
+     "instr": "Ustoz o'qiydi, o'quvchilar yozadi. Keyin bitta o'quvchi doskada yozadi, qolganlar tekshiradi.",
+     "items": [
+      "F-double O",
+      "A-N-G-L-E-S-E-A Road",
+      "oh-four-oh, four-double-two, nine-one-six-oh",
+      "C-O-U-N-D-O-N",
+      "C-V-twenty-six",
+      "double-seven, two-seven-six, nine-seven, seven-seven"
+     ],
+     "answers": [
+      "FOO",
+      "Anglesea Road",
+      "040 422 9160",
+      "Coundon",
+      "CV26",
+      "77 276 97 77"
+     ],
+     "why": [
+      "\"Double O\" — ikki marta O.",
+      "Uzun nomda harflarni guruhlab yozing: A-N-G / L-E-S / E-A.",
+      "\"Oh\" — nol. Telefon raqami guruhlab aytiladi: 3 + 3 + 4.",
+      "Oxiri O-N — E-N emas. Workbook audiosida intervyu oluvchi aynan shuni so'rab tekshiradi.",
+      "Britaniya indeksi: harflar + raqam.",
+      "Akademiya raqami — o'quvchilar o'z raqamini ham shunday aytishni mashq qiladi."
+     ],
+     "note": "Mashqdan keyin juftlikda: har o'quvchi ismini va manzilini harflab aytadi, sherigi yozadi.",
+     "layout": "qa"
+    },
+    {
+     "title": "\"Qaysi biri?\" — tuzoq mashqi",
+     "type": "Og'zaki",
+     "instr": "Ustoz gapni o'qiydi. O'quvchilar savolga javob beradi va tuzoqni aytadi.",
+     "items": [
+      "\"Last year we had 30 members, currently about 50, and next year we'll have about 80.\" — How many members now?",
+      "\"I was born in Kuala Lumpur, but I lived in the United States for a couple of years.\" — Nationality?",
+      "\"At the moment I'm doing a temporary job with a company — I'm an economist, in fact.\" — Occupation?",
+      "\"I sang with a band, but what I like best is dancing.\" — Favourite free-time interest?",
+      "\"We meet every second Thursday, so a couple of times a month.\" — How often?"
+     ],
+     "answers": [
+      "50",
+      "Malaysian",
+      "economist",
+      "dancing",
+      "once every two weeks"
+     ],
+     "why": [
+      "\"Currently\" = now. 30 va 80 — tuzoq.",
+      "Shahar va boshqa davlat — tuzoq; millat keyingi gapda keladi: \"So you're Malaysian?\"",
+      "\"Temporary job with a company\" — kasb emas, ish joyi.",
+      "\"What I like best\" — eng yoqtirgani. \"Singing\" formada allaqachon bor.",
+      "\"Every second\" = har ikkinchi, ya'ni ikki haftada bir."
+     ],
+     "layout": "qa"
+    }
+   ],
+   "readings": [],
+   "listenings": [
+    {
+     "title": "Student's Book, Track 1: International Social Club (Q1–5)",
+     "qtype": "Form completion — Section 1, 1-qism",
+     "audios": "CD1 Track 1",
+     "audio": "ielts6_02_sb_track1.mp3",
+     "image": "ielts6_02_sb_social_club.jpg",
+     "intro": [
+      "Jenny xalqaro ijtimoiy klubga yozilmoqda, Don formani to'ldiryapti. Tinglashdan oldin 30 soniya: har bo'shliq uchun qanday ma'lumot kerak (millat, manzil, telefon, kasb, qiziqish).",
+      "Ko'rsatma: Write ONE WORD AND/OR A NUMBER for each answer. Savollar sahifasi quyida rasm sifatida."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 1–5 — Application form",
+       "type": "ONE WORD AND/OR A NUMBER",
+       "instr": "Forma tartibi = suhbat tartibi. Harflab aytilganlarni yozib boring.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+       ],
+       "answers": [
+        "Malaysian",
+        "13 Anglesea",
+        "040 422 9160",
+        "economist",
+        "dancing"
+       ],
+       "why": [
+        "\"So you're Malaysian, are you?\" — \"That's right\". Tuzoq: \"Kuala Lumpur\" (shahar) va \"United States\" (vaqtincha yashagan).",
+        "\"13 Anglesea Road in Bondi\", keyin harflab: A-N-G-L-E-S-E-A. \"Road\" va \"Bondi\" formada bor.",
+        "\"It's 040 422 9160\". Jenny raqamni hali yodlamagan — telefonidan qarab aytadi; Don oxirini qaytaradi: \"...9160\".",
+        "\"I'm an economist, in fact\". Tuzoq: \"a temporary job with a company\".",
+        "\"What I like best is dancing\". \"Singing\" formada allaqachon yozilgan."
+       ],
+       "layout": "grid",
+       "head": [
+        "Application form",
+        ""
+       ],
+       "rows": [
+        [
+         "Name",
+         "Jenny Foo"
+        ],
+        [
+         "Age",
+         "21"
+        ],
+        [
+         "Nationality",
+         "(1)"
+        ],
+        [
+         "Address",
+         "(2) Road, Bondi"
+        ],
+        [
+         "Mobile phone",
+         "(3)"
+        ],
+        [
+         "Occupation",
+         "(4)"
+        ],
+        [
+         "Free-time interests",
+         "Singing and (5)"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Student's Book, Track 2: International Social Club (Q6–10)",
+     "qtype": "Multiple choice (A, B, C) — Section 1, 2-qism",
+     "audios": "CD1 Track 2",
+     "audio": "ielts6_02_sb_track2.mp3",
+     "intro": [
+      "Tinglashdan oldin har savolning kalit g'oyasini tagiga chizing: \"problem for Jenny\", \"NOW\", \"how often\", \"most frequent\", \"main purpose\".",
+      "Uchala variant ham odatda eshitiladi — savoldagi shartga mos kelganini tanlang."
+     ],
+     "tasks": [
+      {
+       "title": "Questions 6–10",
+       "type": "Choose the correct letter, A, B or C",
+       "instr": "Javob paraphrase bilan keladi. Variantdagi so'z eshitilgani uchun uni tanlamang.",
+       "items": [
+        "6 According to Don, what might be a problem for Jenny? A) her accent B) talking to her colleagues C) understanding local people",
+        "7 How many members does the club have now? A) 30 B) 50 C) 80",
+        "8 How often does the club meet? A) once a week B) once every two weeks C) once a month",
+        "9 What is the club's most frequent type of activity? A) a talk B) a visit C) a meal",
+        "10 The main purpose of the club is to help members to A) meet Australians. B) learn about life in Australia. C) enjoy themselves together."
+       ],
+       "answers": [
+        "C",
+        "B",
+        "B",
+        "A",
+        "A"
+       ],
+       "why": [
+        "\"You might find some of our Australian slang more difficult to understand\". A — tuzoq: aksenti \"really nice\"; B — \"I don't suppose you have any communication problems in the office\".",
+        "\"Currently about 50 members\". 30 — o'tgan yil, 80 — keyingi yil.",
+        "\"Every second Thursday in fact, so a couple of times a month\". A tuzoq — \"Thursday\" so'zi har hafta degan fikr beradi; C — \"a couple of times\" ikki marta.",
+        "\"The usual thing is for one of the members to give a little presentation\". \"Most frequent\" = \"the usual thing\"; presentation = talk. B va C — \"from time to time\".",
+        "\"The main point of the club is to give people like you the chance to mix in more with people from this country\". \"Main purpose\" = \"main point\"; \"people from this country\" = Australians."
+       ],
+       "note": "6-savol — darsning eng yaxshi misoli: variantlarning uchalasi ham audioda eshitiladi (accent, office, slang). Faqat bittasi \"problem\" deb aytiladi.",
+       "layout": "mcq"
+      }
+     ]
+    },
+    {
+     "title": "Student's Book: recording script (Track 1–2) — ustoz uchun",
+     "qtype": "Skript",
+     "intro": [
+      "Tekshiruvdan keyin ekranga chiqaring. Har javob gapini va tuzoq gapni alohida rang bilan ko'rsating."
+     ],
+     "image": "ielts6_02_sb_script.jpg",
+     "tasks": []
+    },
+    {
+     "title": "Workbook, Track 2: City survey (Q1–10)",
+     "qtype": "Form completion + Multiple choice — imtihon rejimi",
+     "audios": "Workbook Track 2",
+     "audio": "ielts6_02_wb_track2.mp3",
+     "image": "ielts6_02_wb_city_survey.jpg",
+     "intro": [
+      "Intervyu oluvchi ko'chada bir erkakdan shahar haqida fikr so'raydi. Avval Workbook 1-mashqini bajaring: Q6–10 hammasi nimaga qaratilgan?",
+      "Keyin imtihondagidek: tayyorlanish vaqti, audio BIR MARTA, 10 savol. Misol (25–34 yosh guruhi) formada berilgan."
+     ],
+     "tasks": [
+      {
+       "title": "1-mashq: Q6–10 nimaga qaratilgan?",
+       "type": "Choose A, B or C",
+       "instr": "Tinglashdan oldin savollarni ko'zdan kechiring.",
+       "items": [
+        "1 What do all of Questions 6–10 focus on? A) how often the man does various things B) a particular aspect of life in the city C) planned changes in the city"
+       ],
+       "answers": [
+        "B"
+       ],
+       "why": [
+        "Har savol shahar hayotining bitta tomoni haqida: transport, sport, ko'ngilochar joylar, axlat, jinoyat."
+       ],
+       "layout": "mcq"
+      },
+      {
+       "title": "Questions 1–5 — Interview: details of subject",
+       "type": "NO MORE THAN TWO WORDS AND/OR A NUMBER",
+       "instr": "Ism va manzil harflab aytiladi. Birinchi eshitgan raqam har doim javob emas.",
+       "items": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+       ],
+       "answers": [
+        "three weeks / 3 weeks",
+        "New Zealand",
+        "lawyer",
+        "Coundon",
+        "CV26"
+       ],
+       "why": [
+        "\"I've only been here for three weeks\". Tuzoq: \"a six-month contract\" — bu qancha qolishi, qancha yashagani emas.",
+        "\"I'm from New Zealand. I lived there all my life before I came to Britain\".",
+        "\"Yes, that's right. I'm a lawyer\". \"Practising law\" — xuddi shu ma'no, lekin formaga kasb nomi yoziladi.",
+        "\"C-O-U-N-D-O-N ... It's O-N at the end, not E-N\". Tuzoq: \"Waterfall Road\" — ko'cha, hudud emas.",
+        "\"That's CV26\". Faqat indeksning birinchi qismi so'ralgan."
+       ],
+       "layout": "grid",
+       "head": [
+        "Interview — details of subject",
+        ""
+       ],
+       "rows": [
+        [
+         "Age group",
+         "25–34"
+        ],
+        [
+         "Length of time living in city",
+         "(1)"
+        ],
+        [
+         "Previous home",
+         "(2)"
+        ],
+        [
+         "Occupation",
+         "(3)"
+        ],
+        [
+         "Area of city",
+         "(4)"
+        ],
+        [
+         "Postcode",
+         "(5)"
+        ]
+       ]
+      },
+      {
+       "title": "Questions 6–10",
+       "type": "Choose the correct letter, A, B or C",
+       "instr": "Har savol shahar hayotining bitta tomoni. Erkak har mavzuda o'z tajribasini aytadi — variantlarni shunga solishtiring.",
+       "items": [
+        "6 What does the man say about public transport? A) He doesn't like using it. B) He seldom uses it. C) He has stopped using it.",
+        "7 What does the man say about sport in the city? A) Some facilities are better than others. B) He intends to do more of it in the future. C) Someone recommended a place to him before he came.",
+        "8 What does the man say about entertainment? A) He doesn't have much time for it. B) There is a very wide range of it. C) It is the best aspect of life in the city.",
+        "9 What does the man say about litter? A) There is less of it than he had expected. B) Not enough is done about the problem. C) His home town has more of it.",
+        "10 What does the man say about crime in the city? A) The police deal with it very efficiently. B) It is something that worries him. C) He doesn't know how much of it there is."
+       ],
+       "answers": [
+        "B",
+        "C",
+        "B",
+        "A",
+        "C"
+       ],
+       "why": [
+        "\"When I've used it, it's been fine, but I don't use it all that often. I cycle to work\". \"Seldom\" = \"not all that often\". A — tuzoq: \"it's been fine\".",
+        "\"A friend back home who'd lived here for a while told me about it\" — kriket klubini oldindan tavsiya qilgan. A — u hamma sharoitni maqtaydi.",
+        "\"There are so many things to choose from\". A — tuzoq: \"I don't think I'll have time to go everywhere\" — vaqt yetmasligi emas, joy ko'pligi haqida.",
+        "\"I was expecting a crowded city with litter ... actually it's not at all bad\". Kutganidan kam.",
+        "\"I don't know how common that sort of thing is here\". B — tuzoq: hamkasbining mashinasi o'g'irlangan, lekin u \"nothing's happened to me so far\" deydi."
+       ],
+       "note": "10-savolda A variantini tanlagan o'quvchilarga ko'rsating: politsiya haqida gap bor, lekin salbiy — \"there wasn't much they could do\".",
+       "layout": "mcq"
+      }
+     ]
+    },
+    {
+     "title": "Workbook: recording script (Track 2) — ustoz uchun",
+     "qtype": "Skript",
+     "intro": [
+      "Skript bilan qayta tinglashda xato qilingan savollarning gapini topishga ishlatiladi."
+     ],
+     "image": "ielts6_02_wb_script.jpg",
+     "tasks": []
+    }
+   ],
+   "homework_intro": [
+    "Bugun Section 1 da ikki savol turini ketma-ket yechdik: avval forma, keyin multiple choice. Eng ko'p ball ikki joyda yo'qoladi — harflash va tuzoq gaplarda.",
+    "Birinchi vazifa — ovozli normativ: ismingiz, familiyangiz, manzilingiz, telefon raqamingiz va kasbingiz (yoki o'qish joyingiz) haqida 5 gapni ingliz tilida ayting va har nomni harflab bering. Ovozli xabarni guruhga yuboring.",
+    "Ikkinchi vazifa — sherigingiz bilan \"klubga yozilish\" suhbati: biringiz Don, biringiz Jenny bo'lasiz. Forma savollarini o'zingiz tuzing va bir-biringizning javobingizni yozib oling (Student's Book, 6-mashq).",
+    "Uchinchi vazifa — xatolar daftari: bugungi har xato javobni yozing va sababini belgilang — imlo, raqam, tuzoq yoki paraphrase."
+   ],
+   "homework": [
+    {
+     "title": "Ovozli normativ: o'zingiz haqingizda forma",
+     "type": "Speaking",
+     "instr": "5 gap + ism, familiya va manzilni harflash; ovozli xabar guruhga.",
+     "answers": "Ustoz harflash va raqamlarni tekshiradi; xato bo'lsa qayta yuboriladi.",
+     "layout": "list"
+    },
+    {
+     "title": "Juftlik suhbati: klubga yozilish",
+     "type": "Speaking",
+     "instr": "SB 6-mashq: bir-biringizni intervyu qilib, formani to'ldiring.",
+     "answers": "Keyingi darsda 2 juftlik sinf oldida ko'rsatadi.",
+     "layout": "list"
+    },
+    {
+     "title": "Xatolar daftari",
+     "type": "Yozma",
+     "instr": "Har xato: savol — to'g'ri javob — sabab (imlo / raqam / tuzoq / paraphrase).",
+     "answers": "Sababsiz qator qabul qilinmaydi.",
+     "layout": "list"
+    }
+   ],
+   "normativ": [
+    [
+     "Ovozli normativ (harflash)",
+     "ism, manzil, raqam — xatosiz",
+     "2 coin"
+    ],
+    [
+     "Workbook Track 2 (sinfda)",
+     "10 dan 8 tasi to'g'ri",
+     "2 coin"
+    ],
+    [
+     "Xatolar daftari",
+     "har xato sababi bilan",
+     "1 coin"
+    ]
+   ]
   }
  ]
 }

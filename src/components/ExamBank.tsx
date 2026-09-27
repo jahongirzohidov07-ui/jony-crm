@@ -101,15 +101,21 @@ export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
   // Filtrlar (2026-09-26): fan (english/math), variant (faqat asl A)
   const [subj, setSubj] = useState("english");
   const [onlyA, setOnlyA] = useState(true);
+  // Tizim "(dublikat)" deb yashirgan mock nusxalari sukut bo'yicha
+  // ko'rinmaydi (2026-09-27) — kerak bo'lsa shu belgi bilan ochiladi.
+  const [showHidden, setShowHidden] = useState(false);
   const rows = all.filter((t) =>
     (t.subject || "english") === subj && (!onlyA || (t.variant || "A") === "A"));
   const setRows = setAll;
 
   function load() {
     setLoading(true);
-    api.fresh<Tpl[]>("/exam-templates").then(setRows).finally(() => setLoading(false));
+    api
+      .fresh<Tpl[]>(showHidden ? "/exam-templates?hidden=true" : "/exam-templates")
+      .then(setRows)
+      .finally(() => setLoading(false));
   }
-  useEffect(load, []);
+  useEffect(load, [showHidden]);
 
   async function open(t: Tpl | null) {
     if (!t) {
@@ -148,6 +154,12 @@ export function ExamBankTab({ canEdit }: { canEdit: boolean }) {
           <label className="text-xs text-slate-500 flex items-center gap-1">
             <input type="checkbox" checked={onlyA} onChange={(e) => setOnlyA(e.target.checked)} />
             faqat asl (A) variantlar
+          </label>
+          <label className="text-xs text-slate-500 flex items-center gap-1"
+                 title="Tizim bir xil testning ortiqcha nusxasi deb yashirgan mock yozuvlari">
+            <input type="checkbox" checked={showHidden}
+                   onChange={(e) => setShowHidden(e.target.checked)} />
+            yashirin nusxalar
           </label>
         </div>
         {canEdit && (
@@ -381,7 +393,10 @@ function TemplateEditor({
               <select className={inp + " bg-white"} value={f.variant || "A"}
                       title="A — asl; B–E — parallel variantlar (linkda aralashadi)"
                       onChange={(e) => setF({ ...f, variant: e.target.value })}>
-                {LETTERS.slice(0, 6).split("").map((v) => (
+                {/* Mock bazasida I-Q variantlari ham bor (CEFR Speaking,
+                    Reading Challenge) — joriy harf ro'yxatda bo'lmasa,
+                    tanlagich uni A ga almashtirib yubormasin. */}
+                {Array.from(new Set([...LETTERS.slice(0, 6).split(""), f.variant || "A"])).map((v) => (
                   <option key={v} value={v}>{v}{v === "A" ? " (asl)" : ""}</option>
                 ))}
               </select>

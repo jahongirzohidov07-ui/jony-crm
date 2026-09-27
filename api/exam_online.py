@@ -491,9 +491,12 @@ def _subj(x) -> str:
 
 
 def _clean_variant(v) -> str:
+    # A-Z (2026-09-27): mock bazasida CEFR Speaking I-J va Reading
+    # Challenge I-Q variantlari bor — A-H cheklovi ularni tahrirlab
+    # saqlashga yo'l qo'ymasdi (examiner "400" olardi).
     v = (str(v or "A").strip().upper() or "A")[:1]
-    if v not in "ABCDEFGH":
-        raise HTTPException(400, "Variant A–H harfi bo'lishi kerak")
+    if not ("A" <= v <= "Z"):
+        raise HTTPException(400, "Variant lotin harfi (A–Z) bo'lishi kerak")
     return v
 
 
@@ -547,9 +550,12 @@ _GRADING = {
         True, "Xom ball (40 tadan) rasmiy Academic Reading jadvali "
               "bo'yicha bandga o'giriladi."),
     ("ielts", "writing"): (
-        False, "Examiner o'qib bandni (0-9) qog'oz balida kiritadi."),
+        False, "Examiner 4 mezonga (0-9) baho qo'yadi — qog'oz bali "
+               "yonidagi kalkulyator bandni IELTS yaxlitlash qoidasi "
+               "bo'yicha o'zi chiqaradi."),
     ("ielts", "speaking"): (
-        False, "Yuzma-yuz o'tkaziladi, band (0-9) qo'lda kiritiladi."),
+        False, "Yuzma-yuz o'tkaziladi. Examiner 4 mezonga (0-9) baho "
+               "qo'yadi, bandni kalkulyator chiqaradi."),
     ("cefr", "listening"): (
         False, "RASMIY USUL — Rasch metodi: ball savollar kalibrovkasiga "
                "va guruh statistikasiga bog'liq, qat'iy jadval yo'q. "
@@ -558,16 +564,21 @@ _GRADING = {
     ("cefr", "reading"): (
         False, "Tinglab tushunish bilan bir xil: Rasch metodi, taxminiy "
                "daraja ko'rsatiladi, ballni examiner qo'yadi."),
+    # Shablonlar YANGI 3 topshiriqli formatda (1.1 / 1.2 / Part 2) —
+    # eski 2 topshiriqli 4-mezonli shkala (x1.25) ularga to'g'ri
+    # kelmaydi; u kalkulyatorda "cefr_writing_old" bo'lib qolgan.
     ("cefr", "writing"): (
-        False, "Rasmiy mezon (uzbmb.uz): har topshiriq 4 mezon bo'yicha "
-               "1-4 balldan = 0-16 xom ball, konversiya x1.25 bilan "
-               "0-20 ball. Hajm jarimasi: 135-120 so'z -1, 119-105 -2, "
-               "104-90 -3, 89-75 -4; 75 dan kam yoki mavzudan chetda "
-               "bo'lsa ish tekshirilmaydi (0.6). Yakuniy ballni "
-               "examiner kiritadi."),
+        False, "Rasmiy shkala (yangi format): examiner har topshiriqqa "
+               "bitta baho qo'yadi — 1.1 -> 0-5, 1.2 -> 0-6, Part 2 -> "
+               "0-6 (jami 17), har bahoning CEFR darajasi ko'rinadi. "
+               "Kalkulyator rasmiy namuna nuqtalarini aniq beradi "
+               "(8 -> 45 B1, 12 -> 57 B2); to'liq 17 -> 75 jadvali "
+               "rasmiy manbada yo'q, oradagi ball TAXMINIY deb "
+               "belgilanadi — yakuniy ballni examiner tasdiqlaydi."),
     ("cefr", "speaking"): (
-        False, "8 element = 21 xom ball; rasmiy jadval bo'yicha 0-75 "
-               "ball. Jadval shablon ichida, ballni examiner kiritadi."),
+        False, "Examiner 4 guruhga baho qo'yadi (1-3, 4-6, 7 -> 0-5; "
+               "8 -> 0-6; jami 21). Kalkulyator 0-75 ball va darajani "
+               "rasmiy jadval bo'yicha o'zi chiqaradi."),
     ("challenge25", "reading"): (
         False, "IELTS Reading savollari to'plami — MASHQ uchun, band "
                "qo'yilmaydi (egasining qarori). Savollar avtomat "
@@ -579,9 +590,11 @@ _GRADING = {
 
 class MarkIn(BaseModel):
     skill: str
-    # ielts_* va cefr_speaking uchun: mezon/element ballari
+    # ielts_*, cefr_speaking va cefr_writing (yangi, 3 topshiriq) uchun:
+    # mezon/element/topshiriq ballari
     marks: Optional[list] = None
-    # cefr_writing uchun: [{"marks": [4 ta], "words": N}, ...]
+    # cefr_writing_old (eski 2 topshiriqli format) uchun:
+    # [{"marks": [4 ta], "words": N}, ...]
     tasks: Optional[list] = None
 
 
@@ -672,6 +685,7 @@ def mock_banks(db: Session = Depends(get_db),
 
 @router.get("/api/exam-templates")
 def list_templates(level: Optional[str] = None, kind: Optional[str] = None,
+                   hidden: bool = False,
                    db: Session = Depends(get_db),
                    user=Depends(require_role(*RESULT_ROLES))):
     q = db.query(models.ExamTemplate)
@@ -679,6 +693,18 @@ def list_templates(level: Optional[str] = None, kind: Optional[str] = None,
         q = q.filter(models.ExamTemplate.level == level)
     if kind:
         q = q.filter(models.ExamTemplate.kind == kind)
+    if not hidden:
+        # Tizim "(dublikat)" deb yashirgan MOCK nusxalari ro'yxatni
+        # to'ldirib yubormasin (2026-09-27: mock seedi bilan dublikat
+        # qoidasi bir-birini aylantirib, har startda 69 tadan nusxa
+        # qoldirgan). Unit/Mid/End va examiner yashirganlari (nomida
+        # "(dublikat)" yo'q) avvalgidek ko'rinadi; hammasini ko'rish —
+        # ?hidden=true (Test bazasidagi "yashirin nusxalar" belgisi).
+        from sqlalchemy import and_, func, not_
+        q = q.filter(not_(and_(
+            models.ExamTemplate.kind == "mock",
+            models.ExamTemplate.is_active != 1,
+            func.coalesce(models.ExamTemplate.title, "").like("%(dublikat)"))))
     rows = q.order_by(models.ExamTemplate.level, models.ExamTemplate.kind,
                       models.ExamTemplate.unit_no,
                       models.ExamTemplate.variant).all()
@@ -2066,25 +2092,54 @@ def seed_variants(db: Session) -> int:
                 db.rollback()
 
 
-def _seed_variants_locked(db: Session, data: dict, exam_bank_seed) -> int:
-    meta = {key: tpl for key, tpl in exam_bank_seed.TEMPLATES}
-    made = 0
-    # Avvalgi startlarda dublikat tushib qolgan bo'lsa — keyingilarini
-    # yashirish (o'chirilmaydi): bitta (daraja, tur, unit, variant) = 1
-    seen = {}
+def _dup_key(t: models.ExamTemplate) -> tuple:
+    """Qaysi shablonlar bir-birining DUBLIKATI hisoblanadi.
+
+    Unit / Mid / End: bitta (daraja, tur, unit, variant) = bitta test.
+
+    MOCK (2026-09-27 tuzatildi). Mockda unit yo'q, variant harfi esa
+    BO'LIM ichida: IELTS Listening A, Reading A, Writing A, Speaking A —
+    to'rtta boshqa-boshqa test. Eski kalit ularni bitta deb hisoblab,
+    eng eskisidan (Listening) boshqasini har startda yashirardi.
+    Jahongir: "nega bu yerda IELTS da faqat listening turibdi, qolgani
+    qani". Endi mock faqat sarlavhasi VA variant harfi ham bir xil
+    bo'lsa dublikat (parallel sovuq startlar bir shablonni ikki marta
+    yozgan holat). Variant kalitda qoladi: examiner bitta nom bilan
+    A, B, C parallel variant yaratadi (tahrirlagich shunday ishlaydi)
+    va ular linkda aralashadi — ular dublikat emas.
+    """
+    if (t.kind or "") == "mock":
+        import mock_seed
+        return (t.level, t.kind, mock_seed.canon_title(t.title), t.variant)
+    return (t.level, t.kind, t.unit_no, t.variant)
+
+
+def dedupe_templates(db: Session) -> int:
+    """Avvalgi startlarda dublikat tushib qolgan bo'lsa — keyingilarini
+    yashiradi (o'chirilmaydi: o'tkazilgan imtihonlar shablonga FK bilan
+    bog'langan). Eng eski yozuv (kichik id) qoladi."""
+    seen, n = {}, 0
     for t in (db.query(models.ExamTemplate)
               .filter(models.ExamTemplate.variant.isnot(None),
                       models.ExamTemplate.is_active == 1)
               .order_by(models.ExamTemplate.id).all()):
-        k = (t.level, t.kind, t.unit_no, t.variant)
+        k = _dup_key(t)
         if k in seen:
             t.is_active = 0
             t.title = (t.title or "") + " (dublikat)"
+            n += 1
             print(f"[exam-bank] dublikat variant yashirildi: {t.title}",
                   flush=True)
         else:
             seen[k] = t.id
     db.commit()
+    return n
+
+
+def _seed_variants_locked(db: Session, data: dict, exam_bank_seed) -> int:
+    meta = {key: tpl for key, tpl in exam_bank_seed.TEMPLATES}
+    made = 0
+    dedupe_templates(db)
     for key, letters in data.items():
         tpl = meta.get(key)
         if not tpl:

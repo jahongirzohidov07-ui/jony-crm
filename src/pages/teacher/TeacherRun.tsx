@@ -43,6 +43,7 @@ type Plan = {
   readings?: PlanReading[];
   listenings?: PlanListen[];
   homework_intro: string[]; homework: Ex[];
+  kahoot?: unknown[];
 };
 type Run = {
   id: number; lesson_id: number; group_id: number; group: string | null; course: string; lesson_no: number;
@@ -144,16 +145,31 @@ export default function TeacherRun() {
     } catch (e) { setErr((e as Error).message); }
     finally { setBusy(false); }
   }
-  async function kahoot() {
+  /** Jonli o'yin: bugungi dars yoki o'tgan dars to'plami (2026-09-28).
+   * Rejalarda dars boshidagi takror — o'tgan darsning Kahooti; tugma
+   * faqat bugungi darsnikini ochardi va o'quvchi hali o'tilmagan mavzuga
+   * tushib qolardi. */
+  async function kahoot(lessonNo: number) {
     if (!run) return;
     setBusy(true);
     try {
       const g = await api.post<{ id: number }>("/live/games",
-        { course: run.course, lesson_no: run.lesson_no, group_id: run.group_id, mode: "mixed", count: 20, seconds: 20 });
+        { course: run.course, lesson_no: lessonNo, group_id: run.group_id, mode: "mixed", count: 20, seconds: 20 });
       window.open(`/live/${g.id}`, "_blank");
     } catch (e) { setErr((e as Error).message); }
     finally { setBusy(false); }
   }
+
+  // Hook'lar har renderda bir xil tartibda chaqirilishi shart (2026-09-28):
+  // useStageAlarm avval "Yuklanmoqda…" return'idan keyin turardi — run
+  // yuklanishi bilan React "Rendered more hooks" xatosini berib, dars rejimi
+  // ochilmasdi. Endi run yo'q paytda ham chaqiriladi (left = Infinity — jim).
+  const cur = run ? run.stages[run.current] : undefined;
+  const startedMs = run?.stage_started_at ? new Date(run.stage_started_at + (run.stage_started_at.endsWith("Z") ? "" : "Z")).getTime() : now;
+  const left = run ? (cur?.min ?? 0) * 60 - (now - startedMs) / 1000 : Infinity;
+  // BOSQICH TUGADI — ovoz va tebranish (2026-09-26). Avval taymer faqat
+  // qizarardi: sinfga qarab turgan ustoz bosqich tugaganini bilmasdi.
+  useStageAlarm(run ? run.current : -1, left);
 
   if (err && !run) {
     return (
@@ -166,15 +182,11 @@ export default function TeacherRun() {
   if (!run) return <div className="min-h-screen bg-slate-50 p-6 text-slate-500">Yuklanmoqda…</div>;
 
   const P = run.plan;
-  const cur = run.stages[run.current];
-  const startedMs = run.stage_started_at ? new Date(run.stage_started_at + (run.stage_started_at.endsWith("Z") ? "" : "Z")).getTime() : now;
-  const elapsed = (now - startedMs) / 1000;
-  const left = (cur?.min ?? 0) * 60 - elapsed;
   const over = left < 0;
   const big = proj ? "text-lg md:text-xl" : "text-sm";
-  // BOSQICH TUGADI — ovoz va tebranish (2026-09-26). Avval taymer faqat
-  // qizarardi: sinfga qarab turgan ustoz bosqich tugaganini bilmasdi.
-  useStageAlarm(run.current, left);
+  // Kahoot faqat savol manbai bor darsda (IELTS 5.0 da lug'at ham, kahoot ham
+  // yo'q — tugma har safar "savol tuzib bo'lmadi" xatosini berardi)
+  const canKahoot = !!(P && ((P.kahoot ?? []).length || (P.vocab?.core ?? []).length));
 
   return (
     <div className={`min-h-screen ${proj ? "bg-white" : "bg-slate-50"}`}>
@@ -254,7 +266,14 @@ export default function TeacherRun() {
               </div>
               <div className="grid grid-cols-2 gap-2 mt-2">
                 <Link to={`/teacher/lesson/${run.lesson_id}`} className="text-xs text-center bg-white border border-slate-200 rounded-lg py-2">Davomat / baho</Link>
-                <button onClick={kahoot} disabled={busy} className="text-xs bg-indigo-600 text-white rounded-lg py-2 flex items-center justify-center gap-1"><Gamepad2 size={14} /> Kahoot</button>
+                {canKahoot ? (
+                  <button onClick={() => kahoot(run.lesson_no)} disabled={busy} className="text-xs bg-indigo-600 text-white rounded-lg py-2 flex items-center justify-center gap-1"><Gamepad2 size={14} /> Kahoot: bugungi</button>
+                ) : (
+                  <span className="text-[11px] text-center text-slate-400 border border-dashed border-slate-200 rounded-lg py-2">Kahoot: bu darsda savol yo'q</span>
+                )}
+                {canKahoot && run.lesson_no > 1 && (
+                  <button onClick={() => kahoot(run.lesson_no - 1)} disabled={busy} className="col-span-2 text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg py-2 flex items-center justify-center gap-1"><Gamepad2 size={14} /> Kahoot: o'tgan dars takrori ({run.lesson_no - 1}-dars)</button>
+                )}
                 <button onClick={openSend} className="col-span-2 text-xs bg-emerald-600 text-white rounded-lg py-2">📤 Topshiriq yuborish (o'quvchi ilovasiga)</button>
                 <Link to="/teacher/check" className="col-span-2 text-xs text-center bg-white border border-slate-200 rounded-lg py-2">Tekshirish (writing / speaking)</Link>
               </div>

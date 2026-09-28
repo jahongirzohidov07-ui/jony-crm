@@ -40,7 +40,7 @@ type Lesson = {
   vocab: { how: string[]; core: string[][]; strong: string[][]; super: string[][]; normativ: string[] };
   class_ex: Ex[];
   reading?: { book_ref?: string; title: string; text: string[]; glossary: string[]; tasks: Ex[] };
-  listening?: { audios: string; intro: string[]; tasks: Ex[] };
+  listening?: { audios: string; intro: string[]; transcript?: string[]; tasks: Ex[] };
   readings?: Reading[];
   listenings?: Listen[];
   homework_intro: string[]; homework: Ex[]; normativ: [string, string, string][];
@@ -377,13 +377,13 @@ function VocabTab({ L, course }: { L: Lesson; course: string }) {
     catch (e) { setDlErr((e as Error).message); }
     finally { setDl(null); }
   }
+  const [open, setOpen] = useState<Record<string, boolean>>({ core: true });   // hook — return'dan oldin
   if (!V) return <p className="text-sm text-slate-500">Bu darsda lug'at yo'q.</p>;
   const tiers: { key: "core" | "strong" | "super"; label: string; cls: string }[] = [
     { key: "core", label: "CORE 20 — hamma uchun", cls: "text-emerald-700" },
     { key: "strong", label: "STRONG +20 — kuchli o'quvchi (jami 40)", cls: "text-sky-700" },
     { key: "super", label: "SUPER +20 — eng kuchli (jami 60)", cls: "text-violet-700" },
   ];
-  const [open, setOpen] = useState<Record<string, boolean>>({ core: true });
   return (
     <>
       {V.how?.length > 0 && <p className="text-sm text-slate-600 mb-3">{V.how.join(" ")}</p>}
@@ -918,6 +918,7 @@ function ListenBlock({ S, idx }: { S: Listen; idx: number }) {
 }
 
 function ListeningTab({ L }: { L: Lesson }) {
+  const [tr, setTr] = useState(false);   // hook — return'lardan oldin
   const S = L.listening;
   const many = L.listenings ?? [];
   if (many.length > 0) return <>{many.map((x, i) => <ListenBlock key={i} S={x} idx={i} />)}</>;
@@ -925,7 +926,16 @@ function ListeningTab({ L }: { L: Lesson }) {
   return (
     <>
       <div className="flex items-center gap-2 text-sm text-slate-700 mb-3"><Headphones size={16} className="text-brand-600" /> Audio {S.audios}</div>
-      {S.intro.map((t, i) => <p key={i} className="text-sm text-slate-700 mb-3">{t}</p>)}
+      {(S.intro ?? []).map((t, i) => <p key={i} className="text-sm text-slate-700 mb-3">{t}</p>)}
+      {/* Skript — ustoz o'qib beradi; yig'ilgan turadi, o'quvchi ekranda javobni ko'rmaydi (2026-09-28) */}
+      {(S.transcript ?? []).length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mb-3">
+          <button onClick={() => setTr(!tr)} className="text-sm font-semibold text-slate-800 flex items-center gap-2">
+            <Headphones size={15} className="text-brand-600" /> Skript (ustoz o'qiydi) {tr ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+          </button>
+          {tr && <div className="mt-2">{S.transcript!.map((t, i) => <p key={i} className="text-sm text-slate-800 mb-1.5 leading-relaxed">{t}</p>)}</div>}
+        </div>
+      )}
       <ExList list={S.tasks} />
     </>
   );

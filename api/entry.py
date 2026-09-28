@@ -7211,6 +7211,20 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # Skip'dan keyin qaytib faollashganlar — kuniga bir marta
     # (2026-09-28, _mc_reactivated_after_skip izohiga qarang)
     ra_key = f"mcra_{today.isoformat()}"
+    # BIR MARTALIK (2026-09-28, Jahongir: "yangi tolov qilganlarga
+    # 3-darsgacha qilsa 10 coin berilishi kerak"). Yangi qoida
+    # students._pay_coin'da; bu esa sentabrda qoida yo'qligida to'lagan
+    # yangi o'quvchilarga coinni to'ldiradi. Idempotent.
+    np_key = "np10_backfill_2026-09"
+    if not _sd(db, np_key):
+        try:
+            import students as _stu
+            _np = _stu._newpay_backfill(db, date(2026, 9, 1))
+            _sm(db, np_key)
+            if _np:
+                print(f"[coin] yangi o'quvchi +10 to'ldirildi: {len(_np)}")
+        except Exception:
+            db.rollback()
     todo = [g for g in _mc_active_groups(db)
             if not _sd(db, f"mcf_{period}_g{g.id}")]
     if not todo and _sd(db, refund_key) and _sd(db, missed_key) \

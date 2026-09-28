@@ -1300,6 +1300,108 @@ def list_payments(
         .all()
     )
 
+# ---------------------------------------------------------------
+#  YANGI O'QUVCHI: 3-DARSGACHA TO'LASA +10 COIN (2026-09-28, Jahongir:
+#  "yangi tolov qilganlarga 3-darsgacha qilsa 10 coin berilishi kerak").
+#
+#  Sabab: sana qoidasi (1-5 +10, 6-10 +5, 11-15 +1) yangi kelganlarga
+#  mos emas edi — 23-sentabrda kelib 28-sentabrda (3-darsi kuni) to'lagan
+#  o'quvchi "16-sanadan keyin" deb 0 coin olardi.
+#
+#  Shart:
+#    * bu o'quvchining BIRINCHI haqiqiy to'lovi (undan oldin kirim yo'q);
+#    * to'lov kunigacha (o'sha kun kirmaydi) kelgan darslari 2 tadan
+#      oshmagan — ya'ni 3-darsi kuni yoki undan oldin to'lagan;
+#    * yangi o'quvchi: o'qishni boshlaganiga 45 kundan oshmagan (LC UP'dan
+#      ko'chgan, JonyOS'da birinchi to'lovi endi tushgan eski o'quvchi
+#      tasodifan "yangi" bo'lib qolmasin).
+#  Coin manbasi "pay_ontime" — to'lov o'chirilsa coin ham qaytadi.
+# ---------------------------------------------------------------
+NEW_PAY_COIN = 10
+NEW_PAY_MAX_LESSONS = 2      # 3-darsgacha: undan oldin ko'pi bilan 2 dars
+NEW_PAY_MAX_AGE_DAYS = 45
+
+
+def _local_day(dt):
+    return (dt + timedelta(hours=5)).date() if dt else roles.local_today()
+
+
+def _new_early_payer(db: Session, s: models.Student,
+                     payment: models.Payment) -> bool:
+    pay_dt = payment.created_at or datetime.utcnow()
+    for p in (db.query(models.Payment)
+              .filter(models.Payment.student_id == s.id,
+                      models.Payment.kind == "payment",
+                      models.Payment.amount > 0,
+                      models.Payment.id != payment.id).all()):
+        p_dt = p.created_at or pay_dt
+        if p_dt < pay_dt or (p_dt == pay_dt and p.id < payment.id):
+            return False            # oldin to'lagan — yangi emas
+    pay_day = _local_day(payment.created_at)
+    came = [d for d in _trial_attendance(db, s.id) if d < pay_day]
+    if len(came) > NEW_PAY_MAX_LESSONS:
+        return False
+    start = came[0] if came else s.enrolled_date
+    if start and (pay_day - start).days > NEW_PAY_MAX_AGE_DAYS:
+        return False
+    return True
+
+
+def _newpay_backfill(db: Session, since: date) -> list:
+    """Qoida paydo bo'lishidan OLDIN to'lagan yangi o'quvchilarga coinni
+    to'ldiradi (bir martalik, kunlik tartibdan chaqiriladi). Shu to'lov
+    uchun jami "pay_ontime" coin 10 ga yetmagan bo'lsa — farqi yoziladi
+    (0 olgan bo'lsa +10, sana bo'yicha +5 olgan bo'lsa +5). Qayta
+    yurganda hech narsa qo'shmaydi. Hech narsa o'chirilmaydi."""
+    start = datetime(since.year, since.month, since.day) - timedelta(hours=5)
+    pays = (db.query(models.Payment)
+            .filter(models.Payment.kind == "payment",
+                    models.Payment.amount > 0,
+                    models.Payment.created_at >= start)
+            .order_by(models.Payment.created_at, models.Payment.id).all())
+    done, out = set(), []
+    for p in pays:
+        if p.student_id in done:
+            continue
+        done.add(p.student_id)          # faqat birinchi to'lovi
+        s = db.get(models.Student, p.student_id)
+        if not s or not _new_early_payer(db, s, p):
+            continue
+        # Shu oyda to'lov coini umuman qancha berilgan (oyiga bir marta
+        # qoidasi: keyingi to'lovga berilgan bo'lsa ham hisobga olinadi,
+        # aks holda jami 10 dan oshib ketardi)
+        d0 = _local_day(p.created_at)
+        m0 = datetime(d0.year, d0.month, 1) - timedelta(hours=5)
+        m1 = datetime(d0.year + (d0.month == 12), d0.month % 12 + 1, 1) \
+            - timedelta(hours=5)
+        have = int(db.query(func.coalesce(func.sum(models.CoinEntry.amount), 0))
+                   .filter(models.CoinEntry.student_id == s.id,
+                           models.CoinEntry.source == "pay_ontime",
+                           or_(models.CoinEntry.ref_id == p.id,
+                               (models.CoinEntry.created_at >= m0)
+                               & (models.CoinEntry.created_at < m1)))
+                   .scalar() or 0)
+        diff = NEW_PAY_COIN - have
+        if diff <= 0:
+            continue
+        db.add(models.CoinEntry(
+            student_id=s.id, amount=diff, source="pay_ontime", ref_id=p.id,
+            note=(f"Yangi o'quvchi 3-darsgacha to'ladi (+{NEW_PAY_COIN} "
+                  f"coin" + (f", avval {have} berilgan edi" if have else "")
+                  + ")"),
+            created_by="Avtomat"))
+        db.add(models.AuditLog(
+            entity="student", entity_id=s.id, action="coin_newpay",
+            entity_label=s.full_name, field="coin", new_value=str(diff),
+            note=("Yangi o'quvchi 3-darsgacha to'lagan — coin to'ldirildi "
+                  f"(to'lov #{p.id}, avval {have})"),
+            branch_id=s.branch_id))
+        out.append({"id": s.id, "name": s.full_name, "added": diff})
+    if out:
+        db.commit()
+    return out
+
+
 def _pay_coin(db: Session, s: models.Student,
               payment: models.Payment, today=None) -> None:
     """To'lov sanasiga qarab avtomat coin (Jahongir qoidasi):
@@ -1318,6 +1420,20 @@ def _pay_coin(db: Session, s: models.Student,
                     models.CoinEntry.source == "pay_ontime",
                     models.CoinEntry.created_at >= month_start).first()):
         return
+    # Yangi o'quvchi 3-darsgacha to'ladi — sanadan qat'i nazar +10
+    # (yuqoridagi NEW_PAY_COIN izohi). Qarz qoidasidan OLDIN: yangi
+    # kelgan bola kechikkan to'lovchi emas.
+    try:
+        if _new_early_payer(db, s, payment):
+            db.add(models.CoinEntry(
+                student_id=s.id, amount=NEW_PAY_COIN, source="pay_ontime",
+                ref_id=payment.id,
+                note=f"Yangi o'quvchi 3-darsgacha to'ladi "
+                     f"(+{NEW_PAY_COIN} coin)",
+                created_by="Avtomat"))
+            return
+    except Exception:
+        pass
     # Oldingi oylardan qarz: joriy oy avto-hisobini (charge, period=shu
     # oy) chiqarib tashlaganda balans manfiy bo'lsa - o'tgan oy puli
     # hali yopilmagan holda oy o'tib ketgan.

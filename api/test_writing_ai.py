@@ -34,6 +34,7 @@ from fastapi.testclient import TestClient          # noqa: E402
 import main, models, roles                         # noqa: E402,F401
 import entry                                       # noqa: F401,E402
 import exam_online                                 # noqa: E402
+import cefr_score as C                             # noqa: E402
 import mock_marking                                # noqa: E402
 import mock_seed                                   # noqa: E402
 import writing_ai                                  # noqa: E402
@@ -67,11 +68,21 @@ def fake(system, user_text):
         return PLAN["raw"]
     ids = re.findall(r"\[id=(T\d+)\]", user_text)
     rows = []
+    gram = ([{"wrong": "peoples is", "right": "people are", "why": "subject-verb agreement"}]
+            + [{"wrong": f"a informations {i}", "right": f"information {i}", "why": "countability"}
+               for i in range(14)]
+            + [{"wrong": "same", "right": "same", "why": "not an error"}])
+    voc = [{"wrong": "make a research", "right": "do research", "why": "collocation",
+            "serious": "true"},
+           {"wrong": "enviroment", "right": "environment", "why": "spelling"}, "junk",
+           {"wrong": "more glasses", "right": "more mirrors", "why": "wrong word",
+            "serious": True}]
     if "IELTS" in system:
         for tid in ids:
             c = PLAN["ielts"].get(int(tid[1:]) - 1, [6, 6, 6, 6])
             rows.append({"id": tid, "ta": c[0], "cc": c[1], "lr": c[2],
-                         "gra": c[3], "feedback": "Yaxshi. Grammatikani oshiring."})
+                         "gra": c[3], "feedback": "The response addresses the task.",
+                         "grammar": gram, "vocabulary": voc})
     else:
         for tid in ids:
             rows.append({"id": tid, "mark": PLAN["cefr"].get(int(tid[1:]) - 1, 4),
@@ -118,6 +129,32 @@ ck("IELTS band = kalkulyator (bir marta yaxlitlash)", res["band"],
    mock_marking.ielts_band([19 / 3, 20 / 3, 6.0, 20 / 3])["band"])
 ck("bitta AI chaqiruvi", len(CALLS), 1)
 ck("o'quvchi javobidan boshqa shaxsiy ma'lumot yo'q", "Talaba" in CALLS[0][1], False)
+g0, v0 = res["tasks"][1]["grammar"], res["tasks"][1]["vocabulary"]
+ck("grammatika xatolari bittama-bitta, 12 tagacha",
+   (len(g0), g0[0]), (12, {"wrong": "peoples is", "right": "people are",
+                            "why": "subject-verb agreement", "serious": False}))
+ck("lug'at xatolari alohida; buzuq qator tashlanadi",
+   [x["right"] for x in v0], ["do research", "environment", "more mirrors"])
+ck("ma'noni buzadigan xato belgisi faqat aniq true bo'lsa",
+   [x["serious"] for x in v0], [False, False, True])
+ck("promptda izoh inglizcha va xatolar ro'yxati so'raladi",
+   ("write it in English" in writing_ai.IELTS_SYSTEM,
+    '"vocabulary"' in writing_ai.IELTS_SYSTEM), (True, True))
+ck("promptlarda band chegaralari (kalibrovka) bor",
+   ("HOW TO FIX A BAND" in writing_ai.IELTS_SYSTEM,
+    "CLEAR overview" in writing_ai.IELTS_SYSTEM,
+    "HOW TO FIX A MARK" in writing_ai.CEFR_SYSTEM), (True, True, True))
+_sc = writing_ai._cefr_scale_text()
+ck("CEFR shkala matni: 1.2 -> 0-5, Part 2 -> 0-6, inglizcha",
+   ("Task 1.2 (target B2, 120-150 words), mark 0-5:" in _sc,
+    "Task 2 (target C1, 180-200 words), mark 0-6:" in _sc, "so'z" in _sc),
+   (True, True, False))
+ck("CEFR shkalasida har ball uchun bitta qator (yuqoridan 0 gacha)",
+   [[int(s.split(" ")[0]) for s in writing_ai.CEFR_SCALE[p]]
+    for p, *_ in C.WRITING_NEW_PARTS],
+   [list(range(mx, -1, -1)) for _p, mx, *_ in C.WRITING_NEW_PARTS])
+ck("CEFR_SYSTEM formatlanadi (qavslar buzilmagan)",
+   '"mark":<whole number>' in writing_ai.CEFR_SYSTEM.format(scale=_sc), True)
 
 CALLS.clear()
 PLAN["reverse"] = True
@@ -138,12 +175,34 @@ ck("<=20 so'zli Task 1: AI'siz, IELTS qoidasi bo'yicha Band 1",
 cp = exam_online._load(sorted(ct, key=lambda t: t.id)[0].parts)
 PLAN["cefr"] = {0: 4, 1: 2, 2: 2}
 rc = writing_ai.grade(cp, {t["qid"]: ESSAY for t in writing_ai.tasks_of(cp)})
-ck("CEFR 4+2+2 = 8 -> 45 B1 (rasmiy nuqta)",
-   (rc["score"], rc["level"], rc["exact"]), (45, "B1", True))
-PLAN["cefr"] = {0: 9, 1: -3, 2: 5}
+ck("CEFR 4+2+2 = 8 -> 47 B1 (rasmiy jadval, 2025-10-13)",
+   (rc["score"], rc["level"], rc["exact"]), (47, "B1", True))
+PLAN["cefr"] = {0: 9, 1: 6, 2: 7}
 rc2 = writing_ai.grade(cp, {t["qid"]: ESSAY for t in writing_ai.tasks_of(cp)})
-ck("CEFR: shkaladan tashqari baho qisiladi (9->5, -3->0)",
-   [t["mark"] for t in rc2["tasks"]], [5, 0, 5])
+ck("CEFR: shkaladan tashqari baho qisiladi (1.1 9->5, 1.2 6->5, 2 7->6)",
+   ([t["mark"] for t in rc2["tasks"]], rc2["score"]), ([5, 5, 6], 75))
+PLAN["cefr"] = {0: 0, 1: -3, 2: 0}
+rc2 = writing_ai.grade(cp, {t["qid"]: ESSAY for t in writing_ai.tasks_of(cp)})
+ck("CEFR: 1.1 da yozilgan javob kamida 1, 1.2 va 2 da 0 bo'lishi mumkin",
+   [t["mark"] for t in rc2["tasks"]], [1, 0, 0])
+# Yakuniy shkaladagi hajm chegaralari
+_ct = writing_ai.tasks_of(cp)
+_w = lambda n: " ".join(["word"] * n)            # noqa: E731
+PLAN["cefr"] = {0: 4, 1: 4, 2: 5}
+rc4 = writing_ai.grade(cp, {_ct[0]["qid"]: _w(20), _ct[1]["qid"]: _w(50),
+                            _ct[2]["qid"]: _w(30)})
+ck("hajm chegarasi: 1.1 20 so'z -> 2, 1.2 50 so'z -> 2, Part 2 30 so'z -> 1",
+   [t["mark"] for t in rc4["tasks"]], [2, 2, 1])
+ck("chegara qo'llansa izohda aytiladi",
+   "too short for a mark above 2" in rc4["tasks"][1]["feedback"], True)
+rc5 = writing_ai.grade(cp, {_ct[0]["qid"]: _w(26), _ct[1]["qid"]: _w(61),
+                            _ct[2]["qid"]: _w(91)})
+ck("chegaradan bir so'z ortiq — cheklanmaydi",
+   [t["mark"] for t in rc5["tasks"]], [4, 4, 5])
+rc6 = writing_ai.grade(cp, {_ct[0]["qid"]: _w(40), _ct[1]["qid"]: _w(20),
+                            _ct[2]["qid"]: _w(60)})
+ck("1.2 24 so'zgacha -> 1, Part 2 38-90 so'z -> 2",
+   [t["mark"] for t in rc6["tasks"]], [4, 1, 2])
 PLAN["cefr"] = {}
 
 

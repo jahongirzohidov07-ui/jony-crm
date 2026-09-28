@@ -63,24 +63,36 @@ for i in range(0, 361):
 ck("monoton (0.0 dan 36.0 gacha)", mono, True)
 ck("eski format: 12 + 24 = 36", C.WRITING_OLD_RAW_MAX, 36.0)
 
-print(chr(10) + "=== B2. YOZMA ISH — YANGI FORMAT (1.1 + 1.2 + 2 = 17) ===")
-ck("uch topshiriq, maksimal 17",
+print(chr(10) + "=== B2. YOZMA ISH — YANGI FORMAT (1.1 + 1.2 + 2 = 16) ===")
+ck("uch topshiriq, maksimal 16 (2025-10-13 yakuniy shkala)",
    ([p[1] for p in C.WRITING_NEW_PARTS], C.WRITING_NEW_RAW_MAX),
-   ([5, 6, 6], 17))
+   ([5, 5, 6], 16))
 ck("topshiriq darajalari B1 / B2 / C1",
    [p[2] for p in C.WRITING_NEW_PARTS], ["B1", "B2", "C1"])
-ck("namuna 1: 8 xom -> 45, B1",
-   (C.writing_score_new(8), C.level_of(C.writing_score_new(8))), (45, "B1"))
-ck("namuna 2: 12 xom -> 57, B2",
-   (C.writing_score_new(12), C.level_of(C.writing_score_new(12))), (57, "B2"))
-ck("0 -> 0", C.writing_score_new(0), 0)
-ck("noma'lum xom ball — None (xato raqam berilmaydi)",
-   (C.writing_score_new(9), C.writing_score_new(15)), (None, None))
-ck("writing_info: aniq nuqtada exact=True",
-   (C.writing_info(12)["score"], C.writing_info(12)["exact"]), (57, True))
-ck("writing_info: noma'lumda exact=False va izoh bor",
-   (C.writing_info(9)["exact"], "jadval" in C.writing_info(9)["note"]),
-   (False, True))
+# Rasmiy jadval (agentlik, 2025-10-13) — har bir qator
+RASMIY_W = {16: 75, 15.5: 72, 15: 69, 14.5: 67, 14: 65, 13.5: 64, 13: 63,
+            12.5: 62, 12: 61, 11.5: 59, 11: 57, 10.5: 55, 10: 53, 9.5: 51,
+            9: 50, 8.5: 48, 8: 47, 7.5: 45, 7: 43, 6.5: 41, 6: 40,
+            5.5: 38, 5: 37, 4.5: 35, 4: 33, 3.5: 31, 3: 28, 2.5: 25,
+            2: 21, 1.5: 17, 1: 14, 0.5: 10, 0: 0}
+ck("konversiya jadvali 33 qatorda aynan mos",
+   [k for k, v in RASMIY_W.items() if C.writing_score_new(k) != v], [])
+ck("jadval chegaralari CEFR darajalariga mos (14 C1, 9.5 B2, 5.5 B1)",
+   [C.level_of(C.writing_score_new(r)) for r in (14, 13.5, 9.5, 9, 5.5, 5)],
+   ["C1", "B2", "B2", "B1", "B1", "B1 dan quyi"])
+ck("monoton o'sadi",
+   all(C.writing_score_new(a / 2) <= C.writing_score_new(a / 2 + 0.5)
+       for a in range(0, 32)), True)
+ck("oraliq qiymat eng yaqin 0.5 ga (8.2 -> 8, 8.3 -> 8.5)",
+   (C.writing_score_new(8.2), C.writing_score_new(8.3)), (47, 48))
+ck("chegaradan tashqari siqiladi (-1 -> 0, 20 -> 75)",
+   (C.writing_score_new(-1), C.writing_score_new(20)), (0, 75))
+ck("xato kirish — None", C.writing_score_new("abc"), None)
+ck("writing_info: har doim aniq",
+   (C.writing_info(12)["score"], C.writing_info(12)["exact"],
+    C.writing_info(9)["exact"]), (61, True, True))
+ck("1.2 shkalasi 0-5 (pilotdagi 6 = C2 yo'q)",
+   [b for b, _ in C.WRITING_NEW_BANDS["1.2"]], [5, 4, 3, 2, 1, 0])
 ck("eski jadval yangi formatga ishlatilmaydi",
    C.writing_score_old(8) != C.writing_score_new(8), True)
 print(chr(10) + "=== B3. YOZMA ISH — RASMIY MEZONLAR (uzbmb.uz) ===")

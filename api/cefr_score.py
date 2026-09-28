@@ -57,17 +57,19 @@ LR_LEVELS = [
 # 2-topshiriq 24 ball = 36 xom ball. Quyidagi WRITING_OLD_TABLE
 # aynan shunga tegishli.
 #
-# YANGI format (2025-yil avgust "piloting" dan boshlab, hozir
-# amalda): uchta topshiriq —
+# YANGI format (2025-yil oktabrdan amalda): uchta topshiriq —
 #   Task 1.1  do'stga norasmiy xat, ~50 so'z,      B1,  0-5 ball
-#   Task 1.2  rasmiy javob xati, 120-150 so'z,     B2,  0-6 ball
+#   Task 1.2  rasmiy javob xati, 120-150 so'z,     B2,  0-5 ball
 #   Part 2    onlayn muhokama posti, 180-200 so'z, C1,  0-6 ball
-# jami 17 xom ball.
+# jami 16 xom ball.
 #
-# YANGI FORMATNING to'liq xom ball -> standart ball jadvali menda
-# YO'Q. Bizda faqat rasmiy namuna javoblardagi ikkita tayanch nuqta
-# bor (quyida WRITING_NEW_ANCHORS). Shuning uchun oraliq qiymatlar
-# TAXMIN QILINMAYDI — noto'g'ri raqam bermaslik uchun None qaytadi.
+# 2026-09-28 TUZATISH: avval 1.2 ni 0-6 (jami 17) deb olgandik — bu
+# 2025-yil avgustdagi PILOT shkala edi ("rating scales.pdf" va namuna
+# javoblar shunga tegishli). Agentlikning 2025-10-13 dagi yakuniy
+# "Yozma ish topshiriqlari tafsilotlari" hujjatida 1.2 ham 0-5
+# (5 = B2 dan yuqori) va to'liq konversiya jadvali bor —
+# WRITING_NEW_TABLE aynan o'sha. Xom ball ikki baholovchi o'rtachasi,
+# shuning uchun 0.5 qadam bilan boradi.
 WRITING_OLD_TABLE = [
     (35.1, 36.0, 75), (34.1, 35.0, 74), (33.1, 34.0, 73), (32.6, 33.0, 72),
     (32.1, 32.5, 71), (31.6, 32.0, 70), (31.1, 31.5, 69), (30.6, 31.0, 68),
@@ -91,15 +93,22 @@ WRITING_OLD_RAW_MAX = 36.0
 
 # Yangi format: topshiriq -> maksimal ball
 WRITING_NEW_PARTS = [("1.1", 5, "B1", "~50 so'z"),
-                     ("1.2", 6, "B2", "120-150 so'z"),
+                     ("1.2", 5, "B2", "120-150 so'z"),
                      ("2", 6, "C1", "180-200 so'z")]
-WRITING_NEW_RAW_MAX = sum(p[1] for p in WRITING_NEW_PARTS)      # 17
+WRITING_NEW_RAW_MAX = sum(p[1] for p in WRITING_NEW_PARTS)      # 16
 
-# Rasmiy namuna javoblardan olingan tayanch nuqtalar
-# ("Sample responses with examiner comments"):
-#   4+2+2 = 8  -> standart 45, daraja B1
-#   5+3+4 = 12 -> standart 57, daraja B2
-WRITING_NEW_ANCHORS = {8: 45, 12: 57}
+# Rasmiy konversiya: ekspert bahosi (xom, 0.5 qadam) -> standart ball.
+# Manba: Bilimni baholash agentligi, 2025-10-13, yozma ish 2-bo'lim
+# topshiriqlari xususiyatlari jadvali. Chiziqli EMAS — aynan shu
+# qiymatlar ishlatiladi. Chegaralar: 14-16 C1, 9.5-13.5 B2,
+# 5.5-9 B1, 0-5 B1 dan quyi (LEVELS bilan mos).
+WRITING_NEW_TABLE = {
+    16: 75, 15.5: 72, 15: 69, 14.5: 67, 14: 65, 13.5: 64, 13: 63,
+    12.5: 62, 12: 61, 11.5: 59, 11: 57, 10.5: 55, 10: 53, 9.5: 51,
+    9: 50, 8.5: 48, 8: 47, 7.5: 45, 7: 43, 6.5: 41, 6: 40, 5.5: 38,
+    5: 37, 4.5: 35, 4: 33, 3.5: 31, 3: 28, 2.5: 25, 2: 21, 1.5: 17,
+    1: 14, 0.5: 10, 0: 0,
+}
 
 # Gapirish: 8 baholanadigan element (1-3, 4-6, 7 -> 0-5 dan; 8 -> 0-6)
 # = 21 xom ball. Jadval CHIZIQLI EMAS, shuning uchun aynan shu
@@ -244,19 +253,15 @@ def writing_score_old(raw) -> Optional[int]:
 
 
 def writing_score_new(raw) -> Optional[int]:
-    """YANGI format (1.1 + 1.2 + 2 = 17) xom balldan standart ball.
-
-    To'liq rasmiy jadval hali qo'limizda yo'q — faqat namuna
-    javoblardagi tayanch nuqtalar aniq. Boshqa qiymatlarda None
-    qaytadi: taxminiy raqam berish o'quvchining darajasini xato
-    ko'rsatib qo'yishi mumkin. Jadval kelgach shu yerga qo'yiladi."""
+    """YANGI format (1.1 + 1.2 + 2 = 16) xom balldan standart ball
+    (WRITING_NEW_TABLE). Xom ball eng yaqin 0.5 ga yaxlitlanadi
+    (yarim yuqoriga) va 0-16 oralig'iga siqiladi."""
     try:
         r = float(raw)
     except (TypeError, ValueError):
         return None
-    if r <= 0:
-        return 0
-    return WRITING_NEW_ANCHORS.get(int(r) if float(r).is_integer() else None)
+    r = min(max(r, 0.0), float(WRITING_NEW_RAW_MAX))
+    return WRITING_NEW_TABLE[_round_half_up(r * 2, 0) / 2]
 
 
 def writing_info(raw) -> dict:
@@ -268,10 +273,7 @@ def writing_info(raw) -> dict:
         "score": sc,
         "level": level_of(sc) if sc is not None else None,
         "exact": sc is not None,
-        "note": ("Rasmiy jadval bo'yicha" if sc is not None else
-                 "Yangi format uchun to'liq xom ball -> standart ball "
-                 "jadvali hali yo'q. Ma'lum nuqtalar: 8 -> 45 (B1), "
-                 "12 -> 57 (B2)."),
+        "note": "Rasmiy konversiya jadvali bo'yicha (2025-10-13).",
     }
 
 
@@ -339,13 +341,14 @@ def overall(scores: list) -> Optional[dict]:
 # HOLISTIK: examiner har topshiriqqa 4 mezon emas, BITTA baho qo'yadi
 # va har baho aniq CEFR darajasiga bog'langan.
 #
-# Shu hujjat WRITING_NEW_PARTS dagi 5 + 6 + 6 = 17 maksimalni tasdiqladi.
+# Yakuniy (2025-10-13) shkalada 1.2 ning pilotdagi "6 = C2" bandi
+# 5 ga qo'shilgan: "C1 yoki undan yuqori". Jami 5 + 5 + 6 = 16.
 WRITING_NEW_BANDS = {
     "1.1": [(5, "B2 yoki undan yuqori"), (4, "Yuqori B1"),
             (3, "Quyi B1"), (2, "A2"), (1, "A1 yoki quyi"),
             (0, "yozilmagan / mavzuga aloqasiz")],
-    "1.2": [(6, "C2"), (5, "C1"), (4, "Yuqori B2"), (3, "Quyi B2"),
-            (2, "B1"), (1, "A2"),
+    "1.2": [(5, "C1 yoki undan yuqori"), (4, "Yuqori B2"),
+            (3, "Quyi B2"), (2, "B1"), (1, "A2"),
             (0, "baholab bo'ladigan til yo'q")],
     "2": [(6, "C2"), (5, "C1"), (4, "Yuqori B2"), (3, "Quyi B2"),
           (2, "B1"), (1, "A2"),

@@ -92,11 +92,19 @@ ck("har sxemada mezonlar va nom bor", bad, [])
 ck("IELTS mezonlari 9 balldan, yarim qadam",
    [(c["max"], c["step"]) for c in M.SCHEMES["ielts_writing"]["criteria"]],
    [(9, 0.5)] * 4)
-ck("CEFR yozma (yangi) mezonlari 5 / 6 / 6",
-   [c["max"] for c in M.SCHEMES["cefr_writing"]["criteria"]], [5, 6, 6])
+ck("CEFR yozma (yangi) mezonlari 5 / 5 / 6",
+   [c["max"] for c in M.SCHEMES["cefr_writing"]["criteria"]], [5, 5, 6])
 ck("har mezonda baho izohlari bor (examiner ko'rsin)",
    [len(c["bands"]) for c in M.SCHEMES["cefr_writing"]["criteria"]],
-   [6, 7, 7])
+   [6, 6, 7])
+_wn = M.compute("cefr_writing", {"marks": [4, 2, 2]})
+ck("yangi format: 4+2+2 = 8 -> 47 B1, aniq (rasmiy jadval)",
+   (_wn["raw"], _wn["raw_max"], _wn["score"], _wn["level"], _wn["exact"]),
+   (8, 16, 47, "B1", True))
+ck("yangi format: 5+5+6 = 16 -> 75 C1",
+   M.compute("cefr_writing", {"marks": [5, 5, 6]})["score"], 75)
+ck("1.2 ga 6 qo'yilsa 5 ga siqiladi",
+   M.compute("cefr_writing", {"marks": [0, 6, 0]})["tasks"][1]["mark"], 5)
 ck("eski format mezonlari 4 balldan",
    [c["max"] for c in M.SCHEMES["cefr_writing_old"]["criteria"]],
    [4, 4, 4, 4])

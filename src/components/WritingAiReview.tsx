@@ -6,8 +6,15 @@
  * va xodim sinovi (MockPracticeTake) shu kartani ko'rsatadi.
  */
 
+/** Bitta xato: asl matn -> to'g'risi, qisqa sabab (inglizcha).
+ *  serious — xato ma'noni buzadi (band'ni shu hal qiladi). */
+export type AiError = { wrong: string; right: string; why?: string; serious?: boolean };
+
 export type AiTask = {
   qid: string;
+  /** Grammatika va lug'at xatolari — alohida, bittama-bitta (2026-09-28) */
+  grammar?: AiError[];
+  vocabulary?: AiError[];
   n: number | null;
   label?: string;
   part?: string;
@@ -59,6 +66,42 @@ const CRIT: [keyof NonNullable<AiTask["criteria"]>, string][] = [
   ["gra", "Grammar"],
 ];
 
+/** Xatolar ro'yxati (Jahongir: "Grammar mistakes, vocabulary mistakes
+ *  alohida har bir korsatilsin bitta bitta"). */
+function ErrorList({ title, items, tone }: { title: string; items: AiError[]; tone: string }) {
+  return (
+    <div className="mt-2">
+      <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+        {title} ({items.length})
+      </p>
+      {items.length ? (
+        <ol className="mt-1 space-y-1">
+          {items.map((e, i) => (
+            <li key={i} className="flex gap-2 text-sm leading-snug">
+              <span className="w-5 shrink-0 text-right text-xs text-slate-400 tabular-nums pt-0.5">
+                {i + 1}.
+              </span>
+              <span className="min-w-0">
+                <span className="text-rose-700 line-through decoration-rose-300">{e.wrong}</span>
+                <span className="mx-1.5 text-slate-400">→</span>
+                <span className={`font-semibold ${tone}`}>{e.right}</span>
+                {e.why ? <span className="ml-2 text-xs text-slate-500">· {e.why}</span> : null}
+                {e.serious ? (
+                  <span className="ml-2 rounded bg-amber-100 px-1.5 py-px text-[10px] font-semibold text-amber-800">
+                    affects meaning
+                  </span>
+                ) : null}
+              </span>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p className="mt-0.5 text-xs text-slate-400">No mistakes found.</p>
+      )}
+    </div>
+  );
+}
+
 /** Umumiy natija: "Band 6.5" yoki "54 / 75 · B2 (taxminiy)". */
 export function aiSummary(r: AiReview | null | undefined): string {
   if (!r || r.score == null) return "";
@@ -77,7 +120,7 @@ export function AiReviewCard({ review }: { review: AiReview }) {
           AI bahosi ·{" "}
           {ielts
             ? "4 mezon, Task 2 ikki barobar og'ir"
-            : "rasmiy shkala (1.1: 0–5, 1.2 va 2: 0–6)"}
+            : "rasmiy shkala (1.1 va 1.2: 0–5, 2: 0–6; jami 16)"}
         </span>
       </div>
       {(review.tasks || []).map((t) => (
@@ -108,12 +151,23 @@ export function AiReviewCard({ review }: { review: AiReview }) {
               ))}
             </div>
           ) : null}
-          {t.skipped ? (
-            <p className="mt-1.5 text-xs text-amber-700">
-              Javob bo'sh yoki juda qisqa — baholanmadi (0).
-            </p>
-          ) : t.feedback ? (
-            <p className="mt-1.5 text-sm text-slate-700">{t.feedback}</p>
+          {/* Izoh inglizcha, rasmiy "Examiner comment" uslubida (2026-09-28,
+              Jahongir: "writing feedback inglizcha bolishi kerak") */}
+          {t.feedback ? (
+            <div className="mt-2">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                Examiner comment
+              </p>
+              <p className="text-sm leading-relaxed text-slate-700">{t.feedback}</p>
+            </div>
+          ) : t.skipped ? (
+            <p className="mt-1.5 text-xs text-amber-700">Javob yozilmagan — 0.</p>
+          ) : null}
+          {!t.skipped && (t.grammar || t.vocabulary) ? (
+            <div className="grid gap-x-6 sm:grid-cols-2">
+              <ErrorList title="Grammar mistakes" items={t.grammar || []} tone="text-emerald-700" />
+              <ErrorList title="Vocabulary mistakes" items={t.vocabulary || []} tone="text-emerald-700" />
+            </div>
           ) : null}
         </div>
       ))}

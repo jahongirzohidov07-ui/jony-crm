@@ -171,9 +171,10 @@ function cefrLevel(c: Attempt["cefr"]): string | null {
 }
 
 function resultText(a: { score?: number | null; max?: number | null; band?: number | null; cefr?: Attempt["cefr"] }) {
-  if (a.band != null) return `Band ${a.band} · ${a.score ?? 0}/${a.max ?? 0}`;
+  // Writing (AI bahosi, 2026-09-28): avtomat savol yo'q — "0/0" yozilmaydi
+  if (a.band != null) return a.max ? `Band ${a.band} · ${a.score ?? 0}/${a.max}` : `Band ${a.band} (AI)`;
   const lv = cefrLevel(a.cefr);
-  if (lv) return `${lv} (taxminiy) · ${a.score ?? 0}/${a.max ?? 0}`;
+  if (lv) return a.max ? `${lv} (taxminiy) · ${a.score ?? 0}/${a.max}` : `${lv} (AI)`;
   if (!a.max) return "tekshirilmaydi";
   return `${a.score ?? 0}/${a.max}`;
 }

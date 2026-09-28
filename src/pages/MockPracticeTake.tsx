@@ -10,6 +10,7 @@ import {
 } from "../components/ExamPaper";
 import { CdExam } from "../components/CdExam";
 import { AnswerSheetTable, type AnswerRow } from "../components/ExamOnline";
+import { AI_ERROR_TEXT, AiReviewCard, type AiReview } from "../components/WritingAiReview";
 import {
   MockIssueDialog, IssueStatusBadge, type IssueTarget,
 } from "../components/MockIssueDialog";
@@ -89,6 +90,9 @@ type Review = {
   key_hidden?: boolean;
   answered?: number;
   auto_count?: number;
+  /** Writing mocki — AI baholaydi (2026-09-28) */
+  ai_writing?: boolean;
+  ai?: AiReview | null;
 };
 
 function isReview(d: Any): boolean {
@@ -377,6 +381,44 @@ export default function MockPracticeTake() {
     if (review) store(keyV, null);
   }, [review, keyV]);
 
+  // WRITING AI (2026-09-28): topshirilgan insholarni AI baholaydi —
+  // natija sahifaga qaytadi. Bir sahifada bir marta o'zi so'raydi,
+  // xato bo'lsa "Qayta urinish" tugmasi.
+  const [aiBusy, setAiBusy] = useState(false);
+  const [aiErr, setAiErr] = useState(false);
+  const aiAsked = useRef(false);
+  const aiPolls = useRef(0);
+  const aiGrade = useCallback(
+    async (force = false) => {
+      setAiBusy(true);
+      setAiErr(false);
+      try {
+        const r = await api.post<Review>(
+          `/mock-practice/${pid}/ai-grade${force ? "?force=true" : ""}`,
+          {}
+        );
+        if (r && Array.isArray(r.detail)) {
+          setReview(r);
+          // Boshqa oynada baholanayotgan bo'lsa — 8 s dan keyin yana so'raymiz
+          if ((!r.ai || r.ai.status === "running") && aiPolls.current < 8) {
+            aiPolls.current += 1;
+            setTimeout(() => void aiGrade(), 8000);
+          }
+        }
+      } catch {
+        setAiErr(true); // tarmoq / vaqt tugadi — "Qayta urinish" chiqadi
+      } finally {
+        setAiBusy(false);
+      }
+    },
+    [pid]
+  );
+  useEffect(() => {
+    if (!review?.ai_writing || review.ai || aiAsked.current) return;
+    aiAsked.current = true;
+    void aiGrade();
+  }, [review, aiGrade]);
+
   const qCount = useMemo(
     () => (run?.parts || []).reduce((a, p) => a + p.questions.length, 0),
     [run]
@@ -480,10 +522,36 @@ export default function MockPracticeTake() {
             {review.title || review.content_key}
             {review.variant ? ` · ${review.variant}` : ""}
           </p>
-          {essay ? (
+          {review.ai_writing ? (
+            <div className="mt-2">
+              {review.ai?.status === "done" ? (
+                <AiReviewCard review={review.ai} />
+              ) : !aiErr && (aiBusy || !review.ai || review.ai.status === "running") ? (
+                <p className="text-sm text-violet-700 bg-violet-50 rounded-lg px-3 py-2">
+                  AI insholaringizni baholamoqda… (odatda 10–20 soniya)
+                </p>
+              ) : (
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="text-sm text-rose-700">
+                    {aiErr
+                      ? "AI javob bermadi (internet yoki vaqt tugadi)"
+                      : AI_ERROR_TEXT[review.ai?.error || ""] || "AI baholay olmadi"}
+                  </p>
+                  <button
+                    type="button"
+                    disabled={aiBusy}
+                    onClick={() => void aiGrade(true)}
+                    className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                  >
+                    Qayta urinish
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : essay ? (
             <>
               <p className="text-lg font-bold text-slate-900 mt-1">
-                Writing / Speaking avtomat tekshirilmaydi
+                Speaking avtomat tekshirilmaydi
               </p>
               <p className="text-sm text-slate-600 mt-1">
                 Javoblaringiz saqlandi. Ball qo'yilmaydi — savol yoki topshiriqda

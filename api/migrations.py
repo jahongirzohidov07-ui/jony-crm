@@ -181,6 +181,15 @@ MIGRATIONS = [
     ("0020_exam_away_eids", [
         "ALTER TABLE exam_submissions ADD COLUMN away_eids TEXT",
     ]),
+    # 2026-09-28: Writing AI bahosi (writing_ai.py) — avtomat qo'riqchi
+    # ham qo'shadi, lekin loglarda tasdiqlab bo'lmaydi; shu kafolat.
+    ("0021_writing_ai", [
+        "ALTER TABLE exam_submissions ADD COLUMN ai_status VARCHAR",
+        "ALTER TABLE exam_submissions ADD COLUMN ai_score FLOAT",
+        "ALTER TABLE exam_submissions ADD COLUMN ai_review TEXT",
+        "ALTER TABLE exam_submissions ADD COLUMN paper_by VARCHAR",
+        "ALTER TABLE mock_practice ADD COLUMN ai_review TEXT",
+    ]),
 ]
 
 

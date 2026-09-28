@@ -3669,13 +3669,20 @@ AI speaking tutor. Be honest that you are AI if asked.
 Topic of this conversation: {topic}."""
 
 
-def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> str:
+def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160,
+              temperature=None, json_mode: bool = False,
+              per_call: float = 8) -> str:
     """LLM'ga murojaat. OPENAI_API_KEY yoki GEMINI_API_KEY dan birini
-    ishlatadi. Testda shu funksiya almashtiriladi (monkeypatch)."""
+    ishlatadi. Testda shu funksiya almashtiriladi (monkeypatch).
+
+    temperature / json_mode / per_call — baholash uchun (writing_ai.py,
+    2026-09-28): barqaror ball uchun past harorat, faqat JSON javob va
+    uzunroq javobga ko'proq vaqt. Berilmasa avvalgidek (0.7, matn, 8 s)."""
     import httpx
     import time as _clock
     from teacher_response import generation_config, response_text
     deadline = _clock.monotonic() + 22
+    temp = 0.7 if temperature is None else float(temperature)
 
     # Chat uses text/teacher; exam callers use content/assistant.
     messages = [{"role": m.get("role", "user"),
@@ -3697,13 +3704,15 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
                 json={
                     "model": os.getenv("SPEAKING_MODEL", "gpt-4o-mini"),
                     "max_tokens": max_tokens,
-                    "temperature": 0.7,
+                    "temperature": temp,
+                    **({"response_format": {"type": "json_object"}}
+                       if json_mode else {}),
                     "messages": [{"role": "system", "content": system}] + [
                         {"role": ("assistant" if m["role"] in ("teacher", "assistant")
                                   else "user"),
                          "content": m["text"]} for m in messages],
                 },
-                timeout=12,
+                timeout=max(12, per_call),
             )
             r.raise_for_status()
             reply = (r.json()["choices"][0]["message"].get("content") or "").strip()
@@ -3772,9 +3781,13 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
         for model in order:
             if _clock.monotonic() >= deadline - 1:
                 break
+            gcfg = generation_config(model, max_tokens)
+            gcfg["temperature"] = temp
+            if json_mode:
+                gcfg["responseMimeType"] = "application/json"
             body = {
                 "systemInstruction": {"parts": [{"text": system}]},
-                "generationConfig": generation_config(model, max_tokens),
+                "generationConfig": gcfg,
                 "contents": contents,
             }
             for attempt in (1,):
@@ -3783,7 +3796,7 @@ def _ai_reply(system: str, messages: list[dict], *, max_tokens: int = 160) -> st
                         f"https://generativelanguage.googleapis.com/"
                         f"v1beta/models/{model}:generateContent",
                         headers={"x-goog-api-key": gem},
-                        json=body, timeout=max(1, min(8, deadline - _clock.monotonic())))
+                        json=body, timeout=max(1, min(per_call, deadline - _clock.monotonic())))
                     r.raise_for_status()
                     reply = response_text(r.json())
                     _ai_reply._good = model  # type: ignore

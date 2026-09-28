@@ -4362,6 +4362,16 @@ class ExamSubmission(Base):
     submitted_at = Column(DateTime, default=datetime.utcnow)
     placed_by = Column(String, nullable=True)
     placed_at = Column(DateTime, nullable=True)
+    # WRITING AI BAHOSI (2026-09-28, Jahongir: "Writingni ham
+    # avtobaholaydigan qilib qoysak"). writing_ai.py baholaydi, alohida
+    # so'rovda (Vercel 30 s): pending | running | done | error | no_key.
+    # ai_score — band (0-9) yoki CEFR 0-75; ai_review — JSON (har
+    # topshiriq mezonlari, izoh). paper_by — qog'oz balini kim qo'ydi:
+    # "ai" yoki examiner ismi (examiner bahosini AI hech qachon yozmaydi).
+    ai_status = Column(String, nullable=True)
+    ai_score = Column(Float, nullable=True)
+    ai_review = Column(Text, nullable=True)
+    paper_by = Column(String, nullable=True)
 
 
 # ------------------------------------------------ XODIMLAR MOCK MASHQI
@@ -4394,6 +4404,9 @@ class MockPractice(Base):
     max_score = Column(Float, nullable=True)
     band = Column(Float, nullable=True)                  # IELTS L/R
     cefr = Column(Text, nullable=True)                   # JSON lr_approx (taxminiy)
+    # Writing AI bahosi (2026-09-28) — writing_ai.py natijasi JSON:
+    # {status, score, band|level, tasks[...], at}
+    ai_review = Column(Text, nullable=True)
     script_opened = Column(String, nullable=True)        # "0,2" — TTS skriptlar
     # in_progress | submitted
     status = Column(String, nullable=False, default="in_progress", index=True)

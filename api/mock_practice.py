@@ -45,6 +45,7 @@ from auth import has_role, require_role
 from database import get_db
 from exam_online import (GRACE_SEC, ESSAY_MAX_CHARS, _BANK_LABELS,
                          _BANK_ORDER, _GRADING, _PRACTICE_BANKS,
+                         _SEC_ORDER, _parse_iso, AI_RUNNING_SEC,
                          _answer_sheet, _iso, _load, _load_dict,
                          deny_mobile,
                          _mock_section, _norm, _opt_label, _qmap,
@@ -334,7 +335,93 @@ def _review(db: Session, p: models.MockPractice, user, tpl) -> dict:
         "limited": limited, "key_hidden": bool(hide_all),
         "detail": sheet,
         "issues": _issues_of_attempt(db, p),
+        # Writing — AI bahosi (2026-09-28); sahifa yo'q bo'lsa baholatadi
+        "ai_writing": _is_writing(parts),
+        "ai": _ai_of(p),
     }
+
+
+# ------------------------------------------------------- WRITING AI
+# 2026-09-28, Jahongir: "Writingni ham avtobaholaydigan qilib qoysak".
+# Xodim sinovida ham insho AI bilan baholanadi — natija faqat egasiga.
+# Holat p.ai_review JSON ichida: {"status": running|done|error|no_key}.
+AI_OWNER_TRIES = 5
+
+
+def _is_writing(parts) -> bool:
+    import writing_ai
+    return writing_ai.skill_of(parts) is not None
+
+
+def _ai_of(p) -> Optional[dict]:
+    d = _load_dict(p.ai_review)
+    if not d:
+        return None
+    d.pop("started", None)
+    d.pop("prev", None)
+    return d
+
+
+@router.post("/api/mock-practice/{pid}/ai-grade")
+def ai_grade(pid: int, force: bool = False, db: Session = Depends(get_db),
+             user=Depends(require_role(*roles.MOCK_PRACTICE))):
+    """Topshirilgan Writing urinishini AI bilan baholaydi (bitta so'rov —
+    bitta urinish, Vercel 30 s). Idempotent: baholangan bo'lsa qayta
+    chaqirmaydi (force — qayta baholash)."""
+    import writing_ai
+    p = _own(db, pid, user)
+    tpl = _tpl_for(db, p)
+    parts = _load(tpl.parts)
+    if p.status != "submitted" or not writing_ai.skill_of(parts):
+        return _review(db, p, user, tpl) if p.status == "submitted" else {"ok": False}
+    meta = _load_dict(p.ai_review)
+    st = meta.get("status")
+    now = datetime.utcnow()
+    tries = int(meta.get("tries") or 0)
+    if st == "done" and not force:
+        return _review(db, p, user, tpl)
+    if st == "running":
+        started = _parse_iso(meta.get("started"))
+        if started and (now - started).total_seconds() < AI_RUNNING_SEC:
+            return _review(db, p, user, tpl)
+    # Avtomat urinishlar 5 ta; egasi "Qayta urinish" (force) bosa — 10 tagacha
+    if st != "done" and tries >= (AI_OWNER_TRIES * 2 if force else AI_OWNER_TRIES):
+        return _review(db, p, user, tpl)
+    M = models.MockPractice
+    old = p.ai_review
+    claim = {"status": "running", "tries": tries,
+             "started": now.isoformat(timespec="seconds")}
+    q = db.query(M).filter(M.id == p.id)
+    q = q.filter(M.ai_review.is_(None) if old is None else M.ai_review == old)
+    got = q.update({M.ai_review: json.dumps(claim)}, synchronize_session=False)
+    db.commit()
+    db.refresh(p)
+    if got != 1:
+        return _review(db, p, user, tpl)
+    try:
+        res = writing_ai.grade(parts, _load_dict(p.answers))
+    except writing_ai.WritingAIError as e:
+        db.refresh(p)
+        if st == "done":
+            p.ai_review = old         # qayta baholash bo'lmadi — eskisi qoladi
+        else:
+            p.ai_review = json.dumps({
+                "status": "no_key" if e.code == "no_key" else "error",
+                "error": e.code, "tries": tries + 1,
+                "at": now.isoformat(timespec="seconds")})
+        db.commit()
+        return _review(db, p, user, tpl)
+    db.refresh(p)
+    res.update({"status": "done", "tries": tries + 1})
+    p.ai_review = json.dumps(res, ensure_ascii=False)
+    if res["skill"] == "ielts_writing":
+        p.band = float(res["band"])
+    else:
+        p.cefr = json.dumps({"level": res.get("level"), "score": res.get("score"),
+                             "of": 75, "approx": not res.get("exact")},
+                            ensure_ascii=False)
+    db.commit()
+    return _review(db, p, user, tpl)
 
 
 # ------------------------------------------------------------- katalog
@@ -397,7 +484,7 @@ def catalog(db: Session = Depends(get_db),
     for bank in sorted(banks, key=lambda b: (b in _PRACTICE_BANKS,
                                              _BANK_ORDER.get(b, 9), b)):
         secs = []
-        for sec in sorted(banks[bank]):
+        for sec in sorted(banks[bank], key=lambda x: (_SEC_ORDER.get(x, 9), x)):
             items = sorted(banks[bank][sec],
                            key=lambda x: (x["variant"], x["content_key"]))
             auto, note = _GRADING.get((bank, sec), (False, ""))

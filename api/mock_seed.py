@@ -266,7 +266,11 @@ def _strict_col(db: Session) -> str:
     loglarida sxema/migratsiya qatorlari ba'zan yo'qoladi, [mock-audit]
     esa har sovuq startda ko'rinadi — tekshiruv shu qatorda turadi."""
     try:
-        db.query(models.ExamSubmission.away_eids).limit(1).all()
+        # 2026-09-28: Writing AI ustunlari ham (migratsiya 0021)
+        db.query(models.ExamSubmission.away_eids,
+                 models.ExamSubmission.ai_status,
+                 models.ExamSubmission.ai_review,
+                 models.ExamSubmission.paper_by).limit(1).all()
         return "bor"
     except Exception as e:      # noqa: BLE001
         db.rollback()

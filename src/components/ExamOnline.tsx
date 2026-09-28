@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
-import { Copy, Check, Link2, Lock, Unlock, X, Calculator } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Copy, Check, Link2, Lock, Unlock, X, Calculator, Sparkles, RotateCw } from "lucide-react";
 import { api } from "../lib/api";
 import { levelLabel } from "../lib/subjects";
 import { MarkCalculator } from "./MarkCalculator";
+import {
+  AI_ERROR_TEXT, AI_TRANSIENT, AiReviewCard, aiSummary, type AiReview,
+} from "./WritingAiReview";
 
 /**
  * ONLINE TEST — guruh testining linki (2026-09-18).
@@ -32,6 +35,12 @@ export type OnlineSubmission = {
   away_count: number;
   away_sec: number;
   photo: string | null;
+  /** Writing AI bahosi (2026-09-28): pending | running | done | error | no_key */
+  ai_status?: string | null;
+  ai_score?: number | null;
+  ai_review?: AiReview | null;
+  /** Qog'oz balini kim qo'ydi: "ai" yoki examiner ismi */
+  paper_by?: string | null;
   detail: {
     id: string;
     n: number;
@@ -72,6 +81,8 @@ export type OnlineData = {
     scripts?: { part: string; script: string }[];
     online_max: number;
     paper_max: number;
+    /** Mock Writing — AI baholaydi (2026-09-28) */
+    ai_writing?: boolean;
     published_at: string | null;
     published_by: string | null;
     state: "waiting" | "countdown" | "running" | "finished";
@@ -169,8 +180,9 @@ export function AnswerSheetButton({
 }) {
   const [open, setOpen] = useState(false);
   const [onlyWrong, setOnlyWrong] = useState(false);
-  const wrong = s.detail.filter((d) => !d.ok).length;
-  const rows = onlyWrong ? s.detail.filter((d) => !d.ok) : s.detail;
+  // Insho (ok === null) xato emas — avtomat tekshirilmaydi (2026-09-28)
+  const wrong = s.detail.filter((d) => d.ok === false).length;
+  const rows = onlyWrong ? s.detail.filter((d) => d.ok === false) : s.detail;
   return (
     <>
       <button
@@ -267,7 +279,10 @@ export function AnswerSheetTable({
             )}
             <div
               className={`rounded-lg border px-3 py-2 text-sm ${
-                d.ok ? "border-emerald-200 bg-emerald-50/40" : "border-rose-200 bg-rose-50/50"
+                // Insho (ok === null) — xato emas, neytral (2026-09-28)
+                d.ok === null
+                  ? "border-slate-200 bg-slate-50/60"
+                  : d.ok ? "border-emerald-200 bg-emerald-50/40" : "border-rose-200 bg-rose-50/50"
               }`}
             >
               {(() => {
@@ -576,11 +591,10 @@ export function OnlineLinkCard({
         </p>
         {kind === "mock" && (
           <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 mb-2">
-            Mock: Listening va Reading avtomat tekshiriladi. IELTS'da xom
-            ball rasmiy jadval bo'yicha bandga o'giriladi. CEFR
-            Multilevel'da rasmiy o'tkazish jadvali yo'q — examiner xom
-            ballni ko'rib darajani o'zi qo'yadi. Writing va Speaking
-            bahosi qog'oz balida kiritiladi.
+            Mock: Listening va Reading avtomat tekshiriladi, IELTS'da band
+            o'zi chiqadi; CEFR'da darajani examiner tasdiqlaydi. Writing'ni
+            AI baholaydi (examiner xohlasa o'zgartiradi). Speaking bahosini
+            examiner kiritadi.
           </p>
         )}
         {data.templates.length === 0 ? (
@@ -706,10 +720,21 @@ export function OnlineLinkCard({
               <button
                 disabled={busy}
                 onClick={() => {
+                  // Writing AI hali baholamagan / baholay olmaganlar —
+                  // ball qo'yilmaguncha ular jadvalga tushmaydi (2026-09-28)
+                  const aiLeft = data.submissions.filter(
+                    (s) =>
+                      s.status === "placed" &&
+                      s.paper_score == null &&
+                      ["pending", "running", "error", "no_key"].includes(s.ai_status || "")
+                  ).length;
                   if (
                     confirm(
                       `${placed} ta natija tasdiqlansinmi? Shundan keyin o'quvchi, ustoz va ota-onaga ko'rinadi, coin beriladi.` +
-                        (waiting ? `\n\nDiqqat: ${waiting} ta aniqlanmagan natija hali biriktirilmagan.` : "")
+                        (waiting ? `\n\nDiqqat: ${waiting} ta aniqlanmagan natija hali biriktirilmagan.` : "") +
+                        (aiLeft
+                          ? `\n\nDiqqat: ${aiLeft} ta Writing'ga AI hali ball qo'ymagan — ular ball kiritilgunicha jadvalga tushmaydi.`
+                          : "")
                     )
                   )
                     run(() => api.post<OnlineData>(`/exams/${examId}/online/publish`, {}));
@@ -829,6 +854,54 @@ export function OnlineLinkCard({
   );
 }
 
+/** Writing AI holati (2026-09-28): baho chipi / baholanmoqda / xato. */
+function AiCell({
+  s,
+  busy,
+  canManage,
+  onOpen,
+  onRetry,
+}: {
+  s: OnlineSubmission;
+  busy: boolean;
+  canManage: boolean;
+  onOpen: () => void;
+  onRetry: () => void;
+}) {
+  if (busy || s.ai_status === "pending" || s.ai_status === "running")
+    return (
+      <span className="inline-flex items-center gap-1 text-[11px] text-violet-600 whitespace-nowrap">
+        <Sparkles size={12} className="animate-pulse" /> AI baholamoqda…
+      </span>
+    );
+  if (s.ai_status === "done")
+    return (
+      <button
+        type="button"
+        onClick={onOpen}
+        title="AI bahosi — mezonlar va izoh"
+        className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-0.5 text-[11px] font-medium text-violet-700 hover:bg-violet-100 whitespace-nowrap"
+      >
+        <Sparkles size={11} /> AI {aiSummary(s.ai_review).replace(/^Band /, "")}
+      </button>
+    );
+  if (s.ai_status === "error" || s.ai_status === "no_key")
+    return (
+      <span className="inline-flex items-center gap-1 text-[11px] text-rose-600 whitespace-nowrap">
+        <button type="button" onClick={onOpen} className="underline decoration-dotted"
+          title={AI_ERROR_TEXT[s.ai_review?.error || ""] || "AI xato"}>
+          AI: xato
+        </button>
+        {canManage && (
+          <button type="button" onClick={onRetry} title="Qayta urinish" className="p-0.5 hover:text-rose-800">
+            <RotateCw size={12} />
+          </button>
+        )}
+      </span>
+    );
+  return null;
+}
+
 /** Jadval ostida: Writing/Speaking kiritish va qizil chiziqdan
  *  pastdagi (aniqlanmagan) natijalar. */
 export function OnlineBelow({
@@ -850,15 +923,100 @@ export function OnlineBelow({
   const [calcFor, setCalcFor] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Examiner yozgan, hali saqlanmagan ballar — qayta yuklashda o'chmasin
+  const dirty = useRef<Set<number>>(new Set());
+  // WRITING AI (2026-09-28): qaysi topshiruv hozir baholanmoqda, qaysisi
+  // shu sahifada urinib ko'rilgan (bir xil xato qayta-qayta so'ralmasin)
+  const [aiBusy, setAiBusy] = useState<number | null>(null);
+  const [aiView, setAiView] = useState<number | null>(null);
+  // id -> oxirgi urinish vaqti (ms): 90 s dan keyin qayta so'rash mumkin
+  // (server "running" ni 75 s dan keyin osilgan deb hisoblaydi)
+  const aiTried = useRef<Map<number, number>>(new Map());
+  const aiOn = !!data?.online?.ai_writing && !!data?.can_manage;
+  const aiWaiting = !!data?.submissions.some(
+    (s) =>
+      s.ai_status === "pending" ||
+      s.ai_status === "running" ||
+      (s.ai_status === "error" &&
+        AI_TRANSIENT.includes(s.ai_review?.error || "") &&
+        (s.ai_review?.tries ?? 0) < 3)
+  );
 
   useEffect(() => {
     if (!data) return;
-    const next: Record<number, string> = {};
-    for (const s of data.submissions)
-      if (s.status === "placed" && s.student_id)
-        next[s.student_id] = s.paper_score != null ? String(s.paper_score) : "";
-    setPaper(next);
+    setPaper((prev) => {
+      const next: Record<number, string> = {};
+      for (const s of data.submissions)
+        if (s.status === "placed" && s.student_id)
+          next[s.student_id] = dirty.current.has(s.student_id)
+            ? prev[s.student_id] ?? ""
+            : s.paper_score != null
+              ? String(s.paper_score)
+              : "";
+      return next;
+    });
   }, [data]);
+
+  async function aiGrade(sid: number, force = false, manual = false) {
+    setAiBusy(sid);
+    aiTried.current.set(sid, Date.now());
+    try {
+      const r = await api.post<{ status: string; ai_review?: AiReview | null }>(
+        `/exam-submissions/${sid}/ai-grade${force ? "?force=true" : ""}`,
+        {}
+      );
+      if (manual && (r?.status === "error" || r?.status === "no_key"))
+        setError(
+          "AI baholay olmadi: " +
+            (AI_ERROR_TEXT[r.ai_review?.error || ""] || "qayta urinib ko'ring")
+        );
+    } catch (e) {
+      if (manual) setError(e instanceof Error ? e.message : "AI baholay olmadi");
+    }
+    try {
+      setData(await api.fresh<OnlineData>(`/exams/${examId}/online`));
+    } catch {
+      /* keyingi yangilanishda */
+    }
+    setAiBusy(null);
+  }
+
+  // Sahifa ochilganda AI kutayotganlarni bittadan baholatadi (bitta
+  // so'rov — bitta topshiruv; o'quvchi brauzeri ulgurmagan bo'lsa).
+  // "running" — boshqa so'rov (masalan o'quvchi brauzeri) baholayapti;
+  // 90 s dan keyin ham tugamasa server uni osilgan deb qayta beradi.
+  useEffect(() => {
+    if (!data || !aiOn || aiBusy !== null) return;
+    const now = Date.now();
+    const next = data.submissions.find((s) => {
+      if (!["placed", "pending", "duplicate"].includes(s.status)) return false;
+      // Vaqtinchalik xato (limit, AI javob bermadi) — server ruxsat
+      // bergancha (3 marta) o'zi qayta urinadi
+      const retry =
+        s.ai_status === "error" &&
+        AI_TRANSIENT.includes(s.ai_review?.error || "") &&
+        (s.ai_review?.tries ?? 0) < 3;
+      if (s.ai_status !== "pending" && s.ai_status !== "running" && !retry) return false;
+      const t = aiTried.current.get(s.id);
+      return t === undefined || now - t > 90000;
+    });
+    if (!next) return;
+    void aiGrade(next.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, aiOn, aiBusy]);
+
+  // AI kutilayotgan bo'lsa — link yopilgan bo'lsa ham — har 8 soniyada
+  // yangilanadi ("baholamoqda" o'z-o'zidan natijaga almashsin)
+  useEffect(() => {
+    if (!aiOn || !aiWaiting || aiBusy !== null) return;
+    const t = setTimeout(() => {
+      api
+        .fresh<OnlineData>(`/exams/${examId}/online`)
+        .then(setData)
+        .catch(() => {});
+    }, 8000);
+    return () => clearTimeout(t);
+  }, [aiOn, aiWaiting, aiBusy, data, examId, setData]);
 
   if (!data || !data.online) return null;
   const o = data.online;
@@ -889,23 +1047,32 @@ export function OnlineBelow({
         <div className="border border-slate-200 rounded-xl bg-white overflow-hidden">
           <div className="flex items-center justify-between px-4 py-3 bg-slate-50">
             <p className="text-sm font-medium text-slate-700">
-              Writing + Speaking (qog'oz, max {o.paper_max})
+              {o.ai_writing
+                ? `Writing — AI baholaydi, examiner o'zgartira oladi (max ${o.paper_max})`
+                : `Writing + Speaking (qog'oz, max ${o.paper_max})`}
             </p>
             {data.can_manage && (
               <button
                 disabled={busy}
                 onClick={() =>
-                  run(() =>
-                    api.put<OnlineData>(`/exams/${examId}/paper`, {
-                      marks: placed.map((s) => ({
-                        student_id: s.student_id,
-                        paper:
-                          (paper[s.student_id!] ?? "").trim() === ""
-                            ? null
-                            : Number(paper[s.student_id!]),
-                      })),
-                    })
-                  )
+                  run(async () => {
+                    // Faqat examiner o'zgartirgan qatorlar yuboriladi — eski
+                    // (bo'sh) katak fonda AI qo'ygan balni o'chirib
+                    // yubormasin (2026-09-28 ko'rigi)
+                    const d = await api.put<OnlineData>(`/exams/${examId}/paper`, {
+                      marks: placed
+                        .filter((s) => dirty.current.has(s.student_id!))
+                        .map((s) => ({
+                          student_id: s.student_id,
+                          paper:
+                            (paper[s.student_id!] ?? "").trim() === ""
+                              ? null
+                              : Number(paper[s.student_id!]),
+                        })),
+                    });
+                    dirty.current.clear();
+                    return d;
+                  })
                 }
                 className="bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-3 py-1.5 text-sm font-medium disabled:opacity-60"
               >
@@ -932,7 +1099,7 @@ export function OnlineBelow({
                       </AnswerSheetButton>
                     </td>
                     <td className="px-4 py-2">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex flex-wrap items-center gap-1.5">
                         <input
                           type="number"
                           min={0}
@@ -941,10 +1108,19 @@ export function OnlineBelow({
                           className="w-20 rounded-lg border border-slate-300 px-2 py-1 text-sm"
                           value={p}
                           placeholder="—"
-                          onChange={(e) =>
-                            setPaper({ ...paper, [s.student_id!]: e.target.value })
+                          title={
+                            s.paper_by === "ai"
+                              ? "AI qo'ygan ball — o'zgartirsangiz examiner bahosi bo'ladi"
+                              : undefined
                           }
+                          onChange={(e) => {
+                            dirty.current.add(s.student_id!);
+                            setPaper({ ...paper, [s.student_id!]: e.target.value });
+                          }}
                         />
+                        {s.paper_by === "ai" && p === String(s.paper_score ?? "") ? (
+                          <span className="text-[10px] font-semibold text-violet-600">AI</span>
+                        ) : null}
                         {/* Examiner yakuniy ballni o'zi hisoblamasin:
                             mezonlarni qo'yadi, tizim jadval bo'yicha
                             chiqaradi (Jahongir: "Examinerga iloji
@@ -959,6 +1135,17 @@ export function OnlineBelow({
                             <Calculator size={15} />
                           </button>
                         )}
+                        {aiOn || s.ai_status ? (
+                          <AiCell
+                            s={s}
+                            busy={aiBusy === s.id}
+                            canManage={data.can_manage}
+                            onOpen={() => setAiView(s.id)}
+                            onRetry={() => {
+                              if (aiBusy === null) void aiGrade(s.id, true, true);
+                            }}
+                          />
+                        ) : null}
                       </div>
                     </td>
                     <td className="px-4 py-2 text-right font-medium text-slate-800 whitespace-nowrap">
@@ -978,6 +1165,82 @@ export function OnlineBelow({
         </div>
       )}
 
+      {aiView != null && (() => {
+        const s = data.submissions.find((x) => x.id === aiView);
+        if (!s) return null;
+        return (
+          <div
+            className="fixed inset-0 bg-slate-900/40 z-50 overflow-y-auto"
+            onClick={() => setAiView(null)}
+          >
+            <div
+              className="bg-slate-50 max-w-2xl mx-auto my-6 rounded-xl shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-3 p-4 border-b border-slate-200 bg-white rounded-t-xl">
+                <Photo src={s.photo} size={40} />
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-slate-900 truncate">
+                    {s.student_name || s.typed_name || "—"}
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    Writing AI bahosi
+                    {s.paper_by && s.paper_by !== "ai"
+                      ? ` · qog'oz bali: ${s.paper_score} (${s.paper_by})`
+                      : ""}
+                  </p>
+                </div>
+                {/* E'londan keyin kelgan yoki examiner o'chirgan AI bahosi —
+                    bir tugma bilan katakka qo'yiladi, keyin "Saqlash" */}
+                {data.can_manage &&
+                s.status === "placed" &&
+                s.student_id &&
+                s.ai_status === "done" &&
+                s.ai_score != null &&
+                s.paper_score !== s.ai_score ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      dirty.current.add(s.student_id!);
+                      setPaper((prev) => ({ ...prev, [s.student_id!]: String(s.ai_score) }));
+                      setAiView(null);
+                    }}
+                    className="rounded-lg bg-violet-600 px-2.5 py-1.5 text-xs font-medium text-white hover:bg-violet-700"
+                  >
+                    Ballni qo'yish ({s.ai_score})
+                  </button>
+                ) : null}
+                {data.can_manage && (
+                  <button
+                    type="button"
+                    disabled={aiBusy !== null}
+                    onClick={() => void aiGrade(s.id, true, true)}
+                    className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                  >
+                    <RotateCw size={13} className={aiBusy === s.id ? "animate-spin" : ""} />
+                    Qayta baholash
+                  </button>
+                )}
+                <button onClick={() => setAiView(null)} className="text-slate-400 hover:text-slate-600">
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="p-4">
+                {s.ai_status === "done" && s.ai_review ? (
+                  <AiReviewCard review={s.ai_review} />
+                ) : (
+                  <p className="text-sm text-slate-600">
+                    {s.ai_status === "pending" || s.ai_status === "running"
+                      ? "AI baholamoqda…"
+                      : AI_ERROR_TEXT[s.ai_review?.error || ""] || "AI bahosi yo'q"}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
       {calcFor != null && (
         <MarkCalculator
           templateTitle={o.template_title}
@@ -985,9 +1248,10 @@ export function OnlineBelow({
           studentName={
             placed.find((s) => s.student_id === calcFor)?.student_name ?? null
           }
-          onApply={(v) =>
-            setPaper((prev) => ({ ...prev, [calcFor]: String(v) }))
-          }
+          onApply={(v) => {
+            dirty.current.add(calcFor);
+            setPaper((prev) => ({ ...prev, [calcFor]: String(v) }));
+          }}
           onClose={() => setCalcFor(null)}
         />
       )}

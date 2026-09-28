@@ -45,7 +45,8 @@ type PublicExam = {
   students: { id: number; name: string }[];
   parts: Part[];
 };
-type Done = { paper_max: number; pending: boolean; auto?: boolean };
+/** ai — Writing mocki: insholarni AI baholaydi (2026-09-28) */
+type Done = { paper_max: number; pending: boolean; auto?: boolean; ai?: boolean };
 
 function store(key: string, val?: unknown) {
   try {
@@ -173,7 +174,14 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
             store(`exam:${token}:key`, mine.key);
             setKey(mine.key);
           } else if (mine && ["placed", "duplicate", "pending"].includes(mine.status)) {
-            const d: Done = { paper_max: mine.paper_max, pending: mine.pending };
+            // Writing AI belgisi saqlanib qolsin (2026-09-28): server
+            // "my" javobida yo'q, shu brauzerdagi yozuvdan olinadi
+            const prev = store(`exam:${token}:done`) as Done | null;
+            const d: Done = {
+              paper_max: mine.paper_max,
+              pending: mine.pending,
+              ai: !!prev?.ai,
+            };
             store(`exam:${token}:done`, d);
             setDone(d);
           } else if (mine?.status === "expelled") {
@@ -261,10 +269,21 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
           setExpelled(true);
           return;
         }
-        const d: Done = { paper_max: j.paper_max, pending: j.pending, auto };
+        const d: Done = { paper_max: j.paper_max, pending: j.pending, auto, ai: !!j.ai_writing };
         store(`exam:${token}:done`, d);
         setDone(d);
         window.scrollTo(0, 0);
+        // WRITING AI (2026-09-28): insholar shu zahoti AI'ga ketadi.
+        // Javobini kutmaymiz (natija o'quvchiga ko'rsatilmaydi); sahifa
+        // yopilsa ham so'rov davom etadi (keepalive). Ulgurmasa —
+        // examiner sahifasi o'zi baholatadi.
+        if (j.ai_writing)
+          fetch(`${pub}/ai-grade`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ key }),
+            keepalive: true,
+          }).catch(() => {});
       } catch (e) {
         setError(e instanceof Error ? e.message : "Xatolik");
         submittingRef.current = false;
@@ -681,12 +700,17 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
         <p className="text-sm text-slate-600 my-3">
           Natijangiz examiner tekshirib tasdiqlagandan keyin e'lon qilinadi.
         </p>
-        {done.paper_max > 0 && (
+        {done.ai ? (
+          <p className="text-sm text-slate-600">
+            Writing'ingizni AI 4 mezon bo'yicha baholaydi, natijani examiner
+            tasdiqlab e'lon qiladi.
+          </p>
+        ) : done.paper_max > 0 ? (
           <p className="text-sm text-slate-600">
             Writing va Speaking (qog'ozda, {done.paper_max} ball) examiner
             tomonidan qo'shiladi.
           </p>
-        )}
+        ) : null}
         {done.pending && (
           <p className="text-sm text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mt-3">
             Natijangizni examiner tekshirib, ismingizga biriktiradi.

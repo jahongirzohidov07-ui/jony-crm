@@ -438,6 +438,9 @@ def _place(db: Session, exam, online, sub, student_id: int, user) -> None:
         old.status = "replaced"
         if sub.paper_score is None:
             sub.paper_score = old.paper_score
+            # Kim qo'ygani ham (AI bahosi bo'lsa — yangi urinishning
+            # AI bahosi kelganda almashadi, examinerniki — yo'q)
+            sub.paper_by = old.paper_by
     sub.student_id = student_id
     sub.status = "placed"
     sub.placed_by = user.full_name
@@ -618,51 +621,58 @@ _BANK_LABELS = {
 # to'liq imtihon tuzilishini bermaydi.
 _PRACTICE_BANKS = {"challenge25"}
 _BANK_ORDER = {"ielts": 0, "cefr": 1}
+# Bo'limlar imtihondagi tartibda: Listening, Reading, Writing, Speaking
+# (2026-09-28, Jahongir: "Speakingdan oldin Writing tursin"). Ilgari
+# alifbo bo'yicha edi — Speaking Writing'dan oldin chiqardi.
+_SEC_ORDER = {"listening": 0, "reading": 1, "writing": 2, "speaking": 3}
+
+# Har bo'lim QANCHA VAQT oladi — faqat ko'rsatish uchun (2026-09-28,
+# Jahongir: "qancha vaqt olishi kerak"). L/R/W — mock_practice.DURATION
+# bilan bir xil (sinov taymeri o'sha yerda); Speaking yuzma-yuz:
+# IELTS rasmiy 11-14 daqiqa, CEFR shablonida "taxminan 15 daqiqa".
+_SECTION_TIME = {
+    ("ielts", "listening"): "30 daqiqa",
+    ("ielts", "reading"): "60 daqiqa",
+    ("ielts", "writing"): "60 daqiqa",
+    ("ielts", "speaking"): "11–14 daqiqa",
+    ("cefr", "listening"): "35 daqiqa",
+    ("cefr", "reading"): "60 daqiqa",
+    ("cefr", "writing"): "60 daqiqa",
+    ("cefr", "speaking"): "~15 daqiqa",
+}
 
 # Har bo'lim qanday baholanadi. "auto" — tizim o'zi chiqaradi.
+# Matnlar qisqa, xom ball raqamlarisiz (2026-09-28, Jahongir: "xom
+# ballar degan narsalar kerak emas") — hisob-kitob kalkulyatorda.
 _GRADING = {
     ("ielts", "listening"): (
-        True, "Xom ball (40 tadan) rasmiy IELTS jadvali bo'yicha "
-              "bandga o'giriladi va guruh jadvaliga o'zi tushadi."),
+        True, "Band (0–9) avtomat chiqadi va guruh jadvaliga tushadi."),
     ("ielts", "reading"): (
-        True, "Xom ball (40 tadan) rasmiy Academic Reading jadvali "
-              "bo'yicha bandga o'giriladi."),
+        True, "Band (0–9) avtomat chiqadi va guruh jadvaliga tushadi."),
+    # Writing — AI baholaydi (writing_ai.py, 2026-09-28): har topshiriq
+    # 4 mezon bo'yicha, band avtomat; examiner xohlasa o'zgartiradi.
     ("ielts", "writing"): (
-        False, "Examiner 4 mezonga (0-9) baho qo'yadi — qog'oz bali "
-               "yonidagi kalkulyator bandni IELTS yaxlitlash qoidasi "
-               "bo'yicha o'zi chiqaradi."),
+        True, "AI har topshiriqni 4 mezon bo'yicha baholaydi, band "
+              "avtomat chiqadi. Examiner xohlasa o'zgartiradi."),
     ("ielts", "speaking"): (
-        False, "Yuzma-yuz o'tkaziladi. Examiner 4 mezonga (0-9) baho "
-               "qo'yadi, bandni kalkulyator chiqaradi."),
+        False, "Yuzma-yuz. Examiner 4 mezonga baho qo'yadi, bandni "
+               "kalkulyator chiqaradi."),
     ("cefr", "listening"): (
-        False, "RASMIY USUL — Rasch metodi: ball savollar kalibrovkasiga "
-               "va guruh statistikasiga bog'liq, qat'iy jadval yo'q. "
-               "Tizim faqat TAXMINIY daraja ko'rsatadi (C1 28-35, "
-               "B2 18-27, B1 10-17), ballni examiner qo'yadi."),
+        False, "Tizim taxminiy darajani ko'rsatadi, yakuniy ballni "
+               "examiner tasdiqlaydi."),
     ("cefr", "reading"): (
-        False, "Tinglab tushunish bilan bir xil: Rasch metodi, taxminiy "
-               "daraja ko'rsatiladi, ballni examiner qo'yadi."),
-    # Shablonlar YANGI 3 topshiriqli formatda (1.1 / 1.2 / Part 2) —
-    # eski 2 topshiriqli 4-mezonli shkala (x1.25) ularga to'g'ri
-    # kelmaydi; u kalkulyatorda "cefr_writing_old" bo'lib qolgan.
+        False, "Tizim taxminiy darajani ko'rsatadi, yakuniy ballni "
+               "examiner tasdiqlaydi."),
     ("cefr", "writing"): (
-        False, "Rasmiy shkala (yangi format): examiner har topshiriqqa "
-               "bitta baho qo'yadi — 1.1 -> 0-5, 1.2 -> 0-6, Part 2 -> "
-               "0-6 (jami 17), har bahoning CEFR darajasi ko'rinadi. "
-               "Kalkulyator rasmiy namuna nuqtalarini aniq beradi "
-               "(8 -> 45 B1, 12 -> 57 B2); to'liq 17 -> 75 jadvali "
-               "rasmiy manbada yo'q, oradagi ball TAXMINIY deb "
-               "belgilanadi — yakuniy ballni examiner tasdiqlaydi."),
+        True, "AI har topshiriqni rasmiy shkala bo'yicha baholaydi, "
+              "ball (0–75) va daraja examiner panelida avtomat chiqadi. "
+              "Examiner xohlasa o'zgartiradi."),
     ("cefr", "speaking"): (
-        False, "Examiner 4 guruhga baho qo'yadi (1-3, 4-6, 7 -> 0-5; "
-               "8 -> 0-6; jami 21). Kalkulyator 0-75 ball va darajani "
-               "rasmiy jadval bo'yicha o'zi chiqaradi."),
+        False, "Yuzma-yuz. Examiner baho qo'yadi, ball va darajani "
+               "kalkulyator chiqaradi."),
     ("challenge25", "reading"): (
-        False, "IELTS Reading savollari to'plami — MASHQ uchun, band "
-               "qo'yilmaydi (egasining qarori). Savollar avtomat "
-               "tekshiriladi, xom ball va javoblar varaqasi examinerda "
-               "ko'rinadi. To'plamlarda savol soni har xil (13 tadan "
-               "83 tagacha)."),
+        False, "Mashq uchun: band qo'yilmaydi, javoblar avtomat "
+               "tekshiriladi."),
 }
 
 
@@ -719,13 +729,16 @@ def mock_banks(db: Session = Depends(get_db),
             bank, sec = "ielts", skill or "?"
         b = banks.setdefault(bank, {})
         s = b.setdefault(sec, {"variants": set(), "levels": set(),
-                               "qs": [], "paper_max": set()})
+                               "qs": [], "paper_max": set(), "tasks": []})
         s["variants"].add(t.variant or "A")
         if t.level:
             s["levels"].add(t.level)
         s["paper_max"].add(float(t.paper_max or 0))
         n = sum(1 for q in _questions(parts) if q.get("type") != "essay")
         s["qs"].append(n)
+        # Writing/Speaking: nechta topshiriq (insho / og'zaki qism)
+        s["tasks"].append(sum(1 for q in _questions(parts)
+                              if q.get("type") == "essay"))
     # BANKLAR TARTIBI va MASHQ AJRATILISHI (2026-09-27).
     #
     # Jahongir: "challenge 25 nima qilyabdi bu mock emasku shunchaki
@@ -738,7 +751,8 @@ def mock_banks(db: Session = Depends(get_db),
     for bank in sorted(banks, key=lambda b: (b in _PRACTICE_BANKS,
                                              _BANK_ORDER.get(b, 9), b)):
         secs = []
-        for sec in sorted(banks[bank]):
+        for sec in sorted(banks[bank],
+                          key=lambda x: (_SEC_ORDER.get(x, 9), x)):
             s = banks[bank][sec]
             auto, note = _GRADING.get((bank, sec), (False, ""))
             qs = s["qs"] or [0]
@@ -750,7 +764,9 @@ def mock_banks(db: Session = Depends(get_db),
                 # (challenge25) — shuning uchun oralig'i ham beriladi
                 "questions": min(qs),
                 "questions_max": max(qs),
+                "tasks": max(s["tasks"] or [0]),
                 "paper_max": max(s["paper_max"]) if s["paper_max"] else 0,
+                "time": _SECTION_TIME.get((bank, sec)),
                 "auto": auto,
                 "grading": note,
             })
@@ -1143,7 +1159,22 @@ def _sub_out(s: models.ExamSubmission, names: dict,
         "detail": _answer_sheet(_load(s.detail), qmap or {}),
         # CEFR mockida taxminiy daraja (boshqa testlarda None)
         "cefr": cefr,
+        # Writing AI bahosi (2026-09-28); paper_by — "ai" yoki examiner
+        "ai_status": s.ai_status,
+        "ai_score": s.ai_score,
+        "ai_review": _ai_public(s.ai_review),
+        "paper_by": s.paper_by,
     }
+
+
+def _ai_public(txt) -> Optional[dict]:
+    """AI natijasi examiner uchun: mezonlar, izohlar, xato kodi."""
+    d = _load_dict(txt)
+    if not d:
+        return None
+    d.pop("started", None)
+    d.pop("prev", None)
+    return d
 
 
 @router.get("/api/groups/{group_id}/exam-bank-max")
@@ -1204,6 +1235,9 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
                          for p in o_parts if p.get("script")]
                         if can_manage else []),
             "online_max": o.online_max, "paper_max": o.paper_max,
+            # Mock Writing — AI baholaydi (sahifa kutilayotganlarni
+            # bittadan baholatadi, 2026-09-28)
+            "ai_writing": _is_ai_writing(o_parts),
             "published_at": (o.published_at.isoformat()
                              if o.published_at else None),
             "published_by": o.published_by,
@@ -1278,6 +1312,11 @@ def create_online(exam_id: int, payload: OnlineIn,
         paper_max = float(t.paper_max or 0)
     if paper_max < 0:
         raise HTTPException(400, "Writing/Speaking bali noto'g'ri")
+    # Mock Writing/Speaking — butun natija qog'oz balida. 0 bo'lsa
+    # tasdiqlashda hammaga band 0 yozilardi va keyin tuzatib bo'lmasdi
+    # (2026-09-28 ko'rigi) — shablon shkalasi (9 / 75) qo'yiladi.
+    if (exam.kind or "") == "mock" and online_max == 0 and paper_max <= 0:
+        paper_max = float(t.paper_max or 0) or 9.0
     total = online_max + paper_max
     scored = [r for r in exam.results if not r.absent and r.score is not None]
     if scored and abs((exam.max_score or 0) - total) > 1e-6:
@@ -1473,7 +1512,13 @@ def save_paper(exam_id: int, payload: PaperBulk,
                 400, f"Writing/Speaking bali 0 va {o.paper_max:g} oralig'ida")
         if s.paper_score == m.paper:
             continue
+        if m.paper is None and s.paper_by == "ai":
+            # Bo'sh katak AI qo'ygan balni o'chirmaydi (eski sahifadan
+            # "Saqlash" bosilsa ham) — examiner o'zi boshqa ball yozadi
+            continue
         s.paper_score = m.paper
+        # Examiner o'zgartirdi — endi AI bu balni hech qachon yozmaydi
+        s.paper_by = user.full_name if m.paper is not None else None
         if m.paper is not None:
             # Mockda ball emas, band yoziladi (_mark_for)
             mk = _mark_for(exam, o, s)
@@ -1717,12 +1762,17 @@ def _finalize(db: Session, o, exam, sub, answers: dict, by: str = "Online test")
             models.ExamSubmission.status == "placed",
             models.ExamSubmission.id != sub.id).first()
         status = "duplicate" if already else "placed"
-    sub.answers = json.dumps(answers, ensure_ascii=False)[:20000]
+    sub.answers = _answers_json(answers)
     sub.detail = json.dumps(detail, ensure_ascii=False)
     sub.online_score = score
     sub.online_max = total
     sub.status = status
     sub.submitted_at = datetime.utcnow()
+    # WRITING AI (2026-09-28): bu yerda faqat belgi. Baholash alohida
+    # so'rovda (/ai-grade) — _finalize finalize_expired ichida GET
+    # so'rovlarida tsiklda chaqiriladi, AI esa 20 s gacha ketadi.
+    if sub.ai_status is None and _is_ai_writing(_load(o.parts)):
+        sub.ai_status = "pending"
     if status != "placed" and status != "duplicate":
         sub.student_id = None
     if status == "placed":
@@ -1752,6 +1802,156 @@ def finalize_expired(db: Session, o, exam) -> int:
     for s in subs:
         _finalize(db, o, exam, s, _load_dict(s.answers), by="Vaqt tugadi (avtomat)")
     return len(subs)
+
+
+def _answers_json(answers: dict) -> str:
+    """Javoblar JSON'i. Ilgari butun matn 20 000 belgida kesilardi —
+    uzun inshoda JSON buzilib, javoblar {} bo'lib qolardi (AI ularni
+    bo'sh deb 0 qo'yardi). Endi har javob o'zi cheklanadi."""
+    safe = {k: (v[:ESSAY_MAX_CHARS] if isinstance(v, str) else v)
+            for k, v in (answers or {}).items()}
+    out = json.dumps(safe, ensure_ascii=False)
+    if len(out) <= 100000:
+        return out
+    # Juda ko'p / juda uzun (g'ayrioddiy) — har matn qisqartiriladi,
+    # JSON baribir to'g'ri qoladi
+    return json.dumps({k: (v[:3000] if isinstance(v, str) else v)
+                       for k, v in list(safe.items())[:300]}, ensure_ascii=False)
+
+
+# ------------------------------------------------------- WRITING AI
+# 2026-09-28, Jahongir: "Writingni ham avtobaholaydigan qilib qoysak
+# yaxshi bo'lardi. Hech qanday muammolarsiz bo'lishi yaxshi bolardi".
+# writing_ai.py baholaydi; bu yerda — qachon, kim va natija qayerga:
+#   - _finalize faqat ai_status="pending" qo'yadi;
+#   - o'quvchi brauzeri topshirgach /api/public/exam/{token}/ai-grade ni,
+#     examiner sahifasi esa kutilayotganlarni bittadan chaqiradi
+#     (bitta so'rov = bitta topshiruv, Vercel 30 s);
+#   - natija e'lon qilinmagan va examiner o'zi ball qo'ymagan bo'lsa
+#     qog'oz baliga yoziladi (paper_by="ai"); examiner istalgan payt
+#     o'zgartiradi — keyin AI unga tegmaydi;
+#   - e'londan keyin kelgan AI bahosi faqat taklif (guruh jadvaliga,
+#     coin va Telegramga o'zi yozilmaydi — examiner saqlaydi).
+AI_RUNNING_SEC = 75     # "baholanmoqda" shundan uzoq tursa — osilgan
+AI_MAX_TRIES = 3        # xato bo'lsa o'zi shuncha marta qayta uriniladi
+
+
+def _is_ai_writing(parts) -> bool:
+    import writing_ai
+    return writing_ai.skill_of(parts) is not None
+
+
+def _parse_iso(s) -> Optional[datetime]:
+    try:
+        return datetime.fromisoformat(str(s))
+    except (TypeError, ValueError):
+        return None
+
+
+def _ai_grade_sub(db: Session, sub, o, *, force: bool = False) -> str:
+    """Bitta topshiruvni AI bilan baholaydi. Holatni qaytaradi:
+    done | running | error | no_key | skipped."""
+    import writing_ai
+    M = models.ExamSubmission
+    parts = _load(o.parts)
+    if not writing_ai.skill_of(parts):
+        return "skipped"
+    if sub.status not in ("placed", "pending", "duplicate", "replaced"):
+        return "skipped"          # hali topshirilmagan / chetlatilgan
+    meta = _load_dict(sub.ai_review)
+    now = datetime.utcnow()
+    if sub.ai_status == "done" and not force:
+        return "done"
+    if sub.ai_status == "running":
+        st = _parse_iso(meta.get("started"))
+        if st and (now - st).total_seconds() < AI_RUNNING_SEC:
+            return "running"
+    tries = int(meta.get("tries") or 0)
+    if not force and sub.ai_status in ("error", "no_key") and tries >= AI_MAX_TRIES:
+        return sub.ai_status
+    answers = _load_dict(sub.answers)
+    if not answers and (sub.answers or "").strip() not in ("", "{}"):
+        # Javoblar saqlanishida buzilgan (eski 20 000 belgi kesimi) —
+        # bo'sh deb 0 qo'yilmasin, examiner qo'lda baholaydi
+        sub.ai_status = "error"
+        sub.ai_review = json.dumps({"error": "bad_answers", "tries": tries,
+                                    "at": now.isoformat(timespec="seconds")})
+        db.commit()
+        return "error"
+
+    # Band qilish (optimistik): shu paytgacha holat o'zgarmagan bo'lsa
+    # "running" — parallel so'rov ikkinchi marta AI chaqirmasin
+    old_status, old_review = sub.ai_status, sub.ai_review
+    claim = {"tries": tries, "started": now.isoformat(timespec="seconds")}
+    if old_status == "done":
+        claim["prev"] = old_review        # qayta baholash xato bo'lsa qaytadi
+    q = db.query(M).filter(M.id == sub.id)
+    q = q.filter(M.ai_status.is_(None) if old_status is None else M.ai_status == old_status)
+    q = q.filter(M.ai_review.is_(None) if old_review is None else M.ai_review == old_review)
+    got = q.update({M.ai_status: "running", M.ai_review: json.dumps(claim)},
+                   synchronize_session=False)
+    db.commit()
+    db.refresh(sub)
+    if got != 1:
+        return sub.ai_status or "running"
+
+    try:
+        res = writing_ai.grade(parts, answers)
+    except writing_ai.WritingAIError as e:
+        db.refresh(sub)
+        if old_status == "done":
+            sub.ai_status, sub.ai_review = "done", old_review
+            db.commit()
+            return "error"
+        sub.ai_status = "no_key" if e.code == "no_key" else "error"
+        sub.ai_review = json.dumps({"error": e.code, "tries": tries + 1,
+                                    "at": now.isoformat(timespec="seconds")})
+        db.commit()
+        return sub.ai_status
+
+    db.refresh(sub)
+    res["tries"] = tries + 1
+    sub.ai_status = "done"
+    sub.ai_score = float(res["score"])
+    sub.ai_review = json.dumps(res, ensure_ascii=False)
+    expected = 9.0 if res["skill"] == "ielts_writing" else 75.0
+    if (not o.published_at
+            and abs(float(o.paper_max or 0) - expected) < 1e-6
+            and (sub.paper_score is None or sub.paper_by == "ai")):
+        sub.paper_score = float(res["score"])
+        sub.paper_by = "ai"
+    db.commit()
+    return "done"
+
+
+class AiGradeIn(BaseModel):
+    key: Optional[str] = None
+
+
+@router.post("/api/exam-submissions/{sid}/ai-grade")
+def ai_grade_submission(sid: int, force: bool = False,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*RESULT_ROLES))):
+    """Examiner: shu topshiruvni AI bilan baholash (force — qayta)."""
+    s, exam, o = _sub_in_scope(db, sid, user)
+    if not o:
+        raise HTTPException(404, "Link yo'q")
+    st = _ai_grade_sub(db, s, o, force=force)
+    db.refresh(s)
+    return {"status": st, "ai_status": s.ai_status, "ai_score": s.ai_score,
+            "paper_score": s.paper_score, "paper_by": s.paper_by,
+            "ai_review": _ai_public(s.ai_review)}
+
+
+@router.post("/api/public/exam/{token}/ai-grade")
+def public_ai_grade(token: str, payload: AiGradeIn,
+                    db: Session = Depends(get_db)):
+    """O'quvchi brauzeri topshirgach chaqiradi — natija o'quvchiga
+    ko'rsatilmaydi (examiner e'lon qilgach ko'radi)."""
+    o, exam = _public(db, token)
+    s = _sub_by_key(db, exam, payload.key or "")
+    st = _ai_grade_sub(db, s, o)
+    return {"ok": True, "status": st}
 
 
 def _load_dict(txt) -> dict:
@@ -1840,8 +2040,9 @@ def public_save(token: str, payload: SaveIn, db: Session = Depends(get_db)):
         return {"ok": True, "submitted": True}
     if not _can_answer(o):
         return {"ok": False}
-    s.answers = json.dumps({str(k): v for k, v in (payload.answers or {}).items()},
-                           ensure_ascii=False)[:20000]
+    # Butun JSON kesilmaydi — har javob o'zi cheklanadi (uzun insho
+    # vaqt tugab avtomat topshirilganda JSON buzilib, AI 0 qo'ymasin)
+    s.answers = _answers_json({str(k): v for k, v in (payload.answers or {}).items()})
     db.commit()
     return {"ok": True}
 
@@ -1921,7 +2122,9 @@ def public_submit(token: str, payload: SubmitIn, request: Request,
                 answers = payload.answers
             _finalize(db, o, exam, s, answers)
         return {"ok": True, "paper_max": o.paper_max or 0,
-                "pending": s.status not in ("placed",)}
+                "pending": s.status not in ("placed",),
+                # Writing mocki — sahifa /ai-grade ni chaqiradi (2026-09-28)
+                "ai_writing": s.ai_status == "pending"}
     # Eski tartib (kalitsiz): faqat test ketayotganda. Mock telefondan
     # bu yo'l bilan ham topshirilmaydi (2026-09-27)
     if is_strict(exam):

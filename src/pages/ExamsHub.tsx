@@ -36,9 +36,20 @@ type MockSection = {
   levels: string[];
   questions: number;
   questions_max: number;
+  /** Writing / Speaking: nechta topshiriq (insho / og'zaki qism) */
+  tasks?: number;
   paper_max: number;
+  /** Qancha vaqt oladi: "60 daqiqa" (2026-09-28) */
+  time?: string | null;
   auto: boolean;
   grading: string;
+};
+
+/** Imtihondagi tartib: Listening, Reading, Writing, Speaking. */
+const SEC_ORDER = ["listening", "reading", "writing", "speaking"];
+const secRank = (s: string) => {
+  const i = SEC_ORDER.indexOf(s);
+  return i < 0 ? 9 : i;
 };
 type MockBank = {
   bank: string;
@@ -92,8 +103,8 @@ function MockTab({ canTry }: { canTry: boolean }) {
       <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">
         Mockni o'tkazish uchun: guruhni oching → <b>Imtihonlar</b> →
         "Yangi test" → turi <b>Mock test</b> → test qatoridan
-        <b> online link</b> oching va shu yerdagi variantlardan birini
-        tanlang. Listening bo'lsa skriptni examiner ovoz chiqarib o'qiydi.
+        <b> online link</b> oching va bo'limni tanlang. Listening bo'lsa
+        skriptni examiner ovoz chiqarib o'qiydi.
       </p>
 
       {/* O'ZIM SINAB KO'RAMAN (2026-09-27, Jahongir: "faqat guruhda
@@ -123,26 +134,27 @@ function MockTab({ canTry }: { canTry: boolean }) {
             <thead className="text-slate-500 text-xs uppercase">
               <tr>
                 <th className="text-left px-4 py-2 font-medium">Bo'lim</th>
-                <th className="text-right px-3 py-2 font-medium">Variant</th>
+                <th className="text-right px-3 py-2 font-medium">Vaqt</th>
                 <th className="text-right px-3 py-2 font-medium">Savol</th>
                 <th className="text-left px-4 py-2 font-medium">Natija qanday chiqadi</th>
               </tr>
             </thead>
             <tbody>
-              {b.sections.map((s) => (
+              {[...b.sections]
+                .sort((x, y) => secRank(x.section) - secRank(y.section))
+                .map((s) => (
                 <tr key={s.section} className="border-t border-slate-100 align-top">
                   <td className="px-4 py-3 font-medium text-slate-800 whitespace-nowrap">
                     {SEC_LABEL[s.section] || s.section}
                   </td>
-                  <td className="px-3 py-3 text-right text-slate-600">
-                    {s.variants.length}
-                    <span className="text-slate-400 text-xs ml-1">
-                      ({s.variants[0]}–{s.variants[s.variants.length - 1]})
-                    </span>
+                  <td className="px-3 py-3 text-right text-slate-600 whitespace-nowrap">
+                    {s.time || <span className="text-slate-400">—</span>}
                   </td>
                   <td className="px-3 py-3 text-right text-slate-600 whitespace-nowrap">
                     {s.questions === 0
-                      ? <span className="text-slate-400">qog'ozda</span>
+                      ? s.tasks
+                        ? `${s.tasks} ${s.section === "speaking" ? "qism" : "topshiriq"}`
+                        : <span className="text-slate-400">—</span>
                       : s.questions === s.questions_max
                         ? s.questions
                         : `${s.questions}–${s.questions_max}`}
@@ -182,7 +194,7 @@ function MockTab({ canTry }: { canTry: boolean }) {
                 <h2 className="font-semibold text-slate-600">{b.label}</h2>
                 <p className="text-xs text-slate-500 mt-0.5">
                   To'liq imtihon tuzilishi emas: faqat Reading savollari.
-                  Band qo'yilmaydi, xom ball va javoblar varaqasi chiqadi.
+                  Band qo'yilmaydi, javoblar avtomat tekshiriladi.
                 </p>
               </div>
               <table className="w-full text-sm">

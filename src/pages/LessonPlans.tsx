@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Headphones, FileText, Download } from "lucide-react";
+import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Headphones, FileText, Download,
+  Gavel, Dices, Link2, Ban, Users, MessagesSquare, Shuffle, LayoutGrid, Copy, Grid3x3, Printer, Eye, EyeOff } from "lucide-react";
 import { api, getToken } from "../lib/api";
 import brandIconSrc from "../assets/brand-icon.png";
 
@@ -44,6 +45,27 @@ type Lesson = {
   readings?: Reading[];
   listenings?: Listen[];
   homework_intro: string[]; homework: Ex[]; normativ: [string, string, string][];
+};
+
+/** Chop etiladigan o'yin (2026-09-28, Jahongir: "dars rejalari ichiga xar
+ * xil oyinli activitylar qoshib ber mavzuga doir. Keyin uni pdf qilib yuklab
+ * chiqarib oynash mumkin bo'lsin"). Backend: api/plan_games.py. */
+type GameType = "auction" | "board" | "dominoes" | "taboo" | "find_someone" | "speaking_cards"
+  | "scramble" | "quiz_board" | "memory" | "bingo";
+type Game = {
+  id: string; type: GameType; type_name: string; type_uz: string; title: string; stage: string;
+  minutes: number; players: string; goal: string; rules: string[]; kit: string[]; skill?: string;
+  auto?: boolean;
+  data: {
+    money?: number;
+    items?: { s?: string; ok?: boolean; fix?: string; why?: string; t?: string; q?: string }[];
+    squares?: { t: string; a?: string }[];
+    pairs?: [string, string][];
+    cards?: ({ word: string; taboo: string[] } | string)[];
+    sentences?: string[];
+    categories?: { name: string; qs: { q: string; a: string }[] }[];
+    words?: [string, string][];
+  };
 };
 
 const MODES = [
@@ -161,11 +183,11 @@ function LessonList({ course }: { course: string }) {
   );
 }
 
-type Tab = "plan" | "grammar" | "vocab" | "class" | "reading" | "listening" | "home";
+type Tab = "plan" | "grammar" | "vocab" | "class" | "games" | "reading" | "listening" | "home";
 
 /** Dars qaysi bo'limlarga ega — shular ko'rinadi. Skill darslarida
  * (IELTS 5.0) grammatika/lug'at yo'q, o'rniga "Savol turi" turadi. */
-function tabsFor(L: Lesson): { key: Tab; label: string }[] {
+function tabsFor(L: Lesson, games = 0): { key: Tab; label: string }[] {
   const G = L.grammar ?? ({} as Lesson["grammar"]);
   const V = L.vocab ?? ({} as Lesson["vocab"]);
   const words = (V.core ?? []).length + (V.strong ?? []).length + (V.super ?? []).length;
@@ -176,6 +198,7 @@ function tabsFor(L: Lesson): { key: Tab; label: string }[] {
   }
   if (!skill) out.push({ key: "vocab", label: "Lug'at 20/40/60" });
   if ((L.class_ex ?? []).length) out.push({ key: "class", label: "Sinf mashqlari" });
+  if (games > 0) out.push({ key: "games", label: `O'yinlar (${games})` });
   if (L.reading || (L.readings ?? []).length) out.push({ key: "reading", label: "Reading" });
   if (L.listening || (L.listenings ?? []).length) out.push({ key: "listening", label: "Listening" });
   out.push({ key: "home", label: "Uyga vazifa" });
@@ -193,10 +216,15 @@ function LessonView({ course, no }: { course: string; no: number }) {
   const [busy, setBusy] = useState(false);
   const [groups, setGroups] = useState<LiveGroup[]>([]);
   const [groupId, setGroupId] = useState<number | "">("");
+  const [games, setGames] = useState<Game[]>([]);
 
   useEffect(() => {
     setL(null);
+    setGames([]);
     api.get<Lesson>(`/plans/${course}/${no}`).then(setL).catch((e) => setErr(e.message));
+    // O'yinlar faqat IELTS 1.0–4.0 da bor — boshqasida 404, tab chiqmaydi
+    api.get<{ games: Game[] }>(`/plans/${course}/${no}/games`)
+      .then((r) => setGames(r.games ?? [])).catch(() => setGames([]));
   }, [course, no]);
   // Ustoz o'z guruhini tanlaydi — coin va natija shu guruhga yoziladi
   useEffect(() => {
@@ -219,7 +247,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
 
   if (err && !L) return <div className="p-8 text-rose-600">{err}</div>;
   if (!L) return <div className="p-8 text-slate-500">Yuklanmoqda…</div>;
-  const tabs = tabsFor(L);
+  const tabs = tabsFor(L, games.length);
   const hasVocab = tabs.some((t) => t.key === "vocab");
   const active: Tab = tabs.some((t) => t.key === tab) ? tab : "plan";
 
@@ -279,10 +307,11 @@ function LessonView({ course, no }: { course: string; no: number }) {
         ))}
       </div>
 
-      {active === "plan" && <PlanTab L={L} />}
+      {active === "plan" && <PlanTab L={L} games={games} openGames={() => setTab("games")} />}
       {active === "grammar" && <GrammarTab L={L} />}
       {active === "vocab" && <VocabTab L={L} course={course} />}
       {active === "class" && <ExList list={L.class_ex ?? []} />}
+      {active === "games" && <GamesTab games={games} course={course} no={L.no} />}
       {active === "reading" && <ReadingTab L={L} />}
       {active === "listening" && <ListeningTab L={L} />}
       {active === "home" && (
@@ -324,7 +353,7 @@ function Table({ head, rows }: { head: string[]; rows: (string | number)[][] }) 
   );
 }
 
-function PlanTab({ L }: { L: Lesson }) {
+function PlanTab({ L, games, openGames }: { L: Lesson; games: Game[]; openGames: () => void }) {
   return (
     <>
       {L.book_ref && <p className="text-xs text-slate-500 mb-3">{L.book_ref}</p>}
@@ -333,8 +362,211 @@ function PlanTab({ L }: { L: Lesson }) {
       <Section title={`Vaqt jadvali (${L.duration} daqiqa)`}>
         <Table head={["Daq.", "Bosqich", "Nima qilinadi"]} rows={L.timeline ?? []} />
       </Section>
+      {games.length > 0 && (
+        <Section title="Darsdagi o'yinlar (chop etib o'ynaladi)">
+          <p className="text-xs text-slate-500 mb-2">
+            Vaqt jadvalidagi mos bosqichda bittasini tanlang — hammasini bitta darsda o'ynash shart emas.
+          </p>
+          <Table head={["O'yin", "Qachon", "Daq."]}
+                 rows={games.map((g) => [`${g.type_uz} — ${g.title}`, g.stage, g.minutes])} />
+          <button onClick={openGames} className="mt-3 text-sm font-medium text-brand-700 hover:text-brand-800 flex items-center gap-1">
+            <Dices size={15} /> O'yinlarni ko'rish va PDF yuklab olish →
+          </button>
+        </Section>
+      )}
     </>
   );
+}
+
+/* ---- O'YINLAR (2026-09-28). Har o'yin — ustoz sahifasi (qoidalar, javoblar
+   kaliti) + qirqiladigan materiallar bitta PDF'da. Web'da qisqa ko'rinish
+   va "Javoblarni ko'rsat". */
+const GAME_ICON: Record<GameType, typeof Gavel> = {
+  auction: Gavel, board: Dices, dominoes: Link2, taboo: Ban, find_someone: Users,
+  speaking_cards: MessagesSquare, scramble: Shuffle, quiz_board: LayoutGrid, memory: Copy, bingo: Grid3x3,
+};
+const SKILL_LABEL: Record<string, string> = {
+  grammar: "Grammatika", vocab: "Lug'at", speaking: "Gapirish", mixed: "Aralash",
+};
+
+function GamesTab({ games, course, no }: { games: Game[]; course: string; no: number }) {
+  const [dl, setDl] = useState<string | null>(null);
+  const [dlErr, setDlErr] = useState("");
+  async function pdf(id?: string) {
+    setDl(id ?? "all"); setDlErr("");
+    try {
+      await downloadPdf(`/plans/${course}/${no}/games.pdf${id ? `?id=${encodeURIComponent(id)}` : ""}`,
+        `Dars ${no} - ${id ?? "oyinlar"}.pdf`);
+    } catch (e) { setDlErr((e as Error).message); }
+    finally { setDl(null); }
+  }
+  return (
+    <>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <p className="text-sm text-slate-600 max-w-2xl">
+          Mavzuga doir o'yinlar. Har PDF'da: <b>ustoz sahifasi</b> (qoidalar, javoblar kaliti) va
+          <b> qirqib o'ynaladigan</b> kartalar, taxta yoki varaqlar. A4 ga chop eting.
+        </p>
+        <button onClick={() => pdf()} disabled={dl !== null}
+                className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-lg px-4 py-2 disabled:opacity-50">
+          <Printer size={16} /> {dl === "all" ? "Tayyorlanmoqda…" : "Hammasi — bitta PDF"}
+        </button>
+      </div>
+      {dlErr && <div className="text-sm text-rose-600 mb-3">{dlErr}</div>}
+      <div className="grid gap-4 md:grid-cols-2">
+        {games.map((g) => <GameCard key={g.id} g={g} busy={dl !== null} loading={dl === g.id} onPdf={() => pdf(g.id)} />)}
+      </div>
+    </>
+  );
+}
+
+function GameCard({ g, busy, loading, onPdf }: { g: Game; busy: boolean; loading: boolean; onPdf: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
+  const Icon = GAME_ICON[g.type] ?? Gamepad2;
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-4 flex flex-col">
+      <div className="flex items-start gap-3">
+        <span className="w-10 h-10 shrink-0 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center">
+          <Icon size={20} />
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-brand-700">
+            {g.type_uz}{g.auto ? " · lug'atdan" : ""}
+          </div>
+          <div className="font-semibold text-slate-900 leading-snug">{g.title}</div>
+          <div className="flex flex-wrap gap-1.5 mt-1.5 text-[11px]">
+            <span className="bg-slate-100 text-slate-600 rounded px-1.5 py-0.5">{g.minutes} daqiqa</span>
+            <span className="bg-slate-100 text-slate-600 rounded px-1.5 py-0.5">{g.players}</span>
+            {g.skill && <span className="bg-emerald-50 text-emerald-700 rounded px-1.5 py-0.5">{SKILL_LABEL[g.skill] ?? g.skill}</span>}
+          </div>
+        </div>
+      </div>
+      <p className="text-sm text-slate-700 mt-3">{g.goal}</p>
+      <p className="text-xs text-slate-500 mt-1"><b>Qachon:</b> {g.stage}</p>
+      <div className="flex flex-wrap items-center gap-2 mt-3">
+        <button onClick={onPdf} disabled={busy}
+                className="flex items-center gap-1.5 text-xs font-medium bg-white border border-slate-200 hover:border-brand-400 rounded-lg px-3 py-1.5 text-slate-700 disabled:opacity-50">
+          <Download size={14} /> {loading ? "Tayyorlanmoqda…" : "PDF yuklab olish"}
+        </button>
+        <button onClick={() => setOpen(!open)}
+                className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 px-2 py-1.5">
+          {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />} Qoidalar va material
+        </button>
+      </div>
+      {open && (
+        <div className="mt-3 border-t border-slate-100 pt-3">
+          <div className="text-xs font-semibold text-slate-500 mb-1">Kerakli narsalar</div>
+          <ul className="list-disc pl-5 text-sm text-slate-700 space-y-0.5 mb-3">{g.kit.map((k, i) => <li key={i}>{k}</li>)}</ul>
+          <div className="text-xs font-semibold text-slate-500 mb-1">Qanday o'ynaladi</div>
+          <ol className="list-decimal pl-5 text-sm text-slate-700 space-y-1 mb-3">{g.rules.map((r, i) => <li key={i}>{r}</li>)}</ol>
+          <div className="flex items-center justify-between mb-1">
+            <div className="text-xs font-semibold text-slate-500">Material</div>
+            <button onClick={() => setShow(!show)} className="flex items-center gap-1 text-xs text-brand-700">
+              {show ? <EyeOff size={13} /> : <Eye size={13} />} {show ? "Javoblarni yashir" : "Javoblarni ko'rsat"}
+            </button>
+          </div>
+          <GameContent g={g} show={show} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function GameContent({ g, show }: { g: Game; show: boolean }) {
+  const d = g.data;
+  const ans = (a?: string) => (show && a ? <span className="text-emerald-700 font-medium"> → {a}</span> : null);
+  const li = "text-sm text-slate-700";
+  switch (g.type) {
+    case "auction":
+      return (
+        <ol className="list-decimal pl-5 space-y-1">
+          {(d.items ?? []).map((it, i) => (
+            <li key={i} className={li}>
+              {it.s}
+              {show && (it.ok
+                ? <span className="text-emerald-700 font-medium"> ✓</span>
+                : <span className="text-rose-600 font-medium"> ✗ <span className="text-emerald-700">{it.fix}</span></span>)}
+              {show && it.why && <span className="text-xs text-slate-500"> · {it.why}</span>}
+            </li>
+          ))}
+        </ol>
+      );
+    case "board":
+      return (
+        <ol className="list-decimal pl-5 space-y-0.5 md:columns-2 gap-6">
+          {(d.squares ?? []).map((s, i) => <li key={i} className={li}>{s.t}{ans(s.a)}</li>)}
+        </ol>
+      );
+    case "dominoes":
+    case "memory":
+      return (
+        <ul className="space-y-0.5">
+          {(d.pairs ?? []).map(([a, b], i) => (
+            <li key={i} className={li}>
+              <span className="font-medium">{a}</span>
+              {show ? <span className="text-emerald-700"> ↔ {b}</span> : <span className="text-slate-400"> ↔ …</span>}
+            </li>
+          ))}
+        </ul>
+      );
+    case "taboo":
+      return (
+        <div className="flex flex-wrap gap-2">
+          {(d.cards ?? []).map((c, i) => typeof c === "string" ? null : (
+            <span key={i} className="border border-slate-200 rounded-lg px-2 py-1 text-xs">
+              <b className="text-brand-700 uppercase">{c.word}</b>
+              <span className="text-rose-600"> · {c.taboo.join(", ")}</span>
+            </span>
+          ))}
+        </div>
+      );
+    case "find_someone":
+      return (
+        <ol className="list-decimal pl-5 space-y-0.5">
+          {(d.items ?? []).map((it, i) => <li key={i} className={li}>Find someone who {it.t}{ans(it.q)}</li>)}
+        </ol>
+      );
+    case "speaking_cards":
+      return (
+        <ol className="list-decimal pl-5 space-y-0.5">
+          {(d.cards ?? []).map((c, i) => <li key={i} className={li}>{typeof c === "string" ? c : c.word}</li>)}
+        </ol>
+      );
+    case "scramble":
+      return (
+        <ol className="list-decimal pl-5 space-y-0.5">
+          {(d.sentences ?? []).map((s, i) => (
+            <li key={i} className={li}>{show ? s : s.split(" ").sort((a, b) => a.localeCompare(b)).join(" / ")}</li>
+          ))}
+        </ol>
+      );
+    case "quiz_board":
+      return (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {(d.categories ?? []).map((c, i) => (
+            <div key={i}>
+              <div className="text-xs font-semibold text-brand-700 mb-0.5">{c.name}</div>
+              <ul className="space-y-0.5">
+                {c.qs.map((q, j) => <li key={j} className="text-xs text-slate-700"><b>{(j + 1) * 100}</b> {q.q}{ans(q.a)}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      );
+    case "bingo":
+      return (
+        <div className="flex flex-wrap gap-1.5">
+          {(d.words ?? []).map(([en, uz], i) => (
+            <span key={i} className="bg-slate-50 border border-slate-200 rounded px-1.5 py-0.5 text-xs">
+              <b>{en}</b>{show && <span className="text-slate-500"> — {uz}</span>}
+            </span>
+          ))}
+        </div>
+      );
+    default:
+      return null;
+  }
 }
 
 function GrammarTab({ L }: { L: Lesson }) {

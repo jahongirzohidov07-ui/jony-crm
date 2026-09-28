@@ -2955,8 +2955,16 @@ def _charge_note(g, period: str, billable: int, disc: float,
 
 
 # --- Faollashtirilganda avtomat yechish ham shu qoidaga bo'ysunsin ---
-def _charge_from_activation_v2(db, s, since, user=None):
-    """Faollashgan kundan oy oxirigacha — 12 darsdan oshmaydi."""
+def _charge_from_activation_v2(db, s, since, user=None, honor_skip=True):
+    """Faollashgan kundan oy oxirigacha — 12 darsdan oshmaydi.
+
+    honor_skip=False (2026-09-28): FAOLLASHISH paytida asoschining
+    o'sha oy uchun o'chirgan yechimi (ChargeSkip) to'siq emas. U
+    o'quvchi kelmay turgan HOLATga tegishli edi; o'quvchi qaytib
+    kelganda qaytgan kunidan dars pulini to'laydi. Ilgari skip
+    faollashish yechimini ham butunlay to'sardi — o'quvchi oy oxirigacha
+    tekin o'qib qolardi (Aloviddinov Asadbek: 11-sentabr "sentabr
+    kelmagan" deb o'chirilgan, 23-sentabr qaytdi, pul yechilmadi)."""
     if not s.group_id or not s.group:
         return None
     period = M._period_key(since.year, since.month)
@@ -2966,7 +2974,7 @@ def _charge_from_activation_v2(db, s, since, user=None):
                       models.Payment.kind == "charge").first())
     if exists:
         return None
-    if M._charge_skipped(db, s.id, period):
+    if honor_skip and M._charge_skipped(db, s.id, period):
         return None
 
     start, end = M.billing.month_bounds(since.year, since.month)
@@ -3034,8 +3042,13 @@ def _charge_months_after(db, s, since, user=None) -> list:
 
 def _charge_from_activation_v3(db, s, since, user=None):
     """Faollashgan kundan shu oy oxirigacha (v2) + keyingi yechilmagan
-    oylar joriy oygacha."""
-    res = _charge_from_activation_v2(db, s, since, user)
+    oylar joriy oygacha.
+
+    Faollashish oyi uchun ChargeSkip hisobga olinmaydi (v2 izohiga
+    qarang, 2026-09-28) — bu funksiya faqat HOLAT faolga o'tganda
+    chaqiriladi. Keyingi oylarda esa asoschining o'chirishi hurmat
+    qilinadi (_charge_months_after)."""
+    res = _charge_from_activation_v2(db, s, since, user, honor_skip=False)
     extra = _charge_months_after(db, s, since, user)
     if not extra:
         return res
@@ -6863,6 +6876,103 @@ def _mc_charge_missed(db: Session, today) -> list:
     return done
 
 
+_RA_DATE = __import__("re").compile(r"(\d{4}-\d{2}-\d{2})")
+
+
+def _mc_reactivated_after_skip(db: Session, today) -> list:
+    """QAYTIB KELGANDA YECHILMAY QOLGAN OYLIK (2026-09-28, Jahongir:
+    "mana bu o'quvchi 3 ta darsdan beri kelyabdi lekin pul yechilmagan
+    ... shunaqa holatlar yana bormikan sababini topib tuzat").
+
+    Sabab: asoschi kelmay turgan o'quvchining oylik yechimini o'chirsa,
+    shu oy uchun ChargeSkip yoziladi. O'quvchi keyin (shu oyning o'zida)
+    qaytib faollashsa, eski kod skip'ni ko'rib faollashish yechimini
+    ham yozmasdi — kunlik xavfsizlik to'ri ham skip'lilarni chetlab
+    o'tadi. Natijada o'quvchi oy oxirigacha tekin o'qirdi.
+
+    Faollashish kodi tuzatildi (_charge_from_activation_v2 honor_skip),
+    bu esa OLDIN qolib ketganlarini ham ushlaydi va bundan keyin ham
+    kunlik to'r bo'lib turadi. Shart — hammasi bir vaqtda:
+      * o'quvchi hozir FAOL va guruhi bor;
+      * shu oy uchun ChargeSkip bor va shu oy yechimi YO'Q;
+      * skip'dan KEYIN faollashtirilgan (audit: student/activate).
+    Yechim faollashish sanasidan oy oxirigacha (oddiy faollashish
+    qoidasi bilan bir xil). Skip o'chirilmaydi; asoschi yangi yozuvni
+    ham o'chirsa — keyingi faollashishgacha qayta yozilmaydi (yangi
+    skip faollashishdan keyin bo'ladi)."""
+    from datetime import timedelta as _td
+    period = _mc_key(today.year, today.month)
+    if period < _MC_FROM:
+        return []
+    last_skip = {}
+    for k in (db.query(models.ChargeSkip)
+              .filter(models.ChargeSkip.period == period).all()):
+        t = k.created_at
+        if t is None:
+            last_skip[k.student_id] = None       # sanasiz — tegilmaydi
+            continue
+        if k.student_id in last_skip and last_skip[k.student_id] is None:
+            continue
+        if k.student_id not in last_skip or t > last_skip[k.student_id]:
+            last_skip[k.student_id] = t
+    if not last_skip:
+        return []
+    ids = [sid for sid, t in last_skip.items() if t is not None]
+    if not ids:
+        return []
+    charged = {sid for (sid,) in
+               db.query(models.Payment.student_id)
+               .filter(models.Payment.kind == "charge",
+                       models.Payment.period == period,
+                       models.Payment.student_id.in_(ids)).all()}
+    start, _end = M.billing.month_bounds(today.year, today.month)
+    done = []
+    for sid in ids:
+        if sid in charged:
+            continue
+        s = db.query(models.Student).get(sid)
+        if s is None or s.status != "active" or not s.group_id \
+                or s.group is None:
+            continue
+        act = (db.query(models.AuditLog)
+               .filter(models.AuditLog.entity == "student",
+                       models.AuditLog.entity_id == sid,
+                       models.AuditLog.action == "activate",
+                       models.AuditLog.created_at > last_skip[sid])
+               .order_by(models.AuditLog.created_at.desc()).first())
+        if act is None:
+            continue
+        on = None
+        m = _RA_DATE.search(act.note or "")
+        if m:
+            try:
+                on = date.fromisoformat(m.group(1))
+            except ValueError:
+                on = None
+        if on is None:
+            on = (act.created_at + _td(hours=5)).date()   # Toshkent
+        if on < start:
+            on = start
+        if on > today:
+            continue
+        res = _charge_from_activation_v2(db, s, on, None, honor_skip=False)
+        if res:
+            done.append({"student_id": sid, "name": s.full_name,
+                         "since": on.isoformat(),
+                         "lessons": res["lessons"],
+                         "amount": roles.money(res["amount"])})
+    if done:
+        db.commit()
+        audit.log(db, None, entity="payment", action="create",
+                  entity_label=f"{period}: qaytib kelganlarning oyligi",
+                  new_value=len(done),
+                  note="; ".join(f"{d['name']} {d['since']} dan "
+                                 f"{d['lessons']} dars {int(d['amount'])}"
+                                 for d in done[:40]),
+                  commit=True)
+    return done
+
+
 def _dt_now():
     from datetime import datetime as _d
     return _d.utcnow()
@@ -7098,9 +7208,13 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # olmayabdi"). Sababi tuzatildi; bu esa ESKI qolib ketganlarini
     # ham to'g'rilaydi.
     dsc_key = f"dscfix_{period}"
+    # Skip'dan keyin qaytib faollashganlar — kuniga bir marta
+    # (2026-09-28, _mc_reactivated_after_skip izohiga qarang)
+    ra_key = f"mcra_{today.isoformat()}"
     todo = [g for g in _mc_active_groups(db)
             if not _sd(db, f"mcf_{period}_g{g.id}")]
-    if not todo and _sd(db, refund_key) and _sd(db, missed_key):
+    if not todo and _sd(db, refund_key) and _sd(db, missed_key) \
+            and _sd(db, ra_key):
         return {"yechildi": 0, "qaytarildi": 0, "tugagan": True}
 
     pg = False
@@ -7137,6 +7251,15 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
                 _sm(db, missed_key)
             except Exception:
                 db.rollback()
+        n5 = 0
+        if ok1 and not _sd(db, ra_key):
+            try:
+                n5 = len(_mc_reactivated_after_skip(db, today))
+                _sm(db, ra_key)
+            except Exception:
+                db.rollback()
+        if n5:
+            print(f"[oylik] qaytib kelganlardan yechildi: {n5} o'quvchi")
         n4 = 0
         if ok1 and not _sd(db, dsc_key):
             try:

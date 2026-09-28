@@ -219,7 +219,12 @@ export default function ExamsHub() {
   const [params] = useSearchParams();
   const TABS: Tab[] = ["exams", "analysis", "orders", "bank", "mock", "issues"];
   const want = params.get("tab") as Tab | null;
-  const [tab, setTab] = useState<Tab>(want && TABS.includes(want) ? want : "exams");
+  // BUYURTMALAR BIRINCHI (2026-09-28, Jahongir: "buyurtmalarni birinchi
+  // oringa qoy") — examinerning kuni kelgan so'rovlardan boshlanadi.
+  // Buyurtma qabul qilmaydiganlar (filial/o'quv rahbari) Imtihonlardan.
+  const [tab, setTab] = useState<Tab>(
+    want && TABS.includes(want) ? want
+      : can(user?.role, EXAM_ORDER_ACCEPT) ? "orders" : "exams");
   const [branchId, setBranchId] = useState<number | null>(null);
 
   const showExams = can(user?.role, EXAM_VIEW);
@@ -241,9 +246,9 @@ export default function ExamsHub() {
   useEffect(loadCount, [showIssues]);
 
   const tabs: { key: Tab; label: string; show: boolean }[] = [
+    { key: "orders", label: "Buyurtmalar", show: showOrders },
     { key: "exams", label: "Imtihonlar", show: showExams },
     { key: "analysis", label: "Imtihon tahlili", show: showExams },
-    { key: "orders", label: "Buyurtmalar", show: showOrders },
     { key: "mock", label: "Mock testlar", show: showExams },
     { key: "bank", label: "Test bazasi", show: showBank },
     {

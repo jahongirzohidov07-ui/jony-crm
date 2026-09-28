@@ -168,5 +168,32 @@ again = students._newpay_backfill(db, TODAY - timedelta(days=30))
 ck("ikkinchi yurish: hech narsa", again, [])
 db.close()
 
+print("=== 9. 1 so'mlik belgi-to'lov ===")
+db = SessionLocal()
+J = student("Bir so'mlik", came=0)
+db = SessionLocal()
+pj = models.Payment(student_id=J, amount=1, kind="payment",
+                    created_at=datetime.utcnow() - timedelta(hours=2))
+db.add(pj); db.commit()
+ck("orqaga to'ldirish 1 so'mga bermaydi",
+   [x for x in students._newpay_backfill(db, TODAY - timedelta(days=30))
+    if x["id"] == J], [])
+# Eski (tuzatishdan oldingi) xato yozuvni taqlid qilamiz
+db.add(models.CoinEntry(student_id=J, amount=15, source="pay_ontime",
+                        ref_id=pj.id, created_by="Avtomat",
+                        note="Yangi o'quvchi 3-darsgacha to'ladi (+10 coin, "
+                             "avval -5 berilgan edi)"))
+db.commit()
+rv = students._newpay_revert_small(db)
+ck("xato coin teskari yozuv bilan qaytdi", rv, [{"id": J, "back": -15}])
+ck("J jami 0, yozuvlar o'chmagan", (sum(a for a, *_ in coins(J)),
+                                    len(coins(J))), (0, 2))
+ck("haqiqiy to'lovlar tegilmadi", sum(a for a, *_ in coins(F)), 10)
+ck("tuzatish takror yurmaydi", students._newpay_revert_small(db), [])
+K = student("Besh ming so'mlik", came=1)
+db.close()
+pay(K, 5000)
+ck("to'lov paytida 10 000 dan kam summaga yangi bonus yo'q", newbonus(K), 0)
+
 print("\nNATIJA:", "HAMMASI OK" if not fails else f"{len(fails)} XATO: {fails}")
 sys.exit(1 if fails else 0)

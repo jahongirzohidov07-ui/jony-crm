@@ -1320,6 +1320,9 @@ def list_payments(
 NEW_PAY_COIN = 10
 NEW_PAY_MAX_LESSONS = 2      # 3-darsgacha: undan oldin ko'pi bilan 2 dars
 NEW_PAY_MAX_AGE_DAYS = 45
+# Haqiqiy to'lov bo'lsin: jonli bazada 1 so'mlik "belgi" yozuvlar bor
+# (eski o'quvchilar, 2026-08-06 ko'chirilganlar) — ular yangi to'lov emas.
+NEW_PAY_MIN_AMOUNT = 10_000
 
 
 def _local_day(dt):
@@ -1328,6 +1331,8 @@ def _local_day(dt):
 
 def _new_early_payer(db: Session, s: models.Student,
                      payment: models.Payment) -> bool:
+    if (payment.amount or 0) < NEW_PAY_MIN_AMOUNT:
+        return False
     pay_dt = payment.created_at or datetime.utcnow()
     for p in (db.query(models.Payment)
               .filter(models.Payment.student_id == s.id,
@@ -1397,6 +1402,36 @@ def _newpay_backfill(db: Session, since: date) -> list:
                   f"(to'lov #{p.id}, avval {have})"),
             branch_id=s.branch_id))
         out.append({"id": s.id, "name": s.full_name, "added": diff})
+    if out:
+        db.commit()
+    return out
+
+
+def _newpay_revert_small(db: Session) -> list:
+    """Bir martalik tuzatish (2026-09-28): birinchi orqaga to'ldirish
+    1 so'mlik "belgi" to'lovlarga ham coin berib yubordi (eski o'quvchilar,
+    haqiqiy yangi to'lov emas). O'sha coinlar O'CHIRILMAYDI — teskari
+    yozuv qo'shiladi (tarix to'liq qoladi). Qayta yurganda takrorlanmaydi."""
+    TAG = "Yangi o'quvchi 3-darsgacha"
+    REV = "Qaytarildi: to'lov haqiqiy yangi to'lov emas"
+    out = []
+    for ce in (db.query(models.CoinEntry)
+               .filter(models.CoinEntry.source == "pay_ontime",
+                       models.CoinEntry.note.like(TAG + "%")).all()):
+        p = db.get(models.Payment, ce.ref_id) if ce.ref_id else None
+        if p is None or (p.amount or 0) >= NEW_PAY_MIN_AMOUNT:
+            continue
+        done = (db.query(models.CoinEntry)
+                .filter(models.CoinEntry.student_id == ce.student_id,
+                        models.CoinEntry.ref_id == ce.ref_id,
+                        models.CoinEntry.note.like(REV + "%")).first())
+        if done:
+            continue
+        db.add(models.CoinEntry(
+            student_id=ce.student_id, amount=-int(ce.amount),
+            source="pay_ontime", ref_id=ce.ref_id,
+            note=f"{REV} ({int(p.amount or 0)} so'm)", created_by="Avtomat"))
+        out.append({"id": ce.student_id, "back": -int(ce.amount)})
     if out:
         db.commit()
     return out

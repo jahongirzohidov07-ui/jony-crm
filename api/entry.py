@@ -7225,6 +7225,18 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
                 print(f"[coin] yangi o'quvchi +10 to'ldirildi: {len(_np)}")
         except Exception:
             db.rollback()
+    # Birinchi yurish 1 so'mlik belgi-to'lovlarga ham coin bergan edi —
+    # teskari yozuv bilan qaytariladi (students._newpay_revert_small).
+    np_fix = "np10_fix_small_2026-09"
+    if not _sd(db, np_fix):
+        try:
+            import students as _stu2
+            _fx = _stu2._newpay_revert_small(db)
+            _sm(db, np_fix)
+            if _fx:
+                print(f"[coin] 1 so'mlik to'lov coini qaytarildi: {len(_fx)}")
+        except Exception:
+            db.rollback()
     todo = [g for g in _mc_active_groups(db)
             if not _sd(db, f"mcf_{period}_g{g.id}")]
     if not todo and _sd(db, refund_key) and _sd(db, missed_key) \

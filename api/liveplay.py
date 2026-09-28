@@ -122,7 +122,12 @@ def _level(course: str, title: str, cefr: str) -> dict:
     Shunda 2.0 darslari tayyor bo'lgani sari saytga chiqadi (2026-09-18)."""
     full = _load_course(course) or {"lessons": []}
     outline = _load_course("outline_" + course) or {"lessons": []}
-    ready = {int(L["no"]): dict(_summary(L), ready=True) for L in full["lessons"]}
+    # Chop etiladigan o'yinlar soni — ro'yxatda "N o'yin" belgisi
+    # (2026-09-28). plan_games liveplay'ni import qiladi, shuning uchun bu
+    # yerda kechiktirib import qilinadi.
+    from plan_games import games_count
+    ready = {int(L["no"]): dict(_summary(L), ready=True, games=games_count(course, L))
+             for L in full["lessons"]}
     lessons = []
     seen = set()
     for L in outline["lessons"]:

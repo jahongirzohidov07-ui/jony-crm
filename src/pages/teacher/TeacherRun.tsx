@@ -274,6 +274,12 @@ export default function TeacherRun() {
                 {canKahoot && run.lesson_no > 1 && (
                   <button onClick={() => kahoot(run.lesson_no - 1)} disabled={busy} className="col-span-2 text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg py-2 flex items-center justify-center gap-1"><Gamepad2 size={14} /> Kahoot: o'tgan dars takrori ({run.lesson_no - 1}-dars)</button>
                 )}
+                {/* Chop etiladigan o'yinlar (2026-09-28) — reja sahifasining
+                    "O'yinlar" bo'limiga to'g'ri olib boradi */}
+                <Link to={`/plans/${run.course}/${run.lesson_no}?tab=games`}
+                      className="col-span-2 text-xs text-center bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg py-2">
+                  🎲 Darsning o'yinlari (PDF — chop etib o'ynash)
+                </Link>
                 <button onClick={openSend} className="col-span-2 text-xs bg-emerald-600 text-white rounded-lg py-2">📤 Topshiriq yuborish (o'quvchi ilovasiga)</button>
                 <Link to="/teacher/check" className="col-span-2 text-xs text-center bg-white border border-slate-200 rounded-lg py-2">Tekshirish (writing / speaking)</Link>
               </div>

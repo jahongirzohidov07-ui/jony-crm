@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Headphones, FileText, Download,
   Gavel, Dices, Link2, Ban, Users, MessagesSquare, Shuffle, LayoutGrid, Copy, Grid3x3, Printer, Eye, EyeOff } from "lucide-react";
 import { api, getToken } from "../lib/api";
@@ -15,7 +15,8 @@ import brandIconSrc from "../assets/brand-icon.png";
  */
 
 type Summary = { no: number; title: string; grammar_topic: string; vocab_topic: string;
-  test_after: string; audios: string; reading: boolean; words: number; ready: boolean; writing?: string };
+  test_after: string; audios: string; reading: boolean; words: number; ready: boolean; writing?: string;
+  games?: number };
 type Level = { course: string; title: string; cefr: string; ready: boolean;
   ready_count: number; lessons: Summary[] };
 type LiveGroup = { id: number; name: string; students: { id: number; name: string }[] };
@@ -165,6 +166,11 @@ function LessonList({ course }: { course: string }) {
                 </div>
               </div>
               <div className="flex items-center gap-2 shrink-0 text-[11px]">
+                {(l.games ?? 0) > 0 && (
+                  <span className="bg-emerald-50 text-emerald-700 rounded px-1.5 py-0.5 flex items-center gap-1">
+                    <Dices size={12} /> {l.games} o'yin
+                  </span>
+                )}
                 {l.test_after && <span className="bg-amber-50 text-amber-700 rounded px-1.5 py-0.5">{l.test_after}</span>}
                 {l.ready
                   ? <ChevronRight size={16} className="text-slate-400" />
@@ -193,12 +199,15 @@ function tabsFor(L: Lesson, games = 0): { key: Tab; label: string }[] {
   const words = (V.core ?? []).length + (V.strong ?? []).length + (V.super ?? []).length;
   const skill = words === 0;
   const out: { key: Tab; label: string }[] = [{ key: "plan", label: "Reja" }];
+  // O'yinlar — Rejadan keyin darhol (2026-09-28, Jahongir: "qani oyinlar
+  // chiqmadiku hammasini chiqaraveri korisnin" — telefonda oxirgi tablar
+  // ekrandan chiqib ketib ko'rinmasdi)
+  if (games > 0) out.push({ key: "games", label: `🎲 O'yinlar (${games})` });
   if ((G.intro ?? []).length || (G.formulas ?? []).length || (G.presentation ?? []).length) {
     out.push({ key: "grammar", label: skill ? "Savol turi" : "Grammatika" });
   }
   if (!skill) out.push({ key: "vocab", label: "Lug'at 20/40/60" });
   if ((L.class_ex ?? []).length) out.push({ key: "class", label: "Sinf mashqlari" });
-  if (games > 0) out.push({ key: "games", label: `O'yinlar (${games})` });
   if (L.reading || (L.readings ?? []).length) out.push({ key: "reading", label: "Reading" });
   if (L.listening || (L.listenings ?? []).length) out.push({ key: "listening", label: "Listening" });
   out.push({ key: "home", label: "Uyga vazifa" });
@@ -207,8 +216,10 @@ function tabsFor(L: Lesson, games = 0): { key: Tab; label: string }[] {
 
 function LessonView({ course, no }: { course: string; no: number }) {
   const nav = useNavigate();
+  const [search] = useSearchParams();
   const [L, setL] = useState<Lesson | null>(null);
-  const [tab, setTab] = useState<Tab>("plan");
+  // ?tab=games — "Darsni boshlash" ekranidan to'g'ri o'yinlarga
+  const [tab, setTab] = useState<Tab>(search.get("tab") === "games" ? "games" : "plan");
   const [err, setErr] = useState("");
   const [mode, setMode] = useState("mixed");
   const [count, setCount] = useState(20);
@@ -298,6 +309,24 @@ function LessonView({ course, no }: { course: string; no: number }) {
         </div>}
       </div>
 
+      {games.length > 0 && active !== "games" && (
+        <button onClick={() => setTab("games")}
+                className="w-full mb-4 flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 px-4 py-3 text-left">
+          <span className="w-10 h-10 shrink-0 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
+            <Dices size={20} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-semibold text-emerald-900">
+              Bu darsda {games.length} ta o'yin — chop etib o'ynash uchun PDF
+            </span>
+            <span className="block text-xs text-emerald-800/80 truncate">
+              {games.map((g) => g.type_uz).join(" · ")}
+            </span>
+          </span>
+          <ChevronRight size={18} className="text-emerald-700 shrink-0" />
+        </button>
+      )}
+
       <div className="flex gap-1 border-b border-slate-200 mb-4 overflow-x-auto">
         {tabs.map((t) => (
           <button key={t.key} onClick={() => setTab(t.key)}
@@ -357,15 +386,12 @@ function PlanTab({ L, games, openGames }: { L: Lesson; games: Game[]; openGames:
   return (
     <>
       {L.book_ref && <p className="text-xs text-slate-500 mb-3">{L.book_ref}</p>}
-      <Section title="Dars maqsadlari"><Bullets items={L.objectives ?? []} /></Section>
-      <Section title="Kerakli materiallar"><Bullets items={L.materials ?? []} /></Section>
-      <Section title={`Vaqt jadvali (${L.duration} daqiqa)`}>
-        <Table head={["Daq.", "Bosqich", "Nima qilinadi"]} rows={L.timeline ?? []} />
-      </Section>
+      {/* O'yinlar rejaning BOSHIDA (2026-09-28, Jahongir: "qani oyinlar
+          chiqmadiku") — avval uzun vaqt jadvalidan keyin qolib ketardi */}
       {games.length > 0 && (
-        <Section title="Darsdagi o'yinlar (chop etib o'ynaladi)">
+        <Section title={`Darsdagi o'yinlar — ${games.length} ta (chop etib o'ynaladi)`}>
           <p className="text-xs text-slate-500 mb-2">
-            Vaqt jadvalidagi mos bosqichda bittasini tanlang — hammasini bitta darsda o'ynash shart emas.
+            Vaqt jadvalidagi mos bosqichda 1–3 tasini tanlang; qolganlari keyingi dars yoki takror uchun.
           </p>
           <Table head={["O'yin", "Qachon", "Daq."]}
                  rows={games.map((g) => [`${g.type_uz} — ${g.title}`, g.stage, g.minutes])} />
@@ -374,6 +400,11 @@ function PlanTab({ L, games, openGames }: { L: Lesson; games: Game[]; openGames:
           </button>
         </Section>
       )}
+      <Section title="Dars maqsadlari"><Bullets items={L.objectives ?? []} /></Section>
+      <Section title="Kerakli materiallar"><Bullets items={L.materials ?? []} /></Section>
+      <Section title={`Vaqt jadvali (${L.duration} daqiqa)`}>
+        <Table head={["Daq.", "Bosqich", "Nima qilinadi"]} rows={L.timeline ?? []} />
+      </Section>
     </>
   );
 }
@@ -421,7 +452,8 @@ function GamesTab({ games, course, no }: { games: Game[]; course: string; no: nu
 }
 
 function GameCard({ g, busy, loading, onPdf }: { g: Game; busy: boolean; loading: boolean; onPdf: () => void }) {
-  const [open, setOpen] = useState(false);
+  // Qoidalar va material darhol ochiq ("hammasini chiqaraveri korisnin")
+  const [open, setOpen] = useState(true);
   const [show, setShow] = useState(false);
   const Icon = GAME_ICON[g.type] ?? Gamepad2;
   return (

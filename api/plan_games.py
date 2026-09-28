@@ -181,6 +181,14 @@ def _auto_games(course: str, L: dict) -> list:
     return out
 
 
+def games_count(course: str, L: dict) -> int:
+    """Darslar ro'yxati uchun tez hisob (nusxa ko'chirmasdan)."""
+    if course not in COURSES:
+        return 0
+    pool = len(_vocab_pairs(L))
+    return len(_load_games(course).get(str(L["no"])) or []) + (pool >= 20) + (pool >= 12)
+
+
 def lesson_games(course: str, L: dict) -> list:
     """Dars o'yinlari: mualliflik + avtomat, web va PDF uchun bir xil."""
     out = []

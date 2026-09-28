@@ -137,6 +137,12 @@ ck("HR ga yopiq", c.get("/api/plans/ielts_1_0/5/games", headers=tok("hr")).statu
 ck("PDF HR ga yopiq", c.get("/api/plans/ielts_1_0/5/games.pdf", headers=tok("hr")).status_code, 403)
 ck("tokensiz yopiq", c.get("/api/plans/ielts_1_0/5/games").status_code in (401, 403), True)
 ck("asoschiga ochiq", c.get("/api/plans/ielts_4_0/25/games", headers=tok("asos")).status_code, 200)
+# Darslar ro'yxatida "N o'yin" belgisi (2026-09-28, "qani oyinlar chiqmadiku")
+lv = {x["course"]: x for x in c.get("/api/plans", headers=T).json()}
+ck("ro'yxatda har 1.0-4.0 darsida kamida 10 o'yin (ba'zida +memory = 11)",
+   min(l.get("games") or 0 for c_ in P.COURSES for l in lv[c_]["lessons"]) >= 10, True)
+ck("o'yin soni /games bilan bir xil",
+   lv["ielts_1_0"]["lessons"][4]["games"], len(c.get("/api/plans/ielts_1_0/5/games", headers=T).json()["games"]))
 
 # ============================================================ D
 print("\n=== D. TEKSHIRUVCHI XATONI USHLAYDI ===")

@@ -4623,11 +4623,15 @@ def _my_exam_cards(db: Session, user: models.User,
                                          models.Exam.kind != "kahoot").all()
     draft = [e for e in exams if (e.status or "done") == "draft"]
     done = [e for e in exams if e.status == "done"]
+    # Imtihonlar 2026-09-26 da Auditdan alohida "Imtihonlar" (/exam)
+    # bo'limiga ko'chgan, kartalar esa hali /audit ga olib borardi —
+    # examiner bosib, imtihonsiz sahifaga tushardi (2026-09-28, Jahongir:
+    # "imtixonlar ko'rinmay qoldi examinerlarga").
     return [
-        _card("Shu oy imtihonlar", len(exams), None, "brand", "/audit"),
+        _card("Shu oy imtihonlar", len(exams), None, "brand", "/exam"),
         _card("Tasdiq kutayotgan", len(draft), None,
-              "bad" if draft else "good", "/audit"),
-        _card("O'tkazilgan", len(done), None, "good", "/audit"),
+              "bad" if draft else "good", "/exam"),
+        _card("O'tkazilgan", len(done), None, "good", "/exam"),
     ]
 
 def _my_facility_cards(db: Session, user: models.User,

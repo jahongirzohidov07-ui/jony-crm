@@ -37,7 +37,7 @@ public class AlertActivity extends Activity {
         ((Button) findViewById(R.id.open)).setOnClickListener(v -> {
             Ringer.stop();
             startActivity(new Intent(this, MainActivity.class)
-                    .putExtra("go", "/audit")
+                    .putExtra("go", "/exam?tab=orders")
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
         });

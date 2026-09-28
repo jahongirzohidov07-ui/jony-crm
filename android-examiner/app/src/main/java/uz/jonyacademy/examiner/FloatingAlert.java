@@ -69,7 +69,7 @@ final class FloatingAlert {
             Ringer.stop();
             hide(c);
             c.startActivity(new Intent(c, MainActivity.class)
-                    .putExtra("go", "/audit")
+                    .putExtra("go", "/exam?tab=orders")
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         });
 

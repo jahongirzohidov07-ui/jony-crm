@@ -13,6 +13,7 @@ import {
   CONDUCT_VIEW, MARKETING_ACCESS, AUDIT_VIEW, ACADEMIC_VIEW, can,
   INVENTORY_VIEW, CASH_ACCESS, STUDENT, PARENT, TEACHER, SUPPORT_TEACHER,
   TEACHER_MENU, SMM_MANAGER, EVENTS_ACCESS, EVENT_MANAGER, EXAM_VIEW,
+  EXAMINER, HEAD_EXAMINER,
   MOCK_PRACTICE,
 } from "../lib/roles";
 
@@ -169,8 +170,14 @@ export function buildNav(
   // turgani uchun topish qiyin edi. Ustozda o'z oqimi bor
   // ("Imtihon buyurtma"), shuning uchun unga bu band chiqmaydi.
   if (can(user?.role, EXAM_VIEW) && user?.role !== TEACHER) {
-    items = [...items,
-      { to: "/exam", label: "Imtihonlar", icon: ClipboardCheck }];
+    const examItem = { to: "/exam", label: "Imtihonlar", icon: ClipboardCheck };
+    // EXAMINERDA ENG TEPADA (2026-09-28, Jahongir: "imtixonlar ko'rinmay
+    // qoldi examinerlarga ... alohida bo'limdan ko'rinadigan qilib ber
+    // yon menuda"). Bu ularning asosiy ishi — ro'yxat oxirida
+    // yo'qolib qolmasin, Dashboard'dan keyin darrov tursin.
+    items = user?.role === EXAMINER || user?.role === HEAD_EXAMINER
+      ? [items[0], examItem, ...items.slice(1)]
+      : [...items, examItem];
   }
   // MOCKNI O'ZI SINAB KO'RISH (2026-09-27, Jahongir: "faqat guruhda
   // emas, boshqalar ham o'zi kirib ishlaydigan bo'lsa yaxshi bo'lardi

@@ -257,7 +257,7 @@ public class WatchService extends Service {
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent open = new Intent(c, MainActivity.class)
-                .putExtra("go", "/audit");
+                .putExtra("go", "/exam?tab=orders");
         PendingIntent openPi = PendingIntent.getActivity(
                 c, 2, open,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);

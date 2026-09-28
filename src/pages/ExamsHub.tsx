@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ClipboardCheck, Check, Hand, FlaskConical } from "lucide-react";
 import { api } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
@@ -214,7 +214,12 @@ function MockTab({ canTry }: { canTry: boolean }) {
 
 export default function ExamsHub() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>("exams");
+  // ?tab=orders kabi havola to'g'ridan-to'g'ri kerakli bo'limni ochadi
+  // (Jony Examiner ilovasidagi "Ko'rish" tugmasi, 2026-09-28).
+  const [params] = useSearchParams();
+  const TABS: Tab[] = ["exams", "analysis", "orders", "bank", "mock", "issues"];
+  const want = params.get("tab") as Tab | null;
+  const [tab, setTab] = useState<Tab>(want && TABS.includes(want) ? want : "exams");
   const [branchId, setBranchId] = useState<number | null>(null);
 
   const showExams = can(user?.role, EXAM_VIEW);

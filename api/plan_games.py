@@ -51,7 +51,9 @@ from vocab_pdf import _ASSETS, BRAND, CONTACT, _fonts
 router = APIRouter()
 
 GAMES_DIR = os.path.join(_PLANS_DIR, "games")
-COURSES = ("ielts_1_0", "ielts_2_0", "ielts_3_0", "ielts_4_0")
+# 1.0-4.0 (2026-09-28) va 5.0-7.0 skill darslari (2026-09-29) — hamma daraja
+COURSES = ("ielts_1_0", "ielts_2_0", "ielts_3_0", "ielts_4_0",
+           "ielts_5_0", "ielts_6_0", "ielts_7_0")
 
 # ------------------------------------------------------------ turlar
 # name — inglizcha nomi, uz — o'zbekcha, skill — nimani mashq qiladi,
@@ -141,9 +143,12 @@ def _auto_games(course: str, L: dict) -> list:
     """Lug'atdan avtomat Bingo va Memory."""
     out = []
     pool = _vocab_pairs(L)
+    # Bingo uchun uchala daraja: 6.0/7.0 da lug'at 10/6/4 bo'lib, CORE+STRONG
+    # atigi 16 so'z (2026-09-29). 1.0-4.0 da birinchi 24 so'z o'zgarmaydi.
+    pool_all = _vocab_pairs(L, ("core", "strong", "super"))
     topic = L.get("vocab_topic") or ""
-    if len(pool) >= 20:
-        words = pool[:24]
+    if len(pool_all) >= 20:
+        words = pool_all[:24]
         out.append({
             "id": "bingo", "type": "bingo", "auto": True,
             "title": f"Vocabulary Bingo — {topic}"[:LIM["title"]],
@@ -186,7 +191,8 @@ def games_count(course: str, L: dict) -> int:
     if course not in COURSES:
         return 0
     pool = len(_vocab_pairs(L))
-    return len(_load_games(course).get(str(L["no"])) or []) + (pool >= 20) + (pool >= 12)
+    pool_all = len(_vocab_pairs(L, ("core", "strong", "super")))
+    return len(_load_games(course).get(str(L["no"])) or []) + (pool_all >= 20) + (pool >= 12)
 
 
 def lesson_games(course: str, L: dict) -> list:

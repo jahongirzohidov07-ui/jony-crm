@@ -46,7 +46,8 @@ def ck(name, got, want):
 
 # ============================================================ A
 print("=== A. HAR DARSDA HAMMA O'YINLAR ===")
-COUNTS = {"ielts_1_0": 28, "ielts_2_0": 25, "ielts_3_0": 26, "ielts_4_0": 25}
+COUNTS = {"ielts_1_0": 28, "ielts_2_0": 25, "ielts_3_0": 26, "ielts_4_0": 25,
+          "ielts_5_0": 48, "ielts_6_0": 20, "ielts_7_0": 32}
 bad_lessons, missing = [], []
 for course, n in COUNTS.items():
     lessons = _load_course(course)["lessons"]
@@ -60,7 +61,7 @@ for course, n in COUNTS.items():
         errs = P.check_lesson(games)
         if errs:
             bad_lessons.append((f"{course}:{L['no']}", errs[:3]))
-ck("hamma 104 darsda mualliflik o'yinlari bor", missing, [])
+ck("hamma 202 darsda (1.0-7.0) mualliflik o'yinlari bor", missing, [])
 ck("hamma darslar tekshiruvdan o'tadi (8 tur, chegaralar)", bad_lessons, [])
 
 L = _load_course("ielts_2_0")["lessons"][6]
@@ -94,9 +95,10 @@ for course in COUNTS:
             pages_min = min(pages_min, pdf.count(b"/Type /Page\n") or pdf.count(b"/Type /Page"))
         except Exception as ex:                    # noqa: BLE001
             pdf_err.append(f"{course}:{L['no']} {type(ex).__name__}: {ex}")
-print(f"   104 dars PDF: {time.time() - t0:.1f} s")
-ck("104 darsning hammasi PDF bo'ladi", pdf_err, [])
-ck("har PDF'da kamida 20 sahifa (10 o'yin: ustoz + material)", pages_min >= 20, True)
+print(f"   202 dars PDF: {time.time() - t0:.1f} s")
+ck("202 darsning hammasi PDF bo'ladi", pdf_err, [])
+# lug'atsiz skill darsida 8 o'yin (Bingo/Memory yo'q) — kamida 16 sahifa
+ck("har PDF'da kamida 16 sahifa (har o'yin: ustoz + material)", pages_min >= 16, True)
 
 # ============================================================ C
 print("\n=== C. API ===")
@@ -132,7 +134,13 @@ ck("hammasi bitta PDF, bittasidan katta",
    (ra.status_code, ra.content[:4] == b"%PDF", len(ra.content) > len(rp.content)), (200, True, True))
 ck("bo'lmagan o'yin — 404", c.get("/api/plans/ielts_1_0/5/games.pdf?id=yoq", headers=T).status_code, 404)
 ck("bo'lmagan dars — 404", c.get("/api/plans/ielts_1_0/99/games", headers=T).status_code, 404)
-ck("IELTS 5.0 da o'yin yo'q — 404", c.get("/api/plans/ielts_5_0/1/games", headers=T).status_code, 404)
+ck("noma'lum darajada o'yin yo'q — 404", c.get("/api/plans/ielts_9_0/1/games", headers=T).status_code, 404)
+g5 = c.get("/api/plans/ielts_5_0/1/games", headers=T).json()["games"]
+ck("5.0 1-dars (lug'atsiz skill darsi): 8 ta o'yin, avtomatlarsiz",
+   (len(g5), [x["id"] for x in g5 if x.get("auto")]), (8, []))
+g7 = c.get("/api/plans/ielts_7_0/1/games", headers=T).json()["games"]
+ck("7.0 1-dars: 8 + lug'atdan Bingo va Memory", len(g7) >= 10, True)
+ck("7.0 PDF", c.get("/api/plans/ielts_7_0/32/games.pdf", headers=T).content[:4], b"%PDF")
 ck("HR ga yopiq", c.get("/api/plans/ielts_1_0/5/games", headers=tok("hr")).status_code, 403)
 ck("PDF HR ga yopiq", c.get("/api/plans/ielts_1_0/5/games.pdf", headers=tok("hr")).status_code, 403)
 ck("tokensiz yopiq", c.get("/api/plans/ielts_1_0/5/games").status_code in (401, 403), True)
@@ -140,7 +148,9 @@ ck("asoschiga ochiq", c.get("/api/plans/ielts_4_0/25/games", headers=tok("asos")
 # Darslar ro'yxatida "N o'yin" belgisi (2026-09-28, "qani oyinlar chiqmadiku")
 lv = {x["course"]: x for x in c.get("/api/plans", headers=T).json()}
 ck("ro'yxatda har 1.0-4.0 darsida kamida 10 o'yin (ba'zida +memory = 11)",
-   min(l.get("games") or 0 for c_ in P.COURSES for l in lv[c_]["lessons"]) >= 10, True)
+   min(l.get("games") or 0 for c_ in P.COURSES[:4] for l in lv[c_]["lessons"]) >= 10, True)
+ck("ro'yxatda 5.0-7.0 ning har darsida kamida 8 o'yin",
+   min(l.get("games") or 0 for c_ in P.COURSES[4:] for l in lv[c_]["lessons"]) >= 8, True)
 ck("o'yin soni /games bilan bir xil",
    lv["ielts_1_0"]["lessons"][4]["games"], len(c.get("/api/plans/ielts_1_0/5/games", headers=T).json()["games"]))
 

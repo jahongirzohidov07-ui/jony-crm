@@ -233,7 +233,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
     setL(null);
     setGames([]);
     api.get<Lesson>(`/plans/${course}/${no}`).then(setL).catch((e) => setErr(e.message));
-    // O'yinlar faqat IELTS 1.0–4.0 da bor — boshqasida 404, tab chiqmaydi
+    // O'yinlar IELTS 1.0–7.0 da bor; boshqa kursda 404 — tab chiqmaydi
     api.get<{ games: Game[] }>(`/plans/${course}/${no}/games`)
       .then((r) => setGames(r.games ?? [])).catch(() => setGames([]));
   }, [course, no]);

@@ -20,6 +20,26 @@ import { LibraryTab } from "./Hr";
 export default function Library() {
   const [canManage, setCanManage] = useState(false);
   const [empty, setEmpty] = useState(false);
+  const [version, setVersion] = useState(0);
+  const [importOpen, setImportOpen] = useState(false);
+  const [bookText, setBookText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const [importError, setImportError] = useState("");
+  const parsedBooks = bookText.split(/\r?\n/).filter(x => x.trim()).map(line => {
+    const [title, ...note] = line.split("\t");
+    return { title: title.trim(), description: note.join(" · ").trim() };
+  });
+  async function importBooks() {
+    if (busy || !parsedBooks.length) return;
+    setBusy(true); setImportError(""); setMessage("");
+    try {
+      const result = await api.post<{added: number; skipped: number}>("/library/import", {items: parsedBooks});
+      setMessage(result.added + " ta kitob qo'shildi. " + result.skipped + " ta oldindan mavjud.");
+      setVersion(v => v + 1); setBookText(""); setImportOpen(false);
+    } catch (e) { setImportError(e instanceof Error ? e.message : "Saqlab bo'lmadi"); }
+    finally { setBusy(false); }
+  }
 
   useEffect(() => {
     api.get<LibraryList>("/library")
@@ -38,8 +58,27 @@ export default function Library() {
         foizingizni o'zingiz belgilaysiz, "topshirdi"ni rahbar qo'yadi.
       </p>
 
+      {canManage && <div className="mb-5">
+        <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm"
+                onClick={() => setImportOpen(v => !v)} disabled={busy}>
+          Ro'yxatdan kitob qo'shish
+        </button>
+        {message && <p role="status" className="mt-2 text-sm text-emerald-700">{message}</p>}
+        {importOpen && <div className="mt-3 rounded-xl border border-slate-200 bg-white p-4 space-y-3">
+          <label htmlFor="library-book-list" className="block text-sm font-medium">Kitoblar ro'yxati</label>
+          <p className="text-sm text-slate-500">Har bir qatorda kitob nomi. Excel'dan ikki ustun — nom va izohni ko'chirib qo'yish mumkin. Mavjud nomlar takrorlanmaydi. Kitoblar ixtiyoriy o'qish uchun qo'shiladi.</p>
+          <textarea id="library-book-list" value={bookText} onChange={e => setBookText(e.target.value)}
+                    disabled={busy} rows={10} className="w-full border border-slate-300 rounded-lg p-3 text-sm" />
+          <p className="text-sm">{parsedBooks.length} ta kitob tayyor</p>
+          {importError && <p role="alert" className="text-sm text-red-600">{importError}</p>}
+          <button onClick={importBooks} disabled={busy || !parsedBooks.length || parsedBooks.length > 500}
+                  className="rounded-lg bg-brand-600 text-white px-4 py-2 text-sm disabled:opacity-50">
+            {busy ? "Qo'shilmoqda…" : "Kitoblarni qo'shish"}
+          </button>
+        </div>}
+      </div>}
       {canManage ? (
-        <LibraryTab />
+        <LibraryTab key={version} />
       ) : empty ? (
         <div className="bg-white rounded-xl border border-slate-200 p-8 text-center">
           <BookOpen size={26} className="mx-auto text-slate-300 mb-2" />

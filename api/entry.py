@@ -5406,6 +5406,19 @@ def library_add(payload: dict = Body(...), db: Session = Depends(get_db),
     return _lib_out(it)
 
 
+@app.post("/api/library/import")
+def library_import(payload: dict = Body(...), db: Session = Depends(get_db),
+                   user=Depends(require_role(*_LIB_MANAGE))):
+    from library_import import import_books
+    result = import_books(db, _LI, payload.get("items"), user.full_name)
+    audit.log(db, user, entity="user", action="create",
+              entity_label="Kutubxona: kitoblar importi",
+              note=f"{result['added']} ta qo'shildi, {result['skipped']} ta mavjud",
+              commit=False)
+    db.commit()
+    return result
+
+
 @app.put("/api/library/{item_id}")
 def library_edit(item_id: int, payload: dict = Body(...),
                  db: Session = Depends(get_db),

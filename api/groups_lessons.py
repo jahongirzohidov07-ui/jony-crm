@@ -1091,10 +1091,19 @@ def create_group(
     payload: schemas.GroupCreate,
     force: bool = False,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.GROUP_MANAGE)),
+    user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR)),
 ):
     _validate_group_fields(payload)
     data = payload.model_dump()
+    if user.role == roles.ADMINISTRATOR:
+        data["branch_id"] = data.get("branch_id") or user.branch_id
+        if not data["branch_id"] or not _in_user_branches(db, user, data["branch_id"]):
+            raise HTTPException(403, "Faqat o'z filialingizda guruh ochishingiz mumkin")
+        for model, key in ((models.Teacher, "teacher_id"), (models.Room, "room_id")):
+            if data.get(key):
+                ref = db.query(model).get(data[key])
+                if not ref or not _in_user_branches(db, user, ref.branch_id):
+                    raise HTTPException(403, "Ustoz yoki xona boshqa filialga tegishli")
     _raise_if_blocked(
         _check_schedule(db, group_id=None,
                         teacher_id=data.get("teacher_id"),
@@ -1234,153 +1243,15 @@ def delete_group(
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.GROUP_MANAGE)),
 ):
-    """Guruhni o'chirish — asoschi, filial rahbari, o'quv bo'limi rahbari.
-
-    Himoya qoidalari:
-      - ichida o'quvchi bo'lsa — avval ko'chirilsin/arxivlansin;
-      - yoqlama tarixi bo'lsa — o'chirib BO'LMAYDI (bu ustoz oyligi va
-        o'quvchi to'lovining hujjati);
-      - bo'sh guruh (xato ochilgan) — darslari bilan birga tozalanadi."""
-    group = db.query(models.Group).get(group_id)
-    if not group:
-        raise HTTPException(404, "Guruh topilmadi")
-    if not _in_user_branches(db, user, group.branch_id, null_ok=True):
-        raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
-
-    # =================================================================
-    #  KIM HAQIQATAN TO'SIB TURIBDI (2026-09-08)
-    #
-    #  Jahongir: "ichidagi o'quvchini ochirib tashlasayam ochmayabdi".
-    #
-    #  Muammo: ro'yxatdagi qavs ichidagi son FAQAT FAOL o'quvchilarni
-    #  sanardi, o'chirish tekshiruvi esa HAMMASINI — muzlatilgan va
-    #  arxivdagilarni ham. Shuning uchun guruh "[0]" ko'rinib turib
-    #  "Guruhda 10 ta o'quvchi bor" deb rad etardi: ular ro'yxatda
-    #  ko'rinmagani uchun foydalanuvchi ularni chiqarib ham bo'lmasdi.
-    #
-    #  Endi:
-    #   - TIRIK o'quvchi (faol, sinovda, muzlatilgan) — to'sadi, lekin
-    #     xabarda qaysi holatda nechtaligi aniq yoziladi;
-    #   - ARXIV/KETGAN — tarix, to'smaydi: guruhdan uziladi (group_id
-    #     bo'shatiladi, bog'lanish nofaol qilinadi). O'quvchi
-    #     O'CHIRILMAYDI, har biri auditga yoziladi.
-    # =================================================================
-    _LIVE = ("active", "trial", "frozen")
-    live = (db.query(models.Student)
-            .filter(in_group(group.id),
-                    models.Student.status.in_(_LIVE)).all())
-    if live:
-        by = {}
-        for st in live:
-            by[st.status] = by.get(st.status, 0) + 1
-        _uz = {"active": "faol", "trial": "sinovda", "frozen": "muzlatilgan"}
-        parts = ", ".join(f"{_uz.get(k, k)} {v} ta" for k, v in by.items())
-        raise HTTPException(
-            400, f"Guruhda {len(live)} ta o'quvchi bor ({parts}). "
-                 "Muzlatilganlar guruhlar ro'yxatidagi songa kirmaydi — "
-                 "shuning uchun ko'rinmasligi mumkin. O'quvchilar "
-                 "sahifasida shu guruhni tanlab, ularni boshqa guruhga "
-                 "ko'chiring yoki arxivlang, keyin guruhni o'chirasiz.")
-
-    # Arxiv/ketganlar — guruhdan uziladi (o'chirilmaydi)
-    old_ones = db.query(models.Student).filter(in_group(group.id)).all()
-    for st in old_ones:
-        try:
-            if st.group_id == group.id:
-                st.group_id = None
-            db.query(models.StudentGroupLink).filter(
-                models.StudentGroupLink.student_id == st.id,
-                models.StudentGroupLink.group_id == group.id).update(
-                {"active": 0}, synchronize_session=False)
-            audit.log(db, user, entity="student", action="group_remove",
-                      entity_id=st.id, entity_label=st.full_name,
-                      field="group", old_value=group.name, new_value=None,
-                      note=("Guruh o'chirildi — arxivdagi o'quvchi "
-                            "guruhdan uzildi, yozuvi saqlanib qoldi"),
-                      branch_id=st.branch_id, commit=False)
-        except Exception:
-            pass
-    db.flush()
-
-    lesson_ids = [lid for (lid,) in db.query(models.Lesson.id).filter(
-        models.Lesson.group_id == group.id).all()]
-    if lesson_ids:
-        n_att = db.query(models.Attendance).filter(
-            models.Attendance.lesson_id.in_(lesson_ids)).count()
-        if n_att:
-            raise HTTPException(
-                400, "Bu guruhda yoqlama tarixi bor — u ustoz oyligi va "
-                     "to'lovlarning hujjati, o'chirib bo'lmaydi. Guruh "
-                     "yakunlangan bo'lsa, tugash sanasini qo'yib qo'ying.")
-        db.query(models.DailyGrade).filter(
-            models.DailyGrade.lesson_id.in_(lesson_ids)).delete(
-            synchronize_session=False)
-        db.query(models.Lesson).filter(
-            models.Lesson.id.in_(lesson_ids)).delete(
-            synchronize_session=False)
-
-    # -----------------------------------------------------------------
-    #  QOLGAN BOG'LANISHLAR (2026-09-08). Guruhga 17 ta jadval
-    #  bog'langan — biri qolib ketsa Postgres FK bilan rad etadi va
-    #  sahifa 500 beradi. Shuning uchun:
-    #   - bo'shatib bo'ladigan (nullable) yozuvlar UZILADI, o'zi qoladi;
-    #   - bo'shatib bo'lmaydiganlar (imtihon, buyurtma, ko'chirish,
-    #     o'rinbosar, oylik) — TARIX, ular bo'lsa guruh o'chirilmaydi
-    #     va foydalanuvchiga nima to'sib turgani aytiladi.
-    # -----------------------------------------------------------------
-    try:
-        db.query(models.SupportAssignment).filter(
-            models.SupportAssignment.group_id == group.id).delete(
-            synchronize_session=False)
-        db.query(models.StudentGroupLink).filter(
-            models.StudentGroupLink.group_id == group.id).delete(
-            synchronize_session=False)
-    except Exception:
-        db.rollback()
-    for _M in (models.Contract, models.Complaint, models.TeacherRating,
-               models.LeaveReason, models.XpTransaction,
-               models.LessonObservation, models.BookOrder,
-               models.SupportSession):
-        try:
-            db.query(_M).filter(_M.group_id == group.id).update(
-                {"group_id": None}, synchronize_session=False)
-        except Exception:
-            db.rollback()
-    db.flush()
-
-    hard = []
-    for _M, _nom in ((models.Exam, "imtihon"),
-                     (models.ExamOrder, "imtihon buyurtmasi"),
-                     (models.LessonReschedule, "dars ko'chirish"),
-                     (models.Substitution, "o'rinbosar ustoz"),
-                     (models.TeacherPayout, "ustoz oyligi")):
-        try:
-            n = db.query(_M).filter(_M.group_id == group.id).count()
-            if n:
-                hard.append(f"{_nom}: {n} ta")
-        except Exception:
-            db.rollback()
-    if hard:
-        db.rollback()
-        raise HTTPException(
-            400, "Bu guruhda tarix yozuvlari bor (" + ", ".join(hard)
-                 + ") — ular hujjat, o'chirib bo'lmaydi. Guruh "
-                   "yakunlangan bo'lsa, tugash sanasini qo'yib qo'ying.")
-
-    audit.log(db, user, entity="group", action="delete",
-              entity_id=group.id, entity_label=group.name,
-              old_value=group.name, branch_id=group.branch_id,
-              commit=False)
-    try:
-        db.delete(group)
-        db.commit()
-    except Exception:
-        db.rollback()
-        raise HTTPException(
-            400, "Guruhni o'chirib bo'lmadi — unga bog'langan yozuvlar "
-                 "qolgan. Guruh yakunlangan bo'lsa, tugash sanasini "
-                 "qo'yib qo'ying: u ro'yxatda tarix bo'lib qoladi.")
-    return {"ok": True}
+    """Deleting a group archives it without deleting any related records."""
+    group = _get_group_in_scope(db, group_id, user)
+    if group.archived_at:
+        return {"ok": True, "archived": True}
+    from group_archive import _archive_one
+    result = _archive_one(db, group, user, "Guruh o'chirish orqali arxivlandi",
+                          allow_current=True)
+    db.commit()
+    return {**result, "archived": True}
 
 @router.get("/api/groups/{group_id}/lessons", response_model=List[schemas.LessonOut])
 def list_lessons(

@@ -41,6 +41,19 @@ export default function Library() {
     finally { setBusy(false); }
   }
 
+  const [archiveSource, setArchiveSource] = useState("");
+  async function archiveImport() {
+    if (busy || !archiveSource.trim()) return;
+    if (!confirm("Shu fayldan import qilingan kitoblar yashirilsinmi? Yozuvlar saqlanadi va qayta faollashtirish mumkin.")) return;
+    setBusy(true); setMessage(""); setImportError("");
+    try {
+      const r = await api.post<{archived: number}>("/library/import/archive", {source: archiveSource.trim()});
+      setMessage(`${r.archived} ta kitob yashirildi. Ma'lumotlari saqlangan.`);
+      setVersion(v => v + 1); setArchiveSource("");
+    } catch (e) { setImportError(e instanceof Error ? e.message : "Xatolik"); }
+    finally { setBusy(false); }
+  }
+
   useEffect(() => {
     api.get<LibraryList>("/library")
       .then((d) => { setCanManage(d.can_manage); setEmpty(d.items.length === 0); })
@@ -63,6 +76,13 @@ export default function Library() {
                 onClick={() => setImportOpen(v => !v)} disabled={busy}>
           Ro'yxatdan kitob qo'shish
         </button>
+        <details className="mt-3 text-sm">
+          <summary className="cursor-pointer">Importni bekor qilish</summary>
+          <p className="my-2 text-slate-500">Faqat tanlangan manbadan import qilingan kitoblar yashiriladi. Yashirilgan materiallar ro'yxatidan tiklash mumkin.</p>
+          <input aria-label="Import manbasi" placeholder="Excel faylining to'liq nomi" value={archiveSource} onChange={e => setArchiveSource(e.target.value)} className="border rounded-lg p-2 mr-2" />
+          <button onClick={archiveImport} disabled={busy || !archiveSource.trim()} className="border rounded-lg p-2">Import kitoblarini yashirish</button>
+          {importError && <p role="alert" className="text-red-600 mt-2">{importError}</p>}
+        </details>
         {message && <p role="status" className="mt-2 text-sm text-emerald-700">{message}</p>}
         {importOpen && <div className="mt-3 rounded-xl border border-slate-200 bg-white p-4 space-y-3">
           <label htmlFor="library-book-list" className="block text-sm font-medium">Kitoblar ro'yxati</label>

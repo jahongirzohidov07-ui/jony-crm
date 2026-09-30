@@ -135,9 +135,9 @@ print("\n=== 3. ARXIVLASH ===")
 r = c.post("/api/groups/archive-bulk", headers=HF,
            json={"ids": [EID], "note": "Kurs tugadi"})
 ck("arxivlandi", [x["name"] for x in r.json()["archived"]], ["Bo'sh guruh"])
-ck("support bo'shatildi", r.json()["archived"][0]["supports_released"],
-   ["SUP"])
-ck("1 kelajak darsi olindi", r.json()["archived"][0]["lessons_removed"], 1)
+ck("support tarixi saqlandi", r.json()["archived"][0]["supports_released"],
+   [])
+ck("kelajak darsi saqlandi", r.json()["archived"][0]["lessons_removed"], 0)
 db.expire_all()
 ck("o'tgan dars joyida", db.query(models.Lesson).filter(
     models.Lesson.group_id == EID, models.Lesson.held == 1).count(), 1)
@@ -156,7 +156,7 @@ groups_lessons._sync_scheduled_lessons(
     db, g, first, first + timedelta(days=60))
 db.commit()
 ck("dars avtomat yaratilmadi", db.query(models.Lesson).filter(
-    models.Lesson.group_id == EID, models.Lesson.held == 0).count(), 0)
+    models.Lesson.group_id == EID, models.Lesson.held == 0).count(), 1)
 st = db.query(models.Student).filter_by(full_name="Ketgan").one()
 probs = common._check_enrolment(db, st, g)
 ck("o'quvchi qo'shib bo'lmaydi",
@@ -175,6 +175,38 @@ acts = [a.action for a in db.query(models.AuditLog)
         .filter(models.AuditLog.entity == "group",
                 models.AuditLog.entity_id == EID).all()]
 ck("arxiv va qaytarish yozildi", sorted(acts), ["archive", "restore"])
+
+print("=== 6. ADMIN CREATE AND DELETE-AS-ARCHIVE ===")
+r = c.post("/api/groups", headers=HA, json={"name": "Admin created", "branch_id": b.id})
+ck("administrator creates group", r.status_code, 200)
+other = models.Branch(name="Other"); db.add(other); db.commit()
+r = c.post("/api/groups", headers=HA, json={"name": "Wrong branch", "branch_id": other.id})
+ck("other branch denied", r.status_code, 403)
+r = c.post("/api/groups", headers=HT, json={"name": "Teacher created", "branch_id": b.id})
+ck("teacher cannot create", r.status_code, 403)
+student = db.query(models.Student).filter_by(group_id=LID, status="active").first()
+lesson = models.Lesson(group_id=LID, teacher_id=t.id, date=today, held=1)
+db.add(lesson); db.flush()
+att = models.Attendance(lesson_id=lesson.id, student_id=student.id, present=1)
+grade = models.DailyGrade(lesson_id=lesson.id, student_id=student.id, score=5)
+db.add_all([att, grade]); db.commit()
+ids = (lesson.id, att.id, grade.id, student.id)
+r = c.delete(f"/api/groups/{LID}", headers=HF)
+ck("delete archives populated group", r.status_code, 200)
+db.expire_all()
+ck("group kept", db.get(models.Group, LID).archived_at is not None, True)
+ck("lesson kept", db.get(models.Lesson, ids[0]) is not None, True)
+ck("attendance kept", db.get(models.Attendance, ids[1]).present, 1)
+ck("grade kept", db.get(models.DailyGrade, ids[2]).score, 5)
+ck("student link kept", db.get(models.Student, ids[3]).group_id, LID)
+ck("repeat delete safe", c.delete(f"/api/groups/{LID}", headers=HF).status_code, 200)
+for path in ("/api/timetable", "/api/timetable/grid?day=mon"):
+    r = c.get(path, headers=HF)
+    if path.startswith("/api/timetable"):
+        ck(path + " status", r.status_code, 200)
+        ck(path + " hides archived", "Faol guruh" in r.text, False)
+ck("restore works", c.post(f"/api/groups/{LID}/restore", headers=HF).status_code, 200)
+ck("restored timetable", "Faol guruh" in c.get("/api/timetable", headers=HF).text, True)
 
 print()
 if fails:

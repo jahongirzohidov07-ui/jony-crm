@@ -2274,7 +2274,8 @@ def _check_teacher_load(db: Session, teacher_id: int,
             f"ochilmaydi. Sabab: {t.remediation_reason or '—'}"))
 
     total = db.query(models.Group).filter(
-        models.Group.teacher_id == teacher_id)
+        models.Group.teacher_id == teacher_id,
+        models.Group.archived_at.is_(None))
     if group_id:
         total = total.filter(models.Group.id != group_id)
     n_groups = total.count() + 1
@@ -2334,7 +2335,7 @@ def _check_schedule(db: Session, *, group_id, teacher_id, room_id,
     if not days or not start:
         return problems
 
-    others = db.query(models.Group).all()
+    others = db.query(models.Group).filter(models.Group.archived_at.is_(None)).all()
     day_counts = {}
     teacher_slots = []
 

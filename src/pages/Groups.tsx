@@ -11,7 +11,7 @@ import {
 import { formatSom } from "../lib/format";
 import { Time24Input } from "../components/Time24Input";
 import { useAuth } from "../lib/AuthContext";
-import { GROUP_MANAGE, SUPPORT_ASSIGN, can } from "../lib/roles";
+import { ADMINISTRATOR, GROUP_MANAGE, SUPPORT_ASSIGN, can } from "../lib/roles";
 import {
   SUBJECTS, levelsFor, subjectLine, WEEKDAYS, parseDays,
 } from "../lib/subjects";
@@ -569,11 +569,11 @@ export default function Groups() {
 
   useEffect(load, []);
   const canEdit = can(user?.role, GROUP_MANAGE);
+  const canCreate = canEdit || user?.role === ADMINISTRATOR;
   const canSupport = can(user?.role, SUPPORT_ASSIGN);
 
   async function removeGroup(g: Group) {
-    if (!confirm(`"${g.name}" guruhi o'chirilsinmi?\n\nIchida o'quvchi`
-      + ` yoki yoqlama tarixi bo'lsa, tizim o'zi to'xtatadi.`)) return;
+    if (!confirm(`"${g.name}" guruhi arxivga o'tkazilsinmi?\n\nYo'qlama va barcha ma'lumotlar saqlanadi. Guruh dars jadvalidan olib tashlanadi.`)) return;
     try {
       await api.delete(`/groups/${g.id}`);
       load();
@@ -609,17 +609,17 @@ export default function Groups() {
               : `Jami: ${groups.length}`}
           </p>
         </div>
-        {canEdit && (
+        {canCreate && (
           <div className="flex items-center gap-2">
             {/* BO'SH GURUHLAR (2026-09-30, Jahongir: "guruhda o'quvchi
                 qolmagan yoki faol bo'lmagan guruhlarni arxivga tushirib
                 ko'rinmaydigan qilish") */}
-            <button
+            {canEdit && <button
               onClick={() => setShowEmpty(true)}
               className="flex items-center gap-2 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg px-3 py-2 text-sm font-medium"
             >
               <ArchiveIcon size={16} /> Bo'sh guruhlar
-            </button>
+            </button>}
             <button
               onClick={() => setShowAdd(true)}
               className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
@@ -845,7 +845,7 @@ export default function Groups() {
                       </button>
                       <button
                         onClick={() => removeGroup(g)}
-                        title="O'chirish"
+                        title="Arxivga o'tkazish"
                         className="text-slate-300 hover:text-red-600 ml-2"
                       >
                         <Trash2 size={15} />

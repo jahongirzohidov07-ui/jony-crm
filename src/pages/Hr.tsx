@@ -1481,6 +1481,7 @@ export function LibraryTab() {
   const [open, setOpen] = useState<LibraryItem | null>(null);
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState<LibraryItem | null>(null);
+  const [showHidden, setShowHidden] = useState(false);
   const [err, setErr] = useState("");
 
   const load = () => {
@@ -1506,12 +1507,14 @@ export function LibraryTab() {
   if (loading) return <p className="text-sm text-slate-400">Yuklanmoqda...</p>;
   if (!data) return null;
 
+  const visibleItems = data.items.filter(it => showHidden ? !it.active : !!it.active);
   return (
     <div>
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <p className="text-sm text-slate-500">
-          {data.items.length} ta material
+          {visibleItems.length} ta material
         </p>
+        <label className="text-sm flex gap-2"><input type="checkbox" checked={showHidden} onChange={e => setShowHidden(e.target.checked)} /> Yashirilgan materiallar</label>
         <div className="flex-1" />
         {data.can_manage && (
           <button
@@ -1529,7 +1532,7 @@ export function LibraryTab() {
         </p>
       )}
 
-      {data.items.length === 0 ? (
+      {visibleItems.length === 0 ? (
         <p className="text-sm text-slate-400 py-10 text-center">
           Hali material yo'q. "Material qo'shish" tugmasidan onboarding
           videosi yoki kitobini qo'ying.
@@ -1548,7 +1551,7 @@ export function LibraryTab() {
               </tr>
             </thead>
             <tbody>
-              {data.items.map((it) => (
+              {visibleItems.map((it) => (
                 <tr key={it.id} className="border-t border-slate-100">
                   <td className="px-4 py-2.5">
                     <button
@@ -1562,6 +1565,7 @@ export function LibraryTab() {
                         majburiy
                       </span>
                     )}
+                    {!it.active && data.can_manage && <button className="text-xs text-brand-700 mr-2" onClick={async () => { try { await api.put(`/library/${it.id}`, {active: true}); load(); } catch (e) { setErr(e instanceof Error ? e.message : "Xatolik"); } }}>Faollashtirish</button>}
                     {!it.active && (
                       <span className="ml-2 text-[10px] uppercase tracking-wide bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">
                         yopiq

@@ -47,5 +47,17 @@ assert db.query(entry._LI).filter_by(title="Valid").count() == 0
 assert post([]).status_code == 400
 assert post([{"title": "x"}] * 501).status_code == 400
 assert post([{"title": "O‘qish"}, {"title": "o'qish"}]).json()["added"] == 1
+source = "test-books.xlsx"
+new.description = "Excel test. Manba: " + source + "."
+db.add(new); db.add(entry._LP(item_id=new.id, user_id=users[1].id, percent=40)); db.commit()
+r = client.post("/api/library/import/archive", headers=teacher, json={"source":source})
+assert r.status_code == 403
+r = client.post("/api/library/import/archive", headers=admin, json={"source":source})
+assert r.status_code == 200 and r.json()["archived"] == 1, r.text
+db.expire_all()
+assert db.get(entry._LI, new.id).active == 0
+assert db.get(entry._LI, existing.id).active == 1
+assert db.query(entry._LP).filter_by(item_id=new.id).one().percent == 40
+assert client.put(f"/api/library/{new.id}", headers=admin, json={"active":True}).status_code == 200
 print("Library import: permissions, idempotency, optional status, validation, preservation OK")
 db.close(); engine.dispose(); tmp.cleanup()

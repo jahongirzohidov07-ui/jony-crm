@@ -1,27 +1,9 @@
-"""GURUH ARXIVI (2026-09-30).
+"""Group archive preserves all related records and can be restored.
 
-Jahongir: "guruhda o'quvchi qolmagan yoki faol bo'lmagan guruhlarni
-arxivga tushirib ko'rinmaydigan qilish funksiyasini qo'sh".
-
-QOIDA. Guruh arxivga faqat unda HOZIRGI o'quvchi qolmaganda tushadi:
-faol, sinovdagi yoki muzlatilgan o'quvchi (asosiy guruh ham, qo'shimcha
-guruh bog'lanishi ham) bo'lsa — rad etiladi. Muzlatilgan o'quvchi
-qaytadi, uning guruhi yashirinib qolmasin.
-
-Avtomat EMAS — ro'yxat taklif qilinadi, odam belgilab tasdiqlaydi:
-yangi ochilgan, o'quvchilari endi qo'shilayotgan guruh adashib
-yashirinib ketmasin.
-
-ARXIVDA NIMA BO'LADI:
-  - guruhlar ro'yxati, tanlagichlar, ustoz/support kabineti va darslar
-    jadvalida ko'rinmaydi (GET /api/groups sukut bo'yicha yashiradi);
-  - kelajakdagi o'tilmagan (bo'sh) darslar olib tashlanadi, yangisi
-    avtomat yaratilmaydi — jadvalda osilib turmasin;
-  - support biriktirishlari bo'shatiladi — supportning vaqti band
-    ko'rinib, boshqa guruhga qo'yishga to'sqinlik qilmasin;
-  - O'CHIRILMAYDI: o'tgan darslar, yo'qlama, baho, to'lovlar joyida;
-    "Arxiv" bo'limidan bir bosishda qaytariladi (darslar jadval
-    bo'yicha yana o'zi yaratiladi).
+The empty-group assistant only accepts groups without current students.
+DELETE is the explicit archive action and also accepts populated groups.
+Lessons, marks, enrolments and support assignments stay intact; active
+schedules exclude archived groups.
 """
 import os
 import sys
@@ -79,32 +61,18 @@ def _current_counts(db: Session, gids: list) -> dict:
     return {gid: len(s) for gid, s in seen.items()}
 
 
-def _archive_one(db: Session, g, user, note: str) -> dict:
+def _archive_one(db: Session, g, user, note: str, *, allow_current=False) -> dict:
     """Bitta guruhni arxivlaydi. Hozirgi o'quvchi bo'lsa — xato matni."""
     if g.archived_at:
         return {"id": g.id, "name": g.name, "ok": False,
                 "reason": "allaqachon arxivda"}
     n = _current_counts(db, [g.id]).get(g.id, 0)
-    if n:
+    if n and not allow_current:
         return {"id": g.id, "name": g.name, "ok": False,
                 "reason": f"{n} ta o'quvchi bor (faol/sinov/muzlatilgan)"}
-    from groups_lessons import _safe_delete_lesson
-    today = roles.local_today()
-    removed = 0
-    for ls in (db.query(models.Lesson)
-               .filter(models.Lesson.group_id == g.id,
-                       models.Lesson.held == 0,
-                       models.Lesson.date > today).all()):
-        if _safe_delete_lesson(db, ls):
-            removed += 1
-    sups = (db.query(models.SupportAssignment)
-            .filter(models.SupportAssignment.group_id == g.id).all())
-    sup_names = []
-    for a in sups:
-        u = db.query(models.User).get(a.user_id) if a.user_id else None
-        if u is not None:
-            sup_names.append(u.full_name)
-        db.delete(a)
+    # Preserve lessons, attendance, grades and assignments for history/restore.
+    # Active schedules filter by Group.archived_at instead of deleting data.
+    removed, sup_names = 0, []
     g.archived_at = datetime.utcnow()
     g.archived_by = user.full_name
     g.archive_note = (note or "").strip() or None

@@ -42,7 +42,7 @@ def timetable(
     qaysi ustoz, qaysi xona. Administrator uchun kunlik ish shu
     jadvaldan boshlanadi."""
     gq = scope_to_branch(db.query(models.Group), models.Group, user, branch_id)
-    groups = gq.all()
+    groups = gq.filter(models.Group.archived_at.is_(None)).all()
     rooms = {r.id: r for r in db.query(models.Room).all()}
 
     counts = {}
@@ -166,7 +166,7 @@ def timetable_grid(
                             user, branch_id).filter(
         models.Room.active == 1).order_by(models.Room.name).all()
     groups = scope_to_branch(db.query(models.Group), models.Group,
-                             user, branch_id).all()
+                             user, branch_id).filter(models.Group.archived_at.is_(None)).all()
     students = scope_to_branch(db.query(models.Student), models.Student,
                                user, branch_id).all()
     today = date.today()
@@ -336,7 +336,8 @@ def support_timetable(day: str = "mon",
                         models.SupportAssignment.group_id.isnot(None))
                 .all()]
         for g in (db.query(models.Group)
-                  .filter(models.Group.id.in_(gids or [-1])).all()):
+                  .filter(models.Group.id.in_(gids or [-1]),
+                          models.Group.archived_at.is_(None)).all()):
             if day not in (g.lesson_days or ""):
                 continue
             st = (g.lesson_time or "").split("-")[0].strip()

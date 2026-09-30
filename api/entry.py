@@ -1183,7 +1183,7 @@ if _orig_create_group is not None:
     def create_group_v2(payload: schemas.GroupCreate,
                         force: bool = False,
                         db: Session = Depends(get_db),
-                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR))):
         _teacher_limit_guard(db, payload.teacher_id, None, user)
         return _orig_create_group(payload=payload, force=force,
                                   db=db, user=user)
@@ -2078,7 +2078,7 @@ if _cur_create_group is not None:
     def create_group_v3(payload: schemas.GroupCreate,
                         force: bool = False,
                         db: Session = Depends(get_db),
-                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR))):
         return _cur_create_group(payload=payload, force=force,
                                  db=db, user=user)
 
@@ -4527,7 +4527,7 @@ if _cur_create_group2 is not None:
     def create_group_v4(payload: schemas.GroupCreate,
                         force: bool = False,
                         db: Session = Depends(get_db),
-                        user=Depends(require_role(*roles.GROUP_MANAGE))):
+                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR))):
         # Nom bo'sh yuborilsa — o'zi qo'yiladi (frontendda ham
         # oldindan ko'rsatiladi, bu esa ikkinchi himoya).
         if not (payload.name or "").strip():
@@ -5404,6 +5404,24 @@ def library_add(payload: dict = Body(...), db: Session = Depends(get_db),
     audit.log(db, user, entity="user", action="create",
               entity_label=f"Kutubxona: {title}", commit=True)
     return _lib_out(it)
+
+
+@app.post("/api/library/import/archive")
+def library_archive_import(payload: dict = Body(...), db: Session = Depends(get_db),
+                           user=Depends(require_role(*_LIB_MANAGE))):
+    source = payload.get("source")
+    if not isinstance(source, str) or not source.strip() or len(source) > 200:
+        raise HTTPException(400, "Import manbasini kiriting")
+    marker = "Manba: " + source.strip() + "."
+    items = [it for it in db.query(_LI).filter(_LI.kind == "book", _LI.active == 1).all()
+             if (it.description or "").endswith(marker)]
+    for it in items:
+        it.active = 0
+    audit.log(db, user, entity="user", action="update",
+              entity_label="Kutubxona: import yashirildi",
+              note=f"{source}: {len(items)} ta kitob. Yozuvlar saqlangan.", commit=False)
+    db.commit()
+    return {"archived": len(items)}
 
 
 @app.post("/api/library/import")

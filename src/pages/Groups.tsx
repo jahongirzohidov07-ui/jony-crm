@@ -11,7 +11,7 @@ import {
 import { formatSom } from "../lib/format";
 import { Time24Input } from "../components/Time24Input";
 import { useAuth } from "../lib/AuthContext";
-import { ADMINISTRATOR, GROUP_MANAGE, SUPPORT_ASSIGN, can } from "../lib/roles";
+import { ADMINISTRATOR, SALES_MANAGER, GROUP_MANAGE, SUPPORT_ASSIGN, can } from "../lib/roles";
 import {
   SUBJECTS, levelsFor, subjectLine, WEEKDAYS, parseDays,
 } from "../lib/subjects";
@@ -569,7 +569,7 @@ export default function Groups() {
 
   useEffect(load, []);
   const canEdit = can(user?.role, GROUP_MANAGE);
-  const canCreate = canEdit || user?.role === ADMINISTRATOR;
+  const canCreate = can(user?.role, [...GROUP_MANAGE, ADMINISTRATOR, SALES_MANAGER]);
   const canSupport = can(user?.role, SUPPORT_ASSIGN);
 
   async function removeGroup(g: Group) {
@@ -624,7 +624,7 @@ export default function Groups() {
               onClick={() => setShowAdd(true)}
               className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
             >
-              <Plus size={16} /> Yangi guruh qo'shish
+              <Plus size={16} /> Yangi guruh
             </button>
           </div>
         )}

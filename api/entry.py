@@ -1183,7 +1183,7 @@ if _orig_create_group is not None:
     def create_group_v2(payload: schemas.GroupCreate,
                         force: bool = False,
                         db: Session = Depends(get_db),
-                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR))):
+                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR, roles.SALES_MANAGER))):
         _teacher_limit_guard(db, payload.teacher_id, None, user)
         return _orig_create_group(payload=payload, force=force,
                                   db=db, user=user)
@@ -2078,7 +2078,7 @@ if _cur_create_group is not None:
     def create_group_v3(payload: schemas.GroupCreate,
                         force: bool = False,
                         db: Session = Depends(get_db),
-                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR))):
+                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR, roles.SALES_MANAGER))):
         return _cur_create_group(payload=payload, force=force,
                                  db=db, user=user)
 
@@ -4527,7 +4527,7 @@ if _cur_create_group2 is not None:
     def create_group_v4(payload: schemas.GroupCreate,
                         force: bool = False,
                         db: Session = Depends(get_db),
-                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR))):
+                        user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR, roles.SALES_MANAGER))):
         # Nom bo'sh yuborilsa — o'zi qo'yiladi (frontendda ham
         # oldindan ko'rsatiladi, bu esa ikkinchi himoya).
         if not (payload.name or "").strip():

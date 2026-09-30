@@ -1091,11 +1091,11 @@ def create_group(
     payload: schemas.GroupCreate,
     force: bool = False,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR)),
+    user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR, roles.SALES_MANAGER)),
 ):
     _validate_group_fields(payload)
     data = payload.model_dump()
-    if user.role == roles.ADMINISTRATOR:
+    if user.role in (roles.ADMINISTRATOR, roles.SALES_MANAGER):
         data["branch_id"] = data.get("branch_id") or user.branch_id
         if not data["branch_id"] or not _in_user_branches(db, user, data["branch_id"]):
             raise HTTPException(403, "Faqat o'z filialingizda guruh ochishingiz mumkin")

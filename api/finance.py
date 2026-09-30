@@ -1773,7 +1773,7 @@ def smm_sales_plan_list(
     # 2026-08-27, Jahongir: "har bir filial rejasi va barchasini
     # korsatish kerak". Avval marketolog FAQAT o'z filialini
     # ko'rardi va tepadagi tanlagich ishlamasdi.
-    hide = set(hidden_branch_ids(db, user))
+    hide = set(hidden_branch_ids(db, user) if branch_id else aggregate_skip_ids(db, user))
     q = db.query(models.Branch).order_by(models.Branch.name)
     if branch_id:
         q = q.filter(models.Branch.id == branch_id)

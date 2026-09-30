@@ -118,10 +118,7 @@ def nps_summary(quarter: str | None = None,
     qk = quarter or _quarter_key(roles.local_today())
     q = db.query(models.NpsResponse).filter(
         models.NpsResponse.quarter == qk)
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        branch_id = user.branch_id
-    if branch_id:
-        q = q.filter(models.NpsResponse.branch_id == branch_id)
+    q = scope_to_branch(q, models.NpsResponse, user, branch_id)
     rows = q.all()
 
     def _nps(items):
@@ -144,7 +141,8 @@ def nps_summary(quarter: str | None = None,
 
     # Mavjud choraklar ro'yxati (tanlash uchun)
     quarters = [x[0] for x in
-                db.query(models.NpsResponse.quarter).distinct().all()]
+                scope_to_branch(db.query(models.NpsResponse.quarter),
+                                models.NpsResponse, user, branch_id).distinct().all()]
     cur = _quarter_key(roles.local_today())
     if cur not in quarters:
         quarters.append(cur)
@@ -190,8 +188,6 @@ def exam_trend(months: int = 12,
     emas - birinchi urinish foizi."""
     months = max(3, min(months or 12, 24))
     today = roles.local_today()
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        branch_id = user.branch_id
 
     y, m = today.year, today.month
     periods = []
@@ -214,8 +210,7 @@ def exam_trend(months: int = 12,
                  models.ExamResult.absent != 1,
                  (models.ExamResult.counted.is_(None))
                  | (models.ExamResult.counted == 1)))
-    if branch_id:
-        q = q.filter(models.Group.branch_id == branch_id)
+    q = scope_to_branch(q, models.Group, user, branch_id)
     rows = q.all()
 
     tnames = {t.id: t.full_name for t in db.query(models.Teacher).all()}

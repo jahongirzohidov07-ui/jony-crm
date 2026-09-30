@@ -268,8 +268,7 @@ def report_student_app_usage(
     q = (db.query(models.Student, models.User.username)
          .outerjoin(models.User, models.User.id == models.Student.user_id)
          .filter(models.Student.status.in_(("active", "trial"))))
-    if branch_id:
-        q = q.filter(models.Student.branch_id == branch_id)
+    q = scope_to_branch(q, models.Student, user, branch_id)
     pairs = q.all()
 
     unames = [u for (_s, u) in pairs if u]
@@ -1479,10 +1478,7 @@ def cash_day(
           .filter(models.Payment.kind == "payment",
                   models.Payment.created_at >= d0,
                   models.Payment.created_at <= d1))
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        pq = pq.filter(_branch_in(db, user, models.Student.branch_id))
-    elif branch_id:
-        pq = pq.filter(models.Student.branch_id == branch_id)
+    pq = scope_to_branch(pq, models.Student, user, branch_id)
 
     first_dates = _payment_first_dates(db)
     branches = {b.id: b.name for b in db.query(models.Branch).all()}
@@ -1582,10 +1578,7 @@ def cashflow_ledger(
                 models.Payment.created_at >= d0,
                 models.Payment.created_at <= d1)
     )
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        pq = pq.filter(_branch_in(db, user, models.Student.branch_id))
-    elif branch_id:
-        pq = pq.filter(models.Student.branch_id == branch_id)
+    pq = scope_to_branch(pq, models.Student, user, branch_id)
 
     first_dates = _payment_first_dates(db)
     branches = {b.id: b.name for b in db.query(models.Branch).all()}
@@ -1658,10 +1651,7 @@ def cashflow_ledger(
     # chiqadi (2026-09-16); eski yozuvda — ustozning asosiy filiali.
     _tp_branch = func.coalesce(models.TeacherPayment.branch_id,
                                models.Teacher.branch_id)
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        tp_q = tp_q.filter(_tp_branch.in_(_user_branch_ids(db, user) or [-1]))
-    elif branch_id:
-        tp_q = tp_q.filter(_tp_branch == branch_id)
+    tp_q = tp_q.filter(_tp_branch.in_(_branch_scope_ids(db, user, branch_id)))
     for tp, t in tp_q.all():
         m_ = getattr(tp, "method", None) or "cash"
         if m_ not in chiqim:
@@ -3046,10 +3036,10 @@ def _overhead_per_student_month(db: Session, user, branch_id=None) -> float:
 
     eq = db.query(models.Expense).filter(models.Expense.date >= start,
                                          models.Expense.date <= end)
-    if branch_id:
+    if user:
+        eq = scope_to_branch(eq, models.Expense, user, branch_id)
+    elif branch_id:
         eq = eq.filter(models.Expense.branch_id == branch_id)
-    elif user and user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        eq = eq.filter(_branch_in(db, user, models.Expense.branch_id))
     total = sum(e.amount or 0 for e in eq.all())
 
     sq = scope_to_branch(db.query(models.Student), models.Student,
@@ -3264,8 +3254,7 @@ def analytics_acquisition(
     lbl = roles.LEAD_SOURCE_LABELS
 
     lq = db.query(models.Lead).filter(models.Lead.created_at >= start_dt)
-    if branch_id:
-        lq = lq.filter(models.Lead.branch_id == branch_id)
+    lq = scope_to_branch(lq, models.Lead, user, branch_id)
     leads = lq.all()
 
     # O'quvchilar va ularning to'lovlari (bitta so'rovda)
@@ -3289,8 +3278,7 @@ def analytics_acquisition(
     eq = (db.query(models.Expense.channel, func.sum(models.Expense.amount))
           .filter(models.Expense.date >= start_d,
                   models.Expense.channel.isnot(None)))
-    if branch_id:
-        eq = eq.filter(models.Expense.branch_id == branch_id)
+    eq = scope_to_branch(eq, models.Expense, user, branch_id)
     spend = {(k or "").lower(): float(v or 0)
              for k, v in eq.group_by(models.Expense.channel).all()}
 
@@ -3695,10 +3683,7 @@ def analytics_romi(
     d0 = _utc_window(start, start)[0]
 
     leads = db.query(models.Lead).filter(models.Lead.created_at >= d0)
-    if branch_id:
-        leads = leads.filter(models.Lead.branch_id == branch_id)
-    elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        leads = leads.filter(_branch_in(db, user, models.Lead.branch_id))
+    leads = scope_to_branch(leads, models.Lead, user, branch_id)
     leads = leads.all()
 
     # Kanal xarajati: reklama xarajatlari channel bo'yicha
@@ -3706,8 +3691,7 @@ def analytics_romi(
     eq = db.query(models.Expense).filter(
         models.Expense.date >= start, models.Expense.date <= end,
         models.Expense.category == "ads")
-    if branch_id:
-        eq = eq.filter(models.Expense.branch_id == branch_id)
+    eq = scope_to_branch(eq, models.Expense, user, branch_id)
     for e in eq.all():
         ch = e.channel or "other"
         spend[ch] = spend.get(ch, 0.0) + (e.amount or 0)
@@ -4048,8 +4032,7 @@ def analytics_academic(branch_id: int | None = None,
     qatnashgani), shuning uchun eski o'quvchilar ham hisobda."""
     groups = {g.id: g for g in db.query(models.Group).all()}
     sq = db.query(models.Student)
-    if branch_id:
-        sq = sq.filter(models.Student.branch_id == branch_id)
+    sq = scope_to_branch(sq, models.Student, user, branch_id)
     students = sq.all()
 
     active = [s for s in students if s.status == "active" and s.group_id]
@@ -4141,14 +4124,14 @@ def analytics_academic(branch_id: int | None = None,
         "churn": churn_rows,
         "churn_worst": churn_rows[0] if churn_rows else None,
         "left_total": len(left_students),
-        "geo": _geo_stats(db, branch_id),
+        "geo": _geo_stats(db, user, branch_id),
         "hint": ("Voronka yoqlama tarixidan tiklanadi: o'quvchi qaysi "
                  "darajadagi guruh darslarida qatnashgan bo'lsa, o'sha "
                  "bosqichdan o'tgan hisoblanadi. Ketish — arxivlangan "
                  "o'quvchining oxirgi darajasi bo'yicha."),
     }
 
-def _geo_stats(db: Session, branch_id=None) -> dict:
+def _geo_stats(db: Session, user, branch_id=None) -> dict:
     """Lidlar va o'quvchilar qayerdan (manzil) va qaysi maktabdan."""
     def top(rows, n=10):
         agg = {}
@@ -4168,11 +4151,10 @@ def _geo_stats(db: Session, branch_id=None) -> dict:
         models.Student.status.in_(("active", "trial")))
     ssq = db.query(models.Student.school).filter(
         models.Student.status.in_(("active", "trial")))
-    if branch_id:
-        lq = lq.filter(models.Lead.branch_id == branch_id)
-        lsq = lsq.filter(models.Lead.branch_id == branch_id)
-        sq = sq.filter(models.Student.branch_id == branch_id)
-        ssq = ssq.filter(models.Student.branch_id == branch_id)
+    lq = scope_to_branch(lq, models.Lead, user, branch_id)
+    lsq = scope_to_branch(lsq, models.Lead, user, branch_id)
+    sq = scope_to_branch(sq, models.Student, user, branch_id)
+    ssq = scope_to_branch(ssq, models.Student, user, branch_id)
     return {
         "lead_addresses": top(lq.all()),
         "lead_schools": top(lsq.all()),
@@ -4211,8 +4193,7 @@ def analytics_sources(
     # ---- Lidlar manbasi ----
     lq = (db.query(models.Lead.source, func.count(models.Lead.id))
           .filter(models.Lead.created_at >= start_dt))
-    if branch_id:
-        lq = lq.filter(models.Lead.branch_id == branch_id)
+    lq = scope_to_branch(lq, models.Lead, user, branch_id)
     leads = [{"key": k or "other", "label": lbl.get(k, k or "Boshqa"),
               "count": int(c)}
              for k, c in lq.group_by(models.Lead.source).all() if c]
@@ -4223,8 +4204,7 @@ def analytics_sources(
           .outerjoin(models.Lead,
                      models.Lead.converted_student_id == models.Student.id)
           .filter(models.Student.enrolled_date >= start_d))
-    if branch_id:
-        sq = sq.filter(models.Student.branch_id == branch_id)
+    sq = scope_to_branch(sq, models.Student, user, branch_id)
     seen: dict = {}
     for sid, src in sq.all():
         # bitta o'quvchiga bir nechta lid ulangan bo'lsa — bittasi yetadi
@@ -4294,10 +4274,7 @@ def _deleted_lead_stats(db: Session, user, first, branch_id=None) -> dict:
         if first:
             q = q.filter(models.DeletedLead.deleted_at
                          >= datetime.combine(first, datetime.min.time()))
-        if branch_id:
-            q = q.filter(models.DeletedLead.branch_id == branch_id)
-        elif user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-            q = q.filter(models.DeletedLead.branch_id == user.branch_id)
+        q = scope_to_branch(q, models.DeletedLead, user, branch_id)
         rows = q.all()
     except Exception:
         db.rollback()
@@ -4596,8 +4573,8 @@ def admin_history(months: int = 12, branch_id: int = None,
         models.User.is_active == 1)
     if not boss:
         admins = admins.filter(models.User.id == user.id)
-    elif branch_id:
-        admins = admins.filter(models.User.branch_id == branch_id)
+    else:
+        admins = scope_to_branch(admins, models.User, user, branch_id)
     admins = admins.order_by(models.User.full_name).all()
     if not admins:
         return {"months": [], "rows": [], "mine": bool(not boss)}

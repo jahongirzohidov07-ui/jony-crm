@@ -1352,18 +1352,13 @@ def test_branch_ids(db) -> list:
     o'quvchi va soxta lid bor. Uning raqamlari hisobotga tushsa,
     real ko'rsatkich buziladi.
 
-    Belgisi NOM bo'yicha aniqlanadi ("Test" bilan boshlanadi) —
-    tizimda allaqachon shu qoida ishlatilgan (leads.py, ochiq
-    filial ro'yxati). Keyinchalik alohida ustun kerak bo'lsa,
-    faqat SHU funksiya o'zgaradi."""
-    global _TEST_IDS
-    if _TEST_IDS is None:
-        try:
-            _TEST_IDS = [b.id for b in db.query(models.Branch).all()
-                         if (b.name or "").strip().lower().startswith("test")]
-        except Exception:
-            return []
-    return _TEST_IDS
+    is_test belgisi yoki eski "Test" nomi orqali aniqlanadi.
+    Belgining boshqa jarayonda o'zgarishi ham darhol hisobga olinadi."""
+    # No process cache: another worker can change the flag or create a branch.
+    return [bid for (bid,) in db.query(models.Branch.id).filter(or_(
+        models.Branch.is_test == 1,
+        func.lower(func.trim(models.Branch.name)).like("test%"))).all()]
+
 
 
 def _home_branches(db, user: models.User) -> set:
@@ -1500,6 +1495,8 @@ def scope_to_branch(query, model, user: models.User, branch_id=None,
                 return query.filter(or_(model.branch_id == branch_id,
                                         model.branch_id.is_(None)))
             return query.filter(model.branch_id == branch_id)
+        skip = set(aggregate_skip_ids(query.session, user))
+        allowed = [bid for bid in allowed if bid not in skip]
         if keep_unset:
             return query.filter(or_(model.branch_id.in_(allowed or [-1]),
                                     model.branch_id.is_(None)))
@@ -1787,10 +1784,7 @@ def _income_by_method(db: Session, user, start: date, end: date,
         models.Payment.created_at >= _utc_window(start, end)[0],
         models.Payment.created_at <= _utc_window(start, end)[1],
     )
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        q = q.filter(_branch_in(db, user, models.Student.branch_id))
-    elif branch_id:
-        q = q.filter(models.Student.branch_id == branch_id)
+    q = scope_to_branch(q, models.Student, user, branch_id)
 
     out = {m: 0.0 for m in roles.PAYMENT_METHODS}
     for p in q.all():
@@ -1826,10 +1820,7 @@ def _payroll_total(db: Session, user, period: str, branch_id=None) -> float:
     start, end = billing.month_bounds(y, m)
 
     gq = db.query(models.Group)
-    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        gq = gq.filter(_branch_in(db, user, models.Group.branch_id))
-    elif branch_id:
-        gq = gq.filter(models.Group.branch_id == branch_id)
+    gq = scope_to_branch(gq, models.Group, user, branch_id)
     groups = {g.id: g for g in gq.all()}
     if not groups:
         return 0.0
@@ -1885,11 +1876,13 @@ def _payroll_branches(db: Session, user, branch_id=None):
         allowed = set(_user_branch_ids(db, user))
         if branch_id and branch_id in allowed:
             return {branch_id}
-        return allowed or {-1}
+        return (allowed - set(aggregate_skip_ids(db, user))) or {-1}
     if branch_id:
         if branch_id in blocked_branch_ids(db, user):
             return {-1}
         return {branch_id}
+    if aggregate_skip_ids(db, user):
+        return set(_branch_scope_ids(db, user, None))
     return None
 
 
@@ -3422,12 +3415,18 @@ def _maybe_auto_activate(db: Session, s: models.Student, *, user=None,
     return None
 
 def _branch_scope_ids(db: Session, user, branch_id: int | None) -> list | None:
-    """Foydalanuvchi ko'ra oladigan filiallar. None - hammasi."""
+    """Explicit branch view or production-only aggregate; never an unbounded empty scope."""
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
-        return [user.branch_id]
-    if branch_id:
-        return [branch_id]
-    return None
+        allowed = _user_branch_ids(db, user)
+        if branch_id and branch_id in allowed:
+            return [branch_id]
+    else:
+        if branch_id:
+            return [-1] if branch_id in blocked_branch_ids(db, user) else [branch_id]
+        allowed = [bid for (bid,) in db.query(models.Branch.id).all()]
+    skip = set(aggregate_skip_ids(db, user))
+    return [bid for bid in allowed if bid not in skip] or [-1]
+
 
 def _task_checklist(t: models.Task) -> list:
     try:

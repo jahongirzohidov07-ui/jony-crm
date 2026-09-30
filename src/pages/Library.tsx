@@ -42,14 +42,14 @@ export default function Library() {
   }
 
   const [archiveSource, setArchiveSource] = useState("");
+  const [archiveConfirm, setArchiveConfirm] = useState(false);
   async function archiveImport() {
     if (busy || !archiveSource.trim()) return;
-    if (!confirm("Shu fayldan import qilingan kitoblar yashirilsinmi? Yozuvlar saqlanadi va qayta faollashtirish mumkin.")) return;
     setBusy(true); setMessage(""); setImportError("");
     try {
       const r = await api.post<{archived: number}>("/library/import/archive", {source: archiveSource.trim()});
       setMessage(`${r.archived} ta kitob yashirildi. Ma'lumotlari saqlangan.`);
-      setVersion(v => v + 1); setArchiveSource("");
+      setVersion(v => v + 1); setArchiveSource(""); setArchiveConfirm(false);
     } catch (e) { setImportError(e instanceof Error ? e.message : "Xatolik"); }
     finally { setBusy(false); }
   }
@@ -80,7 +80,7 @@ export default function Library() {
           <summary className="cursor-pointer">Importni bekor qilish</summary>
           <p className="my-2 text-slate-500">Faqat tanlangan manbadan import qilingan kitoblar yashiriladi. Yashirilgan materiallar ro'yxatidan tiklash mumkin.</p>
           <input aria-label="Import manbasi" placeholder="Excel faylining to'liq nomi" value={archiveSource} onChange={e => setArchiveSource(e.target.value)} className="border rounded-lg p-2 mr-2" />
-          <button onClick={archiveImport} disabled={busy || !archiveSource.trim()} className="border rounded-lg p-2">Import kitoblarini yashirish</button>
+          <button onClick={() => setArchiveConfirm(true)} disabled={busy || !archiveSource.trim()} className="border rounded-lg p-2">Import kitoblarini yashirish</button>
           {importError && <p role="alert" className="text-red-600 mt-2">{importError}</p>}
         </details>
         {message && <p role="status" className="mt-2 text-sm text-emerald-700">{message}</p>}
@@ -96,6 +96,17 @@ export default function Library() {
             {busy ? "Qo'shilmoqda…" : "Kitoblarni qo'shish"}
           </button>
         </div>}
+      </div>}
+      {archiveConfirm && <div role="dialog" aria-modal="true" aria-labelledby="archive-import-title" className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+        <div className="max-w-lg bg-white rounded-xl p-6 space-y-4">
+          <h2 id="archive-import-title" className="font-semibold">Import kitoblarini yashirish</h2>
+          <p className="text-sm">{archiveSource} faylidan qo'shilgan kitoblar yashiriladi. Ma'lumotlar saqlanadi, keyin qayta faollashtirish mumkin.</p>
+          {importError && <p role="alert" className="text-red-600 text-sm">{importError}</p>}
+          <div className="flex justify-end gap-2">
+            <button onClick={() => setArchiveConfirm(false)} disabled={busy} className="border rounded-lg px-4 py-2">Bekor</button>
+            <button onClick={archiveImport} disabled={busy} className="bg-brand-600 text-white rounded-lg px-4 py-2">{busy ? "Yashirilmoqda…" : "Ha, yashirish"}</button>
+          </div>
+        </div>
       </div>}
       {canManage ? (
         <LibraryTab key={version} />

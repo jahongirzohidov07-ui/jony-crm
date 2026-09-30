@@ -1,3 +1,4 @@
+import ExamMonthlyReport from "../components/ExamMonthlyReport";
 import { useEffect, useState } from "react";
 import { formatPhone } from "../components/PhoneInput";
 import {
@@ -17,7 +18,7 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import {
-  FINANCE_ACCESS, PAYROLL_VIEW, FOUNDER, SMM_MANAGER, DISCOUNT_REQUEST, can,
+  EXAM_VIEW, FINANCE_ACCESS, PAYROLL_VIEW, FOUNDER, SMM_MANAGER, DISCOUNT_REQUEST, can,
 } from "../lib/roles";
 import DiscountsPage from "./DiscountsPage";
 import { MONTHS } from "../lib/expenses";
@@ -26,7 +27,7 @@ import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi" | "app"
-  | "discounts";
+  | "discounts" | "exams";
 
 // OYLIKLAR BO'LIMI MOLIYADAN SHU YERGA KO'CHDI (2026-08-20,
 // Jahongir: "uzr molyia bolimidan hisobotlarga olib ot demoqchi
@@ -1179,19 +1180,21 @@ export default function Reports() {
   // rollarda (sotuv, administrator, rahbariyat).
   const canDiscount = can(user?.role, DISCOUNT_REQUEST);
   const base = finance
-    ? TABS
+    ? [...TABS]
     : smm
       ? TABS.filter((t) => SMM_TABS.includes(t.key))
       : payrollOnly
         ? TABS.filter((t) => t.key === "payroll")
         : [];
+  const examAccess = can(user?.role, EXAM_VIEW);
+  if (examAccess) base.push({ key: "exams", label: "Oylik imtihon hisoboti" });
   const tabs = canDiscount
     ? [...base, { key: "discounts" as Tab, label: "Chegirmalar" }]
     : base;
   const [tab, setTab] = useState<Tab>(
-    smm ? "funnel" : payrollOnly || finance ? "payroll" : "discounts");
+    smm ? "funnel" : payrollOnly || finance ? "payroll" : examAccess ? "exams" : "discounts");
 
-  if (!finance && !payrollOnly && !smm && !canDiscount) {
+  if (!finance && !payrollOnly && !smm && !canDiscount && !examAccess) {
     return (
       <div className="p-8">
         <p className="text-slate-400 text-sm">
@@ -1226,6 +1229,7 @@ export default function Reports() {
         ))}
       </div>
 
+      {tab === "exams" && <ExamMonthlyReport />}
       {tab === "payroll" && <PayrollTab />}
       {tab === "discipline" && <DisciplineTab />}
       {tab === "tasks" && <TaskReportTab />}

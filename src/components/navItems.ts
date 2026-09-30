@@ -121,6 +121,9 @@ export function buildNav(
       { to: "/analytics", label: "Analitika", icon: PieChart },
     ];
   }
+  if (!items.some(i => i.to === "/reports") && can(user?.role, EXAM_VIEW)) {
+    items = [...items, { to: "/reports", label: "Hisobotlar", icon: BarChart3 }];
+  }
   // KUTUBXONA - barcha xodimga (2026-08-20, Jahongir: "kutubxona
   // bo'liimi ham supportlarda ochilmadi"). Ilgari faqat HR sahifasi
   // ichida edi - supportlar va boshqa xodimlar yo'l topolmasdi.

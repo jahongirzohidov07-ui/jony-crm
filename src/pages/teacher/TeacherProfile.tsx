@@ -1,3 +1,4 @@
+import ExamMonthlyReport from "../../components/ExamMonthlyReport";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, LogOut, Monitor } from "lucide-react";
@@ -43,6 +44,8 @@ export default function TeacherProfile() {
             <Stat value={String(d.lessons_this_month)} label="Bu oy dars" />
           </div>
         )}
+
+        {user?.role === "teacher" && <div className="rounded-xl bg-white p-3 border border-slate-200"><ExamMonthlyReport own /></div>}
 
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <Link

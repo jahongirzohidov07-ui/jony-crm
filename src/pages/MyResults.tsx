@@ -1,3 +1,5 @@
+import ExamMonthlyReport from "../components/ExamMonthlyReport";
+import { useAuth } from "../lib/AuthContext";
 import { useEffect, useState } from "react";
 import { PieChart, Info, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { api, type MyResults as Data, type LeaverWindow } from "../lib/api";
@@ -19,6 +21,7 @@ const TONE: Record<string, string> = {
  * oila uchun ustozni ayblash noto'g'ri bo'lardi.
  */
 export default function MyResults() {
+  const {user} = useAuth();
   const [d, setD] = useState<Data | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [win, setWin] = useState("m6");
@@ -47,6 +50,8 @@ export default function MyResults() {
       <p className="text-sm text-slate-500 mb-5">
         {d.teacher.name} · {d.teacher.grade_label}
       </p>
+
+      {user?.role === "teacher" && <div className="mb-6"><ExamMonthlyReport own /></div>}
 
       {/* Asosiy raqamlar */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">

@@ -1,3 +1,4 @@
+import ExamMonthlyReport from "../components/ExamMonthlyReport";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -495,6 +496,11 @@ function AnalysisTable({
 
 /** Imtihon tahlili — "Imtihonlar" bo'limidan chaqiriladi. */
 export function AnalysisTab({ branchId }: { branchId: number | null }) {
+  const [legacy, setLegacy] = useState(false);
+  return <><div className="flex gap-2 mb-4"><button onClick={()=>setLegacy(false)} className={`rounded-lg px-3 py-2 text-sm ${!legacy?"bg-blue-50 text-blue-700":"text-slate-500"}`}>Oylik natijalar</button><button onClick={()=>setLegacy(true)} className={`rounded-lg px-3 py-2 text-sm ${legacy?"bg-blue-50 text-blue-700":"text-slate-500"}`}>Davrlar va tavsiyalar</button></div>{legacy?<PeriodAnalysisTab branchId={branchId}/>:<ExamMonthlyReport branchId={branchId}/>}</>;
+}
+
+function PeriodAnalysisTab({ branchId }: { branchId: number | null }) {
   const [data, setData] = useState<ExaminerAnalysis | null>(null);
   const [months, setMonths] = useState(6);
   const [loading, setLoading] = useState(true);

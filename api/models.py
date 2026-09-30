@@ -740,6 +740,9 @@ class Exam(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     group_id = Column(Integer, ForeignKey("groups.id"), nullable=False, index=True)
+    # Attribution stays with the exam even when a group later changes teacher/branch.
+    report_teacher_id = Column(Integer, nullable=True, index=True)
+    report_branch_id = Column(Integer, nullable=True, index=True)
     kind = Column(String, nullable=False, default="unit")
     unit_no = Column(Integer, nullable=True)   # faqat kind="unit" uchun 1..12
     title = Column(String, nullable=True)
@@ -4655,3 +4658,13 @@ class VideoCheck(Base):
     result = Column(Text, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+@event.listens_for(Exam, "before_insert")
+def _capture_exam_report_owner(mapper, connection, target):
+    from sqlalchemy import select
+    row = connection.execute(select(Group.teacher_id, Group.branch_id)
+                             .where(Group.id == target.group_id)).first()
+    if row:
+        target.report_teacher_id = row.teacher_id
+        target.report_branch_id = row.branch_id

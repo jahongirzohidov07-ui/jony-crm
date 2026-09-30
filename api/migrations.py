@@ -196,6 +196,13 @@ MIGRATIONS = [
         "ALTER TABLE groups ADD COLUMN archived_by VARCHAR",
         "ALTER TABLE groups ADD COLUMN archive_note VARCHAR",
     ]),
+    ("0023_exam_report_owner", [
+        "ALTER TABLE exams ADD COLUMN report_teacher_id INTEGER",
+        "ALTER TABLE exams ADD COLUMN report_branch_id INTEGER",
+        "UPDATE exams SET report_teacher_id = (SELECT teacher_id FROM groups WHERE groups.id = exams.group_id), "
+        "report_branch_id = (SELECT branch_id FROM groups WHERE groups.id = exams.group_id)",
+    ]),
+
 ]
 
 

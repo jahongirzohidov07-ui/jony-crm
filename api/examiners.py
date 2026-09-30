@@ -356,3 +356,18 @@ def examiner_salary_list(year: int | None = None, month: int | None = None,
         "can_penalize": user.role in tuple(roles.EXAMINER_PENALTY_SET),
     }
 
+
+
+@router.get("/api/reports/exams-monthly")
+def monthly_exam_report(period: str | None = None, branch_id: int | None = None,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.EXAM_VIEW))):
+    from exam_reports import report
+    return report(db, user, period, branch_id)
+
+
+@router.get("/api/teacher/exam-history")
+def own_exam_history(period: str | None = None, db: Session = Depends(get_db),
+                     user=Depends(require_role(roles.TEACHER))):
+    from exam_reports import report
+    return report(db, user, period, own=True)

@@ -2417,6 +2417,12 @@ def _check_enrolment(db: Session, s: models.Student, g: models.Group) -> list:
     problems = []
     if not g:
         return problems
+    if getattr(g, "archived_at", None):
+        problems.append(_problem(
+            "group_archived",
+            f"\"{g.name}\" guruhi arxivda. Avval Arxiv bo'limidan "
+            f"qaytaring."))
+        return problems
 
     n = _active_student_count(db, g.id, exclude_student_id=s.id)
     rooms = {r.id: r for r in db.query(models.Room).all()}
@@ -5976,7 +5982,8 @@ def _support_assigned_groups(db: Session, user) -> list:
                     models.SupportAssignment.group_id.isnot(None)).all()]
     if not gids:
         return []
-    return (db.query(models.Group).filter(models.Group.id.in_(gids))
+    return (db.query(models.Group).filter(models.Group.id.in_(gids),
+                                          models.Group.archived_at.is_(None))
             .order_by(models.Group.name).all())
 
 # =====================================================================
@@ -6046,7 +6053,8 @@ def _cabinet_groups(db: Session, user, t) -> list:
 
 def _my_groups(db: Session, teacher_id: int) -> list:
     return (db.query(models.Group)
-            .filter(models.Group.teacher_id == teacher_id)
+            .filter(models.Group.teacher_id == teacher_id,
+                    models.Group.archived_at.is_(None))
             .order_by(models.Group.name).all())
 
 def _reschedule_usage(db: Session, teacher_id: int,

@@ -44,6 +44,9 @@ ACTIONS = {
     "wheel_prizes": "Baraban sozlamasi o'zgardi",
     # 2026-09-26: filial rahbari o'quvchi pul balansini to'g'riladi
     "balance_fix": "Balans tuzatildi",
+    # 2026-09-30: guruh arxivi
+    "archive": "Arxivga o'tkazildi",
+    "restore": "Arxivdan qaytarildi",
 }
 
 # Kuzatiladigan obyektlar.

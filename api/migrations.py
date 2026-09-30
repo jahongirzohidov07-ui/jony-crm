@@ -190,6 +190,12 @@ MIGRATIONS = [
         "ALTER TABLE exam_submissions ADD COLUMN paper_by VARCHAR",
         "ALTER TABLE mock_practice ADD COLUMN ai_review TEXT",
     ]),
+    # 2026-09-30: guruh arxivi (bo'sh guruhlar ro'yxatdan yashiriladi)
+    ("0022_group_archive", [
+        "ALTER TABLE groups ADD COLUMN archived_at TIMESTAMP",
+        "ALTER TABLE groups ADD COLUMN archived_by VARCHAR",
+        "ALTER TABLE groups ADD COLUMN archive_note VARCHAR",
+    ]),
 ]
 
 

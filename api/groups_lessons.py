@@ -103,6 +103,9 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
 
     Jadval o'zgarsa (masalan juma olib tashlansa) - endi mos kelmaydigan,
     hali yoqlama ham baho ham qo'yilmagan darslar tozalanadi."""
+    # Arxivdagi guruhga yangi dars yaratilmaydi (2026-09-30)
+    if getattr(group, "archived_at", None):
+        return
     days = [d.strip() for d in (group.lesson_days or "").split(",") if d.strip()]
     wanted = {_WEEKDAY_INDEX[d] for d in days if d in _WEEKDAY_INDEX}
 

@@ -10,13 +10,15 @@ import {
 import { useAuth } from "../lib/AuthContext";
 import {
   TEACHING_STAFF, STAFF_VIEWERS, HR_ACCESS, FREEZE_ROLES, FOUNDER, can,
+  GROUP_MANAGE,
 } from "../lib/roles";
+import { ArchivedGroupsTab } from "../components/GroupArchive";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "students" | "staff";
+type Tab = "students" | "staff" | "groups";
 
 /** Arxiv toifalari rangi. */
 const GROUP_TONE: Record<string, { box: string; text: string; dot: string }> = {
@@ -782,6 +784,13 @@ export default function Archive() {
   }
 
   const showStaff = can(user?.role, STAFF_VIEWERS);
+  // Arxivdagi guruhlar (2026-09-30) — guruhni boshqaradiganlarga
+  const showGroups = can(user?.role, GROUP_MANAGE);
+  const tabs = [
+    { k: "students" as Tab, l: "O'quvchilar", show: true },
+    { k: "staff" as Tab, l: "Xodimlar", show: showStaff },
+    { k: "groups" as Tab, l: "Guruhlar", show: showGroups },
+  ].filter((t) => t.show);
 
   return (
     <div>
@@ -790,15 +799,12 @@ export default function Archive() {
         <h1 className="text-xl font-semibold text-slate-900">Arxiv</h1>
       </div>
       <p className="text-sm text-slate-500 mb-5">
-        Ketgan o'quvchilar va ishdan bo'shagan xodimlar
+        Ketgan o'quvchilar, ishdan bo'shagan xodimlar va yopilgan guruhlar
       </p>
 
-      {showStaff && (
+      {tabs.length > 1 && (
         <div className="flex gap-1 border-b border-slate-200 mb-5">
-          {[
-            { k: "students" as Tab, l: "O'quvchilar" },
-            { k: "staff" as Tab, l: "Xodimlar" },
-          ].map((t) => (
+          {tabs.map((t) => (
             <button
               key={t.k}
               onClick={() => setTab(t.k)}
@@ -814,7 +820,13 @@ export default function Archive() {
         </div>
       )}
 
-      {tab === "students" || !showStaff ? <StudentsTab /> : <StaffTab />}
+      {tab === "groups" && showGroups ? (
+        <ArchivedGroupsTab canRestore={showGroups} />
+      ) : tab === "staff" && showStaff ? (
+        <StaffTab />
+      ) : (
+        <StudentsTab />
+      )}
     </div>
   );
 }

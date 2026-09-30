@@ -151,6 +151,7 @@ import teachers as _r_teachers
 import timetable as _r_timetable
 import wheel as _r_wheel
 import hr_checklist as _r_hr_checklist
+import group_archive as _r_group_archive
 import ig_connect as _r_ig_connect
 import video_check as _r_video_check
 import ig_audience as _r_ig_audience
@@ -208,6 +209,7 @@ app.include_router(_r_teachers.router)
 app.include_router(_r_timetable.router)
 app.include_router(_r_wheel.router)
 app.include_router(_r_hr_checklist.router)
+app.include_router(_r_group_archive.router)
 app.include_router(_r_ig_connect.router)
 app.include_router(_r_video_check.router)
 app.include_router(_r_ig_audience.router)

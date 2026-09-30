@@ -246,7 +246,9 @@ def _group_support_map(db: Session, group_ids: list) -> dict:
                   models.User.id == models.SupportAssignment.user_id)
             .filter(models.SupportAssignment.group_id.in_(group_ids),
                     models.User.is_active == 1,
-                    models.User.role == roles.SUPPORT_TEACHER)
+                    # qo'shimcha lavozimi support bo'lganlar ham
+                    # (2026-09-30)
+                    _C._support_cond())
             .all())
     m = {}
     for gid, name in rows:
@@ -260,11 +262,17 @@ _drop_route("/api/groups", "GET")
 
 @app.get("/api/groups", response_model=list[schemas.GroupOut])
 def list_groups(branch_id: int | None = None,
+                archived: int = 0,
                 db: Session = Depends(get_db),
                 user=Depends(M.get_current_user)):
     M.backfill_missing_ids(db, "group", models.Group)
     q = scope_to_branch(db.query(models.Group), models.Group, user,
                         branch_id)
+    # ARXIV (2026-09-30): sukut bo'yicha arxivdagi guruhlar ro'yxatda,
+    # tanlagichlarda va jadvalda ko'rinmaydi; archived=1 — faqat
+    # arxivdagilar (Arxiv bo'limi).
+    q = q.filter(models.Group.archived_at.isnot(None) if archived
+                 else models.Group.archived_at.is_(None))
     # TEZLIK (2026-08-15): ustoz va filial guruhlar bilan BIRGA
     # o'qiladi. Ilgari har guruh uchun alohida so'rov ketardi
     # (45 guruh = 21 ortiqcha so'rov). Javob o'zgarmaydi.

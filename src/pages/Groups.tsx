@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, X, Pencil, Search , Trash2 } from "lucide-react";
+import { Plus, X, Pencil, Search , Trash2, Archive as ArchiveIcon } from "lucide-react";
+import { EmptyGroupsDialog } from "../components/GroupArchive";
 import {
   api, ApiError, getGlobalBranch, type Group, type Teacher,
   type Branch, type Room,
@@ -534,6 +535,8 @@ export default function Groups() {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
+  // Bo'sh guruhlarni arxivlash (2026-09-30)
+  const [showEmpty, setShowEmpty] = useState(false);
   const [editing, setEditing] = useState<Group | null>(null);
   // Ro'yxatdan turib tez tahrirlash
   const [supFor, setSupFor] = useState<Group | null>(null);
@@ -607,12 +610,23 @@ export default function Groups() {
           </p>
         </div>
         {canEdit && (
-          <button
-            onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
-          >
-            <Plus size={16} /> Yangi guruh qo'shish
-          </button>
+          <div className="flex items-center gap-2">
+            {/* BO'SH GURUHLAR (2026-09-30, Jahongir: "guruhda o'quvchi
+                qolmagan yoki faol bo'lmagan guruhlarni arxivga tushirib
+                ko'rinmaydigan qilish") */}
+            <button
+              onClick={() => setShowEmpty(true)}
+              className="flex items-center gap-2 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg px-3 py-2 text-sm font-medium"
+            >
+              <ArchiveIcon size={16} /> Bo'sh guruhlar
+            </button>
+            <button
+              onClick={() => setShowAdd(true)}
+              className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
+            >
+              <Plus size={16} /> Yangi guruh qo'shish
+            </button>
+          </div>
         )}
       </div>
 
@@ -845,6 +859,9 @@ export default function Groups() {
         </div>
       )}
 
+      {showEmpty && (
+        <EmptyGroupsDialog onClose={() => setShowEmpty(false)} onDone={load} />
+      )}
       {showAdd && (
         <GroupFormModal
           teachers={teachers}

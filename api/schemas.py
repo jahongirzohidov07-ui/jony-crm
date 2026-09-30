@@ -312,6 +312,10 @@ class GroupOut(GroupCreate):
     rate_manual: Optional[int] = None
     # Guruhga biriktirilgan support ustoz(lar) nomi — ro'yxatda ko'rinadi
     support_label: Optional[str] = None
+    # Arxiv (2026-09-30)
+    archived_at: Optional[_dt.datetime] = None
+    archived_by: Optional[str] = None
+    archive_note: Optional[str] = None
 
 
 # ---------- Lesson ("yoqlama") ----------

@@ -308,6 +308,14 @@ class Group(Base):
                        index=True)
     price_manual = Column(Integer, default=0)
 
+    # ARXIV (2026-09-30, Jahongir: "guruhda o'quvchi qolmagan yoki faol
+    # bo'lmagan guruhlarni arxivga tushirib ko'rinmaydigan qilish").
+    # O'chirilmaydi — ro'yxatlardan yashiriladi, tarix (darslar,
+    # yo'qlama, to'lovlar) joyida qoladi va bir bosishda qaytariladi.
+    archived_at = Column(DateTime, nullable=True, index=True)
+    archived_by = Column(String, nullable=True)
+    archive_note = Column(String, nullable=True)
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     teacher = relationship("Teacher", back_populates="groups")

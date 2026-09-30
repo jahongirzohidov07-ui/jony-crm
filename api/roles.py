@@ -1422,6 +1422,8 @@ SUPPORT_MAX_GROUPS = 4
 MAX_GAP_HOURS = 5
 
 CHECKS = [
+    # 2026-09-30: arxivdagi guruhga o'quvchi qo'shilmaydi
+    ("group_archived", "Guruh arxivda", "block"),
     ("teacher_clash", "Ustoz bir vaqtda ikki guruhda", "block"),
     ("age_limit", "Kurs yosh chegarasiga mos emas", "block"),
     ("age_unknown", "Tug'ilgan sana kiritilmagan", "warn"),

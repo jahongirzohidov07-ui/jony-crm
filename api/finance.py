@@ -1379,7 +1379,7 @@ def create_discount(
     db.commit()
     return _discount_out(db, d)
 
-def _recharge_current_month(db: Session, st: models.Student) -> bool:
+def _recharge_current_month(db: Session, st: models.Student, *, commit: bool = True) -> bool:
     """Shu oyning AVTOMAT hisob qatorini chegirma bilan qayta yozadi.
 
     Qator o'chirilmaydi — summa joyida to'g'rilanadi (tizimdagi umumiy
@@ -1461,7 +1461,8 @@ def _recharge_current_month(db: Session, st: models.Student) -> bool:
               old_value=old_amt, new_value=-target,
               note="Chegirma tasdiqlandi — shu oy hisobi qayta yozildi",
               branch_id=st.branch_id)
-    db.commit()
+    if commit:
+        db.commit()
     return True
 
 

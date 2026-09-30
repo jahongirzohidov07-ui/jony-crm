@@ -547,6 +547,7 @@ class LeadConvertRequest(BaseModel):
     # Bir xil telefonli o'quvchi bazada bo'lsa server ogohlantiradi.
     # Haqiqatan boshqa odam bo'lsa (aka-uka) shu belgi bilan tasdiqlanadi.
     force: bool = False
+    family_sibling_id: Optional[int] = None
 
 
 class ExpenseCreate(BaseModel):

@@ -8380,6 +8380,7 @@ def activate_student_v3(student_id: int, payload: dict | None = None,
     except Exception:
         pass
 
+    db.flush()  # Family count must include this newly active child.
     charge = adjust = None
     try:
         charge = _fz_activation_charge(db, s, on, user)
@@ -8396,6 +8397,9 @@ def activate_student_v3(student_id: int, payload: dict | None = None,
             if left > 0:
                 adjust = _fz_set(db, s, period, total,
                                  f"{on.strftime('%d.%m')} dan qaytdi", user)
+
+    from common import _refresh_family_charges
+    _refresh_family_charges(db, s)
 
     audit.log(db, user, entity="student", action="activate", entity_id=s.id,
               entity_label=s.full_name, field="status",

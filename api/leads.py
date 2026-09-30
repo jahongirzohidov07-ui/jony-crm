@@ -521,11 +521,19 @@ def convert_lead(
     # hech qanday tekshiruv yo'q edi: bir xil telefonli odam bazada
     # bo'lsa ham ikkinchi karta jimgina ochilaverardi. Endi "O'quvchi
     # qo'shish" formasidagi bilan bir xil ogohlantirish beriladi.
-    if not payload.force:
-        def _tail(v):
-            d = "".join(ch for ch in str(v or "") if ch.isdigit())
-            return d[-9:] if len(d) >= 9 else ""
+    def _tail(v):
+        d = "".join(ch for ch in str(v or "") if ch.isdigit())
+        return d[-9:] if len(d) >= 9 else ""
 
+    family_sibling = None
+    if payload.family_sibling_id is not None:
+        family_sibling = db.get(models.Student, payload.family_sibling_id)
+        ph = _tail(lead.phone)
+        if (not payload.force or not family_sibling or not ph
+                or ph not in (_tail(family_sibling.phone), _tail(family_sibling.parent_phone))):
+            raise HTTPException(400, "Oila bog'lanishi uchun tasdiqlangan umumiy raqam mos kelishi kerak")
+
+    if not payload.force:
         ph = _tail(lead.phone)
         nm = " ".join((lead.full_name or "").split()).lower()
         dup = None
@@ -545,12 +553,12 @@ def convert_lead(
             joy = f", {br.name} filialida" if br else ""
             raise HTTPException(
                 409,
-                f"Bu odam bazada allaqachon bor: {dup.full_name} "
+                {"duplicate_student_id": (dup.id if ph and ph in (_tail(dup.phone), _tail(dup.parent_phone)) else None), "message": f"Bu odam bazada allaqachon bor: {dup.full_name} "
                 f"(#{dup.id}, {_lbl.get(dup.status, dup.status or '')}"
                 f"{joy}). Yangi karta ochish o'rniga o'shani ishlating — "
                 "aks holda bitta bolaga ikkita karta bo'lib, pul va "
                 "davomat ikkiga bo'linib ketadi. Boshqa odam bo'lsa "
-                "(masalan aka-uka) — tasdiqlang.")
+                "(masalan aka-uka) — tasdiqlang."})
 
     # Lidda yig'ilgan qo'shimcha ma'lumot (manzil, maktab, sinf) yo'qolib
     # ketmasligi uchun uni o'quvchining izohiga ko'chiramiz.
@@ -590,6 +598,25 @@ def convert_lead(
     )
     db.add(student)
     db.flush()
+
+    if family_sibling is not None:
+        # Only the explicitly confirmed sibling is linked; never merge unrelated families.
+        if family_sibling.parent_id:
+            student.parent_id = family_sibling.parent_id
+        else:
+            family = models.Parent(
+                full_name=f"{(family_sibling.full_name or 'Oila').split()[0]} oilasi",
+                phone=lead.phone, branch_id=lead.branch_id, created_by=user.username)
+            db.add(family)
+            db.flush()
+            family_sibling.parent_id = student.parent_id = family.id
+        student.parent_phone = lead.phone
+        audit.log(db, user, entity="student", action="family_link",
+                  entity_id=student.id, entity_label=student.full_name,
+                  branch_id=student.branch_id,
+                  new_value=f"{student.full_name} + {family_sibling.full_name}",
+                  note="Umumiy ota-ona raqami: boshqa farzand deb tasdiqlandi",
+                  commit=False)
 
     lead.stage = "converted"
     lead.converted_student_id = student.id

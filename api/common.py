@@ -3064,6 +3064,20 @@ def _family_discount_percent(db: Session, s: models.Student) -> float:
         return roles.FAMILY_DISCOUNT_PERCENT
     return 0.0
 
+def _refresh_family_charges(db: Session, s: models.Student) -> None:
+    """Reprice current bills when another child starts, in the caller's transaction."""
+    if not s.parent_id:
+        return
+    db.flush()  # SessionLocal disables autoflush; count the newly active child.
+    if not _family_discount_percent(db, s):
+        return
+    from finance import _recharge_current_month
+    for child in db.query(models.Student).filter(
+            models.Student.parent_id == s.parent_id,
+            models.Student.status == "active").all():
+        _recharge_current_month(db, child, commit=False)
+
+
 def _discount_alive(d: models.Discount, on: date = None) -> bool:
     """Chegirma shu sanada amaldami."""
     on = on or date.today()
@@ -3352,7 +3366,9 @@ def _activate_student(db: Session, s: models.Student, *, on: date,
     # Xuddi shu sabab bilan (yuqoridagi izohga qarang) main orqali
     # dinamik chaqiramiz - entry.py buni almashtirishi mumkin.
     import main as _main
+    db.flush()
     charge = _main._charge_from_activation(db, s, on, user)
+    _refresh_family_charges(db, s)
 
     # Lid ham yopiladi - u endi o'quvchi, doskada turishi shart emas
     lead = (db.query(models.Lead)

@@ -467,6 +467,7 @@ function ConvertModal({
   const [error, setError] = useState<string | null>(null);
 
   const [duplicate, setDuplicate] = useState(false);
+  const [siblingId, setSiblingId] = useState<number | null>(null);
 
   async function convert(force = false) {
     if (saving) return;
@@ -478,11 +479,13 @@ function ConvertModal({
         group_id: groupId ? Number(groupId) : null,
         enrolled_date: enrolled || null,
         force,
+        family_sibling_id: force ? siblingId : null,
       });
       onDone();
       onClose();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
+      setSiblingId(e instanceof ApiError ? e.duplicateStudentId : null);
       setDuplicate(e instanceof ApiError && e.status === 409
         && e.message.startsWith("Bu odam bazada allaqachon bor:"));
     } finally {
@@ -540,7 +543,7 @@ function ConvertModal({
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           {duplicate && <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 space-y-3">
-            <p className="text-sm text-amber-900">Raqam ota-onaniki bo'lib, boshqa farzand kelayotgan bo'lsa, uni alohida o'quvchi sifatida oching. Mavjud o'quvchining kartasi, to'lovi va yo'qlamasi saqlanadi.</p>
+            <p className="text-sm text-amber-900">Raqam ota-onaniki bo'lib, boshqa farzand kelayotgan bo'lsa, uni alohida o'quvchi sifatida oching. {siblingId && <>Farzandlar avtomatik bir oilaga bog'lanadi. Oiladan kamida 2 farzand o'qiganda 10% chegirma hisoblanadi. Arxivdagi farzand hisobga kirmaydi. </>} Mavjud o'quvchining kartasi, to'lovi va yo'qlamasi saqlanadi.</p>
             <button onClick={() => convert(true)} disabled={saving}
               className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 px-3 text-sm font-medium disabled:opacity-60">
               Boshqa farzand — alohida ochish

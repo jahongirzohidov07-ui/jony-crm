@@ -47,6 +47,7 @@ export interface CheckProblem {
 export class ApiError extends Error {
   problems: CheckProblem[] = [];
   canForce = false;
+  duplicateStudentId: number | null = null;
   status = 0;
 }
 
@@ -374,6 +375,7 @@ async function doRequestInner<T>(
       const err = new ApiError(d.message || `Xatolik: ${res.status}`);
       err.problems = d.problems ?? [];
       err.canForce = Boolean(d.can_force);
+      err.duplicateStudentId = Number.isInteger(d.duplicate_student_id) ? d.duplicate_student_id : null;
       err.status = res.status;
       pushToast(err.message);
       throw err;

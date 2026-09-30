@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Plus, X, Trash2, UserPlus, Phone, GripVertical } from "lucide-react";
-import { api, getGlobalBranch } from "../lib/api";
+import { api, ApiError, getGlobalBranch } from "../lib/api";
 import type { Lead, Branch, StaffOption, Group } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { LEAD_ACCESS, can } from "../lib/roles";
@@ -466,18 +466,25 @@ function ConvertModal({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function convert() {
+  const [duplicate, setDuplicate] = useState(false);
+
+  async function convert(force = false) {
+    if (saving) return;
+    setDuplicate(false);
     setSaving(true);
     setError(null);
     try {
       await api.post(`/leads/${lead.id}/convert`, {
         group_id: groupId ? Number(groupId) : null,
         enrolled_date: enrolled || null,
+        force,
       });
       onDone();
       onClose();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
+      setDuplicate(e instanceof ApiError && e.status === 409
+        && e.message.startsWith("Bu odam bazada allaqachon bor:"));
     } finally {
       setSaving(false);
     }
@@ -532,12 +539,19 @@ function ConvertModal({
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 
+          {duplicate && <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 space-y-3">
+            <p className="text-sm text-amber-900">Raqam ota-onaniki bo'lib, boshqa farzand kelayotgan bo'lsa, uni alohida o'quvchi sifatida oching. Mavjud o'quvchining kartasi, to'lovi va yo'qlamasi saqlanadi.</p>
+            <button onClick={() => convert(true)} disabled={saving}
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white rounded-lg py-2.5 px-3 text-sm font-medium disabled:opacity-60">
+              Boshqa farzand — alohida ochish
+            </button>
+          </div>}
           <button
-            onClick={convert}
+            onClick={() => convert()}
             disabled={saving}
             className="w-full bg-green-600 hover:bg-green-700 text-white rounded-lg py-2.5 text-sm font-medium disabled:opacity-60"
           >
-            {saving ? "Aylantirilmoqda..." : "Tasdiqlash"}
+            {saving ? "Aylantirilmoqda..." : duplicate ? "Qayta tekshirish" : "Tasdiqlash"}
           </button>
         </div>
       </div>

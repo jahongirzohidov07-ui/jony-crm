@@ -52,6 +52,7 @@ from main import (  # noqa: F401
 )
 from common import ensure_tables  # noqa: E402
 import main as M
+import common as _C
 
 
 def _drop_route(path: str, method: str) -> None:
@@ -832,9 +833,11 @@ def group_supports_v2(group_id: int,
         "start": a.start, "end": a.end,
     } for a in db.query(models.SupportAssignment)
         .filter(models.SupportAssignment.group_id == g.id).all()]
+    # Qo'shimcha lavozimi support bo'lganlar ham (2026-09-30)
+    _C._ensure_support_cards(db)
     q = (db.query(models.Teacher)
          .join(models.User, models.User.id == models.Teacher.user_id)
-         .filter(models.User.role == roles.SUPPORT_TEACHER,
+         .filter(_C._support_cond(), models.User.is_active == 1,
                  models.Teacher.is_active == 1))
     q = scope_to_branch(q, models.Teacher, user)
     bnames = {b.id: b.name for b in db.query(models.Branch).all()}
@@ -863,7 +866,7 @@ def set_group_supports_v2(group_id: int, payload: _GroupSupportsIn2,
             raise HTTPException(400, "Bitta support ikki marta tanlangan")
         seen.add(it.user_id)
         u = db.query(models.User).get(it.user_id)
-        if not u or u.role != roles.SUPPORT_TEACHER:
+        if not u or not _C._is_support_user(db, u):
             raise HTTPException(400, "Faqat support teacherlarni "
                                      "biriktirish mumkin")
         msg = _sup_time_ok(it)
@@ -920,9 +923,11 @@ def support_timetable_v2(day: str = "mon",
     biriktirishda BELGILANGAN support-dars vaqti ko'rsatiladi."""
     if day not in ("mon", "tue", "wed", "thu", "fri", "sat", "sun"):
         raise HTTPException(400, "Kun noto'g'ri")
+    # Qo'shimcha lavozimi support bo'lganlar ham (2026-09-30)
+    _C._ensure_support_cards(db)
     q = (db.query(models.Teacher)
          .join(models.User, models.User.id == models.Teacher.user_id)
-         .filter(models.User.role == roles.SUPPORT_TEACHER,
+         .filter(_C._support_cond(), models.User.is_active == 1,
                  models.Teacher.is_active == 1))
     q = scope_to_branch(q, models.Teacher, user)
     if branch_id:

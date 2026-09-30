@@ -121,8 +121,12 @@ def list_teachers(branch_id: Optional[int] = None,
         t.login = logins.get(t.user_id)
         item = schemas.TeacherOut.model_validate(t)
         lu = linked.get(t.user_id)
-        item.kind = ("support" if lu and lu.role == roles.SUPPORT_TEACHER
-                     else "teacher")
+        # Qo'shimcha lavozimi support bo'lgan (asosiysi ustoz emas)
+        # xodim ham support kartasi (2026-09-30).
+        item.kind = ("support" if lu and (
+            lu.role == roles.SUPPORT_TEACHER
+            or (lu.role != roles.TEACHER and _is_support_user(db, lu)))
+            else "teacher")
         # Yordamchi o'qituvchi ustozlik darajasi zinasida emas —
         # kartasida adashib daraja qolgan bo'lsa ham ko'rsatilmaydi.
         # O'rniga SUPPORT darajasi (Volontyor/Junior/Middle/Senior)
@@ -216,7 +220,7 @@ def update_teacher(
     # bo'lmasdi.
     if _was_active and not teacher.is_active and teacher.user_id:
         _lu = db.query(models.User).get(teacher.user_id)
-        if _lu is not None and _lu.role == roles.SUPPORT_TEACHER:
+        if _lu is not None and _is_support_user(db, _lu):
             try:
                 _release_support_groups(db, _lu, "ishdan bo'shatildi")
             except Exception:
@@ -246,7 +250,7 @@ def delete_teacher(
     # avtomat chiqsin").
     if teacher.user_id:
         _lu = db.query(models.User).get(teacher.user_id)
-        if _lu is not None and _lu.role == roles.SUPPORT_TEACHER:
+        if _lu is not None and _is_support_user(db, _lu):
             try:
                 _release_support_groups(db, _lu, "kartasi o'chirildi")
             except Exception:

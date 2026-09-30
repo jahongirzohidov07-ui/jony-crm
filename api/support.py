@@ -132,7 +132,7 @@ def student_support_get(sid: int, db: Session = Depends(get_db),
             .filter(models.SupportAssignment.student_id == s.id).all())
     sups = [{"id": u.id, "name": u.full_name}
             for u in db.query(models.User)
-            .filter(models.User.role == roles.SUPPORT_TEACHER,
+            .filter(_support_cond(),
                     models.User.is_active == 1)
             .order_by(models.User.full_name).all()]
     return {
@@ -158,7 +158,7 @@ def student_support_add(sid: int, payload: dict = Body(...),
     if s.status != "active":
         raise HTTPException(400, "Faqat faol o'quvchi biriktiriladi")
     u = db.query(models.User).get(payload.get("user_id") or 0)
-    if not u or u.role != roles.SUPPORT_TEACHER or not u.is_active:
+    if not u or not _is_support_user(db, u) or not u.is_active:
         raise HTTPException(404, "Support teacher topilmadi")
     if not (payload.get("note") or "").strip():
         raise HTTPException(400, "Sababini yozing — nega orqada qolgan")
@@ -238,7 +238,7 @@ def solo_list(db: Session = Depends(get_db),
     out.sort(key=lambda r: r["student"])
     sups = [{"id": u.id, "name": u.full_name}
             for u in db.query(models.User)
-            .filter(models.User.role == roles.SUPPORT_TEACHER,
+            .filter(_support_cond(),
                     models.User.is_active == 1)
             .order_by(models.User.full_name).all()]
     return {
@@ -303,7 +303,7 @@ def support_teacher_list(db: Session = Depends(get_db),
     yerda oylik ham bor), shuning uchun bu yo'l FAQAT support
     teacherlarning ismini qaytaradi — boshqa hech narsa."""
     q = db.query(models.User).filter(
-        models.User.role == roles.SUPPORT_TEACHER,
+        _support_cond(),
         models.User.is_active == 1)
     q = scope_to_branch(q, models.User, user)
     rows = q.order_by(models.User.full_name).all()
@@ -569,9 +569,10 @@ def support_teacher_salaries(year: int | None = None,
     uchun. Formulasiz, faqat yakuniy summa va seans soni."""
     today = roles.local_today()
     y, m = year or today.year, month or today.month
+    _ensure_support_cards(db)
     q = (db.query(models.Teacher)
          .join(models.User, models.User.id == models.Teacher.user_id)
-         .filter(models.User.role == roles.SUPPORT_TEACHER))
+         .filter(_support_cond()))
     q = scope_to_branch(q, models.Teacher, user)
     rows = []
     for t in q.all():
@@ -593,7 +594,7 @@ def support_salary_list(year: int | None = None, month: int | None = None,
     today = roles.local_today()
     y, m = year or today.year, month or today.month
     su_users = db.query(models.User).filter(
-        models.User.role == roles.SUPPORT_TEACHER,
+        _support_cond(),
         models.User.is_active == 1).all()
     rows = []
     for u in su_users:
@@ -624,7 +625,7 @@ def add_support_adjustment(payload: schemas.SupportAdjustIn,
                                *roles.SUPPORT_PENALTY_SET))):
     """Support teacherdan jarima ball ayirish (2026-09-16): sabab majburiy."""
     target = db.query(models.User).get(payload.user_id)
-    if not target or target.role != roles.SUPPORT_TEACHER:
+    if not target or not _is_support_user(db, target):
         raise HTTPException(404, "Support teacher topilmadi")
     if not (payload.reason or "").strip():
         raise HTTPException(400, "Sababni yozing — ball sababsiz ayirilmaydi")

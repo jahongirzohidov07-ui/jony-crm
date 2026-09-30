@@ -1616,13 +1616,66 @@ def _smm_achievement_task(db: Session, s: models.Student, *,
         branch_id=s.branch_id,
         priority="high")
 
+def _support_cond():
+    """SQL sharti: xodim SUPPORT TEACHER — asosiy lavozimi YOKI qo'shimcha
+    lavozimi (user_roles) bo'yicha.
+
+    2026-09-30, Jahongir: "adminga support qo'shimcha lavozim biriktirsam
+    guruhda support biriktirishda chiqmay qoldi". Ilgari hamma joyda
+    faqat User.role (asosiy lavozim) tekshirilardi — qo'shimcha
+    lavozimli xodim ro'yxatga tushmasdi, saqlashda rad etilardi va
+    tozalovchi uning biriktirishini o'chirib yuborardi."""
+    return or_(models.User.role == roles.SUPPORT_TEACHER,
+               models.User.id.in_(
+                   select(models.UserRole.user_id)
+                   .where(models.UserRole.role == roles.SUPPORT_TEACHER)))
+
+
+def _is_support_user(db: Session, u) -> bool:
+    """Bitta xodim support teachermi (asosiy yoki qo'shimcha lavozim)."""
+    if u is None:
+        return False
+    if u.role == roles.SUPPORT_TEACHER:
+        return True
+    return db.query(models.UserRole.id).filter(
+        models.UserRole.user_id == u.id,
+        models.UserRole.role == roles.SUPPORT_TEACHER).first() is not None
+
+
+def _ensure_support_cards(db: Session) -> int:
+    """Qo'shimcha lavozimi support bo'lgan, lekin ustoz kartasi yo'q
+    xodimlarga karta ochadi. Supportlar jadvali, oylik va biriktirish
+    ro'yxati ustoz kartasiga (Teacher) tayanadi — kartasiz xodim u
+    yerlarda ko'rinmasdi."""
+    have = {uid for (uid,) in db.query(models.Teacher.user_id)
+            .filter(models.Teacher.user_id.isnot(None)).all()}
+    made = 0
+    for u in (db.query(models.User)
+              .filter(models.User.is_active == 1, _support_cond()).all()):
+        if u.id in have:
+            continue
+        if _ensure_teacher_card(db, u) is not None:
+            made += 1
+    if made:
+        db.commit()
+    return made
+
+
 def _ensure_teacher_card(db: Session, u: models.User):
     """O'qituvchi yoki support roli bilan ochilgan hisobga Ustozlar
     bo'limida ham karta ochib qo'yadi — HR dan qo'shilsa ham, ikkala
     tomonda ko'rinib turadi. Ism mos kelgan egasiz karta bo'lsa,
-    dublikat ochmasdan o'shanga bog'laydi."""
+    dublikat ochmasdan o'shanga bog'laydi.
+
+    Qo'shimcha lavozim (masalan administrator + support) ham hisobga
+    olinadi (2026-09-30)."""
     if u.role not in (roles.TEACHER, roles.SUPPORT_TEACHER):
-        return None
+        extra = db.query(models.UserRole.id).filter(
+            models.UserRole.user_id == u.id,
+            models.UserRole.role.in_(
+                (roles.TEACHER, roles.SUPPORT_TEACHER))).first()
+        if extra is None:
+            return None
     t = (db.query(models.Teacher)
          .filter(models.Teacher.user_id == u.id).first())
     if t:
@@ -7337,7 +7390,7 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
     ok = {u.id for u in db.query(models.User)
           .filter(models.User.id.in_(uids or [-1]),
                   models.User.is_active == 1,
-                  models.User.role == roles.SUPPORT_TEACHER).all()}
+                  _support_cond()).all()}
     # USTOZ KARTASI HAM FAOL BO'LSIN (2026-09-03, Jahongir: "NUR
     # guruhidan Dostonni olib tashlay olmayabman"). Dostonbekning
     # akkaunti faol edi, lekin ustoz KARTASI 02.09 da yopilgan —
@@ -7432,6 +7485,7 @@ __all__ = [
     "_ensure_student_account",
     "_ensure_staff_date_tasks",
     "_ensure_teacher_card",
+    "_support_cond", "_is_support_user", "_ensure_support_cards",
     "_exam_order_form",
     "_exam_order_out",
     "_exam_summary",

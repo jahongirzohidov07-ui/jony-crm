@@ -2636,7 +2636,7 @@ def _support_load(db: Session, branch_id=None) -> list[dict]:
          .join(models.User, models.User.id == models.Teacher.user_id)
          .filter(models.Teacher.is_active == 1,
                  models.User.is_active == 1,
-                 models.User.role == roles.SUPPORT_TEACHER))
+                 _support_cond()))
     if branch_id:
         q = q.filter(models.Teacher.branch_id == branch_id)
     sups = q.all()

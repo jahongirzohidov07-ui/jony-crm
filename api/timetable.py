@@ -317,9 +317,10 @@ def support_timetable(day: str = "mon",
     band. Support manager kimdan so'ramasdan darsni qo'yaveradi."""
     if day not in ("mon", "tue", "wed", "thu", "fri", "sat", "sun"):
         raise HTTPException(400, "Kun noto'g'ri")
+    _ensure_support_cards(db)
     q = (db.query(models.Teacher)
          .join(models.User, models.User.id == models.Teacher.user_id)
-         .filter(models.User.role == roles.SUPPORT_TEACHER,
+         .filter(_support_cond(),
                  models.Teacher.is_active == 1))
     q = scope_to_branch(q, models.Teacher, user)
     if branch_id:

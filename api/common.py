@@ -5,6 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import bisect
 import json
+import re
 from datetime import date, datetime, timedelta, time as dtime
 from typing import List, Optional
 
@@ -6604,28 +6605,85 @@ def _apply_shop_discounts(db: Session, period: str = None,
         s = db.query(models.Student).get(d.student_id)
         if s is None:
             continue
-        charge = (db.query(models.Payment)
-                  .filter(models.Payment.student_id == d.student_id,
-                          models.Payment.period == d.period,
-                          models.Payment.kind == "charge").first())
+        charge = _pick_period_charge(db, d.student_id, d.period)
         if charge is None:
             continue            # hisob hali yo'q - keyingi safar
-        amount = _shop_discount_sum(db, s, d)
-        if amount <= 0:
+        # 2026-09-30 (Jahongir, Abdullayeva Umida skrinshoti): "coinga
+        # almashganlarda nimaga hisobida pul bn ko'rinyabdi ... oy boshida
+        # 480 000 hisoblansa shuni o'zgartirib qo'yadigan bo'lsin".
+        # Endi alohida "+158 000 chegirma" qatori OCHILMAYDI — o'sha oyning
+        # hisobi o'zi kamayadi (480 000 -> 321 600). Eski usul bundan
+        # tashqari IKKI MARTA chegirma berardi: 2026-09-06 dan beri avtomat
+        # hisob chegirmani o'zi qo'llaydi (_mc_after_discount), ustiga
+        # "+pul" qatori ham qo'shilardi.
+        if _fold_shop_discount(db, s, d, charge, kind) == "none":
             continue
-        who = ("Do'st taklifi (avtomat)" if kind == "app_referral"
-               else "Jony Shop (coin)")
-        what = ("Do'st taklifi chegirmasi" if kind == "app_referral"
-                else "Jony Shop chegirmasi")
-        db.add(models.Payment(
-            student_id=d.student_id, amount=abs(amount), kind="discount",
-            period=d.period, created_by=who,
-            note=f"{d.period} - {what} ({d.reason})"))
         d.applied_at = datetime.utcnow()
         made += 1
     if made:
         db.commit()
     return made
+
+
+def _pick_period_charge(db: Session, student_id: int, period: str):
+    """O'sha oyning asosiy hisob qatori (bir nechta bo'lsa — eng kattasi)."""
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.student_id == student_id,
+                    models.Payment.period == period,
+                    models.Payment.kind == "charge").all())
+    if not rows:
+        return None
+    return max(rows, key=lambda r: abs(r.amount or 0))
+
+
+def _fold_shop_discount(db: Session, s, d, charge,
+                        kind: str = "coin_shop") -> str:
+    """Do'kon/do'st chegirmasini O'SHA OY HISOBINING O'ZIGA qo'llaydi.
+
+    Qaytaradi: "included" — hisob chegirma paydo bo'lgandan keyin
+    yozilgan, avtomat hisob uni allaqachon qo'llagan (faqat izoh
+    qo'shiladi); "folded" — hisob chegirmadan oldin yozilgan, shu yerda
+    kamaytirildi; "none" — summa 0. Hech narsa o'chirilmaydi."""
+    amount = _shop_discount_sum(db, s, d)
+    if amount <= 0:
+        return "none"
+    what = ("Do'st taklifi chegirmasi" if kind == "app_referral"
+            else "Jony Shop chegirmasi")
+    size = (f"{d.percent:g}%" if d.percent
+            else f"{int(amount):,} so'm".replace(",", " "))
+    d_at = d.approved_at or d.created_at
+    c_at = charge.created_at
+    if c_at and d_at and c_at >= d_at:
+        if what not in (charge.note or ""):
+            charge.note = (charge.note or "") + f" · {what} ({size}) hisobda"
+        return "included"
+    cur = abs(float(charge.amount or 0))
+    note = charge.note or ""
+    # Foizli chegirma — AYNAN SHU hisob qatoridan (qisman oy bo'lsa,
+    # 5 darslik 225 000 dan 33%, butun oy narxidan emas). Asl summa
+    # izohda saqlangan bo'lsa ([asos:X]) — o'shandan.
+    if d.percent:
+        m = re.search(r"\[asos:(\d+)\]", note)
+        base = float(m.group(1)) if m else cur
+        off = roles.money(base * float(d.percent) / 100.0)
+    else:
+        off = amount
+    new = roles.money(max(0.0, cur - min(off, cur)))
+    # Qisman oy qatorida asl summa saqlanadi — keyin boshqa chegirma
+    # tasdiqlansa hisob asl summadan qayta olinadi (finance.
+    # _recharge_current_month), chegirma ustiga chegirma tushmaydi.
+    if "[asos:" not in note:
+        note += f" [asos:{int(cur)}]"
+    charge.amount = -new
+    charge.note = (note + f" · {what} ({size}): {int(cur):,} -> "
+                   f"{int(new):,}").replace(",", " ")
+    charge.updated_at = datetime.utcnow()
+    audit.log(db, None, entity="payment", action="update",
+              entity_id=charge.id, entity_label=s.full_name, field="amount",
+              old_value=-cur, new_value=-new,
+              note=f"{what} shu oy hisobiga qo'llandi ({d.reason})",
+              branch_id=s.branch_id)
+    return "folded"
 
 
 def backfill_student_branches(db: Session) -> int:
@@ -7389,6 +7447,8 @@ __all__ = [
     "backfill_student_groups",
     "_apply_shop_discounts",
     "_shop_discount_sum",
+    "_pick_period_charge",
+    "_fold_shop_discount",
     "_family_discount_percent",
     "_recharge_after_move",
     "_recharge_on_leave",

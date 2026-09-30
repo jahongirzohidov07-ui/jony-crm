@@ -1465,6 +1465,131 @@ def _recharge_current_month(db: Session, st: models.Student) -> bool:
     return True
 
 
+# =====================================================================
+#  ESKI "+PUL" CHEGIRMA QATORLARINI HISOBGA KO'CHIRISH (2026-09-30)
+#  Jahongir (Abdullayeva Umida #688): "coinga almashganlarda nimaga
+#  hisobida pul bn ko'rinyabdi ... pul ortiqcha ekan qaytaring deyishi
+#  mumkin ... oy boshida 480 000 hisoblansa shuni o'zgartirib qo'yadigan
+#  bo'lsin".
+#
+#  Har bir eski "Jony Shop (coin)" / "Do'st taklifi (avtomat)" qatori:
+#   * hisob chegirmani ALLAQACHON qo'llagan bo'lsa (IKKI MARTA chegirma) —
+#     qator arxivga ko'chadi, balans ortiqcha summaga kamayadi;
+#   * qo'llamagan bo'lsa — o'sha oy hisobi shu summaga kamaytiriladi va
+#     qator arxivga ko'chadi, balans O'ZGARMAYDI.
+#  Hech narsa yo'q qilinmaydi: qator payments_deleted'da to'liq qoladi.
+# =====================================================================
+_SHOP_ROW_BY = ("Jony Shop (coin)", "Do'st taklifi (avtomat)")
+_DISC_AWARE_FROM = datetime(2026, 9, 6)   # avtomat hisob chegirmani qo'llay boshlagan
+
+
+def _shop_rows_plan(db: Session, apply: bool = False, by: str = "Tizim"):
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.kind == "discount",
+                    models.Payment.created_by.in_(_SHOP_ROW_BY))
+            .order_by(models.Payment.id).all())
+    out = []
+    for r in rows:
+        s = db.query(models.Student).get(r.student_id)
+        kind = ("app_referral" if (r.created_by or "").startswith("Do'st")
+                else "coin_shop")
+        D = abs(float(r.amount or 0))
+        ch = _pick_period_charge(db, r.student_id, r.period) if r.period \
+            else None
+        item = {"payment_id": r.id, "student_id": r.student_id,
+                "name": s.full_name if s else None, "period": r.period,
+                "amount": D, "kind": kind,
+                "balance_before": student_balance(db, r.student_id)}
+        if ch is None or s is None:
+            item["case"] = "hisob_yoq"          # tegilmaydi
+            out.append(item)
+            continue
+        d = (db.query(models.Discount)
+             .filter(models.Discount.student_id == r.student_id,
+                     models.Discount.kind == kind,
+                     models.Discount.period == r.period)
+             .order_by(models.Discount.id).first())
+        d_at = (d.approved_at or d.created_at) if d else None
+        note = ch.note or ""
+        inc = False
+        if d_at is not None:
+            if ch.created_at and ch.created_at >= max(d_at, _DISC_AWARE_FROM):
+                inc = True       # hisob chegirmadan keyin, chegirmali yozilgan
+            elif ("chegirma qo'llandi" in note and ch.updated_at
+                  and ch.updated_at >= d_at):
+                inc = True       # keyin chegirma bilan qayta yozilgan
+        item["charge_id"] = ch.id
+        item["charge_before"] = abs(float(ch.amount or 0))
+        item["case"] = "ikki_marta" if inc else "hisobga_kochdi"
+        new_charge = item["charge_before"] if inc \
+            else roles.money(max(0.0, item["charge_before"] - D))
+        item["charge_after"] = new_charge
+        item["balance_after"] = roles.money(
+            item["balance_before"] - (D if inc else 0))
+        if apply:
+            what = ("Do'st taklifi chegirmasi" if kind == "app_referral"
+                    else "Jony Shop chegirmasi")
+            if not inc:
+                old = ch.amount
+                if "[asos:" not in note:
+                    note += f" [asos:{int(item['charge_before'])}]"
+                ch.amount = -new_charge
+                ch.note = (note + f" · {what}: {int(item['charge_before']):,}"
+                           f" -> {int(new_charge):,}").replace(",", " ")
+                ch.updated_at = datetime.utcnow()
+                audit.log(db, None, entity="payment", action="update",
+                          entity_id=ch.id, entity_label=s.full_name,
+                          field="amount", old_value=old,
+                          new_value=ch.amount,
+                          note=f"{what} alohida qatordan hisobning o'ziga "
+                               f"ko'chirildi (#{r.id})",
+                          branch_id=s.branch_id)
+            elif what not in note:
+                ch.note = note + f" · {what} hisobda"
+            db.add(models.DeletedPayment(
+                payment_id=r.id, public_id=r.public_id,
+                student_id=r.student_id, student_name=s.full_name,
+                branch_id=s.branch_id, amount=r.amount, kind=r.kind,
+                method=r.method, note=r.note, period=r.period,
+                created_by=r.created_by, created_at=r.created_at,
+                entered_at=getattr(r, "entered_at", None),
+                client_key=getattr(r, "client_key", None),
+                deleted_by=by,
+                reason=("Chegirma endi hisobning o'zida ko'rinadi"
+                        if not inc else
+                        "IKKI MARTA chegirma: hisob chegirmani allaqachon "
+                        "qo'llagan edi")))
+            db.delete(r)
+            db.commit()
+            item["balance_after_real"] = student_balance(
+                db, item["student_id"])
+        out.append(item)
+    return out
+
+
+@router.get("/api/admin/shop-discount-rows")
+def shop_discount_rows_plan(db: Session = Depends(get_db),
+                            user=Depends(get_current_user)):
+    """Faqat ko'rish: nima o'zgarishini ko'rsatadi (asoschi)."""
+    if not founder_like(user):
+        raise HTTPException(403, "Faqat asoschi")
+    return {"rows": _shop_rows_plan(db, apply=False)}
+
+
+@router.post("/api/admin/shop-discount-rows")
+def shop_discount_rows_apply(db: Session = Depends(get_db),
+                             user=Depends(get_current_user)):
+    if not founder_like(user):
+        raise HTTPException(403, "Faqat asoschi")
+    res = _shop_rows_plan(db, apply=True, by=user.full_name)
+    audit.log(db, user, entity="payment", action="update",
+              entity_label="Do'kon chegirmalari hisobga ko'chirildi",
+              new_value=len(res),
+              note="; ".join(f"{x['name']} {x['period']} {x['case']}"
+                             for x in res[:40]), commit=True)
+    return {"rows": res}
+
+
 @router.post("/api/discounts/{discount_id}/approve")
 def approve_discount(
     discount_id: int,

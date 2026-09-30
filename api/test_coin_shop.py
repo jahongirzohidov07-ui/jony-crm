@@ -145,6 +145,18 @@ disc = (db.query(models.Discount)
 ck("chegirma yozuvi ochildi", disc is not None, True)
 ck("oyi yozilgan", disc.period, d["period"])
 ck("sababda coin soni bor", "100 coin" in (disc.reason or ""), True)
+# 2026-09-30: chegirma alohida "+pul" qatori emas — hisobning o'zi kamayadi
+ck("alohida chegirma (+pul) qatori YO'Q",
+   db.query(models.Payment).filter(models.Payment.student_id == SID,
+                                   models.Payment.kind == "discount").count(),
+   0)
+_ch = (db.query(models.Payment)
+       .filter(models.Payment.student_id == SID,
+               models.Payment.period == period_now,
+               models.Payment.kind == "charge").first())
+ck("shu oy hisobi 400 000 -> 268 000", round(-_ch.amount), 268000)
+ck("hisob izohida Jony Shop chegirmasi",
+   "Jony Shop chegirmasi (33%)" in (_ch.note or ""), True)
 db.close()
 
 print("\n=== 6. Ikki marta tushmaydi ===")
@@ -175,14 +187,23 @@ d2 = models.Discount(student_id=SID, kind="coin_shop", amount=50000,
 db.add(d2); db.commit()
 n = _apply_shop_discounts(db, nxt_p)
 ck("hisob yo'q — tushmadi", n, 0)
-db.add(models.Payment(student_id=SID, amount=-400000, kind="charge",
+# Keyingi oy hisobini avtomat oylik CHEGIRMA BILAN yozadi
+# (entry._mc_after_discount): 400 000 - 50 000 = 350 000. Ustiga yana
+# chegirma qo'shilmasligi kerak — ikki marta chegirma xatosi shu edi.
+db.add(models.Payment(student_id=SID, amount=-350000, kind="charge",
                       period=nxt_p, created_by="avtomat (oylik)"))
 db.commit()
 bal = student_balance(db, SID)
 n = _apply_shop_discounts(db, nxt_p)
-ck("hisob chiqqach tushdi", n, 1)
-ck("balans 50 000 ga yaxshilandi",
-   round(student_balance(db, SID) - bal), 50000)
+ck("hisob chiqqach belgilandi", n, 1)
+ck("IKKI MARTA chegirma yo'q — balans o'zgarmadi",
+   round(student_balance(db, SID) - bal), 0)
+_c2 = (db.query(models.Payment)
+       .filter(models.Payment.student_id == SID,
+               models.Payment.period == nxt_p,
+               models.Payment.kind == "charge").first())
+ck("hisob izohida chegirma ko'rinadi",
+   "Jony Shop chegirmasi" in (_c2.note or ""), True)
 n = _apply_shop_discounts(db, nxt_p)
 ck("takror tushmadi", n, 0)
 db.close()

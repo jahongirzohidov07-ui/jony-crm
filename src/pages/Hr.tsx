@@ -1770,7 +1770,7 @@ function LibraryForm({
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">
-              Havola *
+              {kind === "book" ? "Havola (ixtiyoriy)" : "Havola *"}
             </label>
             <input
               value={url}
@@ -1779,8 +1779,8 @@ function LibraryForm({
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
             />
             <p className="text-xs text-slate-400 mt-1">
-              Video YouTube yoki Drive'da tursin — bazaga yuklanmaydi,
-              shuning uchun tizim sekinlashmaydi.
+              {kind === "book" ? "Qog'oz kitob uchun havola shart emas."
+                : "Video uchun YouTube yoki Google Drive havolasini kiriting."}
             </p>
           </div>
           <div>
@@ -1834,7 +1834,7 @@ function LibraryForm({
         <div className="flex gap-2 mt-5">
           <button
             onClick={save}
-            disabled={busy || !title.trim() || !url.trim()}
+            disabled={busy || !title.trim() || (kind !== "book" && !url.trim() && !initial?.attachment_id)}
             className="flex-1 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-40"
           >
             Saqlash

@@ -18,6 +18,7 @@ import migrations
 import models
 import notify
 import roles
+from teacher_schedule import check_lesson_write
 import schemas
 from auth import (
     create_access_token,
@@ -448,6 +449,7 @@ def save_attendance(
     if not lesson:
         raise HTTPException(404, "Dars topilmadi")
     _get_group_in_scope(db, lesson.group_id, user)
+    check_lesson_write(db, user, lesson)
 
     # SANA QOIDALARI. Yoqlama — pul hujjati (ustoz oyligi shundan
     # chiqadi), shuning uchun qat'iy:
@@ -837,6 +839,7 @@ def save_grades(
     if not lesson:
         raise HTTPException(404, "Dars topilmadi")
     _get_group_in_scope(db, lesson.group_id, user)
+    check_lesson_write(db, user, lesson)
 
     for m in payload.marks:
         if m.score is not None and not (

@@ -8,17 +8,17 @@ ikkinchi nusxa yozilmagani) ham tasdiqlanadi."""
 import os, sys
 from datetime import date, timedelta
 
-os.environ["DATABASE_URL"] = "sqlite:////tmp/verify_teacher_app/db.sqlite"
-os.makedirs("/tmp/verify_teacher_app", exist_ok=True)
-if os.path.exists("/tmp/verify_teacher_app/db.sqlite"):
-    os.remove("/tmp/verify_teacher_app/db.sqlite")
+import tempfile
+from pathlib import Path
+_test_dir = tempfile.TemporaryDirectory(prefix="teacher-app-")
+os.environ["DATABASE_URL"] = "sqlite:///" + (Path(_test_dir.name) / "db.sqlite").as_posix()
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from fastapi.testclient import TestClient
 import main, models, roles
 import entry  # noqa: F401
-from database import SessionLocal
+from database import SessionLocal, engine
 from auth import hash_password
 
 client = TestClient(main.app)
@@ -204,5 +204,126 @@ ck("ustoz bo'lmagan xodim kira olmaydi", r.status_code, 403)
 r = client.get("/api/teacher/home")
 ckt("loginsiz kirish yopiq", r.status_code in (401, 403))
 
+
+print("\n=== CANCELLED LESSONS ===")
+cancelled = models.Lesson(group_id=gA.id, teacher_id=t1.id, date=today,
+                          held=0, cancelled=1)
+cancelled_old = models.Lesson(group_id=gA.id, teacher_id=t1.id,
+                              date=today - timedelta(days=1), held=0, cancelled=1)
+db.add_all([cancelled, cancelled_old]); db.commit()
+
+def listed(header, endpoint, key):
+    data = client.get(endpoint, headers=header).json()
+    if key == "days":
+        return [l for day in data["days"] for l in day["lessons"]]
+    return data[key]
+
+for endpoint, key in [("/api/teacher/home", "today"),
+                      ("/api/teacher/today", "lessons"),
+                      ("/api/teacher/today", "missed"),
+                      ("/api/teacher/week", "days")]:
+    ckt("cancelled absent: " + endpoint + "/" + key,
+        not {cancelled.id, cancelled_old.id}.intersection(
+            l["lesson_id"] for l in listed(H1, endpoint, key)))
+ck("cancelled detail unavailable",
+   client.get(f"/api/teacher/lesson/{cancelled.id}", headers=H1).status_code, 404)
+for kind in ["attendance", "grades"]:
+    ck("cancelled write blocked: " + kind,
+       client.put(f"/api/lessons/{cancelled.id}/{kind}",
+                  headers=H1, json={"marks": []}).status_code, 400)
+cancelled.cancelled = 0; db.commit()
+ckt("restored lesson returns", cancelled.id in
+    [l["lesson_id"] for l in listed(H1, "/api/teacher/home", "today")])
+cancelled.cancelled = 1; db.commit()
+
+print("\n=== SUBSTITUTE WITH NO PERMANENT GROUPS ===")
+u3, t3 = mk_teacher("ustC", "Substitute")
+H3 = H("ustC")
+sub = models.Substitution(group_id=gB.id, original_teacher_id=t2.id,
+                          substitute_teacher_id=t3.id, lesson_date=today,
+                          status="offered")
+db.add(sub); db.commit()
+ckt("offered lesson stays with original", lsB.id in
+    [l["lesson_id"] for l in listed(H2, "/api/teacher/home", "today")])
+ck("unaccepted substitute denied",
+   client.get(f"/api/teacher/lesson/{lsB.id}", headers=H3).status_code, 403)
+r = client.post(f"/api/me/substitutions/{sub.id}/decide", headers=H3,
+                json={"decision": "accepted"})
+ck("accept substitute", r.status_code, 200)
+db.expire_all()
+for endpoint, key in [("/api/teacher/home", "today"),
+                      ("/api/teacher/today", "lessons"),
+                      ("/api/teacher/week", "days")]:
+    ckt("substitute sees lesson: " + endpoint, lsB.id in
+        [l["lesson_id"] for l in listed(H3, endpoint, key)])
+    ckt("original no longer sees lesson: " + endpoint, lsB.id not in
+        [l["lesson_id"] for l in listed(H2, endpoint, key)])
+ck("substitute opens attendance",
+   client.get(f"/api/teacher/lesson/{lsB.id}", headers=H3).status_code, 200)
+ck("original cannot open delegated lesson",
+   client.get(f"/api/teacher/lesson/{lsB.id}", headers=H2).status_code, 403)
+other_date = models.Lesson(group_id=gB.id, teacher_id=t2.id,
+                           date=today + timedelta(days=1), held=0)
+db.add(other_date); db.commit()
+ck("substitute cannot open other date",
+   client.get(f"/api/teacher/lesson/{other_date.id}", headers=H3).status_code, 403)
+for kind in ["attendance", "grades"]:
+    ckt("substitute cannot write other date: " + kind,
+        client.put(f"/api/lessons/{other_date.id}/{kind}",
+                   headers=H3, json={"marks": []}).status_code in (400, 403))
+    ck("original cannot write delegated date: " + kind,
+       client.put(f"/api/lessons/{lsB.id}/{kind}",
+                  headers=H2, json={"marks": []}).status_code, 403)
+ck("substitute saves attendance",
+   client.put(f"/api/lessons/{lsB.id}/attendance", headers=H3,
+              json={"marks": [{"student_id": sB1.id, "present": True}]}).status_code, 200)
+ck("substitute saves grade",
+   client.put(f"/api/lessons/{lsB.id}/grades", headers=H3,
+              json={"marks": [{"student_id": sB1.id, "score": 4}]}).status_code, 200)
+db.expire_all()
+ck("lesson still belongs to substitute", db.get(models.Lesson, lsB.id).teacher_id, t3.id)
+sub.status = "done"; db.commit()
+ck("completed substitute remains readable",
+   client.get(f"/api/teacher/lesson/{lsB.id}", headers=H3).status_code, 200)
+sub.status = "cancelled"; db.commit()
+ck("cancelled substitute loses access",
+   client.get(f"/api/teacher/lesson/{lsB.id}", headers=H3).status_code, 403)
+ckt("original regains schedule after cancellation", lsB.id in
+    [l["lesson_id"] for l in listed(H2, "/api/teacher/home", "today")])
+
+print("\n=== RESCHEDULED TIME ===")
+move = models.LessonReschedule(group_id=gA.id, teacher_id=t1.id,
+    lesson_id=lsA.id, from_date=today - timedelta(days=1), to_date=today,
+    from_time="09:00", to_time="15:00", status="approved")
+db.add(move); db.commit()
+for endpoint, key in [("/api/teacher/home", "today"),
+                      ("/api/teacher/today", "lessons"),
+                      ("/api/teacher/week", "days")]:
+    lesson = next(l for l in listed(H1, endpoint, key) if l["lesson_id"] == lsA.id)
+    ck("new time: " + endpoint, lesson["time"], "15:00")
+ck("detail new time",
+   client.get(f"/api/teacher/lesson/{lsA.id}", headers=H1).json()["time"], "15:00")
+ck("other lesson keeps recurring time",
+   client.get(f"/api/teacher/lesson/{fut.id}", headers=H1).json()["time"], "09:00")
+gLater = mk_group("Afternoon", t1, "13:00")
+later = models.Lesson(group_id=gLater.id, teacher_id=t1.id, date=today, held=0)
+db.add(later); db.commit()
+cards = listed(H1, "/api/teacher/home", "today")
+ck("sort follows new time", [l["lesson_id"] for l in cards], [later.id, lsA.id])
+pending = models.LessonReschedule(group_id=gA.id, teacher_id=t1.id,
+    lesson_id=lsA.id, from_date=today, to_date=today,
+    to_time="18:00", status="pending")
+db.add(pending); db.commit()
+for status in ["pending", "rejected"]:
+    pending.status = status; db.commit()
+    ck(status + " move does not override approved time",
+       client.get(f"/api/teacher/lesson/{lsA.id}", headers=H1).json()["time"], "15:00")
+move.status = "rejected"; db.commit()
+ck("no applied move uses recurring time",
+   client.get(f"/api/teacher/lesson/{lsA.id}", headers=H1).json()["time"], "09:00")
+
 print("\n" + ("BARCHASI OK" if not fails else f"XATOLAR: {fails}"))
+db.close()
+engine.dispose()
+_test_dir.cleanup()
 sys.exit(1 if fails else 0)

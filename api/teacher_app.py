@@ -31,6 +31,7 @@ from sqlalchemy.orm import Session
 import billing
 import models
 import roles
+from teacher_schedule import lesson_scope, lesson_time
 from auth import require_role
 from database import get_db
 from common import *  # noqa: F401,F403 - shared helpers/state
@@ -71,6 +72,8 @@ def _lesson_card(db: Session, ls: models.Lesson, g: models.Group,
     graded = (db.query(func.count(models.DailyGrade.id))
               .filter(models.DailyGrade.lesson_id == ls.id).scalar() or 0)
     _days, _time, _src, _note = group_time_for(slots, g)
+    if slots is None:
+        _time = lesson_time(db, ls, _time)
     return {
         "lesson_id": ls.id,
         "group_id": g.id,
@@ -102,17 +105,13 @@ def teacher_today(day: str | None = None,
     on = date.fromisoformat(day) if day else roles.local_today()
     gids = _my_group_ids(db, user, t)
     slots = support_slot_map(db, user)
-    if not gids:
-        return {"date": on.isoformat(), "lessons": [], "groups": 0,
-                "students": 0, "pending": 0,
-                "hint": "Sizga hali guruh biriktirilmagan."}
-
     rows = (db.query(models.Lesson, models.Group)
             .join(models.Group, models.Lesson.group_id == models.Group.id)
-            .filter(models.Lesson.group_id.in_(gids),
+            .filter(lesson_scope(db, user, t, gids),
                     models.Lesson.date == on)
             .order_by(models.Group.lesson_time, models.Group.name).all())
-    lessons = [_lesson_card(db, ls, g, slots) for ls, g in rows]
+    lessons = sorted([_lesson_card(db, ls, g, slots) for ls, g in rows],
+                     key=lambda l: (l["time"] or "99:99", l["group"]))
 
     # Oxirgi 7 kunda yo'qlamasi qo'yilmagan darslar — ustoz esidan
     # chiqargan bo'lsa ko'rinib tursin (oylik shundan hisoblanadi).
@@ -120,7 +119,7 @@ def teacher_today(day: str | None = None,
     old_rows = (db.query(models.Lesson, models.Group)
                 .join(models.Group,
                       models.Lesson.group_id == models.Group.id)
-                .filter(models.Lesson.group_id.in_(gids),
+                .filter(lesson_scope(db, user, t, gids),
                         models.Lesson.date >= back,
                         models.Lesson.date < on,
                         models.Lesson.held == 0)
@@ -155,7 +154,11 @@ def teacher_lesson(lesson_id: int,
     ls = db.query(models.Lesson).get(lesson_id)
     if not ls:
         raise HTTPException(404, "Dars topilmadi")
-    if ls.group_id not in _my_group_ids(db, user, t):
+    if ls.cancelled:
+        raise HTTPException(404, "Dars bekor qilingan")
+    if not db.query(models.Lesson.id).filter(
+            models.Lesson.id == ls.id,
+            lesson_scope(db, user, t, _my_group_ids(db, user, t))).first():
         raise HTTPException(403, "Bu dars sizning guruhingiz emas")
     g = db.query(models.Group).get(ls.group_id)
 
@@ -179,6 +182,9 @@ def teacher_lesson(lesson_id: int,
         why = ("O'tib ketgan kunning yo'qlamasini faqat rahbariyat "
                "o'zgartira oladi")
 
+    display_time = group_time_for(support_slot_map(db, user), g)[1]
+    if user.role != roles.SUPPORT_TEACHER:
+        display_time = lesson_time(db, ls, display_time)
     return {
         "lesson_id": ls.id,
         "group_id": g.id,
@@ -186,7 +192,7 @@ def teacher_lesson(lesson_id: int,
         "level": getattr(g, "level", None),
         "date": ls.date.isoformat(),
         # Support uchun bu yerda ham o'z seans vaqti (2026-09-10)
-        "time": group_time_for(support_slot_map(db, user), g)[1],
+        "time": display_time,
         "editable": editable,
         "readonly_reason": why,
         "students": [{
@@ -211,13 +217,9 @@ def teacher_week(db: Session = Depends(get_db),
     today = roles.local_today()
     start = today - timedelta(days=today.weekday())
     end = start + timedelta(days=6)
-    if not gids:
-        return {"start": start.isoformat(), "end": end.isoformat(),
-                "days": []}
-
     rows = (db.query(models.Lesson, models.Group)
             .join(models.Group, models.Lesson.group_id == models.Group.id)
-            .filter(models.Lesson.group_id.in_(gids),
+            .filter(lesson_scope(db, user, t, gids),
                     models.Lesson.date >= start,
                     models.Lesson.date <= end)
             .order_by(models.Lesson.date, models.Group.lesson_time).all())
@@ -235,7 +237,8 @@ def teacher_week(db: Session = Depends(get_db),
             "date": d.isoformat(),
             "label": names[i],
             "is_today": d == today,
-            "lessons": by_day.get(d, []),
+            "lessons": sorted(by_day.get(d, []),
+                              key=lambda l: (l["time"] or "99:99", l["group"])),
         })
     return {"start": start.isoformat(), "end": end.isoformat(),
             "days": days, "teacher": t.full_name}
@@ -411,19 +414,20 @@ def teacher_home(db: Session = Depends(get_db),
     # Shu oyda o'tilgan darslar (oylik shundan chiqadi)
     m_start, m_end = billing.month_bounds(today.year, today.month)
     held = (db.query(func.count(models.Lesson.id))
-            .filter(models.Lesson.group_id.in_(gids),
+            .filter(lesson_scope(db, user, t, gids),
                     models.Lesson.held == 1,
                     models.Lesson.date >= m_start,
                     models.Lesson.date <= m_end)
-            .scalar() or 0) if gids else 0
+            .scalar() or 0)
 
     today_rows = (db.query(models.Lesson, models.Group)
                   .join(models.Group,
                         models.Lesson.group_id == models.Group.id)
-                  .filter(models.Lesson.group_id.in_(gids),
+                  .filter(lesson_scope(db, user, t, gids),
                           models.Lesson.date == today)
-                  .order_by(models.Group.lesson_time).all()) if gids else []
-    lessons = [_lesson_card(db, ls, g, slots) for ls, g in today_rows]
+                  .order_by(models.Group.lesson_time).all())
+    lessons = sorted([_lesson_card(db, ls, g, slots) for ls, g in today_rows],
+                     key=lambda l: (l["time"] or "99:99", l["group"]))
 
     return {
         "teacher": t.full_name,

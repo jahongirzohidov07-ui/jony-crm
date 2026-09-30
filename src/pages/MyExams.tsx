@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ClipboardCheck, Info, X, CheckCircle2 } from "lucide-react";
 import { api, type MyExamOrders, type ExamOrder } from "../lib/api";
 import { Time24Input } from "../components/Time24Input";
+import { examOrderDates } from "../lib/examOrderDates";
 
 const TONE: Record<string, string> = {
   amber: "bg-amber-100 text-amber-700",
@@ -153,14 +154,13 @@ function OrderForm({
   const [err, setErr] = useState("");
 
   const group = data.groups.find((g) => String(g.id) === f.group_id);
-  const min = new Date(Date.now() + data.min_notice_days * 86400000)
-    .toISOString()
-    .slice(0, 10);
-  const max = new Date(Date.now() + data.max_ahead_days * 86400000)
-    .toISOString()
-    .slice(0, 10);
+  const dates = examOrderDates(data);
 
   const save = async () => {
+    if (!dates.some(d => d.value === f.date)) {
+      setErr("Imtihon sanasini ro‘yxatdan tanlang");
+      return;
+    }
     if (f.kind === "unit" && !f.unit_no) {
       setErr("Qaysi unit ekanini belgilang — examiner shu unitning testini tayyorlab keladi");
       return;
@@ -216,14 +216,15 @@ function OrderForm({
         <div className="grid grid-cols-2 gap-2 mb-3">
           <div>
             <label className="block text-xs text-slate-500 mb-1">Sana</label>
-            <input
-              type="date"
+            <select
+              aria-label="Imtihon sanasi"
               value={f.date}
-              min={min}
-              max={max}
-              onChange={(e) => setF({ ...f, date: e.target.value })}
+              onChange={(e) => { setF({ ...f, date: e.target.value }); setErr(""); }}
               className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"
-            />
+            >
+              <option value="">Sanani tanlang</option>
+              {dates.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
+            </select>
           </div>
           <div>
             <label className="block text-xs text-slate-500 mb-1">Vaqt</label>

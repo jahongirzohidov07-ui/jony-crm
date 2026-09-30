@@ -130,4 +130,22 @@ r = c.post("/api/me/exam-orders", headers=H("ust"),
 ck("bir kunga ikkinchi so'rov rad etiladi", r.status_code, 400)
 
 print("\n" + ("BARCHASI OK" if not fails else f"XATOLAR: {fails}"))
+
+from unittest.mock import patch
+teacher_headers = H("ust")
+with patch.object(roles, "local_today", return_value=date(2026, 9, 30)):
+    form = c.get("/api/me/exam-orders", headers=teacher_headers).json()
+    ck("server min date, oy almashishi", form["min_date"], "2026-10-01")
+    ck("server max date", form["max_date"], "2026-11-29")
+    for selected, status in [("2026-10-02", 200), ("2026-10-01", 200),
+                             ("2026-09-30", 400), ("2026-02-10", 400),
+                             ("2026-11-29", 200), ("2026-11-30", 400)]:
+        response = c.post("/api/me/exam-orders", headers=teacher_headers,
+            json={"group_id": g.id, "date": selected, "time": "09:30",
+                  "kind": "unit", "unit_no": 11})
+        ck("sana chegarasi " + selected, response.status_code, status)
+with patch.object(roles, "local_today", return_value=date(2026, 12, 31)):
+    form = c.get("/api/me/exam-orders", headers=teacher_headers).json()
+    ck("yil almashishi", form["min_date"], "2027-01-01")
+print("SANA TESTLARI OK" if not fails else f"XATOLAR: {fails}")
 sys.exit(1 if fails else 0)

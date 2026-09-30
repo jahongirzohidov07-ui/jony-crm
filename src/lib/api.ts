@@ -5028,6 +5028,8 @@ export interface ExamOrder {
 }
 
 interface ExamOrderForm {
+  min_date?: string;
+  max_date?: string;
   kinds: { key: string; label: string }[];
   unit_count: number;
   min_notice_days: number;

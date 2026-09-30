@@ -6256,7 +6256,10 @@ def _exam_order_out(db: Session, o: models.ExamOrder) -> dict:
     }
 
 def _exam_order_form(db: Session, user: models.User) -> dict:
+    today = roles.local_today()
     return {
+        "min_date": (today + timedelta(days=roles.EXAM_ORDER_MIN_NOTICE_DAYS)).isoformat(),
+        "max_date": (today + timedelta(days=roles.EXAM_ORDER_MAX_AHEAD_DAYS)).isoformat(),
         "kinds": [{"key": k, "label": roles.EXAM_KIND_LABELS.get(k, k)}
                   for k in roles.EXAM_KINDS],
         "unit_count": roles.UNIT_COUNT,

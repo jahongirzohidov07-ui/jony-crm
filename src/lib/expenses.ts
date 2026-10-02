@@ -62,7 +62,7 @@ export const EXPENSE_CATEGORIES: CategoryDef[] = [
 
   { key: "admin_salary", label: "Ma'muriy xodim oyligi", group: "admin_salary" },
   { key: "support_salary", label: "Farrosh / qorovul", group: "admin_salary" },
-  { key: "founder_salary", label: "Asoschi oyligi", group: "admin_salary" },
+  { key: "founder_salary", label: "CEO oyligi", group: "admin_salary" },
   { key: "salary", label: "Xodimlar oyligi (eski)", group: "admin_salary", legacy: true },
   // Ustozga berilgan pul — ro'yxatda ko'rinadi, formada tanlanmaydi
   // (Oylik -> ustozni tanlash orqali yoziladi).

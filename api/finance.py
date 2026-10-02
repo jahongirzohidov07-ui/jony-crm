@@ -3338,7 +3338,7 @@ def _month_win(y: int, m: int):
     return s, e
 
 # Budjetda alohida qator bo'lmaydigan rollar: ustozlar (oyligi
-# yoqlamadan avtomat), o'quvchi/ota-ona, asoschi ("Asoschi oyligi"
+# yoqlamadan avtomat), o'quvchi/ota-ona, asoschi ("CEO oyligi"
 # alohida kategoriya).
 _BUDGET_STAFF_SKIP = {roles.STUDENT, roles.PARENT, roles.FOUNDER,
                       roles.TEACHER}
@@ -3371,7 +3371,7 @@ def _budget_staff(db: Session, user, branch_id=None) -> list:
 def _budget_split_staff(db: Session, user, start, end, branch_id,
                         by_cat: dict, staff: list) -> dict:
     """Xodimga bog'langan oylik xarajatlarini fakt'da shu xodimning
-    "staff:<id>" qatoriga, asoschinikini "Asoschi oyligi"ga o'tkazadi.
+    "staff:<id>" qatoriga, asoschinikini "CEO oyligi"ga o'tkazadi.
     Jami summa o'zgarmaydi — faqat qaysi qatorga tushishi."""
     ids = {x["user_id"] for x in staff}
     founders = {uid for (uid,) in db.query(models.User.id).filter(

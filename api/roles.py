@@ -253,7 +253,7 @@ EXPENSE_CATEGORY_DEFS = [
     ("admin_salary", "Ma'muriy xodim oyligi", "admin_salary"),
     ("support_salary", "Farrosh / qorovul", "admin_salary"),
     # 2026-10-02, Jahongir: budjetda "Asoschi oylik deb ham qo'shasan"
-    ("founder_salary", "Asoschi oyligi", "admin_salary"),
+    ("founder_salary", "CEO oyligi", "admin_salary"),  # "CEO oyligi deylik, Asoschi emas"
     # Eski "salary" kaliti ham ma'muriy xodimlarni bildirgan.
     ("salary", "Xodimlar oyligi (eski)", "admin_salary"),
 

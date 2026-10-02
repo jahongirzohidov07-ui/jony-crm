@@ -1230,7 +1230,8 @@ export interface LedgerRow {
   title: string;
   student_id: number | null;
   method: string;
-  direction: "in" | "out";
+  /** "balance" — oy boshidagi "Oldingi oydan qoldiq" qatori (2026-10-02) */
+  direction: "in" | "out" | "balance";
   branch: string;
   category: string;
   note?: string | null;
@@ -1239,8 +1240,11 @@ export interface LedgerRow {
 export interface CashflowMonth {
   period: string;
   title: string;
+  /** Oy boshidagi qoldiq (2026-10-02) */
+  opening?: number;
   kirim: number;
   chiqim: number;
+  /** Oy oxirida kassada qolgan pul: qoldiq + kirim − chiqim */
   kassa: number;
   count: number;
 }
@@ -1249,6 +1253,8 @@ export interface CashflowLedger {
   period: string;
   /** Oraliq tanlanganda — oxirgi oy (2026-09-16) */
   period_to?: string;
+  /** Davr boshidagi qoldiq (2026-10-02) */
+  opening?: CashMethodBlock;
   kirim: CashMethodBlock;
   chiqim: CashMethodBlock;
   kassa: CashMethodBlock;

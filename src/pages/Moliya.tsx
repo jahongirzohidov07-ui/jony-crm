@@ -153,6 +153,9 @@ function SummaryTable({ data }: { data: CashflowLedger }) {
     block: CashMethodBlock;
     cls: string;
   }[] = [
+    ...(data.opening
+      ? [{ label: "Qoldiq", block: data.opening, cls: "bg-slate-100 text-slate-800" }]
+      : []),
     { label: "Kirim", block: data.kirim, cls: "bg-emerald-100 text-emerald-900" },
     { label: "Chiqim", block: data.chiqim, cls: "bg-red-100 text-red-900" },
     { label: "Kassa", block: data.kassa, cls: "bg-amber-100 text-amber-900" },
@@ -236,6 +239,7 @@ function PaymentKindTable({ data }: { data: CashflowLedger }) {
 }
 
 function ledgerCategoryLabel(r: LedgerRow): string {
+  if (r.direction === "balance") return "Oldingi oydan qoldiq";
   if (r.direction === "in") {
     return r.category === "new_payment" ? "Yangi to'lov" : "Eski to'lov";
   }
@@ -314,7 +318,8 @@ function CashflowTab() {
         Summa: r.amount,
         Izoh: r.title,
         Usul: methodLabel(r.method),
-        Turi: r.direction === "in" ? "Kirim" : "Chiqim",
+        Turi: r.direction === "balance" ? "Qoldiq"
+          : r.direction === "in" ? "Kirim" : "Chiqim",
         Filial: r.branch,
         Kategoriya: ledgerCategoryLabel(r),
       })));
@@ -416,8 +421,9 @@ function CashflowTab() {
           <PaymentKindTable data={data} />
         </div>
         <Note>
-          Kassa = kirim − chiqim, har bir usul bo'yicha alohida. Ustozlar
-          oyligi yoqlamadan avtomat hisoblanib, chiqimga qo'shilgan.
+          Qoldiq — oldingi oydan qolgan pul (1-sentabr 2026 dan yuritiladi).
+          Kassa = qoldiq + kirim − chiqim, har bir usul bo'yicha alohida.
+          Chiqimga xarajatlar va haqiqatda berilgan ustoz oyliklari kiradi.
         </Note>
       </div>
 
@@ -431,6 +437,7 @@ function CashflowTab() {
               <thead>
                 <tr className="text-xs text-slate-500 border-b border-slate-100">
                   <th className="text-left py-2">Oy</th>
+                  <th className="text-right">Qoldiq</th>
                   <th className="text-right">Kirim</th>
                   <th className="text-right">Chiqim</th>
                   <th className="text-right">Kassa</th>
@@ -441,6 +448,7 @@ function CashflowTab() {
                 {data.months.map((m) => (
                   <tr key={m.period} className="border-b border-slate-50">
                     <td className="py-2 text-slate-700">{m.title}</td>
+                    <td className="text-right tabular-nums text-slate-600">{formatSom(m.opening ?? 0)}</td>
                     <td className="text-right tabular-nums text-emerald-700">{formatSom(m.kirim)}</td>
                     <td className="text-right tabular-nums text-red-700">{formatSom(m.chiqim)}</td>
                     <td className={`text-right tabular-nums font-medium ${m.kassa < 0 ? "text-red-700" : "text-slate-900"}`}>
@@ -451,6 +459,7 @@ function CashflowTab() {
                 ))}
                 <tr className="font-semibold">
                   <td className="py-2">Jami</td>
+                  <td className="text-right tabular-nums text-slate-600">{formatSom(data.opening?.total ?? 0)}</td>
                   <td className="text-right tabular-nums text-emerald-700">{formatSom(data.kirim.total)}</td>
                   <td className="text-right tabular-nums text-red-700">{formatSom(data.chiqim.total)}</td>
                   <td className="text-right tabular-nums">{formatSom(data.kassa.total)}</td>
@@ -511,11 +520,14 @@ function CashflowTab() {
               </thead>
               <tbody>
                 {rows.map((r) => {
+                  const bal = r.direction === "balance";
                   const inRow = r.direction === "in";
-                  const bg = inRow
+                  const bg = bal
+                    ? "bg-slate-50 hover:bg-slate-100"
+                    : inRow
                     ? "bg-emerald-50 hover:bg-emerald-100"
                     : "bg-red-50 hover:bg-red-100";
-                  const fg = inRow ? "text-emerald-900" : "text-red-900";
+                  const fg = bal ? "text-slate-800" : inRow ? "text-emerald-900" : "text-red-900";
                   return (
                     <tr
                       key={r.id}
@@ -526,7 +538,7 @@ function CashflowTab() {
                       </td>
                       <td className="px-4 py-2">{formatDate(r.date)}</td>
                       <td className="text-right font-medium tabular-nums pr-6">
-                        {inRow ? "+" : "−"}
+                        {bal ? "" : inRow ? "+" : "−"}
                         {formatSom(r.amount)}
                       </td>
                       <td className="py-2 pl-2">
@@ -542,11 +554,13 @@ function CashflowTab() {
                         )}
                       </td>
                       <td>{methodLabel(r.method)}</td>
-                      <td className="font-medium">{inRow ? "Kirim" : "Chiqim"}</td>
+                      <td className="font-medium">
+                        {bal ? "Qoldiq" : inRow ? "Kirim" : "Chiqim"}
+                      </td>
                       <td>{r.branch}</td>
                       <td>{ledgerCategoryLabel(r)}</td>
                       <td className="pr-3 text-right">
-                        {canPayEdit && (
+                        {canPayEdit && !bal && (
                           <button
                             onClick={() =>
                               setEditing({

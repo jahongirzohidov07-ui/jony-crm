@@ -1538,6 +1538,64 @@ def cash_day(
     }
 
 
+# Kassa qoldig'i shu kundan boshlab yuritiladi (2026-10-02, Jahongir:
+# "Sentabr 2026 dan"). Undan oldingi to'lovlarning bir qismi import
+# qilingan — haqiqatda kassada turmagan, shuning uchun hisobga olinmaydi.
+CF_OPENING_FROM = date(2026, 9, 1)
+
+
+def _cf_opening(db: Session, user, branch_id, start: date) -> dict:
+    """`start` kunigacha kassada qolgan pul, usullar kesimida
+    (2026-10-02, Jahongir: "Pul oqimi bo'limiga JonySchoolga o'xshab
+    qoldiqlar keyingi oyga o'tsin, click, naqd va terminalniki").
+
+    CF_OPENING_FROM dan `start` gacha: kirim (to'lovlar) − chiqim
+    (xarajatlar va haqiqatda berilgan ustoz oyliklari) — kassa
+    daftarining o'zi bilan BIR XIL so'rovlar va filial chegarasi.
+    Qoldiq hech qayerda saqlanmaydi: har safar qayta hisoblanadi, o'tgan
+    oyga keyinroq kiritilgan yoki o'chirilgan yozuv keyingi oylar
+    qoldig'ini o'zi to'g'rilaydi."""
+    bal = {m: 0.0 for m in roles.PAYMENT_METHODS}
+    if start <= CF_OPENING_FROM:
+        return bal
+
+    def _bk(method):
+        return method if method in bal else "cash"
+
+    lo, _x = _utc_window(CF_OPENING_FROM, CF_OPENING_FROM)
+    hi, _y = _utc_window(start, start)
+    pq = (db.query(models.Payment.method, func.sum(models.Payment.amount))
+          .join(models.Student, models.Payment.student_id == models.Student.id)
+          .filter(models.Payment.kind == "payment",
+                  models.Payment.created_at >= lo,
+                  models.Payment.created_at < hi))
+    pq = scope_to_branch(pq, models.Student, user, branch_id)
+    for method, amt in pq.group_by(models.Payment.method).all():
+        bal[_bk(method)] += float(amt or 0)
+
+    eq = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+        models.Expense.date >= CF_OPENING_FROM, models.Expense.date < start)
+    if branch_id and user.role in tuple(roles.ORG_WIDE_ROLES):
+        eq = eq.filter(models.Expense.branch_id == branch_id)
+    for method, amt in (eq.with_entities(models.Expense.method,
+                                         func.sum(models.Expense.amount))
+                        .group_by(models.Expense.method).all()):
+        bal[_bk(method)] -= float(amt or 0)
+
+    _tp_branch = func.coalesce(models.TeacherPayment.branch_id,
+                               models.Teacher.branch_id)
+    tq = (db.query(models.TeacherPayment.method,
+                   func.sum(models.TeacherPayment.amount))
+          .join(models.Teacher,
+                models.TeacherPayment.teacher_id == models.Teacher.id)
+          .filter(models.TeacherPayment.paid_on >= CF_OPENING_FROM,
+                  models.TeacherPayment.paid_on < start,
+                  _tp_branch.in_(_branch_scope_ids(db, user, branch_id))))
+    for method, amt in tq.group_by(models.TeacherPayment.method).all():
+        bal[_bk(method)] -= float(amt or 0)
+    return {k: round(v, 2) for k, v in bal.items()}
+
+
 @router.get("/api/reports/cashflow-ledger")
 def cashflow_ledger(
     year: int,
@@ -1671,12 +1729,9 @@ def cashflow_ledger(
             "note": getattr(tp, "note", None),
         })
 
-    rows.sort(key=lambda r: (r["date"], r["id"]))
-
     def block(d):
-        return {**d, "total": sum(d.values())}
-
-    kassa = {m: kirim[m] - chiqim[m] for m in roles.PAYMENT_METHODS}
+        return {**{k: round(v, 2) for k, v in d.items()},
+                "total": round(sum(d.values()), 2)}
 
     # Oylar kesimi — oraliqdagi har oy (bo'sh oy ham) alohida qator
     per_month: dict = {}
@@ -1684,22 +1739,77 @@ def cashflow_ledger(
     while (y, m) <= (end.year, end.month):
         key = f"{y:04d}-{m:02d}"
         per_month[key] = {"period": key, "title": _month_title(key),
-                          "kirim": 0.0, "chiqim": 0.0, "count": 0}
+                          "kirim": 0.0, "chiqim": 0.0, "count": 0,
+                          "_in": {k: 0.0 for k in roles.PAYMENT_METHODS},
+                          "_out": {k: 0.0 for k in roles.PAYMENT_METHODS}}
         y, m = (y + 1, 1) if m == 12 else (y, m + 1)
     for r in rows:
         pm = per_month.get(r["date"][:7])
         if pm is None:
             continue
-        pm["kirim" if r["direction"] == "in" else "chiqim"] += r["amount"]
+        side = "in" if r["direction"] == "in" else "out"
+        pm["kirim" if side == "in" else "chiqim"] += r["amount"]
+        pm["_" + side][r["method"]] += r["amount"]
         pm["count"] += 1
-    months_out = [dict(v, kirim=round(v["kirim"], 2),
-                       chiqim=round(v["chiqim"], 2),
-                       kassa=round(v["kirim"] - v["chiqim"], 2))
-                  for v in per_month.values()]
+
+    # OY BOSHIDAGI QOLDIQ (2026-10-02). Har oy oldingi oydan qolgan pul
+    # bilan boshlanadi: oyning 1-kuniga usul bo'yicha "Qoldiq" qatori
+    # (jamlarga — kirim/chiqimga — qo'shilmaydi). Kassa = qoldiq +
+    # kirim − chiqim. CF_OPENING_FROM dan oldingi oylarda qoldiq yo'q.
+    opening = _cf_opening(db, user, branch_id, start)
+    run = dict(opening)
+    from_key = _period_key(CF_OPENING_FROM.year, CF_OPENING_FROM.month)
+    months_out = []
+    for v in per_month.values():
+        if v["period"] < from_key:
+            run = {k: 0.0 for k in roles.PAYMENT_METHODS}
+        o_ = dict(run)
+        for k in roles.PAYMENT_METHODS:
+            run[k] = run[k] + v["_in"][k] - v["_out"][k]
+        if v["period"] < from_key:
+            run = {k: 0.0 for k in roles.PAYMENT_METHODS}
+            closing = {k: v["_in"][k] - v["_out"][k]
+                       for k in roles.PAYMENT_METHODS}
+        else:
+            closing = dict(run)
+        months_out.append({
+            "period": v["period"], "title": v["title"],
+            "count": v["count"],
+            "kirim": round(v["kirim"], 2), "chiqim": round(v["chiqim"], 2),
+            "opening": round(sum(o_.values()), 2),
+            "kassa": round(sum(closing.values()), 2),
+        })
+        y_, m_ = int(v["period"][:4]), int(v["period"][5:7])
+        prev = _period_key(*((y_ - 1, 12) if m_ == 1 else (y_, m_ - 1)))
+        for k in roles.PAYMENT_METHODS:
+            amt = round(o_[k], 2)
+            if abs(amt) < 0.005:
+                continue
+            rows.append({
+                "id": f"0open-{v['period']}-{k}",
+                "date": billing.month_bounds(y_, m_)[0].isoformat(),
+                "amount": amt,
+                "title": "Oldingi oydan qoldiq",
+                "student_id": None,
+                "method": k,
+                "direction": "balance",
+                "branch": "—",
+                "category": "opening",
+                "note": prev,
+            })
+    # Kassa — oyna oxirida qolgan pul. Oyna butunlay CF_OPENING_FROM dan
+    # oldin bo'lsa qoldiq yuritilmagan — avvalgidek kirim − chiqim.
+    if end < CF_OPENING_FROM:
+        kassa = {k: kirim[k] - chiqim[k] for k in roles.PAYMENT_METHODS}
+    else:
+        kassa = closing
+
+    rows.sort(key=lambda r: (r["date"], r["id"]))
 
     return {
         "period": _period_key(start.year, start.month),
         "period_to": _period_key(end.year, end.month),
+        "opening": block(opening),
         "kirim": block(kirim),
         "chiqim": block(chiqim),
         "kassa": block(kassa),

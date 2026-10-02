@@ -41,6 +41,7 @@ import {
   CASH_ACCESS, DEBTOR_ACCESS, PROFIT_VIEW, SALES_MANAGER, ADMINISTRATOR, can,
 } from "../lib/roles";
 import { SalesPanelCards, AdminCollectionCard } from "../components/SalesPanel";
+import { AdminSalaryCard } from "../components/AdminSalaryCoach";
 import { MyPanel } from "../components/MyPanel";
 import { FillCard } from "../components/FillReport";
 import { useAuth } from "../lib/AuthContext";
@@ -509,6 +510,11 @@ export default function Dashboard() {
           ko'zdan qochardi. Endi bosh sahifada, tugmalari bilan. */}
       {["founder", "branch_manager", "finance_director"]
         .includes(user?.role || "") && <DiscountPendingBlock />}
+
+      {/* ADMINISTRATOR: OYLIGI VA KEYINGI BONUS — ENG TEPADA, ajralib
+          turadigan karta (2026-10-02, Jahongir: "dashboardda ko'rinib
+          tursin, doim eslatib ajralib turadigan bo'lsin"). */}
+      {isSales && <AdminSalaryCard />}
 
       {/* Har bir xodim avval O'Z ishini ko'radi */}
       <MyPanel onLoaded={setShowGeneral} />

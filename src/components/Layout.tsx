@@ -26,6 +26,8 @@ import {
   PARENT,
   BRANCH_SWITCH,
   ALL_BRANCH_ROLES,
+  SALES_MANAGER,
+  ADMINISTRATOR,
 } from "../lib/roles";
 import {
   api, setGlobalBranch, getGlobalBranch, setActiveRole, getActiveRole,
@@ -34,6 +36,7 @@ import {
 import type { Branch } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
 import { DrillTimer } from "./DrillTimer";
+import { AdminSalaryFloat } from "./AdminSalaryCoach";
 import { PasswordInput } from "./PasswordInput";
 
 // Menyu bandlari endi ./navItems.ts da (buildNav) — JonyOS xodim
@@ -525,6 +528,10 @@ export default function Layout() {
           ketganda sekundomer o'chib qolyabdi") — mashq ketayotgan
           bo'lsa har qanday sahifada osilib turadi. */}
       <DrillTimer />
+      {/* Administratorga oylik va keyingi bonus har sahifada (2026-10-02) */}
+      {(user?.role === SALES_MANAGER || user?.role === ADMINISTRATOR) && (
+        <AdminSalaryFloat />
+      )}
 
       {(showPasswordModal || forcePw) && (
         <ChangePasswordModal

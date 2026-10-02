@@ -1080,6 +1080,41 @@ def _collection_bonus(db: Session, students: int, percent: float) -> float:
         best = max(best, r.bonus)
     return best
 
+def _next_collection_step(db: Session, students: int, percent: float,
+                          expected: float, collected: float):
+    """Joriy bonusdan KATTAROQ bonus beradigan eng yaqin foiz pog'onasi:
+    (foiz, bonus, yana yig'ilishi kerak so'm) yoki None (2026-10-02)."""
+    cur = _collection_bonus(db, students, percent)
+    best = None
+    for r in db.query(models.KpiCollectionRule).all():
+        if students < r.min_students:
+            continue
+        if r.max_students is not None and students > r.max_students:
+            continue
+        if r.min_percent <= percent + 1e-9 or r.bonus <= cur:
+            continue
+        if best is None or (r.min_percent, -r.bonus) < (best.min_percent,
+                                                         -best.bonus):
+            best = r
+    if best is None or expected <= 0:
+        return None
+    gap = max(0.0, expected * best.min_percent / 100.0 - collected)
+    return best.min_percent, best.bonus, round(gap, -3) if gap >= 1000 \
+        else round(gap, 2)
+
+
+def _next_new_client_step(db: Session, count: int):
+    """Joriy bonusdan kattaroq bonusli eng yaqin yangi mijoz pog'onasi:
+    (kerakli son, bonus) yoki None."""
+    cur = _new_client_bonus(db, count)
+    cands = [r for r in db.query(models.KpiNewClientRule).all()
+             if r.min_clients > count and r.bonus > cur]
+    if not cands:
+        return None
+    r = min(cands, key=lambda x: (x.min_clients, -x.bonus))
+    return r.min_clients, r.bonus
+
+
 def _new_client_bonus(db: Session, count: int) -> float:
     """Yangi mijozlar soniga mos eng yuqori pog'ona bonusi."""
     best = 0.0
@@ -1230,7 +1265,16 @@ def compute_admin_kpi(db: Session, user, year: int, month: int,
         if (user.role not in tuple(roles.FULL_ACCESS + [roles.FINANCE_DIRECTOR])
                 and a.id != user.id):
             continue
+        nc = _next_collection_step(db, st["active_students"], pct,
+                                   st["expected"], st["collected"])
+        nn = _next_new_client_step(db, new_count)
         rows.append(schemas.AdminKpi(
+            next_collection_percent=nc[0] if nc else None,
+            next_collection_bonus=nc[1] if nc else None,
+            collection_gap=nc[2] if nc else None,
+            next_new_clients=nn[0] if nn else None,
+            next_new_client_bonus=nn[1] if nn else None,
+            new_clients_gap=(nn[0] - new_count) if nn else None,
             user_id=a.id, full_name=a.full_name, branch_id=a.branch_id,
             branch=a.branch.name if a.branch else None,
             fix_salary=fix,

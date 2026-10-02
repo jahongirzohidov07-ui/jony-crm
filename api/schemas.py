@@ -972,6 +972,16 @@ class AdminKpi(BaseModel):
 
     total: float = 0
 
+    # KEYINGI POG'ONA (2026-10-02, Jahongir: "bonusi keyingisiga qancha
+    # qolishi va qancha oylik olishini ko'rsatib turishi kerak va ularni
+    # undashi kerak"). None — keyingi pog'ona yo'q (eng yuqorisida).
+    next_collection_percent: Optional[float] = None
+    next_collection_bonus: Optional[float] = None   # o'sha pog'ona bonusi
+    collection_gap: Optional[float] = None          # yana yig'ish kerak (so'm)
+    next_new_clients: Optional[int] = None
+    next_new_client_bonus: Optional[float] = None
+    new_clients_gap: Optional[int] = None           # yana nechta yangi mijoz
+
 
 class AdminKpiResult(BaseModel):
     period: str

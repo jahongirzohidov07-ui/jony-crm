@@ -1091,6 +1091,13 @@ export interface AdminKpi {
   branch_new_revenue?: number;
   unassigned_new_clients?: number;
   total: number;
+  // Keyingi pog'ona (2026-10-02). null — eng yuqorisida.
+  next_collection_percent?: number | null;
+  next_collection_bonus?: number | null;
+  collection_gap?: number | null;
+  next_new_clients?: number | null;
+  next_new_client_bonus?: number | null;
+  new_clients_gap?: number | null;
 }
 
 export interface AdminKpiResult {

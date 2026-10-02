@@ -282,12 +282,17 @@ EXPENSE_CATEGORY_GROUP = {c: g for c, _, g in EXPENSE_CATEGORY_DEFS}
 # oyligidan tashqari boshqa xodimlar oyligini bitta bitta kiritadigan
 # qilish kerak"). Budjet qatori kategoriyasi "staff:<user_id>".
 BUDGET_STAFF_PREFIX = "staff:"
+# Ustozlar bo'limidagi faqat-reja qatorlari (2026-10-02, Jahongir:
+# "ustoz bonuslari deb qo'shib qo'y").
+BUDGET_TEACHER_CATS = {"teacher_bonus": "Ustoz bonuslari"}
 
 
 def budget_category_group(cat):
     """Budjet kategoriyasining xarajat guruhi (staff:* — ma'muriyat)."""
     if cat and str(cat).startswith(BUDGET_STAFF_PREFIX):
         return "admin_salary"
+    if cat in BUDGET_TEACHER_CATS:
+        return "teacher_payroll"
     return EXPENSE_CATEGORY_GROUP.get(cat, "other")
 
 # DIQQAT: ustozlar ish haqi bu ro'yxatda YO'Q - u TeacherPayout

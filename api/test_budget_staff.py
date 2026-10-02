@@ -154,6 +154,17 @@ d = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
 ck("barcha filiallar: hammasi", sorted(x["user_id"] for x in d["staff"]),
    sorted([SARVAR, HR, U2]))
 
+print("\n=== 6. Ustoz bonuslari ===")
+c.put(f"/api/finance/budget/{Y}", headers=H, json={"items": [
+    {"month": M, "kind": "expense", "category": "teacher_bonus",
+     "amount": 4_000_000}]})
+d = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
+cats = {x["category"]: x for x in d["monthly"]["categories"]}
+ck("qator", (cats["teacher_bonus"]["label"], cats["teacher_bonus"]["plan"]),
+   ("Ustoz bonuslari", 4_000_000))
+deps = {x["department"]: x for x in d["departments"]}
+ck("O'quv bo'limiga tushdi", deps["teacher_payroll"]["plan"], 4_000_000)
+
 print()
 if fails:
     print(f"{len(fails)} ta XATO: {fails}")

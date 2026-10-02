@@ -570,7 +570,8 @@ function BudgetEditor({ d, month, approved, onClose }: Any) {
     ];
   }
   sections.push({ key: "teacher_payroll", label: "Ustozlar",
-    items: [{ key: "teacher_payroll", label: "Ustozlar ish haqi" }] });
+    items: [{ key: "teacher_payroll", label: "Ustozlar ish haqi" },
+      { key: "teacher_bonus", label: "Ustoz bonuslari" }] });
 
   // Jami — formada ko'rinib turgan maydonlar (boshqa filial xodimlari
   // rejasi bu yerda ko'rinmaydi, lekin saqlanganicha qoladi)

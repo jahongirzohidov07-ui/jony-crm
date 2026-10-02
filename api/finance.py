@@ -3415,7 +3415,8 @@ def _budget_cat_label(db: Session, c: str) -> str:
         except ValueError:
             u = None
         return (u.full_name or u.username) if u else "Xodim oyligi"
-    return roles.EXPENSE_CATEGORY_LABELS.get(c, c)
+    return (roles.BUDGET_TEACHER_CATS.get(c)
+            or roles.EXPENSE_CATEGORY_LABELS.get(c, c))
 
 
 @router.get("/api/finance/budget")

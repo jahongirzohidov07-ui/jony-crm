@@ -153,6 +153,37 @@ ck("audit yozildi", s.query(models.AuditLog).filter(
 s.close()
 ck("ro'yxatda 1 ta qoldi", client.get(URL, headers=F).json()["count"], 1)
 
+print("\n=== 5. Bir martalik avtomat bekor qilish (Jahongir: olib tashla) ===")
+s = SessionLocal()
+R3 = models.Payment(student_id=SID, amount=80_000, kind="discount",
+                    note=f"Louisiana — {P}: 10 dars o'tildi, farq qaytarildi",
+                    created_by="avtomat (oylik)", period=P,
+                    created_at=datetime(Y, 10, 1, 0, 5))
+s.add(R3); s.commit(); R3 = R3.id
+entry._mc_ensure(s)
+s.close()
+s = SessionLocal()
+left = s.query(models.Payment).filter(
+    models.Payment.kind == "discount",
+    models.Payment.note.like("%farq qaytarildi%")).count()
+ck("hammasi olib tashlandi", left, 0)
+ck("arxivda", s.query(models.DeletedPayment).filter(
+    models.DeletedPayment.payment_id.in_([R2, R3])).count(), 2)
+ck("Jony Shop qatori joyida", s.query(models.Payment).get(OTHER) is not None,
+   True)
+ck("Simora sentabri to'liq oylik (Jony Shop alohida)",
+   round(sum(x.amount for x in s.query(models.Payment).filter(
+       models.Payment.student_id == SID2, models.Payment.period == P,
+       models.Payment.kind != "discount"))), -480_000)
+R4 = models.Payment(student_id=SID, amount=1, kind="discount",
+                    note=f"X — {P}: 1 dars o'tildi, farq qaytarildi",
+                    created_by="avtomat (oylik)", period=P)
+s.add(R4); s.commit(); R4 = R4.id
+entry._mc_ensure(s)
+ck("bir martalik — keyingi yurishda tegmaydi",
+   s.query(models.Payment).get(R4) is not None, True)
+s.close()
+
 print()
 if fails:
     print(f"{len(fails)} ta XATO: {fails}")

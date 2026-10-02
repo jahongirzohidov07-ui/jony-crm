@@ -7347,6 +7347,24 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # (2026-09-28, _mc_reactivated_after_skip izohiga qarang)
     ra_key = f"mcra_{today.isoformat()}"
     old_key = f"mcold_{today.isoformat()}"
+    # BIR MARTALIK (2026-10-02, Jahongir: "kam dars qaytarilgan farq
+    # bo'lsa bu chegirmalarni olib tashla") — 1-oktabrda o'chirilgan
+    # _mc_refund_prev yozgan "+summa chegirma" qatorlari arxivga.
+    lr_key = "lrfix_cancel_2026-10"
+    if not _sd(db, lr_key):
+        try:
+            import finance as _Fin
+            _lr = _Fin._lesson_refund_cancel_all(db)
+            _sm(db, lr_key)
+            if _lr:
+                audit.log(db, None, entity="payment", action="payment_cancel",
+                          entity_label="Kam dars qaytarishlari bekor qilindi",
+                          new_value=len(_lr),
+                          note=", ".join(f"{x['name']} {int(x['amount'])}"
+                                         for x in _lr[:60]), commit=True)
+                print(f"[oylik] kam dars qaytarishlari bekor qilindi: {len(_lr)}")
+        except Exception:
+            db.rollback()
     # BIR MARTALIK (2026-09-28, Jahongir: "yangi tolov qilganlarga
     # 3-darsgacha qilsa 10 coin berilishi kerak"). Yangi qoida
     # students._pay_coin'da; bu esa sentabrda qoida yo'qligida to'lagan

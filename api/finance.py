@@ -1715,8 +1715,17 @@ def lesson_refund_cancel(payload: dict, db: Session = Depends(get_db),
     if not founder_like(user):
         raise HTTPException(403, "Faqat asoschi")
     ids = [int(x) for x in (payload or {}).get("ids") or []]
+    done = _lesson_refund_cancel(db, ids, user)
+    return {"cancelled": done, "count": len(done)}
+
+
+def _lesson_refund_cancel(db: Session, ids, user=None) -> list:
+    """Qatorlarni arxivga ko'chiradi. user=None — tizimning bir martalik
+    qadami (entry._mc_ensure, 2026-10-02, Jahongir: "kam dars qaytarilgan
+    farq bo'lsa bu chegirmalarni olib tashla")."""
     reason = ("Kam dars uchun avtomat qaytarish bekor qilindi — qoida: "
               "oyda dars soni qancha bo'lsa ham to'liq oylik")
+    by = user.full_name if user is not None else "Tizim (Jahongir ko'rsatmasi)"
     done = []
     for pid in ids:
         p = db.query(models.Payment).get(pid)
@@ -1724,7 +1733,8 @@ def lesson_refund_cancel(payload: dict, db: Session = Depends(get_db),
                 or _LR_MARK not in (p.note or "")):
             continue
         s = db.query(models.Student).get(p.student_id)
-        if s is None or not _in_user_branches(db, user, s.branch_id):
+        if s is None or (user is not None
+                         and not _in_user_branches(db, user, s.branch_id)):
             continue
         db.add(models.DeletedPayment(
             payment_id=p.id, public_id=p.public_id,
@@ -1734,7 +1744,7 @@ def lesson_refund_cancel(payload: dict, db: Session = Depends(get_db),
             created_by=p.created_by, created_at=p.created_at,
             entered_at=getattr(p, "entered_at", None),
             client_key=getattr(p, "client_key", None),
-            deleted_by=user.full_name, reason=reason))
+            deleted_by=by, reason=reason))
         audit.log(db, user, entity="payment", action="payment_cancel",
                   entity_id=p.id, entity_label=s.full_name, field=p.kind,
                   old_value=p.amount, new_value=None, note=reason,
@@ -1743,7 +1753,16 @@ def lesson_refund_cancel(payload: dict, db: Session = Depends(get_db),
         done.append({"payment_id": pid, "name": s.full_name,
                      "amount": abs(float(p.amount or 0))})
     db.commit()
-    return {"cancelled": done, "count": len(done)}
+    return done
+
+
+def _lesson_refund_cancel_all(db: Session) -> list:
+    """Hamma "kam dars — farq qaytarildi" qatorlari (bir martalik)."""
+    ids = [pid for (pid,) in db.query(models.Payment.id)
+           .filter(models.Payment.kind == "discount",
+                   models.Payment.created_by == _LR_BY,
+                   models.Payment.note.like("%" + _LR_MARK + "%")).all()]
+    return _lesson_refund_cancel(db, ids, None) if ids else []
 
 
 @router.post("/api/discounts/{discount_id}/approve")

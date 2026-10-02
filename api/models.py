@@ -652,6 +652,9 @@ class Expense(Base):
     # korinsin").
     staff_user_id = Column(Integer, ForeignKey("users.id"), nullable=True,
                            index=True)
+    # Oylik QAYSI OY UCHUN berilgani ("YYYY-MM"). Bo'sh bo'lsa — sana
+    # oyi. Oy yopilishi shu bo'yicha "berildi" deb yopiladi (2026-10-02).
+    period = Column(String, nullable=True, index=True)
     # SONI va qaysi mahsulot: "3 ta Round-up 5" kabi. Kitob/marker
     # olinganda ombor qoldig'i shu orqali oshadi.
     qty = Column(Float, nullable=True)

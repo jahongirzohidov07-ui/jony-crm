@@ -600,6 +600,7 @@ class ExpenseOut(BaseModel):
     created_by: Optional[str] = None
     created_at: datetime
     staff_user_id: Optional[int] = None
+    period: Optional[str] = None
     qty: Optional[float] = None
     consumable_id: Optional[int] = None
     # Ustozga berilgan pul (TeacherPayment) — ro'yxatda "Ustoz oyligi"

@@ -11096,3 +11096,7 @@ def pt_export(days: int = 30, branch_id: int | None = None,
     return {"source": "jonyos", "kind": "placement",
             "exported_at": _pt_now().isoformat(), "days": days,
             "count": len(rows), "rows": rows}
+
+
+# OY YOPILISHI VA P&L (2026-10-02) — alohida faylda
+import month_close  # noqa: E402,F401

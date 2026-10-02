@@ -41,6 +41,7 @@ import { MonthPaymentsTab } from "../components/Payroll";
 import { QuickPayment } from "../components/QuickPayment";
 import { PayImportTab } from "../components/PayImport";
 import { CashDayCard } from "../components/CashDay";
+import { MonthCloseView, PnlBoard } from "../components/MonthClose";
 
 type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "paid" | "lcup" | "trash" | "fixes";
 
@@ -64,7 +65,7 @@ const FULL_TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy ko'rinish" },
   { key: "debtors", label: "Qarzdorlar" },
   { key: "cashflow", label: "Pul oqimi" },
-  { key: "pnl", label: "Foyda / zarar" },
+  { key: "pnl", label: "P&L" },
   { key: "breakeven", label: "Zararsizlik" },
   { key: "budget", label: "Budjet" },
   { key: "calendar", label: "To'lov kalendari" },
@@ -245,6 +246,7 @@ function ledgerCategoryLabel(r: LedgerRow): string {
     return r.category === "new_payment" ? "Yangi to'lov" : "Eski to'lov";
   }
   if (r.category === "teacher_salary") return "Ustozlar oyligi";
+  if (r.category === "staff_salary") return "Examiner / support oyligi";
   return "Xarajat";
 }
 
@@ -634,157 +636,30 @@ function CashflowTab() {
   );
 }
 
-function PnlTab() {
-  const now = new Date();
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth() + 1);
-  const [data, setData] = useState<PnlReport | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    api
-      .get<PnlReport>(`/reports/pnl?year=${year}&month=${month}`)
-      .then(setData)
-      .finally(() => setLoading(false));
-  }, [year, month]);
-
-  const years = [now.getFullYear() - 1, now.getFullYear()];
-
+/** Pul oqimi ikki ko'rinishda (2026-10-02, Jahongir): real vaqt —
+ *  pul qachon tushgan bo'lsa; oy kesimida — qaysi oy uchun bo'lsa. */
+function CashflowSwitch() {
+  const [view, setView] = useState<"live" | "month">(() => {
+    try {
+      return localStorage.getItem("jonyos_cf_view") === "month" ? "month" : "live";
+    } catch { return "live"; }
+  });
+  const pick = (v: "live" | "month") => {
+    setView(v);
+    try { localStorage.setItem("jonyos_cf_view", v); } catch { /* */ }
+  };
   return (
     <div>
-      <div className="flex items-center gap-2 mb-5">
-        <select
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
-          value={month}
-          onChange={(e) => setMonth(Number(e.target.value))}
-        >
-          {MONTHS.map((m, i) => (
-            <option key={m} value={i + 1}>
-              {m}
-            </option>
-          ))}
-        </select>
-        <select
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
-          value={year}
-          onChange={(e) => setYear(Number(e.target.value))}
-        >
-          {years.map((y) => (
-            <option key={y} value={y}>
-              {y}
-            </option>
-          ))}
-        </select>
+      <div className="inline-flex gap-1 bg-white border border-slate-200 rounded-lg p-1 mb-4">
+        {([["live", "Real vaqt"], ["month", "Oy kesimida"]] as const).map(([k, l]) => (
+          <button key={k} onClick={() => pick(k)}
+            className={`px-3 py-1.5 rounded-md text-sm ${view === k
+              ? "bg-brand-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}>
+            {l}
+          </button>
+        ))}
       </div>
-
-      {loading || !data ? (
-        <p className="text-slate-400 text-sm">Yuklanmoqda...</p>
-      ) : (
-        <>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-            <Stat label="Kirim" value={formatSom(data.income)} tone="green" />
-            <Stat
-              label="Chiqim"
-              value={formatSom(data.outflow_total)}
-              hint={
-                data.payroll_total > 0
-                  ? `shundan ish haqi ${short(data.payroll_total)}`
-                  : undefined
-              }
-            />
-            <Stat
-              label="Foyda"
-              value={formatSom(data.profit)}
-              tone={data.profit >= 0 ? "green" : "red"}
-            />
-            <Stat
-              label="Rentabellik"
-              value={`${data.margin}%`}
-              hint="foyda / kirim"
-              tone={data.margin >= 0 ? "green" : "red"}
-            />
-          </div>
-
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <table className="w-full text-sm">
-              <tbody>
-                <tr className="bg-emerald-50/60">
-                  <td className="px-4 py-3 font-medium text-slate-700">Kirim</td>
-                  <td className="px-4 py-3 text-right font-semibold text-emerald-700">
-                    {formatSom(data.income)}
-                  </td>
-                </tr>
-                {(
-                  [
-                    ["cash", "Naqd"],
-                    ["card", "Plastik"],
-                    ["terminal", "Terminal"],
-                    ["other", "Boshqa"],
-                  ] as const
-                )
-                  .filter(([k]) => (data.income_by_method[k] || 0) > 0)
-                  .map(([k, label]) => (
-                    <tr key={k} className="border-t border-slate-100">
-                      <td className="px-4 py-2 pl-8 text-slate-500">{label}</td>
-                      <td className="px-4 py-2 text-right text-slate-600">
-                        {formatSom(data.income_by_method[k])}
-                      </td>
-                    </tr>
-                  ))}
-
-                <tr className="border-t-2 border-slate-200 bg-red-50/50">
-                  <td className="px-4 py-3 font-medium text-slate-700">Chiqim</td>
-                  <td className="px-4 py-3 text-right font-semibold text-red-700">
-                    {formatSom(data.outflow_total)}
-                  </td>
-                </tr>
-                {data.expense_lines.length === 0 && (
-                  <tr className="border-t border-slate-100">
-                    <td colSpan={2} className="px-4 py-3 text-center text-slate-400">
-                      Bu oyda chiqim kiritilmagan
-                    </td>
-                  </tr>
-                )}
-                {data.expense_lines.map((l) => (
-                  <tr key={l.category} className="border-t border-slate-100">
-                    <td className="px-4 py-2 pl-8 text-slate-500">
-                      {l.auto ? "Ustozlar ish haqi" : categoryLabel(l.category)}
-                      {l.auto && (
-                        <span className="ml-2 text-[10px] uppercase tracking-wide bg-brand-50 text-brand-700 px-1.5 py-0.5 rounded">
-                          avtomatik
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-2 text-right text-slate-600">
-                      {formatSom(l.amount)}
-                    </td>
-                  </tr>
-                ))}
-
-                <tr className="border-t-2 border-slate-300 bg-slate-50">
-                  <td className="px-4 py-3 font-semibold text-slate-800">
-                    Sof foyda
-                  </td>
-                  <td
-                    className={`px-4 py-3 text-right font-bold ${
-                      data.profit >= 0 ? "text-emerald-700" : "text-red-700"
-                    }`}
-                  >
-                    {formatSom(data.profit)}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <Note>
-            "Avtomatik" belgisi qo'yilgan qator yoqlama asosida o'zi
-            hisoblanadi — uni Xarajatlar bo'limiga qayta kiritish kerak emas,
-            aks holda ikki marta ayiriladi.
-          </Note>
-        </>
-      )}
+      {view === "live" ? <CashflowTab /> : <MonthCloseView />}
     </div>
   );
 }
@@ -855,6 +730,24 @@ function ExpenseForm({
   const [staff, setStaff] = useState<StaffPayee[]>([]);
   const [payee, setPayee] = useState<StaffPayee | null>(null);
   const [staffQ, setStaffQ] = useState("");
+  // QAYSI OY UCHUN (2026-10-02): oy yopilishida "berildi" shu bo'yicha.
+  // Oyning 1–15 kunlari odatda o'tgan oy oyligi beriladi.
+  const periodOptions = (() => {
+    const out: { v: string; l: string }[] = [];
+    const d0 = new Date();
+    d0.setDate(1);
+    for (let i = -3; i <= 0; i++) {
+      const d = new Date(d0.getFullYear(), d0.getMonth() + i, 1);
+      out.push({
+        v: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`,
+        l: `${MONTHS[d.getMonth()]} ${d.getFullYear()}`,
+      });
+    }
+    return out;
+  })();
+  const [payPeriod, setPayPeriod] = useState(
+    initial?.period
+      ?? periodOptions[new Date().getDate() <= 15 ? 2 : 3].v);
   // Soni va kitob
   const [qty, setQty] = useState("");
   const [books, setBooks] = useState<{ id: number; name: string; qty: number }[]>([]);
@@ -908,7 +801,7 @@ function ExpenseForm({
         teacher_id: salary ? payee?.teacher_id ?? null : null,
         staff_user_id: salary && !payee?.teacher_id
           ? payee?.user_id ?? null : null,
-        period: salary ? date.slice(0, 7) : null,
+        period: salary ? payPeriod : null,
         qty: !salary && qty ? Number(qty) : null,
         consumable_id: !salary && category === "book" && bookId
           ? Number(bookId) : null,
@@ -967,6 +860,23 @@ function ExpenseForm({
           </div>
 
           {/* OYLIK: shu filial xodimlari */}
+          {mode === "salary" && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Qaysi oy uchun
+              </label>
+              <select value={payPeriod}
+                onChange={(e) => setPayPeriod(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm bg-white">
+                {periodOptions.some((o) => o.v === payPeriod) ? null : (
+                  <option value={payPeriod}>{payPeriod}</option>
+                )}
+                {periodOptions.map((o) => (
+                  <option key={o.v} value={o.v}>{o.l}</option>
+                ))}
+              </select>
+            </div>
+          )}
           {mode === "salary" && (
             <div>
               <label className="block text-xs font-medium text-slate-500 mb-1">
@@ -1553,8 +1463,8 @@ export default function Moliya() {
 
       <div key={payKey}>
         {tab === "debtors" && <Debtors />}
-        {tab === "cashflow" && <CashflowTab />}
-        {tab === "pnl" && <PnlTab />}
+        {tab === "cashflow" && <CashflowSwitch />}
+        {tab === "pnl" && <PnlBoard />}
         {tab === "expenses" && <ExpensesTab />}
         {tab === "billing" && <BillingTab />}
         {tab === "breakeven" && <BreakEvenTab />}

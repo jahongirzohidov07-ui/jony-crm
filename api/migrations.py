@@ -212,6 +212,10 @@ MIGRATIONS = [
         "ALTER TABLE exam_orders ADD COLUMN proposed_note TEXT",
         "ALTER TABLE exam_orders ADD COLUMN proposed_from_status VARCHAR",
     ]),
+    # 2026-10-02: xodim oyligi qaysi oy uchun berilgani (oy yopilishi)
+    ("0025_expense_period", [
+        "ALTER TABLE expenses ADD COLUMN period VARCHAR",
+    ]),
 
 ]
 

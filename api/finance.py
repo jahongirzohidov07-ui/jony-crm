@@ -110,6 +110,12 @@ def list_expenses(
     return out
 
 
+def _valid_period(p):
+    """"YYYY-MM" bo'lsa qaytaradi, aks holda None."""
+    import re as _re
+    return p if p and _re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", str(p)) else None
+
+
 def _linked_teacher(db: Session, user_id) -> models.Teacher | None:
     """Xodim akkaunti ustozga bog'langanmi — bog'langan bo'lsa unga
     beriladigan pul USTOZ oyligi (TeacherPayment), ma'muriy xarajat emas."""
@@ -346,6 +352,8 @@ def create_expense(
         channel=payload.channel,
         method=payload.method or "cash",
         staff_user_id=payload.staff_user_id,
+        period=(_valid_period(payload.period)
+                if payload.staff_user_id else None),
         qty=payload.qty,
         consumable_id=cons.id if cons else None,
         created_by=user.full_name,
@@ -418,6 +426,8 @@ def update_expense(
             raise HTTPException(404, "Xodim topilmadi")
         _check_pay_scope(db, user, staff_user=su)
         data["staff_user_id"] = sid
+    if (sid or exp.staff_user_id) and _valid_period(period):
+        data["period"] = period
 
     if "category" in data and data["category"] not in roles.EXPENSE_CATEGORIES:
         raise HTTPException(400, "Noto'g'ri xarajat turi")

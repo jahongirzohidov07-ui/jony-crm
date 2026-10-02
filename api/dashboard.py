@@ -1588,6 +1588,25 @@ def cash_day(
 CF_OPENING_FROM = date(2026, 9, 1)
 
 
+def _ssp_in_scope(db: Session, user, branch_id, lo: date, hi: date):
+    """Examiner/support oyligi (StaffSalaryPayment) — HAQIQATDA berilgan
+    pul, [lo, hi) oralig'ida. Ilgari pul oqimiga umuman tushmas edi
+    (2026-10-02 topildi). Filial — xodimning asosiy filiali; filialsiz
+    xodimniki faqat "barcha filiallar"da ko'rinadi."""
+    SSP = getattr(models, "StaffSalaryPayment", None)
+    if SSP is None:
+        return []
+    scope = set(_branch_scope_ids(db, user, branch_id))
+    out = []
+    for p, u in (db.query(SSP, models.User)
+                 .outerjoin(models.User, models.User.id == SSP.user_id)
+                 .filter(SSP.paid_on >= lo, SSP.paid_on < hi).all()):
+        b = u.branch_id if u else None
+        if (b in scope) or (b is None and not branch_id):
+            out.append((p, u, b))
+    return out
+
+
 def _cf_opening(db: Session, user, branch_id, start: date) -> dict:
     """`start` kunigacha kassada qolgan pul, usullar kesimida
     (2026-10-02, Jahongir: "Pul oqimi bo'limiga JonySchoolga o'xshab
@@ -1637,6 +1656,9 @@ def _cf_opening(db: Session, user, branch_id, start: date) -> dict:
                   _tp_branch.in_(_branch_scope_ids(db, user, branch_id))))
     for method, amt in tq.group_by(models.TeacherPayment.method).all():
         bal[_bk(method)] -= float(amt or 0)
+    for p, _u, _b in _ssp_in_scope(db, user, branch_id, CF_OPENING_FROM,
+                                   start):
+        bal[_bk(p.method)] -= float(p.amount or 0)
     return {k: round(v, 2) for k, v in bal.items()}
 
 
@@ -1771,6 +1793,26 @@ def cashflow_ledger(
             "branch": branches.get(tp.branch_id or t.branch_id) or "—",
             "category": "teacher_salary",
             "note": getattr(tp, "note", None),
+        })
+
+    # Examiner va support oyliklari (StaffSalaryPayment)
+    for sp, su, sb in _ssp_in_scope(db, user, branch_id, start,
+                                    end + timedelta(days=1)):
+        m_ = sp.method if sp.method in chiqim else "cash"
+        chiqim[m_] += sp.amount or 0
+        rows.append({
+            "id": f"ssp{sp.id}",
+            "date": sp.paid_on.isoformat() if sp.paid_on
+            else end.isoformat(),
+            "amount": sp.amount or 0,
+            "title": "Xodim oyligi: " + ((su.full_name or su.username)
+                                         if su else "—"),
+            "student_id": None,
+            "method": m_,
+            "direction": "out",
+            "branch": branches.get(sb) or "—",
+            "category": "staff_salary",
+            "note": getattr(sp, "note", None),
         })
 
     def block(d):

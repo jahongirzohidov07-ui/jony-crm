@@ -706,6 +706,7 @@ export interface Expense {
   id: number;
   teacher_id?: number | null;
   staff_user_id?: number | null;
+  period?: string | null;
   date: string; // YYYY-MM-DD
   category: string;
   amount: number;

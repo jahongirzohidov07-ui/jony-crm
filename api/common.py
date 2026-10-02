@@ -6257,6 +6257,19 @@ def _exam_order_out(db: Session, o: models.ExamOrder) -> dict:
             roles.EXAM_ORDER_REJECT_REASONS).get(o.reject_reason),
         "exam_id": o.exam_id,
         "created_at": o.created_at.isoformat() if o.created_at else None,
+        # Vaqtni ko'chirish taklifi (2026-10-02)
+        "proposal": ({
+            "date": o.proposed_date.isoformat(),
+            "date_text": roles.uz_date_full(o.proposed_date),
+            "time": o.proposed_time,
+            "by": (lambda u: u.full_name if u else None)(
+                db.query(models.User).get(o.proposed_by)
+                if o.proposed_by else None),
+            "reason": o.proposed_reason,
+            "reason_label": dict(roles.EXAM_ORDER_RESCHEDULE_REASONS)
+            .get(o.proposed_reason),
+            "note": o.proposed_note,
+        } if o.status == "reschedule" and o.proposed_date else None),
         # Ustoz ham, examiner ham AYNAN shu matnni ko'radi
         "message": roles.exam_order_message(
             teacher=t.full_name if t else "—",
@@ -6283,6 +6296,8 @@ def _exam_order_form(db: Session, user: models.User) -> dict:
         "max_ahead_days": roles.EXAM_ORDER_MAX_AHEAD_DAYS,
         "reject_reasons": [{"key": k, "label": l}
                            for k, l in roles.EXAM_ORDER_REJECT_REASONS],
+        "reschedule_reasons": [{"key": k, "label": l}
+                               for k, l in roles.EXAM_ORDER_RESCHEDULE_REASONS],
         "statuses": [{"key": k, "label": l, "tone": t}
                      for k, l, t in roles.EXAM_ORDER_STATUSES],
     }

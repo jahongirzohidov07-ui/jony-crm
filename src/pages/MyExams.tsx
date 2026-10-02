@@ -10,7 +10,25 @@ const TONE: Record<string, string> = {
   teal: "bg-teal-100 text-teal-700",
   red: "bg-red-100 text-red-700",
   slate: "bg-slate-100 text-slate-600",
+  sky: "bg-sky-100 text-sky-700",
 };
+
+/** Ko'chirish taklifi qutisi — ustoz ham, examiner ham ko'radi. */
+function ProposalBox({ o }: { o: ExamOrder }) {
+  if (!o.proposal) return null;
+  const p = o.proposal;
+  return (
+    <div className="mt-2 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-xs text-sky-900">
+      <p className="font-medium">
+        Ko'chirish taklifi: {p.date_text}{p.time ? ` · ${p.time}` : ""}
+      </p>
+      <p className="text-sky-800 mt-0.5">
+        {p.by ? `${p.by} · ` : ""}Sabab: {p.reason_label || "—"}
+        {p.note ? ` · ${p.note}` : ""}
+      </p>
+    </div>
+  );
+}
 
 /**
  * Ustozning imtihon buyurtmalari.
@@ -35,6 +53,26 @@ export default function MyExams() {
   const cancel = async (o: ExamOrder) => {
     await api.post(`/me/exam-orders/${o.id}/cancel`, {});
     load();
+  };
+
+  // Examinerning ko'chirish taklifiga javob (2026-10-02)
+  const [answering, setAnswering] = useState<number | null>(null);
+  const answer = async (o: ExamOrder, accept: boolean) => {
+    let note: string | null = null;
+    if (!accept) {
+      note = prompt("Nega mos emas? (ixtiyoriy, examinerga boradi)", "");
+      if (note === null) return;
+    }
+    setAnswering(o.id);
+    try {
+      await api.post(`/me/exam-orders/${o.id}/reschedule-answer`,
+        { accept, note: note || null });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setAnswering(null);
+    }
   };
 
   if (error)
@@ -94,6 +132,26 @@ export default function MyExams() {
                 {o.message}
               </pre>
 
+              <ProposalBox o={o} />
+              {o.status === "reschedule" && o.proposal && (
+                <div className="flex gap-2 mt-2">
+                  <button
+                    onClick={() => answer(o, true)}
+                    disabled={answering === o.id}
+                    className="flex items-center gap-1 bg-emerald-600 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-40"
+                  >
+                    <CheckCircle2 size={13} /> Qabul qilaman
+                  </button>
+                  <button
+                    onClick={() => answer(o, false)}
+                    disabled={answering === o.id}
+                    className="border border-slate-300 text-slate-600 rounded-lg px-3 py-1.5 text-xs disabled:opacity-40"
+                  >
+                    Menga mos emas
+                  </button>
+                </div>
+              )}
+
               {o.status === "rejected" && (
                 <p className="text-xs text-red-600 mt-1.5">
                   Sabab: {o.reject_reason_label || "—"}
@@ -101,7 +159,8 @@ export default function MyExams() {
                 </p>
               )}
 
-              {(o.status === "new" || o.status === "accepted") && (
+              {(o.status === "new" || o.status === "accepted"
+                || o.status === "reschedule") && (
                 <button
                   onClick={() => cancel(o)}
                   className="text-xs text-slate-400 hover:text-red-600 mt-2"
@@ -307,6 +366,7 @@ export function ExamOrderQueueTab() {
   const [d, setD] = useState<import("../lib/api").ExamOrderQueue | null>(null);
   const [filter, setFilter] = useState("");
   const [rejecting, setRejecting] = useState<ExamOrder | null>(null);
+  const [moving, setMoving] = useState<ExamOrder | null>(null);
   const [busy, setBusy] = useState<number | null>(null);
   const [err, setErr] = useState("");
 
@@ -428,6 +488,7 @@ export function ExamOrderQueueTab() {
                   Ustoz izohi: {o.note}
                 </p>
               )}
+              <ProposalBox o={o} />
 
               <div className="flex gap-2 mt-2.5">
                 {o.status === "new" && (
@@ -440,6 +501,12 @@ export function ExamOrderQueueTab() {
                       <CheckCircle2 size={13} /> Qabul qilish
                     </button>
                     <button
+                      onClick={() => setMoving(o)}
+                      className="border border-sky-300 text-sky-700 rounded-lg px-3 py-1.5 text-xs"
+                    >
+                      Vaqtni ko'chirish
+                    </button>
+                    <button
                       onClick={() => setRejecting(o)}
                       className="border border-slate-300 text-slate-600 rounded-lg px-3 py-1.5 text-xs"
                     >
@@ -448,13 +515,26 @@ export function ExamOrderQueueTab() {
                   </>
                 )}
                 {o.status === "accepted" && (
-                  <button
-                    onClick={() => act(o, "done")}
-                    disabled={busy === o.id}
-                    className="bg-teal-600 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-40"
-                  >
-                    O'tkazildi
-                  </button>
+                  <>
+                    <button
+                      onClick={() => act(o, "done")}
+                      disabled={busy === o.id}
+                      className="bg-teal-600 text-white rounded-lg px-3 py-1.5 text-xs font-medium disabled:opacity-40"
+                    >
+                      O'tkazildi
+                    </button>
+                    <button
+                      onClick={() => setMoving(o)}
+                      className="border border-sky-300 text-sky-700 rounded-lg px-3 py-1.5 text-xs"
+                    >
+                      Vaqtni ko'chirish
+                    </button>
+                  </>
+                )}
+                {o.status === "reschedule" && (
+                  <span className="text-xs text-sky-700 self-center">
+                    Ustoz javobi kutilmoqda
+                  </span>
                 )}
                 {o.exam_id && (
                   <a
@@ -474,6 +554,18 @@ export function ExamOrderQueueTab() {
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
         {d.hint}
       </p>
+
+      {moving && (
+        <RescheduleModal
+          order={moving}
+          data={d}
+          onClose={() => setMoving(null)}
+          onDone={() => {
+            setMoving(null);
+            load();
+          }}
+        />
+      )}
 
       {rejecting && (
         <RejectModal
@@ -566,6 +658,130 @@ function RejectModal({
           className="w-full bg-red-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40"
         >
           Rad etish
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * VAQTNI KO'CHIRISH (2026-10-02, Jahongir: "ko'chirishni tanlab o'ziga
+ * mos kun vaqtni examiner tanlasa keyin ustozga notification boradi
+ * keyin ustozgayam qulay bo'lsa accept qilinadi").
+ */
+function RescheduleModal({
+  order,
+  data,
+  onClose,
+  onDone,
+}: {
+  order: ExamOrder;
+  data: import("../lib/api").ExamOrderQueue;
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const reasons = data.reschedule_reasons || [];
+  const dates = examOrderDates({
+    min_notice_days: 0,
+    max_ahead_days: data.max_ahead_days,
+  });
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState(order.time || "");
+  const [reason, setReason] = useState(reasons[0]?.key || "");
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const save = async () => {
+    if (!date) {
+      setErr("Yangi kunni tanlang");
+      return;
+    }
+    setBusy(true);
+    setErr("");
+    try {
+      await api.post(`/exam-orders/${order.id}/reschedule`, {
+        date, time: time || null, reason, note: note || null,
+      });
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-xl p-5 w-full max-w-sm"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3 className="font-semibold text-slate-900 mb-1">
+          Vaqtni ko'chirish
+        </h3>
+        <p className="text-sm text-slate-500 mb-4">
+          {order.group} · hozir: {order.date_text} {order.time || ""}
+        </p>
+
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Yangi kun</label>
+            <select
+              aria-label="Yangi kun"
+              value={date}
+              onChange={(e) => { setDate(e.target.value); setErr(""); }}
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="">Tanlang</option>
+              {dates.map((d) => (
+                <option key={d.value} value={d.value}>{d.label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Vaqt</label>
+            <Time24Input
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"
+            />
+          </div>
+        </div>
+
+        <label className="block text-xs text-slate-500 mb-1">Sabab</label>
+        <select
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3"
+        >
+          {reasons.map((r) => (
+            <option key={r.key} value={r.key}>{r.label}</option>
+          ))}
+        </select>
+
+        <textarea
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          rows={2}
+          placeholder="Ustozga izoh (ixtiyoriy)"
+          className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3"
+        />
+        <p className="text-xs text-slate-400 mb-3">
+          Ustozga xabar boradi. U rozi bo'lsa imtihon yangi vaqtga o'tadi va
+          sizning nomingizga qabul qilinadi.
+        </p>
+
+        {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
+        <button
+          onClick={save}
+          disabled={busy}
+          className="w-full bg-sky-600 text-white rounded-lg py-2 text-sm font-medium disabled:opacity-40"
+        >
+          Taklif yuborish
         </button>
       </div>
     </div>

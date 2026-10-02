@@ -202,6 +202,16 @@ MIGRATIONS = [
         "UPDATE exams SET report_teacher_id = (SELECT teacher_id FROM groups WHERE groups.id = exams.group_id), "
         "report_branch_id = (SELECT branch_id FROM groups WHERE groups.id = exams.group_id)",
     ]),
+    # 2026-10-02: imtihon buyurtmasida vaqtni ko'chirish taklifi
+    ("0024_exam_order_reschedule", [
+        "ALTER TABLE exam_orders ADD COLUMN proposed_date DATE",
+        "ALTER TABLE exam_orders ADD COLUMN proposed_time VARCHAR",
+        "ALTER TABLE exam_orders ADD COLUMN proposed_by INTEGER",
+        "ALTER TABLE exam_orders ADD COLUMN proposed_at TIMESTAMP",
+        "ALTER TABLE exam_orders ADD COLUMN proposed_reason VARCHAR",
+        "ALTER TABLE exam_orders ADD COLUMN proposed_note TEXT",
+        "ALTER TABLE exam_orders ADD COLUMN proposed_from_status VARCHAR",
+    ]),
 
 ]
 

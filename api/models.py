@@ -2824,6 +2824,18 @@ class ExamOrder(Base):
     # Qabul qilingach yaratiladigan haqiqiy imtihon
     exam_id = Column(Integer, ForeignKey("exams.id"))
 
+    # VAQTNI KO'CHIRISH TAKLIFI (2026-10-02, Jahongir: "ko'chirishni
+    # tanlab o'ziga mos kun vaqtni examiner tanlasa keyin ustozga
+    # notification boradi keyin ustozgayam qulay bo'lsa accept qilinadi")
+    proposed_date = Column(Date)
+    proposed_time = Column(String)
+    proposed_by = Column(Integer, ForeignKey("users.id"))
+    proposed_at = Column(DateTime)
+    proposed_reason = Column(String)
+    proposed_note = Column(Text)
+    # Ustoz rozi bo'lmasa qaysi holatga qaytadi (new yoki accepted)
+    proposed_from_status = Column(String)
+
     requested_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 

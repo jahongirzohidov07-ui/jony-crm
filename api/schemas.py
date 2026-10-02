@@ -2216,6 +2216,20 @@ class ExamOrderDecision(BaseModel):
     reason: Optional[str] = None
 
 
+class ExamOrderReschedule(BaseModel):
+    """Examiner boshqa kun/vaqt taklif qiladi (2026-10-02)."""
+    date: date
+    time: Optional[str] = None
+    reason: Optional[str] = None
+    note: Optional[str] = None
+
+
+class ExamOrderAnswer(BaseModel):
+    """Ustozning ko'chirish taklifiga javobi."""
+    accept: bool
+    note: Optional[str] = None
+
+
 # ---------- HR Faza 2B: ATS ----------
 class ApplicationIn(BaseModel):
     """Yangi ariza. Nomzod mavjud bo'lsa candidate_id, yangi bo'lsa

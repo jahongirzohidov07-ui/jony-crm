@@ -4994,6 +4994,9 @@ def homework_band(percent: float | None) -> tuple[str, str]:
 EXAM_ORDER_STATUSES = [
     ("new", "Yangi so'rov", "amber"),
     ("accepted", "Qabul qilindi", "emerald"),
+    # Examiner boshqa kun/vaqt taklif qildi — ustoz javobini kutmoqda
+    # (2026-10-02)
+    ("reschedule", "Ko'chirish taklifi — ustoz javobi kutilmoqda", "sky"),
     ("done", "O'tkazildi", "teal"),
     ("rejected", "Rad etildi", "red"),
     ("cancelled", "Bekor qilindi", "slate"),
@@ -5001,7 +5004,7 @@ EXAM_ORDER_STATUSES = [
 EXAM_ORDER_LABELS = {k: l for k, l, _t in EXAM_ORDER_STATUSES}
 EXAM_ORDER_TONE = {k: t for k, _l, t in EXAM_ORDER_STATUSES}
 # Examiner ko'radigan navbat
-EXAM_ORDER_OPEN = ["new", "accepted"]
+EXAM_ORDER_OPEN = ["new", "accepted", "reschedule"]
 
 # Kim so'raydi, kim qabul qiladi
 EXAM_ORDER_CREATE = [TEACHER, SUPPORT_TEACHER, ACADEMIC_HEAD] + FULL_ACCESS
@@ -5017,9 +5020,24 @@ EXAM_ORDER_REJECT_NEEDS_NOTE = True
 
 EXAM_ORDER_REJECT_REASONS = [
     ("busy", "Shu vaqtda band"),
+    # 2026-10-02, Jahongir: "Shaxsiy sababga ko'ra, Xatolik tufayli,
+    # Examiner yo'q va h.k."
+    ("personal", "Shaxsiy sababga ko'ra"),
+    ("mistake", "Xatolik tufayli"),
+    ("no_examiner", "Examiner yo'q"),
     ("too_soon", "Juda kech so'ralgan"),
     ("not_ready", "Guruh imtihonga tayyor emas"),
     ("wrong_kind", "Test turi mos emas"),
+    ("other", "Boshqa sabab"),
+]
+
+# Vaqtni ko'chirish sabablari (2026-10-02)
+EXAM_ORDER_RESCHEDULE_REASONS = [
+    ("personal", "Shaxsiy sababga ko'ra"),
+    ("busy", "Examiner shu vaqtda band"),
+    ("no_examiner", "Shu kuni examiner yo'q"),
+    ("mistake", "Xatolik tufayli (vaqt noto'g'ri)"),
+    ("room", "Xona bo'sh emas"),
     ("other", "Boshqa sabab"),
 ]
 
@@ -5043,7 +5061,10 @@ def exam_order_message(*, teacher: str, branch: str, date_text: str,
         f"Guruh: {group}",
         f"O'quvchilar soni: {students}",
     ]
-    if accepted_by:
+    if status == "reschedule":
+        lines += ["", "\U0001F553 Vaqtni ko'chirish taklif qilindi — "
+                      "ustoz javobi kutilmoqda"]
+    elif accepted_by:
         lines += ["", f"\u2705 Qabul qilindi: {accepted_by}"]
     elif status == "rejected":
         lines += ["", "\u274C Rad etildi"]

@@ -5063,6 +5063,16 @@ export interface ExamOrder {
   reject_reason_label?: string | null;
   exam_id?: number | null;
   created_at?: string | null;
+  /** Examinerning vaqtni ko'chirish taklifi (2026-10-02) */
+  proposal?: {
+    date: string;
+    date_text: string;
+    time?: string | null;
+    by?: string | null;
+    reason?: string | null;
+    reason_label?: string | null;
+    note?: string | null;
+  } | null;
   /** Ustoz va examiner ko'radigan bir xil xabar matni. */
   message: string;
 }
@@ -5075,6 +5085,8 @@ interface ExamOrderForm {
   min_notice_days: number;
   max_ahead_days: number;
   reject_reasons: { key: string; label: string }[];
+  /** Vaqtni ko'chirish sabablari (2026-10-02) */
+  reschedule_reasons?: { key: string; label: string }[];
   statuses: { key: string; label: string; tone: string }[];
   hint: string;
 }

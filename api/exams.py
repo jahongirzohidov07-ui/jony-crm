@@ -949,7 +949,7 @@ def exam_orders_queue(status: str | None = None,
     #   2) qabul qilinganlar — sanasi yaqinlari birinchi;
     #   3) yopilganlar (o'tkazildi, rad etildi, bekor) — eng
     #      yangisi birinchi.
-    _rank = {"new": 0, "accepted": 1}
+    _rank = {"new": 0, "reschedule": 1, "accepted": 1}
     def _sort_key(r):
         grp = _rank.get(r["status"], 2)
         d = r.get("date") or ""
@@ -990,10 +990,34 @@ def exam_order_accept(oid: int, payload: schemas.ExamOrderDecision,
         raise HTTPException(400, "Bu buyurtma yopilgan")
 
     g = db.query(models.Group).get(o.group_id)
+    o.decision_note = payload.note
+    _order_accept_by(db, o, user)
+    db.commit(); db.refresh(o)
+
+    # Ustozga xabar — kim qabul qilgani ko'rinsin
+    out = _exam_order_out(db, o)
+    if o.requested_by:
+        _hr_task_for(db, o.requested_by,
+                     title=f"Imtihon tasdiqlandi {o.public_id}",
+                     body=out["message"],
+                     branch_id=o.branch_id,
+                     days=max(1, (o.date - roles.local_today()).days))
+        db.commit()
+
+    audit.log(db, user, entity="exam_order", action="accept",
+              entity_id=o.id, entity_label=g.name if g else None,
+              branch_id=o.branch_id, new_value=user.full_name,
+              note=payload.note, commit=True)
+    return out
+
+
+def _order_accept_by(db: Session, o, user) -> None:
+    """Buyurtmani `user` (examiner) nomiga qabul qiladi va imtihonni
+    yaratadi (commit qilmaydi). Ko'chirish taklifini ustoz qabul
+    qilganda ham shu ishlatiladi (2026-10-02)."""
     o.status = "accepted"
     o.accepted_by = user.id
     o.accepted_at = datetime.utcnow()
-    o.decision_note = payload.note
 
     # AVTOMAT: qabul qilinishi bilan imtihon tayyor bo'ladi —
     # examiner alohida "imtihon yarat" tugmasini bosmaydi
@@ -1019,23 +1043,6 @@ def exam_order_accept(oid: int, payload: schemas.ExamOrderDecision,
         examiner_id=user.id)
     db.add(ex); db.flush()
     o.exam_id = ex.id
-    db.commit(); db.refresh(o)
-
-    # Ustozga xabar — kim qabul qilgani ko'rinsin
-    out = _exam_order_out(db, o)
-    if o.requested_by:
-        _hr_task_for(db, o.requested_by,
-                     title=f"Imtihon tasdiqlandi {o.public_id}",
-                     body=out["message"],
-                     branch_id=o.branch_id,
-                     days=max(1, (o.date - roles.local_today()).days))
-        db.commit()
-
-    audit.log(db, user, entity="exam_order", action="accept",
-              entity_id=o.id, entity_label=g.name if g else None,
-              branch_id=o.branch_id, new_value=user.full_name,
-              note=payload.note, commit=True)
-    return out
 
 @router.post("/api/exam-orders/{oid}/reject")
 def exam_order_reject(oid: int, payload: schemas.ExamOrderDecision,
@@ -1074,6 +1081,161 @@ def exam_order_reject(oid: int, payload: schemas.ExamOrderDecision,
               entity_id=o.id, branch_id=o.branch_id,
               new_value=payload.reason, note=payload.note, commit=True)
     return out
+
+# =====================================================================
+#  VAQTNI KO'CHIRISH (2026-10-02)
+#
+#  Jahongir: "Test qabul qilishda rad etish bilan vaqtni ko'chirishni
+#  qo'shish kerak. Ko'chirishni tanlab o'ziga mos kun vaqtni examiner
+#  tanlasa keyin ustozga notification boradi keyin ustozgayam qulay
+#  bo'lsa accept qilinadi".
+#
+#  1) Examiner (yangi yoki o'zi qabul qilgan buyurtmada) yangi kun,
+#     vaqt va sabab tanlaydi -> holat "reschedule", ustozga vazifa.
+#  2) Ustoz rozi -> sana/vaqt yangilanadi, buyurtma taklif qilgan
+#     examiner nomiga qabul qilinadi (imtihon yaratiladi yoki sanasi
+#     yangilanadi), examinerga xabar.
+#  3) Ustoz rozi emas -> buyurtma oldingi holatiga qaytadi (yangi yoki
+#     qabul qilingan, eski vaqtida), examinerga xabar.
+# =====================================================================
+def _resched_reason_label(key):
+    return dict(roles.EXAM_ORDER_RESCHEDULE_REASONS).get(key)
+
+
+@router.post("/api/exam-orders/{oid}/reschedule")
+def exam_order_reschedule(oid: int, payload: schemas.ExamOrderReschedule,
+                          db: Session = Depends(get_db),
+                          user=Depends(require_role(*roles.EXAM_ORDER_ACCEPT))):
+    o = db.query(models.ExamOrder).get(oid)
+    if not o:
+        raise HTTPException(404, "Buyurtma topilmadi")
+    if not _in_user_branches(db, user, o.branch_id):
+        raise HTTPException(403, "Bu buyurtma boshqa filialga tegishli")
+    if o.status == "reschedule":
+        raise HTTPException(400, "Ko'chirish taklifi allaqachon yuborilgan "
+                                 "— ustoz javobini kuting")
+    if o.status not in ("new", "accepted"):
+        raise HTTPException(400, "Bu buyurtma yopilgan")
+    if o.status == "accepted" and o.accepted_by and o.accepted_by != user.id \
+            and user.role not in tuple(roles.ORG_WIDE_ROLES):
+        raise HTTPException(403, "Buyurtmani boshqa examiner qabul qilgan")
+    if payload.reason and payload.reason not in \
+            dict(roles.EXAM_ORDER_RESCHEDULE_REASONS):
+        raise HTTPException(400, "Sabab noto'g'ri")
+    if not payload.reason:
+        raise HTTPException(400, "Ko'chirish sababini tanlang")
+    today = roles.local_today()
+    if payload.date < today:
+        raise HTTPException(400, "O'tib ketgan kunga ko'chirib bo'lmaydi")
+    if (payload.date - today).days > roles.EXAM_ORDER_MAX_AHEAD_DAYS:
+        raise HTTPException(400, f"Ko'pi bilan {roles.EXAM_ORDER_MAX_AHEAD_DAYS}"
+                                 f" kun oldinga ko'chiriladi")
+    new_time = (payload.time or o.time or "").strip() or None
+    if payload.date == o.date and new_time == o.time:
+        raise HTTPException(400, "Yangi kun yoki vaqt avvalgisidan farq qilsin")
+
+    o.proposed_from_status = o.status
+    o.status = "reschedule"
+    o.proposed_date = payload.date
+    o.proposed_time = new_time
+    o.proposed_by = user.id
+    o.proposed_at = datetime.utcnow()
+    o.proposed_reason = payload.reason
+    o.proposed_note = payload.note
+    db.commit(); db.refresh(o)
+
+    out = _exam_order_out(db, o)
+    if o.requested_by:
+        _hr_task_for(
+            db, o.requested_by,
+            title=f"Imtihon vaqtini ko'chirish taklifi {o.public_id}",
+            body=(f"{user.full_name} imtihonni boshqa vaqtga ko'chirishni "
+                  f"taklif qildi.\n\n"
+                  f"Hozirgi vaqt: {roles.uz_date_full(o.date)} {o.time or ''}\n"
+                  f"Taklif: {roles.uz_date_full(o.proposed_date)} "
+                  f"{o.proposed_time or ''}\n"
+                  f"Sabab: {_resched_reason_label(o.proposed_reason) or '—'}"
+                  + (f"\nIzoh: {o.proposed_note}" if o.proposed_note else "")
+                  + "\n\nImtihon buyurtmasi sahifasida qabul qiling yoki "
+                    "rad eting."),
+            branch_id=o.branch_id, days=1)
+        db.commit()
+    audit.log(db, user, entity="exam_order", action="reschedule",
+              entity_id=o.id, branch_id=o.branch_id,
+              old_value=f"{o.date} {o.time or ''}".strip(),
+              new_value=f"{o.proposed_date} {o.proposed_time or ''}".strip(),
+              note=_resched_reason_label(o.proposed_reason), commit=True)
+    return out
+
+
+@router.post("/api/me/exam-orders/{oid}/reschedule-answer")
+def exam_order_reschedule_answer(oid: int, payload: schemas.ExamOrderAnswer,
+                                 db: Session = Depends(get_db),
+                                 user=Depends(require_role(
+                                     *roles.EXAM_ORDER_CREATE))):
+    o = db.query(models.ExamOrder).get(oid)
+    if not o:
+        raise HTTPException(404, "Buyurtma topilmadi")
+    t = _teacher_of_user(db, user)
+    if t and o.teacher_id != t.id:
+        raise HTTPException(403, "Bu buyurtma sizniki emas")
+    if not t and not _in_user_branches(db, user, o.branch_id):
+        raise HTTPException(403, "Bu buyurtma boshqa filialga tegishli")
+    if o.status != "reschedule" or not o.proposed_date:
+        raise HTTPException(400, "Bu buyurtmada ko'chirish taklifi yo'q")
+
+    examiner = db.query(models.User).get(o.proposed_by) \
+        if o.proposed_by else None
+    old = f"{roles.uz_date_full(o.date)} {o.time or ''}".strip()
+    new = f"{roles.uz_date_full(o.proposed_date)} {o.proposed_time or ''}".strip()
+    if payload.accept:
+        dup = db.query(models.ExamOrder).filter(
+            models.ExamOrder.id != o.id,
+            models.ExamOrder.group_id == o.group_id,
+            models.ExamOrder.date == o.proposed_date,
+            models.ExamOrder.status.in_(roles.EXAM_ORDER_OPEN)).first()
+        if dup:
+            raise HTTPException(
+                400, "Bu guruhga shu kunga boshqa buyurtma bor")
+        o.date = o.proposed_date
+        o.time = o.proposed_time or o.time
+        if o.exam_id:
+            ex = db.query(models.Exam).get(o.exam_id)
+            if ex is not None:
+                ex.date = o.date
+            o.status = "accepted"
+            if examiner is not None and o.accepted_by != examiner.id:
+                o.accepted_by = examiner.id
+                o.accepted_at = datetime.utcnow()
+                if ex is not None:
+                    ex.examiner_id = examiner.id
+        elif examiner is not None:
+            _order_accept_by(db, o, examiner)
+        else:
+            o.status = "new"
+        title = f"Ustoz ko'chirishni qabul qildi {o.public_id}"
+        body = (f"Imtihon yangi vaqtga ko'chirildi: {new} (avval: {old}).")
+    else:
+        o.status = o.proposed_from_status or "new"
+        title = f"Ustoz ko'chirishga rozi emas {o.public_id}"
+        body = (f"Ustoz {new} ga ko'chirishni qabul qilmadi. Imtihon "
+                f"avvalgi vaqtida: {old}.")
+    if payload.note:
+        body += f"\nUstoz izohi: {payload.note}"
+    decided = "accepted" if payload.accept else "declined"
+    o.proposed_date = None
+    o.proposed_time = None
+    o.proposed_from_status = None
+    db.commit(); db.refresh(o)
+    if examiner is not None:
+        _hr_task_for(db, examiner.id, title=title, body=body,
+                     branch_id=o.branch_id, days=1)
+        db.commit()
+    audit.log(db, user, entity="exam_order", action="reschedule_" + decided,
+              entity_id=o.id, branch_id=o.branch_id, old_value=old,
+              new_value=new, note=payload.note, commit=True)
+    return _exam_order_out(db, o)
+
 
 @router.post("/api/exam-orders/{oid}/done")
 def exam_order_done(oid: int, payload: schemas.ExamOrderDecision,

@@ -3459,6 +3459,13 @@ def finance_budget(year: int | None = None, month: int | None = None,
     ph_bid = user.branch_id if is_partner_head(user) else None
     if ph_bid:
         lines = [l for l in lines if l.branch_id == ph_bid]
+    # FILIAL KESIMI (2026-10-02, Jahongir: "men qaysi filialga kirsam shu
+    # filialni budjet rejasini o'zgartira olay va statistika hamma
+    # narsalar faqat shu filialniki bo'lsin, barcha filialga kirsam
+    # barcha filial ko'rsatilsin"). Tepadagi tanlagichdan keladi.
+    bid = ph_bid or branch_id
+    if bid and not ph_bid:
+        lines = [l for l in lines if l.branch_id == bid]
 
     def plan_of(m, kind, cat=None, br=None):
         return round(sum(
@@ -3478,11 +3485,11 @@ def finance_budget(year: int | None = None, month: int | None = None,
         p_exp = round(sum(l.amount for l in lines
                           if l.month == m and l.kind == "expense"), 0)
         done = s <= today
-        f_inc = _plan_fakt(db, "revenue", s, e, ph_bid) if done else None
+        f_inc = _plan_fakt(db, "revenue", s, e, bid) if done else None
         if done:
-            et, _bc = _expenses_total(db, user, s, e, ph_bid)
+            et, _bc = _expenses_total(db, user, s, e, bid)
             pr = _payroll_total(db, user, f"{yy:04d}-{m:02d}",
-                                ph_bid) or 0
+                                bid) or 0
             f_exp = round(et + pr, 0)
         else:
             f_exp = None
@@ -3504,11 +3511,11 @@ def finance_budget(year: int | None = None, month: int | None = None,
     # ---- Oylik: tanlangan oy kategoriyalar kesimida ----
     yy = roles.plan_month_year(year, month)
     s, e = _month_win(yy, month)
-    _t, by_cat = _expenses_total(db, user, s, e, ph_bid)
+    _t, by_cat = _expenses_total(db, user, s, e, bid)
     payroll = round(_payroll_total(db, user, f"{yy:04d}-{month:02d}",
-                                   ph_bid) or 0, 0)
+                                   bid) or 0, 0)
     staff_all = _budget_staff(db, user, ph_bid)
-    by_cat = _budget_split_staff(db, user, s, e, ph_bid, by_cat, staff_all)
+    by_cat = _budget_split_staff(db, user, s, e, bid, by_cat, staff_all)
     staff_names = {f"{roles.BUDGET_STAFF_PREFIX}{x['user_id']}": x["name"]
                    for x in staff_all}
     # Formadagi xodimlar — tepada tanlangan filialniki (2026-10-02,
@@ -3534,7 +3541,7 @@ def finance_budget(year: int | None = None, month: int | None = None,
                  "fakt": payroll,
                  "pct": None})
     inc_fakt = _plan_fakt(db, "revenue", s, min(e, today + timedelta(
-        days=1))) if s <= today else 0
+        days=1)), bid) if s <= today else 0
     monthly = {
         "month": month, "label": roles.UZ_MONTHS[month - 1],
         "income_plan": plan_of(month, "income"),
@@ -3546,8 +3553,8 @@ def finance_budget(year: int | None = None, month: int | None = None,
     d0, d1 = _utc_window(s, e)
     br_rows = []
     _bq = db.query(models.Branch)
-    if ph_bid:
-        _bq = _bq.filter(models.Branch.id == ph_bid)
+    if bid:
+        _bq = _bq.filter(models.Branch.id == bid)
     for b in _bq.all():
         f_exp_b = round(db.query(func.coalesce(
             func.sum(models.Expense.amount), 0)).filter(
@@ -3607,6 +3614,17 @@ def finance_budget(year: int | None = None, month: int | None = None,
         "branches": br_rows, "departments": dep_rows,
         "forecast": forecast,
         "can_edit": has_role(user, roles.BUDGET_EDIT),
+        # Budjet faqat aniq filial tanlanganda kiritiladi
+        "branch_id": bid,
+        "can_assign": user.role == roles.FOUNDER,
+        "branch_name": (db.query(models.Branch).get(bid).name
+                        if bid and db.query(models.Branch).get(bid) else None),
+        # Filialsiz (umumiy) eski reja qatorlari — qaysi filialga
+        # o'tkazishni asoschi hal qiladi
+        "unassigned_lines": (db.query(models.BudgetLine).filter(
+            models.BudgetLine.year == year,
+            models.BudgetLine.branch_id.is_(None)).count()
+            if not ph_bid else 0),
         "expense_categories": [
             {"key": c, "label": roles.EXPENSE_CATEGORY_LABELS[c],
              "group": roles.EXPENSE_CATEGORY_GROUP[c],
@@ -3621,8 +3639,8 @@ def finance_budget(year: int | None = None, month: int | None = None,
             str(mm): {
                 "income": round(sum(l.amount for l in lines
                                     if l.month == mm and l.kind == "income"
-                                    and l.branch_id == ph_bid)),
-                "expense": _plan_by_cat(lines, mm, ph_bid),
+                                    and l.branch_id == bid)),
+                "expense": _plan_by_cat(lines, mm, bid),
             } for mm in roles.PLAN_MONTHS},
         "hint": ("Reja — budjet qatorlaridan, fakt — tirik ma'lumotdan "
                  "(to'lovlar, xarajatlar, ustozlar ish haqi avtomat). "

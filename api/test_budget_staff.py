@@ -48,6 +48,7 @@ def ck(name, got, want):
 
 db = SessionLocal()
 b = models.Branch(name="Zafar"); db.add(b); db.commit()
+BZ = b.id
 
 
 def mk(login, role, fix=0):
@@ -88,13 +89,13 @@ ck("asoschi oyligi", keys.get("founder_salary"), "admin_salary")
 
 print("\n=== 2. Saqlash ===")
 items = [
-    {"month": M, "kind": "expense", "category": f"staff:{SARVAR}",
+    {"month": M, "kind": "expense", "branch_id": BZ, "category": f"staff:{SARVAR}",
      "amount": 3_000_000},
-    {"month": M, "kind": "expense", "category": f"staff:{HR}",
+    {"month": M, "kind": "expense", "branch_id": BZ, "category": f"staff:{HR}",
      "amount": 2_000_000},
-    {"month": M, "kind": "expense", "category": "founder_salary",
+    {"month": M, "kind": "expense", "branch_id": BZ, "category": "founder_salary",
      "amount": 10_000_000},
-    {"month": M, "kind": "expense", "category": "cleaning",
+    {"month": M, "kind": "expense", "branch_id": BZ, "category": "cleaning",
      "amount": 300_000},
 ]
 ck("saqlandi", c.put(f"/api/finance/budget/{Y}", headers=H,
@@ -108,7 +109,7 @@ for amt, cat, uid in ((2_800_000, "admin_salary", SARVAR),
                           amount=amt, branch_id=b.id, staff_user_id=uid))
 db.commit()
 
-d = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
+d = c.get(f"/api/finance/budget?year={Y}&month={M}&branch_id={BZ}", headers=H).json()
 plan = d["plans"][str(M)]["expense"]
 ck("oy rejasi formaga qaytadi", (plan.get(f"staff:{SARVAR}"),
                                  plan.get("founder_salary"),
@@ -134,9 +135,10 @@ ck("Xo'jalik bo'limi", deps["household"]["label"], "Xo'jalik")
 
 print("\n=== 4. Tozalash ===")
 c.put(f"/api/finance/budget/{Y}", headers=H, json={"items": [
-    {"month": M, "kind": "expense", "category": f"staff:{HR}",
+    {"month": M, "kind": "expense", "branch_id": BZ, "category": f"staff:{HR}",
      "amount": 0}]})
-d = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
+d = c.get(f"/api/finance/budget?year={Y}&month={M}&branch_id={BZ}",
+          headers=H).json()
 ck("HR rejasi 0", d["plans"][str(M)]["expense"].get(f"staff:{HR}"), 0)
 
 print("\n=== 5. Filial tanlanganda — faqat shu filial xodimlari ===")
@@ -182,14 +184,55 @@ ck("Bekobod 1'da Sarvar yo'q", SARVAR in bk, False)
 
 print("\n=== 6. Ustoz bonuslari ===")
 c.put(f"/api/finance/budget/{Y}", headers=H, json={"items": [
-    {"month": M, "kind": "expense", "category": "teacher_bonus",
+    {"month": M, "kind": "expense", "branch_id": BZ, "category": "teacher_bonus",
      "amount": 4_000_000}]})
-d = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
+d = c.get(f"/api/finance/budget?year={Y}&month={M}&branch_id={ZID}",
+          headers=H).json()
 cats = {x["category"]: x for x in d["monthly"]["categories"]}
 ck("qator", (cats["teacher_bonus"]["label"], cats["teacher_bonus"]["plan"]),
    ("Ustoz bonuslari", 4_000_000))
 deps = {x["department"]: x for x in d["departments"]}
 ck("O'quv bo'limiga tushdi", deps["teacher_payroll"]["plan"], 4_000_000)
+
+print("\n=== 7. Filial kesimi ===")
+r = c.put(f"/api/finance/budget/{Y}", headers=H, json={"items": [
+    {"month": M, "kind": "expense", "category": "rent", "amount": 1}]})
+ck("filialsiz saqlash — 400", r.status_code, 400)
+c.put(f"/api/finance/budget/{Y}", headers=H, json={"items": [
+    {"month": M, "kind": "expense", "branch_id": B2, "category": "rent",
+     "amount": 7_000_000}]})
+z = c.get(f"/api/finance/budget?year={Y}&month={M}&branch_id={BZ}",
+          headers=H).json()
+bk = c.get(f"/api/finance/budget?year={Y}&month={M}&branch_id={B2}",
+           headers=H).json()
+al = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
+pz = {x["category"]: x["plan"] for x in z["monthly"]["categories"]}
+pb = {x["category"]: x["plan"] for x in bk["monthly"]["categories"]}
+pa = {x["category"]: x["plan"] for x in al["monthly"]["categories"]}
+ck("Zafarda Bekobod ijarasi yo'q", pz.get("rent"), None)
+ck("Bekobodda o'zi", pb.get("rent"), 7_000_000)
+ck("Bekobodda Zafar tozalashi yo'q", pb.get("cleaning"), None)
+ck("barchasida ikkalasi", (pa.get("rent"), pa.get("cleaning")),
+   (7_000_000, 300_000))
+fz = {x["category"]: x["fakt"] for x in z["monthly"]["categories"]}
+fb = {x["category"]: x["fakt"] for x in bk["monthly"]["categories"]}
+ck("fakt ham filialniki", (fz.get("cleaning"), fb.get("cleaning")),
+   (250_000, None))
+ck("filial nomi", (z["branch_name"], al["branch_name"]), ("Zafar", None))
+
+print("\n=== 8. Filialsiz eski qatorni o'tkazish ===")
+s8 = SessionLocal()
+s8.add(models.BudgetLine(year=Y, month=M, kind="expense", category="gas",
+                         amount=900_000, branch_id=None))
+s8.commit(); s8.close()
+ck("ko'rsatildi", c.get(f"/api/finance/budget?year={Y}&month={M}&branch_id={BZ}",
+                        headers=H).json()["unassigned_lines"], 1)
+r = c.post("/api/finance/budget-assign", headers=H,
+           json={"year": Y, "branch_id": BZ}).json()
+ck("o'tkazildi", r["moved"], 1)
+z = c.get(f"/api/finance/budget?year={Y}&month={M}&branch_id={BZ}",
+          headers=H).json()
+ck("Zafar rejasida gaz", z["plans"][str(M)]["expense"].get("gas"), 900_000)
 
 print()
 if fails:

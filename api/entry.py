@@ -7926,6 +7926,10 @@ def save_budget_locked(year: int, payload: schemas.BudgetSaveIn,
         # yozadi — Jony Academy qatorlariga tegolmaydi.
         if _is_ph(user):
             it.branch_id = user.branch_id
+        # Budjet filial kesimida kiritiladi (2026-10-02)
+        if not it.branch_id and it.kind in ("income", "expense"):
+            raise HTTPException(
+                400, "Budjet kiritish uchun tepada filialni tanlang")
         if it.month in locked:
             raise HTTPException(
                 400, f"{roles.UZ_MONTHS[it.month - 1]} tasdiqlangan — "
@@ -7950,6 +7954,36 @@ def save_budget_locked(year: int, payload: schemas.BudgetSaveIn,
     except Exception:
         db.rollback()
     return {"ok": True, "saved": n}
+
+
+@app.post("/api/finance/budget-assign")
+def budget_assign(payload: dict = Body(...), db: Session = Depends(get_db),
+                  user=Depends(require_role(roles.FOUNDER))):
+    """Filialsiz (umumiy) eski budjet qatorlarini tanlangan filialga
+    o'tkazadi. Shu filialda allaqachon bor qator tegilmaydi — umumiy
+    qator o'z joyida qoladi."""
+    y = int(payload.get("year") or 0)
+    bid = int(payload.get("branch_id") or 0)
+    if not y or not db.query(models.Branch).get(bid):
+        raise HTTPException(400, "Yil va filialni tanlang")
+    locked = set(_bud_approved(db, y).keys())
+    moved = skipped = 0
+    for l in db.query(models.BudgetLine).filter(
+            models.BudgetLine.year == y,
+            models.BudgetLine.branch_id.is_(None)).all():
+        clash = db.query(models.BudgetLine).filter_by(
+            year=y, month=l.month, kind=l.kind, category=l.category,
+            branch_id=bid).first()
+        if clash or l.month in locked:
+            skipped += 1
+            continue
+        l.branch_id = bid
+        moved += 1
+    db.commit()
+    audit.log(db, user, entity="budget", action="assign", entity_id=y,
+              entity_label=roles.plan_year_label(y),
+              new_value=f"{moved} ta qator filialga o'tkazildi", commit=True)
+    return {"ok": True, "moved": moved, "skipped": skipped}
 
 
 # --------------------------------------------- avtomat vazifalar ----

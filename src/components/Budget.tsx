@@ -152,13 +152,52 @@ export function BudgetTab() {
         )}
         <span className="text-sm text-slate-500">{d.year_label}</span>
         <div className="flex-1" />
+        <span className="text-sm font-medium text-slate-700">
+          {d.branch_name ? d.branch_name : "Barcha filiallar"}
+        </span>
         {d.can_edit && (
-          <button onClick={() => setEdit(true)}
-            className="flex items-center gap-1.5 bg-slate-900 text-white rounded-lg px-3 py-1.5 text-sm font-medium">
+          <button
+            onClick={() => d.branch_id ? setEdit(true) : alert(
+              "Budjet filial kesimida kiritiladi — tepada filialni tanlang.")}
+            title={d.branch_id ? "" : "Avval tepada filialni tanlang"}
+            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium ${
+              d.branch_id ? "bg-slate-900 text-white"
+                : "bg-slate-200 text-slate-500"}`}>
             <Pencil size={13} /> Budjet kiritish
           </button>
         )}
       </div>
+
+      {/* Filialsiz (umumiy) eski reja — tanlangan filialga o'tkazish */}
+      {d.unassigned_lines > 0 && (
+        <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 flex flex-wrap items-center gap-3">
+          <span className="flex-1 min-w-[220px]">
+            {d.unassigned_lines} ta reja qatori hech qaysi filialga
+            bog'lanmagan (filial kesimi qo'shilishidan oldin kiritilgan).
+            {d.branch_id
+              ? ` Ular ${d.branch_name}niki bo'lsa, o'tkazing.`
+              : " O'tkazish uchun tepada filialni tanlang."}
+          </span>
+          {d.branch_id && d.can_assign && (
+            <button disabled={busy} onClick={async () => {
+              if (!confirm(`Hamma filialsiz reja qatorlari ${d.branch_name} filialiga o'tkazilsinmi?`)) return;
+              setBusy(true);
+              try {
+                const r = await api.post<Any>("/finance/budget-assign",
+                  { year: d.year, branch_id: d.branch_id });
+                alert(`${r.moved} ta qator o'tkazildi` +
+                  (r.skipped ? `, ${r.skipped} tasi o'tkazilmadi (shu filialda bor yoki oy qulflangan)` : ""));
+                load();
+              } catch (e) {
+                alert(e instanceof Error ? e.message : "Xatolik");
+              } finally { setBusy(false); }
+            }}
+              className="rounded-lg bg-amber-600 text-white px-3 py-1.5 text-xs font-medium disabled:opacity-40">
+              {d.branch_name}ga o'tkazish
+            </button>
+          )}
+        </div>
+      )}
 
       {/* ---------------- Tasdiqlash paneli ---------------- */}
       {meta && (
@@ -521,7 +560,7 @@ function BudgetEditor({ d, month, approved, onClose }: Any) {
     const items: Any[] = [];
     if (income !== "" && !isNaN(Number(income)))
       items.push({ month: m, kind: "income", category: null,
-        amount: Number(income) });
+        branch_id: d.branch_id, amount: Number(income) });
     const keys = new Set([...Object.keys(vals),
       ...Object.keys(saved.expense || {})]);
     for (const c of keys) {
@@ -529,12 +568,13 @@ function BudgetEditor({ d, month, approved, onClose }: Any) {
       // tozalangan maydon — 0 bo'lib saqlanadi
       if (s === undefined || s === "") {
         if (saved.expense && saved.expense[c])
-          items.push({ month: m, kind: "expense", category: c, amount: 0 });
+          items.push({ month: m, kind: "expense", category: c,
+            branch_id: d.branch_id, amount: 0 });
         continue;
       }
       if (!isNaN(Number(s)))
         items.push({ month: m, kind: "expense", category: c,
-          amount: Number(s) });
+          branch_id: d.branch_id, amount: Number(s) });
     }
     try {
       await api.put(`/finance/budget/${d.year}`, { items });
@@ -589,7 +629,7 @@ function BudgetEditor({ d, month, approved, onClose }: Any) {
       <div className="bg-white rounded-xl w-full max-w-lg max-h-[90vh] overflow-auto p-5">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-base font-semibold text-slate-900">
-            Budjet kiritish — {d.year_label}
+            Budjet kiritish — {d.branch_name} · {d.year_label}
           </h2>
           <button onClick={onClose} className="text-slate-400">
             <X size={18} />

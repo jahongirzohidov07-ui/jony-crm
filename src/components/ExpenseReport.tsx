@@ -28,6 +28,7 @@ const GROUP_COLOR: Record<string, string> = {
   rent: "#2a78d6",
   communal: "#eb6834",
   office: "#1baf7a",
+  household: "#8a5a2b",
   admin_salary: "#eda100",
   teacher_salary: "#e87ba4",
   marketing: "#008300",

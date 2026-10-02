@@ -9,6 +9,7 @@ export const EXPENSE_GROUPS = [
   { key: "rent", label: "Ijara", color: "#0d9488" },
   { key: "communal", label: "Kommunal", color: "#38bdf8" },
   { key: "office", label: "Ofis xarajatlari", color: "#a78bfa" },
+  { key: "household", label: "Xo'jalik xarajatlari", color: "#a16207" },
   { key: "admin_salary", label: "Ma'muriy xodim oyliklari", color: "#f59e0b" },
   { key: "teacher_salary", label: "Ustozlar oyligi", color: "#ef4444" },
   { key: "marketing", label: "Reklama", color: "#ec4899" },
@@ -53,8 +54,15 @@ export const EXPENSE_CATEGORIES: CategoryDef[] = [
   { key: "wet_wipes", label: "Vlajniy salfetka", group: "office" },
   { key: "book", label: "Kitob", group: "office" },
 
+  // 2026-10-02, Jahongir: "xo'jalik xarajatlarini ham kiritish kerak"
+  { key: "cleaning", label: "Tozalash vositalari", group: "household" },
+  { key: "hygiene", label: "Gigiyena (sovun, tualet qog'oz)", group: "household" },
+  { key: "kitchen", label: "Choy, shakar, oshxona", group: "household" },
+  { key: "household", label: "Boshqa xo'jalik mollari", group: "household" },
+
   { key: "admin_salary", label: "Ma'muriy xodim oyligi", group: "admin_salary" },
   { key: "support_salary", label: "Farrosh / qorovul", group: "admin_salary" },
+  { key: "founder_salary", label: "Asoschi oyligi", group: "admin_salary" },
   { key: "salary", label: "Xodimlar oyligi (eski)", group: "admin_salary", legacy: true },
   // Ustozga berilgan pul — ro'yxatda ko'rinadi, formada tanlanmaydi
   // (Oylik -> ustozni tanlash orqali yoziladi).

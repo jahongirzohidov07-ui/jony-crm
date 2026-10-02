@@ -3337,6 +3337,87 @@ def _month_win(y: int, m: int):
     e = date(y + 1, 1, 1) if m == 12 else date(y, m + 1, 1)
     return s, e
 
+# Budjetda alohida qator bo'lmaydigan rollar: ustozlar (oyligi
+# yoqlamadan avtomat), o'quvchi/ota-ona, asoschi ("Asoschi oyligi"
+# alohida kategoriya).
+_BUDGET_STAFF_SKIP = {roles.STUDENT, roles.PARENT, roles.FOUNDER,
+                      roles.TEACHER}
+
+
+def _budget_staff(db: Session, user, branch_id=None) -> list:
+    """Budjetga bittalab kiritiladigan xodimlar — ustoz bo'lmaganlar
+    (administrator, HR, marketolog, buxgalter ...)."""
+    uq = scope_to_branch(db.query(models.User), models.User, user, branch_id)
+    users = uq.filter(models.User.is_active == 1).all()
+    tlinked = {uid for (uid,) in db.query(models.Teacher.user_id).filter(
+        models.Teacher.user_id.isnot(None),
+        models.Teacher.is_active == 1).all()}
+    out = []
+    for u in users:
+        if u.role in _BUDGET_STAFF_SKIP or u.id in tlinked:
+            continue
+        out.append({
+            "user_id": u.id,
+            "category": f"{roles.BUDGET_STAFF_PREFIX}{u.id}",
+            "name": u.full_name or u.username,
+            "role_label": roles.UZ_LABELS.get(u.role, u.role),
+            "branch": u.branch.name if u.branch else None,
+            "fix_salary": round(getattr(u, "fix_salary", 0) or 0),
+        })
+    out.sort(key=lambda r: (r["role_label"], r["name"]))
+    return out
+
+
+def _budget_split_staff(db: Session, user, start, end, branch_id,
+                        by_cat: dict, staff: list) -> dict:
+    """Xodimga bog'langan oylik xarajatlarini fakt'da shu xodimning
+    "staff:<id>" qatoriga, asoschinikini "Asoschi oyligi"ga o'tkazadi.
+    Jami summa o'zgarmaydi — faqat qaysi qatorga tushishi."""
+    ids = {x["user_id"] for x in staff}
+    founders = {uid for (uid,) in db.query(models.User.id).filter(
+        models.User.role == roles.FOUNDER).all()}
+    q = scope_to_branch(db.query(models.Expense), models.Expense, user,
+                        branch_id).filter(
+        models.Expense.date >= start, models.Expense.date <= end,
+        models.Expense.staff_user_id.isnot(None),
+        models.Expense.category.in_(roles.EXPENSE_SALARY_CATEGORIES))
+    out = dict(by_cat)
+    for ex in q.all():
+        uid = ex.staff_user_id
+        if uid in founders:
+            key = "founder_salary"
+        elif uid in ids:
+            key = f"{roles.BUDGET_STAFF_PREFIX}{uid}"
+        else:
+            continue
+        out[ex.category] = out.get(ex.category, 0) - ex.amount
+        if abs(out[ex.category]) < 0.5:
+            out.pop(ex.category)
+        out[key] = out.get(key, 0) + ex.amount
+    return out
+
+
+def _plan_by_cat(lines, month: int, branch_id=None) -> dict:
+    """Formada tahrirlanadigan qatorlar — saqlashda shu branch_id bilan
+    yoziladi (asoschi: umumiy, hamkor rahbari: o'z markazi)."""
+    out = {}
+    for l in lines:
+        if (l.month == month and l.kind == "expense" and l.category
+                and l.branch_id == branch_id):
+            out[l.category] = round(out.get(l.category, 0) + l.amount)
+    return out
+
+
+def _budget_cat_label(db: Session, c: str) -> str:
+    if c.startswith(roles.BUDGET_STAFF_PREFIX):
+        try:
+            u = db.query(models.User).get(int(c[len(roles.BUDGET_STAFF_PREFIX):]))
+        except ValueError:
+            u = None
+        return (u.full_name or u.username) if u else "Xodim oyligi"
+    return roles.EXPENSE_CATEGORY_LABELS.get(c, c)
+
+
 @router.get("/api/finance/budget")
 def finance_budget(year: int | None = None, month: int | None = None,
                    db: Session = Depends(get_db),
@@ -3401,6 +3482,10 @@ def finance_budget(year: int | None = None, month: int | None = None,
     _t, by_cat = _expenses_total(db, user, s, e, ph_bid)
     payroll = round(_payroll_total(db, user, f"{yy:04d}-{month:02d}",
                                    ph_bid) or 0, 0)
+    staff = _budget_staff(db, user, ph_bid)
+    by_cat = _budget_split_staff(db, user, s, e, ph_bid, by_cat, staff)
+    staff_names = {f"{roles.BUDGET_STAFF_PREFIX}{x['user_id']}": x["name"]
+                   for x in staff}
     cats = []
     all_cats = set(roles.EXPENSE_CATEGORIES) | set(by_cat) | {
         l.category for l in lines
@@ -3411,7 +3496,7 @@ def finance_budget(year: int | None = None, month: int | None = None,
         if not p and not f:
             continue
         cats.append({"category": c,
-                     "label": roles.EXPENSE_CATEGORY_LABELS.get(c, c),
+                     "label": staff_names.get(c) or _budget_cat_label(db, c),
                      "plan": p, "fakt": f,
                      "pct": round(f / p * 100, 0) if p else None})
     cats.append({"category": "teacher_payroll",
@@ -3460,7 +3545,7 @@ def finance_budget(year: int | None = None, month: int | None = None,
     # ---- Bo'lim kesimi (tanlangan oy, xarajat guruhlari) ----
     dep_f = {}
     for c, v in by_cat.items():
-        g = roles.EXPENSE_CATEGORY_GROUP.get(c, "other")
+        g = roles.budget_category_group(c)
         dep_f[g] = dep_f.get(g, 0) + v
     dep_f["teacher_payroll"] = payroll
     dep_rows = []
@@ -3468,7 +3553,7 @@ def finance_budget(year: int | None = None, month: int | None = None,
         p = round(sum(
             l.amount for l in lines
             if l.month == month and l.kind == "expense" and l.category
-            and (roles.EXPENSE_CATEGORY_GROUP.get(l.category, "other") == g
+            and (roles.budget_category_group(l.category) == g
                  or l.category == g)), 0)
         f = round(dep_f.get(g, 0), 0)
         if p or f:
@@ -3494,8 +3579,22 @@ def finance_budget(year: int | None = None, month: int | None = None,
         "forecast": forecast,
         "can_edit": has_role(user, roles.BUDGET_EDIT),
         "expense_categories": [
-            {"key": c, "label": roles.EXPENSE_CATEGORY_LABELS[c]}
+            {"key": c, "label": roles.EXPENSE_CATEGORY_LABELS[c],
+             "group": roles.EXPENSE_CATEGORY_GROUP[c],
+             "group_label": roles.EXPENSE_GROUP_LABELS.get(
+                 roles.EXPENSE_CATEGORY_GROUP[c], "")}
             for c in roles.EXPENSE_CATEGORIES],
+        # Budjet formasida har xodim alohida qator (2026-10-02)
+        "staff": staff,
+        # Har oyning saqlangan rejasi — forma qaysi oy tanlansa o'shani
+        # to'ldiradi: {oy: {"income": .., "expense": {kategoriya: ..}}}
+        "plans": {
+            str(mm): {
+                "income": round(sum(l.amount for l in lines
+                                    if l.month == mm and l.kind == "income"
+                                    and l.branch_id == ph_bid)),
+                "expense": _plan_by_cat(lines, mm, ph_bid),
+            } for mm in roles.PLAN_MONTHS},
         "hint": ("Reja — budjet qatorlaridan, fakt — tirik ma'lumotdan "
                  "(to'lovlar, xarajatlar, ustozlar ish haqi avtomat). "
                  "Prognoz: o'tgan oylar fakti + qolgan oylar rejasi."),

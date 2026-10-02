@@ -492,25 +492,29 @@ function BudgetCopy({ d, years, onClose }: Any) {
   );
 }
 
+// Formada ko'rinmaydigan eski kategoriyalar — faqat qiymati bo'lsa chiqadi
+const LEGACY_CATS = ["utilities", "salary", "admin_salary"];
+
 function BudgetEditor({ d, month, approved, onClose }: Any) {
   const [m, setM] = useState(month);
   const [income, setIncome] = useState("");
   const [vals, setVals] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const locked = !!(approved && approved[String(m)]);
+  const staff: Any[] = d.staff || [];
+  const saved = (d.plans && d.plans[String(m)]) || { income: 0, expense: {} };
 
   useEffect(() => {
-    // joriy qiymatlarni oylikdan olamiz
-    if (m === d.monthly.month) {
-      setIncome(d.monthly.income_plan ? String(d.monthly.income_plan) : "");
-      const v: Record<string, string> = {};
-      for (const c of d.monthly.categories)
-        if (c.plan) v[c.category] = String(c.plan);
-      setVals(v);
-    } else {
-      setIncome(""); setVals({});
-    }
+    // tanlangan oyning saqlangan rejasi
+    setIncome(saved.income ? String(saved.income) : "");
+    const v: Record<string, string> = {};
+    for (const [c, a] of Object.entries(saved.expense || {}))
+      if (a) v[c] = String(a);
+    setVals(v);
   }, [m]);
+
+  const num = (x: string | undefined) =>
+    x && !isNaN(Number(x)) ? Number(x) : 0;
 
   const save = async () => {
     setBusy(true);
@@ -518,10 +522,20 @@ function BudgetEditor({ d, month, approved, onClose }: Any) {
     if (income !== "" && !isNaN(Number(income)))
       items.push({ month: m, kind: "income", category: null,
         amount: Number(income) });
-    for (const [c, s] of Object.entries(vals))
-      if (s !== "" && !isNaN(Number(s)))
+    const keys = new Set([...Object.keys(vals),
+      ...Object.keys(saved.expense || {})]);
+    for (const c of keys) {
+      const s = vals[c];
+      // tozalangan maydon — 0 bo'lib saqlanadi
+      if (s === undefined || s === "") {
+        if (saved.expense && saved.expense[c])
+          items.push({ month: m, kind: "expense", category: c, amount: 0 });
+        continue;
+      }
+      if (!isNaN(Number(s)))
         items.push({ month: m, kind: "expense", category: c,
           amount: Number(s) });
+    }
     try {
       await api.put(`/finance/budget/${d.year}`, { items });
       onClose();
@@ -531,8 +545,40 @@ function BudgetEditor({ d, month, approved, onClose }: Any) {
     }
   };
 
-  const cats = [...d.expense_categories,
-    { key: "teacher_payroll", label: "Ustozlar ish haqi" }];
+  // Guruhlar bo'yicha bo'limlar (Jony School formasi kabi)
+  const sections: { key: string; label: string; items: Any[] }[] = [];
+  for (const c of d.expense_categories as Any[]) {
+    if (c.group === "teacher_salary") continue;
+    if (LEGACY_CATS.includes(c.key) && !vals[c.key]) continue;
+    let sec = sections.find((x) => x.key === c.group);
+    if (!sec) {
+      sec = { key: c.group, label: c.group_label || c.group, items: [] };
+      sections.push(sec);
+    }
+    sec.items.push({ key: c.key, label: c.label });
+  }
+  // Xodimlar oyligi — har biri alohida (ustozlardan tashqari)
+  const adm = sections.find((x) => x.key === "admin_salary");
+  if (adm) {
+    adm.items = [
+      ...staff.map((x) => ({
+        key: x.category, label: x.name,
+        hint: [x.role_label, x.branch].filter(Boolean).join(" · "),
+        placeholder: x.fix_salary ? String(x.fix_salary) : "",
+      })),
+      ...adm.items,
+    ];
+  }
+  sections.push({ key: "teacher_payroll", label: "Ustozlar",
+    items: [{ key: "teacher_payroll", label: "Ustozlar ish haqi" }] });
+
+  const total = Object.values(vals).reduce((a, x) => a + num(x), 0);
+  const fillFix = () => {
+    const v = { ...vals };
+    for (const x of staff)
+      if (!v[x.category] && x.fix_salary) v[x.category] = String(x.fix_salary);
+    setVals(v);
+  };
 
   return (
     <div className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4">
@@ -567,24 +613,65 @@ function BudgetEditor({ d, month, approved, onClose }: Any) {
         <p className="text-xs font-medium text-slate-500 mb-1.5">
           Xarajat rejasi (kategoriya bo'yicha):
         </p>
-        <div className="grid grid-cols-2 gap-2 mb-4">
-          {cats.map((c: Any) => (
-            <label key={c.key} className="text-xs text-slate-600">
-              {c.label}
-              <input value={vals[c.key] || ""}
-                onChange={(e) =>
-                  setVals({ ...vals, [c.key]: e.target.value })}
-                className="mt-0.5 w-full border border-slate-200 rounded-lg px-2 py-1.5 text-sm text-right" />
-            </label>
-          ))}
+        <div className="space-y-3 mb-4">
+          {sections.map((sec) => {
+            const sub = sec.items.reduce((a, c) => a + num(vals[c.key]), 0);
+            return (
+              <div key={sec.key} className="rounded-lg border border-slate-200 p-2.5">
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="text-xs font-semibold text-slate-700">
+                    {sec.key === "admin_salary"
+                      ? "Xodimlar oyligi (ustozlardan tashqari)" : sec.label}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    {sec.key === "admin_salary" && staff.some((x) => x.fix_salary) && (
+                      <button type="button" onClick={fillFix}
+                        className="text-[11px] text-brand-600 hover:underline">
+                        Fiks oyliklarni qo'yish
+                      </button>
+                    )}
+                    {sub > 0 && (
+                      <span className="text-xs tabular-nums text-slate-500">
+                        {fmt(sub)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {sec.items.map((c: Any) => (
+                    <label key={c.key} className="text-xs text-slate-600 min-w-0">
+                      <span className="block truncate" title={c.label}>{c.label}</span>
+                      {c.hint && (
+                        <span className="block truncate text-[10px] text-slate-400">
+                          {c.hint}
+                        </span>
+                      )}
+                      <input value={vals[c.key] || ""}
+                        inputMode="numeric"
+                        placeholder={c.placeholder || ""}
+                        onChange={(e) =>
+                          setVals({ ...vals, [c.key]: e.target.value })}
+                        className="mt-0.5 w-full border border-slate-200 rounded-lg px-2 py-1.5 text-sm text-right" />
+                    </label>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <div className="flex justify-end gap-2">
-          <button onClick={onClose}
-            className="px-4 py-2 text-sm text-slate-600">Bekor</button>
-          <button onClick={save} disabled={busy || locked}
-            className="bg-brand-600 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-40">
-            Saqlash
-          </button>
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-xs text-slate-500">
+            Jami xarajat rejasi:{" "}
+            <b className="text-slate-800 tabular-nums">{fmt(total)}</b>
+          </p>
+          <div className="flex gap-2">
+            <button onClick={onClose}
+              className="px-4 py-2 text-sm text-slate-600">Bekor</button>
+            <button onClick={save} disabled={busy || locked}
+              className="bg-brand-600 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-40">
+              Saqlash
+            </button>
+          </div>
         </div>
       </div>
     </div>

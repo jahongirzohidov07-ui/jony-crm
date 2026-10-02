@@ -212,6 +212,8 @@ EXPENSE_GROUPS = [
     ("rent", "Ijara"),
     ("communal", "Kommunal"),
     ("office", "Ofis xarajatlari"),
+    # 2026-10-02, Jahongir: "xo'jalik xarajatlarini ham kiritish kerak"
+    ("household", "Xo'jalik xarajatlari"),
     ("admin_salary", "Ma'muriy xodim oyliklari"),
     ("teacher_salary", "Ustozlar oyligi"),   # avtomatik - qo'lda kiritilmaydi
     ("marketing", "Reklama"),
@@ -243,8 +245,15 @@ EXPENSE_CATEGORY_DEFS = [
     ("book", "Kitob", "office"),
     ("office_phone", "Ishxona telefoni", "communal"),
 
+    ("cleaning", "Tozalash vositalari", "household"),
+    ("hygiene", "Gigiyena (sovun, tualet qog'oz)", "household"),
+    ("kitchen", "Choy, shakar, oshxona", "household"),
+    ("household", "Boshqa xo'jalik mollari", "household"),
+
     ("admin_salary", "Ma'muriy xodim oyligi", "admin_salary"),
     ("support_salary", "Farrosh / qorovul", "admin_salary"),
+    # 2026-10-02, Jahongir: budjetda "Asoschi oylik deb ham qo'shasan"
+    ("founder_salary", "Asoschi oyligi", "admin_salary"),
     # Eski "salary" kaliti ham ma'muriy xodimlarni bildirgan.
     ("salary", "Xodimlar oyligi (eski)", "admin_salary"),
 
@@ -268,6 +277,18 @@ EXPENSE_COUNTABLE = [
 EXPENSE_SALARY_CATEGORIES = ["admin_salary", "support_salary", "salary"]
 EXPENSE_CATEGORY_LABELS = {c: lbl for c, lbl, _ in EXPENSE_CATEGORY_DEFS}
 EXPENSE_CATEGORY_GROUP = {c: g for c, _, g in EXPENSE_CATEGORY_DEFS}
+
+# BUDJETDA XODIM OYLIGI BITTALAB (2026-10-02, Jahongir: "ustozlar
+# oyligidan tashqari boshqa xodimlar oyligini bitta bitta kiritadigan
+# qilish kerak"). Budjet qatori kategoriyasi "staff:<user_id>".
+BUDGET_STAFF_PREFIX = "staff:"
+
+
+def budget_category_group(cat):
+    """Budjet kategoriyasining xarajat guruhi (staff:* — ma'muriyat)."""
+    if cat and str(cat).startswith(BUDGET_STAFF_PREFIX):
+        return "admin_salary"
+    return EXPENSE_CATEGORY_GROUP.get(cat, "other")
 
 # DIQQAT: ustozlar ish haqi bu ro'yxatda YO'Q - u TeacherPayout
 # jadvalidan avtomatik olinadi. Agar uni qo'lda ham kiritsangiz,
@@ -5904,7 +5925,8 @@ PAYMENT_DUE_LABELS = {k: l for k, l in PAYMENT_DUE_KINDS}
 # Bo'lim (departament) — xarajat guruhidan (budjet uchun)
 BUDGET_DEPARTMENT_LABELS = {
     "rent": "Ijara", "communal": "Kommunal", "office": "Ofis",
-    "admin_salary": "Ma'muriyat", "marketing": "Marketing",
+    "household": "Xo'jalik", "admin_salary": "Ma'muriyat",
+    "marketing": "Marketing",
     "tax": "Soliq", "other": "Boshqa",
     "teacher_payroll": "O'quv bo'limi (ustozlar)",
 }

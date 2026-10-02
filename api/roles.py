@@ -5746,6 +5746,24 @@ def examiner_exam_points(kind, level, students: int):
     }
 
 
+def examiner_exam_code(kind, level, unit_no=None, retake=False) -> str:
+    """Examiner jadvalidagi qisqa nom (2026-10-02): "S2 U9", "S1 U7",
+    "MID-COURSE", "END-COURSE", "MOCK". Retake — oldiga "RETAKE"."""
+    if kind == "unit":
+        lv = {"step1": "S1", "step2": "S2", "step3": "S3",
+              "step4": "S4"}.get(level or "", (level or "").upper())
+        code = f"{lv} U{unit_no}".strip() if unit_no else (lv or "UNIT")
+    elif kind == "mid":
+        code = "MID-COURSE"
+    elif kind == "end":
+        code = "END-COURSE"
+    elif kind == "mock":
+        code = "MOCK"
+    else:
+        code = (kind or "").upper()
+    return f"RETAKE {code}" if retake else code
+
+
 def examiner_penalty_points(kind, level, lc_up: bool, coin: bool,
                             delay_hours: float = 0.0) -> float:
     """Bitta imtihon uchun jarima ballari (musbat son qaytadi)."""

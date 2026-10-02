@@ -1,3 +1,4 @@
+import { ExaminerPayAdminTab } from "../pages/ExaminerPay";
 import { useEffect, useState } from "react";
 import { formatPhone } from "./PhoneInput";
 import { TeacherPayrollTab, SalaryDetailTab } from "./TeacherPayroll";
@@ -481,14 +482,24 @@ export function PayrollTab() {
       ) : sub === "teacher_detail" ? (
         <SalaryDetailTab />
       ) : sub === "examiner" ? (
-        <PayrollTable
-          url="/examiners/salary"
-          title="Examiner oyliklari"
-          hint="Oylik o'tkazilgan imtihonlardan avtomat hisoblanadi:
-                daraja bo'yicha baza ball + qatnashgan o'quvchi. Jarima va
-                qo'lda ayirilgan ballar chegiriladi. Volontyorga oylik
-                berilmaydi."
-        />
+        <>
+          <PayrollTable
+            url="/examiners/salary"
+            title="Examiner oyliklari"
+            hint="Oylik o'tkazilgan imtihonlardan avtomat hisoblanadi:
+                  daraja bo'yicha baza ball + qatnashgan o'quvchi. Jarima va
+                  qo'lda ayirilgan ballar chegiriladi. Volontyorga oylik
+                  berilmaydi."
+          />
+          {/* Har examiner: qaysi imtihonlar, ball va oylik qayerdan
+              chiqdi — jadval ko'rinishida (2026-10-02) */}
+          <div className="mt-6">
+            <p className="text-sm font-medium text-slate-700 mb-2">
+              Imtihonlar kesimida (examinerni bosing)
+            </p>
+            <ExaminerPayAdminTab />
+          </div>
+        </>
       ) : sub === "support" ? (
         <PayrollTable
           url="/support/salary"

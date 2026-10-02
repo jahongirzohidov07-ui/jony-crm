@@ -6442,6 +6442,18 @@ def _examiner_month(db: Session, user_id: int, y: int, m: int) -> dict:
         .all()
     )
     rows, base_total, pen_total = [], 0.0, 0.0
+    _teachers = {}
+    _branches = {}
+
+    def _name(cache, model, oid):
+        if not oid:
+            return None
+        if oid not in cache:
+            x = db.query(model).get(oid)
+            cache[oid] = x.full_name if hasattr(x, "full_name") and x \
+                else (x.name if x else None)
+        return cache[oid]
+
     for e in exams:
         g = db.query(models.Group).get(e.group_id)
         students = len([r for r in e.results if not r.absent])
@@ -6451,9 +6463,23 @@ def _examiner_month(db: Session, user_id: int, y: int, m: int) -> dict:
             e.kind, g.level if g else None,
             bool(e.penalty_lc_up), bool(e.penalty_coin),
             e.penalty_delay_hours or 0)
+        # Jadval ko'rinishi uchun (2026-10-02, Jahongir: "har bir
+        # examinerning oyligini shunaqa nechta imtihon oldi va qancha
+        # oylik qayerdan chiqdi ko'rinishi kerak") — qisqa nom (S2 U9,
+        # MID-COURSE), ustoz va filial. Imtihon paytidagi ustoz/filial
+        # (report_*) bo'lsa o'sha, bo'lmasa guruhniki.
+        tid = getattr(e, "report_teacher_id", None) or (
+            g.teacher_id if g else None)
+        bid = getattr(e, "report_branch_id", None) or (
+            g.branch_id if g else None)
         row = {
             "exam_id": e.id,
             "date": e.date.isoformat(),
+            "code": roles.examiner_exam_code(
+                e.kind, g.level if g else None, e.unit_no,
+                bool(e.retake_of_id)),
+            "teacher": _name(_teachers, models.Teacher, tid) or "—",
+            "branch": _name(_branches, models.Branch, bid) or "—",
             "group": g.name if g else "—",
             "kind": roles.EXAM_KIND_LABELS.get(e.kind, e.kind),
             "retake": bool(e.retake_of_id),
@@ -6494,6 +6520,8 @@ def _examiner_month(db: Session, user_id: int, y: int, m: int) -> dict:
         "period": f"{y:04d}-{m:02d}",
         "exams": rows,
         "exam_count": len(rows),
+        "students_total": sum(r["students"] for r in rows),
+        "branches": sorted({r["branch"] for r in rows if r["branch"] != "—"}),
         "base_points": round(base_total, 2),
         "penalty_points": round(pen_total, 2),
         "adjustments": [

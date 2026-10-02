@@ -6,12 +6,14 @@ import { useAuth } from "../lib/AuthContext";
 import {
   EXAM_VIEW, EXAM_ACCESS, EXAM_EDIT, EXAM_ORDER_ACCEPT, can,
   MOCK_PRACTICE, MOCK_ISSUE_VIEW, MOCK_ISSUE_TRIAGE,
+  EXAMINER_PAY_OWN, EXAMINER_SALARY_VIEW,
 } from "../lib/roles";
 import { BranchPicker } from "../components/BranchPicker";
 import { ExamBankTab, type BankFocus } from "../components/ExamBank";
 import { MockIssues } from "../components/MockIssues";
 import { ExamOrderQueueTab } from "./MyExams";
 import { ExamsTab, AnalysisTab } from "./Audit";
+import { ExaminerPayTab, ExaminerPayAdminTab } from "./ExaminerPay";
 
 /**
  * IMTIHONLAR — alohida bo'lim (2026-09-26).
@@ -27,7 +29,8 @@ import { ExamsTab, AnalysisTab } from "./Audit";
  *   Buyurtmalar       — ustozlardan kelgan imtihon so'rovlari
  *   Test bazasi       — savollar banki (mock, unit, mid, end)
  */
-type Tab = "exams" | "analysis" | "orders" | "bank" | "mock" | "issues";
+type Tab = "exams" | "analysis" | "orders" | "bank" | "mock" | "issues"
+  | "pay" | "paylist";
 
 /** Mock bazalari: qaysi imtihon, qaysi bo'lim, natija qanday chiqadi. */
 type MockSection = {
@@ -268,6 +271,13 @@ export default function ExamsHub() {
       label: issueCount != null ? `Savol xatolari (${issueCount})` : "Savol xatolari",
       show: showIssues,
     },
+    // OYLIK (2026-10-02, Jahongir: "examinerlarniki o'ziga ham ko'rinishi
+    // kerak"). Ilgari faqat Auditda edi — examiner menyusida Audit yo'q,
+    // ya'ni o'z oyligini ko'ra olmasdi. Volontyorga chiqmaydi.
+    { key: "pay", label: "Oyligim",
+      show: can(user?.role, EXAMINER_PAY_OWN) && !user?.salary_hidden },
+    { key: "paylist", label: "Examiner oyliklari",
+      show: can(user?.role, EXAMINER_SALARY_VIEW) },
   ];
   const visible = tabs.filter((t) => t.show);
   const firstKey = visible.length ? visible[0].key : null;
@@ -322,6 +332,8 @@ export default function ExamsHub() {
       {tab === "exams" && <ExamsTab branchId={branchId} />}
       {tab === "analysis" && <AnalysisTab branchId={branchId} />}
       {tab === "orders" && <ExamOrderQueueTab />}
+      {tab === "pay" && <ExaminerPayTab />}
+      {tab === "paylist" && <ExaminerPayAdminTab />}
       {tab === "mock" && <MockTab canTry={can(user?.role, MOCK_PRACTICE)} />}
       {tab === "bank" && (
         <ExamBankTab

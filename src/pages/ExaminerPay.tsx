@@ -1,6 +1,38 @@
 import { useEffect, useState } from "react";
-import { Wallet, Info, MinusCircle } from "lucide-react";
+import { Wallet, Info, MinusCircle, Download } from "lucide-react";
 import { api } from "../lib/api";
+import { useAuth } from "../lib/AuthContext";
+import { exportToExcel } from "../lib/exportXlsx";
+
+const MONTHS_UP = ["YANVAR", "FEVRAL", "MART", "APREL", "MAY", "IYUN",
+  "IYUL", "AVGUST", "SENTABR", "OKTABR", "NOYABR", "DEKABR"];
+const MONTHS = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
+  "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"];
+
+/** Oy tanlagich (oxirgi 12 oy). */
+function MonthPicker({ value, onChange }: {
+  value: string; onChange: (v: string) => void;
+}) {
+  const now = new Date();
+  const opts = Array.from({ length: 12 }, (_, i) => {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const v = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    return { v, l: `${MONTHS[d.getMonth()]} ${d.getFullYear()}` };
+  });
+  return (
+    <select value={value} onChange={(e) => onChange(e.target.value)}
+            className="border border-slate-300 rounded-lg px-3 py-1.5 text-sm bg-white">
+      {opts.map((o) => <option key={o.v} value={o.v}>{o.l}</option>)}
+    </select>
+  );
+}
+
+const thisMonth = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+};
+const qs = (period: string) =>
+  `?year=${Number(period.slice(0, 4))}&month=${Number(period.slice(5, 7))}`;
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -84,71 +116,128 @@ function SalaryCard({ d }: { d: Any }) {
   );
 }
 
-function ExamsTable({ d }: { d: Any }) {
+/**
+ * EXAMINER JADVALI (2026-10-02, Jahongir: "har bir examinerning oyligini
+ * shunaqa nechta imtihon oldi va qancha oylik qayerdan chiqdi ko'rinishi
+ * kerak") — Excel'dagi "MUHAMMADHAYOT / SENTABR / STRETINKO" jadvali
+ * ko'rinishida, pastida ball -> oylik hisobi.
+ */
+export function ExamSheet({ d, name }: { d: Any; name: string }) {
+  const m = Number(String(d.period || "").slice(5, 7));
+  const title = [name, MONTHS_UP[m - 1] || d.period,
+                 (d.branches || []).join(", ")].filter(Boolean).join(" / ");
+  const ded = Number(d.penalty_points || 0) + Number(d.adjustment_points || 0);
+  const hasPen = (d.exams || []).some((e: Any) => e.penalty_points > 0);
+  const dm = (iso: string) => `${iso.slice(8, 10)}.${iso.slice(5, 7)}`;
+  const exportRows = () =>
+    exportToExcel(`examiner-${name}-${d.period}`, "Imtihonlar",
+      (d.exams || []).map((e: Any, i: number) => ({
+        "#": i + 1, EXAM: e.code, STUDENTS: e.students, DATE: dm(e.date),
+        TEACHER: e.teacher, GROUP: e.group, BRANCH: e.branch,
+        SCORE: e.points, JARIMA: e.penalty_points || 0,
+      })));
+  const th = "px-3 py-2 font-semibold text-slate-700 border border-slate-300";
+  const td = "px-3 py-1.5 border border-slate-200";
   return (
-    <div className="bg-white border border-slate-200 rounded-xl overflow-x-auto mb-4">
-      <table className="w-full text-sm">
-        <thead className="bg-slate-50 text-slate-500 text-xs">
-          <tr>
-            <th className="text-left px-4 py-2.5 font-medium">Sana</th>
-            <th className="text-left px-3 py-2.5 font-medium">Guruh</th>
-            <th className="text-left px-3 py-2.5 font-medium">Daraja</th>
-            <th className="text-right px-3 py-2.5 font-medium">O'quvchi</th>
-            <th className="text-right px-3 py-2.5 font-medium">Ball</th>
-            <th className="text-right px-3 py-2.5 font-medium">Jarima</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-100">
-          {d.exams.map((e: Any) => (
-            <tr key={e.exam_id}>
-              <td className="px-4 py-2.5 text-slate-700">{e.date}</td>
-              <td className="px-3 py-2.5 text-slate-700">
-                {e.group}
-                <span className="text-xs text-slate-400 ml-1.5">
-                  {e.kind}
-                  {e.retake ? " · retake" : ""}
-                </span>
-              </td>
-              <td className="px-3 py-2.5 text-slate-500">{e.tier_label}</td>
-              <td className="px-3 py-2.5 text-right text-slate-700">
-                {e.students}
-              </td>
-              <td className="px-3 py-2.5 text-right font-medium text-emerald-700">
-                {e.points > 0 ? `+${e.points}` : "0"}
-                {e.points > 0 && (
-                  <span className="text-xs font-normal text-slate-400 ml-1">
-                    ({e.base}+{e.students}x{e.per_student})
-                  </span>
-                )}
-              </td>
-              <td className="px-3 py-2.5 text-right text-red-600">
-                {e.penalty_points > 0 ? `−${e.penalty_points}` : "—"}
-                {e.penalty_points > 0 && (
-                  <span
-                    className="text-xs text-slate-400 ml-1"
-                    title={e.penalty_note || ""}
-                  >
-                    ({[
-                      e.penalty_lc_up ? "LC UP" : null,
-                      e.penalty_coin ? "Coin" : null,
-                      e.penalty_delay_hours
-                        ? `${e.penalty_delay_hours} soat`
-                        : null,
-                    ]
-                      .filter(Boolean)
-                      .join(", ")})
-                  </span>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {d.exams.length === 0 && (
-        <p className="text-sm text-slate-400 py-8 text-center">
-          Bu oyda hali o'tkazilgan imtihon yo'q.
+    <div className="bg-white border border-slate-300 rounded-xl overflow-hidden mb-4">
+      <div className="flex items-center gap-2 bg-slate-200 px-4 py-2.5">
+        <p className="flex-1 text-center font-semibold tracking-wide text-slate-800 uppercase">
+          {title}
         </p>
-      )}
+        <button onClick={exportRows} title="Excel"
+                className="flex items-center gap-1 text-xs text-slate-600 hover:text-slate-900">
+          <Download size={14} /> Excel
+        </button>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border-collapse">
+          <thead className="bg-slate-100 text-xs uppercase">
+            <tr>
+              <th className={th}>#</th>
+              <th className={th}>Exam</th>
+              <th className={th}>Students</th>
+              <th className={th}>Date</th>
+              <th className={`${th} text-left`}>Teacher</th>
+              <th className={th}>Group</th>
+              <th className={th}>Branch</th>
+              <th className={th}>Score</th>
+              {hasPen && <th className={`${th} text-red-700`}>Jarima</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {(d.exams || []).map((e: Any, i: number) => (
+              <tr key={e.exam_id} className="text-center odd:bg-white even:bg-slate-50/60">
+                <td className={`${td} text-slate-500`}>{i + 1}</td>
+                <td className={`${td} font-semibold text-slate-800 whitespace-nowrap`}
+                    title={e.tier_label}>{e.code}</td>
+                <td className={`${td} tabular-nums`}>{e.students}</td>
+                <td className={`${td} tabular-nums`}>{dm(e.date)}</td>
+                <td className={`${td} text-left uppercase whitespace-nowrap`}>{e.teacher}</td>
+                <td className={`${td} uppercase whitespace-nowrap`}>{e.group}</td>
+                <td className={`${td} uppercase whitespace-nowrap`}>{e.branch}</td>
+                <td className={`${td} tabular-nums font-medium`}
+                    title={e.points > 0 ? `${e.base} + ${e.students} x ${e.per_student}` : ""}>
+                  {String(e.points).replace(".", ",")}
+                </td>
+                {hasPen && (
+                  <td className={`${td} text-red-600 tabular-nums`} title={e.penalty_note || ""}>
+                    {e.penalty_points > 0 ? `−${e.penalty_points}` : ""}
+                  </td>
+                )}
+              </tr>
+            ))}
+            {(d.exams || []).length === 0 && (
+              <tr><td colSpan={hasPen ? 9 : 8}
+                      className="py-8 text-center text-slate-400">
+                Bu oyda o'tkazilgan imtihon yo'q
+              </td></tr>
+            )}
+          </tbody>
+          <tfoot>
+            <tr className="font-semibold text-center">
+              <td colSpan={2} className="px-3 py-2 bg-sky-400 text-white border border-sky-500">
+                {d.exam_count} EXAMS
+              </td>
+              <td className="px-3 py-2 bg-sky-400 text-white border border-sky-500 tabular-nums">
+                {d.students_total ?? 0}
+              </td>
+              <td colSpan={4} className="border border-slate-200" />
+              <td className="px-3 py-2 bg-sky-400 text-white border border-sky-500 tabular-nums">
+                {String(d.base_points).replace(".", ",")}
+              </td>
+              {hasPen && (
+                <td className="px-3 py-2 text-red-600 border border-slate-200 tabular-nums">
+                  −{d.penalty_points}
+                </td>
+              )}
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      {/* Oylik qayerdan chiqdi */}
+      <div className="px-4 py-3 border-t border-slate-200 text-sm text-slate-700 space-y-0.5">
+        <p>
+          Ball jami <b className="tabular-nums">{d.base_points}</b>
+          {ded > 0 && <> − jarima va ayirmalar <b className="text-red-600 tabular-nums">{ded.toFixed(2)}</b></>}
+          {" "}= sof ball <b className="tabular-nums">{d.points}</b>
+        </p>
+        {d.volunteer || d.grade_coef === 0 ? (
+          <p className="text-amber-700">
+            {d.points} ball × {fmt(d.unit || 1000)} so'm = {fmt(d.raw)} so'm, lekin
+            volontyor bosqichi — oylik hisoblanmaydi (0 so'm).
+          </p>
+        ) : (
+          <p>
+            {d.points} ball × {fmt(d.unit || 1000)} so'm = {fmt(d.raw)} so'm
+            {d.clamped_min && <> → eng kam oylik {fmt(d.min)}</>}
+            {d.clamped_max && <> → yuqori chegara {fmt(d.max)}</>}
+            {d.grade_coef != null && d.grade_coef !== 1 && (
+              <> → × {d.grade_coef} ({d.grade_label})</>
+            )}
+            {" "}= <b className="text-lg text-slate-900">{fmt(d.salary)} so'm</b>
+          </p>
+        )}
+      </div>
     </div>
   );
 }
@@ -224,21 +313,26 @@ function RateTable({ d }: { d: Any }) {
 
 /** Examinerning o'z oyligi (Audit → "Oyligim"). */
 export function ExaminerPayTab() {
+  const { user } = useAuth();
   const [d, setD] = useState<Any>(null);
   const [err, setErr] = useState("");
+  const [period, setPeriod] = useState(thisMonth());
   useEffect(() => {
     api
-      .get<Any>("/me/examiner-salary")
+      .get<Any>("/me/examiner-salary" + qs(period))
       .then(setD)
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, []);
+  }, [period]);
   if (err)
     return <p className="text-sm text-slate-500 py-10 text-center">{err}</p>;
   if (!d) return <p className="text-sm text-slate-400 py-10">Yuklanmoqda…</p>;
   return (
     <div>
+      <div className="flex justify-end mb-3">
+        <MonthPicker value={period} onChange={setPeriod} />
+      </div>
       <SalaryCard d={d} />
-      <ExamsTable d={d} />
+      <ExamSheet d={d} name={user?.full_name || ""} />
       <Adjustments d={d} />
       <RateTable d={d} />
       <p className="text-xs text-slate-500 mt-4 flex items-start gap-1.5">
@@ -330,6 +424,7 @@ function PenaltyEditor({
 
 /** Rahbariyat: barcha examinerlar oyligi + jarima va ball ayirish. */
 export function ExaminerPayAdminTab() {
+  const [period, setPeriod] = useState(thisMonth());
   const [d, setD] = useState<Any>(null);
   const [err, setErr] = useState("");
   const [open, setOpen] = useState<number | null>(null);
@@ -338,11 +433,11 @@ export function ExaminerPayAdminTab() {
 
   const load = () => {
     api
-      .get<Any>("/examiners/salary")
+      .get<Any>("/examiners/salary" + qs(period))
       .then(setD)
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   };
-  useEffect(load, []);
+  useEffect(load, [period]);
 
   const addAdj = async (userId: number) => {
     setBusy(true);
@@ -367,8 +462,9 @@ export function ExaminerPayAdminTab() {
 
   return (
     <div>
-      <div className="flex items-baseline justify-between mb-3">
-        <p className="text-sm text-slate-500">
+      <div className="flex items-baseline justify-between gap-3 mb-3">
+        <MonthPicker value={period} onChange={setPeriod} />
+        <p className="text-sm text-slate-500 flex-1">
           {d.period} · jami{" "}
           <span className="font-semibold text-slate-900">
             {fmt(d.total)} so'm
@@ -411,7 +507,7 @@ export function ExaminerPayAdminTab() {
 
           {open === r.user_id && (
             <div className="border-t border-slate-100 p-4">
-              <ExamsTable d={r} />
+              <ExamSheet d={r} name={r.name} />
               {d.can_penalize && (
                 <div className="space-y-2 mb-4">
                   <p className="text-xs font-medium text-slate-600">

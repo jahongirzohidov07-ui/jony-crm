@@ -24,6 +24,10 @@ from fastapi.testclient import TestClient
 import main, models, notify
 import entry  # noqa: F401 - haqiqiy jonli yo'lni ro'yxatdan o'tkazadi
 from database import SessionLocal
+import common as _cm_stub                           # noqa: E402
+# Login oylik yechimni ishga tushiradi (auth_users -> common, 2026-10-02
+# dan beri to'g'ri ulangan). Bu test unga bog'liq emas — o'chiramiz.
+_cm_stub._ensure_month_charges = lambda db, **kw: None
 from auth import hash_password
 
 client = TestClient(main.app)

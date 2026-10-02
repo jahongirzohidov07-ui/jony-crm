@@ -92,8 +92,118 @@ def _safe_delete_lesson(db: Session, ls) -> bool:
         return False
 
 
+class _MergeConflict(Exception):
+    pass
+
+
+def _merge_dup_lesson(db: Session, keep, dup) -> bool:
+    """BIR KUNDA IKKITA DARS — ikkalasiga ham yo'qlama qo'yilgan
+    (2026-10-02, Jahongir: "bu yerda esa bir kunda 2ta dars bo'lib
+    qolgan"). Oy jadvali ikki parallel so'rovda ikki marta yaratilgan,
+    ustoz esa ikkala ustunga ham belgi qo'ygan. Ikki "o'tilgan" dars
+    ustoz oyligiga ham, o'quvchi hisobiga ham ikki marta kiradi.
+
+    Nusxadagi belgilar asosiy darsga KO'CHIRILADI, keyin nusxa
+    o'chiriladi. Faqat ziddiyat bo'lmasa:
+      * bir o'quvchiga ikki darsda HAR XIL belgi (keldi/kelmadi, uy
+        vazifasi, baho) bo'lsa — tegilmaydi, qo'lda ko'riladi;
+      * nusxaga XP, ko'chirish, dars rejimi yoki topshiriq bog'langan
+        bo'lsa — tegilmaydi (XP jurnali o'chirilmaydi).
+    Hammasi savepoint ichida — xato bo'lsa hech narsa o'zgarmaydi."""
+    for Mdl in (models.XpTransaction, models.LessonReschedule,
+                models.LessonRun, models.Assignment):
+        try:
+            if db.query(Mdl.id).filter(Mdl.lesson_id == dup.id).first():
+                return False
+        except Exception:
+            return False
+    sp = db.begin_nested()
+    try:
+        have = {a.student_id: a for a in db.query(models.Attendance)
+                .filter(models.Attendance.lesson_id == keep.id).all()}
+        for a in (db.query(models.Attendance)
+                  .filter(models.Attendance.lesson_id == dup.id).all()):
+            k = have.get(a.student_id)
+            if k is None:
+                a.lesson_id = keep.id
+                have[a.student_id] = a
+                continue
+            if (k.present or 0) != (a.present or 0):
+                raise _MergeConflict()
+            if a.homework is not None:
+                if k.homework is None:
+                    k.homework = a.homework
+                elif k.homework != a.homework:
+                    raise _MergeConflict()
+            if a.note and not k.note:
+                k.note = a.note
+            db.delete(a)
+        grades = {x.student_id: x for x in db.query(models.DailyGrade)
+                  .filter(models.DailyGrade.lesson_id == keep.id).all()}
+        for x in (db.query(models.DailyGrade)
+                  .filter(models.DailyGrade.lesson_id == dup.id).all()):
+            k = grades.get(x.student_id)
+            if k is None:
+                x.lesson_id = keep.id
+                grades[x.student_id] = x
+            elif k.score != x.score:
+                raise _MergeConflict()
+            else:
+                db.delete(x)
+        if dup.held:
+            keep.held = 1
+        db.flush()
+        db.delete(dup)
+        db.flush()
+        sp.commit()
+        return True
+    except Exception:
+        try:
+            sp.rollback()
+        except Exception:
+            pass
+        return False
+
+
 def _sync_scheduled_lessons(db: Session, group: models.Group,
                             start: date, end: date) -> None:
+    """Jadvalni sinxronlash — GURUH BO'YICHA QULF bilan (2026-10-02).
+
+    1-oktabr kuni yangi oy jadvali ikki parallel so'rovda (guruh
+    sahifasi bir vaqtda bir nechta bo'limni yuklaydi) ikki marta
+    yaratildi — har kunga ikkita dars. Endi Postgres'da shu guruh
+    uchun bir vaqtda faqat bitta so'rov jadval yaratadi; ikkinchisi
+    kutib turadi va tayyor jadvalni ko'radi. SQLite (testlar) —
+    qulfsiz, avvalgidek."""
+    locked = False
+    try:
+        if db.get_bind().dialect.name == "postgresql":
+            db.execute(text("SELECT pg_advisory_lock(917301, :g)"),
+                       {"g": int(group.id)})
+            locked = True
+    except Exception:
+        locked = False
+    try:
+        _sync_scheduled_lessons_body(db, group, start, end)
+    finally:
+        if locked:
+            # Qulf ulanishda osilib qolmasin: tranzaksiya xato bilan
+            # buzilgan bo'lsa — avval rollback, keyin bo'shatamiz.
+            for _ in range(2):
+                try:
+                    db.execute(
+                        text("SELECT pg_advisory_unlock(917301, :g)"),
+                        {"g": int(group.id)})
+                    break
+                except Exception:
+                    try:
+                        db.rollback()
+                    except Exception:
+                        break
+
+
+def _sync_scheduled_lessons_body(db: Session, group: models.Group,
+                                 start: date, end: date) -> None:
     """Guruhning dars kunlari ("mon,wed,fri") bo'yicha shu oydagi barcha
     dars kunlarini AVTOMAT yaratadi.
 
@@ -141,8 +251,21 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
             dup_removed = True
         elif loser is not None:
             by_date[loser.date] = by_date.get(loser.date) or loser
+        elif _merge_dup_lesson(db, prev, ls):
+            # ikkalasi ham band — belgilar bitta darsga birlashtirildi
+            # (_merge_dup_lesson izohiga qarang, 2026-10-02)
+            dup_removed = True
+            try:
+                audit.log(db, None, entity="lesson", action="merge",
+                          entity_id=prev.id,
+                          entity_label=f"{group.name} — {ls.date}",
+                          note=f"Bir kunda 2 ta dars: #{ls.id} "
+                               f"belgilari #{prev.id} ga birlashtirildi",
+                          branch_id=group.branch_id)
+            except Exception:
+                pass
         else:
-            # ikkalasi ham band — qo'l bilan ko'rish kerak, tegmaymiz
+            # ziddiyatli belgilar — qo'l bilan ko'rish kerak, tegmaymiz
             pass
     if dup_removed:
         db.flush()
@@ -202,7 +325,10 @@ def _sync_scheduled_lessons(db: Session, group: models.Group,
     _t = roles.local_today()
     _closed_month = end < date(_t.year, _t.month, 1)
 
-    changed = False
+    # Dublikat tozalash ham SAQLANSIN (2026-10-02): ilgari faqat yangi
+    # dars yaratilganda commit bo'lardi — Postgres'da o'chirish so'rov
+    # oxirida bekor bo'lib, dublikatlar har safar qaytib kelardi.
+    changed = dup_removed
     if wanted and not _closed_month:
         d = lo
         while d <= hi:

@@ -135,7 +135,10 @@ def login(payload: schemas.LoginRequest, request: Request,
         # Kirish sekinlashmasin: bu yerda faqat 5 soniyalik ulush
         # bajariladi, qolgani keyingi kirishlarda va kunlik cron'da
         # davom etadi (2026-08-14).
-        _ensure_month_charges(db, budget_s=5.0)
+        # common orqali — entry.py almashtirgan YANGI qoida ishlasin
+        # (to'g'ridan-to'g'ri nom eski funksiya nusxasi edi, 2026-10-02)
+        import common as _cm
+        _cm._ensure_month_charges(db, budget_s=5.0)
     except Exception:
         pass
     # STANDART PAROL — MAJBURIY ALMASHTIRISH (2026-09-06).

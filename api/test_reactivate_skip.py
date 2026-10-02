@@ -36,6 +36,10 @@ import main, models, roles                         # noqa: E402
 import entry                                       # noqa: E402
 import common                                      # noqa: E402
 from database import SessionLocal                  # noqa: E402
+import common as _cm_stub                           # noqa: E402
+# Login oylik yechimni ishga tushiradi (auth_users -> common, 2026-10-02
+# dan beri to'g'ri ulangan). Bu test unga bog'liq emas — o'chiramiz.
+_cm_stub._ensure_month_charges = lambda db, **kw: None
 from auth import hash_password                     # noqa: E402
 
 client = TestClient(main.app)

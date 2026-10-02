@@ -54,7 +54,14 @@ def tok(u):
         .json()["access_token"]}
 
 
+# Login oylik yechimni ishga tushiradi (2026-10-02 dan beri to'g'ri
+# ulangan) — bu yerda faqat login uchun o'chiramiz, oylik pastda o'zi
+# tekshiriladi.
+import common as _cm_stub                           # noqa: E402
+_mc_real = _cm_stub._ensure_month_charges
+_cm_stub._ensure_month_charges = lambda db, **kw: None
 A, A2 = tok("adm"), tok("adm2")
+_cm_stub._ensure_month_charges = _mc_real
 
 print("=== 1. Bir xil kalit bilan 2 marta yuborilsa - BITTA to'lov ===")
 KEY = "test-key-0001"

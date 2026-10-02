@@ -1819,6 +1819,117 @@ def cashflow_ledger(
         "rows": rows,
     }
 
+@router.get("/api/reports/expenses")
+def expense_report(
+    year: int,
+    month: int,
+    months: int = 6,
+    branch_id: int | None = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FINANCE_ACCESS)),
+):
+    """XARAJATLAR HISOBOTI (2026-10-02, Jahongir: "harajatlar kesimida
+    ham nechta qaysinga qaysi oyda qancha harajat ketyabdi hisobotlarda
+    to'g'ri tushunarli ... chartlar bilan").
+
+    year/month bilan tugaydigan oxirgi `months` oy (1..24). Har oy va
+    har tur (kategoriya) bo'yicha: summa, yozuvlar soni va (sanaladigan
+    mahsulotda) dona. Manba — Pul oqimi bilan bir xil: xarajatlar va
+    haqiqatda berilgan ustoz oyliklari (TeacherPayment, "teacher_salary"),
+    filial chegarasi ham bir xil. Rahbariyat ko'radi (FINANCE_ACCESS)."""
+    if not 1 <= month <= 12:
+        raise HTTPException(400, "Oy noto'g'ri")
+    months = max(1, min(int(months or 6), 24))
+    t = year * 12 + (month - 1) - (months - 1)
+    start = billing.month_bounds(t // 12, t % 12 + 1)[0]
+    end = billing.month_bounds(year, month)[1]
+    periods = []
+    y, m = start.year, start.month
+    while (y, m) <= (end.year, end.month):
+        periods.append(f"{y:04d}-{m:02d}")
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+
+    cats: dict = {}
+
+    def add(cat, period, amount, qty=None):
+        c = cats.setdefault(cat, {
+            "key": cat,
+            "group": ("teacher_salary" if cat == "teacher_salary"
+                      else roles.EXPENSE_CATEGORY_GROUP.get(cat, "other")),
+            "label": ("Ustoz oyligi" if cat == "teacher_salary"
+                      else roles.EXPENSE_CATEGORY_LABELS.get(cat, cat)),
+            "total": 0.0, "count": 0, "qty": 0.0,
+            "by_month": {p: 0.0 for p in periods},
+            "count_by_month": {p: 0 for p in periods},
+        })
+        c["total"] += amount
+        c["count"] += 1
+        if qty:
+            c["qty"] += qty
+        if period in c["by_month"]:
+            c["by_month"][period] += amount
+            c["count_by_month"][period] += 1
+
+    eq = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+        models.Expense.date >= start, models.Expense.date <= end)
+    if branch_id and user.role in tuple(roles.ORG_WIDE_ROLES):
+        eq = eq.filter(models.Expense.branch_id == branch_id)
+    for e in eq.all():
+        add(e.category or "other", e.date.strftime("%Y-%m"),
+            float(e.amount or 0), getattr(e, "qty", None))
+
+    _tp_branch = func.coalesce(models.TeacherPayment.branch_id,
+                               models.Teacher.branch_id)
+    tq = (db.query(models.TeacherPayment)
+          .join(models.Teacher,
+                models.TeacherPayment.teacher_id == models.Teacher.id)
+          .filter(models.TeacherPayment.paid_on >= start,
+                  models.TeacherPayment.paid_on <= end,
+                  _tp_branch.in_(_branch_scope_ids(db, user, branch_id))))
+    for tp in tq.all():
+        add("teacher_salary", tp.paid_on.strftime("%Y-%m"),
+            float(tp.amount or 0))
+
+    cat_list = sorted(cats.values(), key=lambda c: -c["total"])
+    groups: dict = {}
+    for c in cat_list:
+        g = groups.setdefault(c["group"], {"key": c["group"], "total": 0.0,
+                                           "count": 0})
+        g["total"] += c["total"]
+        g["count"] += c["count"]
+    total = sum(c["total"] for c in cat_list)
+    month_rows = []
+    for p in periods:
+        by_g: dict = {}
+        for c in cat_list:
+            v = c["by_month"][p]
+            if v:
+                by_g[c["group"]] = round(by_g.get(c["group"], 0.0) + v, 2)
+        month_rows.append({
+            "period": p, "title": _month_title(p),
+            "total": round(sum(by_g.values()), 2),
+            "count": sum(c["count_by_month"][p] for c in cat_list),
+            "groups": by_g,
+        })
+
+    def _r(c):
+        return {**c, "total": round(c["total"], 2),
+                "qty": round(c["qty"], 2),
+                "by_month": {k: round(v, 2) for k, v in c["by_month"].items()}}
+
+    return {
+        "from": periods[0], "to": periods[-1], "periods": periods,
+        "total": round(total, 2),
+        "count": sum(c["count"] for c in cat_list),
+        "avg_month": round(total / len(periods), 2),
+        "months": month_rows,
+        "groups": [{**g, "total": round(g["total"], 2),
+                    "share": round(g["total"] / total * 100, 1) if total else 0}
+                   for g in sorted(groups.values(), key=lambda g: -g["total"])],
+        "categories": [_r(c) for c in cat_list],
+    }
+
+
 @router.get("/api/reports/hr-funnel")
 def hr_funnel(
     months: int = 12,

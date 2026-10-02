@@ -1893,7 +1893,16 @@ ADVANCE_LIMIT_OF_EARNED = 1.0
 # oylik berish huquqini ber") — faqat O'Z filiali ustoz/xodimlariga
 # (common._check_pay_scope). Hamma oyliklar ro'yxatini ko'rish
 # (PAYROLL_VIEW) unga ochilmaydi.
-SALARY_PAY = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT, ADMINISTRATOR]
+# SALES_MANAGER = hozirgi "Administrator" (2026-09-03 da hamma
+# administratorlar shu rolga birlashtirilgan). 2026-09-16 dagi "admin
+# oylik bersin" huquqi eski ADMINISTRATOR ga qo'shilib qolgan edi —
+# haqiqiy administratorlar bera olmasdi (2026-10-02 tuzatildi). Filial
+# chegarasini _check_pay_scope tekshiradi.
+SALARY_PAY = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT, ADMINISTRATOR,
+                            SALES_MANAGER]
+# Berilgan oylikni O'CHIRISH / filialini tuzatish — faqat rahbariyat
+# (2026-10-02, Jahongir: administrator "faqat bera olsin").
+SALARY_FIX = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT]
 # O'zining oyligini har bir ustoz ko'radi
 SALARY_SELF_VIEW = STAFF_ROLES
 

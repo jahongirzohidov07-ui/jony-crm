@@ -22,8 +22,9 @@ import {
 import { useAuth } from "../lib/AuthContext";
 import {
   FINANCE_ACCESS, CASH_ACCESS, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, founderLike,
-  SALARY_PAY } from "../lib/roles";
+  SALARY_FIX } from "../lib/roles";
 import Debtors from "./Debtors";
+import LessonRefundsReview from "../components/LessonRefundsReview";
 import {
   categoryLabel, categoriesByGroup, groupLabel, categoryGroup, MONTHS,
   isCountable,
@@ -1041,32 +1042,32 @@ function ExpenseForm({
             {/* Xodim oyligi faqat "Oylik" orqali, ism tanlab (2026-09-16) —
                 ism izohga qo'lda yozilsa ustoz oyligi ham shu turga tushib
                 qolardi. Farrosh/qorovul (akkaunti yo'q) shu yerda qoladi. */}
-            {categoriesByGroup()
-              .map((g) => ({ ...g, items: g.items.filter((c) => c.key !== "admin_salary") }))
-              .filter((g) => g.items.length > 0)
-              .map((g) => (
-              <div key={g.key} className="mb-2.5">
-                <p className="text-[11px] uppercase tracking-wide text-slate-400 mb-1">
-                  {g.label}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {g.items.map((c) => (
-                    <button
-                      key={c.key}
-                      type="button"
-                      onClick={() => setCategory(c.key)}
-                      className={`px-2.5 py-1 rounded-md text-xs font-medium border transition ${
-                        category === c.key
-                          ? "bg-brand-50 border-brand-400 text-brand-700"
-                          : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
-                      }`}
-                    >
-                      {c.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
+            {/* GURUHLANGAN RO'YXAT (2026-10-02, Jahongir: "xarajat
+                kiritish ham shunaqa bo'lsin" — Jony School kabi: Ijara /
+                Kommunal / Ofis... sarlavhalari ostida turlar). */}
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm bg-white"
+            >
+              {categoriesByGroup()
+                .map((g) => ({ ...g, items: g.items.filter((c) => c.key !== "admin_salary") }))
+                .filter((g) => g.items.length > 0)
+                .map((g) => (
+                  <optgroup key={g.key} label={g.label}>
+                    {g.items.map((c) => (
+                      <option key={c.key} value={c.key}>
+                        {c.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              {/* Eski yozuvni tahrirlashda — eski tur ham ko'rinsin */}
+              {editing && !categoriesByGroup().some((g) =>
+                g.items.some((c) => c.key === category && c.key !== "admin_salary")) && (
+                <option value={category}>{categoryLabel(category)}</option>
+              )}
+            </select>
           </div>
           )}
 
@@ -1280,7 +1281,12 @@ function ExpensesTab() {
 
   // Ustozga berilgan pulning filialini to'g'rilash (2026-09-16):
   // ilgari asosiy filialga yozilib qolganlar uchun.
-  const canPay = can(user?.role, SALARY_PAY);
+  // Administrator oylikni BERADI, lekin o'chirmaydi / tuzatmaydi
+  // (2026-10-02, Jahongir: "faqat bera olsin"). Oddiy xarajatni ham
+  // faqat moliya o'chiradi (backend: EXPENSE_DELETE = FINANCE_ACCESS).
+  const canPay = can(user?.role, SALARY_FIX);
+  const canDelete = (e: Expense) =>
+    can(user?.role, e.id < 0 ? SALARY_FIX : FINANCE_ACCESS);
   async function moveBranch(e: Expense, branchId: number) {
     try {
       await api.put(`/teacher-payments/${-e.id}/branch`, { branch_id: branchId });
@@ -1424,12 +1430,14 @@ function ExpensesTab() {
                         <Pencil size={15} />
                       </button>
                     )}
-                    <button
-                      onClick={() => remove(e)}
-                      className="text-slate-300 hover:text-red-500"
-                    >
-                      <Trash2 size={15} />
-                    </button>
+                    {canDelete(e) && (
+                      <button
+                        onClick={() => remove(e)}
+                        className="text-slate-300 hover:text-red-500"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -1521,6 +1529,10 @@ export default function Moliya() {
         <QuickPayment onDone={() => setPayKey((k) => k + 1)} />
       </div>
       <div className="h-4" />
+
+      {/* "Kam dars — farq qaytarildi" qatorlarini ko'rib chiqish
+          (2026-10-02) — faqat asoschi; qolmasa karta ko'rinmaydi. */}
+      {founderLike(user?.role) && <LessonRefundsReview />}
 
       <div className="flex gap-1 mb-6 border-b border-slate-200">
         {TABS.map((t) => (

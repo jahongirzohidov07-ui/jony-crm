@@ -286,7 +286,10 @@ export const INVENTORY_VIEW = [
 /** Ustoz o'z oyligini ko'radi; boshqaning oyligi ko'rinmaydi. */
 export const SALARY_SELF_VIEW = STAFF_ROLES;
 /** Oylik beradi. Administrator — faqat o'z filialiga (2026-09-16). */
-export const SALARY_PAY = [...FULL_ACCESS, FINANCE_DIRECTOR, ACCOUNTANT, ADMINISTRATOR];
+// SALES_MANAGER — hozirgi "Administrator" (2026-10-02, backend bilan bir xil)
+export const SALARY_PAY = [...FULL_ACCESS, FINANCE_DIRECTOR, ACCOUNTANT, ADMINISTRATOR, SALES_MANAGER];
+// Berilgan oylikni o'chirish / filialini tuzatish — faqat rahbariyat
+export const SALARY_FIX = [...FULL_ACCESS, FINANCE_DIRECTOR, ACCOUNTANT];
 
 /** Moliyadagi "Oyliklar" bo'limi — examiner va support teacher oyligi.
  *  Administrator bu yerda YO'Q: u oylikni Xarajatlar -> Oylik orqali

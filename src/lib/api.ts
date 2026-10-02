@@ -1264,6 +1264,38 @@ export interface CashflowLedger {
   rows: LedgerRow[];
 }
 
+// ------------------------------------------------- Xarajatlar hisoboti ----
+/** /reports/expenses (2026-10-02) — oylar va turlar kesimida xarajat. */
+export interface ExpenseReportCategory {
+  key: string;
+  label: string;
+  group: string;
+  total: number;
+  count: number;
+  /** Sanaladigan mahsulotda (marker, kitob...) jami dona */
+  qty: number;
+  by_month: Record<string, number>;
+  count_by_month: Record<string, number>;
+}
+
+export interface ExpenseReport {
+  from: string;
+  to: string;
+  periods: string[];
+  total: number;
+  count: number;
+  avg_month: number;
+  months: {
+    period: string;
+    title: string;
+    total: number;
+    count: number;
+    groups: Record<string, number>;
+  }[];
+  groups: { key: string; total: number; count: number; share: number }[];
+  categories: ExpenseReportCategory[];
+}
+
 // ------------------------------------------------------------- HR ----
 export interface Vacancy {
   id: number;

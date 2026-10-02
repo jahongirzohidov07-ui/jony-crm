@@ -4,6 +4,8 @@ import {
 } from "lucide-react";
 import { api, type SalaryCard as Card } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
+import { useAuth } from "../lib/AuthContext";
+import { can, SALARY_FIX } from "../lib/roles";
 import { TeacherFinance } from "./TeacherFinance";
 
 /**
@@ -22,6 +24,9 @@ export function SalaryCard({
   onClose?: () => void;
 }) {
   const [c, setC] = useState<Card | null>(null);
+  // O'chirish — faqat rahbariyat; administrator faqat beradi (2026-10-02)
+  const { user } = useAuth();
+  const canFix = !!c?.can_pay && can(user?.role, SALARY_FIX);
   const [form, setForm] = useState(false);
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(true);
@@ -220,7 +225,7 @@ export function SalaryCard({
                 </span>
                 <span className="flex-1 text-slate-500">{p.note}</span>
                 <span className="text-slate-400">{p.by}</span>
-                {c.can_pay && (
+                {canFix && (
                   <button
                     onClick={async () => {
                       if (!confirm("Bu yozuv o'chirilsinmi?")) return;

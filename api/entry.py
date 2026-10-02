@@ -2529,7 +2529,8 @@ _SALARY_KIND_LABELS = dict(_SALARY_KINDS)
 # Oyliklarni Moliya bo'limida ko'radigan va to'laydiganlar
 # Administrator bu ro'yxatlarda YO'Q (2026-09-16): u oylikni Xarajatlar
 # -> Oylik orqali o'z filialiga beradi, hammaning oyligini ko'rmaydi.
-_SALARY_PAY_ORG = [r for r in roles.SALARY_PAY if r != roles.ADMINISTRATOR]
+_SALARY_PAY_ORG = [r for r in roles.SALARY_PAY
+                   if r not in (roles.ADMINISTRATOR, roles.SALES_MANAGER)]
 _PAYROLL_VIEW = list(dict.fromkeys(
     _SALARY_PAY_ORG + [roles.HR_MANAGER, roles.ACADEMIC_HEAD,
                        roles.HEAD_EXAMINER, roles.HEAD_SUPPORT]))
@@ -7193,7 +7194,16 @@ def _mc_refund_prev(db: Session, today, deadline=None) -> tuple:
     """O'tgan oy uchun: dars kam o'tilgan bo'lsa farqni qaytaradi.
     Vaqt byudjeti tugasa to'xtaydi — qaytarilmaganlari keyingi
     chaqiruvda ko'riladi (allaqachon qaytarilgani qayta ko'rilmaydi,
-    izohdagi belgi bo'yicha)."""
+    izohdagi belgi bo'yicha).
+
+    O'CHIRILGAN (2026-10-02, Jahongir: "Qaytarilmasin" — qoida: oyda
+    dars soni qancha bo'lsa ham bir xil to'liq oylik, kamida 12 dars
+    puli). 1-oktabrda bu funksiya sentabr uchun "+summa chegirma"
+    qatorlarini yozgan edi: yo'qlamasi qo'yilmagan darslar "o'tilmagan"
+    sanalgan, o'quvchi guruh almashgan bo'lsa esa HOZIRGI guruh darslari
+    sanalgan. Ota-onalar buni "pul to'langan" deb tushungan. Yozilganlari
+    lesson_refund_rows ro'yxatida ko'rib chiqiladi."""
+    return 0, True
     import time as _time
     from datetime import timedelta as _td
     import billing as _B

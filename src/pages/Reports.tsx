@@ -7,6 +7,7 @@ import {
 } from "recharts";
 import SalesFunnel from "../components/SalesFunnel";
 import { PayrollTab } from "../components/Payroll";
+import ExpenseReport from "../components/ExpenseReport";
 import { Download, Users, TrendingDown } from "lucide-react";
 import {
   api,
@@ -26,7 +27,7 @@ import { stageLabel } from "../lib/leads";
 import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
-type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi" | "app"
+type Tab = "payroll" | "expenses" | "discipline" | "tasks" | "funnel" | "sales" | "kpi" | "app"
   | "discounts" | "exams";
 
 // OYLIKLAR BO'LIMI MOLIYADAN SHU YERGA KO'CHDI (2026-08-20,
@@ -35,6 +36,10 @@ type Tab = "payroll" | "discipline" | "tasks" | "funnel" | "sales" | "kpi" | "ap
 // Support teacher, Ma'muriy xodimlar, Darajalar.
 const TABS: { key: Tab; label: string }[] = [
   { key: "payroll", label: "Oyliklar" },
+  // 2026-10-02, Jahongir: "harajatlar kesimida ham nechta qaysinga qaysi
+  // oyda qancha harajat ketyabdi ... chartlar bilan". Faqat rahbariyat
+  // (FINANCE_ACCESS) — boshqalar uchun TABS filtrlanadi.
+  { key: "expenses", label: "Xarajatlar" },
   { key: "discipline", label: "Ustoz intizomi" },
   { key: "tasks", label: "Vazifalar" },
   { key: "funnel", label: "Sales funnel" },
@@ -1231,6 +1236,7 @@ export default function Reports() {
 
       {tab === "exams" && <ExamMonthlyReport />}
       {tab === "payroll" && <PayrollTab />}
+      {tab === "expenses" && <ExpenseReport />}
       {tab === "discipline" && <DisciplineTab />}
       {tab === "tasks" && <TaskReportTab />}
       {tab === "funnel" && <FunnelTab />}

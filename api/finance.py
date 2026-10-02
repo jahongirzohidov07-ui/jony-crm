@@ -1591,6 +1591,161 @@ def shop_discount_rows_apply(db: Session = Depends(get_db),
     return {"rows": res}
 
 
+# =====================================================================
+#  "KAM DARS — FARQ QAYTARILDI" QATORLARI (2026-10-02)
+#
+#  Jahongir: "ba'zi o'quvchilarda 1-oktabrda qanaqadur chegirma bilan
+#  pul qo'shilib qolyabdi ... qayerdan bunaqa chegirmalar paydo bo'lib
+#  qolyabdi shuni bilish kerak" va "bu qanaqa chegirma va nega
+#  berilganligiga bog'liq".
+#
+#  Manba — avtomat oylik "farq qaytarish" (entry._mc_refund_prev, endi
+#  o'chirilgan): oy oxirida o'tilgan darslar standartdan (12) kam
+#  sanalsa farq "+summa" chegirma bo'lib yozilardi. Bu yerda HAR BIR
+#  qator uchun nega kam sanalgani ko'rsatiladi; asoschi tanlab bekor
+#  qiladi (qator payments_deleted'ga ko'chadi, audit yoziladi).
+# =====================================================================
+_LR_BY = "avtomat (oylik)"
+_LR_MARK = "farq qaytarildi"
+_LR_RE = __import__("re").compile(r"^(.*?) — (\d{4}-\d{2}): (\d+) dars o'tildi")
+
+
+def _lr_group_name(note: str) -> str:
+    """Hisob izohidagi guruh nomi ("Guruh — 2026-09: ..." yoki eski
+    "Guruh - 2026-09 oyi uchun ...")."""
+    for sep in (" — ", " - "):
+        if sep in (note or ""):
+            return note.split(sep, 1)[0].strip()
+    return ""
+
+
+def _lesson_refund_rows(db: Session, user) -> list:
+    q = (db.query(models.Payment)
+         .filter(models.Payment.kind == "discount",
+                 models.Payment.created_by == _LR_BY,
+                 models.Payment.note.like("%" + _LR_MARK + "%"))
+         .order_by(models.Payment.created_at.desc(), models.Payment.id))
+    out = []
+    for p in q.all():
+        s = db.query(models.Student).get(p.student_id)
+        if s is None or not _in_user_branches(db, user, s.branch_id):
+            continue
+        m = _LR_RE.match(p.note or "")
+        rgroup = m.group(1).strip() if m else _lr_group_name(p.note)
+        period = p.period or (m.group(2) if m else None)
+        counted = int(m.group(3)) if m else None
+        charges = (db.query(models.Payment)
+                   .filter(models.Payment.student_id == s.id,
+                           models.Payment.kind == "charge",
+                           models.Payment.period == period).all()
+                   if period else [])
+        cgroups = sorted({_lr_group_name(c.note) for c in charges} - {""})
+        reasons = []
+        g = s.group
+        std = int((g.standard_lessons_per_month if g else None) or 12) or 12
+        if cgroups and rgroup and rgroup.lower() not in \
+                {x.lower() for x in cgroups}:
+            reasons.append(
+                f"Oylik «{', '.join(cgroups)}» guruhi uchun yechilgan, "
+                f"qaytarish esa «{rgroup}» guruhi darslari bo'yicha "
+                f"sanalgan (o'quvchi guruh almashgan)")
+        if period and g is not None:
+            y_, mo_ = int(period[:4]), int(period[5:7])
+            start, end = billing.month_bounds(y_, mo_)
+            ls = (db.query(models.Lesson)
+                  .filter(models.Lesson.group_id == g.id,
+                          models.Lesson.date >= start,
+                          models.Lesson.date <= end,
+                          or_(models.Lesson.cancelled.is_(None),
+                              models.Lesson.cancelled == 0)).all())
+            held = sum(1 for x in ls if x.held)
+            unmarked = len(ls) - held
+            if unmarked > 0:
+                reasons.append(
+                    f"«{g.name}» guruhida {unmarked} ta darsga yo'qlama "
+                    f"qo'yilmagan — ular \"o'tilmagan\" sanalgan")
+            if len(ls) < std:
+                reasons.append(
+                    f"«{g.name}» guruhida oyda {len(ls)} ta dars "
+                    f"rejalashtirilgan (standart {std})")
+            if s.enrolled_date and start < s.enrolled_date <= end:
+                reasons.append(
+                    f"O'quvchi {s.enrolled_date.isoformat()} da qo'shilgan "
+                    f"— undan oldingi darslar sanalmagan")
+            cut = billing.attendance_cutoff(db, [s.id], g.id).get(s.id)
+            if cut is not None and cut < end:
+                reasons.append(
+                    f"Oxirgi kelgan darsi {cut.isoformat()} — undan "
+                    f"keyingi darslar sanalmagan")
+        if not reasons:
+            reasons.append("Aniq sabab topilmadi — qo'lda ko'rish kerak")
+        out.append({
+            "payment_id": p.id, "student_id": s.id, "name": s.full_name,
+            "branch": s.branch.name if s.branch else None,
+            "status": s.status, "period": period,
+            "amount": abs(float(p.amount or 0)),
+            "created_at": p.created_at.isoformat() if p.created_at else None,
+            "refund_group": rgroup, "charged_groups": cgroups,
+            "counted_lessons": counted, "standard": std,
+            "charged": round(sum(abs(float(c.amount or 0))
+                                 for c in charges), 2),
+            "balance": student_balance(db, s.id),
+            "reasons": reasons, "note": p.note,
+        })
+    return out
+
+
+@router.get("/api/admin/lesson-refunds")
+def lesson_refund_rows(db: Session = Depends(get_db),
+                       user=Depends(get_current_user)):
+    """Ko'rish: "kam dars — farq qaytarildi" qatorlari va sabablari."""
+    if not founder_like(user):
+        raise HTTPException(403, "Faqat asoschi")
+    rows = _lesson_refund_rows(db, user)
+    return {"rows": rows, "count": len(rows),
+            "total": round(sum(r["amount"] for r in rows), 2)}
+
+
+@router.post("/api/admin/lesson-refunds/cancel")
+def lesson_refund_cancel(payload: dict, db: Session = Depends(get_db),
+                         user=Depends(get_current_user)):
+    """Tanlangan qatorlarni bekor qilish: payments_deleted'ga ko'chadi
+    (asoschi bir bosishda qaytara oladi), audit yoziladi. Faqat shu turdagi
+    avtomat qatorlarga ishlaydi."""
+    if not founder_like(user):
+        raise HTTPException(403, "Faqat asoschi")
+    ids = [int(x) for x in (payload or {}).get("ids") or []]
+    reason = ("Kam dars uchun avtomat qaytarish bekor qilindi — qoida: "
+              "oyda dars soni qancha bo'lsa ham to'liq oylik")
+    done = []
+    for pid in ids:
+        p = db.query(models.Payment).get(pid)
+        if (p is None or p.kind != "discount" or p.created_by != _LR_BY
+                or _LR_MARK not in (p.note or "")):
+            continue
+        s = db.query(models.Student).get(p.student_id)
+        if s is None or not _in_user_branches(db, user, s.branch_id):
+            continue
+        db.add(models.DeletedPayment(
+            payment_id=p.id, public_id=p.public_id,
+            student_id=p.student_id, student_name=s.full_name,
+            branch_id=s.branch_id, amount=p.amount, kind=p.kind,
+            method=p.method, note=p.note, period=p.period,
+            created_by=p.created_by, created_at=p.created_at,
+            entered_at=getattr(p, "entered_at", None),
+            client_key=getattr(p, "client_key", None),
+            deleted_by=user.full_name, reason=reason))
+        audit.log(db, user, entity="payment", action="payment_cancel",
+                  entity_id=p.id, entity_label=s.full_name, field=p.kind,
+                  old_value=p.amount, new_value=None, note=reason,
+                  branch_id=s.branch_id)
+        db.delete(p)
+        done.append({"payment_id": pid, "name": s.full_name,
+                     "amount": abs(float(p.amount or 0))})
+    db.commit()
+    return {"cancelled": done, "count": len(done)}
+
+
 @router.post("/api/discounts/{discount_id}/approve")
 def approve_discount(
     discount_id: int,
@@ -2025,7 +2180,7 @@ def set_teacher_payment_branch(
     payment_id: int,
     payload: schemas.TeacherPaymentBranchIn,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.SALARY_PAY)),
+    user=Depends(require_role(*roles.SALARY_FIX)),
 ):
     """Ustozga berilgan pulning FILIALINI to'g'rilash (2026-09-16) —
     ilgari asosiy filialga yozilib qolgan yozuvlar uchun."""
@@ -2055,7 +2210,7 @@ def set_teacher_payment_branch(
 def delete_teacher_payment(
     payment_id: int,
     db: Session = Depends(get_db),
-    user=Depends(require_role(*roles.SALARY_PAY)),
+    user=Depends(require_role(*roles.SALARY_FIX)),
 ):
     p = db.query(models.TeacherPayment).get(payment_id)
     if not p:

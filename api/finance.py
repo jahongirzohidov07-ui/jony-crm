@@ -3362,10 +3362,33 @@ def _budget_staff(db: Session, user, branch_id=None) -> list:
             "name": u.full_name or u.username,
             "role_label": roles.UZ_LABELS.get(u.role, u.role),
             "branch": u.branch.name if u.branch else None,
+            "branch_id": u.branch_id,
             "fix_salary": round(getattr(u, "fix_salary", 0) or 0),
         })
     out.sort(key=lambda r: (r["role_label"], r["name"]))
     return out
+
+
+def _budget_staff_of_branch(db: Session, staff: list, bid: int) -> list:
+    """Tanlangan filial xodimlari. Filialsiz xodim (HR va h.k.) oyligini
+    qaysi filialdan olsa, o'sha filialda chiqadi (2026-10-02, Jahongir:
+    "HR bilan Marhabo Mamatqulova yo'q ko'rinmay qoldi, bular Zafar
+    filialdan oylik olishadi"). Hali hech qayerdan oylik olmagan
+    filialsiz xodim yo'qolib qolmasligi uchun har filialda ko'rinadi."""
+    ids = [x["user_id"] for x in staff]
+    extra = {uid for (uid,) in db.query(models.UserBranch.user_id).filter(
+        models.UserBranch.branch_id == bid,
+        models.UserBranch.user_id.in_(ids or [-1])).all()}
+    paid = {}
+    for uid, b in db.query(models.Expense.staff_user_id,
+                           models.Expense.branch_id).filter(
+            models.Expense.staff_user_id.in_(ids or [-1]),
+            models.Expense.branch_id.isnot(None)).distinct().all():
+        paid.setdefault(uid, set()).add(b)
+    return [x for x in staff
+            if x["branch_id"] == bid or x["user_id"] in extra
+            or bid in paid.get(x["user_id"], ())
+            or (x["branch_id"] is None and not paid.get(x["user_id"]))]
 
 
 def _budget_split_staff(db: Session, user, start, end, branch_id,
@@ -3490,7 +3513,7 @@ def finance_budget(year: int | None = None, month: int | None = None,
                    for x in staff_all}
     # Formadagi xodimlar — tepada tanlangan filialniki (2026-10-02,
     # Jahongir: "nega boshqa filial xodimlari chiqyabdi bu yerga").
-    staff = (_budget_staff(db, user, ph_bid or branch_id)
+    staff = (_budget_staff_of_branch(db, staff_all, branch_id)
              if branch_id and not ph_bid else staff_all)
     cats = []
     all_cats = set(roles.EXPENSE_CATEGORIES) | set(by_cat) | {

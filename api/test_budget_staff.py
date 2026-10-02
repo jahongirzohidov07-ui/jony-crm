@@ -154,6 +154,32 @@ d = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
 ck("barcha filiallar: hammasi", sorted(x["user_id"] for x in d["staff"]),
    sorted([SARVAR, HR, U2]))
 
+print("\n=== 5b. Filialsiz HR — oylik olgan filialida ===")
+db2 = SessionLocal()
+hr2 = models.User(username="marhabo", full_name="Marhabo Mamatqulova",
+                  role=roles.SALES_MANAGER, branch_id=None, is_active=1,
+                  password_hash="x")
+newbie = models.User(username="yangi", full_name="Yangi HR",
+                     role=roles.SALES_MANAGER, branch_id=None, is_active=1,
+                     password_hash="x")
+db2.add_all([hr2, newbie]); db2.commit()
+MH, NB = hr2.id, newbie.id
+db2.add(models.Expense(date=date(today.year, M, 1), category="admin_salary",
+                       amount=1_000_000, branch_id=b.id, staff_user_id=MH))
+db2.commit(); ZID = b.id
+db2.close()
+z = [x["user_id"] for x in c.get(
+    f"/api/finance/budget?year={Y}&month={M}&branch_id={ZID}",
+    headers=H).json()["staff"]]
+bk = [x["user_id"] for x in c.get(
+    f"/api/finance/budget?year={Y}&month={M}&branch_id={B2}",
+    headers=H).json()["staff"]]
+ck("Zafar'da Marhabo bor", MH in z, True)
+ck("Bekobod 1'da Marhabo yo'q", MH in bk, False)
+ck("hali oylik olmagan filialsiz xodim ikkalasida", (NB in z, NB in bk),
+   (True, True))
+ck("Bekobod 1'da Sarvar yo'q", SARVAR in bk, False)
+
 print("\n=== 6. Ustoz bonuslari ===")
 c.put(f"/api/finance/budget/{Y}", headers=H, json={"items": [
     {"month": M, "kind": "expense", "category": "teacher_bonus",

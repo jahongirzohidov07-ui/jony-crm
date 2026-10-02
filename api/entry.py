@@ -7017,6 +7017,87 @@ def _mc_reactivated_after_skip(db: Session, today) -> list:
     return done
 
 
+_MC_OLD_FIX = "to'liq oyga to'g'rilandi"
+
+
+def _mc_fix_old_rule(db: Session, today, apply: bool = True) -> list:
+    """ESKI QOIDA BILAN YOZILGAN OYLIK (2026-10-02, Jahongir: "58 ta
+    o'quvchi 40 ta qarzdor ... ba'zilaridan yechilgan, ba'zilaridan
+    esa bitta darsga yechilgan").
+
+    Sabab: 27-sentabrdagi bo'linishdan keyin login (auth_users.py)
+    yangi qoidaga ulanmay qolgan edi. 1-oktabr 05:00 dan keyingi
+    birinchi kirishda ESKI common._ensure_month_charges ishladi —
+    u "o'tilgan darslar" bo'yicha yechadi: shu paytgacha 1 dars
+    o'tilgan guruhlardan 1 dars uchun yechdi. Yangi qoida esa
+    "shu oy yechimi bor" deb ularni o'tkazib yubordi. Darsi hali
+    o'tilmagan guruhlar eski qoidada "kutilmoqda" bo'lib qoldi va
+    yangi qoida ulardan to'liq oylikni yechdi — shu sabab natija
+    aralash chiqdi.
+
+    Bu funksiya eski qoida yozgan qatorlarni (izohi "<guruh> - <oy>
+    oyi uchun N dars (avtomat)") to'liq oylik summaga (chegirmasi bo'lsa
+    chegirma bilan) JOYIDA ko'taradi — qator o'chirilmaydi, eski summa
+    auditda qoladi.
+    Faqat KO'TARADI; qo'lda o'zgartirilgan yoki allaqachon to'g'ri
+    qatorga tegmaydi. Idempotent."""
+    period = _mc_key(today.year, today.month)
+    if period < _MC_FROM:
+        return []
+    rows = (db.query(models.Payment)
+            .filter(models.Payment.period == period,
+                    models.Payment.kind == "charge",
+                    models.Payment.created_by == _MC_BY,
+                    models.Payment.note.like(f"% - {period} oyi uchun %"))
+            .all())
+    done = []
+    for p in rows:
+        if _MC_OLD_FIX in (p.note or ""):
+            continue
+        s = db.query(models.Student).get(p.student_id)
+        if s is None or s.status != "active" or s.group is None:
+            continue
+        g = s.group
+        # Qator boshqa guruh uchun yozilgan bo'lsa (o'quvchi ko'chgan) —
+        # qo'lda ko'rilsin
+        if not (p.note or "").startswith(f"{g.name} - "):
+            continue
+        # Jahongir (2026-10-02): "har biridan avtomat oylik summa
+        # yechilsin, chegirmasi bo'lsa chegirma bilan, bo'lmasa to'liq"
+        std = int(g.standard_lessons_per_month or 12) or 12
+        want = _mc_expected(db, s, g, std)
+        what = f"{std} dars (standart oy)"
+        old = abs(float(p.amount or 0))
+        if want <= old + 0.5:
+            continue
+        done.append({"student_id": s.id, "name": s.full_name,
+                     "branch_id": s.branch_id,
+                     "old": roles.money(old), "new": roles.money(want)})
+        if not apply:
+            continue
+        old_amt = p.amount
+        p.amount = -want
+        p.note = ((p.note or "") + f" · {_MC_OLD_FIX}: {what}, "
+                  f"{int(old):,} -> {int(want):,}").replace(",", " ")
+        p.updated_at = _dt_now()
+        audit.log(db, None, entity="payment", action="update",
+                  entity_id=p.id, entity_label=s.full_name,
+                  field="amount", old_value=old_amt, new_value=-want,
+                  note="Oy boshida eski qoida bilan faqat o'tilgan "
+                       "darslar yechilgan edi — to'liq oyga to'g'rilandi",
+                  branch_id=s.branch_id)
+    if apply and done:
+        db.commit()
+        audit.log(db, None, entity="payment", action="update",
+                  entity_label=f"{period}: chala yechilgan oyliklar "
+                               f"to'g'rilandi",
+                  new_value=len(done),
+                  note=", ".join(f"{d['name']} {int(d['old'])}->"
+                                 f"{int(d['new'])}" for d in done[:40]),
+                  commit=True)
+    return done
+
+
 def _dt_now():
     from datetime import datetime as _d
     return _d.utcnow()
@@ -7255,6 +7336,7 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # Skip'dan keyin qaytib faollashganlar — kuniga bir marta
     # (2026-09-28, _mc_reactivated_after_skip izohiga qarang)
     ra_key = f"mcra_{today.isoformat()}"
+    old_key = f"mcold_{today.isoformat()}"
     # BIR MARTALIK (2026-09-28, Jahongir: "yangi tolov qilganlarga
     # 3-darsgacha qilsa 10 coin berilishi kerak"). Yangi qoida
     # students._pay_coin'da; bu esa sentabrda qoida yo'qligida to'lagan
@@ -7284,7 +7366,7 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     todo = [g for g in _mc_active_groups(db)
             if not _sd(db, f"mcf_{period}_g{g.id}")]
     if not todo and _sd(db, refund_key) and _sd(db, missed_key) \
-            and _sd(db, ra_key):
+            and _sd(db, ra_key) and _sd(db, old_key):
         return {"yechildi": 0, "qaytarildi": 0, "tugagan": True}
 
     pg = False
@@ -7319,6 +7401,16 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
             try:
                 n3 = len(_mc_charge_missed(db, today))
                 _sm(db, missed_key)
+            except Exception:
+                db.rollback()
+        # Eski qoida bilan chala yechilganlar — kuniga bir marta
+        # (2026-10-02, _mc_fix_old_rule izohiga qarang)
+        if ok1 and not _sd(db, old_key):
+            try:
+                n6 = len(_mc_fix_old_rule(db, today))
+                _sm(db, old_key)
+                if n6:
+                    print(f"[oylik] chala yechilgan to'g'rilandi: {n6}")
             except Exception:
                 db.rollback()
         n5 = 0
@@ -7360,12 +7452,20 @@ def _mc_install():
     """common/system modullaridagi eski funksiyani almashtiramiz."""
     import sys as _s
     done = []
-    for mod in ("common", "system", "main"):
-        m = _s.modules.get(mod)
+    # HAMMA yuklangan modul (2026-10-02). Ilgari faqat common/system/
+    # main almashtirilardi. 27-sentabrdagi bo'linishdan keyin login
+    # auth_users.py ga ko'chdi ("from common import *" — eski funksiya
+    # nusxasi), u almashtirilmay qoldi va 1-oktabr kuni login ESKI
+    # qoida bilan "faqat o'tilgan darslar" (1 dars) yechib qo'ydi.
+    for mod, m in list(_s.modules.items()):
         if m is None:
             continue
-        old = getattr(m, "_ensure_month_charges", None)
-        if old is None or getattr(old, "_mc_new", False):
+        try:
+            old = getattr(m, "_ensure_month_charges", None)
+        except Exception:
+            continue
+        if old is None or not callable(old) \
+                or getattr(old, "_mc_new", False):
             continue
 
         def _wrap(db, _old=old, **kw):
@@ -7952,12 +8052,16 @@ def _bud_install():
     shu funksiyani chaqiradi."""
     import sys as _sys
     done = []
-    for mod in ("common", "system", "main"):
-        m = _sys.modules.get(mod)
+    # Hamma yuklangan modul — _mc_install izohiga qarang (2026-10-02)
+    for mod, m in list(_sys.modules.items()):
         if m is None:
             continue
-        old = getattr(m, "_ensure_month_charges", None)
-        if old is None or getattr(old, "_bud_new", False):
+        try:
+            old = getattr(m, "_ensure_month_charges", None)
+        except Exception:
+            continue
+        if old is None or not callable(old) \
+                or getattr(old, "_bud_new", False):
             continue
 
         def _wrap(db, _old=old, **kw):

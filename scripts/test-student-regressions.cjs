@@ -18,7 +18,7 @@ function environment() {
     const source = readFileSync(join(__dirname, '../src/lib', name + '.ts'), 'utf8');
     const code = ts.transpileModule(source, {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
     const exports = {};
-    vm.runInNewContext(code, {exports, require: name => name === './toast' ? {pushToast(){}} : load(name.replace('./','')), sessionStorage, localStorage, window, Date, Promise, setTimeout, clearTimeout, fetch: (url, options) => new Promise(resolve => pending.push({url,options,reply:(data,status=200) => resolve({ok:status<400,status,json:async()=>data})}))});
+    vm.runInNewContext(code, {exports, require: name => name === './toast' ? {pushToast(){}} : load(name.replace('./','')), sessionStorage, localStorage, window, Date, Promise, setTimeout, clearTimeout, fetch: (url, options) => new Promise(resolve => pending.push({url,options,reply:(data,status=200) => resolve({ok:status<400,status,headers:{get:()=>null},json:async()=>data})}))});
     modules.set(name,exports);
     return exports;
   }

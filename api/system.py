@@ -201,7 +201,8 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
         raise HTTPException(403, "Ruxsat yo'q")
     _founder_name_fix(db)
     # Kunlik cron - eng katta ulush (Vercel limiti 30 s).
-    _ensure_month_charges(db, budget_s=18.0)
+    import common as _cm      # yangi qoida (auth_users izohiga qarang)
+    _cm._ensure_month_charges(db, budget_s=18.0)
     # KUNLIK ZAXIRA (2026-08-15). Asoschining Telegramiga fayl bo'lib
     # boradi. Bot sozlanmagan yoki chat bog'lanmagan bo'lsa jimgina
     # o'tadi - kunlik ish shu sababdan yiqilmasin.

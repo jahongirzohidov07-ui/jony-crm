@@ -572,7 +572,10 @@ function BudgetEditor({ d, month, approved, onClose }: Any) {
   sections.push({ key: "teacher_payroll", label: "Ustozlar",
     items: [{ key: "teacher_payroll", label: "Ustozlar ish haqi" }] });
 
-  const total = Object.values(vals).reduce((a, x) => a + num(x), 0);
+  // Jami — formada ko'rinib turgan maydonlar (boshqa filial xodimlari
+  // rejasi bu yerda ko'rinmaydi, lekin saqlanganicha qoladi)
+  const total = sections.reduce((a, sec) =>
+    a + sec.items.reduce((b: number, c: Any) => b + num(vals[c.key]), 0), 0);
   const fillFix = () => {
     const v = { ...vals };
     for (const x of staff)

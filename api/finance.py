@@ -3420,6 +3420,7 @@ def _budget_cat_label(db: Session, c: str) -> str:
 
 @router.get("/api/finance/budget")
 def finance_budget(year: int | None = None, month: int | None = None,
+                   branch_id: int | None = None,
                    db: Session = Depends(get_db),
                    user=Depends(require_role(*roles.FINANCE_ACCESS))):
     """Budjet: yillik/oylik/filial/bo'lim kesimlari, reja-fakt va yil
@@ -3482,10 +3483,14 @@ def finance_budget(year: int | None = None, month: int | None = None,
     _t, by_cat = _expenses_total(db, user, s, e, ph_bid)
     payroll = round(_payroll_total(db, user, f"{yy:04d}-{month:02d}",
                                    ph_bid) or 0, 0)
-    staff = _budget_staff(db, user, ph_bid)
-    by_cat = _budget_split_staff(db, user, s, e, ph_bid, by_cat, staff)
+    staff_all = _budget_staff(db, user, ph_bid)
+    by_cat = _budget_split_staff(db, user, s, e, ph_bid, by_cat, staff_all)
     staff_names = {f"{roles.BUDGET_STAFF_PREFIX}{x['user_id']}": x["name"]
-                   for x in staff}
+                   for x in staff_all}
+    # Formadagi xodimlar — tepada tanlangan filialniki (2026-10-02,
+    # Jahongir: "nega boshqa filial xodimlari chiqyabdi bu yerga").
+    staff = (_budget_staff(db, user, ph_bid or branch_id)
+             if branch_id and not ph_bid else staff_all)
     cats = []
     all_cats = set(roles.EXPENSE_CATEGORIES) | set(by_cat) | {
         l.category for l in lines

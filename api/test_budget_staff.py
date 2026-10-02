@@ -139,6 +139,21 @@ c.put(f"/api/finance/budget/{Y}", headers=H, json={"items": [
 d = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
 ck("HR rejasi 0", d["plans"][str(M)]["expense"].get(f"staff:{HR}"), 0)
 
+print("\n=== 5. Filial tanlanganda — faqat shu filial xodimlari ===")
+db2 = SessionLocal()
+b2 = models.Branch(name="Bekobod 1"); db2.add(b2); db2.commit()
+u2 = models.User(username="boshqa", full_name="Boshqa", role=roles.SALES_MANAGER,
+                 branch_id=b2.id, is_active=1, password_hash="x")
+db2.add(u2); db2.commit()
+B2, U2 = b2.id, u2.id
+db2.close()
+d = c.get(f"/api/finance/budget?year={Y}&month={M}&branch_id={B2}",
+          headers=H).json()
+ck("Bekobod 1: faqat o'zi", [x["user_id"] for x in d["staff"]], [U2])
+d = c.get(f"/api/finance/budget?year={Y}&month={M}", headers=H).json()
+ck("barcha filiallar: hammasi", sorted(x["user_id"] for x in d["staff"]),
+   sorted([SARVAR, HR, U2]))
+
 print()
 if fails:
     print(f"{len(fails)} ta XATO: {fails}")

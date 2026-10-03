@@ -1369,6 +1369,19 @@ def _home_branches(db, user: models.User) -> set:
     return out
 
 
+def same_business_branches(db, branch_id) -> set:
+    """Shu filial bilan BIR BIZNESdagi filiallar (2026-10-03, Jahongir:
+    "ITga keladiganlar umuman boshqa filial boshqa markaz, aloqamiz
+    yo'q"). Hamkor markaz (Stetch) — faqat o'zi; Jony filiallari —
+    hamma hamkor bo'lmagan filiallar. Filialsiz yozuv Jony'niki (None)."""
+    b = db.query(models.Branch).get(branch_id) if branch_id else None
+    if b is not None and getattr(b, "is_partner", 0):
+        return {b.id}
+    return {bid for (bid,) in db.query(models.Branch.id).filter(
+        or_(models.Branch.is_partner.is_(None),
+            models.Branch.is_partner == 0)).all()} | {None}
+
+
 def hidden_branch_ids(db, user: models.User) -> list:
     """Xodimga TANLAGICHDA ko'rinmasligi kerak bo'lgan filiallar.
 
@@ -7509,6 +7522,7 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
 
 
 __all__ = [
+    "same_business_branches",
     "_plan_fakt_revenue_plan",
     "_visible_discounts",
     "_balances_bulk", "_neg_since_bulk", "_aging_bucket",

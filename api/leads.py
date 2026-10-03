@@ -537,7 +537,17 @@ def convert_lead(
         ph = _tail(lead.phone)
         nm = " ".join((lead.full_name or "").split()).lower()
         dup = None
+        # Faqat SHU biznes ichida: Stetch (hamkor markaz) o'quvchisi
+        # Jony'dagi eski o'quvchi bilan solishtirilmaydi va aksincha
+        # (2026-10-03, Jahongir: "aloqamiz yo'q, bunaqa narsa kerak emas").
+        _gid = payload.group_id
+        _g = db.query(models.Group).get(_gid) if _gid else None
+        _biz = same_business_branches(
+            db, (_g.branch_id if _g else None) or lead.branch_id
+            or user.branch_id)
         for st in db.query(models.Student).all():
+            if st.branch_id not in _biz:
+                continue
             if ph and (_tail(st.phone) == ph or _tail(st.parent_phone) == ph):
                 dup = st
                 break

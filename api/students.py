@@ -714,7 +714,11 @@ def create_student(
         pph = _tail(getattr(payload, "parent_phone", None))
         same = None
         by_phone = False
+        # Faqat SHU biznes ichida (Stetch alohida markaz, 2026-10-03)
+        _biz = same_business_branches(db, payload.branch_id or user.branch_id)
         for st in db.query(models.Student).all():
+            if st.branch_id not in _biz:
+                continue
             if " ".join((st.full_name or "").split()).lower() == nm \
                     and st.status != "archived":
                 same = st

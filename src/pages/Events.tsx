@@ -216,10 +216,25 @@ function BirthdaysTab() {
                   r.today ? "bg-rose-100 text-rose-600" : "bg-violet-50 text-violet-600"}`}>
                   <Cake size={16} />
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium text-slate-800 truncate">{r.full_name}</p>
-                  <p className="text-xs text-slate-500 truncate">
-                    {r.who_label}{r.sub ? ` · ${r.sub}` : ""}{r.branch ? ` · ${r.branch}` : ""}{r.phone ? ` · ${formatPhone(r.phone)}` : ""}
+                {/* Ism, lavozim/guruh, filial — telefonda ham to'liq
+                    (2026-10-03, Jahongir: "faqat kun ko'rinyabdi"). Avval
+                    ustun flex-1 + truncate bilan 0 kenglikka siqilardi. */}
+                <div className="min-w-[200px] flex-1">
+                  <p className="font-medium text-slate-800">
+                    {r.full_name}{" "}
+                    <span className={`ml-1 align-middle text-[10px] font-medium rounded px-1.5 py-0.5 ${
+                      r.who === "staff" ? "bg-sky-50 text-sky-700" : "bg-violet-50 text-violet-700"}`}>
+                      {r.who_label}
+                    </span>
+                  </p>
+                  <p className="text-xs text-slate-600">
+                    <span className="text-slate-400">{r.who === "staff" ? "Lavozimi:" : "Guruhi:"}</span>{" "}
+                    {r.sub || "—"}
+                  </p>
+                  <p className="text-xs text-slate-600">
+                    <span className="text-slate-400">{r.who === "staff" ? "Filiallari:" : "Filiali:"}</span>{" "}
+                    {r.branch || "—"}
+                    {r.phone ? <span className="text-slate-400"> · {formatPhone(r.phone)}</span> : null}
                   </p>
                 </div>
                 <div className="text-right">

@@ -79,11 +79,18 @@ def event_birthdays(
                             branches.get(s.branch_id), s.phone, s.birth_date, today)
         if row["days_left"] <= days:
             rows.append(row)
+    # Xodimning BARCHA filiallari (asosiy + qo'shimcha) — tabriklashda
+    # kim qayerda ishlashi ko'rinsin (2026-10-03, Jahongir)
+    extra: dict = {}
+    for ub in db.query(models.UserBranch).all():
+        extra.setdefault(ub.user_id, []).append(ub.branch_id)
     for u in staff:
         if not u.birth_date:
             continue
+        bids = [u.branch_id] + [b for b in extra.get(u.id, []) if b != u.branch_id]
+        brs = ", ".join(n for n in (branches.get(b) for b in bids if b) if n)
         row = _birthday_row("staff", u.id, u.full_name, roles.UZ_LABELS.get(u.role, u.role),
-                            branches.get(u.branch_id), u.phone, u.birth_date, today)
+                            brs or "Barcha filiallar", u.phone, u.birth_date, today)
         if row["days_left"] <= days:
             rows.append(row)
     rows.sort(key=lambda r: (r["days_left"], r["full_name"]))

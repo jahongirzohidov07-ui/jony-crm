@@ -510,6 +510,14 @@ def _mark_lesson_held(db: Session, lesson: models.Lesson) -> None:
     u pulga va ustoz ish haqiga kiradi."""
     if not lesson.held:
         lesson.held = 1
+        # Dars ISHDAN KETGAN ustoz nomida qolgan bo'lsa (guruh boshqa
+        # ustozga o'tgan) — pul guruhning hozirgi ustoziga (2026-10-03)
+        g = db.query(models.Group).get(lesson.group_id)
+        if g and g.teacher_id and lesson.teacher_id != g.teacher_id:
+            t = (db.query(models.Teacher).get(lesson.teacher_id)
+                 if lesson.teacher_id else None)
+            if t is None or not t.is_active:
+                lesson.teacher_id = g.teacher_id
 
 def _group_lessons_in_month(db: Session, group_id: int, year: int, month: int):
     start, end = billing.month_bounds(year, month)
@@ -1355,6 +1363,17 @@ def update_group(
         group.standard_lessons_per_month = d.get(
             "standard_lessons_per_month", group.standard_lessons_per_month)
         group.monthly_fee = d.get("monthly_fee", group.monthly_fee)
+    # USTOZ ALMASHDI — hali O'TILMAGAN darslar yangi ustozga (2026-10-03,
+    # Jahongir: "Rayxona Xoshimova avgustda ishdan bo'shagan, sentabr
+    # oyligida turibdi"). Oy boshida butun oyning darslari eski ustoz
+    # nomida yaratilib qolardi; keyin yoqlama qo'yilganda pul eski
+    # ustozga yozilardi. O'tilgan darslarga tegilmaydi.
+    if "teacher_id" in fields and _before.get("teacher_id") != group.teacher_id:
+        db.query(models.Lesson).filter(
+            models.Lesson.group_id == group.id,
+            models.Lesson.held == 0).update(
+            {models.Lesson.teacher_id: group.teacher_id},
+            synchronize_session=False)
     db.commit()
     db.refresh(group)
     item = schemas.GroupOut.model_validate(group)
@@ -1422,7 +1441,7 @@ def add_lesson(
         # Jadval bo'yicha avtomat yaratilgan bo'sh kun bo'lsa - xato
         # bermaymiz, shunchaki "o'tildi" deb belgilaymiz.
         if not existing.held:
-            existing.held = 1
+            _mark_lesson_held(db, existing)
             if payload.teacher_id is not None:
                 existing.teacher_id = payload.teacher_id
             if payload.note:

@@ -432,7 +432,12 @@ r = client.put(f"/api/exams/{EID2}/paper", headers=HE, json={
     "marks": [{"student_id": S["Aliyev Ali"], "paper": None}]})
 client.post(f"/api/exams/{EID2}/online/publish", headers=HE)
 d = client.get(f"/api/exams/{EID2}", headers=H).json()
-ck("qog'ozsiz natija hali yo'q", len(d["results"]), 0)
+# 2026-10-03: umuman kirmaganlar e'londa "kelmadi" bo'ladi — ular
+# sanalmaydi; qog'ozi kutilayotgan Alining natijasi hali yo'q
+ck("qog'ozsiz natija hali yo'q",
+   len([x for x in d["results"] if not x.get("absent")]), 0)
+ck("Ali kelmadi deb yozilmadi (topshirgan)",
+   S["Aliyev Ali"] in {x["student_id"] for x in d["results"]}, False)
 r = client.put(f"/api/exams/{EID2}/paper", headers=HE, json={
     "marks": [{"student_id": S["Aliyev Ali"], "paper": 25}]})
 ck("20 dan katta rad", r.status_code, 400)

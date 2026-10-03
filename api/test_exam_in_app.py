@@ -252,6 +252,35 @@ r = client.post(f"/api/public/exam/{TOKEN}/save", json={"key": KEY, "answers": {
 ck("bo'sh saqlash ham 200", r.json(), {"ok": True})
 st = client.get(f"/api/student/exam/{TOKEN}", headers=HA).json()
 ck("boshqa telefonda javoblar qaytadi (30 ta)", len(st["my"]["answers"] or {}), 30)
+# JONLI JARAYON (2026-10-03): examiner kim nechta javob berganini ko'radi
+on = client.get(f"/api/exams/{EID}/online", headers=HE).json()["online"]
+ck("examiner: Ali 30/30 javob", [(x["answered"], x["total"]) for x in on["live"]],
+   [(30, 30)])
+ck("examiner: hali kirmaganlar ro'yxatida Bobur",
+   "Boboyev Bobur" in [x["name"] for x in on["not_joined"]], True)
+# ARALASH (2026-10-03): har o'quvchiga o'z tartibi, javob asl raqamda
+import exam_online as _eo
+_d = SessionLocal()
+_o = _d.query(models.ExamOnline).filter_by(token=TOKEN).first()
+_orig = _eo._load(_o.parts)
+_d.close()
+pa = _eo.shuffle_for(_eo.public_parts(_orig), _orig, "kalit-1")
+pb = _eo.shuffle_for(_eo.public_parts(_orig), _orig, "kalit-2")
+ids = lambda pp: [q["id"] for p in pp for q in p["questions"]]
+ops = lambda pp: [tuple(q["options"] or []) for p in pp for q in p["questions"]]
+ck("ikki o'quvchida tartib boshqacha", (ids(pa) != ids(pb)) or (ops(pa) != ops(pb)),
+   True)
+ck("bir kalit — doim bir xil tartib",
+   ids(_eo.shuffle_for(_eo.public_parts(_orig), _orig, "kalit-1")), ids(pa))
+_omap = {q["id"]: q for p in _orig for q in p["questions"]}
+_ok = all(sorted(q["opt"]) == list(range(len(q["options"])))
+          and [_omap[q["id"]]["options"][j] for j in q["opt"]] == q["options"]
+          for p in pa for q in p["questions"] if q.get("opt"))
+ck("aralash variant -> asl indeks to'g'ri", _ok, True)
+ck("savollar to'liq (hech biri yo'qolmagan)", sorted(ids(pa)), sorted(_omap))
+st2 = client.get(f"/api/student/exam/{TOKEN}", headers=HA).json()
+ck("ilovada Ali o'z kaliti bo'yicha aralash oladi",
+   ids(st2["parts"]), ids(_eo.shuffle_for(_eo.public_parts(_orig), _orig, KEY)))
 r = client.post(f"/api/public/exam/{TOKEN}/away", json={"key": KEY, "seconds": 3})
 ck("chiqish qayd qilinadi", r.json().get("away_count"), 1)
 r = client.post(f"/api/public/exam/{TOKEN}/submit",
@@ -297,6 +326,8 @@ ck("e'londan keyin ball: 27/30 = 90%",
 res = {x["student_id"]: x for x in
        client.get(f"/api/exams/{EID}", headers=H).json()["results"]}
 ck("guruh imtihonida o'z qatorida 90%", res[ALI]["percent"], 90.0)
+ck("umuman kirmagan Bobur — kelmadi (avtomat)",
+   bool(res.get(BOBUR, {}).get("absent")), True)
 # Avvaldan bor /api/student/exams (tasdiqlangan natijalar tarixi)
 # buzilmagan — yangi ro'yxat alohida manzilda (/exams/online)
 r = client.get("/api/student/exams", headers=HA)

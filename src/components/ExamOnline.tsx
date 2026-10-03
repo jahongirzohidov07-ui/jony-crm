@@ -102,7 +102,12 @@ export type OnlineData = {
       away_sec: number;
       /** Mock: masalan "To'liq ekran ishlamadi" (2026-09-27) */
       note?: string | null;
+      /** Nechta savolga javob bergan / jami (2026-10-03) */
+      answered?: number;
+      total?: number;
     }[];
+    /** Linkni hali ochmagan faol o'quvchilar */
+    not_joined?: { id: number; name: string }[];
     expelled: { id: number; name: string; note: string | null }[];
   } | null;
   group_level: string | null;
@@ -415,8 +420,17 @@ function TimerControls({
         {data.live?.length ? (
           <div className="w-full mt-1 space-y-1">
             {data.live.map((x) => (
-              <div key={x.id} className="flex items-center gap-2 text-xs">
-                <span className="text-slate-700">{x.name}</span>
+              <div key={x.id} className="flex flex-wrap items-center gap-2 text-xs">
+                <span className="text-slate-700 min-w-[120px]">{x.name}</span>
+                {x.total ? (
+                  <span className="flex items-center gap-1.5" title="Javob bergan savollar (15 soniyada yangilanadi)">
+                    <span className="w-24 h-1.5 rounded-full bg-sky-100 overflow-hidden">
+                      <span className="block h-full bg-sky-600 rounded-full"
+                        style={{ width: `${Math.min(100, Math.round(((x.answered || 0) / x.total) * 100))}%` }} />
+                    </span>
+                    <span className="tabular-nums text-sky-800">{x.answered || 0}/{x.total}</span>
+                  </span>
+                ) : null}
                 {x.away_count ? (
                   <span className="text-amber-700">
                     ⚠ {x.away_count} marta chiqdi
@@ -440,6 +454,12 @@ function TimerControls({
               </div>
             ))}
           </div>
+        ) : null}
+        {data.not_joined?.length ? (
+          <span className="w-full text-xs text-slate-600">
+            Hali kirmagan ({data.not_joined.length}):{" "}
+            {data.not_joined.map((x) => x.name).join(", ")}
+          </span>
         ) : null}
         {data.expelled?.length ? (
           <span className="w-full text-xs text-rose-700">

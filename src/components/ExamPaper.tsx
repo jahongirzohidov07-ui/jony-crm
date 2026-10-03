@@ -35,6 +35,9 @@ export type PaperQ = {
   pick?: number | null;
   /** essay — eng kam so'z (IELTS Writing: 150 / 250) */
   min_words?: number | null;
+  /** Variantlar aralashtirilgan bo'lsa — har ko'rinadigan variantning
+   *  ASL indeksi (javob shu bilan saqlanadi, 2026-10-03) */
+  opt?: number[] | null;
 };
 export type PaperPart = {
   title: string;
@@ -218,11 +221,13 @@ export function QuestionInput({
           {need} ta variant belgilang ({cur.length}/{need})
         </p>
         <div className="grid gap-1.5">
-          {(q.options || []).map((o, oi) => (
+          {(q.options || []).map((o, di) => {
+            const oi = q.opt?.[di] ?? di;
+            return (
             <button
               key={oi}
               type="button"
-              data-answer={oi === 0 || undefined}
+              data-answer={di === 0 || undefined}
               disabled={off}
               aria-pressed={cur.includes(oi)}
               onClick={() => toggle(oi)}
@@ -232,10 +237,11 @@ export function QuestionInput({
                   : "border-slate-200 bg-white/60 text-slate-700 hover:border-slate-300"
               }`}
             >
-              <span className="font-semibold mr-2">{LETTERS[oi]}</span>
-              {o !== LETTERS[oi] && o}
+              <span className="font-semibold mr-2">{LETTERS[di]}</span>
+              {o !== LETTERS[di] && o}
             </button>
-          ))}
+            );
+          })}
         </div>
       </div>
     );
@@ -250,11 +256,13 @@ export function QuestionInput({
             : "grid gap-1.5"
         }
       >
-        {(q.options || []).map((o, oi) => (
+        {(q.options || []).map((o, di) => {
+          const oi = q.opt?.[di] ?? di;
+          return (
           <button
             key={oi}
             type="button"
-            data-answer={oi === 0 || undefined}
+            data-answer={di === 0 || undefined}
             disabled={off}
             aria-pressed={value === oi}
             onClick={() => onChange(oi)}
@@ -264,10 +272,11 @@ export function QuestionInput({
                 : "border-slate-200 bg-white/60 text-slate-700 hover:border-slate-300"
             }`}
           >
-            <span className="font-semibold mr-2">{LETTERS[oi]}</span>
-            {o !== LETTERS[oi] && o}
+            <span className="font-semibold mr-2">{LETTERS[di]}</span>
+            {o !== LETTERS[di] && o}
           </button>
-        ))}
+          );
+        })}
       </div>
     );
   }

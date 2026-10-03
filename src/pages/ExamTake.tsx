@@ -155,7 +155,11 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   const submittingRef = useRef(false);
 
   const load = useCallback(() => {
-    return fetch(api, { headers: authHeaders() })
+    // Havola orqali kirganda kalit yuboriladi — savollar shu o'quvchiga
+    // aralash tartibda keladi (2026-10-03)
+    const k = inApp ? null : (store(`exam:${token}:key`) as string | null);
+    const url = k ? `${api}?key=${encodeURIComponent(k)}` : api;
+    return fetch(url, { headers: authHeaders() })
       .then(async (r) => {
         const j = await r.json().catch(() => ({}));
         if (!r.ok) throw new Error(j.detail || "Test topilmadi");

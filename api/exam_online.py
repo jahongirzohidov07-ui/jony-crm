@@ -325,6 +325,52 @@ def public_parts(parts: list) -> list:
     return out
 
 
+_NO_SHUFFLE_OPTS = {"true", "false", "not given", "yes", "no"}
+
+
+def shuffle_for(pub: list, orig: list, seed: str | None) -> list:
+    """HAR O'QUVCHIGA ARALASH (2026-10-03, Jahongir: "guruhda hammaga
+    bir xil test chiqadi ... aralashtirib ber").
+
+    Seed — o'quvchining topshiriq kaliti: qayta kirsa ham, boshqa
+    telefondan kirsa ham tartib O'SHA-O'SHA. Javob ASL raqamda
+    saqlanadi (variant uchun "opt" — asl indekslar), shuning uchun
+    baholash va examiner ko'rinishi o'zgarmaydi.
+
+    Savollar tartibi faqat matn/audio/rasmga bog'lanmagan bo'limda
+    aralashadi (o'qish va tinglashda savollar matn ketma-ketligida
+    turadi). Variantlar: kamida 3 ta va harf (A, B..) yoki True/False
+    bo'lmasa."""
+    import random
+    if not seed:
+        return pub
+    rnd = random.Random(seed)
+    out = []
+    for i, p in enumerate(pub):
+        o = orig[i] if i < len(orig) else {}
+        qs = [dict(q) for q in p.get("questions") or []]
+        tied = bool(p.get("passage") or p.get("audio_url") or p.get("image")
+                    or o.get("script"))
+        if not tied and len(qs) > 1:
+            nums = [q.get("n") for q in qs]
+            rnd.shuffle(qs)
+            for q, n in zip(qs, nums):
+                q["n"] = n
+        for q in qs:
+            opts = q.get("options") or []
+            if (q.get("type") in ("choice", "multi") and len(opts) >= 3
+                    and not q.get("image")
+                    and all(len(str(x).strip()) > 2 for x in opts)
+                    and not ({str(x).strip().lower() for x in opts}
+                             & _NO_SHUFFLE_OPTS)):
+                idx = list(range(len(opts)))
+                rnd.shuffle(idx)
+                q["options"] = [opts[j] for j in idx]
+                q["opt"] = idx
+        out.append({**p, "questions": qs})
+    return out
+
+
 def grade(parts: list, answers: dict):
     """(ball, maksimal, tafsilot). Har savol 1 ball."""
     score, total, detail = 0, 0, []
@@ -1224,6 +1270,7 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
     can_manage = user.role in RESULT_ROLES
     if o:
         t = db.query(models.ExamTemplate).get(o.template_id)
+        q_total = sum(len(p.get("questions") or []) for p in o_parts)
         online = {
             "token": o.token, "is_open": bool(o.is_open),
             "template_id": o.template_id,
@@ -1255,9 +1302,21 @@ def get_online(exam_id: int, db: Session = Depends(get_db),
                  "name": s.typed_name or names.get(s.student_id) or "—",
                  "away_count": s.away_count or 0, "away_sec": s.away_sec or 0,
                  # masalan "To'liq ekran ishlamadi" (mock, 2026-09-27)
-                 "note": s.note}
+                 "note": s.note,
+                 # JONLI JARAYON (2026-10-03): nechta savolga javob
+                 # bergan (javoblar 15 soniyada saqlanadi)
+                 "answered": _answered_count(s.answers),
+                 "total": q_total}
                 for s in subs if s.status == "in_progress"
             ],
+            # Linkni hali umuman ochmaganlar (faol o'quvchilar)
+            "not_joined": ([
+                {"id": st.id, "name": st.full_name}
+                for st in _group_students(db, exam.group_id)
+                if (st.status or "active") == "active"
+                and st.id not in {x.student_id for x in subs}]
+                if timer_state(o) in ("waiting", "countdown", "running")
+                else []),
             "expelled": [
                 {"id": s.id,
                  "name": s.typed_name or names.get(s.student_id) or "—",
@@ -1557,6 +1616,23 @@ def publish_online(exam_id: int, db: Session = Depends(get_db),
         m = _mark_for(exam, o, s)
         if m is not None:
             marks.append(m)
+    # UMUMAN KIRMAGANLAR — "KELMADI" (2026-10-03, Jahongir: "imtihonga
+    # umuman kirmagan o'quvchi kelmadi deb avtomat belgilansin").
+    # Faqat faol o'quvchilar; linkni ochgan (har qanday holatda) yoki
+    # natijasi allaqachon bor o'quvchiga tegilmaydi. Examiner keyin
+    # jadvalda o'zgartira oladi.
+    touched = {sid for (sid,) in db.query(models.ExamSubmission.student_id)
+               .filter(models.ExamSubmission.exam_id == exam.id,
+                       models.ExamSubmission.student_id.isnot(None)).all()}
+    has_row = {r.student_id for r in exam.results}
+    marked = {m.student_id for m in marks}
+    absent_ids = [st.id for st in _group_students(db, exam.group_id)
+                  if (st.status or "active") == "active"
+                  and st.id not in touched and st.id not in has_row
+                  and st.id not in marked]
+    for sid in absent_ids:
+        marks.append(schemas.ExamScoreMark(student_id=sid, absent=True,
+                                           note="Online testga kirmadi"))
     o.published_at = datetime.utcnow()
     o.published_by = user.full_name
     db.commit()
@@ -1565,7 +1641,9 @@ def publish_online(exam_id: int, db: Session = Depends(get_db),
                                  user)
     audit.log(db, user, entity="exam", action="update", entity_id=exam.id,
               entity_label=exam.title or roles.exam_title(exam.kind, exam.unit_no),
-              field="online_publish", new_value=f"{len(marks)} ta natija",
+              field="online_publish",
+              new_value=f"{len(marks) - len(absent_ids)} ta natija"
+                        + (f", {len(absent_ids)} ta kelmadi" if absent_ids else ""),
               commit=True)
     return get_online(exam_id, db, user)
 
@@ -1595,8 +1673,17 @@ def _public(db: Session, token: str):
     return o, exam
 
 
+def _parts_for(exam, parts: list, key: str | None) -> list:
+    """O'quvchiga savollar — mockdan tashqari har o'quvchiga aralash."""
+    pub = public_parts(parts)
+    if is_strict(exam) or not key:
+        return pub
+    return shuffle_for(pub, parts, key)
+
+
 @router.get("/api/public/exam/{token}")
-def public_exam(token: str, db: Session = Depends(get_db)):
+def public_exam(token: str, key: str | None = None,
+                db: Session = Depends(get_db)):
     """Ochiq sahifa holati. Savollar faqat test ketayotganda beriladi —
     examiner "Start" bosmaguncha o'quvchi kutib turadi (2026-09-18)."""
     o, exam = _public(db, token)
@@ -1625,7 +1712,8 @@ def public_exam(token: str, db: Session = Depends(get_db)):
         "students": [{"id": s.id, "name": s.full_name}
                      for s in _roster(db, exam.group_id)]
         if is_open and state != "finished" else [],
-        "parts": public_parts(parts) if is_open and state == "running" else [],
+        "parts": (_parts_for(exam, parts, key)
+                  if is_open and state == "running" else []),
     }
 
 
@@ -1802,6 +1890,19 @@ def finalize_expired(db: Session, o, exam) -> int:
     for s in subs:
         _finalize(db, o, exam, s, _load_dict(s.answers), by="Vaqt tugadi (avtomat)")
     return len(subs)
+
+
+def _answered_count(answers_json) -> int:
+    """Nechta savolga javob berilgan (bo'sh matn/ro'yxat sanalmaydi)."""
+    n = 0
+    for v in _load_dict(answers_json).values():
+        if isinstance(v, (int, float)) and not isinstance(v, bool):
+            n += 1
+        elif isinstance(v, list) and v:
+            n += 1
+        elif isinstance(v, str) and v.strip():
+            n += 1
+    return n
 
 
 def _merge_answers(old_json, new: dict | None) -> dict:
@@ -2337,8 +2438,9 @@ def student_exam_state(token: str, db: Session = Depends(get_db),
         "duration_min": o.duration_min,
         "q_count": int(o.online_max or 0), "paper_max": o.paper_max or 0,
         "students": [],
-        "parts": public_parts(_load(o.parts))
-        if is_open and state == "running" else [],
+        "parts": (_parts_for(exam, _load(o.parts),
+                             my.sub_key if my else None)
+                  if is_open and state == "running" else []),
         "me": {"id": s.id, "name": s.full_name},
         "my": mine,
     }

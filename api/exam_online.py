@@ -1402,6 +1402,7 @@ def create_online(exam_id: int, payload: OnlineIn,
               new_value=f"{t.title}: online {online_max:g} + qog'oz "
                         f"{paper_max:g}, variantlar {variants}",
               commit=True)
+    _push_exam(db, exam, o, started=False)
     return get_online(exam_id, db, user)
 
 
@@ -1416,6 +1417,15 @@ def toggle_online(exam_id: int, payload: OnlineToggle,
     o.is_open = 1 if payload.is_open else 0
     db.commit()
     return get_online(exam_id, db, user)
+
+
+def _push_exam(db: Session, exam, o, started: bool) -> None:
+    """Jony Student ilovasidagi o'quvchilarga telefon bildirishnomasi
+    (2026-10-03). push moduli entry.py orqali yuklanadi; bo'lmasa jim."""
+    import sys as _sys
+    P = _sys.modules.get("push")
+    if P is not None and not is_strict(exam):
+        P.notify_exam(db, exam, o, started)
 
 
 class StartIn(BaseModel):
@@ -1456,6 +1466,7 @@ def start_online(exam_id: int, payload: StartIn, db: Session = Depends(get_db),
               entity_label=exam.title or roles.exam_title(exam.kind, exam.unit_no),
               field="online_start", new_value=f"{payload.minutes} daqiqa",
               commit=True)
+    _push_exam(db, exam, o, started=True)
     return get_online(exam_id, db, user)
 
 

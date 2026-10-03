@@ -16,6 +16,7 @@ import { NpsCard } from "../../components/NpsCard";
 import { GoalCard } from "../../components/GoalCard";
 import { JsaLogo, XpHex, JSA } from "../../components/Jsa";
 import { api } from "../../lib/api";
+import { PushBanner } from "../../components/PushBanner";
 import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
 
 /**
@@ -131,6 +132,8 @@ export default function StudentHome() {
             )}
           </Link>
         </div>
+
+        <PushBanner />
 
         {/* ====================================== SALOM + UMUMIY XP */}
         <div className="flex items-start gap-3">

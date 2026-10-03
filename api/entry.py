@@ -11169,3 +11169,6 @@ def pt_export(days: int = 30, branch_id: int | None = None,
 
 # OY YOPILISHI VA P&L (2026-10-02) — alohida faylda
 import month_close  # noqa: E402,F401
+
+# WEB PUSH — telefonga bildirishnoma (2026-10-03)
+import push  # noqa: E402,F401

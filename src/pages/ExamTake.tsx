@@ -81,6 +81,10 @@ function shrink(file: File): Promise<string> {
 }
 
 type Me = { id: number; name: string };
+/** Jony Student ilovasi (Play Market) — assetlinks.json bilan bir xil */
+const STUDENT_APP_ID = "uz.jonyos.jonystudent";
+const PLAY_URL = `https://play.google.com/store/apps/details?id=${STUDENT_APP_ID}`;
+
 type Mine = {
   status: string;
   key: string | null;
@@ -609,16 +613,35 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
   // Androidda shu tugma ilovani to'g'ridan-to'g'ri ochadi; ilova
   // o'rnatilmagan bo'lsa sahifaning o'zi qolaveradi.
   // Mock telefonda umuman ochilmaydi — ilova havolasi ham kerak emas
+  // 2026-10-03, Jahongir: "linkdan kirganda birinchi Student appga
+  // kirish bo'lsin, agar yo'q bo'lsa Play Marketga o'tsin yuklashga".
+  // Androidda Jony Student ilovasi shu imtihon sahifasida ochiladi;
+  // o'rnatilmagan bo'lsa — Play Market.
   const androidLink =
     !inApp &&
     !strict &&
     typeof navigator !== "undefined" &&
     /Android/i.test(navigator.userAgent) &&
     !(window as unknown as { JonyApp?: unknown }).JonyApp
-      ? `intent://${window.location.host}/t/${token}#Intent;scheme=https;` +
-        `package=uz.jonyacademy.exam;S.browser_fallback_url=` +
-        `${encodeURIComponent(window.location.href)};end`
+      ? `intent://${window.location.host}/student/exam/${encodeURIComponent(token)}` +
+        `?pwa=1#Intent;scheme=https;package=${STUDENT_APP_ID};` +
+        `S.browser_fallback_url=${encodeURIComponent(PLAY_URL)};end`
       : null;
+
+  // Havola ochilganda BIR MARTA avtomat ilovaga o'tkaziladi. Qaytib
+  // kelsa (ilova yo'q, Play Marketdan qaytdi) — sahifa odatdagidek
+  // qoladi: login yoki mehmon tartibi.
+  useEffect(() => {
+    if (!androidLink || key || done) return;
+    const flag = `exam:${token}:app_tried`;
+    try {
+      if (sessionStorage.getItem(flag)) return;
+      sessionStorage.setItem(flag, "1");
+    } catch {
+      return;
+    }
+    window.location.href = androidLink;
+  }, [androidLink, key, done, token]);
 
   // Test ketayotganda ilovaga qaytish havolasi ko'rsatilmaydi (chalg'itmasin)
   const canLeave = inApp && (!key || !!done || expelled);
@@ -654,7 +677,7 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
             href={androidLink}
             className="flex items-center justify-center gap-2 mb-3 rounded-xl bg-white/15 border border-white/30 px-4 py-2.5 text-sm font-medium text-white"
           >
-            📱 Jony Imtihon ilovasida ochish
+            📱 Jony Student ilovasida ochish
           </a>
         )}
         {body}

@@ -105,3 +105,43 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+// TELEFONGA BILDIRISHNOMA (2026-10-03, Jahongir: "test bo'lsa ularga
+// notification bo'lib kelishi kerak, shundan kirishi kerak").
+// Server (api/push.py) shifrlangan xabar yuboradi: {title, body, url, tag}.
+self.addEventListener("push", (event) => {
+  let d = {};
+  try {
+    d = event.data ? event.data.json() : {};
+  } catch (e) {
+    d = { title: "Jony Student", body: event.data ? event.data.text() : "" };
+  }
+  event.waitUntil(
+    self.registration.showNotification(d.title || "Jony Student", {
+      body: d.body || "",
+      icon: "/pwa-192.png",
+      badge: "/pwa-192.png",
+      tag: d.tag || undefined,
+      renotify: !!d.tag,
+      requireInteraction: true,
+      data: { url: d.url || "/student" },
+    })
+  );
+});
+
+// Bildirishnoma bosilsa — ochiq oyna bo'lsa o'sha sahifaga, bo'lmasa yangi
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = (event.notification.data && event.notification.data.url) || "/student";
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
+      for (const w of list) {
+        if ("focus" in w && w.url.startsWith(self.location.origin)) {
+          w.navigate(url).catch(() => {});
+          return w.focus();
+        }
+      }
+      return self.clients.openWindow(url);
+    })
+  );
+});

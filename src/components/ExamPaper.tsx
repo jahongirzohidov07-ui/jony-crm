@@ -185,7 +185,16 @@ export function QuestionInput({
             tall ? "lg:min-h-[calc(100dvh-17rem)]" : ""
           }`}
           value={txt}
+          // KLAVIATURA YORDAMI O'CHIQ (2026-10-03, Jahongir: "so'zni
+          // tavsiya qiladi ... to'g'ri-xato yozdi kabi narsalar
+          // ishlamasligi kerak"): tavsiya, avto-tuzatish, imlo tekshiruvi
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
           spellCheck={false}
+          data-gramm="false"
+          data-gramm_editor="false"
+          data-enable-grammarly="false"
           readOnly={off}
           aria-label={`${q.n}-topshiriq javobi`}
           placeholder="Javobingizni shu yerga yozing"
@@ -285,9 +294,13 @@ export function QuestionInput({
       data-answer
       className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm"
       value={String(value ?? "")}
+      autoComplete="off"
       autoCapitalize="off"
       autoCorrect="off"
       spellCheck={false}
+      data-gramm="false"
+      data-gramm_editor="false"
+      data-enable-grammarly="false"
       readOnly={off}
       aria-label={`${q.n}-savol javobi`}
       placeholder="Javobni yozing"

@@ -859,7 +859,9 @@ DEFAULT_EXAM_COIN_RULES = [
 # DIQQAT: bu FAQAT guruh SONI chegarasiga tegishli. Vaqt/xona
 # to'qnashuvi (bir vaqtda ikki guruh) hamma uchun taqiqligicha
 # qoladi — u jismonan imkonsiz narsa.
-GROUP_LIMIT_OVERRIDE = [FOUNDER, HR_MANAGER]
+# 2026-10-03, Jahongir: "shu joyda baribir ochilsin buyrug'i Stetch filial
+# rahbariga ham berilsin" — hamkor markaz rahbari (faqat o'z filialida).
+GROUP_LIMIT_OVERRIDE = [FOUNDER, HR_MANAGER, PARTNER_HEAD]
 
 # Faqat O'Z guruhini ko'radigan rollar. Bular uchun guruh, o'quvchi
 # va davomat manzil qatoridan ham ochilmaydi — biriktirilmagan guruh

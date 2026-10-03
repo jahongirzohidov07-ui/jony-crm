@@ -1163,7 +1163,7 @@ def _teacher_limit_guard(db: Session, teacher_id, group_id, user):
     Ruxsati borlar (roles.GROUP_LIMIT_OVERRIDE — asoschi va HR
     menejer) bu yerdan o'tib ketadi va yuqoridagi "warn" tufayli
     409 ogohlantirish oladi: "baribir saqlash" mumkin."""
-    if not teacher_id or user.role in tuple(roles.GROUP_LIMIT_OVERRIDE):
+    if not teacher_id or _has_role(user, roles.GROUP_LIMIT_OVERRIDE):
         return
     problems = [p for p in _orig_check_teacher_load(db, teacher_id, group_id)
                 if p.get("key") == "teacher_overload"]

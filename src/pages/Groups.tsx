@@ -413,11 +413,24 @@ export function GroupFormModal({
               onChange={(e) => setTeacherId(e.target.value)}
             >
               <option value="">— tanlanmagan —</option>
-              {teachers.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.full_name}
-                </option>
-              ))}
+              {/* FAQAT ISHLAYOTGAN va SHU FILIAL ustozlari, filiali bilan
+                  (2026-10-03: ikki "Rayxona" chalkashib, Zafardan
+                  ishdan ketgan ustoz Bekobod 1 guruhiga tanlangan edi —
+                  sentabr oyligi unga yozilib qoldi). Guruhda turgan
+                  ustoz ro'yxatda bo'lmasa ham ko'rinadi. */}
+              {teachers
+                .filter((t) =>
+                  String(t.id) === teacherId ||
+                  (t.is_active !== 0 &&
+                    (!branchId || !t.branch_ids?.length ||
+                      t.branch_ids.includes(Number(branchId)))))
+                .map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.full_name}
+                    {t.branches_label ? ` — ${t.branches_label}` : ""}
+                    {t.is_active === 0 ? " (ishdan ketgan)" : ""}
+                  </option>
+                ))}
             </select>
           </div>
 

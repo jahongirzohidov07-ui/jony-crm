@@ -12,3 +12,6 @@ httpx==0.28.1
 
 # Lug'at PDF (2026-09-18)
 reportlab==5.0.1
+
+# Web Push bildirishnomalari: shifrlash va VAPID imzosi (2026-10-03)
+cryptography==49.0.0

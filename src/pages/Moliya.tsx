@@ -15,7 +15,6 @@ import {
   type CollectionReport,
   type CashMethodBlock,
   type LedgerRow,
-  type PnlReport,
   type Expense,
   type Branch,
 } from "../lib/api";
@@ -107,31 +106,6 @@ function short(n: number): string {
   if (abs >= 1_000_000) return `${(n / 1_000_000).toFixed(1)} mln`;
   if (abs >= 1_000) return `${Math.round(n / 1_000)} ming`;
   return String(Math.round(n));
-}
-
-function Stat({
-  label, value, hint, tone = "slate", icon: Icon,
-}: {
-  label: string;
-  value: string;
-  hint?: string;
-  tone?: "slate" | "green" | "red";
-  icon?: React.ComponentType<{ size?: number; className?: string }>;
-}) {
-  const toneClass =
-    tone === "green" ? "text-emerald-600"
-      : tone === "red" ? "text-red-600"
-      : "text-slate-900";
-  return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4">
-      <div className="flex items-center gap-2 mb-1">
-        {Icon && <Icon size={14} className="text-slate-400" />}
-        <p className="text-xs text-slate-500">{label}</p>
-      </div>
-      <p className={`text-lg font-semibold ${toneClass}`}>{value}</p>
-      {hint && <p className="text-xs text-slate-400 mt-0.5">{hint}</p>}
-    </div>
-  );
 }
 
 function Note({ children }: { children: React.ReactNode }) {

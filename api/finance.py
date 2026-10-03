@@ -138,7 +138,7 @@ def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
     _check_pay_scope(db, user, teacher=t)
     tp = models.TeacherPayment(
         teacher_id=t.id, amount=abs(amount), kind="salary",
-        period=period or on.isoformat()[:7],
+        period=period or roles.default_pay_period(on),
         paid_on=on, method=method or "cash",
         branch_id=_pay_branch(db, user, t, branch_id),
         note=note, created_by=user.full_name)

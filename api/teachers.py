@@ -363,7 +363,8 @@ def pay_teacher(
 
     p = models.TeacherPayment(
         teacher_id=t.id, amount=payload.amount, kind=payload.kind,
-        period=payload.period or date.today().isoformat()[:7],
+        period=payload.period or roles.default_pay_period(
+            payload.date or roles.local_today(), payload.kind),
         paid_on=payload.date or date.today(),
         method=payload.method, note=payload.note,
         branch_id=_pay_branch(db, user, t, payload.branch_id),

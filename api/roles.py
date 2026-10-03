@@ -6245,3 +6245,14 @@ def blacklist_name_key(name) -> str | None:
     table = str.maketrans({c: "'" for c in "’‘ʻʼ`´"})
     words = str(name or "").translate(table).lower().split()
     return " ".join(sorted(words)) if len(words) >= 2 else None
+
+
+def default_pay_period(d, kind: str = "salary") -> str:
+    """Oylik QAYSI OY UCHUN — beruvchi tanlamasa (2026-10-03, Jahongir:
+    "sentabr oyinikini oktabrda berilsa ham sentabrniki bo'lib
+    yozilsin"). Oyning 1–15 kunlarida berilgan oylik — o'tgan oyniki;
+    avans esa doim shu oyniki (oy ichida oldindan beriladi)."""
+    if kind != "advance" and d.day <= 15:
+        y, m = (d.year - 1, 12) if d.month == 1 else (d.year, d.month - 1)
+        return f"{y:04d}-{m:02d}"
+    return f"{d.year:04d}-{d.month:02d}"

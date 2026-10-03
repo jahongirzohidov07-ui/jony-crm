@@ -106,6 +106,16 @@ for d in range(1, 13):
     for sid in kids:
         db.add(models.Attendance(student_id=sid, lesson_id=les.id, present=1))
 db.commit()
+# Examiner o'tgan oyda 1 ta imtihon oldi (kam — eng kami 400 000);
+# Ex2 umuman olmadi — 0 (Jahongir, 2026-10-03)
+EX2 = mk("ex2", roles.EXAMINER, ZA)
+db.add(models.StaffGrade(user_id=EX2, grade="junior"))
+ex = models.Exam(group_id=g.id, kind="unit", unit_no=1, date=date(PY, PM, 10),
+                 status="done", examiner_id=EX, title="t", max_score=50)
+db.add(ex); db.commit()
+db.add(models.ExamResult(exam_id=ex.id, student_id=kids[0], score=30,
+                         absent=0))
+db.commit()
 # Ustoz: 2 x 12 x 10 000 = 240 000; avans 90 000 shu oy uchun
 db.add(models.TeacherPayment(teacher_id=TID, amount=90_000, kind="advance",
                              period=P, paid_on=date(PY, PM, 20),
@@ -157,7 +167,8 @@ ck("ustoz: 240k, avans 90k, qoldi 150k, qisman",
     rows["Elena"]["status"]), (240_000, 90_000, 150_000, "partial"))
 ck("HR fiks 3 mln, berilmagan", (rows["Hr"]["accrued"], rows["Hr"]["status"]),
    (3_000_000, "unpaid"))
-ck("examiner bor (minimal oylik)", rows["Ex"]["accrued"] > 0, True)
+ck("kam imtihon olgan examiner — 400 000", rows["Ex"]["accrued"], 400_000)
+ck("imtihon olmagan examiner — ro'yxatda yo'q (0)", "Ex2" in rows, False)
 EXA = rows["Ex"]["accrued"]
 ck("Bekobod buxgalteri ham (barcha filiallar)", "Bkhr" in rows, True)
 

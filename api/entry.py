@@ -2652,7 +2652,8 @@ def staff_salary_pay(payload: dict, db: Session = Depends(get_db),
             and not M._in_user_branches(db, user, u.branch_id)):
         raise HTTPException(403, "Faqat o'z filialingiz xodimiga "
                                  "oylik bera olasiz")
-    period = payload.get("period") or date.today().isoformat()[:7]
+    period = payload.get("period") or roles.default_pay_period(
+        roles.local_today(), payload.get("kind") or "salary")
     row = _SSP(user_id=u.id, amount=round(amount, 2), kind=kind,
                period=period, paid_on=date.today(),
                method=payload.get("method") or "cash",
@@ -7305,6 +7306,36 @@ def _dsc_fix_month(db: Session, today) -> list:
     return done
 
 
+def _salary_period_fix(db: Session, d0, d1, to_period: str) -> int:
+    """[d0, d1] kunlari berilgan oyliklarni (avans emas) to_period ga
+    o'tkazadi: ustoz (TeacherPayment), examiner/support
+    (StaffSalaryPayment), xodim (Xarajat -> Oylik)."""
+    cur = d0.strftime("%Y-%m")
+    n = 0
+    for p in db.query(models.TeacherPayment).filter(
+            models.TeacherPayment.paid_on >= d0,
+            models.TeacherPayment.paid_on <= d1,
+            models.TeacherPayment.kind != "advance").all():
+        if p.period in (None, "", cur):
+            p.period = to_period
+            n += 1
+    SSP = getattr(models, "StaffSalaryPayment", None)
+    if SSP is not None:
+        for p in db.query(SSP).filter(SSP.paid_on >= d0, SSP.paid_on <= d1,
+                                      SSP.kind != "advance").all():
+            if p.period in (None, "", cur):
+                p.period = to_period
+                n += 1
+    for e in db.query(models.Expense).filter(
+            models.Expense.staff_user_id.isnot(None),
+            models.Expense.date >= d0, models.Expense.date <= d1).all():
+        if e.period in (None, "", cur):
+            e.period = to_period
+            n += 1
+    db.commit()
+    return n
+
+
 def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     """Login va kunlik cron shu funksiyani chaqiradi.
 
@@ -7350,6 +7381,23 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # BIR MARTALIK (2026-10-02, Jahongir: "kam dars qaytarilgan farq
     # bo'lsa bu chegirmalarni olib tashla") — 1-oktabrda o'chirilgan
     # _mc_refund_prev yozgan "+summa chegirma" qatorlari arxivga.
+    # BIR MARTALIK (2026-10-03, Jahongir: "sentabr oyinikini oktabrda
+    # berilsa ham sentabrniki bo'lib yozilsin") — 1–15 oktabrda berilgan
+    # oyliklar (avans emas) sentabrniki bo'ladi.
+    sp_key = "salary_period_fix_2026-10"
+    if not _sd(db, sp_key):
+        try:
+            _n = _salary_period_fix(db, date(2026, 10, 1), date(2026, 10, 15),
+                                    "2026-09")
+            _sm(db, sp_key)
+            if _n:
+                audit.log(db, None, entity="salary", action="period_fix",
+                          entity_label="Oktabr boshida berilgan oyliklar "
+                                       "sentabrniki qilindi",
+                          new_value=_n, commit=True)
+                print(f"[oylik] sentabrga o'tkazilgan to'lovlar: {_n}")
+        except Exception:
+            db.rollback()
     lr_key = "lrfix_cancel_2026-10"
     if not _sd(db, lr_key):
         try:

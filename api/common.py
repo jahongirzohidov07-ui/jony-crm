@@ -6516,6 +6516,10 @@ def _examiner_month(db: Session, user_id: int, y: int, m: int) -> dict:
     adj_total = round(sum(a.points or 0 for a in adjs), 2)
     net = round(base_total - pen_total - adj_total, 2)
     pay = roles.examiner_salary(net)
+    # 2026-10-03, Jahongir: "imtihon olmasa 0 tursin, umuman olmasa;
+    # kam olsa 400 bo'ladi". Eng kam oylik faqat ISHLAGAN examinerga.
+    if not rows:
+        pay = {**pay, "salary": 0, "clamped_min": False, "no_exams": True}
     return {
         "period": f"{y:04d}-{m:02d}",
         "exams": rows,

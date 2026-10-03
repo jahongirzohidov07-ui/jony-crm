@@ -45,9 +45,11 @@ st = models.Branch(name="Stetch", is_partner=1)
 za = models.Branch(name="Zafar")
 db.add_all([st, za]); db.commit()
 ST, ZA = st.id, za.id
-for login, br in (("stetch", ST), ("zafar", ZA)):
+for login, br, role in (("stetch", ST, roles.BRANCH_MANAGER),
+                        ("zafar", ZA, roles.BRANCH_MANAGER),
+                        ("husayn", ST, roles.ACADEMIC_HEAD)):
     db.add(models.User(username=login, password_hash=hash_password("x"),
-                       full_name=login, role=roles.BRANCH_MANAGER,
+                       full_name=login, role=role,
                        branch_id=br, is_active=1))
 db.commit()
 
@@ -72,10 +74,15 @@ def H(u):
         "username": u, "password": "x"}).json()["access_token"]}
 
 
+_n = [0]
+
+
 def new_group(h, tid, br, force=False):
+    _n[0] += 1
     return c.post("/api/groups" + ("?force=true" if force else ""), headers=h,
-                  json={"name": f"Yangi{tid}{force}", "teacher_id": tid,
-                        "branch_id": br, "lesson_time": "18:00",
+                  json={"name": f"Yangi{_n[0]}", "teacher_id": tid,
+                        "branch_id": br,
+                        "lesson_time": f"{8 + 3 * _n[0]:02d}:00",
                         "lesson_days": "tue,thu,sat"})
 
 
@@ -85,6 +92,13 @@ r = new_group(hs, TS, ST)
 ck("ogohlantirish 409 (to'xtatilmaydi)", r.status_code, 409)
 r = new_group(hs, TS, ST, force=True)
 ck("baribir saqlash — ochildi", r.status_code, 200)
+
+print("\n=== 1b. Stetch egasi (boshqa lavozimda) ===")
+hh = H("husayn")
+r = new_group(hh, TS, ST)
+ck("Husayn: ogohlantirish 409", r.status_code, 409)
+ck("Husayn: baribir saqlash", new_group(hh, TS, ST, force=True).status_code,
+   200)
 
 print("\n=== 2. Oddiy filial rahbari ===")
 r = new_group(H("zafar"), TZ, ZA, force=True)

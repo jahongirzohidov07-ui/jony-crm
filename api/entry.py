@@ -1157,13 +1157,33 @@ def _check_teacher_load_soft(db, teacher_id, group_id):
 M._check_teacher_load = _check_teacher_load_soft
 
 
-def _teacher_limit_guard(db: Session, teacher_id, group_id, user):
+def _own_partner_branch(db: Session, user, branch_id) -> bool:
+    """Xodimning ASOSIY ish joyi hamkor markaz (Stetch) va guruh ham
+    shu markazniki (2026-10-03, Jahongir: Stetch egasi Husayn uchun
+    "baribir ochilsin"). Lavozimidan qat'i nazar — hamkor markazni
+    o'zi boshqaradi; boshqa filialga bu ruxsat o'tmaydi."""
+    if not user.branch_id:
+        return False
+    b = db.query(models.Branch).get(user.branch_id)
+    if not b or not getattr(b, "is_partner", 0):
+        return False
+    return not branch_id or int(branch_id) == user.branch_id
+
+
+def _teacher_limit_guard(db: Session, teacher_id, group_id, user,
+                         branch_id=None):
     """Chegaradan oshganda RUXSATI YO'Q rollarga qattiq taqiq.
 
     Ruxsati borlar (roles.GROUP_LIMIT_OVERRIDE — asoschi va HR
-    menejer) bu yerdan o'tib ketadi va yuqoridagi "warn" tufayli
-    409 ogohlantirish oladi: "baribir saqlash" mumkin."""
+    menejer; o'z hamkor markazida — uning xodimi) bu yerdan o'tib
+    ketadi va yuqoridagi "warn" tufayli 409 ogohlantirish oladi:
+    "baribir saqlash" mumkin."""
     if not teacher_id or _has_role(user, roles.GROUP_LIMIT_OVERRIDE):
+        return
+    if group_id and not branch_id:
+        g = db.query(models.Group).get(group_id)
+        branch_id = g.branch_id if g else None
+    if _own_partner_branch(db, user, branch_id):
         return
     problems = [p for p in _orig_check_teacher_load(db, teacher_id, group_id)
                 if p.get("key") == "teacher_overload"]
@@ -1184,7 +1204,8 @@ if _orig_create_group is not None:
                         force: bool = False,
                         db: Session = Depends(get_db),
                         user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR, roles.SALES_MANAGER))):
-        _teacher_limit_guard(db, payload.teacher_id, None, user)
+        _teacher_limit_guard(db, payload.teacher_id, None, user,
+                             payload.branch_id or user.branch_id)
         return _orig_create_group(payload=payload, force=force,
                                   db=db, user=user)
 

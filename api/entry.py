@@ -7327,6 +7327,58 @@ def _dsc_fix_month(db: Session, today) -> list:
     return done
 
 
+def _fix_washington_teacher(db: Session) -> int:
+    """BIR MARTALIK (2026-10-03, Jahongir tasdiqladi: "hop"). Bekobod 1
+    Washington guruhiga adashib Zafardan ketgan "Xoshimova Rayxona"
+    tanlangan edi; guruh keyin Rayxona Abdujalilovaga to'g'rilangan, lekin
+    sentabr darslari Xoshimovada qolgan. O'sha darslar guruhning hozirgi
+    ustoziga o'tadi va sentabr oyligi muhri qayta hisoblanadi.
+    Xavfsizlik: guruhning hozirgi ustozi Abdujalilova bo'lsagina."""
+    from sqlalchemy import func as _f
+    b = db.query(models.Branch).filter(
+        _f.lower(models.Branch.name) == "bekobod 1").first()
+    if not b:
+        return 0
+    g = db.query(models.Group).filter(
+        models.Group.branch_id == b.id,
+        _f.lower(models.Group.name) == "washington").first()
+    new = db.query(models.Teacher).get(g.teacher_id) if g and g.teacher_id else None
+    if not g or not new or "abdujalilova" not in (new.full_name or "").lower():
+        return 0
+    olds = [t for t in db.query(models.Teacher).all()
+            if "xoshimova" in (t.full_name or "").lower()
+            and "rayxona" in (t.full_name or "").lower()]
+    if not olds:
+        return 0
+    old_ids = [t.id for t in olds]
+    les = db.query(models.Lesson).filter(
+        models.Lesson.group_id == g.id,
+        models.Lesson.teacher_id.in_(old_ids),
+        models.Lesson.date >= date(2026, 9, 1)).all()
+    for l in les:
+        l.teacher_id = new.id
+    db.commit()
+    if les:
+        audit.log(db, None, entity="group", action="update", entity_id=g.id,
+                  entity_label=g.name, branch_id=g.branch_id,
+                  field="darslar ustozi",
+                  old_value=", ".join(t.full_name for t in olds),
+                  new_value=new.full_name,
+                  note=f"{len(les)} ta dars (sentabrdan) — adashib tanlangan "
+                       "ustozdan guruhning hozirgi ustoziga", commit=True)
+        # Sentabr muhri FAQAT shu ikki ustozniki qayta hisoblanadi
+        # (boshqa ustozlar muhriga tegilmaydi): eskisi o'chadi, keyin
+        # _seal_month muhri yo'qlarnigina muhrlaydi; darsi qolmagan
+        # Xoshimovaga yangi muhr tushmaydi.
+        db.query(models.PayrollSeal).filter(
+            models.PayrollSeal.period == "2026-09",
+            models.PayrollSeal.teacher_id.in_(old_ids + [new.id])).delete(
+                synchronize_session=False)
+        db.commit()
+        _C._seal_month(db, 2026, 9, by="tuzatish (Washington)")
+    return len(les)
+
+
 def _salary_period_fix(db: Session, d0, d1, to_period: str) -> int:
     """[d0, d1] kunlari berilgan oyliklarni (avans emas) to_period ga
     o'tkazadi: ustoz (TeacherPayment), examiner/support
@@ -7405,6 +7457,15 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # BIR MARTALIK (2026-10-03, Jahongir: "sentabr oyinikini oktabrda
     # berilsa ham sentabrniki bo'lib yozilsin") — 1–15 oktabrda berilgan
     # oyliklar (avans emas) sentabrniki bo'ladi.
+    wf_key = "fix_washington_teacher_2026-10"
+    if not _sd(db, wf_key):
+        try:
+            _n = _fix_washington_teacher(db)
+            _sm(db, wf_key)
+            if _n:
+                print(f"[oylik] Washington darslari to'g'rilandi: {_n}")
+        except Exception:
+            db.rollback()
     sp_key = "salary_period_fix_2026-10"
     if not _sd(db, sp_key):
         try:

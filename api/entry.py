@@ -11172,3 +11172,6 @@ import month_close  # noqa: E402,F401
 
 # WEB PUSH — telefonga bildirishnoma (2026-10-03)
 import push  # noqa: E402,F401
+
+# Imtihon natijasi va xatolar tahlili — o'quvchiga (2026-10-03)
+import exam_review  # noqa: E402,F401

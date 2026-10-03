@@ -22,6 +22,7 @@ Tekshiriladi:
   G. Ilovada hisobi yo'q o'quvchi uchun eski (link) tartib ishlayveradi;
   H. Link yopilsa: holat "closed", kirish 410.
 """
+import json
 import os
 import sys
 import tempfile
@@ -328,6 +329,54 @@ res = {x["student_id"]: x for x in
 ck("guruh imtihonida o'z qatorida 90%", res[ALI]["percent"], 90.0)
 ck("umuman kirmagan Bobur — kelmadi (avtomat)",
    bool(res.get(BOBUR, {}).get("absent")), True)
+
+print("\n=== E2. NATIJA VA XATOLAR TAHLILI (2026-10-03) ===")
+import exam_review as _er
+_seen = {}
+
+
+def _fake_ai(system, user_text):
+    data = json.loads(user_text.split("\n", 1)[1])
+    _seen["items"] = data["items"]
+    # Ataylab to'g'ri javobni ham yozadi — tozalanishi kerak
+    return json.dumps({"items": [
+        {"id": it["id"], "explain": "Qoida shunday. To'g'ri: "
+         + (it["correct_for_teacher_only"] or "")} for it in data["items"]]})
+
+
+_er.AI["call"] = _fake_ai
+lst = client.get("/api/student/results", headers=HA).json()["rows"]
+mine_r = [x for x in lst if x["exam_id"] == EID]
+ck("natijalar ro'yxatida, tahlil bor", (len(mine_r), mine_r[0]["has_review"]),
+   (1, True))
+rv = client.get(f"/api/student/results/{EID}/review", headers=HA).json()
+ck("27/30, 3 ta xato", (rv["online_correct"], rv["online_total"],
+                        len(rv["mistakes"])), (27, 30, 3))
+m0 = rv["mistakes"][0]
+ck("savolning o'zi, o'z javobi, tahlil bor",
+   (bool(m0["q"]), bool(m0["your_answer"]), bool(m0["explain"])),
+   (True, True, True))
+ck("to'g'ri javob kaliti yo'q", any("correct" in m for m in rv["mistakes"]),
+   False)
+_corr = [it["correct_for_teacher_only"] for it in _seen["items"]]
+_leak = any((c.split(")")[0] + ")" in m["explain"]) or (
+            len(c.split(") ", 1)[-1]) >= 3
+            and c.split(") ", 1)[-1].lower() in m["explain"].lower())
+            for c, m in zip(_corr, rv["mistakes"]) if c)
+ck("tushuntirishda to'g'ri variant harfi va matni yashirilgan", _leak, False)
+ck("_scrub: harf va variant so'zi", _er._scrub(
+    "To'g'ri javob B) is. B variant to'g'ri, variant B yaxshi.", "B) is"),
+   "To'g'ri javob … is. … to'g'ri, … yaxshi.")
+ck("_scrub: uzun javob matni", _er._scrub("Bu yerda have been kerak", "C) have been"),
+   "Bu yerda … kerak")
+ck("mavzu kesimi bor", len(rv["topics"]) >= 1, True)
+_er.AI["call"] = lambda *a: (_ for _ in ()).throw(RuntimeError("x"))
+rv2 = client.get(f"/api/student/results/{EID}/review", headers=HA).json()
+ck("ikkinchi ochilishda saqlangan tahlil (AI chaqirilmaydi)",
+   rv2["mistakes"][0]["explain"], m0["explain"])
+ck("boshqa o'quvchi (Kamola) tahlil ololmaydi",
+   client.get(f"/api/student/results/{EID}/review", headers=HK).status_code,
+   404)
 # Avvaldan bor /api/student/exams (tasdiqlangan natijalar tarixi)
 # buzilmagan — yangi ro'yxat alohida manzilda (/exams/online)
 r = client.get("/api/student/exams", headers=HA)

@@ -154,6 +154,7 @@ const StudentPayments = lazy(() => import("./pages/student/StudentPayments"));
 const StudentCertificates = lazy(
   () => import("./pages/student/StudentCertificates"),
 );
+const StudentResults = lazy(() => import("./pages/student/StudentResults"));
 const StudentGrammar = lazy(() => import("./pages/student/StudentGrammar"));
 const StudentVocab = lazy(() => import("./pages/student/StudentVocab"));
 const StudentPractice = lazy(
@@ -426,6 +427,8 @@ function AppRoutes() {
           <Route path="settings" element={<StudentSettings />} />
           <Route path="payments" element={<StudentPayments />} />
           <Route path="certificates" element={<StudentCertificates />} />
+          <Route path="results" element={<StudentResults />} />
+          <Route path="results/:examId" element={<StudentResults />} />
           <Route path="profile" element={<StudentProfile />} />
         </Route>
         {/* JONY TEACHER endi JonyOS ichida (2026-09-27, Jahongir: "Jony

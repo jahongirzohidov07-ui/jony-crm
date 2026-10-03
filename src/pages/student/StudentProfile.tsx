@@ -485,6 +485,18 @@ export default function StudentProfile() {
           <ChevronRight size={17} className="text-slate-500 shrink-0" />
         </Link>
 
+        {/* Imtihon natijalari va xatolar tahlili (2026-10-03) */}
+        <Link to="/student/results"
+          className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
+          style={card}>
+          <StudentIcon name="mission" size={40} />
+          <div className="min-w-0 flex-1">
+            <p className="text-[15px] font-bold text-white">Imtihon natijalarim</p>
+            <p className="text-[13px] text-brand-300">Ball va xatolar tahlili</p>
+          </div>
+          <ChevronRight size={17} className="text-slate-500 shrink-0" />
+        </Link>
+
         <Link to="/student/certificates"
           className="rounded-2xl border p-4 flex items-center gap-3 active:scale-[0.98] transition"
           style={card}>

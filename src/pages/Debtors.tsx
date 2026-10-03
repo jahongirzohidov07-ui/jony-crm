@@ -10,6 +10,7 @@ import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
 import { StudentPayButton } from "../components/QuickPayment";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
+import { monthLabel } from "../lib/examReport";
 
 const TONE: Record<string, string> = {
   slate: "bg-slate-100 text-slate-600",
@@ -27,6 +28,9 @@ const TONE: Record<string, string> = {
 export default function Debtors() {
   const [data, setData] = useState<DebtorList | null>(null);
   const [branchId, setBranchId] = useState<number | null>(null);
+  // Oy kesimi (2026-10-03, Jahongir: "o'tgan oy, undan oldingi oyda
+  // qolib ketgan qarzdorlarni ko'rish")
+  const [period, setPeriod] = useState<string>("");
   const [filter, setFilter] = useState<string>("");
   const [contact, setContact] = useState<DebtorRow | null>(null);
   const [history, setHistory] = useState<number | null>(null);
@@ -35,11 +39,12 @@ export default function Debtors() {
   function load() {
     setLoading(true);
     api
-      .get<DebtorList>(`/debtors?x=1${branchParam(branchId)}`)
+      .get<DebtorList>(`/debtors?x=1${branchParam(branchId)}${
+        period ? `&period=${period}` : ""}`)
       .then(setData)
       .finally(() => setLoading(false));
   }
-  useEffect(load, [branchId]);
+  useEffect(load, [branchId, period]);
 
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
   if (!data) return null;
@@ -58,9 +63,11 @@ export default function Debtors() {
     <div data-guide="debtors-table">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
         <Stat
-          label="Jami qarz"
-          value={formatSom(data.total_debt)}
-          hint={`${data.count} ta o'quvchi`}
+          label={period ? `${monthLabel(period)} qarzi` : "Jami qarz"}
+          value={formatSom(period ? data.period_debt ?? 0 : data.total_debt)}
+          hint={period
+            ? `${data.count} ta o'quvchi · umumiy qarzi ${formatSom(data.total_debt)}`
+            : `${data.count} ta o'quvchi`}
           tone="red"
         />
         <Stat
@@ -128,6 +135,22 @@ export default function Debtors() {
           </button>
         )}
         <BranchPicker value={branchId} onChange={setBranchId} />
+        <select
+          value={period}
+          onChange={(e) => setPeriod(e.target.value)}
+          className="px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm"
+          title="Qarz qaysi oydan qolgan"
+        >
+          <option value="">Barcha oylar</option>
+          {(data.months || []).map((m) => (
+            <option key={m.period} value={m.period}>
+              {monthLabel(m.period)} — {m.count} ta · {formatSom(m.sum)}
+            </option>
+          ))}
+          {period && !(data.months || []).some((m) => m.period === period) && (
+            <option value={period}>{monthLabel(period)}</option>
+          )}
+        </select>
         <span className="text-sm text-slate-500">{rows.length} ta</span>
       </div>
 
@@ -212,14 +235,34 @@ export default function Debtors() {
                   {r.last_note && (
                     <p className="text-xs text-slate-600 mt-1">{r.last_note}</p>
                   )}
+                  {(r.months?.length ?? 0) > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1.5">
+                      {r.months!.map((m) => (
+                        <span key={m.period}
+                          className={`px-1.5 py-0.5 rounded text-[11px] tabular-nums ${
+                            m.period === period
+                              ? "bg-red-100 text-red-700 font-semibold"
+                              : "bg-slate-100 text-slate-600"}`}>
+                          {monthLabel(m.period)}: {formatSom(m.amount)}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
                   <div className="text-right mr-1">
-                    <p className="text-xs text-slate-500">Qarzi</p>
-                    <p className="text-base font-semibold text-red-600">
-                      {formatSom(r.debt)}
+                    <p className="text-xs text-slate-500">
+                      {period ? `${monthLabel(period)} qarzi` : "Qarzi"}
                     </p>
+                    <p className="text-base font-semibold text-red-600">
+                      {formatSom(period ? r.period_debt ?? 0 : r.debt)}
+                    </p>
+                    {period && r.period_debt !== r.debt && (
+                      <p className="text-[11px] text-slate-400">
+                        jami {formatSom(r.debt)}
+                      </p>
+                    )}
                   </div>
                   <button
                     onClick={() =>

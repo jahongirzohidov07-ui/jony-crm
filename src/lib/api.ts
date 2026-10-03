@@ -2837,6 +2837,9 @@ export interface DebtorRow {
   promised_amount?: number | null;
   promise_broken: boolean;
   days_since_contact?: number | null;
+  /** Qarz qaysi oylardan qolgan (eski oy birinchi) */
+  months?: { period: string; amount: number }[];
+  period_debt?: number | null;
 }
 
 export interface DebtorList {
@@ -2848,6 +2851,9 @@ export interface DebtorList {
   never_contacted: number;
   results: { key: string; label: string; tone: string }[];
   aging: { key: string; label: string; count: number; sum: number }[];
+  period?: string | null;
+  months?: { period: string; count: number; sum: number }[];
+  period_debt?: number | null;
 }
 
 export interface DebtContactRow {

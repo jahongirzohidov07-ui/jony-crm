@@ -2261,9 +2261,75 @@ def _last_charge_date(db: Session, student_id: int) -> date | None:
            .order_by(models.Payment.created_at.desc()).first())
     return row.created_at.date() if row and row.created_at else None
 
+def _debt_by_period(db: Session, student_ids) -> dict:
+    """Qarzdor qarzi QAYSI OYLARDAN qolgan (2026-10-03, Jahongir: "oylar
+    kesimida tanlash — o'tgan oy, undan oldingi oyda qolib ketgan
+    qarzdorlarni ko'rish").
+
+    {student_id: {"2026-09": 540000, ...}}. Balans bilan AYNAN mos:
+    har manfiy yozuv (yechilgan oylik, qaytarilgan pul) o'z oyiga qarz;
+    oyi ko'rsatilgan chegirma avval o'sha oyni yopadi; qolgan barcha
+    musbat pul (to'lovlar) eng eski ochiq oydan boshlab yopadi (FIFO —
+    "Pul oqimi → Oy kesimida" bilan bir xil qoida). Qoldiqlar yig'indisi
+    = |balans|."""
+    ids = list(student_ids)
+    out: dict = {}
+    if not ids:
+        return out
+    off = timedelta(hours=roles.TIMEZONE_OFFSET_HOURS)
+
+    def per(p):
+        if p.period:
+            return p.period
+        dt = p.created_at
+        if dt is None:
+            return ""
+        if isinstance(dt, datetime):
+            dt = dt + off
+        return dt.strftime("%Y-%m")
+
+    for i in range(0, len(ids), 900):
+        rows = (db.query(models.Payment)
+                .filter(models.Payment.student_id.in_(ids[i:i + 900]))
+                .order_by(models.Payment.student_id, models.Payment.id).all())
+        by: dict = {}
+        for p in rows:
+            by.setdefault(p.student_id, []).append(p)
+        for sid, ps in by.items():
+            owed: dict = {}
+            pool = 0.0
+            disc = []
+            for p in ps:
+                amt = float(p.amount or 0)
+                if amt < 0:
+                    P = per(p)
+                    owed[P] = owed.get(P, 0.0) - amt
+                elif amt > 0:
+                    if p.kind == "discount" and p.period:
+                        disc.append((p.period, amt))
+                    else:
+                        pool += amt
+            for P, amt in disc:
+                take = min(amt, owed.get(P, 0.0))
+                if take > 0:
+                    owed[P] -= take
+                pool += amt - take
+            for P in sorted(owed):
+                if pool <= 0.005:
+                    break
+                take = min(pool, owed[P])
+                owed[P] -= take
+                pool -= take
+            res = {P: round(v, 2) for P, v in owed.items() if v > 0.5}
+            if res:
+                out[sid] = res
+    return out
+
+
 @router.get("/api/debtors")
 def list_debtors(
     branch_id: int | None = None,
+    period: str | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.DEBTOR_ACCESS)),
 ):
@@ -2301,12 +2367,19 @@ def list_debtors(
                 if mx is not None:
                     _lc[sid] = mx.date() if hasattr(mx, "date") else mx
 
+    _bp = _debt_by_period(db, _debtor_ids)
+    if period and not re.fullmatch(r"\d{4}-\d{2}", period):
+        period = None
+
     rows = []
     for s in students:
         bal = _bal.get(s.id, 0.0)
         if bal >= 0:
             continue
         debt = abs(bal)
+        months = _bp.get(s.id) or {}
+        if period and period not in months:
+            continue
         since = _lc.get(s.id) or s.enrolled_date or today
         days = (today - since).days
         key, label, tone = roles.debt_urgency(days)
@@ -2347,6 +2420,10 @@ def list_debtors(
             "promise_broken": broken,
             "days_since_contact": ((today - c.contacted_on).days
                                    if c and c.contacted_on else None),
+            # Qarz qaysi oylardan (eski oy birinchi)
+            "months": [{"period": P, "amount": a}
+                       for P, a in sorted(months.items())],
+            "period_debt": months.get(period) if period else None,
         })
 
     # Tartib: va'dasi buzilgan → bugun va'da qilgan → hech bog'lanilmagan
@@ -2360,8 +2437,27 @@ def list_debtors(
         )
     rows.sort(key=sort_key)
 
+    # Oy tanlagich uchun: har oyda nechta qarzdor, qancha (filial kesimida,
+    # oy filtridan oldin)
+    _mon: dict = {}
+    for s in students:
+        if _bal.get(s.id, 0.0) >= 0:
+            continue
+        for P, a in (_bp.get(s.id) or {}).items():
+            m = _mon.setdefault(P, {"period": P, "count": 0, "sum": 0.0})
+            m["count"] += 1
+            m["sum"] += a
+
     return {
         "rows": rows,
+        "period": period,
+        "months": [{"period": m["period"], "count": m["count"],
+                    "sum": round(m["sum"], 0)}
+                   for m in sorted(_mon.values(), key=lambda m: m["period"],
+                                   reverse=True)],
+        # Oy tanlansa — faqat o'sha oydan qolgan qarz yig'iladi
+        "period_debt": (round(sum(r["period_debt"] or 0 for r in rows), 2)
+                        if period else None),
         "total_debt": round(sum(r["debt"] for r in rows), 2),
         "count": len(rows),
         "broken_promises": sum(1 for r in rows if r["promise_broken"]),

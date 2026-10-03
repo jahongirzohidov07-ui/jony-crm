@@ -1134,7 +1134,7 @@ def admin_kpi(
 
 
 def compute_admin_kpi(db: Session, user, year: int, month: int,
-                      admin_roles=None):
+                      admin_roles=None, branch_id: int | None = None):
     """Adminlar KPI hisobi — BITTA joyda.
 
     2026-08-30: bu hisob ilgari IKKI joyda edi (dashboard.py va
@@ -1153,6 +1153,10 @@ def compute_admin_kpi(db: Session, user, year: int, month: int,
     )
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         admins = admins.filter(models.User.branch_id == user.branch_id)
+    elif branch_id:
+        # Tepada filial tanlansa — faqat shu filial xodimlari (2026-10-03,
+        # Jahongir). Har bir adminning hisobi o'zgarmaydi, faqat ro'yxat.
+        admins = admins.filter(models.User.branch_id == branch_id)
     admins = admins.order_by(models.User.full_name).all()
     if not admins:
         return schemas.AdminKpiResult(period=period, rows=[])

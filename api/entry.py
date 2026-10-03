@@ -1962,7 +1962,8 @@ _drop_route("/api/kpi/admins", "GET")
 
 
 @app.get("/api/kpi/admins", response_model=schemas.AdminKpiResult)
-def admin_kpi_v2(year: int, month: int, db: Session = Depends(get_db),
+def admin_kpi_v2(year: int, month: int, branch_id: int | None = None,
+                 db: Session = Depends(get_db),
                  user=Depends(require_role(*roles.KPI_VIEW))):
     """Adminlar KPI. Farqi bittagina: ro'yxatga "Administrator (qabul)"
     roli ham kiradi. Hisobning O'ZI dashboard.compute_admin_kpi da.
@@ -1978,7 +1979,8 @@ def admin_kpi_v2(year: int, month: int, db: Session = Depends(get_db),
     YANGI MIJOZ bonusi — SHAXSIY (Jahongir, 2026-08-30: "kim yangi
     to'lov qildirsa o'ziga hisoblanishi kerak")."""
     return M.compute_admin_kpi(db, user, year, month,
-                               admin_roles=_ADMIN_ROLES)
+                               admin_roles=_ADMIN_ROLES,
+                               branch_id=branch_id)
 
 
 # MyProfile ham shu hisobdan foydalanadi

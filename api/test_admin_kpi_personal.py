@@ -192,6 +192,26 @@ ck("admin faqat o'z qatorini ko'radi",
    [x["full_name"] for x in r3["rows"]], ["Zohidova Shaxlo"])
 
 
+print("\n=== Filial tanlansa — faqat shu filial adminlari ===")
+_s = SessionLocal() if "SessionLocal" in globals() else db
+_b2 = models.Branch(name="Bekobod 1"); _s.add(_b2); _s.commit()
+_s.add(models.User(username="bek_admin", password_hash=hash_password("x"),
+                   role=roles.SALES_MANAGER, full_name="Bekobod Admin",
+                   branch_id=_b2.id, is_active=1, fix_salary=1_000_000))
+_s.commit()
+_all = {x["full_name"] for x in c.get(
+    f"/api/kpi/admins?year={YIL}&month={OY}", headers=HF).json()["rows"]}
+_za = {x["full_name"] for x in c.get(
+    f"/api/kpi/admins?year={YIL}&month={OY}&branch_id={b.id}",
+    headers=HF).json()["rows"]}
+_bk = [x["full_name"] for x in c.get(
+    f"/api/kpi/admins?year={YIL}&month={OY}&branch_id={_b2.id}",
+    headers=HF).json()["rows"]]
+ck("barcha filiallar — Bekobod admini ham", "Bekobod Admin" in _all, True)
+ck("Zafar — Bekobod admini yo'q", "Bekobod Admin" in _za, False)
+ck("Zafar — Shaxlo bor", "Zohidova Shaxlo" in _za, True)
+ck("Bekobod 1 — faqat o'z admini", _bk, ["Bekobod Admin"])
+
 print("\n" + "=" * 60)
 if fails:
     print("YIQILGAN TEKSHIRUVLAR:", len(fails))

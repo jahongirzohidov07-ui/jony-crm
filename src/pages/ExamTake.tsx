@@ -87,6 +87,8 @@ type Mine = {
   submitted_at: string | null;
   pending: boolean;
   paper_max: number;
+  /** Serverda saqlangan javoblar (boshqa telefondan kirganda) */
+  answers?: Record<string, unknown> | null;
 };
 
 /**
@@ -173,6 +175,12 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
           if (mine?.status === "in_progress" && mine.key) {
             store(`exam:${token}:key`, mine.key);
             setKey(mine.key);
+            // BOSHQA TELEFONDAN KIRDI (2026-10-03): serverdagi javoblar
+            // qaytadi; shu telefonda yozilganlari ustun turadi.
+            const srv = mine.answers;
+            if (srv && Object.keys(srv).length) {
+              setAnswers((prev) => ({ ...(srv as typeof prev), ...prev }));
+            }
           } else if (mine && ["placed", "duplicate", "pending"].includes(mine.status)) {
             // Writing AI belgisi saqlanib qolsin (2026-09-28): server
             // "my" javobida yo'q, shu brauzerdagi yozuvdan olinadi
@@ -293,6 +301,33 @@ export default function ExamTake({ inApp = false }: { inApp?: boolean }) {
     },
     [key, answers, pub, token]
   );
+
+  // EKRAN O'CHMASIN (2026-10-03): telefon test davomida o'z-o'zidan
+  // qulflansa "sahifadan chiqdi" deb sanalib, o'quvchi chiqarib
+  // yuborilardi. Wake Lock — qo'llab-quvvatlamagan brauzerda jim o'tadi.
+  useEffect(() => {
+    if (done || state !== "running") return;
+    type WL = { release: () => Promise<void> };
+    const nav = navigator as Navigator & {
+      wakeLock?: { request: (t: "screen") => Promise<WL> };
+    };
+    if (!nav.wakeLock) return;
+    let lock: WL | null = null;
+    let alive = true;
+    const grab = () => {
+      if (document.visibilityState !== "visible") return;
+      nav.wakeLock!.request("screen").then((l) => {
+        if (alive) lock = l; else l.release().catch(() => {});
+      }).catch(() => {});
+    };
+    grab();
+    document.addEventListener("visibilitychange", grab);
+    return () => {
+      alive = false;
+      document.removeEventListener("visibilitychange", grab);
+      lock?.release().catch(() => {});
+    };
+  }, [done, state]);
 
   // Javoblarni 15 soniyada bir serverga saqlash — telefon o'chib qolsa ham
   useEffect(() => {

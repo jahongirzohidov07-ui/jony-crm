@@ -246,6 +246,12 @@ ck("vaqt bor", (st["state"], bool(st["ends_at"]), st["duration_min"]),
 r = client.post(f"/api/public/exam/{TOKEN}/save",
                 json={"key": KEY, "answers": correct_answers(5)})
 ck("oraliq saqlash (eski yo'l, kalit bilan)", r.json(), {"ok": True})
+# BOSHQA TELEFON (2026-10-03): yangi telefon bo'sh {} yuboradi —
+# serverdagi 30 ta javob o'chmasligi va holatda qaytishi kerak
+r = client.post(f"/api/public/exam/{TOKEN}/save", json={"key": KEY, "answers": {}})
+ck("bo'sh saqlash ham 200", r.json(), {"ok": True})
+st = client.get(f"/api/student/exam/{TOKEN}", headers=HA).json()
+ck("boshqa telefonda javoblar qaytadi (30 ta)", len(st["my"]["answers"] or {}), 30)
 r = client.post(f"/api/public/exam/{TOKEN}/away", json={"key": KEY, "seconds": 3})
 ck("chiqish qayd qilinadi", r.json().get("away_count"), 1)
 r = client.post(f"/api/public/exam/{TOKEN}/submit",

@@ -1804,6 +1804,16 @@ def finalize_expired(db: Session, o, exam) -> int:
     return len(subs)
 
 
+def _merge_answers(old_json, new: dict | None) -> dict:
+    """Saqlangan javoblar USTIGA yangilari (2026-10-03). Kalit hech
+    qachon o'chmaydi: o'quvchi boshqa telefonga o'tsa, yangi telefon
+    bo'sh {} yuborib serverdagi javoblarni o'chirib yubormasin."""
+    d = _load_dict(old_json)
+    for k, v in (new or {}).items():
+        d[str(k)] = v
+    return d
+
+
 def _answers_json(answers: dict) -> str:
     """Javoblar JSON'i. Ilgari butun matn 20 000 belgida kesilardi —
     uzun inshoda JSON buzilib, javoblar {} bo'lib qolardi (AI ularni
@@ -2042,7 +2052,7 @@ def public_save(token: str, payload: SaveIn, db: Session = Depends(get_db)):
         return {"ok": False}
     # Butun JSON kesilmaydi — har javob o'zi cheklanadi (uzun insho
     # vaqt tugab avtomat topshirilganda JSON buzilib, AI 0 qo'ymasin)
-    s.answers = _answers_json({str(k): v for k, v in (payload.answers or {}).items()})
+    s.answers = _answers_json(_merge_answers(s.answers, payload.answers))
     db.commit()
     return {"ok": True}
 
@@ -2119,7 +2129,7 @@ def public_submit(token: str, payload: SubmitIn, request: Request,
                 # Muhlat o'tib ketgan — saqlangan javoblar bilan yakunlanadi
                 answers = _load_dict(s.answers)
             else:
-                answers = payload.answers
+                answers = _merge_answers(s.answers, payload.answers)
             _finalize(db, o, exam, s, answers)
         return {"ok": True, "paper_max": o.paper_max or 0,
                 "pending": s.status not in ("placed",),
@@ -2307,6 +2317,9 @@ def student_exam_state(token: str, db: Session = Depends(get_db),
     if my:
         mine = {"status": my.status,
                 "key": my.sub_key if my.status == "in_progress" else None,
+                # Boshqa telefondan kirsa — javoblari qaytib keladi
+                "answers": (_load_dict(my.answers)
+                            if my.status == "in_progress" else None),
                 "submitted_at": (my.submitted_at.isoformat()
                                  if my.submitted_at else None),
                 "pending": my.status not in ("placed",),

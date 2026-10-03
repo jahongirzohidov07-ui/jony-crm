@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Copy, Check, Link2, Lock, Unlock, X, Calculator, Sparkles, RotateCw } from "lucide-react";
+import { Copy, Check, Link2, Lock, Unlock, X, Calculator, Sparkles, RotateCw, QrCode } from "lucide-react";
+import QRCode from "qrcode";
 import { api } from "../lib/api";
 import { levelLabel } from "../lib/subjects";
 import { MarkCalculator } from "./MarkCalculator";
@@ -534,6 +535,7 @@ export function OnlineLinkCard({
   // (ustoz oldindan bilolmaydi); "single" — faqat tanlangan variant
   const [mode, setMode] = useState<"mix" | "single">("mix");
   const [busy, setBusy] = useState(false);
+  const [showQr, setShowQr] = useState(false);
   const [copied, setCopied] = useState(false);
   const [scriptsOpen, setScriptsOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -816,6 +818,13 @@ export function OnlineLinkCard({
           {copied ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
           {copied ? "Nusxalandi" : "Nusxa olish"}
         </button>
+        <button
+          onClick={() => setShowQr(true)}
+          className="inline-flex items-center gap-1.5 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+        >
+          <QrCode size={14} /> QR kod
+        </button>
+        {showQr && <ExamQr url={url} onClose={() => setShowQr(false)} />}
         {/* 2026-09-25: imtihon Jony Student ilovasi ichida — link ochiq
             bo'lsa guruh o'quvchilari bosh sahifada va bildirishnomada
             ko'radi; link ham ilovaga olib kiradi (kim ekani login'dan). */}
@@ -1345,6 +1354,42 @@ export function OnlineBelow({
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+
+/** QR KOD (2026-10-03): doskaga/proyektorga chiqariladi — o'quvchilar
+ *  telefon kamerasi bilan skanerlab darrov testga kiradi. */
+function ExamQr({ url, onClose }: { url: string; onClose: () => void }) {
+  const [img, setImg] = useState("");
+  useEffect(() => {
+    QRCode.toDataURL(url, { width: 640, margin: 1, color: { dark: "#0f172a" } })
+      .then(setImg).catch(() => setImg(""));
+  }, [url]);
+  return (
+    <div className="fixed inset-0 z-50 bg-slate-900/70 flex items-center justify-center p-4"
+      onClick={onClose}>
+      <div className="bg-white rounded-2xl p-6 w-full max-w-lg text-center"
+        onClick={(e) => e.stopPropagation()}>
+        <div className="flex justify-end">
+          <button onClick={onClose} className="text-slate-400"><X size={20} /></button>
+        </div>
+        <p className="text-lg font-semibold text-slate-900 -mt-2">
+          Telefon kamerasi bilan skanerlang
+        </p>
+        {img ? (
+          <img src={img} alt="QR" className="mx-auto my-4 w-full max-w-[420px] aspect-square" />
+        ) : (
+          <div className="my-4 h-64 flex items-center justify-center text-slate-400 text-sm">
+            Tayyorlanmoqda...
+          </div>
+        )}
+        <p className="text-sm text-slate-600 break-all">{url}</p>
+        <p className="text-xs text-slate-400 mt-2">
+          Jony Student ilovasiga kirgan o'quvchida imtihon bosh sahifada ham chiqadi.
+        </p>
+      </div>
     </div>
   );
 }

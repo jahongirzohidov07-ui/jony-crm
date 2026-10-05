@@ -109,6 +109,9 @@ export function buildNav(
   if (can(user?.role, CASH_ACCESS)) {
     items = [...items, { to: "/finance", label: "Moliya", icon: Wallet }];
   }
+  if (user?.role === SMM_MANAGER) {
+    items = [...items, { to: "/my-finance", label: "Moliya", icon: Wallet }];
+  }
   // 2026-08-27, Jahongir: "Smm mutaxasisi uchun hisobotlardan va
   // analitikadan qismida unga kerakli foydali boladiganlari
   // korsatilsin." Marketologda bu ikki band umuman yo'q edi.

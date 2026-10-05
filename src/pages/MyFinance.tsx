@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { TeacherFinance } from "../components/TeacherFinance";
+import { useAuth } from "../lib/AuthContext";
+import { SmmFinance } from "../components/SmmFinance";
 
 /**
  * Ustozning MOLIYA bo'limi (kompyuter ko'rinishi) — oylar bo'yicha
@@ -8,6 +10,8 @@ import { TeacherFinance } from "../components/TeacherFinance";
  * hisoblanib borsin oyliklar tarixi bo'lsin".
  */
 export default function MyFinance() {
+  const { user } = useAuth();
+  if (user?.role === "smm_manager") return <SmmFinance />;
   return (
     <div className="max-w-4xl">
       <div className="flex items-center justify-between mb-4">

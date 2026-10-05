@@ -3,6 +3,10 @@ import calendar
 import math
 import roles
 
+FIXED_SALARY_TIERS = [(0, 100, 1_500_000), (101, 150, 2_000_000),
+                      (151, 200, 3_000_000), (201, 300, 5_000_000),
+                      (301, None, 8_000_000)]
+
 
 def student_plan_state(db, branch_id, year, month):
     """Use the branch's student headcount target, never a money target."""
@@ -25,11 +29,9 @@ def student_plan_state(db, branch_id, year, month):
 
 
 def student_fixed_salary(count):
-    for maximum, salary in [(100, 1_500_000), (150, 2_000_000),
-                            (200, 3_000_000), (300, 5_000_000)]:
-        if count <= maximum:
+    for minimum, maximum, salary in FIXED_SALARY_TIERS:
+        if maximum is None or count <= maximum:
             return salary
-    return 8_000_000  # 301 and above, confirmed by the owner.
 
 
 def smm_salary_goal(user, state, today):
@@ -68,6 +70,8 @@ def smm_salary_goal(user, state, today):
         "gap": remaining,
         "days_left": calendar.monthrange(today.year, today.month)[1] - today.day + 1,
         "scale": [{"min": mn, "bonus": bo, "label": label} for mn, bo, label in steps],
+        "fixed_scale": [{"min": mn, "max": mx, "salary": salary}
+                        for mn, mx, salary in FIXED_SALARY_TIERS],
     }
 
 

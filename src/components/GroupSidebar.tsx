@@ -4,6 +4,8 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Download, Phone, Pencil } from "lucide-react";
 import { api, type Group, type GroupProgress, type Student } from "../lib/api";
+import { useAuth } from "../lib/AuthContext";
+import { STUDENT_TRANSFER, can } from "../lib/roles";
 import { StudentRowMenu } from "./StudentRowMenu";
 import { formatSom, formatDate } from "../lib/format";
 import { subjectLine, WEEKDAYS, parseDays } from "../lib/subjects";
@@ -130,6 +132,38 @@ export function GroupSidebar({
   const [goneOpen, setGoneOpen] = useState(false);
   const [gone, setGone] = useState<Student[] | null>(null);
   const [goneBusy, setGoneBusy] = useState(false);
+  // GURUHGA QAYTARISH (2026-10-05, Jahongir: "guruh arxivida turgan
+  // o'quvchini ism familya yonida guruhga qaytarish tugmasi tursin,
+  // guruhga qaytarganda avtomat oylik tanlagan kundan boshlab oy
+  // oxirigacha hisoblanishi kerak").
+  const { user } = useAuth();
+  const canReturn = can(user?.role, STUDENT_TRANSFER);
+  const today = new Date().toISOString().slice(0, 10);
+  const [retFor, setRetFor] = useState<number | null>(null);
+  const [retOn, setRetOn] = useState(today);
+  const [retBusy, setRetBusy] = useState(false);
+  const [retMsg, setRetMsg] = useState<string | null>(null);
+  async function doReturn(s: Student) {
+    setRetBusy(true);
+    setRetMsg(null);
+    try {
+      const r = await api.post<{
+        charge?: { lessons: number; amount: number } | null;
+      }>(`/groups/${group.id}/students/${s.id}/return`, { on: retOn });
+      const c = r.charge;
+      setRetMsg(
+        `${s.full_name} guruhga qaytarildi` +
+          (c ? ` — ${c.lessons} dars uchun ${formatSom(c.amount)} hisoblandi` : ""),
+      );
+      setRetFor(null);
+      setGone((g) => (g || []).filter((x) => x.id !== s.id));
+      load();
+    } catch (e) {
+      setRetMsg(e instanceof Error ? e.message : "Qaytarib bo'lmadi");
+    } finally {
+      setRetBusy(false);
+    }
+  }
   function toggleGone() {
     const next = !goneOpen;
     setGoneOpen(next);
@@ -380,18 +414,60 @@ export function GroupSidebar({
                     Bu guruhdan o'chirilganlar yo'q
                   </p>
                 )}
+                {retMsg && (
+                  <p className="text-xs text-emerald-700 bg-emerald-50 rounded-md px-2 py-1 mx-2">
+                    {retMsg}
+                  </p>
+                )}
                 {(gone || []).map((s) => (
-                  <div key={s.id}
-                    className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-slate-50">
-                    <span className="w-2.5 h-2.5 rounded-full shrink-0 bg-slate-300" />
-                    <Link to={`/students/${s.id}`}
-                      className="text-[13px] text-slate-400 hover:text-slate-600 line-through decoration-slate-300">
-                      {s.full_name}
-                    </Link>
-                    <span className="ml-auto text-[10px] uppercase tracking-wide text-slate-400 shrink-0">
-                      {s.status === "archived" ? "arxiv"
-                        : s.status === "left" ? "ketgan" : s.status}
-                    </span>
+                  <div key={s.id}>
+                    <div className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-slate-50">
+                      <span className="w-2.5 h-2.5 rounded-full shrink-0 bg-slate-300" />
+                      <Link to={`/students/${s.id}`}
+                        className="text-[13px] text-slate-400 hover:text-slate-600 line-through decoration-slate-300">
+                        {s.full_name}
+                      </Link>
+                      <span className="ml-auto text-[10px] uppercase tracking-wide text-slate-400 shrink-0">
+                        {s.status === "archived" ? "arxiv"
+                          : s.status === "left" ? "ketgan" : s.status}
+                      </span>
+                      {canReturn && (
+                        <button
+                          onClick={() => {
+                            setRetFor(retFor === s.id ? null : s.id);
+                            setRetOn(today);
+                            setRetMsg(null);
+                          }}
+                          className="text-[11px] font-medium text-brand-600 hover:text-brand-700 shrink-0"
+                        >
+                          Qaytarish
+                        </button>
+                      )}
+                    </div>
+                    {retFor === s.id && (
+                      <div className="flex flex-wrap items-center gap-2 px-2 pb-2 pl-7">
+                        <label className="text-[11px] text-slate-500">
+                          Qaysi kundan:
+                        </label>
+                        <input
+                          type="date"
+                          value={retOn}
+                          max={today}
+                          onChange={(e) => setRetOn(e.target.value)}
+                          className="rounded-md border border-slate-300 px-1.5 py-0.5 text-xs"
+                        />
+                        <button
+                          disabled={retBusy || !retOn}
+                          onClick={() => doReturn(s)}
+                          className="rounded-md bg-brand-600 text-white text-[11px] px-2 py-1 disabled:opacity-50"
+                        >
+                          {retBusy ? "..." : "Guruhga qaytarish"}
+                        </button>
+                        <span className="w-full text-[10px] text-slate-400">
+                          Shu kundan oy oxirigacha darslar uchun oylik avtomat hisoblanadi
+                        </span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

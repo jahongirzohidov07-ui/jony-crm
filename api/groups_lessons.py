@@ -851,8 +851,16 @@ def save_attendance(
                 full_name=st.full_name, phone=st.phone,
                 source="other", stage="new",
                 branch_id=st.branch_id, note=note_txt))
+            # Bog'lanish ham yopiladi (2026-10-05): ilgari faqat group_id
+            # bo'shatilardi, student_groups qatori "faol" qolib ketardi —
+            # o'quvchi bir vaqtda ham guruhsiz, ham guruhda ko'rinardi.
+            try:
+                detach_group(db, st, lesson.group_id)
+            except Exception:
+                pass
             st.status = "archived"
-            st.group_id = None
+            if st.group_id == lesson.group_id:
+                st.group_id = None
             db.commit()
             audit.log(db, None, entity="student", action="trial_dropout",
                       entity_id=st.id, entity_label=st.full_name,

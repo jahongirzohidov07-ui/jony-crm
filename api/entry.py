@@ -8668,7 +8668,34 @@ def activate_student_v3(student_id: int, payload: dict | None = None,
     if on > today:
         raise HTTPException(400, "Kelajakdagi sanani tanlab bo'lmaydi")
 
+    # GURUHSIZ FAOLLASHTIRISH TAQIQI (2026-10-05, Jahongir: "Gayratova
+    # Nargiza, Rahmonova Diyora, Maqsudova Durdona o'zidan o'zi arxivga
+    # o'tib qolibdi, nega"). Sabab: sinovda 2 marta kelmagani uchun
+    # guruhdan avtomat chiqarilgan o'quvchi arxivdan GURUHSIZ faol
+    # qilindi; tizim "guruhsiz odam faol bo'la olmaydi" qoidasi bilan
+    # uni bir daqiqada "Chiqib ketgan"ga, so'ng qarzsiz bo'lgani uchun
+    # arxivga qaytardi. Endi guruh shu yerda tanlanadi (group_id),
+    # tanlanmasa — tushunarli xato, jimgina arxivga qaytish yo'q.
+    gid = (payload or {}).get("group_id")
+    if gid:
+        g = db.query(models.Group).get(int(gid))
+        if g is None:
+            raise HTTPException(404, "Guruh topilmadi")
+        _CM.attach_group(db, s, g.id, user, joined=on,
+                       note="Faollashtirishda guruhga qo'shildi")
+        db.flush()
+    if not s.group_id:
+        # Bog'lanish ochiq qolgan bo'lsa — asosiy guruh undan olinadi
+        _CM.sync_primary_group(db, s)
+    if not s.group_id:
+        raise HTTPException(
+            400, "O'quvchi hech qaysi guruhda emas. Avval guruhga qo'shing "
+                 "(yoki guruh sahifasidagi \"Guruhdan o'chirilganlar\" "
+                 "ro'yxatidan \"Qaytarish\" tugmasini bosing) — guruhsiz "
+                 "faol o'quvchini tizim avtomat arxivga qaytaradi.")
+
     old_status = s.status
+    s.archive_when_paid = 0
     s.status = "active"
     if not s.enrolled_date or s.enrolled_date > on:
         s.enrolled_date = on
@@ -8708,6 +8735,57 @@ def activate_student_v3(student_id: int, payload: dict | None = None,
     db.commit()
     return {"ok": True, "status": s.status, "activated_on": on.isoformat(),
             "charge": charge, "adjust": adjust}
+
+
+# ---- Guruhga qaytarish (2026-10-05) ----
+@app.post("/api/groups/{group_id}/students/{student_id}/return")
+def return_to_group(group_id: int, student_id: int,
+                    payload: dict | None = None,
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.STUDENT_RESTORE))):
+    """"Guruhdan o'chirilganlar" ro'yxatidagi o'quvchini shu guruhga
+    qaytaradi (Jahongir: "guruh arxivida turgan o'quvchini ism familya
+    yonida guruhga qaytarish tugmasi tursin, guruhga qaytarganda avtomat
+    oylik tanlagan kundan boshlab oy oxirigacha hisoblanishi kerak").
+
+    Bog'lanish qayta ochiladi, o'quvchi faol bo'ladi va tanlangan
+    kundan oy oxirigacha bo'lgan darslar uchun hisob yoziladi
+    (oddiy faollashtirish qoidasi bilan bir xil). Hech narsa
+    o'chirilmaydi."""
+    s = M._get_student_in_scope(db, student_id, user)
+    g = db.query(models.Group).get(group_id)
+    if g is None:
+        raise HTTPException(404, "Guruh topilmadi")
+    inb = getattr(M, "_in_user_branches", None)
+    if inb is not None and not inb(db, user, g.branch_id, null_ok=True):
+        raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
+    today = roles.local_today()
+    on = _fz_date((payload or {}).get("on"), "Sana") or today
+    if on > today:
+        raise HTTPException(400, "Kelajakdagi sanani tanlab bo'lmaydi")
+    in_now = g.id in _CM.student_group_ids(db, s.id) or s.group_id == g.id
+    if in_now and s.status in ("active", "trial", "frozen"):
+        raise HTTPException(400, "O'quvchi allaqachon shu guruhda")
+
+    _CM.attach_group(db, s, g.id, user, joined=on, note="Guruhga qaytarildi")
+    s.archive_when_paid = 0
+    db.flush()
+    if s.status == "active":
+        # Boshqa guruhda faol o'qiyapti — faqat shu guruhga qaytariladi,
+        # asosiy oylik o'sha guruh bo'yicha allaqachon yozilgan.
+        audit.log(db, user, entity="student", action="return_group",
+                  entity_id=s.id, entity_label=s.full_name,
+                  field="group", new_value=g.name, branch_id=s.branch_id,
+                  note=f"{on.isoformat()} dan guruhga qaytarildi")
+        db.commit()
+        return {"ok": True, "status": s.status, "group": g.name,
+                "charge": None, "activated_on": on.isoformat()}
+    res = activate_student_v3(student_id, {"on": on.isoformat()}, db, user)
+    audit.log(db, user, entity="student", action="return_group",
+              entity_id=s.id, entity_label=s.full_name, field="group",
+              new_value=g.name, branch_id=s.branch_id,
+              note=f"{on.isoformat()} dan guruhga qaytarildi", commit=True)
+    return {**res, "group": g.name}
 
 
 # =====================================================================
@@ -10944,7 +11022,7 @@ def _xb_move(db: Session, s, g, user, note: str = None,
     # BOG'LANISH: avval yangisi qo'shiladi, keyin eskisi yopiladi —
     # teskarisi qilinsa sync_primary_group() group_id ni eski guruhga
     # qaytarib yuborishi mumkin (2026-09-03).
-    link = _CM.attach_group(db, s, g.id, user)
+    link = _C_CM.attach_group(db, s, g.id, user)
     if old_group is not None and old_group.id != g.id:
         _CM.detach_group(db, s, old_group.id)
     # FILIAL ALMASHSA — ESKI FILIALDAGI HAMMA GURUHDAN chiqadi

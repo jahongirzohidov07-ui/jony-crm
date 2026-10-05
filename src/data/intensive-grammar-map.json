@@ -1,0 +1,1862 @@
+[
+  {
+    "title": "Sentence foundations",
+    "uz": "Gap qurish poydevori",
+    "phase": 0,
+    "goal": "Gapdagi ega, fe’l va boshqa qismlarni ajratib, sodda gap tartibini tushuntiraman.",
+    "items": [
+      [
+        "Noun — ot nima?",
+        "student, book, school"
+      ],
+      [
+        "Adjective — sifat nima?",
+        "kind, happy, useful"
+      ],
+      [
+        "Verb — harakat va holat fe’li",
+        "read, work, be"
+      ],
+      [
+        "Pronoun — ot o‘rnidagi so‘z",
+        "Ali → he; the book → it"
+      ],
+      [
+        "Adverb — ravish nima?",
+        "slowly, often, here"
+      ],
+      [
+        "Preposition — predlog nima?",
+        "in the room; at school"
+      ],
+      [
+        "Conjunction — bog‘lovchi nima?",
+        "and, but, because"
+      ],
+      [
+        "Subject pronouns — ega olmoshlari",
+        "I, you, he, she, it, we, they"
+      ],
+      [
+        "Subject — gapning egasi",
+        "My sister works."
+      ],
+      [
+        "Verb / object — fe’l va to‘ldiruvchi",
+        "I read books."
+      ],
+      [
+        "Complement — egani tavsiflovchi qism",
+        "She is a teacher. She is kind."
+      ],
+      [
+        "Word order — ega + fe’l + davom",
+        "We study English at school."
+      ],
+      [
+        "Be va harakat fe’lini ajratish",
+        "I am happy. / I work. (I am work emas.)"
+      ],
+      [
+        "Capital letters va gap oxiri",
+        "I am Ali. Are you ready?"
+      ]
+    ]
+  },
+  {
+    "title": "TO BE · present",
+    "uz": "Adjective · noun · adjective + noun · place",
+    "phase": 0,
+    "goal": "Kim? Qanday? Qayerda? ma’nolarida tasdiq, inkor va savol gap tuzaman.",
+    "items": [
+      [
+        "Am / is / are — egaga moslash",
+        "I am; he/she/it is; you/we/they are"
+      ],
+      [
+        "To be + adjective — positive",
+        "She is happy."
+      ],
+      [
+        "To be + adjective — negative",
+        "She is not happy."
+      ],
+      [
+        "To be + adjective — questions",
+        "Is she happy?"
+      ],
+      [
+        "To be + noun — positive",
+        "He is a student."
+      ],
+      [
+        "To be + noun — negative",
+        "He is not a student."
+      ],
+      [
+        "To be + noun — questions",
+        "Is he a student?"
+      ],
+      [
+        "To be + adjective + noun — positive",
+        "She is a kind teacher."
+      ],
+      [
+        "To be + adjective + noun — negative",
+        "She is not a kind teacher."
+      ],
+      [
+        "To be + adjective + noun — questions",
+        "Is she a kind teacher?"
+      ],
+      [
+        "To be + place — positive",
+        "They are at school."
+      ],
+      [
+        "To be + place — negative",
+        "They are not at school."
+      ],
+      [
+        "To be + place — questions",
+        "Are they at school?"
+      ],
+      [
+        "Wh-questions with be",
+        "Who is he? Where are you? How are you?"
+      ],
+      [
+        "Short answers — qisqa javoblar",
+        "Yes, I am. / No, she isn’t."
+      ],
+      [
+        "Contractions — qisqartmalar",
+        "I’m; she’s; we’re; isn’t; aren’t"
+      ],
+      [
+        "Birlikdagi noun bilan a / an",
+        "a teacher; an English teacher"
+      ],
+      [
+        "Place phrases va here / there",
+        "at home; in class; She is here."
+      ]
+    ]
+  },
+  {
+    "title": "Nouns & articles",
+    "uz": "Otlar va artikllar",
+    "phase": 0,
+    "goal": "Otning soni va ma’nosiga qarab a/an, the yoki artiklsiz shaklni tanlayman.",
+    "items": [
+      [
+        "Singular nouns — birlik",
+        "a book; a student"
+      ],
+      [
+        "Regular plurals — -s / -es",
+        "books; boxes"
+      ],
+      [
+        "Plural spelling — -y / -f shakllari",
+        "city → cities; leaf → leaves"
+      ],
+      [
+        "Irregular plurals — istisnolar",
+        "child → children; person → people"
+      ],
+      [
+        "Countable nouns — sanaladigan otlar",
+        "one apple; two apples"
+      ],
+      [
+        "Uncountable nouns — sanalmaydigan otlar",
+        "water; advice; information"
+      ],
+      [
+        "A / an — tovushga qarab tanlash",
+        "a university; an hour"
+      ],
+      [
+        "A / an — birinchi marta tilga olish",
+        "I bought a bag."
+      ],
+      [
+        "The — ma’lum yoki aniqlangan narsa",
+        "The bag is blue."
+      ],
+      [
+        "Zero article — umumiy ko‘plik",
+        "Books are useful."
+      ],
+      [
+        "Zero article — umumiy sanalmaydigan ot",
+        "Water is important."
+      ],
+      [
+        "Articles with jobs — kasblar",
+        "She is an engineer."
+      ],
+      [
+        "Possessive ’s — birlikdagi egalik",
+        "my brother’s phone"
+      ],
+      [
+        "Possessive s’ — ko‘plikdagi egalik",
+        "the students’ books"
+      ],
+      [
+        "Partitives — miqdor birikmalari",
+        "a piece of advice; a glass of water"
+      ],
+      [
+        "Compound nouns — qo‘shma otlar",
+        "bus stop; classroom; coffee cup"
+      ]
+    ]
+  },
+  {
+    "title": "Pronouns & determiners",
+    "uz": "Olmoshlar va aniqlovchilar",
+    "phase": 0,
+    "goal": "Kimga yoki nimaga ishora qilayotganimni aniq ifodalayman.",
+    "items": [
+      [
+        "Object pronouns — to‘ldiruvchi olmoshlar",
+        "me, you, him, her, it, us, them"
+      ],
+      [
+        "Subject vs object pronouns",
+        "She knows him. He knows her."
+      ],
+      [
+        "Possessive adjectives — my / your…",
+        "This is my book."
+      ],
+      [
+        "Possessive pronouns — mine / yours…",
+        "This book is mine."
+      ],
+      [
+        "Possessive adjective vs pronoun",
+        "your bag / yours"
+      ],
+      [
+        "This / that — birlikka ishora",
+        "This is my pen. That is your bag."
+      ],
+      [
+        "These / those — ko‘plikka ishora",
+        "These are books. Those are pens."
+      ],
+      [
+        "Whose — kimniki?",
+        "Whose bag is this?"
+      ],
+      [
+        "One / ones — otni takrorlamaslik",
+        "The blue one. / The small ones."
+      ],
+      [
+        "Somebody / anybody / nobody",
+        "Somebody is here. Nobody is outside."
+      ],
+      [
+        "Something / anything / nothing",
+        "I need something. I don’t need anything."
+      ],
+      [
+        "Every / each — har biri",
+        "Every student has a book."
+      ],
+      [
+        "Reflexive pronouns — o‘zlik",
+        "I made it myself."
+      ],
+      [
+        "Each other — o‘zaro harakat",
+        "They help each other."
+      ]
+    ]
+  },
+  {
+    "title": "Existence & possession",
+    "uz": "Borligi, egalik va ko‘rsatmalar",
+    "phase": 0,
+    "goal": "Bor-yo‘qlik va egalikni aytaman, sodda ko‘rsatma beraman.",
+    "items": [
+      [
+        "There is — positive",
+        "There is a library nearby."
+      ],
+      [
+        "There are — positive",
+        "There are two windows."
+      ],
+      [
+        "There is / are — negative",
+        "There isn’t a lift. There aren’t any chairs."
+      ],
+      [
+        "There is / are — yes/no questions",
+        "Is there a bank? Are there any shops?"
+      ],
+      [
+        "There is / are — how many questions",
+        "How many rooms are there?"
+      ],
+      [
+        "There is / are — short answers",
+        "Yes, there is. / No, there aren’t."
+      ],
+      [
+        "There vs it — borlik va ishora",
+        "There is a park. It is large."
+      ],
+      [
+        "Have / has — positive",
+        "I have a bike. She has a car."
+      ],
+      [
+        "Have / has — negative",
+        "I don’t have a car. He doesn’t have a bike."
+      ],
+      [
+        "Have / has — questions",
+        "Do you have a pen? Does she have a car?"
+      ],
+      [
+        "Have got / has got — positive",
+        "I’ve got a bag. She’s got a phone."
+      ],
+      [
+        "Have got — negative",
+        "I haven’t got a car."
+      ],
+      [
+        "Have got — questions and short answers",
+        "Have you got a pen? Yes, I have."
+      ],
+      [
+        "Imperative — positive",
+        "Open your book, please."
+      ],
+      [
+        "Imperative — negative",
+        "Don’t close the door."
+      ],
+      [
+        "Let’s / let’s not — taklif",
+        "Let’s start. Let’s not wait."
+      ]
+    ]
+  },
+  {
+    "title": "Present Simple",
+    "uz": "Odatlar, kundalik tartib va faktlar",
+    "phase": 0,
+    "goal": "Kundalik faoliyat haqida tasdiq, inkor, savol va qisqa javoblar tuzaman.",
+    "items": [
+      [
+        "Present Simple — positive: I / you / we / they",
+        "I study English every day."
+      ],
+      [
+        "Present Simple — positive: he / she / it",
+        "She studies English every day."
+      ],
+      [
+        "Third person spelling — -s / -es / -ies",
+        "works; watches; studies"
+      ],
+      [
+        "Third person — irregular forms",
+        "has; does; goes"
+      ],
+      [
+        "Present Simple — negative: don’t",
+        "I don’t work on Sundays."
+      ],
+      [
+        "Present Simple — negative: doesn’t",
+        "She doesn’t work on Sundays."
+      ],
+      [
+        "Present Simple — questions: do",
+        "Do you study here?"
+      ],
+      [
+        "Present Simple — questions: does",
+        "Does he study here?"
+      ],
+      [
+        "Present Simple — wh-questions",
+        "Where do you live? When does she work?"
+      ],
+      [
+        "Present Simple — short answers",
+        "Yes, I do. / No, he doesn’t."
+      ],
+      [
+        "Question words — what / where / when",
+        "What do you do? When do you start?"
+      ],
+      [
+        "Habits and repeated actions",
+        "We visit our grandmother every week."
+      ],
+      [
+        "Facts and general truths",
+        "Water freezes at zero degrees Celsius."
+      ],
+      [
+        "Frequency adverbs — gapdagi joyi",
+        "She often reads. She is always busy."
+      ],
+      [
+        "Frequency phrases — how often",
+        "twice a week; every morning"
+      ],
+      [
+        "Be vs do / does — savol va inkor",
+        "Are you tired? / Do you work?"
+      ]
+    ]
+  },
+  {
+    "title": "Present Continuous",
+    "uz": "Hozirgi va vaqtinchalik harakatlar",
+    "phase": 0,
+    "goal": "Hozirgi harakatni odatdan ajrataman va mos zamonni tanlayman.",
+    "items": [
+      [
+        "Present Continuous — positive",
+        "I am reading. She is working."
+      ],
+      [
+        "Present Continuous — negative",
+        "They aren’t sleeping."
+      ],
+      [
+        "Present Continuous — yes/no questions",
+        "Are you listening?"
+      ],
+      [
+        "Present Continuous — wh-questions",
+        "What is she doing?"
+      ],
+      [
+        "Present Continuous — short answers",
+        "Yes, I am. / No, they aren’t."
+      ],
+      [
+        "-ing spelling — asosiy qoida",
+        "work → working; make → making"
+      ],
+      [
+        "-ing spelling — doubling / -ie",
+        "run → running; lie → lying"
+      ],
+      [
+        "Actions happening now",
+        "He is talking on the phone now."
+      ],
+      [
+        "Temporary situations",
+        "I am staying with my aunt this week."
+      ],
+      [
+        "Changes and trends",
+        "The weather is getting warmer."
+      ],
+      [
+        "Present Simple vs Continuous",
+        "I walk to school. / I’m taking a taxi today."
+      ],
+      [
+        "Stative verbs — asosiy holatlar",
+        "I know the answer. (I am knowing emas.)"
+      ]
+    ]
+  },
+  {
+    "title": "Questions, place & time",
+    "uz": "Savollar, joy va vaqt",
+    "phase": 0,
+    "goal": "Kerakli ma’lumotni so‘rayman va harakatning qayerda/qachonligini aytaman.",
+    "items": [
+      [
+        "What / which — ochiq va cheklangan tanlov",
+        "What music do you like? Which bag is yours?"
+      ],
+      [
+        "Who / whose — kim va kimniki?",
+        "Who is she? Whose phone is this?"
+      ],
+      [
+        "Why / how — sabab va usul",
+        "Why do you study? How do you travel?"
+      ],
+      [
+        "How old / how long / how far",
+        "How old are you? How far is the station?"
+      ],
+      [
+        "How much / how many",
+        "How much water? How many books?"
+      ],
+      [
+        "Subject questions — who + verb",
+        "Who lives here?"
+      ],
+      [
+        "Object questions — yordamchi bilan",
+        "Who do you know here?"
+      ],
+      [
+        "Place — in / on / at",
+        "in the room; on the table; at the station"
+      ],
+      [
+        "Position — under / behind / between…",
+        "The bag is under the chair."
+      ],
+      [
+        "Movement — to / into / out of / across",
+        "She walks into the room."
+      ],
+      [
+        "Time — in / on / at",
+        "in May; on Monday; at six"
+      ],
+      [
+        "Time — before / after / until",
+        "before class; after lunch; until Friday"
+      ],
+      [
+        "From…to / during / for",
+        "from nine to five; during class; for an hour"
+      ],
+      [
+        "Adverbs of manner — -ly",
+        "She speaks slowly."
+      ],
+      [
+        "Adverbs — irregular forms",
+        "good → well; fast → fast"
+      ],
+      [
+        "Place–manner–time: tabiiy gap tartibi",
+        "She worked quietly at home yesterday."
+      ]
+    ]
+  },
+  {
+    "title": "Past Simple & past BE",
+    "uz": "O‘tgan holat va tugagan voqealar",
+    "phase": 1,
+    "goal": "O‘tgan voqeani hikoya qilaman va was/were bilan didni farqlayman.",
+    "items": [
+      [
+        "Was / were — positive",
+        "I was tired. They were at home."
+      ],
+      [
+        "Was / were — negative",
+        "She wasn’t at school."
+      ],
+      [
+        "Was / were — yes/no questions",
+        "Were you busy?"
+      ],
+      [
+        "Was / were — wh-questions",
+        "Where were they yesterday?"
+      ],
+      [
+        "Was / were — short answers",
+        "Yes, I was. / No, they weren’t."
+      ],
+      [
+        "There was / were — positive",
+        "There was a concert. There were many people."
+      ],
+      [
+        "There was / were — negative",
+        "There wasn’t a bus. There weren’t any taxis."
+      ],
+      [
+        "There was / were — questions",
+        "Was there a problem? Were there any seats?"
+      ],
+      [
+        "Past Simple — positive: regular verbs",
+        "We visited our cousins."
+      ],
+      [
+        "Past Simple — positive: irregular verbs",
+        "She went home. We saw a film."
+      ],
+      [
+        "Regular past spelling and -ed sounds",
+        "played; studied; stopped / worked; wanted"
+      ],
+      [
+        "Past Simple — negative",
+        "I didn’t go out."
+      ],
+      [
+        "Past Simple — yes/no questions",
+        "Did you finish your work?"
+      ],
+      [
+        "Past Simple — wh-questions",
+        "What did you buy?"
+      ],
+      [
+        "Past Simple — short answers",
+        "Yes, I did. / No, she didn’t."
+      ],
+      [
+        "Past time markers",
+        "yesterday; last week; two days ago"
+      ],
+      [
+        "Past be vs Past Simple",
+        "Were you late? / Did you arrive late?"
+      ]
+    ]
+  },
+  {
+    "title": "Past Continuous & habits",
+    "uz": "Voqea foni va avvalgi odatlar",
+    "phase": 1,
+    "goal": "Hikoyada davom etayotgan voqea bilan uni bo‘lgan hodisani bog‘layman.",
+    "items": [
+      [
+        "Past Continuous — positive",
+        "I was studying at eight."
+      ],
+      [
+        "Past Continuous — negative",
+        "She wasn’t sleeping."
+      ],
+      [
+        "Past Continuous — yes/no questions",
+        "Were they waiting?"
+      ],
+      [
+        "Past Continuous — wh-questions",
+        "What were you doing?"
+      ],
+      [
+        "Past Continuous — short answers",
+        "Yes, I was. / No, we weren’t."
+      ],
+      [
+        "Past Continuous vs Past Simple",
+        "I was reading when she called."
+      ],
+      [
+        "When / while — voqealarni bog‘lash",
+        "While I was cooking, he was reading."
+      ],
+      [
+        "Used to — positive",
+        "I used to live in Samarkand."
+      ],
+      [
+        "Used to — negative",
+        "I didn’t use to drink coffee."
+      ],
+      [
+        "Used to — questions",
+        "Did you use to walk to school?"
+      ],
+      [
+        "Would — takrorlangan o‘tgan harakat",
+        "Every summer, we would visit our aunt."
+      ],
+      [
+        "Used to vs would vs Past Simple",
+        "I used to be shy. / I met her yesterday."
+      ]
+    ]
+  },
+  {
+    "title": "Future plans & decisions",
+    "uz": "Kelajak rejasi, qarori va taxmini",
+    "phase": 1,
+    "goal": "Reja, kelishuv, tezkor qaror va taxminni mos shaklda ifodalayman.",
+    "items": [
+      [
+        "Will — positive",
+        "I will help you."
+      ],
+      [
+        "Will — negative",
+        "I won’t be late."
+      ],
+      [
+        "Will — yes/no questions",
+        "Will you join us?"
+      ],
+      [
+        "Will — wh-questions",
+        "When will you arrive?"
+      ],
+      [
+        "Will — short answers",
+        "Yes, I will. / No, she won’t."
+      ],
+      [
+        "Will be + adjective / noun / place",
+        "I’ll be ready. She’ll be a doctor. We’ll be home."
+      ],
+      [
+        "Going to — positive",
+        "I am going to study tonight."
+      ],
+      [
+        "Going to — negative",
+        "He isn’t going to travel."
+      ],
+      [
+        "Going to — yes/no questions",
+        "Are you going to apply?"
+      ],
+      [
+        "Going to — wh-questions",
+        "What are you going to do?"
+      ],
+      [
+        "Going to — short answers",
+        "Yes, I am. / No, he isn’t."
+      ],
+      [
+        "Present Continuous — kelishilgan reja",
+        "I’m meeting my teacher at ten tomorrow."
+      ],
+      [
+        "Present Simple — kelajak jadvali",
+        "The train leaves at seven tomorrow."
+      ],
+      [
+        "Will vs going to — qaror / reja / dalil",
+        "I’ll answer it. / Look! It’s going to rain."
+      ],
+      [
+        "Future time clauses — when / as soon as",
+        "I’ll call you when I arrive."
+      ],
+      [
+        "Shall I / shall we — taklif va yordam",
+        "Shall I open the window?"
+      ]
+    ]
+  },
+  {
+    "title": "Present Perfect Simple",
+    "uz": "O‘tgan voqea va hozirgi bog‘lanish",
+    "phase": 1,
+    "goal": "Tajriba, hozirgi natija va tugamagan davrni ifodalayman.",
+    "items": [
+      [
+        "Past participle — V3 shakli",
+        "worked; gone; seen; written"
+      ],
+      [
+        "Present Perfect — positive: have",
+        "I have finished my homework."
+      ],
+      [
+        "Present Perfect — positive: has",
+        "She has finished her homework."
+      ],
+      [
+        "Present Perfect — negative",
+        "We haven’t met before."
+      ],
+      [
+        "Present Perfect — yes/no questions",
+        "Have you read this book?"
+      ],
+      [
+        "Present Perfect — wh-questions",
+        "What have you learned?"
+      ],
+      [
+        "Present Perfect — short answers",
+        "Yes, I have. / No, she hasn’t."
+      ],
+      [
+        "Ever / never — hayotiy tajriba",
+        "Have you ever flown? I’ve never flown."
+      ],
+      [
+        "Just — yaqinda tugagan ish",
+        "She has just arrived."
+      ],
+      [
+        "Already — allaqachon",
+        "I have already paid."
+      ],
+      [
+        "Yet / still — kutilayotgan natija",
+        "He hasn’t arrived yet. He still hasn’t called."
+      ],
+      [
+        "For / since — davomiylik va boshlanish",
+        "I have lived here for two years / since 2024."
+      ],
+      [
+        "Unfinished time — this week / today",
+        "I’ve read two books this week."
+      ],
+      [
+        "Been vs gone",
+        "She’s been to Bukhara. / She’s gone to Bukhara."
+      ],
+      [
+        "Present Perfect vs Past Simple",
+        "I’ve seen it. / I saw it yesterday."
+      ],
+      [
+        "How long…? — davomiy holat",
+        "How long have you known her?"
+      ]
+    ]
+  },
+  {
+    "title": "Perfect & continuous",
+    "uz": "Davomiylik va voqealar ketma-ketligi",
+    "phase": 1,
+    "goal": "Natija, davomiy faoliyat va oldinroq bo‘lgan voqeani farqlayman.",
+    "items": [
+      [
+        "Present Perfect Continuous — positive",
+        "I have been studying for two hours."
+      ],
+      [
+        "Present Perfect Continuous — negative",
+        "She hasn’t been sleeping well."
+      ],
+      [
+        "Present Perfect Continuous — yes/no questions",
+        "Have you been waiting long?"
+      ],
+      [
+        "Present Perfect Continuous — wh-questions",
+        "How long have you been learning English?"
+      ],
+      [
+        "Present Perfect Continuous — short answers",
+        "Yes, I have. / No, she hasn’t."
+      ],
+      [
+        "Perfect Simple vs Continuous",
+        "I’ve written three pages. / I’ve been writing."
+      ],
+      [
+        "Past Perfect — positive",
+        "She had left before I arrived."
+      ],
+      [
+        "Past Perfect — negative",
+        "I hadn’t met him before."
+      ],
+      [
+        "Past Perfect — yes/no questions",
+        "Had they finished before you came?"
+      ],
+      [
+        "Past Perfect — wh-questions",
+        "What had she done before you arrived?"
+      ],
+      [
+        "Past Perfect — short answers",
+        "Yes, she had. / No, they hadn’t."
+      ],
+      [
+        "Past Perfect vs Past Simple",
+        "When I arrived, the lesson had started."
+      ],
+      [
+        "Past Perfect Continuous — positive",
+        "It had been raining, so the road was wet."
+      ],
+      [
+        "Past Perfect Continuous — negative",
+        "He hadn’t been feeling well."
+      ],
+      [
+        "Past Perfect Continuous — yes/no questions",
+        "Had you been waiting long?"
+      ],
+      [
+        "Past Perfect Continuous — wh-questions",
+        "How long had she been working there?"
+      ],
+      [
+        "Past Perfect Continuous — short answers",
+        "Yes, I had. / No, she hadn’t."
+      ],
+      [
+        "Past Perfect Simple vs Continuous",
+        "She had cooked dinner. / She had been cooking."
+      ]
+    ]
+  },
+  {
+    "title": "Comparison & quantity",
+    "uz": "Taqqoslash va miqdor",
+    "phase": 1,
+    "goal": "Odam, narsa va vaziyatlarni daraja hamda miqdor bo‘yicha taqqoslayman.",
+    "items": [
+      [
+        "Comparative — short adjectives",
+        "smaller; taller; easier"
+      ],
+      [
+        "Comparative — long adjectives",
+        "more useful; more expensive"
+      ],
+      [
+        "Comparative — irregular adjectives",
+        "better; worse; farther/further"
+      ],
+      [
+        "Superlative — short adjectives",
+        "the smallest; the easiest"
+      ],
+      [
+        "Superlative — long / irregular adjectives",
+        "the most useful; the best"
+      ],
+      [
+        "As…as / not as…as",
+        "This room is as large as that one."
+      ],
+      [
+        "Comparative adverbs",
+        "She works more carefully than I do."
+      ],
+      [
+        "Much / far / a bit + comparative",
+        "much cheaper; a bit faster"
+      ],
+      [
+        "Some / any — positive, negative, questions",
+        "some rice; not any rice; Have you got any rice?"
+      ],
+      [
+        "Some in offers and requests",
+        "Would you like some tea?"
+      ],
+      [
+        "Much / many / a lot of",
+        "much time; many books; a lot of work"
+      ],
+      [
+        "Few / a few — sanaladigan ot",
+        "few friends / a few friends"
+      ],
+      [
+        "Little / a little — sanalmaydigan ot",
+        "little time / a little time"
+      ],
+      [
+        "Too / enough — ortiqcha va yetarli",
+        "too hot; warm enough; enough money"
+      ],
+      [
+        "Both / either / neither",
+        "Both are good. Neither answer is correct."
+      ],
+      [
+        "All / most / some / none + of",
+        "Most of the students are here."
+      ]
+    ]
+  },
+  {
+    "title": "Ability & permission",
+    "uz": "Qobiliyat, ruxsat va iltimos",
+    "phase": 2,
+    "goal": "Nima qila olishimni aytaman, ruxsat so‘rayman va muloyim iltimos qilaman.",
+    "items": [
+      [
+        "Can — positive: qobiliyat",
+        "I can swim."
+      ],
+      [
+        "Can — negative: qila olmaslik",
+        "I can’t drive."
+      ],
+      [
+        "Can — yes/no questions",
+        "Can you cook?"
+      ],
+      [
+        "Can — wh-questions",
+        "What can you do?"
+      ],
+      [
+        "Can — short answers",
+        "Yes, I can. / No, she can’t."
+      ],
+      [
+        "Could — positive: oldingi qobiliyat",
+        "I could read when I was five."
+      ],
+      [
+        "Could — negative",
+        "I couldn’t swim as a child."
+      ],
+      [
+        "Could — questions",
+        "Could you read at that age?"
+      ],
+      [
+        "Be able to — turli zamonlarda",
+        "I’ll be able to join you tomorrow."
+      ],
+      [
+        "Was able to / managed to — aniq muvaffaqiyat",
+        "We managed to open the door."
+      ],
+      [
+        "Can / could / may — ruxsat so‘rash",
+        "May I come in? Could I use your pen?"
+      ],
+      [
+        "Could / would — muloyim iltimos",
+        "Could you help me? Would you open the door?"
+      ],
+      [
+        "Be allowed to — ruxsat borligi",
+        "We are allowed to use a dictionary."
+      ],
+      [
+        "Would like — istak va taklif",
+        "I’d like some tea. Would you like to sit down?"
+      ]
+    ]
+  },
+  {
+    "title": "Obligation & advice",
+    "uz": "Majburiyat, taqiq va maslahat",
+    "phase": 2,
+    "goal": "Majburiy, taqiqlangan va ixtiyoriy ishni farqlab tushuntiraman.",
+    "items": [
+      [
+        "Must — positive: majburiyat",
+        "You must wear a seat belt."
+      ],
+      [
+        "Mustn’t — negative: taqiq",
+        "You mustn’t park here."
+      ],
+      [
+        "Must — questions",
+        "Must we finish today?"
+      ],
+      [
+        "Have to / has to — positive",
+        "She has to leave early."
+      ],
+      [
+        "Don’t / doesn’t have to — zarur emas",
+        "You don’t have to bring food."
+      ],
+      [
+        "Have to — questions",
+        "Do we have to book? Does she have to pay?"
+      ],
+      [
+        "Had to — o‘tgan majburiyat",
+        "I had to work yesterday."
+      ],
+      [
+        "Didn’t have to / did…have to?",
+        "I didn’t have to wait. Did you have to pay?"
+      ],
+      [
+        "Will have to — kelajakdagi zarurat",
+        "We will have to leave early."
+      ],
+      [
+        "Mustn’t vs don’t have to",
+        "Don’t enter. / Entering is optional."
+      ],
+      [
+        "Should — positive: maslahat",
+        "You should get some rest."
+      ],
+      [
+        "Shouldn’t — negative",
+        "You shouldn’t skip meals."
+      ],
+      [
+        "Should — questions",
+        "What should I do? Should I call her?"
+      ],
+      [
+        "Ought to / had better",
+        "You ought to rest. We’d better leave."
+      ],
+      [
+        "Need to / don’t need to / needn’t",
+        "You needn’t hurry."
+      ],
+      [
+        "Needn’t have vs didn’t need to",
+        "I needn’t have bought bread; we already had some."
+      ]
+    ]
+  },
+  {
+    "title": "Possibility & deduction",
+    "uz": "Ehtimol va dalil asosida taxmin",
+    "phase": 2,
+    "goal": "Taxminim qanchalik ishonchli ekanini hozirgi va o‘tgan vaziyatda ifodalayman.",
+    "items": [
+      [
+        "May / might / could — hozirgi ehtimol",
+        "She might be at home."
+      ],
+      [
+        "May not / might not — ehtimoliy inkor",
+        "He might not know the answer."
+      ],
+      [
+        "Must — hozirgi kuchli taxmin",
+        "The lights are on. They must be home."
+      ],
+      [
+        "Can’t — hozirgi imkonsiz taxmin",
+        "He can’t be at school; it’s closed."
+      ],
+      [
+        "Could…? — ehtimol haqida savol",
+        "Could this be the right address?"
+      ],
+      [
+        "Modal + be + -ing",
+        "She might be working now."
+      ],
+      [
+        "Must have + V3 — o‘tgan kuchli taxmin",
+        "They must have missed the bus."
+      ],
+      [
+        "May / might / could have + V3",
+        "She might have forgotten the date."
+      ],
+      [
+        "Can’t / couldn’t have + V3",
+        "He can’t have finished already."
+      ],
+      [
+        "Should have + V3 — bajarilmagan yaxshi ish",
+        "I should have studied earlier."
+      ],
+      [
+        "Shouldn’t have + V3 — afsus",
+        "I shouldn’t have said that."
+      ],
+      [
+        "Could have + V3 — foydalanilmagan imkon",
+        "We could have taken a taxi, but we walked."
+      ],
+      [
+        "Be likely / unlikely to",
+        "Prices are likely to rise."
+      ],
+      [
+        "Probably / definitely — gapdagi joyi",
+        "She will probably come. He probably won’t."
+      ]
+    ]
+  },
+  {
+    "title": "Conditionals · 0 / 1 / 2",
+    "uz": "Shart, natija va faraz",
+    "phase": 2,
+    "goal": "Fakt, real kelajak va faraziy vaziyatga mos shart gap tuzaman.",
+    "items": [
+      [
+        "Zero conditional — positive",
+        "If you heat ice, it melts."
+      ],
+      [
+        "Zero conditional — negative",
+        "If plants don’t get water, they die."
+      ],
+      [
+        "Zero conditional — questions",
+        "What happens if you heat ice?"
+      ],
+      [
+        "First conditional — positive",
+        "If I finish early, I’ll call you."
+      ],
+      [
+        "First conditional — negative",
+        "If it rains, we won’t go out."
+      ],
+      [
+        "First conditional — yes/no questions",
+        "Will you come if you are free?"
+      ],
+      [
+        "First conditional — wh-questions",
+        "What will you do if it rains?"
+      ],
+      [
+        "First conditional — modal / imperative result",
+        "If you’re tired, rest. If you finish, you can leave."
+      ],
+      [
+        "Unless — if…not",
+        "Unless you hurry, you’ll miss the bus."
+      ],
+      [
+        "Second conditional — positive",
+        "If I had more time, I would travel."
+      ],
+      [
+        "Second conditional — negative",
+        "If I didn’t work, I wouldn’t earn money."
+      ],
+      [
+        "Second conditional — yes/no questions",
+        "Would you move if you found a better job?"
+      ],
+      [
+        "Second conditional — wh-questions",
+        "What would you do if you won?"
+      ],
+      [
+        "If I were you — maslahat",
+        "If I were you, I would ask for help."
+      ],
+      [
+        "First vs second conditional",
+        "If I have time… / If I had more time…"
+      ],
+      [
+        "If-clause order and commas",
+        "If it rains, we’ll stay. / We’ll stay if it rains."
+      ]
+    ]
+  },
+  {
+    "title": "Past conditions & wishes",
+    "uz": "O‘tgan farazlar va istaklar",
+    "phase": 3,
+    "goal": "O‘tgan qarorning boshqa natijasini va hozirgi afsusni ifodalayman.",
+    "items": [
+      [
+        "Third conditional — positive",
+        "If I had studied, I would have passed."
+      ],
+      [
+        "Third conditional — negative",
+        "If we hadn’t left late, we wouldn’t have missed it."
+      ],
+      [
+        "Third conditional — yes/no questions",
+        "Would you have come if I had invited you?"
+      ],
+      [
+        "Third conditional — wh-questions",
+        "What would you have done if you had known?"
+      ],
+      [
+        "Third conditional — could / might have",
+        "If I had saved more, I could have bought it."
+      ],
+      [
+        "Mixed conditional — past → present",
+        "If I had slept well, I wouldn’t be tired now."
+      ],
+      [
+        "Mixed conditional — present → past",
+        "If I spoke French, I would have understood her."
+      ],
+      [
+        "Mixed conditional — negative / questions",
+        "Would you be here if you hadn’t met her?"
+      ],
+      [
+        "Wish / if only + Past Simple",
+        "I wish I had more time."
+      ],
+      [
+        "Wish / if only + Past Perfect",
+        "I wish I had listened."
+      ],
+      [
+        "Wish + would — o‘zgarishini istash",
+        "I wish the neighbours would be quieter."
+      ],
+      [
+        "Wish + could — imkon yoki qobiliyat",
+        "I wish I could swim."
+      ],
+      [
+        "Wish vs hope",
+        "I hope she comes. / I wish she were here."
+      ],
+      [
+        "Provided / as long as / even if",
+        "You can borrow it as long as you return it."
+      ]
+    ]
+  },
+  {
+    "title": "Passive voice",
+    "uz": "Harakatdan ta’sirlangan narsani markazga olish",
+    "phase": 3,
+    "goal": "Kim bajarganidan ko‘ra nima bo‘lganiga urg‘u beraman.",
+    "items": [
+      [
+        "Active vs passive — ega va fokus",
+        "People use this room. / This room is used."
+      ],
+      [
+        "Present Simple Passive — positive",
+        "English is spoken here."
+      ],
+      [
+        "Present Simple Passive — negative",
+        "The office isn’t cleaned on Sundays."
+      ],
+      [
+        "Present Simple Passive — questions",
+        "Is it made here? Where is it made?"
+      ],
+      [
+        "Past Simple Passive — positive",
+        "The bridge was built in 1990."
+      ],
+      [
+        "Past Simple Passive — negative",
+        "The letter wasn’t sent."
+      ],
+      [
+        "Past Simple Passive — questions",
+        "Was it repaired? When was it repaired?"
+      ],
+      [
+        "Present Continuous Passive — positive",
+        "The road is being repaired."
+      ],
+      [
+        "Present Continuous Passive — negative",
+        "The room isn’t being used."
+      ],
+      [
+        "Present Continuous Passive — questions",
+        "Is the house being painted?"
+      ],
+      [
+        "Present Perfect Passive — positive",
+        "The work has been finished."
+      ],
+      [
+        "Present Perfect Passive — negative",
+        "The results haven’t been announced."
+      ],
+      [
+        "Present Perfect Passive — questions",
+        "Has the parcel been delivered?"
+      ]
+    ]
+  },
+  {
+    "title": "Passive · extended",
+    "uz": "Passivning kengaytirilgan shakllari",
+    "phase": 3,
+    "goal": "Kelajak, modal va oldingi voqealarni passivda ifodalayman.",
+    "items": [
+      [
+        "Future Passive — positive",
+        "The results will be published tomorrow."
+      ],
+      [
+        "Future Passive — negative",
+        "The results won’t be published today."
+      ],
+      [
+        "Future Passive — questions",
+        "When will the results be published?"
+      ],
+      [
+        "Modal Passive — positive",
+        "This machine can be repaired."
+      ],
+      [
+        "Modal Passive — negative",
+        "This door mustn’t be opened."
+      ],
+      [
+        "Modal Passive — questions",
+        "Can this machine be repaired?"
+      ],
+      [
+        "Past Continuous Passive — positive",
+        "The car was being repaired when I called."
+      ],
+      [
+        "Past Continuous Passive — negative",
+        "The room wasn’t being used."
+      ],
+      [
+        "Past Continuous Passive — questions",
+        "Was the road being repaired?"
+      ],
+      [
+        "Past Perfect Passive — positive",
+        "The work had been completed before I arrived."
+      ],
+      [
+        "Past Perfect Passive — negative",
+        "The parcel hadn’t been sent."
+      ],
+      [
+        "Past Perfect Passive — questions",
+        "Had the tickets been booked?"
+      ],
+      [
+        "By + agent — bajaruvchini aytish",
+        "The book was written by a local author."
+      ]
+    ]
+  },
+  {
+    "title": "Reported speech",
+    "uz": "Birovning gapini yetkazish",
+    "phase": 3,
+    "goal": "Aytilgan gap, savol va iltimosni ma’nosini saqlab yetkazaman.",
+    "items": [
+      [
+        "Say vs tell — asosiy farq",
+        "She said she was busy. / She told me she was busy."
+      ],
+      [
+        "Reported statements — positive",
+        "“I am tired.” → She said she was tired."
+      ],
+      [
+        "Reported statements — negative",
+        "“I don’t know.” → He said he didn’t know."
+      ],
+      [
+        "Backshift — present → past",
+        "“I work here.” → She said she worked there."
+      ],
+      [
+        "Backshift — past / perfect → past perfect",
+        "“I lost it.” → He said he had lost it."
+      ],
+      [
+        "Backshift — will → would; can → could",
+        "“I will help.” → She said she would help."
+      ],
+      [
+        "No backshift — hali dolzarb ma’lumot",
+        "She says she lives nearby."
+      ],
+      [
+        "Pronoun changes — kim haqida?",
+        "“My bag…” → He said his bag was missing."
+      ],
+      [
+        "Time / place changes — kontekstga qarab",
+        "today → that day; here → there"
+      ],
+      [
+        "Reported yes/no questions — if / whether",
+        "She asked if I was ready."
+      ],
+      [
+        "Reported wh-questions — oddiy gap tartibi",
+        "He asked where I lived."
+      ],
+      [
+        "Reported commands — to + verb",
+        "She told me to wait."
+      ],
+      [
+        "Reported negative commands — not to",
+        "He told us not to leave."
+      ],
+      [
+        "Reported requests — ask + object + to",
+        "She asked me to help her."
+      ],
+      [
+        "Reporting verbs — promise / offer / refuse",
+        "He offered to help. She refused to leave."
+      ],
+      [
+        "Reporting verbs — suggest / admit / deny",
+        "She suggested taking a break."
+      ]
+    ]
+  },
+  {
+    "title": "Relative clauses",
+    "uz": "Ot haqida qo‘shimcha yoki aniqlovchi ma’lumot",
+    "phase": 3,
+    "goal": "Ikki fikrni birlashtirib, kim yoki qaysi narsa haqida gapirayotganimni aniqlayman.",
+    "items": [
+      [
+        "Defining relative — who",
+        "The woman who teaches us is kind."
+      ],
+      [
+        "Defining relative — which / that",
+        "The book that I bought is useful."
+      ],
+      [
+        "Defining relative — whose",
+        "The girl whose bag is red is my sister."
+      ],
+      [
+        "Defining relative — where",
+        "This is the school where I studied."
+      ],
+      [
+        "Defining relative — when",
+        "I remember the day when we met."
+      ],
+      [
+        "Subject relative pronouns — tushirib bo‘lmaydi",
+        "The man who called is here."
+      ],
+      [
+        "Object relative pronouns — tushirish mumkin",
+        "The book I bought is useful."
+      ],
+      [
+        "Non-defining relative — who / which",
+        "Ali, who lives nearby, is a teacher."
+      ],
+      [
+        "Non-defining relative — whose / where",
+        "Bukhara, where my aunt lives, is beautiful."
+      ],
+      [
+        "Defining vs non-defining — ma’no va vergul",
+        "My brother who lives abroad… / My brother, who…"
+      ],
+      [
+        "Preposition + relative — oddiy va rasmiy",
+        "the person I spoke to / to whom I spoke"
+      ],
+      [
+        "Which referring to a whole clause",
+        "He helped us, which was kind."
+      ],
+      [
+        "Reduced relative — -ing",
+        "The students waiting outside are in my class."
+      ],
+      [
+        "Reduced relative — V3",
+        "The books written by her are popular."
+      ]
+    ]
+  },
+  {
+    "title": "Verb patterns",
+    "uz": "Fe’ldan keyin keladigan shakllar",
+    "phase": 3,
+    "goal": "Fe’ldan keyin -ing, to-infinitive yoki bare infinitiveni to‘g‘ri tanlayman.",
+    "items": [
+      [
+        "Verb + -ing",
+        "I enjoy reading. She avoids driving at night."
+      ],
+      [
+        "Verb + to-infinitive",
+        "I decided to study. They hope to win."
+      ],
+      [
+        "Verb + object + to-infinitive",
+        "I want you to listen."
+      ],
+      [
+        "Verb + object + bare infinitive",
+        "Let me help. The joke made us laugh."
+      ],
+      [
+        "Modal + bare infinitive",
+        "She can swim. (can to swim emas.)"
+      ],
+      [
+        "Preposition + -ing",
+        "I’m interested in learning languages."
+      ],
+      [
+        "Infinitive of purpose",
+        "I went out to buy bread."
+      ],
+      [
+        "Gerund as subject",
+        "Reading helps me relax."
+      ],
+      [
+        "Adjective + to-infinitive",
+        "It is easy to understand."
+      ],
+      [
+        "Too / enough + to-infinitive",
+        "too tired to work; old enough to drive"
+      ],
+      [
+        "Stop doing vs stop to do",
+        "He stopped smoking. / He stopped to rest."
+      ],
+      [
+        "Remember / forget doing vs to do",
+        "Remember to call. / I remember calling."
+      ],
+      [
+        "Try doing vs try to do",
+        "Try restarting it. / I tried to open it."
+      ],
+      [
+        "Used to vs be used to",
+        "I used to walk. / I’m used to walking."
+      ],
+      [
+        "Get used to + noun / -ing",
+        "I’m getting used to waking up early."
+      ],
+      [
+        "Phrasal verbs — separable / inseparable",
+        "Turn it off. / Look after her."
+      ],
+      [
+        "Dependent prepositions after verbs/adjectives",
+        "depend on; listen to; interested in; good at"
+      ],
+      [
+        "Have / get something done — xizmat",
+        "I had my hair cut. I’ll get my phone repaired."
+      ]
+    ]
+  },
+  {
+    "title": "Clauses & connections",
+    "uz": "Fikrlarni mantiqan bog‘lash",
+    "phase": 3,
+    "goal": "Sabab, natija, qarama-qarshilik va maqsadni bog‘langan gaplarda ifodalayman.",
+    "items": [
+      [
+        "And / but / or — teng fikrlarni ulash",
+        "I called, but nobody answered."
+      ],
+      [
+        "Because / since / as — sabab",
+        "We stayed in because it was raining."
+      ],
+      [
+        "Because of / due to + noun phrase",
+        "The match stopped because of the rain."
+      ],
+      [
+        "So / therefore / as a result — natija",
+        "It was late, so we left."
+      ],
+      [
+        "Although / even though + clause",
+        "Although it was cold, we went out."
+      ],
+      [
+        "Despite / in spite of + noun / -ing",
+        "Despite the rain, we went out."
+      ],
+      [
+        "However / nevertheless — qarshi fikr",
+        "It was cold. However, we went out."
+      ],
+      [
+        "While / whereas — taqqoslab qarshi qo‘yish",
+        "I prefer tea, whereas she prefers coffee."
+      ],
+      [
+        "So…that — sifat/ravish bilan natija",
+        "It was so cold that we stayed inside."
+      ],
+      [
+        "Such…that — ot birikmasi bilan natija",
+        "It was such a good book that I read it twice."
+      ],
+      [
+        "To / in order to / so as to — maqsad",
+        "I study to improve my English."
+      ],
+      [
+        "So that + clause — maqsad",
+        "I spoke slowly so that everyone could follow."
+      ],
+      [
+        "Before / after / until / as soon as",
+        "Wait until I return."
+      ],
+      [
+        "In case vs if — ehtiyot va shart",
+        "Take a coat in case it gets cold."
+      ],
+      [
+        "Both…and / either…or / neither…nor",
+        "You can either walk or take a bus."
+      ],
+      [
+        "Not only…but also — parallel shakllar",
+        "She is not only kind but also patient."
+      ],
+      [
+        "Adding and exemplifying — qo‘shimcha/misol",
+        "Moreover…; for example…; for instance…"
+      ],
+      [
+        "Paragraph links and punctuation",
+        "It was raining; however, we continued."
+      ]
+    ]
+  },
+  {
+    "title": "Precision & complex forms",
+    "uz": "Aniqlik va murakkabroq tuzilmalar",
+    "phase": 3,
+    "goal": "Gaplarimni aniqroq, tabiiyroq va grammatik jihatdan izchil qilaman.",
+    "items": [
+      [
+        "Subject–verb agreement — oddiy va murakkab ega",
+        "The list of names is on the desk."
+      ],
+      [
+        "Indefinite pronouns — birlikdagi fe’l",
+        "Everyone is ready. Nobody knows."
+      ],
+      [
+        "Articles — general vs specific meaning",
+        "Life is difficult. / The life of this artist…"
+      ],
+      [
+        "Articles — places, institutions, geography",
+        "at school; in the school; the Nile; Uzbekistan"
+      ],
+      [
+        "Countability shifts — ma’noga qarab",
+        "some chicken / a chicken; some paper / a paper"
+      ],
+      [
+        "Adjective order — ot oldidagi sifatlar",
+        "a beautiful old wooden chair"
+      ],
+      [
+        "-ed vs -ing adjectives",
+        "I’m interested. / The topic is interesting."
+      ],
+      [
+        "Gradable / non-gradable adjectives",
+        "very cold; absolutely freezing"
+      ],
+      [
+        "Adverb position and scope",
+        "She almost finished. / Only she finished."
+      ],
+      [
+        "Indirect questions — yes/no",
+        "Could you tell me if the bank is open?"
+      ],
+      [
+        "Indirect questions — wh-",
+        "Do you know where she lives?"
+      ],
+      [
+        "Question tags — positive statement",
+        "You work here, don’t you?"
+      ],
+      [
+        "Question tags — negative statement",
+        "She isn’t ready, is she?"
+      ],
+      [
+        "So / neither + auxiliary — qo‘shilish",
+        "So do I. / Neither have I."
+      ],
+      [
+        "Stative vs dynamic meanings",
+        "I think it’s good. / I’m thinking about it."
+      ]
+    ]
+  },
+  {
+    "title": "Future · extended",
+    "uz": "Kelajakdagi jarayon va tugallangan natija",
+    "phase": 3,
+    "goal": "Kelajakdagi bir paytda davom etadigan va shu paytgacha tugaydigan ishni ajrataman.",
+    "items": [
+      [
+        "Future Continuous — positive",
+        "I’ll be studying at eight tomorrow."
+      ],
+      [
+        "Future Continuous — negative",
+        "I won’t be working tomorrow morning."
+      ],
+      [
+        "Future Continuous — yes/no questions",
+        "Will you be working tomorrow?"
+      ],
+      [
+        "Future Continuous — wh-questions",
+        "What will you be doing at eight?"
+      ],
+      [
+        "Future Perfect — positive",
+        "I’ll have finished by Friday."
+      ],
+      [
+        "Future Perfect — negative",
+        "I won’t have finished by then."
+      ],
+      [
+        "Future Perfect — questions",
+        "Will you have finished by noon?"
+      ],
+      [
+        "Future Continuous — short answers",
+        "Yes, I will. / No, she won’t."
+      ],
+      [
+        "Future Perfect — wh-questions",
+        "What will you have finished by Friday?"
+      ],
+      [
+        "Future Perfect — short answers",
+        "Yes, I will. / No, they won’t."
+      ],
+      [
+        "Future Continuous vs Future Perfect",
+        "At six, I’ll be working. / By six, I’ll have finished."
+      ],
+      [
+        "By / by the time — yakun muddati",
+        "I’ll have left by the time you arrive."
+      ],
+      [
+        "Future in the past — was going to / would",
+        "I was going to call, but I forgot."
+      ]
+    ]
+  }
+]

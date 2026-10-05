@@ -4,6 +4,7 @@ import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, He
   Gavel, Dices, Link2, Ban, Users, MessagesSquare, Shuffle, LayoutGrid, Copy, Grid3x3, Printer, Eye, EyeOff } from "lucide-react";
 import { api, getToken } from "../lib/api";
 import brandIconSrc from "../assets/brand-icon.png";
+import IntensivePlans from "./IntensivePlans";
 
 /**
  * DARS REJALARI (2026-09-18, Jahongir: "saytgayam qoy ... kahoot
@@ -81,6 +82,7 @@ const MODES = [
  * kirganda list korinishida 1-dars - Shaping the mindset ..."). */
 export default function LessonPlans() {
   const { course, no } = useParams();
+  if (course === "intensive") return <IntensivePlans />;
   if (course && no) return <LessonView course={course} no={Number(no)} />;
   if (course) return <LessonList course={course} />;
   return <LevelList />;
@@ -102,6 +104,10 @@ function LevelList() {
       <h1 className="text-xl font-semibold text-slate-900 mb-1 flex items-center gap-2">
         <BookOpen size={20} className="text-brand-600" /> Dars rejalari
       </h1>
+      <nav aria-label="O‘quv yo‘nalishi" className="my-5 flex gap-2 rounded-xl bg-slate-100 p-1">
+        <Link to="/plans" aria-current="page" className="flex-1 rounded-lg bg-white px-4 py-3 text-center text-sm font-semibold text-brand-700 shadow-sm">Standard English</Link>
+        <Link to="/plans/intensive" className="flex-1 rounded-lg px-4 py-3 text-center text-sm font-semibold text-slate-600 hover:bg-white">Intensive</Link>
+      </nav>
       <p className="text-sm text-slate-500 mb-5">
         Darajani tanlang. Har mavzu — bitta 120 daqiqalik dars: grammatika, 20/40/60 lug'at,
         mashqlar, reading, listening, uyga vazifa va <b>jonli o'yin</b> (Kahoot uslubi).

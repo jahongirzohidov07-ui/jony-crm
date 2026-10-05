@@ -43,6 +43,7 @@ import {
 import { SalesPanelCards, AdminCollectionCard } from "../components/SalesPanel";
 import { AdminSalaryCard } from "../components/AdminSalaryCoach";
 import { SmmSalaryCard } from "../components/SmmSalaryCoach";
+import { ExaminerSalaryCard } from "../components/ExaminerSalaryCoach";
 import { MyPanel } from "../components/MyPanel";
 import { FillCard } from "../components/FillReport";
 import { useAuth } from "../lib/AuthContext";
@@ -518,6 +519,7 @@ export default function Dashboard() {
           tursin, doim eslatib ajralib turadigan bo'lsin"). */}
       {isSales && <AdminSalaryCard />}
       {user?.role === "smm_manager" && <SmmSalaryCard />}
+      {["examiner", "head_examiner"].includes(user?.role || "") && <ExaminerSalaryCard />}
 
       {/* Har bir xodim avval O'Z ishini ko'radi */}
       <MyPanel onLoaded={setShowGeneral} />

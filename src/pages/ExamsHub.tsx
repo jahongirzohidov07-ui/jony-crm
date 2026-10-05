@@ -232,7 +232,7 @@ export default function ExamsHub() {
   // ?tab=orders kabi havola to'g'ridan-to'g'ri kerakli bo'limni ochadi
   // (Jony Examiner ilovasidagi "Ko'rish" tugmasi, 2026-09-28).
   const [params] = useSearchParams();
-  const TABS: Tab[] = ["exams", "analysis", "orders", "bank", "mock", "issues"];
+  const TABS: Tab[] = ["exams", "analysis", "orders", "bank", "mock", "issues", "pay"];
   const want = params.get("tab") as Tab | null;
   // BUYURTMALAR BIRINCHI (2026-09-28, Jahongir: "buyurtmalarni birinchi
   // oringa qoy") — examinerning kuni kelgan so'rovlardan boshlanadi.

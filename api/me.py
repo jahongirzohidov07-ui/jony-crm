@@ -2669,6 +2669,8 @@ def my_examiner_salary(year: int | None = None, month: int | None = None,
         out["clamped_min"] = False
         out["clamped_max"] = False
         out["volunteer_hint"] = _VOLUNTEER_HINT
+    from salary_coach import examiner_salary_goal
+    out["goal"] = examiner_salary_goal(out, today)
     return out
 
 @router.get("/api/me/junior-path")

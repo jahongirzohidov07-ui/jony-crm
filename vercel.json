@@ -3,14 +3,14 @@
   "functions": {
     "api/main.py": {
       "maxDuration": 30,
-      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json}"
+      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json,public/german/**,dist/german/**,src/data/german/**}"
     },
     "api/entry.py": {
       "maxDuration": 30,
-      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json}"
+      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json,public/german/**,dist/german/**,src/data/german/**}"
     },
     "api/**/*.py": {
-      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json}"
+      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json,public/german/**,dist/german/**,src/data/german/**}"
     }
   },
   "crons": [

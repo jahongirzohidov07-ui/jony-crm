@@ -1,0 +1,95 @@
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Download, Headphones, Volume2, Square, Eye, ChevronRight } from 'lucide-react';
+import brand from '../assets/brand-icon.png';
+import Practice from '../components/IntensivePractice';
+import VocabularyPdfButtons from '../components/VocabularyPdfButtons';
+import { germanWords, germanGrammar, germanLessons, germanSkills, germanMonths, lessonWords, supportWords, germanWordPractice, mainTimeline, orientationTimeline, finalWeekTimeline, supportTimeline, independentWork, goetheInfo, goethePractice } from '../lib/german';
+import type { GermanWord, GermanTopic, GermanSkills } from '../lib/german';
+import { shuffled } from '../lib/intensive';
+
+const button = 'inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:border-blue-400 disabled:opacity-40';
+const panel = 'rounded-2xl border border-slate-200 bg-white p-5 md:p-6';
+function Pdf({ file, children }: { file: string; children: React.ReactNode }) {
+  return <a className={button} href={`/german/${file}.pdf`} download><Download size={16}/>{children}</a>;
+}
+function Timeline({ rows }: { rows: readonly [number, string, string][] }) {
+  let end = 0;
+  return <ol className="space-y-3">{rows.map(([minutes, title, text]) => { const from = end; end += minutes; return <li key={title} className="flex gap-3 rounded-xl bg-slate-50 p-3"><span className="w-16 shrink-0 text-xs font-bold text-blue-700">{from}–{end}<br/>daqiqa</span><div><h4 className="text-sm font-semibold">{title}</h4><p className="mt-1 text-sm leading-6 text-slate-600">{text}</p></div></li>; })}</ol>;
+}
+function WordCards({ pool }: { pool: GermanWord[] }) {
+  const [hide, setHide] = useState(false);
+  return <><button className={`${button} mb-4`} onClick={() => setHide(!hide)}><Eye size={16}/>{hide ? 'Tarjimalarni ko‘rsatish' : 'Tarjimalarni yopish'}</button><div className="grid gap-3 md:grid-cols-2">{pool.map(w => <article key={w.id} className={panel}>
+    <span className="text-xs text-slate-400">#{w.id} · {w.week}-hafta · {w.topic}</span><h3 lang="de" className="mt-1 text-lg font-bold text-slate-900">{w.word}</h3><p className="text-sm text-blue-700">{w.ipa}</p>{w.forms && <p lang="de" className="mt-1 text-xs text-slate-500">{w.forms}</p>}
+    {!hide && <p className="mt-3 font-medium">{w.meaning}</p>}<p lang="de" className="mt-3 border-l-2 border-blue-200 pl-3 text-sm leading-6">{w.example}</p>{!hide && <p className="mt-1 text-sm leading-6 text-slate-500">{w.translation}</p>}
+  </article>)}</div></>;
+}
+function WordBlock({ pool }: { pool: GermanWord[] }) {
+  const [size, setSize] = useState(10), [block, setBlock] = useState(0);
+  const safeBlock = Math.min(block, Math.max(0, Math.ceil(pool.length / size) - 1));
+  const selected = pool.slice(safeBlock * size, (safeBlock + 1) * size);
+  const questions = germanWordPractice(selected, size === 20);
+  return <><div className="my-4 flex flex-wrap items-center gap-2">{[10, 20].map(n => <button key={n} className={`${button} ${n === size ? 'border-blue-500 bg-blue-50 text-blue-700' : ''}`} aria-pressed={n === size} onClick={() => {setSize(n);setBlock(0);}}>{n} so‘z{n === 20 ? ' · aralash' : ''}</button>)}
+    <label className="flex items-center gap-2 text-sm">To‘plam<select className="max-w-64 rounded-xl border border-slate-200 bg-white p-3" value={safeBlock} onChange={e => setBlock(Number(e.target.value))}>{Array.from({ length: Math.ceil(pool.length / size) }, (_, i) => <option key={i} value={i}>{pool[i * size].id}–{pool[Math.min((i + 1) * size, pool.length) - 1].id} · {pool[i * size].topic}</option>)}</select></label></div>
+    <VocabularyPdfButtons pool={selected} mixed={size === 20} questions={questions} brandTitle="JONY DEUTSCH · B1" prefix="jony-deutsch"/>
+    <WordCards pool={selected}/><div className="mt-5"><Practice key={`${selected[0]?.id}-${size}`} questions={questions} title="Nemischa lug‘at mashqi"/></div>
+  </>;
+}
+function Topic({ topic }: { topic: GermanTopic }) {
+  return <details className={panel}><summary className="cursor-pointer font-semibold text-slate-900">{topic.id} · {topic.title} <span className="text-xs text-blue-600">{topic.level}</span></summary><p className="mt-4 whitespace-pre-line text-sm leading-7">{topic.rule}</p><p lang="de" className="mt-3 rounded-xl bg-blue-50 p-3 font-medium text-blue-900">{topic.example}</p><p className="my-3 text-sm text-slate-500">{topic.translation}</p><Practice questions={topic.questions} title="Mavzu mashqlari"/></details>;
+}
+function Listening({ item }: { item: GermanSkills['listening'] }) {
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]), [playing, setPlaying] = useState(false), [error, setError] = useState('');
+  useEffect(() => {
+    if (!('speechSynthesis' in window)) return;
+    const update = () => setVoices(window.speechSynthesis.getVoices().filter(v => /^de(?:-|_)/i.test(v.lang)));
+    update(); window.speechSynthesis.addEventListener('voiceschanged', update);
+    return () => {window.speechSynthesis.removeEventListener('voiceschanged', update);window.speechSynthesis.cancel();};
+  }, []);
+  function play() {
+    if (!voices.length) {setError('Qurilmada nemischa ovoz yo‘q. Ustoz transkriptni ikki marta o‘qib beradi.');return;}
+    window.speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(item.text); utterance.lang = 'de-DE'; utterance.voice = voices[0]; utterance.rate = 0.9;
+    utterance.onend = () => setPlaying(false); utterance.onerror = () => {setPlaying(false);setError('Ovoz ijro etilmadi. Ustoz transkriptdan foydalansin.');};
+    setError('');setPlaying(true);window.speechSynthesis.speak(utterance);
+  }
+  return <section className={panel}><h3 className="font-bold"><Headphones className="mr-2 inline" size={18}/>Hören · {item.title}</h3><p className="my-3 text-sm text-slate-500">Mualliflik mashqi. Qurilmaning nemischa sintetik ovozi yoki ustoz o‘qishi; rasmiy imtihon audiosi emas. Avval tinglang, so‘ng transkriptni oching.</p><div className="flex gap-2"><button className={button} onClick={play}><Volume2 size={16}/>{playing ? 'Qayta tinglash' : 'Tinglash'}</button><button className={button} disabled={!playing} onClick={() => {window.speechSynthesis.cancel();setPlaying(false);}}><Square size={16}/>To‘xtatish</button></div>{error && <p role="status" className="my-2 text-sm text-amber-700">{error}</p>}<details className="my-4"><summary className="cursor-pointer text-sm font-semibold">Transkript · ustoz uchun ham</summary><p lang="de" className="mt-3 whitespace-pre-line text-sm leading-7">{item.text}</p></details><Practice questions={item.questions} title="Tinglab tushunish"/></section>;
+}
+function Skills({ no }: { no: number }) {
+  const item = germanSkills.find(s => s.no === no);
+  if (!item) return <p>Bu dars materiali topilmadi.</p>;
+  return <div className="space-y-5"><section className={panel}><h3 className="font-bold">Lesen · {item.reading.title}</h3><p lang="de" className="my-4 whitespace-pre-line text-sm leading-7">{item.reading.text}</p><Practice questions={item.reading.questions} title="O‘qib tushunish"/></section><Listening key={no} item={item.listening}/>{(['speaking','writing'] as const).map(kind => <section className={panel} key={kind}><h3 className="font-bold">{kind === 'speaking' ? 'Sprechen · gapirish' : 'Schreiben · yozish'}</h3><p className="my-3 whitespace-pre-line text-sm leading-7">{item[kind].task}</p><ul className="ml-5 list-disc space-y-2 text-sm text-slate-600">{item[kind].criteria.map(c => <li key={c}>{c}</li>)}</ul><details className="mt-4"><summary className="cursor-pointer text-sm font-semibold text-blue-700">Namuna · avval mustaqil bajaring</summary><p lang="de" className="mt-3 whitespace-pre-line rounded-xl bg-blue-50 p-4 text-sm leading-7">{item[kind].model}</p></details><p className="mt-3 text-xs text-slate-500">Erkin nutq va yozuvni ustoz mezonlar bo‘yicha baholaydi.</p></section>)}</div>;
+}
+function Lesson({ no }: { no: number }) {
+  const plan = germanLessons.find(l => l.no === no)!;
+  const [section, setSection] = useState('plan');
+  const selectedTopics = plan.topicIds.map(id => germanGrammar.find(t => t.id === id)!).filter(Boolean);
+  const pool = lessonWords(no);
+  const review = supportWords(no);
+  return <div className="space-y-5"><div className={panel}><span className="text-xs font-semibold text-blue-600">{plan.month}-oy · {plan.week}-hafta · {plan.level}</span><h2 className="mt-2 text-xl font-bold">{no}-dars · {plan.title}</h2><p className="mt-3 text-sm leading-6">{plan.objective}</p><p className="mt-2 text-xs text-slate-500">120 daqiqa asosiy + 60 daqiqa support · {pool.length} so‘z · #{pool[0]?.id}–{pool.at(-1)?.id}</p>{plan.checkpoint && <p className="mt-3 rounded-xl bg-amber-50 p-3 text-sm text-amber-900">Ichki nazorat: mavzular, lug‘at va to‘rtta ko‘nikmani tekshiring. Bu natija rasmiy Goethe bali emas.</p>}</div>
+    <nav aria-label="Dars ichidagi bo‘limlar" className="flex flex-wrap gap-2">{[['plan','Dars tartibi'],['grammar','Grammatika'],['words','Lug‘at'],['skills','4 ko‘nikma'],['support','Support'],['homework','Uy vazifasi']].map(([key,label]) => <button key={key} className={`${button} ${section === key ? 'border-blue-500 text-blue-700' : ''}`} aria-pressed={section === key} onClick={() => setSection(key)}>{label}</button>)}</nav>
+    {section === 'plan' && <section className={panel}><h3 className="mb-3 font-bold">Asosiy ustoz uchun · 120 daqiqa</h3><p className="mb-4 rounded-xl bg-blue-50 p-4 text-sm leading-7">{plan.teacherTip}</p>{no === 1 && <p className="mb-4 text-sm leading-7">Kurs boshlanishida xaritani ko‘rsating: asosiy dars → support → mustaqil ish. Lug‘atni artikl bilan o‘rganish, xato daftari va haftalik tekshiruv tartibini namoyish qiling. 6 oy natijasi bosqich tekshiruvlari bilan kuzatiladi.</p>}<Timeline rows={no === 1 ? orientationTimeline : plan.week === 24 ? finalWeekTimeline(no) : mainTimeline}/></section>}
+    {section === 'grammar' && <><div className="space-y-3">{selectedTopics.map(t => <Topic key={t.id} topic={t}/>)}</div><Practice questions={shuffled(selectedTopics.flatMap(t => t.questions),no)} title="Dars grammatikasi · aralash mashq"/></>}
+    {section === 'words' && <WordBlock key={no} pool={pool}/>}
+    {section === 'skills' && <Skills key={no} no={no}/>}
+    {section === 'support' && <><section className={panel}><h3 className="mb-3 font-bold">Support ustoz uchun · 60 daqiqa</h3><p className="mb-4 rounded-xl bg-blue-50 p-4 text-sm leading-7">{plan.supportTask}</p><Timeline rows={supportTimeline}/></section><Practice questions={germanWordPractice(review,true)} title="Bugungi va oldingi hafta · 20 so‘zli qaytarish"/></>}
+    {section === 'homework' && <section className={panel}><h3 className="mb-3 font-bold">Mustaqil ish · 75 daqiqa, haftada 6 kun</h3><ul className="mb-5 ml-5 list-decimal space-y-2 text-sm leading-6">{plan.homework.map((h,i) => <li key={i}>{h}</li>)}</ul><Timeline rows={independentWork}/></section>}
+  </div>;
+}
+
+export default function GermanPlans() {
+  const [params, setParams] = useSearchParams();
+  const tab = ['map','lessons','grammar','vocabulary','exam'].includes(params.get('tab') ?? '') ? params.get('tab')! : 'map';
+  const lesson = Math.min(72,Math.max(1,Math.trunc(Number(params.get('lesson'))) || 1));
+  const month = Math.ceil(lesson / 12);
+  const [query, setQuery] = useState('');
+  const setTab = (value: string) => {setQuery('');setParams({tab:value, lesson:String(lesson)});};
+  const wordSearch = germanWords.filter(w => `${w.word} ${w.meaning} ${w.topic}`.toLocaleLowerCase().includes(query.toLocaleLowerCase()));
+  return <main className="mx-auto max-w-6xl px-6 pb-12 md:px-8"><header className="rounded-3xl bg-slate-950 p-6 text-white md:p-9"><div className="flex items-center gap-3"><img src={brand} alt="Jony" className="h-10 w-10 rounded-xl"/><span className="text-sm font-semibold tracking-widest text-blue-200">JONY DEUTSCH</span></div><h1 className="mt-5 text-3xl font-bold">0 dan B1 gacha. Har dars aniq.</h1><p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">Goethe-Zertifikat B1 ga tayyorgarlik · 6 oy, 24 o‘quv haftasi. Asosiy ustoz, support va mustaqil ish bir yo‘lda.</p><div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">{[['72','Asosiy dars · 120 daqiqa'],['72','Support · 60 daqiqa'],[String(germanGrammar.length),'Grammatika mavzusi'],[germanWords.length.toLocaleString(),'So‘z va ibora']].map(([value,label]) => <div className="rounded-xl bg-white/10 p-3" key={label}><strong className="text-2xl">{value}</strong><p className="mt-1 text-xs text-slate-300">{label}</p></div>)}</div></header>
+    <nav aria-label="Nemis kursi bo‘limlari" className="my-5 flex flex-wrap gap-2">{[['map','Kurs xaritasi'],['lessons','Darslar'],['grammar','Grammar Map'],['vocabulary','Vocabulary'],['exam','Goethe B1']].map(([key,label]) => <button key={key} className={`${button} ${tab === key ? 'border-blue-600 bg-blue-50 text-blue-700' : ''}`} onClick={() => setTab(key)} aria-pressed={tab === key}>{label}</button>)}</nav>
+    {tab === 'map' && <div className="space-y-5"><section className={panel}><h2 className="text-xl font-bold">Olti oy uchun yo‘l xaritasi</h2><p className="my-3 text-sm leading-7 text-slate-600">Har hafta 3 ta asosiy dars va ularga mos 3 ta support: jami 9 soat. Mustaqil ish — 75 daqiqadan, haftada 6 kun. 24 hafta o‘quv rejasidir; boshlanish sanasi va bayramlar guruh jadvalida hisobga olinadi.</p><div className="grid gap-3 md:grid-cols-2">{germanMonths.map((name,i) => <button key={name} className="rounded-xl border border-slate-200 p-4 text-left hover:border-blue-400" onClick={() => {setQuery('');setParams({tab:'lessons',lesson:String(i*12+1)});}}><span className="text-xs text-blue-600">{i+1}-oy · {i*4+1}–{i*4+4}-hafta</span><h3 className="mt-1 font-semibold">{name}</h3><p className="mt-2 text-xs text-slate-500">12 asosiy + 12 support · 400 so‘z</p></button>)}</div><p className="mt-4 text-sm leading-6 text-slate-600">Har oy ko‘nikmalar tekshiriladi. Ichki mezon: grammatika/lug‘at mashqlarida 80% va mustaqil bajarilgan nutq-yozuv topshiriqlari. Past natijada supportda qayta mashq, so‘ng qayta tekshiruv. Bu mezon Goethe imtihonining baholash shkalasi emas.</p></section><section className={panel}><h2 className="mb-4 font-bold">Kitoblar va ustoz qo‘llanmasi</h2><div className="flex flex-wrap gap-2"><Pdf file="jony-deutsch-course-map">Kurs va dars rejasi</Pdf><Pdf file="jony-deutsch-grammar">Grammar Map + mashqlar</Pdf><Pdf file="jony-deutsch-vocabulary">To‘liq lug‘at</Pdf><Pdf file="jony-deutsch-answer-key">Grammar javoblari</Pdf></div><p className="mt-3 text-xs leading-6 text-slate-500">Lug‘at bo‘limida 10/20 so‘zli PDFlar ham bor. Materiallar Jony mualliflik mashqlari; rasmiy Goethe testlari alohida havolada.</p></section></div>}
+    {tab === 'lessons' && <><div className="mb-5 flex flex-wrap gap-3"><label className="text-sm">Oy <select className="ml-2 rounded-xl border p-3" value={month} onChange={e => {const m=Number(e.target.value);setParams({tab:'lessons',lesson:String((m-1)*12+1)});}}>{germanMonths.map((name,i) => <option key={name} value={i+1}>{i+1}. {name}</option>)}</select></label><Pdf file={`jony-deutsch-month-${month}-skills`}>{month}-oy ko‘nikma daftari</Pdf><Pdf file={`jony-deutsch-month-${month}-vocabulary`}>{month}-oy lug‘ati</Pdf></div><div className="grid items-start gap-5 lg:grid-cols-[260px_1fr]"><aside className="space-y-2">{germanLessons.filter(l => l.month === month).map(l => <button key={l.no} onClick={() => setParams({tab:'lessons',lesson:String(l.no)})} className={`w-full rounded-xl border p-3 text-left ${l.no === lesson ? 'border-blue-500 bg-blue-50' : 'border-slate-200 bg-white'}`}><span className="text-xs text-blue-700">{l.no}-dars · {l.week}-hafta</span><span className="mt-1 block text-sm font-medium">{l.title}</span></button>)}</aside><Lesson key={lesson} no={lesson}/></div></>}
+    {tab === 'grammar' && <><div className="mb-4 flex flex-wrap gap-2"><Pdf file="jony-deutsch-grammar">Xarita va mashqlar PDF</Pdf><Pdf file="jony-deutsch-answer-key">Javoblar PDF</Pdf></div><input className="mb-5 w-full rounded-xl border border-slate-200 p-3" aria-label="Grammatika mavzusini qidirish" placeholder="Mavzu yoki daraja: sein, Akkusativ, B1…" value={query} onChange={e => setQuery(e.target.value)}/><div className="space-y-3">{germanGrammar.filter(t => `${t.title} ${t.level}`.toLocaleLowerCase().includes(query.toLocaleLowerCase())).map(t => <Topic key={t.id} topic={t}/>)}</div></>}
+    {tab === 'vocabulary' && <><div className="flex flex-wrap items-center justify-between gap-3"><h2 className="text-xl font-bold">Vocabulary Map · Nemis tili</h2><Pdf file="jony-deutsch-vocabulary">To‘liq lug‘at PDF</Pdf></div><p className="my-3 text-sm leading-7 text-slate-600">Artikl + so‘z + talaffuz + misol. Otning ko‘pligini birga o‘rganing. Lug‘atni ertasi kuni, 3-kuni va 7-kuni qaytaring. Bu kurs lug‘ati, rasmiy Goethe ro‘yxatining nusxasi emas.</p><input className="my-3 w-full rounded-xl border border-slate-200 p-3" aria-label="Nemischa so‘z qidirish" placeholder="So‘z, tarjima yoki mavzu…" value={query} onChange={e => setQuery(e.target.value)}/>{query ? <><p className="my-3 text-sm">{wordSearch.length} ta topildi{wordSearch.length > 100 ? ' · dastlabki 100 tasi' : ''}</p><WordCards pool={wordSearch.slice(0,100)}/></> : <WordBlock pool={germanWords}/>}</>}
+    {tab === 'exam' && <section className={panel}><h2 className="text-xl font-bold">Maqsad · Goethe-Zertifikat B1</h2><p className="my-4 text-sm leading-7">Lesen — 65 daqiqa; Hören — taxminan 40 daqiqa; Schreiben — 60 daqiqa; Sprechen — taxminan 15 daqiqa. Tayyorlanishning oxirgi haftalarida modullarni vaqt bilan bajaring, keyin xatolarni support darsida tahlil qiling.</p><p className="mb-4 text-sm leading-7">Rasmiy sinovda Goethe namunasi va uning audio/javoblaridan foydalaning. Ichki dars mashqlari to‘liq rasmiy sinov o‘rnini bosmaydi. 6 oy — tayyorlash rejasi; imtihonga tayyorlik alohida modul natijalari bilan aniqlanadi.</p><div className="flex flex-wrap gap-2"><a className={button} href={goetheInfo} target="_blank" rel="noreferrer">Rasmiy format <ChevronRight size={16}/></a><a className={button} href={goethePractice} target="_blank" rel="noreferrer">Goethe sinovlari va audio <Headphones size={16}/></a></div><p className="mt-4 text-xs text-slate-500">Format tekshirilgan sana: 05.10.2026. 216 soat ustoz bilan + muntazam mustaqil ish. Rasmiy talab va sanalarni Goethe sahifasidan tekshiring.</p></section>}
+  </main>;
+}

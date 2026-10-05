@@ -5107,12 +5107,19 @@ def _apply_grade(db: Session, rows: list, key: str = "user_id") -> list:
 
 @app.get("/api/staff-grades")
 def staff_grades_list(branch_id: int | None = None,
+                      only: str | None = None,
                       db: Session = Depends(get_db),
                       user=Depends(require_role(*_PAYROLL_VIEW))):
     rates = _grade_rates(db)
     order = sorted(rates.values(), key=lambda x: x["order_no"])
+    # only=examiner — HR "Examinerlar" bo'limi uchun (2026-10-05)
+    graded = _GRADED_ROLES
+    if only == "examiner":
+        graded = (roles.EXAMINER, roles.HEAD_EXAMINER)
+    elif only == "support":
+        graded = (roles.SUPPORT_TEACHER, roles.HEAD_SUPPORT)
     us = (db.query(models.User)
-          .filter(models.User.role.in_(_GRADED_ROLES),
+          .filter(models.User.role.in_(graded),
                   models.User.is_active == 1)
           .order_by(models.User.full_name).all())
     us = [u for u in us if user.role in tuple(roles.ORG_WIDE_ROLES)
@@ -5130,6 +5137,9 @@ def staff_grades_list(branch_id: int | None = None,
         rows.append({
             "user_id": u.id, "name": u.full_name,
             "role": roles.UZ_LABELS.get(u.role, u.role),
+            "branch": u.branch.name if u.branch else None,
+            "phone": u.phone,
+            "updated_by": r.updated_by if r else None,
             "grade": g,
             "grade_label": (rates.get(g) or {}).get("label", g),
             "coef": (rates.get(g) or {}).get("coef", 0),

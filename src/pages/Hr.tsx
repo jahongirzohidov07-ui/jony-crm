@@ -44,12 +44,14 @@ import { DuplicateCandidateDialog } from "../components/CandidateHistory";
 import { exportToExcel } from "../lib/exportXlsx";
 import { HrVacancyReport } from "../components/HrVacancyReport";
 import { ChecklistTab } from "../components/HrChecklist";
+import { ExaminerStatusTab } from "../components/HrExaminers";
 
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
   | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps"
-  | "penalty" | "blacklist" | "solo" | "exited" | "drill" | "checklist";
+  | "penalty" | "blacklist" | "solo" | "exited" | "drill" | "checklist"
+  | "examiners";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
@@ -71,6 +73,9 @@ const TABS: { key: Tab; label: string }[] = [
   // 2026-09-26, Jahongir: "supportlarga ko'rgan videolari va o'qigan
   // kitobini o'tdi o'tmadi qilib bitta katta jadvalda"
   { key: "checklist", label: "Checklist" },
+  // 2026-10-05, Jahongir: "hr uchun examinerlarni valantyor va examiner
+  // qilib o'zgartirishni qo'shib ber"
+  { key: "examiners", label: "Examinerlar" },
   // 2026-08-20, Jahongir: "hamma xodimga xar xilda onboarding"
   { key: "onbsteps", label: "Onboarding" },
   // 2026-09-23, Jahongir: "hr qo'sha olsin u o'quvchilarni"
@@ -1458,6 +1463,7 @@ export default function Hr() {
       {activeTab === "nps" && <NpsTab />}
       {activeTab === "library" && <LibraryTab />}
       {activeTab === "checklist" && <ChecklistTab />}
+      {activeTab === "examiners" && <ExaminerStatusTab />}
       {activeTab === "onbsteps" && <OnboardingStepsTab />}
       {activeTab === "solo" && <SoloSupportTab />}
       {activeTab === "exited" && <ExitedStaffTab />}

@@ -243,6 +243,18 @@ try:
         _seed_hr_structure(_db3)
 except Exception:
     pass
+# Imtihoni o'tib ketgan buyurtmalarning "kechikdi" bo'lib osilib qolgan
+# vazifalari (2026-10-05) — deploydan keyin bir marta yopiladi; keyin
+# natija kiritilganda o'zi yopiladi, kunlik cron qolganini tutadi.
+try:
+    from sqlalchemy.orm import Session as _ES
+    from common import close_stale_exam_order_tasks, _seed_done, _seed_mark
+    with _ES(engine) as _db_eo:
+        if not _seed_done(_db_eo, "exam_order_tasks_v1"):
+            close_stale_exam_order_tasks(_db_eo)
+            _seed_mark(_db_eo, "exam_order_tasks_v1")
+except Exception:
+    pass
 # Eski telefon raqamlarini bir marta tozalash — 4 soniyalik ulush,
 # tugamasa keyingi ishga tushishda va kunlik cron'da davom etadi.
 try:

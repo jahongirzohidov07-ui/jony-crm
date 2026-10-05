@@ -6,7 +6,7 @@ import {
 import { api, type TaskList, type TaskRow, type User } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { TASK_ACCESS, DISCOUNT_APPROVE, PAYMENT_FIX_APPROVE,
-  RESCHEDULE_APPROVE, can } from "../lib/roles";
+  RESCHEDULE_APPROVE, STAFF_VIEWERS, can } from "../lib/roles";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 
 const TONE: Record<string, string> = {
@@ -59,9 +59,13 @@ export default function Tasks() {
   }
 
   useEffect(load, [branchId, scope]);
+  // Xodimlar ro'yxati faqat uni ko'ra oladiganlarga so'raladi
+  // (2026-10-05): examiner/ustoz vazifani ochganda /users 403 qaytarib,
+  // har safar "Bu amal uchun ruxsatingiz yo'q" xabari chiqardi.
   useEffect(() => {
+    if (!can(user?.role, STAFF_VIEWERS)) return;
     api.get<User[]>("/users").then(setStaff).catch(() => setStaff([]));
-  }, []);
+  }, [user?.role]);
 
   if (!can(user?.role, TASK_ACCESS)) {
     return (

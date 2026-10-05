@@ -2,10 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "api/main.py": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json}"
     },
     "api/entry.py": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json}"
     }
   },
   "crons": [

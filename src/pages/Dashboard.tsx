@@ -42,6 +42,7 @@ import {
 } from "../lib/roles";
 import { SalesPanelCards, AdminCollectionCard } from "../components/SalesPanel";
 import { AdminSalaryCard } from "../components/AdminSalaryCoach";
+import { SmmSalaryCard } from "../components/SmmSalaryCoach";
 import { MyPanel } from "../components/MyPanel";
 import { FillCard } from "../components/FillReport";
 import { useAuth } from "../lib/AuthContext";
@@ -461,6 +462,7 @@ export default function Dashboard() {
       <div className="p-8">
         <DashTabs tab={tab} setTab={setTab} showToday={showToday}
                   showPlan={showPlan} />
+        {user?.role === "smm_manager" && <SmmSalaryCard />}
         <Plan />
       </div>
     );
@@ -515,6 +517,7 @@ export default function Dashboard() {
           turadigan karta (2026-10-02, Jahongir: "dashboardda ko'rinib
           tursin, doim eslatib ajralib turadigan bo'lsin"). */}
       {isSales && <AdminSalaryCard />}
+      {user?.role === "smm_manager" && <SmmSalaryCard />}
 
       {/* Har bir xodim avval O'Z ishini ko'radi */}
       <MyPanel onLoaded={setShowGeneral} />

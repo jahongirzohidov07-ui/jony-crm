@@ -43,8 +43,8 @@ router = APIRouter()
 @router.get("/api/me/smm-salary")
 def my_smm_salary(db: Session = Depends(get_db),
                   user=Depends(require_role(roles.SMM_MANAGER))):
-    from salary_coach import own_smm_salary
-    return own_smm_salary(user, db, roles.local_today(), _smm_sales_state)
+    from salary_coach import own_smm_salary, student_plan_state
+    return own_smm_salary(user, db, roles.local_today(), student_plan_state)
 
 def _group_homework(db: Session, group_id: int,
                     since: date | None = None) -> dict:

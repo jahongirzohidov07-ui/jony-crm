@@ -61,6 +61,8 @@ jobs:
       - run: npm ci || npm install
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
+      - name: Intensive curriculum and exercise checks
+        run: node --test scripts/test-intensive.cjs
       - name: Type check (Vercel bilan bir xil)
         run: npx tsc -b
       - name: Build

@@ -50,6 +50,9 @@ export default function MyExams() {
   };
   useEffect(load, []);
 
+  // Ustoz vaqtni o'zi o'zgartiradi (2026-10-05)
+  const [changing, setChanging] = useState<ExamOrder | null>(null);
+
   const cancel = async (o: ExamOrder) => {
     await api.post(`/me/exam-orders/${o.id}/cancel`, {});
     load();
@@ -159,15 +162,28 @@ export default function MyExams() {
                 </p>
               )}
 
-              {(o.status === "new" || o.status === "accepted"
-                || o.status === "reschedule") && (
-                <button
-                  onClick={() => cancel(o)}
-                  className="text-xs text-slate-400 hover:text-red-600 mt-2"
-                >
-                  Buyurtmani bekor qilish
-                </button>
-              )}
+              <div className="flex items-center gap-4 mt-2">
+                {/* VAQTNI O'ZGARTIRISH (2026-10-05, Jahongir: "ustozlarga
+                    imtixon vaqtini o'zgartirishga ruxsat berish kerak").
+                    Examiner taklifi kutilayotganda — avval unga javob. */}
+                {(o.status === "new" || o.status === "accepted") && (
+                  <button
+                    onClick={() => setChanging(o)}
+                    className="text-xs font-medium text-brand-700 hover:underline"
+                  >
+                    Vaqtini o'zgartirish
+                  </button>
+                )}
+                {(o.status === "new" || o.status === "accepted"
+                  || o.status === "reschedule") && (
+                  <button
+                    onClick={() => cancel(o)}
+                    className="text-xs text-slate-400 hover:text-red-600"
+                  >
+                    Buyurtmani bekor qilish
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -177,6 +193,15 @@ export default function MyExams() {
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />
         {d.hint}
       </p>
+
+      {changing && (
+        <TimeChangeForm
+          data={d}
+          order={changing}
+          onClose={() => setChanging(null)}
+          onDone={() => { setChanging(null); load(); }}
+        />
+      )}
 
       {adding && (
         <OrderForm
@@ -188,6 +213,111 @@ export default function MyExams() {
           }}
         />
       )}
+    </div>
+  );
+}
+
+/** Imtihon kuni/vaqtini o'zgartirish (ustoz, 2026-10-05). Sana ro'yxati
+ *  yangi buyurtmadagi bilan bir xil chegarada (server ham tekshiradi). */
+function TimeChangeForm({ data, order, onClose, onDone }: {
+  data: MyExamOrders;
+  order: ExamOrder;
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const dates = examOrderDates(data);
+  const [date, setDate] = useState(
+    dates.some((x) => x.value === order.date) ? (order.date as string) : "");
+  const [time, setTime] = useState(order.time || "");
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const save = async () => {
+    if (!dates.some((x) => x.value === date)) {
+      setErr("Yangi sanani ro'yxatdan tanlang");
+      return;
+    }
+    setBusy(true);
+    setErr("");
+    try {
+      await api.post(`/me/exam-orders/${order.id}/change-time`, {
+        date, time: time || null, note: note.trim() || null,
+      });
+      onDone();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-xl p-5 w-full max-w-sm max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="font-semibold text-slate-900">Imtihon vaqtini o'zgartirish</h3>
+          <button onClick={onClose} className="text-slate-400">
+            <X size={18} />
+          </button>
+        </div>
+        <p className="text-xs text-slate-500 mb-4">
+          {order.group} · {order.kind_label} · hozir: {order.date_text} {order.time}
+        </p>
+
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Yangi sana</label>
+            <select
+              aria-label="Yangi sana"
+              value={date}
+              onChange={(e) => { setDate(e.target.value); setErr(""); }}
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="">Sanani tanlang</option>
+              {dates.map((x) => <option key={x.value} value={x.value}>{x.label}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Yangi vaqt</label>
+            <Time24Input
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"
+            />
+          </div>
+        </div>
+
+        <label className="block text-xs text-slate-500 mb-1">Izoh (ixtiyoriy)</label>
+        <input
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          placeholder="Nega o'zgartirilyapti — examinerga boradi"
+          className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3"
+        />
+
+        <p className="text-[11px] text-slate-500 mb-3">
+          {order.status === "accepted"
+            ? "Buyurtmani qabul qilgan examinerga darhol xabar boradi. Unga to'g'ri kelmasa, boshqa vaqt taklif qiladi."
+            : "Filial examinerlariga yangi vaqt haqida xabar boradi."}
+        </p>
+
+        {err && <p className="text-xs text-red-600 mb-3">{err}</p>}
+
+        <button
+          onClick={save}
+          disabled={busy}
+          className="w-full bg-brand-600 text-white rounded-lg py-2.5 text-sm font-medium disabled:opacity-50"
+        >
+          {busy ? "Saqlanmoqda..." : "Saqlash"}
+        </button>
+      </div>
     </div>
   );
 }

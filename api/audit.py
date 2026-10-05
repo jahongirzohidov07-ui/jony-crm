@@ -47,6 +47,8 @@ ACTIONS = {
     # 2026-09-30: guruh arxivi
     "archive": "Arxivga o'tkazildi",
     "restore": "Arxivdan qaytarildi",
+    # 2026-10-05: ustoz imtihon vaqtini o'zgartirdi
+    "time_change": "Vaqti o'zgartirildi",
 }
 
 # Kuzatiladigan obyektlar.

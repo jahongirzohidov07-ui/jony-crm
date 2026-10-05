@@ -2235,6 +2235,13 @@ class ExamOrderReschedule(BaseModel):
     note: Optional[str] = None
 
 
+class ExamOrderTimeChange(BaseModel):
+    """Ustozning o'zi imtihon kuni/vaqtini o'zgartiradi (2026-10-05)."""
+    date: date
+    time: Optional[str] = None
+    note: Optional[str] = None
+
+
 class ExamOrderAnswer(BaseModel):
     """Ustozning ko'chirish taklifiga javobi."""
     accept: bool

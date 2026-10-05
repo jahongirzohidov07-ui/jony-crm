@@ -1237,6 +1237,111 @@ def exam_order_reschedule_answer(oid: int, payload: schemas.ExamOrderAnswer,
     return _exam_order_out(db, o)
 
 
+def _order_examiners(db: Session, branch_id) -> list:
+    """Buyurtma xabari kimlarga boradi: filial examinerlari (asosiy yoki
+    qo'shimcha filiali shu bo'lgan yoki filialsiz). Filialda examiner
+    bo'lmasa — hammasiga. Buyurtma yaratish bilan bir xil qoida."""
+    exs = (db.query(models.User)
+           .filter(models.User.role.in_((roles.EXAMINER,
+                                         roles.HEAD_EXAMINER)),
+                   models.User.is_active == 1).all())
+    extra = {ub.user_id for ub in db.query(models.UserBranch)
+             .filter(models.UserBranch.branch_id == branch_id).all()}
+    local = [u for u in exs if u.branch_id == branch_id
+             or u.id in extra or not u.branch_id]
+    return local or exs
+
+
+@router.post("/api/me/exam-orders/{oid}/change-time")
+def exam_order_change_time(oid: int, payload: schemas.ExamOrderTimeChange,
+                           db: Session = Depends(get_db),
+                           user=Depends(require_role(
+                               *roles.EXAM_ORDER_CREATE))):
+    """USTOZ IMTIHON VAQTINI O'ZI O'ZGARTIRADI (2026-10-05, Jahongir:
+    "ustozlarga imtixon vaqtini o'zgartirishga ruxsat berish kerak").
+
+    Ilgari kun/vaqtni faqat examiner ko'chirishni TAKLIF qila olardi.
+    Endi ustozning o'zi ham o'zgartiradi — buyurtma yaratishdagi qoidalar
+    bilan (kamida EXAM_ORDER_MIN_NOTICE_DAYS kun oldin, ko'pi bilan
+    EXAM_ORDER_MAX_AHEAD_DAYS, shu kunga guruhda boshqa buyurtma yo'q).
+
+    Qabul qilingan buyurtmada examiner o'z o'rnida qoladi va darhol
+    vazifa oladi: yangi vaqt to'g'ri kelmasa — "Ko'chirish" bilan boshqa
+    vaqt taklif qiladi. Examiner taklifi kutilayotganda (reschedule)
+    ustoz avval o'sha taklifga javob beradi — ikki tomondan bir vaqtda
+    o'zgarish chalkashlik bermasin."""
+    o = db.query(models.ExamOrder).get(oid)
+    if not o:
+        raise HTTPException(404, "Buyurtma topilmadi")
+    t = _teacher_of_user(db, user)
+    if t and o.teacher_id != t.id:
+        raise HTTPException(403, "Bu buyurtma sizniki emas")
+    if not t and not _in_user_branches(db, user, o.branch_id):
+        raise HTTPException(403, "Bu buyurtma boshqa filialga tegishli")
+    if o.status == "reschedule":
+        raise HTTPException(400, "Examiner boshqa vaqt taklif qilgan — "
+                                 "avval o'sha taklifga javob bering")
+    if o.status not in ("new", "accepted"):
+        raise HTTPException(400, "Bu buyurtma yopilgan — vaqtini "
+                                 "o'zgartirib bo'lmaydi")
+    today = roles.local_today()
+    notice = (payload.date - today).days
+    if notice < roles.EXAM_ORDER_MIN_NOTICE_DAYS:
+        raise HTTPException(
+            400, f"Imtihon kamida {roles.EXAM_ORDER_MIN_NOTICE_DAYS} kun "
+                 f"oldin belgilanishi kerak — examinerning ham jadvali bor")
+    if notice > roles.EXAM_ORDER_MAX_AHEAD_DAYS:
+        raise HTTPException(
+            400, f"Ko'pi bilan {roles.EXAM_ORDER_MAX_AHEAD_DAYS} kun "
+                 f"oldinga belgilanadi")
+    new_time = (payload.time or o.time or "").strip() or None
+    if payload.date == o.date and new_time == o.time:
+        raise HTTPException(400, "Yangi kun yoki vaqt avvalgisidan farq qilsin")
+    dup = db.query(models.ExamOrder).filter(
+        models.ExamOrder.id != o.id,
+        models.ExamOrder.group_id == o.group_id,
+        models.ExamOrder.date == payload.date,
+        models.ExamOrder.status.in_(roles.EXAM_ORDER_OPEN)).first()
+    if dup:
+        raise HTTPException(400, "Bu guruhga shu kunga boshqa buyurtma bor")
+
+    old = f"{roles.uz_date_full(o.date)} {o.time or ''}".strip()
+    o.date = payload.date
+    o.time = new_time
+    if o.exam_id:
+        ex = db.query(models.Exam).get(o.exam_id)
+        if ex is not None:
+            ex.date = o.date
+    db.commit(); db.refresh(o)
+    new = f"{roles.uz_date_full(o.date)} {o.time or ''}".strip()
+
+    g = db.query(models.Group).get(o.group_id)
+    gname = g.name if g else "—"
+    note = (payload.note or "").strip()
+    body = (f"{user.full_name} \"{gname}\" guruhi imtihoni vaqtini "
+            f"o'zgartirdi.\n\nAvval: {old}\nYangi: {new}"
+            + (f"\nIzoh: {note}" if note else ""))
+    days = max(1, notice)
+    if o.status == "accepted" and o.accepted_by:
+        _hr_task_for(
+            db, o.accepted_by,
+            title=f"Ustoz imtihon vaqtini o'zgartirdi {o.public_id}",
+            body=body + ("\n\nYangi vaqt sizga to'g'ri kelmasa — buyurtmada "
+                         "\"Ko'chirish\" orqali boshqa vaqt taklif qiling."),
+            branch_id=o.branch_id, days=days)
+    else:
+        for u in _order_examiners(db, o.branch_id):
+            _hr_task_for(
+                db, u.id,
+                title=f"Imtihon vaqti o'zgardi {o.public_id} — {u.full_name}",
+                body=body, branch_id=o.branch_id, days=days)
+    db.commit()
+    audit.log(db, user, entity="exam_order", action="time_change",
+              entity_id=o.id, entity_label=gname, branch_id=o.branch_id,
+              old_value=old, new_value=new, note=note or None, commit=True)
+    return _exam_order_out(db, o)
+
+
 @router.post("/api/exam-orders/{oid}/done")
 def exam_order_done(oid: int, payload: schemas.ExamOrderDecision,
                     db: Session = Depends(get_db),

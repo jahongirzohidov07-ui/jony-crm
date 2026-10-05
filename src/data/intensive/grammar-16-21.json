@@ -1,0 +1,1433 @@
+{
+  "16.1": [
+    {
+      "prompt": "Majburiyatni must bilan ifodalang. Faqat bo‘shliq: Visitors ___ show identification.",
+      "answers": [
+        "must"
+      ],
+      "explanation": "Must dan keyin fe’lning asosiy shakli keladi; qoida majburiyatni bildiradi."
+    },
+    {
+      "prompt": "Faqat xato fe’lni tuzating: Every passenger must wears a helmet.",
+      "answers": [
+        "wear"
+      ],
+      "explanation": "Must dan keyin uchinchi shaxs uchun ham -s qo‘shilmaydi."
+    }
+  ],
+  "16.2": [
+    {
+      "prompt": "Taqiqni must ning inkor shakli bilan yozing: You ___ touch these cables.",
+      "answers": [
+        "must not",
+        "mustn't"
+      ],
+      "explanation": "Must not yoki mustn't harakat taqiqlanganini bildiradi."
+    },
+    {
+      "prompt": "A yoki B: Laboratoriyada ovqatlanish taqiqlangan. A) You mustn't eat here. B) You don't have to eat here.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Mustn't taqiq; don't have to esa majburiyat yo‘qligini bildiradi."
+    }
+  ],
+  "16.3": [
+    {
+      "prompt": "Majburiyat haqidagi to‘g‘ri savolni tanlang: A) Do I must sign every page? B) Must I sign every page?",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Must yordamchi modal bo‘lib, savolda egadan oldin keladi; do kerak emas."
+    },
+    {
+      "prompt": "Bitta ortiqcha so‘zni yozing: Must the visitors to leave now?",
+      "answers": [
+        "to"
+      ],
+      "explanation": "Must + ega + asosiy fe’l bo‘ladi; to ishlatilmaydi."
+    }
+  ],
+  "16.4": [
+    {
+      "prompt": "Have to ni moslang: The caretaker ___ unlock the gate at six.",
+      "answers": [
+        "has to"
+      ],
+      "explanation": "Uchinchi shaxs birlikdagi ega bilan has to ishlatiladi."
+    },
+    {
+      "prompt": "Have to ni moslang: We ___ bring our own towels.",
+      "answers": [
+        "have to"
+      ],
+      "explanation": "We bilan have to keladi; has to emas."
+    }
+  ],
+  "16.5": [
+    {
+      "prompt": "Have to ning inkorini yozing: Entry is free. You ___ pay.",
+      "answers": [
+        "do not have to",
+        "don't have to"
+      ],
+      "explanation": "To‘lash zarur emasligi don't have to orqali bildiriladi."
+    },
+    {
+      "prompt": "Have to ning inkorini yozing: Nina has a key, so she ___ wait outside.",
+      "answers": [
+        "does not have to",
+        "doesn't have to"
+      ],
+      "explanation": "She bilan doesn't have to; doesn't dan keyin have o‘zgarmaydi."
+    }
+  ],
+  "16.6": [
+    {
+      "prompt": "Savolning birinchi so‘zini yozing: ___ the driver have to show a licence?",
+      "answers": [
+        "Does"
+      ],
+      "explanation": "Birlikdagi the driver bilan savol Does orqali tuziladi."
+    },
+    {
+      "prompt": "Faqat xato so‘zni tuzating: Do the guests has to register?",
+      "answers": [
+        "have"
+      ],
+      "explanation": "Do dan keyin have asosiy shaklda keladi."
+    }
+  ],
+  "16.7": [
+    {
+      "prompt": "Have to ni o‘tgan zamonga qo‘ying: Last night we ___ use candles.",
+      "answers": [
+        "had to"
+      ],
+      "explanation": "O‘tgan majburiyat barcha egalar bilan had to orqali ifodalanadi."
+    },
+    {
+      "prompt": "A yoki B: Kecha yo‘l yopiq edi, shu sabab uzoqdan aylanib o‘tishga majbur bo‘ldim. A) I had to take a longer route. B) I must take a longer route.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Kecha bo‘lgan majburiyat uchun had to kerak."
+    }
+  ],
+  "16.8": [
+    {
+      "prompt": "Have to ni Past Simple inkorga qo‘ying: The lift worked, so we ___ climb the stairs.",
+      "answers": [
+        "did not have to",
+        "didn't have to"
+      ],
+      "explanation": "O‘tgan zamonda zarurat yo‘qligi didn't have to bilan aytiladi."
+    },
+    {
+      "prompt": "Faqat bo‘shliq: Did the children ___ (have to) buy tickets?",
+      "answers": [
+        "have to"
+      ],
+      "explanation": "Did dan keyin had emas, have ishlatiladi."
+    }
+  ],
+  "16.9": [
+    {
+      "prompt": "Will have to bilan to‘ldiring: When the pass expires, I ___ renew it.",
+      "answers": [
+        "will have to",
+        "'ll have to"
+      ],
+      "explanation": "Kelajakda paydo bo‘ladigan zarurat will have to bilan ifodalanadi."
+    },
+    {
+      "prompt": "Faqat xato shaklni tuzating: She will has to travel alone.",
+      "answers": [
+        "have"
+      ],
+      "explanation": "Will dan keyin has emas, have keladi."
+    }
+  ],
+  "16.10": [
+    {
+      "prompt": "A yoki B: Dubulg‘a kiyish shart, uni yechish mumkin emas. A) You mustn't remove it. B) You don't have to remove it.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Taqiq uchun mustn't ishlatiladi."
+    },
+    {
+      "prompt": "A yoki B: Sochiq olib kelish ixtiyoriy. A) You mustn't bring a towel. B) You don't have to bring a towel.",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Ixtiyoriy harakatda majburiyat yo‘q; bu taqiq emas."
+    }
+  ],
+  "16.11": [
+    {
+      "prompt": "Should yordamida maslahatni to‘ldiring: Your bag is heavy. You ___ (use) a trolley.",
+      "answers": [
+        "should use"
+      ],
+      "explanation": "Maslahat uchun should + asosiy fe’l; use shakli o‘zgarmaydi."
+    },
+    {
+      "prompt": "Faqat xato fe’lni tuzating: Omar should asks the receptionist.",
+      "answers": [
+        "ask"
+      ],
+      "explanation": "Should dan keyin ask shakli o‘zgarmaydi."
+    }
+  ],
+  "16.12": [
+    {
+      "prompt": "Should ning inkorini yozing: This shelf is weak. You ___ put heavy boxes on it.",
+      "answers": [
+        "should not",
+        "shouldn't"
+      ],
+      "explanation": "Shouldn't qilmaslik haqidagi maslahatni bildiradi."
+    },
+    {
+      "prompt": "Faqat xato fe’lni tuzating: You shouldn't leaving candles unattended.",
+      "answers": [
+        "leave"
+      ],
+      "explanation": "Shouldn't dan keyin -ing emas, asosiy fe’l kerak."
+    }
+  ],
+  "16.13": [
+    {
+      "prompt": "Maslahat so‘rovchi savolni tanlang: A) Which entrance should we use? B) Which entrance we should use?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "To‘g‘ridan-to‘g‘ri savolda should egadan oldin keladi."
+    },
+    {
+      "prompt": "Bitta ortiqcha so‘zni yozing: Should do I contact the manager?",
+      "answers": [
+        "do"
+      ],
+      "explanation": "Should o‘zi yordamchi vazifasini bajaradi; do kerak emas."
+    }
+  ],
+  "16.14": [
+    {
+      "prompt": "Faqat predlogni yozing: You ought ___ check the address first.",
+      "answers": [
+        "to"
+      ],
+      "explanation": "Ought to dan keyin asosiy fe’l keladi."
+    },
+    {
+      "prompt": "Bitta ortiqcha so‘zni yozing: We'd better to take a torch.",
+      "answers": [
+        "to"
+      ],
+      "explanation": "Had better dan keyin to siz asosiy fe’l ishlatiladi."
+    }
+  ],
+  "16.15": [
+    {
+      "prompt": "Need to ni moslang: This plant ___ more sunlight. Bo‘shliqqa need to get birikmasini moslab yozing.",
+      "answers": [
+        "needs to get"
+      ],
+      "explanation": "Birlikdagi this plant bilan needs to get ishlatiladi."
+    },
+    {
+      "prompt": "Ma’nosi bir xil variantni tanlang: You don't need to print it. A) You needn't print it. B) You mustn't print it.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Don't need to va needn't zarurat yo‘qligini bildiradi; mustn't taqiqdir."
+    }
+  ],
+  "16.16": [
+    {
+      "prompt": "A yoki B: Men chipta sotib oldim, keyin kirish bepul ekanini bildim. A) I needn't have bought a ticket. B) I didn't need to buy a ticket, so I didn't.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Needn't have bought bajarilgan, ammo keraksiz bo‘lgan harakatni bildiradi."
+    },
+    {
+      "prompt": "A yoki B: Chiptam bor edi, shuning uchun yangisini sotib olmadim. A) I needn't have bought another ticket. B) I didn't need to buy another ticket, so I didn't.",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Bu holatda zarurat bo‘lmagan va harakat bajarilmagan."
+    }
+  ],
+  "17.1": [
+    {
+      "prompt": "Hozirgi ehtimol uchun may/might/could dan mosini yozing: I am not sure, but the keys ___ be in the garage.",
+      "answers": [
+        "may",
+        "might",
+        "could"
+      ],
+      "explanation": "Uchala modal ham bu gapda hozirgi ehtimolni bildiradi."
+    },
+    {
+      "prompt": "Faqat xato shaklni tuzating: The parcel might is downstairs.",
+      "answers": [
+        "be"
+      ],
+      "explanation": "Might dan keyin be asosiy shaklda keladi."
+    }
+  ],
+  "17.2": [
+    {
+      "prompt": "May bilan ehtimoliy inkorni yozing: Perhaps Sara does not recognise us. Sara ___ recognise us.",
+      "answers": [
+        "may not"
+      ],
+      "explanation": "May not ehtimol tanimasligini bildiradi, qat’iy taqiqni emas."
+    },
+    {
+      "prompt": "Might bilan to‘ldiring: Perhaps the café is not open. The café ___ be open.",
+      "answers": [
+        "might not",
+        "mightn't"
+      ],
+      "explanation": "Might not hozirgi holatning ehtimoliy inkorini bildiradi."
+    }
+  ],
+  "17.3": [
+    {
+      "prompt": "Must orqali hozirgi kuchli taxminni yozing: Ali has worked three night shifts. He ___ (be) exhausted.",
+      "answers": [
+        "must be"
+      ],
+      "explanation": "Hozirgi holatga dalil asosidagi kuchli taxmin must + be orqali ifodalanadi."
+    },
+    {
+      "prompt": "Hozirgi kuchli taxminni must bilan to‘ldiring: She is smiling at the results. She ___ be pleased.",
+      "answers": [
+        "must"
+      ],
+      "explanation": "Hozirgi holatga kuchli xulosa must be orqali ifodalanadi."
+    }
+  ],
+  "17.4": [
+    {
+      "prompt": "Can't bilan kuchli inkoriy taxmin: That ___ be our bus; its number is wrong.",
+      "answers": [
+        "cannot",
+        "can't"
+      ],
+      "explanation": "Can't be dalil asosida bu holat mumkin emasligini bildiradi."
+    },
+    {
+      "prompt": "A yoki B: Nina hozir yonimda. Telefonda gapirayotgan ayol Nina bo‘lishi mumkin emas. A) It can't be Nina. B) It mustn't be Nina.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Can't be imkonsiz taxmin; mustn't odatda taqiq bildiradi."
+    }
+  ],
+  "17.5": [
+    {
+      "prompt": "Hozirgi ehtimol haqidagi to‘g‘ri savolni tanlang: A) Could that noise be the washing machine? B) Could be that noise the washing machine?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Savol tartibi could + ega + be; be egadan keyin keladi."
+    },
+    {
+      "prompt": "Bitta ortiqcha so‘zni yozing: Could this to be the missing key?",
+      "answers": [
+        "to"
+      ],
+      "explanation": "Could + ega + be; modal bilan to ishlatilmaydi."
+    }
+  ],
+  "17.6": [
+    {
+      "prompt": "Qavsdagi fe’lni davom etayotgan ehtimolga qo‘ying: Dad might ___ (sleep) upstairs now.",
+      "answers": [
+        "be sleeping"
+      ],
+      "explanation": "Modal + be + -ing ayni paytda davom etayotgan harakatni bildiradi."
+    },
+    {
+      "prompt": "Qavsdagi fe’lni to‘ldiring: They could ___ (wait) at the wrong entrance right now.",
+      "answers": [
+        "be waiting"
+      ],
+      "explanation": "Could be waiting hozir davom etayotgan ehtimoliy harakatdir."
+    }
+  ],
+  "17.7": [
+    {
+      "prompt": "Must have bilan to‘ldiring: The grass is wet, though nobody watered it. It ___ (rain) overnight.",
+      "answers": [
+        "must have rained"
+      ],
+      "explanation": "O‘tgan voqeaga kuchli taxmin: must have + V3."
+    },
+    {
+      "prompt": "Faqat V3 ni yozing: The door is unlocked. Someone must have ___ (leave) it open.",
+      "answers": [
+        "left"
+      ],
+      "explanation": "Leave fe’lining uchinchi shakli left; must have dan keyin V3 keladi."
+    }
+  ],
+  "17.8": [
+    {
+      "prompt": "Might have bilan to‘ldiring: Perhaps I sent the letter to the old address. I ___ (send) it there.",
+      "answers": [
+        "might have sent"
+      ],
+      "explanation": "Might have + V3 o‘tgan ehtimolni bildiradi."
+    },
+    {
+      "prompt": "May/might/could dan istalgan mos modalni yozing: We are unsure; the dog ___ have hidden the slipper.",
+      "answers": [
+        "may",
+        "might",
+        "could"
+      ],
+      "explanation": "Have hidden bilan uchala modal ham o‘tgan ehtimolga mos."
+    }
+  ],
+  "17.9": [
+    {
+      "prompt": "Can't have bilan to‘ldiring: The parcel arrived ten minutes ago. You ___ (collect) it yesterday.",
+      "answers": [
+        "cannot have collected",
+        "can't have collected"
+      ],
+      "explanation": "Can't have + V3 o‘tgan harakatning imkonsizligi haqidagi xulosadir."
+    },
+    {
+      "prompt": "Faqat V3 ni yozing: They couldn't have ___ (see) the notice; it was hidden.",
+      "answers": [
+        "seen"
+      ],
+      "explanation": "See fe’lining uchinchi shakli seen."
+    }
+  ],
+  "17.10": [
+    {
+      "prompt": "Should have bilan afsusni to‘ldiring: I got lost. I ___ (save) the map before leaving.",
+      "answers": [
+        "should have saved"
+      ],
+      "explanation": "Should have saved qilish yaxshi bo‘lgan, ammo qilinmagan ishni bildiradi."
+    },
+    {
+      "prompt": "Faqat xato shaklni tuzating: We should have bring warmer clothes.",
+      "answers": [
+        "brought"
+      ],
+      "explanation": "Should have dan keyin bring ning V3 shakli brought kerak."
+    }
+  ],
+  "17.11": [
+    {
+      "prompt": "Shouldn't have bilan to‘ldiring: I told everyone her secret. I ___ (say) anything.",
+      "answers": [
+        "should not have said",
+        "shouldn't have said"
+      ],
+      "explanation": "Shouldn't have said bajarilgan, ammo noto‘g‘ri bo‘lgan ishga afsusdir."
+    },
+    {
+      "prompt": "Faqat V3 ni yozing: He shouldn't have ___ (spend) all the money.",
+      "answers": [
+        "spent"
+      ],
+      "explanation": "Spend ning V3 shakli spent; should not have dan keyin keladi."
+    }
+  ],
+  "17.12": [
+    {
+      "prompt": "Could have bilan to‘ldiring: A neighbour offered a lift, but we walked. We ___ (accept) it.",
+      "answers": [
+        "could have accepted"
+      ],
+      "explanation": "Could have accepted mavjud, ammo ishlatilmagan imkoniyatni bildiradi."
+    },
+    {
+      "prompt": "A yoki B: We could have booked seats, but we chose not to. A) Joy band qildik. B) Imkon bor edi, lekin band qilmadik.",
+      "answers": [
+        "B"
+      ],
+      "explanation": "But we chose not to imkoniyatdan foydalanilmaganini aniq ko‘rsatadi."
+    }
+  ],
+  "17.13": [
+    {
+      "prompt": "Ehtimol yuqoriligini bildiring: The weather looks excellent. The picnic is ___ go ahead. A) likely to B) unlikely to",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Be likely to hodisa yuz berishi ehtimoli yuqoriligini bildiradi."
+    },
+    {
+      "prompt": "Ehtimol pastligini bildiring: The shop closes in one minute. We are ___ arrive in time. A) likely to B) unlikely to",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Be unlikely to + fe’l hodisa ehtimoli pastligini bildiradi."
+    }
+  ],
+  "17.14": [
+    {
+      "prompt": "To‘g‘ri joylashuvni tanlang: A) She will probably find the key. B) She will find probably the key.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Probably yordamchi fe’ldan keyin, asosiy fe’ldan oldin kelishi mumkin; fe’l bilan obyektni ajratmaymiz."
+    },
+    {
+      "prompt": "Definitely ni will not dan oldin qo‘shing: The parcel will not arrive today. Butun gapni yozing; qisqartirmang.",
+      "answers": [
+        "The parcel definitely will not arrive today"
+      ],
+      "explanation": "Definitely ni inkordan oldin qo‘yish kelmasligi aniq ekanini bildiradi."
+    }
+  ],
+  "18.1": [
+    {
+      "prompt": "Umumiy qonuniyat, Zero Conditional: If this sensor detects smoke, the alarm ___ (ring).",
+      "answers": [
+        "rings"
+      ],
+      "explanation": "Zero Conditionalning ikkala qismida Present Simple ishlatiladi."
+    },
+    {
+      "prompt": "Doimiy qoida: If customers ___ (pay) online, the system sends a receipt.",
+      "answers": [
+        "pay"
+      ],
+      "explanation": "Umumiy qoida uchun if qismida Present Simple kerak."
+    }
+  ],
+  "18.2": [
+    {
+      "prompt": "Zero Conditional inkori: If the battery ___ (not work), the clock stops.",
+      "answers": [
+        "does not work",
+        "doesn't work"
+      ],
+      "explanation": "Birlikdagi battery bilan doesn't work; bu umumiy holat."
+    },
+    {
+      "prompt": "Umumiy qoida: If you enter the wrong code, the gate ___ (not open).",
+      "answers": [
+        "does not open",
+        "doesn't open"
+      ],
+      "explanation": "Natija qismida ham Present Simple inkori ishlatiladi."
+    }
+  ],
+  "18.3": [
+    {
+      "prompt": "Umumiy qonuniyat savoli: What ___ (happen) if milk gets too warm?",
+      "answers": [
+        "happens"
+      ],
+      "explanation": "What ega vazifasida kelgan; sodda hozirgi zamonda happens kerak."
+    },
+    {
+      "prompt": "Umumiy ishlash qoidasi: ___ this bell ring if someone presses the red button? Do yoki does ni tanlang.",
+      "answers": [
+        "Does"
+      ],
+      "explanation": "This bell birlik bo‘lgani uchun savolda does ishlatiladi."
+    }
+  ],
+  "18.4": [
+    {
+      "prompt": "First Conditional, will bilan: If the rain stops, we ___ (eat) outside.",
+      "answers": [
+        "will eat",
+        "'ll eat"
+      ],
+      "explanation": "Real kelajak sharti: if + Present Simple, natija will + fe’l."
+    },
+    {
+      "prompt": "First Conditional: If Leila ___ (arrive) early, she will unlock the hall.",
+      "answers": [
+        "arrives"
+      ],
+      "explanation": "Kelajak ma’nosi bo‘lsa ham if qismida Present Simple keladi."
+    }
+  ],
+  "18.5": [
+    {
+      "prompt": "First Conditional, will inkori: If the lift breaks, we ___ (not use) it.",
+      "answers": [
+        "will not use",
+        "won't use"
+      ],
+      "explanation": "Natija qismida will not + asosiy fe’l ishlatiladi."
+    },
+    {
+      "prompt": "First Conditional: If you ___ (not charge) the torch, it will go out.",
+      "answers": [
+        "do not charge",
+        "don't charge"
+      ],
+      "explanation": "If qismidagi inkor Present Simple orqali tuziladi."
+    }
+  ],
+  "18.6": [
+    {
+      "prompt": "Real kelajak sharti haqidagi to‘g‘ri savolni tanlang: A) Will you help if we run out of chairs? B) You will help if we run out of chairs?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Odatiy yozma yes/no savolda will egadan oldin keladi."
+    },
+    {
+      "prompt": "Faqat qavsdagi fe’l: Will the event continue if the speaker ___ (be) late?",
+      "answers": [
+        "is"
+      ],
+      "explanation": "If qismida kelajak uchun will be emas, is kerak."
+    }
+  ],
+  "18.7": [
+    {
+      "prompt": "Real kelajak sharti haqidagi odatiy wh-savolni tanlang: A) Where you will wait if the hall is locked? B) Where will you wait if the hall is locked?",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Wh-so‘zdan keyin will + ega + asosiy fe’l tartibi kerak."
+    },
+    {
+      "prompt": "First Conditional: What will Mum do if the oven ___ (stop) working?",
+      "answers": [
+        "stops"
+      ],
+      "explanation": "If qismi Present Simple: birlikdagi oven bilan stops."
+    }
+  ],
+  "18.8": [
+    {
+      "prompt": "Buyruq shaklini yozing: If the screen freezes, ___ (restart) the app.",
+      "answers": [
+        "restart"
+      ],
+      "explanation": "Shartning natijasi buyruq bo‘lsa, asosiy fe’l ishlatiladi."
+    },
+    {
+      "prompt": "Ruxsatni can bilan yozing: If you finish the form, you ___ leave early.",
+      "answers": [
+        "can"
+      ],
+      "explanation": "Natijada will o‘rniga can ishlatib ruxsatni bildirish mumkin."
+    }
+  ],
+  "18.9": [
+    {
+      "prompt": "Bitta bog‘lovchi: ___ you bring your pass, you won't get in. Ma’no: agar olib kelmasangiz.",
+      "answers": [
+        "Unless"
+      ],
+      "explanation": "Unless bu yerda if you do not ma’nosini beradi."
+    },
+    {
+      "prompt": "Unless ni if bilan almashtiring. Faqat bo‘shliq: Unless it rains, we'll walk. If it ___, we'll walk.",
+      "answers": [
+        "does not rain",
+        "doesn't rain"
+      ],
+      "explanation": "Unless it rains = if it doesn't rain."
+    }
+  ],
+  "18.10": [
+    {
+      "prompt": "Second Conditional: If I owned a boat, I ___ (visit) the island. Would dan foydalaning.",
+      "answers": [
+        "would visit",
+        "'d visit"
+      ],
+      "explanation": "Faraziy hozirgi yoki kelajak natija would + fe’l bilan tuziladi."
+    },
+    {
+      "prompt": "Second Conditional: If we ___ (have) a bigger kitchen, we would host dinner.",
+      "answers": [
+        "had"
+      ],
+      "explanation": "Faraziy shart qismida Past Simple ishlatiladi."
+    }
+  ],
+  "18.11": [
+    {
+      "prompt": "Second Conditional: If I ___ (not live) nearby, I would take a bus.",
+      "answers": [
+        "did not live",
+        "didn't live"
+      ],
+      "explanation": "If qismida Past Simple inkori: didn't + asosiy fe’l."
+    },
+    {
+      "prompt": "Would inkori bilan yozing: If the room were warmer, we ___ (not need) blankets.",
+      "answers": [
+        "would not need",
+        "wouldn't need"
+      ],
+      "explanation": "Faraziy natijaning inkori wouldn't + fe’l."
+    }
+  ],
+  "18.12": [
+    {
+      "prompt": "Faraziy shart haqidagi odatiy yes/no savolni tanlang: A) Would you adopt a dog if you had a garden? B) You would adopt a dog if you had a garden?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Second Conditionalning savolida would egadan oldin keladi."
+    },
+    {
+      "prompt": "Faqat qavsdagi fe’l: Would your sister cook more if she ___ (own) an oven?",
+      "answers": [
+        "owned"
+      ],
+      "explanation": "If qismida Past Simple; owned faraziy shartni bildiradi."
+    }
+  ],
+  "18.13": [
+    {
+      "prompt": "Faraziy shart haqida to‘g‘ri wh-savolni tanlang: A) What would you buy if you won the prize? B) What you would buy if you won the prize?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "To‘g‘ridan-to‘g‘ri wh-savolda would + ega + asosiy fe’l ishlatiladi."
+    },
+    {
+      "prompt": "Second Conditional: Where would they stay if the hotel ___ (close)?",
+      "answers": [
+        "closed"
+      ],
+      "explanation": "Faraziy shartdagi fe’l Past Simple bo‘ladi."
+    }
+  ],
+  "18.14": [
+    {
+      "prompt": "Rasmiy faraziy maslahat qolipida be ni moslang: If I ___ (be) you, I would keep the receipt.",
+      "answers": [
+        "were"
+      ],
+      "explanation": "If I were you — sizning o‘rningizda bo‘lsam degan maslahat qolipi."
+    },
+    {
+      "prompt": "An’anaviy maslahat qolipining davomini tanlang: If I were you, ___. A) I would ask for a refund B) I will asked for a refund",
+      "answers": [
+        "A"
+      ],
+      "explanation": "If I were you maslahatining natija qismida would + asosiy fe’l ishlatiladi."
+    }
+  ],
+  "18.15": [
+    {
+      "prompt": "Ertaga vaqt topishim real ehtimol. A) If I have time, I'll help. B) If I had time, I'd help. Mos variantni yozing.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Real kelajak ehtimoli First Conditional bilan ifodalanadi."
+    },
+    {
+      "prompt": "Hozir mashinam yo‘q, faraz qilyapman. A) If I have a car, I'll drive you. B) If I had a car, I'd drive you.",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Hozirgi haqiqatga zid farazda Second Conditional kerak."
+    }
+  ],
+  "18.16": [
+    {
+      "prompt": "Shart qismi boshda turgan to‘g‘ri gapni tanlang: A) If the shop is open, I'll buy batteries. B) If will the shop open, I'll buy batteries.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Oldingi if qismida Present Simple ishlatiladi va undan keyin vergul keladi."
+    },
+    {
+      "prompt": "Shart qismi gap oxirida kelgan variantni tanlang: A) If the path is clear, we will cycle. B) We will cycle if the path is clear.",
+      "answers": [
+        "B"
+      ],
+      "explanation": "B variantida natija oldinda, if bilan boshlangan shart oxirida; ma’no saqlangan."
+    }
+  ],
+  "19.1": [
+    {
+      "prompt": "Third Conditional: If I ___ (save) the number, I would have called.",
+      "answers": [
+        "had saved",
+        "'d saved"
+      ],
+      "explanation": "O‘tgan bajarilmagan shart: if + had + V3."
+    },
+    {
+      "prompt": "Would have bilan: If they had set an alarm, they ___ (wake) earlier.",
+      "answers": [
+        "would have woken",
+        "'d have woken"
+      ],
+      "explanation": "O‘tgan faraziy natija would have + V3 bilan tuziladi."
+    }
+  ],
+  "19.2": [
+    {
+      "prompt": "Third Conditional: If we ___ (not miss) the exit, we would have arrived on time.",
+      "answers": [
+        "had not missed",
+        "hadn't missed"
+      ],
+      "explanation": "Shart inkori had not + V3 orqali tuziladi."
+    },
+    {
+      "prompt": "Would have inkori: If I had read the label, I ___ (not wash) it in hot water.",
+      "answers": [
+        "would not have washed",
+        "wouldn't have washed"
+      ],
+      "explanation": "Bajarilgan ishning muqobil inkoriy natijasi wouldn't have + V3."
+    }
+  ],
+  "19.3": [
+    {
+      "prompt": "O‘tgan faraz haqidagi odatiy savolni tanlang: A) Would have you attended if they had invited you? B) Would you have attended if they had invited you?",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Savol tartibi would + ega + have + V3; have egadan keyin keladi."
+    },
+    {
+      "prompt": "Faqat qavsdagi fe’l: Would she have stayed if we ___ (offer) her a room?",
+      "answers": [
+        "had offered",
+        "'d offered"
+      ],
+      "explanation": "If qismida Past Perfect ishlatiladi."
+    }
+  ],
+  "19.4": [
+    {
+      "prompt": "Would have bilan savol: What would you ___ (do) if the gate had been locked?",
+      "answers": [
+        "have done"
+      ],
+      "explanation": "Would dan keyin have + V3: have done."
+    },
+    {
+      "prompt": "Third Conditional: Where would they have eaten if the kitchen ___ (close) early?",
+      "answers": [
+        "had closed",
+        "'d closed"
+      ],
+      "explanation": "O‘tgan shart qismida had closed kerak."
+    }
+  ],
+  "19.5": [
+    {
+      "prompt": "Foydalanilmagan imkon: If I had brought my camera, I ___ (take) photos. Could have ishlating.",
+      "answers": [
+        "could have taken"
+      ],
+      "explanation": "Could have + V3 o‘tgan sharoitdagi imkoniyatni bildiradi."
+    },
+    {
+      "prompt": "Noaniq o‘tgan natija: If we had left earlier, we ___ (avoid) the queue. Might have ishlating.",
+      "answers": [
+        "might have avoided"
+      ],
+      "explanation": "Might have + V3 kafolatlanmagan muqobil natijani bildiradi."
+    }
+  ],
+  "19.6": [
+    {
+      "prompt": "Kecha uxlamadim, hozir charchaganman. If I had slept, I ___ (feel) better now. Would ishlating.",
+      "answers": [
+        "would feel",
+        "'d feel"
+      ],
+      "explanation": "O‘tgan shartning hozirgi natijasi would + asosiy fe’l bilan keladi."
+    },
+    {
+      "prompt": "Mixed Conditional: If she ___ (take) the earlier train, she would be here now.",
+      "answers": [
+        "had taken",
+        "'d taken"
+      ],
+      "explanation": "Oldingi harakat hozirgi joylashuvga ta’sir qilmoqda: had taken."
+    }
+  ],
+  "19.7": [
+    {
+      "prompt": "U doim inglizcha bilmaydi, kecha yo‘riqnomani tushunmadi. If he ___ (speak) English, he would have understood it.",
+      "answers": [
+        "spoke"
+      ],
+      "explanation": "Hozirgi umumiy holat Past Simple, o‘tgan natija would have orqali beriladi."
+    },
+    {
+      "prompt": "Hozirgi xususiyat va kechagi natija: If I were more careful, I ___ (not lose) my keys yesterday. Would inkorini ishlating.",
+      "answers": [
+        "would not have lost",
+        "wouldn't have lost"
+      ],
+      "explanation": "Hozirgi xususiyatning o‘tgan natijasi wouldn't have + V3."
+    }
+  ],
+  "19.8": [
+    {
+      "prompt": "Mixed Conditional: If I hadn't broken my arm, I ___ (not sit) at home now. Would bilan, davomiy shaklda yozing.",
+      "answers": [
+        "would not be sitting",
+        "wouldn't be sitting"
+      ],
+      "explanation": "O‘tgan shart hozir davom etayotgan holatga ta’sir qiladi."
+    },
+    {
+      "prompt": "O‘tgan shart va hozirgi natijali savolni tanlang: A) Would you be tired now if you had slept well? B) Would have you tired now if you slept well?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "O‘tgan shart had slept, hozirgi natija would be orqali ifodalanadi."
+    }
+  ],
+  "19.9": [
+    {
+      "prompt": "Hozir velosipedim yo‘q: I wish I ___ (have) a bicycle.",
+      "answers": [
+        "had"
+      ],
+      "explanation": "Hozirgi haqiqatga zid istakda wish + Past Simple ishlatiladi."
+    },
+    {
+      "prompt": "Hozir yonimizda yashamaydilar: If only they ___ (live) closer.",
+      "answers": [
+        "lived"
+      ],
+      "explanation": "If only + Past Simple hozirgi vaziyat o‘zgarsa degan istakdir."
+    }
+  ],
+  "19.10": [
+    {
+      "prompt": "Kecha eshikni qulflashni unutdim: I wish I ___ (remember) to lock it.",
+      "answers": [
+        "had remembered",
+        "'d remembered"
+      ],
+      "explanation": "O‘tgan ishga afsus wish + Past Perfect orqali bildiriladi."
+    },
+    {
+      "prompt": "If only I ___ (not delete) that photo! O‘tgan afsusni yozing.",
+      "answers": [
+        "had not deleted",
+        "hadn't deleted"
+      ],
+      "explanation": "O‘tgan inkoriy istak had not + V3 bilan keladi."
+    }
+  ],
+  "19.11": [
+    {
+      "prompt": "Boshqa odam odati o‘zgarishini istayman: I wish my brother ___ stop borrowing my charger.",
+      "answers": [
+        "would"
+      ],
+      "explanation": "Wish + would boshqa birovning odati yoki xatti-harakati o‘zgarishini istashdir."
+    },
+    {
+      "prompt": "Won't emas, would inkorini ishlating: I wish the neighbours ___ play music after midnight.",
+      "answers": [
+        "would not",
+        "wouldn't"
+      ],
+      "explanation": "Wish + wouldn't takrorlanadigan yoqimsiz harakat to‘xtashini istaydi."
+    }
+  ],
+  "19.12": [
+    {
+      "prompt": "Hozir suzolmayman: I wish I ___ swim. Qobiliyat modalini yozing.",
+      "answers": [
+        "could"
+      ],
+      "explanation": "Wish + could yo‘q qobiliyat yoki imkoniyatni istash uchun ishlatiladi."
+    },
+    {
+      "prompt": "Hozir qatnashishga imkonim yo‘q. Could yordamida istakni to‘ldiring: If only I ___ (join) your trip!",
+      "answers": [
+        "could join"
+      ],
+      "explanation": "Imkoniyat haqidagi istakda could + asosiy fe’l keladi."
+    }
+  ],
+  "19.13": [
+    {
+      "prompt": "Ertangi natija hali noma’lum: I ___ you pass the exam. Hope yoki wish?",
+      "answers": [
+        "hope"
+      ],
+      "explanation": "Kelajakda amalga oshishi mumkin bo‘lgan istakda hope ishlatiladi."
+    },
+    {
+      "prompt": "Hozir bu yerda emasliging aniq: I ___ you were here. Hope yoki wish?",
+      "answers": [
+        "wish"
+      ],
+      "explanation": "Hozirgi haqiqatga zid istakda wish + o‘tgan shakl keladi."
+    }
+  ],
+  "19.14": [
+    {
+      "prompt": "Shart ma’nosidagi variant: You may borrow the tent ___ you dry it afterwards. A) as long as B) even if",
+      "answers": [
+        "A"
+      ],
+      "explanation": "As long as qat’iy shartni bildiradi; even if shart natijani o‘zgartirmasligini bildiradi."
+    },
+    {
+      "prompt": "Yomg‘ir bo‘lsa ham boraman: I'll attend ___ it rains. A) provided B) even if",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Even if yomg‘ir ham qarorni o‘zgartirmasligini bildiradi."
+    }
+  ],
+  "20.1": [
+    {
+      "prompt": "Qaysi gapda e’tibor ishni bajarganlarga emas, ishlov berilgan buyumga qaratilgan? A) Volunteers painted the bench. B) The bench was painted by volunteers.",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Passive gapda harakat ta’siridagi bench ega bo‘ladi; bajaruvchi by bilan qo‘shilishi mumkin."
+    },
+    {
+      "prompt": "The windows are cleaned every Friday. Gapning grammatik egasini aynan yozing.",
+      "answers": [
+        "The windows",
+        "windows"
+      ],
+      "explanation": "Passive gapda windows ishni bajarmaydi, lekin grammatik ega vazifasida turadi."
+    }
+  ],
+  "20.2": [
+    {
+      "prompt": "Present Simple Passive bilan to‘ldiring: Fresh bread ___ (deliver) here every morning.",
+      "answers": [
+        "is delivered"
+      ],
+      "explanation": "Bread sanalmaydigan birlik ot; is + V3 odatiy passive harakatni bildiradi."
+    },
+    {
+      "prompt": "Present Simple Passive: These herbs ___ (grow) without chemicals.",
+      "answers": [
+        "are grown"
+      ],
+      "explanation": "Ko‘plikdagi herbs bilan are, grow fe’lining V3 shakli grown ishlatiladi."
+    }
+  ],
+  "20.3": [
+    {
+      "prompt": "Present Simple Passive inkori: This corridor ___ (not clean) on Saturdays.",
+      "answers": [
+        "is not cleaned",
+        "isn't cleaned"
+      ],
+      "explanation": "Birlikdagi corridor bilan is not + V3 keladi."
+    },
+    {
+      "prompt": "Present Simple Passive inkori: Glass bottles ___ (not accept) in this box.",
+      "answers": [
+        "are not accepted",
+        "aren't accepted"
+      ],
+      "explanation": "Ko‘plikdagi bottles bilan are not + V3 ishlatiladi."
+    }
+  ],
+  "20.4": [
+    {
+      "prompt": "Odatiy jarayon haqida to‘g‘ri passive savolni tanlang: A) Are these uniforms washed here? B) Do these uniforms washed here?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Present Simple Passive savolida am/is/are egadan oldinga chiqadi; do ishlatilmaydi."
+    },
+    {
+      "prompt": "Present Simple Passive savolidagi fe’lni to‘ldiring: Where is this cheese ___ (make)?",
+      "answers": [
+        "made"
+      ],
+      "explanation": "Is egadan oldin, make fe’lining V3 shakli made egadan keyin keladi."
+    }
+  ],
+  "20.5": [
+    {
+      "prompt": "Past Simple Passive: The community garden ___ (open) last April.",
+      "answers": [
+        "was opened"
+      ],
+      "explanation": "O‘tgan tugallangan voqea uchun birlikdagi ega bilan was + V3 kerak."
+    },
+    {
+      "prompt": "Past Simple Passive: These photographs ___ (take) in 1998.",
+      "answers": [
+        "were taken"
+      ],
+      "explanation": "Ko‘plikdagi ega bilan were va take ning V3 shakli taken keladi."
+    }
+  ],
+  "20.6": [
+    {
+      "prompt": "Past Simple Passive inkori: The invitation ___ (not send) yesterday.",
+      "answers": [
+        "was not sent",
+        "wasn't sent"
+      ],
+      "explanation": "Birlikdagi ega uchun was not + V3; send ning uchinchi shakli sent."
+    },
+    {
+      "prompt": "Past Simple Passive inkori: The old lockers ___ (not remove) last week.",
+      "answers": [
+        "were not removed",
+        "weren't removed"
+      ],
+      "explanation": "Ko‘plikdagi ega bilan were not + V3 ishlatiladi."
+    }
+  ],
+  "20.7": [
+    {
+      "prompt": "Past Simple Passive savolini tanlang: A) Did the sign replaced yesterday? B) Was the sign replaced yesterday?",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Past Simple Passive savolida was/were egadan oldin keladi, did emas."
+    },
+    {
+      "prompt": "Past Simple Passive savolining birinchi so‘zini yozing: ___ the benches repaired before the festival?",
+      "answers": [
+        "Were"
+      ],
+      "explanation": "Benches ko‘plik; so‘roq tartibi were + ega + V3."
+    }
+  ],
+  "20.8": [
+    {
+      "prompt": "Present Continuous Passive: The roof ___ (repair) right now.",
+      "answers": [
+        "is being repaired"
+      ],
+      "explanation": "Hozir davom etayotgan passive harakat is being + V3 bilan tuziladi."
+    },
+    {
+      "prompt": "Present Continuous Passive: New trees ___ (plant) along our street at the moment.",
+      "answers": [
+        "are being planted"
+      ],
+      "explanation": "Ko‘plikdagi trees bilan are being + V3 ishlatiladi."
+    }
+  ],
+  "20.9": [
+    {
+      "prompt": "Present Continuous Passive inkori: The main hall ___ (not use) this afternoon.",
+      "answers": [
+        "is not being used",
+        "isn't being used"
+      ],
+      "explanation": "Birlikdagi ega bilan is not being + V3 kerak."
+    },
+    {
+      "prompt": "Present Continuous Passive inkori: The empty boxes ___ (not move) at the moment.",
+      "answers": [
+        "are not being moved",
+        "aren't being moved"
+      ],
+      "explanation": "Ko‘plikdagi ega bilan are not being + V3 ishlatiladi."
+    }
+  ],
+  "20.10": [
+    {
+      "prompt": "Ayni jarayon haqida to‘g‘ri passive savolni tanlang: A) Is the lift being inspected? B) Is being the lift inspected?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "So‘roq tartibi is + ega + being + V3."
+    },
+    {
+      "prompt": "Present Continuous Passive: Why are the windows ___ (cover) right now?",
+      "answers": [
+        "being covered"
+      ],
+      "explanation": "Are oldinda bor; bo‘shliqqa being + V3 keladi."
+    }
+  ],
+  "20.11": [
+    {
+      "prompt": "Present Perfect Passive: The broken handle ___ (replace) already.",
+      "answers": [
+        "has been replaced"
+      ],
+      "explanation": "Birlikdagi ega uchun has been + V3 tugallangan ishning hozirgi natijasini bildiradi."
+    },
+    {
+      "prompt": "Present Perfect Passive: All the dishes ___ (wash). We can put them away now.",
+      "answers": [
+        "have been washed"
+      ],
+      "explanation": "Ko‘plikdagi dishes bilan have been + V3 kerak."
+    }
+  ],
+  "20.12": [
+    {
+      "prompt": "Present Perfect Passive inkori: The new timetable ___ (not publish) yet.",
+      "answers": [
+        "has not been published",
+        "hasn't been published"
+      ],
+      "explanation": "Birlikdagi ega bilan has not been + V3 ishlatiladi."
+    },
+    {
+      "prompt": "Present Perfect Passive inkori: The spare keys ___ (not find) yet.",
+      "answers": [
+        "have not been found",
+        "haven't been found"
+      ],
+      "explanation": "Ko‘plikdagi keys bilan have not been; find ning V3 shakli found."
+    }
+  ],
+  "20.13": [
+    {
+      "prompt": "Present Perfect Passive savolini tanlang: A) Have the tickets been printed? B) Have been the tickets printed?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Savol tartibi have + ega + been + V3."
+    },
+    {
+      "prompt": "Present Perfect Passive: Has the broken chair ___ (take) away?",
+      "answers": [
+        "been taken"
+      ],
+      "explanation": "Has oldinda bor; bo‘shliqqa been va take ning V3 shakli taken keladi."
+    }
+  ],
+  "21.1": [
+    {
+      "prompt": "Future Passive, will bilan: The meeting link ___ (send) tomorrow morning.",
+      "answers": [
+        "will be sent",
+        "'ll be sent"
+      ],
+      "explanation": "Kelajakdagi passive harakat will be + V3 bilan tuziladi."
+    },
+    {
+      "prompt": "Future Passive, will bilan: The old windows ___ (replace) next month.",
+      "answers": [
+        "will be replaced",
+        "'ll be replaced"
+      ],
+      "explanation": "Will barcha egalar bilan o‘zgarmaydi; undan keyin be + V3 keladi."
+    }
+  ],
+  "21.2": [
+    {
+      "prompt": "Future Passive inkori: The sports hall ___ (not close) during the holidays.",
+      "answers": [
+        "will not be closed",
+        "won't be closed"
+      ],
+      "explanation": "Future Passive inkori will not be + V3 bilan tuziladi."
+    },
+    {
+      "prompt": "Future Passive inkori: Your details ___ (not share) with other companies.",
+      "answers": [
+        "will not be shared",
+        "won't be shared"
+      ],
+      "explanation": "Ega details harakatni qabul qiladi; won't be shared kerak."
+    }
+  ],
+  "21.3": [
+    {
+      "prompt": "To‘g‘ri Future Passive savolni tanlang: A) When will the winners be announced? B) When will be the winners announced?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Wh-so‘zdan keyin will + ega + be + V3 tartibi keladi."
+    },
+    {
+      "prompt": "Future Passive savolini to‘ldiring: Will these chairs ___ (need) tomorrow?",
+      "answers": [
+        "be needed"
+      ],
+      "explanation": "Will oldinda berilgan; undan keyingi passive qism be + V3."
+    }
+  ],
+  "21.4": [
+    {
+      "prompt": "Can bilan passive shakl: This bag can ___ (reuse) many times.",
+      "answers": [
+        "be reused"
+      ],
+      "explanation": "Modal + be + V3: can be reused."
+    },
+    {
+      "prompt": "Should bilan passive shakl: The damaged cable should ___ (replace) immediately.",
+      "answers": [
+        "be replaced"
+      ],
+      "explanation": "Should dan keyin passive ma’no uchun be + V3 ishlatiladi."
+    }
+  ],
+  "21.5": [
+    {
+      "prompt": "Taqiqni modal passive bilan tanlang: A) This exit mustn't be blocked. B) This exit doesn't have to be blocked.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Mustn't be + V3 taqiqni, doesn't have to esa zarurat yo‘qligini bildiradi."
+    },
+    {
+      "prompt": "Modal Passive inkori: These documents cannot ___ (remove) from the office.",
+      "answers": [
+        "be removed"
+      ],
+      "explanation": "Cannot dan keyin passive tuzilma be + V3 keladi."
+    }
+  ],
+  "21.6": [
+    {
+      "prompt": "To‘g‘ri modal passive savolni tanlang: A) Can be this fabric recycled? B) Can this fabric be recycled?",
+      "answers": [
+        "B"
+      ],
+      "explanation": "Savol tartibi modal + ega + be + V3."
+    },
+    {
+      "prompt": "Modal Passive savolini to‘ldiring: Should the receipt ___ (keep) for later?",
+      "answers": [
+        "be kept"
+      ],
+      "explanation": "Should dan keyin passive be + V3; keep ning V3 shakli kept."
+    }
+  ],
+  "21.7": [
+    {
+      "prompt": "Past Continuous Passive: The gate ___ (paint) when we arrived.",
+      "answers": [
+        "was being painted"
+      ],
+      "explanation": "O‘tgan vaqtda davom etgan passive jarayon was being + V3 bilan tuziladi."
+    },
+    {
+      "prompt": "Past Continuous Passive: At ten yesterday, the carpets ___ (clean).",
+      "answers": [
+        "were being cleaned"
+      ],
+      "explanation": "Ko‘plikdagi ega bilan were being + V3 kerak."
+    }
+  ],
+  "21.8": [
+    {
+      "prompt": "Past Continuous Passive inkori: The spare room ___ (not use) when I visited.",
+      "answers": [
+        "was not being used",
+        "wasn't being used"
+      ],
+      "explanation": "Birlikdagi ega bilan was not being + V3 ishlatiladi."
+    },
+    {
+      "prompt": "Past Continuous Passive inkori: The lifts ___ (not repair) at noon; the workers were at lunch.",
+      "answers": [
+        "were not being repaired",
+        "weren't being repaired"
+      ],
+      "explanation": "Aynan o‘sha vaqtda jarayon davom etmagani were not being + V3 bilan aytiladi."
+    }
+  ],
+  "21.9": [
+    {
+      "prompt": "To‘g‘ri Past Continuous Passive savolni tanlang: A) Were the shelves being installed when you arrived? B) Did the shelves being installed when you arrived?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Past Continuous Passive savolida were egadan oldinga chiqadi."
+    },
+    {
+      "prompt": "Past Continuous Passive: Why was the entrance ___ (block) when the guests arrived?",
+      "answers": [
+        "being blocked"
+      ],
+      "explanation": "Was oldinda berilgan; bo‘shliq being + V3 bilan to‘ldiriladi."
+    }
+  ],
+  "21.10": [
+    {
+      "prompt": "Past Perfect Passive: The tables ___ (set) before the guests arrived.",
+      "answers": [
+        "had been set",
+        "'d been set"
+      ],
+      "explanation": "Boshqa o‘tgan voqeadan oldin tugallangan passive ish had been + V3 bilan aytiladi."
+    },
+    {
+      "prompt": "Past Perfect Passive: The lost wallet ___ (return) before I called the café.",
+      "answers": [
+        "had been returned",
+        "'d been returned"
+      ],
+      "explanation": "Had been returned hamyon qo‘ng‘iroqdan oldin qaytarilganini bildiradi."
+    }
+  ],
+  "21.11": [
+    {
+      "prompt": "Past Perfect Passive inkori: The cake ___ (not cut) when the candles were brought in.",
+      "answers": [
+        "had not been cut",
+        "hadn't been cut"
+      ],
+      "explanation": "O‘tgan nuqtagacha tugallanmagan passive ish had not been + V3 shaklida keladi."
+    },
+    {
+      "prompt": "Past Perfect Passive inkori: Our seats ___ (not reserve) before the train became full.",
+      "answers": [
+        "had not been reserved",
+        "hadn't been reserved"
+      ],
+      "explanation": "Past Perfect Passive barcha egalar bilan had not been + V3 bo‘ladi."
+    }
+  ],
+  "21.12": [
+    {
+      "prompt": "To‘g‘ri Past Perfect Passive savolni tanlang: A) Had the files been copied before the computer failed? B) Had been the files copied before the computer failed?",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Savol tartibi had + ega + been + V3."
+    },
+    {
+      "prompt": "Past Perfect Passive savoli: Had the bill ___ (pay) before the guests left?",
+      "answers": [
+        "been paid"
+      ],
+      "explanation": "Had oldinda bor; bo‘shliqda been + V3, ya’ni been paid kerak."
+    }
+  ],
+  "21.13": [
+    {
+      "prompt": "Bajaruvchini kiriting: The mural was painted ___ local volunteers. By yoki with ni tanlang.",
+      "answers": [
+        "by"
+      ],
+      "explanation": "Ishni bajargan shaxs yoki guruh passive gapda by bilan ko‘rsatiladi."
+    },
+    {
+      "prompt": "The bread was cut by Omar with a sharp knife. Ishni bajargan shaxsni aynan yozing.",
+      "answers": [
+        "Omar"
+      ],
+      "explanation": "By Omar bajaruvchini, with a sharp knife esa ishlatilgan asbobni bildiradi."
+    }
+  ]
+}

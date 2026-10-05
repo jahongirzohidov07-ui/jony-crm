@@ -1,0 +1,4002 @@
+[
+  {
+    "word": "armchair",
+    "ipa": "/ˈɑːmtʃeə/",
+    "meaning": "yumshoq kreslo",
+    "example": "Grandpa's armchair is the cat's office now.",
+    "translation": "Bobomning yumshoq kreslosi endi mushukning idorasi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "carpet",
+    "ipa": "/ˈkɑːpɪt/",
+    "meaning": "gilam",
+    "example": "Our carpet has more biscuit crumbs than the plate.",
+    "translation": "Gilamimizda likopchadagidan ko‘proq pechenye ushoqlari bor.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "rug",
+    "ipa": "/rʌɡ/",
+    "meaning": "kichik gilamcha",
+    "example": "The dog brings his rug to every room.",
+    "translation": "It gilamchasini har bir xonaga olib boradi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "curtain",
+    "ipa": "/ˈkɜːtn/",
+    "meaning": "parda",
+    "example": "One curtain is shorter because the puppy helped.",
+    "translation": "Bitta parda kaltaroq, chunki kuchukcha yordam berdi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "cushion",
+    "ipa": "/ˈkʊʃn/",
+    "meaning": "divan yostiqchasi",
+    "example": "This cushion looks like a very tired lemon.",
+    "translation": "Bu divan yostiqchasi juda charchagan limonga o‘xshaydi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "shelf",
+    "ipa": "/ʃelf/",
+    "meaning": "tokcha",
+    "example": "The top shelf is safe from Dad's hungry hands.",
+    "translation": "Eng yuqori tokcha dadamning och qo‘llaridan xoli.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "bookcase",
+    "ipa": "/ˈbʊkkeɪs/",
+    "meaning": "kitob javoni",
+    "example": "Our bookcase holds books and one secret chocolate bar.",
+    "translation": "Kitob javonimizda kitoblar va bitta yashirin shokolad bor.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "cupboard",
+    "ipa": "/ˈkʌbəd/",
+    "meaning": "eshikli javon",
+    "example": "Please open the cupboard before buying more mugs.",
+    "translation": "Yana krujka sotib olishdan oldin javonni oching.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "drawer",
+    "ipa": "/drɔː/",
+    "meaning": "tortma",
+    "example": "I found my glasses in the biscuit drawer.",
+    "translation": "Ko‘zoynagimni pechenye tortmasidan topdim.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "stool",
+    "ipa": "/stuːl/",
+    "meaning": "suyanchiqsiz kursi",
+    "example": "This little stool makes me tall enough to steal a biscuit.",
+    "translation": "Bu kichik kursi pechenye o‘g‘irlashim uchun bo‘yimni yetarli qiladi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "bench",
+    "ipa": "/bentʃ/",
+    "meaning": "uzun o‘rindiq",
+    "example": "Three coats are sitting on our hall bench.",
+    "translation": "Dahlizdagi uzun o‘rindig‘imizda uchta palto o‘tiribdi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "furniture",
+    "ipa": "/ˈfɜːnɪtʃə/",
+    "meaning": "mebel",
+    "example": "We moved the furniture, but the cat wants it back.",
+    "translation": "Mebelni ko‘chirdik, lekin mushuk uni avvalgi joyiga qaytarishimizni xohlaydi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "clock",
+    "ipa": "/klɒk/",
+    "meaning": "soat",
+    "example": "The kitchen clock says it is always lunchtime.",
+    "translation": "Oshxonadagi soat doim tushlik vaqti ekanini ko‘rsatadi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "vase",
+    "ipa": "/vɑːz/",
+    "meaning": "guldon",
+    "example": "There are wooden spoons in my flower vase.",
+    "translation": "Guldonimda yog‘och qoshiqlar turibdi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "ornament",
+    "ipa": "/ˈɔːnəmənt/",
+    "meaning": "bezak buyumi",
+    "example": "That tiny duck ornament watches us eat.",
+    "translation": "O‘sha mitti o‘rdak shaklidagi bezak ovqatlanishimizni kuzatadi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "frame",
+    "ipa": "/freɪm/",
+    "meaning": "ramka",
+    "example": "The frame is beautiful, but the photo is upside down.",
+    "translation": "Ramka chiroyli, lekin surat teskari turibdi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "candle",
+    "ipa": "/ˈkændl/",
+    "meaning": "sham",
+    "example": "This candle smells like cake, which feels unfair.",
+    "translation": "Bu shamdan tort hidi keladi, bu esa adolatsizlikdek tuyuladi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "candlestick",
+    "ipa": "/ˈkændlstɪk/",
+    "meaning": "shamdon",
+    "example": "Our grand candlestick holds one tiny birthday candle.",
+    "translation": "Hashamatli shamdonimizda tug‘ilgan kun uchun bitta mitti sham turibdi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "fireplace",
+    "ipa": "/ˈfaɪəpleɪs/",
+    "meaning": "kamin",
+    "example": "The dog sleeps by the fireplace like a little king.",
+    "translation": "It kamin yonida kichkina qirol kabi uxlaydi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "radiator",
+    "ipa": "/ˈreɪdieɪtə/",
+    "meaning": "isitish radiatori",
+    "example": "My socks are having a warm holiday on the radiator.",
+    "translation": "Paypoqlarim radiatorda issiq ta’til o‘tkazyapti.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "fan",
+    "ipa": "/fæn/",
+    "meaning": "ventilyator",
+    "example": "The fan blows my shopping list across the room.",
+    "translation": "Ventilyator xaridlar ro‘yxatimni xona bo‘ylab uchirib yuboradi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "television",
+    "ipa": "/ˈtelɪvɪʒn/",
+    "meaning": "televizor",
+    "example": "Our television is huge, but we still lose the remote.",
+    "translation": "Televizorimiz ulkan, ammo pultni baribir yo‘qotamiz.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "remote",
+    "ipa": "/rɪˈməʊt/",
+    "meaning": "masofadan boshqarish pulti",
+    "example": "The remote was under Dad all evening.",
+    "translation": "Pult kech bo‘yi dadamning tagida edi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "stereo",
+    "ipa": "/ˈsteriəʊ/",
+    "meaning": "musiqa eshittirish qurilmasi",
+    "example": "Mum's old stereo still plays louder than we sing.",
+    "translation": "Onamning eski musiqa qurilmasi hali ham bizning qo‘shig‘imizdan balandroq ovoz chiqaradi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "coaster",
+    "ipa": "/ˈkəʊstə/",
+    "meaning": "piyola tagligi",
+    "example": "Use a coaster; the table dislikes tea rings.",
+    "translation": "Piyola tagligini ishlating, stol choy izlarini yoqtirmaydi.",
+    "topic": "2-oy • Mehmonxona jihozlari"
+  },
+  {
+    "word": "ceiling",
+    "ipa": "/ˈsiːlɪŋ/",
+    "meaning": "shift",
+    "example": "There is a pancake mark on the ceiling.",
+    "translation": "Shiftda quymoq izi bor.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "stairs",
+    "ipa": "/steəz/",
+    "meaning": "zinapoya",
+    "example": "The stairs creak when I sneak down for cake.",
+    "translation": "Tort yeyish uchun sekin tushganimda zinapoya g‘ichirlaydi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "hall",
+    "ipa": "/hɔːl/",
+    "meaning": "dahliz",
+    "example": "Our hall is a small museum of muddy shoes.",
+    "translation": "Dahlizimiz loy oyoq kiyimlarning kichik muzeyi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "landing",
+    "ipa": "/ˈlændɪŋ/",
+    "meaning": "zina maydonchasi",
+    "example": "A lonely slipper waits on the landing.",
+    "translation": "Zina maydonchasida bitta yolg‘iz shippak kutib turibdi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "balcony",
+    "ipa": "/ˈbælkəni/",
+    "meaning": "balkon",
+    "example": "We grow herbs on the balcony and call it a farm.",
+    "translation": "Balkonda ko‘kat yetishtiramiz va uni ferma deymiz.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "basement",
+    "ipa": "/ˈbeɪsmənt/",
+    "meaning": "yerto‘la",
+    "example": "Our basement contains three broken fans and a dream.",
+    "translation": "Yerto‘lamizda uchta buzilgan ventilyator va bir orzu bor.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "attic",
+    "ipa": "/ˈætɪk/",
+    "meaning": "chordoq",
+    "example": "I went into the attic and found Mum's disco shoes.",
+    "translation": "Chordoqqa chiqib, onamning diskoteka tuflisini topdim.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "garage",
+    "ipa": "/ˈɡærɑːʒ/",
+    "meaning": "garaj",
+    "example": "The garage is full, so the car lives outside.",
+    "translation": "Garaj to‘la, shuning uchun mashina tashqarida yashaydi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "porch",
+    "ipa": "/pɔːtʃ/",
+    "meaning": "eshik oldidagi ayvon",
+    "example": "Grandma keeps a chair on the porch for serious gossip.",
+    "translation": "Buvim muhim g‘iybatlar uchun ayvonda kursi saqlaydi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "gate",
+    "ipa": "/ɡeɪt/",
+    "meaning": "darvoza",
+    "example": "Our gate makes a louder noise than the doorbell.",
+    "translation": "Darvozamiz eshik qo‘ng‘irog‘idan ham balandroq ovoz chiqaradi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "fence",
+    "ipa": "/fens/",
+    "meaning": "to‘siq; panjara",
+    "example": "The cat crosses our fence without asking.",
+    "translation": "Mushuk panjaramizdan so‘ramasdan oshib o‘tadi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "step",
+    "ipa": "/step/",
+    "meaning": "zina pog‘onasi",
+    "example": "There is a flowerpot on every step except mine.",
+    "translation": "Men turganidan boshqa har bir zina pog‘onasida gultuvak bor.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "handle",
+    "ipa": "/ˈhændl/",
+    "meaning": "tutqich",
+    "example": "The door handle is sticky after our jam party.",
+    "translation": "Murabbo ziyofatimizdan keyin eshik tutqichi yopishqoq bo‘lib qolgan.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "lock",
+    "ipa": "/lɒk/",
+    "meaning": "qulf",
+    "example": "This lock protects a cupboard full of boring towels.",
+    "translation": "Bu qulf zerikarli sochiqlar bilan to‘la javonni qo‘riqlaydi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "key",
+    "ipa": "/kiː/",
+    "meaning": "kalit",
+    "example": "My key was in the pocket I checked three times.",
+    "translation": "Kalitim uch marta tekshirgan cho‘ntagimda ekan.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "doorbell",
+    "ipa": "/ˈdɔːbel/",
+    "meaning": "eshik qo‘ng‘irog‘i",
+    "example": "The doorbell rang just as I put on a face mask.",
+    "translation": "Yuzimga niqob surtganim zahoti eshik qo‘ng‘irog‘i chalindi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "doormat",
+    "ipa": "/ˈdɔːmæt/",
+    "meaning": "eshik tagidagi gilamcha",
+    "example": "Our doormat says welcome, but the cat looks doubtful.",
+    "translation": "Eshik gilamchamizda xush kelibsiz deb yozilgan, lekin mushuk shubha bilan qaraydi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "socket",
+    "ipa": "/ˈsɒkɪt/",
+    "meaning": "elektr rozetkasi",
+    "example": "The only free socket is behind a very heavy sofa.",
+    "translation": "Yagona bo‘sh rozetka juda og‘ir divan ortida.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "plug",
+    "ipa": "/plʌɡ/",
+    "meaning": "elektr vilkasi",
+    "example": "I checked the plug before blaming the kettle.",
+    "translation": "Choynakni ayblashdan oldin elektr vilkasini tekshirdim.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "switch",
+    "ipa": "/swɪtʃ/",
+    "meaning": "elektr o‘chirgichi",
+    "example": "This switch turns on the hall light, not the moon.",
+    "translation": "Bu o‘chirgich oyni emas, dahliz chirog‘ini yoqadi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "bulb",
+    "ipa": "/bʌlb/",
+    "meaning": "lampochka",
+    "example": "We changed the bulb and discovered more dust.",
+    "translation": "Lampochkani almashtirib, yana ko‘proq changni ko‘rdik.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "tap",
+    "ipa": "/tæp/",
+    "meaning": "suv jo‘mragi",
+    "example": "The tap drips like a very slow drummer.",
+    "translation": "Jo‘mrak juda sekin barabanchi kabi tomchilaydi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "pipe",
+    "ipa": "/paɪp/",
+    "meaning": "quvur",
+    "example": "That pipe makes strange noises after my shower.",
+    "translation": "Dush qabul qilganimdan keyin o‘sha quvur g‘alati ovoz chiqaradi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "heating",
+    "ipa": "/ˈhiːtɪŋ/",
+    "meaning": "isitish tizimi",
+    "example": "The heating is on, and the cat has melted onto the rug.",
+    "translation": "Isitish tizimi yoqilgan, mushuk esa gilamchaga yoyilib yotibdi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "air conditioning",
+    "ipa": "/ˈeə kəndɪʃənɪŋ/",
+    "meaning": "havoni sovitish tizimi",
+    "example": "The air conditioning makes our bedroom feel like a fridge.",
+    "translation": "Havoni sovitish tizimi yotoqxonamizni muzlatkichdek qiladi.",
+    "topic": "2-oy • Uy qismlari va qulayliklari"
+  },
+  {
+    "word": "pillow",
+    "ipa": "/ˈpɪləʊ/",
+    "meaning": "yostiq",
+    "example": "My pillow knows all my weekend plans: sleep.",
+    "translation": "Yostig‘im dam olish kunidagi barcha rejalarimni biladi: uxlash.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "pillowcase",
+    "ipa": "/ˈpɪləʊkeɪs/",
+    "meaning": "yostiq jildi",
+    "example": "This pillowcase has little dancing carrots on it.",
+    "translation": "Bu yostiq jildida raqsga tushayotgan mitti sabzilar tasviri bor.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "sheet",
+    "ipa": "/ʃiːt/",
+    "meaning": "choyshab",
+    "example": "The sheet is clean until the dog says hello.",
+    "translation": "It salom berguncha choyshab toza turadi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "blanket",
+    "ipa": "/ˈblæŋkɪt/",
+    "meaning": "adyol",
+    "example": "We share a blanket, but my brother takes the warm half.",
+    "translation": "Biz bitta adyolni bo‘lishamiz, ammo ukam issiq yarmini oladi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "duvet",
+    "ipa": "/ˈduːveɪ/",
+    "meaning": "qalin yumshoq ko‘rpa",
+    "example": "Getting out from under this duvet is my hardest job.",
+    "translation": "Bu ko‘rpa tagidan chiqish mening eng qiyin ishim.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "mattress",
+    "ipa": "/ˈmætrəs/",
+    "meaning": "to‘shak; matras",
+    "example": "Our new mattress arrived in a box smaller than Dad.",
+    "translation": "Yangi matrasimiz dadamdan kichikroq qutida keldi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "bedspread",
+    "ipa": "/ˈbedspred/",
+    "meaning": "karavot ustiga yopiladigan yopinchiq",
+    "example": "The fancy bedspread hides my untidy sheets.",
+    "translation": "Bezakli yopinchiq tartibsiz choyshablarimni yashiradi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "bedding",
+    "ipa": "/ˈbedɪŋ/",
+    "meaning": "choyshab va ko‘rpa-to‘shak anjomlari",
+    "example": "Fresh bedding makes Monday feel slightly kinder.",
+    "translation": "Yangi yuvilgan ko‘rpa-to‘shak anjomlari dushanbani biroz yoqimliroq qiladi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "bunk bed",
+    "ipa": "/ˈbʌŋk bed/",
+    "meaning": "ikki qavatli karavot",
+    "example": "My brother calls the top of the bunk bed his castle.",
+    "translation": "Ukam ikki qavatli karavotning yuqorisini o‘z qal’asi deydi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "cot",
+    "ipa": "/kɒt/",
+    "meaning": "chaqaloq karavoti",
+    "example": "The baby sleeps in a cot surrounded by toy bears.",
+    "translation": "Chaqaloq o‘yinchoq ayiqlar qurshovidagi karavotida uxlaydi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "bedside table",
+    "ipa": "/ˌbedsaɪd ˈteɪbl/",
+    "meaning": "karavot yonidagi tumba",
+    "example": "My bedside table holds water and seven unfinished books.",
+    "translation": "Karavotim yonidagi tumbada suv va yettita tugatilmagan kitob bor.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "alarm clock",
+    "ipa": "/əˈlɑːm klɒk/",
+    "meaning": "budilnik",
+    "example": "My alarm clock is the loudest member of the family.",
+    "translation": "Budilnigim oilamizning eng shovqinli a’zosi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "hanger",
+    "ipa": "/ˈhæŋə/",
+    "meaning": "kiyim ilgich",
+    "example": "I have ten hangers and eleven coats; one coat is sad.",
+    "translation": "Menda o‘nta ilgich va o‘n bitta palto bor; bitta palto xafa.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "hook",
+    "ipa": "/hʊk/",
+    "meaning": "ilgak",
+    "example": "The hook behind the door holds my entire winter.",
+    "translation": "Eshik ortidagi ilgakda qishki kiyimlarimning hammasi osilib turibdi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "chest of drawers",
+    "ipa": "/ˌtʃest əv ˈdrɔːz/",
+    "meaning": "tortmali kiyim javoni",
+    "example": "The chest of drawers is full of socks without partners.",
+    "translation": "Tortmali kiyim javoni jufti yo‘q paypoqlarga to‘la.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "bath",
+    "ipa": "/bɑːθ/",
+    "meaning": "vanna",
+    "example": "The bath is ready, and so is my rubber duck.",
+    "translation": "Vanna tayyor, rezina o‘rdagim ham tayyor.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "shower",
+    "ipa": "/ˈʃaʊə/",
+    "meaning": "dush",
+    "example": "My brother sings in the shower; the pipes complain.",
+    "translation": "Akam dushda qo‘shiq aytadi; quvurlar shikoyat qiladi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "toilet",
+    "ipa": "/ˈtɔɪlət/",
+    "meaning": "unitaz; hojatxona",
+    "example": "Our toilet has a warmer seat than my office chair.",
+    "translation": "Unitazimizning o‘rindig‘i idoradagi kursimnikidan issiqroq.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "basin",
+    "ipa": "/ˈbeɪsn/",
+    "meaning": "yuz-qo‘l yuvgich",
+    "example": "The bathroom basin is too small for our dramatic cat.",
+    "translation": "Hammomdagi yuz-qo‘l yuvgich o‘zini ko‘z-ko‘z qiladigan mushugimiz uchun juda kichik.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "towel",
+    "ipa": "/ˈtaʊəl/",
+    "meaning": "sochiq",
+    "example": "Someone used my best towel to dry the dog.",
+    "translation": "Kimdir eng yaxshi sochig‘im bilan itni quritibdi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "bathmat",
+    "ipa": "/ˈbɑːθmæt/",
+    "meaning": "hammom gilamchasi",
+    "example": "The wet bathmat feels like a cold pancake.",
+    "translation": "Ho‘l hammom gilamchasi sovuq quymoqqa o‘xshaydi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "sponge",
+    "ipa": "/spʌndʒ/",
+    "meaning": "gubka",
+    "example": "This yellow sponge works harder than anyone in the bathroom.",
+    "translation": "Bu sariq gubka hammomdagi hammadan ko‘proq ishlaydi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "drain",
+    "ipa": "/dreɪn/",
+    "meaning": "suv oqib ketadigan teshik",
+    "example": "My ring nearly went down the drain during its bath.",
+    "translation": "Uzugimni yuvayotganda u suv teshigiga tushib ketay dedi.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "tile",
+    "ipa": "/taɪl/",
+    "meaning": "kafel; plitka",
+    "example": "One bathroom tile has a duck on it for company.",
+    "translation": "Hammomdagi bir kafelda hamroh bo‘lsin deb o‘rdak rasmi tushirilgan.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "toilet paper",
+    "ipa": "/ˈtɔɪlət peɪpə/",
+    "meaning": "hojatxona qog‘ozi",
+    "example": "Buying toilet paper is less exciting than buying cake.",
+    "translation": "Hojatxona qog‘ozi sotib olish tort olishdek qiziq emas.",
+    "topic": "2-oy • Yotoq va hammom jihozlari"
+  },
+  {
+    "word": "bowl",
+    "ipa": "/bəʊl/",
+    "meaning": "kosa",
+    "example": "This bowl is large enough for my breakfast dreams.",
+    "translation": "Bu kosa nonushta haqidagi orzularim uchun yetarlicha katta.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "mug",
+    "ipa": "/mʌɡ/",
+    "meaning": "krujka",
+    "example": "My mug says boss, but Mum gives the orders.",
+    "translation": "Krujkamda boshliq deb yozilgan, lekin buyruqni onam beradi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "saucer",
+    "ipa": "/ˈsɔːsə/",
+    "meaning": "piyola tagidagi likopcha",
+    "example": "The biscuit on my saucer disappeared during one phone call.",
+    "translation": "Bitta telefon suhbati davomida likopchamdagi pechenye yo‘qoldi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "glass",
+    "ipa": "/ɡlɑːs/",
+    "meaning": "stakan",
+    "example": "He poured juice into a glass bigger than his breakfast.",
+    "translation": "U sharbatni nonushtasidan kattaroq stakanga quydi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "jug",
+    "ipa": "/dʒʌɡ/",
+    "meaning": "ko‘za; dastali suv idishi",
+    "example": "The jug is full of lemonade and ambitious lemon slices.",
+    "translation": "Ko‘za limonad va juda katta limon bo‘laklariga to‘la.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "teapot",
+    "ipa": "/ˈtiːpɒt/",
+    "meaning": "choy damlash choynagi",
+    "example": "Our teapot wears a little woolly hat.",
+    "translation": "Choy damlaydigan choynagimiz kichik jun qalpoq kiygan.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "teaspoon",
+    "ipa": "/ˈtiːspuːn/",
+    "meaning": "choy qoshiq",
+    "example": "I ate the ice cream with a teaspoon to make it last.",
+    "translation": "Muzqaymoq uzoqroqqa yetsin deb uni choy qoshiqda yedim.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "tablespoon",
+    "ipa": "/ˈteɪblspuːn/",
+    "meaning": "osh qoshiq",
+    "example": "Use one tablespoon of honey, not the whole jar.",
+    "translation": "Butun bankani emas, bir osh qoshiq asal ishlating.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "chopsticks",
+    "ipa": "/ˈtʃɒpstɪks/",
+    "meaning": "ovqat yeyish tayoqchalari",
+    "example": "My chopsticks keep dropping noodles onto my shirt.",
+    "translation": "Tayoqchalarim ugra bo‘laklarini ko‘ylagimga tushiraveradi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "cutlery",
+    "ipa": "/ˈkʌtləri/",
+    "meaning": "qoshiq, sanchqi va pichoqlar",
+    "example": "We packed the picnic but forgot all the cutlery.",
+    "translation": "Sayr ovqatini joyladik, lekin barcha qoshiq, sanchqi va pichoqlarni unutdik.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "dish",
+    "ipa": "/dɪʃ/",
+    "meaning": "ovqat solinadigan idish",
+    "example": "The serving dish is empty, so dinner was a success.",
+    "translation": "Ovqat tortilgan idish bo‘sh, demak kechki ovqat yaxshi chiqibdi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "tray",
+    "ipa": "/treɪ/",
+    "meaning": "patnis",
+    "example": "I carried breakfast on a tray like a nervous waiter.",
+    "translation": "Nonushtani hayajonlangan ofitsiantdek patnisda olib keldim.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "pan",
+    "ipa": "/pæn/",
+    "meaning": "tova; ovqat pishirish idishi",
+    "example": "The pan is hot, but my cooking ideas are not.",
+    "translation": "Tova issiq, ammo ovqat pishirish g‘oyalarim unchalik zo‘r emas.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "saucepan",
+    "ipa": "/ˈsɔːspən/",
+    "meaning": "dastali kastryulka",
+    "example": "Our smallest saucepan makes exactly one lonely portion.",
+    "translation": "Eng kichik kastryulkamizda rosa bir kishilik ovqat pishadi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "frying pan",
+    "ipa": "/ˈfraɪɪŋ pæn/",
+    "meaning": "qovurish tovasi",
+    "example": "This frying pan has seen more eggs than a farm.",
+    "translation": "Bu qovurish tovasi fermadan ham ko‘proq tuxum ko‘rgan.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "lid",
+    "ipa": "/lɪd/",
+    "meaning": "qopqoq",
+    "example": "The lid fits every pot except the right one.",
+    "translation": "Qopqoq o‘z qozonidan boshqa hamma qozonga tushadi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "ladle",
+    "ipa": "/ˈleɪdl/",
+    "meaning": "cho‘mich",
+    "example": "Dad uses a ladle because his idea of a spoon is big.",
+    "translation": "Dadamning qoshiq haqidagi tasavvuri katta bo‘lgani uchun u cho‘mich ishlatadi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "spatula",
+    "ipa": "/ˈspætʃələ/",
+    "meaning": "ovqat ag‘darish kurakchasi",
+    "example": "The spatula rescued my pancake from a sticky end.",
+    "translation": "Kurakcha quymog‘imni yopishib qolishdan qutqardi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "whisk",
+    "ipa": "/wɪsk/",
+    "meaning": "ko‘pirtirgich",
+    "example": "The whisk left cream on my nose and nowhere useful.",
+    "translation": "Ko‘pirtirgich qaymoqni kerakli joyga emas, burnimga sachratdi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "grater",
+    "ipa": "/ˈɡreɪtə/",
+    "meaning": "qirg‘ich",
+    "example": "The grater turned a large cheese block into a tiny mountain.",
+    "translation": "Qirg‘ich katta pishloq bo‘lagini kichik tog‘chaga aylantirdi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "peeler",
+    "ipa": "/ˈpiːlə/",
+    "meaning": "po‘st archish asbobi",
+    "example": "This peeler gives every potato a quick haircut.",
+    "translation": "Bu po‘st archgich har bir kartoshkaning sochini tezda olib qo‘yadi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "sieve",
+    "ipa": "/sɪv/",
+    "meaning": "elak",
+    "example": "Flour went through the sieve and onto my black trousers.",
+    "translation": "Un elakdan o‘tib, qora shimimga tushdi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "colander",
+    "ipa": "/ˈkʌləndə/",
+    "meaning": "suzgich",
+    "example": "The colander lets the water escape but keeps dinner safe.",
+    "translation": "Suzgich suvni chiqarib yuboradi, ammo ovqatni saqlab qoladi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "chopping board",
+    "ipa": "/ˈtʃɒpɪŋ bɔːd/",
+    "meaning": "masalliq to‘g‘rash taxtasi",
+    "example": "My chopping board smells of garlic, whatever I cut.",
+    "translation": "Nima kesishimdan qat’i nazar, taxtamdan sarimsoq hidi keladi.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "rolling pin",
+    "ipa": "/ˈrəʊlɪŋ pɪn/",
+    "meaning": "o‘qlov",
+    "example": "Grandma uses a rolling pin; I just watch and eat.",
+    "translation": "Buvim o‘qlov ishlatadi, men esa faqat kuzataman va yeyman.",
+    "topic": "2-oy • Oshxona idishlari"
+  },
+  {
+    "word": "oven",
+    "ipa": "/ˈʌvn/",
+    "meaning": "duxovka",
+    "example": "The oven is ready, but the cake is still an idea.",
+    "translation": "Duxovka tayyor, ammo tort hali faqat g‘oya.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "microwave",
+    "ipa": "/ˈmaɪkrəweɪv/",
+    "meaning": "mikroto‘lqinli pech",
+    "example": "The microwave finished lunch before I found a fork.",
+    "translation": "Sanchqi topgunimcha mikroto‘lqinli pech tushlikni isitib bo‘ldi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "kettle",
+    "ipa": "/ˈketl/",
+    "meaning": "suv qaynatish choynagi",
+    "example": "Our kettle works harder when Grandma visits.",
+    "translation": "Buvim kelganida suv choynagimiz ko‘proq ishlaydi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "toaster",
+    "ipa": "/ˈtəʊstə/",
+    "meaning": "non qizartirgich",
+    "example": "The toaster frightened me by throwing up my breakfast.",
+    "translation": "Non qizartirgich nonushtamni yuqoriga otib meni qo‘rqitdi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "blender",
+    "ipa": "/ˈblendə/",
+    "meaning": "blender; maydalab aralashtirgich",
+    "example": "The blender turned my fruit into a pink breakfast.",
+    "translation": "Blender mevalarimni pushti nonushtaga aylantirdi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "mixer",
+    "ipa": "/ˈmɪksə/",
+    "meaning": "mikser",
+    "example": "Our mixer is loud enough to announce cake to the neighbours.",
+    "translation": "Mikserimizning ovozi qo‘shnilarga tort pishayotganini bildirishga yetadi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "freezer",
+    "ipa": "/ˈfriːzə/",
+    "meaning": "muzlatish kamerasi",
+    "example": "The freezer contains peas and my emergency ice cream.",
+    "translation": "Muzlatish kamerasida no‘xat va zarurat uchun saqlagan muzqaymog‘im bor.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "dishwasher",
+    "ipa": "/ˈdɪʃwɒʃə/",
+    "meaning": "idish yuvish mashinasi",
+    "example": "I thanked the dishwasher after our twelve-person dinner.",
+    "translation": "O‘n ikki kishilik kechki ovqatdan so‘ng idish yuvish mashinasiga rahmat aytdim.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "sink",
+    "ipa": "/sɪŋk/",
+    "meaning": "oshxona chig‘anog‘i",
+    "example": "The sink is full of dishes having a long bath.",
+    "translation": "Oshxona chig‘anog‘i uzoq cho‘milayotgan idishlarga to‘la.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "worktop",
+    "ipa": "/ˈwɜːktɒp/",
+    "meaning": "oshxonadagi ish yuzasi",
+    "example": "Flour covers the worktop like very expensive snow.",
+    "translation": "Oshxona ish yuzasini juda qimmat qordek un qoplagan.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "scales",
+    "ipa": "/skeɪlz/",
+    "meaning": "tarozi",
+    "example": "The kitchen scales say my small snack weighs half a kilo.",
+    "translation": "Oshxona tarozisi kichik gazagim yarim kilo kelishini ko‘rsatmoqda.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "timer",
+    "ipa": "/ˈtaɪmə/",
+    "meaning": "vaqt belgilagich; taymer",
+    "example": "Set the timer before the biscuits become little rocks.",
+    "translation": "Pechenyelar mayda toshlarga aylanishidan oldin taymerni qo‘ying.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "tin opener",
+    "ipa": "/ˈtɪn əʊpənə/",
+    "meaning": "konserva ochgich",
+    "example": "We brought beans on holiday but no tin opener.",
+    "translation": "Ta’tilga loviya konservasini oldik, ammo konserva ochgich olmabmiz.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "bottle opener",
+    "ipa": "/ˈbɒtl əʊpənə/",
+    "meaning": "shisha ochgich",
+    "example": "The bottle opener is hiding whenever I want lemonade.",
+    "translation": "Limonad ichmoqchi bo‘lganimda shisha ochgich yashirinib oladi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "bottle",
+    "ipa": "/ˈbɒtl/",
+    "meaning": "shisha; butilka",
+    "example": "This bottle holds water, despite its fancy label.",
+    "translation": "Chiroyli yorlig‘iga qaramay, bu shishada oddiy suv bor.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "jar",
+    "ipa": "/dʒɑː/",
+    "meaning": "banka",
+    "example": "Grandma keeps buttons in an old jam jar.",
+    "translation": "Buvim tugmalarni eski murabbo bankasida saqlaydi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "tin",
+    "ipa": "/tɪn/",
+    "meaning": "metall quti; konserva bankasi",
+    "example": "The biscuit tin contains sewing things again.",
+    "translation": "Pechenye qutisida yana tikuv buyumlari turibdi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "container",
+    "ipa": "/kənˈteɪnə/",
+    "meaning": "saqlash idishi",
+    "example": "Every container has a lid, just never the one I find.",
+    "translation": "Har bir idishning qopqog‘i bor, faqat men topgan qopqoq unga tushmaydi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "lunchbox",
+    "ipa": "/ˈlʌntʃbɒks/",
+    "meaning": "tushlik qutisi",
+    "example": "My lunchbox is so full that the sandwich needs a seat belt.",
+    "translation": "Tushlik qutim shunchalik to‘laki, sendvichga xavfsizlik kamari kerak.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "basket",
+    "ipa": "/ˈbɑːskɪt/",
+    "meaning": "savat",
+    "example": "The bread basket is empty, and Dad looks innocent.",
+    "translation": "Non savati bo‘sh, dadam esa o‘zini aybsizdek tutyapti.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "foil",
+    "ipa": "/fɔɪl/",
+    "meaning": "alyuminiy zarqog‘oz",
+    "example": "I wrapped the potato in foil like a tiny present.",
+    "translation": "Kartoshkani mitti sovg‘adek zarqog‘ozga o‘radim.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "cling film",
+    "ipa": "/ˈklɪŋ fɪlm/",
+    "meaning": "oziq-ovqat o‘rash plyonkasi",
+    "example": "The cling film sticks to me better than to the bowl.",
+    "translation": "O‘rash plyonkasi kosadan ko‘ra menga yaxshiroq yopishadi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "napkin",
+    "ipa": "/ˈnæpkɪn/",
+    "meaning": "dasturxon salfetkasi",
+    "example": "He tucked a napkin into his shirt before the tomato soup.",
+    "translation": "U pomidor sho‘rvasini ichishdan oldin yoqasiga salfetka qistirdi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "tablecloth",
+    "ipa": "/ˈteɪblklɒθ/",
+    "meaning": "dasturxon",
+    "example": "Our white tablecloth remembers every family dinner.",
+    "translation": "Oq dasturxonimiz har bir oilaviy kechki ovqatni eslaydi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "apron",
+    "ipa": "/ˈeɪprən/",
+    "meaning": "fartuk",
+    "example": "Dad wears an apron to protect his shirt from his cooking.",
+    "translation": "Dadam ko‘ylagini o‘zining pazandaligidan himoya qilish uchun fartuk kiyadi.",
+    "topic": "2-oy • Oshxona texnikasi va saqlash"
+  },
+  {
+    "word": "broom",
+    "ipa": "/bruːm/",
+    "meaning": "supurgi",
+    "example": "The broom is for the floor, not for flying to the shops.",
+    "translation": "Supurgi do‘konga uchish uchun emas, pol uchun.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "brush",
+    "ipa": "/brʌʃ/",
+    "meaning": "cho‘tka",
+    "example": "This stiff brush can finally clean my muddy boots.",
+    "translation": "Bu qattiq cho‘tka nihoyat loy etiklarimni tozalay oladi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "dustpan",
+    "ipa": "/ˈdʌstpæn/",
+    "meaning": "xokandoz",
+    "example": "The last crumb refuses to enter the dustpan.",
+    "translation": "Oxirgi ushoq xokandozga kirishni istamayapti.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "mop",
+    "ipa": "/mɒp/",
+    "meaning": "pol artgich; shvabra",
+    "example": "The mop has wetter hair than I do after a shower.",
+    "translation": "Pol artgichning sochi dushdan keyingi sochimdan ham ho‘lroq.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "bucket",
+    "ipa": "/ˈbʌkɪt/",
+    "meaning": "chelak",
+    "example": "I filled the bucket and immediately wished it had wheels.",
+    "translation": "Chelakni to‘ldirib, darhol uning g‘ildiraklari bo‘lishini istadim.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "vacuum cleaner",
+    "ipa": "/ˈvækjuːm kliːnə/",
+    "meaning": "changyutkich",
+    "example": "The vacuum cleaner eats crumbs and frightens the cat.",
+    "translation": "Changyutkich ushoqlarni yeydi va mushukni qo‘rqitadi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "duster",
+    "ipa": "/ˈdʌstə/",
+    "meaning": "chang artish lattasi",
+    "example": "My duster has discovered a grey world behind the television.",
+    "translation": "Chang lattam televizor ortidan kulrang dunyo topdi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "cloth",
+    "ipa": "/klɒθ/",
+    "meaning": "artish lattasi",
+    "example": "Use a damp cloth; your sleeve is not a cleaning tool.",
+    "translation": "Nam latta ishlating, yengingiz tozalash asbobi emas.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "rag",
+    "ipa": "/ræɡ/",
+    "meaning": "eski latta",
+    "example": "Dad's old shirt is now a very proud cleaning rag.",
+    "translation": "Dadamning eski ko‘ylagi endi juda mag‘rur tozalash lattasi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "detergent",
+    "ipa": "/dɪˈtɜːdʒənt/",
+    "meaning": "yuvish vositasi",
+    "example": "This detergent smells of flowers I have never met.",
+    "translation": "Bu yuvish vositasidan men hech uchratmagan gullarning hidi keladi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "washing-up liquid",
+    "ipa": "/ˌwɒʃɪŋ ʌp ˈlɪkwɪd/",
+    "meaning": "idish yuvish suyuqligi",
+    "example": "A little washing-up liquid makes a mountain of bubbles.",
+    "translation": "Ozgina idish yuvish suyuqligi bir tog‘ ko‘pik hosil qiladi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "bleach",
+    "ipa": "/bliːtʃ/",
+    "meaning": "oqartiruvchi tozalash vositasi",
+    "example": "Mum keeps the bleach high up, far from curious hands.",
+    "translation": "Onam oqartiruvchi vositani qiziquvchan qo‘llardan uzoqda, yuqorida saqlaydi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "polish",
+    "ipa": "/ˈpɒlɪʃ/",
+    "meaning": "jilo beruvchi vosita",
+    "example": "The furniture polish makes our old table look important.",
+    "translation": "Mebelga jilo beruvchi vosita eski stolimizni salobatli ko‘rsatadi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "bin",
+    "ipa": "/bɪn/",
+    "meaning": "axlat chelagi",
+    "example": "The bin is full, but nobody wants to be the first to notice.",
+    "translation": "Axlat chelagi to‘la, ammo hech kim buni birinchi bo‘lib payqashni istamaydi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "bin bag",
+    "ipa": "/ˈbɪn bæɡ/",
+    "meaning": "axlat paketi",
+    "example": "This bin bag is carrying the remains of our party.",
+    "translation": "Bu axlat paketida ziyofatimizdan qolgan chiqindilar bor.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "rubbish",
+    "ipa": "/ˈrʌbɪʃ/",
+    "meaning": "axlat",
+    "example": "Please take the rubbish out before it starts a new life.",
+    "translation": "Axlat yangi hayot boshlamasidan oldin uni tashqariga olib chiqing.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "dust",
+    "ipa": "/dʌst/",
+    "meaning": "chang",
+    "example": "There is enough dust on this shelf to write my name.",
+    "translation": "Bu tokchada ismimni yozishga yetadigan chang bor.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "stain",
+    "ipa": "/steɪn/",
+    "meaning": "dog‘",
+    "example": "The stain on my shirt looks exactly like Italy.",
+    "translation": "Ko‘ylagimdagi dog‘ xuddi Italiyaga o‘xshaydi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "washing machine",
+    "ipa": "/ˈwɒʃɪŋ məʃiːn/",
+    "meaning": "kir yuvish mashinasi",
+    "example": "Our washing machine dances when it washes towels.",
+    "translation": "Kir yuvish mashinamiz sochiq yuvganda raqsga tushadi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "iron",
+    "ipa": "/ˈaɪən/",
+    "meaning": "dazmol",
+    "example": "The iron is ready for a battle with my shirt.",
+    "translation": "Dazmol ko‘ylagim bilan jang qilishga tayyor.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "ironing board",
+    "ipa": "/ˈaɪənɪŋ bɔːd/",
+    "meaning": "dazmol taxtasi",
+    "example": "The ironing board squeaks louder than our front gate.",
+    "translation": "Dazmol taxtasi old darvozamizdan ham balandroq g‘ichirlaydi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "peg",
+    "ipa": "/peɡ/",
+    "meaning": "kir qisqichi",
+    "example": "One brave peg is holding up Dad's enormous trousers.",
+    "translation": "Bitta jasur kir qisqichi dadamning ulkan shimini ushlab turibdi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "clothesline",
+    "ipa": "/ˈkləʊðzlaɪn/",
+    "meaning": "kir arqoni",
+    "example": "Our clothesline displays the family's favourite colours.",
+    "translation": "Kir arqonimiz oilamizning sevimli ranglarini namoyish qiladi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "laundry",
+    "ipa": "/ˈlɔːndri/",
+    "meaning": "yuviladigan yoki yuvilgan kirlar",
+    "example": "The laundry pile grows while I am not looking.",
+    "translation": "Men qaramaganimda kir uyumi kattalashadi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "tumble dryer",
+    "ipa": "/ˌtʌmbl ˈdraɪə/",
+    "meaning": "kir quritish mashinasi",
+    "example": "The tumble dryer returned my jumper in a smaller size.",
+    "translation": "Kir quritish mashinasi jemperimni kichikroq o‘lchamda qaytardi.",
+    "topic": "2-oy • Tozalash va kir yuvish buyumlari"
+  },
+  {
+    "word": "sweep",
+    "ipa": "/swiːp/",
+    "meaning": "supurmoq",
+    "example": "I sweep the kitchen while the dog supplies more crumbs.",
+    "translation": "Men oshxonani supuraman, it esa yana ushoq yetkazib beradi.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "wipe",
+    "ipa": "/waɪp/",
+    "meaning": "artmoq",
+    "example": "Wipe the table before your elbows stick to it.",
+    "translation": "Tirsaklaringiz yopishib qolmasidan oldin stolni arting.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "scrub",
+    "ipa": "/skrʌb/",
+    "meaning": "ishqalab tozalamoq",
+    "example": "We scrubbed the pan until it finally forgave us.",
+    "translation": "Tova nihoyat bizni kechirguncha uni ishqalab tozaladik.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "rinse",
+    "ipa": "/rɪns/",
+    "meaning": "chaymoq",
+    "example": "Rinse the mug unless you enjoy tea with soap.",
+    "translation": "Sovunli choyni yoqtirmasangiz, krujkani chaying.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "soak",
+    "ipa": "/səʊk/",
+    "meaning": "ivitmoq",
+    "example": "I soak dirty dishes while I gather the courage to wash them.",
+    "translation": "Yuvishga jur’at yig‘gunimcha kir idishlarni ivitib qo‘yaman.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "dry",
+    "ipa": "/draɪ/",
+    "meaning": "quritmoq",
+    "example": "Dry the plates before they create a lake in the cupboard.",
+    "translation": "Javonda ko‘l hosil qilmasidan oldin likopchalarni quriting.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "fold",
+    "ipa": "/fəʊld/",
+    "meaning": "taxlamoq; buklamoq",
+    "example": "I fold towels into squares; Dad makes mysterious shapes.",
+    "translation": "Men sochiqlarni to‘rtburchak qilib taxlayman, dadam esa sirli shakllar yasaydi.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "hang",
+    "ipa": "/hæŋ/",
+    "meaning": "osmoq",
+    "example": "Hang your coat on the hook, not on your little brother.",
+    "translation": "Paltoyingizni ukangizga emas, ilgakka osing.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "tidy up",
+    "ipa": "/ˌtaɪdi ˈʌp/",
+    "meaning": "yig‘ishtirmoq",
+    "example": "We tidy up before guests discover our real lifestyle.",
+    "translation": "Mehmonlar haqiqiy turmush tarzimizni bilib qolmasidan oldin yig‘ishtiramiz.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "put away",
+    "ipa": "/ˌpʊt əˈweɪ/",
+    "meaning": "joyiga olib qo‘ymoq",
+    "example": "Put away the clean socks before the cat adopts them.",
+    "translation": "Toza paypoqlarni mushuk o‘ziniki qilib olmasidan oldin joyiga qo‘ying.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "wash up",
+    "ipa": "/ˌwɒʃ ˈʌp/",
+    "meaning": "idishlarni yuvmoq",
+    "example": "Who will wash up after my famous three-pan breakfast?",
+    "translation": "Mening mashhur uch tovalik nonushtamdan keyin idishlarni kim yuvadi?",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "clear up",
+    "ipa": "/ˌklɪər ˈʌp/",
+    "meaning": "tartibsizlikni yig‘ishtirmoq",
+    "example": "Let's clear up before Mum sees our flour mountain.",
+    "translation": "Onam un tog‘imizni ko‘rmasidan oldin yig‘ishtiraylik.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "throw away",
+    "ipa": "/ˌθrəʊ əˈweɪ/",
+    "meaning": "tashlab yubormoq",
+    "example": "Don't throw away that box; the cat has moved in.",
+    "translation": "U qutini tashlab yubormang, mushuk unga ko‘chib kirgan.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "pick up",
+    "ipa": "/ˌpɪk ˈʌp/",
+    "meaning": "yerdan ko‘tarmoq; terib olmoq",
+    "example": "Please pick up your socks; the floor wants a rest.",
+    "translation": "Iltimos, paypoqlaringizni terib oling, pol dam olmoqchi.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "sort",
+    "ipa": "/sɔːt/",
+    "meaning": "ajratib saralamoq",
+    "example": "I sort the laundry while my brother sorts the snacks.",
+    "translation": "Men kirlarni saralayman, akam esa gazaklarni saralaydi.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "separate",
+    "ipa": "/ˈsepəreɪt/",
+    "meaning": "ajratmoq",
+    "example": "Separate white clothes from red ones unless you want pink socks.",
+    "translation": "Pushti paypoq xohlamasangiz, oq kiyimlarni qizillaridan ajrating.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "empty",
+    "ipa": "/ˈempti/",
+    "meaning": "bo‘shatmoq",
+    "example": "Empty the bin before the lid gives up.",
+    "translation": "Qopqoq taslim bo‘lmasidan oldin axlat chelagini bo‘shating.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "fill",
+    "ipa": "/fɪl/",
+    "meaning": "to‘ldirmoq",
+    "example": "Fill the kettle, but leave some water for the rest of us.",
+    "translation": "Choynakni to‘ldiring, lekin qolganlarimizga ham suv qoldiring.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "repair",
+    "ipa": "/rɪˈpeə/",
+    "meaning": "ta’mirlamoq",
+    "example": "Dad repaired the chair, and now it has one extra screw.",
+    "translation": "Dadam kursini ta’mirladi, endi esa bitta vint ortib qoldi.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "mend",
+    "ipa": "/mend/",
+    "meaning": "yamamoq; tikib tuzatmoq",
+    "example": "Grandma mended my sock with bright orange thread.",
+    "translation": "Buvim paypog‘imni yorqin to‘q sariq ip bilan yamadi.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "replace",
+    "ipa": "/rɪˈpleɪs/",
+    "meaning": "almashtirmoq",
+    "example": "We replaced the broken lamp before another dark dinner.",
+    "translation": "Yana qorong‘ida ovqatlanmaslik uchun singan chiroqni almashtirdik.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "unplug",
+    "ipa": "/ˌʌnˈplʌɡ/",
+    "meaning": "vilkasini rozetkadan uzmoq",
+    "example": "Unplug the iron before we go; it isn't coming with us.",
+    "translation": "Ketishdan oldin dazmolni rozetkadan uzing, u biz bilan bormaydi.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "switch on",
+    "ipa": "/ˌswɪtʃ ˈɒn/",
+    "meaning": "yoqmoq",
+    "example": "Switch on the fan before we all turn into soup.",
+    "translation": "Hammamiz sho‘rvaga aylanmasimizdan oldin ventilyatorni yoqing.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "switch off",
+    "ipa": "/ˌswɪtʃ ˈɒf/",
+    "meaning": "o‘chirmoq",
+    "example": "Switch off the light; the furniture can sleep in the dark.",
+    "translation": "Chiroqni o‘chiring, mebel qorong‘ida ham uxlay oladi.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "chore",
+    "ipa": "/tʃɔː/",
+    "meaning": "uy yumushi",
+    "example": "My favourite chore is testing whether the biscuits are fresh.",
+    "translation": "Sevimli uy yumushim pechenyelar yangiligini tekshirish.",
+    "topic": "2-oy • Uy yumushlari"
+  },
+  {
+    "word": "boil",
+    "ipa": "/bɔɪl/",
+    "meaning": "qaynatmoq",
+    "example": "Boil the potatoes until they stop being little stones.",
+    "translation": "Kartoshkalarni mayda tosh bo‘lmay qolguncha qaynating.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "fry",
+    "ipa": "/fraɪ/",
+    "meaning": "qovurmoq",
+    "example": "Dad fries eggs as if he is on a cooking show.",
+    "translation": "Dadam tuxumni pazandalik ko‘rsatuvidagidek qovuradi.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "bake",
+    "ipa": "/beɪk/",
+    "meaning": "duxovkada pishirmoq",
+    "example": "We bake biscuits whenever the house needs a better smell.",
+    "translation": "Uyga yoqimliroq hid kerak bo‘lsa, pechenye pishiramiz.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "roast",
+    "ipa": "/rəʊst/",
+    "meaning": "duxovkada qizartirib pishirmoq",
+    "example": "Roast the vegetables until they are brown, not until they look like coal.",
+    "translation": "Sabzavotlarni ko‘mirga o‘xshaguncha emas, qizarguncha duxovkada pishiring.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "grill",
+    "ipa": "/ɡrɪl/",
+    "meaning": "grilda pishirmoq",
+    "example": "I grill peppers while Dad gives expert advice from his chair.",
+    "translation": "Men qalampirlarni grilda pishiraman, dadam esa kursidan mutaxassis maslahatlarini beradi.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "steam",
+    "ipa": "/stiːm/",
+    "meaning": "bug‘da pishirmoq",
+    "example": "We steam broccoli, but my brother still looks suspicious.",
+    "translation": "Biz brokkolini bug‘da pishiramiz, ammo ukam baribir shubha bilan qaraydi.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "heat",
+    "ipa": "/hiːt/",
+    "meaning": "isitmoq",
+    "example": "Heat the soup before it forgets it is dinner.",
+    "translation": "Sho‘rva kechki ovqat ekanini unutmasidan oldin uni isiting.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "peel",
+    "ipa": "/piːl/",
+    "meaning": "po‘stini archmoq",
+    "example": "I peel apples in one long strip and feel very clever.",
+    "translation": "Olmalarning po‘stini bitta uzun tasma qilib archib, o‘zimni juda aqlli his qilaman.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "chop",
+    "ipa": "/tʃɒp/",
+    "meaning": "to‘g‘ramoq",
+    "example": "Chop the onion before it makes you tell a sad story.",
+    "translation": "Piyoz sizga qayg‘uli hikoya ayttirmasidan oldin uni to‘g‘rang.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "slice",
+    "ipa": "/slaɪs/",
+    "meaning": "tilimlab kesmoq",
+    "example": "Slice the bread thinly; this sandwich is already a tower.",
+    "translation": "Nonni yupqa tilimlang, bu sendvich allaqachon minoraga aylangan.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "cut",
+    "ipa": "/kʌt/",
+    "meaning": "kesmoq",
+    "example": "Cut the cake fairly; everyone is watching your knife.",
+    "translation": "Tortni teng bo‘lib kesing, hamma pichog‘ingizni kuzatyapti.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "grate",
+    "ipa": "/ɡreɪt/",
+    "meaning": "qirg‘ichdan o‘tkazmoq",
+    "example": "I grate cheese until the pasta disappears underneath it.",
+    "translation": "Makaron tagida ko‘rinmay qolguncha pishloqni qirg‘ichdan o‘tkazaman.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "mix",
+    "ipa": "/mɪks/",
+    "meaning": "aralashtirmoq",
+    "example": "Mix the flour slowly unless you want a white kitchen.",
+    "translation": "Oq oshxona xohlamasangiz, unni sekin aralashtiring.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "stir",
+    "ipa": "/stɜː/",
+    "meaning": "qoshiq bilan aralashtirmoq",
+    "example": "Stir the sauce while I rescue the toast.",
+    "translation": "Men qizargan nonni qutqargunimcha qaylani aralashtirib turing.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "pour",
+    "ipa": "/pɔː/",
+    "meaning": "quymoq",
+    "example": "Pour the milk slowly; my breakfast does not need a flood.",
+    "translation": "Sutni sekin quying, nonushtamga suv toshqini kerak emas.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "add",
+    "ipa": "/æd/",
+    "meaning": "qo‘shmoq",
+    "example": "Add a little chilli if dinner needs some excitement.",
+    "translation": "Kechki ovqatga biroz hayajon kerak bo‘lsa, ozgina achchiq qalampir qo‘shing.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "weigh",
+    "ipa": "/weɪ/",
+    "meaning": "tortmoq; vaznini o‘lchamoq",
+    "example": "Weigh the flour, because your huge spoon is not a scale.",
+    "translation": "Unni torting, chunki ulkan qoshig‘ingiz tarozi emas.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "measure",
+    "ipa": "/ˈmeʒə/",
+    "meaning": "o‘lchamoq",
+    "example": "I measure the oil; Dad just hopes for the best.",
+    "translation": "Men yog‘ni o‘lchayman, dadam esa yaxshi chiqishiga umid qiladi, xolos.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "beat",
+    "ipa": "/biːt/",
+    "meaning": "ko‘pirtirib aralashtirmoq",
+    "example": "Beat the eggs; they need more exercise than I do today.",
+    "translation": "Tuxumlarni ko‘pirtiring, bugun ularga mendan ko‘ra ko‘proq mashq kerak.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "knead",
+    "ipa": "/niːd/",
+    "meaning": "xamir qormoq; mushtlamoq",
+    "example": "I knead the dough and imagine it is my Monday problem.",
+    "translation": "Xamirni mushtlab, uni dushanbadagi muammom deb tasavvur qilaman.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "roll",
+    "ipa": "/rəʊl/",
+    "meaning": "yoymoq; dumalatmoq",
+    "example": "Roll the dough into a circle, or something almost round.",
+    "translation": "Xamirni doira yoki deyarli yumaloq shaklda yoying.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "spread",
+    "ipa": "/spred/",
+    "meaning": "surtmoq",
+    "example": "Spread the butter to the edges; the corners are hungry too.",
+    "translation": "Sariyog‘ni chetlarigacha surting, burchaklar ham och.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "squeeze",
+    "ipa": "/skwiːz/",
+    "meaning": "siqmoq",
+    "example": "Squeeze the lemon gently unless your shirt needs flavour.",
+    "translation": "Ko‘ylagingizga ta’m kerak bo‘lmasa, limonni sekin siqing.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "serve",
+    "ipa": "/sɜːv/",
+    "meaning": "dasturxonga tortmoq",
+    "example": "Serve the cake quickly before I improve it by eating the edge.",
+    "translation": "Chetini yeb uni yaxshilamasimdan oldin tortni tezroq dasturxonga torting.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "burn",
+    "ipa": "/bɜːn/",
+    "meaning": "kuydirmoq; kuymoq",
+    "example": "I burned the toast while admiring my perfect egg.",
+    "translation": "Zo‘r chiqqan tuxumimga qoyil qolib, nonni kuydirib qo‘ydim.",
+    "topic": "2-oy • Ovqat tayyorlash harakatlari"
+  },
+  {
+    "word": "flour",
+    "ipa": "/ˈflaʊə/",
+    "meaning": "un",
+    "example": "There is flour on my nose, so I must be a baker now.",
+    "translation": "Burnimda un bor, demak endi men novvoyman.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "oil",
+    "ipa": "/ɔɪl/",
+    "meaning": "yog‘",
+    "example": "A little oil stops the eggs from becoming part of the pan.",
+    "translation": "Ozgina yog‘ tuxumlarning tovaga qo‘shilib ketishiga yo‘l qo‘ymaydi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "vinegar",
+    "ipa": "/ˈvɪnɪɡə/",
+    "meaning": "sirka",
+    "example": "Dad added vinegar and woke up the whole salad.",
+    "translation": "Dadam sirka qo‘shib, butun salatni uyg‘otib yubordi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "honey",
+    "ipa": "/ˈhʌni/",
+    "meaning": "asal",
+    "example": "The honey moves slowly, just like me before breakfast.",
+    "translation": "Asal xuddi nonushtadan oldingi men kabi sekin harakatlanadi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "jam",
+    "ipa": "/dʒæm/",
+    "meaning": "murabbo",
+    "example": "My toast has more jam than bread.",
+    "translation": "Qizartirilgan nonimda nondan ko‘ra murabbo ko‘proq.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "marmalade",
+    "ipa": "/ˈmɑːməleɪd/",
+    "meaning": "sitrus mevalar murabbosi",
+    "example": "This marmalade makes bitter oranges welcome at breakfast.",
+    "translation": "Bu murabbo achchiqroq apelsinlarni nonushtaning aziz mehmoniga aylantiradi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "syrup",
+    "ipa": "/ˈsɪrəp/",
+    "meaning": "shirin sirop",
+    "example": "The pancakes are swimming in syrup again.",
+    "translation": "Quymoqlar yana siropda suzyapti.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "yeast",
+    "ipa": "/jiːst/",
+    "meaning": "xamirturush",
+    "example": "The yeast is working while I sit and watch the dough.",
+    "translation": "Men o‘tirib xamirni kuzatyapman, xamirturush esa ishlayapti.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "dough",
+    "ipa": "/dəʊ/",
+    "meaning": "xamir",
+    "example": "The dough has grown bigger than its bowl.",
+    "translation": "Xamir ko‘tarilib, kosasidan ham kattalashdi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "batter",
+    "ipa": "/ˈbætə/",
+    "meaning": "suyuq xamir",
+    "example": "I poured pancake batter into the pan and made a map of Africa.",
+    "translation": "Tovaga quymoq xamirini quyib, Afrika xaritasini yasadim.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "pastry",
+    "ipa": "/ˈpeɪstri/",
+    "meaning": "qatlama yoki pirog xamiri",
+    "example": "The pastry tears whenever I try to look professional.",
+    "translation": "O‘zimni ustadek ko‘rsatishga uringanimda pirog xamiri yirtiladi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "cocoa",
+    "ipa": "/ˈkəʊkəʊ/",
+    "meaning": "kakao kukuni",
+    "example": "A spoon of cocoa gave the cake a lovely brown coat.",
+    "translation": "Bir qoshiq kakao tortga chiroyli jigarrang tus berdi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "chocolate",
+    "ipa": "/ˈtʃɒklət/",
+    "meaning": "shokolad",
+    "example": "The chocolate was for baking, but I had other plans.",
+    "translation": "Shokolad pishiriq uchun edi, ammo mening boshqa rejalarim bor edi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "vanilla",
+    "ipa": "/vəˈnɪlə/",
+    "meaning": "vanil",
+    "example": "A drop of vanilla makes the kitchen smell like good news.",
+    "translation": "Bir tomchi vanil oshxonaga xushxabar hidini beradi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "cinnamon",
+    "ipa": "/ˈsɪnəmən/",
+    "meaning": "dolchin",
+    "example": "Cinnamon makes my porridge feel less like homework.",
+    "translation": "Dolchin bo‘tqamni majburiy vazifadek tuyulishdan qutqaradi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "ginger",
+    "ipa": "/ˈdʒɪndʒə/",
+    "meaning": "zanjabil",
+    "example": "This ginger has a strange shape but excellent flavour.",
+    "translation": "Bu zanjabilning shakli g‘alati, lekin ta’mi ajoyib.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "spice",
+    "ipa": "/spaɪs/",
+    "meaning": "ziravor",
+    "example": "One extra spice turned Dad's stew into an adventure.",
+    "translation": "Yana bitta ziravor dadamning dimlamasini sarguzashtga aylantirdi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "herb",
+    "ipa": "/hɜːb/",
+    "meaning": "xushbo‘y ko‘kat",
+    "example": "This fresh herb smells better than my expensive soap.",
+    "translation": "Bu yangi ko‘kat qimmat sovunimdan ham xushbo‘yroq.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "sauce",
+    "ipa": "/sɔːs/",
+    "meaning": "qayla; sous",
+    "example": "The sauce is so good that the pasta feels unnecessary.",
+    "translation": "Qayla shunchalik mazaliki, makaron ortiqchadek tuyuladi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "gravy",
+    "ipa": "/ˈɡreɪvi/",
+    "meaning": "go‘sht sharbatidan tayyorlangan qayla",
+    "example": "My potatoes are hiding under a lake of gravy.",
+    "translation": "Kartoshkalarim go‘sht qaylasidan hosil bo‘lgan ko‘l ostida yashiringan.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "mustard",
+    "ipa": "/ˈmʌstəd/",
+    "meaning": "xantal",
+    "example": "That mustard is stronger than my morning coffee.",
+    "translation": "O‘sha xantal ertalabki qahvamdan ham kuchliroq.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "mayonnaise",
+    "ipa": "/ˌmeɪəˈneɪz/",
+    "meaning": "mayonez",
+    "example": "He added mayonnaise until the salad turned completely white.",
+    "translation": "U salat butunlay oqarguncha mayonez qo‘shdi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "ketchup",
+    "ipa": "/ˈketʃəp/",
+    "meaning": "ketchup",
+    "example": "The ketchup bottle finally sneezed onto my chips.",
+    "translation": "Ketchup shishasi nihoyat kartoshka qovurdoqlarim ustiga aksirdi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "baking powder",
+    "ipa": "/ˈbeɪkɪŋ paʊdə/",
+    "meaning": "xamir ko‘taruvchi kukun",
+    "example": "Without baking powder, my cake would be a sweet brick.",
+    "translation": "Xamir ko‘taruvchi kukunsiz tortim shirin g‘isht bo‘lardi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "cornflour",
+    "ipa": "/ˈkɔːnflaʊə/",
+    "meaning": "makkajo‘xori kraxmali",
+    "example": "A little cornflour stopped the sauce from looking like water.",
+    "translation": "Ozgina makkajo‘xori kraxmali qaylaning suvdek bo‘lishini to‘xtatdi.",
+    "topic": "2-oy • Pishiriq va taom masalliqlari"
+  },
+  {
+    "word": "apricot",
+    "ipa": "/ˈeɪprɪkɒt/",
+    "meaning": "o‘rik",
+    "example": "This apricot is small enough to disappear in one bite.",
+    "translation": "Bu o‘rik bir tishlashda yo‘q bo‘ladigan darajada kichik.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "plum",
+    "ipa": "/plʌm/",
+    "meaning": "olxo‘ri",
+    "example": "The plum left a purple smile on my little sister.",
+    "translation": "Olxo‘ri singlimning og‘zi atrofida binafsha tabassum qoldirdi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "pineapple",
+    "ipa": "/ˈpaɪnæpl/",
+    "meaning": "ananas",
+    "example": "A pineapple looks dressed for a very strange party.",
+    "translation": "Ananas juda g‘alati ziyofatga kiyingandek ko‘rinadi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "mango",
+    "ipa": "/ˈmæŋɡəʊ/",
+    "meaning": "mango",
+    "example": "I ate a juicy mango and gave my shirt a yellow spot.",
+    "translation": "Sersuv mango yeb, ko‘ylagimga sariq dog‘ tushirdim.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "coconut",
+    "ipa": "/ˈkəʊkənʌt/",
+    "meaning": "kokos yong‘og‘i",
+    "example": "The coconut looks easy to open until you try.",
+    "translation": "Kokosni ochish urinib ko‘rmaguningizcha oson ko‘rinadi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "kiwi",
+    "ipa": "/ˈkiːwiː/",
+    "meaning": "kivi",
+    "example": "A kiwi is wearing a brown coat over its green middle.",
+    "translation": "Kivi yashil ichki qismi ustidan jigarrang palto kiygan.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "grapefruit",
+    "ipa": "/ˈɡreɪpfruːt/",
+    "meaning": "greypfrut",
+    "example": "The grapefruit woke up my face before the coffee arrived.",
+    "translation": "Qahva kelmasidan oldin greypfrut yuzimni uyg‘otdi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "lime",
+    "ipa": "/laɪm/",
+    "meaning": "laym; yashil limon",
+    "example": "One lime made my plain water feel fancy.",
+    "translation": "Bitta laym oddiy suvimni hashamatli ichimlikka aylantirdi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "raspberry",
+    "ipa": "/ˈrɑːzbəri/",
+    "meaning": "malina",
+    "example": "The last raspberry sits on the cake like a tiny queen.",
+    "translation": "Oxirgi malina tort ustida mitti malika kabi o‘tiribdi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "blueberry",
+    "ipa": "/ˈbluːbəri/",
+    "meaning": "ko‘k rezavor meva",
+    "example": "A blueberry rolled under the fridge and retired there.",
+    "translation": "Bitta ko‘k rezavor muzlatkich tagiga dumalab kirib, o‘sha yerda dam olishga chiqdi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "blackberry",
+    "ipa": "/ˈblækbəri/",
+    "meaning": "maymunjon",
+    "example": "This blackberry is delicious, but my fingers now look purple.",
+    "translation": "Bu maymunjon mazali, lekin barmoqlarim endi binafsha ko‘rinadi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "fig",
+    "ipa": "/fɪɡ/",
+    "meaning": "anjir",
+    "example": "Grandma cut the fig open to show its secret pink room.",
+    "translation": "Buvim anjirning yashirin pushti xonasini ko‘rsatish uchun uni kesdi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "raisin",
+    "ipa": "/ˈreɪzn/",
+    "meaning": "mayiz",
+    "example": "I thought it was chocolate, but it was a raisin in disguise.",
+    "translation": "Men uni shokolad deb o‘yladim, ammo u niqoblangan mayiz ekan.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "currant",
+    "ipa": "/ˈkʌrənt/",
+    "meaning": "smorodina",
+    "example": "The red currant looked sweet, but my face disagreed.",
+    "translation": "Qizil smorodina shirin ko‘rindi, ammo yuzim bunga qo‘shilmadi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "prune",
+    "ipa": "/pruːn/",
+    "meaning": "quritilgan olxo‘ri",
+    "example": "A prune is a plum that has had a very long nap.",
+    "translation": "Quritilgan olxo‘ri juda uzoq uxlagan olxo‘ridir.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "walnut",
+    "ipa": "/ˈwɔːlnʌt/",
+    "meaning": "yong‘oq",
+    "example": "The walnut looks like a tiny brain inside a helmet.",
+    "translation": "Yong‘oq dubulg‘a ichidagi mitti miyaga o‘xshaydi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "almond",
+    "ipa": "/ˈɑːmənd/",
+    "meaning": "bodom",
+    "example": "One almond fell into my tea and became a surprise snack.",
+    "translation": "Bitta bodom choyimga tushib, kutilmagan gazakka aylandi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "peanut",
+    "ipa": "/ˈpiːnʌt/",
+    "meaning": "yeryong‘oq",
+    "example": "I dropped a peanut and began a long search under the sofa.",
+    "translation": "Yeryong‘oqni tushirib yuborib, divan tagida uzoq qidiruv boshladim.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "hazelnut",
+    "ipa": "/ˈheɪzlnʌt/",
+    "meaning": "funduk; o‘rmon yong‘og‘i",
+    "example": "This chocolate has a hazelnut hiding in the middle.",
+    "translation": "Bu shokoladning o‘rtasida funduk yashiringan.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "pistachio",
+    "ipa": "/pɪˈstæʃiəʊ/",
+    "meaning": "pista",
+    "example": "The last pistachio will not open without a serious discussion.",
+    "translation": "Oxirgi pista jiddiy suhbat bo‘lmasa ochilmaydi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "cashew",
+    "ipa": "/ˈkæʃuː/",
+    "meaning": "keshyu yong‘og‘i",
+    "example": "A cashew looks like a tiny smile in my snack bowl.",
+    "translation": "Keshyu gazak kosamdagi mitti tabassumga o‘xshaydi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "nut",
+    "ipa": "/nʌt/",
+    "meaning": "yong‘oq turi",
+    "example": "This nut is too hard for my lazy nutcracker.",
+    "translation": "Bu yong‘oq dangasa yong‘oq chaqqichim uchun juda qattiq.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "seed",
+    "ipa": "/siːd/",
+    "meaning": "urug‘; danakcha",
+    "example": "I found a lemon seed in my tea and nearly planted it.",
+    "translation": "Choyimdan limon urug‘ini topib, uni ekay dedim.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "avocado",
+    "ipa": "/ˌævəˈkɑːdəʊ/",
+    "meaning": "avokado",
+    "example": "The avocado was hard yesterday and has chosen today to be perfect.",
+    "translation": "Avokado kecha qattiq edi, bugun esa mukammal bo‘lishga qaror qildi.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "papaya",
+    "ipa": "/pəˈpaɪə/",
+    "meaning": "papayya",
+    "example": "The papaya has enough black seeds for a tiny garden.",
+    "translation": "Papayyaning qora urug‘lari mitti bog‘ uchun yetarli.",
+    "topic": "2-oy • Mevalar va yong‘oqlar"
+  },
+  {
+    "word": "garlic",
+    "ipa": "/ˈɡɑːlɪk/",
+    "meaning": "sarimsoq",
+    "example": "After that garlic soup, even my words smell strong.",
+    "translation": "O‘sha sarimsoqli sho‘rvadan keyin hatto so‘zlarimdan ham kuchli hid keladi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "lettuce",
+    "ipa": "/ˈletɪs/",
+    "meaning": "salat bargi",
+    "example": "The lettuce gives my enormous burger a healthy hat.",
+    "translation": "Salat bargi ulkan burgerimga foydali qalpoq bo‘ladi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "spinach",
+    "ipa": "/ˈspɪnɪtʃ/",
+    "meaning": "ismaloq",
+    "example": "A huge bag of spinach became a tiny green spoonful.",
+    "translation": "Ulkan paketdagi ismaloq bir qoshiq yashil ovqatga aylandi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "broccoli",
+    "ipa": "/ˈbrɒkəli/",
+    "meaning": "brokkoli",
+    "example": "My plate has a forest of broccoli beside the rice.",
+    "translation": "Likopchamda guruch yonida brokkoli o‘rmoni bor.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "cauliflower",
+    "ipa": "/ˈkɒliflaʊə/",
+    "meaning": "gulkaram",
+    "example": "The cauliflower looks like a cloud that came to dinner.",
+    "translation": "Gulkaram kechki ovqatga kelgan bulutga o‘xshaydi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "courgette",
+    "ipa": "/kɔːˈʒet/",
+    "meaning": "qovoqcha",
+    "example": "I hid a courgette in the cake, and nobody complained.",
+    "translation": "Tortga qovoqcha yashirdim, hech kim shikoyat qilmadi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "aubergine",
+    "ipa": "/ˈəʊbəʒiːn/",
+    "meaning": "baqlajon",
+    "example": "That shiny aubergine looks ready for a photograph.",
+    "translation": "O‘sha yaltiroq baqlajon suratga tushishga tayyordek ko‘rinadi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "pumpkin",
+    "ipa": "/ˈpʌmpkɪn/",
+    "meaning": "qovoq",
+    "example": "This pumpkin is too big for both my pot and my plans.",
+    "translation": "Bu qovoq qozonim uchun ham, rejalarim uchun ham juda katta.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "radish",
+    "ipa": "/ˈrædɪʃ/",
+    "meaning": "rediska",
+    "example": "The little radish adds a surprisingly sharp bite to the salad.",
+    "translation": "Kichkina rediska salatga kutilmaganda o‘tkir ta’m beradi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "beetroot",
+    "ipa": "/ˈbiːtruːt/",
+    "meaning": "lavlagi",
+    "example": "The beetroot has painted my entire salad pink.",
+    "translation": "Lavlagi butun salatimni pushti rangga bo‘yadi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "turnip",
+    "ipa": "/ˈtɜːnɪp/",
+    "meaning": "sholg‘om",
+    "example": "Dad called the turnip a potato with more personality.",
+    "translation": "Dadam sholg‘omni fe’l-atvori kuchliroq kartoshka dedi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "leek",
+    "ipa": "/liːk/",
+    "meaning": "porey piyozi",
+    "example": "The leek is so long that it needs its own shopping bag.",
+    "translation": "Porey piyozi shunchalik uzunki, unga alohida xarid paketi kerak.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "celery",
+    "ipa": "/ˈseləri/",
+    "meaning": "selderey",
+    "example": "Crunching celery is a noisy way to eat quietly.",
+    "translation": "Seldereyni qarsillatib yeyish jim ovqatlanishning shovqinli usuli.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "sweetcorn",
+    "ipa": "/ˈswiːtkɔːn/",
+    "meaning": "shirin makkajo‘xori",
+    "example": "The sweetcorn makes my salad look full of little suns.",
+    "translation": "Shirin makkajo‘xori salatimni mitti quyoshchalarga to‘ldiradi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "mushroom",
+    "ipa": "/ˈmʌʃruːm/",
+    "meaning": "qo‘ziqorin",
+    "example": "This mushroom wears a better hat than I do.",
+    "translation": "Bu qo‘ziqorinning qalpog‘i menikidan yaxshiroq.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "lentil",
+    "ipa": "/ˈlentl/",
+    "meaning": "yasmiq",
+    "example": "One lentil escaped the bag and rolled towards freedom.",
+    "translation": "Bitta yasmiq donasi paketdan chiqib, ozodlik sari dumaladi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "chickpea",
+    "ipa": "/ˈtʃɪkpiː/",
+    "meaning": "no‘xat",
+    "example": "A chickpea landed on my plate after a brave jump from the spoon.",
+    "translation": "Bir dona no‘xat qoshiqdan jasorat bilan sakrab, likopchamga tushdi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "chilli",
+    "ipa": "/ˈtʃɪli/",
+    "meaning": "achchiq qalampir",
+    "example": "That tiny chilli has a very loud personality.",
+    "translation": "O‘sha mitti achchiq qalampirning fe’li juda kuchli.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "parsley",
+    "ipa": "/ˈpɑːsli/",
+    "meaning": "petrushka",
+    "example": "A little parsley makes my simple soup look important.",
+    "translation": "Ozgina petrushka oddiy sho‘rvamni salobatli ko‘rsatadi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "mint",
+    "ipa": "/mɪnt/",
+    "meaning": "yalpiz",
+    "example": "The mint in my tea smells like a fresh start.",
+    "translation": "Choyimdagi yalpizdan yangi boshlanish hidi keladi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "basil",
+    "ipa": "/ˈbæzəl/",
+    "meaning": "rayhon",
+    "example": "Our basil plant supplies leaves faster than I make pasta.",
+    "translation": "Rayhonimiz men makaron pishirgandan tezroq barg beradi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "dill",
+    "ipa": "/dɪl/",
+    "meaning": "shivit",
+    "example": "Grandma adds dill until the potatoes look green.",
+    "translation": "Buvim kartoshkalar yashil ko‘ringuncha shivit qo‘shadi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "olive",
+    "ipa": "/ˈɒlɪv/",
+    "meaning": "zaytun",
+    "example": "The olive rolled off my pizza and onto Dad's plate.",
+    "translation": "Zaytun pitsamdan dumalab, dadamning likopchasiga tushdi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "sweet potato",
+    "ipa": "/ˌswiːt pəˈteɪtəʊ/",
+    "meaning": "batat; shirin kartoshka",
+    "example": "A sweet potato makes orange chips without any magic.",
+    "translation": "Batat hech qanday sehrsiz to‘q sariq kartoshka qovurdoq beradi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "spring onion",
+    "ipa": "/ˌsprɪŋ ˈʌnjən/",
+    "meaning": "ko‘k piyoz",
+    "example": "The spring onion is sticking out of my sandwich like a flag.",
+    "translation": "Ko‘k piyoz sendvichimdan bayroqdek chiqib turibdi.",
+    "topic": "2-oy • Sabzavotlar va ko‘katlar"
+  },
+  {
+    "word": "beef",
+    "ipa": "/biːf/",
+    "meaning": "mol go‘shti",
+    "example": "The beef is cooking slowly, and I am waiting loudly.",
+    "translation": "Mol go‘shti sekin pishyapti, men esa shovqin bilan kutyapman.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "pork",
+    "ipa": "/pɔːk/",
+    "meaning": "cho‘chqa go‘shti",
+    "example": "The label says pork, so we chose a different pie.",
+    "translation": "Yorliqda cho‘chqa go‘shti deb yozilgan, shuning uchun boshqa pirog tanladik.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "lamb",
+    "ipa": "/læm/",
+    "meaning": "qo‘zi go‘shti",
+    "example": "The roast lamb smells so good that everyone arrives early.",
+    "translation": "Qovurib pishirilgan qo‘zi go‘shti shunchalik xushbo‘yki, hamma erta keladi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "turkey",
+    "ipa": "/ˈtɜːki/",
+    "meaning": "kurka go‘shti",
+    "example": "We bought turkey for dinner and sandwiches for a week.",
+    "translation": "Kechki ovqatga va bir haftalik sendvichlarga yetadigan kurka go‘shti oldik.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "sausage",
+    "ipa": "/ˈsɒsɪdʒ/",
+    "meaning": "kolbasa; sosiska",
+    "example": "The sausage rolled across the plate before I caught it.",
+    "translation": "Sosiska ushlagunimcha likopcha bo‘ylab dumaladi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "bacon",
+    "ipa": "/ˈbeɪkən/",
+    "meaning": "bekon; yupqa kesilgan tuzlangan yoki dudlangan cho‘chqa go‘shti",
+    "example": "The smell of bacon got my brother out of bed.",
+    "translation": "Bekon hidi akamni o‘rnidan turg‘izdi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "ham",
+    "ipa": "/hæm/",
+    "meaning": "tuzlangan yoki dudlangan cho‘chqa son go‘shti",
+    "example": "He put so much ham in the sandwich that the bread disappeared.",
+    "translation": "U sendvichga shunchalik ko‘p dudlangan go‘sht soldiki, non ko‘rinmay qoldi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "steak",
+    "ipa": "/steɪk/",
+    "meaning": "steyk; qalin kesilgan go‘sht",
+    "example": "Dad watches his steak more carefully than the news.",
+    "translation": "Dadam steykini yangiliklardan ham diqqatliroq kuzatadi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "mince",
+    "ipa": "/mɪns/",
+    "meaning": "qiyma",
+    "example": "The mince is for meatballs, not for the waiting cat.",
+    "translation": "Qiyma kutib turgan mushuk uchun emas, go‘sht sharchalari uchun.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "liver",
+    "ipa": "/ˈlɪvə/",
+    "meaning": "jigar (oziq-ovqat)",
+    "example": "Grandma cooks liver with enough onions to fill a small garden.",
+    "translation": "Buvim jigarni kichik bog‘ni to‘ldirishga yetadigan piyoz bilan pishiradi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "seafood",
+    "ipa": "/ˈsiːfuːd/",
+    "meaning": "dengiz mahsulotlari",
+    "example": "This seafood salad looks like a tiny visit to the seaside.",
+    "translation": "Bu dengiz mahsulotli salat dengiz bo‘yiga kichik sayohatga o‘xshaydi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "prawn",
+    "ipa": "/prɔːn/",
+    "meaning": "krevetka",
+    "example": "The last prawn is hiding under a lettuce leaf.",
+    "translation": "Oxirgi krevetka salat bargi ostida yashiringan.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "tuna",
+    "ipa": "/ˈtjuːnə/",
+    "meaning": "tunets balig‘i",
+    "example": "My tuna sandwich announced itself before I opened the lunchbox.",
+    "translation": "Tunetsli sendvichim qutini ochishimdan oldin o‘zini tanishtirdi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "salmon",
+    "ipa": "/ˈsæmən/",
+    "meaning": "losos balig‘i",
+    "example": "The salmon on my plate is pinker than my new shirt.",
+    "translation": "Likopchamdagi losos yangi ko‘ylagimdan ham pushtiroq.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "sardine",
+    "ipa": "/ˌsɑːˈdiːn/",
+    "meaning": "sardina balig‘i",
+    "example": "I put a sardine on toast and called it a quick dinner.",
+    "translation": "Qizartirilgan non ustiga sardina qo‘yib, uni tez tayyorlangan kechki ovqat dedim.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "crab",
+    "ipa": "/kræb/",
+    "meaning": "qisqichbaqa",
+    "example": "Eating crab takes longer than my lunch break allows.",
+    "translation": "Qisqichbaqa yeyish tushlik tanaffusimdan ko‘proq vaqt oladi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "cream",
+    "ipa": "/kriːm/",
+    "meaning": "qaymoq",
+    "example": "A spoon of cream gave my soup a white moustache.",
+    "translation": "Bir qoshiq qaymoq sho‘rvamga oq mo‘ylov berdi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "yoghurt",
+    "ipa": "/ˈjɒɡət/",
+    "meaning": "yogurt; qatiq",
+    "example": "I chose plain yoghurt and then added a mountain of fruit.",
+    "translation": "Oddiy yogurt tanlab, keyin unga bir tog‘ meva qo‘shdim.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "cottage cheese",
+    "ipa": "/ˌkɒtɪdʒ ˈtʃiːz/",
+    "meaning": "tvorog; donador yumshoq pishloq",
+    "example": "The cottage cheese keeps falling off my enthusiastic spoon.",
+    "translation": "Tvorog g‘ayratli qoshig‘imdan tushaveradi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "margarine",
+    "ipa": "/ˌmɑːdʒəˈriːn/",
+    "meaning": "margarin",
+    "example": "The margarine is soft, so my toast survives breakfast.",
+    "translation": "Margarin yumshoq, shuning uchun nonim nonushtada sinmay qoladi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "tofu",
+    "ipa": "/ˈtəʊfuː/",
+    "meaning": "soya pishlog‘i; tofu",
+    "example": "The tofu borrowed all its flavour from the spicy sauce.",
+    "translation": "Tofu butun ta’mini achchiq qayladan oldi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "omelette",
+    "ipa": "/ˈɒmlət/",
+    "meaning": "omlet",
+    "example": "My omelette broke in half, so now we have two portions.",
+    "translation": "Omletim ikkiga bo‘lindi, demak endi ikki porsiyamiz bor.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "meatball",
+    "ipa": "/ˈmiːtbɔːl/",
+    "meaning": "go‘sht sharchasi",
+    "example": "A meatball escaped my fork and took a bath in the sauce.",
+    "translation": "Bir go‘sht sharchasi sanchqimdan qochib, qaylada cho‘mildi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "fillet",
+    "ipa": "/ˈfɪlɪt/",
+    "meaning": "suyaksiz go‘sht yoki baliq bo‘lagi",
+    "example": "This fish fillet has no bones to interrupt my dinner.",
+    "translation": "Bu baliq filesida kechki ovqatimga xalal beradigan suyaklar yo‘q.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "yolk",
+    "ipa": "/jəʊk/",
+    "meaning": "tuxum sarig‘i",
+    "example": "The yolk broke just when I wanted a perfect photo.",
+    "translation": "Aynan chiroyli surat olmoqchi bo‘lganimda tuxum sarig‘i yorildi.",
+    "topic": "2-oy • Go‘sht va sutli mahsulotlar"
+  },
+  {
+    "word": "pasta",
+    "ipa": "/ˈpæstə/",
+    "meaning": "makaron mahsulotlari",
+    "example": "We cooked pasta for four, but it looks enough for fourteen.",
+    "translation": "To‘rt kishiga makaron pishirdik, lekin o‘n to‘rt kishiga yetadigandek ko‘rinadi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "noodle",
+    "ipa": "/ˈnuːdl/",
+    "meaning": "ugra; uzun makaron tolasi",
+    "example": "One noodle is hanging from my fork like a loose shoelace.",
+    "translation": "Bitta ugra sanchqimdan yechilgan bog‘ichdek osilib turibdi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "spaghetti",
+    "ipa": "/spəˈɡeti/",
+    "meaning": "spagetti",
+    "example": "Eating spaghetti in a white shirt is a brave decision.",
+    "translation": "Oq ko‘ylakda spagetti yeyish jasoratli qaror.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "pizza",
+    "ipa": "/ˈpiːtsə/",
+    "meaning": "pitsa",
+    "example": "The pizza arrived, and our serious conversation ended.",
+    "translation": "Pitsa keldi va jiddiy suhbatimiz tugadi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "burger",
+    "ipa": "/ˈbɜːɡə/",
+    "meaning": "burger",
+    "example": "This burger is taller than my mouth can manage.",
+    "translation": "Bu burger og‘zim sig‘dira olganidan balandroq.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "sandwich",
+    "ipa": "/ˈsænwɪdʒ/",
+    "meaning": "sendvich; orasiga masalliq solingan non",
+    "example": "My sandwich lost a tomato on the way to my mouth.",
+    "translation": "Sendvichim og‘zimga ketayotib bir bo‘lak pomidorini yo‘qotdi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "toast",
+    "ipa": "/təʊst/",
+    "meaning": "qizartirilgan non",
+    "example": "The toast jumped out while I was looking for butter.",
+    "translation": "Men sariyog‘ izlayotganimda qizartirilgan non otilib chiqdi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "cereal",
+    "ipa": "/ˈsɪəriəl/",
+    "meaning": "sut bilan yeyiladigan donli nonushta",
+    "example": "My cereal went soft during a very long weather report.",
+    "translation": "Juda uzun ob-havo xabari davomida donli nonushtam yumshab ketdi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "porridge",
+    "ipa": "/ˈpɒrɪdʒ/",
+    "meaning": "suli bo‘tqasi",
+    "example": "This porridge is warm enough to improve a cold Monday.",
+    "translation": "Bu suli bo‘tqasi sovuq dushanbani yaxshilashga yetarlicha issiq.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "pancake",
+    "ipa": "/ˈpænkeɪk/",
+    "meaning": "quymoq",
+    "example": "My first pancake always looks like an unknown country.",
+    "translation": "Birinchi quymog‘im doim noma’lum mamlakatga o‘xshaydi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "waffle",
+    "ipa": "/ˈwɒfl/",
+    "meaning": "vafli",
+    "example": "Every little square in my waffle has its own pool of honey.",
+    "translation": "Vaflimdagi har bir katakning o‘z asal hovuzi bor.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "biscuit",
+    "ipa": "/ˈbɪskɪt/",
+    "meaning": "pechenye",
+    "example": "I dipped the biscuit in tea and lost half my snack.",
+    "translation": "Pechenyeni choyga botirib, gazagimning yarmini yo‘qotdim.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "cake",
+    "ipa": "/keɪk/",
+    "meaning": "tort; keks",
+    "example": "Our cake leans to one side, but it tastes confident.",
+    "translation": "Tortimiz bir tomonga qiyshaygan, ammo ta’mi ishonchli.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "pie",
+    "ipa": "/paɪ/",
+    "meaning": "usti xamirli pirog",
+    "example": "The pie hides its vegetables under a golden roof.",
+    "translation": "Pirog sabzavotlarini oltinrang tom ostiga yashiradi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "tart",
+    "ipa": "/tɑːt/",
+    "meaning": "usti ochiq shirin pirog",
+    "example": "The fruit tart is too pretty to cut, but I will try.",
+    "translation": "Mevali pirog kesishga juda chiroyli, lekin urinib ko‘raman.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "bun",
+    "ipa": "/bʌn/",
+    "meaning": "bulochka",
+    "example": "The warm bun disappeared before my tea cooled down.",
+    "translation": "Choyim sovimasidan oldin issiq bulochka yo‘q bo‘ldi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "doughnut",
+    "ipa": "/ˈdəʊnʌt/",
+    "meaning": "ponchik",
+    "example": "This doughnut has a hole, so I claim it is a small snack.",
+    "translation": "Bu ponchikning teshigi bor, shuning uchun uni kichik gazak deb hisoblayman.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "muffin",
+    "ipa": "/ˈmʌfɪn/",
+    "meaning": "kichik yumshoq keks",
+    "example": "My blueberry muffin left purple evidence on the napkin.",
+    "translation": "Ko‘k rezavorli kichik keksim salfetkada binafsha dalil qoldirdi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "cracker",
+    "ipa": "/ˈkrækə/",
+    "meaning": "yupqa qarsildoq pechenye",
+    "example": "The cracker broke before the cheese reached my mouth.",
+    "translation": "Pishloq og‘zimga yetmasidan oldin qarsildoq pechenye sindi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "crisp",
+    "ipa": "/krɪsp/",
+    "meaning": "yupqa kartoshka chipsi",
+    "example": "The last crisp in the bag is always smaller than I hope.",
+    "translation": "Paketdagi oxirgi chips doim umid qilganimdan kichikroq bo‘ladi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "chips",
+    "ipa": "/tʃɪps/",
+    "meaning": "uzunchoq qovurilgan kartoshka",
+    "example": "Dad orders chips for everyone and eats most of them.",
+    "translation": "Dadam hammaga kartoshka qovurdoq buyuradi va ko‘pini o‘zi yeydi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "popcorn",
+    "ipa": "/ˈpɒpkɔːn/",
+    "meaning": "bodroq",
+    "example": "The popcorn was finished before the film began.",
+    "translation": "Film boshlanmasidan oldin bodroq tugadi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "pudding",
+    "ipa": "/ˈpʊdɪŋ/",
+    "meaning": "yumshoq shirin desert; puding",
+    "example": "The chocolate pudding shakes whenever I move the plate.",
+    "translation": "Likopchani qimirlatganimda shokoladli puding titraydi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "dessert",
+    "ipa": "/dɪˈzɜːt/",
+    "meaning": "ovqatdan keyingi shirinlik",
+    "example": "I said I was full, but dessert changed my opinion.",
+    "translation": "To‘ydim dedim, ammo shirinlik fikrimni o‘zgartirdi.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "ice cream",
+    "ipa": "/ˌaɪs ˈkriːm/",
+    "meaning": "muzqaymoq",
+    "example": "My ice cream is melting faster than I can enjoy it.",
+    "translation": "Muzqaymog‘im men undan zavqlanganimdan tezroq eriyapti.",
+    "topic": "2-oy • Tayyor taomlar va yeguliklar"
+  },
+  {
+    "word": "fresh",
+    "ipa": "/freʃ/",
+    "meaning": "yangi; barra",
+    "example": "The bread is so fresh that nobody waits for a knife.",
+    "translation": "Non shunchalik yangiki, hech kim pichoqni kutmaydi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "stale",
+    "ipa": "/steɪl/",
+    "meaning": "qotib qolgan; yangiligini yo‘qotgan",
+    "example": "This stale bun could probably hold the door open.",
+    "translation": "Bu qotgan bulochka eshikni ochiq tutib tura olsa kerak.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "ripe",
+    "ipa": "/raɪp/",
+    "meaning": "pishgan; yetilgan",
+    "example": "The pear is ripe now, so cancel all other snack plans.",
+    "translation": "Nok hozir yetilgan, shuning uchun boshqa gazak rejalarini bekor qiling.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "raw",
+    "ipa": "/rɔː/",
+    "meaning": "xom; pishirilmagan",
+    "example": "I like raw carrots because cooking them delays my snack.",
+    "translation": "Xom sabzini yoqtiraman, chunki uni pishirish gazagimni kechiktiradi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "sweet",
+    "ipa": "/swiːt/",
+    "meaning": "shirin",
+    "example": "This tea is so sweet that the sugar must be very happy.",
+    "translation": "Bu choy shunchalik shirinki, shakar juda xursand bo‘lsa kerak.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "sour",
+    "ipa": "/ˈsaʊə/",
+    "meaning": "nordon",
+    "example": "The sour plum made my face look ten years older.",
+    "translation": "Nordon olxo‘ri yuzimni o‘n yilga qaritib ko‘rsatdi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "bitter",
+    "ipa": "/ˈbɪtə/",
+    "meaning": "taxir; achchiq",
+    "example": "The coffee is bitter enough to wake my eyebrows.",
+    "translation": "Qahva qoshlarimni uyg‘otadigan darajada taxir.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "salty",
+    "ipa": "/ˈsɔːlti/",
+    "meaning": "sho‘r",
+    "example": "The soup is salty because two people tried to improve it.",
+    "translation": "Sho‘rva sho‘r, chunki ikki kishi uni yaxshilashga urindi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "spicy",
+    "ipa": "/ˈspaɪsi/",
+    "meaning": "ziravorli achchiq",
+    "example": "This spicy sauce has started a small fire in my mouth.",
+    "translation": "Bu achchiq qayla og‘zimda kichik yong‘in boshladi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "tasty",
+    "ipa": "/ˈteɪsti/",
+    "meaning": "mazali",
+    "example": "The ugly biscuits are surprisingly tasty.",
+    "translation": "Xunuk pechenyelar kutilmaganda mazali chiqdi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "delicious",
+    "ipa": "/dɪˈlɪʃəs/",
+    "meaning": "juda mazali",
+    "example": "Your cake is delicious; I need another slice to be certain.",
+    "translation": "Tortingiz juda mazali, ishonch hosil qilish uchun yana bir bo‘lak kerak.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "juicy",
+    "ipa": "/ˈdʒuːsi/",
+    "meaning": "sersuv",
+    "example": "This juicy peach requires a plate and a careful plan.",
+    "translation": "Bu sersuv shaftoli uchun likopcha va puxta reja kerak.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "crispy",
+    "ipa": "/ˈkrɪspi/",
+    "meaning": "qarsildoq",
+    "example": "The crispy potatoes make more noise than our conversation.",
+    "translation": "Qarsildoq kartoshkalar suhbatimizdan ham ko‘proq ovoz chiqaradi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "soft",
+    "ipa": "/sɒft/",
+    "meaning": "yumshoq",
+    "example": "The bun is so soft that my fingers leave little seats in it.",
+    "translation": "Bulochka shunchalik yumshoqki, barmoqlarim unda kichik o‘rindiqlar qoldiradi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "hard",
+    "ipa": "/hɑːd/",
+    "meaning": "qattiq",
+    "example": "This cheese is hard, so my small knife needs help.",
+    "translation": "Bu pishloq qattiq, shuning uchun kichik pichog‘imga yordam kerak.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "thick",
+    "ipa": "/θɪk/",
+    "meaning": "quyuq",
+    "example": "The soup is so thick that my spoon can almost stand in it.",
+    "translation": "Sho‘rva shunchalik quyuqki, qoshiq unda deyarli tik tura oladi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "thin",
+    "ipa": "/θɪn/",
+    "meaning": "suyuq",
+    "example": "This sauce is thin enough to escape from any sandwich.",
+    "translation": "Bu qayla har qanday sendvichdan oqib chiqadigan darajada suyuq.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "smooth",
+    "ipa": "/smuːð/",
+    "meaning": "bir xil mayin; donasiz",
+    "example": "The soup is smooth now; the blender won its battle.",
+    "translation": "Sho‘rva endi bir xil mayin, blender jangda g‘olib bo‘ldi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "creamy",
+    "ipa": "/ˈkriːmi/",
+    "meaning": "qaymoqdek mayin; qaymoqli",
+    "example": "The creamy sauce makes plain pasta feel rich.",
+    "translation": "Qaymoqli qayla oddiy makaronni hashamatli qiladi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "sticky",
+    "ipa": "/ˈstɪki/",
+    "meaning": "yopishqoq",
+    "example": "The sticky cake has made friends with all my fingers.",
+    "translation": "Yopishqoq tort barcha barmoqlarim bilan do‘stlashib oldi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "oily",
+    "ipa": "/ˈɔɪli/",
+    "meaning": "yog‘li",
+    "example": "These oily chips have left a map on the paper bag.",
+    "translation": "Bu yog‘li kartoshka qovurdoqlar qog‘oz paketda xarita qoldirdi.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "mild",
+    "ipa": "/maɪld/",
+    "meaning": "ta’mi o‘tkir bo‘lmagan",
+    "example": "Choose the mild curry unless your mouth enjoys surprises.",
+    "translation": "Og‘zingiz kutilmagan holatlarni yoqtirmasa, achchiq bo‘lmagan karrini tanlang.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "flavour",
+    "ipa": "/ˈfleɪvə/",
+    "meaning": "ta’m",
+    "example": "This soup has plenty of colour but very little flavour.",
+    "translation": "Bu sho‘rvaning rangi ko‘p, ammo ta’mi juda kam.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "ingredient",
+    "ipa": "/ɪnˈɡriːdiənt/",
+    "meaning": "masalliq",
+    "example": "The secret ingredient is butter, which is not very secret.",
+    "translation": "Sirli masalliq sariyog‘, bu esa unchalik sir emas.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "recipe",
+    "ipa": "/ˈresəpi/",
+    "meaning": "taom tayyorlash retsepti",
+    "example": "I followed the recipe until it asked me to wait.",
+    "translation": "Retsept kutishimni so‘raguncha unga amal qildim.",
+    "topic": "2-oy • Ta’m va ovqat xususiyatlari"
+  },
+  {
+    "word": "jumper",
+    "ipa": "/ˈdʒʌmpə/",
+    "meaning": "boshdan kiyiladigan trikotaj ustki kiyim",
+    "example": "This jumper is warm enough to cancel my winter complaints.",
+    "translation": "Bu jemper qish haqidagi shikoyatlarimni to‘xtatadigan darajada issiq.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "cardigan",
+    "ipa": "/ˈkɑːdɪɡən/",
+    "meaning": "oldi tugmali trikotaj ustki kiyim",
+    "example": "Grandma's cardigan has a sweet in every pocket.",
+    "translation": "Buvimning kardiganidagi har bir cho‘ntakda konfet bor.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "sweatshirt",
+    "ipa": "/ˈswetʃɜːt/",
+    "meaning": "qalin sport koftasi",
+    "example": "My sweatshirt says runner, but I am sitting with biscuits.",
+    "translation": "Sport koftamda yuguruvchi deb yozilgan, ammo men pechenye bilan o‘tiribman.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "hoodie",
+    "ipa": "/ˈhʊdi/",
+    "meaning": "kapyushonli kofta",
+    "example": "I pulled up my hoodie and became a sleepy turtle.",
+    "translation": "Ko‘ftamning kapyushonini ko‘tarib, uyquchi toshbaqaga aylandim.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "blouse",
+    "ipa": "/blaʊz/",
+    "meaning": "ayollar ko‘ylagi; bluzka",
+    "example": "This blouse looks formal until you notice the tiny ducks.",
+    "translation": "Mitti o‘rdaklarni payqamaguningizcha bu bluzka rasmiy ko‘rinadi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "jeans",
+    "ipa": "/dʒiːnz/",
+    "meaning": "jinsi shim",
+    "example": "My jeans have more pockets than I have useful things.",
+    "translation": "Jinsi shimimning cho‘ntaklari foydali buyumlarimdan ko‘proq.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "shorts",
+    "ipa": "/ʃɔːts/",
+    "meaning": "kalta shim; shortik",
+    "example": "Dad wears shorts as soon as he sees one brave ray of sun.",
+    "translation": "Dadam quyoshning bitta jasur nurini ko‘rishi bilan shortik kiyadi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "suit",
+    "ipa": "/suːt/",
+    "meaning": "kostyum-shim",
+    "example": "He wore a suit to dinner and spilled soup on the first bite.",
+    "translation": "U kechki ovqatga kostyum-shim kiyib, birinchi qoshiqdayoq sho‘rva to‘kdi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "waistcoat",
+    "ipa": "/ˈweɪskəʊt/",
+    "meaning": "kostyum nimchasi",
+    "example": "The waistcoat makes my little brother look like a tiny waiter.",
+    "translation": "Kostyum nimchasi ukamni mitti ofitsiantga o‘xshatadi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "uniform",
+    "ipa": "/ˈjuːnɪfɔːm/",
+    "meaning": "maxsus forma",
+    "example": "My school uniform is ready, but its owner is still asleep.",
+    "translation": "Maktab formam tayyor, ammo egasi hali uxlayapti.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "tracksuit",
+    "ipa": "/ˈtræksuːt/",
+    "meaning": "sport kiyimi to‘plami",
+    "example": "I bought a tracksuit for exercise and tested it on the sofa.",
+    "translation": "Mashq uchun sport kiyimi oldim va uni divanda sinab ko‘rdim.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "leggings",
+    "ipa": "/ˈleɡɪŋz/",
+    "meaning": "yopishib turadigan elastik shim",
+    "example": "These leggings stretch more willingly than I do.",
+    "translation": "Bu elastik shim mendan ko‘ra bajonidilroq cho‘ziladi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "tights",
+    "ipa": "/taɪts/",
+    "meaning": "kolgotka",
+    "example": "My tights caught on a chair before the party even began.",
+    "translation": "Ziyofat boshlanmasidan oldin kolgotkam kursiga ilinib qoldi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "underwear",
+    "ipa": "/ˈʌndəweə/",
+    "meaning": "ichki kiyim",
+    "example": "I packed enough underwear for a month and stayed two nights.",
+    "translation": "Bir oylik ichki kiyim joyladim-u, ikki kecha qoldim.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "bra",
+    "ipa": "/brɑː/",
+    "meaning": "byustgalter",
+    "example": "This bra is comfortable enough to forget about the shopping trip.",
+    "translation": "Bu byustgalter shunchalik qulayki, xariddagi charchoq ham unutiladi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "pants",
+    "ipa": "/pænts/",
+    "meaning": "kalta ichki kiyim; ishton",
+    "example": "My lucky pants have little stars nobody gets to see.",
+    "translation": "Omadli ichki kiyimimda hech kim ko‘rmaydigan mitti yulduzlar bor.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "vest",
+    "ipa": "/vest/",
+    "meaning": "yengsiz ichki mayka",
+    "example": "Mum insists on a vest even when the sun is working hard.",
+    "translation": "Quyosh qattiq qizdirganda ham onam ichki mayka kiyishimni talab qiladi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "nightdress",
+    "ipa": "/ˈnaɪtdres/",
+    "meaning": "ayollar tungi ko‘ylagi",
+    "example": "My nightdress has pockets for midnight biscuit emergencies.",
+    "translation": "Tungi ko‘ylagimda yarim tunda pechenye kerak bo‘lib qolishi uchun cho‘ntaklar bor.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "pyjamas",
+    "ipa": "/pəˈdʒɑːməz/",
+    "meaning": "pijama",
+    "example": "These pyjamas are my official weekend uniform.",
+    "translation": "Bu pijama mening rasmiy dam olish kuni formam.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "dressing gown",
+    "ipa": "/ˈdresɪŋ ɡaʊn/",
+    "meaning": "uy xalati",
+    "example": "Dad opened the door in a dressing gown and one sock.",
+    "translation": "Dadam eshikni uy xalati va bitta paypoqda ochdi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "raincoat",
+    "ipa": "/ˈreɪnkəʊt/",
+    "meaning": "yomg‘irpo‘sh",
+    "example": "My yellow raincoat makes grey weather look less serious.",
+    "translation": "Sariq yomg‘irpo‘shim tund ob-havoni kamroq jiddiy ko‘rsatadi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "swimsuit",
+    "ipa": "/ˈswɪmsuːt/",
+    "meaning": "cho‘milish kiyimi",
+    "example": "I packed my swimsuit before checking whether the hotel had a pool.",
+    "translation": "Mehmonxonada hovuz borligini tekshirmasdan cho‘milish kiyimimni joyladim.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "bikini",
+    "ipa": "/bɪˈkiːni/",
+    "meaning": "ikki qismli ayollar cho‘milish kiyimi",
+    "example": "The bikini takes up less room in my case than my book.",
+    "translation": "Bikini chamadonimda kitobimdan kamroq joy oladi.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "overalls",
+    "ipa": "/ˈəʊvərɔːlz/",
+    "meaning": "ish kombinezoni",
+    "example": "Dad's overalls have more paint than the wall.",
+    "translation": "Dadamning ish kombinezonida devordagidan ko‘proq bo‘yoq bor.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "dungarees",
+    "ipa": "/ˌdʌŋɡəˈriːz/",
+    "meaning": "ko‘krak qismli, tasmali kombinezon",
+    "example": "My dungarees have a front pocket for very important snacks.",
+    "translation": "Kombinezonimning oldida juda muhim gazaklar uchun cho‘ntak bor.",
+    "topic": "2-oy • Kundalik kiyimlar"
+  },
+  {
+    "word": "boot",
+    "ipa": "/buːt/",
+    "meaning": "etik",
+    "example": "There is a pebble in my boot that wants to join our walk.",
+    "translation": "Etigimda sayrimizga qo‘shilmoqchi bo‘lgan toshcha bor.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "sandal",
+    "ipa": "/ˈsændl/",
+    "meaning": "sandal",
+    "example": "One sandal is under the bed, enjoying the shade.",
+    "translation": "Bitta sandalim karavot tagida soyada maza qilib yotibdi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "slipper",
+    "ipa": "/ˈslɪpə/",
+    "meaning": "uy shippagi",
+    "example": "The dog brought my slipper but charged me a biscuit.",
+    "translation": "It shippagimni olib keldi, lekin xizmatiga pechenye oldi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "trainer",
+    "ipa": "/ˈtreɪnə/",
+    "meaning": "sport oyoq kiyimi; krossovka",
+    "example": "My left trainer squeaks louder than the right one.",
+    "translation": "Chap krossovkam o‘ngidagidan balandroq g‘ichirlaydi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "heel",
+    "ipa": "/hiːl/",
+    "meaning": "oyoq kiyim poshnasi",
+    "example": "This heel makes me taller and much less confident on stairs.",
+    "translation": "Bu poshna meni balandroq qiladi, zinada esa ishonchimni ancha kamaytiradi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "shoelace",
+    "ipa": "/ˈʃuːleɪs/",
+    "meaning": "oyoq kiyim bog‘ichi",
+    "example": "My shoelace comes undone whenever I am already late.",
+    "translation": "Allaqachon kechikayotganimda oyoq kiyim bog‘ichim yechiladi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "insole",
+    "ipa": "/ˈɪnsəʊl/",
+    "meaning": "patak; oyoq kiyim ichki tagligi",
+    "example": "A new insole made my old boot feel young again.",
+    "translation": "Yangi patak eski etigimni yana yoshartirdi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "scarf",
+    "ipa": "/skɑːf/",
+    "meaning": "sharf",
+    "example": "Grandma knitted a scarf long enough for two winters.",
+    "translation": "Buvim ikki qishga yetadigan darajada uzun sharf to‘qidi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "glove",
+    "ipa": "/ɡlʌv/",
+    "meaning": "qo‘lqop",
+    "example": "I found one glove, so half of me is ready for winter.",
+    "translation": "Bitta qo‘lqop topdim, demak yarmim qishga tayyor.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "mitten",
+    "ipa": "/ˈmɪtn/",
+    "meaning": "barmoqlari birga turadigan qo‘lqop",
+    "example": "This mitten keeps four fingers in one cosy room.",
+    "translation": "Bu qo‘lqop to‘rtta barmoqni bitta shinam xonada saqlaydi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "belt",
+    "ipa": "/belt/",
+    "meaning": "kamar",
+    "example": "My belt has a special hole for family dinners.",
+    "translation": "Kamarimda oilaviy kechki ovqatlar uchun maxsus teshik bor.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "tie",
+    "ipa": "/taɪ/",
+    "meaning": "galstuk",
+    "example": "Dad's tie is covered in tiny fish wearing hats.",
+    "translation": "Dadamning galstugida qalpoq kiygan mitti baliqlar tasviri bor.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "cap",
+    "ipa": "/kæp/",
+    "meaning": "kepka",
+    "example": "My cap keeps the sun out of my eyes and hides my hair.",
+    "translation": "Kepkam ko‘zimni quyoshdan asraydi va sochimni yashiradi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "sunhat",
+    "ipa": "/ˈsʌnhæt/",
+    "meaning": "quyoshdan saqlaydigan shlyapa",
+    "example": "Her sunhat is wide enough to shade a small picnic.",
+    "translation": "Uning shlyapasi kichik piknikka soya beradigan darajada keng.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "purse",
+    "ipa": "/pɜːs/",
+    "meaning": "kichik pul hamyoni",
+    "example": "My purse is full of receipts pretending to be money.",
+    "translation": "Hamyonim o‘zini puldek tutayotgan cheklarga to‘la.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "wallet",
+    "ipa": "/ˈwɒlɪt/",
+    "meaning": "buklama hamyon",
+    "example": "My wallet gets thinner whenever I visit the bakery.",
+    "translation": "Novvoyxonaga borganimda hamyonim yupqalashadi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "handbag",
+    "ipa": "/ˈhændbæɡ/",
+    "meaning": "qo‘l sumkasi",
+    "example": "Mum's handbag contains everything except the thing she wants.",
+    "translation": "Onamning sumkasida u izlayotgan narsadan boshqa hamma narsa bor.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "backpack",
+    "ipa": "/ˈbækpæk/",
+    "meaning": "ryukzak",
+    "example": "My backpack is mostly snacks with a little space for a book.",
+    "translation": "Ryukzagimning ko‘pi gazak, kitobga esa ozgina joy bor.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "earring",
+    "ipa": "/ˈɪərɪŋ/",
+    "meaning": "sirg‘a",
+    "example": "One earring fell behind the sofa and started a treasure hunt.",
+    "translation": "Bitta sirg‘a divan ortiga tushib, xazina qidiruvini boshlab berdi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "necklace",
+    "ipa": "/ˈnekləs/",
+    "meaning": "marjon",
+    "example": "This necklace looks lovely, but my hair keeps getting caught in it.",
+    "translation": "Bu marjon chiroyli ko‘rinadi, lekin sochim unga ilinaveradi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "bracelet",
+    "ipa": "/ˈbreɪslət/",
+    "meaning": "bilaguzuk",
+    "example": "My bracelet announces every move with a little rattle.",
+    "translation": "Bilaguzugim har bir harakatimni kichik shiqirlash bilan e’lon qiladi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "ring",
+    "ipa": "/rɪŋ/",
+    "meaning": "uzuk",
+    "example": "The ring fits perfectly, but the box is bigger than my hand.",
+    "translation": "Uzuk juda mos, lekin qutisi qo‘limdan katta.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "brooch",
+    "ipa": "/brəʊtʃ/",
+    "meaning": "to‘g‘nag‘ich taqinchoq; brosh",
+    "example": "Grandma's brooch is a frog with very serious eyes.",
+    "translation": "Buvimning broshi ko‘zlari juda jiddiy qurbaqa shaklida.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "sunglasses",
+    "ipa": "/ˈsʌnɡlɑːsɪz/",
+    "meaning": "quyosh ko‘zoynagi",
+    "example": "I wore sunglasses indoors until I remembered they were on my face.",
+    "translation": "Yuzimda ekanini eslagunimcha uyda quyosh ko‘zoynagida yurdim.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "umbrella",
+    "ipa": "/ʌmˈbrelə/",
+    "meaning": "soyabon",
+    "example": "My umbrella turned inside out and became a bowl for rain.",
+    "translation": "Soyabonim teskariga ag‘darilib, yomg‘ir uchun kosaga aylandi.",
+    "topic": "2-oy • Oyoq kiyim va aksessuarlar"
+  },
+  {
+    "word": "cotton",
+    "ipa": "/ˈkɒtn/",
+    "meaning": "paxta; paxtali mato",
+    "example": "This cotton shirt lets me survive the summer politely.",
+    "translation": "Bu paxtali ko‘ylak yozdan odob bilan omon chiqishimga yordam beradi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "wool",
+    "ipa": "/wʊl/",
+    "meaning": "jun",
+    "example": "The wool in this jumper remembers being on a warm sheep.",
+    "translation": "Bu jemperning juni issiq qo‘y ustida bo‘lganini eslaydi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "silk",
+    "ipa": "/sɪlk/",
+    "meaning": "ipak",
+    "example": "The silk scarf slides off my chair whenever I look away.",
+    "translation": "Men boshqa tomonga qaraganimda ipak sharf kursimdan sirg‘alib tushadi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "leather",
+    "ipa": "/ˈleðə/",
+    "meaning": "charm",
+    "example": "My leather boots make me feel ready for important puddles.",
+    "translation": "Charm etiklarim o‘zimni muhim ko‘lmaklarga tayyordek his qildiradi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "denim",
+    "ipa": "/ˈdenɪm/",
+    "meaning": "jinsi matosi",
+    "example": "This denim jacket has survived three owners and a puppy.",
+    "translation": "Bu jinsi kurtka uchta egasi va bitta kuchukchadan omon qolgan.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "linen",
+    "ipa": "/ˈlɪnɪn/",
+    "meaning": "zig‘ir matosi",
+    "example": "My linen trousers are full of lines again, five minutes after ironing.",
+    "translation": "Zig‘ir matoli shimim dazmollaganimdan besh daqiqa o‘tib yana g‘ijim bo‘ldi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "fabric",
+    "ipa": "/ˈfæbrɪk/",
+    "meaning": "mato",
+    "example": "The fabric is covered in cherries, so I call it my fruit shirt.",
+    "translation": "Mato gilos rasmlariga to‘la, shuning uchun uni mevali ko‘ylagim deyman.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "button",
+    "ipa": "/ˈbʌtn/",
+    "meaning": "tugma",
+    "example": "One button left my shirt during a very large lunch.",
+    "translation": "Juda katta tushlik paytida ko‘ylagimning bitta tugmasi uzilib ketdi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "zip",
+    "ipa": "/zɪp/",
+    "meaning": "kiyim molniyasi",
+    "example": "The zip on my jacket refuses to cooperate before breakfast.",
+    "translation": "Kurtkamning molniyasi nonushtagacha hamkorlik qilishni istamaydi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "pocket",
+    "ipa": "/ˈpɒkɪt/",
+    "meaning": "cho‘ntak",
+    "example": "This pocket contains a key, a coin, and an ancient sweet.",
+    "translation": "Bu cho‘ntakda kalit, tanga va qadimiy konfet bor.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "sleeve",
+    "ipa": "/sliːv/",
+    "meaning": "yeng",
+    "example": "My sleeve reached the soup before my spoon did.",
+    "translation": "Yengim sho‘rvaga qoshig‘imdan oldin yetib bordi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "collar",
+    "ipa": "/ˈkɒlə/",
+    "meaning": "yoqa",
+    "example": "Dad straightened his collar to answer a phone call.",
+    "translation": "Dadam telefon qo‘ng‘irog‘iga javob berish uchun yoqasini to‘g‘riladi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "cuff",
+    "ipa": "/kʌf/",
+    "meaning": "yeng uchi; manjet",
+    "example": "The cuff of my shirt has collected half my breakfast.",
+    "translation": "Ko‘ylagimning manjeti nonushtamning yarmini yig‘ib olgan.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "hood",
+    "ipa": "/hʊd/",
+    "meaning": "kapyushon",
+    "example": "My hood keeps the rain out and my hairstyle secret.",
+    "translation": "Kapyushonim yomg‘irni to‘sadi va soch turmagimni sir saqlaydi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "lining",
+    "ipa": "/ˈlaɪnɪŋ/",
+    "meaning": "astar",
+    "example": "The coat has a bright pink lining that nobody expects.",
+    "translation": "Paltoning hech kim kutmagan yorqin pushti astari bor.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "pattern",
+    "ipa": "/ˈpætn/",
+    "meaning": "mato guli; naqsh",
+    "example": "The pattern on my shirt makes me hard to find near the curtains.",
+    "translation": "Ko‘ylagimdagi naqsh meni pardalar yonida topishni qiyinlashtiradi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "stripe",
+    "ipa": "/straɪp/",
+    "meaning": "yo‘l-yo‘l naqshdagi chiziq",
+    "example": "One red stripe makes these socks look surprisingly sporty.",
+    "translation": "Bitta qizil chiziq bu paypoqlarni kutilmaganda sportcha ko‘rsatadi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "waterproof",
+    "ipa": "/ˈwɔːtəpruːf/",
+    "meaning": "suv o‘tkazmaydigan",
+    "example": "My waterproof jacket works, but my trousers are having a bath.",
+    "translation": "Suv o‘tkazmaydigan kurtkam ish beryapti, ammo shimim cho‘milyapti.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "plain",
+    "ipa": "/pleɪn/",
+    "meaning": "gulsiz; bir xil rangli",
+    "example": "I bought a plain shirt to give my noisy trousers some peace.",
+    "translation": "Ko‘zga tashlanadigan shimimga biroz osoyishtalik berish uchun gulsiz ko‘ylak oldim.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "loose",
+    "ipa": "/luːs/",
+    "meaning": "keng; tanaga yopishmaydigan",
+    "example": "These loose trousers are prepared for Grandma's dinner.",
+    "translation": "Bu keng shim buvimning kechki ovqatiga tayyor.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "tight",
+    "ipa": "/taɪt/",
+    "meaning": "tor; siqib turadigan",
+    "example": "This jacket is too tight for both me and my lunch.",
+    "translation": "Bu kurtka menga ham, tushligimga ham torlik qiladi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "fit",
+    "ipa": "/fɪt/",
+    "meaning": "o‘lchami mos kelmoq",
+    "example": "These shoes fit perfectly, so my toes have stopped complaining.",
+    "translation": "Bu oyoq kiyimning o‘lchami juda mos, shuning uchun oyoq barmoqlarim shikoyatni to‘xtatdi.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "size",
+    "ipa": "/saɪz/",
+    "meaning": "o‘lcham",
+    "example": "I asked for a larger size after meeting the changing-room mirror.",
+    "translation": "Kiyinish xonasidagi oynani ko‘rgach, kattaroq o‘lcham so‘radim.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "sew",
+    "ipa": "/səʊ/",
+    "meaning": "tikmoq",
+    "example": "I can sew a button on, but it may point in a new direction.",
+    "translation": "Tugma tika olaman, lekin u yangi tomonga qarab qolishi mumkin.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "thread",
+    "ipa": "/θred/",
+    "meaning": "tikuv ipi",
+    "example": "The thread is red because matching colours requires more patience.",
+    "translation": "Ip qizil, chunki mos rang topish uchun ko‘proq sabr kerak.",
+    "topic": "2-oy • Mato va kiyim detallari"
+  },
+  {
+    "word": "receipt",
+    "ipa": "/rɪˈsiːt/",
+    "meaning": "xarid cheki",
+    "example": "The receipt is longer than the scarf I bought.",
+    "translation": "Xarid cheki olgan sharfimdan ham uzunroq.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "refund",
+    "ipa": "/ˈriːfʌnd/",
+    "meaning": "qaytarilgan to‘lov",
+    "example": "I got a refund for the kettle that refused to boil water.",
+    "translation": "Suv qaynatishni istamagan choynak uchun pulimni qaytarib oldim.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "exchange",
+    "ipa": "/ɪksˈtʃeɪndʒ/",
+    "meaning": "xaridni boshqasiga almashtirmoq",
+    "example": "Can I exchange these giant socks for a pair made for humans?",
+    "translation": "Bu ulkan paypoqlarni odamlar uchun tikilgan juftiga almashtirsam bo‘ladimi?",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "discount",
+    "ipa": "/ˈdɪskaʊnt/",
+    "meaning": "chegirma",
+    "example": "The discount made me buy a hat I did not need.",
+    "translation": "Chegirma menga kerak bo‘lmagan shlyapani sotib olishga undadi.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "sale",
+    "ipa": "/seɪl/",
+    "meaning": "chegirmali savdo",
+    "example": "I went to the sale for one shirt and returned with five.",
+    "translation": "Chegirmali savdoga bitta ko‘ylak uchun borib, beshtasi bilan qaytdim.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "bargain",
+    "ipa": "/ˈbɑːɡɪn/",
+    "meaning": "arzonga olingan yaxshi buyum",
+    "example": "This coat was a bargain until I paid to fix all the buttons.",
+    "translation": "Barcha tugmalarini tuzatishga pul bergunimcha bu palto yaxshi arzon xarid edi.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "checkout",
+    "ipa": "/ˈtʃekaʊt/",
+    "meaning": "do‘kon kassasi",
+    "example": "At the checkout, I remembered the milk I came for.",
+    "translation": "Kassada aynan sut uchun kelganimni esladim.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "cashier",
+    "ipa": "/kæˈʃɪə/",
+    "meaning": "kassir",
+    "example": "The cashier smiled at my basket of emergency chocolate.",
+    "translation": "Kassir zarurat uchun olgan shokoladlarimga to‘la savatimga qarab jilmaydi.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "customer",
+    "ipa": "/ˈkʌstəmə/",
+    "meaning": "xaridor",
+    "example": "I was the only customer comparing six nearly identical mugs.",
+    "translation": "Deyarli bir xil oltita krujkani solishtirayotgan yagona xaridor men edim.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "queue",
+    "ipa": "/kjuː/",
+    "meaning": "navbat",
+    "example": "I joined the shortest queue, and it immediately stopped moving.",
+    "translation": "Eng qisqa navbatga turdim va u darhol yurmay qoldi.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "trolley",
+    "ipa": "/ˈtrɒli/",
+    "meaning": "xarid aravachasi",
+    "example": "My trolley has one wheel with its own shopping plans.",
+    "translation": "Xarid aravachamning bitta g‘ildiragida o‘z xarid rejalari bor.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "fitting room",
+    "ipa": "/ˈfɪtɪŋ ruːm/",
+    "meaning": "kiyim kiyib ko‘rish xonasi",
+    "example": "The fitting room is smaller than the coat I am trying on.",
+    "translation": "Kiyib ko‘rish xonasi men sinayotgan paltodan ham kichikroq.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "label",
+    "ipa": "/ˈleɪbl/",
+    "meaning": "yorliq",
+    "example": "The label says wash by hand, so this jumper is demanding.",
+    "translation": "Yorliqda qo‘lda yuving deyilgan, demak bu jemper talabchan.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "tag",
+    "ipa": "/tæɡ/",
+    "meaning": "osma narx yorlig‘i",
+    "example": "I wore the new shirt with the tag still waving behind me.",
+    "translation": "Yangi ko‘ylakni osma yorlig‘i orqamda hilpiragan holda kiyib yurdim.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "brand",
+    "ipa": "/brænd/",
+    "meaning": "mahsulot markasi",
+    "example": "I forgot the brand but remembered the biscuit flavour.",
+    "translation": "Mahsulot markasini unutdim, ammo pechenye ta’mini eslab qoldim.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "parcel",
+    "ipa": "/ˈpɑːsl/",
+    "meaning": "pochta o‘rami; jo‘natma",
+    "example": "The parcel arrived, and the cat claimed the box first.",
+    "translation": "Jo‘natma keldi va mushuk qutini birinchi bo‘lib egalladi.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "package",
+    "ipa": "/ˈpækɪdʒ/",
+    "meaning": "qadoq; o‘ram",
+    "example": "The package is huge, but the earrings inside are tiny.",
+    "translation": "Qadoq ulkan, ammo ichidagi sirg‘alar mitti.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "purchase",
+    "ipa": "/ˈpɜːtʃəs/",
+    "meaning": "sotib olingan buyum; xarid",
+    "example": "My latest purchase is a spoon shaped like a little shovel.",
+    "translation": "Eng so‘nggi xaridim kichkina belkurak shaklidagi qoshiq.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "order",
+    "ipa": "/ˈɔːdə/",
+    "meaning": "buyurtma",
+    "example": "My order includes six towels because guests keep appearing.",
+    "translation": "Mehmonlar kelaverayotgani uchun buyurtmamga oltita sochiq kiritdim.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "delivery",
+    "ipa": "/dɪˈlɪvəri/",
+    "meaning": "yetkazib berish",
+    "example": "The delivery came while I was wearing my least serious pyjamas.",
+    "translation": "Buyurtma eng kulgili pijamamni kiyib turganimda yetkazib berildi.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "stock",
+    "ipa": "/stɒk/",
+    "meaning": "sotuvdagi mahsulot zaxirasi",
+    "example": "The shop has plenty of stock, except for my size.",
+    "translation": "Do‘konda mahsulot ko‘p, faqat mening o‘lchamim yo‘q.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "available",
+    "ipa": "/əˈveɪləbl/",
+    "meaning": "mavjud; sotuvda bor",
+    "example": "The boots are available in every colour except the one I want.",
+    "translation": "Etiklar men xohlaganidan boshqa barcha rangda mavjud.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "sold out",
+    "ipa": "/ˌsəʊld ˈaʊt/",
+    "meaning": "hammasi sotilib bo‘lgan",
+    "example": "The cheap mugs are sold out, so my wallet can relax.",
+    "translation": "Arzon krujkalar sotilib bo‘lgan, demak hamyonim dam olishi mumkin.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "try on",
+    "ipa": "/ˌtraɪ ˈɒn/",
+    "meaning": "kiyib ko‘rmoq",
+    "example": "I will try on the hat before giving it such a serious job.",
+    "translation": "Shlyapaga shunday jiddiy vazifa berishdan oldin uni kiyib ko‘raman.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "shopkeeper",
+    "ipa": "/ˈʃɒpkiːpə/",
+    "meaning": "do‘kondor",
+    "example": "The shopkeeper knows I always return for more biscuits.",
+    "translation": "Do‘kondor yana pechenye uchun qaytishimni biladi.",
+    "topic": "2-oy • Do‘konda xarid qilish"
+  },
+  {
+    "word": "soap",
+    "ipa": "/səʊp/",
+    "meaning": "sovun",
+    "example": "The soap slipped away as if it also disliked washing.",
+    "translation": "Sovun ham yuvinishni yoqtirmagandek sirg‘alib ketdi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "shampoo",
+    "ipa": "/ʃæmˈpuː/",
+    "meaning": "shampun",
+    "example": "This shampoo promises shiny hair, but mine remains independent.",
+    "translation": "Bu shampun yaltiroq sochni va’da qiladi, ammo mening sochim o‘z bilganidan qolmaydi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "conditioner",
+    "ipa": "/kənˈdɪʃənə/",
+    "meaning": "soch yumshatuvchi balzam",
+    "example": "The conditioner helped my comb travel through my hair peacefully.",
+    "translation": "Soch balzami tarog‘imning sochim orasidan tinchgina o‘tishiga yordam berdi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "toothpaste",
+    "ipa": "/ˈtuːθpeɪst/",
+    "meaning": "tish pastasi",
+    "example": "I squeezed the toothpaste and decorated the basin by mistake.",
+    "translation": "Tish pastasini siqib, bilmasdan yuz-qo‘l yuvgichni bezadim.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "toothbrush",
+    "ipa": "/ˈtuːθbrʌʃ/",
+    "meaning": "tish cho‘tkasi",
+    "example": "My electric toothbrush sounds more awake than I feel.",
+    "translation": "Elektr tish cho‘tkam mendan ko‘ra uyg‘oqroq ovoz chiqaradi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "floss",
+    "ipa": "/flɒs/",
+    "meaning": "tish oralig‘ini tozalash ipi",
+    "example": "The floss found a popcorn piece that wanted to stay overnight.",
+    "translation": "Tish ipi tunab qolmoqchi bo‘lgan bodroq bo‘lagini topdi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "razor",
+    "ipa": "/ˈreɪzə/",
+    "meaning": "ustara",
+    "example": "Dad packed his razor but forgot his shirts.",
+    "translation": "Dadam ustara joyladi, lekin ko‘ylaklarini unutdi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "comb",
+    "ipa": "/kəʊm/",
+    "meaning": "taroq",
+    "example": "This comb has a difficult meeting with my hair every morning.",
+    "translation": "Bu taroq har tong sochim bilan qiyin uchrashuv o‘tkazadi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "hairbrush",
+    "ipa": "/ˈheəbrʌʃ/",
+    "meaning": "soch cho‘tkasi",
+    "example": "My hairbrush is hiding because it knows how I slept.",
+    "translation": "Soch cho‘tkam qanday uxlaganimni bilgani uchun yashirinib olgan.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "hairdryer",
+    "ipa": "/ˈheədraɪə/",
+    "meaning": "soch quritgich; fen",
+    "example": "The hairdryer gives me warm air and a very large hairstyle.",
+    "translation": "Fen menga issiq havo va juda katta soch turmagi beradi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "deodorant",
+    "ipa": "/diˈəʊdərənt/",
+    "meaning": "ter hidini kamaytiruvchi vosita",
+    "example": "I remembered my deodorant just before a very crowded bus ride.",
+    "translation": "Juda gavjum avtobusga chiqish oldidan dezodorantimni esladim.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "perfume",
+    "ipa": "/ˈpɜːfjuːm/",
+    "meaning": "atir",
+    "example": "Her perfume entered the room a second before she did.",
+    "translation": "Uning atiri xonaga o‘zidan bir soniya oldin kirdi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "lotion",
+    "ipa": "/ˈləʊʃn/",
+    "meaning": "teriga surtiladigan loson",
+    "example": "This lotion smells like coconut, so my hands feel on holiday.",
+    "translation": "Bu losondan kokos hidi keladi, shuning uchun qo‘llarim ta’tildagidek.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "moisturiser",
+    "ipa": "/ˈmɔɪstʃəraɪzə/",
+    "meaning": "terini namlantiruvchi krem",
+    "example": "My hands are so dry that they seem to drink the moisturiser.",
+    "translation": "Qo‘llarim shunchalik quruqki, go‘yo namlantiruvchi kremni ichayotgandek.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "sunscreen",
+    "ipa": "/ˈsʌnskriːn/",
+    "meaning": "quyoshdan himoya kremi",
+    "example": "I put on sunscreen before my nose turns into a tomato.",
+    "translation": "Burnim pomidorga aylanmasidan oldin quyoshdan himoya kremi surtaman.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "tissue",
+    "ipa": "/ˈtɪʃuː/",
+    "meaning": "qog‘oz salfetka",
+    "example": "A tissue in my pocket survived everything except the washing machine.",
+    "translation": "Cho‘ntagimdagi salfetka kir yuvish mashinasidan boshqa hamma narsadan omon qoldi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "cotton wool",
+    "ipa": "/ˌkɒtn ˈwʊl/",
+    "meaning": "gigiyenik paxta",
+    "example": "The cotton wool looks like a little cloud on the bathroom shelf.",
+    "translation": "Gigiyenik paxta hammom tokchasidagi mitti bulutga o‘xshaydi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "nail clippers",
+    "ipa": "/ˈneɪl klɪpəz/",
+    "meaning": "tirnoq olgich",
+    "example": "The nail clippers are tiny, which makes losing them very easy.",
+    "translation": "Tirnoq olgich mitti, shu sababli uni yo‘qotish juda oson.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "nail file",
+    "ipa": "/ˈneɪl faɪl/",
+    "meaning": "tirnoq egovi",
+    "example": "My nail file keeps my nails from becoming tiny hooks.",
+    "translation": "Tirnoq egovim tirnoqlarimning mitti ilgaklarga aylanishiga yo‘l qo‘ymaydi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "tweezers",
+    "ipa": "/ˈtwiːzəz/",
+    "meaning": "pinset; tuk yulgich",
+    "example": "I found the tweezers after giving up on my stubborn eyebrow.",
+    "translation": "Qaysar qoshimdan umidni uzgach, pinsetni topdim.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "lipstick",
+    "ipa": "/ˈlɪpstɪk/",
+    "meaning": "lab bo‘yog‘i",
+    "example": "My lipstick left a red hello on the white cup.",
+    "translation": "Lab bo‘yog‘im oq piyolada qizil salom qoldirdi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "mascara",
+    "ipa": "/mæˈskɑːrə/",
+    "meaning": "kiprik bo‘yog‘i; tush",
+    "example": "I applied mascara and immediately felt a sneeze coming.",
+    "translation": "Kiprigimga tush surtdim va darhol aksirgim keldi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "make-up",
+    "ipa": "/ˈmeɪk ʌp/",
+    "meaning": "pardoz vositalari; pardoz",
+    "example": "My make-up took twenty minutes, but washing it off took two.",
+    "translation": "Pardozim yigirma daqiqa oldi, uni yuvish esa ikki daqiqa.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "shower gel",
+    "ipa": "/ˈʃaʊə dʒel/",
+    "meaning": "dush geli",
+    "example": "This shower gel smells of mangoes, so breakfast feels close.",
+    "translation": "Bu dush gelidan mango hidi keladi, shuning uchun nonushta yaqindek tuyuladi.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "bubble bath",
+    "ipa": "/ˈbʌbl bɑːθ/",
+    "meaning": "vanna ko‘pigi",
+    "example": "I added too much bubble bath and lost sight of my knees.",
+    "translation": "Juda ko‘p vanna ko‘pigi qo‘shib, tizzalarimni ko‘rmay qoldim.",
+    "topic": "2-oy • Shaxsiy parvarish buyumlari"
+  },
+  {
+    "word": "shave",
+    "ipa": "/ʃeɪv/",
+    "meaning": "soqol yoki tukni olmoq",
+    "example": "Dad shaves one side, then checks whether he looks younger.",
+    "translation": "Dadam bir tomonini qirib, yoshroq ko‘rinayotganini tekshiradi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "bathe",
+    "ipa": "/beɪð/",
+    "meaning": "vannada cho‘milmoq",
+    "example": "I bathe in the evening with a rubber duck for company.",
+    "translation": "Kechqurun rezina o‘rdakni hamroh qilib vannada cho‘milaman.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "dress up",
+    "ipa": "/ˌdres ˈʌp/",
+    "meaning": "bezanib; tantanali kiyinmoq",
+    "example": "We dress up for dinner even when the dinner is pizza.",
+    "translation": "Kechki ovqat pitsa bo‘lsa ham, biz tantanali kiyinamiz.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "get dressed",
+    "ipa": "/ˌɡet ˈdrest/",
+    "meaning": "kiyinmoq",
+    "example": "I get dressed slowly while my alarm clock judges me.",
+    "translation": "Budilnigim meni ayblab turganida sekin kiyinaman.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "undress",
+    "ipa": "/ʌnˈdres/",
+    "meaning": "kiyimini yechmoq",
+    "example": "I undress for bed and find a biscuit crumb in my sleeve.",
+    "translation": "Uxlash uchun kiyimimni yechib, yengimdan pechenye ushog‘ini topaman.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "put on",
+    "ipa": "/ˌpʊt ˈɒn/",
+    "meaning": "kiymoq; taqmoq",
+    "example": "Put on your slippers; the floor is colder than your ice cream.",
+    "translation": "Shippagingizni kiying, pol muzqaymog‘ingizdan ham sovuqroq.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "take off",
+    "ipa": "/ˌteɪk ˈɒf/",
+    "meaning": "kiyimni yechmoq",
+    "example": "Take off that heavy coat before you cook inside it.",
+    "translation": "Ichida pishib qolmasdan o‘sha og‘ir paltoni yeching.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "fasten",
+    "ipa": "/ˈfɑːsn/",
+    "meaning": "mahkamlamoq; qadamoq",
+    "example": "I can fasten this necklace only when nobody is watching.",
+    "translation": "Bu marjonni faqat hech kim qaramayotganda taqa olaman.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "unfasten",
+    "ipa": "/ʌnˈfɑːsn/",
+    "meaning": "yechmoq; tugmasini ochmoq",
+    "example": "I unfasten my collar as soon as the formal photos are done.",
+    "translation": "Rasmiy suratlar olinishi bilan yoqamning tugmasini ochaman.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "tie up",
+    "ipa": "/ˌtaɪ ˈʌp/",
+    "meaning": "sochni yig‘ib bog‘lamoq",
+    "example": "Tie up your hair before it decides to taste the soup.",
+    "translation": "Sochingiz sho‘rvani tatib ko‘rishga qaror qilmasidan oldin uni yig‘ib bog‘lang.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "trim",
+    "ipa": "/trɪm/",
+    "meaning": "uchidan ozgina kesmoq",
+    "example": "I asked him to trim my hair, not change my identity.",
+    "translation": "Undan sochimni uchidan olishni so‘radim, kimligimni o‘zgartirishni emas.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "rub",
+    "ipa": "/rʌb/",
+    "meaning": "ishqalamoq; ishqalab surtmoq",
+    "example": "Rub the cream into your hands before touching my clean mirror.",
+    "translation": "Toza oynamga tegishdan oldin kremni qo‘llaringizga ishqalab singdiring.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "massage",
+    "ipa": "/ˈmæsɑːʒ/",
+    "meaning": "uqalamoq; massaj qilmoq",
+    "example": "I massage my tired feet and thank them for the shopping trip.",
+    "translation": "Charchagan oyoqlarimni uqalab, xarid sayri uchun ularga rahmat aytaman.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "apply",
+    "ipa": "/əˈplaɪ/",
+    "meaning": "surtmoq; qo‘llamoq",
+    "example": "Apply a little cream; your face is not a birthday cake.",
+    "translation": "Ozgina krem surting, yuzingiz tug‘ilgan kun torti emas.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "remove",
+    "ipa": "/rɪˈmuːv/",
+    "meaning": "olib tashlamoq; ketkazmoq",
+    "example": "Remove your make-up before your pillow starts wearing it.",
+    "translation": "Yostig‘ingiz pardoz qila boshlamasidan oldin yuzingizdagi pardozni tozalang.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "haircut",
+    "ipa": "/ˈheəkʌt/",
+    "meaning": "soch oldirish; kesilgan soch shakli",
+    "example": "My new haircut makes my ears feel more famous.",
+    "translation": "Yangi soch turmagim quloqlarimni mashhurroq his qildiradi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "hairstyle",
+    "ipa": "/ˈheəstaɪl/",
+    "meaning": "soch turmagi",
+    "example": "The wind gave me a hairstyle I would never choose.",
+    "translation": "Shamol menga hech qachon tanlamaydigan soch turmagini berdi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "ponytail",
+    "ipa": "/ˈpəʊniteɪl/",
+    "meaning": "dum qilib bog‘langan soch",
+    "example": "My ponytail swings like a small clock when I walk.",
+    "translation": "Yurganimda dum qilib bog‘langan sochim kichik soatdek tebranadi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "fringe",
+    "ipa": "/frɪndʒ/",
+    "meaning": "peshonaga tushirilgan soch; kokil",
+    "example": "My fringe is long enough to read my book before I do.",
+    "translation": "Kokilim kitobimni mendan oldin o‘qiydigan darajada uzun.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "parting",
+    "ipa": "/ˈpɑːtɪŋ/",
+    "meaning": "sochning ajratilgan chizig‘i",
+    "example": "My parting is straight today, which feels like a small victory.",
+    "translation": "Bugun sochimning ajratilgan chizig‘i tekis, bu kichik g‘alabadek tuyuladi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "beard",
+    "ipa": "/bɪəd/",
+    "meaning": "soqol",
+    "example": "His beard caught a crumb and saved it for later.",
+    "translation": "Uning soqoli bir ushoqni tutib, keyinga saqlab qo‘ydi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "moustache",
+    "ipa": "/məˈstɑːʃ/",
+    "meaning": "mo‘ylov",
+    "example": "Grandpa's moustache gets a white tip whenever he drinks milk.",
+    "translation": "Bobom sut ichganida mo‘ylovining uchi oqaradi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "nail",
+    "ipa": "/neɪl/",
+    "meaning": "tirnoq",
+    "example": "One nail broke just after I finished painting the others.",
+    "translation": "Boshqa tirnoqlarimni bo‘yab bo‘lishim bilan bittasi sindi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "curl",
+    "ipa": "/kɜːl/",
+    "meaning": "soch jingalagi",
+    "example": "One curl stands up every morning to greet the world.",
+    "translation": "Bitta jingalak har tong dunyoga salom berish uchun tik turadi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  },
+  {
+    "word": "fragrance",
+    "ipa": "/ˈfreɪɡrəns/",
+    "meaning": "xushbo‘y hid",
+    "example": "The fragrance of this soap turns our bathroom into a rose garden.",
+    "translation": "Bu sovunning xushbo‘y hidi hammomimizni atirgul bog‘iga aylantiradi.",
+    "topic": "2-oy • Kiyinish va o‘ziga qarash"
+  }
+]

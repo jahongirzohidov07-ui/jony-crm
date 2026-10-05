@@ -1,0 +1,4002 @@
+[
+  {
+    "word": "travel",
+    "ipa": "/ˈtrævəl/",
+    "meaning": "sayohat qilmoq",
+    "example": "I travel with a very noisy suitcase.",
+    "translation": "Men juda shovqinli chamadon bilan sayohat qilaman.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "trip",
+    "ipa": "/trɪp/",
+    "meaning": "qisqa sayohat",
+    "example": "Our trip began with a missing shoe.",
+    "translation": "Sayohatimiz yo‘qolgan tuflidan boshlandi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "holiday",
+    "ipa": "/ˈhɒlədeɪ/",
+    "meaning": "ta’til",
+    "example": "Even my alarm clock needs a holiday.",
+    "translation": "Hatto budilnigimga ham ta’til kerak.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "tour",
+    "ipa": "/tʊə/",
+    "meaning": "ekskursiya; sayohat",
+    "example": "The castle tour ended in the kitchen.",
+    "translation": "Qal’a ekskursiyasi oshxonada tugadi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "tourist",
+    "ipa": "/ˈtʊərɪst/",
+    "meaning": "sayyoh",
+    "example": "A tourist photographed our ordinary dustbin.",
+    "translation": "Bir sayyoh oddiy axlat qutimizni suratga oldi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "visitor",
+    "ipa": "/ˈvɪzɪtə/",
+    "meaning": "tashrif buyuruvchi",
+    "example": "Our first visitor asked about lunch.",
+    "translation": "Birinchi tashrif buyuruvchimiz tushlik haqida so‘radi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "guide",
+    "ipa": "/ɡaɪd/",
+    "meaning": "gid; yo‘l ko‘rsatuvchi",
+    "example": "The guide knew every sleeping cat.",
+    "translation": "Gid uxlayotgan har bir mushukni tanirdi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "passport",
+    "ipa": "/ˈpɑːspɔːt/",
+    "meaning": "pasport",
+    "example": "My passport photo frightens even me.",
+    "translation": "Pasportdagi suratim hatto o‘zimni ham qo‘rqitadi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "visa",
+    "ipa": "/ˈviːzə/",
+    "meaning": "viza",
+    "example": "My visa arrived before my suitcase.",
+    "translation": "Vizam chamadonimdan oldin yetib keldi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "abroad",
+    "ipa": "/əˈbrɔːd/",
+    "meaning": "chet elda; chet elga",
+    "example": "Abroad, Dad still searches for plov.",
+    "translation": "Dadam chet elda ham osh izlaydi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "destination",
+    "ipa": "/ˌdestɪˈneɪʃən/",
+    "meaning": "boriladigan manzil",
+    "example": "Our destination is somewhere without homework.",
+    "translation": "Boradigan manzilimiz uy vazifasi bo‘lmaydigan bir joy.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "route",
+    "ipa": "/ruːt/",
+    "meaning": "yo‘nalish",
+    "example": "This route passes three cake shops.",
+    "translation": "Bu yo‘nalish uchta tort do‘koni yonidan o‘tadi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "map",
+    "ipa": "/mæp/",
+    "meaning": "xarita",
+    "example": "You are holding the map upside down.",
+    "translation": "Siz xaritani teskari ushlab turibsiz.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "booking",
+    "ipa": "/ˈbʊkɪŋ/",
+    "meaning": "oldindan band qilish; bandlov",
+    "example": "Our booking is for two, not twenty.",
+    "translation": "Bandlovimiz yigirma emas, ikki kishi uchun.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "reservation",
+    "ipa": "/ˌrezəˈveɪʃən/",
+    "meaning": "band qilingan joy; bandlov",
+    "example": "The reservation includes a surprisingly tiny room.",
+    "translation": "Bandlovga hayratlanarli darajada kichik xona kiradi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "departure",
+    "ipa": "/dɪˈpɑːtʃə/",
+    "meaning": "jo‘nab ketish",
+    "example": "Departure is at six; Dad wakes at seven.",
+    "translation": "Jo‘nab ketish oltida; dadam yettida uyg‘onadi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "arrival",
+    "ipa": "/əˈraɪvəl/",
+    "meaning": "yetib kelish",
+    "example": "Our arrival woke the hotel dog.",
+    "translation": "Yetib kelganimiz mehmonxona itini uyg‘otdi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "return",
+    "ipa": "/rɪˈtɜːn/",
+    "meaning": "borish-qaytish chiptasi",
+    "example": "I bought a return because the cat expects me.",
+    "translation": "Mushuk meni kutgani uchun borish-qaytish chiptasini oldim.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "fare",
+    "ipa": "/feə/",
+    "meaning": "yo‘l haqi",
+    "example": "The bus fare costs less than my sandwich.",
+    "translation": "Avtobus yo‘l haqi sendvichimdan arzon.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "passenger",
+    "ipa": "/ˈpæsɪndʒə/",
+    "meaning": "yo‘lovchi",
+    "example": "One passenger brought a very large cactus.",
+    "translation": "Bir yo‘lovchi juda katta kaktus olib keldi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "timetable",
+    "ipa": "/ˈtaɪmteɪbəl/",
+    "meaning": "qatnov jadvali",
+    "example": "The timetable is clearer than Dad's plan.",
+    "translation": "Qatnov jadvali dadamning rejasidan tushunarliroq.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "delay",
+    "ipa": "/dɪˈleɪ/",
+    "meaning": "kechikish",
+    "example": "The delay gave us time for another cake.",
+    "translation": "Kechikish bizga yana bir tort yeyishga vaqt berdi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "cancel",
+    "ipa": "/ˈkænsəl/",
+    "meaning": "bekor qilmoq",
+    "example": "Please cancel the trip to the volcano.",
+    "translation": "Iltimos, vulqonga sayohatni bekor qiling.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "explore",
+    "ipa": "/ɪkˈsplɔː/",
+    "meaning": "kezib o‘rganmoq",
+    "example": "Let's explore before the pigeons find us.",
+    "translation": "Kabutarlar bizni topmasidan oldin aylanib chiqaylik.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "sightseeing",
+    "ipa": "/ˈsaɪtˌsiːɪŋ/",
+    "meaning": "diqqatga sazovor joylarni tomosha qilish",
+    "example": "After sightseeing, even my shoes needed rest.",
+    "translation": "Diqqatga sazovor joylarni tomosha qilgach, hatto tuflilarim ham damga muhtoj edi.",
+    "topic": "3-oy • Safarni rejalash"
+  },
+  {
+    "word": "luggage",
+    "ipa": "/ˈlʌɡɪdʒ/",
+    "meaning": "yuk; safar buyumlari",
+    "example": "Our luggage took a different holiday.",
+    "translation": "Yuklarimiz boshqa joyga ta’tilga ketibdi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "suitcase",
+    "ipa": "/ˈsuːtkeɪs/",
+    "meaning": "chamadon",
+    "example": "This suitcase contains more snacks than clothes.",
+    "translation": "Bu chamadonda kiyimdan ko‘ra yegulik ko‘p.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "washbag",
+    "ipa": "/ˈwɒʃbæɡ/",
+    "meaning": "yuvinish buyumlari sumkachasi",
+    "example": "My washbag contains enough soap for a month.",
+    "translation": "Yuvinish sumkachamda bir oyga yetadigan sovun bor.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "rucksack",
+    "ipa": "/ˈrʌksæk/",
+    "meaning": "sayohat ryukzagi",
+    "example": "A squirrel inspected my rucksack for nuts.",
+    "translation": "Bir olmaxon yong‘oq qidirib ryukzagimni tekshirdi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "pack",
+    "ipa": "/pæk/",
+    "meaning": "safarga buyumlarni joylamoq",
+    "example": "Pack your socks, not the whole drawer.",
+    "translation": "Paypoqlaringizni joylang, butun tortmani emas.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "unpack",
+    "ipa": "/ʌnˈpæk/",
+    "meaning": "yukdagi buyumlarni chiqarmoq",
+    "example": "I unpack slowly to make holidays last.",
+    "translation": "Ta’til uzoqroq tuyulishi uchun buyumlarni sekin chiqaraman.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "baggage",
+    "ipa": "/ˈbæɡɪdʒ/",
+    "meaning": "safarda olib yuriladigan yuk",
+    "example": "Our baggage arrived before our sleepy uncle did.",
+    "translation": "Yuklarimiz uyquchi amakimizdan oldin yetib keldi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "padlock",
+    "ipa": "/ˈpædlɒk/",
+    "meaning": "osma qulf",
+    "example": "The padlock protects my emergency biscuits.",
+    "translation": "Osma qulf favqulodda vaziyat uchun pechenyelarimni qo‘riqlaydi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "groundsheet",
+    "ipa": "/ˈɡraʊndʃiːt/",
+    "meaning": "chodir tagiga yoziladigan suv o‘tkazmas to‘shama",
+    "example": "Our groundsheet kept the tent dry all night.",
+    "translation": "Chodir tagidagi to‘shama uni tun bo‘yi quruq saqladi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "goggles",
+    "ipa": "/ˈɡɒɡəlz/",
+    "meaning": "suzish ko‘zoynagi",
+    "example": "My goggles help me find coins in the pool.",
+    "translation": "Suzish ko‘zoynagim hovuzdagi tangalarni topishga yordam beradi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "strap",
+    "ipa": "/stræp/",
+    "meaning": "sumka tasmasi",
+    "example": "The strap is longer than my little brother.",
+    "translation": "Sumka tasmasi ukamdan uzunroq.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "adapter",
+    "ipa": "/əˈdæptə/",
+    "meaning": "elektr vilkasi uchun moslagich",
+    "example": "I packed an adapter but forgot my charger.",
+    "translation": "Elektr vilkasi moslagichini oldim, lekin quvvatlagichimni unutdim.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "walking stick",
+    "ipa": "/ˈwɔːkɪŋ stɪk/",
+    "meaning": "hassa; yurishga yordam beruvchi tayoq",
+    "example": "Grandpa's walking stick reached the hilltop before I did.",
+    "translation": "Bobomning hassasi tepalik cho‘qqisiga mendan oldin yetdi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "earplugs",
+    "ipa": "/ˈɪəplʌɡz/",
+    "meaning": "quloq tiqinlari",
+    "example": "My earplugs make Dad's snoring almost musical.",
+    "translation": "Quloq tiqinlarim dadamning xurragini deyarli musiqadek eshittiradi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "flippers",
+    "ipa": "/ˈflɪpəz/",
+    "meaning": "suzish uchun oyoqqa kiyiladigan kurakchalar",
+    "example": "In flippers, I swim like a fish and walk like a duck.",
+    "translation": "Suzish kurakchalarida baliqdek suzaman, o‘rdakdek yuraman.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "repellent",
+    "ipa": "/rɪˈpelənt/",
+    "meaning": "hasharotlarni uzoqlashtiruvchi vosita",
+    "example": "We packed insect repellent to keep mosquitoes away.",
+    "translation": "Chivinlarni uzoqlashtirish uchun hasharotga qarshi vosita oldik.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "bumbag",
+    "ipa": "/ˈbʌmbæɡ/",
+    "meaning": "belga taqiladigan kichik sumka",
+    "example": "My bumbag holds my passport and emergency biscuits.",
+    "translation": "Bel sumkamda pasportim va zarurat uchun pechenye bor.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "torch",
+    "ipa": "/tɔːtʃ/",
+    "meaning": "qo‘l fonari",
+    "example": "The torch found my shoes and a frog.",
+    "translation": "Fonar tuflimni va bir qurbaqani topdi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "compass",
+    "ipa": "/ˈkʌmpəs/",
+    "meaning": "kompas",
+    "example": "The compass points north, not towards lunch.",
+    "translation": "Kompas tushlik tomon emas, shimolni ko‘rsatadi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "guidebook",
+    "ipa": "/ˈɡaɪdbʊk/",
+    "meaning": "sayohat qo‘llanmasi",
+    "example": "Our guidebook forgot to mention the goats.",
+    "translation": "Sayohat qo‘llanmamiz echkilarni tilga olishni unutibdi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "souvenir",
+    "ipa": "/ˌsuːvəˈnɪə/",
+    "meaning": "esdalik buyumi",
+    "example": "My souvenir is too large for the plane.",
+    "translation": "Esdalik buyumim samolyot uchun juda katta.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "postcard",
+    "ipa": "/ˈpəʊstkɑːd/",
+    "meaning": "manzarali pochta kartochkasi",
+    "example": "The postcard arrived after we came home.",
+    "translation": "Pochta kartochkasi uyga qaytganimizdan keyin keldi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "camera",
+    "ipa": "/ˈkæmərə/",
+    "meaning": "fotoapparat",
+    "example": "The camera caught Dad stealing a biscuit.",
+    "translation": "Fotoapparat dadamning pechenye o‘g‘irlayotganini suratga oldi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "binoculars",
+    "ipa": "/bɪˈnɒkjʊləz/",
+    "meaning": "durbin",
+    "example": "Through binoculars, that sheep looks enormous.",
+    "translation": "Durbindan qaraganda anavi qo‘y ulkan ko‘rinadi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "flask",
+    "ipa": "/flɑːsk/",
+    "meaning": "termos",
+    "example": "My flask keeps tea warmer than my hands.",
+    "translation": "Termosim choyni qo‘llarimdan issiqroq saqlaydi.",
+    "topic": "3-oy • Safar buyumlari"
+  },
+  {
+    "word": "flight",
+    "ipa": "/flaɪt/",
+    "meaning": "samolyot reysi; parvoz",
+    "example": "Our flight was shorter than Dad's story.",
+    "translation": "Parvozimiz dadamning hikoyasidan qisqaroq bo‘ldi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "airline",
+    "ipa": "/ˈeəlaɪn/",
+    "meaning": "aviakompaniya",
+    "example": "This airline gives children tiny pilot hats.",
+    "translation": "Bu aviakompaniya bolalarga kichkina uchuvchi qalpoqlari beradi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "aeroplane",
+    "ipa": "/ˈeərəpleɪn/",
+    "meaning": "samolyot",
+    "example": "The toy aeroplane has more seats than our car.",
+    "translation": "O‘yinchoq samolyotning o‘rindig‘i mashinamiznikidan ko‘p.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "helicopter",
+    "ipa": "/ˈhelɪkɒptə/",
+    "meaning": "vertolyot",
+    "example": "A helicopter blew away our picnic napkins.",
+    "translation": "Vertolyot sayrdagi salfetkalarimizni uchirib yubordi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "pilot",
+    "ipa": "/ˈpaɪlət/",
+    "meaning": "uchuvchi",
+    "example": "The pilot waved, but not while landing.",
+    "translation": "Uchuvchi qo‘l silkidi, lekin qo‘nish paytida emas.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "crew",
+    "ipa": "/kruː/",
+    "meaning": "ekipaj",
+    "example": "The crew found my teddy before take-off.",
+    "translation": "Ekipaj parvozdan oldin o‘yinchoq ayig‘imni topdi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "cabin",
+    "ipa": "/ˈkæbɪn/",
+    "meaning": "samolyot saloni",
+    "example": "The cabin became quiet when snacks arrived.",
+    "translation": "Yegulik kelganda salon jim bo‘lib qoldi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "cockpit",
+    "ipa": "/ˈkɒkpɪt/",
+    "meaning": "uchuvchilar kabinasi",
+    "example": "The cockpit has more buttons than my coat.",
+    "translation": "Uchuvchilar kabinasida paltomdagidan ko‘proq tugma bor.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "runway",
+    "ipa": "/ˈrʌnweɪ/",
+    "meaning": "uchish-qo‘nish yo‘lagi",
+    "example": "A rabbit delayed us on the runway.",
+    "translation": "Uchish-qo‘nish yo‘lagidagi quyon bizni kechiktirdi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "terminal",
+    "ipa": "/ˈtɜːmɪnəl/",
+    "meaning": "aeroport terminali",
+    "example": "We walked around the terminal for exercise.",
+    "translation": "Mashq uchun aeroport terminalini aylanib yurdik.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "stopover",
+    "ipa": "/ˈstɒpəʊvə/",
+    "meaning": "parvozlar orasidagi qisqa to‘xtash",
+    "example": "Our stopover gave Dad time for two breakfasts.",
+    "translation": "Parvozlar orasidagi to‘xtash dadamga ikki marta nonushta qilishga vaqt berdi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "aisle",
+    "ipa": "/aɪl/",
+    "meaning": "o‘rindiqlar orasidagi yo‘lak",
+    "example": "My long legs nearly filled the aisle.",
+    "translation": "Uzun oyoqlarim deyarli butun yo‘lakni egalladi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "seat",
+    "ipa": "/siːt/",
+    "meaning": "o‘rindiq",
+    "example": "My seat is next to a snoring uncle.",
+    "translation": "O‘rindig‘im xurrak otayotgan bir amaki yonida.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "seatbelt",
+    "ipa": "/ˈsiːtbelt/",
+    "meaning": "xavfsizlik kamari",
+    "example": "Fasten your seatbelt before your sandwich escapes.",
+    "translation": "Sendvichingiz qochib ketmasidan xavfsizlik kamarini taqing.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "wing",
+    "ipa": "/wɪŋ/",
+    "meaning": "qanot",
+    "example": "I photographed the wing seventeen times.",
+    "translation": "Qanotni o‘n yetti marta suratga oldim.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "engine",
+    "ipa": "/ˈendʒɪn/",
+    "meaning": "dvigatel",
+    "example": "The engine is louder than my headphones.",
+    "translation": "Dvigatel quloqchinimdan balandroq ovoz chiqaradi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "board",
+    "ipa": "/bɔːd/",
+    "meaning": "transportga chiqmoq",
+    "example": "We board first because Grandma walks slowly.",
+    "translation": "Buvim sekin yurgani uchun biz birinchi chiqamiz.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "non-stop",
+    "ipa": "/ˌnɒn ˈstɒp/",
+    "meaning": "oraliq qo‘nishsiz; to‘g‘ridan to‘g‘ri",
+    "example": "Our non-stop flight was shorter than Dad's story.",
+    "translation": "Oraliq qo‘nishsiz parvozimiz dadamning hikoyasidan qisqaroq bo‘ldi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "land",
+    "ipa": "/lænd/",
+    "meaning": "yerga qo‘nmoq",
+    "example": "We land just in time for breakfast.",
+    "translation": "Biz aynan nonushtaga vaqtida qo‘namiz.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "check in",
+    "ipa": "/tʃek ɪn/",
+    "meaning": "reysga ro‘yxatdan o‘tmoq",
+    "example": "We check in with six identical suitcases.",
+    "translation": "Biz oltita bir xil chamadon bilan ro‘yxatdan o‘tamiz.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "customs",
+    "ipa": "/ˈkʌstəmz/",
+    "meaning": "bojxona",
+    "example": "At customs, Dad explained his enormous teapot.",
+    "translation": "Bojxonada dadam ulkan choynagi haqida tushuntirdi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "security",
+    "ipa": "/sɪˈkjʊərəti/",
+    "meaning": "xavfsizlik tekshiruvi",
+    "example": "At security, my boots got their own tray.",
+    "translation": "Xavfsizlik tekshiruvida etiklarimga alohida patnis berildi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "boarding pass",
+    "ipa": "/ˈbɔːdɪŋ pɑːs/",
+    "meaning": "samolyotga chiqish taloni",
+    "example": "Your boarding pass is under your muffin.",
+    "translation": "Samolyotga chiqish taloningiz keksingizning tagida.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "overhead",
+    "ipa": "/ˌəʊvəˈhed/",
+    "meaning": "bosh ustida",
+    "example": "My hat is overhead with the luggage.",
+    "translation": "Shlyapam boshim ustida, yuklar yonida.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "jet",
+    "ipa": "/dʒet/",
+    "meaning": "reaktiv samolyot",
+    "example": "The jet disappeared before I found my camera.",
+    "translation": "Fotoapparatimni topgunimcha reaktiv samolyot ko‘zdan g‘oyib bo‘ldi.",
+    "topic": "3-oy • Havo transporti"
+  },
+  {
+    "word": "tram",
+    "ipa": "/træm/",
+    "meaning": "tramvay",
+    "example": "The tram bell interrupted my terrible singing.",
+    "translation": "Tramvay qo‘ng‘irog‘i yomon qo‘shiq aytishimni to‘xtatdi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "underground",
+    "ipa": "/ˈʌndəɡraʊnd/",
+    "meaning": "metro",
+    "example": "We took the underground to avoid wet hair.",
+    "translation": "Sochimiz ho‘l bo‘lmasligi uchun metroda bordik.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "metro",
+    "ipa": "/ˈmetrəʊ/",
+    "meaning": "metro tizimi",
+    "example": "The metro map looks like colourful spaghetti.",
+    "translation": "Metro xaritasi rangli spagettiga o‘xshaydi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "coach",
+    "ipa": "/kəʊtʃ/",
+    "meaning": "shaharlararo avtobus",
+    "example": "Everyone on the coach heard Dad's joke.",
+    "translation": "Shaharlararo avtobusdagilarning hammasi dadamning hazilini eshitdi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "minibus",
+    "ipa": "/ˈmɪnibʌs/",
+    "meaning": "mikroavtobus",
+    "example": "Our minibus carried twelve people and a cake.",
+    "translation": "Mikroavtobusimiz o‘n ikki kishi va bir tortni tashidi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "van",
+    "ipa": "/væn/",
+    "meaning": "furgon",
+    "example": "The van delivers bread before I wake up.",
+    "translation": "Furgon nonni men uyg‘onishimdan oldin yetkazadi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "lorry",
+    "ipa": "/ˈlɒri/",
+    "meaning": "yuk mashinasi",
+    "example": "A lorry carried a mountain of onions.",
+    "translation": "Yuk mashinasi bir tog‘ piyoz tashidi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "motorbike",
+    "ipa": "/ˈməʊtəbaɪk/",
+    "meaning": "mototsikl",
+    "example": "His motorbike is shinier than our mirror.",
+    "translation": "Uning mototsikli ko‘zgumizdan yaltiroq.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "scooter",
+    "ipa": "/ˈskuːtə/",
+    "meaning": "skuter; samokat",
+    "example": "She reached the bakery on her scooter.",
+    "translation": "U nonvoyxonaga samokatida yetib bordi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "vehicle",
+    "ipa": "/ˈviːɪkəl/",
+    "meaning": "transport vositasi",
+    "example": "That vehicle has more wheels than seats.",
+    "translation": "Anavi transport vositasining g‘ildiragi o‘rindig‘idan ko‘p.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "ambulance",
+    "ipa": "/ˈæmbjələns/",
+    "meaning": "tez yordam mashinasi",
+    "example": "We moved aside for the ambulance immediately.",
+    "translation": "Tez yordam mashinasiga darhol yo‘l berdik.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "tractor",
+    "ipa": "/ˈtræktə/",
+    "meaning": "traktor",
+    "example": "The tractor pulled our car from the mud.",
+    "translation": "Traktor mashinamizni loydan tortib chiqardi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "caravan",
+    "ipa": "/ˈkærəvæn/",
+    "meaning": "tirkama uy",
+    "example": "Our caravan has a kitchen for tiny cooks.",
+    "translation": "Tirkama uyimizda kichkina oshpazlarga mos oshxona bor.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "railway",
+    "ipa": "/ˈreɪlweɪ/",
+    "meaning": "temiryo‘l",
+    "example": "The railway runs behind Grandma's chickens.",
+    "translation": "Temiryo‘l buvimning tovuqlari orqasidan o‘tadi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "rail",
+    "ipa": "/reɪl/",
+    "meaning": "rels",
+    "example": "A shiny rail reflected my bright socks.",
+    "translation": "Yaltiroq relsda yorqin paypoqlarim aks etdi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "platform",
+    "ipa": "/ˈplætfɔːm/",
+    "meaning": "vokzal platformasi",
+    "example": "We waited on the platform with cold chips.",
+    "translation": "Biz platformada sovib qolgan kartoshka bilan kutdik.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "carriage",
+    "ipa": "/ˈkærɪdʒ/",
+    "meaning": "yo‘lovchi vagoni",
+    "example": "Our carriage smelled of oranges and adventure.",
+    "translation": "Vagonimizdan apelsin va sarguzasht hidi kelardi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "conductor",
+    "ipa": "/kənˈdʌktə/",
+    "meaning": "chipta tekshiruvchi",
+    "example": "The conductor smiled at my upside-down ticket.",
+    "translation": "Chipta tekshiruvchi teskari turgan chiptamga qarab kulimsiradi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "commuter",
+    "ipa": "/kəˈmjuːtə/",
+    "meaning": "ishga muntazam qatnovchi",
+    "example": "The sleepy commuter nearly missed his stop.",
+    "translation": "Uyquchi qatnovchi tushadigan bekatini deyarli o‘tkazib yubordi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "pedestrian",
+    "ipa": "/pəˈdestriən/",
+    "meaning": "piyoda",
+    "example": "One pedestrian walked faster than our bus.",
+    "translation": "Bir piyoda avtobusimizdan tezroq yurdi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "cyclist",
+    "ipa": "/ˈsaɪklɪst/",
+    "meaning": "velosipedchi",
+    "example": "The cyclist waved with a banana in hand.",
+    "translation": "Velosipedchi qo‘lida banan bilan salomlashdi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "ride",
+    "ipa": "/raɪd/",
+    "meaning": "minmoq",
+    "example": "I ride my bike to earn my breakfast.",
+    "translation": "Nonushtamga munosib bo‘lish uchun velosiped minaman.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "get on",
+    "ipa": "/ɡet ɒn/",
+    "meaning": "avtobus yoki poyezdga chiqmoq",
+    "example": "Get on the bus before Dad starts singing.",
+    "translation": "Dadam qo‘shiq boshlamasidan avtobusga chiqing.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "get off",
+    "ipa": "/ɡet ɒf/",
+    "meaning": "transportdan tushmoq",
+    "example": "We get off near the giant doughnut sign.",
+    "translation": "Biz ulkan ponchik belgisi yonida tushamiz.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "overtake",
+    "ipa": "/ˌəʊvəˈteɪk/",
+    "meaning": "quvib o‘tmoq",
+    "example": "Even bicycles overtake our old bus.",
+    "translation": "Eski avtobusimizni hatto velosipedlar ham quvib o‘tadi.",
+    "topic": "3-oy • Quruqlik transporti"
+  },
+  {
+    "word": "traffic",
+    "ipa": "/ˈtræfɪk/",
+    "meaning": "transport qatnovi; tirbandlik",
+    "example": "The traffic gave Dad time for ten stories.",
+    "translation": "Tirbandlik dadamga o‘nta hikoya uchun vaqt berdi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "motorway",
+    "ipa": "/ˈməʊtəweɪ/",
+    "meaning": "avtomagistral",
+    "example": "We left the motorway to find proper tea.",
+    "translation": "Yaxshi choy topish uchun avtomagistraldan chiqdik.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "junction",
+    "ipa": "/ˈdʒʌŋkʃən/",
+    "meaning": "yo‘llar tutashgan joy",
+    "example": "At the junction, Dad finally trusted the map.",
+    "translation": "Yo‘llar tutashgan joyda dadam nihoyat xaritaga ishondi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "roundabout",
+    "ipa": "/ˈraʊndəbaʊt/",
+    "meaning": "aylanma chorraha",
+    "example": "We passed the same roundabout three times.",
+    "translation": "Bir xil aylanma chorrahadan uch marta o‘tdik.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "crossroads",
+    "ipa": "/ˈkrɒsrəʊdz/",
+    "meaning": "chorraha",
+    "example": "At the crossroads, Dad chose the road towards cake.",
+    "translation": "Chorrahada dadam tort tomon ketadigan yo‘lni tanladi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "lane",
+    "ipa": "/leɪn/",
+    "meaning": "harakatlanish qatori",
+    "example": "Stay in this lane; lunch can wait.",
+    "translation": "Shu qatorda qoling; tushlik kutib turadi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "pavement",
+    "ipa": "/ˈpeɪvmənt/",
+    "meaning": "piyodalar yo‘lagi",
+    "example": "A pigeon owned most of the pavement.",
+    "translation": "Piyodalar yo‘lagining katta qismi bir kabutarga tegishli edi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "crossing",
+    "ipa": "/ˈkrɒsɪŋ/",
+    "meaning": "piyodalar o‘tish joyi",
+    "example": "We used the crossing behind a slow duck.",
+    "translation": "Sekin o‘rdak ortidan piyodalar o‘tish joyidan o‘tdik.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "traffic lights",
+    "ipa": "/ˈtræfɪk laɪts/",
+    "meaning": "svetofor",
+    "example": "The traffic lights turned red at every junction.",
+    "translation": "Har chorrahada svetofor qizilga o‘tdi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "signpost",
+    "ipa": "/ˈsaɪnpəʊst/",
+    "meaning": "yo‘l ko‘rsatkich ustuni",
+    "example": "The signpost promised cake in two kilometres.",
+    "translation": "Yo‘l ko‘rsatkich ikki kilometrdan keyin tort va’da qildi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "bridge",
+    "ipa": "/brɪdʒ/",
+    "meaning": "ko‘prik",
+    "example": "The bridge shook when our whole class laughed.",
+    "translation": "Butun sinfimiz kulganda ko‘prik silkindi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "tunnel",
+    "ipa": "/ˈtʌnəl/",
+    "meaning": "tunnel",
+    "example": "Dad stopped singing when we left the tunnel.",
+    "translation": "Tunneldan chiqqanimizda dadam kuylashdan to‘xtadi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "petrol",
+    "ipa": "/ˈpetrəl/",
+    "meaning": "benzin",
+    "example": "The car needs petrol; I need lunch.",
+    "translation": "Mashinaga benzin kerak; menga tushlik.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "diesel",
+    "ipa": "/ˈdiːzəl/",
+    "meaning": "dizel yoqilg‘isi",
+    "example": "This van uses diesel, not Dad's cooking oil.",
+    "translation": "Bu furgon dadamning osh yog‘ida emas, dizelda yuradi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "fuel",
+    "ipa": "/ˈfjuːəl/",
+    "meaning": "yoqilg‘i",
+    "example": "Our fuel lasted longer than our snacks.",
+    "translation": "Yoqilg‘imiz yeguliklarimizdan uzoqroqqa yetdi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "brake",
+    "ipa": "/breɪk/",
+    "meaning": "tormoz",
+    "example": "Test the brake before the hill tests you.",
+    "translation": "Tepalik sizni sinashidan oldin tormozni tekshiring.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "tyre",
+    "ipa": "/ˈtaɪə/",
+    "meaning": "shina",
+    "example": "A flat tyre cancelled our race with lunch.",
+    "translation": "Pachoq shina tushlikka shoshilishimizni to‘xtatdi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "wheel",
+    "ipa": "/wiːl/",
+    "meaning": "g‘ildirak",
+    "example": "One wheel made a noise like a duck.",
+    "translation": "Bir g‘ildirak o‘rdakdek ovoz chiqardi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "steering wheel",
+    "ipa": "/ˈstɪərɪŋ wiːl/",
+    "meaning": "rul",
+    "example": "Keep both hands on the steering wheel.",
+    "translation": "Ikkala qo‘lingizni rulda tuting.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "windscreen",
+    "ipa": "/ˈwɪndskriːn/",
+    "meaning": "old oyna",
+    "example": "A leaf stuck to the windscreen like a sticker.",
+    "translation": "Barg old oynaga yopishtirmadek yopishib qoldi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "bumper",
+    "ipa": "/ˈbʌmpə/",
+    "meaning": "avtomobil bamperi",
+    "example": "A butterfly rested on our muddy bumper.",
+    "translation": "Kapalak loy bamperimizga qo‘nib dam oldi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "bonnet",
+    "ipa": "/ˈbɒnɪt/",
+    "meaning": "mashina kapoti",
+    "example": "A cat warmed itself on the bonnet.",
+    "translation": "Bir mushuk kapotda isinib yotdi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "horn",
+    "ipa": "/hɔːn/",
+    "meaning": "transport signali",
+    "example": "The horn sounded like an unhappy goose.",
+    "translation": "Mashina signali norozi g‘ozdek yangradi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "headlight",
+    "ipa": "/ˈhedlaɪt/",
+    "meaning": "old fara",
+    "example": "One headlight lit up a surprised rabbit.",
+    "translation": "Bir old fara hayron quyonni yoritdi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "parking",
+    "ipa": "/ˈpɑːkɪŋ/",
+    "meaning": "mashina qo‘yish; to‘xtash joyi",
+    "example": "Parking here requires more patience than driving.",
+    "translation": "Bu yerda mashina qo‘yish haydashdan ko‘proq sabr talab qiladi.",
+    "topic": "3-oy • Yo‘l va avtomobil"
+  },
+  {
+    "word": "ship",
+    "ipa": "/ʃɪp/",
+    "meaning": "kema",
+    "example": "Our ship was bigger than the village.",
+    "translation": "Kemamiz qishloqdan kattaroq edi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "ferry",
+    "ipa": "/ˈferi/",
+    "meaning": "parom",
+    "example": "The ferry carried our car across the bay.",
+    "translation": "Parom mashinamizni qo‘ltiqning narigi tomoniga olib o‘tdi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "yacht",
+    "ipa": "/jɒt/",
+    "meaning": "yaxta",
+    "example": "His yacht has room for one jealous uncle.",
+    "translation": "Uning yaxtasida bitta hasadgo‘y amakiga joy bor.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "canoe",
+    "ipa": "/kəˈnuː/",
+    "meaning": "kanoe qayig‘i",
+    "example": "Our canoe turned round without asking us.",
+    "translation": "Kanoemiz bizdan so‘ramay aylanib ketdi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "kayak",
+    "ipa": "/ˈkaɪæk/",
+    "meaning": "kayak qayig‘i",
+    "example": "I entered the kayak with surprising difficulty.",
+    "translation": "Kayakka chiqishim kutilmaganda qiyin bo‘ldi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "raft",
+    "ipa": "/rɑːft/",
+    "meaning": "sol",
+    "example": "The raft carried us and our wet sandwiches.",
+    "translation": "Sol bizni va ho‘l sendvichlarimizni olib o‘tdi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "sail",
+    "ipa": "/seɪl/",
+    "meaning": "yelkan",
+    "example": "The sail filled with wind before Dad sat down.",
+    "translation": "Dadam o‘tirmasidan yelkan shamolga to‘ldi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "sailor",
+    "ipa": "/ˈseɪlə/",
+    "meaning": "dengizchi",
+    "example": "The sailor tied knots faster than I blinked.",
+    "translation": "Dengizchi ko‘z yumib ochgunimcha tugun bog‘ladi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "captain",
+    "ipa": "/ˈkæptɪn/",
+    "meaning": "kema kapitani",
+    "example": "The captain let Grandma ring the bell.",
+    "translation": "Kapitan buvimga qo‘ng‘iroq chalishga ruxsat berdi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "deck",
+    "ipa": "/dek/",
+    "meaning": "kema palubasi",
+    "example": "We ate biscuits on the windy deck.",
+    "translation": "Shamolli palubada pechenye yedik.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "anchor",
+    "ipa": "/ˈæŋkə/",
+    "meaning": "langar",
+    "example": "The anchor is heavier than our whole picnic.",
+    "translation": "Langar butun sayr yeguliklarimizdan og‘irroq.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "rope",
+    "ipa": "/rəʊp/",
+    "meaning": "arqon",
+    "example": "That rope holds the boat, not your trousers.",
+    "translation": "Anavi arqon shimingizni emas, qayiqni ushlab turibdi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "oar",
+    "ipa": "/ɔː/",
+    "meaning": "eshkak",
+    "example": "I dropped an oar and gained a story.",
+    "translation": "Eshkakni tushirib yuborib, aytadigan hikoyamni ko‘paytirdim.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "paddle",
+    "ipa": "/ˈpædəl/",
+    "meaning": "qayiqni eshkak bilan haydamoq",
+    "example": "We paddle slowly because the ducks are watching.",
+    "translation": "O‘rdaklar kuzatayotgani uchun sekin eshkak eshamiz.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "row",
+    "ipa": "/rəʊ/",
+    "meaning": "eshkak eshmoq",
+    "example": "Can you row while I protect the cake?",
+    "translation": "Men tortni asragunimcha eshkak esha olasizmi?",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "harbour",
+    "ipa": "/ˈhɑːbə/",
+    "meaning": "bandargoh",
+    "example": "The harbour smelled of fish and breakfast.",
+    "translation": "Bandargohdan baliq va nonushta hidi kelardi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "port",
+    "ipa": "/pɔːt/",
+    "meaning": "port",
+    "example": "Our ship reached port before my tea cooled.",
+    "translation": "Choyim sovimasidan kemamiz portga yetdi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "dock",
+    "ipa": "/dɒk/",
+    "meaning": "kemalar turadigan joy",
+    "example": "A sleepy seal waited beside the dock.",
+    "translation": "Uyquchi tyulen kemalar turadigan joy yonida kutdi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "pier",
+    "ipa": "/pɪə/",
+    "meaning": "suvga chiqib turgan sayr yo‘lagi",
+    "example": "Grandpa lost his hat from the pier.",
+    "translation": "Bobom suv ustidagi sayr yo‘lagida shlyapasini yo‘qotdi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "lighthouse",
+    "ipa": "/ˈlaɪthaʊs/",
+    "meaning": "mayoq",
+    "example": "The lighthouse is a very tall night lamp.",
+    "translation": "Mayoq juda baland tungi chiroqdir.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "cruise",
+    "ipa": "/kruːz/",
+    "meaning": "kemada dam olish sayohati",
+    "example": "The cruise offered breakfast almost everywhere.",
+    "translation": "Kema sayohatida deyarli hamma yerda nonushta taklif qilindi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "seasick",
+    "ipa": "/ˈsiːsɪk/",
+    "meaning": "dengiz safarida ko‘ngli aynigan",
+    "example": "I felt seasick before we left the harbour.",
+    "translation": "Bandargohdan chiqmasimizdan ko‘nglim aynidi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "life jacket",
+    "ipa": "/ˈlaɪf dʒækɪt/",
+    "meaning": "qutqaruv nimchasi",
+    "example": "My life jacket makes me look like an orange.",
+    "translation": "Qutqaruv nimcham meni apelsinga o‘xshatadi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "lifeboat",
+    "ipa": "/ˈlaɪfbəʊt/",
+    "meaning": "qutqaruv qayig‘i",
+    "example": "We practised finding the lifeboat before lunch.",
+    "translation": "Tushlikdan oldin qutqaruv qayig‘ini topishni mashq qildik.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "rescue",
+    "ipa": "/ˈreskjuː/",
+    "meaning": "qutqarmoq",
+    "example": "The sailors rescue people, not floating biscuits.",
+    "translation": "Dengizchilar suzib yurgan pechenyelarni emas, odamlarni qutqaradi.",
+    "topic": "3-oy • Suv transporti"
+  },
+  {
+    "word": "hostel",
+    "ipa": "/ˈhɒstəl/",
+    "meaning": "arzon umumiy mehmonxona; hostel",
+    "example": "The hostel had six beds and seven backpacks.",
+    "translation": "Hostelda oltita karavot va yettita ryukzak bor edi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "guesthouse",
+    "ipa": "/ˈɡesthaʊs/",
+    "meaning": "kichik mehmon uyi",
+    "example": "Our guesthouse serves breakfast with local gossip.",
+    "translation": "Mehmon uyimizda nonushta mahalliy gap-so‘zlar bilan beriladi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "motel",
+    "ipa": "/məʊˈtel/",
+    "meaning": "yo‘l bo‘yidagi mehmonxona",
+    "example": "The motel sign was brighter than the moon.",
+    "translation": "Yo‘l bo‘yidagi mehmonxona yozuvi oydan yorqinroq edi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "campsite",
+    "ipa": "/ˈkæmpsaɪt/",
+    "meaning": "chodir tikib tunash joyi",
+    "example": "Our campsite included some very curious sheep.",
+    "translation": "Chodir tikkan joyimizda juda qiziquvchan qo‘ylar ham bor edi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "resort",
+    "ipa": "/rɪˈzɔːt/",
+    "meaning": "dam olish maskani",
+    "example": "This resort has more pools than I have socks.",
+    "translation": "Bu dam olish maskanining hovuzi paypoqlarimdan ko‘p.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "accommodation",
+    "ipa": "/əˌkɒməˈdeɪʃən/",
+    "meaning": "vaqtincha turar joy",
+    "example": "Our accommodation includes a cat on the sofa.",
+    "translation": "Vaqtincha turar joyimizga divandagi mushuk ham kiradi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "reception",
+    "ipa": "/rɪˈsepʃən/",
+    "meaning": "qabulxona",
+    "example": "At reception, I asked for a quieter pillow.",
+    "translation": "Qabulxonada ovozi pastroq yostiq so‘radim.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "receptionist",
+    "ipa": "/rɪˈsepʃənɪst/",
+    "meaning": "qabulxona xodimi",
+    "example": "The receptionist remembered my enormous purple suitcase.",
+    "translation": "Qabulxona xodimi ulkan binafsha chamadonimni esladi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "guest",
+    "ipa": "/ɡest/",
+    "meaning": "mehmon",
+    "example": "One guest brought slippers for his dog.",
+    "translation": "Bir mehmon itiga shippak olib keldi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "host",
+    "ipa": "/həʊst/",
+    "meaning": "mehmon kutuvchi",
+    "example": "Our host fed us like hungry footballers.",
+    "translation": "Mehmon kutuvchimiz bizni och futbolchilardek to‘ydirdi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "lobby",
+    "ipa": "/ˈlɒbi/",
+    "meaning": "mehmonxona kirish zali",
+    "example": "A sleepy pianist played in the lobby.",
+    "translation": "Kirish zalida uyquchi pianinochi kuy chaldi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "lift",
+    "ipa": "/lɪft/",
+    "meaning": "lift",
+    "example": "The lift arrived faster than our youngest cousin.",
+    "translation": "Lift eng kichik amakivachchamizdan tezroq keldi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "chalet",
+    "ipa": "/ˈʃæleɪ/",
+    "meaning": "tog‘dagi dam olish uyi",
+    "example": "Our chalet had a mountain view and a nosy goat.",
+    "translation": "Tog‘dagi uyimizda tog‘ manzarasi va qiziquvchan echki bor edi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "corridor",
+    "ipa": "/ˈkɒrɪdɔː/",
+    "meaning": "yo‘lak",
+    "example": "Our corridor seems longer when I carry bags.",
+    "translation": "Sumka ko‘targanimda yo‘lagimiz uzunroq tuyuladi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "cottage",
+    "ipa": "/ˈkɒtɪdʒ/",
+    "meaning": "qishloqdagi kichik uy",
+    "example": "The cottage was small, but its spiders were not.",
+    "translation": "Qishloq uyi kichkina edi, lekin o‘rgimchaklari unday emasdi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "apartment",
+    "ipa": "/əˈpɑːtmənt/",
+    "meaning": "kvartira",
+    "example": "Our holiday apartment had three clocks, all wrong.",
+    "translation": "Ta’tilga olgan kvartiramizda uchta soat bor edi, hammasi noto‘g‘ri.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "dormitory",
+    "ipa": "/ˈdɔːmɪtəri/",
+    "meaning": "ko‘p kishilik yotoqxona",
+    "example": "The hostel dormitory had eight beds and one loud sleeper.",
+    "translation": "Hostel yotoqxonasida sakkizta karavot va bitta shovqinli uxlovchi bor edi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "suite",
+    "ipa": "/swiːt/",
+    "meaning": "mehmonxonadagi bir necha xonali nomer",
+    "example": "Our hotel suite was bigger than our flat.",
+    "translation": "Mehmonxonadagi nomerimiz kvartiramizdan kattaroq edi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "porter",
+    "ipa": "/ˈpɔːtə/",
+    "meaning": "mehmonxonada yuk tashuvchi xodim",
+    "example": "The porter lifted my suitcase more easily than I did.",
+    "translation": "Yuk tashuvchi chamadonimni mendan osonroq ko‘tardi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "room service",
+    "ipa": "/ˈruːm sɜːvɪs/",
+    "meaning": "mehmonxona xonasiga taom yetkazish xizmati",
+    "example": "Room service brought breakfast before I found my slippers.",
+    "translation": "Xonaga taom yetkazish xizmati shippagimni topmasimdan nonushta olib keldi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "single",
+    "ipa": "/ˈsɪŋɡəl/",
+    "meaning": "bir kishilik",
+    "example": "A single room leaves little space for dancing.",
+    "translation": "Bir kishilik xonada raqsga kam joy qoladi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "double",
+    "ipa": "/ˈdʌbəl/",
+    "meaning": "ikki kishilik",
+    "example": "Our double bed fits us and one small suitcase.",
+    "translation": "Ikki kishilik karavotimizga biz va bitta kichik chamadon sig‘adi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "vacancy",
+    "ipa": "/ˈveɪkənsi/",
+    "meaning": "bo‘sh xona yoki joy",
+    "example": "The only vacancy was above a singing club.",
+    "translation": "Yagona bo‘sh xona qo‘shiqchilar klubi tepasida edi.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "check out",
+    "ipa": "/tʃek aʊt/",
+    "meaning": "hisoblashib mehmonxonadan chiqmoq",
+    "example": "We check out at ten, after one last pancake.",
+    "translation": "Oxirgi quymoqdan keyin soat o‘nda mehmonxonadan chiqamiz.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "overnight",
+    "ipa": "/ˌəʊvəˈnaɪt/",
+    "meaning": "bir kechaga; tun davomida",
+    "example": "We stayed overnight beside a very loud river.",
+    "translation": "Juda shovqinli daryo yonida bir kecha qoldik.",
+    "topic": "3-oy • Turar joy va mehmonxona"
+  },
+  {
+    "word": "location",
+    "ipa": "/ləʊˈkeɪʃən/",
+    "meaning": "joylashuv; joy",
+    "example": "The picnic location pleased everyone except the ants.",
+    "translation": "Sayr joyi chumolilardan boshqa hammaga yoqdi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "position",
+    "ipa": "/pəˈzɪʃən/",
+    "meaning": "turgan joy; o‘rin",
+    "example": "Our tent's position surprised the morning cows.",
+    "translation": "Chodirimizning turgan joyi ertalab sigirlarni hayron qoldirdi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "direction",
+    "ipa": "/dəˈrekʃən/",
+    "meaning": "yo‘nalish; tomon",
+    "example": "We chose the direction with fewer hills.",
+    "translation": "Tepaligi kamroq yo‘nalishni tanladik.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "distance",
+    "ipa": "/ˈdɪstəns/",
+    "meaning": "masofa",
+    "example": "The distance felt longer without any biscuits.",
+    "translation": "Pechenyesiz masofa uzoqroq tuyuldi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "north",
+    "ipa": "/nɔːθ/",
+    "meaning": "shimol",
+    "example": "We drove north until Dad wanted tea.",
+    "translation": "Dadam choy xohlaguncha shimolga yurdik.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "south",
+    "ipa": "/saʊθ/",
+    "meaning": "janub",
+    "example": "The birds flew south without buying tickets.",
+    "translation": "Qushlar chipta sotib olmay janubga uchdi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "east",
+    "ipa": "/iːst/",
+    "meaning": "sharq",
+    "example": "Our hotel faces east, so breakfast is bright.",
+    "translation": "Mehmonxonamiz sharqqa qaragan, shuning uchun nonushta joyi yorug‘.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "west",
+    "ipa": "/west/",
+    "meaning": "g‘arb",
+    "example": "Head west and follow the smell of bread.",
+    "translation": "G‘arbga yuring va non hidiga ergashing.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "left",
+    "ipa": "/left/",
+    "meaning": "chap; chapga",
+    "example": "The beach is on your left, behind Dad.",
+    "translation": "Sohil chap tomoningizda, dadamning orqasida.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "right",
+    "ipa": "/raɪt/",
+    "meaning": "o‘ng; o‘ngga",
+    "example": "Go right unless you want to meet the bull.",
+    "translation": "Buqaga duch kelishni istamasangiz, o‘ngga yuring.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "straight",
+    "ipa": "/streɪt/",
+    "meaning": "to‘g‘riga",
+    "example": "Walk straight until you see the smiling baker.",
+    "translation": "Kulimsiragan novvoyni ko‘rguncha to‘g‘riga yuring.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "ahead",
+    "ipa": "/əˈhed/",
+    "meaning": "oldinda",
+    "example": "There is a hill ahead and cake beyond it.",
+    "translation": "Oldinda tepalik, uning narigi tomonida tort bor.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "nearby",
+    "ipa": "/ˌnɪəˈbaɪ/",
+    "meaning": "yaqin atrofda",
+    "example": "A nearby donkey answered our guide's whistle.",
+    "translation": "Yaqin atrofdagi eshak gidimizning hushtagiga javob berdi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "far",
+    "ipa": "/fɑː/",
+    "meaning": "uzoq",
+    "example": "The beach is too far for these slippers.",
+    "translation": "Sohil bu shippaklarda borish uchun juda uzoq.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "away",
+    "ipa": "/əˈweɪ/",
+    "meaning": "nari; uzoqlikda",
+    "example": "Our tent is safely away from Dad's snoring.",
+    "translation": "Chodirimiz dadamning xurragidan yaxshigina narida.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "across",
+    "ipa": "/əˈkrɒs/",
+    "meaning": "narigi tomonida; kesib o‘tib",
+    "example": "The bakery is across the road from paradise.",
+    "translation": "Nonvoyxona jannatning yo‘l narigi tomonida.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "along",
+    "ipa": "/əˈlɒŋ/",
+    "meaning": "bo‘ylab",
+    "example": "Follow the ducks along the canal.",
+    "translation": "O‘rdaklarga ergashib kanal bo‘ylab yuring.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "through",
+    "ipa": "/θruː/",
+    "meaning": "orqali; ichidan o‘tib",
+    "example": "We walked through a tunnel of wet leaves.",
+    "translation": "Ho‘l barglardan hosil bo‘lgan tunnel orqali yurdik.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "towards",
+    "ipa": "/təˈwɔːdz/",
+    "meaning": "tomon; sari",
+    "example": "My feet moved towards the ice cream van.",
+    "translation": "Oyoqlarim muzqaymoq furgoni tomon yurdi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "around",
+    "ipa": "/əˈraʊnd/",
+    "meaning": "atrofida; aylanib",
+    "example": "We walked around the lake twice by mistake.",
+    "translation": "Adashib ko‘lni ikki marta aylanib chiqdik.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "beyond",
+    "ipa": "/bɪˈjɒnd/",
+    "meaning": "narigi tomonida",
+    "example": "Beyond the bridge, a goat guarded the path.",
+    "translation": "Ko‘prikning narigi tomonida echki so‘qmoqni qo‘riqlardi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "beside",
+    "ipa": "/bɪˈsaɪd/",
+    "meaning": "yonida",
+    "example": "Pitch your tent beside mine, not on it.",
+    "translation": "Chodiringizni menikining ustiga emas, yoniga tiking.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "inside",
+    "ipa": "/ˌɪnˈsaɪd/",
+    "meaning": "ichida; ichkarida",
+    "example": "Inside the cave, Dad's sneeze sounded enormous.",
+    "translation": "G‘or ichida dadamning aksirgani juda baland eshitildi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "uphill",
+    "ipa": "/ˌʌpˈhɪl/",
+    "meaning": "tepalikka; yuqoriga",
+    "example": "Going uphill made everyone suddenly very quiet.",
+    "translation": "Tepalikka chiqish hammani birdan jim qildi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "downhill",
+    "ipa": "/ˌdaʊnˈhɪl/",
+    "meaning": "tepalikdan pastga",
+    "example": "The empty trolley rolled downhill without us.",
+    "translation": "Bo‘sh aravacha bizsiz tepalikdan pastga dumaladi.",
+    "topic": "3-oy • Joylashuv va yo‘nalish"
+  },
+  {
+    "word": "town",
+    "ipa": "/taʊn/",
+    "meaning": "shaharcha; shahar",
+    "example": "Our town has one clock and twelve bakeries.",
+    "translation": "Shahrimizda bitta soat va o‘n ikkita nonvoyxona bor.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "village",
+    "ipa": "/ˈvɪlɪdʒ/",
+    "meaning": "qishloq",
+    "example": "The village dogs welcomed us very loudly.",
+    "translation": "Qishloq itlari bizni juda shovqinli kutib oldi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "capital",
+    "ipa": "/ˈkæpɪtəl/",
+    "meaning": "poytaxt",
+    "example": "In the capital, even the pigeons look busy.",
+    "translation": "Poytaxtda hatto kabutarlar ham band ko‘rinadi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "suburb",
+    "ipa": "/ˈsʌbɜːb/",
+    "meaning": "shahar chetidagi turar joy hududi",
+    "example": "Our suburb wakes when Mr Ali's rooster sings.",
+    "translation": "Ali akaning xo‘rozi qichqirganda shahar chetidagi turar joy hududimiz uyg‘onadi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "centre",
+    "ipa": "/ˈsentə/",
+    "meaning": "markaz",
+    "example": "We reached the centre by following hungry tourists.",
+    "translation": "Och sayyohlarga ergashib markazga yetdik.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "square",
+    "ipa": "/skweə/",
+    "meaning": "maydon",
+    "example": "The square was full of pigeons judging tourists.",
+    "translation": "Maydon sayyohlarga baho berayotgan kabutarlarga to‘la edi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "castle",
+    "ipa": "/ˈkɑːsəl/",
+    "meaning": "qal’a",
+    "example": "The castle has no dragons, just expensive tea.",
+    "translation": "Qal’ada ajdarholar yo‘q, faqat qimmat choy bor.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "palace",
+    "ipa": "/ˈpæləs/",
+    "meaning": "saroy",
+    "example": "Cleaning that palace must take all weekend.",
+    "translation": "O‘sha saroyni tozalashga butun dam olish kuni ketsa kerak.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "tower",
+    "ipa": "/ˈtaʊə/",
+    "meaning": "minora",
+    "example": "We climbed the tower and regretted breakfast.",
+    "translation": "Minoraga chiqib, nonushtadan pushaymon bo‘ldik.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "monument",
+    "ipa": "/ˈmɒnjʊmənt/",
+    "meaning": "yodgorlik",
+    "example": "A pigeon sat proudly on the monument.",
+    "translation": "Kabutar yodgorlik ustida mag‘rur o‘tirardi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "statue",
+    "ipa": "/ˈstætʃuː/",
+    "meaning": "haykal",
+    "example": "The statue wore snow like a new hat.",
+    "translation": "Haykal qorni yangi shlyapadek kiyib olgan edi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "fountain",
+    "ipa": "/ˈfaʊntɪn/",
+    "meaning": "favvora",
+    "example": "The fountain washed my shoes without permission.",
+    "translation": "Favvora tuflilarimni ruxsatsiz yuvdi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "cathedral",
+    "ipa": "/kəˈθiːdrəl/",
+    "meaning": "bosh cherkov; sobor",
+    "example": "The cathedral bells woke every sleepy tourist.",
+    "translation": "Sobor qo‘ng‘iroqlari barcha uyquchi sayyohlarni uyg‘otdi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "mosque",
+    "ipa": "/mɒsk/",
+    "meaning": "masjid",
+    "example": "We left our shoes neatly outside the mosque.",
+    "translation": "Oyoq kiyimlarimizni masjid tashqarisida tartibli qoldirdik.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "temple",
+    "ipa": "/ˈtempəl/",
+    "meaning": "ibodatxona",
+    "example": "A monkey watched us enter the temple.",
+    "translation": "Ibodatxonaga kirishimizni bir maymun kuzatdi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "ruin",
+    "ipa": "/ˈruːɪn/",
+    "meaning": "xaroba",
+    "example": "The old ruin has more visitors than walls.",
+    "translation": "Eski xarobaning devoridan ko‘ra mehmoni ko‘p.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "gallery",
+    "ipa": "/ˈɡæləri/",
+    "meaning": "rasmlar galereyasi",
+    "example": "At the gallery, Dad admired a painted potato.",
+    "translation": "Galereyada dadam chizilgan kartoshkaga qoyil qoldi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "aquarium",
+    "ipa": "/əˈkweəriəm/",
+    "meaning": "akvarium; dengiz hayvonlari ko‘rgazmasi",
+    "example": "At the aquarium, a fish watched me back.",
+    "translation": "Akvariumda bir baliq ham menga qarab turdi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "zoo",
+    "ipa": "/zuː/",
+    "meaning": "hayvonot bog‘i",
+    "example": "The zoo monkeys looked entertained by us.",
+    "translation": "Hayvonot bog‘idagi maymunlar bizdan zavqlanayotgandek ko‘rindi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "landmark",
+    "ipa": "/ˈlændmɑːk/",
+    "meaning": "taniqli mo‘ljal bino yoki joy",
+    "example": "The huge teapot is our town's favourite landmark.",
+    "translation": "Ulkan choynak shahrimizning sevimli taniqli mo‘ljalidir.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "entrance",
+    "ipa": "/ˈentrəns/",
+    "meaning": "kirish joyi",
+    "example": "We found the entrance behind a souvenir stall.",
+    "translation": "Kirish joyini esdalik buyumlari rastasi ortidan topdik.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "exit",
+    "ipa": "/ˈeksɪt/",
+    "meaning": "chiqish joyi",
+    "example": "The exit led straight into another gift shop.",
+    "translation": "Chiqish joyi to‘g‘ri yana bir sovg‘a do‘koniga olib bordi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "courtyard",
+    "ipa": "/ˈkɔːtjɑːd/",
+    "meaning": "ichki hovli",
+    "example": "We shared the courtyard with a proud peacock.",
+    "translation": "Ichki hovlini mag‘rur tovus bilan bo‘lishdik.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "viewpoint",
+    "ipa": "/ˈvjuːpɔɪnt/",
+    "meaning": "manzara tomosha qilinadigan joy",
+    "example": "The viewpoint was worth all those noisy breaths.",
+    "translation": "Manzara maydonchasiga chiqish o‘sha hansirashlarga arzidi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "historic",
+    "ipa": "/hɪˈstɒrɪk/",
+    "meaning": "tarixiy",
+    "example": "This historic bridge survived even our school trip.",
+    "translation": "Bu tarixiy ko‘prik hatto maktab sayohatimizga ham chidadi.",
+    "topic": "3-oy • Shahar va diqqatga sazovor joylar"
+  },
+  {
+    "word": "geography",
+    "ipa": "/dʒiˈɒɡrəfi/",
+    "meaning": "geografiya",
+    "example": "Geography explains why our walk needed a boat.",
+    "translation": "Geografiya sayrimizga nega qayiq kerak bo‘lganini tushuntiradi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "world",
+    "ipa": "/wɜːld/",
+    "meaning": "dunyo",
+    "example": "The world is bigger than Dad's holiday map.",
+    "translation": "Dunyo dadamning ta’til xaritasidan kattaroq.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "continent",
+    "ipa": "/ˈkɒntɪnənt/",
+    "meaning": "qit’a",
+    "example": "We cannot explore a continent before lunch.",
+    "translation": "Tushlikkacha butun qit’ani kezib chiqa olmaymiz.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "region",
+    "ipa": "/ˈriːdʒən/",
+    "meaning": "hudud; mintaqa",
+    "example": "This region is famous for mountains and melons.",
+    "translation": "Bu mintaqa tog‘lari va qovunlari bilan mashhur.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "border",
+    "ipa": "/ˈbɔːdə/",
+    "meaning": "davlat chegarasi",
+    "example": "At the border, Dad practised his polite smile.",
+    "translation": "Chegarada dadam muloyim tabassumini mashq qildi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "island",
+    "ipa": "/ˈaɪlənd/",
+    "meaning": "orol",
+    "example": "The island has more goats than people.",
+    "translation": "Orolda odamlardan ko‘ra echkilar ko‘p.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "mountain",
+    "ipa": "/ˈmaʊntɪn/",
+    "meaning": "tog‘",
+    "example": "That mountain looks smaller from my sofa.",
+    "translation": "Anavi tog‘ divanimdan kichikroq ko‘rinadi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "hill",
+    "ipa": "/hɪl/",
+    "meaning": "tepalik",
+    "example": "We called it a hill until we climbed it.",
+    "translation": "Ustiga chiqmagunimizcha uni tepalik derdik.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "valley",
+    "ipa": "/ˈvæli/",
+    "meaning": "vodiy",
+    "example": "Our laughter travelled across the valley.",
+    "translation": "Kulgimiz butun vodiy bo‘ylab tarqaldi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "desert",
+    "ipa": "/ˈdezət/",
+    "meaning": "cho‘l",
+    "example": "In the desert, I finally appreciated my hat.",
+    "translation": "Cho‘lda nihoyat shlyapamning qadriga yetdim.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "forest",
+    "ipa": "/ˈfɒrɪst/",
+    "meaning": "o‘rmon",
+    "example": "The forest hid our picnic from the sun.",
+    "translation": "O‘rmon sayr joyimizni quyoshdan yashirdi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "jungle",
+    "ipa": "/ˈdʒʌŋɡəl/",
+    "meaning": "qalin tropik o‘rmon",
+    "example": "The jungle was louder than our classroom.",
+    "translation": "Tropik o‘rmon sinfxonamizdan shovqinliroq edi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "countryside",
+    "ipa": "/ˈkʌntrisaɪd/",
+    "meaning": "qishloq hududi; tabiat qo‘yni",
+    "example": "The countryside smells different from the underground.",
+    "translation": "Qishloq havosining hidi metro havosidan farq qiladi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "field",
+    "ipa": "/fiːld/",
+    "meaning": "dala",
+    "example": "We crossed a field under a cow's careful eye.",
+    "translation": "Sigirning sinchkov nigohi ostida daladan o‘tdik.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "meadow",
+    "ipa": "/ˈmedəʊ/",
+    "meaning": "o‘tloq",
+    "example": "The meadow became our dining room for lunch.",
+    "translation": "O‘tloq tushlikka oshxonamiz bo‘ldi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "cliff",
+    "ipa": "/klɪf/",
+    "meaning": "tik qoya",
+    "example": "We admired the cliff from a safe distance.",
+    "translation": "Tik qoyani xavfsiz masofadan tomosha qildik.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "cave",
+    "ipa": "/keɪv/",
+    "meaning": "g‘or",
+    "example": "Inside the cave, even my whisper sounded important.",
+    "translation": "G‘or ichida hatto pichirlashim ham muhim gapdek jarangladi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "rock",
+    "ipa": "/rɒk/",
+    "meaning": "qoya; katta tosh",
+    "example": "That rock looks exactly like Dad's nose.",
+    "translation": "Anavi qoya xuddi dadamning burniga o‘xshaydi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "stone",
+    "ipa": "/stəʊn/",
+    "meaning": "tosh",
+    "example": "A tiny stone made my boot suddenly uncomfortable.",
+    "translation": "Kichkina tosh tufayli etigim birdan noqulay bo‘lib qoldi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "volcano",
+    "ipa": "/vɒlˈkeɪnəʊ/",
+    "meaning": "vulqon",
+    "example": "We chose a sleeping volcano for our visit.",
+    "translation": "Sayohat uchun uyqudagi vulqonni tanladik.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "peak",
+    "ipa": "/piːk/",
+    "meaning": "tog‘ cho‘qqisi",
+    "example": "At the peak, our sandwiches tasted like prizes.",
+    "translation": "Cho‘qqida sendvichlarimiz mukofotdek mazali tuyuldi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "slope",
+    "ipa": "/sləʊp/",
+    "meaning": "yonbag‘ir; qiyalik",
+    "example": "My apple rolled down the slope without me.",
+    "translation": "Olmam yonbag‘irdan mensiz dumalab tushdi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "glacier",
+    "ipa": "/ˈɡlæsiə/",
+    "meaning": "muzlik",
+    "example": "The glacier moves even more slowly than our holiday bus.",
+    "translation": "Muzlik hatto sayohat avtobusimizdan ham sekinroq siljiydi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "scenery",
+    "ipa": "/ˈsiːnəri/",
+    "meaning": "tabiat manzarasi",
+    "example": "The scenery distracted me from my aching feet.",
+    "translation": "Manzara oyoqlarim og‘rig‘ini unutdirdi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "landscape",
+    "ipa": "/ˈlændskeɪp/",
+    "meaning": "tabiiy manzara",
+    "example": "A lonely tractor completed the green landscape.",
+    "translation": "Yolg‘iz traktor yashil manzarani to‘ldirdi.",
+    "topic": "3-oy • Geografiya va yer shakllari"
+  },
+  {
+    "word": "sea",
+    "ipa": "/siː/",
+    "meaning": "dengiz",
+    "example": "The sea borrowed my hat and kept it.",
+    "translation": "Dengiz shlyapamni olib, qaytarmadi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "ocean",
+    "ipa": "/ˈəʊʃən/",
+    "meaning": "okean",
+    "example": "The ocean makes our swimming pool look silly.",
+    "translation": "Okean yonida suzish hovuzimiz arzimas ko‘rinadi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "lake",
+    "ipa": "/leɪk/",
+    "meaning": "ko‘l",
+    "example": "The lake reflected Dad's enormous fishing hat.",
+    "translation": "Ko‘lda dadamning ulkan baliqchi shlyapasi aks etdi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "pond",
+    "ipa": "/pɒnd/",
+    "meaning": "kichik hovuz",
+    "example": "Our pond has frogs with very loud opinions.",
+    "translation": "Hovuzimizda o‘z fikrini juda baland aytadigan qurbaqalar bor.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "stream",
+    "ipa": "/striːm/",
+    "meaning": "soy; jilg‘a",
+    "example": "The stream cooled our drinks and my socks.",
+    "translation": "Soy ichimliklarimizni ham, paypoqlarimni ham sovitdi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "waterfall",
+    "ipa": "/ˈwɔːtəfɔːl/",
+    "meaning": "sharshara",
+    "example": "The waterfall gave everyone a free shower.",
+    "translation": "Sharshara hammaga bepul dush taqdim etdi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "canal",
+    "ipa": "/kəˈnæl/",
+    "meaning": "kanal",
+    "example": "A duck led our boat along the canal.",
+    "translation": "Kanal bo‘ylab qayig‘imizni o‘rdak boshlab bordi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "coast",
+    "ipa": "/kəʊst/",
+    "meaning": "dengiz sohillari",
+    "example": "We followed the coast and the ice cream signs.",
+    "translation": "Sohil va muzqaymoq belgilariga ergashib yurdik.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "shore",
+    "ipa": "/ʃɔː/",
+    "meaning": "suv qirg‘og‘i",
+    "example": "My shoes waited patiently on the shore.",
+    "translation": "Tuflilarim qirg‘oqda sabr bilan kutdi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "beach",
+    "ipa": "/biːtʃ/",
+    "meaning": "cho‘milish sohili",
+    "example": "The beach followed us home inside our shoes.",
+    "translation": "Sohil tuflilarimiz ichida uyga ergashib keldi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "bay",
+    "ipa": "/beɪ/",
+    "meaning": "dengiz qo‘ltig‘i",
+    "example": "The calm bay looked like a giant bath.",
+    "translation": "Tinch qo‘ltiq ulkan vannaga o‘xshardi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "wave",
+    "ipa": "/weɪv/",
+    "meaning": "to‘lqin",
+    "example": "One wave stole the bottom of my sandwich.",
+    "translation": "Bitta to‘lqin sendvichimning pastki qismini olib ketdi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "tide",
+    "ipa": "/taɪd/",
+    "meaning": "suvning davriy ko‘tarilishi va qaytishi",
+    "example": "The tide reached our castle before lunch.",
+    "translation": "Suv ko‘tarilishi tushlikdan oldin qal’amizga yetdi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "current",
+    "ipa": "/ˈkʌrənt/",
+    "meaning": "suv oqimi",
+    "example": "The current carried the leaf faster than us.",
+    "translation": "Oqim bargni bizdan tezroq olib ketdi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "sand",
+    "ipa": "/sænd/",
+    "meaning": "qum",
+    "example": "There is sand in every holiday sandwich.",
+    "translation": "Har bir ta’til sendvichida qum bor.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "pebble",
+    "ipa": "/ˈpebəl/",
+    "meaning": "mayda yumaloq tosh",
+    "example": "I chose a pebble shaped like a potato.",
+    "translation": "Kartoshkaga o‘xshash mayda toshni tanladim.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "shell",
+    "ipa": "/ʃel/",
+    "meaning": "chig‘anoq",
+    "example": "This shell is my cheapest holiday souvenir.",
+    "translation": "Bu chig‘anoq ta’tildagi eng arzon esdaligim.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "coral",
+    "ipa": "/ˈkɒrəl/",
+    "meaning": "marjon",
+    "example": "We admired the coral without touching it.",
+    "translation": "Marjonga tegmay tomosha qildik.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "reef",
+    "ipa": "/riːf/",
+    "meaning": "suv osti qoyalari; rif",
+    "example": "Colourful fish gathered around the reef.",
+    "translation": "Rang-barang baliqlar rif atrofida to‘plandi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "seaweed",
+    "ipa": "/ˈsiːwiːd/",
+    "meaning": "dengiz o‘ti",
+    "example": "Seaweed gave my ankle a cold hug.",
+    "translation": "Dengiz o‘ti to‘pig‘imni sovuq quchoqladi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "depth",
+    "ipa": "/depθ/",
+    "meaning": "chuqurlik",
+    "example": "Check the depth before your brave jump.",
+    "translation": "Jasorat bilan sakrashdan oldin chuqurlikni tekshiring.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "shallow",
+    "ipa": "/ˈʃæləʊ/",
+    "meaning": "sayoz",
+    "example": "The shallow water barely covered Dad's toes.",
+    "translation": "Sayoz suv dadamning oyoq barmoqlarini zo‘rg‘a yopdi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "deep",
+    "ipa": "/diːp/",
+    "meaning": "chuqur",
+    "example": "That deep pool needs more than brave talk.",
+    "translation": "O‘sha chuqur hovuzga quruq jasoratli gap yetmaydi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "freshwater",
+    "ipa": "/ˈfreʃwɔːtə/",
+    "meaning": "chuchuk suvdagi; chuchuk suv",
+    "example": "Freshwater fish do not need a seaside holiday.",
+    "translation": "Chuchuk suv baliqlariga dengiz bo‘yida ta’til kerak emas.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "underwater",
+    "ipa": "/ˌʌndəˈwɔːtə/",
+    "meaning": "suv ostida",
+    "example": "Underwater, my brother's jokes are finally quiet.",
+    "translation": "Suv ostida ukamning hazillari nihoyat jim bo‘ladi.",
+    "topic": "3-oy • Suv havzalari va sohil"
+  },
+  {
+    "word": "nature",
+    "ipa": "/ˈneɪtʃə/",
+    "meaning": "tabiat",
+    "example": "Nature planned a much louder morning than I did.",
+    "translation": "Tabiat men kutgandan ancha shovqinli tong rejalabdi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "plant",
+    "ipa": "/plɑːnt/",
+    "meaning": "o‘simlik",
+    "example": "This plant gets more drinks than I do.",
+    "translation": "Bu o‘simlik mendan ko‘proq suv ichadi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "grass",
+    "ipa": "/ɡrɑːs/",
+    "meaning": "maysa; o‘t",
+    "example": "The grass left green stamps on my knees.",
+    "translation": "Maysa tizzalarimga yashil tamg‘alar qo‘ydi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "leaf",
+    "ipa": "/liːf/",
+    "meaning": "barg",
+    "example": "A leaf landed perfectly inside my tea.",
+    "translation": "Bir barg to‘g‘ri choyim ichiga tushdi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "branch",
+    "ipa": "/brɑːntʃ/",
+    "meaning": "shox",
+    "example": "A low branch politely removed my hat.",
+    "translation": "Past shox shlyapamni odob bilan yechib oldi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "root",
+    "ipa": "/ruːt/",
+    "meaning": "ildiz",
+    "example": "The root across the path surprised my foot.",
+    "translation": "So‘qmoqdagi ildiz oyog‘imni kutilmaganda qoqdi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "trunk",
+    "ipa": "/trʌŋk/",
+    "meaning": "daraxt tanasi",
+    "example": "Three children could not hug the whole trunk.",
+    "translation": "Uch bola daraxt tanasini to‘liq quchoqlay olmadi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "bark",
+    "ipa": "/bɑːk/",
+    "meaning": "daraxt po‘stlog‘i",
+    "example": "The rough bark scratched my shiny new watch.",
+    "translation": "G‘adir-budur po‘stloq yangi yaltiroq soatimni tirnadi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "petal",
+    "ipa": "/ˈpetəl/",
+    "meaning": "gulbarg",
+    "example": "A rose petal landed in Grandpa's tea.",
+    "translation": "Atirgulning bir gulbargi bobomning choyiga tushdi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "bush",
+    "ipa": "/bʊʃ/",
+    "meaning": "buta",
+    "example": "The bush was hiding a very guilty football.",
+    "translation": "Buta juda aybdor futbol to‘pini yashirib turardi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "hedge",
+    "ipa": "/hedʒ/",
+    "meaning": "butalardan o‘stirilgan devor",
+    "example": "Our hedge gives the birds a private meeting room.",
+    "translation": "Buta devorimiz qushlarga alohida majlis xonasi beradi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "rose",
+    "ipa": "/rəʊz/",
+    "meaning": "atirgul",
+    "example": "The rose looked lovely but scratched my nose.",
+    "translation": "Atirgul chiroyli edi, lekin burnimni tirnadi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "tulip",
+    "ipa": "/ˈtjuːlɪp/",
+    "meaning": "lola",
+    "example": "One tulip grew taller than all its neighbours.",
+    "translation": "Bitta lola barcha qo‘shnilaridan balandroq o‘sdi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "sunflower",
+    "ipa": "/ˈsʌnflaʊə/",
+    "meaning": "kungaboqar",
+    "example": "Our sunflower watches the sun like a fan.",
+    "translation": "Kungaboqarimiz quyoshni muxlisdek kuzatadi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "oak",
+    "ipa": "/əʊk/",
+    "meaning": "eman",
+    "example": "The old oak shades our whole picnic.",
+    "translation": "Qari eman butun sayr dasturxonimizga soya beradi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "pine",
+    "ipa": "/paɪn/",
+    "meaning": "qarag‘ay",
+    "example": "A pine dropped a cone beside my sandwich.",
+    "translation": "Qarag‘ay sendvichim yoniga g‘uddasini tashladi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "palm",
+    "ipa": "/pɑːm/",
+    "meaning": "palma",
+    "example": "The palm makes our balcony feel tropical.",
+    "translation": "Palma balkonimizni tropik joyga o‘xshatadi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "cactus",
+    "ipa": "/ˈkæktəs/",
+    "meaning": "kaktus",
+    "example": "Our cactus needs sunshine, not a friendly hug.",
+    "translation": "Kaktusimizga do‘stona quchoq emas, quyosh nuri kerak.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "moss",
+    "ipa": "/mɒs/",
+    "meaning": "yo‘sin",
+    "example": "Soft moss covered the stone like a blanket.",
+    "translation": "Yumshoq yo‘sin toshni adyoldek qoplagan edi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "soil",
+    "ipa": "/sɔɪl/",
+    "meaning": "tuproq",
+    "example": "The soil ended up mostly on my trousers.",
+    "translation": "Tuproqning ko‘pi shimimga tushdi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "mud",
+    "ipa": "/mʌd/",
+    "meaning": "loy",
+    "example": "The mud kept one boot as a souvenir.",
+    "translation": "Loy bitta etigimni esdalikka olib qoldi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "grow",
+    "ipa": "/ɡrəʊ/",
+    "meaning": "o‘smoq",
+    "example": "Our beans grow faster than my little brother.",
+    "translation": "Loviyalarimiz ukamdan tezroq o‘sadi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "bloom",
+    "ipa": "/bluːm/",
+    "meaning": "gullamoq",
+    "example": "These flowers bloom before I remember their names.",
+    "translation": "Bu gullar nomini eslashimdan oldin gullaydi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "wild",
+    "ipa": "/waɪld/",
+    "meaning": "yovvoyi; tabiiy o‘sadigan",
+    "example": "Wild flowers decorated our path for free.",
+    "translation": "Yovvoyi gullar so‘qmog‘imizni bepul bezadi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "evergreen",
+    "ipa": "/ˈevəɡriːn/",
+    "meaning": "doim yashil",
+    "example": "The evergreen tree keeps its coat all year.",
+    "translation": "Doim yashil daraxt yil bo‘yi kiyimini yechmaydi.",
+    "topic": "3-oy • O‘simliklar va tabiat"
+  },
+  {
+    "word": "cloudy",
+    "ipa": "/ˈklaʊdi/",
+    "meaning": "bulutli",
+    "example": "It was cloudy, but Dad still wore sunglasses.",
+    "translation": "Havo bulutli edi, lekin dadam baribir quyosh ko‘zoynagini taqdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "fog",
+    "ipa": "/fɒɡ/",
+    "meaning": "tuman",
+    "example": "The fog hid everything except Dad's loud voice.",
+    "translation": "Tuman dadamning baland ovozidan boshqa hamma narsani yashirdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "foggy",
+    "ipa": "/ˈfɒɡi/",
+    "meaning": "tumanli",
+    "example": "On foggy mornings, our hill plays hide-and-seek.",
+    "translation": "Tumanli tonglarda tepaligimiz bekinmachoq o‘ynaydi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "storm",
+    "ipa": "/stɔːm/",
+    "meaning": "bo‘ron",
+    "example": "The storm cancelled our outdoor chess match.",
+    "translation": "Bo‘ron ochiq havodagi shaxmat bahsimizni bekor qildi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "thunder",
+    "ipa": "/ˈθʌndə/",
+    "meaning": "momaqaldiroq",
+    "example": "The thunder was louder than Grandpa's sneeze.",
+    "translation": "Momaqaldiroq bobomning aksirishidan balandroq edi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "lightning",
+    "ipa": "/ˈlaɪtnɪŋ/",
+    "meaning": "chaqmoq",
+    "example": "Lightning lit the sky like a giant camera.",
+    "translation": "Chaqmoq osmonni ulkan fotoapparatdek yoritdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "rainbow",
+    "ipa": "/ˈreɪnbəʊ/",
+    "meaning": "kamalak",
+    "example": "The rainbow appeared after we packed the camera.",
+    "translation": "Fotoapparatni yig‘ishtirganimizdan keyin kamalak chiqdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "frost",
+    "ipa": "/frɒst/",
+    "meaning": "qirov",
+    "example": "Frost decorated the car better than we could.",
+    "translation": "Qirov mashinani bizdan yaxshiroq bezadi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "ice",
+    "ipa": "/aɪs/",
+    "meaning": "muz",
+    "example": "The ice made our path an unwanted skating rink.",
+    "translation": "Muz so‘qmog‘imizni kutilmagan yaxmalakka aylantirdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "icy",
+    "ipa": "/ˈaɪsi/",
+    "meaning": "muzlagan; muzli",
+    "example": "The icy steps turned Dad into a careful dancer.",
+    "translation": "Muzlagan zinalar dadamni ehtiyotkor raqqosga aylantirdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "snowy",
+    "ipa": "/ˈsnəʊi/",
+    "meaning": "qorli",
+    "example": "The snowy garden hid all our forgotten toys.",
+    "translation": "Qorli bog‘ unutilgan barcha o‘yinchoqlarimizni yashirdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "snowflake",
+    "ipa": "/ˈsnəʊfleɪk/",
+    "meaning": "qor parchasi",
+    "example": "A snowflake vanished before I could photograph it.",
+    "translation": "Qor parchasi suratga olishimdan oldin erib ketdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "hail",
+    "ipa": "/heɪl/",
+    "meaning": "do‘l",
+    "example": "Hail tapped the roof like impatient fingers.",
+    "translation": "Do‘l tomni sabrsiz barmoqlardek taqillatdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "breeze",
+    "ipa": "/briːz/",
+    "meaning": "shabada",
+    "example": "A gentle breeze moved our picnic napkins.",
+    "translation": "Mayin shabada sayr salfetkalarimizni siljitdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "sunshine",
+    "ipa": "/ˈsʌnʃaɪn/",
+    "meaning": "quyosh nuri",
+    "example": "The sunshine woke me before my alarm.",
+    "translation": "Quyosh nuri meni budilnikdan oldin uyg‘otdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "shade",
+    "ipa": "/ʃeɪd/",
+    "meaning": "soya joy",
+    "example": "We raced to the shade with melting ice creams.",
+    "translation": "Eriyotgan muzqaymoqlar bilan soya joyga yugurdik.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "temperature",
+    "ipa": "/ˈtemprətʃə/",
+    "meaning": "harorat",
+    "example": "The temperature rose faster than our tent went up.",
+    "translation": "Harorat chodirimiz tiklanishidan tezroq ko‘tarildi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "forecast",
+    "ipa": "/ˈfɔːkɑːst/",
+    "meaning": "ob-havo bashorati",
+    "example": "The forecast promised sunshine; my socks disagreed.",
+    "translation": "Bashorat quyosh va’da qildi; paypoqlarim bunga qo‘shilmadi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "climate",
+    "ipa": "/ˈklaɪmət/",
+    "meaning": "iqlim",
+    "example": "This warm climate suits my lazy winter coat.",
+    "translation": "Bu iliq iqlim dangasa qishki paltomga mos.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "drought",
+    "ipa": "/draʊt/",
+    "meaning": "qurg‘oqchilik",
+    "example": "During the drought, our lawn turned the colour of biscuits.",
+    "translation": "Qurg‘oqchilikda maysazorimiz pechenye rangiga kirdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "wet",
+    "ipa": "/wet/",
+    "meaning": "ho‘l",
+    "example": "My wet boots made funny noises in the lobby.",
+    "translation": "Ho‘l etiklarim kirish zalida kulgili ovoz chiqardi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "humid",
+    "ipa": "/ˈhjuːmɪd/",
+    "meaning": "dim; havosi nam",
+    "example": "The humid air gave my hair new ideas.",
+    "translation": "Nam havo sochlarimga yangi g‘oyalar berdi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "melt",
+    "ipa": "/melt/",
+    "meaning": "erimoq",
+    "example": "Snowmen melt faster than we can build them.",
+    "translation": "Qor odamlar biz ularni yasaganimizdan tezroq eriydi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "freezing",
+    "ipa": "/ˈfriːzɪŋ/",
+    "meaning": "juda sovuq",
+    "example": "It was freezing, but Dad still wanted ice cream.",
+    "translation": "Juda sovuq edi, lekin dadam baribir muzqaymoq xohladi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "drizzle",
+    "ipa": "/ˈdrɪzəl/",
+    "meaning": "mayda yomg‘ir",
+    "example": "The drizzle slowly seasoned our picnic with water.",
+    "translation": "Mayda yomg‘ir dasturxonimizni asta suv bilan namladi.",
+    "topic": "3-oy • Ob-havo"
+  },
+  {
+    "word": "animal",
+    "ipa": "/ˈænɪməl/",
+    "meaning": "hayvon",
+    "example": "Which animal borrowed my picnic sandwich?",
+    "translation": "Qaysi hayvon sayr sendvichimni olib ketdi?",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "mammal",
+    "ipa": "/ˈmæməl/",
+    "meaning": "sutemizuvchi",
+    "example": "A bat is a mammal with an unusual bedtime.",
+    "translation": "Ko‘rshapalak uxlash vaqti g‘ayrioddiy bo‘lgan sutemizuvchidir.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "bear",
+    "ipa": "/beə/",
+    "meaning": "ayiq",
+    "example": "The bear scratched its back against a tree.",
+    "translation": "Ayiq daraxtga ishqalanib orqasini qashidi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "tiger",
+    "ipa": "/ˈtaɪɡə/",
+    "meaning": "yo‘lbars",
+    "example": "The tiger yawned wider than my school bag.",
+    "translation": "Yo‘lbars maktab sumkamdan ham kengroq esnadi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "leopard",
+    "ipa": "/ˈlepəd/",
+    "meaning": "qoplon",
+    "example": "The leopard's spots make hide-and-seek easier.",
+    "translation": "Qoplonning dog‘lari bekinmachoqni osonlashtiradi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "cheetah",
+    "ipa": "/ˈtʃiːtə/",
+    "meaning": "gepard",
+    "example": "A cheetah would easily win our school race.",
+    "translation": "Gepard maktabimiz poygasida osongina yutardi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "wolf",
+    "ipa": "/wʊlf/",
+    "meaning": "bo‘ri",
+    "example": "The wolf howled like a terrible singer.",
+    "translation": "Bo‘ri yomon qo‘shiqchidek uvilladi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "fox",
+    "ipa": "/fɒks/",
+    "meaning": "tulki",
+    "example": "A fox crossed the path without greeting us.",
+    "translation": "Tulki biz bilan salomlashmay so‘qmoqdan o‘tdi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "deer",
+    "ipa": "/dɪə/",
+    "meaning": "kiyik",
+    "example": "The deer heard us before we saw it.",
+    "translation": "Kiyik biz uni ko‘rishimizdan oldin bizni eshitdi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "giraffe",
+    "ipa": "/dʒɪˈrɑːf/",
+    "meaning": "jirafa",
+    "example": "The giraffe can see lunch over the fence.",
+    "translation": "Jirafa tushlikni devor oshib ko‘ra oladi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "zebra",
+    "ipa": "/ˈzebrə/",
+    "meaning": "zebra",
+    "example": "The zebra never needs to choose shirt colours.",
+    "translation": "Zebra hech qachon ko‘ylak rangini tanlamaydi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "hippopotamus",
+    "ipa": "/ˌhɪpəˈpɒtəməs/",
+    "meaning": "begemot",
+    "example": "The hippopotamus enjoyed a very long bath.",
+    "translation": "Begemot juda uzoq cho‘milishdan zavqlandi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "rhinoceros",
+    "ipa": "/raɪˈnɒsərəs/",
+    "meaning": "karkidon",
+    "example": "The rhinoceros ignored our expensive camera.",
+    "translation": "Karkidon qimmat fotoapparatimizga parvo qilmadi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "camel",
+    "ipa": "/ˈkæməl/",
+    "meaning": "tuya",
+    "example": "The camel chewed slowly during our photograph.",
+    "translation": "Suratga tushayotganimizda tuya sekin chaynadi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "donkey",
+    "ipa": "/ˈdɒŋki/",
+    "meaning": "eshak",
+    "example": "The donkey stopped where the carrots were.",
+    "translation": "Eshak sabzilar turgan joyda to‘xtadi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "monkey",
+    "ipa": "/ˈmʌŋki/",
+    "meaning": "maymun",
+    "example": "A monkey examined Dad's hat with interest.",
+    "translation": "Maymun dadamning shlyapasini qiziqib tekshirdi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "gorilla",
+    "ipa": "/ɡəˈrɪlə/",
+    "meaning": "gorilla",
+    "example": "The gorilla sat like an uncle after lunch.",
+    "translation": "Gorilla tushlikdan keyingi amakidek o‘tirardi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "kangaroo",
+    "ipa": "/ˌkæŋɡəˈruː/",
+    "meaning": "kenguru",
+    "example": "A kangaroo carries its baby without a backpack.",
+    "translation": "Kenguru bolasini ryukzaksiz olib yuradi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "koala",
+    "ipa": "/kəʊˈɑːlə/",
+    "meaning": "koala",
+    "example": "The koala looked ready for another long nap.",
+    "translation": "Koala yana uzoq uxlashga tayyor ko‘rinardi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "panda",
+    "ipa": "/ˈpændə/",
+    "meaning": "panda",
+    "example": "The panda treated every bamboo stick like lunch.",
+    "translation": "Panda har bir bambuk poyasini tushlik deb bildi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "squirrel",
+    "ipa": "/ˈskwɪrəl/",
+    "meaning": "olmaxon",
+    "example": "A squirrel buried lunch and forgot the address.",
+    "translation": "Olmaxon tushligini ko‘mib, manzilini unutdi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "hedgehog",
+    "ipa": "/ˈhedʒhɒɡ/",
+    "meaning": "tipratikan",
+    "example": "The hedgehog is not a good cuddle partner.",
+    "translation": "Tipratikan quchoqlashish uchun yaxshi sherik emas.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "bat",
+    "ipa": "/bæt/",
+    "meaning": "ko‘rshapalak",
+    "example": "The bat started breakfast when we wanted dinner.",
+    "translation": "Biz kechki ovqat xohlaganda ko‘rshapalak nonushta boshladi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "otter",
+    "ipa": "/ˈɒtə/",
+    "meaning": "suvsar",
+    "example": "The otter slid into water like a happy child.",
+    "translation": "Suvsar xursand boladek suvga sirg‘alib tushdi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "beaver",
+    "ipa": "/ˈbiːvə/",
+    "meaning": "qunduz",
+    "example": "The beaver builds better walls than my brother.",
+    "translation": "Qunduz ukamdan yaxshiroq devor quradi.",
+    "topic": "3-oy • Yovvoyi sutemizuvchilar"
+  },
+  {
+    "word": "eagle",
+    "ipa": "/ˈiːɡəl/",
+    "meaning": "burgut",
+    "example": "The eagle spotted lunch before our guide did.",
+    "translation": "Burgut tushlikni gidimizdan oldin payqadi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "owl",
+    "ipa": "/aʊl/",
+    "meaning": "boyo‘g‘li",
+    "example": "The owl looked annoyed by our morning visit.",
+    "translation": "Boyo‘g‘li ertalabki tashrifimizdan norozi ko‘rindi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "parrot",
+    "ipa": "/ˈpærət/",
+    "meaning": "to‘tiqush",
+    "example": "Our parrot says goodbye before visitors leave.",
+    "translation": "To‘tiqushimiz mehmonlar ketmasidan xayrlashadi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "penguin",
+    "ipa": "/ˈpeŋɡwɪn/",
+    "meaning": "pingvin",
+    "example": "The penguin walked like Dad in tight shoes.",
+    "translation": "Pingvin tor tufli kiygan dadamdek yurdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "pigeon",
+    "ipa": "/ˈpɪdʒɪn/",
+    "meaning": "kabutar",
+    "example": "A pigeon inspected my lunch without permission.",
+    "translation": "Kabutar tushligimni ruxsatsiz tekshirdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "sparrow",
+    "ipa": "/ˈspærəʊ/",
+    "meaning": "chumchuq",
+    "example": "The sparrow carried a crumb bigger than its head.",
+    "translation": "Chumchuq boshidan katta non ushoqchasini tashidi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "crow",
+    "ipa": "/krəʊ/",
+    "meaning": "qarg‘a",
+    "example": "A crow announced our picnic to the forest.",
+    "translation": "Qarg‘a sayrimizni butun o‘rmonga e’lon qildi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "swan",
+    "ipa": "/swɒn/",
+    "meaning": "oqqush",
+    "example": "The swan crossed the pond like a queen.",
+    "translation": "Oqqush hovuzni malikadek kesib o‘tdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "goose",
+    "ipa": "/ɡuːs/",
+    "meaning": "g‘oz",
+    "example": "The goose chased us away from its breakfast.",
+    "translation": "G‘oz bizni nonushtasidan quvib yubordi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "robin",
+    "ipa": "/ˈrɒbɪn/",
+    "meaning": "qizilto‘sh qushi",
+    "example": "A robin watched me dig, hoping for a worm.",
+    "translation": "Qizilto‘sh chuvalchang umidida yer qazishimni kuzatdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "rooster",
+    "ipa": "/ˈruːstə/",
+    "meaning": "xo‘roz",
+    "example": "Our rooster has never learnt about weekends.",
+    "translation": "Xo‘rozimiz dam olish kunlari haqida hech o‘rganmagan.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "hen",
+    "ipa": "/hen/",
+    "meaning": "tovuq; makiyon",
+    "example": "The hen laid an egg in Dad's hat.",
+    "translation": "Tovuq dadamning shlyapasiga tuxum qo‘ydi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "chick",
+    "ipa": "/tʃɪk/",
+    "meaning": "jo‘ja",
+    "example": "A chick fell asleep beside my warm hand.",
+    "translation": "Jo‘ja iliq qo‘lim yonida uxlab qoldi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "peacock",
+    "ipa": "/ˈpiːkɒk/",
+    "meaning": "tovus",
+    "example": "The peacock dressed better than all the visitors.",
+    "translation": "Tovus barcha mehmonlardan yaxshiroq kiyingan edi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "flamingo",
+    "ipa": "/fləˈmɪŋɡəʊ/",
+    "meaning": "flamingo",
+    "example": "The flamingo stood on one leg during lunch.",
+    "translation": "Flamingo tushlik paytida bir oyoqda turdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "ostrich",
+    "ipa": "/ˈɒstrɪtʃ/",
+    "meaning": "tuyaqush",
+    "example": "The ostrich could outrun our entire football team.",
+    "translation": "Tuyaqush butun futbol jamoamizdan tez yugura olardi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "woodpecker",
+    "ipa": "/ˈwʊdˌpekə/",
+    "meaning": "qizilishton",
+    "example": "The woodpecker started work before my alarm rang.",
+    "translation": "Qizilishton budilnigim chalinmasidan ish boshladi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "swallow",
+    "ipa": "/ˈswɒləʊ/",
+    "meaning": "qaldirg‘och",
+    "example": "A swallow flew past our window like an arrow.",
+    "translation": "Qaldirg‘och derazamiz yonidan o‘qdek uchib o‘tdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "seagull",
+    "ipa": "/ˈsiːɡʌl/",
+    "meaning": "dengiz chaykasi",
+    "example": "The seagull wanted chips, not a photograph.",
+    "translation": "Chayka surat emas, qovurilgan kartoshka xohladi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "stork",
+    "ipa": "/stɔːk/",
+    "meaning": "laylak",
+    "example": "The stork built a nest above the noisy road.",
+    "translation": "Laylak shovqinli yo‘l tepasida uya qurdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "feather",
+    "ipa": "/ˈfeðə/",
+    "meaning": "pat",
+    "example": "One feather made my brother sneeze three times.",
+    "translation": "Bitta pat ukamni uch marta aksirtirdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "beak",
+    "ipa": "/biːk/",
+    "meaning": "tumshuq",
+    "example": "The parrot opened its beak to demand breakfast.",
+    "translation": "To‘tiqush nonushta talab qilib tumshug‘ini ochdi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "nest",
+    "ipa": "/nest/",
+    "meaning": "uya",
+    "example": "The nest contains more string than our drawer.",
+    "translation": "Uyadagi ip tortmamizdagidan ko‘p.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "hatch",
+    "ipa": "/hætʃ/",
+    "meaning": "tuxumdan chiqmoq",
+    "example": "The chicks hatch without reading any instructions.",
+    "translation": "Jo‘jalar hech qanday yo‘riqnoma o‘qimay tuxumdan chiqadi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "chirp",
+    "ipa": "/tʃɜːp/",
+    "meaning": "chirqillamoq",
+    "example": "The birds chirp outside my window before dawn.",
+    "translation": "Qushlar tong otmasidan derazam tashqarisida chirqillaydi.",
+    "topic": "3-oy • Qushlar"
+  },
+  {
+    "word": "whale",
+    "ipa": "/weɪl/",
+    "meaning": "kit",
+    "example": "The whale surfaced before anyone found a camera.",
+    "translation": "Hech kim fotoapparatini topmasidan kit suv yuziga chiqdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "dolphin",
+    "ipa": "/ˈdɒlfɪn/",
+    "meaning": "delfin",
+    "example": "A dolphin followed our boat without a ticket.",
+    "translation": "Delfin qayig‘imiz ortidan chiptasiz ergashdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "seal",
+    "ipa": "/siːl/",
+    "meaning": "tyulen",
+    "example": "The seal looked comfortable on its rocky sofa.",
+    "translation": "Tyulen toshli divanida qulay yotgandek ko‘rindi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "shark",
+    "ipa": "/ʃɑːk/",
+    "meaning": "akula",
+    "example": "The shark made the aquarium suddenly very interesting.",
+    "translation": "Akula akvariumni birdan juda qiziqarli qildi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "octopus",
+    "ipa": "/ˈɒktəpəs/",
+    "meaning": "sakkizoyoq",
+    "example": "An octopus would need four pairs of gloves.",
+    "translation": "Sakkizoyoqqa to‘rt juft qo‘lqop kerak bo‘lardi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "jellyfish",
+    "ipa": "/ˈdʒelifɪʃ/",
+    "meaning": "meduza",
+    "example": "The jellyfish floated like a tiny transparent umbrella.",
+    "translation": "Meduza kichkina shaffof soyabondek suzdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "seahorse",
+    "ipa": "/ˈsiːhɔːs/",
+    "meaning": "dengiz oti",
+    "example": "The seahorse looks ready for a very tiny saddle.",
+    "translation": "Dengiz oti juda kichkina egarga tayyor ko‘rinadi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "starfish",
+    "ipa": "/ˈstɑːfɪʃ/",
+    "meaning": "dengiz yulduzi",
+    "example": "The starfish looked ready for a drawing lesson.",
+    "translation": "Dengiz yulduzi rasm darsiga tayyor ko‘rinardi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "turtle",
+    "ipa": "/ˈtɜːtəl/",
+    "meaning": "suv toshbaqasi",
+    "example": "The turtle swam faster than its serious face suggested.",
+    "translation": "Toshbaqa jiddiy yuzidan kutilganidan tezroq suzdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "tortoise",
+    "ipa": "/ˈtɔːtəs/",
+    "meaning": "quruqlik toshbaqasi",
+    "example": "Our tortoise reaches lunch just before dinner.",
+    "translation": "Toshbaqamiz tushlikka deyarli kechki ovqat oldidan yetadi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "crocodile",
+    "ipa": "/ˈkrɒkədaɪl/",
+    "meaning": "timsoh",
+    "example": "The crocodile smiled without making us feel welcome.",
+    "translation": "Timsoh jilmaydi, lekin o‘zimizni xush kelgandek his qilmadik.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "snake",
+    "ipa": "/sneɪk/",
+    "meaning": "ilon",
+    "example": "The snake disappeared before Dad finished shouting.",
+    "translation": "Dadam baqirib bo‘lmasidan ilon g‘oyib bo‘ldi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "lizard",
+    "ipa": "/ˈlɪzəd/",
+    "meaning": "kaltakesak",
+    "example": "A lizard sunbathed on our warm garden wall.",
+    "translation": "Kaltakesak bog‘imizning iliq devorida quyoshga toblandi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "frog",
+    "ipa": "/frɒɡ/",
+    "meaning": "qurbaqa",
+    "example": "The frog jumped into my empty watering can.",
+    "translation": "Qurbaqa bo‘sh gulchelagimga sakrab tushdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "toad",
+    "ipa": "/təʊd/",
+    "meaning": "baqa",
+    "example": "The toad sat under a leaf like a king.",
+    "translation": "Baqa barg tagida podshohdek o‘tirardi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "insect",
+    "ipa": "/ˈɪnsekt/",
+    "meaning": "hasharot",
+    "example": "One tiny insect interrupted our enormous picnic.",
+    "translation": "Bitta mitti hasharot ulkan sayr dasturxonimizni buzdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "bee",
+    "ipa": "/biː/",
+    "meaning": "asalari",
+    "example": "The bee preferred flowers to my bright shirt.",
+    "translation": "Asalari yorqin ko‘ylagimdan ko‘ra gullarni afzal ko‘rdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "wasp",
+    "ipa": "/wɒsp/",
+    "meaning": "qovog‘ari",
+    "example": "A wasp invited itself to our jam sandwiches.",
+    "translation": "Qovog‘ari murabbali sendvichlarimizga o‘zini o‘zi taklif qildi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "ant",
+    "ipa": "/ænt/",
+    "meaning": "chumoli",
+    "example": "An ant carried away a piece of our feast.",
+    "translation": "Chumoli ziyofatimizdan bir bo‘lak olib ketdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "butterfly",
+    "ipa": "/ˈbʌtəflaɪ/",
+    "meaning": "kapalak",
+    "example": "The butterfly refused to sit still for my photo.",
+    "translation": "Kapalak suratga olishim uchun tinch o‘tirmadi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "mosquito",
+    "ipa": "/məˈskiːtəʊ/",
+    "meaning": "chivin",
+    "example": "One mosquito performed beside my ear all night.",
+    "translation": "Bitta chivin tun bo‘yi qulog‘im yonida konsert berdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "beetle",
+    "ipa": "/ˈbiːtəl/",
+    "meaning": "qo‘ng‘iz",
+    "example": "A shiny beetle climbed over my walking boot.",
+    "translation": "Yaltiroq qo‘ng‘iz sayr etigim ustidan oshib o‘tdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "spider",
+    "ipa": "/ˈspaɪdə/",
+    "meaning": "o‘rgimchak",
+    "example": "The spider repaired its web after my careless walk.",
+    "translation": "O‘rgimchak beparvo yurishimdan keyin to‘rini tuzatdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "snail",
+    "ipa": "/sneɪl/",
+    "meaning": "shilliqqurt",
+    "example": "The snail brought its house to our campsite.",
+    "translation": "Shilliqqurt chodir joyimizga uyini olib keldi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "worm",
+    "ipa": "/wɜːm/",
+    "meaning": "chuvalchang",
+    "example": "A worm surprised me while I planted flowers.",
+    "translation": "Gul ekayotganimda chuvalchang meni cho‘chitdi.",
+    "topic": "3-oy • Suv hayvonlari va mayda jonivorlar"
+  },
+  {
+    "word": "basketball",
+    "ipa": "/ˈbɑːskɪtbɔːl/",
+    "meaning": "basketbol",
+    "example": "Basketball is harder when everyone is taller than you.",
+    "translation": "Hamma sizdan baland bo‘lsa, basketbol qiyinroq.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "volleyball",
+    "ipa": "/ˈvɒlibɔːl/",
+    "meaning": "voleybol",
+    "example": "We played volleyball until the ball joined a picnic.",
+    "translation": "To‘p sayr dasturxoniga qo‘shilguncha voleybol o‘ynadik.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "badminton",
+    "ipa": "/ˈbædmɪntən/",
+    "meaning": "badminton",
+    "example": "During badminton, we kept hitting Mum's washing.",
+    "translation": "Badminton paytida onamning osilgan kirlariga qayta-qayta uraverdik.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "rugby",
+    "ipa": "/ˈrʌɡbi/",
+    "meaning": "regbi",
+    "example": "After rugby, my shirt was mostly mud.",
+    "translation": "Regbidan keyin ko‘ylagimning ko‘p qismi loy edi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "cricket",
+    "ipa": "/ˈkrɪkɪt/",
+    "meaning": "kriket",
+    "example": "Grandpa explains cricket longer than we play it.",
+    "translation": "Bobom kriketni biz o‘ynaganimizdan uzoqroq tushuntiradi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "baseball",
+    "ipa": "/ˈbeɪsbɔːl/",
+    "meaning": "beysbol",
+    "example": "Our baseball landed beside a surprised gardener.",
+    "translation": "Beysbol to‘pimiz hayron bog‘bon yoniga tushdi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "golf",
+    "ipa": "/ɡɒlf/",
+    "meaning": "golf",
+    "example": "In golf, I spend more time searching than playing.",
+    "translation": "Golfda o‘ynashdan ko‘ra ko‘proq qidiraman.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "hockey",
+    "ipa": "/ˈhɒki/",
+    "meaning": "xokkey",
+    "example": "Our hockey team practises before the town wakes.",
+    "translation": "Xokkey jamoamiz shahar uyg‘onmasidan mashq qiladi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "table tennis",
+    "ipa": "/ˈteɪbəl tenɪs/",
+    "meaning": "stol tennisi",
+    "example": "Table tennis turns our garage into a stadium.",
+    "translation": "Stol tennisi garajimizni stadionga aylantiradi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "squash",
+    "ipa": "/skwɒʃ/",
+    "meaning": "skvosh",
+    "example": "Squash makes me chase a ball in a room.",
+    "translation": "Skvosh meni xonada to‘p ortidan yugurtiradi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "boxing",
+    "ipa": "/ˈbɒksɪŋ/",
+    "meaning": "boks",
+    "example": "In boxing class, the bag always wins against me.",
+    "translation": "Boks darsida qop meni doim yengadi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "wrestling",
+    "ipa": "/ˈreslɪŋ/",
+    "meaning": "kurash",
+    "example": "Wrestling practice left my hair pointing everywhere.",
+    "translation": "Kurash mashqi sochlarimni har tomonga to‘zg‘itdi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "karate",
+    "ipa": "/kəˈrɑːti/",
+    "meaning": "karate",
+    "example": "My karate belt takes longer to tie than yours.",
+    "translation": "Karate belbog‘imni bog‘lash siznikidan ko‘proq vaqt oladi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "judo",
+    "ipa": "/ˈdʒuːdəʊ/",
+    "meaning": "dzyudo",
+    "example": "Judo taught me to fall more politely.",
+    "translation": "Dzyudo menga odobliroq yiqilishni o‘rgatdi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "gymnastics",
+    "ipa": "/dʒɪmˈnæstɪks/",
+    "meaning": "gimnastika",
+    "example": "Gymnastics looks easy until I try it.",
+    "translation": "Gimnastika o‘zim sinagunimcha oson ko‘rinadi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "athletics",
+    "ipa": "/æθˈletɪks/",
+    "meaning": "yengil atletika",
+    "example": "Athletics day emptied every water bottle at school.",
+    "translation": "Yengil atletika kuni maktabdagi barcha suv idishlari bo‘shadi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "cycling",
+    "ipa": "/ˈsaɪklɪŋ/",
+    "meaning": "velosport; velosipedda yurish",
+    "example": "Cycling uphill earned us a very large lunch.",
+    "translation": "Tepalikka velosipedda chiqib, katta tushlikka munosib bo‘ldik.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "skiing",
+    "ipa": "/ˈskiːɪŋ/",
+    "meaning": "chang‘i uchish",
+    "example": "My first skiing lesson involved plenty of sitting.",
+    "translation": "Birinchi chang‘i darsim ko‘p o‘tirish bilan o‘tdi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "snowboarding",
+    "ipa": "/ˈsnəʊbɔːdɪŋ/",
+    "meaning": "snoubord uchish",
+    "example": "Snowboarding gave my bottom a cold afternoon.",
+    "translation": "Snoubord uchib, tushdan keyin dumbamni sovuqda qoldirdim.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "skating",
+    "ipa": "/ˈskeɪtɪŋ/",
+    "meaning": "konkida uchish",
+    "example": "Skating made Dad hold the wall very lovingly.",
+    "translation": "Konkida uchish dadamni devorni mehr bilan ushlashga majbur qildi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "surfing",
+    "ipa": "/ˈsɜːfɪŋ/",
+    "meaning": "syorfing; to‘lqinda taxtada uchish",
+    "example": "Surfing taught me how salty the sea is.",
+    "translation": "Syorfing menga dengiz qanchalik sho‘r ekanini o‘rgatdi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "diving",
+    "ipa": "/ˈdaɪvɪŋ/",
+    "meaning": "suv ostiga sho‘ng‘ish",
+    "example": "Diving introduced me to some very curious fish.",
+    "translation": "Suv ostiga sho‘ng‘ish meni juda qiziquvchan baliqlar bilan tanishtirdi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "sailing",
+    "ipa": "/ˈseɪlɪŋ/",
+    "meaning": "yelkanli qayiqda suzish",
+    "example": "Sailing is easier when the wind agrees.",
+    "translation": "Shamol rozi bo‘lsa, yelkanli qayiqda suzish osonroq.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "archery",
+    "ipa": "/ˈɑːtʃəri/",
+    "meaning": "kamondan otish",
+    "example": "At archery, my first arrow surprised the grass.",
+    "translation": "Kamondan otishda birinchi o‘qim maysani hayron qoldirdi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "yoga",
+    "ipa": "/ˈjəʊɡə/",
+    "meaning": "yoga",
+    "example": "During yoga, my cat copies me more easily.",
+    "translation": "Yoga paytida mushugim harakatlarimni osonroq takrorlaydi.",
+    "topic": "3-oy • Sport turlari"
+  },
+  {
+    "word": "team",
+    "ipa": "/tiːm/",
+    "meaning": "jamoa",
+    "example": "Our team shares one ball and many opinions.",
+    "translation": "Jamoamiz bitta to‘p va ko‘p fikrni bo‘lishadi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "player",
+    "ipa": "/ˈpleɪə/",
+    "meaning": "o‘yinchi",
+    "example": "Our smallest player has the loudest celebration.",
+    "translation": "Eng kichik o‘yinchimiz eng baland ovozda nishonlaydi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "athlete",
+    "ipa": "/ˈæθliːt/",
+    "meaning": "sportchi",
+    "example": "The athlete finished before I opened my water.",
+    "translation": "Sportchi suvimni ochishimdan oldin marraga yetdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "goalkeeper",
+    "ipa": "/ˈɡəʊlkiːpə/",
+    "meaning": "darvozabon",
+    "example": "Our goalkeeper caught the ball and a leaf.",
+    "translation": "Darvozabonimiz to‘p bilan birga bargni ham tutdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "referee",
+    "ipa": "/ˌrefəˈriː/",
+    "meaning": "hakam",
+    "example": "The referee ran more than some players.",
+    "translation": "Hakam ayrim o‘yinchilardan ko‘proq yugurdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "match",
+    "ipa": "/mætʃ/",
+    "meaning": "sport uchrashuvi",
+    "example": "The match ended before Dad found his glasses.",
+    "translation": "Dadam ko‘zoynagini topmasidan o‘yin tugadi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "tournament",
+    "ipa": "/ˈtʊənəmənt/",
+    "meaning": "turnir",
+    "example": "Our tournament included a very serious biscuit break.",
+    "translation": "Turnirimizda juda jiddiy pechenye tanaffusi bo‘ldi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "champion",
+    "ipa": "/ˈtʃæmpiən/",
+    "meaning": "chempion",
+    "example": "The champion still asks Mum to find his socks.",
+    "translation": "Chempion hali ham onasidan paypoqlarini topishni so‘raydi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "winner",
+    "ipa": "/ˈwɪnə/",
+    "meaning": "g‘olib",
+    "example": "The winner received a cup bigger than her head.",
+    "translation": "G‘olib boshidan katta kubok oldi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "medal",
+    "ipa": "/ˈmedəl/",
+    "meaning": "medal",
+    "example": "My medal looks excellent with my pyjamas.",
+    "translation": "Medalim pijamam bilan juda yaxshi ko‘rinadi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "trophy",
+    "ipa": "/ˈtrəʊfi/",
+    "meaning": "musobaqa kubogi",
+    "example": "The trophy needs its own seat in the car.",
+    "translation": "Kubokka mashinada alohida o‘rindiq kerak.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "score",
+    "ipa": "/skɔː/",
+    "meaning": "o‘yin hisobi",
+    "example": "Dad forgot the score but remembered every snack.",
+    "translation": "Dadam hisobni unutdi, lekin har bir yegulikni esladi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "goal",
+    "ipa": "/ɡəʊl/",
+    "meaning": "gol",
+    "example": "My first goal surprised both teams.",
+    "translation": "Birinchi golim ikkala jamoani ham hayron qoldirdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "point",
+    "ipa": "/pɔɪnt/",
+    "meaning": "ochko",
+    "example": "I won one point and celebrated for five minutes.",
+    "translation": "Bir ochko yutib, besh daqiqa nishonladim.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "ball",
+    "ipa": "/bɔːl/",
+    "meaning": "to‘p",
+    "example": "The ball bounced straight into the teacher's bag.",
+    "translation": "To‘p sakrab, to‘g‘ri o‘qituvchining sumkasiga tushdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "racket",
+    "ipa": "/ˈrækɪt/",
+    "meaning": "raketka",
+    "example": "My racket is ready; my legs are not.",
+    "translation": "Raketkam tayyor, oyoqlarim esa yo‘q.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "net",
+    "ipa": "/net/",
+    "meaning": "sport to‘ri",
+    "example": "The net caught more leaves than balls today.",
+    "translation": "Bugun to‘r to‘pdan ko‘ra ko‘proq barg tutdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "helmet",
+    "ipa": "/ˈhelmɪt/",
+    "meaning": "himoya dubulg‘asi",
+    "example": "My helmet makes my head look like a mushroom.",
+    "translation": "Dubulg‘am boshimni qo‘ziqoringa o‘xshatadi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "whistle",
+    "ipa": "/ˈwɪsəl/",
+    "meaning": "hushtak",
+    "example": "The whistle ended our dreams of another goal.",
+    "translation": "Hushtak yana gol urish orzuyimizni tugatdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "stadium",
+    "ipa": "/ˈsteɪdiəm/",
+    "meaning": "stadion",
+    "example": "The stadium cheered louder than our school bell.",
+    "translation": "Stadion maktab qo‘ng‘irog‘imizdan balandroq hayqirdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "pitch",
+    "ipa": "/pɪtʃ/",
+    "meaning": "sport maydoni",
+    "example": "A duck visited the pitch during our match.",
+    "translation": "O‘yinimiz vaqtida maydonga o‘rdak keldi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "court",
+    "ipa": "/kɔːt/",
+    "meaning": "tennis yoki basketbol maydoni",
+    "example": "The tennis court became a puddle after lunch.",
+    "translation": "Tushlikdan keyin tennis maydoni ko‘lmakka aylandi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "gym",
+    "ipa": "/dʒɪm/",
+    "meaning": "sport zali",
+    "example": "At the gym, I lift more water than weights.",
+    "translation": "Sport zalida og‘irlikdan ko‘ra ko‘proq suv ko‘taraman.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "race",
+    "ipa": "/reɪs/",
+    "meaning": "poyga",
+    "example": "Our race to the tree ended at the bakery.",
+    "translation": "Daraxtgacha poygamiz nonvoyxonada tugadi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "lap",
+    "ipa": "/læp/",
+    "meaning": "yo‘lak yoki hovuz bo‘ylab bir aylanish",
+    "example": "One lap was enough to silence my boasting.",
+    "translation": "Bir aylanish maqtanishimni to‘xtatishga yetdi.",
+    "topic": "3-oy • Musobaqa va sport anjomlari"
+  },
+  {
+    "word": "adventure",
+    "ipa": "/ədˈventʃə/",
+    "meaning": "sarguzasht",
+    "example": "Our adventure began with a very wrong turn.",
+    "translation": "Sarguzashtimiz juda noto‘g‘ri burilishdan boshlandi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "hiking",
+    "ipa": "/ˈhaɪkɪŋ/",
+    "meaning": "tabiatda uzoq piyoda yurish",
+    "example": "Hiking makes ordinary bread taste wonderful.",
+    "translation": "Tabiatda uzoq yurish oddiy nonni ham ajoyib mazali qiladi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "camping",
+    "ipa": "/ˈkæmpɪŋ/",
+    "meaning": "chodirda dam olish",
+    "example": "Camping taught us to respect indoor toilets.",
+    "translation": "Chodirda dam olish uydagi hojatxonaning qadrini o‘rgatdi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "tent",
+    "ipa": "/tent/",
+    "meaning": "chodir",
+    "example": "Our tent looked larger on the packet.",
+    "translation": "Chodirimiz qadoqda kattaroq ko‘ringan edi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "sleeping bag",
+    "ipa": "/ˈsliːpɪŋ bæɡ/",
+    "meaning": "uyqu qopi",
+    "example": "My sleeping bag turned me into a warm sausage.",
+    "translation": "Uyqu qopim meni issiq kolbasaga aylantirdi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "campfire",
+    "ipa": "/ˈkæmpfaɪə/",
+    "meaning": "gulxan",
+    "example": "We told stories beside the campfire until bedtime.",
+    "translation": "Uxlash vaqtigacha gulxan yonida hikoyalar aytdik.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "picnic",
+    "ipa": "/ˈpɪknɪk/",
+    "meaning": "tabiat qo‘ynida ovqatlanib dam olish",
+    "example": "Our picnic attracted three dogs and one uncle.",
+    "translation": "Sayr dasturxonimiz uchta it va bir amakini jalb qildi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "barbecue",
+    "ipa": "/ˈbɑːbɪkjuː/",
+    "meaning": "ochiq olovda taom pishirib dam olish",
+    "example": "Dad's barbecue produced more smoke than dinner.",
+    "translation": "Dadamning ochiq olovda ovqat pishirishi taomdan ko‘proq tutun chiqardi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "trail",
+    "ipa": "/treɪl/",
+    "meaning": "belgilangan sayr yo‘li",
+    "example": "The trail ended beside a very welcome café.",
+    "translation": "Sayr yo‘li juda kerakli kafe yonida tugadi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "path",
+    "ipa": "/pɑːθ/",
+    "meaning": "so‘qmoq",
+    "example": "This path is wide enough for one hungry tourist.",
+    "translation": "Bu so‘qmoqqa bitta och sayyoh sig‘adi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "footpath",
+    "ipa": "/ˈfʊtpɑːθ/",
+    "meaning": "piyoda yo‘li",
+    "example": "The footpath took us past suspicious sheep.",
+    "translation": "Piyoda yo‘li bizni shubha bilan qarayotgan qo‘ylar yonidan olib o‘tdi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "climb",
+    "ipa": "/klaɪm/",
+    "meaning": "tirmashib chiqmoq",
+    "example": "We climb slowly to protect our chocolate biscuits.",
+    "translation": "Shokoladli pechenyelarimizni asrash uchun sekin chiqamiz.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "jump",
+    "ipa": "/dʒʌmp/",
+    "meaning": "sakramoq",
+    "example": "Jump over the puddle, not into my lunch.",
+    "translation": "Ko‘lmakdan sakrab o‘ting, tushligimning ichiga emas.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "jog",
+    "ipa": "/dʒɒɡ/",
+    "meaning": "sekin yugurmoq",
+    "example": "I jog until the bakery smell stops me.",
+    "translation": "Nonvoyxona hidi to‘xtatguncha sekin yuguraman.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "stretch",
+    "ipa": "/stretʃ/",
+    "meaning": "mushaklarni cho‘zmoq",
+    "example": "Stretch your legs before our ambitious ten-minute hike.",
+    "translation": "Katta niyat bilan boshlayotgan o‘n daqiqalik sayrimizdan oldin oyoq mushaklaringizni cho‘zing.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "balance",
+    "ipa": "/ˈbæləns/",
+    "meaning": "muvozanatni saqlamoq",
+    "example": "I balance on one foot while finding my sock.",
+    "translation": "Paypog‘imni qidirib, bir oyoqda muvozanat saqlayman.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "throw",
+    "ipa": "/θrəʊ/",
+    "meaning": "uloqtirmoq",
+    "example": "Throw the ball away from the birthday cake.",
+    "translation": "To‘pni tug‘ilgan kun tortidan uzoqroqqa oting.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "catch",
+    "ipa": "/kætʃ/",
+    "meaning": "ilib olmoq; tutmoq",
+    "example": "Catch the ball before it catches your lunch.",
+    "translation": "To‘p tushligingizga tegmasidan uni tuting.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "kick",
+    "ipa": "/kɪk/",
+    "meaning": "tepmoq",
+    "example": "Kick the ball gently near Grandma's flowers.",
+    "translation": "Buvimning gullari yonida to‘pni sekin teping.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "bounce",
+    "ipa": "/baʊns/",
+    "meaning": "sakrab sapchimoq",
+    "example": "The ball can bounce higher than my little cousin.",
+    "translation": "To‘p kichik amakivachchamdan balandroq sapchiy oladi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "warm up",
+    "ipa": "/wɔːm ʌp/",
+    "meaning": "mashq oldidan badan qizdirmoq",
+    "example": "We warm up before our very short run.",
+    "translation": "Juda qisqa yugurishimizdan oldin badan qizdiramiz.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "set off",
+    "ipa": "/set ɒf/",
+    "meaning": "yo‘lga chiqmoq",
+    "example": "We set off early and forgot the tent.",
+    "translation": "Erta yo‘lga chiqib, chodirni unutdik.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "get lost",
+    "ipa": "/ɡet lɒst/",
+    "meaning": "adashib qolmoq",
+    "example": "We get lost whenever Dad says he knows.",
+    "translation": "Dadam yo‘lni bilaman deganida har safar adashamiz.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "fishing",
+    "ipa": "/ˈfɪʃɪŋ/",
+    "meaning": "baliq ovlash",
+    "example": "Fishing gives Grandpa an excuse to sit quietly.",
+    "translation": "Baliq ovlash bobomga jim o‘tirish uchun bahona beradi.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "birdwatching",
+    "ipa": "/ˈbɜːdwɒtʃɪŋ/",
+    "meaning": "qushlarni kuzatish",
+    "example": "Birdwatching is difficult with my sneezing brother.",
+    "translation": "Aksirayotgan ukam bilan qush kuzatish qiyin.",
+    "topic": "3-oy • Ochiq havodagi mashg‘ulotlar"
+  },
+  {
+    "word": "leisure",
+    "ipa": "/ˈleʒə/",
+    "meaning": "bo‘sh vaqt; hordiq",
+    "example": "My leisure time begins when the dishes are clean.",
+    "translation": "Bo‘sh vaqtim idishlar tozalanganda boshlanadi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "relax",
+    "ipa": "/rɪˈlæks/",
+    "meaning": "dam olmoq; bo‘shashmoq",
+    "example": "I relax best where nobody can find the vacuum.",
+    "translation": "Hech kim changyutgichni topolmaydigan joyda yaxshi dam olaman.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "rest",
+    "ipa": "/rest/",
+    "meaning": "dam; hordiq",
+    "example": "After our holiday, Dad needed a rest.",
+    "translation": "Ta’tildan keyin dadamga dam kerak bo‘ldi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "fun",
+    "ipa": "/fʌn/",
+    "meaning": "zavq; xursandchilik",
+    "example": "We had fun even when the kite escaped.",
+    "translation": "Varrak qochib ketganda ham maza qildik.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "outdoors",
+    "ipa": "/ˌaʊtˈdɔːz/",
+    "meaning": "ochiq havoda",
+    "example": "Eating outdoors means sharing lunch with curious ants.",
+    "translation": "Ochiq havoda ovqatlanish tushlikni qiziquvchan chumolilar bilan bo‘lishishdir.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "indoors",
+    "ipa": "/ˌɪnˈdɔːz/",
+    "meaning": "bino ichida",
+    "example": "We played indoors after the rain won.",
+    "translation": "Yomg‘ir yutgach, bino ichida o‘ynadik.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "sunbathe",
+    "ipa": "/ˈsʌnbeɪð/",
+    "meaning": "quyoshga toblanmoq",
+    "example": "Dad tried to sunbathe under an enormous umbrella.",
+    "translation": "Dadam ulkan soyabon ostida quyoshga toblanmoqchi bo‘ldi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "snorkel",
+    "ipa": "/ˈsnɔːkəl/",
+    "meaning": "nafas naychasi bilan suvda suzmoq",
+    "example": "We snorkel to meet fish without knocking.",
+    "translation": "Baliqlar bilan eshik taqillatmay uchrashish uchun naycha bilan suzamiz.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "skateboard",
+    "ipa": "/ˈskeɪtbɔːd/",
+    "meaning": "skeytbord",
+    "example": "My skateboard moves faster when I fall off.",
+    "translation": "Skeytbordim men yiqilganda tezroq yuradi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "kite",
+    "ipa": "/kaɪt/",
+    "meaning": "varrak",
+    "example": "The kite preferred the tree to the sky.",
+    "translation": "Varrak osmondan ko‘ra daraxtni afzal ko‘rdi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "swing",
+    "ipa": "/swɪŋ/",
+    "meaning": "arg‘imchoq",
+    "example": "Grandma chose the swing before the children arrived.",
+    "translation": "Buvim bolalar kelmasidan arg‘imchoqni tanladi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "slide",
+    "ipa": "/slaɪd/",
+    "meaning": "sirpanib tushish qurilmasi",
+    "example": "The slide made my little cousin's hair stand up.",
+    "translation": "Sirpanib tushganda kichik amakivachchamning sochi tik bo‘ldi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "seesaw",
+    "ipa": "/ˈsiːsɔː/",
+    "meaning": "ikki uchida o‘tirib uchiladigan arg‘imchoq",
+    "example": "The seesaw works better without Dad on one end.",
+    "translation": "Bir uchida dadam bo‘lmasa, arg‘imchoq yaxshiroq ishlaydi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "playground",
+    "ipa": "/ˈpleɪɡraʊnd/",
+    "meaning": "bolalar o‘yin maydonchasi",
+    "example": "Our playground has no room for adult worries.",
+    "translation": "O‘yin maydonchamizda kattalarning tashvishlariga joy yo‘q.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "amusement park",
+    "ipa": "/əˈmjuːzmənt pɑːk/",
+    "meaning": "attraksionlar bog‘i",
+    "example": "The amusement park made Dad scream like a child.",
+    "translation": "Attraksionlar bog‘ida dadam boladek qichqirdi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "theme park",
+    "ipa": "/ˈθiːm pɑːk/",
+    "meaning": "muayyan mavzudagi attraksionlar bog‘i",
+    "example": "This theme park has dinosaurs selling ice cream.",
+    "translation": "Bu mavzuli bog‘da dinozavrlar muzqaymoq sotadi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "funfair",
+    "ipa": "/ˈfʌnfeə/",
+    "meaning": "ko‘chma attraksionlar sayli",
+    "example": "We left the funfair with an enormous teddy.",
+    "translation": "Attraksionlar saylidan ulkan o‘yinchoq ayiq bilan qaytdik.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "roller coaster",
+    "ipa": "/ˈrəʊlə ˌkəʊstə/",
+    "meaning": "tez yuradigan baland-past attraksion",
+    "example": "The roller coaster rearranged my carefully combed hair.",
+    "translation": "Tezkor attraksion tartibli taralgan sochimni qayta turmakladi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "Ferris wheel",
+    "ipa": "/ˈferɪs wiːl/",
+    "meaning": "charxpalak attraksioni",
+    "example": "The Ferris wheel showed us everyone's colourful hats.",
+    "translation": "Charxpalak bizga hammaning rang-barang shlyapalarini ko‘rsatdi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "sandcastle",
+    "ipa": "/ˈsændkɑːsəl/",
+    "meaning": "qumdan yasalgan qal’a",
+    "example": "Our sandcastle had a garage but no roof.",
+    "translation": "Qum qal’amizda garaj bor edi, lekin tom yo‘q edi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "hammock",
+    "ipa": "/ˈhæmək/",
+    "meaning": "osma to‘r belanchak",
+    "example": "Getting into the hammock was my daily exercise.",
+    "translation": "Osma belanchakka chiqish kunlik mashqim bo‘ldi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "frisbee",
+    "ipa": "/ˈfrɪzbi/",
+    "meaning": "uloqtirib o‘ynaladigan disk",
+    "example": "The frisbee landed on our sleeping uncle.",
+    "translation": "Uloqtirilgan disk uxlayotgan amakimiz ustiga tushdi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "paddling pool",
+    "ipa": "/ˈpædlɪŋ puːl/",
+    "meaning": "bolalar uchun sayoz hovuz",
+    "example": "The paddling pool was perfect for Dad's tired feet.",
+    "translation": "Bolalar hovuzi dadamning charchagan oyoqlariga ayni muddao edi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "deckchair",
+    "ipa": "/ˈdektʃeə/",
+    "meaning": "yig‘ma dam olish kursisi",
+    "example": "The deckchair folded before I finished sitting down.",
+    "translation": "O‘tirib bo‘lmasimdan yig‘ma kursi yig‘ilib qoldi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  },
+  {
+    "word": "waterslide",
+    "ipa": "/ˈwɔːtə slaɪd/",
+    "meaning": "suvli sirpanish attraksioni",
+    "example": "The waterslide delivered me without my brave expression.",
+    "translation": "Suvli attraksiondan tushganda yuzimdagi jasorat yo‘qolgan edi.",
+    "topic": "3-oy • Hordiq va ko‘ngilochar sayr"
+  }
+]

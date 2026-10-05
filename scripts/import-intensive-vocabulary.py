@@ -3,6 +3,9 @@ import json, sys
 from pathlib import Path
 source=Path(sys.argv[1])
 root=Path(__file__).resolve().parents[1]
+existing=root/'src/data/intensive-vocabulary.json'
+if existing.exists() and len(json.loads(existing.read_text(encoding='utf-8')))>500:
+    raise SystemExit('Full course already assembled. Use assemble-intensive.cjs; this legacy importer must not truncate the course.')
 rows=json.loads((source/'vocabulary-001-300-Memorable.json').read_text(encoding='utf-8'))
 for part in [4,5]:
     for line in (source/f'foundation-{part:02d}.txt').read_text(encoding='utf-8').splitlines():

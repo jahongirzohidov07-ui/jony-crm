@@ -1,0 +1,4002 @@
+[
+  {
+    "word": "rebuttal",
+    "ipa": "/rɪˈbʌtəl/",
+    "meaning": "qarshi dalil bilan rad etish",
+    "example": "Her rebuttal was brief: the supposedly missing file was already on the screen.",
+    "translation": "Uning qarshi dalili qisqa edi: go‘yoki yo‘qolgan fayl allaqachon ekranda turardi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "claim",
+    "ipa": "/kleɪm/",
+    "meaning": "tasdiqlanmagan da’vo",
+    "example": "His claim that he works best at night surprised his sleeping cat.",
+    "translation": "Uning tunda eng yaxshi ishlashi haqidagi da’vosi uxlayotgan mushugini hayron qoldirdi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "assertion",
+    "ipa": "/əˈsɜːʃən/",
+    "meaning": "qat’iy bildirilgan fikr",
+    "example": "The assertion sounded impressive until someone asked for evidence.",
+    "translation": "Kimdir dalil so‘raguncha bu qat’iy fikr ta’sirli eshitildi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "counterargument",
+    "ipa": "/ˈkaʊntəˌɑːɡjəmənt/",
+    "meaning": "qarshi dalil",
+    "example": "Her counterargument to the no-snack rule was a very loud stomach.",
+    "translation": "Uning tamaddini taqiqlash qoidasiga qarshi dalili juda baland ovozli qorni bo‘ldi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "objection",
+    "ipa": "/əbˈdʒekʃən/",
+    "meaning": "e’tiroz",
+    "example": "My only objection to the plan is its complete lack of lunch.",
+    "translation": "Rejaga yagona e’tirozim unda tushlik umuman yo‘qligi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "standpoint",
+    "ipa": "/ˈstændpɔɪnt/",
+    "meaning": "nuqtayi nazar",
+    "example": "From a beginner's standpoint, the manual looks like a secret code.",
+    "translation": "Boshlovchi nuqtayi nazaridan qo‘llanma maxfiy kodga o‘xshaydi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "perspective",
+    "ipa": "/pəˈspektɪv/",
+    "meaning": "qarash; nuqtayi nazar",
+    "example": "From the cat's perspective, this is a heated chair with a human problem.",
+    "translation": "Mushukning qarashicha, bu odam muammosi bor isitiladigan stul.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "case",
+    "ipa": "/keɪs/",
+    "meaning": "fikrni yoqlovchi dalillar majmui",
+    "example": "She made a strong case for quiet keyboards by typing one sentence.",
+    "translation": "U bitta gap yozib, ovozsiz klaviaturalarni yoqlovchi kuchli dalil keltirdi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "premise",
+    "ipa": "/ˈpremɪs/",
+    "meaning": "xulosa uchun boshlang‘ich fikr",
+    "example": "The plan rests on a false premise: nobody here arrives early.",
+    "translation": "Reja noto‘g‘ri boshlang‘ich fikrga tayanadi: bu yerda hech kim erta kelmaydi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "reasoning",
+    "ipa": "/ˈriːzənɪŋ/",
+    "meaning": "fikr yuritish; mulohaza",
+    "example": "His reasoning was clear, even if his diagram looked like noodles.",
+    "translation": "Chizmasi ugraga o‘xshasa ham, uning fikr yuritishi aniq edi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "logic",
+    "ipa": "/ˈlɒdʒɪk/",
+    "meaning": "mantiq",
+    "example": "I cannot follow the logic of buying a bigger bin instead of recycling.",
+    "translation": "Qayta ishlash o‘rniga kattaroq axlat qutisi olish mantig‘ini tushunmayapman.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "basis",
+    "ipa": "/ˈbeɪsɪs/",
+    "meaning": "asos",
+    "example": "One lucky guess is a poor basis for calling yourself an expert.",
+    "translation": "Bitta omadli taxmin o‘zingizni mutaxassis deb atash uchun zaif asos.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "justification",
+    "ipa": "/ˌdʒʌstɪfɪˈkeɪʃən/",
+    "meaning": "asoslash; oqlovchi sabab",
+    "example": "The justification for the huge screen was that everyone could read the tiny text.",
+    "translation": "Ulkan ekran olishga sabab mayda matnni hamma o‘qiy olishi edi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "illustration",
+    "ipa": "/ˌɪləˈstreɪʃən/",
+    "meaning": "fikrni ochib beruvchi misol",
+    "example": "The broken chair is a useful illustration of why cheap is not always economical.",
+    "translation": "Singan stul arzon narsa har doim tejamli bo‘lmasligiga yaxshi misol.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "example",
+    "ipa": "/ɪɡˈzɑːmpəl/",
+    "meaning": "misol",
+    "example": "Give an example that does not involve your brother stealing food.",
+    "translation": "Akangiz ovqat o‘g‘irlashiga aloqasi bo‘lmagan misol keltiring.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "instance",
+    "ipa": "/ˈɪnstəns/",
+    "meaning": "misol; alohida holat",
+    "example": "For instance, our silent alarm failed because it was too silent.",
+    "translation": "Masalan, ovozsiz signalimiz haddan tashqari jim bo‘lgani uchun ish bermadi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "distinction",
+    "ipa": "/dɪˈstɪŋkʃən/",
+    "meaning": "muhim farq",
+    "example": "There is a distinction between being busy and repeatedly opening your inbox.",
+    "translation": "Band bo‘lish bilan xatlar qutisini qayta-qayta ochish o‘rtasida farq bor.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "emphasis",
+    "ipa": "/ˈemfəsɪs/",
+    "meaning": "alohida urg‘u",
+    "example": "The emphasis is on accuracy, so speed will not rescue your wrong answer.",
+    "translation": "Asosiy urg‘u aniqlikka qaratilgan, shuning uchun tezlik noto‘g‘ri javobingizni qutqarmaydi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "relevance",
+    "ipa": "/ˈreləvəns/",
+    "meaning": "mavzuga aloqadorlik",
+    "example": "I question the relevance of your holiday photos to this budget meeting.",
+    "translation": "Ta’til suratlaringizning bu budjet yig‘ilishiga aloqadorligini shubha ostiga qo‘yaman.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "implication",
+    "ipa": "/ˌɪmplɪˈkeɪʃən/",
+    "meaning": "bevosita aytilmagan ma’no yoki oqibat",
+    "example": "The implication was clear: whoever broke the mug would buy a new one.",
+    "translation": "Yashirin ma’no aniq edi: krujkani kim sindirgan bo‘lsa, yangisini oladi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "interpretation",
+    "ipa": "/ɪnˌtɜːprɪˈteɪʃən/",
+    "meaning": "talqin",
+    "example": "His interpretation of tidy was to push everything under the desk.",
+    "translation": "Uning tartibli degan talqini hamma narsani stol tagiga surish edi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "inference",
+    "ipa": "/ˈɪnfərəns/",
+    "meaning": "dalildan chiqarilgan xulosa",
+    "example": "My inference from the crumbs was that the meeting had started without me.",
+    "translation": "Ushoqlardan chiqargan xulosam yig‘ilish mensiz boshlanganligi edi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "paradox",
+    "ipa": "/ˈpærədɒks/",
+    "meaning": "ziddiyatli ko‘rinsa ham asosli fikr yoki holat",
+    "example": "It is a paradox that our time-saving app takes so long to set up.",
+    "translation": "Vaqt tejovchi ilovamizni sozlash uzoq davom etishi paradoksdir.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "contradiction",
+    "ipa": "/ˌkɒntrəˈdɪkʃən/",
+    "meaning": "bir-biriga zidlik",
+    "example": "There is a contradiction between banning noise and installing that coffee grinder.",
+    "translation": "Shovqinni taqiqlash bilan o‘sha qahva maydalagichni o‘rnatish o‘rtasida ziddiyat bor.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "thesis",
+    "ipa": "/ˈθiːsɪs/",
+    "meaning": "asosiy ilmiy fikr; tezis",
+    "example": "Her thesis is that smaller classes help learning, not just reduce missing pencils.",
+    "translation": "Uning asosiy fikri shuki, kichik sinflar faqat yo‘qolgan qalamlarni kamaytirmay, o‘rganishga yordam beradi.",
+    "topic": "8-oy • Dalil va bahs tuzilishi"
+  },
+  {
+    "word": "justify",
+    "ipa": "/ˈdʒʌstɪfaɪ/",
+    "meaning": "asoslab bermoq",
+    "example": "Can you justify spending half the budget on a golden stapler?",
+    "translation": "Budjetning yarmini oltin steplerga sarflashni asoslab bera olasizmi?",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "demonstrate",
+    "ipa": "/ˈdemənstreɪt/",
+    "meaning": "amalda ko‘rsatmoq; isbotlamoq",
+    "example": "I will demonstrate the shortcut once the computer finishes its nap.",
+    "translation": "Kompyuter mizg‘ib bo‘lgach, qisqa yo‘lni ko‘rsataman.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "illustrate",
+    "ipa": "/ˈɪləstreɪt/",
+    "meaning": "misol bilan tushuntirmoq",
+    "example": "These two receipts illustrate how expensive my coffee habit has become.",
+    "translation": "Bu ikkita chek qahva odatim qanchalik qimmatga tushayotganini ko‘rsatadi.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "imply",
+    "ipa": "/ɪmˈplaɪ/",
+    "meaning": "bilvosita anglatmoq",
+    "example": "A full calendar does not imply that every meeting is useful.",
+    "translation": "To‘la taqvim har bir yig‘ilish foydali ekanini anglatmaydi.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "infer",
+    "ipa": "/ɪnˈfɜː/",
+    "meaning": "dalildan xulosa chiqarmoq",
+    "example": "We can infer from the empty plate that the biscuits were acceptable.",
+    "translation": "Bo‘sh likopchadan pechenyelar ma’qul bo‘lgan degan xulosaga kelishimiz mumkin.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "deduce",
+    "ipa": "/dɪˈdjuːs/",
+    "meaning": "mantiqan aniqlamoq",
+    "example": "She could deduce who used her desk from the unusually tidy pencils.",
+    "translation": "U g‘ayrioddiy tartibli qalamlardan stolini kim ishlatganini aniqlay oldi.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "prove",
+    "ipa": "/pruːv/",
+    "meaning": "isbotlamoq",
+    "example": "One successful attempt does not prove the machine likes you.",
+    "translation": "Bitta muvaffaqiyatli urinish uskuna sizni yoqtirishini isbotlamaydi.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "disprove",
+    "ipa": "/dɪsˈpruːv/",
+    "meaning": "noto‘g‘riligini isbotlamoq",
+    "example": "One rainy picnic can disprove the claim that this valley is always sunny.",
+    "translation": "Bitta yomg‘irli piknik bu vodiy doim quyoshli degan da’voni rad etishi mumkin.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "establish",
+    "ipa": "/ɪˈstæblɪʃ/",
+    "meaning": "aniqlab tasdiqlamoq",
+    "example": "First establish the facts, including whether the missing cake ever existed.",
+    "translation": "Avval faktlarni, jumladan, yo‘qolgan tort umuman bor bo‘lganini aniqlang.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "confirm",
+    "ipa": "/kənˈfɜːm/",
+    "meaning": "tasdiqlamoq",
+    "example": "Please confirm the date before I arrive at an empty building again.",
+    "translation": "Men yana bo‘sh binoga kelib qolmasimdan sanani tasdiqlang.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "reject",
+    "ipa": "/rɪˈdʒekt/",
+    "meaning": "rad etmoq",
+    "example": "We had to reject the idea of holding the meeting in a hot-air balloon.",
+    "translation": "Yig‘ilishni havo sharida o‘tkazish g‘oyasini rad etishga majbur bo‘ldik.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "challenge",
+    "ipa": "/ˈtʃælɪndʒ/",
+    "meaning": "fikrning asosini shubha ostiga qo‘ymoq",
+    "example": "Challenge the claim politely, even if the chart looks like modern art.",
+    "translation": "Diagramma zamonaviy san’atga o‘xshasa ham, da’voni muloyimlik bilan shubha ostiga qo‘ying.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "assert",
+    "ipa": "/əˈsɜːt/",
+    "meaning": "ishonch bilan ta’kidlamoq",
+    "example": "He continues to assert that the plan is simple, despite its forty-page guide.",
+    "translation": "Qirq sahifalik qo‘llanmasiga qaramay, u reja oddiyligini ta’kidlashda davom etmoqda.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "interpret",
+    "ipa": "/ɪnˈtɜːprɪt/",
+    "meaning": "talqin qilmoq",
+    "example": "Do not interpret my silence as agreement; I am chewing.",
+    "translation": "Jimligimni rozilik deb talqin qilmang; ovqat chaynayapman.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "assess",
+    "ipa": "/əˈses/",
+    "meaning": "baholamoq",
+    "example": "We assess the proposal on its merits, not the colour of its folder.",
+    "translation": "Taklifni jildi rangiga emas, afzalliklariga qarab baholaymiz.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "rate",
+    "ipa": "/reɪt/",
+    "meaning": "baho bermoq; darajasini belgilamoq",
+    "example": "Rate the explanation for clarity, not for the speaker's impressive moustache.",
+    "translation": "Izohni so‘zlovchining ta’sirli mo‘yloviga emas, aniqligiga qarab baholang.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "judge",
+    "ipa": "/dʒʌdʒ/",
+    "meaning": "baho bermoq; xulosa qilmoq",
+    "example": "Do not judge the whole course by my first confused question.",
+    "translation": "Butun kursga mening ilk chalkash savolimga qarab baho bermang.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "approximate",
+    "ipa": "/əˈprɒksɪmeɪt/",
+    "meaning": "taxminan hisoblamoq",
+    "example": "We can approximate the cost without counting every paperclip twice.",
+    "translation": "Har bir qisqichni ikki marta sanamay xarajatni taxminan hisoblay olamiz.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "predict",
+    "ipa": "/prɪˈdɪkt/",
+    "meaning": "oldindan aytmoq",
+    "example": "Nobody could predict that the quietest person would win the debate.",
+    "translation": "Eng kamgap odam bahsda yutishini hech kim oldindan ayta olmadi.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "anticipate",
+    "ipa": "/ænˈtɪsɪpeɪt/",
+    "meaning": "oldindan kutmoq; hisobga olmoq",
+    "example": "We anticipate questions about the cost, especially from the person holding the calculator.",
+    "translation": "Narx haqidagi savollarni, ayniqsa kalkulyator ushlab turgan odamdan kutyapmiz.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "identify",
+    "ipa": "/aɪˈdentɪfaɪ/",
+    "meaning": "aniqlamoq; tanib topmoq",
+    "example": "Identify the main issue before we spend an hour discussing the font.",
+    "translation": "Shriftni bir soat muhokama qilishimizdan oldin asosiy masalani aniqlang.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "distinguish",
+    "ipa": "/dɪˈstɪŋɡwɪʃ/",
+    "meaning": "farqini ajratmoq",
+    "example": "Can you distinguish a fact from a very confident guess?",
+    "translation": "Faktni juda ishonchli aytilgan taxmindan ajrata olasizmi?",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "contrast",
+    "ipa": "/kənˈtrɑːst/",
+    "meaning": "farqlarini qiyoslamoq",
+    "example": "Contrast the two plans, especially the one that includes a flying office.",
+    "translation": "Ikki rejaning, ayniqsa uchar ofisni o‘z ichiga olganining farqlarini qiyoslang.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "emphasise",
+    "ipa": "/ˈemfəsaɪz/",
+    "meaning": "alohida ta’kidlamoq",
+    "example": "I must emphasise that optional does not mean secretly compulsory.",
+    "translation": "Ixtiyoriy yashirincha majburiy degani emasligini ta’kidlashim kerak.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "concede",
+    "ipa": "/kənˈsiːd/",
+    "meaning": "istamay bo‘lsa ham tan olmoq",
+    "example": "I concede that your simpler solution does not need my excellent diagram.",
+    "translation": "Oddiyroq yechimingizga mening ajoyib chizmam kerak emasligini tan olaman.",
+    "topic": "8-oy • Dalillash va xulosa chiqarish"
+  },
+  {
+    "word": "define",
+    "ipa": "/dɪˈfaɪn/",
+    "meaning": "aniq ta’riflamoq",
+    "example": "Define success before declaring yourself the champion of unfinished projects.",
+    "translation": "Tugallanmagan loyihalar chempioni deb e’lon qilishdan oldin muvaffaqiyatni ta’riflang.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "specify",
+    "ipa": "/ˈspesɪfaɪ/",
+    "meaning": "aniq ko‘rsatmoq",
+    "example": "Specify the number of chairs unless you want one enormous sofa.",
+    "translation": "Bitta ulkan divan xohlamasangiz, stullar sonini aniq ko‘rsating.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "indicate",
+    "ipa": "/ˈɪndɪkeɪt/",
+    "meaning": "ko‘rsatmoq; bildirmoq",
+    "example": "These figures indicate growth, although the accountant is not dancing yet.",
+    "translation": "Bu raqamlar o‘sishni ko‘rsatadi, ammo hisobchi hali raqsga tushayotgani yo‘q.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "state",
+    "ipa": "/steɪt/",
+    "meaning": "aniq bayon qilmoq",
+    "example": "State your main point before the audience starts studying the ceiling.",
+    "translation": "Tinglovchilar shiftni o‘rganishni boshlamasidan asosiy fikringizni ayting.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "express",
+    "ipa": "/ɪkˈspres/",
+    "meaning": "ifoda etmoq",
+    "example": "She can express a complex idea without borrowing half the dictionary.",
+    "translation": "U lug‘atning yarmini qarzga olmasdan murakkab fikrni ifoda eta oladi.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "outline",
+    "ipa": "/ˈaʊtlaɪn/",
+    "meaning": "asosiy jihatlarini bayon qilmoq",
+    "example": "Outline the plan briefly; the details can have their own adventure later.",
+    "translation": "Rejaning asosiy jihatlarini qisqa ayting; tafsilotlar keyin alohida sarguzasht qilishi mumkin.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "select",
+    "ipa": "/sɪˈlekt/",
+    "meaning": "tanlab olmoq",
+    "example": "Select the strongest example, not the one with the funniest photograph.",
+    "translation": "Eng kulgili suratlisini emas, eng kuchli misolni tanlang.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "classify",
+    "ipa": "/ˈklæsɪfaɪ/",
+    "meaning": "turlarga ajratmoq",
+    "example": "We classify the responses by topic, which puts all the biscuit complaints together.",
+    "translation": "Javoblarni mavzu bo‘yicha ajratamiz, bu pechenye haqidagi barcha shikoyatlarni birlashtiradi.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "categorise",
+    "ipa": "/ˈkætəɡəraɪz/",
+    "meaning": "toifalarga ajratmoq",
+    "example": "Categorise the expenses before calling everything essential research.",
+    "translation": "Hamma narsani zarur tadqiqot deb atashdan oldin xarajatlarni toifalarga ajrating.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "arrange",
+    "ipa": "/əˈreɪndʒ/",
+    "meaning": "tartib bilan joylashtirmoq",
+    "example": "Arrange the paragraphs so the conclusion does not arrive before the question.",
+    "translation": "Xulosa savoldan oldin kelmasligi uchun xatboshilarni tartiblang.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "combine",
+    "ipa": "/kəmˈbaɪn/",
+    "meaning": "birlashtirmoq",
+    "example": "Combine the two ideas, but leave the unnecessary robot out.",
+    "translation": "Ikki g‘oyani birlashtiring, lekin keraksiz robotni tashqarida qoldiring.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "integrate",
+    "ipa": "/ˈɪntɪɡreɪt/",
+    "meaning": "bir butun tarkibiga qo‘shmoq",
+    "example": "Integrate the new evidence without turning the report into a patchwork blanket.",
+    "translation": "Hisobotni quroq ko‘rpaga aylantirmay yangi dalillarni unga qo‘shing.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "include",
+    "ipa": "/ɪnˈkluːd/",
+    "meaning": "ichiga kiritmoq",
+    "example": "Include the cost of batteries unless the machine runs on optimism.",
+    "translation": "Uskuna nekbinlik bilan ishlamasa, batareyalar narxini ham kiriting.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "exclude",
+    "ipa": "/ɪkˈskluːd/",
+    "meaning": "hisobga qo‘shmaslik; chiqarib tashlamoq",
+    "example": "Exclude the practice attempt, when I forgot to start the timer.",
+    "translation": "Taymerni yoqishni unutgan mashq urinishimni hisobga qo‘shmang.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "omit",
+    "ipa": "/əʊˈmɪt/",
+    "meaning": "tushirib qoldirmoq",
+    "example": "Omit the long story about your printer; one sentence is enough.",
+    "translation": "Printeringiz haqidagi uzun hikoyani tushirib qoldiring; bir gap yetarli.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "involve",
+    "ipa": "/ɪnˈvɒlv/",
+    "meaning": "o‘z ichiga olmoq; talab qilmoq",
+    "example": "The task will involve counting, not naming every paperclip.",
+    "translation": "Vazifa har bir qisqichga ism berishni emas, sanashni talab qiladi.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "contain",
+    "ipa": "/kənˈteɪn/",
+    "meaning": "tarkibida bo‘lmoq",
+    "example": "The appendix contains extra data and one surprisingly useful doodle.",
+    "translation": "Ilovada qo‘shimcha ma’lumotlar va hayratlanarli darajada foydali bitta chizgi bor.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "consist",
+    "ipa": "/kənˈsɪst/",
+    "meaning": "tashkil topmoq",
+    "example": "The sample will consist of volunteers who promise to stay awake.",
+    "translation": "Tanlanma uyg‘oq qolishga va’da bergan ko‘ngillilardan tashkil topadi.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "comprise",
+    "ipa": "/kəmˈpraɪz/",
+    "meaning": "o‘z ichiga olmoq; tashkil topmoq",
+    "example": "The report will comprise three sections, none called miscellaneous panic.",
+    "translation": "Hisobot uch bo‘limdan iborat bo‘ladi, hech biri turli vahimalar deb nomlanmaydi.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "represent",
+    "ipa": "/ˌreprɪˈzent/",
+    "meaning": "ifodalamoq; vakili bo‘lmoq",
+    "example": "These ten answers cannot represent everyone in a city this large.",
+    "translation": "Bu o‘nta javob bunday katta shahardagi hammani ifodalay olmaydi.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "refer",
+    "ipa": "/rɪˈfɜː/",
+    "meaning": "murojaat qilmoq; havola bermoq",
+    "example": "Refer to the diagram when my explanation starts sounding like a weather report.",
+    "translation": "Izohim ob-havo xabariga o‘xshay boshlasa, chizmaga qarang.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "cite",
+    "ipa": "/saɪt/",
+    "meaning": "dalil sifatida manba keltirmoq",
+    "example": "Cite a reliable source rather than a cousin who sounds certain.",
+    "translation": "Ishonchli gapiradigan amakivachchani emas, ishonchli manbani keltiring.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "quote",
+    "ipa": "/kwəʊt/",
+    "meaning": "aynan ko‘chirma keltirmoq",
+    "example": "Quote the sentence accurately, even if you think you can improve the joke.",
+    "translation": "Hazilni yaxshilay olaman deb o‘ylasangiz ham, gapni aynan keltiring.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "extract",
+    "ipa": "/ɪkˈstrækt/",
+    "meaning": "kerakli ma’lumotni ajratib olmoq",
+    "example": "Extract the key figures without copying the entire mountain of tables.",
+    "translation": "Butun jadval tog‘ini ko‘chirmasdan asosiy raqamlarni ajratib oling.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "elaborate",
+    "ipa": "/ɪˈlæbəreɪt/",
+    "meaning": "batafsil tushuntirmoq",
+    "example": "Please elaborate on the idea, but let the introduction retire.",
+    "translation": "Iltimos, g‘oyani batafsil tushuntiring, lekin kirishni nafaqaga chiqaring.",
+    "topic": "8-oy • Akademik bayon amallari"
+  },
+  {
+    "word": "assessment",
+    "ipa": "/əˈsesmənt/",
+    "meaning": "baholash",
+    "example": "My assessment of the plan improved after someone added a lunch break.",
+    "translation": "Kimdir tushlik tanaffusini qo‘shgach, rejaga bergan bahom yaxshilandi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "evaluation",
+    "ipa": "/ɪˌvæljuˈeɪʃən/",
+    "meaning": "har tomonlama baholash",
+    "example": "The evaluation revealed that users loved the colour but could not find the menu.",
+    "translation": "Baholash foydalanuvchilar rangni yoqtirib, menyuni topa olmaganini ko‘rsatdi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "criterion",
+    "ipa": "/kraɪˈtɪəriən/",
+    "meaning": "baholash mezoni",
+    "example": "Cost is one criterion; whether the thing works is another.",
+    "translation": "Narx bir mezon, buyumning ishlashi esa boshqa mezon.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "standard",
+    "ipa": "/ˈstændəd/",
+    "meaning": "talab darajasi; standart",
+    "example": "Our standard is high enough to exclude tables with only two legs.",
+    "translation": "Talab darajamiz ikki oyoqli stollarni qabul qilmaslik uchun yetarlicha yuqori.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "quality",
+    "ipa": "/ˈkwɒləti/",
+    "meaning": "sifat",
+    "example": "The quality of the argument matters more than the quality of the suit.",
+    "translation": "Dalilning sifati kostyum sifatidan muhimroq.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "merit",
+    "ipa": "/ˈmerɪt/",
+    "meaning": "munosib jihat; afzallik",
+    "example": "The idea has merit, even if its name sounds like a breakfast cereal.",
+    "translation": "Nomi nonushta yormasiga o‘xshasa ham, g‘oyaning yaxshi jihati bor.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "worth",
+    "ipa": "/wɜːθ/",
+    "meaning": "arziydigan",
+    "example": "This report is worth reading, preferably before the meeting about it.",
+    "translation": "Bu hisobotni, yaxshisi u haqidagi yig‘ilishdan oldin o‘qishga arziydi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "rating",
+    "ipa": "/ˈreɪtɪŋ/",
+    "meaning": "berilgan baho; reyting",
+    "example": "The tool received a high rating from everyone except the person who read its instructions backwards.",
+    "translation": "Ko‘rsatmalarini teskari o‘qigan odamdan tashqari hamma vositaga yuqori baho berdi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "significance",
+    "ipa": "/sɪɡˈnɪfɪkəns/",
+    "meaning": "muhimlik; ahamiyat",
+    "example": "We missed the significance of the extra zero until the bill arrived.",
+    "translation": "Hisob kelguncha ortiqcha nolning ahamiyatini sezmadik.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "importance",
+    "ipa": "/ɪmˈpɔːtəns/",
+    "meaning": "muhimlik",
+    "example": "The importance of a backup is easiest to explain after a coffee spill.",
+    "translation": "Zaxira nusxaning muhimligini qahva to‘kilgandan keyin tushuntirish eng oson.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "advantage",
+    "ipa": "/ədˈvɑːntɪdʒ/",
+    "meaning": "afzallik",
+    "example": "One advantage of a short speech is that people remember how it started.",
+    "translation": "Qisqa nutqning bir afzalligi odamlar uning qanday boshlanganini eslaydi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "disadvantage",
+    "ipa": "/ˌdɪsədˈvɑːntɪdʒ/",
+    "meaning": "salbiy jihat; kamchilik",
+    "example": "The disadvantage of this tiny keyboard is my very ordinary fingers.",
+    "translation": "Bu mitti klaviaturaning kamchiligi mening oddiy barmoqlarimga mos emasligi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "limitation",
+    "ipa": "/ˌlɪmɪˈteɪʃən/",
+    "meaning": "imkoniyat chegarasi; cheklanish",
+    "example": "The study has one limitation: all the volunteers are my cousins.",
+    "translation": "Tadqiqotning bitta cheklanishi bor: barcha ko‘ngillilar amakivachchalarim.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "restriction",
+    "ipa": "/rɪˈstrɪkʃən/",
+    "meaning": "qo‘yilgan cheklov",
+    "example": "The word restriction forced me to remove two jokes and half an introduction.",
+    "translation": "So‘zlar soni cheklovi meni ikki hazil va kirishning yarmini olib tashlashga majbur qildi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "exception",
+    "ipa": "/ɪkˈsepʃən/",
+    "meaning": "istisno",
+    "example": "Every file is labelled, with the exception of the one called mysterious thing.",
+    "translation": "Sirli narsa deb atalganidan tashqari har bir fayl belgilangan.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "defect",
+    "ipa": "/ˈdiːfekt/",
+    "meaning": "nuqson",
+    "example": "A small defect in the logic turned one missing pencil into a national crisis.",
+    "translation": "Mantiqdagi kichik nuqson bitta yo‘qolgan qalamni milliy inqirozga aylantirdi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "shortcoming",
+    "ipa": "/ˈʃɔːtˌkʌmɪŋ/",
+    "meaning": "kamchilik",
+    "example": "The main shortcoming of the guide is that it forgets beginners exist.",
+    "translation": "Qo‘llanmaning asosiy kamchiligi boshlovchilar borligini unutishidir.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "correctness",
+    "ipa": "/kəˈrektnəs/",
+    "meaning": "to‘g‘rilik; xatosizlik",
+    "example": "The correctness of an answer does not depend on how many times you underline it.",
+    "translation": "Javobning to‘g‘riligi tagiga necha marta chizishingizga bog‘liq emas.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "validity",
+    "ipa": "/vəˈlɪdəti/",
+    "meaning": "asoslilik; haqiqiylik",
+    "example": "We questioned the validity of a survey answered only by the organisers.",
+    "translation": "Faqat tashkilotchilar javob bergan so‘rovning asosliligini shubha ostiga qo‘ydik.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "reliability",
+    "ipa": "/rɪˌlaɪəˈbɪləti/",
+    "meaning": "ishonchlilik",
+    "example": "The clock's reliability declined after it fell into the fish tank.",
+    "translation": "Soat akvariumga tushganidan keyin uning ishonchliligi pasaydi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "effectiveness",
+    "ipa": "/ɪˈfektɪvnəs/",
+    "meaning": "samaradorlik; maqsadga erishish darajasi",
+    "example": "The effectiveness of the reminder was obvious when everyone finally arrived.",
+    "translation": "Hamma nihoyat kelganda eslatmaning samaradorligi ayon bo‘ldi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "practicality",
+    "ipa": "/ˌpræktɪˈkæləti/",
+    "meaning": "amalda qo‘llashga yaroqlilik",
+    "example": "We questioned the practicality of a desk that needs its own parking space.",
+    "translation": "Alohida to‘xtash joyi kerak bo‘lgan stolning amaliy yaroqliligini shubha ostiga qo‘ydik.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "usefulness",
+    "ipa": "/ˈjuːsfəlnəs/",
+    "meaning": "foydalilik",
+    "example": "The usefulness of the map was limited by its missing street names.",
+    "translation": "Xaritaning foydaliligi ko‘cha nomlari yo‘qligi bilan cheklangan edi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "suitability",
+    "ipa": "/ˌsuːtəˈbɪləti/",
+    "meaning": "moslik; muvofiqlik",
+    "example": "We checked the chair's suitability for adults before ordering fifty tiny ones.",
+    "translation": "Ellikta mitti stul buyurtma qilishdan oldin kattalarga mosligini tekshirdik.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "excellence",
+    "ipa": "/ˈeksələns/",
+    "meaning": "a’lo sifat; yuksak daraja",
+    "example": "Excellence does not require a gold border on every page.",
+    "translation": "A’lo sifat har bir sahifada oltin hoshiya bo‘lishini talab qilmaydi.",
+    "topic": "8-oy • Baholash mezonlari"
+  },
+  {
+    "word": "concept",
+    "ipa": "/ˈkɒnsept/",
+    "meaning": "tushuncha",
+    "example": "The concept is simple, although the diagram seems determined to hide it.",
+    "translation": "Tushuncha oddiy, garchi chizma buni yashirishga qat’iy bel bog‘lagandek bo‘lsa ham.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "notion",
+    "ipa": "/ˈnəʊʃən/",
+    "meaning": "tasavvur; fikr",
+    "example": "He rejected the notion that a longer password needs a longer keyboard.",
+    "translation": "U uzunroq parolga uzunroq klaviatura kerak degan fikrni rad etdi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "essence",
+    "ipa": "/ˈesəns/",
+    "meaning": "mohiyat",
+    "example": "The essence of the idea is sharing information, not sharing a hundred confusing files.",
+    "translation": "G‘oyaning mohiyati yuzta chalkash faylni emas, ma’lumotni bo‘lishishdir.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "aspect",
+    "ipa": "/ˈæspekt/",
+    "meaning": "jihat",
+    "example": "The practical aspect of the plan received less attention than its shiny cover.",
+    "translation": "Rejaning amaliy jihatiga yaltiroq muqovasidan kamroq e’tibor berildi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "factor",
+    "ipa": "/ˈfæktə/",
+    "meaning": "omil",
+    "example": "Hunger was a major factor in our unusually quick decision.",
+    "translation": "Ochlik noodatiy tez qarorimizning muhim omili bo‘ldi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "part",
+    "ipa": "/pɑːt/",
+    "meaning": "qism; tarkibiy bo‘lak",
+    "example": "The hardest part of the argument is explaining why the easy part took three hours.",
+    "translation": "Dalilning eng qiyin qismi oson qismi nega uch soat olganini tushuntirishdir.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "feature",
+    "ipa": "/ˈfiːtʃə/",
+    "meaning": "o‘ziga xos jihat",
+    "example": "The best feature of this plan is that ordinary humans can follow it.",
+    "translation": "Rejaning eng yaxshi jihati oddiy odamlar ham unga amal qila olishidir.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "characteristic",
+    "ipa": "/ˌkærəktəˈrɪstɪk/",
+    "meaning": "xos xususiyat",
+    "example": "One characteristic of his explanations is their complete lack of endings.",
+    "translation": "Uning izohlariga xos bir xususiyat — ular umuman tugamaydi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "property",
+    "ipa": "/ˈprɒpəti/",
+    "meaning": "xossa; xususiyat",
+    "example": "A useful property of this material is that it survives my clumsy testing.",
+    "translation": "Bu materialning foydali xossasi mening beso‘naqay sinovlarimga chidashidir.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "structure",
+    "ipa": "/ˈstrʌktʃə/",
+    "meaning": "tuzilish",
+    "example": "The structure of your essay should be clearer than your bedroom floor.",
+    "translation": "Inshongiz tuzilishi yotoqxonangiz polidan ko‘ra aniqroq bo‘lishi kerak.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "framework",
+    "ipa": "/ˈfreɪmwɜːk/",
+    "meaning": "asosiy tuzilma; tizimli asos",
+    "example": "The framework gives our ideas somewhere to live besides sticky notes.",
+    "translation": "Bu tuzilma g‘oyalarimizga yopishqoq qog‘ozlardan boshqa joyda yashash imkonini beradi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "system",
+    "ipa": "/ˈsɪstəm/",
+    "meaning": "tizim",
+    "example": "Our filing system works perfectly until someone files something.",
+    "translation": "Kimdir hujjat joylamaguncha, hujjat saqlash tizimimiz mukammal ishlaydi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "context",
+    "ipa": "/ˈkɒntekst/",
+    "meaning": "mazmunni tushunishga yordam beruvchi vaziyat",
+    "example": "Without context, that sentence makes me sound like a professional biscuit thief.",
+    "translation": "Kontekstsiz o‘sha gap meni professional pechenye o‘g‘risidek ko‘rsatadi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "circumstance",
+    "ipa": "/ˈsɜːkəmstəns/",
+    "meaning": "vaziyatga ta’sir qiluvchi holat",
+    "example": "One unusual circumstance was that our judge was also the only contestant.",
+    "translation": "Bitta noodatiy holat shuki, hakamimiz yagona ishtirokchi ham edi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "situation",
+    "ipa": "/ˌsɪtʃuˈeɪʃən/",
+    "meaning": "vaziyat",
+    "example": "The situation improved when we realised the door opened outwards.",
+    "translation": "Eshik tashqariga ochilishini tushunganimizda vaziyat yaxshilandi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "condition",
+    "ipa": "/kənˈdɪʃən/",
+    "meaning": "shart",
+    "example": "I agreed on one condition: the meeting must end before my birthday.",
+    "translation": "Bir shart bilan rozi bo‘ldim: yig‘ilish tug‘ilgan kunimdan oldin tugashi kerak.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "issue",
+    "ipa": "/ˈɪʃuː/",
+    "meaning": "muhokama talab qiladigan masala",
+    "example": "The main issue is time, not whether the chart should be turquoise.",
+    "translation": "Asosiy masala diagrammaning feruza rang bo‘lishi emas, vaqt.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "matter",
+    "ipa": "/ˈmætə/",
+    "meaning": "masala; ish",
+    "example": "This is a matter of accuracy, so approximately your birthday will not do.",
+    "translation": "Bu aniqlik masalasi, shuning uchun taxminiy tug‘ilgan kuningiz yaramaydi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "theme",
+    "ipa": "/θiːm/",
+    "meaning": "asosiy mavzu",
+    "example": "The theme of the talk was simplicity, hidden inside ninety slides.",
+    "translation": "Nutqning mavzusi soddalik edi, u to‘qson slayd ichiga yashirilgandi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "category",
+    "ipa": "/ˈkætəɡəri/",
+    "meaning": "toifa",
+    "example": "These answers belong in the category called creative but incorrect.",
+    "translation": "Bu javoblar ijodiy, ammo noto‘g‘ri deb ataladigan toifaga kiradi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "association",
+    "ipa": "/əˌsəʊsiˈeɪʃən/",
+    "meaning": "bog‘liqlik; aloqadorlik",
+    "example": "An association between coffee and late work does not explain which causes which.",
+    "translation": "Qahva bilan kech ishlash orasidagi bog‘liqlik qaysi biri qaysisiga sababligini tushuntirmaydi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "dimension",
+    "ipa": "/daɪˈmenʃən/",
+    "meaning": "masalaning tomoni; o‘lchami",
+    "example": "The cost adds another dimension to our discussion of a swimming-pool office.",
+    "translation": "Narx basseynli ofis haqidagi muhokamamizga yana bir jihat qo‘shadi.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "component",
+    "ipa": "/kəmˈpəʊnənt/",
+    "meaning": "tarkibiy qism",
+    "example": "The most important component of the argument is still missing.",
+    "translation": "Dalilning eng muhim tarkibiy qismi hali ham yo‘q.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "entity",
+    "ipa": "/ˈentəti/",
+    "meaning": "alohida mavjud birlik",
+    "example": "Treat each branch as a separate entity, not one enormous confused shop.",
+    "translation": "Har bir filialni ulkan chalkash do‘kon emas, alohida birlik sifatida ko‘ring.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "phenomenon",
+    "ipa": "/fəˈnɒmɪnən/",
+    "meaning": "hodisa",
+    "example": "The disappearance of office teaspoons is a phenomenon worth studying.",
+    "translation": "Ofis choy qoshiqlarining yo‘qolishi o‘rganishga arziydigan hodisa.",
+    "topic": "8-oy • Mavhum tushunchalar"
+  },
+  {
+    "word": "stimulus",
+    "ipa": "/ˈstɪmjələs/",
+    "meaning": "harakatni boshlatuvchi turtki",
+    "example": "One awkward question provided the stimulus for a much better explanation.",
+    "translation": "Bitta noqulay savol ancha yaxshiroq izohga turtki berdi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "after-effect",
+    "ipa": "/ˈɑːftər ɪˌfekt/",
+    "meaning": "keyin seziladigan ta’sir",
+    "example": "An unexpected after-effect of the shorter form was a sudden shortage of things to complain about.",
+    "translation": "Qisqaroq shaklning kutilmagan keyingi ta’siri shikoyat qiladigan narsalar birdan kamayishi bo‘ldi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "impact",
+    "ipa": "/ˈɪmpækt/",
+    "meaning": "kuchli ta’sir",
+    "example": "One missing comma had an unexpected impact on our sandwich order.",
+    "translation": "Bitta yetishmagan vergul sendvich buyurtmamizga kutilmagan ta’sir ko‘rsatdi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "influence",
+    "ipa": "/ˈɪnfluəns/",
+    "meaning": "ta’sir ko‘rsatmoq",
+    "example": "The smell of lunch can influence even a serious discussion.",
+    "translation": "Tushlik hidi hatto jiddiy muhokamaga ham ta’sir qilishi mumkin.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "affect",
+    "ipa": "/əˈfekt/",
+    "meaning": "ta’sir etmoq",
+    "example": "Poor lighting can affect your work and your opinion of everyone nearby.",
+    "translation": "Yomon yoritish ishingizga va yoningizdagilar haqidagi fikringizga ta’sir qilishi mumkin.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "trigger",
+    "ipa": "/ˈtrɪɡə/",
+    "meaning": "boshlanishiga sabab bo‘lmoq",
+    "example": "One question about chairs can trigger a surprisingly long debate.",
+    "translation": "Stullar haqidagi bitta savol hayratlanarli uzun bahsni boshlab berishi mumkin.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "prompt",
+    "ipa": "/prɒmpt/",
+    "meaning": "undamoq; sabab bo‘lmoq",
+    "example": "An empty chart should prompt a question, not a round of applause.",
+    "translation": "Bo‘sh diagramma qarsakka emas, savolga sabab bo‘lishi kerak.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "produce",
+    "ipa": "/prəˈdjuːs/",
+    "meaning": "natija hosil qilmoq",
+    "example": "Repeating the same error will not produce a better result.",
+    "translation": "Bir xil xatoni takrorlash yaxshiroq natija bermaydi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "create",
+    "ipa": "/kriˈeɪt/",
+    "meaning": "yaratmoq; yuzaga keltirmoq",
+    "example": "An unclear instruction can create more work than a broken printer.",
+    "translation": "Noaniq ko‘rsatma buzilgan printerdan ko‘proq ish yaratishi mumkin.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "by-product",
+    "ipa": "/ˈbaɪˌprɒdʌkt/",
+    "meaning": "asosiy natijadan tashqari qo‘shimcha mahsul yoki oqibat",
+    "example": "A useful by-product of the debate was discovering that we all wanted shorter emails.",
+    "translation": "Bahsning foydali qo‘shimcha natijasi hammamiz qisqaroq xatlar xohlashimizni bilish bo‘ldi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "origin",
+    "ipa": "/ˈɒrɪdʒɪn/",
+    "meaning": "kelib chiqish manbai",
+    "example": "The origin of the rumour was a joke nobody recognised as a joke.",
+    "translation": "Mish-mishning manbai hech kim hazil deb tushunmagan hazil edi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "mechanism",
+    "ipa": "/ˈmekənɪzəm/",
+    "meaning": "jarayonning ishlash usuli",
+    "example": "The mechanism is simple: press here and the box stops singing.",
+    "translation": "Ishlash usuli oddiy: shu yerni bosing, quti kuylashni to‘xtatadi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "response",
+    "ipa": "/rɪˈspɒns/",
+    "meaning": "javob; javob tariqasidagi harakat",
+    "example": "The response to shorter reports was immediate and extremely cheerful.",
+    "translation": "Qisqaroq hisobotlarga javob darhol va nihoyatda quvonchli bo‘ldi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "reaction",
+    "ipa": "/riˈækʃən/",
+    "meaning": "voqea yoki fikrga munosabat",
+    "example": "His reaction suggested that my estimate was missing several zeros.",
+    "translation": "Uning munosabati hisobimda bir nechta nol yetishmayotganini ko‘rsatdi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "interaction",
+    "ipa": "/ˌɪntərˈækʃən/",
+    "meaning": "o‘zaro ta’sir",
+    "example": "The interaction between these two settings explains our upside-down photos.",
+    "translation": "Bu ikki sozlamaning o‘zaro ta’siri teskari suratlarimizni tushuntiradi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "dependence",
+    "ipa": "/dɪˈpendəns/",
+    "meaning": "bog‘liqlik; qaramlik",
+    "example": "Our dependence on one charger became obvious when it disappeared.",
+    "translation": "Yagona quvvatlagichga qaramligimiz u yo‘qolganda ayon bo‘ldi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "lead to",
+    "ipa": "/ˈliːd tuː/",
+    "meaning": "biror natijaga olib kelmoq",
+    "example": "A clearer title can lead to fewer confused emails.",
+    "translation": "Aniqroq sarlavha kamroq chalkash xatlarga olib kelishi mumkin.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "result in",
+    "ipa": "/rɪˈzʌlt ɪn/",
+    "meaning": "natijasi bo‘lmoq; keltirib chiqarmoq",
+    "example": "Skipping the instructions may result in a very unusual bookshelf.",
+    "translation": "Ko‘rsatmalarni o‘tkazib yuborish juda g‘ayrioddiy javon paydo bo‘lishiga olib kelishi mumkin.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "result from",
+    "ipa": "/rɪˈzʌlt frɒm/",
+    "meaning": "sababli yuzaga kelmoq",
+    "example": "These errors result from haste, not a secret keyboard rebellion.",
+    "translation": "Bu xatolar yashirin klaviatura isyonidan emas, shoshqaloqlikdan kelib chiqadi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "bring about",
+    "ipa": "/brɪŋ əˈbaʊt/",
+    "meaning": "yuzaga keltirmoq",
+    "example": "A five-minute break can bring about a remarkable return of common sense.",
+    "translation": "Besh daqiqalik tanaffus sog‘lom fikrning ajoyib qaytishiga sabab bo‘lishi mumkin.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "stem from",
+    "ipa": "/ˈstem frɒm/",
+    "meaning": "kelib chiqmoq",
+    "example": "Our difficulties stem from one tiny word that nobody defined.",
+    "translation": "Qiyinchiliklarimiz hech kim ta’riflamagan bitta kichik so‘zdan kelib chiqadi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "due to",
+    "ipa": "/ˈdjuː tuː/",
+    "meaning": "sababli",
+    "example": "The delay was due to a printer that wanted individual attention.",
+    "translation": "Kechikish alohida e’tibor xohlagan printer sababli yuz berdi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "owing to",
+    "ipa": "/ˈəʊɪŋ tuː/",
+    "meaning": "tufayli",
+    "example": "Owing to a booking error, our serious debate took place in a playroom.",
+    "translation": "Bronlash xatosi tufayli jiddiy bahsimiz o‘yin xonasida o‘tdi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "chain",
+    "ipa": "/tʃeɪn/",
+    "meaning": "ketma-ket bog‘langan hodisalar qatori",
+    "example": "A chain of small mistakes ended with the invitations reaching the wrong town.",
+    "translation": "Kichik xatolar zanjiri taklifnomalar noto‘g‘ri shaharga yetishi bilan tugadi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "motive",
+    "ipa": "/ˈməʊtɪv/",
+    "meaning": "harakatning ichki sababi",
+    "example": "His motive for volunteering became clear when he asked about free lunch.",
+    "translation": "Bepul tushlik haqida so‘raganda uning ko‘ngilli bo‘lish sababi ayon bo‘ldi.",
+    "topic": "8-oy • Sabab va oqibat"
+  },
+  {
+    "word": "alter",
+    "ipa": "/ˈɔːltə/",
+    "meaning": "qisman o‘zgartirmoq",
+    "example": "We can alter the schedule without declaring a new era.",
+    "translation": "Yangi davr e’lon qilmasdan ham jadvalni o‘zgartira olamiz.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "modify",
+    "ipa": "/ˈmɒdɪfaɪ/",
+    "meaning": "moslab o‘zgartirmoq",
+    "example": "Modify the design so ordinary thumbs can reach the button.",
+    "translation": "Oddiy bosh barmoqlar tugmaga yetishi uchun dizaynni moslang.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "overhaul",
+    "ipa": "/ˌəʊvəˈhɔːl/",
+    "meaning": "tubdan qayta ko‘rib yaxshilamoq",
+    "example": "We should overhaul the process before it requires a form for requesting a form.",
+    "translation": "Shakl so‘rash uchun ham shakl kerak bo‘lmasidan jarayonni tubdan yangilashimiz kerak.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "switch over",
+    "ipa": "/swɪtʃ ˈəʊvə/",
+    "meaning": "boshqa tizim yoki usulga o‘tmoq",
+    "example": "We can switch over to the simpler method once everyone stops defending the complicated one.",
+    "translation": "Hamma murakkab usulni himoya qilishni to‘xtatgach, soddarog‘iga o‘ta olamiz.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "vary",
+    "ipa": "/ˈveəri/",
+    "meaning": "farq qilmoq; o‘zgarib turmoq",
+    "example": "The answers vary, especially when people complete the survey before coffee.",
+    "translation": "Javoblar, ayniqsa odamlar so‘rovni qahvadan oldin to‘ldirsa, farq qiladi.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "evolve",
+    "ipa": "/ɪˈvɒlv/",
+    "meaning": "asta-sekin rivojlanmoq",
+    "example": "Our simple idea began to evolve into a plan with far too many arrows.",
+    "translation": "Oddiy g‘oyamiz haddan ortiq strelkali rejaga aylana boshladi.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "emerge",
+    "ipa": "/ɪˈmɜːdʒ/",
+    "meaning": "paydo bo‘lmoq; ayonlashmoq",
+    "example": "A useful explanation may emerge once everyone stops speaking at once.",
+    "translation": "Hamma bir paytda gapirishni to‘xtatgach, foydali izoh paydo bo‘lishi mumkin.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "decline",
+    "ipa": "/dɪˈklaɪn/",
+    "meaning": "pasaymoq",
+    "example": "Interest can decline when the introduction reaches its tenth page.",
+    "translation": "Kirish o‘ninchi sahifaga yetganda qiziqish pasayishi mumkin.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "decrease",
+    "ipa": "/dɪˈkriːs/",
+    "meaning": "kamaymoq",
+    "example": "Errors decrease when I read my work before breakfast rather than during it.",
+    "translation": "Ishimni nonushta paytida emas, undan oldin o‘qisam, xatolar kamayadi.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "increase",
+    "ipa": "/ɪnˈkriːs/",
+    "meaning": "oshmoq; ko‘paytirmoq",
+    "example": "Adding more charts will not necessarily increase understanding.",
+    "translation": "Ko‘proq diagramma qo‘shish tushunishni albatta oshiravermaydi.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "tone down",
+    "ipa": "/təʊn ˈdaʊn/",
+    "meaning": "keskinligini yumshatmoq",
+    "example": "Tone down the claim unless you can prove this pen will change human history.",
+    "translation": "Bu ruchka insoniyat tarixini o‘zgartirishini isbotlay olmasangiz, da’voni yumshating.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "raise",
+    "ipa": "/reɪz/",
+    "meaning": "oshirmoq; ko‘tarmoq",
+    "example": "The discovery may raise expectations beyond what our tiny team can deliver.",
+    "translation": "Kashfiyot kutilmalarni kichik jamoamiz uddalay oladigan darajadan oshirishi mumkin.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "lower",
+    "ipa": "/ˈləʊə/",
+    "meaning": "pasaytirmoq",
+    "example": "Clear instructions lower the chance of anyone assembling the chair backwards.",
+    "translation": "Aniq ko‘rsatmalar kimningdir stulni teskari yig‘ish ehtimolini kamaytiradi.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "maintain",
+    "ipa": "/meɪnˈteɪn/",
+    "meaning": "bir holatda saqlamoq",
+    "example": "Maintain a steady pace rather than working like a frightened squirrel.",
+    "translation": "Qo‘rqqan olmaxondek ishlashdan ko‘ra barqaror sur’atni saqlang.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "preserve",
+    "ipa": "/prɪˈzɜːv/",
+    "meaning": "asl holicha saqlamoq",
+    "example": "Preserve the original meaning when you shorten my unusually long sentence.",
+    "translation": "G‘ayrioddiy uzun gapimni qisqartirganda asl ma’noni saqlang.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "retain",
+    "ipa": "/rɪˈteɪn/",
+    "meaning": "saqlab qolmoq",
+    "example": "We can retain the useful sections and release the others into retirement.",
+    "translation": "Foydali bo‘limlarni saqlab, qolganlarini nafaqaga chiqarishimiz mumkin.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "reinstate",
+    "ipa": "/ˌriːɪnˈsteɪt/",
+    "meaning": "qayta joriy qilmoq; tiklamoq",
+    "example": "We voted to reinstate the old rule after its replacement needed six pages of explanation.",
+    "translation": "Yangi qoida olti sahifa izoh talab qilgach, eskisini tiklashga ovoz berdik.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "reverse",
+    "ipa": "/rɪˈvɜːs/",
+    "meaning": "teskarisiga o‘zgartirmoq",
+    "example": "New evidence made us reverse our decision about the supposedly brilliant gadget.",
+    "translation": "Yangi dalil go‘yoki ajoyib qurilma haqidagi qarorimizni teskarisiga o‘zgartirishga majbur qildi.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "reform",
+    "ipa": "/rɪˈfɔːm/",
+    "meaning": "tizimni yaxshilab o‘zgartirmoq",
+    "example": "They plan to reform the process so one request does not need six signatures.",
+    "translation": "Bitta so‘rovga oltita imzo kerak bo‘lmasligi uchun jarayonni isloh qilmoqchilar.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "reshape",
+    "ipa": "/ˌriːˈʃeɪp/",
+    "meaning": "tuzilishini yangidan o‘zgartirmoq",
+    "example": "The feedback helped reshape our argument into something less like a maze.",
+    "translation": "Fikr-mulohazalar dalilimizni labirintga kamroq o‘xshaydigan shaklga keltirishga yordam berdi.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "renew",
+    "ipa": "/rɪˈnjuː/",
+    "meaning": "yangilamoq; qayta kuchaytirmoq",
+    "example": "A promising result can renew enthusiasm even on a wet Monday.",
+    "translation": "Umidli natija hatto yomg‘irli dushanbada ham ishtiyoqni yangilashi mumkin.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "extend",
+    "ipa": "/ɪkˈstend/",
+    "meaning": "uzaytirmoq; kengaytirmoq",
+    "example": "Please extend the deadline, not the list of additional tasks.",
+    "translation": "Qo‘shimcha vazifalar ro‘yxatini emas, muddatni uzaytiring.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "strengthen",
+    "ipa": "/ˈstreŋθən/",
+    "meaning": "kuchaytirmoq",
+    "example": "One reliable source can strengthen your argument more than ten exclamation marks.",
+    "translation": "Bitta ishonchli manba dalilingizni o‘nta undov belgisidan ko‘proq kuchaytirishi mumkin.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "weaken",
+    "ipa": "/ˈwiːkən/",
+    "meaning": "zaiflashtirmoq",
+    "example": "Ignoring the awkward facts will weaken your case, however loudly you speak.",
+    "translation": "Qanchalik baland gapirsangiz ham, noqulay faktlarni e’tiborsiz qoldirish dalilingizni zaiflashtiradi.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "stabilise",
+    "ipa": "/ˈsteɪbəlaɪz/",
+    "meaning": "barqarorlashtirmoq",
+    "example": "We expect the numbers to stabilise once everyone understands the question.",
+    "translation": "Hamma savolni tushungach, raqamlar barqarorlashishini kutyapmiz.",
+    "topic": "8-oy • O‘zgarish va barqarorlik"
+  },
+  {
+    "word": "similar",
+    "ipa": "/ˈsɪmɪlə/",
+    "meaning": "o‘xshash",
+    "example": "The two proposals are similar, apart from one having a helicopter budget.",
+    "translation": "Ikkala taklif o‘xshash, faqat birida vertolyot uchun budjet bor.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "different",
+    "ipa": "/ˈdɪfrənt/",
+    "meaning": "farqli; boshqacha",
+    "example": "A different title will not fix the same old problem.",
+    "translation": "Boshqa sarlavha o‘sha eski muammoni tuzatmaydi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "equal",
+    "ipa": "/ˈiːkwəl/",
+    "meaning": "teng",
+    "example": "Give both ideas equal attention, even if one arrives in a fancier folder.",
+    "translation": "Biri chiroyliroq jildda kelsa ham, ikkala g‘oyaga teng e’tibor bering.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "identical",
+    "ipa": "/aɪˈdentɪkəl/",
+    "meaning": "aynan bir xil",
+    "example": "The supposedly new plan is identical to yesterday's, including the spelling mistake.",
+    "translation": "Go‘yoki yangi reja kechagisi bilan, hatto imlo xatosigacha bir xil.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "equivalent",
+    "ipa": "/ɪˈkwɪvələnt/",
+    "meaning": "teng qiymatli; muqobil",
+    "example": "This shortcut gives an equivalent result without the twelve extra clicks.",
+    "translation": "Bu qisqa yo‘l o‘n ikki ortiqcha bosishsiz teng natija beradi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "comparable",
+    "ipa": "/ˈkɒmpərəbəl/",
+    "meaning": "qiyoslash mumkin bo‘lgan",
+    "example": "The results are comparable only if both groups had the same amount of coffee.",
+    "translation": "Natijalarni faqat ikkala guruh bir xil miqdorda qahva ichgan bo‘lsa qiyoslash mumkin.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "distinct",
+    "ipa": "/dɪˈstɪŋkt/",
+    "meaning": "alohida; aniq farqli",
+    "example": "These are two distinct issues, despite sharing one extremely long email.",
+    "translation": "Bitta juda uzun xatda bo‘lsa ham, bular ikkita alohida masala.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "diverse",
+    "ipa": "/daɪˈvɜːs/",
+    "meaning": "turli-tuman",
+    "example": "A diverse group provides more perspectives than five copies of me.",
+    "translation": "Turli odamlardan iborat guruh mening beshta nusxamdan ko‘proq qarash beradi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "absolute",
+    "ipa": "/ˈæbsəluːt/",
+    "meaning": "mutlaq",
+    "example": "Absolute certainty is difficult when your evidence is a blurry photograph.",
+    "translation": "Dalilingiz xira surat bo‘lsa, mutlaq ishonch qiyin.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "consistent",
+    "ipa": "/kənˈsɪstənt/",
+    "meaning": "izchil; bir-biriga mos",
+    "example": "Her answers are consistent, unlike the office temperature.",
+    "translation": "Uning javoblari ofis haroratidan farqli ravishda izchil.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "inconsistent",
+    "ipa": "/ˌɪnkənˈsɪstənt/",
+    "meaning": "bir-biriga mos kelmaydigan",
+    "example": "The instructions are inconsistent: one page says wait and the next says hurry.",
+    "translation": "Ko‘rsatmalar zid: bir sahifa kuting desa, keyingisi shoshiling deydi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "compatible",
+    "ipa": "/kəmˈpætəbəl/",
+    "meaning": "birga ishlashga yoki mos kelishga yaroqli",
+    "example": "Our aims are compatible, although our preferred meeting times certainly are not.",
+    "translation": "Maqsadlarimiz mos, ammo afzal ko‘rgan yig‘ilish vaqtlarimiz aniq mos emas.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "incompatible",
+    "ipa": "/ˌɪnkəmˈpætəbəl/",
+    "meaning": "bir-biriga mos kelmaydigan",
+    "example": "These two rules are incompatible unless employees can be in two places at once.",
+    "translation": "Xodimlar bir paytda ikki joyda bo‘lolmasa, bu ikki qoida bir-biriga mos emas.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "superior",
+    "ipa": "/suːˈpɪəriə/",
+    "meaning": "ustun; yaxshiroq",
+    "example": "A superior method should do more than have a longer name.",
+    "translation": "Ustun usul faqat uzunroq nomga ega bo‘lishdan ko‘proq ish qilishi kerak.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "inferior",
+    "ipa": "/ɪnˈfɪəriə/",
+    "meaning": "sifati pastroq",
+    "example": "The cheaper version is not automatically inferior, despite its modest box.",
+    "translation": "Oddiy qutisiga qaramay, arzonroq nusxa o‘z-o‘zidan sifatsizroq bo‘lib qolmaydi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "unique",
+    "ipa": "/juˈniːk/",
+    "meaning": "o‘ziga xos; yagona",
+    "example": "This is a unique solution, which is not always a compliment.",
+    "translation": "Bu o‘ziga xos yechim, bu esa har doim maqtov emas.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "common",
+    "ipa": "/ˈkɒmən/",
+    "meaning": "keng tarqalgan",
+    "example": "A common mistake is confusing a colourful chart with a clear one.",
+    "translation": "Rangli diagrammani tushunarli diagramma deb bilish keng tarqalgan xato.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "typical",
+    "ipa": "/ˈtɪpɪkəl/",
+    "meaning": "odatdagi; xos",
+    "example": "This is a typical example of solving a small problem with a giant machine.",
+    "translation": "Bu kichik muammoni ulkan uskuna bilan hal qilishning odatiy misoli.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "unusual",
+    "ipa": "/ʌnˈjuːʒuəl/",
+    "meaning": "noodatiy",
+    "example": "The unusual result made us check whether the sensor was attached to the cat.",
+    "translation": "Noodatiy natija datchik mushukka ulanganmi deb tekshirishimizga sabab bo‘ldi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "ordinary",
+    "ipa": "/ˈɔːdənəri/",
+    "meaning": "oddiy; odatdagi",
+    "example": "Explain the idea in ordinary language before inventing three abbreviations.",
+    "translation": "Uchta qisqartma o‘ylab topishdan oldin g‘oyani oddiy tilda tushuntiring.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "exceptional",
+    "ipa": "/ɪkˈsepʃənəl/",
+    "meaning": "odatdagidan ancha yuqori; ajoyib",
+    "example": "Her exceptional memory includes every promise I hoped she had forgotten.",
+    "translation": "Uning ajoyib xotirasi men unutgan deb umid qilgan har bir va’dani ham saqlaydi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "respective",
+    "ipa": "/rɪˈspektɪv/",
+    "meaning": "har biriga tegishli",
+    "example": "We returned to our respective tasks after jointly losing the same key.",
+    "translation": "Bir kalitni birgalikda yo‘qotgach, har birimiz o‘z vazifamizga qaytdik.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "mutual",
+    "ipa": "/ˈmjuːtʃuəl/",
+    "meaning": "o‘zaro; ikki tomonga tegishli",
+    "example": "Our mutual dislike of long meetings helped us reach agreement quickly.",
+    "translation": "Uzun yig‘ilishlarni ikkovimiz ham yoqtirmasligimiz tez kelishishimizga yordam berdi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "parallel",
+    "ipa": "/ˈpærəlel/",
+    "meaning": "o‘xshash tarzda birga kechadigan",
+    "example": "The teams ran parallel trials and discovered different ways to break the same button.",
+    "translation": "Jamoalar parallel sinovlar o‘tkazib, bir tugmani buzishning turli yo‘llarini topishdi.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "corresponding",
+    "ipa": "/ˌkɒrɪˈspɒndɪŋ/",
+    "meaning": "mos keluvchi",
+    "example": "Put each answer beside its corresponding question, not beside your favourite drawing.",
+    "translation": "Har bir javobni sevimli rasmingiz yoniga emas, mos savol yoniga qo‘ying.",
+    "topic": "8-oy • Qiyoslash va farqlash"
+  },
+  {
+    "word": "logical",
+    "ipa": "/ˈlɒdʒɪkəl/",
+    "meaning": "mantiqiy",
+    "example": "The logical next step is testing the idea, not ordering a statue of its inventor.",
+    "translation": "Keyingi mantiqiy qadam ixtirochiga haykal buyurtma qilish emas, g‘oyani sinash.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "rational",
+    "ipa": "/ˈræʃənəl/",
+    "meaning": "aqlga asoslangan; oqilona",
+    "example": "A rational decision is easier after lunch than during a biscuit shortage.",
+    "translation": "Oqilona qaror qabul qilish pechenye tanqisligida emas, tushlikdan keyin osonroq.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "objective",
+    "ipa": "/əbˈdʒektɪv/",
+    "meaning": "xolis",
+    "example": "Try to be objective about the design, even though your nephew drew it.",
+    "translation": "Dizaynni jiyaningiz chizgan bo‘lsa ham, xolis bo‘lishga harakat qiling.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "subjective",
+    "ipa": "/səbˈdʒektɪv/",
+    "meaning": "shaxsiy qarashga asoslangan",
+    "example": "The claim that purple is professional is rather subjective.",
+    "translation": "Binafsha rang professional degan da’vo ancha subyektiv.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "neutral",
+    "ipa": "/ˈnjuːtrəl/",
+    "meaning": "betaraf",
+    "example": "The chairperson stayed neutral during the fierce debate about chair colours.",
+    "translation": "Rais stul ranglari haqidagi qizg‘in bahsda betaraf qoldi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "biased",
+    "ipa": "/ˈbaɪəst/",
+    "meaning": "bir tomonga yon bosgan",
+    "example": "The survey may be biased because only pizza lovers received it.",
+    "translation": "So‘rov biryoqlama bo‘lishi mumkin, chunki uni faqat pitsa ishqibozlari olgan.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "balanced",
+    "ipa": "/ˈbælənst/",
+    "meaning": "har ikki tomonni hisobga olgan",
+    "example": "A balanced review mentions both the excellent screen and the tragic battery.",
+    "translation": "Xolis taqriz ajoyib ekranni ham, achinarli batareyani ham tilga oladi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "convincing",
+    "ipa": "/kənˈvɪnsɪŋ/",
+    "meaning": "ishontiradigan",
+    "example": "Her explanation was convincing until the missing file appeared on her desktop.",
+    "translation": "Yo‘qolgan fayl uning ish stolida paydo bo‘lguncha izohi ishonarli edi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "doubtful",
+    "ipa": "/ˈdaʊtfəl/",
+    "meaning": "shubhali; ishonchsiz",
+    "example": "It seems doubtful that twelve people will fit around this tiny table.",
+    "translation": "O‘n ikki odam bu kichik stol atrofiga sig‘ishi shubhali ko‘rinadi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "obvious",
+    "ipa": "/ˈɒbviəs/",
+    "meaning": "yaqqol; ayon",
+    "example": "The answer was obvious once someone switched the monitor on.",
+    "translation": "Kimdir monitorni yoqqach, javob ayon bo‘ldi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "apparent",
+    "ipa": "/əˈpærənt/",
+    "meaning": "ko‘rinib turgan yoki shunday tuyulgan",
+    "example": "The apparent success disappeared when we noticed the machine was unplugged.",
+    "translation": "Uskuna tokdan uzilganini payqaganimizda ko‘ringan muvaffaqiyat yo‘qqa chiqdi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "evident",
+    "ipa": "/ˈevɪdənt/",
+    "meaning": "ravshan; yaqqol ko‘rinadigan",
+    "example": "Her relief was evident when the final slide finally appeared.",
+    "translation": "Oxirgi slayd nihoyat paydo bo‘lganda uning yengil tortgani yaqqol sezildi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "explicit",
+    "ipa": "/ɪkˈsplɪsɪt/",
+    "meaning": "ochiq va aniq aytilgan",
+    "example": "The instructions were explicit: no glitter near the keyboard.",
+    "translation": "Ko‘rsatmalar aniq edi: klaviatura yonida yaltiroq kukun bo‘lmasin.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "implicit",
+    "ipa": "/ɪmˈplɪsɪt/",
+    "meaning": "bevosita aytilmagan; yashirin",
+    "example": "There was an implicit agreement that nobody would mention the burnt toast.",
+    "translation": "Kuygan tostni hech kim tilga olmasligi haqida aytilmagan kelishuv bor edi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "ambiguous",
+    "ipa": "/æmˈbɪɡjuəs/",
+    "meaning": "ikki xil talqin qilish mumkin bo‘lgan",
+    "example": "The ambiguous title made half the class bring paints instead of essays.",
+    "translation": "Ikki ma’noli sarlavha tufayli sinfning yarmi insho o‘rniga bo‘yoq olib keldi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "precise",
+    "ipa": "/prɪˈsaɪs/",
+    "meaning": "juda aniq",
+    "example": "Give a precise time, not sometime after the pigeons wake up.",
+    "translation": "Kabutarlar uyg‘ongandan keyin bir payt emas, aniq vaqt ayting.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "vague",
+    "ipa": "/veɪɡ/",
+    "meaning": "noaniq; mavhum",
+    "example": "His vague directions included the helpful phrase somewhere over there.",
+    "translation": "Uning noaniq yo‘l ko‘rsatmasida ana o‘sha tarafda degan foydali ibora bor edi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "relevant",
+    "ipa": "/ˈreləvənt/",
+    "meaning": "mavzuga tegishli",
+    "example": "Your example is entertaining, but is the tap-dancing hamster relevant?",
+    "translation": "Misolingiz qiziq, ammo raqs tushadigan xomyak mavzuga aloqadormi?",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "irrelevant",
+    "ipa": "/ɪˈreləvənt/",
+    "meaning": "mavzuga aloqasiz",
+    "example": "The colour of my socks is irrelevant to the accuracy of my calculation.",
+    "translation": "Paypog‘im rangi hisobimning aniqligiga aloqasiz.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "valid",
+    "ipa": "/ˈvælɪd/",
+    "meaning": "asosli; to‘g‘ri",
+    "example": "That is a valid criticism, even if it arrived on a napkin.",
+    "translation": "Salfetkaga yozilgan bo‘lsa ham, bu asosli tanqid.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "invalid",
+    "ipa": "/ɪnˈvælɪd/",
+    "meaning": "asossiz; yaroqsiz",
+    "example": "The conclusion is invalid because the two groups answered different questions.",
+    "translation": "Ikki guruh boshqa-boshqa savollarga javob bergani uchun xulosa asossiz.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "coherent",
+    "ipa": "/kəʊˈhɪərənt/",
+    "meaning": "izchil va tushunarli",
+    "example": "The explanation became coherent once the three unrelated dinosaurs were removed.",
+    "translation": "Aloqasiz uchta dinozavr olib tashlangach, izoh izchil bo‘ldi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "flawed",
+    "ipa": "/flɔːd/",
+    "meaning": "nuqsonli; xatosi bor",
+    "example": "The flawed method counted my second cup as a second person.",
+    "translation": "Nuqsonli usul ikkinchi piyolamni ikkinchi odam deb sanadi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "credible",
+    "ipa": "/ˈkredəbəl/",
+    "meaning": "ishonishga arziydigan",
+    "example": "A credible source usually offers more than a dramatic headline.",
+    "translation": "Ishonchli manba odatda shov-shuvli sarlavhadan ko‘proq narsa taqdim etadi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "misleading",
+    "ipa": "/ˌmɪsˈliːdɪŋ/",
+    "meaning": "noto‘g‘ri tasavvur uyg‘otadigan",
+    "example": "The misleading chart made a tiny increase look like a mountain.",
+    "translation": "Chalg‘ituvchi diagramma kichik o‘sishni tog‘dek ko‘rsatdi.",
+    "topic": "8-oy • Fikrning aniqligi va ishonarliligi"
+  },
+  {
+    "word": "essential",
+    "ipa": "/ɪˈsenʃəl/",
+    "meaning": "juda zarur",
+    "example": "A working alarm is essential if your plan depends on waking up.",
+    "translation": "Rejangiz uyg‘onishga bog‘liq bo‘lsa, ishlaydigan budilnik juda zarur.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "vital",
+    "ipa": "/ˈvaɪtəl/",
+    "meaning": "nihoyatda muhim",
+    "example": "This detail is vital: the meeting is online, not on the roof.",
+    "translation": "Bu tafsilot nihoyatda muhim: yig‘ilish tomda emas, onlayn bo‘ladi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "crucial",
+    "ipa": "/ˈkruːʃəl/",
+    "meaning": "hal qiluvchi ahamiyatga ega",
+    "example": "The crucial question is whether anyone actually needs this invention.",
+    "translation": "Hal qiluvchi savol — bu ixtiro biror kishiga haqiqatan kerakmi?",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "significant",
+    "ipa": "/sɪɡˈnɪfɪkənt/",
+    "meaning": "muhim; sezilarli",
+    "example": "There was a significant improvement when we stopped using invisible ink.",
+    "translation": "Ko‘rinmas siyohdan foydalanishni to‘xtatgach, sezilarli yaxshilanish bo‘ldi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "minor",
+    "ipa": "/ˈmaɪnə/",
+    "meaning": "kichik; uncha muhim bo‘lmagan",
+    "example": "A minor spelling error gave our product a rather unfortunate name.",
+    "translation": "Kichik imlo xatosi mahsulotimizga ancha noqulay nom berdi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "major",
+    "ipa": "/ˈmeɪdʒə/",
+    "meaning": "katta; asosiy",
+    "example": "The major difficulty is that nobody knows where the original file lives.",
+    "translation": "Asosiy qiyinchilik asl fayl qayerda yashashini hech kim bilmasligidir.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "central",
+    "ipa": "/ˈsentrəl/",
+    "meaning": "asosiy; markaziy",
+    "example": "The central argument should not hide in a footnote.",
+    "translation": "Asosiy dalil izoh ostiga yashirinmasligi kerak.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "basic",
+    "ipa": "/ˈbeɪsɪk/",
+    "meaning": "eng sodda; asosiy",
+    "example": "The basic idea fits on a postcard, unlike the explanation.",
+    "translation": "Asosiy g‘oya izohdan farqli ravishda otkritkaga sig‘adi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "fundamental",
+    "ipa": "/ˌfʌndəˈmentəl/",
+    "meaning": "tub; eng asosiy",
+    "example": "There is a fundamental difference between measuring and hoping.",
+    "translation": "O‘lchash bilan umid qilish o‘rtasida tub farq bor.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "primary",
+    "ipa": "/ˈpraɪməri/",
+    "meaning": "birlamchi; eng asosiy",
+    "example": "Our primary aim is clarity, not winning a prize for long words.",
+    "translation": "Asosiy maqsadimiz uzun so‘zlar uchun mukofot olish emas, aniqlik.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "secondary",
+    "ipa": "/ˈsekəndəri/",
+    "meaning": "ikkinchi darajali",
+    "example": "The font is a secondary concern when the report contains no facts.",
+    "translation": "Hisobotda fakt bo‘lmasa, shrift ikkinchi darajali masala.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "initial",
+    "ipa": "/ɪˈnɪʃəl/",
+    "meaning": "dastlabki",
+    "example": "My initial reaction was confusion, followed by a search for coffee.",
+    "translation": "Dastlabki munosabatim chalkashlik bo‘ldi, undan keyin qahva qidirdim.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "final",
+    "ipa": "/ˈfaɪnəl/",
+    "meaning": "yakuniy",
+    "example": "The final version should not be called final again seven times.",
+    "translation": "Yakuniy nusxa yana yetti marta yakuniy deb nomlanmasligi kerak.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "overall",
+    "ipa": "/ˌəʊvərˈɔːl/",
+    "meaning": "umumiy",
+    "example": "The overall result was good, despite the dramatic collapse of one chart.",
+    "translation": "Bitta diagrammaning keskin buzilishiga qaramay, umumiy natija yaxshi bo‘ldi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "general",
+    "ipa": "/ˈdʒenərəl/",
+    "meaning": "umumiy; keng qamrovli",
+    "example": "Give a general overview before describing every screw in the machine.",
+    "translation": "Uskunadagi har bir vintni tasvirlashdan oldin umumiy ma’lumot bering.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "specific",
+    "ipa": "/spəˈsɪfɪk/",
+    "meaning": "aniq bir narsaga oid",
+    "example": "We need a specific example, preferably one that happened outside your imagination.",
+    "translation": "Bizga aniq misol kerak, yaxshisi xayolingizdan tashqarida yuz bergani.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "particular",
+    "ipa": "/pəˈtɪkjələ/",
+    "meaning": "aynan shu; muayyan",
+    "example": "This particular method works only if nobody eats the counters.",
+    "translation": "Aynan shu usul sanash buyumlarini hech kim yemasa ishlaydi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "broad",
+    "ipa": "/brɔːd/",
+    "meaning": "keng; umumiy",
+    "example": "We have broad agreement, except about the date, place, cost, and purpose.",
+    "translation": "Sana, joy, xarajat va maqsaddan tashqari umumiy kelishuvimiz bor.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "comprehensive",
+    "ipa": "/ˌkɒmprɪˈhensɪv/",
+    "meaning": "barcha muhim jihatlarni qamrab olgan",
+    "example": "The comprehensive guide even explains what to do if the help button fails.",
+    "translation": "Keng qamrovli qo‘llanma hatto yordam tugmasi ishlamasa nima qilishni ham tushuntiradi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "limited",
+    "ipa": "/ˈlɪmɪtɪd/",
+    "meaning": "cheklangan",
+    "example": "Our limited evidence does not justify such unlimited confidence.",
+    "translation": "Cheklangan dalilimiz bunday cheksiz ishonchni oqlamaydi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "sufficient",
+    "ipa": "/səˈfɪʃənt/",
+    "meaning": "yetarli",
+    "example": "One clear paragraph is sufficient; the extra six can rest.",
+    "translation": "Bitta aniq xatboshi yetarli; ortiqcha oltitasi dam olishi mumkin.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "insufficient",
+    "ipa": "/ˌɪnsəˈfɪʃənt/",
+    "meaning": "yetarli bo‘lmagan",
+    "example": "The evidence is insufficient, however impressive the cover looks.",
+    "translation": "Muqova qanchalik ta’sirli ko‘rinsa ham, dalillar yetarli emas.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "adequate",
+    "ipa": "/ˈædɪkwət/",
+    "meaning": "talabni qondiradigan; yetarli",
+    "example": "The room is adequate for six people, provided nobody brings a grand piano.",
+    "translation": "Hech kim royal olib kelmasa, xona olti kishiga yetarli.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "appropriate",
+    "ipa": "/əˈprəʊpriət/",
+    "meaning": "mos; o‘rinli",
+    "example": "A pie chart is appropriate here, although an actual pie would be more popular.",
+    "translation": "Bu yerda doiraviy diagramma mos, ammo haqiqiy pirog ko‘proq yoqardi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "inappropriate",
+    "ipa": "/ˌɪnəˈprəʊpriət/",
+    "meaning": "noo‘rin; mos kelmaydigan",
+    "example": "A dancing emoji seemed inappropriate in the serious research summary.",
+    "translation": "Jiddiy tadqiqot xulosasida raqsga tushadigan emoji noo‘rin ko‘rindi.",
+    "topic": "8-oy • Muhimlik va yetarlilik"
+  },
+  {
+    "word": "slightly",
+    "ipa": "/ˈslaɪtli/",
+    "meaning": "biroz",
+    "example": "The second design is slightly better, mainly because it no longer falls over.",
+    "translation": "Ikkinchi dizayn biroz yaxshiroq, asosan endi ag‘darilmagani uchun.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "somewhat",
+    "ipa": "/ˈsʌmwɒt/",
+    "meaning": "birmuncha",
+    "example": "The explanation was somewhat clearer after we removed the singing example.",
+    "translation": "Kuylaydigan misolni olib tashlagach, izoh birmuncha ravshanlashdi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "rather",
+    "ipa": "/ˈrɑːðə/",
+    "meaning": "ancha; kutilganidan ko‘ra",
+    "example": "The report is rather long for something called a quick note.",
+    "translation": "Tezkor qayd deb atalgan narsa uchun hisobot ancha uzun.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "fairly",
+    "ipa": "/ˈfeəli/",
+    "meaning": "anchagina; o‘rtacha darajada",
+    "example": "The instructions are fairly clear if you already know how everything works.",
+    "translation": "Hamma narsa qanday ishlashini bilsangiz, ko‘rsatmalar anchagina tushunarli.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "quite",
+    "ipa": "/kwaɪt/",
+    "meaning": "ancha",
+    "example": "The idea is quite useful once you remove the unnecessary fireworks.",
+    "translation": "Keraksiz mushaklarni olib tashlasangiz, g‘oya ancha foydali.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "relatively",
+    "ipa": "/ˈrelətɪvli/",
+    "meaning": "nisbatan",
+    "example": "The task is relatively simple compared with explaining why we forgot it.",
+    "translation": "Vazifa uni nega unutganimizni tushuntirishga qaraganda nisbatan oson.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "comparatively",
+    "ipa": "/kəmˈpærətɪvli/",
+    "meaning": "qiyosan",
+    "example": "This version is comparatively short at only forty pages.",
+    "translation": "Bu nusxa bor-yo‘g‘i qirq sahifaligi bilan qiyosan qisqa.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "considerably",
+    "ipa": "/kənˈsɪdərəbli/",
+    "meaning": "ancha katta darajada",
+    "example": "The cost fell considerably when we removed the marble entrance.",
+    "translation": "Marmar kirish qismini olib tashlaganimizda xarajat ancha kamaydi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "substantially",
+    "ipa": "/səbˈstænʃəli/",
+    "meaning": "sezilarli darajada",
+    "example": "The revised plan is substantially cheaper and contains fewer imaginary machines.",
+    "translation": "Qayta ishlangan reja sezilarli arzonroq va unda kamroq xayoliy uskuna bor.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "significantly",
+    "ipa": "/sɪɡˈnɪfɪkəntli/",
+    "meaning": "sezilarli ravishda",
+    "example": "People answered significantly faster when the questions stopped rhyming.",
+    "translation": "Savollar qofiyalanmay qo‘ygach, odamlar sezilarli tezroq javob berishdi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "largely",
+    "ipa": "/ˈlɑːdʒli/",
+    "meaning": "asosan; katta qismi",
+    "example": "The problem was largely solved by moving the plug closer to the socket.",
+    "translation": "Muammo asosan vilkani rozetkaga yaqinlashtirish orqali hal qilindi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "mostly",
+    "ipa": "/ˈməʊstli/",
+    "meaning": "ko‘pincha; aksariyat qismi",
+    "example": "The responses were mostly positive, apart from one complaint about the biscuits.",
+    "translation": "Pechenye haqidagi bitta shikoyatdan tashqari javoblarning aksariyati ijobiy edi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "mainly",
+    "ipa": "/ˈmeɪnli/",
+    "meaning": "asosan",
+    "example": "The delay was mainly caused by our discussion about avoiding delays.",
+    "translation": "Kechikishga asosan kechikishlardan qochish haqidagi muhokamamiz sabab bo‘ldi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "partly",
+    "ipa": "/ˈpɑːtli/",
+    "meaning": "qisman",
+    "example": "The result was partly luck and partly reading the instructions.",
+    "translation": "Natija qisman omad, qisman ko‘rsatmalarni o‘qish tufayli bo‘ldi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "partially",
+    "ipa": "/ˈpɑːʃəli/",
+    "meaning": "qisman; to‘liq bo‘lmagan tarzda",
+    "example": "The question was partially answered before the microphone gave up.",
+    "translation": "Mikrofon taslim bo‘lishidan oldin savolga qisman javob berildi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "entirely",
+    "ipa": "/ɪnˈtaɪəli/",
+    "meaning": "butunlay; to‘laligicha",
+    "example": "The estimate was entirely wrong, but the handwriting was excellent.",
+    "translation": "Hisob butunlay noto‘g‘ri edi, lekin yozuv ajoyib edi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "completely",
+    "ipa": "/kəmˈpliːtli/",
+    "meaning": "to‘liq; mutlaqo",
+    "example": "I completely understand the method now that the diagram is the right way up.",
+    "translation": "Chizma to‘g‘ri aylantirilgach, usulni to‘liq tushundim.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "absolutely",
+    "ipa": "/ˈæbsəluːtli/",
+    "meaning": "mutlaqo; tamoman",
+    "example": "There is absolutely no evidence that my lucky mug improves accuracy.",
+    "translation": "Omadli krujkam aniqlikni oshirishiga mutlaqo dalil yo‘q.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "virtually",
+    "ipa": "/ˈvɜːtʃuəli/",
+    "meaning": "deyarli",
+    "example": "The two versions are virtually identical, except for a more expensive cover.",
+    "translation": "Qimmatroq muqovadan tashqari ikki nusxa deyarli bir xil.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "almost",
+    "ipa": "/ˈɔːlməʊst/",
+    "meaning": "deyarli",
+    "example": "The explanation almost made sense until the talking triangle appeared.",
+    "translation": "Gapiradigan uchburchak paydo bo‘lguncha izoh deyarli tushunarli edi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "nearly",
+    "ipa": "/ˈnɪəli/",
+    "meaning": "deyarli; sal qolib",
+    "example": "Nearly everyone agreed, including the person who had misunderstood the question.",
+    "translation": "Deyarli hamma, jumladan, savolni noto‘g‘ri tushungan odam ham rozi bo‘ldi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "barely",
+    "ipa": "/ˈbeəli/",
+    "meaning": "zo‘rg‘a",
+    "example": "The conclusion barely fits on the page because the introduction ate all the space.",
+    "translation": "Kirish hamma joyni yeb qo‘ygani uchun xulosa sahifaga zo‘rg‘a sig‘adi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "hardly",
+    "ipa": "/ˈhɑːdli/",
+    "meaning": "deyarli yo‘q; zo‘rg‘a",
+    "example": "One lucky result is hardly enough to announce a scientific revolution.",
+    "translation": "Bitta omadli natija ilmiy inqilob e’lon qilish uchun deyarli yetmaydi.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "merely",
+    "ipa": "/ˈmɪəli/",
+    "meaning": "shunchaki; xolos",
+    "example": "I merely asked for an example, not your complete life story.",
+    "translation": "Men shunchaki misol so‘radim, butun hayotingiz hikoyasini emas.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "strictly",
+    "ipa": "/ˈstrɪktli/",
+    "meaning": "qat’iy ravishda; aniq ma’noda",
+    "example": "Strictly speaking, a guess in a suit is still a guess.",
+    "translation": "Aniq aytganda, kostyum kiygan taxmin hamon taxmindir.",
+    "topic": "8-oy • Daraja va miqdorni aniqlashtirish"
+  },
+  {
+    "word": "however",
+    "ipa": "/haʊˈevə/",
+    "meaning": "biroq",
+    "example": "The plan is attractive; however, it requires a building we do not own.",
+    "translation": "Reja jozibali; biroq u bizga tegishli bo‘lmagan binoni talab qiladi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "nevertheless",
+    "ipa": "/ˌnevəðəˈles/",
+    "meaning": "shunga qaramay",
+    "example": "The first attempt failed; nevertheless, the team kept its biscuits and its hope.",
+    "translation": "Birinchi urinish muvaffaqiyatsiz bo‘ldi; shunga qaramay, jamoa pechenyesini ham, umidini ham saqladi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "nonetheless",
+    "ipa": "/ˌnʌnðəˈles/",
+    "meaning": "shunday bo‘lsa-da",
+    "example": "The evidence was limited; nonetheless, it gave us something better than a hunch.",
+    "translation": "Dalillar cheklangan edi; shunday bo‘lsa-da, ular bizga sezgidan yaxshiroq asos berdi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "therefore",
+    "ipa": "/ˈðeəfɔː/",
+    "meaning": "shuning uchun",
+    "example": "The key is missing; therefore, admiring the door will not get us inside.",
+    "translation": "Kalit yo‘q; shuning uchun eshikka qoyil qolish bizni ichkariga kiritmaydi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "thus",
+    "ipa": "/ðʌs/",
+    "meaning": "shu tariqa; demak",
+    "example": "We shortened the form, thus saving everyone several unnecessary sighs.",
+    "translation": "Shaklni qisqartirdik, shu tariqa hammani bir necha keraksiz xo‘rsinishdan qutqardik.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "hence",
+    "ipa": "/hens/",
+    "meaning": "shu sababli; shundan",
+    "example": "Nobody checked the address, hence our unexpected visit to a dance studio.",
+    "translation": "Hech kim manzilni tekshirmadi, shu sababli kutilmaganda raqs studiyasiga bordik.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "consequently",
+    "ipa": "/ˈkɒnsɪkwəntli/",
+    "meaning": "natijada",
+    "example": "The instructions omitted a page; consequently, our shelf had a mysterious extra leg.",
+    "translation": "Ko‘rsatmalarda bir sahifa yo‘q edi; natijada tokchamizning sirli ortiqcha oyog‘i bor edi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "accordingly",
+    "ipa": "/əˈkɔːdɪŋli/",
+    "meaning": "shunga muvofiq",
+    "example": "The budget is smaller, so we must adjust our helicopter plans accordingly.",
+    "translation": "Budjet kichikroq, shuning uchun vertolyot rejalarimizni shunga moslashtirishimiz kerak.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "moreover",
+    "ipa": "/mɔːrˈəʊvə/",
+    "meaning": "bundan tashqari",
+    "example": "The method is slow; moreover, it requires three people to hold one ruler.",
+    "translation": "Usul sekin; bundan tashqari, bitta chizg‘ichni ushlash uchun uch kishi kerak.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "furthermore",
+    "ipa": "/ˌfɜːðəˈmɔː/",
+    "meaning": "yana shuni aytish kerakki",
+    "example": "The design is affordable; furthermore, it does not need batteries to be a chair.",
+    "translation": "Dizayn hamyonbop; bundan tashqari, stul bo‘lishi uchun batareya kerak emas.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "besides",
+    "ipa": "/bɪˈsaɪdz/",
+    "meaning": "bundan tashqari",
+    "example": "We lack evidence; besides, your cousin's dream is not a reliable source.",
+    "translation": "Dalilimiz kam; bundan tashqari, amakivachchangizning tushi ishonchli manba emas.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "otherwise",
+    "ipa": "/ˈʌðəwaɪz/",
+    "meaning": "aks holda",
+    "example": "Label the samples; otherwise, tomorrow's research will become a guessing contest.",
+    "translation": "Namunalarga yorliq qo‘ying; aks holda ertangi tadqiqot topishmoq musobaqasiga aylanadi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "instead",
+    "ipa": "/ɪnˈsted/",
+    "meaning": "o‘rniga",
+    "example": "We could argue for an hour or test the idea instead.",
+    "translation": "Bir soat bahslashishimiz yoki buning o‘rniga g‘oyani sinashimiz mumkin.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "alternatively",
+    "ipa": "/ɔːlˈtɜːnətɪvli/",
+    "meaning": "boshqa yo‘l sifatida",
+    "example": "We can write a long report; alternatively, one clear diagram may do.",
+    "translation": "Uzun hisobot yozishimiz mumkin; boshqa yo‘l sifatida bitta aniq chizma yetishi mumkin.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "similarly",
+    "ipa": "/ˈsɪmɪləli/",
+    "meaning": "xuddi shunday",
+    "example": "The first group disliked the noise; similarly, the second group requested earplugs.",
+    "translation": "Birinchi guruh shovqinni yoqtirmadi; xuddi shunday, ikkinchi guruh quloq tiqinlarini so‘radi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "likewise",
+    "ipa": "/ˈlaɪkwaɪz/",
+    "meaning": "xuddi shuningdek",
+    "example": "Her summary was brief; likewise, mine left room for readers to breathe.",
+    "translation": "Uning xulosasi qisqa edi; xuddi shuningdek, menikisi ham o‘quvchilarga nafas olishga joy qoldirdi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "conversely",
+    "ipa": "/ˈkɒnvɜːsli/",
+    "meaning": "aksincha",
+    "example": "More detail can help experts; conversely, it may frighten beginners away.",
+    "translation": "Ko‘proq tafsilot mutaxassislarga yordam beradi; aksincha, boshlovchilarni qo‘rqitib yuborishi mumkin.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "whereas",
+    "ipa": "/ˌweərˈæz/",
+    "meaning": "holbuki; esa",
+    "example": "The old method needs ten steps, whereas the new one needs two and a biscuit.",
+    "translation": "Eski usulga o‘n qadam kerak, yangisiga esa ikki qadam va bitta pechenye.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "although",
+    "ipa": "/ɔːlˈðəʊ/",
+    "meaning": "garchi",
+    "example": "Although the answer is short, finding it took most of my weekend.",
+    "translation": "Javob qisqa bo‘lsa-da, uni topish dam olish kunimning ko‘p qismini oldi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "despite",
+    "ipa": "/dɪˈspaɪt/",
+    "meaning": "qaramay",
+    "example": "Despite the impressive title, the report mostly discusses missing teaspoons.",
+    "translation": "Ta’sirli sarlavhasiga qaramay, hisobot asosan yo‘qolgan choy qoshiqlarini muhokama qiladi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "meanwhile",
+    "ipa": "/ˈmiːnwaɪl/",
+    "meaning": "shu orada",
+    "example": "We debated the best method; meanwhile, Sara quietly finished the task.",
+    "translation": "Biz eng yaxshi usulni muhokama qildik; shu orada Sara jimgina vazifani tugatdi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "subsequently",
+    "ipa": "/ˈsʌbsɪkwəntli/",
+    "meaning": "keyinchalik; shundan so‘ng",
+    "example": "The error was spotted and subsequently blamed on a very innocent keyboard.",
+    "translation": "Xato aniqlandi va keyin ayb juda begunoh klaviaturaga yuklandi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "previously",
+    "ipa": "/ˈpriːviəsli/",
+    "meaning": "ilgari; avval",
+    "example": "Previously, we stored everything in a folder called find this later.",
+    "translation": "Ilgari hamma narsani keyin top deb nomlangan papkada saqlardik.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "eventually",
+    "ipa": "/ɪˈventʃuəli/",
+    "meaning": "oxir-oqibat",
+    "example": "Eventually, the committee agreed that the original idea was perfectly fine.",
+    "translation": "Oxir-oqibat qo‘mita dastlabki g‘oya juda yaxshi bo‘lganiga rozi bo‘ldi.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "ultimately",
+    "ipa": "/ˈʌltɪmətli/",
+    "meaning": "yakunida; pirovardida",
+    "example": "Ultimately, a useful answer matters more than an impressive throat-clearing introduction.",
+    "translation": "Oxir-oqibat foydali javob tomoq qirish bilan boshlangan ta’sirli kirishdan muhimroq.",
+    "topic": "8-oy • Fikrlarni bog‘lash"
+  },
+  {
+    "word": "scope",
+    "ipa": "/skəʊp/",
+    "meaning": "qamrov; ko‘lam",
+    "example": "The scope of the study does not include solving every problem in the universe.",
+    "translation": "Tadqiqot qamroviga koinotdagi har bir muammoni yechish kirmaydi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "extent",
+    "ipa": "/ɪkˈstent/",
+    "meaning": "daraja; ko‘lam",
+    "example": "We underestimated the extent of the confusion until someone brought a ladder.",
+    "translation": "Kimdir narvon olib kelguncha chalkashlik ko‘lamini past baholadik.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "range",
+    "ipa": "/reɪndʒ/",
+    "meaning": "doira; turli qiymatlar oralig‘i",
+    "example": "The responses cover a wide range, from sensible to wonderfully strange.",
+    "translation": "Javoblar oqilonadan ajoyib g‘alatigacha bo‘lgan keng doirani qamraydi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "proportion",
+    "ipa": "/prəˈpɔːʃən/",
+    "meaning": "nisbat; ulush",
+    "example": "A surprising proportion of the budget went on replacing lost pens.",
+    "translation": "Budjetning hayratlanarli ulushi yo‘qolgan ruchkalarni almashtirishga ketdi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "quantity",
+    "ipa": "/ˈkwɒntəti/",
+    "meaning": "miqdor",
+    "example": "The quantity of evidence matters less if all of it comes from one confused person.",
+    "translation": "Barcha dalil bitta chalkash odamdan kelsa, uning miqdori kamroq ahamiyatli.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "amount",
+    "ipa": "/əˈmaʊnt/",
+    "meaning": "miqdor",
+    "example": "The amount of detail should match the question, not your enthusiasm.",
+    "translation": "Tafsilot miqdori ishtiyoqingizga emas, savolga mos bo‘lishi kerak.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "number",
+    "ipa": "/ˈnʌmbə/",
+    "meaning": "son; miqdor",
+    "example": "The number of versions grew faster than our understanding of the problem.",
+    "translation": "Nusxalar soni muammoni tushunishimizdan tezroq o‘sdi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "regularity",
+    "ipa": "/ˌreɡjəˈlærəti/",
+    "meaning": "muntazamlik",
+    "example": "The regularity of these errors suggests a pattern, not a mischievous keyboard.",
+    "translation": "Bu xatolarning muntazamligi sho‘x klaviaturani emas, bir qonuniyatni ko‘rsatadi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "duration",
+    "ipa": "/djʊˈreɪʃən/",
+    "meaning": "davomiylik",
+    "example": "The duration of the experiment depended on how long the battery felt cooperative.",
+    "translation": "Tajriba davomiyligi batareya qancha vaqt hamkorlik qilishiga bog‘liq edi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "interval",
+    "ipa": "/ˈɪntəvəl/",
+    "meaning": "oraliq vaqt",
+    "example": "We checked the results at each interval, along with the remaining snacks.",
+    "translation": "Har bir vaqt oralig‘ida natijalarni ham, qolgan yeguliklarni ham tekshirdik.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "sequence",
+    "ipa": "/ˈsiːkwəns/",
+    "meaning": "ketma-ketlik",
+    "example": "The sequence matters: open the box before attempting to use the keyboard.",
+    "translation": "Ketma-ketlik muhim: klaviaturani ishlatishdan oldin qutini oching.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "distribution",
+    "ipa": "/ˌdɪstrɪˈbjuːʃən/",
+    "meaning": "taqsimlanish",
+    "example": "The distribution of tasks was uneven, especially near the person pretending to be busy.",
+    "translation": "Vazifalar notekis taqsimlandi, ayniqsa o‘zini band ko‘rsatgan odam atrofida.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "variation",
+    "ipa": "/ˌveəriˈeɪʃən/",
+    "meaning": "farqlanish; o‘zgarish",
+    "example": "Some variation is normal, unless every answer is a different planet.",
+    "translation": "Har bir javob boshqa sayyora bo‘lmasa, ma’lum farqlanish tabiiy.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "diversity",
+    "ipa": "/daɪˈvɜːsəti/",
+    "meaning": "xilma-xillik",
+    "example": "The diversity of opinions made the discussion useful and the summary difficult.",
+    "translation": "Fikrlar xilma-xilligi muhokamani foydali, xulosani esa qiyin qildi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "complexity",
+    "ipa": "/kəmˈpleksəti/",
+    "meaning": "murakkablik",
+    "example": "The complexity increased when someone suggested colour-coding the colour codes.",
+    "translation": "Kimdir rang kodlarini ham rang bilan belgilashni taklif qilganda murakkablik oshdi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "simplicity",
+    "ipa": "/sɪmˈplɪsəti/",
+    "meaning": "soddalik",
+    "example": "The simplicity of her answer made our enormous diagram look embarrassed.",
+    "translation": "Javobining soddaligi ulkan chizmamizni uyalgandek ko‘rsatdi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "clarity",
+    "ipa": "/ˈklærəti/",
+    "meaning": "ravshanlik; tushunarlilik",
+    "example": "Clarity improved after we stopped calling everything a thing.",
+    "translation": "Hamma narsani narsa deb atashni to‘xtatgach, ravshanlik oshdi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "ambiguity",
+    "ipa": "/ˌæmbɪˈɡjuːəti/",
+    "meaning": "ikki ma’nolilik; noaniqlik",
+    "example": "The ambiguity in the invitation explains why I arrived with painting equipment.",
+    "translation": "Taklifnomadagi ikki ma’nolilik nega bo‘yash asboblari bilan kelganimni tushuntiradi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "consistency",
+    "ipa": "/kənˈsɪstənsi/",
+    "meaning": "izchillik; bir xillik",
+    "example": "Consistency would be easier if the instructions did not change every Tuesday.",
+    "translation": "Ko‘rsatmalar har seshanba o‘zgarmasa, izchillik osonroq bo‘lardi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "continuity",
+    "ipa": "/ˌkɒntɪˈnjuːəti/",
+    "meaning": "uzluksizlik; davomiy bog‘liqlik",
+    "example": "The repeated example gives the essay continuity, although the duck is getting tired.",
+    "translation": "Takrorlanuvchi misol inshoga bog‘liqlik beradi, garchi o‘rdak charchayotgan bo‘lsa ham.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "stability",
+    "ipa": "/stəˈbɪləti/",
+    "meaning": "barqarorlik",
+    "example": "The stability of the results improved once we stopped moving the sensor.",
+    "translation": "Datchikni ko‘chirishni to‘xtatgach, natijalar barqarorligi yaxshilandi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "flexibility",
+    "ipa": "/ˌfleksəˈbɪləti/",
+    "meaning": "moslashuvchanlik",
+    "example": "Some flexibility is useful when your perfect plan meets a cancelled bus.",
+    "translation": "Mukammal rejangiz bekor qilingan avtobusga duch kelganda biroz moslashuvchanlik foydali.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "odds",
+    "ipa": "/ɒdz/",
+    "meaning": "ehtimol; imkon darajasi",
+    "example": "The odds of finishing early improve when we actually begin.",
+    "translation": "Haqiqatan boshlaganimizda erta tugatish ehtimoli oshadi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "likelihood",
+    "ipa": "/ˈlaɪklihʊd/",
+    "meaning": "ehtimol darajasi",
+    "example": "The likelihood of mistakes increases when the deadline approaches and the coffee disappears.",
+    "translation": "Muddat yaqinlashib, qahva tugaganda xato ehtimoli ortadi.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "possibility",
+    "ipa": "/ˌpɒsəˈbɪləti/",
+    "meaning": "imkon; ehtimol",
+    "example": "Consider the possibility that the simple explanation is actually correct.",
+    "translation": "Oddiy izoh haqiqatan to‘g‘ri bo‘lishi mumkinligini hisobga oling.",
+    "topic": "8-oy • Ko‘lam va miqdor tushunchalari"
+  },
+  {
+    "word": "insight",
+    "ipa": "/ˈɪnsaɪt/",
+    "meaning": "chuqur anglash; yangi tushuncha",
+    "example": "One beginner's question gave us more insight than our hour-long discussion.",
+    "translation": "Bitta boshlovchining savoli bir soatlik muhokamadan ko‘proq tushuncha berdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "comprehension",
+    "ipa": "/ˌkɒmprɪˈhenʃən/",
+    "meaning": "anglash; tushunib yetish",
+    "example": "The diagram improved comprehension until someone added fourteen mysterious arrows.",
+    "translation": "Kimdir o‘n to‘rtta sirli strelka qo‘shguncha chizma tushunishni yaxshiladi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "perception",
+    "ipa": "/pəˈsepʃən/",
+    "meaning": "idrok; narsani qabul qilish usuli",
+    "example": "The colourful cover changed my perception of a very ordinary report.",
+    "translation": "Rangli muqova juda oddiy hisobot haqidagi tasavvurimni o‘zgartirdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "recognition",
+    "ipa": "/ˌrekəɡˈnɪʃən/",
+    "meaning": "tanib olish",
+    "example": "Recognition of the error came just after we printed two hundred copies.",
+    "translation": "Xatoni ikki yuz nusxa chop etganimizdan sal keyin tanib oldik.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "realisation",
+    "ipa": "/ˌrɪəlaɪˈzeɪʃən/",
+    "meaning": "birdan anglash",
+    "example": "The realisation that we had measured the wrong table brought a thoughtful silence.",
+    "translation": "Noto‘g‘ri stolni o‘lchaganimizni anglash o‘ychan sukunat keltirdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "theorise",
+    "ipa": "/ˈθɪəraɪz/",
+    "meaning": "nazariy taxmin yuritmoq",
+    "example": "We could theorise all afternoon, or we could ask the person who built it.",
+    "translation": "Tushdan keyin davomida taxmin yuritishimiz yoki uni qurgan odamdan so‘rashimiz mumkin.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "speculation",
+    "ipa": "/ˌspekjəˈleɪʃən/",
+    "meaning": "yetarli dalilsiz taxmin",
+    "example": "Without data, the discussion is mostly speculation wearing a serious expression.",
+    "translation": "Ma’lumotsiz muhokama asosan jiddiy qiyofaga kirgan taxmindir.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "certainty",
+    "ipa": "/ˈsɜːtənti/",
+    "meaning": "aniq ishonch",
+    "example": "He spoke with certainty until the calculator politely disagreed.",
+    "translation": "Kalkulyator muloyimlik bilan qarshi chiqmaguncha u qat’iy ishonch bilan gapirdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "rethink",
+    "ipa": "/ˌriːˈθɪŋk/",
+    "meaning": "fikr yoki rejani qayta o‘ylab ko‘rmoq",
+    "example": "We should rethink the explanation if it needs a second explanation to make sense.",
+    "translation": "Izohni tushunish uchun yana bir izoh kerak bo‘lsa, uni qayta o‘ylab ko‘rishimiz kerak.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "misconception",
+    "ipa": "/ˌmɪskənˈsepʃən/",
+    "meaning": "noto‘g‘ri tushuncha",
+    "example": "A common misconception is that more slides automatically mean more knowledge.",
+    "translation": "Ko‘proq slayd o‘z-o‘zidan ko‘proq bilim degani keng tarqalgan noto‘g‘ri tushuncha.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "intuition",
+    "ipa": "/ˌɪntjuˈɪʃən/",
+    "meaning": "ichki sezgi",
+    "example": "My intuition suggested trouble when the instructions began with good luck.",
+    "translation": "Ko‘rsatmalar omad tilaymiz deb boshlanganda ichki sezgim muammo borligini aytdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "objectivity",
+    "ipa": "/ˌɒbdʒekˈtɪvəti/",
+    "meaning": "xolislik",
+    "example": "Objectivity is difficult when you are judging a cake you baked yourself.",
+    "translation": "O‘zingiz pishirgan tortni baholaganda xolislik qiyin.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "subjectivity",
+    "ipa": "/ˌsʌbdʒekˈtɪvəti/",
+    "meaning": "shaxsiy qarashlarga bog‘liqlik",
+    "example": "The subjectivity of taste explains our three-hour argument about the logo.",
+    "translation": "Didning subyektivligi logotip haqidagi uch soatlik bahsimizni tushuntiradi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "bias",
+    "ipa": "/ˈbaɪəs/",
+    "meaning": "biryoqlamalik; tarafkashlik",
+    "example": "My bias towards short reports may be linked to my love of free evenings.",
+    "translation": "Qisqa hisobotlarga yon bosishim bo‘sh oqshomlarni sevishimga bog‘liq bo‘lishi mumkin.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "consensus",
+    "ipa": "/kənˈsensəs/",
+    "meaning": "umumiy kelishuv",
+    "example": "We reached a consensus that the next discussion should contain fewer discussions.",
+    "translation": "Keyingi muhokamada kamroq muhokama bo‘lishi kerak degan umumiy kelishuvga keldik.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "controversy",
+    "ipa": "/ˈkɒntrəvɜːsi/",
+    "meaning": "katta bahs; qarama-qarshi fikrlar",
+    "example": "The proposal caused controversy by suggesting that meetings could happen without biscuits.",
+    "translation": "Yig‘ilishlarni pechenyesiz o‘tkazish taklifi katta bahs tug‘dirdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "dispute",
+    "ipa": "/dɪˈspjuːt/",
+    "meaning": "kelishmovchilik; bahs",
+    "example": "The dispute concerned the data, although the argument sounded personal to the calculator.",
+    "translation": "Kelishmovchilik ma’lumotlar haqida edi, ammo bahs kalkulyatorga shaxsiydek eshitildi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "criticism",
+    "ipa": "/ˈkrɪtɪsɪzəm/",
+    "meaning": "tanqid",
+    "example": "Her criticism was useful: apparently, a conclusion needs more than finally.",
+    "translation": "Uning tanqidi foydali edi: aftidan, xulosaga nihoyat so‘zidan ko‘proq narsa kerak.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "counterexample",
+    "ipa": "/ˈkaʊntərɪɡˌzɑːmpəl/",
+    "meaning": "umumiy fikrni rad etuvchi misol",
+    "example": "One counterexample ruined his claim that every silent person was asleep.",
+    "translation": "Bitta qarshi misol uning har bir jim odam uxlayapti degan da’vosini buzdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "analogy",
+    "ipa": "/əˈnælədʒi/",
+    "meaning": "o‘xshatish orqali tushuntirish",
+    "example": "The traffic analogy helped until someone asked where the data parks.",
+    "translation": "Yo‘l harakatiga o‘xshatish kimdir ma’lumotlar qayerda to‘xtashini so‘raguncha yordam berdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "comparison",
+    "ipa": "/kəmˈpærɪsən/",
+    "meaning": "taqqoslash",
+    "example": "The comparison is unfair because one team had a calculator and the other had hope.",
+    "translation": "Bir jamoada kalkulyator, boshqasida umid bo‘lgani uchun taqqoslash adolatsiz.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "deduction",
+    "ipa": "/dɪˈdʌkʃən/",
+    "meaning": "mantiqiy xulosa",
+    "example": "My deduction was simple: warm tea meant someone had recently escaped the meeting.",
+    "translation": "Xulosam oddiy edi: iliq choy kimdir yaqinda yig‘ilishdan qochganini anglatardi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "synthesis",
+    "ipa": "/ˈsɪnθəsɪs/",
+    "meaning": "turli fikrlarni bir butunga birlashtirish",
+    "example": "The final synthesis joined our ideas without preserving every argument about commas.",
+    "translation": "Yakuniy umumlashtirish vergullar haqidagi har bir bahsni saqlamay, g‘oyalarimizni birlashtirdi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "generalisation",
+    "ipa": "/ˌdʒenrəlaɪˈzeɪʃən/",
+    "meaning": "umumlashtirilgan fikr",
+    "example": "Calling every new app confusing is a generalisation, though my uncle supports it.",
+    "translation": "Har bir yangi ilovani chalkash deyish umumlashtirishdir, ammo amakim buni qo‘llaydi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "abstraction",
+    "ipa": "/æbˈstrækʃən/",
+    "meaning": "aniq misoldan ajratilgan umumiy tushuncha",
+    "example": "Fairness remained an abstraction until we had to divide one cake among seven people.",
+    "translation": "Bitta tortni yetti kishiga bo‘lishga to‘g‘ri kelguncha adolat mavhum tushuncha bo‘lib qoldi.",
+    "topic": "8-oy • Bilish va talqin"
+  },
+  {
+    "word": "hypothetical",
+    "ipa": "/ˌhaɪpəˈθetɪkəl/",
+    "meaning": "faraziy",
+    "example": "In this hypothetical example, the printer works on the first attempt.",
+    "translation": "Bu faraziy misolda printer birinchi urinishdayoq ishlaydi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "theoretical",
+    "ipa": "/ˌθɪəˈretɪkəl/",
+    "meaning": "nazariy",
+    "example": "The theoretical solution is elegant; the actual cardboard keeps bending.",
+    "translation": "Nazariy yechim nafis, haqiqiy karton esa egilaveradi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "feasible",
+    "ipa": "/ˈfiːzəbəl/",
+    "meaning": "amalga oshirish mumkin bo‘lgan",
+    "example": "The plan is feasible if we remove the underwater meeting room.",
+    "translation": "Suvosti yig‘ilish xonasini olib tashlasak, rejani amalga oshirish mumkin.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "realistic",
+    "ipa": "/ˌrɪəˈlɪstɪk/",
+    "meaning": "hayotga mos; amalga oshadigan",
+    "example": "A realistic estimate includes time for the printer's mysterious moods.",
+    "translation": "Haqiqiy hisob printerning sirli kayfiyatlari uchun ham vaqtni hisobga oladi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "unrealistic",
+    "ipa": "/ˌʌnrɪəˈlɪstɪk/",
+    "meaning": "amalga oshishi qiyin; haqiqatga mos emas",
+    "example": "It is unrealistic to expect silence from a room full of beginners and new gadgets.",
+    "translation": "Boshlovchilar va yangi qurilmalar to‘la xonadan sukunat kutish haqiqatga mos emas.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "probable",
+    "ipa": "/ˈprɒbəbəl/",
+    "meaning": "ehtimoli katta",
+    "example": "The probable explanation is a loose cable, not a computer with feelings.",
+    "translation": "Ehtimoli katta izoh hissiyotli kompyuter emas, bo‘shashgan kabel.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "improbable",
+    "ipa": "/ɪmˈprɒbəbəl/",
+    "meaning": "ehtimoli juda kam",
+    "example": "His explanation was improbable but much more entertaining than the truth.",
+    "translation": "Izohi ehtimoldan yiroq, ammo haqiqatdan ancha qiziqarli edi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "plausible",
+    "ipa": "/ˈplɔːzəbəl/",
+    "meaning": "ishonsa bo‘ladigan; asosli tuyuladigan",
+    "example": "That is a plausible explanation, unlike yesterday's theory about invisible ducks.",
+    "translation": "Bu kechagi ko‘rinmas o‘rdaklar nazariyasidan farqli ravishda ishonarli izoh.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "implausible",
+    "ipa": "/ɪmˈplɔːzəbəl/",
+    "meaning": "ishonish qiyin bo‘lgan",
+    "example": "The implausible excuse involved a bus, a goat, and a missing spreadsheet.",
+    "translation": "Ishonish qiyin bahonada avtobus, echki va yo‘qolgan elektron jadval bor edi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "inevitable",
+    "ipa": "/ɪnˈevɪtəbəl/",
+    "meaning": "muqarrar; oldini olib bo‘lmaydigan",
+    "example": "Confusion was inevitable once both buttons were labelled start.",
+    "translation": "Ikkala tugma ham boshlash deb belgilangach, chalkashlik muqarrar edi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "avoidable",
+    "ipa": "/əˈvɔɪdəbəl/",
+    "meaning": "oldini olish mumkin bo‘lgan",
+    "example": "The delay was avoidable: someone could have checked the address.",
+    "translation": "Kechikishning oldini olish mumkin edi: kimdir manzilni tekshirishi mumkin bo‘lgan.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "unavoidable",
+    "ipa": "/ˌʌnəˈvɔɪdəbəl/",
+    "meaning": "oldini olib bo‘lmaydigan",
+    "example": "Some noise is unavoidable when your experiment involves popping balloons.",
+    "translation": "Tajribangiz shar yorishni o‘z ichiga olsa, biroz shovqinning oldini olib bo‘lmaydi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "predictable",
+    "ipa": "/prɪˈdɪktəbəl/",
+    "meaning": "oldindan aytish mumkin bo‘lgan",
+    "example": "The response was predictable: everyone voted for the shorter survey.",
+    "translation": "Javobni oldindan bilish mumkin edi: hamma qisqaroq so‘rovga ovoz berdi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "unpredictable",
+    "ipa": "/ˌʌnprɪˈdɪktəbəl/",
+    "meaning": "oldindan aytib bo‘lmaydigan",
+    "example": "The results are unpredictable when the measuring device is a sleepy volunteer.",
+    "translation": "O‘lchash vositasi uyqusiragan ko‘ngilli bo‘lsa, natijalarni oldindan aytib bo‘lmaydi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "conditional",
+    "ipa": "/kənˈdɪʃənəl/",
+    "meaning": "shartga bog‘liq",
+    "example": "My agreement is conditional on the session ending before the bakery closes.",
+    "translation": "Roziligim mashg‘ulot novvoyxona yopilmasidan tugashi shartiga bog‘liq.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "unconditional",
+    "ipa": "/ˌʌnkənˈdɪʃənəl/",
+    "meaning": "shartsiz",
+    "example": "The approval was unconditional, which made us check that we had heard correctly.",
+    "translation": "Tasdiq shartsiz edi, shuning uchun to‘g‘ri eshitganimizni tekshirdik.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "dependent",
+    "ipa": "/dɪˈpendənt/",
+    "meaning": "bog‘liq; qaram",
+    "example": "The conclusion is dependent on one figure that looks suspiciously like a doodle.",
+    "translation": "Xulosa shubhali ravishda chizgiga o‘xshaydigan bitta raqamga bog‘liq.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "optional",
+    "ipa": "/ˈɒpʃənəl/",
+    "meaning": "ixtiyoriy",
+    "example": "The final exercise is optional, so my pencil has voted against it.",
+    "translation": "Oxirgi mashq ixtiyoriy, shuning uchun qalamim unga qarshi ovoz berdi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "compulsory",
+    "ipa": "/kəmˈpʌlsəri/",
+    "meaning": "majburiy",
+    "example": "Attendance is compulsory, but enthusiasm cannot be measured at the door.",
+    "translation": "Qatnashish majburiy, ammo ishtiyoqni eshik oldida o‘lchab bo‘lmaydi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "restrictive",
+    "ipa": "/rɪˈstrɪktɪv/",
+    "meaning": "qattiq cheklovchi",
+    "example": "The restrictive format leaves room for an answer but hardly for a comma.",
+    "translation": "Qattiq cheklovchi shaklda javobga joy bor, vergulga esa zo‘rg‘a.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "selective",
+    "ipa": "/sɪˈlektɪv/",
+    "meaning": "tanlab yondashadigan",
+    "example": "Be selective with examples; readers do not need all thirty versions of your joke.",
+    "translation": "Misollarni tanlab oling; o‘quvchilarga hazilingizning o‘ttizta talqini kerak emas.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "inclusive",
+    "ipa": "/ɪnˈkluːsɪv/",
+    "meaning": "hammani qamrab oladigan",
+    "example": "An inclusive discussion gives quiet people a chance before the loudest person returns.",
+    "translation": "Hamma qatnashadigan muhokama eng baland ovozli odam qaytguncha kamgaplarga ham imkon beradi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "exclusive",
+    "ipa": "/ɪkˈskluːsɪv/",
+    "meaning": "faqat ma’lum kishilarga tegishli",
+    "example": "Exclusive access to the data does not make your guesses more accurate.",
+    "translation": "Ma’lumotlardan faqat siz foydalanishingiz taxminlaringizni aniqroq qilmaydi.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "viable",
+    "ipa": "/ˈvaɪəbəl/",
+    "meaning": "amalda ishlashi mumkin bo‘lgan",
+    "example": "We need a viable solution, not a drawing that requires new laws of physics.",
+    "translation": "Bizga fizikaning yangi qonunlarini talab qiladigan chizma emas, ishlaydigan yechim kerak.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "tentative",
+    "ipa": "/ˈtentətɪv/",
+    "meaning": "dastlabki; hali qat’iy bo‘lmagan",
+    "example": "Our tentative conclusion is that the sensor prefers being switched on.",
+    "translation": "Dastlabki xulosamiz datchik yoqilgan bo‘lishni afzal ko‘rishidir.",
+    "topic": "8-oy • Ehtimol va shartlar"
+  },
+  {
+    "word": "figure out",
+    "ipa": "/ˈfɪɡər aʊt/",
+    "meaning": "o‘ylab tushunib olmoq",
+    "example": "I need to figure out why the simplest question has the longest answer.",
+    "translation": "Eng oddiy savol nega eng uzun javobga ega ekanini tushunib olishim kerak.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "think through",
+    "ipa": "/θɪŋk ˈθruː/",
+    "meaning": "barcha jihatlarini puxta o‘ylamoq",
+    "example": "Think through the consequences before promising free coffee forever.",
+    "translation": "Abadiy bepul qahva va’da qilishdan oldin oqibatlarini puxta o‘ylang.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "think over",
+    "ipa": "/θɪŋk ˈəʊvə/",
+    "meaning": "qaror oldidan yaxshilab o‘ylamoq",
+    "example": "Let me think over the proposal after my brain returns from lunch.",
+    "translation": "Miyam tushlikdan qaytgach, taklifni yaxshilab o‘ylab olay.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "look into",
+    "ipa": "/lʊk ˈɪntuː/",
+    "meaning": "tekshirib o‘rganmoq",
+    "example": "We should look into the sudden increase in very expensive paperclips.",
+    "translation": "Juda qimmat qisqichlar sonining to‘satdan oshishini tekshirishimiz kerak.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "go over",
+    "ipa": "/ɡəʊ ˈəʊvə/",
+    "meaning": "diqqat bilan qayta ko‘rmoq",
+    "example": "Go over the figures before presenting our accidental million-pound plan.",
+    "translation": "Tasodifiy million funtlik rejamizni taqdim etishdan oldin raqamlarni qayta ko‘ring.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "rule out",
+    "ipa": "/ruːl ˈaʊt/",
+    "meaning": "ehtimollar qatoridan chiqarmoq",
+    "example": "We can rule out magic, but we should still check the cable.",
+    "translation": "Sehrni istisno qila olamiz, lekin kabelni baribir tekshirishimiz kerak.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "narrow down",
+    "ipa": "/ˈnærəʊ daʊn/",
+    "meaning": "variantlar sonini kamaytirmoq",
+    "example": "Narrow down the options before the shortlist becomes a novel.",
+    "translation": "Qisqa ro‘yxat romanga aylanmasidan variantlarni kamaytiring.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "point to",
+    "ipa": "/ˈpɔɪnt tuː/",
+    "meaning": "dalolat bermoq; ko‘rsatmoq",
+    "example": "The figures point to a simple explanation that nobody wants to admit.",
+    "translation": "Raqamlar hech kim tan olishni istamaydigan oddiy izohni ko‘rsatadi.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "round off",
+    "ipa": "/raʊnd ˈɒf/",
+    "meaning": "yakunlab qo‘ymoq",
+    "example": "Round off the discussion with a conclusion, not another exciting question.",
+    "translation": "Muhokamani yana bir qiziqarli savol bilan emas, xulosa bilan yakunlang.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "set out",
+    "ipa": "/set ˈaʊt/",
+    "meaning": "tartibli va aniq bayon qilmoq",
+    "example": "Set out the reasons clearly, leaving the dramatic thunder out.",
+    "translation": "Dramatik momaqaldiroqni chetga qo‘yib, sabablarni aniq bayon qiling.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "get down to",
+    "ipa": "/ɡet ˈdaʊn tuː/",
+    "meaning": "jiddiy bajarishga kirishmoq",
+    "example": "Let us get down to the evidence before the introduction becomes a family history.",
+    "translation": "Kirish oilaviy tarixga aylanmasidan dalillarga jiddiy kirishaylik.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "flesh out",
+    "ipa": "/fleʃ ˈaʊt/",
+    "meaning": "tafsilotlar bilan boyitmoq",
+    "example": "Flesh out the idea with evidence, not another decorative paragraph.",
+    "translation": "G‘oyani yana bir bezak xatboshi bilan emas, dalillar bilan boyiting.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "build on",
+    "ipa": "/ˈbɪld ɒn/",
+    "meaning": "mavjud asosni rivojlantirmoq",
+    "example": "We can build on last year's results instead of rediscovering the same stapler.",
+    "translation": "Xuddi o‘sha steplerni qayta kashf qilish o‘rniga o‘tgan yilgi natijalarni rivojlantira olamiz.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "draw on",
+    "ipa": "/ˈdrɔː ɒn/",
+    "meaning": "bilim yoki tajribadan foydalanmoq",
+    "example": "Draw on your experience, including the project that taught you to label everything.",
+    "translation": "Tajribangizdan, jumladan, hamma narsaga yorliq qo‘yishni o‘rgatgan loyihadan foydalaning.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "account for",
+    "ipa": "/əˈkaʊnt fɔː/",
+    "meaning": "sababini tushuntirmoq",
+    "example": "Can you account for the extra zero without blaming the cat?",
+    "translation": "Mushukni ayblamasdan ortiqcha nolning sababini tushuntira olasizmi?",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "allow for",
+    "ipa": "/əˈlaʊ fɔː/",
+    "meaning": "hisobga olmoq",
+    "example": "Allow for delays, especially when six people share one charger.",
+    "translation": "Ayniqsa olti kishi bitta quvvatlagichdan foydalansa, kechikishlarni hisobga oling.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "boil down to",
+    "ipa": "/bɔɪl ˈdaʊn tuː/",
+    "meaning": "mohiyatan bir narsaga borib taqalmoq",
+    "example": "The argument may boil down to who gets the comfortable chair.",
+    "translation": "Bahsning mohiyati qulay stul kimga tegishiga borib taqalishi mumkin.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "come down to",
+    "ipa": "/kʌm ˈdaʊn tuː/",
+    "meaning": "asosiy omilga bog‘liq bo‘lmoq",
+    "example": "The decision will come down to cost, not the charm of the brochure.",
+    "translation": "Qaror buklet jozibasiga emas, xarajatga bog‘liq bo‘ladi.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "follow from",
+    "ipa": "/ˈfɒləʊ frɒm/",
+    "meaning": "mantiqan kelib chiqmoq",
+    "example": "That conclusion does not follow from finding one cheerful accountant.",
+    "translation": "Bitta quvnoq hisobchini topishdan bunday xulosa kelib chiqmaydi.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "tie in with",
+    "ipa": "/taɪ ˈɪn wɪð/",
+    "meaning": "boshqa fikrga bog‘lanmoq; mos kelmoq",
+    "example": "Does this example tie in with the topic, or do you just like penguins?",
+    "translation": "Bu misol mavzuga bog‘lanadimi yoki siz shunchaki pingvinlarni yoqtirasizmi?",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "bear out",
+    "ipa": "/beər ˈaʊt/",
+    "meaning": "tasdiqlamoq; to‘g‘riligini ko‘rsatmoq",
+    "example": "The results bear out our prediction that shorter instructions cause fewer sighs.",
+    "translation": "Natijalar qisqaroq ko‘rsatmalar kamroq xo‘rsinishga sabab bo‘lishi haqidagi taxminimizni tasdiqlaydi.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "add up",
+    "ipa": "/æd ˈʌp/",
+    "meaning": "mantiqan to‘g‘ri chiqmoq",
+    "example": "His explanation does not add up unless the printer can walk.",
+    "translation": "Printer yura olmasa, uning izohi mantiqan to‘g‘ri chiqmaydi.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "piece together",
+    "ipa": "/piːs təˈɡeðə/",
+    "meaning": "bo‘lak ma’lumotlardan to‘liq tasavvur tuzmoq",
+    "example": "We tried to piece together the events from three emails and a coffee stain.",
+    "translation": "Uchta xat va qahva dog‘idan voqealarni tiklashga urindik.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "get at",
+    "ipa": "/ˈɡet æt/",
+    "meaning": "aslida nazarda tutmoq",
+    "example": "What are you trying to get at with this story about a nervous toaster?",
+    "translation": "Asabiy toster haqidagi hikoya bilan aslida nimani demoqchisiz?",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "put forward",
+    "ipa": "/pʊt ˈfɔːwəd/",
+    "meaning": "taklif yoki fikr bildirmoq",
+    "example": "Put forward a solution before we form another committee to find one.",
+    "translation": "Yechim izlash uchun yana qo‘mita tuzmasimizdan bir yechim taklif qiling.",
+    "topic": "8-oy • Fikrni ishlab chiqish frazalari"
+  },
+  {
+    "word": "go ahead",
+    "ipa": "/ɡəʊ əˈhed/",
+    "meaning": "ishni boshlamoq; davom ettirmoq",
+    "example": "We can go ahead once someone confirms that this is the right building.",
+    "translation": "Kimdir bu to‘g‘ri bino ekanini tasdiqlagach, boshlashimiz mumkin.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "move on",
+    "ipa": "/muːv ˈɒn/",
+    "meaning": "keyingi bosqichga o‘tmoq",
+    "example": "Let's move on before the first question becomes a three-part documentary.",
+    "translation": "Birinchi savol uch qismli hujjatli filmga aylanmasidan keyingisiga o‘taylik.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "press on",
+    "ipa": "/pres ˈɒn/",
+    "meaning": "qiyinchilikka qaramay davom etmoq",
+    "example": "We decided to press on despite the printer's dramatic noises.",
+    "translation": "Printerning dramatik shovqinlariga qaramay davom etishga qaror qildik.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "push ahead",
+    "ipa": "/pʊʃ əˈhed/",
+    "meaning": "qat’iyat bilan olg‘a siljimoq",
+    "example": "The team will push ahead with the trial after replacing the sleepy sensor.",
+    "translation": "Jamoa uyqusiragan datchikni almashtirgach, sinovni qat’iyat bilan davom ettiradi.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "get on with",
+    "ipa": "/ɡet ˈɒn wɪð/",
+    "meaning": "ishni davom ettirmoq",
+    "example": "I should get on with the report instead of designing its imaginary award.",
+    "translation": "Xayoliy mukofotini loyihalash o‘rniga hisobotni davom ettirishim kerak.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "step up",
+    "ipa": "/step ˈʌp/",
+    "meaning": "jadallashtirmoq; kuchaytirmoq",
+    "example": "We need to step up our efforts, not merely the size of our motivational posters.",
+    "translation": "Ruhlantiruvchi plakatlar hajmini emas, harakatlarimizni kuchaytirishimiz kerak.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "keep up with",
+    "ipa": "/kiːp ˈʌp wɪð/",
+    "meaning": "ortda qolmay kuzatib bormoq",
+    "example": "I struggle to keep up with changes to a plan called the final plan.",
+    "translation": "Yakuniy reja deb atalgan rejadagi o‘zgarishlarni kuzatishga zo‘rg‘a ulguraman.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "fall behind",
+    "ipa": "/fɔːl bɪˈhaɪnd/",
+    "meaning": "ortda qolmoq",
+    "example": "We may fall behind if every small decision needs a grand ceremony.",
+    "translation": "Har bir kichik qarorga katta marosim kerak bo‘lsa, ortda qolishimiz mumkin.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "get ahead",
+    "ipa": "/ɡet əˈhed/",
+    "meaning": "boshqalardan ilgarilamoq; rivojlanmoq",
+    "example": "To get ahead, try learning the software rather than blaming the mouse.",
+    "translation": "Ilgarilash uchun sichqonchani ayblash o‘rniga dasturni o‘rganishga harakat qiling.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "catch on",
+    "ipa": "/kætʃ ˈɒn/",
+    "meaning": "tushuna boshlamoq",
+    "example": "I began to catch on when she replaced the equation with three apples.",
+    "translation": "U tenglamani uchta olma bilan almashtirganda tushuna boshladim.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "take on",
+    "ipa": "/teɪk ˈɒn/",
+    "meaning": "vazifa yoki mas’uliyatni zimmasiga olmoq",
+    "example": "Do not take on another project until your desk becomes visible again.",
+    "translation": "Stolingiz yana ko‘rinmaguncha boshqa loyihani zimmangizga olmang.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "carry out",
+    "ipa": "/ˈkæri aʊt/",
+    "meaning": "amalga oshirmoq",
+    "example": "Carry out the test before celebrating your completely untested invention.",
+    "translation": "Mutlaqo sinalmagan ixtirongizni nishonlashdan oldin sinovni o‘tkazing.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "follow up",
+    "ipa": "/ˈfɒləʊ ʌp/",
+    "meaning": "keyingi choralar bilan davom ettirmoq",
+    "example": "Follow up the discussion with action, preferably before everyone forgets it.",
+    "translation": "Hamma unutmasidan muhokamani amaliy ish bilan davom ettiring.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "follow through",
+    "ipa": "/ˈfɒləʊ θruː/",
+    "meaning": "boshlangan ishni oxiriga yetkazmoq",
+    "example": "An elegant plan helps only if we follow through.",
+    "translation": "Nafis reja faqat uni oxiriga yetkazsak yordam beradi.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "see through",
+    "ipa": "/siː ˈθruː/",
+    "meaning": "yashirin niyat yoki aldovni anglamoq",
+    "example": "It was easy to see through his excuse once we found the empty cake box.",
+    "translation": "Bo‘sh tort qutisini topgach, uning bahonasini anglash oson bo‘ldi.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "go through",
+    "ipa": "/ɡəʊ ˈθruː/",
+    "meaning": "bosqichlardan yoki jarayondan o‘tmoq",
+    "example": "Every proposal must go through review, even one with a charming penguin logo.",
+    "translation": "Har bir taklif, hatto yoqimli pingvin logotipi bor bo‘lsa ham, ko‘rib chiqishdan o‘tishi kerak.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "get through",
+    "ipa": "/ɡet ˈθruː/",
+    "meaning": "ishni tugatib chiqmoq",
+    "example": "We can get through these forms before the kettle boils if nobody invents new questions.",
+    "translation": "Hech kim yangi savol o‘ylamasa, choynak qaynaguncha shakllarni tugata olamiz.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "start over",
+    "ipa": "/stɑːt ˈəʊvə/",
+    "meaning": "boshidan qayta boshlamoq",
+    "example": "We had to start over after discovering that the chart described the wrong year.",
+    "translation": "Diagramma noto‘g‘ri yilni ko‘rsatganini bilib, boshidan boshlashga majbur bo‘ldik.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "start out",
+    "ipa": "/stɑːt ˈaʊt/",
+    "meaning": "dastlab ish boshlamoq",
+    "example": "Many experts start out asking questions that sound wonderfully basic.",
+    "translation": "Ko‘p mutaxassislar dastlab juda sodda tuyuladigan savollar berishdan boshlaydi.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "set about",
+    "ipa": "/set əˈbaʊt/",
+    "meaning": "ishni bajarishga kirishmoq",
+    "example": "We will set about solving the issue once the debate about its name ends.",
+    "translation": "Masalaning nomi haqidagi bahs tugagach, uni hal qilishga kirishamiz.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "embark on",
+    "ipa": "/ɪmˈbɑːk ɒn/",
+    "meaning": "yangi jiddiy ishga kirishmoq",
+    "example": "Before we embark on another study, let us read the one we already finished.",
+    "translation": "Yana bir tadqiqotga kirishishdan oldin tugatganimizni o‘qiylik.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "end up",
+    "ipa": "/end ˈʌp/",
+    "meaning": "oxir-oqibat bir holga kelmoq",
+    "example": "We could end up with a simpler system if we resist adding twelve extra features.",
+    "translation": "O‘n ikki qo‘shimcha imkoniyatni qo‘shishga berilmasak, oxirida soddaroq tizimga ega bo‘lishimiz mumkin.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "wind down",
+    "ipa": "/waɪnd ˈdaʊn/",
+    "meaning": "asta-sekin kamayib tugamoq",
+    "example": "The discussion began to wind down when even the loudest member checked the clock.",
+    "translation": "Hatto eng baland ovozli a’zo soatga qaragach, muhokama asta-sekin tugay boshladi.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "phase out",
+    "ipa": "/feɪz ˈaʊt/",
+    "meaning": "bosqichma-bosqich bekor qilmoq",
+    "example": "We will phase out paper forms before they occupy the whole building.",
+    "translation": "Qog‘oz shakllar butun binoni egallamasidan ularni bosqichma-bosqich bekor qilamiz.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "phase in",
+    "ipa": "/feɪz ˈɪn/",
+    "meaning": "bosqichma-bosqich joriy qilmoq",
+    "example": "Phase in the new system so Monday does not become a national emergency.",
+    "translation": "Dushanba milliy favqulodda holatga aylanmasligi uchun yangi tizimni bosqichma-bosqich kiriting.",
+    "topic": "8-oy • Harakat va rivojlanish frazalari"
+  },
+  {
+    "word": "opt for",
+    "ipa": "/ˈɒpt fɔː/",
+    "meaning": "bir variantni tanlamoq",
+    "example": "We will opt for the simple design, despite the gold one's confident sparkle.",
+    "translation": "Oltin nusxaning ishonchli yaltirashiga qaramay, oddiy dizaynni tanlaymiz.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "settle on",
+    "ipa": "/ˈsetəl ɒn/",
+    "meaning": "o‘ylab bir qarorga kelmoq",
+    "example": "Can we settle on a date before the calendar needs replacing?",
+    "translation": "Taqvimni almashtirishga to‘g‘ri kelmasidan bir sanaga kelisha olamizmi?",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "settle for",
+    "ipa": "/ˈsetəl fɔː/",
+    "meaning": "yaxshirog‘i bo‘lmagach kamrog‘iga rozi bo‘lmoq",
+    "example": "We wanted a perfect solution but had to settle for one that worked.",
+    "translation": "Mukammal yechim xohladik, ammo ishlaydiganiga rozi bo‘lishga to‘g‘ri keldi.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "go for",
+    "ipa": "/ˈɡəʊ fɔː/",
+    "meaning": "tanlamoq",
+    "example": "I would go for the clearer chart, even if it has fewer exciting arrows.",
+    "translation": "Unda qiziqarli strelkalar kamroq bo‘lsa ham, aniqroq diagrammani tanlardim.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "rule against",
+    "ipa": "/ruːl əˈɡenst/",
+    "meaning": "qarshi rasmiy qaror chiqarmoq",
+    "example": "The panel may rule against the proposal to replace meetings with interpretive dance.",
+    "translation": "Hay’at yig‘ilishlarni ifodali raqs bilan almashtirish taklifiga qarshi qaror chiqarishi mumkin.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "hold off",
+    "ipa": "/həʊld ˈɒf/",
+    "meaning": "ishni vaqtincha boshlamay turmoq",
+    "example": "Hold off announcing victory until the machine has actually switched on.",
+    "translation": "Uskuna haqiqatan yoqilmaguncha g‘alaba e’lon qilishni kutib turing.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "hold back",
+    "ipa": "/həʊld ˈbæk/",
+    "meaning": "aytish yoki ko‘rsatishdan tiyilmoq",
+    "example": "Do not hold back useful criticism just because the chart is my favourite colour.",
+    "translation": "Diagramma sevimli rangimda bo‘lgani uchun foydali tanqidni aytishdan tiyilmang.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "step back",
+    "ipa": "/step ˈbæk/",
+    "meaning": "vaziyatni chetdan qayta baholamoq",
+    "example": "We should step back and ask whether anyone needs this complicated solution.",
+    "translation": "Bir chetdan qarab, bu murakkab yechim kimgadir kerakmi deb so‘rashimiz kerak.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "sleep on",
+    "ipa": "/ˈsliːp ɒn/",
+    "meaning": "qarorni ertagacha o‘ylab ko‘rmoq",
+    "example": "Let me sleep on the proposal rather than approve it before my nap.",
+    "translation": "Mizg‘ishdan oldin tasdiqlagandan ko‘ra taklifni ertagacha o‘ylab ko‘ray.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "sit on",
+    "ipa": "/ˈsɪt ɒn/",
+    "meaning": "qarorni cho‘zib yurmoq",
+    "example": "The committee cannot sit on this request until the chairs become antiques.",
+    "translation": "Qo‘mita bu so‘rovni stullar qadimiy buyumga aylanguncha cho‘zib yurolmaydi.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "stick to",
+    "ipa": "/ˈstɪk tuː/",
+    "meaning": "amal qilmoq; chetga chiqmaslik",
+    "example": "Stick to the question unless you want another accidental history lecture.",
+    "translation": "Yana tasodifiy tarix ma’ruzasi xohlamasangiz, savoldan chetga chiqmang.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "commit to",
+    "ipa": "/kəˈmɪt tuː/",
+    "meaning": "qat’iy ravishda zimmasiga olmoq",
+    "example": "Commit to a realistic deadline, not one invented during a burst of enthusiasm.",
+    "translation": "Ishtiyoq to‘lqinida o‘ylangan emas, haqiqiy muddatni zimmangizga oling.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "back down",
+    "ipa": "/bæk ˈdaʊn/",
+    "meaning": "avvalgi qat’iy fikridan qaytmoq",
+    "example": "He agreed to back down when the evidence arrived on a very large screen.",
+    "translation": "Dalil juda katta ekranda paydo bo‘lgach, u fikridan qaytishga rozi bo‘ldi.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "give in",
+    "ipa": "/ɡɪv ˈɪn/",
+    "meaning": "qarshilikni to‘xtatib rozi bo‘lmoq",
+    "example": "I will not give in just because your argument comes with free biscuits.",
+    "translation": "Dalilingiz bepul pechenye bilan kelgani uchungina rozi bo‘lmayman.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "turn to",
+    "ipa": "/ˈtɜːn tuː/",
+    "meaning": "yordam yoki javob uchun murojaat qilmoq",
+    "example": "We can turn to the data when our opinions start chasing each other in circles.",
+    "translation": "Fikrlarimiz bir-birini aylanib quva boshlaganda ma’lumotlarga murojaat qila olamiz.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "fall back on",
+    "ipa": "/fɔːl ˈbæk ɒn/",
+    "meaning": "zaxira yechimdan foydalanmoq",
+    "example": "We can fall back on paper notes if the computer chooses another holiday.",
+    "translation": "Kompyuter yana ta’tilni tanlasa, qog‘oz qaydlarga qayta olamiz.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "do without",
+    "ipa": "/duː wɪˈðaʊt/",
+    "meaning": "biror narsasiz uddalamoq",
+    "example": "The report can do without five different photographs of the same button.",
+    "translation": "Hisobot bir tugmaning besh xil suratisiz ham bo‘la oladi.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "dispense with",
+    "ipa": "/dɪˈspens wɪð/",
+    "meaning": "keraksiz deb voz kechmoq",
+    "example": "We can dispense with the long introduction and get straight to the mystery.",
+    "translation": "Uzun kirishdan voz kechib, darhol sirga o‘tishimiz mumkin.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "pass up",
+    "ipa": "/pɑːs ˈʌp/",
+    "meaning": "imkoniyatdan foydalanmaslik",
+    "example": "Do not pass up the chance to ask a question before the expert escapes.",
+    "translation": "Mutaxassis qochib ketmasidan savol berish imkoniyatini qo‘ldan boy bermang.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "take up",
+    "ipa": "/teɪk ˈʌp/",
+    "meaning": "taklifni qabul qilmoq",
+    "example": "I will take up your offer of help before this spreadsheet grows another page.",
+    "translation": "Bu jadval yana bir sahifa o‘stirmasidan yordamingizni qabul qilaman.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "understate",
+    "ipa": "/ˌʌndəˈsteɪt/",
+    "meaning": "ahamiyati yoki darajasini kamaytirib ko‘rsatmoq",
+    "example": "Saying I was hungry would understate the problem: I ate the menu.",
+    "translation": "Qornim ochligini aytish muammoni kamaytirib ko‘rsatgan bo‘lardi: men menyuni yeb qo‘ydim.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "pull out",
+    "ipa": "/pʊl ˈaʊt/",
+    "meaning": "rejalashtirilgan ishtirokdan chiqmoq",
+    "example": "One partner may pull out if the plan still includes a dancing delivery robot.",
+    "translation": "Rejada hali ham raqsga tushadigan yetkazuvchi robot bo‘lsa, bir hamkor chiqib ketishi mumkin.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "drop out",
+    "ipa": "/drɒp ˈaʊt/",
+    "meaning": "boshlangan faoliyatni tashlab ketmoq",
+    "example": "Some volunteers drop out when the short study enters its sixth month.",
+    "translation": "Qisqa tadqiqot oltinchi oyga kirganda ayrim ko‘ngillilar uni tark etadi.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "sign off",
+    "ipa": "/saɪn ˈɒf/",
+    "meaning": "yakuniy rasmiy rozilik bermoq",
+    "example": "The editor will sign off the report once we remove the imaginary sources.",
+    "translation": "Xayoliy manbalarni olib tashlagach, muharrir hisobotni yakuniy tasdiqlaydi.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "go along with",
+    "ipa": "/ɡəʊ əˈlɒŋ wɪð/",
+    "meaning": "taklifga qo‘shilmoq",
+    "example": "I can go along with the plan, provided the budget does not assume free electricity.",
+    "translation": "Budjet bepul elektrni nazarda tutmasa, rejaga qo‘shila olaman.",
+    "topic": "8-oy • Tanlov va qaror frazalari"
+  },
+  {
+    "word": "break down",
+    "ipa": "/breɪk ˈdaʊn/",
+    "meaning": "qismlarga ajratib tahlil qilmoq",
+    "example": "Break down the problem before it becomes one enormous cloud of worry.",
+    "translation": "Muammo ulkan xavotir bulutiga aylanishidan oldin uni qismlarga ajrating.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "break off",
+    "ipa": "/breɪk ˈɒf/",
+    "meaning": "birdan to‘xtatmoq",
+    "example": "We had to break off the discussion when the alarm started competing with us.",
+    "translation": "Signal biz bilan raqobatlasha boshlaganda muhokamani to‘xtatishga majbur bo‘ldik.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "break through",
+    "ipa": "/breɪk ˈθruː/",
+    "meaning": "to‘siqni yengib o‘tmoq",
+    "example": "One simple example helped us break through the confusion.",
+    "translation": "Bitta sodda misol chalkashlikni yengishimizga yordam berdi.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "trim down",
+    "ipa": "/trɪm ˈdaʊn/",
+    "meaning": "qisqartirib ixchamlashtirmoq",
+    "example": "Trim down the report until its summary no longer needs a bookmark.",
+    "translation": "Qisqacha mazmuniga xatcho‘p kerak bo‘lmay qolguncha hisobotni ixchamlashtiring.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "cut out",
+    "ipa": "/kʌt ˈaʊt/",
+    "meaning": "keraksiz qismini olib tashlamoq",
+    "example": "Cut out the repeated sentences unless repetition is the actual topic.",
+    "translation": "Mavzu takrorlash bo‘lmasa, takrorlangan gaplarni olib tashlang.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "cut off",
+    "ipa": "/kʌt ˈɒf/",
+    "meaning": "gapini bo‘lmoq; to‘xtatmoq",
+    "example": "Please do not cut off the speaker just as the explanation starts making sense.",
+    "translation": "Izoh tushunarli bo‘la boshlaganida so‘zlovchining gapini bo‘lmang.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "fill in",
+    "ipa": "/fɪl ˈɪn/",
+    "meaning": "yetishmagan ma’lumotni to‘ldirmoq",
+    "example": "Fill in the missing dates before history develops several mysterious gaps.",
+    "translation": "Tarixda bir necha sirli bo‘shliq paydo bo‘lmasidan yetishmagan sanalarni to‘ldiring.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "fill out",
+    "ipa": "/fɪl ˈaʊt/",
+    "meaning": "shaklni to‘ldirmoq",
+    "example": "Fill out the form in plain language, not in the style of a royal announcement.",
+    "translation": "Shaklni qirollik e’loni uslubida emas, oddiy tilda to‘ldiring.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "leave out",
+    "ipa": "/liːv ˈaʊt/",
+    "meaning": "kiritmay qoldirmoq",
+    "example": "Do not leave out the one fact that makes your confident conclusion doubtful.",
+    "translation": "Ishonchli xulosangizni shubhali qiladigan yagona faktni tashlab ketmang.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "put aside",
+    "ipa": "/pʊt əˈsaɪd/",
+    "meaning": "vaqtincha chetga surmoq",
+    "example": "Put aside your favourite explanation and look at the actual numbers.",
+    "translation": "Sevimli izohingizni chetga surib, haqiqiy raqamlarga qarang.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "lay out",
+    "ipa": "/leɪ ˈaʊt/",
+    "meaning": "aniq tartibda bayon qilmoq",
+    "example": "Lay out your reasoning so readers do not need a detective licence.",
+    "translation": "O‘quvchilarga detektiv litsenziyasi kerak bo‘lmasligi uchun mulohazangizni aniq bayon qiling.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "map out",
+    "ipa": "/mæp ˈaʊt/",
+    "meaning": "batafsil rejalashtirmoq",
+    "example": "Map out the stages before stage one becomes permanent.",
+    "translation": "Birinchi bosqich abadiy bo‘lib qolmasidan bosqichlarni rejalashtiring.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "mark out",
+    "ipa": "/mɑːk ˈaʊt/",
+    "meaning": "ajralib turishiga sabab bo‘lmoq",
+    "example": "Clear reasoning can mark out a good report more than a shiny cover can.",
+    "translation": "Aniq mulohaza yaxshi hisobotni yaltiroq muqovadan ko‘ra yaxshiroq ajratib ko‘rsatishi mumkin.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "cross out",
+    "ipa": "/krɒs ˈaʊt/",
+    "meaning": "ustidan chizib o‘chirmoq",
+    "example": "Cross out the irrelevant example before the penguin takes over the essay.",
+    "translation": "Pingvin inshoni egallab olmasidan aloqasiz misolning ustidan chizing.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "write down",
+    "ipa": "/raɪt ˈdaʊn/",
+    "meaning": "yozib qo‘ymoq",
+    "example": "Write down the idea before it joins your other brilliant forgotten thoughts.",
+    "translation": "G‘oya boshqa unutilgan ajoyib fikrlaringizga qo‘shilmasidan uni yozib qo‘ying.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "note down",
+    "ipa": "/nəʊt ˈdaʊn/",
+    "meaning": "qisqacha qayd qilmoq",
+    "example": "Note down the exact figure rather than something between five and fifty.",
+    "translation": "Besh bilan ellik orasidagi nimadir emas, aniq raqamni qayd qiling.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "read through",
+    "ipa": "/riːd ˈθruː/",
+    "meaning": "boshidan oxirigacha o‘qimoq",
+    "example": "Read through the conclusion before giving it the title Final Final Final.",
+    "translation": "Xulosaga Yakuniy Yakuniy Yakuniy deb nom berishdan oldin uni o‘qib chiqing.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "read up on",
+    "ipa": "/riːd ˈʌp ɒn/",
+    "meaning": "mavzuni o‘qib o‘rganmoq",
+    "example": "I need to read up on the topic before my confidence gets ahead of my knowledge.",
+    "translation": "Ishonchim bilimimdan o‘zib ketmasidan mavzuni o‘qib o‘rganishim kerak.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "look up",
+    "ipa": "/lʊk ˈʌp/",
+    "meaning": "manbadan topib bilmoq",
+    "example": "Look up the term before using it to impress the one person who knows it.",
+    "translation": "Atamani biladigan yagona odamni qoyil qoldirish uchun ishlatishdan oldin ma’nosini tekshiring.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "look back on",
+    "ipa": "/lʊk ˈbæk ɒn/",
+    "meaning": "o‘tgan voqeani eslab baholamoq",
+    "example": "We can look back on the mistake as a lesson, once the embarrassment fades.",
+    "translation": "Xijolat yo‘qolgach, xatoni saboq sifatida eslashimiz mumkin.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "look ahead",
+    "ipa": "/lʊk əˈhed/",
+    "meaning": "kelajakni hisobga olmoq",
+    "example": "Look ahead before choosing a system that cannot handle next month's work.",
+    "translation": "Keyingi oy ishini ko‘tara olmaydigan tizimni tanlashdan oldin kelajakni hisobga oling.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "run through",
+    "ipa": "/rʌn ˈθruː/",
+    "meaning": "tezda ko‘rib chiqmoq",
+    "example": "Run through the main points before the audience runs out of patience.",
+    "translation": "Tinglovchilar sabri tugamasidan asosiy fikrlarni qisqa ko‘rib chiqing.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "talk through",
+    "ipa": "/tɔːk ˈθruː/",
+    "meaning": "bosqichma-bosqich og‘zaki tushuntirmoq",
+    "example": "Talk through the method slowly enough for my pencil to keep up.",
+    "translation": "Qalamim ulguradigan darajada sekin qilib usulni bosqichma-bosqich tushuntiring.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "talk over",
+    "ipa": "/tɔːk ˈəʊvə/",
+    "meaning": "birgalikda muhokama qilmoq",
+    "example": "We should talk over the options before naming the project after a planet.",
+    "translation": "Loyihaga sayyora nomini berishdan oldin variantlarni muhokama qilishimiz kerak.",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "walk through",
+    "ipa": "/wɔːk ˈθruː/",
+    "meaning": "qadamma-qadam ko‘rsatib tushuntirmoq",
+    "example": "Could you walk through the example without skipping the bit everybody finds difficult?",
+    "translation": "Hamma qiyin deb biladigan qismini o‘tkazmay misolni qadamma-qadam tushuntira olasizmi?",
+    "topic": "8-oy • Tahlil va bayon frazalari"
+  },
+  {
+    "word": "entail",
+    "ipa": "/ɪnˈteɪl/",
+    "meaning": "zarur ravishda talab qilmoq yoki keltirib chiqarmoq",
+    "example": "The change will entail retraining, not merely buying brighter name badges.",
+    "translation": "O‘zgarish shunchaki yorqinroq ism nishonlari emas, qayta o‘qitishni talab qiladi.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "enable",
+    "ipa": "/ɪˈneɪbəl/",
+    "meaning": "imkon bermoq",
+    "example": "Clear labels enable people to work without becoming part-time detectives.",
+    "translation": "Aniq yorliqlar odamlarga yarim stavkali detektivga aylanmay ishlash imkonini beradi.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "facilitate",
+    "ipa": "/fəˈsɪlɪteɪt/",
+    "meaning": "osonlashtirmoq",
+    "example": "A shared glossary can facilitate discussion and reduce theatrical misunderstandings.",
+    "translation": "Umumiy lug‘at muhokamani osonlashtirib, dramatik tushunmovchiliklarni kamaytirishi mumkin.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "require",
+    "ipa": "/rɪˈkwaɪə/",
+    "meaning": "talab qilmoq",
+    "example": "A bold claim will require stronger evidence than your uncle's enthusiastic nod.",
+    "translation": "Dadil da’voga amakining jo‘shqin bosh irg‘ashidan kuchliroq dalil kerak.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "depend",
+    "ipa": "/dɪˈpend/",
+    "meaning": "bog‘liq bo‘lmoq",
+    "example": "The results depend on accurate measurements, not on how serious we look.",
+    "translation": "Natijalar qanchalik jiddiy ko‘rinishimizga emas, aniq o‘lchovlarga bog‘liq.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "differ",
+    "ipa": "/ˈdɪfə/",
+    "meaning": "farq qilmoq",
+    "example": "The two accounts differ mainly on who ate the evidence.",
+    "translation": "Ikki bayon asosan dalilni kim yeganida farq qiladi.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "resemble",
+    "ipa": "/rɪˈzembəl/",
+    "meaning": "o‘xshamoq",
+    "example": "Your explanation should not resemble a maze with no exit.",
+    "translation": "Izohingiz chiqishsiz labirintga o‘xshamasligi kerak.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "relate",
+    "ipa": "/rɪˈleɪt/",
+    "meaning": "bog‘liq bo‘lmoq",
+    "example": "How does the dancing robot relate to the question about saving time?",
+    "translation": "Raqsga tushadigan robot vaqt tejash haqidagi savolga qanday bog‘lanadi?",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "concern",
+    "ipa": "/kənˈsɜːn/",
+    "meaning": "tegishli bo‘lmoq; haqida bo‘lmoq",
+    "example": "These figures concern real expenses, including our unexpectedly costly pencils.",
+    "translation": "Bu raqamlar haqiqiy xarajatlarga, jumladan, kutilmaganda qimmatga tushgan qalamlarimizga tegishli.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "regard",
+    "ipa": "/rɪˈɡɑːd/",
+    "meaning": "deb hisoblamoq",
+    "example": "I regard a working example as more useful than a spectacular promise.",
+    "translation": "Ishlaydigan misolni ajoyib va’dadan foydaliroq deb hisoblayman.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "constitute",
+    "ipa": "/ˈkɒnstɪtjuːt/",
+    "meaning": "tashkil etmoq; hisoblanmoq",
+    "example": "Three guesses do not constitute evidence, even if they agree.",
+    "translation": "Uchta taxmin bir-biriga mos kelsa ham, dalil hisoblanmaydi.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "correspond",
+    "ipa": "/ˌkɒrɪˈspɒnd/",
+    "meaning": "mos kelmoq",
+    "example": "The labels must correspond to the samples, not to whichever name sounds nicest.",
+    "translation": "Yorliqlar eng yoqimli eshitilgan nomga emas, namunalarga mos kelishi kerak.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "derive",
+    "ipa": "/dɪˈraɪv/",
+    "meaning": "bir manbadan olmoq; keltirib chiqarmoq",
+    "example": "We derive the estimate from records, not from a particularly cheerful mood.",
+    "translation": "Hisobni juda quvnoq kayfiyatdan emas, qaydlardan chiqaramiz.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "obtain",
+    "ipa": "/əbˈteɪn/",
+    "meaning": "qo‘lga kiritmoq; olmoq",
+    "example": "Obtain permission before transforming the corridor into a research laboratory.",
+    "translation": "Yo‘lakni tadqiqot laboratoriyasiga aylantirishdan oldin ruxsat oling.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "acquire",
+    "ipa": "/əˈkwaɪə/",
+    "meaning": "o‘zlashtirmoq; egallamoq",
+    "example": "You acquire useful habits through practice, not by buying a more impressive notebook.",
+    "translation": "Foydali odatlarni zo‘rroq daftar sotib olib emas, mashq orqali egallaysiz.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "attain",
+    "ipa": "/əˈteɪn/",
+    "meaning": "darajaga erishmoq",
+    "example": "We can attain better accuracy without asking everyone to hold their breath.",
+    "translation": "Hammadan nafasini ushlab turishni so‘ramay ham yuqoriroq aniqlikka erisha olamiz.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "accomplish",
+    "ipa": "/əˈkʌmplɪʃ/",
+    "meaning": "muvaffaqiyat bilan bajarmoq",
+    "example": "We could accomplish more if we spent less time naming our task groups.",
+    "translation": "Vazifa guruhlariga nom berishga kamroq vaqt sarflasak, ko‘proq ish bajara olardik.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "fulfil",
+    "ipa": "/fʊlˈfɪl/",
+    "meaning": "talab yoki va’dani bajarmoq",
+    "example": "The design must fulfil the requirements, including the boring one about fitting through doors.",
+    "translation": "Dizayn talablarga, jumladan, eshikdan sig‘ish haqidagi zerikarli talabga javob berishi kerak.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "implement",
+    "ipa": "/ˈɪmplɪment/",
+    "meaning": "amalga joriy etmoq",
+    "example": "Implement the useful suggestion before it disappears into another meeting record.",
+    "translation": "Foydali taklif yana bir bayonnomada yo‘qolmasidan uni joriy eting.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "perform",
+    "ipa": "/pəˈfɔːm/",
+    "meaning": "bajarmoq; o‘tkazmoq",
+    "example": "Perform the calculation before celebrating the astonishing result in your head.",
+    "translation": "Xayolingizdagi hayratlanarli natijani nishonlashdan oldin hisobni bajaring.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "undertake",
+    "ipa": "/ˌʌndəˈteɪk/",
+    "meaning": "ishni zimmasiga olib bajarmoq",
+    "example": "Do not undertake a huge study simply because the title sounds impressive.",
+    "translation": "Faqat sarlavhasi ta’sirli eshitilgani uchun ulkan tadqiqotga kirishmang.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "pursue",
+    "ipa": "/pəˈsjuː/",
+    "meaning": "maqsad yoki fikr ortidan bormoq",
+    "example": "We should pursue the useful lead rather than the amusing rumour.",
+    "translation": "Qiziqarli mish-mish emas, foydali ma’lumot izidan borishimiz kerak.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "seek",
+    "ipa": "/siːk/",
+    "meaning": "izlamoq; topishga intilmoq",
+    "example": "Seek a clearer explanation before assuming the machine dislikes you.",
+    "translation": "Uskuna sizni yoqtirmaydi deb o‘ylashdan oldin aniqroq izoh izlang.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "ensure",
+    "ipa": "/ɪnˈʃɔː/",
+    "meaning": "ta’minlamoq; albatta bo‘lishiga erishmoq",
+    "example": "Ensure the example answers the question rather than starting a new mystery.",
+    "translation": "Misol yangi sir boshlamay, savolga javob berishini ta’minlang.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  },
+  {
+    "word": "outweigh",
+    "ipa": "/ˌaʊtˈweɪ/",
+    "meaning": "ahamiyat jihatdan ustun kelmoq",
+    "example": "The benefits outweigh the drawbacks, although the drawbacks have a louder spokesperson.",
+    "translation": "Afzalliklar kamchiliklardan ustun, ammo kamchiliklarning vakili balandroq gapiradi.",
+    "topic": "8-oy • Umumiy akademik fe’llar"
+  }
+]

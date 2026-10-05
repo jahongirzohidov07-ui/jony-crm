@@ -1,0 +1,771 @@
+{
+  "1.1": [
+    {
+      "prompt": "Otni yozing: happy / pencil / slowly.",
+      "answers": [
+        "pencil"
+      ],
+      "explanation": "Pencil buyum nomi; shuning uchun ot. Happy sifat, slowly ravish."
+    },
+    {
+      "prompt": "Shaxsni bildirgan otni yozing: run / teacher / kind.",
+      "answers": [
+        "teacher"
+      ],
+      "explanation": "Teacher shaxs yoki kasb nomi. Run fe’l, kind bu ro‘yxatda sifat."
+    }
+  ],
+  "1.2": [
+    {
+      "prompt": "Sifatni yozing: blue / bag / jump.",
+      "answers": [
+        "blue"
+      ],
+      "explanation": "Blue rangni bildiradi va otni tavsiflaydi."
+    },
+    {
+      "prompt": "The tiny robot is here. Robotni tavsiflovchi sifatni yozing.",
+      "answers": [
+        "tiny"
+      ],
+      "explanation": "Tiny robotning o‘lchamini bildiradi: juda kichik robot."
+    }
+  ],
+  "1.3": [
+    {
+      "prompt": "Harakat fe’lini yozing: chair / dance / red.",
+      "answers": [
+        "dance"
+      ],
+      "explanation": "Dance harakatni bildiradi. Chair buyum nomi, red rang sifati."
+    },
+    {
+      "prompt": "We laugh. Gapdagi fe’lni yozing.",
+      "answers": [
+        "laugh"
+      ],
+      "explanation": "Laugh egalar bajaradigan harakatni bildiradi: kulmoq."
+    }
+  ],
+  "1.4": [
+    {
+      "prompt": "Ali is kind. ___ is my friend. Ali o‘rnidagi olmoshni yozing.",
+      "answers": [
+        "He"
+      ],
+      "explanation": "Ali erkak kishining ismi; ega o‘rnida he ishlatiladi."
+    },
+    {
+      "prompt": "The book is blue. ___ is small. Book o‘rnidagi olmoshni yozing.",
+      "answers": [
+        "It"
+      ],
+      "explanation": "Birlikdagi jonsiz buyum o‘rnida it ishlatiladi."
+    }
+  ],
+  "1.5": [
+    {
+      "prompt": "She speaks slowly. Qanday gapirishini bildirgan ravishni yozing.",
+      "answers": [
+        "slowly"
+      ],
+      "explanation": "Slowly speaks harakatining qanday bajarilishini bildiradi."
+    },
+    {
+      "prompt": "I often read. Takrorlanish chastotasini bildirgan so‘zni yozing.",
+      "answers": [
+        "often"
+      ],
+      "explanation": "Often harakat qanchalik tez-tez bo‘lishini bildiradi: ko‘pincha."
+    }
+  ],
+  "1.6": [
+    {
+      "prompt": "The cat is under the chair. Joy munosabatini bildirgan predlogni yozing.",
+      "answers": [
+        "under"
+      ],
+      "explanation": "Under mushukning stulga nisbatan joyini bildiradi: tagida."
+    },
+    {
+      "prompt": "We are in the classroom. Predlogni yozing.",
+      "answers": [
+        "in"
+      ],
+      "explanation": "In classroom bilan birga ichkaridagi joyni bildiradi."
+    }
+  ],
+  "1.7": [
+    {
+      "prompt": "Tea and milk. Ikki otni bog‘lagan so‘zni yozing.",
+      "answers": [
+        "and"
+      ],
+      "explanation": "And ikki otni qo‘shadi: choy va sut."
+    },
+    {
+      "prompt": "I am tired, but I am happy. Qarama-qarshi fikrlarni bog‘lagan so‘zni yozing.",
+      "answers": [
+        "but"
+      ],
+      "explanation": "But ikki qarama-qarshi fikrni bog‘laydi: charchagan, lekin xursand."
+    }
+  ],
+  "1.8": [
+    {
+      "prompt": "Mina is a girl. ___ is a student.",
+      "answers": [
+        "She"
+      ],
+      "explanation": "Birlikdagi qiz yoki ayol uchun ega olmoshi she."
+    },
+    {
+      "prompt": "Ali and I are friends. ___ are students.",
+      "answers": [
+        "We"
+      ],
+      "explanation": "Gapiruvchi o‘zi ham guruhga kirsa we ishlatadi."
+    }
+  ],
+  "1.9": [
+    {
+      "prompt": "My brother smiles. Egani to‘liq yozing.",
+      "answers": [
+        "My brother"
+      ],
+      "explanation": "Kim tabassum qilyapti? My brother. Smiles esa fe’l."
+    },
+    {
+      "prompt": "Two cats sleep. Egani to‘liq yozing.",
+      "answers": [
+        "Two cats"
+      ],
+      "explanation": "Kim uxlayapti? Two cats. Ega ikki so‘zdan iborat."
+    }
+  ],
+  "1.10": [
+    {
+      "prompt": "Mina reads comics. To‘ldiruvchini yozing.",
+      "answers": [
+        "comics"
+      ],
+      "explanation": "Mina nimani o‘qiydi? Comics. Fe’l reads, ega Mina."
+    },
+    {
+      "prompt": "The robot carries a bag. Fe’lni yozing.",
+      "answers": [
+        "carries"
+      ],
+      "explanation": "Carries bajarilayotgan harakat; a bag to‘ldiruvchi."
+    }
+  ],
+  "1.11": [
+    {
+      "prompt": "The soup is hot. Egani tavsiflovchi sifatni yozing.",
+      "answers": [
+        "hot"
+      ],
+      "explanation": "Hot is dan keyin soup egasining holatini tavsiflaydi."
+    },
+    {
+      "prompt": "My aunt is a doctor. Egani tavsiflovchi ot birikmasini to‘liq yozing.",
+      "answers": [
+        "a doctor"
+      ],
+      "explanation": "A doctor ega kimligini aytadi. Bu gapda u to‘ldiruvchi emas, be dan keyingi tavsiflovchi qism."
+    }
+  ],
+  "1.12": [
+    {
+      "prompt": "Gapni tartiblang: English / study / We.",
+      "answers": [
+        "We study English"
+      ],
+      "explanation": "Sodda darak gapda ega We, keyin fe’l study, keyin to‘ldiruvchi English."
+    },
+    {
+      "prompt": "Gapni tartiblang: apples / eats / The horse.",
+      "answers": [
+        "The horse eats apples"
+      ],
+      "explanation": "Ega The horse, fe’l eats, to‘ldiruvchi apples tartibida keladi."
+    }
+  ],
+  "1.13": [
+    {
+      "prompt": "Bitta xato so‘zni olib tashlab, gapni to‘liq yozing: I am like tea.",
+      "answers": [
+        "I like tea"
+      ],
+      "explanation": "Like bu gapning asosiy fe’li. Present Simple darakda uning oldiga am qo‘yilmaydi."
+    },
+    {
+      "prompt": "Mos shaklni tanlang va yozing: The robot ___ happy. (is / works)",
+      "answers": [
+        "is"
+      ],
+      "explanation": "Happy sifat; egani sifat bilan bog‘lash uchun is kerak."
+    }
+  ],
+  "1.14": [
+    {
+      "prompt": "Katta harflarni tuzatib gapni yozing: i am ali.",
+      "answers": [
+        "I am Ali"
+      ],
+      "explanation": "I har doim katta harf bilan, Ali atoqli oti ham katta harf bilan boshlanadi.",
+      "caseSensitive": true
+    },
+    {
+      "prompt": "Are you ready gapining oxiriga qaysi belgi kerak? So‘z bilan yozing: question mark / full stop.",
+      "answers": [
+        "question mark"
+      ],
+      "explanation": "Are you ready so‘roq gap, shuning uchun savol belgisi kerak."
+    }
+  ],
+  "2.1": [
+    {
+      "prompt": "I ___ ready. (am / is / are)",
+      "answers": [
+        "am"
+      ],
+      "explanation": "I egasi bilan am keladi."
+    },
+    {
+      "prompt": "Two robots ___ tired. (am / is / are)",
+      "answers": [
+        "are"
+      ],
+      "explanation": "Two robots ko‘plikdagi ega, shuning uchun are."
+    }
+  ],
+  "2.2": [
+    {
+      "prompt": "My cat ___ happy. (am / is / are)",
+      "answers": [
+        "is"
+      ],
+      "explanation": "My cat birlik; sifatdan oldin is keladi."
+    },
+    {
+      "prompt": "Gapni tartiblang: hungry / are / We.",
+      "answers": [
+        "We are hungry"
+      ],
+      "explanation": "Ega we dan keyin are, keyin hungry sifati keladi."
+    }
+  ],
+  "2.3": [
+    {
+      "prompt": "Bitta so‘z bilan inkor qiling: I am ___ tired.",
+      "answers": [
+        "not"
+      ],
+      "explanation": "Am dan keyin not qo‘yilib inkor yasaladi."
+    },
+    {
+      "prompt": "Qisqartirmasdan inkor gap yozing: The robot is angry.",
+      "answers": [
+        "The robot is not angry"
+      ],
+      "explanation": "Is dan keyin not qo‘yiladi; angry sifati o‘zgarmaydi."
+    }
+  ],
+  "2.4": [
+    {
+      "prompt": "So‘roq gap qiling: You are ready.",
+      "answers": [
+        "Are you ready"
+      ],
+      "explanation": "Be so‘roq gapda ega oldiga chiqadi: Are + you + ready?"
+    },
+    {
+      "prompt": "___ the soup hot? (Am / Is / Are)",
+      "answers": [
+        "Is"
+      ],
+      "explanation": "The soup birlik; so‘roq boshida Is keladi."
+    }
+  ],
+  "2.5": [
+    {
+      "prompt": "My brother ___ a student. (am / is / are)",
+      "answers": [
+        "is"
+      ],
+      "explanation": "Birlikdagi My brother egasidan keyin is keladi."
+    },
+    {
+      "prompt": "Gapni tartiblang: doctors / are / They.",
+      "answers": [
+        "They are doctors"
+      ],
+      "explanation": "They ko‘plik, shuning uchun are doctors. Ko‘plikdagi kasbdan oldin a qo‘yilmaydi."
+    }
+  ],
+  "2.6": [
+    {
+      "prompt": "Bitta so‘z bilan inkor qiling: We are ___ teachers.",
+      "answers": [
+        "not"
+      ],
+      "explanation": "Are dan keyin not qo‘yilib inkor yasaladi."
+    },
+    {
+      "prompt": "Qisqartirmasdan inkor gap yozing: She is a nurse.",
+      "answers": [
+        "She is not a nurse"
+      ],
+      "explanation": "Is not inkor shakli; a nurse birikmasi saqlanadi."
+    }
+  ],
+  "2.7": [
+    {
+      "prompt": "So‘roq gap qiling: He is a driver.",
+      "answers": [
+        "Is he a driver"
+      ],
+      "explanation": "Is egadan oldin keladi; a driver o‘z joyida qoladi."
+    },
+    {
+      "prompt": "___ they students? (Am / Is / Are)",
+      "answers": [
+        "Are"
+      ],
+      "explanation": "They egasi bilan are ishlatiladi; savolda u gap boshiga chiqadi."
+    }
+  ],
+  "2.8": [
+    {
+      "prompt": "Gapni tartiblang: a / kind / is / He / doctor.",
+      "answers": [
+        "He is a kind doctor"
+      ],
+      "explanation": "Ot birikmasi a + kind + doctor tartibida keladi."
+    },
+    {
+      "prompt": "My sister is ___ excellent teacher. (a / an)",
+      "answers": [
+        "an"
+      ],
+      "explanation": "Excellent unli tovush bilan boshlanadi; artikl sifatdan oldin an bo‘ladi."
+    }
+  ],
+  "2.9": [
+    {
+      "prompt": "Qisqartirmasdan inkor gap yozing: He is a lazy student.",
+      "answers": [
+        "He is not a lazy student"
+      ],
+      "explanation": "Not is dan keyin, butun a lazy student birikmasidan oldin keladi."
+    },
+    {
+      "prompt": "Bitta so‘z bilan inkor qiling: They are ___ noisy children.",
+      "answers": [
+        "not"
+      ],
+      "explanation": "Ko‘plikdagi are dan keyin not qo‘yiladi. Children oldidan a ishlatilmaydi."
+    }
+  ],
+  "2.10": [
+    {
+      "prompt": "So‘roq gap qiling: She is a busy nurse.",
+      "answers": [
+        "Is she a busy nurse"
+      ],
+      "explanation": "Is oldinga chiqadi; a busy nurse ichidagi tartib o‘zgarmaydi."
+    },
+    {
+      "prompt": "___ you a friendly neighbour? (Am / Is / Are)",
+      "answers": [
+        "Are"
+      ],
+      "explanation": "You egasi bilan are; otning birlik shakli neighbour bu qoidani o‘zgartirmaydi."
+    }
+  ],
+  "2.11": [
+    {
+      "prompt": "They ___ in the library. (am / is / are)",
+      "answers": [
+        "are"
+      ],
+      "explanation": "They ko‘plik egasi; joy birikmasidan oldin are keladi."
+    },
+    {
+      "prompt": "Gapni tartiblang: at home / is / My cat.",
+      "answers": [
+        "My cat is at home"
+      ],
+      "explanation": "Ega + be + joy: My cat + is + at home."
+    }
+  ],
+  "2.12": [
+    {
+      "prompt": "Qisqartirmasdan inkor gap yozing: We are at school.",
+      "answers": [
+        "We are not at school"
+      ],
+      "explanation": "Not are dan keyin keladi, joy birikmasi saqlanadi."
+    },
+    {
+      "prompt": "The teacher is ___ in the office. Bitta so‘z bilan inkor qiling.",
+      "answers": [
+        "not"
+      ],
+      "explanation": "Is dan keyingi not joy haqidagi gapni inkor qiladi."
+    }
+  ],
+  "2.13": [
+    {
+      "prompt": "So‘roq gap qiling: They are in the kitchen.",
+      "answers": [
+        "Are they in the kitchen"
+      ],
+      "explanation": "Are ega oldiga ko‘chadi. In the kitchen joy birikmasi oxirda qoladi."
+    },
+    {
+      "prompt": "___ your brother at home? (Am / Is / Are)",
+      "answers": [
+        "Is"
+      ],
+      "explanation": "Your brother birlikdagi ega, so‘roq boshida Is keladi."
+    }
+  ],
+  "2.14": [
+    {
+      "prompt": "Joyni so‘rang: ___ is your bag? — It is on the chair.",
+      "answers": [
+        "Where"
+      ],
+      "explanation": "Joyni so‘rash uchun Where ishlatiladi."
+    },
+    {
+      "prompt": "Shaxs kimligini so‘rang: ___ is she? — She is our teacher.",
+      "answers": [
+        "Who"
+      ],
+      "explanation": "Shaxsning kimligini so‘rash uchun Who ishlatiladi."
+    }
+  ],
+  "2.15": [
+    {
+      "prompt": "Are you a student? — Yes, I ___.",
+      "answers": [
+        "am"
+      ],
+      "explanation": "Savoldagi you ga javob beruvchi I deydi; I bilan am keladi."
+    },
+    {
+      "prompt": "Is he ready? — No, he ___. Qisqartma yozing.",
+      "answers": [
+        "isn't"
+      ],
+      "explanation": "He bilan qisqa inkor javob No, he isn't bo‘ladi."
+    }
+  ],
+  "2.16": [
+    {
+      "prompt": "I am happy gapidagi I am ni qisqartirib, to‘liq gapni yozing.",
+      "answers": [
+        "I'm happy"
+      ],
+      "explanation": "I am ning qisqartmasi I'm."
+    },
+    {
+      "prompt": "They are not here. Are not ni qisqartirib gapni yozing.",
+      "answers": [
+        "They aren't here"
+      ],
+      "explanation": "Are not qisqartmasi aren't; ega They o‘zgarmaydi."
+    }
+  ],
+  "2.17": [
+    {
+      "prompt": "She is ___ doctor. (a / an)",
+      "answers": [
+        "a"
+      ],
+      "explanation": "Doctor undosh tovush bilan boshlanadi; birlikdagi kasbdan oldin a."
+    },
+    {
+      "prompt": "He is ___ artist. (a / an)",
+      "answers": [
+        "an"
+      ],
+      "explanation": "Artist unli tovush bilan boshlanadi; birlikdagi kasbdan oldin an."
+    }
+  ],
+  "2.18": [
+    {
+      "prompt": "Bitta ortiqcha so‘zni olib tashlab yozing: She is at here.",
+      "answers": [
+        "She is here"
+      ],
+      "explanation": "Bu joy ma’nosida here oldidan at ishlatilmaydi."
+    },
+    {
+      "prompt": "We are ___ home. (at / on / to)",
+      "answers": [
+        "at"
+      ],
+      "explanation": "Joyni bildiruvchi odatiy birikma at home."
+    }
+  ],
+  "3.1": [
+    {
+      "prompt": "Ko‘plikni birlikka aylantiring: books. Faqat otni yozing.",
+      "answers": [
+        "book"
+      ],
+      "explanation": "Oddiy ko‘plik -s olib tashlanadi: books → book."
+    },
+    {
+      "prompt": "Bitta buyum: a ___. (chair / chairs)",
+      "answers": [
+        "chair"
+      ],
+      "explanation": "A faqat birlikdagi sanaladigan ot bilan ishlatiladi."
+    }
+  ],
+  "3.2": [
+    {
+      "prompt": "Box so‘zining ko‘pligini yozing.",
+      "answers": [
+        "boxes"
+      ],
+      "explanation": "Oxiri -x bilan tugagan otga -es qo‘shiladi."
+    },
+    {
+      "prompt": "Pen so‘zining ko‘pligini yozing.",
+      "answers": [
+        "pens"
+      ],
+      "explanation": "Oddiy ko‘plikda pen ga -s qo‘shiladi."
+    }
+  ],
+  "3.3": [
+    {
+      "prompt": "City so‘zining ko‘pligini yozing.",
+      "answers": [
+        "cities"
+      ],
+      "explanation": "Undosh + y bilan tugasa y o‘rniga -ies: cities."
+    },
+    {
+      "prompt": "Leaf so‘zining ko‘pligini yozing.",
+      "answers": [
+        "leaves"
+      ],
+      "explanation": "Leaf ko‘plikda -f ni -ves ga o‘zgartiradi. Bu barcha -f otlarga bir xil qoida emas."
+    }
+  ],
+  "3.4": [
+    {
+      "prompt": "Child so‘zining ko‘pligini yozing.",
+      "answers": [
+        "children"
+      ],
+      "explanation": "Child istisno: childs emas, children."
+    },
+    {
+      "prompt": "Tooth so‘zining ko‘pligini yozing.",
+      "answers": [
+        "teeth"
+      ],
+      "explanation": "Tooth istisno ko‘plik shakliga ega: teeth."
+    }
+  ],
+  "3.5": [
+    {
+      "prompt": "Two ___ are on the table. (apple / apples)",
+      "answers": [
+        "apples"
+      ],
+      "explanation": "Two dan keyin sanaladigan ot ko‘plikda keladi."
+    },
+    {
+      "prompt": "Sanaladigan otni tanlang: furniture / chair / advice.",
+      "answers": [
+        "chair"
+      ],
+      "explanation": "Bir chair, ikki chairs deb sanash mumkin; furniture va advice odatda sanalmaydi."
+    }
+  ],
+  "3.6": [
+    {
+      "prompt": "Mos gapni tanlang. Faqat A yoki B yozing. A: I need advice. B: I need an advice.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "Advice odatda sanalmaydigan ot, uning oldidan an ishlatilmaydi."
+    },
+    {
+      "prompt": "Ortiqcha -s ni olib tashlab gapni yozing: I need informations.",
+      "answers": [
+        "I need information"
+      ],
+      "explanation": "Information odatda sanalmaydigan ot; ko‘plik -s olmaydi."
+    }
+  ],
+  "3.7": [
+    {
+      "prompt": "___ hour (a / an)",
+      "answers": [
+        "an"
+      ],
+      "explanation": "Hour boshidagi h talaffuz qilinmaydi; birinchi tovush unli, shuning uchun an."
+    },
+    {
+      "prompt": "___ university (a / an)",
+      "answers": [
+        "a"
+      ],
+      "explanation": "University /j/ undosh tovushi bilan boshlanadi, shuning uchun a."
+    }
+  ],
+  "3.8": [
+    {
+      "prompt": "Birinchi marta, qaysi biri noma’lum: I have ___ new bag. (a / the)",
+      "answers": [
+        "a"
+      ],
+      "explanation": "Birinchi bor tilga olinayotgan noaniq birlikdagi buyum uchun a."
+    },
+    {
+      "prompt": "Birinchi marta, qaysi biri noma’lum: There is ___ orange on my desk. (an / the)",
+      "answers": [
+        "an"
+      ],
+      "explanation": "Orange yangi ma’lumot va unli tovush bilan boshlanadi: an orange."
+    }
+  ],
+  "3.9": [
+    {
+      "prompt": "I have a cat. ___ cat is black. (A / The)",
+      "answers": [
+        "The"
+      ],
+      "explanation": "Ikkinchi gapda avval tanishtirilgan ma’lum mushuk aytilmoqda, shuning uchun The."
+    },
+    {
+      "prompt": "Xonada bitta eshik bor. Please close ___ door. (a / the)",
+      "answers": [
+        "the"
+      ],
+      "explanation": "Vaziyatdan qaysi eshik ekani ma’lum; the ishlatiladi."
+    }
+  ],
+  "3.10": [
+    {
+      "prompt": "Umuman kitoblar haqida: ___ books are useful. (a / the / 0). Artikl kerak bo‘lmasa 0 yozing.",
+      "answers": [
+        "0"
+      ],
+      "explanation": "Ko‘plikdagi books umumiy ma’noda artiklsiz ishlatiladi."
+    },
+    {
+      "prompt": "Umuman mushuklar haqida: I like ___ cats. (a / the / 0). Artikl kerak bo‘lmasa 0 yozing.",
+      "answers": [
+        "0"
+      ],
+      "explanation": "Cats barcha mushuklar haqida umumiy ma’noda, shuning uchun zero article."
+    }
+  ],
+  "3.11": [
+    {
+      "prompt": "Umuman suv haqida: ___ water is important. (a / the / 0). Artikl kerak bo‘lmasa 0 yozing.",
+      "answers": [
+        "0"
+      ],
+      "explanation": "Water umumiy ma’noda sanalmaydigan ot; artikl kerak emas."
+    },
+    {
+      "prompt": "Umuman musiqa haqida: I love ___ music. (a / the / 0). Artikl kerak bo‘lmasa 0 yozing.",
+      "answers": [
+        "0"
+      ],
+      "explanation": "Music umumiy ma’noda sanalmaydigan ot bo‘lgani uchun artiklsiz keladi."
+    }
+  ],
+  "3.12": [
+    {
+      "prompt": "My aunt is ___ engineer. (a / an / 0)",
+      "answers": [
+        "an"
+      ],
+      "explanation": "Birlikdagi kasb engineer oldidan unli tovushga mos an keladi."
+    },
+    {
+      "prompt": "They are ___ teachers. (a / an / 0). Artikl kerak bo‘lmasa 0 yozing.",
+      "answers": [
+        "0"
+      ],
+      "explanation": "Teachers ko‘plik, shuning uchun birlik artikllari a/an qo‘yilmaydi."
+    }
+  ],
+  "3.13": [
+    {
+      "prompt": "Egalik birikmasini yozing: the bag of my sister.",
+      "answers": [
+        "my sister's bag"
+      ],
+      "explanation": "Birlikdagi egaga 's qo‘shiladi: my sister's bag."
+    },
+    {
+      "prompt": "Egalik birikmasini yozing: the hat of Ali.",
+      "answers": [
+        "Ali's hat"
+      ],
+      "explanation": "Ali birlikdagi shaxs nomi; egalik Ali's shaklida."
+    }
+  ],
+  "3.14": [
+    {
+      "prompt": "Egalik birikmasini yozing: the room of the teachers. Bir nechta ustoz nazarda tutilgan.",
+      "answers": [
+        "the teachers' room"
+      ],
+      "explanation": "Teachers ko‘plik -s bilan tugaydi; egalik uchun faqat apostrof qo‘shiladi."
+    },
+    {
+      "prompt": "Egalik birikmasini yozing: the bags of the students.",
+      "answers": [
+        "the students' bags"
+      ],
+      "explanation": "Ko‘plikdagi students so‘zidan keyin apostrof keladi: students' bags."
+    }
+  ],
+  "3.15": [
+    {
+      "prompt": "A ___ of water. (glass / piece)",
+      "answers": [
+        "glass"
+      ],
+      "explanation": "Ichimlik miqdorini bildirish uchun a glass of water ishlatiladi."
+    },
+    {
+      "prompt": "A ___ of advice. (piece / bottle)",
+      "answers": [
+        "piece"
+      ],
+      "explanation": "Advice sanalmaydi; bitta maslahat a piece of advice deyiladi."
+    }
+  ],
+  "3.16": [
+    {
+      "prompt": "Avtobus bekati birikmasini ikki so‘z bilan yozing: bus + stop.",
+      "answers": [
+        "bus stop"
+      ],
+      "explanation": "Inglizcha qo‘shma otda aniqlovchi bus bosh ot stop dan oldin keladi."
+    },
+    {
+      "prompt": "Qahva ichish uchun piyola: coffee / cup so‘zlarini to‘g‘ri tartibda yozing.",
+      "answers": [
+        "coffee cup"
+      ],
+      "explanation": "Birinchi ot coffee ikkinchi ot cup ning turini bildiradi."
+    }
+  ]
+}

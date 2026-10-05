@@ -1,0 +1,90 @@
+[
+  {
+    "month": 1,
+    "focus": "Fundament",
+    "canDo": [
+      "Ot, sifat, fe’l va ega vazifasini farqlayman.",
+      "Be bilan odam, sifat, kasb va joyni tasvirlayman; inkor va savol tuzaman.",
+      "Sodda matndan ism, rang, son va joyni topaman.",
+      "O‘zim va buyumlarim haqida qisqa gapiraman va yozaman."
+    ],
+    "check": "24-dars: o‘qish va tinglash savollari, qisqa suhbat va shu darsdagi Writing topshirig‘i. Hajm va mezonlar topshiriqda berilgan."
+  },
+  {
+    "month": 2,
+    "focus": "Kundalik hayot",
+    "canDo": [
+      "Borlik va egalikni aytaman.",
+      "Kundalik odatni hozir davom etayotgan ish bilan farqlayman.",
+      "Joy, vaqt va kundalik ehtiyojlar haqida savol beraman.",
+      "Qisqa suhbat va xabardan asosiy ma’lumotni olaman."
+    ],
+    "check": "48-dars: kundalik vaziyat bo‘yicha savol-javob, o‘qish/tinglash va shu darsdagi yozma topshiriq."
+  },
+  {
+    "month": 3,
+    "focus": "Vaqt va tajriba",
+    "canDo": [
+      "O‘tgan voqeani ketma-ket hikoya qilaman.",
+      "Reja va tezkor qarorni ifodalayman.",
+      "Tajriba va natijani aniq o‘tgan vaqt bilan farqlayman.",
+      "Qisqa hikoya va suhbatdan voqea tartibini tushunaman."
+    ],
+    "check": "72-dars: o‘tgan voqea va hozirgi natijani farqlash, o‘qish/tinglash va bog‘langan yozma matn."
+  },
+  {
+    "month": 4,
+    "focus": "Taqqoslash va yechim",
+    "canDo": [
+      "Natija va davomiylikni farqlab tushuntiraman.",
+      "Variantlarni taqqoslab, sabab bilan tanlov qilaman.",
+      "Qobiliyat, ruxsat, majburiyat va maslahatni ifodalayman.",
+      "Amaliy muammo uchun yozma va og‘zaki tavsiya beraman."
+    ],
+    "check": "96-dars: variantlarni solishtirish, maslahat berish va shu darsdagi mezonlarga mos yozma javob."
+  },
+  {
+    "month": 5,
+    "focus": "Taxmin va shart",
+    "canDo": [
+      "Dalilga asoslangan taxminni aytaman.",
+      "Real va faraziy shartlarni farqlayman.",
+      "O‘tgan qaror va uning oqibati haqida mulohaza qilaman.",
+      "Jarayon va voqeani passive shaklda ifodalayman."
+    ],
+    "check": "120-dars: muammo–yechim muhokamasi, oqibatlarni tushuntirish, o‘qish/tinglash va dalilli yozuv."
+  },
+  {
+    "month": 6,
+    "focus": "Bog‘langan fikr",
+    "canDo": [
+      "Boshqa odam fikrini mazmunini saqlab yetkazaman.",
+      "Relative clause bilan aniq tafsilot qo‘shaman.",
+      "Fe’ldan keyingi shakllarni o‘rinli ishlataman.",
+      "Matndagi sabab, qarama-qarshilik va muallif fikrini ajrataman."
+    ],
+    "check": "144-dars: fikrlarni solishtirish, suhbat mazmunini yetkazish va shu darsdagi hajmga mos izchil yozuv."
+  },
+  {
+    "month": 7,
+    "focus": "Aniq va asosli nutq",
+    "canDo": [
+      "Murakkab gaplarni tushunarli bog‘layman.",
+      "Fikr, misol, dalil va qarshi fikrni ajrataman.",
+      "Kelajakdagi muddat va davomiylikni aniq ifodalayman.",
+      "Bir mavzuni turli tomonlardan izohlab, xulosa qilaman."
+    ],
+    "check": "168-dars: vaqt chegarasida o‘qish/tinglash, asosli munozara va janrga mos mustaqil yozuv."
+  },
+  {
+    "month": 8,
+    "focus": "B2ga yo‘naltirilgan integratsiya",
+    "canDo": [
+      "Murakkabroq matnning asosiy fikri va muhim dalillarini tushunaman.",
+      "Bir necha nuqtayi nazarni solishtirib, o‘z fikrimni asoslayman.",
+      "Turli mavzularda izchil gapiraman va aniqlashtiruvchi savollarga javob beraman.",
+      "Yozuvimni vazifa, tuzilma, lug‘at va grammar bo‘yicha qayta tahrirlayman."
+    ],
+    "check": "192-dars: to‘rt ko‘nikma bo‘yicha ichki yakuniy tekshiruv. Rasmiy sinovga tayyorlik alohida baholanadi."
+  }
+]

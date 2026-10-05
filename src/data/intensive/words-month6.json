@@ -1,0 +1,4002 @@
+[
+  {
+    "word": "environment",
+    "ipa": "/ɪnˈvaɪrənmənt/",
+    "meaning": "atrof-muhit",
+    "example": "The environment would enjoy our picnic more without the plastic forks.",
+    "translation": "Plastik sanchqilar bo‘lmasa, atrof-muhit piknigimizdan ko‘proq mamnun bo‘lardi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "ecology",
+    "ipa": "/iˈkɒlədʒi/",
+    "meaning": "tirik mavjudotlar va muhit aloqalarini o‘rganish; ekologiya",
+    "example": "Ecology explains why removing one insect can upset a whole garden.",
+    "translation": "Ekologiya bitta hasharotni yo‘qotish butun bog‘dagi muvozanatni nega buzishini tushuntiradi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "ecosystem",
+    "ipa": "/ˈiːkəʊsɪstəm/",
+    "meaning": "ekotizim",
+    "example": "Our pond is a small ecosystem with some extremely noisy residents.",
+    "translation": "Hovuzimiz ayrim juda shovqinli aholisi bo‘lgan kichik ekotizimdir.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "habitat",
+    "ipa": "/ˈhæbɪtæt/",
+    "meaning": "tabiiy yashash muhiti",
+    "example": "The fallen tree is a habitat, not just an untidy bit of forest.",
+    "translation": "Qulagan daraxt shunchaki o‘rmonning tartibsiz qismi emas, yashash muhitidir.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "biodiversity",
+    "ipa": "/ˌbaɪəʊdaɪˈvɜːsəti/",
+    "meaning": "biologik xilma-xillik",
+    "example": "Our garden's biodiversity includes several creatures that eat my lettuce.",
+    "translation": "Bog‘imizning biologik xilma-xilligiga salatimni yeydigan bir nechta jonzot ham kiradi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "wildlife",
+    "ipa": "/ˈwaɪldlaɪf/",
+    "meaning": "yovvoyi hayvonot dunyosi",
+    "example": "Local wildlife treats my vegetable patch as a free restaurant.",
+    "translation": "Mahalliy yovvoyi hayvonlar sabzavot ekkan joyimni bepul oshxona deb biladi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "species",
+    "ipa": "/ˈspiːʃiːz/",
+    "meaning": "biologik tur",
+    "example": "We identified five bird species before Dad identified the nearest café.",
+    "translation": "Dadam eng yaqin kafeni topguncha biz beshta qush turini aniqladik.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "population",
+    "ipa": "/ˌpɒpjuˈleɪʃn/",
+    "meaning": "muayyan hududdagi bir tur vakillari soni",
+    "example": "The rabbit population has increased, and my carrots have noticed.",
+    "translation": "Quyonlar soni ko‘paydi, sabzilarim esa buni sezdi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "organism",
+    "ipa": "/ˈɔːɡənɪzəm/",
+    "meaning": "tirik organizm",
+    "example": "Even a tiny organism can have a surprisingly busy life.",
+    "translation": "Hatto mitti organizmning ham hayoti kutilmaganda juda band bo‘lishi mumkin.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "vegetation",
+    "ipa": "/ˌvedʒəˈteɪʃn/",
+    "meaning": "o‘simlik qoplami",
+    "example": "Thick vegetation has hidden the path and possibly Dad's confidence.",
+    "translation": "Qalin o‘simliklar yo‘lni va, ehtimol, dadamning ishonchini yashirdi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "wilderness",
+    "ipa": "/ˈwɪldənəs/",
+    "meaning": "inson kam aralashgan yovvoyi tabiat hududi",
+    "example": "In the wilderness, my phone is mostly an expensive clock.",
+    "translation": "Yovvoyi tabiat qo‘ynida telefonim asosan qimmat soat vazifasini bajaradi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "wetland",
+    "ipa": "/ˈwetlənd/",
+    "meaning": "suv-botqoq hudud",
+    "example": "The wetland stores water and gives muddy boots a purpose.",
+    "translation": "Suv-botqoq hudud suvni saqlaydi va loy etiklar kiyishga sabab beradi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "woodland",
+    "ipa": "/ˈwʊdlənd/",
+    "meaning": "daraxtzor",
+    "example": "The woodland behind our estate is quieter than our family kitchen.",
+    "translation": "Turar joyimiz ortidagi daraxtzor oilamiz oshxonasidan tinchroq.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "rainforest",
+    "ipa": "/ˈreɪnfɒrɪst/",
+    "meaning": "sernam tropik o‘rmon",
+    "example": "A rainforest has more layers of leaves than my winter outfit has clothes.",
+    "translation": "Tropik o‘rmondagi barg qatlamlari qishki kiyimim qatlamlaridan ko‘proq.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "grassland",
+    "ipa": "/ˈɡrɑːslænd/",
+    "meaning": "o‘tloqli keng hudud",
+    "example": "The grassland looks empty until a hundred insects introduce themselves.",
+    "translation": "Yuzta hasharot o‘zini tanishtirguncha keng o‘tloq bo‘m-bo‘sh ko‘rinadi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "marsh",
+    "ipa": "/mɑːʃ/",
+    "meaning": "botqoqlik",
+    "example": "We admired the marsh from a path that kept our socks dry.",
+    "translation": "Paypoqlarimizni quruq saqlaydigan yo‘lakdan botqoqlikni tomosha qildik.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "estuary",
+    "ipa": "/ˈestʃuəri/",
+    "meaning": "daryo dengizga quyiladigan kengaygan joy",
+    "example": "Birds gather at the estuary as if somebody has announced lunch.",
+    "translation": "Daryoning dengizga quyilish joyiga qushlar go‘yo kimdir tushlikni e’lon qilgandek to‘planadi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "coastline",
+    "ipa": "/ˈkəʊstlaɪn/",
+    "meaning": "qirg‘oq chizig‘i",
+    "example": "The coastline curves so much that our walk keeps getting longer.",
+    "translation": "Qirg‘oq chizig‘i shunchalik egri-bugriki, sayrimiz uzayaveradi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "peninsula",
+    "ipa": "/pəˈnɪnsjələ/",
+    "meaning": "yarimorol",
+    "example": "On this peninsula, the sea seems to follow us everywhere.",
+    "translation": "Bu yarimorolda dengiz go‘yo hamma joyda ortimizdan yuradi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "dune",
+    "ipa": "/djuːn/",
+    "meaning": "qum tepaligi",
+    "example": "The dune moved a little, but our picnic blanket moved much faster.",
+    "translation": "Qum tepaligi biroz siljidi, piknik to‘shamamiz esa ancha tezroq uchdi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "altitude",
+    "ipa": "/ˈæltɪtjuːd/",
+    "meaning": "dengiz sathidan balandlik",
+    "example": "At this altitude, even our snack bags seem slightly swollen.",
+    "translation": "Bu balandlikda hatto gazak paketlarimiz ham biroz shishgandek.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "terrain",
+    "ipa": "/təˈreɪn/",
+    "meaning": "yer yuzasining tuzilishi",
+    "example": "The rough terrain gave my new boots an immediate interview.",
+    "translation": "Notekis yer yangi etiklarimni darhol sinovdan o‘tkazdi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "canopy",
+    "ipa": "/ˈkænəpi/",
+    "meaning": "o‘rmondagi daraxt shoxlarining yuqori qatlami",
+    "example": "The forest canopy works as a roof with occasional leaks.",
+    "translation": "O‘rmonning yuqori shox qatlami ba’zan suv o‘tkazadigan tom vazifasini bajaradi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "undergrowth",
+    "ipa": "/ˈʌndəɡrəʊθ/",
+    "meaning": "daraxtlar tagidagi qalin o‘simliklar",
+    "example": "Something rustled in the undergrowth, and Dad suddenly walked faster.",
+    "translation": "Daraxtlar tagidagi o‘simliklar orasida nimadir shitirladi va dadam birdan tezroq yurdi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "native",
+    "ipa": "/ˈneɪtɪv/",
+    "meaning": "shu hududga tabiiy xos",
+    "example": "We planted native flowers, and the local bees approved immediately.",
+    "translation": "Shu hududga xos gullarni ekdik, mahalliy asalarilar darhol ma’qulladi.",
+    "topic": "6-oy • Tabiiy muhit va yashash joylari"
+  },
+  {
+    "word": "global warming",
+    "ipa": "/ˌɡləʊbl ˈwɔːmɪŋ/",
+    "meaning": "global isish",
+    "example": "Global warming is a long-term trend, not a reason to trust tomorrow's picnic weather.",
+    "translation": "Global isish uzoq muddatli jarayon, ertangi piknik havosiga ishonish uchun sabab emas.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "greenhouse effect",
+    "ipa": "/ˈɡriːnhaʊs ɪfekt/",
+    "meaning": "issiqxona effekti",
+    "example": "The greenhouse effect keeps Earth warm, but adding more gases turns up the heat.",
+    "translation": "Issiqxona effekti Yerni iliq saqlaydi, lekin gazlar ko‘payishi issiqlikni oshiradi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "carbon",
+    "ipa": "/ˈkɑːbən/",
+    "meaning": "uglerod",
+    "example": "Carbon is in my pencil and my body, though only one does homework.",
+    "translation": "Uglerod qalamimda ham, tanamda ham bor, lekin ulardan faqat bittasi uy vazifasini bajaradi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "carbon dioxide",
+    "ipa": "/ˌkɑːbən daɪˈɒksaɪd/",
+    "meaning": "karbonat angidrid",
+    "example": "The yeast releases carbon dioxide, giving our bread a lift.",
+    "translation": "Xamirturush karbonat angidrid chiqarib, nonimizni ko‘taradi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "methane",
+    "ipa": "/ˈmiːθeɪn/",
+    "meaning": "metan gazi",
+    "example": "Methane traps heat in the atmosphere, so leaks are more than a waste of gas.",
+    "translation": "Metan atmosferada issiqlikni tutadi, shuning uchun sizib chiqish faqat gaz isrofi emas.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "emission",
+    "ipa": "/ɪˈmɪʃn/",
+    "meaning": "havoga gaz yoki modda chiqarilishi",
+    "example": "The emission of smoke from that chimney has cancelled our outdoor lunch.",
+    "translation": "O‘sha mo‘ridan tutun chiqishi ochiq havodagi tushligimizni bekor qildi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "footprint",
+    "ipa": "/ˈfʊtprɪnt/",
+    "meaning": "faoliyatning atrof-muhitga ta’sir hajmi",
+    "example": "Taking fewer flights can shrink my carbon footprint without shrinking my shoes.",
+    "translation": "Kamroq samolyotda uchish oyoq kiyimimni kichraytirmay, uglerod izimni kamaytirishi mumkin.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "atmosphere",
+    "ipa": "/ˈætməsfɪə/",
+    "meaning": "atmosfera; Yerni o‘ragan havo qatlami",
+    "example": "Earth's atmosphere does a valuable job without sending us a bill.",
+    "translation": "Yer atmosferasi bizga hisob yubormay muhim ish bajaradi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "pollution",
+    "ipa": "/pəˈluːʃn/",
+    "meaning": "ifloslanish",
+    "example": "Air pollution is one visitor our town would rather not welcome.",
+    "translation": "Havo ifloslanishi shahrimiz kutib olishni istamaydigan mehmondir.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "pollutant",
+    "ipa": "/pəˈluːtənt/",
+    "meaning": "ifloslantiruvchi modda",
+    "example": "A pollutant can be invisible, unlike the rubbish on my desk.",
+    "translation": "Ifloslantiruvchi modda stolimdagi axlatdan farqli ravishda ko‘rinmas bo‘lishi mumkin.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "smog",
+    "ipa": "/smɒɡ/",
+    "meaning": "tutun aralash iflos tuman",
+    "example": "Smog hid the skyline, so our photos feature mostly grey.",
+    "translation": "Iflos tuman shahar manzarasini yashirdi, suratlarimizda asosan kulrang chiqdi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "soot",
+    "ipa": "/sʊt/",
+    "meaning": "qurum",
+    "example": "Soot covered the old chimney brush like a very dark coat.",
+    "translation": "Qurum eski mo‘ri cho‘tkasini juda qora palto kabi qopladi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "acid rain",
+    "ipa": "/ˌæsɪd ˈreɪn/",
+    "meaning": "kislotali yomg‘ir",
+    "example": "Acid rain can damage buildings; even stone dislikes some weather.",
+    "translation": "Kislotali yomg‘ir binolarga zarar yetkazishi mumkin, hatto tosh ham ayrim ob-havoni yoqtirmaydi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "deforestation",
+    "ipa": "/ˌdiːfɒrɪˈsteɪʃn/",
+    "meaning": "o‘rmonlarning kesilib yo‘q qilinishi",
+    "example": "Deforestation leaves animals looking for homes nobody has built.",
+    "translation": "O‘rmonlarning yo‘q qilinishi hayvonlarni hech kim qurmagan uylarni izlashga majbur qiladi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "desertification",
+    "ipa": "/dɪˌzɜːtɪfɪˈkeɪʃn/",
+    "meaning": "yerning cho‘llanishi",
+    "example": "Desertification can turn productive land into a place where farming becomes a struggle.",
+    "translation": "Cho‘llanish unumdor yerni dehqonchilik qiyinlashadigan joyga aylantirishi mumkin.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "erosion",
+    "ipa": "/ɪˈrəʊʒn/",
+    "meaning": "tuproq yoki qirg‘oqning yemirilishi",
+    "example": "Erosion has taken part of the path without asking the walkers.",
+    "translation": "Yemirilish piyodalardan so‘ramay yo‘lakning bir qismini olib ketdi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "flood",
+    "ipa": "/flʌd/",
+    "meaning": "suv toshqini",
+    "example": "After the flood, our football pitch briefly resembled a lake.",
+    "translation": "Suv toshqinidan keyin futbol maydonimiz bir muddat ko‘lga o‘xshadi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "wildfire",
+    "ipa": "/ˈwaɪldfaɪə/",
+    "meaning": "tabiiy hududdagi katta yong‘in",
+    "example": "The wildfire warning was a good reason to cancel our campfire plans.",
+    "translation": "Tabiiy yong‘in haqidagi ogohlantirish gulxan rejamizni bekor qilish uchun yetarli sabab edi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "heatwave",
+    "ipa": "/ˈhiːtweɪv/",
+    "meaning": "uzoq davom etadigan kuchli issiq",
+    "example": "During the heatwave, the shady bench became the village's best address.",
+    "translation": "Kuchli issiq paytida soyadagi o‘rindiq qishloqning eng yaxshi manziliga aylandi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "hurricane",
+    "ipa": "/ˈhʌrɪkən/",
+    "meaning": "kuchli tropik dovul",
+    "example": "The hurricane warning made our garden furniture an indoor collection.",
+    "translation": "Dovul haqidagi ogohlantirish bog‘ mebellarimizni uy ichidagi to‘plamga aylantirdi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "cyclone",
+    "ipa": "/ˈsaɪkləʊn/",
+    "meaning": "past bosim markazi atrofida aylanadigan yirik bo‘ron; siklon",
+    "example": "We followed the cyclone updates more closely than any television drama.",
+    "translation": "Siklon haqidagi xabarlarni har qanday serialdan diqqatliroq kuzatdik.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "tornado",
+    "ipa": "/tɔːˈneɪdəʊ/",
+    "meaning": "quyun",
+    "example": "The tornado in the documentary made our windy street seem peaceful.",
+    "translation": "Hujjatli filmdagi quyun shamolli ko‘chamizni osoyishta ko‘rsatdi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "blizzard",
+    "ipa": "/ˈblɪzəd/",
+    "meaning": "kuchli qor bo‘roni",
+    "example": "The blizzard persuaded even Dad that staying home was an adventure.",
+    "translation": "Qor bo‘roni hatto dadamni ham uyda qolish sarguzasht ekaniga ishontirdi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "landslide",
+    "ipa": "/ˈlændslaɪd/",
+    "meaning": "yer ko‘chkisi",
+    "example": "A landslide blocked the road, giving our map a new problem.",
+    "translation": "Yer ko‘chkisi yo‘lni to‘sib, xaritamizga yangi muammo berdi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "disaster",
+    "ipa": "/dɪˈzɑːstə/",
+    "meaning": "katta falokat",
+    "example": "After the disaster, neighbours shared meals and finally learnt each other's names.",
+    "translation": "Falokatdan keyin qo‘shnilar ovqat ulashib, nihoyat bir-birining ismini bilib oldi.",
+    "topic": "6-oy • Iqlim va ekologik xavflar"
+  },
+  {
+    "word": "conservation",
+    "ipa": "/ˌkɒnsəˈveɪʃn/",
+    "meaning": "tabiatni muhofaza qilish",
+    "example": "Conservation sometimes means leaving that messy pile of leaves alone.",
+    "translation": "Tabiatni asrash ba’zan o‘sha tartibsiz barg uyumiga tegmaslikni anglatadi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "preservation",
+    "ipa": "/ˌprezəˈveɪʃn/",
+    "meaning": "asrab saqlash",
+    "example": "The preservation of old trees matters more than a perfectly straight path.",
+    "translation": "Eski daraxtlarni asrab saqlash mutlaqo to‘g‘ri yo‘lakdan muhimroq.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "restoration",
+    "ipa": "/ˌrestəˈreɪʃn/",
+    "meaning": "tabiiy holatni tiklash",
+    "example": "River restoration brought back fish and several enthusiastic photographers.",
+    "translation": "Daryoni tiklash baliqlarni va bir nechta ishtiyoqli fotograflarni qaytardi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "sustainability",
+    "ipa": "/səˌsteɪnəˈbɪləti/",
+    "meaning": "ekologik va resurs jihatdan uzoq muddatli barqarorlik",
+    "example": "Sustainability means thinking beyond the next shopping bag.",
+    "translation": "Barqarorlik keyingi xarid paketidan uzoqroqni o‘ylashni anglatadi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "renewable",
+    "ipa": "/rɪˈnjuːəbl/",
+    "meaning": "tabiiy ravishda qayta tiklanadigan",
+    "example": "Wind is renewable, though it rarely follows our laundry schedule.",
+    "translation": "Shamol qayta tiklanadigan manba, lekin u kir yuvish jadvalimizga kamdan kam amal qiladi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "non-renewable",
+    "ipa": "/ˌnɒn rɪˈnjuːəbl/",
+    "meaning": "qayta tiklanmaydigan",
+    "example": "Coal is non-renewable; ordering more does not make Earth produce it faster.",
+    "translation": "Ko‘mir qayta tiklanmaydi, ko‘proq buyurtma berish Yer uni tezroq yaratishiga olib kelmaydi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "biodegradable",
+    "ipa": "/ˌbaɪəʊdɪˈɡreɪdəbl/",
+    "meaning": "tabiiy biologik jarayonlarda parchalanadigan",
+    "example": "Biodegradable packaging still belongs in the correct bin, not in a hedge.",
+    "translation": "Biologik parchalanadigan qadoq ham butalar orasiga emas, tegishli chiqindi qutisiga tashlanadi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "reusable",
+    "ipa": "/ˌriːˈjuːzəbl/",
+    "meaning": "qayta-qayta ishlatiladigan",
+    "example": "My reusable cup has survived more Mondays than my last umbrella.",
+    "translation": "Qayta ishlatiladigan stakanim oxirgi soyabonimdan ko‘proq dushanbani ko‘rgan.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "recyclable",
+    "ipa": "/ˌriːˈsaɪkləbl/",
+    "meaning": "qayta ishlashga yaroqli",
+    "example": "The box is recyclable once we remove the plastic ribbon and the cat.",
+    "translation": "Plastik tasma bilan mushukni olgach, qutini qayta ishlash mumkin.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "compostable",
+    "ipa": "/ˈkɒmpɒstəbl/",
+    "meaning": "tegishli sharoitda kompostga aylana oladigan",
+    "example": "This compostable cup needs special conditions, not just a hopeful flowerpot.",
+    "translation": "Bu kompostlanadigan stakanga umid bilan qo‘yilgan gultuvak emas, maxsus sharoit kerak.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "disposable",
+    "ipa": "/dɪˈspəʊzəbl/",
+    "meaning": "bir martalik",
+    "example": "We replaced disposable plates with dishes that have actual careers.",
+    "translation": "Bir martalik likopchalarni uzoq xizmat qiladigan idishlarga almashtirdik.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "zero waste",
+    "ipa": "/ˌzɪərəʊ ˈweɪst/",
+    "meaning": "chiqindini imkon qadar yo‘qotish tamoyili",
+    "example": "Our zero waste challenge began with remembering the shopping bags.",
+    "translation": "Chiqindisiz yashash sinovimiz xarid sumkalarini unutmaslikdan boshlandi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "circular economy",
+    "ipa": "/ˌsɜːkjələr ɪˈkɒnəmi/",
+    "meaning": "mahsulot va materiallar qayta foydalaniladigan iqtisodiyot",
+    "example": "In a circular economy, a broken chair gets another chance before becoming waste.",
+    "translation": "Aylanma iqtisodiyotda singan kursi chiqindiga aylanishidan oldin yana imkon oladi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "nature reserve",
+    "ipa": "/ˈneɪtʃə rɪzɜːv/",
+    "meaning": "tabiat qo‘riqxonasi",
+    "example": "At the nature reserve, the birds get priority over our picnic plans.",
+    "translation": "Tabiat qo‘riqxonasida qushlar piknik rejalarimizdan ustun turadi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "national park",
+    "ipa": "/ˌnæʃnəl ˈpɑːk/",
+    "meaning": "milliy bog‘",
+    "example": "The national park charges for parking, but the views remain generously large.",
+    "translation": "Milliy bog‘ mashina qo‘yish uchun haq oladi, ammo manzaralari hamon saxiylik bilan keng.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "sanctuary",
+    "ipa": "/ˈsæŋktʃuəri/",
+    "meaning": "hayvonlar qo‘riqlanadigan boshpana",
+    "example": "The bird sanctuary is a safe address for some very loud guests.",
+    "translation": "Qushlar boshpanasi ayrim juda shovqinli mehmonlar uchun xavfsiz manzil.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "endangered",
+    "ipa": "/ɪnˈdeɪndʒəd/",
+    "meaning": "yo‘qolib ketish xavfi ostidagi",
+    "example": "An endangered species needs more help than a sympathetic photo caption.",
+    "translation": "Yo‘qolish xavfidagi turga hamdard surat tagyozuvidan ko‘ra ko‘proq yordam kerak.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "extinct",
+    "ipa": "/ɪkˈstɪŋkt/",
+    "meaning": "butunlay yo‘qolib ketgan",
+    "example": "That species is extinct, so the museum model is our only introduction.",
+    "translation": "O‘sha tur yo‘qolib ketgan, shuning uchun u bilan faqat muzey modeli orqali tanishamiz.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "poaching",
+    "ipa": "/ˈpəʊtʃɪŋ/",
+    "meaning": "noqonuniy ov qilish",
+    "example": "The campaign against poaching protects animals that cannot hire lawyers.",
+    "translation": "Noqonuniy ovga qarshi kampaniya advokat yollay olmaydigan hayvonlarni himoya qiladi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "reforestation",
+    "ipa": "/ˌriːfɒrɪˈsteɪʃn/",
+    "meaning": "o‘rmonni qayta tiklash",
+    "example": "Reforestation takes longer than a weekend and requires more than a ceremonial shovel.",
+    "translation": "O‘rmonni qayta tiklash dam olish kunlaridan ko‘proq vaqt va tantanali belkurakdan ko‘proq narsa talab qiladi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "wildlife corridor",
+    "ipa": "/ˈwaɪldlaɪf kɒrɪdɔː/",
+    "meaning": "hayvonlar o‘tishi uchun bog‘langan tabiiy yo‘lak",
+    "example": "The wildlife corridor lets animals travel without applying for a bus pass.",
+    "translation": "Tabiiy yo‘lak hayvonlarga avtobus kartasiga ariza bermasdan yurish imkonini beradi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "breeding",
+    "ipa": "/ˈbriːdɪŋ/",
+    "meaning": "hayvonlarning ko‘payishi; nasl yetishtirish",
+    "example": "During the breeding season, even quiet birds become busy neighbours.",
+    "translation": "Ko‘payish mavsumida hatto tinch qushlar ham band qo‘shnilarga aylanadi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "captivity",
+    "ipa": "/kæpˈtɪvəti/",
+    "meaning": "tutqunlikda saqlanish",
+    "example": "Animals in captivity depend on people for more than meal times.",
+    "translation": "Tutqunlikdagi hayvonlar odamlarga faqat ovqatlanish paytida emas, boshqa jihatlardan ham bog‘liq.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "protected area",
+    "ipa": "/prəˌtektɪd ˈeəriə/",
+    "meaning": "muhofaza etiladigan hudud",
+    "example": "In this protected area, flowers stay where they grow, however good your vase looks.",
+    "translation": "Bu muhofaza hududida guldoningiz qanchalik chiroyli bo‘lmasin, gullar o‘sgan joyida qoladi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "ecotourism",
+    "ipa": "/ˈiːkəʊtʊərɪzəm/",
+    "meaning": "tabiatni asrashga mas’uliyatli sayohat; ekoturizm",
+    "example": "Good ecotourism leaves local people with benefits rather than piles of bottles.",
+    "translation": "Yaxshi ekoturizm mahalliy aholiga shisha uyumlari o‘rniga foyda qoldiradi.",
+    "topic": "6-oy • Tabiatni asrash"
+  },
+  {
+    "word": "recycle",
+    "ipa": "/ˌriːˈsaɪkl/",
+    "meaning": "qayta ishlamoq",
+    "example": "We recycle our cans so they can have a life after lemonade.",
+    "translation": "Limonaddan keyin ham hayoti bo‘lsin deb metall bankalarni qayta ishlashga topshiramiz.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "reuse",
+    "ipa": "/ˌriːˈjuːz/",
+    "meaning": "qayta foydalanmoq",
+    "example": "I reuse jars until every cupboard looks like a tiny laboratory.",
+    "translation": "Har bir javon kichik laboratoriyaga o‘xshaguncha bankalarni qayta ishlataman.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "reduce",
+    "ipa": "/rɪˈdjuːs/",
+    "meaning": "kamaytirmoq",
+    "example": "We reduced packaging by buying loose apples, which arrived without tiny coats.",
+    "translation": "Donalab olma olib qadoqni kamaytirdik, olmalar mitti paltosiz keldi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "compost",
+    "ipa": "/ˈkɒmpɒst/",
+    "meaning": "chirigan organik moddalardan o‘g‘it; kompost",
+    "example": "Our compost turns yesterday's vegetable scraps into tomorrow's garden help.",
+    "translation": "Kompostimiz kechagi sabzavot qoldiqlarini ertangi bog‘ yordamchisiga aylantiradi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "landfill",
+    "ipa": "/ˈlændfɪl/",
+    "meaning": "chiqindi ko‘miladigan maydon",
+    "example": "A broken umbrella deserves a repair attempt before a trip to landfill.",
+    "translation": "Singan soyabon chiqindi maydoniga borishidan oldin ta’mirlab ko‘rishga arziydi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "litter",
+    "ipa": "/ˈlɪtə/",
+    "meaning": "jamoat joyiga tashlangan mayda axlat",
+    "example": "We collected litter and discovered which snacks our neighbours prefer.",
+    "translation": "Axlat terib, qo‘shnilarimiz qaysi gazaklarni yoqtirishini bilib oldik.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "waste",
+    "ipa": "/weɪst/",
+    "meaning": "chiqindi; isrof",
+    "example": "Food waste fell when Dad stopped cooking rice for an imaginary football team.",
+    "translation": "Dadam xayoliy futbol jamoasiga guruch pishirishni to‘xtatgach, ovqat isrofi kamaydi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "garbage",
+    "ipa": "/ˈɡɑːbɪdʒ/",
+    "meaning": "axlat; chiqindi",
+    "example": "The film called it garbage; our council calls it rubbish.",
+    "translation": "Filmda axlatni garbage deyishdi, mahalliy kengashimiz esa rubbish deydi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "packaging",
+    "ipa": "/ˈpækɪdʒɪŋ/",
+    "meaning": "mahsulot qadoqlari",
+    "example": "The packaging weighed almost as much as the tiny toy inside.",
+    "translation": "Qadoqning vazni ichidagi mitti o‘yinchoqnikiga deyarli teng edi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "plastic",
+    "ipa": "/ˈplæstɪk/",
+    "meaning": "plastmassa",
+    "example": "We found plastic on the beach where only shells should have been.",
+    "translation": "Faqat chig‘anoqlar bo‘lishi kerak bo‘lgan sohilda plastik topdik.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "cardboard",
+    "ipa": "/ˈkɑːdbɔːd/",
+    "meaning": "karton",
+    "example": "The cardboard box became a castle before entering the recycling bin.",
+    "translation": "Karton quti qayta ishlash qutisiga tushishidan oldin qal’a bo‘ldi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "aluminium",
+    "ipa": "/ˌæljəˈmɪniəm/",
+    "meaning": "alyuminiy",
+    "example": "Aluminium can be recycled repeatedly, unlike my patience at the sorting station.",
+    "translation": "Saralash joyidagi sabrimdan farqli ravishda alyuminiyni qayta-qayta ishlash mumkin.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "steel",
+    "ipa": "/stiːl/",
+    "meaning": "po‘lat",
+    "example": "The old steel pan may become something with a less stressful kitchen career.",
+    "translation": "Eski po‘lat tova oshxonada kamroq tashvishli vazifasi bo‘lgan buyumga aylanishi mumkin.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "metal",
+    "ipa": "/ˈmetl/",
+    "meaning": "metall",
+    "example": "We separated metal from paper before the recycling bags became too mysterious.",
+    "translation": "Qayta ishlash paketlari juda chalkash bo‘lib ketmasidan oldin metallni qog‘ozdan ajratdik.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "rubber",
+    "ipa": "/ˈrʌbə/",
+    "meaning": "rezina",
+    "example": "Recycled rubber gave these old tyres a new job under playground feet.",
+    "translation": "Qayta ishlangan rezina eski shinalarga o‘yingohdagi oyoqlar ostida yangi vazifa berdi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "scrap",
+    "ipa": "/skræp/",
+    "meaning": "qayta ishlashga yaroqli metall parchalari",
+    "example": "The scrap in Dad's shed finally found someone who actually wanted it.",
+    "translation": "Dadamning omboridagi metall parchalari nihoyat ularni chindan xohlagan odamni topdi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "sewage",
+    "ipa": "/ˈsuːɪdʒ/",
+    "meaning": "kanalizatsiya oqova suvlari",
+    "example": "Sewage needs treatment before entering rivers, however fast the river flows.",
+    "translation": "Daryo qanchalik tez oqmasin, kanalizatsiya suvi unga tushishdan oldin tozalanishi kerak.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "wastewater",
+    "ipa": "/ˈweɪstwɔːtə/",
+    "meaning": "ishlatilgan oqova suv",
+    "example": "The plant cleans wastewater while most of us only notice our clean taps.",
+    "translation": "Inshoot oqova suvni tozalaydi, ko‘pchiligimiz esa faqat jo‘mrakdagi toza suvni sezamiz.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "drainage",
+    "ipa": "/ˈdreɪnɪdʒ/",
+    "meaning": "ortiqcha suvni chiqarib yuborish tizimi",
+    "example": "Better drainage stopped the playground becoming a free swimming pool.",
+    "translation": "Yaxshiroq drenaj o‘yingohning bepul hovuzga aylanishini to‘xtatdi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "incinerator",
+    "ipa": "/ɪnˈsɪnəreɪtə/",
+    "meaning": "chiqindi yoqish pechi",
+    "example": "The incinerator burns waste under controlled conditions, unlike a careless garden fire.",
+    "translation": "Chiqindi yoqish pechi chiqindini ehtiyotsiz bog‘ gulxanidan farqli ravishda nazorat ostida yoqadi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "dump",
+    "ipa": "/dʌmp/",
+    "meaning": "chiqindini noqonuniy yoki betartib tashlamoq",
+    "example": "Someone dumped a sofa by the road as if the trees needed seating.",
+    "translation": "Kimdir daraxtlarga o‘rindiq kerakdek yo‘l bo‘yiga divan tashlab ketibdi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "disposal",
+    "ipa": "/dɪˈspəʊzl/",
+    "meaning": "chiqindini chiqarish yoki yo‘q qilish",
+    "example": "Safe battery disposal takes more thought than aiming at the nearest bin.",
+    "translation": "Batareyani xavfsiz yo‘q qilish eng yaqin qutini nishonga olishdan ko‘proq o‘ylashni talab qiladi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "collection",
+    "ipa": "/kəˈlekʃn/",
+    "meaning": "chiqindini yig‘ib olib ketish",
+    "example": "Our waste collection starts early enough to wake even the lazy dog.",
+    "translation": "Chiqindini olib ketish hatto dangasa itni uyg‘otadigan darajada erta boshlanadi.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "contamination",
+    "ipa": "/kənˌtæmɪˈneɪʃn/",
+    "meaning": "begona yoki zararli modda bilan ifloslanish",
+    "example": "Food contamination in recycling can give a whole batch an unwanted smell.",
+    "translation": "Qayta ishlanadigan materiallarning ovqat bilan ifloslanishi butun turkumga yoqimsiz hid berishi mumkin.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "microplastic",
+    "ipa": "/ˌmaɪkrəʊˈplæstɪk/",
+    "meaning": "juda mayda plastik zarracha",
+    "example": "A microplastic particle can be smaller than the full stop in this sentence.",
+    "translation": "Mikroplastik zarracha bu gapning nuqtasidan ham kichik bo‘lishi mumkin.",
+    "topic": "6-oy • Chiqindi va qayta ishlash"
+  },
+  {
+    "word": "conserve",
+    "ipa": "/kənˈsɜːv/",
+    "meaning": "tejab asramoq",
+    "example": "We conserve water by ending showers before we finish a whole concert.",
+    "translation": "Dushdagi butun konsertimiz tugashini kutmay yuvinishni bitirib, suvni tejaymiz.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "carpool",
+    "ipa": "/ˈkɑːpuːl/",
+    "meaning": "bir mashinada birga qatnamoq",
+    "example": "We carpool to work, so four conversations now travel in one car.",
+    "translation": "Ishga bitta mashinada qatnaymiz, endi to‘rtta suhbat bir mashinada ketadi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "frugal",
+    "ipa": "/ˈfruːɡl/",
+    "meaning": "tejamkor; isrofsiz",
+    "example": "My frugal aunt gives every jar at least three different jobs.",
+    "translation": "Tejamkor xolam har bir bankaga kamida uch xil vazifa beradi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "minimise",
+    "ipa": "/ˈmɪnɪmaɪz/",
+    "meaning": "imkon qadar kamaytirmoq",
+    "example": "I minimise food waste by inviting a friend with an excellent appetite.",
+    "translation": "Ishtahasi a’lo do‘stimni chaqirib, ovqat isrofini imkon qadar kamaytiraman.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "limit",
+    "ipa": "/ˈlɪmɪt/",
+    "meaning": "cheklamoq",
+    "example": "We limit car journeys, which gives our bicycles a reason to feel useful.",
+    "translation": "Mashina safarlarini cheklaymiz, bu velosipedlarimizga o‘zini foydali his qilishga sabab beradi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "offset",
+    "ipa": "/ˌɒfˈset/",
+    "meaning": "zararni boshqa foydali harakat bilan qoplamoq",
+    "example": "We cannot offset endless waste with one heroic reusable cup.",
+    "translation": "Cheksiz isrofni bitta qahramonona qayta ishlatiladigan stakan bilan qoplay olmaymiz.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "consume",
+    "ipa": "/kənˈsjuːm/",
+    "meaning": "iste’mol qilmoq; sarflamoq",
+    "example": "Our old freezer consumes electricity as if somebody else pays the bill.",
+    "translation": "Eski muzlatkichimiz elektrni go‘yo hisobini boshqa odam to‘laydigandek sarflaydi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "refill",
+    "ipa": "/ˌriːˈfɪl/",
+    "meaning": "qayta to‘ldirmoq",
+    "example": "I refill my bottle instead of buying water a new plastic home.",
+    "translation": "Suvga yangi plastik uy sotib olish o‘rniga idishimni qayta to‘ldiraman.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "upcycle",
+    "ipa": "/ˈʌpsaɪkl/",
+    "meaning": "eski buyumni yaxshiroq yangi buyumga aylantirmoq",
+    "example": "We upcycled a drawer into a planter, and the strawberries moved in.",
+    "translation": "Eski tortmadan gultuvak yasadik, qulupnaylar unga ko‘chib kirdi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "donate",
+    "ipa": "/dəʊˈneɪt/",
+    "meaning": "ehson qilmoq",
+    "example": "I donated the coat that had spent three years waiting for a smaller owner.",
+    "translation": "Uch yil kichikroq egasini kutgan paltomni ehson qildim.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "refurbish",
+    "ipa": "/ˌriːˈfɜːbɪʃ/",
+    "meaning": "ta’mirlab yangilamoq",
+    "example": "They refurbished the old computers and gave them a second working life.",
+    "translation": "Ular eski kompyuterlarni yangilab, ularga ikkinchi ish umrini berdi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "restore",
+    "ipa": "/rɪˈstɔː/",
+    "meaning": "avvalgi yaxshi holatiga qaytarmoq",
+    "example": "We restored the garden bench, including its ability to hold Dad safely.",
+    "translation": "Bog‘ o‘rindig‘ini, jumladan dadamni xavfsiz ushlab turish qobiliyatini tikladik.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "repurpose",
+    "ipa": "/ˌriːˈpɜːpəs/",
+    "meaning": "boshqa maqsadda ishlatmoq",
+    "example": "I repurposed a biscuit tin as a sewing box and disappointed everyone.",
+    "translation": "Pechenye qutisini tikuv qutisiga aylantirib, hammani hafsalasini pir qildim.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "swap",
+    "ipa": "/swɒp/",
+    "meaning": "o‘zaro almashtirmoq",
+    "example": "We swap clothes with friends before our wardrobes demand another room.",
+    "translation": "Javonlarimiz yana bir xona talab qilmasidan oldin do‘stlar bilan kiyim almashtiramiz.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "second-hand",
+    "ipa": "/ˌsekənd ˈhænd/",
+    "meaning": "avval ishlatilgan",
+    "example": "My second-hand desk arrived with character and one mysterious stain.",
+    "translation": "Ishlatilgan stolim o‘ziga xos ko‘rinish va bitta sirli dog‘ bilan keldi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "durable",
+    "ipa": "/ˈdjʊərəbl/",
+    "meaning": "uzoq chidaydigan; pishiq",
+    "example": "These durable bags have carried enough potatoes to deserve medals.",
+    "translation": "Bu pishiq sumkalar medalga loyiq bo‘ladigan darajada ko‘p kartoshka tashigan.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "seasonal",
+    "ipa": "/ˈsiːzənəl/",
+    "meaning": "mavsumiy",
+    "example": "Seasonal vegetables keep our menu changing without a family meeting.",
+    "translation": "Mavsumiy sabzavotlar oilaviy majlissiz ham taomnomamizni o‘zgartirib turadi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "organic",
+    "ipa": "/ɔːˈɡænɪk/",
+    "meaning": "organik dehqonchilik usulida yetishtirilgan",
+    "example": "The organic carrots are oddly shaped but make perfectly ordinary soup.",
+    "translation": "Organik sabzilar g‘alati shaklda, ammo ulardan odatdagidek sho‘rva chiqadi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "ethical",
+    "ipa": "/ˈeθɪkl/",
+    "meaning": "axloqiy me’yorlarga mos",
+    "example": "Ethical shopping asks who made the shirt, not just whether it matches my shoes.",
+    "translation": "Axloqiy xarid ko‘ylak oyoq kiyimimga mosligini emas, uni kim tikkanini ham so‘raydi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "economical",
+    "ipa": "/ˌiːkəˈnɒmɪkl/",
+    "meaning": "tejamkor",
+    "example": "The economical heater warms the room without frightening my bank account.",
+    "translation": "Tejamkor isitkich hisobimni qo‘rqitmasdan xonani isitadi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "efficient",
+    "ipa": "/ɪˈfɪʃnt/",
+    "meaning": "kam sarf bilan samarali ishlaydigan",
+    "example": "An efficient dishwasher uses less water than my dramatic washing-up routine.",
+    "translation": "Samarali idish yuvish mashinasi mening shov-shuvli yuvish usulimdan kamroq suv sarflaydi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "ration",
+    "ipa": "/ˈræʃn/",
+    "meaning": "cheklangan miqdorda taqsimlamoq",
+    "example": "During the shortage, we rationed water more carefully than birthday cake.",
+    "translation": "Tanqislik paytida suvni tug‘ilgan kun tortidan ham ehtiyotkorroq taqsimladik.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "boycott",
+    "ipa": "/ˈbɔɪkɒt/",
+    "meaning": "norozilik sifatida sotib olmaslik yoki qatnashmaslik",
+    "example": "Residents boycotted the shop until it stopped dumping waste by the stream.",
+    "translation": "Do‘kon soy bo‘yiga chiqindi tashlashni to‘xtatguncha aholi undan xarid qilmadi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "vegetarian",
+    "ipa": "/ˌvedʒəˈteəriən/",
+    "meaning": "go‘sht yemaydigan odam",
+    "example": "Our vegetarian guest made a bean pie that even Dad requested again.",
+    "translation": "Go‘sht yemaydigan mehmonimiz shunday loviyali pirog qildiki, hatto dadam yana so‘radi.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "vegan",
+    "ipa": "/ˈviːɡən/",
+    "meaning": "hayvonlardan olinadigan mahsulotlarni iste’mol qilmaydigan",
+    "example": "The vegan cake contains no eggs or dairy, but plenty of reasons for another slice.",
+    "translation": "Vegan tortda tuxum ham, sut mahsuloti ham yo‘q, ammo yana bir bo‘lak olishga sabablar ko‘p.",
+    "topic": "6-oy • Barqaror kundalik odatlar"
+  },
+  {
+    "word": "supply",
+    "ipa": "/səˈplaɪ/",
+    "meaning": "ta’minot; yetkazib beriladigan zaxira",
+    "example": "The water supply returned just before our washing-up mountain became permanent.",
+    "translation": "Idishlar tog‘imiz doimiy bo‘lib qolishidan oldin suv ta’minoti tiklandi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "reservoir",
+    "ipa": "/ˈrezəvwɑː/",
+    "meaning": "suv ombori",
+    "example": "The reservoir stores water for the town, not just reflections for our photographs.",
+    "translation": "Suv ombori faqat suratlarimiz uchun akslarni emas, shaharga suv ham saqlaydi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "dam",
+    "ipa": "/dæm/",
+    "meaning": "to‘g‘on",
+    "example": "The dam holds back more water than my tiny garden bucket could imagine.",
+    "translation": "To‘g‘on mitti bog‘ chelagim tasavvur qilganidan ko‘proq suvni to‘sib turadi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "well",
+    "ipa": "/wel/",
+    "meaning": "quduq",
+    "example": "The old well supplied the village long before taps became fashionable.",
+    "translation": "Jo‘mraklar urf bo‘lishidan ancha oldin eski quduq qishloqni suv bilan ta’minlagan.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "aquifer",
+    "ipa": "/ˈækwɪfə/",
+    "meaning": "yer ostidagi suv saqlovchi qatlam",
+    "example": "An aquifer stores water underground without needing a roof or a fence.",
+    "translation": "Suvli qatlam suvni tom yoki panjarasiz yer ostida saqlaydi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "groundwater",
+    "ipa": "/ˈɡraʊndwɔːtə/",
+    "meaning": "yer osti suvi",
+    "example": "Groundwater moves slowly, which gives pollution plenty of time to cause trouble.",
+    "translation": "Yer osti suvi sekin harakatlanadi, bu ifloslanishga muammo keltirish uchun ko‘p vaqt beradi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "rainwater",
+    "ipa": "/ˈreɪnwɔːtə/",
+    "meaning": "yomg‘ir suvi",
+    "example": "We collect rainwater, and our plants enjoy a drink paid for by the clouds.",
+    "translation": "Yomg‘ir suvini yig‘amiz, o‘simliklarimiz esa bulutlar hisobidan suv ichadi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "drinking water",
+    "ipa": "/ˈdrɪŋkɪŋ wɔːtə/",
+    "meaning": "ichimlik suvi",
+    "example": "Clear pond water is not necessarily drinking water, whatever the ducks suggest.",
+    "translation": "O‘rdaklar nima demasin, tiniq hovuz suvi albatta ichimlik suvi degani emas.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "sanitation",
+    "ipa": "/ˌsænɪˈteɪʃn/",
+    "meaning": "sanitariya; toza suv va chiqindi chiqarish sharoitlari",
+    "example": "Good sanitation does vital work that rarely earns applause.",
+    "translation": "Yaxshi sanitariya kamdan kam olqish oladigan muhim ishni bajaradi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "purification",
+    "ipa": "/ˌpjʊərɪfɪˈkeɪʃn/",
+    "meaning": "suvni zararli aralashmalardan tozalash",
+    "example": "Water purification is more complicated than removing the leaf I can see.",
+    "translation": "Suvni tozalash men ko‘rayotgan bargni olib tashlashdan murakkabroq.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "damp",
+    "ipa": "/dæmp/",
+    "meaning": "nam; zax",
+    "example": "The damp wall suggests a leak, not a new indoor gardening opportunity.",
+    "translation": "Zax devor uyda bog‘ ochish imkoniyatini emas, suv sizayotganini bildiradi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "irrigate",
+    "ipa": "/ˈɪrɪɡeɪt/",
+    "meaning": "sug‘ormoq",
+    "example": "Farmers irrigate the fields while I struggle to water one balcony pot.",
+    "translation": "Dehqonlar dalalarni sug‘oradi, men esa balkondagi bitta gultuvakka suv quyishga qiynalaman.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "drip",
+    "ipa": "/drɪp/",
+    "meaning": "bir tomchi; tomchilash",
+    "example": "Each drip from the tap is small, but the bucket tells a longer story.",
+    "translation": "Jo‘mrakning har tomchisi kichik, ammo chelak uzunroq hikoyani aytadi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "shortage",
+    "ipa": "/ˈʃɔːtɪdʒ/",
+    "meaning": "yetishmovchilik",
+    "example": "The water shortage ended our lawn's dream of being bright green all summer.",
+    "translation": "Suv yetishmovchiligi maysazorimizning yoz bo‘yi yam-yashil bo‘lish orzusini tugatdi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "scarcity",
+    "ipa": "/ˈskeəsəti/",
+    "meaning": "tanqislik",
+    "example": "Water scarcity makes a dripping tap sound less amusing.",
+    "translation": "Suv tanqisligida tomchilayotgan jo‘mrakning ovozi kamroq kulgili tuyuladi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "running water",
+    "ipa": "/ˌrʌnɪŋ ˈwɔːtə/",
+    "meaning": "quvur orqali keladigan suv",
+    "example": "Without running water, making tea became a small expedition.",
+    "translation": "Quvur suvisiz choy tayyorlash kichik ekspeditsiyaga aylandi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "water meter",
+    "ipa": "/ˈwɔːtə miːtə/",
+    "meaning": "suv hisoblagichi",
+    "example": "The water meter knows exactly how long Dad's showers last.",
+    "translation": "Suv hisoblagichi dadamning dushi qancha davom etishini aniq biladi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "cistern",
+    "ipa": "/ˈsɪstən/",
+    "meaning": "suv yig‘iladigan bak",
+    "example": "The toilet cistern kept filling as if it had forgotten its purpose.",
+    "translation": "Unitaz baki vazifasini unutgandek suvga to‘laverdi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "gutter",
+    "ipa": "/ˈɡʌtə/",
+    "meaning": "tom chetidagi suv novasi",
+    "example": "Leaves filled the gutter and gave the rain a new route over our door.",
+    "translation": "Barglar novani to‘ldirib, yomg‘irga eshigimiz ustidan yangi yo‘l ochdi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "downpipe",
+    "ipa": "/ˈdaʊnpaɪp/",
+    "meaning": "tom suvini pastga tushiradigan quvur",
+    "example": "The downpipe carries roof water straight to our very grateful rain barrel.",
+    "translation": "Quvur tomdagi suvni juda minnatdor yomg‘ir bochkamizga olib tushadi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "overflow",
+    "ipa": "/ˌəʊvəˈfləʊ/",
+    "meaning": "toshmoq; sig‘may oqib chiqmoq",
+    "example": "The barrel overflowed during the storm and watered the path for free.",
+    "translation": "Bo‘ron paytida bochka toshib, yo‘lakni bepul sug‘ordi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "puddle",
+    "ipa": "/ˈpʌdl/",
+    "meaning": "ko‘lmak",
+    "example": "The puddle outside our gate has attracted a very small duck audience.",
+    "translation": "Darvozamiz oldidagi ko‘lmak kichik o‘rdak tomoshabinlarini jalb qildi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "absorb",
+    "ipa": "/əbˈzɔːb/",
+    "meaning": "shimmoq; o‘ziga singdirmoq",
+    "example": "Healthy soil can absorb rain before it rushes towards our shoes.",
+    "translation": "Sog‘lom tuproq yomg‘ir oyoq kiyimimizga otilishidan oldin uni shimishi mumkin.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "evaporation",
+    "ipa": "/ɪˌvæpəˈreɪʃn/",
+    "meaning": "bug‘lanish",
+    "example": "Evaporation emptied the birdbath without a single thirsty bird being responsible.",
+    "translation": "Qushlarning hech biri aybdor bo‘lmasa ham, bug‘lanish ularning suv idishini bo‘shatdi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "condensation",
+    "ipa": "/ˌkɒndenˈseɪʃn/",
+    "meaning": "bug‘ning suyuqlikka aylanishi; kondensatsiya",
+    "example": "Condensation covered the bathroom mirror and briefly cancelled my hairstyle worries.",
+    "translation": "Kondensatsiya hammom oynasini qoplab, soch turmagi haqidagi tashvishlarimni vaqtincha bekor qildi.",
+    "topic": "6-oy • Suvdan foydalanish"
+  },
+  {
+    "word": "electricity",
+    "ipa": "/ɪˌlekˈtrɪsəti/",
+    "meaning": "elektr energiyasi",
+    "example": "Electricity does plenty of work while we complain about charging our phones.",
+    "translation": "Telefon quvvatlashdan shikoyat qilayotganimizda elektr ko‘p ish bajaradi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "power",
+    "ipa": "/ˈpaʊə/",
+    "meaning": "elektr quvvati; elektr ta’minoti",
+    "example": "The power went off just as the washing machine reached its dramatic final act.",
+    "translation": "Kir yuvish mashinasi hayajonli so‘nggi bosqichga yetganda elektr o‘chdi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "voltage",
+    "ipa": "/ˈvəʊltɪdʒ/",
+    "meaning": "elektr kuchlanishi",
+    "example": "I checked the voltage before trusting my travel kettle with breakfast.",
+    "translation": "Sayohat choynagimga nonushtani ishonishdan oldin kuchlanishni tekshirdim.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "electric current",
+    "ipa": "/ɪˌlektrɪk ˈkʌrənt/",
+    "meaning": "elektr toki",
+    "example": "An electric current flows through the circuit and gives the little bulb its moment.",
+    "translation": "Zanjirdan elektr toki o‘tib, mitti lampochkaga porlash imkonini beradi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "circuit",
+    "ipa": "/ˈsɜːkɪt/",
+    "meaning": "elektr zanjiri",
+    "example": "Our simple circuit worked once we stopped arguing and connected the final wire.",
+    "translation": "Bahsni to‘xtatib oxirgi simni ulagan zahoti oddiy zanjirimiz ishladi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "fuse",
+    "ipa": "/fjuːz/",
+    "meaning": "elektr saqlagichi",
+    "example": "The fuse interrupted the current before our appliance could create bigger problems.",
+    "translation": "Saqlagich jihozimiz kattaroq muammo chiqarmasidan oldin tokni uzdi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "transformer",
+    "ipa": "/trænsˈfɔːmə/",
+    "meaning": "kuchlanishni o‘zgartiruvchi qurilma; transformator",
+    "example": "The transformer changes voltage without any costume change or dramatic music.",
+    "translation": "Transformator kiyim almashtirmay va dramatik musiqasiz kuchlanishni o‘zgartiradi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "generator",
+    "ipa": "/ˈdʒenəreɪtə/",
+    "meaning": "elektr ishlab chiqaruvchi qurilma",
+    "example": "The generator kept the freezers working when the lights elsewhere went out.",
+    "translation": "Boshqa joylarda chiroq o‘chganda generator muzlatkichlarni ishlatib turdi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "turbine",
+    "ipa": "/ˈtɜːbaɪn/",
+    "meaning": "oqim kuchini aylanishga aylantiruvchi turbina",
+    "example": "The wind turbine turns while the sheep below continue their quiet lunch.",
+    "translation": "Shamol turbinasi aylanadi, pastdagi qo‘ylar esa tinchgina tushlikni davom ettiradi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "solar panel",
+    "ipa": "/ˌsəʊlə ˈpænl/",
+    "meaning": "quyosh paneli",
+    "example": "The solar panel earns its place on the roof by working whenever sunlight is available.",
+    "translation": "Quyosh paneli yorug‘lik borida ishlab, tomdagi o‘rnini oqlaydi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "wind farm",
+    "ipa": "/ˈwɪnd fɑːm/",
+    "meaning": "shamol elektr stansiyalari majmuasi",
+    "example": "The wind farm grows electricity rather than potatoes.",
+    "translation": "Shamol elektr majmuasi kartoshka emas, elektr yetishtiradi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "hydropower",
+    "ipa": "/ˈhaɪdrəʊpaʊə/",
+    "meaning": "suv kuchidan olinadigan elektr",
+    "example": "Hydropower turns moving water into electricity instead of merely wet trousers.",
+    "translation": "Gidroenergetika oqayotgan suvdan shunchaki ho‘l shim emas, elektr hosil qiladi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "biomass",
+    "ipa": "/ˈbaɪəʊmæs/",
+    "meaning": "energiya uchun ishlatiladigan organik modda",
+    "example": "Biomass can include plant waste that once looked like nothing but a messy pile.",
+    "translation": "Biomassaga ilgari tartibsiz uyumdek ko‘ringan o‘simlik chiqindilari ham kiradi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "biogas",
+    "ipa": "/ˈbaɪəʊɡæs/",
+    "meaning": "organik modda parchalanishidan olinadigan gaz",
+    "example": "The farm produces biogas from waste, giving manure an unexpected promotion.",
+    "translation": "Ferma chiqindidan biogaz olib, go‘ngga kutilmagan yuqori vazifa beradi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "nuclear",
+    "ipa": "/ˈnjuːkliə/",
+    "meaning": "atom yadrosi energiyasiga oid",
+    "example": "The exhibition explains nuclear power with models smaller than my lunchbox.",
+    "translation": "Ko‘rgazma yadro energetikasini tushlik qutimdan kichik modellar bilan tushuntiradi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "fossil fuel",
+    "ipa": "/ˈfɒsl fjuːəl/",
+    "meaning": "qazilma yoqilg‘i",
+    "example": "A fossil fuel took millions of years to form, so using it is not a quick loan from nature.",
+    "translation": "Qazilma yoqilg‘i millionlab yilda hosil bo‘lgan, uni ishlatish tabiatdan qisqa qarz olish emas.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "coal",
+    "ipa": "/kəʊl/",
+    "meaning": "ko‘mir",
+    "example": "Coal once heated this house, judging by the stubborn black marks in the cellar.",
+    "translation": "Yerto‘ladagi ketmaydigan qora izlarga qaraganda, bu uy ilgari ko‘mir bilan isitilgan.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "natural gas",
+    "ipa": "/ˌnætʃrəl ˈɡæs/",
+    "meaning": "tabiiy gaz",
+    "example": "Natural gas heats the building, though the name does not make it emission-free.",
+    "translation": "Tabiiy gaz binoni isitadi, ammo nomi uni chiqindisiz manbaga aylantirmaydi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "petroleum",
+    "ipa": "/pəˈtrəʊliəm/",
+    "meaning": "neft",
+    "example": "Petroleum is used for fuels and plastics, giving it a very crowded job description.",
+    "translation": "Neft yoqilg‘i va plastmassa uchun ishlatiladi, demak uning vazifalari juda ko‘p.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "crude oil",
+    "ipa": "/ˌkruːd ˈɔɪl/",
+    "meaning": "xom neft",
+    "example": "Crude oil needs processing before it becomes something useful for a car.",
+    "translation": "Xom neft mashinaga foydali mahsulotga aylanishidan oldin qayta ishlanishi kerak.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "charging point",
+    "ipa": "/ˈtʃɑːdʒɪŋ pɔɪnt/",
+    "meaning": "elektromobil quvvatlash nuqtasi",
+    "example": "The charging point gave our car lunch while we had sandwiches.",
+    "translation": "Biz sendvich yegunimizcha quvvatlash nuqtasi mashinamizni ovqatlantirdi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "mains",
+    "ipa": "/meɪnz/",
+    "meaning": "asosiy elektr yoki suv tarmog‘i",
+    "example": "This radio runs on the mains, so it prefers staying near a socket.",
+    "translation": "Bu radio elektr tarmog‘idan ishlaydi, shuning uchun rozetka yonida qolishni ma’qul ko‘radi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "blackout",
+    "ipa": "/ˈblækaʊt/",
+    "meaning": "keng hududda elektr uzilishi",
+    "example": "The blackout introduced our family to an old activity called conversation.",
+    "translation": "Elektr uzilishi oilamizni suhbat degan eski mashg‘ulot bilan tanishtirdi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "outage",
+    "ipa": "/ˈaʊtɪdʒ/",
+    "meaning": "xizmat yoki elektr ta’minotidagi uzilish",
+    "example": "The planned outage gave us a firm deadline for charging everything.",
+    "translation": "Rejali elektr uzilishi hamma narsani quvvatlash uchun qat’iy muddat berdi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "power station",
+    "ipa": "/ˈpaʊə steɪʃn/",
+    "meaning": "elektr stansiyasi",
+    "example": "The power station supplies thousands of homes that rarely think about it.",
+    "translation": "Elektr stansiyasi u haqda kamdan kam o‘ylaydigan minglab uylarni ta’minlaydi.",
+    "topic": "6-oy • Elektr va energiya manbalari"
+  },
+  {
+    "word": "insulation",
+    "ipa": "/ˌɪnsjəˈleɪʃn/",
+    "meaning": "issiqlikni saqlovchi izolyatsiya",
+    "example": "Better insulation keeps warmth indoors instead of heating the neighbourhood.",
+    "translation": "Yaxshi izolyatsiya mahallani isitish o‘rniga issiqlikni uyda saqlaydi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "thermostat",
+    "ipa": "/ˈθɜːməstæt/",
+    "meaning": "haroratni boshqaruvchi termostat",
+    "example": "Our thermostat is set lower, and my favourite jumper has returned to work.",
+    "translation": "Termostatimiz pastroqqa qo‘yilgan, sevimli jemperim esa yana ishga qaytdi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "boiler",
+    "ipa": "/ˈbɔɪlə/",
+    "meaning": "suv isitish qozoni",
+    "example": "The boiler makes hot water while making noises that deserve their own radio show.",
+    "translation": "Suv isitish qozoni suvni isitib, alohida radioeshittirishga loyiq tovushlar chiqaradi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "double glazing",
+    "ipa": "/ˌdʌbl ˈɡleɪzɪŋ/",
+    "meaning": "ikki qatlam oynali deraza",
+    "example": "Double glazing keeps more heat inside and fewer street arguments audible.",
+    "translation": "Ikki qatlamli oyna ko‘proq issiqlikni ichkarida saqlaydi va ko‘chadagi janjallarni kamroq eshittiradi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "draught",
+    "ipa": "/drɑːft/",
+    "meaning": "tirqishdan kiradigan sovuq havo",
+    "example": "A draught under the door keeps reminding my ankles about winter.",
+    "translation": "Eshik ostidan kirgan sovuq havo to‘piqlarimga qishni eslatib turadi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "ventilation",
+    "ipa": "/ˌventɪˈleɪʃn/",
+    "meaning": "havo almashinuvi; shamollatish",
+    "example": "Good ventilation removes damp air and yesterday's ambitious cooking smells.",
+    "translation": "Yaxshi shamollatish nam havoni va kechagi katta pazandalik rejalarining hidini chiqaradi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "airtight",
+    "ipa": "/ˈeətaɪt/",
+    "meaning": "havo o‘tkazmaydigan",
+    "example": "An airtight lid keeps the biscuits crisp and my plans for later believable.",
+    "translation": "Havo o‘tkazmaydigan qopqoq pechenyeni qarsildoq, keyinga saqlash rejamni esa ishonarli tutadi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "loft",
+    "ipa": "/lɒft/",
+    "meaning": "tom ostidagi chordoq",
+    "example": "Insulating the loft was less exciting than decorating it, but much warmer.",
+    "translation": "Chordoqqa izolyatsiya qo‘yish bezashdan zerikarliroq, ammo ancha issiqroq bo‘ldi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "heat pump",
+    "ipa": "/ˈhiːt pʌmp/",
+    "meaning": "issiqlikni ko‘chirib isitadigan nasos",
+    "example": "Our heat pump moves heat indoors while the outdoor cat remains unimpressed.",
+    "translation": "Issiqlik nasosimiz issiqlikni ichkariga ko‘chiradi, tashqaridagi mushuk esa bundan ta’sirlanmaydi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "meter",
+    "ipa": "/ˈmiːtə/",
+    "meaning": "sarflangan elektr, gaz yoki suv hisoblagichi",
+    "example": "The meter keeps counting even when I politely ignore the bill.",
+    "translation": "Hisob qog‘ozini odob bilan e’tiborsiz qoldirsam ham, hisoblagich sanashda davom etadi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "kilowatt",
+    "ipa": "/ˈkɪləwɒt/",
+    "meaning": "ming vattga teng quvvat birligi",
+    "example": "A kilowatt is a thousand watts, which sounds less friendly on a heater label.",
+    "translation": "Kilovatt ming vattga teng, bu isitkich yorlig‘ida unchalik yoqimli eshitilmaydi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "watt",
+    "ipa": "/wɒt/",
+    "meaning": "quvvat o‘lchov birligi; vatt",
+    "example": "The label gives the power in watts, not the lamp's personal opinion of brightness.",
+    "translation": "Yorliq chiroqning yorqinlik haqidagi fikrini emas, quvvatni vattda ko‘rsatadi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "standby",
+    "ipa": "/ˈstændbaɪ/",
+    "meaning": "qurilmaning kutish holati",
+    "example": "The television stays on standby, apparently waiting for a more interesting evening.",
+    "translation": "Televizor kutish holatida turadi, aftidan qiziqroq kechani kutyapti.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "rechargeable",
+    "ipa": "/ˌriːˈtʃɑːdʒəbl/",
+    "meaning": "qayta quvvatlanadigan",
+    "example": "Rechargeable batteries have saved our toy train from many early retirements.",
+    "translation": "Qayta quvvatlanadigan batareyalar o‘yinchoq poyezdimizni ko‘p marta erta pensiyadan qutqardi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "LED",
+    "ipa": "/ˌel iː ˈdiː/",
+    "meaning": "yorug‘lik chiqaruvchi diod",
+    "example": "The LED uses little power but still exposes every crumb on the floor.",
+    "translation": "LED kam quvvat ishlatadi, ammo poldagi har bir ushoqni baribir ko‘rsatadi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "fluorescent",
+    "ipa": "/fləˈresnt/",
+    "meaning": "flyuorestsent; maxsus qoplama orqali nur chiqaradigan",
+    "example": "The fluorescent lamp makes our kitchen look like a very small office.",
+    "translation": "Flyuorestsent chiroq oshxonamizni juda kichik idoraga o‘xshatadi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "appliance",
+    "ipa": "/əˈplaɪəns/",
+    "meaning": "maishiy elektr jihozi",
+    "example": "Before buying an appliance, I check whether it saves work or merely occupies a shelf.",
+    "translation": "Maishiy jihoz olishdan oldin u ishni kamaytiradimi yoki faqat tokchani egallaydimi, tekshiraman.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "efficiency",
+    "ipa": "/ɪˈfɪʃnsi/",
+    "meaning": "foydali ishning sarfga nisbatan samaradorligi",
+    "example": "The new heater's efficiency pleases me more than its twelve unnecessary buttons.",
+    "translation": "Yangi isitkichning samaradorligi uning o‘n ikkita keraksiz tugmasidan ko‘proq yoqadi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "consumption",
+    "ipa": "/kənˈsʌmpʃn/",
+    "meaning": "iste’mol; sarf miqdori",
+    "example": "Our electricity consumption dropped when the empty-room lights lost their jobs.",
+    "translation": "Bo‘sh xonalardagi chiroqlar ishini yo‘qotgach, elektr sarfimiz kamaydi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "household",
+    "ipa": "/ˈhaʊshəʊld/",
+    "meaning": "bir uyda yashovchilar; xo‘jalik",
+    "example": "Every household on our street received a recycling guide, including the forgetful one: ours.",
+    "translation": "Ko‘chamizdagi har bir xonadon, jumladan unutuvchan biznikiga ham qayta ishlash qo‘llanmasi keldi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "running cost",
+    "ipa": "/ˈrʌnɪŋ kɒst/",
+    "meaning": "jihozni ishlatib turish xarajati",
+    "example": "The low price looked better before I calculated the running cost.",
+    "translation": "Ishlatish xarajatini hisoblamagunimcha arzon narx yaxshiroq ko‘ringan edi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "overheat",
+    "ipa": "/ˌəʊvəˈhiːt/",
+    "meaning": "haddan tashqari qizib ketmoq",
+    "example": "The appliance may overheat if its air vents wear a blanket.",
+    "translation": "Havo teshiklariga adyol yopilsa, jihoz haddan tashqari qizishi mumkin.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "regulate",
+    "ipa": "/ˈreɡjuleɪt/",
+    "meaning": "me’yorlab boshqarmoq",
+    "example": "The thermostat regulates temperature without asking which family member feels coldest.",
+    "translation": "Termostat oilada kim eng ko‘p sovqotayotganini so‘ramay haroratni boshqaradi.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "upgrade",
+    "ipa": "/ˌʌpˈɡreɪd/",
+    "meaning": "yaxshiroq turiga almashtirib yangilamoq",
+    "example": "We upgraded the lighting before buying another lamp that mostly produced heat.",
+    "translation": "Asosan issiqlik chiqaradigan yana bir chiroq olishdan oldin yoritishni yangiladik.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "cut back",
+    "ipa": "/ˌkʌt ˈbæk/",
+    "meaning": "sarfni kamaytirmoq",
+    "example": "We cut back on heating costs without turning the living room into a fridge.",
+    "translation": "Mehmonxonani muzlatkichga aylantirmasdan isitish xarajatlarini kamaytirdik.",
+    "topic": "6-oy • Uyda energiyani tejash"
+  },
+  {
+    "word": "substance",
+    "ipa": "/ˈsʌbstəns/",
+    "meaning": "modda",
+    "example": "We identified the sticky substance as honey, not a new scientific discovery.",
+    "translation": "Yopishqoq moddani yangi ilmiy kashfiyot emas, asal deb aniqladik.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "solid",
+    "ipa": "/ˈsɒlɪd/",
+    "meaning": "qattiq holatdagi modda",
+    "example": "Ice is a solid until my warm kitchen changes its plans.",
+    "translation": "Oshxonamning issig‘i rejalarini o‘zgartirguncha muz qattiq moddadir.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "liquid",
+    "ipa": "/ˈlɪkwɪd/",
+    "meaning": "suyuqlik",
+    "example": "The liquid took the shape of the jug and then, unfortunately, the floor.",
+    "translation": "Suyuqlik ko‘zaning, keyin esa, afsuski, polning shaklini oldi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "gas",
+    "ipa": "/ɡæs/",
+    "meaning": "gaz holatidagi modda",
+    "example": "The gas inside the balloon expands when warmed; it does not simply feel happier.",
+    "translation": "Shar ichidagi gaz isiganda kengayadi, shunchaki xursand bo‘lib qolmaydi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "particle",
+    "ipa": "/ˈpɑːtɪkl/",
+    "meaning": "zarracha",
+    "example": "A dust particle looks much more impressive under a microscope.",
+    "translation": "Chang zarrachasi mikroskop ostida ancha salobatli ko‘rinadi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "atom",
+    "ipa": "/ˈætəm/",
+    "meaning": "atom",
+    "example": "An atom is far too small for even my grandmother to dust.",
+    "translation": "Atom hatto buvim changini artishi uchun ham juda kichik.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "molecule",
+    "ipa": "/ˈmɒlɪkjuːl/",
+    "meaning": "molekula",
+    "example": "Our model of a water molecule uses balls that refuse to stay connected.",
+    "translation": "Suv molekulasi modelimizda bir-biriga ulanib turishni istamaydigan sharchalar ishlatilgan.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "chemical",
+    "ipa": "/ˈkemɪkl/",
+    "meaning": "kimyoviy modda",
+    "example": "Water is a chemical too, despite its very ordinary appearance.",
+    "translation": "Juda oddiy ko‘rinishiga qaramay, suv ham kimyoviy moddadir.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "element",
+    "ipa": "/ˈelɪmənt/",
+    "meaning": "kimyoviy element",
+    "example": "Gold is an element that makes both chemists and jewellers pay attention.",
+    "translation": "Oltin kimyogarlar va zargarlarning e’tiborini birdek tortadigan elementdir.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "compound",
+    "ipa": "/ˈkɒmpaʊnd/",
+    "meaning": "kimyoviy birikma",
+    "example": "Table salt is a compound with a surprisingly busy career in cooking.",
+    "translation": "Osh tuzi pazandalikda kutilmaganda juda band bo‘lgan birikmadir.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "mixture",
+    "ipa": "/ˈmɪkstʃə/",
+    "meaning": "aralashma",
+    "example": "Sand and salt form a mixture that would make a terrible seasoning.",
+    "translation": "Qum bilan tuz juda yomon ziravor bo‘ladigan aralashma hosil qiladi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "acid",
+    "ipa": "/ˈæsɪd/",
+    "meaning": "kislota",
+    "example": "Lemon juice contains acid, which explains my face after that brave sip.",
+    "translation": "Limon sharbatida kislota bor, bu jasoratli ho‘plamdan keyingi yuzimni tushuntiradi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "solvent",
+    "ipa": "/ˈsɒlvənt/",
+    "meaning": "erituvchi modda",
+    "example": "Water is the solvent in my sugar solution, not a magician making sugar vanish.",
+    "translation": "Shakar eritmamda suv shakarni yo‘qotadigan sehrgar emas, erituvchidir.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "dissolve",
+    "ipa": "/dɪˈzɒlv/",
+    "meaning": "erimoq; eritmoq",
+    "example": "The sugar dissolves in hot tea faster than my patience in a long queue.",
+    "translation": "Shakar issiq choyda mening uzun navbatdagi sabrimdan ham tezroq eriydi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "dilute",
+    "ipa": "/daɪˈluːt/",
+    "meaning": "suyuqlik qo‘shib suyultirmoq",
+    "example": "Dilute the juice unless you want a very intense relationship with blackcurrants.",
+    "translation": "Qora smorodina bilan juda kuchli munosabat istamasangiz, sharbatni suyultiring.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "density",
+    "ipa": "/ˈdensəti/",
+    "meaning": "zichlik",
+    "example": "Density helps explain why oil floats on water instead of joining it downstairs.",
+    "translation": "Zichlik yog‘ nega suvning tagiga tushmay, yuzida suzishini tushuntirishga yordam beradi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "mass",
+    "ipa": "/mæs/",
+    "meaning": "massa; modda miqdori",
+    "example": "The object's mass stays the same on the Moon, even if lifting it feels easier.",
+    "translation": "Oyda ko‘tarish osonroq tuyulsa ham, buyumning massasi o‘zgarmaydi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "pressure",
+    "ipa": "/ˈpreʃə/",
+    "meaning": "bosim",
+    "example": "Air pressure keeps the bicycle tyre firm enough to carry my ambitious picnic.",
+    "translation": "Havo bosimi velosiped shinasini katta piknigimni ko‘taradigan darajada qattiq tutadi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "gravity",
+    "ipa": "/ˈɡrævəti/",
+    "meaning": "tortishish kuchi",
+    "example": "Gravity never forgets to collect the toast I drop.",
+    "translation": "Tortishish kuchi tushirib yuborgan nonimni olishni hech qachon unutmaydi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "friction",
+    "ipa": "/ˈfrɪkʃn/",
+    "meaning": "ishqalanish",
+    "example": "Friction helps my shoes grip the floor during an unexpected kitchen dance.",
+    "translation": "Kutilmagan oshxona raqsida ishqalanish oyoq kiyimimning polga tayanishiga yordam beradi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "force",
+    "ipa": "/fɔːs/",
+    "meaning": "kuch",
+    "example": "Opening this stiff drawer requires more force than my breakfast has supplied.",
+    "translation": "Bu qattiq tortmani ochish nonushtam berganidan ko‘proq kuch talab qiladi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "magnet",
+    "ipa": "/ˈmæɡnət/",
+    "meaning": "magnit",
+    "example": "The magnet holds our shopping list with greater commitment than we follow it.",
+    "translation": "Magnit xarid ro‘yxatimizni biz unga amal qilgandan ham sadoqatliroq ushlab turadi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "copper",
+    "ipa": "/ˈkɒpə/",
+    "meaning": "mis",
+    "example": "Copper carries electricity through wires without taking credit for the television show.",
+    "translation": "Mis televizordagi ko‘rsatuv uchun maqtov talab qilmay, simlardan elektr o‘tkazadi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "crystal",
+    "ipa": "/ˈkrɪstl/",
+    "meaning": "kristall",
+    "example": "The salt crystal looks like a tiny building under the magnifying glass.",
+    "translation": "Tuz kristali lupa ostida mitti binoga o‘xshaydi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "elastic",
+    "ipa": "/ɪˈlæstɪk/",
+    "meaning": "cho‘zilib yana qayta oladigan",
+    "example": "This elastic band returns to its shape more reliably than my old jumper.",
+    "translation": "Bu elastik tasma eski jemperimdan ishonchliroq tarzda shakliga qaytadi.",
+    "topic": "6-oy • Modda va materiallar"
+  },
+  {
+    "word": "expand",
+    "ipa": "/ɪkˈspænd/",
+    "meaning": "kengaymoq",
+    "example": "Air expands when heated, which gives the balloon more confidence than it needs.",
+    "translation": "Havo isiganda kengayib, sharga keragidan ortiq ishonch beradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "shrink",
+    "ipa": "/ʃrɪŋk/",
+    "meaning": "kichraymoq; kirishmoq",
+    "example": "My wool jumper shrank and began looking for a younger owner.",
+    "translation": "Jun jemperim kirishib, yoshroq egani qidira boshladi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "float",
+    "ipa": "/fləʊt/",
+    "meaning": "suv yuzida suzib turmoq",
+    "example": "The orange floats, although it has never attended a swimming lesson.",
+    "translation": "Apelsin hech qachon suzish darsiga qatnamagan bo‘lsa ham, suv yuzida turadi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "freeze",
+    "ipa": "/friːz/",
+    "meaning": "muzlamoq; muzlatmoq",
+    "example": "We freeze spare soup before it develops a personality in the fridge.",
+    "translation": "Ortiqcha sho‘rva muzlatkichda o‘ziga xos fe’l chiqarmasidan oldin uni muzlatamiz.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "thaw",
+    "ipa": "/θɔː/",
+    "meaning": "muzdan tushmoq; muzini eritmoq",
+    "example": "The frozen berries thaw slowly while I practise being patient.",
+    "translation": "Men sabrni mashq qilayotganimda muzlagan rezavorlar sekin eriydi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "compress",
+    "ipa": "/kəmˈpres/",
+    "meaning": "siqmoq",
+    "example": "You can compress air in the pump, but not your whole bicycle into a cupboard.",
+    "translation": "Nasosdagi havoni siqish mumkin, ammo butun velosipedni javonga siqib bo‘lmaydi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "rotate",
+    "ipa": "/rəʊˈteɪt/",
+    "meaning": "o‘z o‘qi atrofida aylanmoq",
+    "example": "The Earth rotates, giving my side of the planet another morning to complain about.",
+    "translation": "Yer aylanib, sayyoraning men turgan tomoniga shikoyat qilish uchun yana bir tong beradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "vibrate",
+    "ipa": "/vaɪˈbreɪt/",
+    "meaning": "tebranmoq",
+    "example": "The ruler vibrates over the desk edge and performs a very short concert.",
+    "translation": "Chizg‘ich stol chetida tebranib, juda qisqa konsert beradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "scatter",
+    "ipa": "/ˈskætə/",
+    "meaning": "yorug‘likni turli yo‘nalishlarga sochmoq",
+    "example": "Fog droplets scatter light and turn distant headlights into blurry stars.",
+    "translation": "Tuman tomchilari yorug‘likni sochib, uzoqdagi faralarni xira yulduzlarga aylantiradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "refract",
+    "ipa": "/rɪˈfrækt/",
+    "meaning": "yorug‘lik yo‘nalishini sindirib o‘zgartirmoq",
+    "example": "Water refracts light, making my straight straw look rather confused.",
+    "translation": "Suv yorug‘likni sindirib, to‘g‘ri naychamni ancha chalkash ko‘rsatadi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "bend",
+    "ipa": "/bend/",
+    "meaning": "egmoq; egilmoq",
+    "example": "This thin metal strip bends more easily than Dad admits.",
+    "translation": "Bu yupqa metall tasma dadam tan olganidan osonroq egiladi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "snap",
+    "ipa": "/snæp/",
+    "meaning": "qars etib sinmoq",
+    "example": "The dry twig snapped before I finished explaining how flexible it was.",
+    "translation": "Quruq novda qanchalik egiluvchanligini tushuntirib bo‘lgunimcha qars etib sindi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "stick",
+    "ipa": "/stɪk/",
+    "meaning": "yopishmoq",
+    "example": "The balloon sticks to the wall after rubbing, giving static electricity a small audience.",
+    "translation": "Ishqalagach shar devorga yopishib, statik elektrga kichik tomoshabinlar yig‘adi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "attract",
+    "ipa": "/əˈtrækt/",
+    "meaning": "tortmoq; o‘ziga jalb qilmoq",
+    "example": "The magnet attracts paperclips but politely ignores my wooden ruler.",
+    "translation": "Magnit qog‘oz qisqichlarini tortadi, yog‘och chizg‘ichimni esa odob bilan e’tiborsiz qoldiradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "repel",
+    "ipa": "/rɪˈpel/",
+    "meaning": "itarib uzoqlashtirmoq",
+    "example": "The matching magnetic poles repel each other like neighbours in a bad mood.",
+    "translation": "Bir xil magnit qutblari yomon kayfiyatdagi qo‘shnilardek bir-birini itaradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "conduct",
+    "ipa": "/kənˈdʌkt/",
+    "meaning": "issiqlik yoki elektrni o‘tkazmoq",
+    "example": "Metal conducts heat, which explains the spoon's surprising enthusiasm for hot soup.",
+    "translation": "Metall issiqlik o‘tkazadi, bu qoshiqning issiq sho‘rvaga nega shunchalik qizishishini tushuntiradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "transmit",
+    "ipa": "/trænzˈmɪt/",
+    "meaning": "uzatmoq",
+    "example": "The wire transmits the signal without enjoying any of the music.",
+    "translation": "Sim musiqadan zavqlanmay, signalni uzatadi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "transfer",
+    "ipa": "/trænsˈfɜː/",
+    "meaning": "bir joydan boshqasiga o‘tkazmoq",
+    "example": "The hot cup transfers heat to my hands more kindly than a winter handshake.",
+    "translation": "Issiq piyola qo‘llarimga qishki qo‘l siqishdan mehribonroq tarzda issiqlik beradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "transform",
+    "ipa": "/trænsˈfɔːm/",
+    "meaning": "shakli yoki xususiyatini o‘zgartirmoq",
+    "example": "Baking transforms soft dough into something the family argues over.",
+    "translation": "Pishirish yumshoq xamirni oila talashadigan narsaga aylantiradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "convert",
+    "ipa": "/kənˈvɜːt/",
+    "meaning": "bir turdan boshqasiga aylantirmoq",
+    "example": "The panel converts sunlight into electricity without asking for a lunch break.",
+    "translation": "Panel tushlik tanaffusini so‘ramay quyosh nurini elektrga aylantiradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "release",
+    "ipa": "/rɪˈliːs/",
+    "meaning": "chiqarmoq; ajratib yubormoq",
+    "example": "Opening the fizzy bottle releases gas and sometimes a little excitement onto my shirt.",
+    "translation": "Gazli shishani ochish gazni, ba’zan esa biroz hayajonni ko‘ylagimga chiqaradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "generate",
+    "ipa": "/ˈdʒenəreɪt/",
+    "meaning": "hosil qilmoq; ishlab chiqarmoq",
+    "example": "The bicycle dynamo generates electricity whenever my legs agree to work.",
+    "translation": "Velosiped dinamosi oyoqlarim ishlashga rozi bo‘lganda elektr hosil qiladi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "store",
+    "ipa": "/stɔː/",
+    "meaning": "saqlamoq; to‘plamoq",
+    "example": "Batteries store energy so my torch can have a useful night shift.",
+    "translation": "Batareyalar fonarim foydali tungi smenada ishlashi uchun energiya saqlaydi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "flow",
+    "ipa": "/fləʊ/",
+    "meaning": "oqmoq",
+    "example": "Water flows downhill without checking whether my shoes are waiting there.",
+    "translation": "Suv oyoq kiyimim o‘sha yerda turganini tekshirmay pastga oqadi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "oxidise",
+    "ipa": "/ˈɒksɪdaɪz/",
+    "meaning": "kislorod bilan reaksiyaga kirishmoq; oksidlanmoq",
+    "example": "Cut apples oxidise and turn brown while I search for the missing lunchbox lid.",
+    "translation": "Kesilgan olmalar men tushlik qutisi qopqog‘ini izlayotganimda oksidlanib, jigarrang tusga kiradi.",
+    "topic": "6-oy • Kundalik fizik jarayonlar"
+  },
+  {
+    "word": "sound",
+    "ipa": "/saʊnd/",
+    "meaning": "tovush",
+    "example": "Sound travels through the wall better than our neighbour's apologies.",
+    "translation": "Tovush devordan qo‘shnimizning uzridan yaxshiroq o‘tadi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "noise",
+    "ipa": "/nɔɪz/",
+    "meaning": "shovqin",
+    "example": "The noise from the road makes our quiet picnic an optimistic idea.",
+    "translation": "Yo‘ldagi shovqin tinch piknigimizni haddan tashqari umidli g‘oyaga aylantiradi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "echo",
+    "ipa": "/ˈekəʊ/",
+    "meaning": "aks sado",
+    "example": "The echo repeated my terrible singing with unnecessary enthusiasm.",
+    "translation": "Aks sado yomon qo‘shig‘imni keraksiz g‘ayrat bilan takrorladi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "frequency",
+    "ipa": "/ˈfriːkwənsi/",
+    "meaning": "tebranish chastotasi",
+    "example": "A higher frequency gives the note a higher pitch, not better manners.",
+    "translation": "Yuqoriroq chastota tovushni odobliroq emas, balandroq tonli qiladi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "brightness",
+    "ipa": "/ˈbraɪtnəs/",
+    "meaning": "yorqinlik",
+    "example": "I reduced the screen brightness before it turned my bedroom into daylight.",
+    "translation": "Ekran yotoqxonamni kunduzga aylantirmasidan oldin yorqinligini kamaytirdim.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "darkness",
+    "ipa": "/ˈdɑːknəs/",
+    "meaning": "qorong‘ilik",
+    "example": "In complete darkness, even my familiar chair becomes a surprise obstacle.",
+    "translation": "To‘liq qorong‘ilikda hatto tanish kursim ham kutilmagan to‘siqqa aylanadi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "shadow",
+    "ipa": "/ˈʃædəʊ/",
+    "meaning": "soya",
+    "example": "My shadow grows enormous at sunset without eating any extra dinner.",
+    "translation": "Quyosh botganda soyam qo‘shimcha ovqat yemay ham ulkanlashadi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "reflection",
+    "ipa": "/rɪˈflekʃn/",
+    "meaning": "aks; aks etgan tasvir",
+    "example": "The lake's reflection gives the mountain a free second appearance.",
+    "translation": "Ko‘ldagi aks tog‘ga bepul ikkinchi ko‘rinish beradi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "beam",
+    "ipa": "/biːm/",
+    "meaning": "yo‘naltirilgan yorug‘lik dastasi",
+    "example": "The torch beam found my lost key and three embarrassing dust balls.",
+    "translation": "Fonar nuri yo‘qolgan kalitimni va uchta uyatli chang uyumini topdi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "ray",
+    "ipa": "/reɪ/",
+    "meaning": "nur",
+    "example": "A ray of sunlight reached the only dusty shelf I had forgotten.",
+    "translation": "Quyosh nuri men unutgan yagona chang tokchaga yetib bordi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "sunlight",
+    "ipa": "/ˈsʌnlaɪt/",
+    "meaning": "quyosh nuri",
+    "example": "Sunlight warmed the windowsill, and the cat immediately rented it.",
+    "translation": "Quyosh nuri deraza tokchasini isitdi, mushuk esa darhol uni ijaraga oldi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "daylight",
+    "ipa": "/ˈdeɪlaɪt/",
+    "meaning": "kunduzgi tabiiy yorug‘lik",
+    "example": "In daylight, my carefully chosen socks turned out to be different colours.",
+    "translation": "Kunduzgi yorug‘likda puxta tanlagan paypoqlarim boshqa-boshqa rangda ekani ma’lum bo‘ldi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "ultraviolet",
+    "ipa": "/ˌʌltrəˈvaɪələt/",
+    "meaning": "ultrabinafsha",
+    "example": "Ultraviolet light is invisible, so my eyes are poor judges of sunburn risk.",
+    "translation": "Ultrabinafsha nur ko‘rinmaydi, shuning uchun ko‘zlarim quyoshda kuyish xavfini yaxshi baholay olmaydi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "infrared",
+    "ipa": "/ˌɪnfrəˈred/",
+    "meaning": "infraqizil",
+    "example": "The infrared image made our cold window look guilty.",
+    "translation": "Infraqizil tasvir sovuq derazamizni aybdordek ko‘rsatdi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "spectrum",
+    "ipa": "/ˈspektrəm/",
+    "meaning": "nurlar yoki ranglar spektri",
+    "example": "The prism produced a spectrum prettier than my attempt to draw a rainbow.",
+    "translation": "Prizma mening kamalak chizish urinishimdan chiroyliroq spektr hosil qildi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "colour",
+    "ipa": "/ˈkʌlə/",
+    "meaning": "rang",
+    "example": "The colour of the wall changes under different lamps, confusing the whole family.",
+    "translation": "Devorning rangi turli chiroqlar ostida o‘zgarib, butun oilani chalg‘itadi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "wavelength",
+    "ipa": "/ˈweɪvleŋθ/",
+    "meaning": "to‘lqin uzunligi",
+    "example": "Red light has a longer wavelength than blue light, although neither needs a ruler.",
+    "translation": "Qizil nurning to‘lqin uzunligi ko‘k nurnikidan katta, ammo ularning hech biriga chizg‘ich kerak emas.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "radiation",
+    "ipa": "/ˌreɪdiˈeɪʃn/",
+    "meaning": "nurlanish",
+    "example": "Sunlight is radiation that makes our balcony warm enough for breakfast.",
+    "translation": "Quyosh nuri balkonimizni nonushta qilishga yetarlicha isitadigan nurlanishdir.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "laser",
+    "ipa": "/ˈleɪzə/",
+    "meaning": "lazer",
+    "example": "The laser scanner reads the barcode faster than I can find my wallet.",
+    "translation": "Lazerli skaner hamyonimni topgunimcha shtrix-kodni o‘qiydi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "glow",
+    "ipa": "/ɡləʊ/",
+    "meaning": "mayin nur sochmoq",
+    "example": "The little night light glows as if it is too polite to wake anyone.",
+    "translation": "Kichik tungi chiroq hech kimni uyg‘otishga odobi yo‘l qo‘ymagandek mayin yonadi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "sparkle",
+    "ipa": "/ˈspɑːkl/",
+    "meaning": "yaltiramoq; jilvalanmoq",
+    "example": "The clean windows sparkle, making the rest of the room look rather guilty.",
+    "translation": "Toza derazalar yaltirab, xonaning qolgan qismini ancha aybdor ko‘rsatadi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "flicker",
+    "ipa": "/ˈflɪkə/",
+    "meaning": "miltillamoq",
+    "example": "The candle flickers whenever Dad gives another energetic speech.",
+    "translation": "Dadam yana jo‘shqin gapirganida sham miltillaydi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "flash",
+    "ipa": "/flæʃ/",
+    "meaning": "qisqa muddat chaqnamoq",
+    "example": "The warning light flashes until I finally notice the empty battery.",
+    "translation": "Batareya tugaganini nihoyat payqagunimcha ogohlantiruvchi chiroq chaqnaydi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "dim",
+    "ipa": "/dɪm/",
+    "meaning": "xira",
+    "example": "The dim light makes this café romantic and its menu impossible.",
+    "translation": "Xira yorug‘lik bu kafeni romantik, taomnomasini esa o‘qib bo‘lmas qiladi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "glare",
+    "ipa": "/ɡleə/",
+    "meaning": "ko‘zni qamashtiruvchi yorug‘lik",
+    "example": "The glare on my screen has turned the report into a guessing game.",
+    "translation": "Ekrandagi qamashtiruvchi yorug‘lik hisobotni topishmoqqa aylantirdi.",
+    "topic": "6-oy • Yorug‘lik va tovush"
+  },
+  {
+    "word": "hypothesis",
+    "ipa": "/haɪˈpɒθəsɪs/",
+    "meaning": "tekshiriladigan ilmiy taxmin",
+    "example": "Our hypothesis was that music helps plants grow, not that they prefer jazz.",
+    "translation": "Taxminimiz o‘simliklar jazni yoqtirishi emas, musiqa ularning o‘sishiga yordam berishi edi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "trial",
+    "ipa": "/ˈtraɪəl/",
+    "meaning": "sinov",
+    "example": "The first trial failed, but at least the measuring jug survived.",
+    "translation": "Birinchi sinov muvaffaqiyatsiz bo‘ldi, lekin hech bo‘lmasa o‘lchov ko‘zasi omon qoldi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "control",
+    "ipa": "/kənˈtrəʊl/",
+    "meaning": "tajribadagi taqqoslash uchun o‘zgartirilmagan namuna",
+    "example": "The plant without fertiliser was our control, not the one we forgot.",
+    "translation": "O‘g‘itsiz o‘simlik unutib qo‘yganimiz emas, taqqoslash namunamiz edi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "variable",
+    "ipa": "/ˈveəriəbl/",
+    "meaning": "tajribada o‘zgaradigan omil",
+    "example": "We changed one variable at a time instead of surprising every plant differently.",
+    "translation": "Har bir o‘simlikni turlicha hayratlantirish o‘rniga bir vaqtda bitta omilni o‘zgartirdik.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "constant",
+    "ipa": "/ˈkɒnstənt/",
+    "meaning": "o‘zgarmas",
+    "example": "We kept the temperature constant, despite Dad's opinions about chilly rooms.",
+    "translation": "Dadamning sovuq xonalar haqidagi fikrlariga qaramay, haroratni o‘zgarmas tutdik.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "estimate",
+    "ipa": "/ˈestɪmeɪt/",
+    "meaning": "taxminan hisoblamoq",
+    "example": "I estimated the jar's volume before filling it beyond its ambitions.",
+    "translation": "Bankani sig‘imidan ortiq to‘ldirishdan oldin hajmini taxmin qildim.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "approximation",
+    "ipa": "/əˌprɒksɪˈmeɪʃn/",
+    "meaning": "taxminiy qiymat",
+    "example": "My approximation was close enough for soup, but not for a laboratory.",
+    "translation": "Taxminiy hisobim sho‘rva uchun yetarli edi, ammo laboratoriya uchun emas.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "accuracy",
+    "ipa": "/ˈækjərəsi/",
+    "meaning": "haqiqiy qiymatga yaqinlik; aniqlik",
+    "example": "We checked the scales for accuracy before blaming the heavy cake.",
+    "translation": "Og‘ir tortni ayblashdan oldin tarozining to‘g‘riligini tekshirdik.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "precision",
+    "ipa": "/prɪˈsɪʒn/",
+    "meaning": "o‘lchovning nozikligi va takroriy bir xilligi",
+    "example": "The balance offered more precision than our recipe's instruction to add a handful.",
+    "translation": "Tarozi retseptimizdagi bir hovuch qo‘shing degan ko‘rsatmadan aniqroq o‘lchov berdi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "uncertainty",
+    "ipa": "/ʌnˈsɜːtnti/",
+    "meaning": "noaniqlik; o‘lchovdagi shubha oralig‘i",
+    "example": "We included the uncertainty instead of pretending our old ruler was perfect.",
+    "translation": "Eski chizg‘ichimizni mukammal deb ko‘rsatmay, noaniqlikni ham kiritdik.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "probability",
+    "ipa": "/ˌprɒbəˈbɪləti/",
+    "meaning": "ehtimollik",
+    "example": "The probability of rain matters more to our picnic than my cheerful guess.",
+    "translation": "Piknigimiz uchun mening quvnoq taxminimdan yomg‘ir ehtimoli muhimroq.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "correlation",
+    "ipa": "/ˌkɒrəˈleɪʃn/",
+    "meaning": "ikki hodisa orasidagi statistik bog‘lanish",
+    "example": "A correlation between ice cream sales and heat does not mean cones control the weather.",
+    "translation": "Muzqaymoq savdosi bilan issiqning bog‘liqligi vafli idishlar ob-havoni boshqaradi degani emas.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "cause",
+    "ipa": "/kɔːz/",
+    "meaning": "sabab",
+    "example": "The cause of the dead plant was no water, not its dislike of our curtains.",
+    "translation": "O‘simlikning nobud bo‘lish sababi pardalarimizni yoqtirmasligi emas, suvsizlik edi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "effect",
+    "ipa": "/ɪˈfekt/",
+    "meaning": "ta’sir; natija",
+    "example": "The effect of extra light was clear: taller plants and a happier gardener.",
+    "translation": "Qo‘shimcha yorug‘lik ta’siri aniq edi: balandroq o‘simliklar va xursandroq bog‘bon.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "outcome",
+    "ipa": "/ˈaʊtkʌm/",
+    "meaning": "yakuniy natija",
+    "example": "The outcome surprised us, which made the experiment more interesting than our predictions.",
+    "translation": "Yakuniy natija bizni hayratlantirib, tajribani taxminlarimizdan qiziqroq qildi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "finding",
+    "ipa": "/ˈfaɪndɪŋ/",
+    "meaning": "tadqiqotda aniqlangan natija",
+    "example": "Our main finding was that the sunny shelf was not sunny after lunch.",
+    "translation": "Asosiy topilmamiz quyoshli tokcha tushlikdan keyin quyoshli emasligi bo‘ldi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "proof",
+    "ipa": "/pruːf/",
+    "meaning": "isbot",
+    "example": "One cheerful tomato is not proof that talking to plants always works.",
+    "translation": "Bitta quvnoq pomidor o‘simliklar bilan gaplashish doim foydali ekanining isboti emas.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "replication",
+    "ipa": "/ˌreplɪˈkeɪʃn/",
+    "meaning": "natijani tekshirish uchun tajribani takrorlash",
+    "example": "Replication showed that our first result was not just a lucky Tuesday.",
+    "translation": "Tajribaning takrorlanishi birinchi natijamiz shunchaki omadli seshanba emasligini ko‘rsatdi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "principle",
+    "ipa": "/ˈprɪnsəpl/",
+    "meaning": "asosiy qoida yoki tamoyil",
+    "example": "The same principle explains both our lever and Dad's battle with a heavy lid.",
+    "translation": "Bir xil tamoyil richagimizni ham, dadamning og‘ir qopqoq bilan jangini ham tushuntiradi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "law",
+    "ipa": "/lɔː/",
+    "meaning": "tabiat qonuni",
+    "example": "A law of physics still applies when my experiment is having a bad day.",
+    "translation": "Tajribamning kuni yomon kelganda ham fizika qonuni amal qiladi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "model",
+    "ipa": "/ˈmɒdl/",
+    "meaning": "soddalashtirilgan ilmiy model",
+    "example": "Our model of the solar system fits on a table, unlike the original.",
+    "translation": "Quyosh tizimi modelimiz aslidan farqli ravishda stolga sig‘adi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "simulation",
+    "ipa": "/ˌsɪmjəˈleɪʃn/",
+    "meaning": "jarayonning sun’iy modeli orqali taqlidi",
+    "example": "The flood simulation soaked the computer map instead of our classroom.",
+    "translation": "Toshqin simulyatsiyasi sinfxonamizni emas, kompyuterdagi xaritani ho‘lladi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "demonstration",
+    "ipa": "/ˌdemənˈstreɪʃn/",
+    "meaning": "tajribani ko‘rsatib tushuntirish",
+    "example": "The demonstration explained air pressure and rescued a very flat balloon.",
+    "translation": "Namoyish havo bosimini tushuntirib, juda yassi sharni qutqardi.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "invention",
+    "ipa": "/ɪnˈvenʃn/",
+    "meaning": "ixtiro",
+    "example": "The washing machine is an invention my laundry pile should thank daily.",
+    "translation": "Kir yuvish mashinasi kir uyumim har kuni rahmat aytishi kerak bo‘lgan ixtirodir.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "breakthrough",
+    "ipa": "/ˈbreɪkθruː/",
+    "meaning": "muhim ilmiy yutuq",
+    "example": "The battery breakthrough may help devices last longer than my patience with chargers.",
+    "translation": "Batareya sohasidagi yutuq qurilmalarni quvvatlagichlarga sabrimdan uzoqroq ishlatishi mumkin.",
+    "topic": "6-oy • Ilmiy fikrlash va tekshirish"
+  },
+  {
+    "word": "cell",
+    "ipa": "/sel/",
+    "meaning": "hujayra",
+    "example": "A cell is tiny, but its daily workload would impress any office manager.",
+    "translation": "Hujayra mitti, lekin uning kundalik ish hajmi har qanday idora boshlig‘ini hayratlantiradi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "organ",
+    "ipa": "/ˈɔːɡən/",
+    "meaning": "tana a’zosi; organ",
+    "example": "Each organ has a job, and none gets a proper weekend.",
+    "translation": "Har bir a’zoning vazifasi bor, hech biri to‘laqonli dam olish kuniga chiqmaydi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "lung",
+    "ipa": "/lʌŋ/",
+    "meaning": "o‘pka",
+    "example": "Each lung works quietly until I decide to race upstairs.",
+    "translation": "Men zinadan yugurishga qaror qilgunimcha har bir o‘pkam tinchgina ishlaydi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "brain",
+    "ipa": "/breɪn/",
+    "meaning": "miya",
+    "example": "My brain remembers old song lyrics but forgets why I entered the kitchen.",
+    "translation": "Miyam eski qo‘shiq matnlarini eslaydi, lekin oshxonaga nega kirganimni unutadi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "blood",
+    "ipa": "/blʌd/",
+    "meaning": "qon",
+    "example": "Blood carries oxygen around my body without consulting a street map.",
+    "translation": "Qon ko‘cha xaritasiga qaramay tanam bo‘ylab kislorod tashiydi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "oxygen",
+    "ipa": "/ˈɒksɪdʒən/",
+    "meaning": "kislorod",
+    "example": "Our bodies need oxygen even during the least ambitious afternoon nap.",
+    "translation": "Eng sust tushki uyquda ham tanamizga kislorod kerak.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "nitrogen",
+    "ipa": "/ˈnaɪtrədʒən/",
+    "meaning": "azot",
+    "example": "Most of the air is nitrogen, despite oxygen getting more publicity.",
+    "translation": "Kislorod ko‘proq tilga olinsa ham, havoning ko‘p qismi azotdir.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "photosynthesis",
+    "ipa": "/ˌfəʊtəʊˈsɪnθəsɪs/",
+    "meaning": "yorug‘lik yordamida o‘simlik oziq hosil qilishi; fotosintez",
+    "example": "Photosynthesis lets the plant make sugar while I still have to visit a shop.",
+    "translation": "Fotosintez o‘simlikka shakar hosil qilish imkonini beradi, men esa do‘konga borishim kerak.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "respiration",
+    "ipa": "/ˌrespəˈreɪʃn/",
+    "meaning": "hujayralarda oziqdan energiya ajralish jarayoni",
+    "example": "Cellular respiration continues while I sleep, making my body a busy night worker.",
+    "translation": "Men uxlaganda ham hujayra nafasi davom etib, tanamni band tungi ishchiga aylantiradi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "gene",
+    "ipa": "/dʒiːn/",
+    "meaning": "irsiy ma’lumot birligi; gen",
+    "example": "A gene can influence eye colour, but it cannot choose my sunglasses.",
+    "translation": "Gen ko‘z rangiga ta’sir qilishi mumkin, ammo quyosh ko‘zoynagimni tanlay olmaydi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "DNA",
+    "ipa": "/ˌdiː en ˈeɪ/",
+    "meaning": "irsiy ma’lumotni saqlovchi DNK",
+    "example": "DNA stores instructions without needing a filing cabinet.",
+    "translation": "DNK hujjat javonisiz ko‘rsatmalarni saqlaydi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "evolution",
+    "ipa": "/ˌiːvəˈluːʃn/",
+    "meaning": "turlarning avlodlar davomida o‘zgarishi; evolyutsiya",
+    "example": "Evolution works across generations, not within my ambitious weekend fitness plan.",
+    "translation": "Evolyutsiya avlodlar davomida yuz beradi, katta dam olish kuni sport rejam doirasida emas.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "mutation",
+    "ipa": "/mjuːˈteɪʃn/",
+    "meaning": "genetik materialdagi o‘zgarish; mutatsiya",
+    "example": "A mutation is a change in DNA, not a guaranteed ticket to superhero status.",
+    "translation": "Mutatsiya DNKdagi o‘zgarishdir, superqahramon bo‘lishga kafolatli chipta emas.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "reproduction",
+    "ipa": "/ˌriːprəˈdʌkʃn/",
+    "meaning": "tirik organizmlarning ko‘payishi",
+    "example": "The diagram explains reproduction without giving every new seed a name.",
+    "translation": "Chizma har bir yangi urug‘ga ism qo‘ymasdan ko‘payishni tushuntiradi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "bacteria",
+    "ipa": "/bækˈtɪəriə/",
+    "meaning": "bakteriyalar",
+    "example": "Some bacteria help make yoghurt, so not every tiny visitor is unwelcome.",
+    "translation": "Ba’zi bakteriyalar yogurt tayyorlashga yordam beradi, demak har bir mitti mehmon yomon emas.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "fungus",
+    "ipa": "/ˈfʌŋɡəs/",
+    "meaning": "zamburug‘",
+    "example": "A fungus appeared on the old bread and cancelled my toast plans.",
+    "translation": "Eski nonda zamburug‘ paydo bo‘lib, qizartirilgan non rejamni bekor qildi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "mould",
+    "ipa": "/məʊld/",
+    "meaning": "mog‘or",
+    "example": "The mould on the jam is not an exciting new topping.",
+    "translation": "Murabbodagi mog‘or qiziqarli yangi qo‘shimcha emas.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "decomposition",
+    "ipa": "/ˌdiːkɒmpəˈzɪʃn/",
+    "meaning": "organik moddaning parchalanishi; chirish",
+    "example": "Decomposition gives fallen leaves another role after their colourful performance.",
+    "translation": "Chirish to‘kilgan barglarga rangli tomoshadan keyin boshqa vazifa beradi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "enzyme",
+    "ipa": "/ˈenzaɪm/",
+    "meaning": "biologik jarayonni tezlashtiruvchi ferment",
+    "example": "An enzyme helps speed up a reaction without demanding overtime pay.",
+    "translation": "Ferment ortiqcha ish haqi so‘ramay reaksiyani tezlashtiradi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "nutrient",
+    "ipa": "/ˈnjuːtriənt/",
+    "meaning": "organizmga zarur oziq modda",
+    "example": "The label lists every nutrient more carefully than I plan my lunch.",
+    "translation": "Yorliq har bir oziq moddani men tushligimni rejalashtirgandan puxtaroq sanaydi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "protein",
+    "ipa": "/ˈprəʊtiːn/",
+    "meaning": "oqsil",
+    "example": "Beans contain protein without needing a gym membership.",
+    "translation": "Loviya sport zaliga a’zo bo‘lmasa ham oqsilga ega.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "carbohydrate",
+    "ipa": "/ˌkɑːbəʊˈhaɪdreɪt/",
+    "meaning": "uglevod",
+    "example": "Bread contains carbohydrate, which helps explain my enthusiasm before a long walk.",
+    "translation": "Nonda uglevod bor, bu uzoq sayr oldidagi unga qiziqishimni tushuntiradi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "fibre",
+    "ipa": "/ˈfaɪbə/",
+    "meaning": "oziq tolasi",
+    "example": "Whole grains provide fibre as well as crumbs for my keyboard.",
+    "translation": "Butun donli mahsulotlar klaviaturamga ushoqdan tashqari oziq tolasi ham beradi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "fat",
+    "ipa": "/fæt/",
+    "meaning": "yog‘ moddasi",
+    "example": "Fat carries flavour, which my buttery potatoes demonstrate enthusiastically.",
+    "translation": "Yog‘ ta’mni olib yuradi, sariyog‘li kartoshkalarim buni ishtiyoq bilan namoyish etadi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "starch",
+    "ipa": "/stɑːtʃ/",
+    "meaning": "kraxmal",
+    "example": "Starch thickens the sauce before it can escape from the plate.",
+    "translation": "Kraxmal qaylani likopchadan qochib ketmasidan oldin quyuqlashtiradi.",
+    "topic": "6-oy • Tirik organizmlar va oziq moddalari"
+  },
+  {
+    "word": "agriculture",
+    "ipa": "/ˈæɡrɪkʌltʃə/",
+    "meaning": "qishloq xo‘jaligi",
+    "example": "Agriculture supplies our meals long before we argue about the menu.",
+    "translation": "Qishloq xo‘jaligi biz taomnoma ustida tortishishimizdan ancha oldin ovqatimizni yetishtiradi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "cultivation",
+    "ipa": "/ˌkʌltɪˈveɪʃn/",
+    "meaning": "yerga ishlov berib ekin yetishtirish",
+    "example": "Cultivation requires more patience than buying tomatoes in a hurry.",
+    "translation": "Ekin yetishtirish shoshilib pomidor sotib olishdan ko‘proq sabr talab qiladi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "crop",
+    "ipa": "/krɒp/",
+    "meaning": "ekin; hosil",
+    "example": "Our first crop of beans fed two people and one very determined snail.",
+    "translation": "Birinchi loviya hosilimiz ikki odamni va bitta qat’iyatli shilliqqurtni to‘ydirdi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "harvest",
+    "ipa": "/ˈhɑːvɪst/",
+    "meaning": "hosilni yig‘ib olish",
+    "example": "The harvest filled our kitchen with more courgettes than anyone had requested.",
+    "translation": "Hosil oshxonamizni hech kim shuncha so‘ramagan qovoqchalar bilan to‘ldirdi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "sow",
+    "ipa": "/səʊ/",
+    "meaning": "urug‘ sepmoq; ekmoq",
+    "example": "We sow seeds in straight rows, although the plants later improvise.",
+    "translation": "Urug‘larni tekis qatorga ekamiz, ammo o‘simliklar keyin o‘zicha o‘sadi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "plantation",
+    "ipa": "/plænˈteɪʃn/",
+    "meaning": "bir tur ekin yetishtiriladigan katta maydon",
+    "example": "The tea plantation made my morning cup seem part of a much bigger story.",
+    "translation": "Choy plantatsiyasi ertalabki piyolamni ancha katta hikoyaning qismidek ko‘rsatdi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "orchard",
+    "ipa": "/ˈɔːtʃəd/",
+    "meaning": "mevali bog‘",
+    "example": "The orchard smells wonderful, and Dad keeps checking whether tasting is allowed.",
+    "translation": "Mevali bog‘ xushbo‘y, dadam esa tatib ko‘rish mumkinligini tekshiraveradi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "pasture",
+    "ipa": "/ˈpɑːstʃə/",
+    "meaning": "yaylov",
+    "example": "The cows in the pasture seem satisfied with a menu that never changes.",
+    "translation": "Yaylovdagi sigirlar hech o‘zgarmaydigan taomnomadan mamnun ko‘rinadi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "graze",
+    "ipa": "/ɡreɪz/",
+    "meaning": "o‘tlamoq",
+    "example": "Sheep graze quietly while our picnic group debates six kinds of sandwich.",
+    "translation": "Piknik guruhimiz olti xil sendvichni muhokama qilganda qo‘ylar tinchgina o‘tlaydi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "fertiliser",
+    "ipa": "/ˈfɜːtəlaɪzə/",
+    "meaning": "o‘g‘it",
+    "example": "The fertiliser helped the tomatoes grow taller than their nervous owner.",
+    "translation": "O‘g‘it pomidorlarning xavotirli egasidan balandroq o‘sishiga yordam berdi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "pesticide",
+    "ipa": "/ˈpestɪsaɪd/",
+    "meaning": "zararkunandalarga qarshi vosita",
+    "example": "We read the pesticide label more carefully than the instructions for our television.",
+    "translation": "Zararkunanda vositasi yorlig‘ini televizor yo‘riqnomasidan diqqatliroq o‘qidik.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "insecticide",
+    "ipa": "/ɪnˈsektɪsaɪd/",
+    "meaning": "hasharotlarga qarshi vosita",
+    "example": "The insecticide is not a general invitation to spray everything green.",
+    "translation": "Hasharotlarga qarshi vosita yashil narsalarning hammasiga purkashga taklif emas.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "weed",
+    "ipa": "/wiːd/",
+    "meaning": "begona o‘t",
+    "example": "The weed grows faster than the flowers I actually paid for.",
+    "translation": "Begona o‘t pul to‘lab olgan gullarimdan tezroq o‘sadi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "pest",
+    "ipa": "/pest/",
+    "meaning": "ekin zararkunandasi",
+    "example": "One small pest has a surprisingly large appetite for my cabbage.",
+    "translation": "Bitta kichik zararkunandaning karamimga ishtahasi kutilmaganda katta.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "pollinator",
+    "ipa": "/ˈpɒlɪneɪtə/",
+    "meaning": "o‘simliklarni changlatuvchi jonzot",
+    "example": "A pollinator visits the flowers without charging a delivery fee.",
+    "translation": "Changlatuvchi jonzot yetkazib berish haqi olmay gullarga tashrif buyuradi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "pollination",
+    "ipa": "/ˌpɒlɪˈneɪʃn/",
+    "meaning": "changlanish",
+    "example": "Pollination happens while we admire the flowers for entirely different reasons.",
+    "translation": "Biz gullarga mutlaqo boshqa sabab bilan qoyil qolayotganimizda changlanish yuz beradi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "beehive",
+    "ipa": "/ˈbiːhaɪv/",
+    "meaning": "asalari uyasi",
+    "example": "The beehive is busier than our office, with much less discussion about tea.",
+    "translation": "Asalari uyasi idoramizdan bandroq, unda choy haqida ancha kam gaplashiladi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "greenhouse",
+    "ipa": "/ˈɡriːnhaʊs/",
+    "meaning": "issiqxona",
+    "example": "The greenhouse gives our tomatoes summer weather on a rather miserable Tuesday.",
+    "translation": "Issiqxona pomidorlarimizga ancha tund seshanbada yoz havosini beradi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "allotment",
+    "ipa": "/əˈlɒtmənt/",
+    "meaning": "sabzavot yetishtirish uchun ajratilgan kichik yer",
+    "example": "Our allotment produces vegetables, gossip, and occasional backache.",
+    "translation": "Tomorqamiz sabzavot, g‘iybat va ba’zan bel og‘rig‘i yetishtiradi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "compost heap",
+    "ipa": "/ˈkɒmpɒst hiːp/",
+    "meaning": "kompost uyumi",
+    "example": "The compost heap is where our vegetable peelings begin their second career.",
+    "translation": "Kompost uyumi sabzavot po‘choqlarimiz ikkinchi faoliyatini boshlaydigan joy.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "turf",
+    "ipa": "/tɜːf/",
+    "meaning": "ildizi va tuprog‘i bilan kesilgan chim",
+    "example": "Laying turf gave us a lawn faster than waiting for our patchy seeds.",
+    "translation": "Chim yotqizish siyrak urug‘larimizni kutishdan tezroq maysazor berdi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "mulch",
+    "ipa": "/mʌltʃ/",
+    "meaning": "tuproqni yopib namlik saqlaydigan qoplama",
+    "example": "Mulch keeps the soil moist and gives weeds a harder morning.",
+    "translation": "Mulcha tuproqni nam saqlaydi va begona o‘tlarning tongini qiyinlashtiradi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "topsoil",
+    "ipa": "/ˈtɒpsɔɪl/",
+    "meaning": "tuproqning unumdor ustki qatlami",
+    "example": "The topsoil arrived in bags heavy enough to change our afternoon plans.",
+    "translation": "Ustki unumdor tuproq tushdan keyingi rejalarimizni o‘zgartiradigan og‘ir paketlarda keldi.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "fertility",
+    "ipa": "/fəˈtɪləti/",
+    "meaning": "tuproq unumdorligi",
+    "example": "Soil fertility matters more to carrots than an encouraging speech.",
+    "translation": "Sabziga dalda beruvchi nutqdan ko‘ra tuproq unumdorligi muhimroq.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "livestock",
+    "ipa": "/ˈlaɪvstɒk/",
+    "meaning": "chorva mollari",
+    "example": "The livestock need feeding even when the farmer would prefer a lie-in.",
+    "translation": "Fermer uzoqroq uxlashni istasa ham, chorvaga yem berish kerak.",
+    "topic": "6-oy • Yer va dehqonchilik"
+  },
+  {
+    "word": "community",
+    "ipa": "/kəˈmjuːnəti/",
+    "meaning": "mahalliy jamoa; hamjamiyat",
+    "example": "Our community can organise a street party faster than I can find matching chairs.",
+    "translation": "Mahallamiz men bir xil kursi topgunimcha ko‘cha bayramini uyushtira oladi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "neighbourhood",
+    "ipa": "/ˈneɪbəhʊd/",
+    "meaning": "mahalla; yaqin atrof",
+    "example": "The whole neighbourhood knows when Mr Karim starts his lawnmower.",
+    "translation": "Karim aka maysa o‘rgichini yoqqanini butun mahalla biladi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "resident",
+    "ipa": "/ˈrezɪdənt/",
+    "meaning": "shu joyda yashovchi kishi",
+    "example": "Every resident received a notice, including the man who never checks his post.",
+    "translation": "Har bir yashovchi, jumladan pochtasini tekshirmaydigan odam ham bildirishnoma oldi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "citizen",
+    "ipa": "/ˈsɪtɪzn/",
+    "meaning": "fuqaro",
+    "example": "A responsible citizen returns the library book before it becomes a family heirloom.",
+    "translation": "Mas’uliyatli fuqaro kutubxona kitobini oilaviy yodgorlik bo‘lmasidan oldin qaytaradi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "citizenship",
+    "ipa": "/ˈsɪtɪzənʃɪp/",
+    "meaning": "fuqarolik",
+    "example": "The citizenship ceremony required more formal shoes than my usual Tuesday.",
+    "translation": "Fuqarolik marosimi odatdagi seshanbamdan rasmiyroq oyoq kiyim talab qildi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "inhabitant",
+    "ipa": "/ɪnˈhæbɪtənt/",
+    "meaning": "hududda istiqomat qiluvchi",
+    "example": "The island has few inhabitants, but apparently plenty of opinions about its ferry.",
+    "translation": "Orolda yashovchilar kam, ammo paromi haqida fikrlar ko‘p ekan.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "district",
+    "ipa": "/ˈdɪstrɪkt/",
+    "meaning": "tuman",
+    "example": "Our district finally has a swimming pool that is not a flooded car park.",
+    "translation": "Tumanimizda nihoyat suv bosgan avtoturargoh bo‘lmagan basseyn bor.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "borough",
+    "ipa": "/ˈbʌrə/",
+    "meaning": "shaharning mahalliy boshqaruv hududi",
+    "example": "The borough repaired the bench before its final leg retired.",
+    "translation": "Mahalliy boshqaruv o‘rindiqning oxirgi oyog‘i pensiyaga chiqmasidan oldin uni tuzatdi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "municipality",
+    "ipa": "/mjuːˌnɪsɪˈpæləti/",
+    "meaning": "shahar yoki tuman boshqaruv birligi",
+    "example": "The municipality planted trees where cars once enjoyed free shade from nothing.",
+    "translation": "Munitsipalitet ilgari mashinalar hech narsaning soyasida turgan joyga daraxt ekdi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "council",
+    "ipa": "/ˈkaʊnsl/",
+    "meaning": "mahalliy boshqaruv kengashi",
+    "example": "The council asked for feedback and received several essays about bins.",
+    "translation": "Kengash fikr so‘rab, axlat qutilari haqida bir nechta insho oldi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "mayor",
+    "ipa": "/meə/",
+    "meaning": "shahar hokimi; mer",
+    "example": "The mayor opened the park with a speech shorter than everyone expected.",
+    "translation": "Mer bog‘ni hamma kutganidan qisqaroq nutq bilan ochdi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "urban",
+    "ipa": "/ˈɜːbən/",
+    "meaning": "shaharga oid",
+    "example": "Urban gardens give city bees somewhere better to visit than our drinks.",
+    "translation": "Shahar bog‘lari asalarilarga ichimliklarimizdan yaxshiroq boradigan joy beradi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "rural",
+    "ipa": "/ˈrʊərəl/",
+    "meaning": "qishloqqa oid",
+    "example": "Rural bus services require planning and a respectful relationship with the timetable.",
+    "translation": "Qishloq avtobuslari reja va jadvalga hurmatli munosabat talab qiladi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "settlement",
+    "ipa": "/ˈsetlmənt/",
+    "meaning": "aholi yashaydigan manzilgoh",
+    "example": "The settlement grew around a well, not around a convenient charging socket.",
+    "translation": "Manzilgoh qulay quvvatlash rozetkasi emas, quduq atrofida o‘sgan.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "housing",
+    "ipa": "/ˈhaʊzɪŋ/",
+    "meaning": "turar joylar; uy-joy ta’minoti",
+    "example": "Affordable housing matters more than another impressive statue of a horse.",
+    "translation": "Arzon uy-joy yana bir salobatli ot haykalidan muhimroq.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "estate",
+    "ipa": "/ɪˈsteɪt/",
+    "meaning": "bir hududdagi turar joy majmuasi",
+    "example": "The housing estate has a shared garden and many unofficial gardening advisers.",
+    "translation": "Turar joy majmuasida umumiy bog‘ va ko‘plab norasmiy bog‘bon maslahatchilar bor.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "tenancy",
+    "ipa": "/ˈtenənsi/",
+    "meaning": "uy-joyni ijaraga olib yashash huquqi yoki muddati",
+    "example": "Our tenancy agreement says nothing about the noisy pigeon on the balcony.",
+    "translation": "Ijara shartnomamizda balkondagi shovqinli kaptar haqida hech narsa deyilmagan.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "tenant",
+    "ipa": "/ˈtenənt/",
+    "meaning": "ijarachi",
+    "example": "The new tenant brought three plants and enough books to support a wall.",
+    "translation": "Yangi ijarachi uchta o‘simlik va devorni tutib turadigan darajada ko‘p kitob keltirdi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "landlord",
+    "ipa": "/ˈlændlɔːd/",
+    "meaning": "ijaraga beruvchi uy egasi",
+    "example": "Our landlord finally replaced the tap that had been practising percussion.",
+    "translation": "Uy egamiz zarbli musiqa mashq qilayotgan jo‘mrakni nihoyat almashtirdi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "communal",
+    "ipa": "/ˈkɒmjənəl/",
+    "meaning": "hamma birgalikda foydalanadigan",
+    "example": "The communal kitchen contains six kettles and one missing teaspoon.",
+    "translation": "Umumiy oshxonada oltita choynak va bitta yo‘qolgan choy qoshiq bor.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "amenity",
+    "ipa": "/əˈmiːnəti/",
+    "meaning": "aholi uchun qulaylik yoki xizmat",
+    "example": "A clean public toilet is an amenity people appreciate without writing poems.",
+    "translation": "Toza jamoat hojatxonasi odamlar she’r yozmasdan ham qadrlaydigan qulaylik.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "facility",
+    "ipa": "/fəˈsɪləti/",
+    "meaning": "muayyan xizmat uchun inshoot",
+    "example": "The new sports facility has more equipment than excuses in my diary.",
+    "translation": "Yangi sport inshootida jihozlar kundaligimdagi bahonalardan ko‘p.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "infrastructure",
+    "ipa": "/ˈɪnfrəstrʌktʃə/",
+    "meaning": "asosiy yo‘l, tarmoq va inshootlar; infratuzilma",
+    "example": "Infrastructure becomes surprisingly interesting the moment the water stops.",
+    "translation": "Suv to‘xtashi bilan infratuzilma kutilmaganda qiziq bo‘lib qoladi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "redevelopment",
+    "ipa": "/ˌriːdɪˈveləpmənt/",
+    "meaning": "hududni qayta qurish",
+    "example": "The redevelopment turned empty warehouses into homes with very fashionable bricks.",
+    "translation": "Qayta qurish bo‘sh omborlarni juda urfdagi g‘ishtli uylarga aylantirdi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "accessibility",
+    "ipa": "/əkˌsesəˈbɪləti/",
+    "meaning": "hamma foydalana olishi uchun qulaylik",
+    "example": "Better accessibility lets everyone enter the hall without planning a small expedition.",
+    "translation": "Yaxshiroq kirish qulayligi hammaga zalga kichik ekspeditsiya rejalamasdan kirish imkonini beradi.",
+    "topic": "6-oy • Mahalla va aholi"
+  },
+  {
+    "word": "utility",
+    "ipa": "/juːˈtɪləti/",
+    "meaning": "suv, gaz yoki elektr kabi kommunal xizmat",
+    "example": "The utility company sent a bill long enough to need its own envelope.",
+    "translation": "Kommunal kompaniya alohida konvert talab qiladigan uzun hisob yubordi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "service",
+    "ipa": "/ˈsɜːvɪs/",
+    "meaning": "aholiga ko‘rsatiladigan xizmat",
+    "example": "The library service lends tools as well as books, which surprised my drill.",
+    "translation": "Kutubxona xizmati kitobdan tashqari asbob ham beradi, bu drelni hayratlantirdi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "public transport",
+    "ipa": "/ˌpʌblɪk ˈtrænspɔːt/",
+    "meaning": "jamoat transporti",
+    "example": "Public transport lets me read while someone else argues with the traffic.",
+    "translation": "Jamoat transporti boshqa kishi tirbandlik bilan kurashayotganda menga kitob o‘qish imkonini beradi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "post office",
+    "ipa": "/ˈpəʊst ɒfɪs/",
+    "meaning": "pochta bo‘limi",
+    "example": "At the post office, my tiny parcel required a surprisingly serious discussion.",
+    "translation": "Pochta bo‘limida mitti jo‘natmam kutilmaganda jiddiy suhbat talab qildi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "postbox",
+    "ipa": "/ˈpəʊstbɒks/",
+    "meaning": "xat tashlash qutisi",
+    "example": "The postbox swallowed my letter without commenting on my handwriting.",
+    "translation": "Pochta qutisi yozuvimni izohlamay xatimni yutdi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "postage",
+    "ipa": "/ˈpəʊstɪdʒ/",
+    "meaning": "pochta orqali yuborish haqi",
+    "example": "The postage cost more than the funny card inside the envelope.",
+    "translation": "Pochta haqi konvertdagi kulgili tabriknomadan qimmat bo‘ldi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "stamp",
+    "ipa": "/stæmp/",
+    "meaning": "pochta markasi",
+    "example": "I put the stamp on straight and considered that a small achievement.",
+    "translation": "Markani tekis yopishtirib, buni kichik yutuq deb bildim.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "courier",
+    "ipa": "/ˈkʊriə/",
+    "meaning": "kuryer; jo‘natma yetkazuvchi",
+    "example": "The courier arrived during the only minute I was in the shower.",
+    "translation": "Kuryer aynan men dushda bo‘lgan yagona daqiqada keldi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "streetlight",
+    "ipa": "/ˈstriːtlaɪt/",
+    "meaning": "ko‘cha chirog‘i",
+    "example": "The repaired streetlight has ended our nightly search for the gate.",
+    "translation": "Tuzatilgan ko‘cha chirog‘i har kechalik darvoza qidiruvimizni tugatdi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "maintenance",
+    "ipa": "/ˈmeɪntənəns/",
+    "meaning": "ish holatida saqlash va ta’mirlash",
+    "example": "Regular maintenance keeps the lift from taking unscheduled holidays.",
+    "translation": "Muntazam texnik xizmat liftning rejasiz ta’tilga chiqishiga yo‘l qo‘ymaydi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "sewer",
+    "ipa": "/ˈsuːə/",
+    "meaning": "kanalizatsiya quvuri",
+    "example": "The sewer does important work beneath our feet without seeking attention.",
+    "translation": "Kanalizatsiya quvuri e’tibor izlamay oyog‘imiz ostida muhim ish bajaradi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "manhole",
+    "ipa": "/ˈmænhəʊl/",
+    "meaning": "yer osti tarmog‘iga kirish tuynugi",
+    "example": "Workers opened the manhole, revealing a workplace with very limited daylight.",
+    "translation": "Ishchilar tuynukni ochib, kunduzgi yorug‘lik juda kam bo‘lgan ish joyini ko‘rsatdi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "waterworks",
+    "ipa": "/ˈwɔːtəwɜːks/",
+    "meaning": "suv tayyorlash va ta’minlash inshooti",
+    "example": "The waterworks tour made our ordinary tap seem much more impressive.",
+    "translation": "Suv inshooti bo‘ylab sayohat oddiy jo‘mragimizni ancha ta’sirli ko‘rsatdi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "bus stop",
+    "ipa": "/ˈbʌs stɒp/",
+    "meaning": "avtobus bekati",
+    "example": "Our bus stop has a timetable that everyone studies like an important exam.",
+    "translation": "Bekatimizda hamma muhim imtihondek o‘rganadigan jadval bor.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "pedestrian crossing",
+    "ipa": "/pəˌdestriən ˈkrɒsɪŋ/",
+    "meaning": "piyodalar o‘tish joyi",
+    "example": "The pedestrian crossing makes the bakery across the road feel much closer.",
+    "translation": "Piyodalar o‘tish joyi yo‘l narigi tomonidagi novvoyxonani ancha yaqinlashtiradi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "cycle lane",
+    "ipa": "/ˈsaɪkl leɪn/",
+    "meaning": "velosiped yo‘lagi",
+    "example": "The cycle lane is for bicycles, however comfortable your parked car looks there.",
+    "translation": "Mashina u yerda qanchalik qulay turgandek ko‘rinmasin, yo‘lak velosipedlar uchun.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "bus shelter",
+    "ipa": "/ˈbʌs ʃeltə/",
+    "meaning": "usti yopiq avtobus bekati",
+    "example": "The bus shelter keeps the rain off our heads but not out of our conversation.",
+    "translation": "Yopiq bekat yomg‘irni boshimizdan to‘sadi, ammo suhbatimizdan emas.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "car park",
+    "ipa": "/ˈkɑː pɑːk/",
+    "meaning": "avtoturargoh",
+    "example": "The car park has three hundred spaces and one very lost driver: me.",
+    "translation": "Avtoturargohda uch yuzta joy va bitta adashgan haydovchi bor: men.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "recycling centre",
+    "ipa": "/ˌriːˈsaɪklɪŋ sentə/",
+    "meaning": "chiqindini qayta ishlashga qabul qilish markazi",
+    "example": "The recycling centre accepted our broken toaster without judging our breakfast history.",
+    "translation": "Qayta ishlash markazi buzilgan non qizartirgichimizni nonushta tariximizni ayblamay qabul qildi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "community centre",
+    "ipa": "/kəˈmjuːnəti sentə/",
+    "meaning": "mahalla jamoat markazi",
+    "example": "The community centre hosts yoga, chess, and some exceptionally serious tea drinking.",
+    "translation": "Jamoat markazida yoga, shaxmat va nihoyatda jiddiy choyxo‘rlik bo‘ladi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "town hall",
+    "ipa": "/ˌtaʊn ˈhɔːl/",
+    "meaning": "shahar hokimiyati binosi",
+    "example": "The town hall clock is more punctual than most meetings inside.",
+    "translation": "Hokimiyat binosidagi soat ichkaridagi ko‘p yig‘ilishdan aniqroq ishlaydi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "helpline",
+    "ipa": "/ˈhelplaɪn/",
+    "meaning": "telefon orqali yordam xizmati",
+    "example": "The helpline explained the form before it defeated the entire family.",
+    "translation": "Yordam xizmati shakl butun oilani yengmasidan oldin uni tushuntirdi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "switchboard",
+    "ipa": "/ˈswɪtʃbɔːd/",
+    "meaning": "telefon qo‘ng‘iroqlarini yo‘naltirish markazi",
+    "example": "The switchboard found the right department after my three imaginative guesses.",
+    "translation": "Telefon markazi mening uchta xayoliy taxminimdan keyin kerakli bo‘limni topdi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "lost property",
+    "ipa": "/ˌlɒst ˈprɒpəti/",
+    "meaning": "topib topshirilgan yo‘qolgan buyumlar",
+    "example": "Lost property had my umbrella and several hundred close relatives of it.",
+    "translation": "Topilmalar bo‘limida soyabonim va uning bir necha yuz yaqin qarindoshi bor edi.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "licence",
+    "ipa": "/ˈlaɪsns/",
+    "meaning": "rasmiy ruxsatnoma; litsenziya",
+    "example": "The café displayed its licence more neatly than its handwritten soup menu.",
+    "translation": "Kafe litsenziyasini qo‘lda yozilgan sho‘rva taomnomasidan saranjomroq osgan.",
+    "topic": "6-oy • Jamoat xizmatlari"
+  },
+  {
+    "word": "democracy",
+    "ipa": "/dɪˈmɒkrəsi/",
+    "meaning": "demokratiya; xalq ishtirokidagi boshqaruv",
+    "example": "Democracy asks citizens to do more than complain at the television.",
+    "translation": "Demokratiya fuqarolardan televizorga shikoyat qilishdan ko‘proq narsani talab qiladi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "election",
+    "ipa": "/ɪˈlekʃn/",
+    "meaning": "saylov",
+    "example": "The election filled our letterbox faster than any shopping season.",
+    "translation": "Saylov pochta qutimizni har qanday xarid mavsumidan tezroq to‘ldirdi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "ballot",
+    "ipa": "/ˈbælət/",
+    "meaning": "saylov byulleteni; yashirin ovoz berish",
+    "example": "I read the ballot carefully; this was not a restaurant menu I could change later.",
+    "translation": "Byulletenni diqqat bilan o‘qidim, bu keyin o‘zgartirish mumkin bo‘lgan taomnoma emas edi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "referendum",
+    "ipa": "/ˌrefəˈrendəm/",
+    "meaning": "umumxalq ovoz berishi; referendum",
+    "example": "The referendum question was shorter than most arguments about it.",
+    "translation": "Referendum savoli u haqdagi ko‘p bahslardan qisqaroq edi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "parliament",
+    "ipa": "/ˈpɑːləmənt/",
+    "meaning": "parlament",
+    "example": "Parliament discussed the proposal while our family held a smaller debate over dinner.",
+    "translation": "Parlament taklifni ko‘rayotganda oilamiz kechki ovqatda kichikroq bahs o‘tkazdi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "government",
+    "ipa": "/ˈɡʌvənmənt/",
+    "meaning": "hukumat",
+    "example": "The government announced the plan, and Dad immediately found three questions.",
+    "translation": "Hukumat rejani e’lon qildi, dadam darhol uchta savol topdi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "minister",
+    "ipa": "/ˈmɪnɪstə/",
+    "meaning": "vazir",
+    "example": "The minister visited our school and faced surprisingly difficult questions from children.",
+    "translation": "Vazir maktabimizga kelib, bolalarning kutilmaganda qiyin savollariga duch keldi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "spokesperson",
+    "ipa": "/ˈspəʊkspɜːsn/",
+    "meaning": "tashkilot nomidan gapiruvchi vakil",
+    "example": "The spokesperson answered questions without promising sunshine for every public event.",
+    "translation": "Matbuot vakili har bir jamoat tadbiriga quyosh va’da qilmay savollarga javob berdi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "constituency",
+    "ipa": "/kənˈstɪtʃuənsi/",
+    "meaning": "saylov okrugi",
+    "example": "The constituency includes both our busy town and several much quieter villages.",
+    "translation": "Saylov okrugiga gavjum shahrimiz va bir nechta ancha tinch qishloq kiradi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "activist",
+    "ipa": "/ˈæktɪvɪst/",
+    "meaning": "ijtimoiy o‘zgarish uchun faol kurashuvchi",
+    "example": "The local activist brought evidence about air pollution and enough tea for a long discussion.",
+    "translation": "Mahalliy faol havo ifloslanishi dalillari va uzoq muhokamaga yetadigan choy olib keldi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "manifesto",
+    "ipa": "/ˌmænɪˈfestəʊ/",
+    "meaning": "saylovoldi dasturi",
+    "example": "The manifesto promised better buses, which interested me more than its glossy cover.",
+    "translation": "Dastur yaxshiroq avtobuslarni va’da qildi, bu meni yaltiroq muqovasidan ko‘proq qiziqtirdi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "policy",
+    "ipa": "/ˈpɒləsi/",
+    "meaning": "rasmiy yo‘nalish; siyosat",
+    "example": "The new recycling policy finally explains where our confusing yoghurt pots belong.",
+    "translation": "Yangi qayta ishlash siyosati chalkash yogurt idishlarimiz qayerga tashlanishini nihoyat tushuntiradi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "legislation",
+    "ipa": "/ˌledʒɪsˈleɪʃn/",
+    "meaning": "qonun hujjatlari; qonunchilik",
+    "example": "The legislation is less entertaining than the headlines but considerably more useful.",
+    "translation": "Qonun matni sarlavhalardan zerikarliroq, ammo ancha foydaliroq.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "constitution",
+    "ipa": "/ˌkɒnstɪˈtjuːʃn/",
+    "meaning": "konstitutsiya; davlatning asosiy qonuni",
+    "example": "The constitution sets basic rules more serious than our family's washing-up agreement.",
+    "translation": "Konstitutsiya oilamizning idish yuvish kelishuvidan jiddiyroq asosiy qoidalarni belgilaydi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "regulation",
+    "ipa": "/ˌreɡjəˈleɪʃn/",
+    "meaning": "rasmiy qoida; nizom",
+    "example": "The regulation requires clear exits, not a decorative mountain of boxes.",
+    "translation": "Qoida bezakli quti tog‘ini emas, to‘siqsiz chiqish yo‘llarini talab qiladi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "freedom",
+    "ipa": "/ˈfriːdəm/",
+    "meaning": "erkinlik",
+    "example": "Freedom of expression includes opinions that do not improve Dad's mood.",
+    "translation": "Fikr erkinligiga dadamning kayfiyatini yaxshilamaydigan fikrlar ham kiradi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "equality",
+    "ipa": "/iˈkwɒləti/",
+    "meaning": "tenglik",
+    "example": "Equality means the club's rules should not depend on how important your uncle is.",
+    "translation": "Tenglik klub qoidalari amakingiz qanchalik muhimligiga bog‘liq bo‘lmasligini anglatadi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "justice",
+    "ipa": "/ˈdʒʌstɪs/",
+    "meaning": "adolat; odil sudlov",
+    "example": "Justice requires listening to evidence, not just the person with the loudest voice.",
+    "translation": "Adolat eng baland ovozli kishini emas, dalillarni tinglashni talab qiladi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "civil rights",
+    "ipa": "/ˌsɪvl ˈraɪts/",
+    "meaning": "fuqarolik huquqlari",
+    "example": "We discussed civil rights with more care than our usual debate about parking.",
+    "translation": "Fuqarolik huquqlarini odatdagi mashina qo‘yish bahsimizdan diqqatliroq muhokama qildik.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "human rights",
+    "ipa": "/ˌhjuːmən ˈraɪts/",
+    "meaning": "inson huquqlari",
+    "example": "Human rights do not disappear when somebody's opinions annoy us.",
+    "translation": "Kimningdir fikri bizni bezovta qilganda inson huquqlari yo‘qolib qolmaydi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "discrimination",
+    "ipa": "/dɪˌskrɪmɪˈneɪʃn/",
+    "meaning": "kamsitish",
+    "example": "The club changed its rules after members reported discrimination.",
+    "translation": "A’zolar kamsitish haqida xabar bergach, klub qoidalarini o‘zgartirdi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "prejudice",
+    "ipa": "/ˈpredʒədɪs/",
+    "meaning": "oldindan shakllangan asossiz salbiy qarash",
+    "example": "Meeting the new neighbours challenged his prejudice more effectively than an argument.",
+    "translation": "Yangi qo‘shnilar bilan tanishish uning asossiz qarashiga bahsdan kuchliroq ta’sir qildi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "harassment",
+    "ipa": "/ˈhærəsmənt/",
+    "meaning": "takroriy bezovta qilish; tazyiq",
+    "example": "The centre has a clear way to report harassment without facing the person alone.",
+    "translation": "Markazda tazyiq qilgan kishi bilan yolg‘iz yuzlashmay xabar berishning aniq yo‘li bor.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "corruption",
+    "ipa": "/kəˈrʌpʃn/",
+    "meaning": "korrupsiya; mansabdan noqonuniy foyda olish",
+    "example": "The investigation into corruption followed the money rather than the impressive speeches.",
+    "translation": "Korrupsiya tekshiruvi ta’sirli nutqlarni emas, pul izini kuzatdi.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "accountability",
+    "ipa": "/əˌkaʊntəˈbɪləti/",
+    "meaning": "qilgan ishi uchun hisob berish majburiyati",
+    "example": "Accountability means explaining the missing funds, not merely changing the subject.",
+    "translation": "Hisobdorlik shunchaki mavzuni almashtirish emas, yo‘qolgan mablag‘ni tushuntirishdir.",
+    "topic": "6-oy • Davlat va fuqarolik huquqlari"
+  },
+  {
+    "word": "participate",
+    "ipa": "/pɑːˈtɪsɪpeɪt/",
+    "meaning": "ishtirok etmoq",
+    "example": "I participated in the local meeting and discovered that bins inspire strong feelings.",
+    "translation": "Mahalliy yig‘ilishda qatnashib, axlat qutilari kuchli hislar uyg‘otishini bildim.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "elect",
+    "ipa": "/ɪˈlekt/",
+    "meaning": "ovoz berib saylamoq",
+    "example": "We elected a chairperson who could finish a sentence before the tea went cold.",
+    "translation": "Choy sovimasidan gapini tugata oladigan rais sayladik.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "voter",
+    "ipa": "/ˈvəʊtə/",
+    "meaning": "saylovchi",
+    "example": "The first-time voter arrived early with more enthusiasm than the sleepy officials.",
+    "translation": "Ilk bor ovoz beruvchi saylovchi uyquchan xodimlardan ko‘proq ishtiyoq bilan erta keldi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "turnout",
+    "ipa": "/ˈtɜːnaʊt/",
+    "meaning": "ovoz berishga kelganlar ulushi yoki soni",
+    "example": "Turnout increased despite the rain trying to discourage everyone.",
+    "translation": "Yomg‘ir hammani qaytarishga urinsa ham, ovoz beruvchilar soni oshdi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "polling station",
+    "ipa": "/ˈpəʊlɪŋ steɪʃn/",
+    "meaning": "ovoz berish uchastkasi",
+    "example": "Our polling station is usually a classroom, so voting felt slightly like an exam.",
+    "translation": "Ovoz berish joyimiz odatda sinfxona, shuning uchun saylov biroz imtihonga o‘xshadi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "councillor",
+    "ipa": "/ˈkaʊnsələ/",
+    "meaning": "mahalliy kengash a’zosi",
+    "example": "The councillor remembered our street mainly because of its legendary pothole.",
+    "translation": "Kengash a’zosi ko‘chamizni asosan afsonaviy chuquri sabab esladi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "petition",
+    "ipa": "/pəˈtɪʃn/",
+    "meaning": "imzolar to‘plangan jamoaviy murojaat",
+    "example": "Our petition for a crossing collected signatures faster than the bakery sold buns.",
+    "translation": "O‘tish joyi uchun murojaatimiz novvoyxona bulochka sotganidan tezroq imzo yig‘di.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "consultation",
+    "ipa": "/ˌkɒnslˈteɪʃn/",
+    "meaning": "qaror oldidan jamoatchilik fikrini olish",
+    "example": "The consultation asked residents where trees should go, and everyone had a favourite spot.",
+    "translation": "Muhokamada daraxt qayerga ekilishi so‘raldi, har kimning sevimli joyi bor edi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "hearing",
+    "ipa": "/ˈhɪərɪŋ/",
+    "meaning": "rasmiy tinglov",
+    "example": "At the public hearing, the microphone finally gave the quiet neighbour an advantage.",
+    "translation": "Ochiq tinglovda mikrofon nihoyat kamgap qo‘shniga ustunlik berdi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "initiative",
+    "ipa": "/ɪˈnɪʃətɪv/",
+    "meaning": "yangi ishni boshlash tashabbusi",
+    "example": "The tree-planting initiative began with one neighbour and far too many seedlings.",
+    "translation": "Daraxt ekish tashabbusi bitta qo‘shni va haddan ortiq ko‘chatdan boshlandi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "motion",
+    "ipa": "/ˈməʊʃn/",
+    "meaning": "yig‘ilishda ovozga qo‘yiladigan rasmiy taklif",
+    "example": "The motion to shorten meetings received unusually quick support.",
+    "translation": "Yig‘ilishlarni qisqartirish taklifi odatdan tashqari tez qo‘llab-quvvatlandi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "amendment",
+    "ipa": "/əˈmendmənt/",
+    "meaning": "rasmiy matn yoki taklifga tuzatish",
+    "example": "An amendment added wheelchair access before anyone approved the new entrance.",
+    "translation": "Yangi kirish joyi tasdiqlanishidan oldin tuzatish aravachada kirishni ham qo‘shdi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "resolution",
+    "ipa": "/ˌrezəˈluːʃn/",
+    "meaning": "rasmiy qabul qilingan qaror",
+    "example": "The resolution passed, and the committee finally moved on to biscuits.",
+    "translation": "Qaror qabul qilindi, qo‘mita nihoyat pechenyega o‘tdi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "approval",
+    "ipa": "/əˈpruːvl/",
+    "meaning": "rasmiy ma’qullash",
+    "example": "The garden project received approval before our seedlings outgrew the windowsill.",
+    "translation": "Ko‘chatlarimiz tokchaga sig‘may qolmasidan oldin bog‘ loyihasi ma’qullandi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "unanimous",
+    "ipa": "/juːˈnænɪməs/",
+    "meaning": "bir ovozdan qo‘llangan",
+    "example": "The decision was unanimous once everyone agreed that the meeting needed a break.",
+    "translation": "Hamma yig‘ilishga tanaffus kerakligiga rozi bo‘lgach, qaror bir ovozdan qabul qilindi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "oppose",
+    "ipa": "/əˈpəʊz/",
+    "meaning": "qarshi chiqmoq",
+    "example": "Residents opposed the plan to replace their only garden with more parking.",
+    "translation": "Aholi yagona bog‘ini yana bir avtoturargohga almashtirish rejasiga qarshi chiqdi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "protest",
+    "ipa": "/ˈprəʊtest/",
+    "meaning": "norozilik namoyishi",
+    "example": "The peaceful protest featured handmade signs and remarkably organised tea.",
+    "translation": "Tinch namoyishda qo‘lda yasalgan shiorlar va hayratlanarli tartibli choy bor edi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "advocate",
+    "ipa": "/ˈædvəkeɪt/",
+    "meaning": "g‘oya yoki chorani faol yoqlamoq",
+    "example": "We advocate safer streets, even when that means fewer parking spaces outside our homes.",
+    "translation": "Uylarimiz oldidagi avtoturargoh kamayadigan bo‘lsa ham, xavfsizroq ko‘chalarni yoqlaymiz.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "consult",
+    "ipa": "/kənˈsʌlt/",
+    "meaning": "maslahatlashmoq; fikrini so‘ramoq",
+    "example": "The council consulted residents before choosing trees that would outgrow the pavement.",
+    "translation": "Kengash yo‘lakka sig‘may o‘sadigan daraxtlarni tanlashdan oldin aholi bilan maslahatlashdi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "mediation",
+    "ipa": "/ˌmiːdiˈeɪʃn/",
+    "meaning": "nizoni vositachi yordamida hal qilish",
+    "example": "Mediation helped the neighbours discuss the fence without measuring it angrily.",
+    "translation": "Vositachilik qo‘shnilarga panjarani jahl bilan o‘lchamay muhokama qilishga yordam berdi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "transparency",
+    "ipa": "/trænsˈpærənsi/",
+    "meaning": "qaror va xarajatlarning ochiqligi",
+    "example": "Budget transparency lets us see whether the expensive benches really needed gold paint.",
+    "translation": "Budjet ochiqligi qimmat o‘rindiqlarga oltinrang bo‘yoq chindan kerak bo‘lganini ko‘rsatadi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "abstain",
+    "ipa": "/əbˈsteɪn/",
+    "meaning": "ovoz berishda betaraf qolmoq",
+    "example": "I abstained because I had missed the discussion, not because the chairs were uncomfortable.",
+    "translation": "Kursilar noqulayligi uchun emas, muhokamada bo‘lmaganim uchun ovoz berishda betaraf qoldim.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "duty",
+    "ipa": "/ˈdjuːti/",
+    "meaning": "burch; vazifa",
+    "example": "My duty at the event was checking tickets, not testing every cake.",
+    "translation": "Tadbirdagi vazifam barcha tortlarni tatish emas, chiptalarni tekshirish edi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "entitlement",
+    "ipa": "/ɪnˈtaɪtlmənt/",
+    "meaning": "biror yordam yoki xizmatni olish huquqi",
+    "example": "The adviser checked my entitlement before I celebrated a discount that was not mine.",
+    "translation": "Maslahatchi menga tegishli bo‘lmagan chegirmadan xursand bo‘lishimdan oldin huquqimni tekshirdi.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "eligibility",
+    "ipa": "/ˌelɪdʒəˈbɪləti/",
+    "meaning": "talablarga mos kelish",
+    "example": "We checked eligibility for the grant before writing our hopeful shopping list.",
+    "translation": "Umidli xarid ro‘yxatini yozishdan oldin grant talablariga mosligimizni tekshirdik.",
+    "topic": "6-oy • Jamoaviy qaror va ishtirok"
+  },
+  {
+    "word": "volunteer",
+    "ipa": "/ˌvɒlənˈtɪə/",
+    "meaning": "ko‘ngilli yordamchi",
+    "example": "One volunteer sorted donations while another negotiated with a mountain of coats.",
+    "translation": "Bir ko‘ngilli ehsonlarni saraladi, boshqasi palto tog‘i bilan muzokara qildi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "voluntary",
+    "ipa": "/ˈvɒləntri/",
+    "meaning": "ixtiyoriy; ko‘ngilli ravishda qilinadigan",
+    "example": "The work is voluntary, but the biscuits create a strong incentive.",
+    "translation": "Ish ixtiyoriy, ammo pechenyelar kuchli rag‘bat beradi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "charity",
+    "ipa": "/ˈtʃærəti/",
+    "meaning": "xayriya tashkiloti",
+    "example": "The charity turned our unused furniture into someone else's comfortable evening.",
+    "translation": "Xayriya tashkiloti ishlatilmayotgan mebelimizni boshqa odamning qulay oqshomiga aylantirdi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "donation",
+    "ipa": "/dəʊˈneɪʃn/",
+    "meaning": "ehson; beg‘araz berilgan pul yoki buyum",
+    "example": "Every donation helped, even the coins rescued from beneath the sofa.",
+    "translation": "Har bir ehson, hatto divan tagidan qutqarilgan tangalar ham yordam berdi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "fundraising",
+    "ipa": "/ˈfʌndreɪzɪŋ/",
+    "meaning": "xayriya uchun mablag‘ yig‘ish",
+    "example": "Our fundraising sale proved that people are generous when cake is involved.",
+    "translation": "Mablag‘ yig‘ish savdomiz tort bo‘lsa odamlar saxiyligini isbotladi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "fund",
+    "ipa": "/fʌnd/",
+    "meaning": "mablag‘ bilan ta’minlamoq",
+    "example": "Local businesses funded the playground without charging the swings rent.",
+    "translation": "Mahalliy korxonalar arg‘imchoqlardan ijara olmay o‘yingohga mablag‘ berdi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "grant",
+    "ipa": "/ɡrɑːnt/",
+    "meaning": "muayyan maqsad uchun ajratilgan mablag‘; grant",
+    "example": "A small grant bought tools that our entire neighbourhood now borrows.",
+    "translation": "Kichik grantga endi butun mahallamiz olib ishlatadigan asboblar olindi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "allowance",
+    "ipa": "/əˈlaʊəns/",
+    "meaning": "muayyan xarajat uchun ajratilgan pul; nafaqa",
+    "example": "The travel allowance covered my bus fares, though not my daily bakery visit.",
+    "translation": "Yo‘l puli avtobus haqimni qopladi, ammo kundalik novvoyxona tashrifimni emas.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "welfare",
+    "ipa": "/ˈwelfeə/",
+    "meaning": "ijtimoiy farovonlik va yordam",
+    "example": "The welfare adviser explained the paperwork without making anyone feel foolish.",
+    "translation": "Ijtimoiy yordam maslahatchisi hech kimni noqulay qilmay hujjatlarni tushuntirdi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "hardship",
+    "ipa": "/ˈhɑːdʃɪp/",
+    "meaning": "og‘ir turmush sharoiti; moddiy qiyinchilik",
+    "example": "The fund supports families facing hardship without asking them to perform gratitude.",
+    "translation": "Jamg‘arma qiyinchilikdagi oilalardan minnatdorchilik namoyishi talab qilmay yordam beradi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "homelessness",
+    "ipa": "/ˈhəʊmləsnəs/",
+    "meaning": "boshpanasizlik",
+    "example": "Preventing homelessness requires more than noticing people after they lose their homes.",
+    "translation": "Boshpanasizlikning oldini olish odamlarni uyidan ayrilgach payqashdan ko‘proq narsani talab qiladi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "shelter",
+    "ipa": "/ˈʃeltə/",
+    "meaning": "vaqtinchalik boshpana",
+    "example": "The shelter offered a bed, a warm meal, and someone willing to listen.",
+    "translation": "Boshpana yotoq, issiq ovqat va tinglashga tayyor insonni taklif qildi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "food bank",
+    "ipa": "/ˈfuːd bæŋk/",
+    "meaning": "muhtojlarga oziq tarqatadigan markaz",
+    "example": "The food bank requested pasta, not the mysterious jar at the back of my cupboard.",
+    "translation": "Oziq-ovqat markazi javonim orqasidagi sirli bankani emas, makaron so‘radi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "aid",
+    "ipa": "/eɪd/",
+    "meaning": "insonparvarlik yoki moddiy yordam",
+    "example": "Aid reached the village before the temporary bridge had a proper name.",
+    "translation": "Vaqtinchalik ko‘prikka nom qo‘yilmasidan oldin yordam qishloqqa yetib bordi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "care",
+    "ipa": "/keə/",
+    "meaning": "g‘amxo‘rlik; parvarish",
+    "example": "The neighbours shared the care of an elderly resident and learnt her excellent tea recipe.",
+    "translation": "Qo‘shnilar keksa yashovchiga g‘amxo‘rlikni bo‘lishib, uning ajoyib choy retseptini o‘rgandi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "outreach",
+    "ipa": "/ˈaʊtriːtʃ/",
+    "meaning": "yordamga yetib bora olmaydiganlarga faol murojaat qilish",
+    "example": "The outreach team visits people who cannot simply walk into an advice centre.",
+    "translation": "Ko‘mak guruhi maslahat markaziga o‘zi bora olmaydigan kishilarni borib ko‘radi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "mentoring",
+    "ipa": "/ˈmentərɪŋ/",
+    "meaning": "tajribali kishining yo‘l-yo‘riq berishi",
+    "example": "Mentoring helped the new volunteer ask questions before inventing creative mistakes.",
+    "translation": "Ustoz ko‘magi yangi ko‘ngilliga ijodiy xatolar o‘ylab topishdan oldin savol berishga yordam berdi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "befriending",
+    "ipa": "/bɪˈfrendɪŋ/",
+    "meaning": "yolg‘iz kishiga muntazam do‘stona hamrohlik qilish",
+    "example": "The befriending scheme pairs volunteers with people who would welcome regular company.",
+    "translation": "Do‘stona hamrohlik dasturi ko‘ngillilarni muntazam suhbatdosh istaydigan odamlar bilan bog‘laydi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "neighbourhood watch",
+    "ipa": "/ˌneɪbəhʊd ˈwɒtʃ/",
+    "meaning": "mahallada xavfsizlikni birga kuzatish guruhi",
+    "example": "Our neighbourhood watch reports concerns without turning every passing cat into a suspect.",
+    "translation": "Mahalla kuzatuvimiz har bir o‘tgan mushukni gumondor qilmay, xavotirli holatlarni bildiradi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "unity",
+    "ipa": "/ˈjuːnəti/",
+    "meaning": "birdamlik",
+    "example": "The flood created unexpected unity among neighbours who had previously argued about parking.",
+    "translation": "Toshqin ilgari mashina qo‘yish ustida tortishgan qo‘shnilar orasida kutilmagan birdamlik yaratdi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "cooperation",
+    "ipa": "/kəʊˌɒpəˈreɪʃn/",
+    "meaning": "hamkorlik",
+    "example": "Cooperation moved the heavy bench faster than six separate opinions.",
+    "translation": "Hamkorlik og‘ir o‘rindiqni oltita alohida fikrdan tezroq ko‘chirdi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "alliance",
+    "ipa": "/əˈlaɪəns/",
+    "meaning": "umumiy maqsad uchun ittifoq",
+    "example": "An alliance of local groups saved the park and gave our meetings a very long guest list.",
+    "translation": "Mahalliy guruhlar ittifoqi bog‘ni saqladi va yig‘ilishlarimizga juda uzun mehmon ro‘yxatini berdi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "non-profit",
+    "ipa": "/ˌnɒn ˈprɒfɪt/",
+    "meaning": "foydani asosiy maqsad qilmaydigan",
+    "example": "The non-profit café puts its surplus into meals rather than a manager's sports car.",
+    "translation": "Notijorat kafe ortiqcha mablag‘ni rahbarning sport mashinasiga emas, ovqatga sarflaydi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "mutual aid",
+    "ipa": "/ˌmjuːtʃuəl ˈeɪd/",
+    "meaning": "o‘zaro yordam",
+    "example": "Our mutual aid group exchanges practical help, from shopping to rescuing flat-pack furniture.",
+    "translation": "O‘zaro yordam guruhimiz xariddan yig‘ma mebelni qutqarishgacha amaliy ko‘mak almashadi.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "inclusion",
+    "ipa": "/ɪnˈkluːʒn/",
+    "meaning": "barchani teng ishtirok ettirish",
+    "example": "Inclusion means arranging the event so everyone can join, not merely printing a friendly poster.",
+    "translation": "Inklyuziya faqat do‘stona plakat bosish emas, tadbirni hamma qatnasha oladigan qilishdir.",
+    "topic": "6-oy • Ko‘ngillilik va o‘zaro yordam"
+  },
+  {
+    "word": "ban",
+    "ipa": "/bæn/",
+    "meaning": "taqiq",
+    "example": "The ban on loud music made our park's birds easier to hear.",
+    "translation": "Baland musiqa taqiqi bog‘imizdagi qushlarni yaxshiroq eshittirdi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "fine",
+    "ipa": "/faɪn/",
+    "meaning": "pul jarimasi",
+    "example": "The parking fine cost more than the lunch I had rushed to buy.",
+    "translation": "Mashina qo‘yish jarimasi shoshilib olgan tushligimdan qimmat bo‘ldi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "sanction",
+    "ipa": "/ˈsæŋkʃn/",
+    "meaning": "qoidabuzarlikka qarshi rasmiy jazo chorasi",
+    "example": "The council imposed a sanction after repeated dumping, not after one untidy picnic.",
+    "translation": "Kengash bitta tartibsiz piknikdan keyin emas, takroriy chiqindi tashlashdan keyin jazo chorasi qo‘lladi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "offence",
+    "ipa": "/əˈfens/",
+    "meaning": "huquqbuzarlik",
+    "example": "The notice says dumping furniture is an offence, even if the sofa is quite attractive.",
+    "translation": "E’londa divan chiroyli bo‘lsa ham, mebel tashlab ketish huquqbuzarlik ekani yozilgan.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "enforcement",
+    "ipa": "/ɪnˈfɔːsmənt/",
+    "meaning": "qoidalarga amal qildirish",
+    "example": "Consistent enforcement made the cycle lane useful to cyclists again.",
+    "translation": "Qoidalarni izchil amalga oshirish velosiped yo‘lagini yana velosipedchilarga foydali qildi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "checkpoint",
+    "ipa": "/ˈtʃekpɔɪnt/",
+    "meaning": "nazorat-o‘tkazish joyi",
+    "example": "At the checkpoint, staff inspected bags more carefully than I had packed mine.",
+    "translation": "Nazorat joyida xodimlar sumkalarni men o‘zimnikini joylaganimdan diqqatliroq tekshirdi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "evacuation",
+    "ipa": "/ɪˌvækjuˈeɪʃn/",
+    "meaning": "odamlarni xavfli joydan olib chiqish",
+    "example": "The evacuation drill taught us which door to use without following the crowd blindly.",
+    "translation": "Evakuatsiya mashqi olomonga ko‘r-ko‘rona ergashmay qaysi eshikdan chiqishni o‘rgatdi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "precaution",
+    "ipa": "/prɪˈkɔːʃn/",
+    "meaning": "ehtiyot chorasi",
+    "example": "As a precaution, we secured the loose banner before the wind joined the festival.",
+    "translation": "Ehtiyot chorasi sifatida shamol bayramga qo‘shilmasidan oldin bo‘sh bannerni mahkamladik.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "hazard",
+    "ipa": "/ˈhæzəd/",
+    "meaning": "xavf tug‘diradigan narsa yoki holat",
+    "example": "The trailing cable was a hazard, not an exciting test of balance.",
+    "translation": "Osilib yotgan sim muvozanatning qiziqarli sinovi emas, xavf edi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "warning",
+    "ipa": "/ˈwɔːnɪŋ/",
+    "meaning": "ogohlantirish",
+    "example": "The warning about wet paint arrived just before my curious hand.",
+    "translation": "Ho‘l bo‘yoq ogohlantirishi qiziquvchan qo‘limdan bir lahza oldin yetib keldi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "safety",
+    "ipa": "/ˈseɪfti/",
+    "meaning": "xavfsizlik",
+    "example": "Safety at the fair matters more than fitting one extra stall beside the exit.",
+    "translation": "Yarmarkada xavfsizlik chiqish yoniga yana bitta rasta sig‘dirishdan muhimroq.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "permit",
+    "ipa": "/ˈpɜːmɪt/",
+    "meaning": "yozma ruxsatnoma",
+    "example": "Our permit allowed a street event, not an unlimited midnight concert.",
+    "translation": "Ruxsatnomamiz cheksiz tungi konsertga emas, ko‘cha tadbiriga ruxsat berdi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "prohibit",
+    "ipa": "/prəˈhɪbɪt/",
+    "meaning": "taqiqlamoq",
+    "example": "The rules prohibit feeding the pigeons, despite their persuasive expressions.",
+    "translation": "Qoidalar kaptarlarning ishontiruvchi yuzlariga qaramay, ularga yem berishni taqiqlaydi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "trespass",
+    "ipa": "/ˈtrespəs/",
+    "meaning": "ruxsatsiz birovning hududiga kirmoq",
+    "example": "We did not trespass just to retrieve a football with poor navigation skills.",
+    "translation": "Yo‘l topishi yomon futbol to‘pini olish uchungina begona hududga ruxsatsiz kirmadik.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "vandalism",
+    "ipa": "/ˈvændəlɪzəm/",
+    "meaning": "jamoat mulkini ataylab buzish",
+    "example": "The broken benches were the result of vandalism, not an unusual design choice.",
+    "translation": "Singan o‘rindiqlar noodatiy dizayn emas, vandalizm natijasi edi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "graffiti",
+    "ipa": "/ɡrəˈfiːti/",
+    "meaning": "devorga chizilgan yozuv yoki rasm",
+    "example": "Volunteers removed graffiti from the sign so visitors could find the library again.",
+    "translation": "Ko‘ngillilar ko‘rsatkichdagi yozuvlarni o‘chirib, mehmonlarga kutubxonani yana topish imkonini berdi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "cordon",
+    "ipa": "/ˈkɔːdn/",
+    "meaning": "xavfli joyni ajratuvchi to‘siq",
+    "example": "The cordon kept spectators away from the damaged wall, including one unusually curious uncle.",
+    "translation": "To‘siq tomoshabinlarni, jumladan juda qiziquvchan bir amakini shikastlangan devordan uzoqda tutdi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "reopen",
+    "ipa": "/ˌriːˈəʊpən/",
+    "meaning": "ishni yoki muhokamani qayta ochmoq",
+    "example": "The committee reopened the discussion after residents supplied a map nobody had seen.",
+    "translation": "Aholi hech kim ko‘rmagan xaritani bergach, qo‘mita muhokamani qayta ochdi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "bylaw",
+    "ipa": "/ˈbaɪlɔː/",
+    "meaning": "mahalliy majburiy qoida",
+    "example": "The bylaw explains when dogs need leads, even very charming dogs.",
+    "translation": "Mahalliy qoida hatto juda yoqimtoy itlarni ham qachon tasma bilan yuritish kerakligini tushuntiradi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "speed limit",
+    "ipa": "/ˈspiːd lɪmɪt/",
+    "meaning": "ruxsat etilgan eng yuqori tezlik",
+    "example": "The speed limit outside the school is not a suggestion for confident drivers.",
+    "translation": "Maktab oldidagi tezlik chegarasi o‘ziga ishongan haydovchilar uchun shunchaki tavsiya emas.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "traffic calming",
+    "ipa": "/ˈtræfɪk kɑːmɪŋ/",
+    "meaning": "transport tezligini pasaytiruvchi yo‘l choralari",
+    "example": "Traffic calming made our street less attractive to drivers in a dramatic hurry.",
+    "translation": "Tezlikni kamaytirish choralari ko‘chamizni juda shoshqaloq haydovchilarga kamroq jozibali qildi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "curfew",
+    "ipa": "/ˈkɜːfjuː/",
+    "meaning": "belgilangan vaqtda tashqarida yurish taqiqi",
+    "example": "The temporary curfew meant our evening walk became a tour of the hallway.",
+    "translation": "Vaqtinchalik komendantlik soati oqshom sayrimizni dahliz bo‘ylab sayohatga aylantirdi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "safeguard",
+    "ipa": "/ˈseɪfɡɑːd/",
+    "meaning": "zarardan himoya qiluvchi chora",
+    "example": "A second signature is a safeguard against one person's expensive mistake.",
+    "translation": "Ikkinchi imzo bir kishining qimmat xatosiga qarshi himoya chorasi.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "abide by",
+    "ipa": "/əˈbaɪd baɪ/",
+    "meaning": "qoida yoki qarorga amal qilmoq",
+    "example": "We abide by the noise rules even when the birthday singer feels particularly talented.",
+    "translation": "Tug‘ilgan kun xonandasi o‘zini juda iste’dodli his qilsa ham, shovqin qoidalariga amal qilamiz.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  },
+  {
+    "word": "notify",
+    "ipa": "/ˈnəʊtɪfaɪ/",
+    "meaning": "rasman xabardor qilmoq",
+    "example": "Please notify the council about the broken streetlight before the moon applies for overtime.",
+    "translation": "Oy ortiqcha ishga ariza bermasidan oldin buzilgan ko‘cha chirog‘i haqida kengashga xabar bering.",
+    "topic": "6-oy • Jamoat tartibi va xavfsizlik"
+  }
+]

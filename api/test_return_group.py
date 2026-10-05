@@ -75,6 +75,7 @@ db.add_all([
 t = models.Teacher(full_name="Sardor Mirfozilov", is_active=1,
                    branch_id=BID)
 db.add(t); db.commit()
+TID = t.id
 g = models.Group(name="Top students", branch_id=BID, teacher_id=t.id,
                  lesson_price=PRICE, standard_lessons_per_month=12,
                  monthly_fee=480_000, lesson_days="")
@@ -186,6 +187,37 @@ r = client.post(f"/api/students/{R}/activate", headers=HM,
                 json={"on": TODAY.isoformat(), "group_id": GID})
 ck("200", r.status_code, 200)
 ck("faol va guruhda", status(R), ("active", GID))
+
+print("=== 7. Guruhsiz faol o'quvchiga guruh qo'shish — oylik yoziladi ===")
+db = SessionLocal()
+sx = models.Student(full_name="Rahmanova Diyora 2", branch_id=BID,
+                    status="active", group_id=None,
+                    enrolled_date=TODAY - timedelta(days=40))
+db.add(sx); db.commit(); X = sx.id
+g2 = models.Group(name="Ikkinchi guruh", branch_id=BID, teacher_id=TID,
+                  lesson_price=PRICE, standard_lessons_per_month=12,
+                  monthly_fee=480_000, lesson_days="")
+db.add(g2); db.commit(); G2 = g2.id
+db.close()
+r = client.post(f"/api/students/{X}/groups", headers=HM,
+                json={"group_id": GID, "joined_date": BACK.isoformat()})
+ck("200", r.status_code, 200)
+ck("hisob qaytdi", bool(r.json().get("charge")), True)
+s = SessionLocal()
+chx = [round(-p.amount) for p in s.query(models.Payment).filter(
+    models.Payment.student_id == X, models.Payment.kind == "charge",
+    models.Payment.period == NOW).all()]
+s.close()
+ck("qo'shilgan kundan oy oxirigacha", chx, [lessons_from(BACK) * PRICE])
+r = client.post(f"/api/students/{X}/groups", headers=HM,
+                json={"group_id": G2})
+ck("ikkinchi guruh — 200", r.status_code, 200)
+ck("ikkinchi guruhga qo'shimcha hisob yo'q", r.json().get("charge"), None)
+s = SessionLocal()
+n_ch = s.query(models.Payment).filter(
+    models.Payment.student_id == X, models.Payment.kind == "charge").count()
+s.close()
+ck("jami bitta hisob", n_ch, 1)
 
 print("\nNATIJA:", "HAMMASI OK" if not fails else f"{len(fails)} XATO: {fails}")
 sys.exit(1 if fails else 0)

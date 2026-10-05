@@ -7443,7 +7443,11 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # belgilanadi (mcf_<oy>_g<id>), qaytarish esa oyiga bir marta.
     refund_key = f"mcr_{period}"
     # Yechilmay qolganlarni tekshirish — kuniga bir marta (2026-09-16)
-    missed_key = f"mcm_{today.isoformat()}"
+    # "mcm2" (2026-10-05): kalit yangilandi — bugun guruh qo'shish
+    # yo'li bilan yechilmay qolganlar (Rahmanova Diyora) deploydan
+    # keyin shu kunning o'zida ushlansin. Idempotent: faqat shu oy
+    # hisobi yo'q faol o'quvchilarga tegadi.
+    missed_key = f"mcm2_{today.isoformat()}"
     # Chegirmasi bor, lekin shu oy hisobi chegirmasiz qolganlar —
     # oyiga bir marta (2026-09-25, Jahongir: "10% chegirma yechib
     # olmayabdi"). Sababi tuzatildi; bu esa ESKI qolib ketganlarini

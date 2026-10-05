@@ -2018,13 +2018,48 @@ def student_add_group(
                       models.StudentGroupLink.active == 1).first())
     if exists:
         raise HTTPException(400, "O'quvchi bu guruhda allaqachon bor")
-    attach_group(db, s, g.id, user, note=(payload or {}).get("note"))
+    today = roles.local_today()
+    joined = today
+    try:
+        if (payload or {}).get("joined_date"):
+            joined = date.fromisoformat(str(payload["joined_date"])[:10])
+    except ValueError:
+        raise HTTPException(400, "Sana noto'g'ri")
+    if joined > today:
+        raise HTTPException(400, "Kelajakdagi sanani tanlab bo'lmaydi")
+    was_groupless = not s.group_id
+    attach_group(db, s, g.id, user, joined=joined,
+                 note=(payload or {}).get("note"))
+    db.flush()
+    # GURUHSIZ FAOL O'QUVCHIGA GURUH QO'SHILSA — OYLIK (2026-10-05,
+    # Jahongir: "shu guruhga keyin qo'shilganda pul yechilmay qolgan
+    # 2 tasi bor"). Rahmanova Diyora: avval guruhsiz "faol" qilindi,
+    # bir daqiqadan keyin shu yerdan guruh qo'shildi — bu yo'l pulga
+    # umuman tegmasdi va shu oy hisobi yozilmay qoldi. Endi bu guruh
+    # o'quvchining ASOSIY (birinchi) guruhi bo'lsa va shu oy hisobi
+    # hali yo'q bo'lsa — qo'shilgan kundan oy oxirigacha yechiladi.
+    # Ikkinchi guruh uchun pul qoidasi hali belgilanmagan — tegilmaydi.
+    charge = None
+    period = f"{today.year:04d}-{today.month:02d}"
+    if (s.status == "active" and was_groupless and s.group_id == g.id
+            and not db.query(models.Payment).filter(
+                models.Payment.student_id == s.id,
+                models.Payment.kind == "charge",
+                models.Payment.period == period).first()):
+        try:
+            import main as _main
+            charge = _main._charge_from_activation(db, s, joined, user)
+        except Exception:
+            charge = None
     db.commit()
     audit.log(db, user, entity="student", action="update",
               entity_id=s.id, entity_label=s.full_name,
               field="Guruh qo'shildi", new_value=g.name,
+              note=(f"{joined.isoformat()} dan {charge['lessons']} dars "
+                    f"uchun {int(charge['amount'])} so'm hisoblandi"
+                    if charge else None),
               branch_id=s.branch_id, commit=True)
-    return {"ok": True, "group": g.name,
+    return {"ok": True, "group": g.name, "charge": charge,
             "active_count": len(student_group_ids(db, s.id))}
 
 

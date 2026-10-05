@@ -8,6 +8,9 @@
     "api/entry.py": {
       "maxDuration": 30,
       "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json}"
+    },
+    "api/**/*.py": {
+      "excludeFiles": "{public/intensive/**,dist/intensive/**,src/data/intensive/**,src/data/intensive-*.json}"
     }
   },
   "crons": [

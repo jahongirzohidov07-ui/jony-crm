@@ -184,5 +184,14 @@ g = rep["groups"][0]
 ck("hisobot: guruh reja 7/28, topshiriqlar", (g["plan"]["next_lesson_no"], g["plan"]["total"], g["assignments"]["sent"] >= 4), (7, 28, True))
 ck("hisobot: kutayotgan tekshiruv 0 (baholangan)", rep["pending_checks"], 0)
 
+# Darajaga mos rubrika (2026-10-05): A1 rubrikasi B2–C1 ishiga qo'llanmasin
+ck("rubrika: 1.0 — A1 (10 ball)", sum(p for _, p in A.rubric_for("writing", "ielts_1_0")), 10)
+ck("rubrika: 3.0 — B1 mezonlari", A.rubric_for("writing", "ielts_3_0")[1][0], "Tuzilma va bog'lovchilar")
+ck("rubrika: 7.0 writing — IELTS 4 mezon × 9", (A.rubric_for("writing", "ielts_7_0")[0][0],
+                                               sum(p for _, p in A.rubric_for("writing", "ielts_7_0"))),
+   ("Task Achievement / Task Response", 36))
+ck("rubrika: 6.0 speaking — IELTS", A.rubric_for("speaking", "ielts_6_0")[0][0], "Fluency & Coherence")
+ck("AI darajasi: 7.0 — C1", A.course_cefr("ielts_7_0"), "C1")
+
 print("\nJAMI XATO:", len(fails), fails)
 sys.exit(1 if fails else 0)

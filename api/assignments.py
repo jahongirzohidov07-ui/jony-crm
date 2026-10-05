@@ -44,6 +44,34 @@ RUBRICS = {
     "speaking": [("Ravonlik va hajm", 3), ("Grammatika to'g'riligi", 3), ("Lug'at (dars so'zlari)", 2), ("Talaffuz", 2)],
     "free": [("To'g'rilik", 5), ("To'liqlik", 3), ("Imlo", 2)],
 }
+# Darajaga mos rubrika (2026-10-05, audit 4.3/4.4: "tizimdagi A1 rubrikasi B2–C1
+# inshosiga ham qo'llanadi"). RUBRICS — A1–A2 (IELTS 1.0–2.0) uchun qoladi.
+B1_RUBRICS = {
+    "writing": [("Savolga to'liq javob va mazmun", 3), ("Tuzilma va bog'lovchilar", 3),
+                ("Lug'at doirasi va aniqligi", 2), ("Grammatika doirasi va aniqligi", 2)],
+    "speaking": [("Ravonlik va izchillik", 3), ("Lug'at doirasi", 2),
+                 ("Grammatika doirasi va aniqligi", 3), ("Talaffuz", 2)],
+}
+IELTS_RUBRICS = {   # rasmiy IELTS mezonlari, har biri band 0–9
+    "writing": [("Task Achievement / Task Response", 9), ("Coherence & Cohesion", 9),
+                ("Lexical Resource", 9), ("Grammatical Range & Accuracy", 9)],
+    "speaking": [("Fluency & Coherence", 9), ("Lexical Resource", 9),
+                 ("Grammatical Range & Accuracy", 9), ("Pronunciation", 9)],
+}
+
+
+def course_cefr(course: str) -> str:
+    from liveplay import LEVELS
+    return next((cefr for c, _, cefr in LEVELS if c == course), "A1")
+
+
+def rubric_for(skill: str, course: str = "") -> list:
+    cefr = course_cefr(course) if course else "A1"
+    if cefr.startswith(("B2", "C")):
+        return IELTS_RUBRICS[skill]
+    if cefr.startswith("B1"):
+        return B1_RUBRICS[skill]
+    return RUBRICS[skill]
 CANNED = [
     "Zo'r! Mavzu grammatikasi to'g'ri ishlatilgan 👏",
     "Yaxshi, lekin 3-shaxsda -s qo'shishni unutma (he goes).",
@@ -209,12 +237,12 @@ def build_from_plan(L: dict, part: str, course: Optional[str] = None) -> Optiona
         if "og'zaki" in typ or "speaking" in typ or "ovozli" in typ:
             return {"kind": "speaking", "skill": "speaking", "title": f"{no}-dars — {ex['title']}",
                     "questions": [{"kind": "audio", "prompt": ex.get("instr") or ex["title"], "answer": ""}],
-                    "rubric": RUBRICS["speaking"]}
+                    "rubric": rubric_for("speaking", course)}
         if "yozma" in typ or "ijodiy" in typ or "writing" in typ or ("gap tuzish" in typ and not ex.get("items")):
             return {"kind": "writing", "skill": "writing", "title": f"{no}-dars — {ex['title']}",
                     "questions": [{"kind": "text", "prompt": ex.get("instr") or ex["title"],
                                    "answer": ex.get("answers") if isinstance(ex.get("answers"), str) else ""}],
-                    "rubric": RUBRICS["writing"]}
+                    "rubric": rubric_for("writing", course)}
         qs = _ex_to_questions(ex)
         auto = all(q["kind"] in AUTO_KINDS for q in qs)
         return {"kind": "homework" if auto else "free", "skill": "grammar",
@@ -543,12 +571,17 @@ def ai_review(sid: int, db: Session = Depends(get_db), user=Depends(require_role
         topic, core = "", ""
     rub = json.loads(a.rubric) if a.rubric else RUBRICS["free"]
     review = None
+    # Daraja kursdan (avval har ish "A1-level" deb tekshirilardi — B2–C1 insho ham)
+    cefr = course_cefr(a.course or "")
+    ielts = any(name in ("Task Achievement / Task Response", "Fluency & Coherence") for name, _ in rub)
     try:
         from student_app import _ai_reply
-        sysmsg = ("You are an English teacher at an Uzbek language school. Check an A1-level student's work. "
+        sysmsg = (f"You are an English teacher at an Uzbek language school. Check a {cefr}-level student's work. "
                   "Return ONLY JSON: {\"score\": number, \"max\": number, "
                   "\"errors\": [{\"wrong\": str, \"right\": str, \"why_uz\": str}], \"comment_uz\": str}. "
                   "Score by rubric criteria (name, points): " + json.dumps(rub, ensure_ascii=False)
+                  + (". Give each criterion an IELTS band 0-9 (public band descriptors; half bands allowed); "
+                     "score = sum of the four bands" if ielts else "")
                   + f". Target grammar: {topic}. Lesson vocabulary: {core}. Explanations in Uzbek (Latin).")
         raw = _ai_reply(sysmsg, [{"role": "user", "text": f"Task: {a.title}\nStudent text:\n{text[:3000]}"}],
                         max_tokens=700)

@@ -1,0 +1,4502 @@
+[
+  {
+    "id": 1,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "I",
+    "ipa": "/aɪ/",
+    "meaning": "men",
+    "example": "I am a potato today.",
+    "translation": "Men bugun kartoshkaman."
+  },
+  {
+    "id": 2,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "you",
+    "ipa": "/juː/",
+    "meaning": "sen; siz",
+    "example": "You are a very polite monster.",
+    "translation": "Siz juda odobli maxluqsiz."
+  },
+  {
+    "id": 3,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "he",
+    "ipa": "/hiː/",
+    "meaning": "u (erkak)",
+    "example": "He is a robot in pyjamas.",
+    "translation": "U pijama kiygan robot."
+  },
+  {
+    "id": 4,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "she",
+    "ipa": "/ʃiː/",
+    "meaning": "u (ayol)",
+    "example": "She is the queen of bananas.",
+    "translation": "U bananlar malikasi."
+  },
+  {
+    "id": 5,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "it",
+    "ipa": "/ɪt/",
+    "meaning": "u; bu (narsa yoki hayvon)",
+    "example": "It is a tiny dragon.",
+    "translation": "Bu mitti ajdarho."
+  },
+  {
+    "id": 6,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "we",
+    "ipa": "/wiː/",
+    "meaning": "biz",
+    "example": "We are spies in a cake shop.",
+    "translation": "Biz tort do‘konidagi josuslarmiz."
+  },
+  {
+    "id": 7,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "they",
+    "ipa": "/ðeɪ/",
+    "meaning": "ular",
+    "example": "They are cats, not teachers.",
+    "translation": "Ular o‘qituvchi emas, mushuk."
+  },
+  {
+    "id": 8,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "my",
+    "ipa": "/maɪ/",
+    "meaning": "mening",
+    "example": "My best friend is a robot.",
+    "translation": "Eng yaqin do‘stim robot."
+  },
+  {
+    "id": 9,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "your",
+    "ipa": "/jɔː/",
+    "meaning": "sening; sizning",
+    "example": "Your hat is a pizza!",
+    "translation": "Bosh kiyimingiz pitsa-ku!"
+  },
+  {
+    "id": 10,
+    "topic": "01 • Olmoshlar va egalik",
+    "word": "our",
+    "ipa": "/aʊə/",
+    "meaning": "bizning",
+    "example": "Our classroom is on the moon.",
+    "translation": "Sinfxonamiz oyda."
+  },
+  {
+    "id": 11,
+    "topic": "02 • Odamlar",
+    "word": "student",
+    "ipa": "/ˈstjuːdənt/",
+    "meaning": "o‘quvchi; talaba",
+    "example": "The new student is a penguin.",
+    "translation": "Yangi o‘quvchi pingvin."
+  },
+  {
+    "id": 12,
+    "topic": "02 • Odamlar",
+    "word": "teacher",
+    "ipa": "/ˈtiːtʃə/",
+    "meaning": "o‘qituvchi",
+    "example": "Our teacher is a friendly alien.",
+    "translation": "Ustozimiz do‘stona o‘zga sayyoralik."
+  },
+  {
+    "id": 13,
+    "topic": "02 • Odamlar",
+    "word": "man",
+    "ipa": "/mæn/",
+    "meaning": "erkak",
+    "example": "The man is in a giant teacup.",
+    "translation": "Erkak ulkan choy piyolasi ichida."
+  },
+  {
+    "id": 14,
+    "topic": "02 • Odamlar",
+    "word": "woman",
+    "ipa": "/ˈwʊmən/",
+    "meaning": "ayol",
+    "example": "The woman is on a flying sofa.",
+    "translation": "Ayol uchadigan divanda."
+  },
+  {
+    "id": 15,
+    "topic": "02 • Odamlar",
+    "word": "boy",
+    "ipa": "/bɔɪ/",
+    "meaning": "o‘g‘il bola",
+    "example": "The boy is a sandwich detective.",
+    "translation": "Bola sendvichlar izquvari."
+  },
+  {
+    "id": 16,
+    "topic": "02 • Odamlar",
+    "word": "girl",
+    "ipa": "/ɡɜːl/",
+    "meaning": "qiz bola",
+    "example": "The girl is the boss of ten robots.",
+    "translation": "Qiz o‘nta robotning boshlig‘i."
+  },
+  {
+    "id": 17,
+    "topic": "02 • Odamlar",
+    "word": "child",
+    "ipa": "/tʃaɪld/",
+    "meaning": "bola; farzand",
+    "example": "The child is the king of this sofa.",
+    "translation": "Bola shu divanning qiroli."
+  },
+  {
+    "id": 18,
+    "topic": "02 • Odamlar",
+    "word": "friend",
+    "ipa": "/frend/",
+    "meaning": "do‘st",
+    "example": "My friend is a purple dinosaur.",
+    "translation": "Do‘stim binafsharang dinozavr."
+  },
+  {
+    "id": 19,
+    "topic": "02 • Odamlar",
+    "word": "person",
+    "ipa": "/ˈpɜːsən/",
+    "meaning": "odam; shaxs",
+    "example": "One person is inside the cake.",
+    "translation": "Bir odam tortning ichida."
+  },
+  {
+    "id": 20,
+    "topic": "02 • Odamlar",
+    "word": "neighbour",
+    "ipa": "/ˈneɪbə/",
+    "meaning": "qo‘shni",
+    "example": "My neighbour is a noisy wizard.",
+    "translation": "Qo‘shnim shovqinchi sehrgar."
+  },
+  {
+    "id": 21,
+    "topic": "03 • Oila",
+    "word": "mother",
+    "ipa": "/ˈmʌðə/",
+    "meaning": "ona",
+    "example": "My mother is a superhero in slippers.",
+    "translation": "Onam shippak kiygan superqahramon."
+  },
+  {
+    "id": 22,
+    "topic": "03 • Oila",
+    "word": "father",
+    "ipa": "/ˈfɑːðə/",
+    "meaning": "ota",
+    "example": "My father is a pirate today.",
+    "translation": "Otam bugun qaroqchi."
+  },
+  {
+    "id": 23,
+    "topic": "03 • Oila",
+    "word": "sister",
+    "ipa": "/ˈsɪstə/",
+    "meaning": "opa; singil",
+    "example": "My sister is the queen of this room.",
+    "translation": "Singlim shu xonaning malikasi."
+  },
+  {
+    "id": 24,
+    "topic": "03 • Oila",
+    "word": "brother",
+    "ipa": "/ˈbrʌðə/",
+    "meaning": "aka; uka",
+    "example": "My brother is under a mountain of socks.",
+    "translation": "Ukam bir tog‘ paypoqning tagida."
+  },
+  {
+    "id": 25,
+    "topic": "03 • Oila",
+    "word": "parent",
+    "ipa": "/ˈpeərənt/",
+    "meaning": "ota yoki ona",
+    "example": "One parent is in a dinosaur costume.",
+    "translation": "Bir ota-ona vakili dinozavr kiyimida."
+  },
+  {
+    "id": 26,
+    "topic": "03 • Oila",
+    "word": "son",
+    "ipa": "/sʌn/",
+    "meaning": "o‘g‘il farzand",
+    "example": "Their son is a tiny football star.",
+    "translation": "Ularning o‘g‘li mitti futbol yulduzi."
+  },
+  {
+    "id": 27,
+    "topic": "03 • Oila",
+    "word": "daughter",
+    "ipa": "/ˈdɔːtə/",
+    "meaning": "qiz farzand",
+    "example": "Their daughter is a cake detective.",
+    "translation": "Ularning qizi tortlar izquvari."
+  },
+  {
+    "id": 28,
+    "topic": "03 • Oila",
+    "word": "husband",
+    "ipa": "/ˈhʌzbənd/",
+    "meaning": "er",
+    "example": "Her husband is a terrible robot dancer.",
+    "translation": "Uning eri robotcha raqsni juda yomon tushadi."
+  },
+  {
+    "id": 29,
+    "topic": "03 • Oila",
+    "word": "wife",
+    "ipa": "/waɪf/",
+    "meaning": "xotin; rafiqa",
+    "example": "His wife is the champion of pillow fights.",
+    "translation": "Uning rafiqasi yostiq janglari chempioni."
+  },
+  {
+    "id": 30,
+    "topic": "03 • Oila",
+    "word": "baby",
+    "ipa": "/ˈbeɪbi/",
+    "meaning": "chaqaloq",
+    "example": "The baby is our new manager.",
+    "translation": "Chaqaloq bizning yangi menejerimiz."
+  },
+  {
+    "id": 31,
+    "topic": "04 • Kasblar",
+    "word": "doctor",
+    "ipa": "/ˈdɒktə/",
+    "meaning": "shifokor",
+    "example": "The doctor is inside a giant shoe.",
+    "translation": "Shifokor ulkan tuflining ichida."
+  },
+  {
+    "id": 32,
+    "topic": "04 • Kasblar",
+    "word": "nurse",
+    "ipa": "/nɜːs/",
+    "meaning": "hamshira",
+    "example": "The nurse is a robot with pink wheels.",
+    "translation": "Hamshira pushti g‘ildirakli robot."
+  },
+  {
+    "id": 33,
+    "topic": "04 • Kasblar",
+    "word": "driver",
+    "ipa": "/ˈdraɪvə/",
+    "meaning": "haydovchi",
+    "example": "Our driver is a duck in a hat.",
+    "translation": "Haydovchimiz shlyapa kiygan o‘rdak."
+  },
+  {
+    "id": 34,
+    "topic": "04 • Kasblar",
+    "word": "farmer",
+    "ipa": "/ˈfɑːmə/",
+    "meaning": "fermer; dehqon",
+    "example": "The farmer is famous for square carrots.",
+    "translation": "Fermer to‘rtburchak sabzilari bilan mashhur."
+  },
+  {
+    "id": 35,
+    "topic": "04 • Kasblar",
+    "word": "cook",
+    "ipa": "/kʊk/",
+    "meaning": "oshpaz",
+    "example": "The cook is afraid of spoons.",
+    "translation": "Oshpaz qoshiqlardan qo‘rqadi."
+  },
+  {
+    "id": 36,
+    "topic": "04 • Kasblar",
+    "word": "dentist",
+    "ipa": "/ˈdentɪst/",
+    "meaning": "tish shifokori",
+    "example": "The dentist is a shark with glasses.",
+    "translation": "Tish shifokori ko‘zoynakli akula."
+  },
+  {
+    "id": 37,
+    "topic": "04 • Kasblar",
+    "word": "engineer",
+    "ipa": "/ˌendʒɪˈnɪə/",
+    "meaning": "muhandis",
+    "example": "The engineer is in a banana-shaped car.",
+    "translation": "Muhandis banan shaklidagi mashinada."
+  },
+  {
+    "id": 38,
+    "topic": "04 • Kasblar",
+    "word": "artist",
+    "ipa": "/ˈɑːtɪst/",
+    "meaning": "rassom; san’atkor",
+    "example": "The artist is covered in blue paint.",
+    "translation": "Rassomning ust-boshi ko‘k bo‘yoq."
+  },
+  {
+    "id": 39,
+    "topic": "04 • Kasblar",
+    "word": "worker",
+    "ipa": "/ˈwɜːkə/",
+    "meaning": "ishchi; xodim",
+    "example": "The worker is a robot on roller skates.",
+    "translation": "Ishchi rolik kiygan robot."
+  },
+  {
+    "id": 40,
+    "topic": "04 • Kasblar",
+    "word": "manager",
+    "ipa": "/ˈmænɪdʒə/",
+    "meaning": "menejer; boshqaruvchi",
+    "example": "The manager is five years old.",
+    "translation": "Menejer besh yoshda."
+  },
+  {
+    "id": 41,
+    "topic": "05 • Holat va hislar",
+    "word": "happy",
+    "ipa": "/ˈhæpi/",
+    "meaning": "xursand; baxtli",
+    "example": "The potato is happy in its new hat.",
+    "translation": "Kartoshka yangi shlyapasidan xursand."
+  },
+  {
+    "id": 42,
+    "topic": "05 • Holat va hislar",
+    "word": "sad",
+    "ipa": "/sæd/",
+    "meaning": "xafa; g‘amgin",
+    "example": "My robot is sad without Wi-Fi.",
+    "translation": "Robotim Wi-Fisiz xafa."
+  },
+  {
+    "id": 43,
+    "topic": "05 • Holat va hislar",
+    "word": "tired",
+    "ipa": "/taɪəd/",
+    "meaning": "charchagan",
+    "example": "The superhero is tired after one push-up.",
+    "translation": "Superqahramon bir marta otjimaniyadan charchadi."
+  },
+  {
+    "id": 44,
+    "topic": "05 • Holat va hislar",
+    "word": "hungry",
+    "ipa": "/ˈhʌŋɡri/",
+    "meaning": "qorni och",
+    "example": "I am hungry, but my sandwich is missing.",
+    "translation": "Qornim och, lekin sendvichim yo‘qolgan."
+  },
+  {
+    "id": 45,
+    "topic": "05 • Holat va hislar",
+    "word": "thirsty",
+    "ipa": "/ˈθɜːsti/",
+    "meaning": "chanqagan",
+    "example": "The snowman is thirsty.",
+    "translation": "Qorbobo chanqagan."
+  },
+  {
+    "id": 46,
+    "topic": "05 • Holat va hislar",
+    "word": "ready",
+    "ipa": "/ˈredi/",
+    "meaning": "tayyor",
+    "example": "I am ready for the pillow battle.",
+    "translation": "Men yostiq jangiga tayyorman."
+  },
+  {
+    "id": 47,
+    "topic": "05 • Holat va hislar",
+    "word": "busy",
+    "ipa": "/ˈbɪzi/",
+    "meaning": "band",
+    "example": "My cat is busy in a meeting.",
+    "translation": "Mushugim yig‘ilishda band."
+  },
+  {
+    "id": 48,
+    "topic": "05 • Holat va hislar",
+    "word": "ill",
+    "ipa": "/ɪl/",
+    "meaning": "kasal",
+    "example": "The dragon is ill; its fire is pink.",
+    "translation": "Ajdarho kasal; olovi pushti."
+  },
+  {
+    "id": 49,
+    "topic": "05 • Holat va hislar",
+    "word": "angry",
+    "ipa": "/ˈæŋɡri/",
+    "meaning": "jahli chiqqan",
+    "example": "The angry banana is on my desk.",
+    "translation": "Jahldor banan yozuv stolimda."
+  },
+  {
+    "id": 50,
+    "topic": "05 • Holat va hislar",
+    "word": "afraid",
+    "ipa": "/əˈfreɪd/",
+    "meaning": "qo‘rqqan",
+    "example": "The lion is afraid of a tiny mouse.",
+    "translation": "Arslon mitti sichqondan qo‘rqadi."
+  },
+  {
+    "id": 51,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "good",
+    "ipa": "/ɡʊd/",
+    "meaning": "yaxshi",
+    "example": "My dog is a good dance teacher.",
+    "translation": "Itim yaxshi raqs o‘qituvchisi."
+  },
+  {
+    "id": 52,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "bad",
+    "ipa": "/bæd/",
+    "meaning": "yomon",
+    "example": "Soup in your pocket is a bad idea.",
+    "translation": "Cho‘ntakdagi sho‘rva — yomon fikr."
+  },
+  {
+    "id": 53,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "big",
+    "ipa": "/bɪɡ/",
+    "meaning": "katta",
+    "example": "This pizza is too big for the door.",
+    "translation": "Bu pitsa eshikdan sig‘maydigan darajada katta."
+  },
+  {
+    "id": 54,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "small",
+    "ipa": "/smɔːl/",
+    "meaning": "kichik",
+    "example": "My dragon is small enough for a cup.",
+    "translation": "Ajdarhom piyolaga sig‘adigan darajada kichik."
+  },
+  {
+    "id": 55,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "new",
+    "ipa": "/njuː/",
+    "meaning": "yangi",
+    "example": "My new neighbour is a dinosaur.",
+    "translation": "Yangi qo‘shnim dinozavr."
+  },
+  {
+    "id": 56,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "old",
+    "ipa": "/əʊld/",
+    "meaning": "eski; qari",
+    "example": "This old phone is bigger than my shoe.",
+    "translation": "Bu eski telefon tuflimdan katta."
+  },
+  {
+    "id": 57,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "young",
+    "ipa": "/jʌŋ/",
+    "meaning": "yosh",
+    "example": "The young wizard is afraid of rabbits.",
+    "translation": "Yosh sehrgar quyonlardan qo‘rqadi."
+  },
+  {
+    "id": 58,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "tall",
+    "ipa": "/tɔːl/",
+    "meaning": "bo‘yi baland",
+    "example": "The tall robot is stuck in the doorway.",
+    "translation": "Baland robot eshikda tiqilib qolgan."
+  },
+  {
+    "id": 59,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "kind",
+    "ipa": "/kaɪnd/",
+    "meaning": "mehribon",
+    "example": "The kind monster is our babysitter.",
+    "translation": "Mehribon maxluq bizning enamiz."
+  },
+  {
+    "id": 60,
+    "topic": "06 • Asosiy sifatlar",
+    "word": "friendly",
+    "ipa": "/ˈfrendli/",
+    "meaning": "xushmuomala; do‘stona",
+    "example": "This friendly shark is a vegetarian.",
+    "translation": "Bu do‘stona akula vegetarian."
+  },
+  {
+    "id": 61,
+    "topic": "07 • Joylar",
+    "word": "home",
+    "ipa": "/həʊm/",
+    "meaning": "uy; yashash joyi",
+    "example": "My home is a giant mushroom.",
+    "translation": "Uyim ulkan qo‘ziqorin."
+  },
+  {
+    "id": 62,
+    "topic": "07 • Joylar",
+    "word": "house",
+    "ipa": "/haʊs/",
+    "meaning": "uy (bino)",
+    "example": "Our house is upside down.",
+    "translation": "Uyimiz teskari turibdi."
+  },
+  {
+    "id": 63,
+    "topic": "07 • Joylar",
+    "word": "school",
+    "ipa": "/skuːl/",
+    "meaning": "maktab",
+    "example": "My school is inside a spaceship.",
+    "translation": "Maktabim kosmik kema ichida."
+  },
+  {
+    "id": 64,
+    "topic": "07 • Joylar",
+    "word": "classroom",
+    "ipa": "/ˈklɑːsruːm/",
+    "meaning": "sinfxona",
+    "example": "There is a giraffe in our classroom.",
+    "translation": "Sinfxonamizda jirafa bor."
+  },
+  {
+    "id": 65,
+    "topic": "07 • Joylar",
+    "word": "office",
+    "ipa": "/ˈɒfɪs/",
+    "meaning": "ofis; idora",
+    "example": "My office is a tree house.",
+    "translation": "Ofisim daraxt ustidagi uycha."
+  },
+  {
+    "id": 66,
+    "topic": "07 • Joylar",
+    "word": "shop",
+    "ipa": "/ʃɒp/",
+    "meaning": "do‘kon",
+    "example": "This shop is full of dancing shoes.",
+    "translation": "Bu do‘kon raqsga tushadigan tuflilarga to‘la."
+  },
+  {
+    "id": 67,
+    "topic": "07 • Joylar",
+    "word": "park",
+    "ipa": "/pɑːk/",
+    "meaning": "istirohat bog‘i",
+    "example": "The park is full of pink sheep.",
+    "translation": "Bog‘ pushti qo‘ylarga to‘la."
+  },
+  {
+    "id": 68,
+    "topic": "07 • Joylar",
+    "word": "street",
+    "ipa": "/striːt/",
+    "meaning": "ko‘cha",
+    "example": "Our street is made of chocolate.",
+    "translation": "Ko‘chamiz shokoladdan yasalgan."
+  },
+  {
+    "id": 69,
+    "topic": "07 • Joylar",
+    "word": "city",
+    "ipa": "/ˈsɪti/",
+    "meaning": "shahar",
+    "example": "This city is inside a snow globe.",
+    "translation": "Bu shahar qorli shisha sharning ichida."
+  },
+  {
+    "id": 70,
+    "topic": "07 • Joylar",
+    "word": "country",
+    "ipa": "/ˈkʌntri/",
+    "meaning": "mamlakat",
+    "example": "In my dream, my country is on Mars.",
+    "translation": "Tushimda mamlakatim Marsda."
+  },
+  {
+    "id": 71,
+    "topic": "08 • Sinf buyumlari",
+    "word": "book",
+    "ipa": "/bʊk/",
+    "meaning": "kitob",
+    "example": "My book is a pillow after ten pages.",
+    "translation": "O‘n sahifadan keyin kitobim yostiqqa aylanadi."
+  },
+  {
+    "id": 72,
+    "topic": "08 • Sinf buyumlari",
+    "word": "notebook",
+    "ipa": "/ˈnəʊtbʊk/",
+    "meaning": "daftar",
+    "example": "My notebook is full of secret pizza plans.",
+    "translation": "Daftarim maxfiy pitsa rejalariga to‘la."
+  },
+  {
+    "id": 73,
+    "topic": "08 • Sinf buyumlari",
+    "word": "pen",
+    "ipa": "/pen/",
+    "meaning": "ruchka",
+    "example": "My pen is the size of a banana.",
+    "translation": "Ruchkam bananchalik katta."
+  },
+  {
+    "id": 74,
+    "topic": "08 • Sinf buyumlari",
+    "word": "pencil",
+    "ipa": "/ˈpensəl/",
+    "meaning": "qalam",
+    "example": "This pencil is taller than my brother.",
+    "translation": "Bu qalam ukamdan baland."
+  },
+  {
+    "id": 75,
+    "topic": "08 • Sinf buyumlari",
+    "word": "bag",
+    "ipa": "/bæɡ/",
+    "meaning": "sumka",
+    "example": "My bag is full of rubber ducks.",
+    "translation": "Sumkam rezina o‘rdaklarga to‘la."
+  },
+  {
+    "id": 76,
+    "topic": "08 • Sinf buyumlari",
+    "word": "desk",
+    "ipa": "/desk/",
+    "meaning": "parta; yozuv stoli",
+    "example": "My desk is a secret spaceship.",
+    "translation": "Yozuv stolim maxfiy kosmik kema."
+  },
+  {
+    "id": 77,
+    "topic": "08 • Sinf buyumlari",
+    "word": "chair",
+    "ipa": "/tʃeə/",
+    "meaning": "stul",
+    "example": "This chair is too small for an ant.",
+    "translation": "Bu stul chumoli uchun ham juda kichik."
+  },
+  {
+    "id": 78,
+    "topic": "08 • Sinf buyumlari",
+    "word": "table",
+    "ipa": "/ˈteɪbəl/",
+    "meaning": "stol",
+    "example": "There is a dragon under the table.",
+    "translation": "Stol tagida ajdarho bor."
+  },
+  {
+    "id": 79,
+    "topic": "08 • Sinf buyumlari",
+    "word": "door",
+    "ipa": "/dɔː/",
+    "meaning": "eshik",
+    "example": "The door is shaped like a banana.",
+    "translation": "Eshik banan shaklida."
+  },
+  {
+    "id": 80,
+    "topic": "08 • Sinf buyumlari",
+    "word": "window",
+    "ipa": "/ˈwɪndəʊ/",
+    "meaning": "deraza",
+    "example": "A giant eye is outside my window.",
+    "translation": "Derazamning narigi tomonida ulkan ko‘z bor."
+  },
+  {
+    "id": 81,
+    "topic": "09 • Ranglar",
+    "word": "black",
+    "ipa": "/blæk/",
+    "meaning": "qora",
+    "example": "The snowman is black with soot.",
+    "translation": "Qorbobo qurumdan qorayib ketgan."
+  },
+  {
+    "id": 82,
+    "topic": "09 • Ranglar",
+    "word": "white",
+    "ipa": "/waɪt/",
+    "meaning": "oq",
+    "example": "My white shoes are chocolate brown now.",
+    "translation": "Oq tuflilarim endi shokolad rangida."
+  },
+  {
+    "id": 83,
+    "topic": "09 • Ranglar",
+    "word": "red",
+    "ipa": "/red/",
+    "meaning": "qizil",
+    "example": "The moon is red in my painting.",
+    "translation": "Rasmimda oy qizil."
+  },
+  {
+    "id": 84,
+    "topic": "09 • Ranglar",
+    "word": "blue",
+    "ipa": "/bluː/",
+    "meaning": "ko‘k",
+    "example": "My tongue is blue after that sweet.",
+    "translation": "O‘sha konfetdan keyin tilim ko‘k."
+  },
+  {
+    "id": 85,
+    "topic": "09 • Ranglar",
+    "word": "green",
+    "ipa": "/ɡriːn/",
+    "meaning": "yashil",
+    "example": "The green alien is my new classmate.",
+    "translation": "Yashil o‘zga sayyoralik yangi sinfdoshim."
+  },
+  {
+    "id": 86,
+    "topic": "09 • Ranglar",
+    "word": "yellow",
+    "ipa": "/ˈjeləʊ/",
+    "meaning": "sariq",
+    "example": "My yellow hat looks like a lemon.",
+    "translation": "Sariq shlyapam limonga o‘xshaydi."
+  },
+  {
+    "id": 87,
+    "topic": "09 • Ranglar",
+    "word": "orange",
+    "ipa": "/ˈɒrɪndʒ/",
+    "meaning": "to‘q sariq",
+    "example": "The orange snowman smells of carrots.",
+    "translation": "To‘q sariq qorbobodan sabzi hidi keladi."
+  },
+  {
+    "id": 88,
+    "topic": "09 • Ranglar",
+    "word": "pink",
+    "ipa": "/pɪŋk/",
+    "meaning": "pushti",
+    "example": "The pink dragon is in the bathroom.",
+    "translation": "Pushti ajdarho yuvinish xonasida."
+  },
+  {
+    "id": 89,
+    "topic": "09 • Ranglar",
+    "word": "brown",
+    "ipa": "/braʊn/",
+    "meaning": "jigarrang",
+    "example": "My brown bear is afraid of honey.",
+    "translation": "Jigarrang ayig‘im asaldan qo‘rqadi."
+  },
+  {
+    "id": 90,
+    "topic": "09 • Ranglar",
+    "word": "grey",
+    "ipa": "/ɡreɪ/",
+    "meaning": "kulrang",
+    "example": "The grey elephant is wearing pink socks.",
+    "translation": "Kulrang fil pushti paypoq kiygan."
+  },
+  {
+    "id": 91,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "listen",
+    "ipa": "/ˈlɪsən/",
+    "meaning": "tinglamoq",
+    "example": "Listen to the singing fridge.",
+    "translation": "Qo‘shiq aytayotgan muzlatkichni tinglang."
+  },
+  {
+    "id": 92,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "look",
+    "ipa": "/lʊk/",
+    "meaning": "qaramoq",
+    "example": "Look at the cat in my shoe!",
+    "translation": "Tuflimdagi mushukka qarang!"
+  },
+  {
+    "id": 93,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "read",
+    "ipa": "/riːd/",
+    "meaning": "o‘qimoq",
+    "example": "Read this story to your sandwich.",
+    "translation": "Bu hikoyani sendvichingizga o‘qib bering."
+  },
+  {
+    "id": 94,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "write",
+    "ipa": "/raɪt/",
+    "meaning": "yozmoq",
+    "example": "Write a birthday card for your robot.",
+    "translation": "Robotingizga tug‘ilgan kun tabrigi yozing."
+  },
+  {
+    "id": 95,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "say",
+    "ipa": "/seɪ/",
+    "meaning": "aytmoq",
+    "example": "Say hello to the moon.",
+    "translation": "Oyga salom ayting."
+  },
+  {
+    "id": 96,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "repeat",
+    "ipa": "/rɪˈpiːt/",
+    "meaning": "takrorlamoq",
+    "example": "Repeat the password: purple potato.",
+    "translation": "Parolni takrorlang: binafsharang kartoshka."
+  },
+  {
+    "id": 97,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "open",
+    "ipa": "/ˈəʊpən/",
+    "meaning": "ochmoq",
+    "example": "Open your bag; the dragon needs air.",
+    "translation": "Sumkangizni oching; ajdarhoga havo kerak."
+  },
+  {
+    "id": 98,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "close",
+    "ipa": "/kləʊz/",
+    "meaning": "yopmoq",
+    "example": "Close the door; the bananas are escaping!",
+    "translation": "Eshikni yoping; bananlar qochyapti!"
+  },
+  {
+    "id": 99,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "ask",
+    "ipa": "/ɑːsk/",
+    "meaning": "so‘ramoq",
+    "example": "Ask the cat for the Wi-Fi password.",
+    "translation": "Mushukdan Wi-Fi parolini so‘rang."
+  },
+  {
+    "id": 100,
+    "topic": "10 • Darsdagi buyruqlar",
+    "word": "answer",
+    "ipa": "/ˈɑːnsə/",
+    "meaning": "javob bermoq",
+    "example": "Answer the phone; it is your dinosaur.",
+    "translation": "Telefonga javob bering; dinozavringiz qo‘ng‘iroq qilyapti."
+  },
+  {
+    "id": 101,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "zero",
+    "ipa": "/ˈzɪərəʊ/",
+    "meaning": "nol",
+    "example": "My robot has zero dance skills.",
+    "translation": "Robotimning raqs mahorati nol."
+  },
+  {
+    "id": 102,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "one",
+    "ipa": "/wʌn/",
+    "meaning": "bir",
+    "example": "One sock is on holiday again.",
+    "translation": "Bir poy paypoq yana ta’tilga ketgan."
+  },
+  {
+    "id": 103,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "two",
+    "ipa": "/tuː/",
+    "meaning": "ikki",
+    "example": "My cat has two secret phones.",
+    "translation": "Mushugimning ikkita yashirin telefoni bor."
+  },
+  {
+    "id": 104,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "three",
+    "ipa": "/θriː/",
+    "meaning": "uch",
+    "example": "Three frogs are in the lift.",
+    "translation": "Liftda uchta qurbaqa bor."
+  },
+  {
+    "id": 105,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "four",
+    "ipa": "/fɔː/",
+    "meaning": "to‘rt",
+    "example": "Four ducks are waiting for a taxi.",
+    "translation": "To‘rtta o‘rdak taksi kutyapti."
+  },
+  {
+    "id": 106,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "five",
+    "ipa": "/faɪv/",
+    "meaning": "besh",
+    "example": "I need five pillows for my castle.",
+    "translation": "Qal’am uchun beshta yostiq kerak."
+  },
+  {
+    "id": 107,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "six",
+    "ipa": "/sɪks/",
+    "meaning": "olti",
+    "example": "Six mice live in my piano.",
+    "translation": "Pianinomda oltita sichqon yashaydi."
+  },
+  {
+    "id": 108,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "seven",
+    "ipa": "/ˈsevən/",
+    "meaning": "yetti",
+    "example": "Seven robots want one small pizza.",
+    "translation": "Yettita robot bitta kichik pitsa xohlaydi."
+  },
+  {
+    "id": 109,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "eight",
+    "ipa": "/eɪt/",
+    "meaning": "sakkiz",
+    "example": "Eight socks are hiding under my bed.",
+    "translation": "Sakkizta paypoq karavotim tagida yashiringan."
+  },
+  {
+    "id": 110,
+    "topic": "11 • Sonlar: 0–9",
+    "word": "nine",
+    "ipa": "/naɪn/",
+    "meaning": "to‘qqiz",
+    "example": "Nine tiny aliens are in my lunchbox.",
+    "translation": "Ovqat qutimda to‘qqizta mitti o‘zga sayyoralik bor."
+  },
+  {
+    "id": 111,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "ten",
+    "ipa": "/ten/",
+    "meaning": "o‘n",
+    "example": "My dog has ten birthday hats.",
+    "translation": "Itimning o‘nta bayram qalpog‘i bor."
+  },
+  {
+    "id": 112,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "eleven",
+    "ipa": "/ɪˈlevən/",
+    "meaning": "o‘n bir",
+    "example": "Eleven penguins are in the queue.",
+    "translation": "Navbatda o‘n bitta pingvin turibdi."
+  },
+  {
+    "id": 113,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "twelve",
+    "ipa": "/twelv/",
+    "meaning": "o‘n ikki",
+    "example": "I have twelve spoons and no soup.",
+    "translation": "Menda o‘n ikkita qoshiq bor, sho‘rva esa yo‘q."
+  },
+  {
+    "id": 114,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "thirteen",
+    "ipa": "/ˌθɜːˈtiːn/",
+    "meaning": "o‘n uch",
+    "example": "Thirteen cats share my sofa.",
+    "translation": "Divanimni o‘n uchta mushuk bo‘lishib olgan."
+  },
+  {
+    "id": 115,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "fourteen",
+    "ipa": "/ˌfɔːˈtiːn/",
+    "meaning": "o‘n to‘rt",
+    "example": "My dragon is fourteen today.",
+    "translation": "Ajdarhom bugun o‘n to‘rt yoshga to‘ldi."
+  },
+  {
+    "id": 116,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "fifteen",
+    "ipa": "/ˌfɪfˈtiːn/",
+    "meaning": "o‘n besh",
+    "example": "Fifteen frogs want swimming lessons.",
+    "translation": "O‘n beshta qurbaqa suzishni o‘rganmoqchi."
+  },
+  {
+    "id": 117,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "sixteen",
+    "ipa": "/ˌsɪkˈstiːn/",
+    "meaning": "o‘n olti",
+    "example": "Sixteen shoes are outside the spaceship.",
+    "translation": "Kosmik kema tashqarisida o‘n oltita tufli bor."
+  },
+  {
+    "id": 118,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "seventeen",
+    "ipa": "/ˌsevənˈtiːn/",
+    "meaning": "o‘n yetti",
+    "example": "Seventeen robots are afraid of a mouse.",
+    "translation": "O‘n yettita robot sichqondan qo‘rqadi."
+  },
+  {
+    "id": 119,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "eighteen",
+    "ipa": "/ˌeɪˈtiːn/",
+    "meaning": "o‘n sakkiz",
+    "example": "Eighteen ducks are at the dentist.",
+    "translation": "O‘n sakkizta o‘rdak tish shifokorida."
+  },
+  {
+    "id": 120,
+    "topic": "12 • Sonlar: 10–19",
+    "word": "nineteen",
+    "ipa": "/ˌnaɪnˈtiːn/",
+    "meaning": "o‘n to‘qqiz",
+    "example": "Nineteen pizzas are on my tiny table.",
+    "translation": "Mitti stolim ustida o‘n to‘qqizta pitsa bor."
+  },
+  {
+    "id": 121,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "twenty",
+    "ipa": "/ˈtwenti/",
+    "meaning": "yigirma",
+    "example": "Twenty ants are carrying my biscuit.",
+    "translation": "Yigirmata chumoli pechenyemni ko‘tarib ketyapti."
+  },
+  {
+    "id": 122,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "thirty",
+    "ipa": "/ˈθɜːti/",
+    "meaning": "o‘ttiz",
+    "example": "My robot needs thirty cups of tea.",
+    "translation": "Robotimga o‘ttiz piyola choy kerak."
+  },
+  {
+    "id": 123,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "forty",
+    "ipa": "/ˈfɔːti/",
+    "meaning": "qirq",
+    "example": "Forty balloons are lifting my chair.",
+    "translation": "Qirqta shar stulimni ko‘taryapti."
+  },
+  {
+    "id": 124,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "fifty",
+    "ipa": "/ˈfɪfti/",
+    "meaning": "ellik",
+    "example": "My hat costs fifty bananas.",
+    "translation": "Shlyapam ellikta banan turadi."
+  },
+  {
+    "id": 125,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "sixty",
+    "ipa": "/ˈsɪksti/",
+    "meaning": "oltmish",
+    "example": "Sixty snails are late for the race.",
+    "translation": "Oltmishta shilliqqurt poygaga kechikyapti."
+  },
+  {
+    "id": 126,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "seventy",
+    "ipa": "/ˈsevənti/",
+    "meaning": "yetmish",
+    "example": "My robot grandmother is seventy.",
+    "translation": "Robot buvim yetmish yoshda."
+  },
+  {
+    "id": 127,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "eighty",
+    "ipa": "/ˈeɪti/",
+    "meaning": "sakson",
+    "example": "Eighty ducks are following the teacher.",
+    "translation": "Saksonta o‘rdak ustozga ergashib kelyapti."
+  },
+  {
+    "id": 128,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "ninety",
+    "ipa": "/ˈnaɪnti/",
+    "meaning": "to‘qson",
+    "example": "Ninety socks, but not one pair!",
+    "translation": "To‘qsonta paypoq, lekin bitta ham juft yo‘q!"
+  },
+  {
+    "id": 129,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "hundred",
+    "ipa": "/ˈhʌndrəd/",
+    "meaning": "yuz",
+    "example": "A hundred frogs are in our pool.",
+    "translation": "Hovuzimizda yuzta qurbaqa bor."
+  },
+  {
+    "id": 130,
+    "topic": "13 • O‘nliklar va katta sonlar",
+    "word": "thousand",
+    "ipa": "/ˈθaʊzənd/",
+    "meaning": "ming",
+    "example": "A thousand ants want my cake.",
+    "translation": "Mingta chumoli tortimni xohlaydi."
+  },
+  {
+    "id": 131,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "day",
+    "ipa": "/deɪ/",
+    "meaning": "kun",
+    "example": "My cat sleeps all day and earns nothing.",
+    "translation": "Mushugim kun bo‘yi uxlaydi, pul esa topmaydi."
+  },
+  {
+    "id": 132,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "week",
+    "ipa": "/wiːk/",
+    "meaning": "hafta",
+    "example": "My robot takes a bath once a week.",
+    "translation": "Robotim haftada bir marta cho‘miladi."
+  },
+  {
+    "id": 133,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "month",
+    "ipa": "/mʌnθ/",
+    "meaning": "oy",
+    "example": "This month, my pig is learning ballet.",
+    "translation": "Bu oy cho‘chqacham balet o‘rganyapti."
+  },
+  {
+    "id": 134,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "year",
+    "ipa": "/jɪə/",
+    "meaning": "yil",
+    "example": "My turtle reads one page a year.",
+    "translation": "Toshbaqam yiliga bir sahifa o‘qiydi."
+  },
+  {
+    "id": 135,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "today",
+    "ipa": "/təˈdeɪ/",
+    "meaning": "bugun",
+    "example": "Today, my boss is a banana.",
+    "translation": "Bugun boshlig‘im banan."
+  },
+  {
+    "id": 136,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "tomorrow",
+    "ipa": "/təˈmɒrəʊ/",
+    "meaning": "ertaga",
+    "example": "Tomorrow, the moon is coming for tea.",
+    "translation": "Ertaga oy choy ichgani keladi."
+  },
+  {
+    "id": 137,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "yesterday",
+    "ipa": "/ˈjestədeɪ/",
+    "meaning": "kecha",
+    "example": "Yesterday, my shoes went for a walk.",
+    "translation": "Kecha tuflilarim sayrga chiqdi."
+  },
+  {
+    "id": 138,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "morning",
+    "ipa": "/ˈmɔːnɪŋ/",
+    "meaning": "ertalab; tong",
+    "example": "Every morning, my alarm clock screams.",
+    "translation": "Har tong budilnigim chinqiradi."
+  },
+  {
+    "id": 139,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "afternoon",
+    "ipa": "/ˌɑːftəˈnuːn/",
+    "meaning": "tushdan keyingi payt",
+    "example": "My dragon drinks tea in the afternoon.",
+    "translation": "Ajdarhom tushdan keyin choy ichadi."
+  },
+  {
+    "id": 140,
+    "topic": "14 • Vaqt va kun qismlari",
+    "word": "evening",
+    "ipa": "/ˈiːvnɪŋ/",
+    "meaning": "kechki payt",
+    "example": "Every evening, our sofa eats a coin.",
+    "translation": "Har oqshom divanimiz bitta tanga yutadi."
+  },
+  {
+    "id": 141,
+    "topic": "15 • Hafta va taqvim",
+    "word": "Monday",
+    "ipa": "/ˈmʌndeɪ/",
+    "meaning": "dushanba",
+    "example": "On Monday, my robot refuses to work.",
+    "translation": "Dushanba kuni robotim ishlashdan bosh tortadi."
+  },
+  {
+    "id": 142,
+    "topic": "15 • Hafta va taqvim",
+    "word": "Tuesday",
+    "ipa": "/ˈtjuːzdeɪ/",
+    "meaning": "seshanba",
+    "example": "On Tuesday, the ducks use our pool.",
+    "translation": "Seshanba kuni hovuzimizdan o‘rdaklar foydalanadi."
+  },
+  {
+    "id": 143,
+    "topic": "15 • Hafta va taqvim",
+    "word": "Wednesday",
+    "ipa": "/ˈwenzdeɪ/",
+    "meaning": "chorshanba",
+    "example": "On Wednesday, I teach my cat maths.",
+    "translation": "Chorshanba kuni mushugimga matematika o‘rgataman."
+  },
+  {
+    "id": 144,
+    "topic": "15 • Hafta va taqvim",
+    "word": "Thursday",
+    "ipa": "/ˈθɜːzdeɪ/",
+    "meaning": "payshanba",
+    "example": "Every Thursday, my fridge sings.",
+    "translation": "Har payshanba muzlatkichim qo‘shiq aytadi."
+  },
+  {
+    "id": 145,
+    "topic": "15 • Hafta va taqvim",
+    "word": "Friday",
+    "ipa": "/ˈfraɪdeɪ/",
+    "meaning": "juma",
+    "example": "On Friday, the pencils have a party.",
+    "translation": "Juma kuni qalamlar ziyofat qiladi."
+  },
+  {
+    "id": 146,
+    "topic": "15 • Hafta va taqvim",
+    "word": "Saturday",
+    "ipa": "/ˈsætədeɪ/",
+    "meaning": "shanba",
+    "example": "On Saturday, my dinosaur washes the car.",
+    "translation": "Shanba kuni dinozavrim mashinani yuvadi."
+  },
+  {
+    "id": 147,
+    "topic": "15 • Hafta va taqvim",
+    "word": "Sunday",
+    "ipa": "/ˈsʌndeɪ/",
+    "meaning": "yakshanba",
+    "example": "On Sunday, even my alarm clock rests.",
+    "translation": "Yakshanba kuni hatto budilnigim ham dam oladi."
+  },
+  {
+    "id": 148,
+    "topic": "15 • Hafta va taqvim",
+    "word": "weekend",
+    "ipa": "/ˌwiːkˈend/",
+    "meaning": "hafta oxiri",
+    "example": "My robot spends the weekend in bed.",
+    "translation": "Robotim hafta oxirini yotoqda o‘tkazadi."
+  },
+  {
+    "id": 149,
+    "topic": "15 • Hafta va taqvim",
+    "word": "season",
+    "ipa": "/ˈsiːzən/",
+    "meaning": "fasl",
+    "example": "In every season, my bear wears a scarf.",
+    "translation": "Ayig‘im har faslda sharf taqadi."
+  },
+  {
+    "id": 150,
+    "topic": "15 • Hafta va taqvim",
+    "word": "date",
+    "ipa": "/deɪt/",
+    "meaning": "sana",
+    "example": "My cat's birthday is an important date.",
+    "translation": "Mushugimning tug‘ilgan kuni muhim sana."
+  },
+  {
+    "id": 151,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "family",
+    "ipa": "/ˈfæməli/",
+    "meaning": "oila",
+    "example": "Our family photo includes three robots.",
+    "translation": "Oilaviy suratimizda uchta robot ham bor."
+  },
+  {
+    "id": 152,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "grandfather",
+    "ipa": "/ˈɡrænfɑːðə/",
+    "meaning": "bobo",
+    "example": "My grandfather races turtles.",
+    "translation": "Bobom toshbaqalar bilan poygalashadi."
+  },
+  {
+    "id": 153,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "grandmother",
+    "ipa": "/ˈɡrænmʌðə/",
+    "meaning": "buvi",
+    "example": "My grandmother sends the moon a cake.",
+    "translation": "Buvim oyga tort yuboradi."
+  },
+  {
+    "id": 154,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "uncle",
+    "ipa": "/ˈʌŋkəl/",
+    "meaning": "amaki; tog‘a",
+    "example": "My uncle wears a tie to the beach.",
+    "translation": "Amakim plyajga galstuk taqib boradi."
+  },
+  {
+    "id": 155,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "aunt",
+    "ipa": "/ɑːnt/",
+    "meaning": "amma; xola",
+    "example": "My aunt has a pet dragon.",
+    "translation": "Xolam uyida ajdarho boqadi."
+  },
+  {
+    "id": 156,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "cousin",
+    "ipa": "/ˈkʌzən/",
+    "meaning": "amakivachcha va b.",
+    "example": "My cousin sleeps in a giant slipper.",
+    "translation": "Amakivachcham ulkan shippakda uxlaydi."
+  },
+  {
+    "id": 157,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "name",
+    "ipa": "/neɪm/",
+    "meaning": "ism",
+    "example": "My robot's name is Mr Biscuit.",
+    "translation": "Robotimning ismi Janob Pechenye."
+  },
+  {
+    "id": 158,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "surname",
+    "ipa": "/ˈsɜːneɪm/",
+    "meaning": "familiya",
+    "example": "The alien's surname is Banana.",
+    "translation": "O‘zga sayyoralikning familiyasi Banan."
+  },
+  {
+    "id": 159,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "age",
+    "ipa": "/eɪdʒ/",
+    "meaning": "yosh",
+    "example": "My cat keeps its age a secret.",
+    "translation": "Mushugim yoshini sir tutadi."
+  },
+  {
+    "id": 160,
+    "topic": "16 • Oila va shaxsiy ma’lumotlar",
+    "word": "birthday",
+    "ipa": "/ˈbɜːθdeɪ/",
+    "meaning": "tug‘ilgan kun",
+    "example": "My fridge wants a birthday cake.",
+    "translation": "Muzlatkichim tug‘ilgan kuniga tort xohlaydi."
+  },
+  {
+    "id": 161,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "head",
+    "ipa": "/hed/",
+    "meaning": "bosh",
+    "example": "A pigeon is sitting on my head.",
+    "translation": "Boshimda kaptar o‘tiribdi."
+  },
+  {
+    "id": 162,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "face",
+    "ipa": "/feɪs/",
+    "meaning": "yuz",
+    "example": "There is a pancake on his face.",
+    "translation": "Uning yuzida quymoq bor."
+  },
+  {
+    "id": 163,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "eye",
+    "ipa": "/aɪ/",
+    "meaning": "ko‘z",
+    "example": "My robot has one eye and ten hats.",
+    "translation": "Robotimning bitta ko‘zi va o‘nta shlyapasi bor."
+  },
+  {
+    "id": 164,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "ear",
+    "ipa": "/ɪə/",
+    "meaning": "quloq",
+    "example": "A tiny alien is sleeping in my ear.",
+    "translation": "Qulog‘imda mitti o‘zga sayyoralik uxlayapti."
+  },
+  {
+    "id": 165,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "nose",
+    "ipa": "/nəʊz/",
+    "meaning": "burun",
+    "example": "The snowman's nose is in the soup.",
+    "translation": "Qorboboning burni sho‘rvada."
+  },
+  {
+    "id": 166,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "mouth",
+    "ipa": "/maʊθ/",
+    "meaning": "og‘iz",
+    "example": "The monster's mouth is full of socks.",
+    "translation": "Maxluqning og‘zi paypoqqa to‘la."
+  },
+  {
+    "id": 167,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "hand",
+    "ipa": "/hænd/",
+    "meaning": "qo‘l; kaft",
+    "example": "There is a tiny frog in my hand.",
+    "translation": "Qo‘limda mitti qurbaqa bor."
+  },
+  {
+    "id": 168,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "arm",
+    "ipa": "/ɑːm/",
+    "meaning": "qo‘l (yelka–bilak)",
+    "example": "My robot's left arm is a spoon.",
+    "translation": "Robotimning chap qo‘li qoshiq."
+  },
+  {
+    "id": 169,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "leg",
+    "ipa": "/leɡ/",
+    "meaning": "oyoq",
+    "example": "The pirate has a wooden leg.",
+    "translation": "Qaroqchining yog‘och oyog‘i bor."
+  },
+  {
+    "id": 170,
+    "topic": "17 • Tana a’zolari — 1",
+    "word": "foot",
+    "ipa": "/fʊt/",
+    "meaning": "oyoq panjasi",
+    "example": "My left foot wants a bigger shoe.",
+    "translation": "Chap oyoq panjam kattaroq tufli xohlaydi."
+  },
+  {
+    "id": 171,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "hair",
+    "ipa": "/heə/",
+    "meaning": "soch",
+    "example": "My hair looks like a bird's nest.",
+    "translation": "Sochim qush uyasiga o‘xshaydi."
+  },
+  {
+    "id": 172,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "tooth",
+    "ipa": "/tuːθ/",
+    "meaning": "tish",
+    "example": "The dragon has one pink tooth.",
+    "translation": "Ajdarhoning bitta pushti tishi bor."
+  },
+  {
+    "id": 173,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "neck",
+    "ipa": "/nek/",
+    "meaning": "bo‘yin",
+    "example": "The giraffe wears ten scarves on its neck.",
+    "translation": "Jirafa bo‘yniga o‘nta sharf taqadi."
+  },
+  {
+    "id": 174,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "shoulder",
+    "ipa": "/ˈʃəʊldə/",
+    "meaning": "yelka",
+    "example": "A tiny king is sitting on my shoulder.",
+    "translation": "Yelkamda mitti qirol o‘tiribdi."
+  },
+  {
+    "id": 175,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "back",
+    "ipa": "/bæk/",
+    "meaning": "orqa; bel",
+    "example": "There is a cake on the turtle's back.",
+    "translation": "Toshbaqaning orqasida tort bor."
+  },
+  {
+    "id": 176,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "finger",
+    "ipa": "/ˈfɪŋɡə/",
+    "meaning": "qo‘l barmog‘i",
+    "example": "A tiny hat is on each finger.",
+    "translation": "Har bir barmoqda mitti shlyapa bor."
+  },
+  {
+    "id": 177,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "knee",
+    "ipa": "/niː/",
+    "meaning": "tizza",
+    "example": "My robot has a button on its knee.",
+    "translation": "Robotimning tizzasida tugma bor."
+  },
+  {
+    "id": 178,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "stomach",
+    "ipa": "/ˈstʌmək/",
+    "meaning": "oshqozon; qorin",
+    "example": "My stomach is asking for a second lunch.",
+    "translation": "Qornim ikkinchi tushlikni so‘rayapti."
+  },
+  {
+    "id": 179,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "body",
+    "ipa": "/ˈbɒdi/",
+    "meaning": "tana",
+    "example": "The robot's body is an old fridge.",
+    "translation": "Robotning tanasi eski muzlatkich."
+  },
+  {
+    "id": 180,
+    "topic": "18 • Tana a’zolari — 2",
+    "word": "heart",
+    "ipa": "/hɑːt/",
+    "meaning": "yurak",
+    "example": "My robot has a chocolate heart.",
+    "translation": "Robotimning shokolad yuragi bor."
+  },
+  {
+    "id": 181,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "bread",
+    "ipa": "/bred/",
+    "meaning": "non",
+    "example": "My bread looks like a sleeping cat.",
+    "translation": "Nonim uxlayotgan mushukka o‘xshaydi."
+  },
+  {
+    "id": 182,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "rice",
+    "ipa": "/raɪs/",
+    "meaning": "guruch",
+    "example": "There is rice in my shoes again.",
+    "translation": "Tuflilarimda yana guruch bor."
+  },
+  {
+    "id": 183,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "egg",
+    "ipa": "/eɡ/",
+    "meaning": "tuxum",
+    "example": "The egg is wearing a tiny hat.",
+    "translation": "Tuxum mitti shlyapa kiygan."
+  },
+  {
+    "id": 184,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "meat",
+    "ipa": "/miːt/",
+    "meaning": "go‘sht",
+    "example": "The lion orders meat and a milkshake.",
+    "translation": "Arslon go‘sht va sutli kokteyl buyuradi."
+  },
+  {
+    "id": 185,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "chicken",
+    "ipa": "/ˈtʃɪkɪn/",
+    "meaning": "tovuq go‘shti",
+    "example": "My chicken sandwich is bigger than my bag.",
+    "translation": "Tovuqli sendvichim sumkamdan katta."
+  },
+  {
+    "id": 186,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "fish",
+    "ipa": "/fɪʃ/",
+    "meaning": "baliq",
+    "example": "The cat orders fish on my phone.",
+    "translation": "Mushuk telefonimda baliq buyurtma qiladi."
+  },
+  {
+    "id": 187,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "soup",
+    "ipa": "/suːp/",
+    "meaning": "sho‘rva",
+    "example": "My soup has a tiny boat in it.",
+    "translation": "Sho‘rvamda mitti qayiq bor."
+  },
+  {
+    "id": 188,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "salad",
+    "ipa": "/ˈsæləd/",
+    "meaning": "salat",
+    "example": "My salad has a secret biscuit in it.",
+    "translation": "Salatimda yashirin pechenye bor."
+  },
+  {
+    "id": 189,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "cheese",
+    "ipa": "/tʃiːz/",
+    "meaning": "pishloq",
+    "example": "The mouse pays its rent in cheese.",
+    "translation": "Sichqon ijara haqini pishloq bilan to‘laydi."
+  },
+  {
+    "id": 190,
+    "topic": "19 • Asosiy oziq-ovqatlar",
+    "word": "butter",
+    "ipa": "/ˈbʌtə/",
+    "meaning": "sariyog‘",
+    "example": "My robot puts butter on its batteries.",
+    "translation": "Robotim batareyalariga sariyog‘ surtadi."
+  },
+  {
+    "id": 191,
+    "topic": "20 • Mevalar",
+    "word": "apple",
+    "ipa": "/ˈæpəl/",
+    "meaning": "olma",
+    "example": "The apple is bigger than my head.",
+    "translation": "Olma boshimdan katta."
+  },
+  {
+    "id": 192,
+    "topic": "20 • Mevalar",
+    "word": "banana",
+    "ipa": "/bəˈnɑːnə/",
+    "meaning": "banan",
+    "example": "My banana is a phone in my dream.",
+    "translation": "Tushimda bananim telefon."
+  },
+  {
+    "id": 193,
+    "topic": "20 • Mevalar",
+    "word": "pear",
+    "ipa": "/peə/",
+    "meaning": "nok",
+    "example": "This pear looks like my uncle.",
+    "translation": "Bu nok amakimga o‘xshaydi."
+  },
+  {
+    "id": 194,
+    "topic": "20 • Mevalar",
+    "word": "peach",
+    "ipa": "/piːtʃ/",
+    "meaning": "shaftoli",
+    "example": "A tiny worm lives in my peach.",
+    "translation": "Shaftolimda mitti qurt yashaydi."
+  },
+  {
+    "id": 195,
+    "topic": "20 • Mevalar",
+    "word": "grape",
+    "ipa": "/ɡreɪp/",
+    "meaning": "uzum donasi",
+    "example": "One grape is hiding in my pocket.",
+    "translation": "Cho‘ntagimda bir dona uzum yashiringan."
+  },
+  {
+    "id": 196,
+    "topic": "20 • Mevalar",
+    "word": "lemon",
+    "ipa": "/ˈlemən/",
+    "meaning": "limon",
+    "example": "The lemon is too sour for the monster.",
+    "translation": "Limon maxluq uchun ham juda nordon."
+  },
+  {
+    "id": 197,
+    "topic": "20 • Mevalar",
+    "word": "melon",
+    "ipa": "/ˈmelən/",
+    "meaning": "qovun",
+    "example": "The melon is wearing sunglasses.",
+    "translation": "Qovun quyosh ko‘zoynagini taqqan."
+  },
+  {
+    "id": 198,
+    "topic": "20 • Mevalar",
+    "word": "watermelon",
+    "ipa": "/ˈwɔːtəmelən/",
+    "meaning": "tarvuz",
+    "example": "My watermelon needs its own chair.",
+    "translation": "Tarvuzimga alohida stul kerak."
+  },
+  {
+    "id": 199,
+    "topic": "20 • Mevalar",
+    "word": "strawberry",
+    "ipa": "/ˈstrɔːbəri/",
+    "meaning": "qulupnay",
+    "example": "The strawberry has a tiny crown.",
+    "translation": "Qulupnayning mitti toji bor."
+  },
+  {
+    "id": 200,
+    "topic": "20 • Mevalar",
+    "word": "cherry",
+    "ipa": "/ˈtʃeri/",
+    "meaning": "gilos",
+    "example": "A cherry is the snowman's nose.",
+    "translation": "Qorboboning burni gilos."
+  },
+  {
+    "id": 201,
+    "topic": "21 • Sabzavotlar",
+    "word": "potato",
+    "ipa": "/pəˈteɪtəʊ/",
+    "meaning": "kartoshka",
+    "example": "The potato wants to be a dancer.",
+    "translation": "Kartoshka raqqos bo‘lmoqchi."
+  },
+  {
+    "id": 202,
+    "topic": "21 • Sabzavotlar",
+    "word": "tomato",
+    "ipa": "/təˈmɑːtəʊ/",
+    "meaning": "pomidor",
+    "example": "The tomato is hiding from the cook.",
+    "translation": "Pomidor oshpazdan yashirinyapti."
+  },
+  {
+    "id": 203,
+    "topic": "21 • Sabzavotlar",
+    "word": "carrot",
+    "ipa": "/ˈkærət/",
+    "meaning": "sabzi",
+    "example": "My carrot looks like a tiny rocket.",
+    "translation": "Sabzim mitti raketaga o‘xshaydi."
+  },
+  {
+    "id": 204,
+    "topic": "21 • Sabzavotlar",
+    "word": "onion",
+    "ipa": "/ˈʌnjən/",
+    "meaning": "piyoz",
+    "example": "The onion makes the monster cry.",
+    "translation": "Piyoz maxluqni yig‘latadi."
+  },
+  {
+    "id": 205,
+    "topic": "21 • Sabzavotlar",
+    "word": "cucumber",
+    "ipa": "/ˈkjuːkʌmbə/",
+    "meaning": "bodring",
+    "example": "The cucumber is the king of the fridge.",
+    "translation": "Bodring muzlatkichning qiroli."
+  },
+  {
+    "id": 206,
+    "topic": "21 • Sabzavotlar",
+    "word": "cabbage",
+    "ipa": "/ˈkæbɪdʒ/",
+    "meaning": "karam",
+    "example": "My hat is made of cabbage leaves.",
+    "translation": "Shlyapam karam barglaridan yasalgan."
+  },
+  {
+    "id": 207,
+    "topic": "21 • Sabzavotlar",
+    "word": "pepper",
+    "ipa": "/ˈpepə/",
+    "meaning": "bulg‘or qalampiri",
+    "example": "The yellow pepper looks like a bell.",
+    "translation": "Sariq bulg‘or qalampiri qo‘ng‘iroqqa o‘xshaydi."
+  },
+  {
+    "id": 208,
+    "topic": "21 • Sabzavotlar",
+    "word": "bean",
+    "ipa": "/biːn/",
+    "meaning": "loviya donasi",
+    "example": "One bean is sleeping in my spoon.",
+    "translation": "Qoshig‘imda bir dona loviya uxlayapti."
+  },
+  {
+    "id": 209,
+    "topic": "21 • Sabzavotlar",
+    "word": "pea",
+    "ipa": "/piː/",
+    "meaning": "yashil no‘xat donasi",
+    "example": "The pea rolls away from my fork.",
+    "translation": "No‘xat donasi sanchqimdan dumalab qochadi."
+  },
+  {
+    "id": 210,
+    "topic": "21 • Sabzavotlar",
+    "word": "vegetable",
+    "ipa": "/ˈvedʒtəbəl/",
+    "meaning": "sabzavot",
+    "example": "This vegetable looks like a spaceship.",
+    "translation": "Bu sabzavot kosmik kemaga o‘xshaydi."
+  },
+  {
+    "id": 211,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "water",
+    "ipa": "/ˈwɔːtə/",
+    "meaning": "suv",
+    "example": "My robot orders water without ice.",
+    "translation": "Robotim muzsiz suv buyuradi."
+  },
+  {
+    "id": 212,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "milk",
+    "ipa": "/mɪlk/",
+    "meaning": "sut",
+    "example": "The cat wants milk in a golden cup.",
+    "translation": "Mushuk oltin piyolada sut xohlaydi."
+  },
+  {
+    "id": 213,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "tea",
+    "ipa": "/tiː/",
+    "meaning": "choy",
+    "example": "The dragon makes tea with its own fire.",
+    "translation": "Ajdarho o‘z olovida choy tayyorlaydi."
+  },
+  {
+    "id": 214,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "coffee",
+    "ipa": "/ˈkɒfi/",
+    "meaning": "qahva",
+    "example": "My coffee is stronger than my superhero.",
+    "translation": "Qahvam superqahramonimdan kuchliroq."
+  },
+  {
+    "id": 215,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "juice",
+    "ipa": "/dʒuːs/",
+    "meaning": "sharbat",
+    "example": "The vampire drinks tomato juice.",
+    "translation": "Vampir pomidor sharbati ichadi."
+  },
+  {
+    "id": 216,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "sugar",
+    "ipa": "/ˈʃʊɡə/",
+    "meaning": "shakar",
+    "example": "The ant asks for more sugar.",
+    "translation": "Chumoli yana shakar so‘raydi."
+  },
+  {
+    "id": 217,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "salt",
+    "ipa": "/sɒlt/",
+    "meaning": "tuz",
+    "example": "The robot puts salt in its coffee.",
+    "translation": "Robot qahvasiga tuz soladi."
+  },
+  {
+    "id": 218,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "breakfast",
+    "ipa": "/ˈbrekfəst/",
+    "meaning": "nonushta",
+    "example": "My breakfast is trying to escape.",
+    "translation": "Nonushtam qochishga urinyapti."
+  },
+  {
+    "id": 219,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "lunch",
+    "ipa": "/lʌntʃ/",
+    "meaning": "tushlik",
+    "example": "My lunch is in the wrong spaceship.",
+    "translation": "Tushligim boshqa kosmik kemada qolgan."
+  },
+  {
+    "id": 220,
+    "topic": "22 • Ichimlik va ovqatlanish",
+    "word": "dinner",
+    "ipa": "/ˈdɪnə/",
+    "meaning": "kechki ovqat",
+    "example": "The monster is late for dinner again.",
+    "translation": "Maxluq kechki ovqatga yana kechikyapti."
+  },
+  {
+    "id": 221,
+    "topic": "23 • Uy va xonalar",
+    "word": "room",
+    "ipa": "/ruːm/",
+    "meaning": "xona",
+    "example": "My room is a museum of lost socks.",
+    "translation": "Xonam yo‘qolgan paypoqlar muzeyi."
+  },
+  {
+    "id": 222,
+    "topic": "23 • Uy va xonalar",
+    "word": "kitchen",
+    "ipa": "/ˈkɪtʃɪn/",
+    "meaning": "oshxona",
+    "example": "A penguin is dancing in our kitchen.",
+    "translation": "Oshxonamizda pingvin raqs tushyapti."
+  },
+  {
+    "id": 223,
+    "topic": "23 • Uy va xonalar",
+    "word": "bedroom",
+    "ipa": "/ˈbedruːm/",
+    "meaning": "yotoqxona",
+    "example": "My bedroom has a door to the moon.",
+    "translation": "Yotoqxonamda oyga olib chiqadigan eshik bor."
+  },
+  {
+    "id": 224,
+    "topic": "23 • Uy va xonalar",
+    "word": "bathroom",
+    "ipa": "/ˈbɑːθruːm/",
+    "meaning": "yuvinish xonasi",
+    "example": "The dragon is singing in the bathroom.",
+    "translation": "Ajdarho yuvinish xonasida kuylayapti."
+  },
+  {
+    "id": 225,
+    "topic": "23 • Uy va xonalar",
+    "word": "garden",
+    "ipa": "/ˈɡɑːdən/",
+    "meaning": "bog‘",
+    "example": "My garden has one giant mushroom.",
+    "translation": "Bog‘imda bitta ulkan qo‘ziqorin bor."
+  },
+  {
+    "id": 226,
+    "topic": "23 • Uy va xonalar",
+    "word": "floor",
+    "ipa": "/flɔː/",
+    "meaning": "pol",
+    "example": "The floor is lava in our game.",
+    "translation": "O‘yinimizda pol lava."
+  },
+  {
+    "id": 227,
+    "topic": "23 • Uy va xonalar",
+    "word": "wall",
+    "ipa": "/wɔːl/",
+    "meaning": "devor",
+    "example": "The wall has a secret biscuit door.",
+    "translation": "Devorda pechenyelar uchun yashirin eshik bor."
+  },
+  {
+    "id": 228,
+    "topic": "23 • Uy va xonalar",
+    "word": "roof",
+    "ipa": "/ruːf/",
+    "meaning": "tom",
+    "example": "There is a swimming pool on the roof.",
+    "translation": "Tom ustida suzish havzasi bor."
+  },
+  {
+    "id": 229,
+    "topic": "23 • Uy va xonalar",
+    "word": "bed",
+    "ipa": "/bed/",
+    "meaning": "karavot",
+    "example": "My bed is a very lazy spaceship.",
+    "translation": "Karavotim juda dangasa kosmik kema."
+  },
+  {
+    "id": 230,
+    "topic": "23 • Uy va xonalar",
+    "word": "sofa",
+    "ipa": "/ˈsəʊfə/",
+    "meaning": "divan",
+    "example": "The sofa has eaten my phone again.",
+    "translation": "Divan telefonimni yana yutib yubordi."
+  },
+  {
+    "id": 231,
+    "topic": "24 • Uy jihozlari",
+    "word": "mirror",
+    "ipa": "/ˈmɪrə/",
+    "meaning": "ko‘zgu",
+    "example": "My mirror shows a dancing potato.",
+    "translation": "Ko‘zgumda raqs tushayotgan kartoshka ko‘rinadi."
+  },
+  {
+    "id": 232,
+    "topic": "24 • Uy jihozlari",
+    "word": "lamp",
+    "ipa": "/læmp/",
+    "meaning": "chiroq",
+    "example": "The lamp wears a hat at night.",
+    "translation": "Chiroq kechasi shlyapa kiyadi."
+  },
+  {
+    "id": 233,
+    "topic": "24 • Uy jihozlari",
+    "word": "fridge",
+    "ipa": "/frɪdʒ/",
+    "meaning": "muzlatkich",
+    "example": "My fridge is louder than my alarm clock.",
+    "translation": "Muzlatkichim budilnigimdan balandroq ovoz chiqaradi."
+  },
+  {
+    "id": 234,
+    "topic": "24 • Uy jihozlari",
+    "word": "cooker",
+    "ipa": "/ˈkʊkə/",
+    "meaning": "oshxona plitasi",
+    "example": "The cooker is the dragon's best friend.",
+    "translation": "Oshxona plitasi ajdarhoning eng yaqin do‘sti."
+  },
+  {
+    "id": 235,
+    "topic": "24 • Uy jihozlari",
+    "word": "cup",
+    "ipa": "/kʌp/",
+    "meaning": "piyola; chashka",
+    "example": "An elephant is drinking from a tiny cup.",
+    "translation": "Fil mitti piyoladan ichyapti."
+  },
+  {
+    "id": 236,
+    "topic": "24 • Uy jihozlari",
+    "word": "plate",
+    "ipa": "/pleɪt/",
+    "meaning": "likopcha",
+    "example": "My plate is empty; the cat looks happy.",
+    "translation": "Likopcham bo‘sh; mushuk esa xursand."
+  },
+  {
+    "id": 237,
+    "topic": "24 • Uy jihozlari",
+    "word": "spoon",
+    "ipa": "/spuːn/",
+    "meaning": "qoshiq",
+    "example": "The giant uses a boat as a spoon.",
+    "translation": "Dev qayiqni qoshiq qilib ishlatadi."
+  },
+  {
+    "id": 238,
+    "topic": "24 • Uy jihozlari",
+    "word": "fork",
+    "ipa": "/fɔːk/",
+    "meaning": "sanchqi",
+    "example": "My fork has a spaghetti hairstyle.",
+    "translation": "Sanchqimning soch turmagi spagettidan."
+  },
+  {
+    "id": 239,
+    "topic": "24 • Uy jihozlari",
+    "word": "knife",
+    "ipa": "/naɪf/",
+    "meaning": "pichoq",
+    "example": "The butter knife wants to be a sword.",
+    "translation": "Sariyog‘ pichog‘i qilich bo‘lishni xohlaydi."
+  },
+  {
+    "id": 240,
+    "topic": "24 • Uy jihozlari",
+    "word": "wardrobe",
+    "ipa": "/ˈwɔːdrəʊb/",
+    "meaning": "kiyim javoni",
+    "example": "A lion is sleeping in my wardrobe.",
+    "translation": "Kiyim javonimda arslon uxlayapti."
+  },
+  {
+    "id": 241,
+    "topic": "25 • Kiyimlar",
+    "word": "shirt",
+    "ipa": "/ʃɜːt/",
+    "meaning": "ko‘ylak (erkaklar)",
+    "example": "My shirt has a pocket for my hamster.",
+    "translation": "Ko‘ylagimda og‘maxonim uchun cho‘ntak bor."
+  },
+  {
+    "id": 242,
+    "topic": "25 • Kiyimlar",
+    "word": "T-shirt",
+    "ipa": "/ˈtiːʃɜːt/",
+    "meaning": "futbolka",
+    "example": "My T-shirt says: Feed me pizza.",
+    "translation": "Futbolkamda «Menga pitsa bering» deb yozilgan."
+  },
+  {
+    "id": 243,
+    "topic": "25 • Kiyimlar",
+    "word": "trousers",
+    "ipa": "/ˈtraʊzəz/",
+    "meaning": "shim",
+    "example": "The clown's trousers are full of balloons.",
+    "translation": "Masxarabozning shimi sharlarga to‘la."
+  },
+  {
+    "id": 244,
+    "topic": "25 • Kiyimlar",
+    "word": "dress",
+    "ipa": "/dres/",
+    "meaning": "ko‘ylak (ayollar)",
+    "example": "Her dress has a hundred tiny bells.",
+    "translation": "Uning ko‘ylagida yuzta mitti qo‘ng‘iroq bor."
+  },
+  {
+    "id": 245,
+    "topic": "25 • Kiyimlar",
+    "word": "skirt",
+    "ipa": "/skɜːt/",
+    "meaning": "yubka",
+    "example": "The robot's skirt is made of spoons.",
+    "translation": "Robotning yubkasi qoshiqlardan yasalgan."
+  },
+  {
+    "id": 246,
+    "topic": "25 • Kiyimlar",
+    "word": "jacket",
+    "ipa": "/ˈdʒækɪt/",
+    "meaning": "kurtka",
+    "example": "My jacket has a secret snack pocket.",
+    "translation": "Kurtkamda yegulik uchun yashirin cho‘ntak bor."
+  },
+  {
+    "id": 247,
+    "topic": "25 • Kiyimlar",
+    "word": "coat",
+    "ipa": "/kəʊt/",
+    "meaning": "palto",
+    "example": "The snowman is looking for a coat.",
+    "translation": "Qorbobo palto qidiryapti."
+  },
+  {
+    "id": 248,
+    "topic": "25 • Kiyimlar",
+    "word": "shoe",
+    "ipa": "/ʃuː/",
+    "meaning": "poyabzalning bir poyi",
+    "example": "A mouse is renting my left shoe.",
+    "translation": "Sichqon chap tuflimni ijaraga olgan."
+  },
+  {
+    "id": 249,
+    "topic": "25 • Kiyimlar",
+    "word": "sock",
+    "ipa": "/sɒk/",
+    "meaning": "paypoqning bir poyi",
+    "example": "My sock is a sleeping bag for a mouse.",
+    "translation": "Paypog‘im sichqon uchun yotoq qopi."
+  },
+  {
+    "id": 250,
+    "topic": "25 • Kiyimlar",
+    "word": "hat",
+    "ipa": "/hæt/",
+    "meaning": "bosh kiyim",
+    "example": "My hat has its own tiny umbrella.",
+    "translation": "Shlyapamning o‘z mitti soyaboni bor."
+  },
+  {
+    "id": 251,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "wake",
+    "ipa": "/weɪk/",
+    "meaning": "uyg‘onmoq",
+    "example": "I wake up when my cat sings.",
+    "translation": "Mushugim kuylaganda uyg‘onaman."
+  },
+  {
+    "id": 252,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "sleep",
+    "ipa": "/sliːp/",
+    "meaning": "uxlamoq",
+    "example": "I sleep like a bear after lunch.",
+    "translation": "Tushlikdan keyin ayiqdek uxlayman."
+  },
+  {
+    "id": 253,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "get",
+    "ipa": "/ɡet/",
+    "meaning": "olmoq; ega bo‘lmoq",
+    "example": "I get birthday cards from Mars.",
+    "translation": "Men Marsdan tug‘ilgan kun tabriklari olaman."
+  },
+  {
+    "id": 254,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "wash",
+    "ipa": "/wɒʃ/",
+    "meaning": "yuvmoq",
+    "example": "I wash my robot with a toothbrush.",
+    "translation": "Robotimni tish cho‘tkasi bilan yuvaman."
+  },
+  {
+    "id": 255,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "eat",
+    "ipa": "/iːt/",
+    "meaning": "yemoq",
+    "example": "Do not eat the map, Mr Goat!",
+    "translation": "Janob Echki, xaritani yemang!"
+  },
+  {
+    "id": 256,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "drink",
+    "ipa": "/drɪŋk/",
+    "meaning": "ichmoq",
+    "example": "My robot likes to drink warm milk.",
+    "translation": "Robotim iliq sut ichishni yoqtiradi."
+  },
+  {
+    "id": 257,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "go",
+    "ipa": "/ɡəʊ/",
+    "meaning": "bormoq",
+    "example": "I go to school on a flying carpet.",
+    "translation": "Men maktabga uchar gilamda boraman."
+  },
+  {
+    "id": 258,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "come",
+    "ipa": "/kʌm/",
+    "meaning": "kelmoq",
+    "example": "Come here, you walking sandwich!",
+    "translation": "Bu yoqqa kel, yuradigan sendvich!"
+  },
+  {
+    "id": 259,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "leave",
+    "ipa": "/liːv/",
+    "meaning": "ketmoq; tark etmoq",
+    "example": "I leave home in a flying teacup.",
+    "translation": "Men uydan uchar piyolada chiqaman."
+  },
+  {
+    "id": 260,
+    "topic": "26 • Kundalik harakatlar",
+    "word": "arrive",
+    "ipa": "/əˈraɪv/",
+    "meaning": "yetib kelmoq",
+    "example": "We arrive at school in a giant teacup.",
+    "translation": "Biz maktabga ulkan piyolada yetib kelamiz."
+  },
+  {
+    "id": 261,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "work",
+    "ipa": "/wɜːk/",
+    "meaning": "ishlamoq",
+    "example": "My socks work as puppets at night.",
+    "translation": "Paypoqlarim kechasi qo‘g‘irchoq bo‘lib ishlaydi."
+  },
+  {
+    "id": 262,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "study",
+    "ipa": "/ˈstʌdi/",
+    "meaning": "o‘qimoq; o‘rganmoq",
+    "example": "I study English with a talking carrot.",
+    "translation": "Men gapiradigan sabzi bilan inglizcha o‘rganaman."
+  },
+  {
+    "id": 263,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "learn",
+    "ipa": "/lɜːn/",
+    "meaning": "o‘rganmoq",
+    "example": "My dragon wants to learn ballet.",
+    "translation": "Ajdarhom balet o‘rganmoqchi."
+  },
+  {
+    "id": 264,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "teach",
+    "ipa": "/tiːtʃ/",
+    "meaning": "o‘qitmoq",
+    "example": "I teach my robot to make pancakes.",
+    "translation": "Robotimga quymoq tayyorlashni o‘rgataman."
+  },
+  {
+    "id": 265,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "speak",
+    "ipa": "/spiːk/",
+    "meaning": "gapirmoq",
+    "example": "My fridge can speak three languages.",
+    "translation": "Muzlatkichim uch tilda gapira oladi."
+  },
+  {
+    "id": 266,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "talk",
+    "ipa": "/tɔːk/",
+    "meaning": "suhbatlashmoq",
+    "example": "My shoes talk when I am asleep.",
+    "translation": "Men uxlaganimda tuflilarim gaplashadi."
+  },
+  {
+    "id": 267,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "watch",
+    "ipa": "/wɒtʃ/",
+    "meaning": "tomosha qilmoq",
+    "example": "The fish watch TV through the tank.",
+    "translation": "Baliqlar akvariumdan televizor tomosha qiladi."
+  },
+  {
+    "id": 268,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "play",
+    "ipa": "/pleɪ/",
+    "meaning": "o‘ynamoq",
+    "example": "My grandmother can play football in slippers.",
+    "translation": "Buvim shippakda futbol o‘ynay oladi."
+  },
+  {
+    "id": 269,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "walk",
+    "ipa": "/wɔːk/",
+    "meaning": "piyoda yurmoq",
+    "example": "I walk my pet cabbage every morning.",
+    "translation": "Har tong uy karamimni sayrga olib chiqaman."
+  },
+  {
+    "id": 270,
+    "topic": "27 • O‘qish va mashg‘ulotlar",
+    "word": "run",
+    "ipa": "/rʌn/",
+    "meaning": "yugurmoq",
+    "example": "I run faster when I smell pizza.",
+    "translation": "Pitsa hidini sezsam, tezroq yuguraman."
+  },
+  {
+    "id": 271,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "like",
+    "ipa": "/laɪk/",
+    "meaning": "yoqtirmoq",
+    "example": "I like my robot, but it steals biscuits.",
+    "translation": "Robotimni yoqtiraman, lekin u pechenye o‘g‘irlaydi."
+  },
+  {
+    "id": 272,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "love",
+    "ipa": "/lʌv/",
+    "meaning": "sevmoq",
+    "example": "I love you more than pizza.",
+    "translation": "Men seni pitsadan ham ko‘proq sevaman."
+  },
+  {
+    "id": 273,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "hate",
+    "ipa": "/heɪt/",
+    "meaning": "juda yomon ko‘rmoq",
+    "example": "My vampires hate tomato soup.",
+    "translation": "Vampirlarim pomidor sho‘rvasini yomon ko‘radi."
+  },
+  {
+    "id": 274,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "want",
+    "ipa": "/wɒnt/",
+    "meaning": "xohlamoq",
+    "example": "I want a holiday from my homework.",
+    "translation": "Men uy vazifasidan ta’til xohlayman."
+  },
+  {
+    "id": 275,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "need",
+    "ipa": "/niːd/",
+    "meaning": "kerak bo‘lmoq",
+    "example": "My dragon needs a bigger toothbrush.",
+    "translation": "Ajdarhomga kattaroq tish cho‘tkasi kerak."
+  },
+  {
+    "id": 276,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "have",
+    "ipa": "/hæv/",
+    "meaning": "bor bo‘lmoq; ega bo‘lmoq",
+    "example": "I have a tiny king in my pocket.",
+    "translation": "Cho‘ntagimda mitti qirol bor."
+  },
+  {
+    "id": 277,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "buy",
+    "ipa": "/baɪ/",
+    "meaning": "sotib olmoq",
+    "example": "Can I buy the moon with three biscuits?",
+    "translation": "Oyni uchta pechenyega sotib olsam bo‘ladimi?"
+  },
+  {
+    "id": 278,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "sell",
+    "ipa": "/sel/",
+    "meaning": "sotmoq",
+    "example": "They sell socks for spiders.",
+    "translation": "Ular o‘rgimchaklar uchun paypoq sotadi."
+  },
+  {
+    "id": 279,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "give",
+    "ipa": "/ɡɪv/",
+    "meaning": "bermoq",
+    "example": "Give the robot a biscuit, not homework.",
+    "translation": "Robotga uy vazifasi emas, pechenye bering."
+  },
+  {
+    "id": 280,
+    "topic": "28 • Istaklar va munosabatlar",
+    "word": "take",
+    "ipa": "/teɪk/",
+    "meaning": "olmoq",
+    "example": "Take an umbrella; it is raining noodles.",
+    "translation": "Soyabon oling; osmondan ugra yog‘yapti."
+  },
+  {
+    "id": 281,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "make",
+    "ipa": "/meɪk/",
+    "meaning": "tayyorlamoq; yasamoq",
+    "example": "I make tiny sandwiches for ants.",
+    "translation": "Men chumolilarga mitti sendvichlar tayyorlayman."
+  },
+  {
+    "id": 282,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "do",
+    "ipa": "/duː/",
+    "meaning": "qilmoq; bajarmoq",
+    "example": "My robot can do everything except dance.",
+    "translation": "Robotim raqsdan boshqa hamma ishni qila oladi."
+  },
+  {
+    "id": 283,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "help",
+    "ipa": "/help/",
+    "meaning": "yordam bermoq",
+    "example": "Please help the elephant find its glasses.",
+    "translation": "Filga ko‘zoynagini topishda yordam bering."
+  },
+  {
+    "id": 284,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "use",
+    "ipa": "/juːz/",
+    "meaning": "foydalanmoq",
+    "example": "I use a banana as a phone.",
+    "translation": "Men bananni telefon sifatida ishlataman."
+  },
+  {
+    "id": 285,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "find",
+    "ipa": "/faɪnd/",
+    "meaning": "topmoq",
+    "example": "I always find biscuits in my robot.",
+    "translation": "Robotimning ichidan doim pechenye topaman."
+  },
+  {
+    "id": 286,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "lose",
+    "ipa": "/luːz/",
+    "meaning": "yo‘qotmoq",
+    "example": "How do you lose a whole dinosaur?",
+    "translation": "Qanday qilib butun boshli dinozavrni yo‘qotasiz?"
+  },
+  {
+    "id": 287,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "bring",
+    "ipa": "/brɪŋ/",
+    "meaning": "olib kelmoq",
+    "example": "Bring your dragon, but leave its sofa.",
+    "translation": "Ajdarhoyingizni olib keling, divanini qoldiring."
+  },
+  {
+    "id": 288,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "put",
+    "ipa": "/pʊt/",
+    "meaning": "qo‘ymoq",
+    "example": "Put the crown on the potato.",
+    "translation": "Tojni kartoshkaga kiydiring."
+  },
+  {
+    "id": 289,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "sit",
+    "ipa": "/sɪt/",
+    "meaning": "o‘tirmoq",
+    "example": "Please sit; the chair rarely bites.",
+    "translation": "Marhamat, o‘tiring; stul kamdan-kam tishlaydi."
+  },
+  {
+    "id": 290,
+    "topic": "29 • Zarur harakat fe’llari",
+    "word": "stand",
+    "ipa": "/stænd/",
+    "meaning": "turmoq",
+    "example": "Stand still; there is a duck on your head.",
+    "translation": "Qimirlamay turing; boshingizda o‘rdak bor."
+  },
+  {
+    "id": 291,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "hot",
+    "ipa": "/hɒt/",
+    "meaning": "issiq",
+    "example": "The soup is too hot for the dragon.",
+    "translation": "Sho‘rva ajdarho uchun ham juda issiq."
+  },
+  {
+    "id": 292,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "cold",
+    "ipa": "/kəʊld/",
+    "meaning": "sovuq",
+    "example": "The ghost is cold under its thin sheet.",
+    "translation": "Arvoh yupqa choyshabi ostida sovqotyapti."
+  },
+  {
+    "id": 293,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "warm",
+    "ipa": "/wɔːm/",
+    "meaning": "iliq",
+    "example": "My cat keeps my homework warm.",
+    "translation": "Mushugim uy vazifamni issiq tutadi."
+  },
+  {
+    "id": 294,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "cool",
+    "ipa": "/kuːl/",
+    "meaning": "salqin",
+    "example": "The penguin wants a cool room.",
+    "translation": "Pingvin salqin xona xohlaydi."
+  },
+  {
+    "id": 295,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "clean",
+    "ipa": "/kliːn/",
+    "meaning": "toza",
+    "example": "My shoes are clean; my robot is muddy.",
+    "translation": "Tuflilarim toza; robotim esa loy."
+  },
+  {
+    "id": 296,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "dirty",
+    "ipa": "/ˈdɜːti/",
+    "meaning": "kir; iflos",
+    "example": "The dirty socks are planning an escape.",
+    "translation": "Kir paypoqlar qochishni rejalashtiryapti."
+  },
+  {
+    "id": 297,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "easy",
+    "ipa": "/ˈiːzi/",
+    "meaning": "oson",
+    "example": "This test is easy for my genius hamster.",
+    "translation": "Bu test daho og‘maxonim uchun oson."
+  },
+  {
+    "id": 298,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "difficult",
+    "ipa": "/ˈdɪfɪkəlt/",
+    "meaning": "qiyin",
+    "example": "It is difficult to put socks on a fish.",
+    "translation": "Baliqqa paypoq kiydirish qiyin."
+  },
+  {
+    "id": 299,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "fast",
+    "ipa": "/fɑːst/",
+    "meaning": "tez",
+    "example": "My fast turtle wears tiny trainers.",
+    "translation": "Tezkor toshbaqam mitti krossovka kiyadi."
+  },
+  {
+    "id": 300,
+    "topic": "30 • Qarama-qarshi sifatlar",
+    "word": "slow",
+    "ipa": "/sləʊ/",
+    "meaning": "sekin",
+    "example": "The slow robot is still saying hello.",
+    "translation": "Sekin robot haligacha salom aytyapti."
+  },
+  {
+    "id": 301,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "hospital",
+    "ipa": "/ˈhɒspɪtəl/",
+    "meaning": "shifoxona",
+    "example": "The robot visits the hospital for a new battery.",
+    "translation": "Robot yangi batareya uchun shifoxonaga boradi."
+  },
+  {
+    "id": 302,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "bank",
+    "ipa": "/bæŋk/",
+    "meaning": "bank",
+    "example": "The mouse keeps cheese in the bank.",
+    "translation": "Sichqon pishlog‘ini bankda saqlaydi."
+  },
+  {
+    "id": 303,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "restaurant",
+    "ipa": "/ˈrestrɒnt/",
+    "meaning": "restoran",
+    "example": "This restaurant serves soup in hats.",
+    "translation": "Bu restoran sho‘rvani shlyapada beradi."
+  },
+  {
+    "id": 304,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "café",
+    "ipa": "/ˈkæfeɪ/",
+    "meaning": "kafe",
+    "example": "My cat opens a café for mice.",
+    "translation": "Mushugim sichqonlar uchun kafe ochadi."
+  },
+  {
+    "id": 305,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "station",
+    "ipa": "/ˈsteɪʃən/",
+    "meaning": "bekat; vokzal",
+    "example": "A duck sells tickets at the station.",
+    "translation": "Bekatda o‘rdak chipta sotadi."
+  },
+  {
+    "id": 306,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "airport",
+    "ipa": "/ˈeəpɔːt/",
+    "meaning": "aeroport",
+    "example": "The dragon waits at the airport.",
+    "translation": "Ajdarho aeroportda kutyapti."
+  },
+  {
+    "id": 307,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "hotel",
+    "ipa": "/həʊˈtel/",
+    "meaning": "mehmonxona",
+    "example": "This hotel has beds for giants.",
+    "translation": "Bu mehmonxonada devlar uchun karavotlar bor."
+  },
+  {
+    "id": 308,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "library",
+    "ipa": "/ˈlaɪbrəri/",
+    "meaning": "kutubxona",
+    "example": "Our library has a book about noisy socks.",
+    "translation": "Kutubxonamizda shovqinchi paypoqlar haqida kitob bor."
+  },
+  {
+    "id": 309,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "museum",
+    "ipa": "/mjuˈziːəm/",
+    "meaning": "muzey",
+    "example": "My old phone belongs in a museum.",
+    "translation": "Eski telefonimni muzeyga qo‘yish kerak."
+  },
+  {
+    "id": 310,
+    "topic": "31 • Shahar va xizmatlar",
+    "word": "supermarket",
+    "ipa": "/ˈsuːpəmɑːkɪt/",
+    "meaning": "supermarket",
+    "example": "An alien buys shampoo at the supermarket.",
+    "translation": "O‘zga sayyoralik supermarketda shampun olyapti."
+  },
+  {
+    "id": 311,
+    "topic": "32 • Transport",
+    "word": "car",
+    "ipa": "/kɑː/",
+    "meaning": "mashina",
+    "example": "My car runs on carrot juice.",
+    "translation": "Mashinam sabzi sharbatida yuradi."
+  },
+  {
+    "id": 312,
+    "topic": "32 • Transport",
+    "word": "bus",
+    "ipa": "/bʌs/",
+    "meaning": "avtobus",
+    "example": "The bus driver is a polite bear.",
+    "translation": "Avtobus haydovchisi odobli ayiq."
+  },
+  {
+    "id": 313,
+    "topic": "32 • Transport",
+    "word": "train",
+    "ipa": "/treɪn/",
+    "meaning": "poyezd",
+    "example": "This train stops for every turtle.",
+    "translation": "Bu poyezd har bir toshbaqa uchun to‘xtaydi."
+  },
+  {
+    "id": 314,
+    "topic": "32 • Transport",
+    "word": "plane",
+    "ipa": "/pleɪn/",
+    "meaning": "samolyot",
+    "example": "Our plane looks like a banana.",
+    "translation": "Samolyotimiz bananga o‘xshaydi."
+  },
+  {
+    "id": 315,
+    "topic": "32 • Transport",
+    "word": "bicycle",
+    "ipa": "/ˈbaɪsɪkəl/",
+    "meaning": "velosiped",
+    "example": "My bicycle has a seat for my cactus.",
+    "translation": "Velosipedimda kaktusim uchun o‘rindiq bor."
+  },
+  {
+    "id": 316,
+    "topic": "32 • Transport",
+    "word": "taxi",
+    "ipa": "/ˈtæksi/",
+    "meaning": "taksi",
+    "example": "The snail takes a taxi to the race.",
+    "translation": "Shilliqqurt poygaga taksida boradi."
+  },
+  {
+    "id": 317,
+    "topic": "32 • Transport",
+    "word": "boat",
+    "ipa": "/bəʊt/",
+    "meaning": "qayiq",
+    "example": "My boat is a giant teacup.",
+    "translation": "Qayig‘im ulkan choy piyolasi."
+  },
+  {
+    "id": 318,
+    "topic": "32 • Transport",
+    "word": "ticket",
+    "ipa": "/ˈtɪkɪt/",
+    "meaning": "chipta",
+    "example": "Does my sandwich need a ticket?",
+    "translation": "Sendvichimga ham chipta kerakmi?"
+  },
+  {
+    "id": 319,
+    "topic": "32 • Transport",
+    "word": "journey",
+    "ipa": "/ˈdʒɜːni/",
+    "meaning": "safar",
+    "example": "The journey ends inside a giant cake.",
+    "translation": "Safar ulkan tortning ichida tugaydi."
+  },
+  {
+    "id": 320,
+    "topic": "32 • Transport",
+    "word": "road",
+    "ipa": "/rəʊd/",
+    "meaning": "yo‘l",
+    "example": "This road leads to the biscuit castle.",
+    "translation": "Bu yo‘l pechenye qal’asiga olib boradi."
+  },
+  {
+    "id": 321,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "sun",
+    "ipa": "/sʌn/",
+    "meaning": "quyosh",
+    "example": "The sun wears sunglasses in my drawing.",
+    "translation": "Rasmimda quyosh ko‘zoynak taqqan."
+  },
+  {
+    "id": 322,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "moon",
+    "ipa": "/muːn/",
+    "meaning": "oy",
+    "example": "The moon looks like a sleepy biscuit.",
+    "translation": "Oy uyqusiragan pechenyega o‘xshaydi."
+  },
+  {
+    "id": 323,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "sky",
+    "ipa": "/skaɪ/",
+    "meaning": "osmon",
+    "example": "There is a flying sofa in the sky.",
+    "translation": "Osmonda uchar divan bor."
+  },
+  {
+    "id": 324,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "rain",
+    "ipa": "/reɪn/",
+    "meaning": "yomg‘ir",
+    "example": "My robot hides from the rain.",
+    "translation": "Robotim yomg‘irdan yashirinadi."
+  },
+  {
+    "id": 325,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "snow",
+    "ipa": "/snəʊ/",
+    "meaning": "qor",
+    "example": "The snow looks like sugar on a cake.",
+    "translation": "Qor tort ustidagi shakarga o‘xshaydi."
+  },
+  {
+    "id": 326,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "wind",
+    "ipa": "/wɪnd/",
+    "meaning": "shamol",
+    "example": "The wind takes my hat to school.",
+    "translation": "Shamol shlyapamni maktabga olib ketadi."
+  },
+  {
+    "id": 327,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "cloud",
+    "ipa": "/klaʊd/",
+    "meaning": "bulut",
+    "example": "That cloud looks like my uncle.",
+    "translation": "Anavi bulut amakimga o‘xshaydi."
+  },
+  {
+    "id": 328,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "tree",
+    "ipa": "/triː/",
+    "meaning": "daraxt",
+    "example": "My tree grows socks instead of apples.",
+    "translation": "Daraxtimda olma o‘rniga paypoq o‘sadi."
+  },
+  {
+    "id": 329,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "flower",
+    "ipa": "/ˈflaʊə/",
+    "meaning": "gul",
+    "example": "The flower sneezes when I water it.",
+    "translation": "Gulga suv quysam, aksiradi."
+  },
+  {
+    "id": 330,
+    "topic": "33 • Tabiat va ob-havo",
+    "word": "river",
+    "ipa": "/ˈrɪvə/",
+    "meaning": "daryo",
+    "example": "The giant uses the river as a bath.",
+    "translation": "Dev daryoni vanna sifatida ishlatadi."
+  },
+  {
+    "id": 331,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "night",
+    "ipa": "/naɪt/",
+    "meaning": "tun",
+    "example": "At night, my socks practise dancing.",
+    "translation": "Tunda paypoqlarim raqs mashq qiladi."
+  },
+  {
+    "id": 332,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "hour",
+    "ipa": "/aʊə/",
+    "meaning": "soat (davomiylik)",
+    "example": "My turtle takes an hour to say hello.",
+    "translation": "Toshbaqam bir soatda salom aytadi."
+  },
+  {
+    "id": 333,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "minute",
+    "ipa": "/ˈmɪnɪt/",
+    "meaning": "daqiqa",
+    "example": "The monster eats a cake every minute.",
+    "translation": "Maxluq har daqiqada bitta tort yeydi."
+  },
+  {
+    "id": 334,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "second",
+    "ipa": "/ˈsekənd/",
+    "meaning": "soniya",
+    "example": "My biscuit disappears in one second.",
+    "translation": "Pechenyem bir soniyada yo‘qoladi."
+  },
+  {
+    "id": 335,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "early",
+    "ipa": "/ˈɜːli/",
+    "meaning": "erta",
+    "example": "My cat wakes me early for breakfast.",
+    "translation": "Mushugim meni nonushta uchun erta uyg‘otadi."
+  },
+  {
+    "id": 336,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "late",
+    "ipa": "/leɪt/",
+    "meaning": "kech; kechikkan",
+    "example": "The time machine is late again.",
+    "translation": "Vaqt mashinasi yana kechikdi."
+  },
+  {
+    "id": 337,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "always",
+    "ipa": "/ˈɔːlweɪz/",
+    "meaning": "har doim",
+    "example": "My robot always forgets its shoes.",
+    "translation": "Robotim har doim tuflilarini unutadi."
+  },
+  {
+    "id": 338,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "usually",
+    "ipa": "/ˈjuːʒuəli/",
+    "meaning": "odatda",
+    "example": "The dragon usually orders cold soup.",
+    "translation": "Ajdarho odatda sovuq sho‘rva buyuradi."
+  },
+  {
+    "id": 339,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "sometimes",
+    "ipa": "/ˈsʌmtaɪmz/",
+    "meaning": "ba’zan",
+    "example": "My fridge sometimes sings at night.",
+    "translation": "Muzlatkichim ba’zan tunda kuylaydi."
+  },
+  {
+    "id": 340,
+    "topic": "34 • Vaqt va takrorlanish",
+    "word": "never",
+    "ipa": "/ˈnevə/",
+    "meaning": "hech qachon",
+    "example": "My fish never lends me its umbrella.",
+    "translation": "Balig‘im menga soyabonini hech qachon bermaydi."
+  },
+  {
+    "id": 341,
+    "topic": "35 • Joylashuv",
+    "word": "in",
+    "ipa": "/ɪn/",
+    "meaning": "ichida; -da",
+    "example": "There is a tiny king in my cup.",
+    "translation": "Piyolamda mitti qirol bor."
+  },
+  {
+    "id": 342,
+    "topic": "35 • Joylashuv",
+    "word": "on",
+    "ipa": "/ɒn/",
+    "meaning": "ustida; -da",
+    "example": "A duck is on my head.",
+    "translation": "Boshimda o‘rdak bor."
+  },
+  {
+    "id": 343,
+    "topic": "35 • Joylashuv",
+    "word": "under",
+    "ipa": "/ˈʌndə/",
+    "meaning": "tagida",
+    "example": "My dragon sleeps under the table.",
+    "translation": "Ajdarhom stol tagida uxlaydi."
+  },
+  {
+    "id": 344,
+    "topic": "35 • Joylashuv",
+    "word": "near",
+    "ipa": "/nɪə/",
+    "meaning": "yaqinida",
+    "example": "Do not leave cake near my robot.",
+    "translation": "Robotim yaqinida tort qoldirmang."
+  },
+  {
+    "id": 345,
+    "topic": "35 • Joylashuv",
+    "word": "behind",
+    "ipa": "/bɪˈhaɪnd/",
+    "meaning": "orqasida",
+    "example": "A giant is hiding behind a pencil.",
+    "translation": "Dev qalam orqasida yashirinyapti."
+  },
+  {
+    "id": 346,
+    "topic": "35 • Joylashuv",
+    "word": "between",
+    "ipa": "/bɪˈtwiːn/",
+    "meaning": "orasida (ikki narsa)",
+    "example": "I sit between two friendly monsters.",
+    "translation": "Men ikki mehribon maxluq orasida o‘tiraman."
+  },
+  {
+    "id": 347,
+    "topic": "35 • Joylashuv",
+    "word": "opposite",
+    "ipa": "/ˈɒpəzɪt/",
+    "meaning": "ro‘parasida",
+    "example": "The vampire lives opposite the dentist.",
+    "translation": "Vampir tish shifokorining ro‘parasida yashaydi."
+  },
+  {
+    "id": 348,
+    "topic": "35 • Joylashuv",
+    "word": "above",
+    "ipa": "/əˈbʌv/",
+    "meaning": "tepasida; yuqorisida",
+    "example": "A tiny cloud floats above my soup.",
+    "translation": "Sho‘rvam tepasida mitti bulut suzib yuribdi."
+  },
+  {
+    "id": 349,
+    "topic": "35 • Joylashuv",
+    "word": "below",
+    "ipa": "/bɪˈləʊ/",
+    "meaning": "pastida",
+    "example": "The fish lives below the noisy duck.",
+    "translation": "Baliq shovqinchi o‘rdakning pastida yashaydi."
+  },
+  {
+    "id": 350,
+    "topic": "35 • Joylashuv",
+    "word": "outside",
+    "ipa": "/ˌaʊtˈsaɪd/",
+    "meaning": "tashqarida",
+    "example": "A dinosaur is waiting outside.",
+    "translation": "Tashqarida dinozavr kutyapti."
+  },
+  {
+    "id": 351,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "who",
+    "ipa": "/huː/",
+    "meaning": "kim",
+    "example": "Who put a crown on my potato?",
+    "translation": "Kartoshkamga kim toj kiydirdi?"
+  },
+  {
+    "id": 352,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "what",
+    "ipa": "/wɒt/",
+    "meaning": "nima",
+    "example": "What is that duck doing in my bag?",
+    "translation": "Anavi o‘rdak sumkamda nima qilyapti?"
+  },
+  {
+    "id": 353,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "where",
+    "ipa": "/weə/",
+    "meaning": "qayerda; qayerga",
+    "example": "Where is my invisible bicycle?",
+    "translation": "Ko‘rinmas velosipedim qayerda?"
+  },
+  {
+    "id": 354,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "when",
+    "ipa": "/wen/",
+    "meaning": "qachon",
+    "example": "When does the moon eat breakfast?",
+    "translation": "Oy qachon nonushta qiladi?"
+  },
+  {
+    "id": 355,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "why",
+    "ipa": "/waɪ/",
+    "meaning": "nega",
+    "example": "Why is your fridge wearing a tie?",
+    "translation": "Nega muzlatkichingiz galstuk taqqan?"
+  },
+  {
+    "id": 356,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "how",
+    "ipa": "/haʊ/",
+    "meaning": "qanday",
+    "example": "How do you wake a sleeping mountain?",
+    "translation": "Uxlayotgan tog‘ni qanday uyg‘otasiz?"
+  },
+  {
+    "id": 357,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "which",
+    "ipa": "/wɪtʃ/",
+    "meaning": "qaysi",
+    "example": "Which robot ate my homework?",
+    "translation": "Uy vazifamni qaysi robot yedi?"
+  },
+  {
+    "id": 358,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "whose",
+    "ipa": "/huːz/",
+    "meaning": "kimning; kimniki",
+    "example": "Whose dinosaur is in the kitchen?",
+    "translation": "Oshxonadagi dinozavr kimniki?"
+  },
+  {
+    "id": 359,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "this",
+    "ipa": "/ðɪs/",
+    "meaning": "bu (yaqindagi)",
+    "example": "This banana is my new assistant.",
+    "translation": "Bu banan yangi yordamchim."
+  },
+  {
+    "id": 360,
+    "topic": "36 • Savol va ko‘rsatish so‘zlari",
+    "word": "that",
+    "ipa": "/ðæt/",
+    "meaning": "anavi; o‘sha",
+    "example": "That cloud is following me.",
+    "translation": "Anavi bulut menga ergashyapti."
+  },
+  {
+    "id": 361,
+    "topic": "37 • O‘qish vositalari",
+    "word": "lesson",
+    "ipa": "/ˈlesən/",
+    "meaning": "dars",
+    "example": "Our first lesson is dragon dancing.",
+    "translation": "Birinchi darsimiz ajdarho raqsi."
+  },
+  {
+    "id": 362,
+    "topic": "37 • O‘qish vositalari",
+    "word": "class",
+    "ipa": "/klɑːs/",
+    "meaning": "sinf; guruh",
+    "example": "Our class has one very clever goat.",
+    "translation": "Sinfimizda bitta juda aqlli echki bor."
+  },
+  {
+    "id": 363,
+    "topic": "37 • O‘qish vositalari",
+    "word": "homework",
+    "ipa": "/ˈhəʊmwɜːk/",
+    "meaning": "uy vazifasi",
+    "example": "My homework is hiding from me.",
+    "translation": "Uy vazifam mendan yashirinyapti."
+  },
+  {
+    "id": 364,
+    "topic": "37 • O‘qish vositalari",
+    "word": "question",
+    "ipa": "/ˈkwestʃən/",
+    "meaning": "savol",
+    "example": "The robot has a question about biscuits.",
+    "translation": "Robotning pechenyelar haqida savoli bor."
+  },
+  {
+    "id": 365,
+    "topic": "37 • O‘qish vositalari",
+    "word": "sentence",
+    "ipa": "/ˈsentəns/",
+    "meaning": "gap",
+    "example": "This sentence has a tiny dragon in it.",
+    "translation": "Bu gapning ichida mitti ajdarho bor."
+  },
+  {
+    "id": 366,
+    "topic": "37 • O‘qish vositalari",
+    "word": "word",
+    "ipa": "/wɜːd/",
+    "meaning": "so‘z",
+    "example": "Pizza is my robot's favourite word.",
+    "translation": "Pitsa robotimning sevimli so‘zi."
+  },
+  {
+    "id": 367,
+    "topic": "37 • O‘qish vositalari",
+    "word": "letter",
+    "ipa": "/ˈletə/",
+    "meaning": "harf",
+    "example": "The letter O looks like a biscuit.",
+    "translation": "O harfi pechenyega o‘xshaydi."
+  },
+  {
+    "id": 368,
+    "topic": "37 • O‘qish vositalari",
+    "word": "language",
+    "ipa": "/ˈlæŋɡwɪdʒ/",
+    "meaning": "til",
+    "example": "My cat speaks a secret language.",
+    "translation": "Mushugim maxfiy tilda gapiradi."
+  },
+  {
+    "id": 369,
+    "topic": "37 • O‘qish vositalari",
+    "word": "English",
+    "ipa": "/ˈɪŋɡlɪʃ/",
+    "meaning": "ingliz tili",
+    "example": "My parrot teaches English to my robot.",
+    "translation": "To‘tiqushim robotimga ingliz tilini o‘rgatadi."
+  },
+  {
+    "id": 370,
+    "topic": "37 • O‘qish vositalari",
+    "word": "dictionary",
+    "ipa": "/ˈdɪkʃənəri/",
+    "meaning": "lug‘at (kitob)",
+    "example": "My dictionary needs a bigger bag.",
+    "translation": "Lug‘at kitobimga kattaroq sumka kerak."
+  },
+  {
+    "id": 371,
+    "topic": "38 • Texnologiya",
+    "word": "phone",
+    "ipa": "/fəʊn/",
+    "meaning": "telefon",
+    "example": "My phone wants a holiday.",
+    "translation": "Telefonim ta’til xohlaydi."
+  },
+  {
+    "id": 372,
+    "topic": "38 • Texnologiya",
+    "word": "computer",
+    "ipa": "/kəmˈpjuːtə/",
+    "meaning": "kompyuter",
+    "example": "My computer is afraid of mice.",
+    "translation": "Kompyuterim sichqonlardan qo‘rqadi."
+  },
+  {
+    "id": 373,
+    "topic": "38 • Texnologiya",
+    "word": "laptop",
+    "ipa": "/ˈlæptɒp/",
+    "meaning": "noutbuk",
+    "example": "My laptop is the cat's favourite bed.",
+    "translation": "Noutbukim mushukning sevimli yotog‘i."
+  },
+  {
+    "id": 374,
+    "topic": "38 • Texnologiya",
+    "word": "screen",
+    "ipa": "/skriːn/",
+    "meaning": "ekran",
+    "example": "There is a dancing potato on my screen.",
+    "translation": "Ekranimda kartoshka raqsga tushyapti."
+  },
+  {
+    "id": 375,
+    "topic": "38 • Texnologiya",
+    "word": "keyboard",
+    "ipa": "/ˈkiːbɔːd/",
+    "meaning": "klaviatura",
+    "example": "My keyboard is full of biscuit crumbs.",
+    "translation": "Klaviaturam pechenye ushoqlariga to‘la."
+  },
+  {
+    "id": 376,
+    "topic": "38 • Texnologiya",
+    "word": "mouse",
+    "ipa": "/maʊs/",
+    "meaning": "sichqoncha (kompyuter)",
+    "example": "My computer mouse needs no cheese.",
+    "translation": "Kompyuter sichqonchamga pishloq kerak emas."
+  },
+  {
+    "id": 377,
+    "topic": "38 • Texnologiya",
+    "word": "internet",
+    "ipa": "/ˈɪntənet/",
+    "meaning": "internet",
+    "example": "The wizard learns spells on the internet.",
+    "translation": "Sehrgar afsunlarni internetdan o‘rganadi."
+  },
+  {
+    "id": 378,
+    "topic": "38 • Texnologiya",
+    "word": "website",
+    "ipa": "/ˈwebsaɪt/",
+    "meaning": "veb-sayt",
+    "example": "This website sells shoes for ghosts.",
+    "translation": "Bu sayt arvohlar uchun tufli sotadi."
+  },
+  {
+    "id": 379,
+    "topic": "38 • Texnologiya",
+    "word": "email",
+    "ipa": "/ˈiːmeɪl/",
+    "meaning": "elektron xat",
+    "example": "I get an email from the moon.",
+    "translation": "Menga oydan elektron xat keladi."
+  },
+  {
+    "id": 380,
+    "topic": "38 • Texnologiya",
+    "word": "message",
+    "ipa": "/ˈmesɪdʒ/",
+    "meaning": "xabar",
+    "example": "The alien sends a message: More tea!",
+    "translation": "O‘zga sayyoralik xabar yuboradi: Yana choy!"
+  },
+  {
+    "id": 381,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "music",
+    "ipa": "/ˈmjuːzɪk/",
+    "meaning": "musiqa",
+    "example": "My plants grow faster with music.",
+    "translation": "O‘simliklarim musiqa bilan tezroq o‘sadi."
+  },
+  {
+    "id": 382,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "song",
+    "ipa": "/sɒŋ/",
+    "meaning": "qo‘shiq",
+    "example": "This song makes my fridge dance.",
+    "translation": "Bu qo‘shiq muzlatkichimni raqsga tushiradi."
+  },
+  {
+    "id": 383,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "film",
+    "ipa": "/fɪlm/",
+    "meaning": "film",
+    "example": "The film is about a brave spoon.",
+    "translation": "Film jasur qoshiq haqida."
+  },
+  {
+    "id": 384,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "game",
+    "ipa": "/ɡeɪm/",
+    "meaning": "o‘yin",
+    "example": "Our game has a very lazy dragon.",
+    "translation": "O‘yinimizda juda dangasa ajdarho bor."
+  },
+  {
+    "id": 385,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "sport",
+    "ipa": "/spɔːt/",
+    "meaning": "sport",
+    "example": "Pillow throwing is my favourite sport.",
+    "translation": "Yostiq uloqtirish sevimli sportim."
+  },
+  {
+    "id": 386,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "football",
+    "ipa": "/ˈfʊtbɔːl/",
+    "meaning": "futbol",
+    "example": "The elephants play football with a melon.",
+    "translation": "Fillar qovun bilan futbol o‘ynaydi."
+  },
+  {
+    "id": 387,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "tennis",
+    "ipa": "/ˈtenɪs/",
+    "meaning": "tennis",
+    "example": "The giants play tennis with the moon.",
+    "translation": "Devlar oy bilan tennis o‘ynaydi."
+  },
+  {
+    "id": 388,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "swimming",
+    "ipa": "/ˈswɪmɪŋ/",
+    "meaning": "suzish",
+    "example": "My robot takes swimming lessons in soup.",
+    "translation": "Robotim sho‘rvada suzishni o‘rganadi."
+  },
+  {
+    "id": 389,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "dance",
+    "ipa": "/dɑːns/",
+    "meaning": "raqs tushmoq",
+    "example": "My shoes dance without me.",
+    "translation": "Tuflilarim mensiz raqs tushadi."
+  },
+  {
+    "id": 390,
+    "topic": "39 • Bo‘sh vaqt",
+    "word": "hobby",
+    "ipa": "/ˈhɒbi/",
+    "meaning": "sevimli mashg‘ulot",
+    "example": "My hobby is drawing hats on potatoes.",
+    "translation": "Sevimli mashg‘ulotim kartoshkalarga shlyapa chizish."
+  },
+  {
+    "id": 391,
+    "topic": "40 • Pul va xarid",
+    "word": "money",
+    "ipa": "/ˈmʌni/",
+    "meaning": "pul",
+    "example": "My robot spends all its money on hats.",
+    "translation": "Robotim barcha pulini shlyapaga sarflaydi."
+  },
+  {
+    "id": 392,
+    "topic": "40 • Pul va xarid",
+    "word": "price",
+    "ipa": "/praɪs/",
+    "meaning": "narx",
+    "example": "The price of the moon is three biscuits.",
+    "translation": "Oyning narxi uchta pechenye."
+  },
+  {
+    "id": 393,
+    "topic": "40 • Pul va xarid",
+    "word": "cash",
+    "ipa": "/kæʃ/",
+    "meaning": "naqd pul",
+    "example": "The dragon pays in cash, not gold.",
+    "translation": "Ajdarho oltinda emas, naqd pulda to‘laydi."
+  },
+  {
+    "id": 394,
+    "topic": "40 • Pul va xarid",
+    "word": "card",
+    "ipa": "/kɑːd/",
+    "meaning": "bank kartasi",
+    "example": "My cat has its own bank card.",
+    "translation": "Mushugimning o‘z bank kartasi bor."
+  },
+  {
+    "id": 395,
+    "topic": "40 • Pul va xarid",
+    "word": "change",
+    "ipa": "/tʃeɪndʒ/",
+    "meaning": "qaytim",
+    "example": "The robot gives me buttons as change.",
+    "translation": "Robot menga qaytim o‘rniga tugma beradi."
+  },
+  {
+    "id": 396,
+    "topic": "40 • Pul va xarid",
+    "word": "bill",
+    "ipa": "/bɪl/",
+    "meaning": "hisob (to‘lov uchun)",
+    "example": "The giant's dinner bill is very long.",
+    "translation": "Devning kechki ovqat hisobi juda uzun."
+  },
+  {
+    "id": 397,
+    "topic": "40 • Pul va xarid",
+    "word": "coin",
+    "ipa": "/kɔɪn/",
+    "meaning": "tanga",
+    "example": "There is a chocolate coin in my wallet.",
+    "translation": "Hamyonimda shokolad tanga bor."
+  },
+  {
+    "id": 398,
+    "topic": "40 • Pul va xarid",
+    "word": "pound",
+    "ipa": "/paʊnd/",
+    "meaning": "funt sterling",
+    "example": "This tiny crown costs one pound.",
+    "translation": "Bu mitti toj bir funt turadi."
+  },
+  {
+    "id": 399,
+    "topic": "40 • Pul va xarid",
+    "word": "cheap",
+    "ipa": "/tʃiːp/",
+    "meaning": "arzon",
+    "example": "The spaceship is cheap, but it has no roof.",
+    "translation": "Kosmik kema arzon, lekin tomi yo‘q."
+  },
+  {
+    "id": 400,
+    "topic": "40 • Pul va xarid",
+    "word": "expensive",
+    "ipa": "/ɪkˈspensɪv/",
+    "meaning": "qimmat",
+    "example": "The expensive hat comes with a tiny butler.",
+    "translation": "Qimmat shlyapa bilan mitti xizmatkor ham beriladi."
+  },
+  {
+    "id": 401,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "cat",
+    "ipa": "/kæt/",
+    "meaning": "mushuk",
+    "example": "My cat is the boss of the sofa.",
+    "translation": "Mushugim divanning boshlig‘i."
+  },
+  {
+    "id": 402,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "dog",
+    "ipa": "/dɒɡ/",
+    "meaning": "it",
+    "example": "My dog wants a driving licence.",
+    "translation": "Itim haydovchilik guvohnomasi xohlaydi."
+  },
+  {
+    "id": 403,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "robot",
+    "ipa": "/ˈrəʊbɒt/",
+    "meaning": "robot",
+    "example": "My robot cries when the Wi-Fi stops.",
+    "translation": "Wi-Fi o‘chsa, robotim yig‘laydi."
+  },
+  {
+    "id": 404,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "dragon",
+    "ipa": "/ˈdræɡən/",
+    "meaning": "ajdarho",
+    "example": "The dragon cooks toast with its nose.",
+    "translation": "Ajdarho burni bilan non qovuradi."
+  },
+  {
+    "id": 405,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "monster",
+    "ipa": "/ˈmɒnstə/",
+    "meaning": "maxluq",
+    "example": "The monster is afraid of homework.",
+    "translation": "Maxluq uy vazifasidan qo‘rqadi."
+  },
+  {
+    "id": 406,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "alien",
+    "ipa": "/ˈeɪliən/",
+    "meaning": "o‘zga sayyoralik",
+    "example": "The alien wants directions to the moon.",
+    "translation": "O‘zga sayyoralik oyga yo‘l so‘rayapti."
+  },
+  {
+    "id": 407,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "snowman",
+    "ipa": "/ˈsnəʊmæn/",
+    "meaning": "qordan yasalgan odam",
+    "example": "The snowman wants a summer holiday.",
+    "translation": "Qorbobo yozgi ta’til xohlaydi."
+  },
+  {
+    "id": 408,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "wizard",
+    "ipa": "/ˈwɪzəd/",
+    "meaning": "sehrgar",
+    "example": "The wizard turns my homework into soup.",
+    "translation": "Sehrgar uy vazifamni sho‘rvaga aylantiradi."
+  },
+  {
+    "id": 409,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "giant",
+    "ipa": "/ˈdʒaɪənt/",
+    "meaning": "dev",
+    "example": "The giant uses a bus as a slipper.",
+    "translation": "Dev avtobusni shippak qilib kiyadi."
+  },
+  {
+    "id": 410,
+    "topic": "41 • Kulgili qahramonlar",
+    "word": "pirate",
+    "ipa": "/ˈpaɪrət/",
+    "meaning": "dengiz qaroqchisi",
+    "example": "The pirate is looking for chocolate coins.",
+    "translation": "Qaroqchi shokolad tangalarni qidiryapti."
+  },
+  {
+    "id": 411,
+    "topic": "42 • Hayvonlar",
+    "word": "rabbit",
+    "ipa": "/ˈræbɪt/",
+    "meaning": "quyon",
+    "example": "The rabbit buys a carrot-shaped car.",
+    "translation": "Quyon sabzi shaklidagi mashina sotib oladi."
+  },
+  {
+    "id": 412,
+    "topic": "42 • Hayvonlar",
+    "word": "horse",
+    "ipa": "/hɔːs/",
+    "meaning": "ot",
+    "example": "My horse takes the bus to work.",
+    "translation": "Otim ishga avtobusda boradi."
+  },
+  {
+    "id": 413,
+    "topic": "42 • Hayvonlar",
+    "word": "cow",
+    "ipa": "/kaʊ/",
+    "meaning": "sigir",
+    "example": "The cow orders milk at the café.",
+    "translation": "Sigir kafeda sut buyuradi."
+  },
+  {
+    "id": 414,
+    "topic": "42 • Hayvonlar",
+    "word": "sheep",
+    "ipa": "/ʃiːp/",
+    "meaning": "qo‘y",
+    "example": "The sheep knits a scarf for winter.",
+    "translation": "Qo‘y qish uchun sharf to‘qiydi."
+  },
+  {
+    "id": 415,
+    "topic": "42 • Hayvonlar",
+    "word": "goat",
+    "ipa": "/ɡəʊt/",
+    "meaning": "echki",
+    "example": "The goat eats the restaurant menu.",
+    "translation": "Echki restoran menyusini yeydi."
+  },
+  {
+    "id": 416,
+    "topic": "42 • Hayvonlar",
+    "word": "pig",
+    "ipa": "/pɪɡ/",
+    "meaning": "cho‘chqa",
+    "example": "The pig wears boots in the mud.",
+    "translation": "Cho‘chqa loyda etik kiyadi."
+  },
+  {
+    "id": 417,
+    "topic": "42 • Hayvonlar",
+    "word": "duck",
+    "ipa": "/dʌk/",
+    "meaning": "o‘rdak",
+    "example": "The duck carries an umbrella in the rain.",
+    "translation": "O‘rdak yomg‘irda soyabon ko‘tarib yuradi."
+  },
+  {
+    "id": 418,
+    "topic": "42 • Hayvonlar",
+    "word": "bird",
+    "ipa": "/bɜːd/",
+    "meaning": "qush",
+    "example": "The bird misses its flight at the airport.",
+    "translation": "Qush aeroportda parvoziga kechikadi."
+  },
+  {
+    "id": 419,
+    "topic": "42 • Hayvonlar",
+    "word": "lion",
+    "ipa": "/ˈlaɪən/",
+    "meaning": "arslon",
+    "example": "The lion asks for a tiny haircut.",
+    "translation": "Arslon sochini ozgina oldirmoqchi."
+  },
+  {
+    "id": 420,
+    "topic": "42 • Hayvonlar",
+    "word": "elephant",
+    "ipa": "/ˈelɪfənt/",
+    "meaning": "fil",
+    "example": "The elephant hides behind a small flower.",
+    "translation": "Fil kichkina gul orqasida yashirinadi."
+  },
+  {
+    "id": 421,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "feel",
+    "ipa": "/fiːl/",
+    "meaning": "his qilmoq",
+    "example": "I feel like a sleepy potato.",
+    "translation": "O‘zimni uyqusiragan kartoshkadek his qilyapman."
+  },
+  {
+    "id": 422,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "see",
+    "ipa": "/siː/",
+    "meaning": "ko‘rmoq",
+    "example": "I see a penguin in my mirror.",
+    "translation": "Ko‘zgumda pingvinni ko‘ryapman."
+  },
+  {
+    "id": 423,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "hear",
+    "ipa": "/hɪə/",
+    "meaning": "eshitmoq",
+    "example": "I hear music inside my sandwich.",
+    "translation": "Sendvichim ichidan musiqa eshityapman."
+  },
+  {
+    "id": 424,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "smell",
+    "ipa": "/smel/",
+    "meaning": "hidini sezmoq",
+    "example": "I can smell cake from another planet.",
+    "translation": "Boshqa sayyoradan tort hidini seza olaman."
+  },
+  {
+    "id": 425,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "taste",
+    "ipa": "/teɪst/",
+    "meaning": "tatib ko‘rmoq",
+    "example": "Taste the soup, brave robot!",
+    "translation": "Sho‘rvani tatib ko‘r, jasur robot!"
+  },
+  {
+    "id": 426,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "know",
+    "ipa": "/nəʊ/",
+    "meaning": "bilmoq",
+    "example": "I know the moon's secret name.",
+    "translation": "Oyning maxfiy ismini bilaman."
+  },
+  {
+    "id": 427,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "think",
+    "ipa": "/θɪŋk/",
+    "meaning": "o‘ylamoq",
+    "example": "I think my cat needs a job.",
+    "translation": "Menimcha, mushugimga ish kerak."
+  },
+  {
+    "id": 428,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "understand",
+    "ipa": "/ˌʌndəˈstænd/",
+    "meaning": "tushunmoq",
+    "example": "Only my robot can understand this duck.",
+    "translation": "Bu o‘rdakni faqat robotim tushuna oladi."
+  },
+  {
+    "id": 429,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "remember",
+    "ipa": "/rɪˈmembə/",
+    "meaning": "eslamoq; yodda tutmoq",
+    "example": "Remember to feed your pet cloud.",
+    "translation": "Uy bulutingizga ovqat berishni unutmang."
+  },
+  {
+    "id": 430,
+    "topic": "43 • Sezish va fikrlash",
+    "word": "forget",
+    "ipa": "/fəˈɡet/",
+    "meaning": "unutmoq",
+    "example": "Do not forget your invisible hat.",
+    "translation": "Ko‘rinmas shlyapangizni unutmang."
+  },
+  {
+    "id": 431,
+    "topic": "44 • Voqea va muloqot",
+    "word": "begin",
+    "ipa": "/bɪˈɡɪn/",
+    "meaning": "boshlanmoq; boshlamoq",
+    "example": "The lessons begin when the dragon wakes.",
+    "translation": "Darslar ajdarho uyg‘onganda boshlanadi."
+  },
+  {
+    "id": 432,
+    "topic": "44 • Voqea va muloqot",
+    "word": "start",
+    "ipa": "/stɑːt/",
+    "meaning": "boshlamoq",
+    "example": "Let us start a club for lonely socks.",
+    "translation": "Keling, yolg‘iz paypoqlar klubini ochamiz."
+  },
+  {
+    "id": 433,
+    "topic": "44 • Voqea va muloqot",
+    "word": "finish",
+    "ipa": "/ˈfɪnɪʃ/",
+    "meaning": "tugatmoq",
+    "example": "Please finish your soup before it escapes.",
+    "translation": "Sho‘rvangiz qochmasidan uni ichib tugating."
+  },
+  {
+    "id": 434,
+    "topic": "44 • Voqea va muloqot",
+    "word": "stop",
+    "ipa": "/stɒp/",
+    "meaning": "to‘xtamoq; to‘xtatmoq",
+    "example": "Stop the bus; my carrot is still outside!",
+    "translation": "Avtobusni to‘xtating; sabzim tashqarida qoldi!"
+  },
+  {
+    "id": 435,
+    "topic": "44 • Voqea va muloqot",
+    "word": "wait",
+    "ipa": "/weɪt/",
+    "meaning": "kutmoq",
+    "example": "Wait for me, flying sandwich!",
+    "translation": "Meni kut, uchar sendvich!"
+  },
+  {
+    "id": 436,
+    "topic": "44 • Voqea va muloqot",
+    "word": "live",
+    "ipa": "/lɪv/",
+    "meaning": "yashamoq",
+    "example": "I live next to a very noisy cloud.",
+    "translation": "Men juda shovqinchi bulut yonida yashayman."
+  },
+  {
+    "id": 437,
+    "topic": "44 • Voqea va muloqot",
+    "word": "visit",
+    "ipa": "/ˈvɪzɪt/",
+    "meaning": "tashrif buyurmoq",
+    "example": "We visit our grandmother on Mars.",
+    "translation": "Biz Marsdagi buvimiznikiga boramiz."
+  },
+  {
+    "id": 438,
+    "topic": "44 • Voqea va muloqot",
+    "word": "meet",
+    "ipa": "/miːt/",
+    "meaning": "uchrashmoq; tanishmoq",
+    "example": "Meet my new teacher, Mr Dragon.",
+    "translation": "Yangi ustozim Janob Ajdarho bilan tanishing."
+  },
+  {
+    "id": 439,
+    "topic": "44 • Voqea va muloqot",
+    "word": "call",
+    "ipa": "/kɔːl/",
+    "meaning": "qo‘ng‘iroq qilmoq",
+    "example": "Call the dentist; my robot has a tooth!",
+    "translation": "Tish shifokoriga qo‘ng‘iroq qiling; robotimda tish chiqdi!"
+  },
+  {
+    "id": 440,
+    "topic": "44 • Voqea va muloqot",
+    "word": "send",
+    "ipa": "/send/",
+    "meaning": "yubormoq",
+    "example": "I send birthday cards to my shoes.",
+    "translation": "Men tuflilarimga tug‘ilgan kun tabrigi yuboraman."
+  },
+  {
+    "id": 441,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "move",
+    "ipa": "/muːv/",
+    "meaning": "siljimoq; ko‘chirmoq",
+    "example": "Do not move; the cake is watching us.",
+    "translation": "Qimirlamang; tort bizni kuzatyapti."
+  },
+  {
+    "id": 442,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "turn",
+    "ipa": "/tɜːn/",
+    "meaning": "burilmoq",
+    "example": "Turn left at the dancing tree.",
+    "translation": "Raqs tushayotgan daraxt yonida chapga buriling."
+  },
+  {
+    "id": 443,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "carry",
+    "ipa": "/ˈkæri/",
+    "meaning": "ko‘tarib yurmoq",
+    "example": "I carry my tiny dragon in a cup.",
+    "translation": "Mitti ajdarhomni piyolada ko‘tarib yuraman."
+  },
+  {
+    "id": 444,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "wear",
+    "ipa": "/weə/",
+    "meaning": "kiyib yurmoq",
+    "example": "My robots wear slippers to work.",
+    "translation": "Robotlarim ishga shippak kiyib boradi."
+  },
+  {
+    "id": 445,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "lend",
+    "ipa": "/lend/",
+    "meaning": "vaqtincha bermoq",
+    "example": "Can you lend me your flying carpet?",
+    "translation": "Uchar gilamingizni vaqtincha berib turasizmi?"
+  },
+  {
+    "id": 446,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "borrow",
+    "ipa": "/ˈbɒrəʊ/",
+    "meaning": "vaqtincha olmoq",
+    "example": "May I borrow your giant spoon?",
+    "translation": "Ulkan qoshig‘ingizni vaqtincha olsam bo‘ladimi?"
+  },
+  {
+    "id": 447,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "pay",
+    "ipa": "/peɪ/",
+    "meaning": "to‘lamoq",
+    "example": "Can I pay with chocolate coins?",
+    "translation": "Shokolad tangalar bilan to‘lasam bo‘ladimi?"
+  },
+  {
+    "id": 448,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "cost",
+    "ipa": "/kɒst/",
+    "meaning": "narxi bo‘lmoq",
+    "example": "How much does a pet cloud cost?",
+    "translation": "Uyda boqiladigan bulut qancha turadi?"
+  },
+  {
+    "id": 449,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "spend",
+    "ipa": "/spend/",
+    "meaning": "sarflamoq",
+    "example": "I spend all my money on robot hats.",
+    "translation": "Men barcha pulimni robot shlyapalariga sarflayman."
+  },
+  {
+    "id": 450,
+    "topic": "45 • Kundalik ishlar va xarid",
+    "word": "save",
+    "ipa": "/seɪv/",
+    "meaning": "jamg‘armoq",
+    "example": "I save money for a tiny spaceship.",
+    "translation": "Mitti kosmik kema uchun pul yig‘aman."
+  },
+  {
+    "id": 451,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "long",
+    "ipa": "/lɒŋ/",
+    "meaning": "uzun",
+    "example": "My long scarf reaches the next street.",
+    "translation": "Uzun sharfim keyingi ko‘chagacha yetadi."
+  },
+  {
+    "id": 452,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "short",
+    "ipa": "/ʃɔːt/",
+    "meaning": "kalta; qisqa",
+    "example": "The giant's short trousers fit our house.",
+    "translation": "Devning kalta shimi uyimizga mos keladi."
+  },
+  {
+    "id": 453,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "wide",
+    "ipa": "/waɪd/",
+    "meaning": "keng",
+    "example": "The wide hat is an umbrella for mice.",
+    "translation": "Keng shlyapa sichqonlar uchun soyabon."
+  },
+  {
+    "id": 454,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "narrow",
+    "ipa": "/ˈnærəʊ/",
+    "meaning": "tor",
+    "example": "This narrow door is for spaghetti only.",
+    "translation": "Bu tor eshik faqat spagetti uchun."
+  },
+  {
+    "id": 455,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "heavy",
+    "ipa": "/ˈhevi/",
+    "meaning": "og‘ir",
+    "example": "My heavy sandwich needs a trolley.",
+    "translation": "Og‘ir sendvichimga aravacha kerak."
+  },
+  {
+    "id": 456,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "light",
+    "ipa": "/laɪt/",
+    "meaning": "yengil",
+    "example": "The light robot floats like a balloon.",
+    "translation": "Yengil robot shardek uchib yuradi."
+  },
+  {
+    "id": 457,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "strong",
+    "ipa": "/strɒŋ/",
+    "meaning": "kuchli",
+    "example": "The strong ant carries my school bag.",
+    "translation": "Kuchli chumoli maktab sumkamni ko‘taryapti."
+  },
+  {
+    "id": 458,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "weak",
+    "ipa": "/wiːk/",
+    "meaning": "kuchsiz",
+    "example": "The weak giant cannot lift a biscuit.",
+    "translation": "Kuchsiz dev pechenyeni ko‘tara olmaydi."
+  },
+  {
+    "id": 459,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "quiet",
+    "ipa": "/ˈkwaɪət/",
+    "meaning": "jim; sokin",
+    "example": "The quiet monster whispers in the library.",
+    "translation": "Sokin maxluq kutubxonada pichirlaydi."
+  },
+  {
+    "id": 460,
+    "topic": "46 • O‘lcham va xususiyatlar",
+    "word": "noisy",
+    "ipa": "/ˈnɔɪzi/",
+    "meaning": "shovqinli",
+    "example": "My noisy socks sing in the wardrobe.",
+    "translation": "Shovqinchi paypoqlarim javonda kuylaydi."
+  },
+  {
+    "id": 461,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "January",
+    "ipa": "/ˈdʒænjuəri/",
+    "meaning": "yanvar",
+    "example": "In January, my dragon wears three coats.",
+    "translation": "Yanvarda ajdarhom uchta palto kiyadi."
+  },
+  {
+    "id": 462,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "February",
+    "ipa": "/ˈfebruəri/",
+    "meaning": "fevral",
+    "example": "In February, my robot sends love letters.",
+    "translation": "Fevralda robotim sevgi maktublari yuboradi."
+  },
+  {
+    "id": 463,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "March",
+    "ipa": "/mɑːtʃ/",
+    "meaning": "mart",
+    "example": "In March, my umbrella starts dancing.",
+    "translation": "Martda soyabonim raqsga tushishni boshlaydi."
+  },
+  {
+    "id": 464,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "April",
+    "ipa": "/ˈeɪprəl/",
+    "meaning": "aprel",
+    "example": "In April, my garden grows chocolate eggs.",
+    "translation": "Aprelda bog‘imda shokolad tuxumlar o‘sadi."
+  },
+  {
+    "id": 465,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "May",
+    "ipa": "/meɪ/",
+    "meaning": "may",
+    "example": "In May, the trees try on new leaves.",
+    "translation": "Mayda daraxtlar yangi barglarini kiyib ko‘radi."
+  },
+  {
+    "id": 466,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "June",
+    "ipa": "/dʒuːn/",
+    "meaning": "iyun",
+    "example": "In June, my snowman moves into the fridge.",
+    "translation": "Iyunda qorbobom muzlatkichga ko‘chib o‘tadi."
+  },
+  {
+    "id": 467,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "July",
+    "ipa": "/dʒuˈlaɪ/",
+    "meaning": "iyul",
+    "example": "In July, the sun needs a holiday.",
+    "translation": "Iyulda quyoshga ta’til kerak."
+  },
+  {
+    "id": 468,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "August",
+    "ipa": "/ˈɔːɡəst/",
+    "meaning": "avgust",
+    "example": "In August, my ice cream runs away.",
+    "translation": "Avgustda muzqaymog‘im qochib ketadi."
+  },
+  {
+    "id": 469,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "September",
+    "ipa": "/sepˈtembə/",
+    "meaning": "sentabr",
+    "example": "In September, my pencils go to school.",
+    "translation": "Sentabrda qalamlarim maktabga boradi."
+  },
+  {
+    "id": 470,
+    "topic": "47 • Oylar: yanvar–oktabr",
+    "word": "October",
+    "ipa": "/ɒkˈtəʊbə/",
+    "meaning": "oktabr",
+    "example": "In October, my pumpkin wears glasses.",
+    "translation": "Oktabrda qovog‘im ko‘zoynak taqadi."
+  },
+  {
+    "id": 471,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "November",
+    "ipa": "/nəʊˈvembə/",
+    "meaning": "noyabr",
+    "example": "In November, my teddy bear wants tea.",
+    "translation": "Noyabrda o‘yinchoq ayig‘im choy xohlaydi."
+  },
+  {
+    "id": 472,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "December",
+    "ipa": "/dɪˈsembə/",
+    "meaning": "dekabr",
+    "example": "In December, my robot wraps itself as a gift.",
+    "translation": "Dekabrda robotim o‘zini sovg‘a qilib o‘raydi."
+  },
+  {
+    "id": 473,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "spring",
+    "ipa": "/sprɪŋ/",
+    "meaning": "bahor",
+    "example": "In spring, my garden wakes up hungry.",
+    "translation": "Bahorda bog‘im och holda uyg‘onadi."
+  },
+  {
+    "id": 474,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "summer",
+    "ipa": "/ˈsʌmə/",
+    "meaning": "yoz",
+    "example": "In summer, the dragon sells ice cream.",
+    "translation": "Yozda ajdarho muzqaymoq sotadi."
+  },
+  {
+    "id": 475,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "autumn",
+    "ipa": "/ˈɔːtəm/",
+    "meaning": "kuz",
+    "example": "In autumn, the trees drop their clothes.",
+    "translation": "Kuzda daraxtlar kiyimlarini tashlaydi."
+  },
+  {
+    "id": 476,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "winter",
+    "ipa": "/ˈwɪntə/",
+    "meaning": "qish",
+    "example": "In winter, my bicycle wears a scarf.",
+    "translation": "Qishda velosipedim sharf taqadi."
+  },
+  {
+    "id": 477,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "weather",
+    "ipa": "/ˈweðə/",
+    "meaning": "ob-havo",
+    "example": "The weather is too wet for my paper car.",
+    "translation": "Qog‘oz mashinam uchun ob-havo juda nam."
+  },
+  {
+    "id": 478,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "sunny",
+    "ipa": "/ˈsʌni/",
+    "meaning": "quyoshli",
+    "example": "On sunny days, my robot wears two hats.",
+    "translation": "Quyoshli kunlarda robotim ikkita shlyapa kiyadi."
+  },
+  {
+    "id": 479,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "rainy",
+    "ipa": "/ˈreɪni/",
+    "meaning": "yomg‘irli",
+    "example": "On rainy days, the ducks borrow my boots.",
+    "translation": "Yomg‘irli kunlarda o‘rdaklar etigimni olib turadi."
+  },
+  {
+    "id": 480,
+    "topic": "48 • Oylar, fasllar va ob-havo",
+    "word": "windy",
+    "ipa": "/ˈwɪndi/",
+    "meaning": "shamolli",
+    "example": "It is windy; my hat is in another town.",
+    "translation": "Havo shamolli; shlyapam boshqa shaharga ketdi."
+  },
+  {
+    "id": 481,
+    "topic": "49 • Muloqot va odob",
+    "word": "hello",
+    "ipa": "/həˈləʊ/",
+    "meaning": "salom",
+    "example": "Say hello to my pet potato.",
+    "translation": "Uy kartoshkamga salom ayting."
+  },
+  {
+    "id": 482,
+    "topic": "49 • Muloqot va odob",
+    "word": "goodbye",
+    "ipa": "/ˌɡʊdˈbaɪ/",
+    "meaning": "xayr",
+    "example": "Say goodbye to your flying hat.",
+    "translation": "Uchib ketayotgan shlyapangiz bilan xayrlashing."
+  },
+  {
+    "id": 483,
+    "topic": "49 • Muloqot va odob",
+    "word": "please",
+    "ipa": "/pliːz/",
+    "meaning": "iltimos",
+    "example": "One ticket to the moon, please.",
+    "translation": "Iltimos, oyga bitta chipta bering."
+  },
+  {
+    "id": 484,
+    "topic": "49 • Muloqot va odob",
+    "word": "thanks",
+    "ipa": "/θæŋks/",
+    "meaning": "rahmat",
+    "example": "Thanks for the invisible birthday cake!",
+    "translation": "Ko‘rinmas tug‘ilgan kun torti uchun rahmat!"
+  },
+  {
+    "id": 485,
+    "topic": "49 • Muloqot va odob",
+    "word": "sorry",
+    "ipa": "/ˈsɒri/",
+    "meaning": "uzr; afsusdaman",
+    "example": "Sorry, my dragon ate your umbrella.",
+    "translation": "Uzr, ajdarhom soyaboningizni yeb qo‘ydi."
+  },
+  {
+    "id": 486,
+    "topic": "49 • Muloqot va odob",
+    "word": "welcome",
+    "ipa": "/ˈwelkəm/",
+    "meaning": "xush kelibsiz",
+    "example": "Welcome to the school for talking socks.",
+    "translation": "Gapiradigan paypoqlar maktabiga xush kelibsiz."
+  },
+  {
+    "id": 487,
+    "topic": "49 • Muloqot va odob",
+    "word": "yes",
+    "ipa": "/jes/",
+    "meaning": "ha",
+    "example": "Yes, that sandwich is my best friend.",
+    "translation": "Ha, o‘sha sendvich eng yaqin do‘stim."
+  },
+  {
+    "id": 488,
+    "topic": "49 • Muloqot va odob",
+    "word": "no",
+    "ipa": "/nəʊ/",
+    "meaning": "yo‘q",
+    "example": "No, you cannot park your dragon here.",
+    "translation": "Yo‘q, ajdarhoyingizni bu yerga qo‘ya olmaysiz."
+  },
+  {
+    "id": 489,
+    "topic": "49 • Muloqot va odob",
+    "word": "okay",
+    "ipa": "/ˌəʊˈkeɪ/",
+    "meaning": "xo‘p; mayli",
+    "example": "Okay, the robot can have my cake.",
+    "translation": "Mayli, robot tortimni olishi mumkin."
+  },
+  {
+    "id": 490,
+    "topic": "49 • Muloqot va odob",
+    "word": "excuse",
+    "ipa": "/ɪkˈskjuːz/",
+    "meaning": "kechirmoq; uzr so‘ramoq",
+    "example": "Excuse me, is this seat for dinosaurs?",
+    "translation": "Kechirasiz, bu o‘rindiq dinozavrlar uchunmi?"
+  },
+  {
+    "id": 491,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "be",
+    "ipa": "/biː/",
+    "meaning": "bo‘lmoq",
+    "example": "I want to be a professional biscuit taster.",
+    "translation": "Men professional pechenye tatib ko‘ruvchi bo‘lmoqchiman."
+  },
+  {
+    "id": 492,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "can",
+    "ipa": "/kæn/",
+    "meaning": "qila olmoq",
+    "example": "My goldfish can play the piano.",
+    "translation": "Oltin balig‘im pianino chala oladi."
+  },
+  {
+    "id": 493,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "must",
+    "ipa": "/mʌst/",
+    "meaning": "shart; kerak",
+    "example": "You must wear a hat in this banana club.",
+    "translation": "Bu banan klubida shlyapa kiyishingiz shart."
+  },
+  {
+    "id": 494,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "try",
+    "ipa": "/traɪ/",
+    "meaning": "urinmoq; sinab ko‘rmoq",
+    "example": "Try to wake the sleeping sandwich.",
+    "translation": "Uxlayotgan sendvichni uyg‘otishga urinib ko‘ring."
+  },
+  {
+    "id": 495,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "choose",
+    "ipa": "/tʃuːz/",
+    "meaning": "tanlamoq",
+    "example": "Choose a hat for your pet cloud.",
+    "translation": "Uy bulutingizga shlyapa tanlang."
+  },
+  {
+    "id": 496,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "show",
+    "ipa": "/ʃəʊ/",
+    "meaning": "ko‘rsatmoq",
+    "example": "Show the alien how to use a spoon.",
+    "translation": "O‘zga sayyoralikka qoshiq ishlatishni ko‘rsating."
+  },
+  {
+    "id": 497,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "tell",
+    "ipa": "/tel/",
+    "meaning": "aytmoq; so‘zlab bermoq",
+    "example": "Tell me why your shoes are singing.",
+    "translation": "Tuflilaringiz nega kuylayotganini ayting."
+  },
+  {
+    "id": 498,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "spell",
+    "ipa": "/spel/",
+    "meaning": "harflab aytmoq",
+    "example": "Can your clever cabbage spell its name?",
+    "translation": "Aqlli karamingiz ismini harflab ayta oladimi?"
+  },
+  {
+    "id": 499,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "check",
+    "ipa": "/tʃek/",
+    "meaning": "tekshirmoq",
+    "example": "Check your bag for tiny dinosaurs.",
+    "translation": "Sumkangizda mitti dinozavr bor-yo‘qligini tekshiring."
+  },
+  {
+    "id": 500,
+    "topic": "50 • Savol-javob va zarur fe’llar",
+    "word": "practise",
+    "ipa": "/ˈpræktɪs/",
+    "meaning": "mashq qilmoq",
+    "example": "I practise English with my polite monster.",
+    "translation": "Men odobli maxluqim bilan inglizcha mashq qilaman."
+  }
+]

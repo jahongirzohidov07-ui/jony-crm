@@ -3,6 +3,25 @@ import calendar
 import math
 import roles
 
+
+def examiner_salary_goal(pay, today):
+    """Display milestones only; the established examiner payroll stays unchanged."""
+    days = calendar.monthrange(today.year, today.month)[1] - today.day + 1
+    result = {"next_salary": None, "gap_points": None, "target_points": None,
+              "progress": 0, "days_left": days if pay["period"] == today.strftime("%Y-%m") else 0}
+    if pay.get("volunteer"):
+        return {**result, "status": "volunteer"}
+    if pay.get("no_exams") or not pay.get("exam_count"):
+        return {**result, "status": "no_exams", "next_salary": pay["min"]}
+    if pay["salary"] >= pay["max"]:
+        return {**result, "status": "maximum", "progress": 100}
+    target = min((math.floor(pay["salary"] / 100_000) + 1) * 100_000, pay["max"])
+    points = target / pay["unit"]
+    return {**result, "status": "active", "next_salary": target,
+            "target_points": points,
+            "gap_points": round(max(0, points - pay["points"]), 2),
+            "progress": round(min(100, max(0, pay["points"] / points * 100)), 1)}
+
 FIXED_SALARY_TIERS = [(0, 100, 1_500_000), (101, 150, 2_000_000),
                       (151, 200, 3_000_000), (201, 300, 5_000_000),
                       (301, None, 8_000_000)]

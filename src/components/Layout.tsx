@@ -37,6 +37,7 @@ import type { Branch } from "../lib/api";
 import { QuickPayment } from "./QuickPayment";
 import { DrillTimer } from "./DrillTimer";
 import { AdminSalaryFloat } from "./AdminSalaryCoach";
+import { SmmSalaryFloat } from "./SmmSalaryCoach";
 import { PasswordInput } from "./PasswordInput";
 
 // Menyu bandlari endi ./navItems.ts da (buildNav) — JonyOS xodim
@@ -528,6 +529,7 @@ export default function Layout() {
           ketganda sekundomer o'chib qolyabdi") — mashq ketayotgan
           bo'lsa har qanday sahifada osilib turadi. */}
       <DrillTimer />
+      {user?.role === "smm_manager" && <SmmSalaryFloat />}
       {/* Administratorga oylik va keyingi bonus har sahifada (2026-10-02) */}
       {(user?.role === SALES_MANAGER || user?.role === ADMINISTRATOR) && (
         <AdminSalaryFloat />

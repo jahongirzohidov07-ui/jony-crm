@@ -86,10 +86,43 @@ const MODES = [
  * kirganda list korinishida 1-dars - Shaping the mindset ..."). */
 export default function LessonPlans() {
   const { course, no } = useParams();
-  if (course === "intensive") return <IntensivePlans />;
+  if (course === "intensive") return <><div className="px-6 md:px-8 max-w-5xl"><CourseNavigation active={course} /></div><IntensivePlans /></>;
+  const language = LANGUAGE_COURSES.find((item) => item.key === course);
+  if (language) return <LanguagePlans language={language} />;
   if (course && no) return <LessonView course={course} no={Number(no)} />;
   if (course) return <LessonList course={course} />;
   return <LevelList />;
+}
+
+const LANGUAGE_COURSES = [
+  { key: "german", title: "Nemis tili", native: "Deutsch" },
+  { key: "russian", title: "Rus tili", native: "Русский язык" },
+  { key: "korean", title: "Koreys tili", native: "한국어" },
+] as const;
+
+function CourseNavigation({ active = "standard" }: { active?: string }) {
+  const courses = [{ key: "standard", title: "Standard English" }, { key: "intensive", title: "Intensive" }, ...LANGUAGE_COURSES];
+  return <nav aria-label="O‘quv yo‘nalishi" className="my-5 flex flex-wrap gap-2 rounded-xl bg-slate-100 p-1">
+    {courses.map((item) => <Link key={item.key} to={item.key === "standard" ? "/plans" : `/plans/${item.key}`}
+      aria-current={active === item.key ? "page" : undefined}
+      className={`flex-1 min-w-28 rounded-lg px-4 py-3 text-center text-sm font-semibold ${active === item.key ? "bg-white text-brand-700 shadow-sm" : "text-slate-600 hover:bg-white"}`}>
+      {item.title}
+    </Link>)}
+  </nav>;
+}
+
+function LanguagePlans({ language }: { language: typeof LANGUAGE_COURSES[number] }) {
+  return <div className="p-6 md:p-8 max-w-5xl">
+    <h1 className="text-xl font-semibold text-slate-900 flex items-center gap-2"><BookOpen size={20} className="text-brand-600" /> Dars rejalari</h1>
+    <CourseNavigation active={language.key} />
+    <section className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
+      <p className="text-sm font-medium text-brand-600">{language.native}</p>
+      <h2 className="mt-2 text-2xl font-semibold text-slate-900">{language.title}</h2>
+      <span className="mt-3 inline-block rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">Dastur tayyorlanmoqda</span>
+      <p className="mt-5 max-w-xl text-sm leading-6 text-slate-600">Bu yo‘nalish uchun darslar hali qo‘shilmagan. Kurs xaritasi, mavzular, lug‘at va mashqlar dastur tasdiqlangach shu bo‘limga joylashtiriladi.</p>
+      <div className="mt-6 flex items-center gap-3 rounded-xl bg-slate-50 p-4 text-sm text-slate-500"><BookOpen size={20} /> Hozircha 0 ta dars</div>
+    </section>
+  </div>;
 }
 
 function useLevels() {
@@ -108,10 +141,7 @@ function LevelList() {
       <h1 className="text-xl font-semibold text-slate-900 mb-1 flex items-center gap-2">
         <BookOpen size={20} className="text-brand-600" /> Dars rejalari
       </h1>
-      <nav aria-label="O‘quv yo‘nalishi" className="my-5 flex gap-2 rounded-xl bg-slate-100 p-1">
-        <Link to="/plans" aria-current="page" className="flex-1 rounded-lg bg-white px-4 py-3 text-center text-sm font-semibold text-brand-700 shadow-sm">Standard English</Link>
-        <Link to="/plans/intensive" className="flex-1 rounded-lg px-4 py-3 text-center text-sm font-semibold text-slate-600 hover:bg-white">Intensive</Link>
-      </nav>
+      <CourseNavigation />
       <p className="text-sm text-slate-500 mb-5">
         Darajani tanlang. Har mavzu — bitta 120 daqiqalik dars: grammatika, 20/40/60 lug'at,
         mashqlar, reading, listening, uyga vazifa va <b>jonli o'yin</b> (Kahoot uslubi).

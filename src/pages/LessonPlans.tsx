@@ -26,7 +26,9 @@ type LiveGroup = { id: number; name: string; students: { id: number; name: strin
 export type Ex = { title: string; type?: string; instr?: string; items?: string[];
   answers?: string[] | string; note?: string; box?: string[]; why?: string[];
   layout?: "grid" | "pairs" | "flow" | "mcq" | "tfng" | "match" | "qa" | "list";
-  head?: string[]; rows?: string[][] };
+  head?: string[]; rows?: string[][];
+  /** Eski format: jadval (1-qator sarlavha) — items yo'q (1.0 "Find someone who") */
+  table?: string[][] };
 /** IELTS 5.0 (Introduction): bitta darsda bir nechta reading/listening,
  * har birida savol turi, paraphrase ro'yxati, javob izohi va transkript
  * (2026-09-20, Jahongir so'rovi). */
@@ -47,6 +49,8 @@ type Lesson = {
   readings?: Reading[];
   listenings?: Listen[];
   homework_intro: string[]; homework: Ex[]; normativ: [string, string, string][];
+  /** Darsga yozilgan Kahoot savollari (jonli o'yin shundan quriladi) */
+  kahoot?: unknown[];
 };
 
 /** Chop etiladigan o'yin (2026-09-28, Jahongir: "dars rejalari ichiga xar
@@ -199,11 +203,16 @@ type Tab = "plan" | "grammar" | "vocab" | "class" | "games" | "reading" | "liste
 
 /** Dars qaysi bo'limlarga ega — shular ko'rinadi. Skill darslarida
  * (IELTS 5.0) grammatika/lug'at yo'q, o'rniga "Savol turi" turadi. */
-function tabsFor(L: Lesson, games = 0): { key: Tab; label: string }[] {
+/** Ko'nikma kurslari: "grammar" maydonida savol turi strategiyasi turadi
+ * (audit: UI "Grammatika" deb ko'rsatardi). Backend: liveplay.SKILL_COURSES. */
+const SKILL_COURSES = ["ielts_5_0", "ielts_6_0", "ielts_7_0"];
+
+function tabsFor(L: Lesson, games = 0, course = ""): { key: Tab; label: string }[] {
   const G = L.grammar ?? ({} as Lesson["grammar"]);
   const V = L.vocab ?? ({} as Lesson["vocab"]);
   const words = (V.core ?? []).length + (V.strong ?? []).length + (V.super ?? []).length;
-  const skill = words === 0;
+  const skillCourse = SKILL_COURSES.includes(course);
+  const skill = skillCourse || words === 0;
   const out: { key: Tab; label: string }[] = [{ key: "plan", label: "Reja" }];
   // O'yinlar — Rejadan keyin darhol (2026-09-28, Jahongir: "qani oyinlar
   // chiqmadiku hammasini chiqaraveri korisnin" — telefonda oxirgi tablar
@@ -212,7 +221,7 @@ function tabsFor(L: Lesson, games = 0): { key: Tab; label: string }[] {
   if ((G.intro ?? []).length || (G.formulas ?? []).length || (G.presentation ?? []).length) {
     out.push({ key: "grammar", label: skill ? "Savol turi" : "Grammatika" });
   }
-  if (!skill) out.push({ key: "vocab", label: "Lug'at 20/40/60" });
+  if (words > 0) out.push({ key: "vocab", label: skillCourse ? "Lug'at" : "Lug'at 20/40/60" });
   if ((L.class_ex ?? []).length) out.push({ key: "class", label: "Sinf mashqlari" });
   if (L.reading || (L.readings ?? []).length) out.push({ key: "reading", label: "Reading" });
   if (L.listening || (L.listenings ?? []).length) out.push({ key: "listening", label: "Listening" });
@@ -264,8 +273,13 @@ function LessonView({ course, no }: { course: string; no: number }) {
 
   if (err && !L) return <div className="p-8 text-rose-600">{err}</div>;
   if (!L) return <div className="p-8 text-slate-500">Yuklanmoqda…</div>;
-  const tabs = tabsFor(L, games.length);
+  const tabs = tabsFor(L, games.length, course);
   const hasVocab = tabs.some((t) => t.key === "vocab");
+  const skillCourse = SKILL_COURSES.includes(course);
+  // Jonli o'yin: lug'at YOKI darsga yozilgan Kahoot savollari bo'lsa
+  const canKahoot = hasVocab || (L.kahoot ?? []).length > 0;
+  const modes = MODES.filter((m) => hasVocab || !m.key.startsWith("vocab"))
+    .map((m) => (skillCourse && m.key === "grammar" ? { ...m, label: "Savol turi (Kahoot savollari)" } : m));
   const active: Tab = tabs.some((t) => t.key === tab) ? tab : "plan";
 
   return (
@@ -277,7 +291,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
           </Link>
           <h1 className="text-xl font-semibold text-slate-900">Dars {L.no} — {L.title}</h1>
           <div className="text-sm text-slate-500 mt-1">
-            {hasVocab
+            {hasVocab && !skillCourse
               ? <>Grammatika: {L.grammar_topic} · Lug'at: {L.vocab_topic}</>
               : <>Savol turi: {L.grammar_topic}{L.vocab_topic ? ` · Mavzu: ${L.vocab_topic}` : ""}</>} · {L.duration} daqiqa
             {L.test_after ? ` · keyin: ${L.test_after}` : ""}
@@ -287,7 +301,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
             <Link to={`/plans/${course}/${no + 1}`} className="text-xs text-brand-600">Dars {no + 1} →</Link>
           </div>
         </div>
-        {hasVocab && <div className="bg-gradient-to-br from-brand-600 to-indigo-700 text-white rounded-2xl p-4 w-full md:w-80 shadow">
+        {canKahoot && <div className="bg-gradient-to-br from-brand-600 to-indigo-700 text-white rounded-2xl p-4 w-full md:w-80 shadow">
           <div className="font-semibold flex items-center gap-2 mb-2"><Gamepad2 size={18} /> Jonli o'yin (Kahoot)</div>
           <select value={groupId} onChange={(e) => setGroupId(e.target.value ? Number(e.target.value) : "")}
                   className="w-full text-slate-900 bg-white rounded-lg px-2 py-1.5 text-sm mb-2">
@@ -296,7 +310,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
           </select>
           <select value={mode} onChange={(e) => setMode(e.target.value)}
                   className="w-full text-slate-900 bg-white rounded-lg px-2 py-1.5 text-sm mb-2">
-            {MODES.map((m) => <option key={m.key} value={m.key}>{m.label}</option>)}
+            {modes.map((m) => <option key={m.key} value={m.key}>{m.label}</option>)}
           </select>
           <div className="grid grid-cols-2 gap-2 text-sm mb-3">
             <label className="flex flex-col gap-0.5"><span className="text-white/80 text-xs">Savollar</span>
@@ -730,6 +744,36 @@ function Gap({ n, ans }: { n: number; ans?: string }) {
   );
 }
 
+/** Qator (item) ichidagi bo'sh joy(lar) — javob QATOR tartibi bo'yicha:
+ * answers[j]. "(N)" ko'pincha Cambridge savol raqami (5.0/7.0), qator raqami
+ * emas; avval answers[N-1] olinardi va 16 mashqda 11 band noto'g'ri, 45 band
+ * bo'sh javob chiqardi (audit 3.2, 2026-09-30). Bir qatorda bir nechta bo'sh
+ * joy bo'lsa javob " / " bo'yicha tartib bilan taqsimlanadi. */
+function rowGaps(text: string, j: number, answers: string[] | undefined, show: boolean) {
+  const ans = answers?.[j];
+  const count = (text.match(GAP_RE) ?? []).length;
+  const parts = count > 1 && ans && ans.includes(" / ") ? ans.split(" / ") : null;
+  const out: React.ReactNode[] = [];
+  let last = 0; let k = 0;
+  text.replace(GAP_RE, (m, num, idx: number) => {
+    out.push(text.slice(last, idx));
+    const n = num ? Number(num) : j + 1;
+    const val = !show ? undefined : parts ? (parts[k] ?? parts[parts.length - 1]) : ans;
+    out.push(<Gap key={k++} n={n} ans={val} />);
+    last = idx + m.length;
+    return m;
+  });
+  out.push(text.slice(last));
+  return out;
+}
+
+/** ";;" — bir band ichidagi alohida qatorlar (grid'dan tashqarida ham). */
+function Lines({ text, render }: { text: string; render: (t: string) => React.ReactNode }) {
+  const lines = text.split(/\s*;;\s*/);
+  if (lines.length < 2) return <>{render(text)}</>;
+  return <ul className="list-disc pl-4 space-y-0.5">{lines.map((l, i) => <li key={i}>{render(l)}</li>)}</ul>;
+}
+
 /** Matndagi "(3)" yoki "___" ni raqamli katakka aylantiradi. */
 function withGaps(text: string, fallbackNo: number, answers: string[] | undefined, show: boolean) {
   const out: React.ReactNode[] = [];
@@ -837,7 +881,7 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
               <tr key={j} className={j % 2 ? "bg-slate-50/60" : ""}>
                 <td className={`${TD} w-10 text-center font-bold text-brand-700`}>{j + 1}</td>
                 {l && <td className={`${TD} font-medium text-slate-600 w-2/5`}>{l}</td>}
-                <td className={TD} colSpan={l ? 1 : 2}>{withGaps(r, j + 1, answers, show)}<Why text={show ? why[j] : undefined} /></td>
+                <td className={TD} colSpan={l ? 1 : 2}>{rowGaps(r, j, answers, show)}<Why text={show ? why[j] : undefined} /></td>
               </tr>
             );
           })}</tbody>
@@ -881,7 +925,7 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
           <div key={j}>
             <div className="border-2 border-brand-200 bg-white rounded-lg px-3 py-2 text-sm">
               <span className="text-[11px] font-bold text-brand-600 mr-2">{j + 1}-bosqich</span>
-              {withGaps(it.replace(/\s*→\s*/g, " → "), j + 1, answers, show)}
+              {rowGaps(it.replace(/\s*→\s*/g, " → "), j, answers, show)}
               <Why text={show ? why[j] : undefined} />
             </div>
             {j < items.length - 1 && <div className="text-center text-brand-400 text-lg leading-none py-0.5">↓</div>}
@@ -895,18 +939,19 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
       <div className="mt-3 space-y-3">
         {items.map((it, j) => {
           // A–E va "Choose TWO" (javob "B, C"), raqam "1–2" ham bo'lishi mumkin
-          const parts = it.split(/\s+(?=[A-E]\)\s)/);
+          // Kichik harfli variantlar ("a) … b) …", 7.0 L14) ham taniladi (audit 3.4)
+          const parts = it.split(/\s+(?=[A-Ea-e]\)\s)/);
           const qn = parts[0].match(/^(\d+(?:[–-]\d+)?)\s+/)?.[1];
           const q = parts[0].replace(/^\d+(?:[–-]\d+)?\s+/, "");
           const opts = parts.slice(1);
-          const lead = (answers?.[j] ?? "").trim().match(/^[A-E](?:\s*,\s*[A-E])*(?![a-z])/)?.[0] ?? "";
+          const lead = (answers?.[j] ?? "").trim().match(/^[A-Ea-e](?:\s*,\s*[A-Ea-e])*(?![a-z])/)?.[0]?.toUpperCase() ?? "";
           const correct = new Set(lead.match(/[A-E]/g) ?? []);
           return (
             <div key={j} className="rounded-lg border border-slate-200 p-3">
               <div className="text-sm font-medium text-slate-800"><span className="font-bold text-brand-700 mr-1">{qn ?? j + 1}.</span>{q}</div>
               <div className="grid sm:grid-cols-2 gap-1.5 mt-2">
                 {opts.map((o, k) => {
-                  const letter = o.charAt(0);
+                  const letter = o.charAt(0).toUpperCase();
                   const ok = show && correct.has(letter);
                   return (
                     <div key={k} className={`text-sm rounded-md px-2.5 py-1.5 border ${ok ? "border-emerald-500 bg-emerald-50 text-emerald-800 font-semibold" : "border-slate-200 bg-slate-50 text-slate-700"}`}>
@@ -960,8 +1005,8 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
           <span className="font-bold text-brand-700 w-6 shrink-0 text-right">{j + 1}.</span>
           <div className="flex-1">
             {/_{3,}|\(\d+\)/.test(it)
-              ? withGaps(it, j + 1, answers, show)
-              : <>{it}{show && answers?.[j] && <span className="ml-2 font-semibold text-emerald-700">→ {answers[j]}</span>}</>}
+              ? <Lines text={it} render={(t) => rowGaps(t, j, answers, show)} />
+              : <><Lines text={it} render={(t) => t} />{show && answers?.[j] && <span className="ml-2 font-semibold text-emerald-700">→ {answers[j]}</span>}</>}
             <Why text={show ? why[j] : undefined} />
           </div>
         </li>
@@ -989,6 +1034,10 @@ function ExList({ list }: { list: Ex[] }) {
           {ex.instr && <p className="text-sm text-slate-700 mt-2">{ex.instr}</p>}
           {ex.box && ex.layout !== "match" && ex.layout !== "tfng" && <div className="text-xs bg-slate-50 rounded px-2 py-1 mt-2 text-slate-600">{ex.box.join(" · ")}</div>}
           {ex.layout && <ExBody ex={ex} show={!!show[i]} />}
+          {/* Faqat "table" kalitli mashq ekranda umuman chiqmasdi (audit 3.3) */}
+          {!ex.layout && !ex.items && (ex.table ?? []).length > 1 && (
+            <Table head={ex.table![0]} rows={ex.table!.slice(1)} />
+          )}
           {!ex.layout && ex.items && (
             <ol className="list-decimal pl-5 text-sm text-slate-800 mt-2 space-y-0.5">
               {ex.items.map((it, j) => {
@@ -1057,7 +1106,8 @@ function useMediaUrl(name: string): [string | null, boolean] {
   return [url, bad];
 }
 
-function AuthImage({ name, alt }: { name: string; alt: string }) {
+/** Dars rejasi va "Darsni boshlash" (TeacherRun) ekranlari uchun umumiy. */
+export function AuthImage({ name, alt }: { name: string; alt: string }) {
   const [url, bad] = useMediaUrl(name);
   if (bad) return <p className="text-xs text-rose-600">Materialni yuklab bo'lmadi.</p>;
   if (!url) return <p className="text-xs text-slate-400">Yuklanmoqda…</p>;
@@ -1065,7 +1115,7 @@ function AuthImage({ name, alt }: { name: string; alt: string }) {
 }
 
 /** Ustoz bergan listening audiosi: AuthImage kabi token bilan yuklanadi. */
-function AuthAudio({ name }: { name: string }) {
+export function AuthAudio({ name }: { name: string }) {
   const [url, bad] = useMediaUrl(name);
   if (bad) return <p className="text-xs text-rose-600">Audioni yuklab bo'lmadi.</p>;
   if (!url) return <p className="text-xs text-slate-400">Audio yuklanmoqda…</p>;

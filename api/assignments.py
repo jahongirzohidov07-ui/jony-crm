@@ -32,7 +32,7 @@ from auth import require_role
 from database import get_db
 from common import (_get_group_in_scope, _group_students, _student_of_user,
                     _sync_coin_entry, _teacher_of_user, scope_to_branch)
-from liveplay import _lesson, build_questions
+from liveplay import _lesson, build_questions, SKILL_COURSES
 
 router = APIRouter()
 TEACHER_APP_ROLES = (roles.TEACHER, roles.SUPPORT_TEACHER)
@@ -164,21 +164,29 @@ def _readings(L: dict) -> list:
     return [v] if v else []
 
 
-def build_from_plan(L: dict, part: str) -> Optional[dict]:
+MIN_AUTO_QS = 5    # bundan kam savolli avtomat test yuborilmaydi
+
+
+def build_from_plan(L: dict, part: str, course: Optional[str] = None) -> Optional[dict]:
     """part: vocab | grammar | reading | reading:<i> | hw:<i> | class:<i>
-    | writing | speaking"""
+    | writing | speaking. Tuzib bo'lmasa None (masalan lug'atsiz darsda
+    lug'at testi) — xato tashlanmaydi (audit 4.1, 2026-09-30)."""
     no = L["no"]
     if part == "vocab":
-        return {"kind": "vocab_test", "skill": "vocab", "title": f"{no}-dars — lug'at testi (CORE 20)",
-                "questions": _mcq(build_questions(L, "vocab", 20))}
+        qs = build_questions(L, "vocab", 20, course=course)
+        if len(qs) < MIN_AUTO_QS:
+            return None
+        return {"kind": "vocab_test", "skill": "vocab", "title": f"{no}-dars — lug'at testi",
+                "questions": _mcq(qs)}
     if part == "grammar":
-        try:
-            qs = build_questions(L, "grammar", 20)
-        except HTTPException:
-            qs = []
-        if len(qs) < 5:
-            qs = build_questions(L, "mixed", 20)
-        return {"kind": "grammar_test", "skill": "grammar", "title": f"{no}-dars — grammatika testi",
+        qs = build_questions(L, "grammar", 20, course=course)
+        if len(qs) < MIN_AUTO_QS:
+            qs = build_questions(L, "mixed", 20, course=course)
+        if len(qs) < MIN_AUTO_QS:
+            return None
+        title = (f"{no}-dars — savol turi va lug'at testi" if course in SKILL_COURSES
+                 else f"{no}-dars — grammatika testi")
+        return {"kind": "grammar_test", "skill": "grammar", "title": title,
                 "questions": _mcq(qs)}
     if part == "reading" or part.startswith("reading:"):
         rs = _readings(L)
@@ -216,7 +224,7 @@ def build_from_plan(L: dict, part: str) -> Optional[dict]:
         keys = ("yozma", "ijodiy", "writing") if part == "writing" else ("og'zaki",)
         for i, h in enumerate(L.get("homework", [])):
             if any(k in ((h.get("type") or "") + (h.get("title") or "")).lower() for k in keys):
-                return build_from_plan(L, f"hw:{i}")
+                return build_from_plan(L, f"hw:{i}", course)
     return None
 
 
@@ -276,20 +284,27 @@ class FromPlanIn(BaseModel):
 
 @router.get("/api/plans/{course}/{no}/assignable")
 def assignable(course: str, no: int, user=Depends(require_role(*roles.TEACHING_ACCESS))):
-    """Rejadan yuborish mumkin bo'lgan qismlar ro'yxati (tugmalar uchun)."""
+    """Rejadan yuborish mumkin bo'lgan qismlar ro'yxati (tugmalar uchun).
+    Faqat haqiqatan tuziladigan qismlar chiqadi: lug'atsiz darsda "Lug'at
+    testi" tugmasi 400 berib butun partiyani to'xtatardi (audit 4.1)."""
     L = _lesson(course, no)
-    out = [{"part": "vocab", "label": "Lug'at testi (CORE 20) — avtomat", "auto": True},
-           {"part": "grammar", "label": "Grammatika testi — avtomat", "auto": True}]
+    out = []
+    if build_from_plan(L, "vocab", course):
+        out.append({"part": "vocab", "label": "Lug'at testi — avtomat", "auto": True})
+    if build_from_plan(L, "grammar", course):
+        out.append({"part": "grammar", "auto": True,
+                    "label": ("Savol turi va lug'at testi (Kahoot savollari) — avtomat"
+                              if course in SKILL_COURSES else "Grammatika testi — avtomat")})
     for i, R in enumerate(_readings(L)):
         part = "reading" if i == 0 else f"reading:{i}"   # eski linklar buzilmasin
-        b = build_from_plan(L, part)
+        b = build_from_plan(L, part, course)
         if not b:
             continue
         out.append({"part": part, "label": f"Reading: {R.get('title') or i + 1}",
                     "auto": bool(all(q["kind"] in AUTO_KINDS
                                      for q in b["questions"]))})
     for i, h in enumerate(L.get("homework", [])):
-        b = build_from_plan(L, f"hw:{i}")
+        b = build_from_plan(L, f"hw:{i}", course)
         if b:
             out.append({"part": f"hw:{i}", "label": f"Uyga vazifa {i + 1}: {h['title']}",
                         "auto": all(q["kind"] in AUTO_KINDS for q in b["questions"]), "kind": b["kind"]})
@@ -306,11 +321,18 @@ def send_from_plan(gid: int, body: FromPlanIn, db: Session = Depends(get_db),
     studs = [s for s in _group_students(db, g.id) if (s.status or "active") in ("active", "trial")]
     if body.student_ids:
         studs = [s for s in studs if s.id in set(body.student_ids)]
+    # Har qism ALOHIDA: bittasi tuzilmasa qolganlari baribir ketadi va
+    # ustoz nima yuborilmaganini aniq ko'radi (audit 4.1, 2026-09-30).
+    skipped = []
     for part in body.parts:
         if not isinstance(part, str):
             continue
-        b = build_from_plan(L, part)
+        try:
+            b = build_from_plan(L, part, body.course)
+        except (HTTPException, ValueError, KeyError, IndexError):
+            b = None
         if not b or not b.get("questions"):
+            skipped.append({"part": part, "reason": _skip_reason(part)})
             continue
         auto = all(q["kind"] in AUTO_KINDS for q in b["questions"])
         mx = (len([q for q in b["questions"] if q["kind"] in AUTO_KINDS]) if auto
@@ -333,7 +355,15 @@ def send_from_plan(gid: int, body: FromPlanIn, db: Session = Depends(get_db),
         for s in studs:
             _tg(s, f"📚 Yangi topshiriq ({g.name}): " + "; ".join(a.title for a in created)
                 + f"\nMuddat: {due.date().isoformat()}. Jony Student → Darslar.")
-    return [_a_out(db, a) for a in created]
+    return {"created": [_a_out(db, a) for a in created], "skipped": skipped}
+
+
+def _skip_reason(part: str) -> str:
+    if part == "vocab":
+        return "lug'at testi: bu darsda lug'at ro'yxati yo'q"
+    if part == "grammar":
+        return "test: bu darsda avtomatik savollar yo'q"
+    return f"{part}: bu qismdan topshiriq tuzib bo'lmadi"
 
 
 @router.get("/api/groups/{gid}/assignments")
@@ -616,13 +646,29 @@ def my_assignments(db: Session = Depends(get_db), user=Depends(require_role(role
                     missed = {"date": last.date.isoformat(), "lesson_no": run.lesson_no, "title": L["title"],
                               "course": run.course, "grammar_intro": (L.get("grammar") or {}).get("intro", [])[:4],
                               "formulas": (L.get("grammar") or {}).get("formulas", []), "cards": _cards(L),
-                              "homework": [h["title"] for h in L.get("homework", [])]}
+                              "homework": [h["title"] for h in L.get("homework", [])],
+                              # qaysi test tuziladi — tugma shunga qarab (yoki umuman chiqmaydi)
+                              "test": _missed_kind(L, run.course)}
                 except HTTPException:
                     pass
     return {"items": items, "today": today, "missed": missed,
             "pending": sum(1 for i in items if not i["submission"] or i["submission"]["status"] == "returned"),
             "graded_new": sum(1 for i in items if i["submission"] and i["submission"]["status"] == "graded"
                               and i["submission"]["graded_by"] != "Avtomat")}
+
+
+def _missed_kind(L: dict, course: Optional[str]) -> Optional[str]:
+    """Qoldirilgan dars uchun avtomat test turi: "vocab" (lug'at bo'lsa),
+    "quiz" (Kahoot/grammatika savollari), yoki None — IELTS 5.0 da lug'at
+    yo'qligi sababli test doim 400 berardi (audit 4.1)."""
+    try:
+        if build_from_plan(L, "vocab", course):
+            return "vocab"
+        if build_from_plan(L, "grammar", course):
+            return "quiz"
+    except (HTTPException, ValueError, KeyError, IndexError):
+        pass
+    return None
 
 
 @router.post("/api/student/assignments/missed-test")
@@ -633,9 +679,13 @@ def missed_test(db: Session = Depends(get_db), user=Depends(require_role(roles.S
     if not m:
         raise HTTPException(400, "Qoldirilgan dars yo'q")
     L = _lesson(m["course"], m["lesson_no"])
-    b = build_from_plan(L, "vocab")
+    kind = _missed_kind(L, m["course"])
+    if not kind:
+        raise HTTPException(400, "Bu dars uchun avtomatik test yo'q — uy vazifasini bajaring")
+    b = build_from_plan(L, "vocab" if kind == "vocab" else "grammar", m["course"])
     a = models.Assignment(group_id=st.group_id, student_id=st.id, course=m["course"], lesson_no=m["lesson_no"],
-                          kind="vocab_test", skill="vocab", title=f"Qoldirilgan {m['lesson_no']}-dars — lug'at testi",
+                          kind=b["kind"], skill=b["skill"],
+                          title=f"Qoldirilgan {m['lesson_no']}-dars — " + ("lug'at testi" if kind == "vocab" else "dars testi"),
                           questions=json.dumps(b["questions"], ensure_ascii=False), auto=1,
                           max_score=float(len(b["questions"])), due_at=datetime.utcnow() + timedelta(days=3),
                           sent_at=datetime.utcnow(), status="sent", created_by="Tizim", targets=json.dumps([st.id]))

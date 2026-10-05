@@ -80,10 +80,33 @@ ck("avtomat va yozma vazifa bor", (bool(hw_auto), bool(hw_write)), (True, True))
 
 # --- yuborish
 r = c.post(f"/api/groups/{G1}/assignments/from-plan", json={"course": "ielts_1_0", "lesson_no": 7, "parts": ["vocab", hw_auto, hw_write], "due_days": 2}, headers=T)
-ck("yuborildi 3 ta", (r.status_code, len(r.json())), (200, 3))
-A_VOC, A_HW, A_WR = [x["id"] for x in r.json()]
-ck("lug'at testi 20 savol, avtomat", (r.json()[0]["questions_count"], r.json()[0]["auto"]), (20, True))
-ck("writing ustoz tekshiradi, rubrika", (r.json()[2]["auto"], r.json()[2]["max_score"]), (False, 10.0))
+CR = r.json()["created"]
+ck("yuborildi 3 ta, o'tkazib yuborilgan yo'q", (r.status_code, len(CR), r.json()["skipped"]), (200, 3, []))
+A_VOC, A_HW, A_WR = [x["id"] for x in CR]
+ck("lug'at testi 20 savol, avtomat", (CR[0]["questions_count"], CR[0]["auto"]), (20, True))
+ck("writing ustoz tekshiradi, rubrika", (CR[2]["auto"], CR[2]["max_score"]), (False, 10.0))
+
+# --- Audit 4.1 (2026-09-30): lug'atsiz va Kahootsiz darsda (5.0 L35 — mock
+# tahlili) "savol tuzib bo'lmadi" butun partiyani to'xtatardi
+p35 = c.get("/api/plans/ielts_5_0/35/assignable", headers=T).json()
+ck("lug'atsiz darsda lug'at/test tugmasi taklif qilinmaydi",
+   [p["part"] for p in p35 if p["part"] in ("vocab", "grammar")], [])
+r35 = c.post(f"/api/groups/{G1}/assignments/from-plan",
+             json={"course": "ielts_5_0", "lesson_no": 35, "parts": ["vocab", "grammar"], "due_days": 2}, headers=T)
+ck("tuzib bo'lmaydigan qismlar 400 bermaydi — sababi bilan qaytadi",
+   (r35.status_code, len(r35.json()["created"]), [s["part"] for s in r35.json()["skipped"]],
+    "lug'at" in r35.json()["skipped"][0]["reason"]), (200, 0, ["vocab", "grammar"], True))
+import assignments as _A                                     # noqa: E402
+import liveplay as _LP                                       # noqa: E402
+_L = dict(_LP._lesson("ielts_6_0", 1)); _L.pop("kahoot", None)
+_L["vocab"] = {"core": [], "strong": [], "super": []}
+ck("6.0: strategiya iboralari va reading javoblaridan savol yasalmaydi",
+   (_LP.build_questions(_L, "grammar", 20, course="ielts_6_0"),
+    _A.build_from_plan(_L, "grammar", "ielts_6_0")), ([], None))
+ck("1.0-4.0 da grammatika savollari avvalgidek quriladi",
+   len(_LP.build_questions(_LP._lesson("ielts_1_0", 7), "grammar", 20, course="ielts_1_0")) >= 5, True)
+lst35 = c.get(f"/api/groups/{G1}/assignments", headers=T).json()
+ck("bo'sh qismlardan topshiriq yaratilmadi", len(lst35), 3)
 lst = c.get(f"/api/groups/{G1}/assignments", headers=T).json()
 ck("guruh ro'yxati", (len(lst), lst[0]["targets"]), (3, 2))
 
@@ -92,6 +115,7 @@ my = c.get("/api/student/assignments", headers=S).json()
 ck("o'quvchida 3 ta, bajarilmagan", (len(my["items"]), my["pending"]), (3, 3))
 ck("bugungi dars + kartochkalar", (my["today"]["lesson_no"], len(my["today"]["cards"])), (7, 20))
 ck("qoldirilgan dars paketi (6-dars)", (my["missed"] or {}).get("lesson_no"), 6)
+ck("qoldirilgan dars testi turi (lug'at bor)", (my["missed"] or {}).get("test"), "vocab")
 nt = c.get("/api/student/notifications", headers=S).json()["items"]
 ck("bildirishnoma: yangi topshiriq", sum(1 for n in nt if n["kind"] == "assignment"), 3)
 

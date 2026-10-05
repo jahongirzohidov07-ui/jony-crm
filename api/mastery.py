@@ -147,8 +147,9 @@ def send_practice(gid: int, body: PracticeIn, db: Session = Depends(get_db),
     part = "vocab" if body.skill == "vocab" else "grammar"
     out = []
     for sid in body.student_ids:
+        # send_from_plan endi {"created", "skipped"} qaytaradi (2026-09-30)
         out += send_from_plan(g.id, FromPlanIn(course=plan.course, lesson_no=body.lesson_no, parts=[part],
-                                               due_days=3, student_ids=[int(sid)]), db, user)
+                                               due_days=3, student_ids=[int(sid)]), db, user)["created"]
     return {"sent": len(out), "items": out}
 
 

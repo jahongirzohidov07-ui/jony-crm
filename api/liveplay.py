@@ -309,14 +309,26 @@ def _kahoot_questions(rnd, L, kind=None) -> list:
     return out
 
 
-def build_questions(L: dict, mode: str, count: int, seed=None) -> list:
+# Ko'nikma kurslari: "grammar" maydonida grammatika emas, savol turi
+# strategiyasi turadi. Undan va reading javoblaridan avtomatik "Qaysi gap
+# TO'G'RI?" savoli yasash ma'nosiz va darsning javoblarini oshkor qilardi
+# (audit 4.1, 2026-09-30) — bu kurslarda faqat qo'lda yozilgan kahoot va
+# lug'at ishlatiladi.
+SKILL_COURSES = ("ielts_5_0", "ielts_6_0", "ielts_7_0")
+
+
+def build_questions(L: dict, mode: str, count: int, seed=None, course=None) -> list:
+    """Savollar ro'yxati; tuzib bo'lmasa BO'SH ro'yxat (xato emas).
+    Avval 400 tashlardi va uyga vazifa partiyasidagi boshqa qismlar ham
+    yuborilmay qolardi (audit 4.1) — endi qaror chaqiruvchida."""
     rnd = random.Random(seed)
+    skills = course in SKILL_COURSES
     if L.get("kahoot") and mode in ("mixed", "grammar"):
         # Maxsus savollar birinchi; yetmasa eski avtomatik savollar bilan to'ldiriladi
         qs = _kahoot_questions(rnd, L, None if mode == "mixed" else "grammar")
         if len(qs) < count:
             seen = {q["prompt"] for q in qs}
-            old = _grammar_questions(rnd, L) if mode == "grammar" else \
+            old = ([] if skills else _grammar_questions(rnd, L)) if mode == "grammar" else \
                 _vocab_questions(rnd, (L.get("vocab") or {}).get("core") or [])
             qs += [q for q in old if q["prompt"] not in seen][:count - len(qs)]
         if qs:
@@ -329,7 +341,7 @@ def build_questions(L: dict, mode: str, count: int, seed=None) -> list:
         voc = _vocab_questions(rnd, core)
     elif mode == "vocab40":
         voc = _vocab_questions(rnd, core + strong)
-    if mode in ("grammar", "mixed"):
+    if mode in ("grammar", "mixed") and not skills:
         gram = _grammar_questions(rnd, L)
     rnd.shuffle(gram)
     if mode == "mixed":
@@ -339,8 +351,6 @@ def build_questions(L: dict, mode: str, count: int, seed=None) -> list:
         rnd.shuffle(qs)
     else:
         qs = (voc or gram)[:count]
-    if not qs:
-        raise HTTPException(400, "Bu dars uchun savol tuzib bo'lmadi")
     return qs
 
 
@@ -446,13 +456,14 @@ def create_game(body: GameIn, db: Session = Depends(get_db),
     # so'zli ro'yxatidan to'ldiriladi.
     count = max(20, min(60, int(body.count or 20)))
     secs = max(5, min(90, int(body.seconds or 20)))
-    qs = build_questions(L, body.mode, count)
+    qs = build_questions(L, body.mode, count, course=body.course)
     if len(qs) < count and body.mode != "vocab40":
-        extra = build_questions(L, "vocab40", count)
+        extra = build_questions(L, "vocab40", count, course=body.course)
         seen = {q["prompt"] for q in qs}
         qs += [q for q in extra if q["prompt"] not in seen][:count - len(qs)]
     if len(qs) < 20:
-        raise HTTPException(400, "Bu dars uchun 20 ta savol tuzib bo'lmadi")
+        raise HTTPException(400, "Bu darsda jonli o'yin uchun yetarli savol yo'q (kamida 20 kerak)"
+                            + ("" if L.get("kahoot") else " — darsga Kahoot savollari hali yozilmagan"))
     g = models.LiveGame(
         code=_new_code(db), course=body.course, lesson_no=body.lesson_no,
         group_id=group.id,

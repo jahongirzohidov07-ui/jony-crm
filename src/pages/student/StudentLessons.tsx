@@ -27,7 +27,9 @@ type Today = { lesson_no: number; title: string; grammar: string; vocab_topic: s
 type Data = {
   items: Item[]; pending: number; graded_new: number;
   today: Today | Record<string, never>;
-  missed: { date: string; lesson_no: number; title: string; grammar_intro: string[]; formulas: string[][]; cards: Card[]; homework: string[] } | null;
+  missed: { date: string; lesson_no: number; title: string; grammar_intro: string[]; formulas: string[][]; cards: Card[]; homework: string[];
+    /** "vocab" | "quiz" | null (test yo'q); undefined — eski API (lug'at) */
+    test?: "vocab" | "quiz" | null } | null;
 };
 type ReviewRow = { i: number; prompt: string; ok: boolean; given: unknown; answer: unknown; explain?: string | null };
 
@@ -88,7 +90,13 @@ function LessonsHome() {
               <ul className="list-disc pl-5 text-xs">{d.missed.grammar_intro.map((x, i) => <li key={i}>{x}</li>)}</ul>
               <div className="text-xs bg-white/70 rounded-lg p-2">{d.missed.formulas.map((f, i) => <div key={i}><b>{f[0]}</b>: {f[1]} — {f[2]}</div>)}</div>
               <div className="text-xs">Uy vazifasi: {d.missed.homework.join("; ")}</div>
-              <button onClick={startMissed} className="w-full bg-amber-600 text-white rounded-xl py-2 text-sm font-semibold">Lug'at testini boshlash (20 so'z)</button>
+              {/* Test turi backenddan: lug'at yoki dars testi; null — tugma chiqmaydi
+                  (5.0 da lug'at yo'qligi sababli test 400 berardi — audit 4.1) */}
+              {d.missed.test !== null && (
+                <button onClick={startMissed} className="w-full bg-amber-600 text-white rounded-xl py-2 text-sm font-semibold">
+                  {d.missed.test === "quiz" ? "Dars testini boshlash" : "Lug'at testini boshlash"}
+                </button>
+              )}
             </div>
           )}
         </div>

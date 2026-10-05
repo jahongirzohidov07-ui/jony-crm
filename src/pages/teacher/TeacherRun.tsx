@@ -6,7 +6,7 @@ import {
 import { api } from "../../lib/api";
 // Mashqlarni reja ekranidagi bilan BIR XIL ko'rsatish uchun (2026-09-26):
 // grid/pairs/flow/mcq/tfng/match/qa/list ko'rinishlari shu komponentda.
-import { ExBody } from "../LessonPlans";
+import { ExBody, AuthImage, AuthAudio } from "../LessonPlans";
 
 /**
  * DARS REJIMI — "Darsni boshlash" (2026-09-18, Jahongir: "Dars paytida
@@ -30,9 +30,9 @@ type Ex = { title: string; type?: string; instr?: string; items?: string[]; answ
  * uchun IELTS 5.0 ning 20 reading va 15 listeningi jonli darsda umuman
  * ko'rinmasdi (2026-09-26). */
 type PlanReading = { title: string; qtype?: string; book_ref?: string; text?: string[];
-  glossary?: string[]; paraphrases?: [string, string][]; tasks?: Ex[] };
+  image?: string; glossary?: string[]; paraphrases?: [string, string][]; tasks?: Ex[] };
 type PlanListen = { title?: string; qtype?: string; audios?: string; audio?: string;
-  intro?: string[]; transcript?: string[]; tasks?: Ex[] };
+  image?: string; intro?: string[]; transcript?: string[]; tasks?: Ex[] };
 type Plan = {
   no: number; title: string; grammar_topic: string; vocab_topic: string;
   grammar: { intro: string[]; formulas: string[][]; presentation: [string, string][]; notes: string[]; mistakes: string[][] };
@@ -138,9 +138,15 @@ export default function TeacherRun() {
     if (!list.length) return;
     setBusy(true); setSent("");
     try {
-      const r = await api.post<{ title: string }[]>(`/groups/${run.group_id}/assignments/from-plan`,
+      // Javob: {created, skipped} — bitta qism tuzilmasa ham qolganlari ketadi
+      // va ustoz sababini ko'radi (audit 4.1, 2026-09-30). Eski ro'yxat shakli ham.
+      const r = await api.post<{ created: { title: string }[]; skipped: { part: string; reason: string }[] } | { title: string }[]>(
+        `/groups/${run.group_id}/assignments/from-plan`,
         { course: run.course, lesson_no: run.lesson_no, parts: list, due_days: dueDays, lesson_id: run.lesson_id });
-      setSent(`${r.length} ta topshiriq yuborildi — o'quvchilar ilovasida paydo bo'ldi.`);
+      const created = Array.isArray(r) ? r : r.created;
+      const skipped = Array.isArray(r) ? [] : r.skipped;
+      setSent(`${list.length} tadan ${created.length} tasi yuborildi — o'quvchilar ilovasida paydo bo'ldi.`
+        + (skipped.length ? ` Yuborilmadi: ${skipped.map((s) => s.reason).join("; ")}.` : ""));
       setPicked({});
     } catch (e) { setErr((e as Error).message); }
     finally { setBusy(false); }
@@ -350,8 +356,12 @@ export default function TeacherRun() {
                 <div key={ri} className="space-y-3">
                   <Card title={readings(P).length > 1 ? `${ri + 1}. ${R.title}` : R.title}>
                     {R.qtype && <p className="text-xs text-slate-500 mb-2">{R.qtype}</p>}
+                    {!proj && R.book_ref && <p className="text-xs text-slate-500 mb-2">{R.book_ref}</p>}
                     {(R.text ?? []).map((t, i) => <p key={i} className="mb-2 leading-relaxed">{t}</p>)}
-                    {(R.paraphrases ?? []).length > 0 && (
+                    {/* Kitob sahifasi / chizma rasmi — Run'da ko'rinmasdi (audit 5-qadam) */}
+                    {R.image && <div className="my-2"><AuthImage name={R.image} alt={R.title} /></div>}
+                    {/* Paraphrase ro'yxati — javob kaliti, proyektorda o'quvchiga ko'rinmasin */}
+                    {!proj && (R.paraphrases ?? []).length > 0 && (
                       <div className="mt-2 text-xs text-slate-600 bg-amber-50 border border-amber-200 rounded px-2 py-1">
                         {(R.paraphrases ?? []).map((pp, i) => <div key={i}>{pp[0]} → {pp[1]}</div>)}
                       </div>
@@ -371,7 +381,10 @@ export default function TeacherRun() {
                   <Card title={Ls.title || (Ls.audios ? `Audio ${Ls.audios}` : `Listening ${li + 1}`)}>
                     {Ls.qtype && <p className="text-xs text-slate-500 mb-2">{Ls.qtype}</p>}
                     {Ls.audios && Ls.title && <p className="text-xs text-slate-500 mb-2">Audio: {Ls.audios}</p>}
+                    {/* Audio pleyer va chizma — Run'da yo'q edi (audit 5-qadam) */}
+                    {Ls.audio && <div className="mb-2"><AuthAudio name={Ls.audio} /></div>}
                     {(Ls.intro ?? []).map((t, i) => <p key={i} className="mb-2">{t}</p>)}
+                    {Ls.image && <div className="my-2"><AuthImage name={Ls.image} alt={Ls.title || "chizma"} /></div>}
                     {/* Transkript — faqat ustozga, proyektorda yashiriladi */}
                     {!proj && (Ls.transcript ?? []).length > 0 && (
                       <details className="mt-2">

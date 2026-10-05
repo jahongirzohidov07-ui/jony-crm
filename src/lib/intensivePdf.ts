@@ -1,6 +1,6 @@
 import brand from '../assets/brand-icon.png';
 import { vocabularyPractice } from './intensive';
-import type { Word } from './intensive';
+import type { Word, Question } from './intensive';
 
 export type VocabularyPdfKind = 'words' | 'exercises' | 'answers';
 const titles = { words: 'Vocabulary · lug‘at', exercises: 'Vocabulary · mashqlar', answers: 'Vocabulary · javoblar' };
@@ -32,7 +32,7 @@ function pagesPdf(pages: HTMLCanvasElement[]): Blob {
   return new Blob([combine(parts)], { type: 'application/pdf' });
 }
 
-export async function vocabularyPdf(pool: Word[], mixed: boolean, kind: VocabularyPdfKind): Promise<Blob> {
+export async function vocabularyPdf(pool: (Word & { forms?: string })[], mixed: boolean, kind: VocabularyPdfKind, options?: { brandTitle?: string; questions?: Question[] }): Promise<Blob> {
   if (!pool.length || pool.length > 20) throw new Error('PDF uchun 1–20 ta so‘z tanlang.');
   await document.fonts.ready;
   const logo = new Image(); logo.src = brand; await logo.decode();
@@ -54,7 +54,7 @@ export async function vocabularyPdf(pool: Word[], mixed: boolean, kind: Vocabula
     const canvas = document.createElement('canvas'); canvas.width = 1200; canvas.height = 1697;
     const context = canvas.getContext('2d'); if (!context) throw new Error('PDF tayyorlab bo‘lmadi.'); c = context;
     c.fillStyle = '#ffffff'; c.fillRect(0, 0, 1200, 1697);
-    c.drawImage(logo, 64, 54, 52, 52); text('JONY INTENSIVE', 134, 89, 25, '#2162e8', true);
+    c.drawImage(logo, 64, 54, 52, 52); text(options?.brandTitle ?? 'JONY INTENSIVE', 134, 89, 25, '#2162e8', true);
     c.fillStyle = '#2162e8'; c.fillRect(64, 132, 1072, 4);
     text(titles[kind], 64, 192, 36, '#10213b', true);
     text(`${pool.length} ta so‘z · ${mixed ? 'Aralash to‘plam' : 'Tanlangan to‘plam'}`, 64, 233, 22, '#62748b');
@@ -80,11 +80,12 @@ export async function vocabularyPdf(pool: Word[], mixed: boolean, kind: Vocabula
     for (const w of pool) block([
       { value: `${w.id}. ${w.word}  ${w.ipa}`, size: 26, bold: true, color: '#2162e8' },
       { value: w.meaning, bold: true },
+      ...(w.forms ? [{ value: w.forms, size: 19, color: '#62748b' }] : []),
       { value: w.example },
       { value: w.translation, color: '#62748b' },
     ]);
   } else {
-    vocabularyPractice(pool, mixed).forEach((q, i) => block(kind === 'exercises'
+    (options?.questions ?? vocabularyPractice(pool, mixed)).forEach((q, i) => block(kind === 'exercises'
       ? [{ value: `${i + 1}. ${q.prompt}`, bold: true }, ...(q.hint ? [{ value: `Yordam: ${q.hint}`, size: 19, color: '#62748b' }] : [])]
       : [{ value: `${i + 1}. ${q.answers.join(' / ')}`, bold: true, color: '#2162e8' }, { value: q.explanation }], kind === 'exercises'));
   }

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Download } from 'lucide-react';
-import type { Word } from '../lib/intensive';
+import type { Word, Question } from '../lib/intensive';
 import type { VocabularyPdfKind } from '../lib/intensivePdf';
 
-export default function VocabularyPdfButtons({ pool, mixed = false }: { pool: Word[]; mixed?: boolean }) {
+export default function VocabularyPdfButtons({ pool, mixed = false, brandTitle, questions, prefix = 'jony' }: { pool: (Word & { forms?: string })[]; mixed?: boolean; brandTitle?: string; questions?: Question[]; prefix?: string }) {
   const [busy, setBusy] = useState<VocabularyPdfKind | null>(null);
   const [error, setError] = useState('');
   async function download(kind: VocabularyPdfKind) {
@@ -11,10 +11,10 @@ export default function VocabularyPdfButtons({ pool, mixed = false }: { pool: Wo
     setBusy(kind); setError('');
     try {
       const { vocabularyPdf } = await import('../lib/intensivePdf');
-      const blob = await vocabularyPdf(pool, mixed, kind);
+      const blob = await vocabularyPdf(pool, mixed, kind, { brandTitle, questions });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a'); a.href = url;
-      a.download = `jony-${pool.length}-soz-${pool[0].id}-${pool.at(-1)!.id}-${kind}.pdf`;
+      a.download = `${prefix}-${pool.length}-soz-${pool[0].id}-${pool.at(-1)!.id}-${kind}.pdf`;
       document.body.appendChild(a); a.click(); a.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
     } catch { setError('PDF yuklanmadi. Qayta urinib ko‘ring.'); }

@@ -13,9 +13,10 @@ export type SmmSalary = {
   gap: number | null; days_left: number; target_count: number | null;
   next_fixed_count: number | null; next_fixed_salary: number | null; fixed_status: string;
   scale: { min: number; bonus: number; label: string }[];
+  fixed_scale: { min: number; max: number | null; salary: number }[];
 };
 
-function useSalary() {
+export function useSalary() {
   const { user } = useAuth();
   const [state, setState] = useState<{ data: SmmSalary | null; error: boolean }>({ data: null, error: false });
   const [retry, setRetry] = useState(0);
@@ -86,7 +87,7 @@ export function SmmSalaryCardView({ r }: { r: SmmSalary }) {
       {r.fixed_status === "unconfigured" && <p className="mt-3 text-sm text-amber-200">Fiks pog‘onasi aniqlashtirilishi kerak. Jami oylik hozircha ko‘rsatilmaydi.</p>}
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-white/80">
         <p className="flex items-center gap-1.5"><Trophy size={13} className="text-amber-300" /> Oy tugashiga {r.days_left} kun qoldi.</p>
-        <Link to="/marketing" className="font-medium underline underline-offset-4 hover:text-white">Reja va bonuslar</Link>
+        <Link to="/my-finance" className="font-medium underline underline-offset-4 hover:text-white">Moliya — barcha bonuslar</Link>
       </div>
       <p className="mt-2 text-[11px] text-white/70">Hisob: fiks + o‘quvchi rejasi bonusi. Alohida bonus va ushlab qolishlar yakuniy hisob-kitobda ko‘riladi.</p>
     </section>
@@ -103,7 +104,7 @@ export function SmmSalaryFloat() {
   const { data: r } = useSalary();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  if (!r || pathname === "/") return null;
+  if (!r || pathname === "/" || pathname.endsWith("/my-finance")) return null;
   return (
     <div className="fixed bottom-4 right-4 z-40 max-w-[calc(100vw-2rem)]">
       {open && <div id="smm-salary-details" className="mb-2 w-72 max-w-full rounded-xl bg-white p-3 text-sm shadow-xl ring-1 ring-slate-200">
@@ -112,7 +113,7 @@ export function SmmSalaryFloat() {
         <p className="mt-1 text-xs text-slate-500">Fiks {r.fix_salary == null ? "Pog‘ona belgilanmagan" : formatSom(r.fix_salary)} + bonus {formatSom(r.bonus)}</p>
         {r.next_total != null && <p className="mt-2 text-xs text-emerald-700">Maqsadga yetsangiz: <b>{formatSom(r.next_total)}</b></p>}
         <p className="mt-2 text-xs leading-5 text-slate-600">{goalText(r)}</p>
-        <Link to="/" className="mt-2 block text-xs text-brand-600 hover:underline">Batafsil — Dashboard</Link>
+        <Link to="/my-finance" className="mt-2 block text-xs text-brand-600 hover:underline">Batafsil — Moliya</Link>
       </div>}
       <button onClick={() => setOpen(value => !value)} aria-expanded={open} aria-controls={open ? "smm-salary-details" : undefined} aria-label="Oylingiz va keyingi bonus" className="flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 px-3.5 py-2 text-white shadow-lg ring-2 ring-white hover:brightness-110">
         <Wallet size={16} /><span className="text-sm font-semibold tabular-nums">{r.total == null ? "Hisob aniqlashtirilmoqda" : formatSom(r.total)}</span>

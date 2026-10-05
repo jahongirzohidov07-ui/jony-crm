@@ -1,17 +1,51 @@
 """Read-only salary goals; use the existing SMM bonus scale without changing payroll."""
 import calendar
+import math
 import roles
 
 
+def student_plan_state(db, branch_id, year, month):
+    """Use the branch's student headcount target, never a money target."""
+    import models
+    if not branch_id:
+        return None
+    school_year = year if month >= 9 else year - 1
+    target = db.query(models.PlanTarget).filter(
+        models.PlanTarget.branch_id == branch_id,
+        models.PlanTarget.year == school_year,
+        models.PlanTarget.month == month,
+        models.PlanTarget.metric == "students",
+    ).first()
+    count = db.query(models.Student).filter(
+        models.Student.branch_id == branch_id,
+        models.Student.status == "active",
+    ).count()
+    plan = max(0, float(target.value or 0)) if target else 0
+    return {"plan": plan, "fact": count}
+
+
+def student_fixed_salary(count):
+    for maximum, salary in [(100, 1_500_000), (150, 2_000_000),
+                            (200, 3_000_000), (300, 5_000_000)]:
+        if count <= maximum:
+            return salary
+    return 8_000_000  # 301 and above, confirmed by the owner.
+
+
 def smm_salary_goal(user, state, today):
-    fixed = float(user.fix_salary or 0)
+    count = int(state["fact"]) if state else 0
+    fixed = student_fixed_salary(count) if user.branch_id else None
     configured = bool(user.branch_id and state and state["plan"] > 0)
-    bonus = float(state["bonus"]) if configured else 0.0
-    percent = state["percent"] if configured else None
+    raw_percent = count / state["plan"] * 100 if configured else None
+    bonus = roles.smm_sales_bonus(raw_percent)[0] if configured else 0
+    percent = round(raw_percent, 1) if configured else None
     steps = sorted(roles.SMM_SALES_BONUS, key=lambda row: row[0])
     next_step = next((row for row in steps
-                      if configured and row[0] > percent and row[1] > bonus), None)
-    remaining = max(0, state["plan"] * next_step[0] / 100 - state["fact"]) if next_step else None
+                      if configured and row[0] > raw_percent and row[1] > bonus), None)
+    target_count = math.ceil(state["plan"] * next_step[0] / 100) if next_step else None
+    remaining = max(0, target_count - count) if next_step else None
+    target_fixed = student_fixed_salary(target_count) if next_step else None
+    next_fixed_count = next((n for n in (101, 151, 201, 301) if n > count), None) if user.branch_id else None
     return {
         "period": today.strftime("%Y-%m"),
         "full_name": user.full_name,
@@ -19,14 +53,18 @@ def smm_salary_goal(user, state, today):
         "branch_id": user.branch_id,
         "fix_salary": fixed,
         "bonus": bonus,
-        "total": fixed + bonus,
+        "total": fixed + bonus if fixed is not None else None,
         "plan": state["plan"] if configured else 0,
         "fact": state["fact"] if state else 0,
         "percent": percent,
         "status": "no_branch" if not user.branch_id else "active" if configured else "no_plan",
         "next_percent": next_step[0] if next_step else None,
         "next_bonus": next_step[1] if next_step else None,
-        "next_total": fixed + next_step[1] if next_step else None,
+        "next_total": target_fixed + next_step[1] if next_step and target_fixed is not None else None,
+        "target_count": target_count,
+        "next_fixed_count": next_fixed_count,
+        "next_fixed_salary": student_fixed_salary(next_fixed_count) if next_fixed_count else None,
+        "fixed_status": "active" if fixed is not None else "unconfigured",
         "gap": remaining,
         "days_left": calendar.monthrange(today.year, today.month)[1] - today.day + 1,
         "scale": [{"min": mn, "bonus": bo, "label": label} for mn, bo, label in steps],

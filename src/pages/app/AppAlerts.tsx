@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AlertDetailModal, type AlertDetailData, type NotifItem } from "../../components/AlertDetail";
 import { api } from "../../lib/api";
 import { appHref } from "./appNav";
 import { Gem } from "./Gem";
 
-type NotifItem = { icon: string; text: string; link?: string; tone: string };
 const TONE_GEM: Record<string, string> = { red: "warn", amber: "bell", sky: "chat", emerald: "check" };
 
 /** BILDIRISHNOMALAR — paneldagi qo'ng'iroqcha bilan bir xil manba (/my/alerts). */
 export default function AppAlerts() {
   const [d, setD] = useState<{ items: NotifItem[]; count: number } | null>(null);
   const [err, setErr] = useState("");
+  const [detail, setDetail] = useState<AlertDetailData | null>(null);
+  const navigate = useNavigate();
   useEffect(() => {
     api.get<{ items: NotifItem[]; count: number }>("/my/alerts")
       .then((x) => {
@@ -36,11 +38,29 @@ export default function AppAlerts() {
                 <div className="m"><b style={{ whiteSpace: "normal" }}>{it.text}</b></div>
               </>
             );
+            // Tug'ilgan kun / yubiley / tadbir — bosilganda tafsilot
+            if (it.detail) {
+              const det = it.detail;
+              return (
+                <button key={i} type="button" className="jos-it"
+                        style={{ width: "100%", textAlign: "left" }}
+                        onClick={() => setDetail(det)}>
+                  {body}
+                </button>
+              );
+            }
             return it.link
               ? <Link key={i} to={appHref(it.link)} className="jos-it">{body}</Link>
               : <div key={i} className="jos-it">{body}</div>;
           })}
         </div>
+      )}
+      {detail && (
+        <AlertDetailModal
+          d={detail}
+          onClose={() => setDetail(null)}
+          onOpen={(link) => { setDetail(null); navigate(appHref(link)); }}
+        />
       )}
     </div>
   );

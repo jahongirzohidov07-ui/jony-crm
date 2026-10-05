@@ -1,3 +1,4 @@
+import { AlertDetailModal, type AlertDetailData, type NotifItem } from "./AlertDetail";
 import { useState, useRef, useEffect } from "react";
 import { formatPhone } from "./PhoneInput";
 import { NavLink, Outlet, useNavigate, Link } from "react-router-dom";
@@ -648,6 +649,8 @@ function NotifBell() {
   const navigate = useNavigate();
   const [d, setD] = useState<{ items: NotifItem[]; count: number } | null>(null);
   const [openB, setOpenB] = useState(false);
+  // Tug'ilgan kun / yubiley / tadbir tafsiloti (2026-10-05)
+  const [detail, setDetail] = useState<AlertDetailData | null>(null);
   // O'qilganini eslab qolamiz: ochilganda belgi o'chadi, faqat YANGI
   // xabar kelganda qaytib chiqadi.
   const [seenKey, setSeenKey] = useState(
@@ -705,7 +708,8 @@ function NotifBell() {
               key={i}
               onClick={() => {
                 setOpenB(false);
-                if (it.link) navigate(it.link);
+                if (it.detail) setDetail(it.detail);
+                else if (it.link) navigate(it.link);
               }}
               className="w-full text-left px-3 py-2.5 hover:bg-slate-50 flex items-start gap-2.5"
             >
@@ -720,11 +724,17 @@ function NotifBell() {
           )}
         </div>
       )}
+      {detail && (
+        <AlertDetailModal
+          d={detail}
+          onClose={() => setDetail(null)}
+          onOpen={(link) => { setDetail(null); navigate(link); }}
+        />
+      )}
     </div>
   );
 }
 
-type NotifItem = { icon: string; text: string; link?: string; tone: string };
 
 
 /** Tepadagi global qidiruv: 3 harfdan boshlab o'quvchilar va

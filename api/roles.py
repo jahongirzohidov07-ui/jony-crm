@@ -6062,6 +6062,12 @@ def money(x) -> float:
 EVENTS_ACCESS = FULL_ACCESS + [EVENT_MANAGER, HR_MANAGER, SMM_MANAGER]
 EVENTS_MANAGE = FULL_ACCESS + [EVENT_MANAGER]
 BIRTHDAY_HORIZON = 30            # standart: 30 kun oldindan ko'rsatiladi
+# Qo'ng'iroqchada (bildirishnoma) necha kun oldindan chiqadi
+# (2026-10-05): xodim sanalari STAFF_DATE_LEAD_DAYS bilan bir xil,
+# o'quvchi tug'ilgan kuni va tadbirlar — 3 kun.
+ALERT_BIRTHDAY_DAYS = 3
+ALERT_EVENT_DAYS = 3
+ALERT_CELEBRATION_MAX = 12       # bundan ko'pi "...va yana N ta" bo'ladi
 EVENT_KINDS = [
     ("holiday", "Bayram"),
     ("birthday", "Tug'ilgan kun tabrigi"),

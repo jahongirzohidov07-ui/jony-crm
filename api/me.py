@@ -2795,23 +2795,179 @@ def my_alerts(db: Session = Depends(get_db),
         except Exception:
             pass
 
-    # 5) Bugun tug'ilgan kunlar (asoschi va HR ko'radi)
-    if user.role in (roles.FOUNDER, roles.HR_MANAGER):
-        try:
-            bd = [u2 for u2 in db.query(models.User).filter(
-                models.User.is_active == 1,
-                models.User.birth_date.isnot(None)).all()
-                if u2.birth_date.month == today.month
-                and u2.birth_date.day == today.day]
-            for u2 in bd[:3]:
-                items.append({
-                    "icon": "cake",
-                    "text": f"Bugun {u2.full_name}ning tug'ilgan kuni 🎉",
-                    "link": "/hr",
-                    "tone": "emerald",
-                })
-        except Exception:
-            pass
+    # 5) TUG'ILGAN KUN, YUBILEY VA TADBIRLAR (2026-10-05, Jahongir:
+    #    "event manager va boshqa bayram bildirishnomalarida kimni
+    #    tug'ilgan kuni yo yubileyi ekani ko'rinmayabdi, ustiga bossa
+    #    batafsil ma'lumot chiqaradigan qilib ber").
+    #    Ilgari faqat asoschi va HR ko'rardi, faqat BUGUNGI xodimlar,
+    #    ko'pi bilan 3 ta. Endi har biri alohida qator — ism, kim
+    #    ekani, qachon — va "detail" bilan: bosilganda to'liq ma'lumot
+    #    va tayyor tabrik matni chiqadi.
+    try:
+        items += _celebration_alerts(db, user, today)
+    except Exception:
+        db.rollback()
 
     return {"items": items, "count": len(items)}
+
+
+def _when_text(days: int) -> str:
+    if days <= 0:
+        return "Bugun"
+    if days == 1:
+        return "Ertaga"
+    return f"{days} kundan keyin"
+
+
+def _celebration_alerts(db: Session, user, today) -> list:
+    """Bayram bildirishnomalari: xodim tug'ilgan kuni va ish yubileyi,
+    o'quvchi tug'ilgan kuni, rejadagi tadbirlar. Kim nimani ko'radi:
+      - xodim sanalari — HR, filial rahbari, rahbariyat va event menejer;
+      - o'quvchi tug'ilgan kunlari va tadbirlar — EVENTS_ACCESS
+        (event menejer, HR, SMM, rahbariyat)."""
+    see_staff = (user.role in tuple(roles.STAFF_DATES_ACCESS)
+                 or user.role in tuple(roles.EVENTS_ACCESS))
+    see_events = user.role in tuple(roles.EVENTS_ACCESS)
+    rows = []
+
+    if see_staff:
+        for r in _staff_dates(db, user, days=roles.STAFF_DATE_LEAD_DAYS):
+            bday = r["kind"] == "birthday"
+            greet = (f"{r['full_name']}, tug'ilgan kuningiz muborak bo'lsin! "
+                     "Jony Academy jamoasi sizga sog'lik, tinchlik va "
+                     "ishingizda katta yutuqlar tilaydi." if bday else
+                     f"{r['full_name']}, jamoamizda {r['years']} yil "
+                     "bo'ldingiz! Mehnatingiz va sabringiz uchun rahmat — "
+                     "shu muhitni siz ham qurdingiz.")
+            what = ("tug'ilgan kuni" if bday
+                    else f"ish yubileyi ({r['years']} yil)")
+            rows.append((r["days_left"], {
+                "icon": "cake" if bday else "medal",
+                "text": f"{'🎂' if bday else '🎉'} {_when_text(r['days_left'])}: "
+                        f"{r['full_name']} — {what}",
+                "tone": "emerald" if r["today"] else "sky",
+                "detail": {
+                    "type": "birthday" if bday else "anniversary",
+                    "title": r["kind_label"],
+                    "full_name": r["full_name"],
+                    "who_label": "Xodim",
+                    "fields": [
+                        ["Lavozimi", r["role_label"]],
+                        ["Filiali", r["branch"] or "—"],
+                        ["Sana", r["date_label"]],
+                        ["Qachon", _when_text(r["days_left"])],
+                        (["Yoshi", f"{r['years']} ga to'ladi"] if bday else
+                         ["Ishga kirgan", roles.uz_date_full(
+                             date.fromisoformat(r["source_date"]))]),
+                        ["Ishlagan muddati", r.get("tenure") or "—"],
+                        ["Telefon", r["phone"] or "—"],
+                    ],
+                    "phone": r["phone"],
+                    "greeting": greet,
+                    # Event menejer xodimlar ro'yxatiga kirmaydi —
+                    # unga Tadbirlar, HR/rahbariyatga HR "Sanalar"
+                    "link": "/events" if see_events else "/hr?tab=dates",
+                    "link_label": ("Tadbirlar" if see_events
+                                   else "HR — Sanalar"),
+                },
+            }))
+
+    if see_events:
+        groups = {g.id: g.name for g in
+                  db.query(models.Group.id, models.Group.name).all()}
+        branches = {b.id: b.name for b in
+                    db.query(models.Branch.id, models.Branch.name).all()}
+        can_card = user.role in tuple(roles.TEACHING_STAFF)
+        sq = scope_to_branch(db.query(models.Student), models.Student, user)
+        for s in sq.filter(models.Student.status.notin_(("archived", "left")),
+                           models.Student.birth_date.isnot(None)).all():
+            nxt = roles.next_occurrence(s.birth_date, today)
+            if not nxt:
+                continue
+            left = (nxt - today).days
+            if left > roles.ALERT_BIRTHDAY_DAYS:
+                continue
+            age = nxt.year - s.birth_date.year
+            rows.append((left, {
+                "icon": "cake",
+                "text": f"🎂 {_when_text(left)}: {s.full_name} (o'quvchi) — "
+                        f"tug'ilgan kuni, {age} yosh",
+                "tone": "emerald" if left == 0 else "sky",
+                "detail": {
+                    "type": "birthday",
+                    "title": "Tug'ilgan kun",
+                    "full_name": s.full_name,
+                    "who_label": "O'quvchi",
+                    "fields": [
+                        ["Guruhi", groups.get(s.group_id) or "—"],
+                        ["Filiali", branches.get(s.branch_id) or "—"],
+                        ["Sana", roles.uz_date_full(nxt)],
+                        ["Qachon", _when_text(left)],
+                        ["Yoshi", f"{age} ga to'ladi"],
+                        ["Telefon", s.phone or "—"],
+                        ["Ota-ona telefoni", getattr(s, "parent_phone", None)
+                         or "—"],
+                    ],
+                    "phone": s.phone or getattr(s, "parent_phone", None),
+                    "greeting": (f"{s.full_name}, tug'ilgan kuningiz muborak "
+                                 "bo'lsin! Jony Academy jamoasi sizga "
+                                 "bilim, sog'lik va katta yutuqlar tilaydi."),
+                    # Event menejer/SMM o'quvchi kartasiga to'liq kira
+                    # olmaydi (to'lovlar va h.k. yopiq) — ularga Tadbirlar
+                    "link": (f"/students/{s.id}" if can_card
+                             else "/events"),
+                    "link_label": ("O'quvchi kartasi" if can_card
+                                   else "Tadbirlar"),
+                },
+            }))
+        eq = scope_to_branch(db.query(models.Event), models.Event, user)
+        for e in eq.filter(
+                models.Event.event_date >= today,
+                models.Event.event_date
+                <= today + timedelta(days=roles.ALERT_EVENT_DAYS),
+                models.Event.status.notin_(("done", "cancelled"))).all():
+            left = (e.event_date - today).days
+            kind = roles.EVENT_KIND_LABELS.get(e.kind, e.kind)
+            rows.append((left, {
+                "icon": "party",
+                "text": f"🎈 {_when_text(left)}: {e.title} ({kind})"
+                        + (f", {e.start_time}" if e.start_time else ""),
+                "tone": "amber",
+                "detail": {
+                    "type": "event",
+                    "title": kind,
+                    "full_name": e.title,
+                    "who_label": "Tadbir",
+                    "fields": [
+                        ["Sana", roles.uz_date_full(e.event_date)],
+                        ["Qachon", _when_text(left)],
+                        ["Vaqti", e.start_time or "—"],
+                        ["Joyi", e.place or "—"],
+                        ["Filiali", e.branch.name if e.branch else
+                         "Barcha filiallar"],
+                        ["Kimlar uchun", e.audience or "—"],
+                        ["Mas'ul", e.responsible.full_name
+                         if e.responsible else "—"],
+                        ["Holati", roles.EVENT_STATUS_LABELS.get(
+                            e.status, e.status)],
+                        ["Izoh", e.note or "—"],
+                    ],
+                    "phone": None,
+                    "greeting": None,
+                    "link": "/events",
+                    "link_label": "Tadbirlar",
+                },
+            }))
+
+    rows.sort(key=lambda x: (x[0], x[1]["text"]))
+    out = [it for _, it in rows[:roles.ALERT_CELEBRATION_MAX]]
+    if len(rows) > roles.ALERT_CELEBRATION_MAX:
+        out.append({
+            "icon": "cake",
+            "text": f"...va yana {len(rows) - roles.ALERT_CELEBRATION_MAX} "
+                    "ta tug'ilgan kun / tadbir",
+            "link": "/events" if see_events else "/hr",
+            "tone": "sky",
+        })
+    return out
 

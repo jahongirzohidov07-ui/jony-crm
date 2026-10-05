@@ -1,0 +1,2177 @@
+[
+  {
+    "lesson": 145,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Sabab bog‘lovchilari va because of/due to bilan da’vo sababini dalildan ajratish.",
+    "reading": {
+      "title": "A Library Beyond Office Hours",
+      "text": "The district library proposes opening until nine on two evenings each week because many residents finish work after its current closing time. A consultation received eighty responses, and fifty supported the change. However, the responses came mainly from existing members, so they cannot represent every household in the district. Staff suggest a six-week trial rather than a permanent extension.\nThe additional hours would use the present budget by shortening two quiet mornings. This matters because a longer timetable is not automatically a larger service. Parents who visit with young children might lose a convenient session. The manager therefore wants attendance recorded by time and purpose, not just as one impressive total.\nSome opponents worry about noise outside the entrance. That concern deserves a practical response, such as clear closing announcements and a staff presence at the door. It does not prove that evening access is unnecessary. Equally, supporters should not describe every quiet morning as wasted time: a few visitors may depend heavily on it.\nThe trial should compare who gains access and who loses it. Due to limited staffing, the final choice must balance different needs rather than promise that every visitor can have every hour.",
+      "questions": [
+        {
+          "prompt": "How long would the trial last?",
+          "answers": [
+            "six weeks",
+            "6 weeks"
+          ],
+          "explanation": "Dalil: «a six-week trial». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "Which sessions would be shortened?",
+          "answers": [
+            "two quiet mornings",
+            "2 quiet mornings",
+            "quiet mornings"
+          ],
+          "explanation": "Dalil: «shortening two quiet mornings». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "Why is the consultation limited? A: Respondents mainly already use the library. B: It excludes all workers. C: It contains no support.",
+          "answers": [
+            "A",
+            "Respondents mainly already use the library",
+            "A: Respondents mainly already use the library"
+          ],
+          "explanation": "Dalil: «the responses came mainly from existing members». Amaldagi a’zolar ustun bo‘lgani sababli barcha oilalarga umumlashtirib bo‘lmaydi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "The Repair Shop's Evening Experiment",
+      "text": "Owner: Customers keep asking us to stay open later. Because they collect appliances after work, our five o'clock closure causes difficulties. I'm considering Thursday evenings.\nTechnician: I understand the demand, but the workshop isn't simply a collection desk. Repairs require concentration, and tired staff may make mistakes.\nOwner: I wasn't proposing a longer working week. We could start later on Thursdays due to the additional evening shift.\nTechnician: Then our morning customers would face the same problem in reverse. Some older customers travel before the buses become crowded.\nOwner: Fair point. What evidence would help us decide?\nTechnician: Record actual collection requests for a month. Telephone enquiries are useful, but someone asking about late opening isn't necessarily someone who will use it.\nOwner: Could we separate repairs from collections? One person could manage completed orders between five and seven.\nTechnician: Possibly, provided no technical diagnosis is promised then. People sometimes arrive with what they call a tiny question and unpack an entire washing machine problem.\nOwner: So the trial notice needs clear limits.\nTechnician: Exactly. I support testing access, not advertising services we cannot safely provide. Let's review collection numbers and missed morning visits together before making the arrangement permanent.",
+      "questions": [
+        {
+          "prompt": "Which evening is proposed?",
+          "answers": [
+            "Thursday",
+            "Thursday evenings"
+          ],
+          "explanation": "Dalil: «I'm considering Thursday evenings.». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "How long does the technician suggest recording requests?",
+          "answers": [
+            "a month",
+            "one month",
+            "1 month",
+            "month"
+          ],
+          "explanation": "Dalil: «Record actual collection requests for a month.». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "What is the technician's position? A: Reject any trial. B: Support a clearly limited trial. C: Offer full repairs all evening.",
+          "answers": [
+            "B",
+            "Support a clearly limited trial",
+            "B: Support a clearly limited trial"
+          ],
+          "explanation": "Dalil: «I support testing access, not advertising services we cannot safely provide.». U cheklovlari aniq sinovni qo‘llaydi, barcha kechki xizmatlarni emas."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Kutubxona kechki sinovini qo‘llaysizmi? Ishlovchilar ehtiyoji va ertalab keluvchilar manfaatini solishtiring. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Sababni because/since/as va because of/due to orqali farqli tuzilmalarda asoslaydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtda bugungi grammatikadan ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Kutubxona xabari: ikki kechki ochilish uchun ikki ertalabki vaqt qisqaradi; olti haftalik sinov haqida fikr so‘ralgan. Do‘stingiz Nilaga norasmiy email yozib, munosabatingiz, bitta tashvish va rejangizni ayting. 45–55 so‘z yozing.",
+      "model": "Hi Nila,\nI'm pleased about the evening library trial because I usually finish work late. Still, I'm worried about parents losing their morning visits. I'll send the manager a suggestion to record both groups' needs during the six weeks. Shall we try the first Thursday session together?\nBest,\nAziza",
+      "success": [
+        "Munosabat, ertalabki tashvish va fikr yuborish rejasini qamrab oladi.",
+        "Qabul qiluvchi va janrga mos uslubda fikrlarni mantiqan bog‘laydi.",
+        "45–55 so‘z chegarasini saqlaydi; maqsadli grammatikani ikki marta aniq ishlatadi."
+      ]
+    },
+    "teacherNote": "Oldindan: consultation — maslahat so‘rovi; extension — uzaytirish; diagnosis — tashxislash. Sababni ifodalovchi gapdan keyin ot birikmasi keladigan shakllarni taqqoslang; so‘rovning qamrovini natijadan ajrating. O‘qish: da’vo va dalilni belgilang. Tinglash: matnsiz ikki marta, avval pozitsiya, keyin tafsilot. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi xulosani o‘zgartirishi mumkin bo‘lgan yangi dalilni taklif qilsin. Bu ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 146,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Although/despite/however va natija bog‘lovchilari bilan muvozanatli tavsiya tuzish.",
+    "reading": {
+      "title": "When a Trial Looks Successful",
+      "text": "A neighbourhood pool introduced discounted lunchtime entry for six weeks. Attendance rose by a third, so its first report called the scheme a clear success. Although more people entered the building, ticket income fell slightly. The report also omitted whether the new visitors were previously inactive or simply changed the time of their usual swim.\nThis does not mean the discount failed. A public facility may reasonably prioritise access over income. Nevertheless, the purpose needs to be stated before the results are judged. If the aim was to reduce crowding in the evening, the relevant evidence is evening occupancy, not merely lunchtime attendance.\nDespite these gaps, the experiment produced one useful finding. Several nearby office workers formed a regular swimming group and reported that a fixed meeting time helped them continue. Their comments suggest a social benefit, though a small group cannot speak for everyone.\nThe next report should therefore compare attendance across the whole day and include staff costs. It should also ask occasional users why they stopped coming. An attractive photograph of a busy pool is encouraging; however, a photograph cannot show who stayed away or whether the improvement lasted after the discount ended.",
+      "questions": [
+        {
+          "prompt": "How long did the discount run?",
+          "answers": [
+            "six weeks",
+            "6 weeks"
+          ],
+          "explanation": "Dalil: «for six weeks». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "What happened to ticket income?",
+          "answers": [
+            "it fell slightly",
+            "fell slightly",
+            "decreased slightly"
+          ],
+          "explanation": "Dalil: «ticket income fell slightly». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "What does the photograph fail to establish? A: Presence of water. B: Lasting improvement. C: The pool's existence.",
+          "answers": [
+            "B",
+            "Lasting improvement",
+            "B: Lasting improvement",
+            "lasting improvement"
+          ],
+          "explanation": "Dalil: «a photograph cannot show who stayed away or whether the improvement lasted». Bitta surat davomiy natija yoki kelmaganlarni ko‘rsatmaydi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Discussing a Faster Check-In",
+      "text": "Manager: Our new kiosk has reduced the average check-in time, so I want to remove the old reception desk.\nReceptionist: Although most guests finish quickly, some need help with names, languages or access requests. Their waiting time has increased because one employee now handles every difficult case.\nManager: The average still improved by three minutes.\nReceptionist: Yes, but an average can hide very different experiences. A guest who finishes in thirty seconds and another who waits fifteen minutes do not receive the same service.\nManager: Would keeping both systems defeat the purpose of automation?\nReceptionist: Not necessarily. Despite the kiosk's speed, we still need a visible route to personal assistance. We could reduce the desk rather than remove it.\nManager: That would preserve part of the staffing cost.\nReceptionist: It would. However, repeated complaints also consume staff time. Yesterday I explained the same error to six guests because nobody had updated the on-screen instructions.\nManager: Then let's improve those instructions and measure assisted check-ins separately.\nReceptionist: Agreed. I am not defending a desk for sentimental reasons. I want us to remove unnecessary work without removing necessary help. After another fortnight, we can compare both speed and unresolved problems instead of relying on one average.",
+      "questions": [
+        {
+          "prompt": "By how much did average time improve?",
+          "answers": [
+            "three minutes",
+            "3 minutes"
+          ],
+          "explanation": "Dalil: «improved by three minutes». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "How many guests needed the same error explained yesterday?",
+          "answers": [
+            "six",
+            "6"
+          ],
+          "explanation": "Dalil: «six guests». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "Why keep some personal assistance? A: Nostalgia alone. B: Kiosks never work. C: Different guests face unequal difficulties.",
+          "answers": [
+            "C",
+            "Different guests face unequal difficulties",
+            "C: Different guests face unequal difficulties",
+            "different guests face unequal difficulties"
+          ],
+          "explanation": "Dalil: «an average can hide very different experiences». O‘rtacha tezlik ayrim mehmonlarning uzoq kutishini yashiradi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Hovuz sinovi muvaffaqiyatini qaysi mezon bilan baholaysiz? Tezlik yoki qatnashuv ortishiga qarshi dalilni muhokama qiling. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Although/despite va therefore/however yordamida natija bilan cheklovni ajratadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtda bugungi grammatikadan ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "145-darsdagi kutubxona xabariga javob: menejer olti haftalik kechki sinov, ikki qisqaradigan ertalab va kuzatuv mezonlari bo‘yicha fikr so‘raydi. Menejerga rasmiy email: pozitsiya, xavotir va o‘lchash taklifini yozing. 120–150 so‘z yozing.",
+      "model": "Dear Library Manager,\nThank you for inviting comments on the proposed evening opening trial. I support testing later access because residents who work during the day may currently be unable to visit.\nAlthough the proposal offers a clear benefit, shortening two mornings could disadvantage parents and older members. I therefore suggest recording attendance separately for each affected session rather than reporting only the total number of visits. Please also ask users whether the revised timetable prevents them from accessing a service they need.\nDespite the staffing limits, a six-week trial should provide useful evidence if its aims are published in advance. Could the final report include both evening demand and lost morning access? This would help members understand the eventual decision and suggest realistic adjustments.\nYours sincerely,\nAziza Karimova",
+      "success": [
+        "Uch bandni qamrab olib, sinov uchun o‘lchanadigan ikki mezon taklif qiladi.",
+        "Qabul qiluvchi va janrga mos uslubda fikrlarni mantiqan bog‘laydi.",
+        "120–150 so‘z chegarasini saqlaydi; maqsadli grammatikani ikki marta aniq ishlatadi."
+      ]
+    },
+    "teacherNote": "Oldindan: occupancy — bandlik; omit — tushirib qoldirmoq; unresolved — yechilmagan. Although + gap va despite + ot/-ing shaklini tekshiring. O‘rtacha qiymat bilan guruhlar tajribasini ajratishga e’tibor bering. O‘qish: da’vo va dalilni belgilang. Tinglash: matnsiz ikki marta, avval pozitsiya, keyin tafsilot. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi xulosani o‘zgartirishi mumkin bo‘lgan yangi dalilni taklif qilsin. Bu ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 147,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Whereas/while va so/such…that bilan qarama-qarshi model hamda oqibatni tahlil qilish.",
+    "reading": {
+      "title": "A Tool Library or a Cheap Drill?",
+      "text": "Two neighbourhoods have chosen different ways to make household tools affordable. One runs a lending library, whereas the other negotiates discounts at a hardware shop. The library spreads the cost of rarely used items across many borrowers. The discount scheme gives people permanent access, but each household still needs storage and maintenance.\nSupporters of lending point to a carpet cleaner that was borrowed thirty times in one year. It was such a popular item that the library bought a second machine. Yet not every tool circulates so well. An unusually heavy drill remained on its shelf because beginners found it intimidating. The collection therefore needs regular review rather than endless expansion.\nThe shop scheme is simpler to administer. Customers choose their own products, while volunteers only arrange the discount. However, a cheaper purchase can still be unnecessary. One resident admitted that his bargain drill had spent longer in its attractive box than outside it.\nNeither approach is automatically more responsible. Lending works best when collection times, training and repairs are reliable. Discounts are more suitable for equipment people use frequently. The sensible question is not which scheme sounds more generous, but which one matches actual patterns of use and the capacity of local volunteers.",
+      "questions": [
+        {
+          "prompt": "How often was the carpet cleaner borrowed?",
+          "answers": [
+            "thirty times",
+            "30 times"
+          ],
+          "explanation": "Dalil: «borrowed thirty times in one year». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "Why did beginners avoid the heavy drill?",
+          "answers": [
+            "it was intimidating",
+            "they found it intimidating",
+            "intimidating"
+          ],
+          "explanation": "Dalil: «beginners found it intimidating». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "Which use best suits purchase discounts? A: One uncertain trial. B: No expected use. C: Frequent use.",
+          "answers": [
+            "C",
+            "Frequent use",
+            "C: Frequent use",
+            "frequent use"
+          ],
+          "explanation": "Dalil: «Discounts are more suitable for equipment people use frequently.». Doimiy foydalanishda sotib olishning foydasi matnda ko‘rsatilgan."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Two Ways to Learn a Language",
+      "text": "Tutor: One course offers live weekly meetings, whereas the other provides recorded lessons. Which arrangement suits your team?\nSupervisor: Recordings are easier for shift workers. Our timetable changes so frequently that a fixed meeting excludes someone almost every week.\nTutor: That is a strong argument. On the other hand, live sessions create an immediate reason to prepare. Some learners collect recordings without actually watching them.\nSupervisor: Our team is motivated, but I accept that access is not the same as participation.\nTutor: Exactly. Last term one group had such a large video library that members didn't know where to begin. We replaced it with a short weekly sequence and a discussion slot.\nSupervisor: Could we keep the discussion optional?\nTutor: Yes, although optional activities need a clear purpose. A meeting to solve actual communication problems is more attractive than a meeting merely to prove attendance.\nSupervisor: Then recordings can introduce language, while a fortnightly session deals with examples from work.\nTutor: That sounds realistic. We should still provide feedback for people who cannot attend.\nSupervisor: Agreed. I don't want flexibility to become a polite word for studying entirely alone. Let's test the combination with one team before purchasing access for the whole organisation.",
+      "questions": [
+        {
+          "prompt": "Why are fixed meetings difficult?",
+          "answers": [
+            "changing shifts",
+            "the timetable changes frequently",
+            "frequent timetable changes",
+            "timetable changes frequently"
+          ],
+          "explanation": "Dalil: «Our timetable changes so frequently». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "How often is the proposed discussion session?",
+          "answers": [
+            "fortnightly",
+            "every two weeks",
+            "every 2 weeks"
+          ],
+          "explanation": "Dalil: «a fortnightly session». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "What concern does the supervisor express? A: Flexibility may mean isolation. B: Videos contain no language. C: Feedback is unnecessary.",
+          "answers": [
+            "A",
+            "Flexibility may mean isolation",
+            "A: Flexibility may mean isolation",
+            "flexibility may mean isolation"
+          ],
+          "explanation": "Dalil: «I don't want flexibility to become a polite word for studying entirely alone.». Moslashuvchanlik yolg‘iz qolishga aylanmasligi kerak degan xavotir bor."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Asbobni ulashish va arzon sotib olishdan qaysi biri mahallangizga mos? Kam ishlatiladigan va tez-tez ishlatiladigan buyumni solishtiring. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Whereas/while va so/such…that ni kamida bittadan ma’noli dalilga bog‘laydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtda bugungi grammatikadan ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Mahalla forumi o‘quvchilari 'Har oilaning o‘z asbobi bo‘lishi kerakmi?' deb muhokama qilmoqda. 147-darsdan foydalanib, pozitsiya, foyda, qarshi dalil va shartli tavsiya yozing. 180–200 so‘z yozing.",
+      "model": "Owning every household tool is convenient, but convenience alone does not make every purchase sensible. I would support a small lending library for equipment that residents use only occasionally.\nA carpet cleaner is a good example. In the reading, one machine was borrowed thirty times in a year. Sharing it reduced the need for many families to buy and store the same bulky item. A lending service can also offer practical instructions, which matter more than an attractive discount for an inexperienced user.\nHowever, borrowing has real disadvantages. Collection times may be inconvenient, and a damaged tool can interrupt somebody's project. A library that keeps expanding without enough volunteers may promise more than it delivers. Meanwhile, someone who uses a drill every week has a reasonable case for owning one.\nI therefore favour a mixed approach. Share expensive items with low individual use, while arranging discounts for frequently needed equipment. Review borrowing records before adding more products, and publish clear repair and collection arrangements. The aim should be useful access rather than the largest possible collection. Otherwise, our community may simply create a much bigger cupboard of objects that nobody uses.",
+      "success": [
+        "Ikki modelni taqqoslab, foydalanish tezligi va xizmat ishonchliligiga asoslangan xulosa beradi.",
+        "Qabul qiluvchi va janrga mos uslubda fikrlarni mantiqan bog‘laydi.",
+        "180–200 so‘z chegarasini saqlaydi; maqsadli grammatikani ikki marta aniq ishlatadi."
+      ]
+    },
+    "teacherNote": "Oldindan: maintenance — texnik parvarish; intimidating — cho‘chitadigan; circulate — aylanma foydalanilmoq. Such + ot birikmasi va so + sifat/ravishni yonma-yon yozing. Har ikki model uchun bir cheklov so‘rang. O‘qish: da’vo va dalilni belgilang. Tinglash: matnsiz ikki marta, avval pozitsiya, keyin tafsilot. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi xulosani o‘zgartirishi mumkin bo‘lgan yangi dalilni taklif qilsin. Bu ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 148,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Maqsad, vaqt va in case/if orasidagi farq bilan amaliy ehtiyot choralarini asoslash.",
+    "reading": {
+      "title": "A Market Prepared for Rain",
+      "text": "The organisers of a neighbourhood market have ordered removable covers in order to keep the event outdoors during light rain. They will not cancel merely because the forecast mentions showers. Instead, they have agreed on clear conditions for moving indoors, including strong wind and standing water near electrical equipment.\nVolunteers will inspect the site before stalls open. They will keep a paper list of sellers in case the mobile connection fails, and they will call each seller if the venue changes. The distinction matters: a backup is prepared beforehand, whereas a call follows a specific decision.\nSome traders argue that preparation creates unnecessary expense. Their concern is understandable after two completely dry years. However, the covers can be reused, and the alternative indoor space requires an advance reservation anyway. Waiting until the first storm would leave everyone competing for the same limited room.\nThe team also plans signs so that visitors can find the indoor entrance without asking at every stall. As soon as a move is confirmed, one volunteer will update the website while another checks the street signs. The plan does not eliminate bad weather; it prevents ordinary uncertainty from turning into several contradictory announcements delivered through increasingly wet phones.",
+      "questions": [
+        {
+          "prompt": "What backup list will volunteers keep?",
+          "answers": [
+            "a paper list of sellers",
+            "paper seller list",
+            "a paper list",
+            "paper list of sellers",
+            "paper list"
+          ],
+          "explanation": "Dalil: «a paper list of sellers». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "When will they call sellers?",
+          "answers": [
+            "if the venue changes",
+            "when the venue changes",
+            "after a venue change"
+          ],
+          "explanation": "Dalil: «they will call each seller if the venue changes». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "Why reserve indoor space early? A: It may be unavailable later. B: Rain is guaranteed. C: Outdoor markets are forbidden.",
+          "answers": [
+            "A",
+            "It may be unavailable later",
+            "A: It may be unavailable later",
+            "it may be unavailable later"
+          ],
+          "explanation": "Dalil: «Waiting until the first storm would leave everyone competing for the same limited room.». Oldindan band qilish joy yetishmasligi xavfini kamaytiradi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Preparing a Remote Workshop",
+      "text": "Trainer: I'll send the worksheets today so that participants can download them before the workshop.\nAssistant: Should we also send a recording link in case somebody loses connection?\nTrainer: We won't have a recording until afterwards. For now, send a short summary and a telephone contact. If a participant disconnects, we can help them rejoin.\nAssistant: Some people may think the summary replaces the workshop.\nTrainer: Then explain its purpose. It is a backup, not the whole lesson. We need live discussion to compare the examples.\nAssistant: When should I admit people from the waiting room?\nTrainer: As soon as you verify their names. Keep unfamiliar names waiting until we confirm registration, but contact them privately rather than announcing a problem to everyone.\nAssistant: I also want to test captions in order to support participants who need them.\nTrainer: Good. Test the technical vocabulary first. Last week's automatic captions turned 'project funding' into 'project pudding', which was memorable but not useful.\nAssistant: I'll check the key terms and keep a written glossary beside the slides.\nTrainer: Exactly. Preparation should make participation easier without promising that technology will be perfect. After the session, we can ask which backup materials people actually needed and revise the system accordingly.",
+      "questions": [
+        {
+          "prompt": "What will be sent before the workshop?",
+          "answers": [
+            "worksheets",
+            "the worksheets"
+          ],
+          "explanation": "Dalil: «I'll send the worksheets today». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "What must happen before admitting participants?",
+          "answers": [
+            "verify their names",
+            "name verification",
+            "their names must be verified"
+          ],
+          "explanation": "Dalil: «As soon as you verify their names.». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "Why test technical terms? A: Participants dislike slides. B: Captions may distort meaning. C: Registration needs pudding.",
+          "answers": [
+            "B",
+            "Captions may distort meaning",
+            "B: Captions may distort meaning",
+            "captions may distort meaning"
+          ],
+          "explanation": "Dalil: «automatic captions turned 'project funding' into 'project pudding'». Noto‘g‘ri subtitr asosiy ma’noni o‘zgartirgan, shuning uchun sinash kerak."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Bozor uchun tayyorgarlik xarajatini himoya qiling yoki qisqartirishni taklif eting; oldindan zaxira bilan hodisaga javobni ajrating. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "In case va if ni farqlaydi; bir maqsad va bir vaqt gapini ishlatadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtda bugungi grammatikadan ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Bozor tashkilotchilari yomg‘ir uchun qoplamalar, yopiq joy va aloqa zaxirasini rejalashtirib, yordam so‘radi. Do‘stingiz Bekka norasmiy email: reja haqidagi fikr, o‘z vazifangiz va birgalikdagi harakat. 45–55 so‘z yozing.",
+      "model": "Hi Bek,\nThe market's rain plan sounds sensible. I'll print the seller list in case the connection fails, and I'll help update signs if we move indoors. Could you check the covered entrance with me before stalls open? That should save visitors from wandering around in the rain.\nCheers,\nMalika",
+      "success": [
+        "Rejani baholaydi, bitta vazifani oladi va do‘stini aniq ishga taklif qiladi.",
+        "Qabul qiluvchi va janrga mos uslubda fikrlarni mantiqan bog‘laydi.",
+        "45–55 so‘z chegarasini saqlaydi; maqsadli grammatikani ikki marta aniq ishlatadi."
+      ]
+    },
+    "teacherNote": "Oldindan: venue — tadbir joyi; backup — zaxira; caption — subtitr. In case tayyorgarligi hodisadan oldin, if javobi shart bajarilganda ekanini vaqt chizig‘ida ko‘rsating. O‘qish: da’vo va dalilni belgilang. Tinglash: matnsiz ikki marta, avval pozitsiya, keyin tafsilot. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi xulosani o‘zgartirishi mumkin bo‘lgan yangi dalilni taklif qilsin. Bu ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 149,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Parallel bog‘lovchilar va misollash orqali muqobil yechimni izchil bayon qilish.",
+    "reading": {
+      "title": "Repairing More Than Objects",
+      "text": "A volunteer repair cafe advertises both practical assistance and opportunities to learn. Visitors can either leave a simple item with a volunteer or remain at the table and observe the process. Neither option guarantees a successful repair, and the organisers state that clearly on the booking form.\nThe learning element is not only a pleasant extra but also a possible way to reduce future waste. For example, a visitor who learns to clean a blocked filter may avoid replacing an appliance unnecessarily. Nevertheless, the cafe does not record such later decisions, so it cannot claim to have measured every environmental benefit.\nIts strongest evidence is modest and specific: during the last session, volunteers restored eighteen of twenty-seven items. Four needed unavailable parts, while five were unsafe or beyond the team's expertise. Publishing those categories builds more trust than announcing that the event 'saved everything'.\nSome residents would prefer a paid repair service with a fixed deadline. That is a reasonable alternative, especially for essential equipment. Moreover, volunteers should not be expected to replace professional services for every household. The cafe's value lies in extending options, sharing knowledge and directing difficult cases elsewhere. A successful community project can acknowledge its limits without turning its publicity into an apology.",
+      "questions": [
+        {
+          "prompt": "How many items were restored?",
+          "answers": [
+            "eighteen",
+            "18"
+          ],
+          "explanation": "Dalil: «restored eighteen of twenty-seven items». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "How many needed unavailable parts?",
+          "answers": [
+            "four",
+            "4"
+          ],
+          "explanation": "Dalil: «Four needed unavailable parts». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "Why publish failure categories? A: To guarantee every repair. B: To build realistic trust. C: To hide volunteer limits.",
+          "answers": [
+            "B",
+            "To build realistic trust",
+            "B: To build realistic trust",
+            "to build realistic trust",
+            "build realistic trust"
+          ],
+          "explanation": "Dalil: «Publishing those categories builds more trust». Aniq muvaffaqiyat va cheklov toifalari ishonchni oshiradi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "A Museum's Two Ticket Options",
+      "text": "Director: We can either offer a low fixed price or introduce a voluntary contribution. Both approaches are more accessible than our current ticket.\nTreasurer: A voluntary contribution may work, but income would be less predictable. Neither goodwill nor a busy entrance automatically pays for maintenance.\nDirector: True. It could attract people who assume the museum is beyond their budget.\nTreasurer: Then we should test that claim. For instance, ask visitors whether price influenced their decision, without making them justify their finances at the desk.\nDirector: I like that. The change should not only increase attendance but also make people feel welcome.\nTreasurer: And we need clear wording. 'Free entry, suggested contribution' means something different from a compulsory charge with a friendly name.\nDirector: Some donors might compensate for lower payments.\nTreasurer: They might; however, we should not build the entire budget on that hope. Keep a reserve and review income monthly.\nDirector: So a three-month pilot, private optional feedback and a visible explanation of where donations go?\nTreasurer: Yes. I support a carefully measured experiment. I simply want the museum to remain open after the enthusiastic launch photographs have disappeared from everyone's feed.\nDirector: Fair enough. Our announcement can describe the opportunity and the uncertainty together.",
+      "questions": [
+        {
+          "prompt": "What two pricing options are discussed?",
+          "answers": [
+            "low fixed price or voluntary contribution",
+            "a low fixed price and a voluntary contribution",
+            "low fixed price and a voluntary contribution"
+          ],
+          "explanation": "Dalil: «a low fixed price or introduce a voluntary contribution». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "How long is the proposed pilot?",
+          "answers": [
+            "three months",
+            "3 months"
+          ],
+          "explanation": "Dalil: «a three-month pilot». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "What is the treasurer mainly protecting? A: Compulsory financial disclosure. B: Expensive publicity. C: Long-term viability.",
+          "answers": [
+            "C",
+            "Long-term viability",
+            "C: Long-term viability",
+            "long-term viability"
+          ],
+          "explanation": "Dalil: «remain open after the enthusiastic launch photographs have disappeared». U dastlabki qiziqishdan keyingi moliyaviy davomiylikni o‘ylayapti."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Ta’mirlash kafesi hisobotida muvaffaqiyatsizliklarni e’lon qilish kerakmi? Ishonch va obro‘ni solishtiring. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Both/either/neither hamda not only…but also ni parallel tuzilmalarda ishlatadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtda bugungi grammatikadan ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "148-darsdagi bozor tashkilotchilariga rasmiy email yozing. Ular yomg‘ir rejasi bo‘yicha fikr, ko‘ngilli vazifa va aloqa tartibini so‘ragan. Rejani baholang, ikki vazifani taklif qiling va tasdiq so‘rang. 120–150 so‘z yozing.",
+      "model": "Dear Market Coordinator,\nThank you for sharing the proposed wet-weather arrangements. I support preparing both removable covers and an alternative indoor venue, since waiting for severe weather could leave traders without a workable option.\nI would be pleased to help not only with printed seller lists but also with the entrance signs. Clear signs would reduce confusion for visitors, while a paper contact list would remain useful if the mobile connection failed. For example, one volunteer could update the website as another checks the physical directions.\nCould you confirm who will authorise a move indoors and how that decision will reach volunteers? Neither sellers nor visitors should receive conflicting messages. I suggest testing the contact chain before market day and naming one person responsible for the final announcement.\nYours sincerely,\nMalika Saidova",
+      "success": [
+        "Fikr, ikki yordam vazifasi va aniq tasdiq savolini qamrab oladi.",
+        "Qabul qiluvchi va janrga mos uslubda fikrlarni mantiqan bog‘laydi.",
+        "120–150 so‘z chegarasini saqlaydi; maqsadli grammatikani ikki marta aniq ishlatadi."
+      ]
+    },
+    "teacherNote": "Oldindan: expertise — mutaxassislik; predictable — oldindan hisoblanadigan; reserve — zaxira mablag‘. Parallel bog‘lanayotgan birliklarning grammatik turini tekshiring. Semikolon va however dan keyingi vergulni matnda ko‘rsating. O‘qish: da’vo va dalilni belgilang. Tinglash: matnsiz ikki marta, avval pozitsiya, keyin tafsilot. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi xulosani o‘zgartirishi mumkin bo‘lgan yangi dalilni taklif qilsin. Bu ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 150,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Haftalik takrorlash: sabab, qarama-qarshilik, maqsad va parallel dalillarni yaxlit argumentda qo‘llash.",
+    "reading": {
+      "title": "Who Benefits from the Car-Free Sunday?",
+      "text": "The town's first car-free Sunday drew a large crowd into the central square. Cafes reported strong sales, while a furniture shop said customers could not collect bulky purchases. Both reports may be accurate because businesses use the same street in different ways. A single total for visitor numbers would miss that distinction.\nThe organisers closed the road in order to create space for walking and public activities. They also provided a delivery window before nine. However, the notice reached some traders only two days beforehand, so several existing collections could not easily be rearranged. Better communication would address that problem without necessarily abandoning the event.\nResidents raised a different concern: traffic moved into neighbouring streets. Although the square was quieter, those households experienced more noise. The next trial should therefore monitor surrounding roads as well as the closed area. Otherwise, an improvement in one visible location may simply transfer inconvenience elsewhere.\nA second event is justified if organisers use the first as evidence rather than as a celebration that cannot be questioned. They should publish both gains and costs, consult people beyond the square, and announce arrangements early. Success means a workable balance of access and public space, not merely a photograph with fewer cars.",
+      "questions": [
+        {
+          "prompt": "When was the delivery window?",
+          "answers": [
+            "before nine",
+            "before 9"
+          ],
+          "explanation": "Dalil: «a delivery window before nine». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "How early did some traders receive notice?",
+          "answers": [
+            "two days",
+            "2 days"
+          ],
+          "explanation": "Dalil: «only two days beforehand». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "What could a square-only evaluation miss? A: The existence of shops. B: All visitors. C: Displaced traffic.",
+          "answers": [
+            "C",
+            "Displaced traffic",
+            "C: Displaced traffic",
+            "displaced traffic"
+          ],
+          "explanation": "Dalil: «traffic moved into neighbouring streets». Faqat maydonni o‘lchash qo‘shni ko‘chalarga ko‘chgan noqulaylikni yashiradi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Should the Shared Desk Trial Continue?",
+      "text": "Team Lead: Our shared-desk trial has reduced unused office space, but the feedback is mixed. We need a recommendation for the next quarter.\nAnalyst: The savings are clear. However, staff who need specialised equipment spend time rebuilding their workspace each morning.\nTeam Lead: Could we reserve a few permanent stations so that those tasks remain efficient?\nAnalyst: Yes. Either a fixed station or a reliable equipment locker could help, depending on the role. We should ask about tasks rather than rank people by seniority.\nTeam Lead: Some colleagues say fixed desks would undermine fairness.\nAnalyst: Equal furniture is not always equal access. A worker using two calibrated monitors has a different requirement from someone mainly attending meetings.\nTeam Lead: What about social contact? The trial was supposed to encourage new conversations.\nAnalyst: We have comments about that, but no consistent evidence. People may meet different colleagues while also losing contact with their immediate team.\nTeam Lead: Then we should retain the trial and revise its rules?\nAnalyst: For another month, yes, provided we measure setup time and missed collaboration as well as space savings. Keep spare stations in case bookings fail. The system should support work, not turn finding a chair into everyone's first project of the day.\nTeam Lead: I'll present that as a conditional recommendation.",
+      "questions": [
+        {
+          "prompt": "What specialist equipment is mentioned?",
+          "answers": [
+            "two calibrated monitors",
+            "calibrated monitors"
+          ],
+          "explanation": "Dalil: «two calibrated monitors». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "How long is the suggested extension?",
+          "answers": [
+            "another month",
+            "one month",
+            "a month",
+            "month"
+          ],
+          "explanation": "Dalil: «For another month». Javob shu matn daliliga tayanadi."
+        },
+        {
+          "prompt": "What principle supports exceptions? A: Different tasks need different support. B: Senior staff always deserve more. C: Fairness means identical furniture.",
+          "answers": [
+            "A",
+            "Different tasks need different support",
+            "A: Different tasks need different support",
+            "different tasks need different support"
+          ],
+          "explanation": "Dalil: «Equal furniture is not always equal access.». Bir xil mebel turli vazifalar uchun teng imkon yaratmasligi mumkin."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Avtomobilsiz yakshanbani davom ettirish shartlarini taklif qiling; g‘olib va zarar ko‘ruvchi guruhlar manfaatini muvozanatlang. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Haftadagi sabab, qarshi fikr va maqsad bog‘lovchilaridan kamida uch turini to‘g‘ri tanlaydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtda bugungi grammatikadan ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Shahar forumi 'Avtomobilsiz kunni har oy o‘tkazaylikmi?' deb so‘ramoqda. O‘quvchilar uchun pozitsiya, ikki dalil, qarshi fikr va amalga oshadigan shartlar bilan post yozing. 180–200 so‘z yozing.",
+      "model": "I would support another car-free Sunday, but not a monthly commitment yet. The first event showed that the square can become an attractive public space. It also revealed problems that deserve more than a photograph.\nCafes benefited from visitors, whereas a furniture shop struggled with collections. These experiences do not cancel each other out. They show why organisers need to consider different kinds of business. An early delivery window is useful, but traders must receive enough notice to rearrange existing appointments.\nThe traffic in neighbouring streets is an important issue. A quieter square is not a complete success if nearby households receive all the displaced noise. The next trial should count traffic around the area as well as inside it and invite comments from those residents.\nSome supporters may worry that further checks will delay a popular idea. I understand that concern, yet a short evaluation could prevent repeated mistakes and strengthen support. Announce the next date early, publish the delivery arrangements, and compare benefits with inconvenience afterwards. If the revised event improves access without simply moving problems elsewhere, a regular programme would have a stronger case. Public enthusiasm is valuable, but practical evidence should shape the final timetable.",
+      "success": [
+        "Qo‘shni ko‘chalar va savdogarlarni hisobga olib, shartli qaror hamda baholash mezonini beradi.",
+        "Qabul qiluvchi va janrga mos uslubda fikrlarni mantiqan bog‘laydi.",
+        "180–200 so‘z chegarasini saqlaydi; maqsadli grammatikani ikki marta aniq ishlatadi."
+      ]
+    },
+    "teacherNote": "Oldindan: bulky — katta hajmli; displaced — boshqa joyga surilgan; calibrated — aniq sozlangan. Takrorlashda bog‘lovchilarni sanashdan ko‘ra ularning argumentdagi vazifasini so‘rang. Dalil bo‘lmagan da’voni alohida belgilang. O‘qish: da’vo va dalilni belgilang. Tinglash: matnsiz ikki marta, avval pozitsiya, keyin tafsilot. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi xulosani o‘zgartirishi mumkin bo‘lgan yangi dalilni taklif qilsin. Bu ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 151,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Murakkab ega, everyone/nobody va artikllar bilan da’vo aniqligini saqlash.",
+    "reading": {
+      "title": "The List Is Not the Community",
+      "text": "The list of registered volunteers is growing, but the coordinator is cautious about calling that growth a stronger community. A name on a list indicates interest; it does not show how often someone participates or whether the work is useful. Everyone receives a welcome message, yet not everyone finds a suitable first task.\nThe centre has introduced short introductory shifts. A group of experienced volunteers meets newcomers and explains what each role involves. This is more demanding than sending a general invitation, but early feedback suggests that people appreciate knowing whom to ask for help. Nobody is expected to understand the whole organisation on their first morning.\nThere is also a problem with how success is described. Volunteering can build confidence, whereas the volunteering required for a particular project may involve repetitive work that offers little choice. Treating all participation as equally rewarding overlooks that difference.\nThe coordinator now reports active shifts, completed tasks and reasons for leaving alongside registration numbers. Some trustees find the new report less impressive because it contains fewer large totals. However, a smaller accurate picture is more useful for planning than a large uncertain one. The centre needs reliable information about participation, not a list that merely looks busy.",
+      "questions": [
+        {
+          "prompt": "What has the centre introduced?",
+          "answers": [
+            "short introductory shifts",
+            "introductory shifts"
+          ],
+          "explanation": "Dalil: «short introductory shifts». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Who meets newcomers?",
+          "answers": [
+            "experienced volunteers",
+            "a group of experienced volunteers",
+            "group of experienced volunteers"
+          ],
+          "explanation": "Dalil: «A group of experienced volunteers meets newcomers». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why do some trustees dislike the report? A: It has fewer impressive totals. B: It contains no information. C: Nobody volunteers.",
+          "answers": [
+            "A",
+            "It has fewer impressive totals",
+            "A: It has fewer impressive totals",
+            "fewer impressive totals"
+          ],
+          "explanation": "Dalil: «it contains fewer large totals». Ta’sirli umumiy sonlar kamaygan, ma’lumot yo‘qolmagan."
+        }
+      ]
+    },
+    "listening": {
+      "title": "What Does 'Everyone Agrees' Mean?",
+      "text": "Editor: Your article says everyone in the building supports the new roof garden. How did you establish that?\nReporter: The residents' meeting approved it, and nobody there objected.\nEditor: How many flats were represented?\nReporter: Twelve out of thirty. The meeting was on a weekday afternoon.\nEditor: Then the support at that meeting is clear, but the opinion of the whole building isn't. Some residents may have been working.\nReporter: I can change it to 'Residents at the meeting supported the proposal.'\nEditor: Good. Also, the collection of comments is interesting, but it isn't a survey with a representative sample.\nReporter: Should I remove the positive quotations?\nEditor: No. Keep them and explain their source. Enthusiasm is part of the story. The problem is making the evidence carry a claim it cannot support.\nReporter: One resident said the garden would transform the building.\nEditor: That is a prediction. Attribute it clearly rather than presenting it as an established result.\nReporter: Understood. I'll ask management whether a second consultation is planned.\nEditor: Excellent. Accuracy doesn't require a lifeless article. It requires readers to distinguish what happened, what people hope, and what remains unknown. Those differences are often more interesting than a headline claiming universal agreement.",
+      "questions": [
+        {
+          "prompt": "How many flats were represented?",
+          "answers": [
+            "twelve",
+            "12"
+          ],
+          "explanation": "Dalil: «Twelve out of thirty». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "When was the meeting?",
+          "answers": [
+            "a weekday afternoon",
+            "on a weekday afternoon",
+            "weekday afternoon"
+          ],
+          "explanation": "Dalil: «on a weekday afternoon». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What does the editor recommend? A: Delete enthusiasm. B: Limit claims to evidence. C: Assume absent residents agree.",
+          "answers": [
+            "B",
+            "Limit claims to evidence",
+            "B: Limit claims to evidence",
+            "limit claims to evidence"
+          ],
+          "explanation": "Dalil: «making the evidence carry a claim it cannot support». Dalil qamrovidan keng xulosa chiqarishni tuzatish kerak."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Ko‘ngillilar soni o‘sishini muvaffaqiyat deyish uchun yana qanday dalil kerak? 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "The list/group is va everyone/nobody bilan birlik fe’lni saqlaydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Markaz yangi ko‘ngillilar uchun qisqa tanishuv navbatchiliklarini e’lon qildi va fikr so‘radi. Do‘stingiz Saraga munosabat, foyda va qatnashish rejangiz haqida norasmiy email yozing. 45–55 so‘z yozing.",
+      "model": "Hi Sara,\nThe centre's new introductory shifts sound useful. Everyone gets a clear first task, so joining should feel less confusing. I'm going on Saturday to see whether the library role suits me. Would you come too? A huge volunteer list means little if nobody knows where to start.\nBest,\nLola",
+      "success": [
+        "Tanishuv ishining foydasi va aniq qatnashish rejasini aytadi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "45–55 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: trustee — boshqaruv a’zosi; representative — vakillik qiluvchi; attribute — manbaga nisbat bermoq. Ega ichidagi ko‘plik otga emas, bosh otga qarab fe’l tanlating. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 152,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Artikl, sanalishdagi ma’no va sifatlar tartibi orqali aniq tavsif yozish.",
+    "reading": {
+      "title": "An Old Chair in a New Exhibition",
+      "text": "A small regional museum has received a beautiful old wooden chair from a local school. At first, the donation seemed unremarkable. The museum already owns several chairs, and visitors rarely travel across town simply to inspect another seat. The accompanying papers, however, connect this object to evening literacy classes held in the school after normal lessons.\nThe distinction between an object and its documented history matters. Wood can reveal how furniture was made, while a written account may explain how it was used. Neither source is complete by itself. A polished surface does not prove that a chair belonged to a particular teacher, and a family memory may confuse two similar objects.\nThe curator plans to display the chair beside copies of attendance records. She will describe the connection as probable rather than certain because one date remains inconsistent. Some donors worry that cautious wording makes the story less attractive. Yet uncertainty can invite visitors to investigate rather than simply admire.\nThe display will also explain why the classes took place at school, not in a purpose-built adult centre. The institution was available in the evenings, and its familiar setting reduced costs. The chair becomes interesting through that social context, not through an exaggerated claim that it changed history alone.",
+      "questions": [
+        {
+          "prompt": "What records will accompany the chair?",
+          "answers": [
+            "attendance records",
+            "copies of attendance records"
+          ],
+          "explanation": "Dalil: «copies of attendance records». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why is the connection only probable?",
+          "answers": [
+            "one date is inconsistent",
+            "an inconsistent date",
+            "inconsistent date"
+          ],
+          "explanation": "Dalil: «one date remains inconsistent». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What makes the chair significant? A: Proven royal ownership. B: Its social context. C: Its price alone.",
+          "answers": [
+            "B",
+            "Its social context",
+            "B: Its social context",
+            "its social context"
+          ],
+          "explanation": "Dalil: «The chair becomes interesting through that social context». Qiymat ijtimoiy tarix bilan bog‘liq, dabdabali da’vo bilan emas."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Choosing Materials for a Public Notice",
+      "text": "Designer: We can print the notice on thick paper or use a small reusable board. Which suits the centre?\nManager: The board costs more initially, but the timetable changes every month. We use a surprising amount of paper already.\nDesigner: Then a plain white magnetic board may be practical. It won't look as elegant as a framed poster, though.\nManager: Elegance isn't the main issue. People need to read the information from the entrance, including visitors who are unfamiliar with the building.\nDesigner: Where exactly will it stand?\nManager: In the hall beside reception. Not outside, where rain would damage it, and not behind the desk, where the queue hides it.\nDesigner: I can bring a sample tomorrow. Would you also like a paper showing the proposed layout?\nManager: Yes, one printed sheet would help the team discuss it. We need evidence about readability before ordering ten boards.\nDesigner: That distinction matters. A material saving is useful only if the information remains accessible.\nManager: Exactly. I don't want to reduce paper consumption by replacing readable notices with something nobody understands. Let's test one board for a week and ask users to find a particular class time without staff assistance.",
+      "questions": [
+        {
+          "prompt": "How often does the timetable change?",
+          "answers": [
+            "every month",
+            "monthly"
+          ],
+          "explanation": "Dalil: «every month». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Where will the board stand?",
+          "answers": [
+            "in the hall beside reception",
+            "beside reception",
+            "the hall",
+            "the hall beside reception",
+            "hall beside reception",
+            "hall"
+          ],
+          "explanation": "Dalil: «In the hall beside reception.». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What determines success? A: Buying ten immediately. B: Elegance alone. C: Readability as well as saving.",
+          "answers": [
+            "C",
+            "Readability as well as saving",
+            "C: Readability as well as saving",
+            "readability as well as saving"
+          ],
+          "explanation": "Dalil: «A material saving is useful only if the information remains accessible.». Tejash o‘qish qulayligini yo‘qotmasligi kerak."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Muzey noaniq tarixni qanday ko‘rsatishi kerak? Jozibali hikoya bilan ehtiyotkor aniqlikni muvozanatlang. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Artikllar, paper/papers kabi ma’no va sifatlar tartibini aniq ishlatadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "151-darsdagi ko‘ngillilar markaziga rasmiy email yozing: tanishuv navbatchiligini baholang, kerakli ma’lumotni so‘rang va yangi a’zolar uchun bitta taklif bering. 120–150 so‘z yozing.",
+      "model": "Dear Volunteer Coordinator,\nThank you for introducing short orientation shifts for new members. The arrangement should help applicants understand the work before making a regular commitment, and I would like to attend the next library session.\nCould you confirm the starting time and explain whether participants need any previous experience? A brief description of the tasks would also help me prepare appropriately. I am interested in organising materials, but I would prefer guidance before assisting visitors independently.\nI suggest providing a simple printed card with the name of an experienced contact person. The card could remain useful after the introductory session, especially for someone who feels uncomfortable interrupting a busy team. Clear information and a welcoming first shift seem more valuable than increasing registration numbers alone.\nYours sincerely,\nLola Akhmedova",
+      "success": [
+        "Ijobiy baho, rolga oid aniq savol va amaliy taklifni kiritadi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "120–150 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: literacy — savodxonlik; curator — muzey kuratori; readability — o‘qish qulayligi. Paper modda va a paper hujjat ma’nosini ajrating; material sifatining o‘rnini ko‘rsating. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 153,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "-ed/-ing sifatlar, daraja va ravish qamrovi bilan bahoni aniqlashtirish.",
+    "reading": {
+      "title": "Only the Headline Was Simple",
+      "text": "A science centre described its new exhibition as 'absolutely unique' and promised that visitors would be amazed. The opening survey produced a more complicated picture. Many visitors were interested in the demonstrations, but several found the instructions confusing. The exhibition was not necessarily disappointing; the route through it was simply unclear.\nOne report stated that visitors almost completed every activity. Another said that almost every visitor completed an activity. These sentences sound similar, yet they describe different outcomes. The first concerns how far people progressed; the second concerns how many people participated at all. A small change in adverb position can therefore alter the apparent success of the entire project.\nThe evaluation team rewrote its summary using specific observations. Most visitors completed at least one activity, while fewer than half reached the final station. Families described the opening demonstration as fascinating, but some were exhausted before finding the quieter area. That evidence suggests a layout problem rather than a complete failure of content.\nThe centre will improve signs and add seating before buying more equipment. Its next advertisement may sound less dramatic, but the practical changes are more likely to help. Visitors need an engaging experience, not a competition between the strongest adjectives in the dictionary.",
+      "questions": [
+        {
+          "prompt": "What did several visitors find confusing?",
+          "answers": [
+            "the instructions",
+            "instructions"
+          ],
+          "explanation": "Dalil: «found the instructions confusing». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "How many reached the final station?",
+          "answers": [
+            "fewer than half",
+            "less than half"
+          ],
+          "explanation": "Dalil: «fewer than half reached the final station». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What problem does the evidence suggest? A: Excess seating. B: No interesting content. C: Layout.",
+          "answers": [
+            "C",
+            "Layout",
+            "C: Layout",
+            "layout"
+          ],
+          "explanation": "Dalil: «a layout problem rather than a complete failure of content». Mavzu qiziq, lekin harakat yo‘li va dam olish joyi muammo bo‘lgan."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Reading Customer Feedback Carefully",
+      "text": "Researcher: The report says customers were completely satisfied with the delivery service. Does the evidence support that wording?\nManager: Most ratings were positive. I thought the stronger phrase made the conclusion clearer.\nResearcher: It actually makes it less accurate. Some customers were pleased with the speed but frustrated by damaged packaging.\nManager: So the service was satisfying but the packaging was disappointing?\nResearcher: For those respondents, yes. We should distinguish the experience from the people experiencing it. Also, this sentence says we only delivered late to rural addresses.\nManager: I meant that rural addresses were the only places with late deliveries.\nResearcher: Then write that directly. 'Only delivered late' can suggest lateness was the only thing we did, which is hardly a recommendation.\nManager: Language is making our vans look worse than they are.\nResearcher: Precise language will help them. We can say ninety percent arrived on time, then explain the exceptions and proposed improvements.\nManager: Would that sound defensive?\nResearcher: Not if the action is clear. Acknowledging an irritating problem is more convincing than calling everything absolutely perfect. Customers remember the box they received, not the adjective we preferred in a meeting.\nManager: I'll revise the summary and keep the figures beside each claim.",
+      "questions": [
+        {
+          "prompt": "What frustrated some customers?",
+          "answers": [
+            "damaged packaging",
+            "the damaged packaging"
+          ],
+          "explanation": "Dalil: «frustrated by damaged packaging». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What percentage arrived on time?",
+          "answers": [
+            "ninety percent",
+            "90 percent",
+            "90%"
+          ],
+          "explanation": "Dalil: «ninety percent arrived on time». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Why avoid 'completely satisfied'? A: It overstates mixed evidence. B: All ratings were negative. C: Numbers are forbidden.",
+          "answers": [
+            "A",
+            "It overstates mixed evidence",
+            "A: It overstates mixed evidence",
+            "it overstates mixed evidence"
+          ],
+          "explanation": "Dalil: «pleased with the speed but frustrated by damaged packaging». Bir jihatdan mamnunlik to‘liq mamnunlikni anglatmaydi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Kuchli reklama sifatlari foydalimi yoki chalg‘itadimi? Ko‘rgazma dalillariga tayangan holda gapiring. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Interested/interesting, gradable sifatlar va only/almost qamrovini to‘g‘ri ajratadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Iste’molchilar blogi uchun 'Perfect kabi reklama so‘zlariga qanchalik ishonish mumkin?' mavzusida post yozing. Misol, qarshi fikr va o‘quvchiga amaliy mezon bering. 180–200 so‘z yozing.",
+      "model": "Advertising often promises an amazing experience, but strong adjectives tell us little without evidence. I am more interested in what a service actually does than in whether a company calls it perfect.\nThe science exhibition provides a useful example. Visitors enjoyed the demonstrations, yet many struggled to find their way through the building. Calling the whole exhibition disappointing would ignore its strengths. Calling it absolutely wonderful would ignore the layout problem. Specific descriptions reveal what needs to change.\nOf course, advertisements are designed to attract attention. Nobody expects a poster to contain an evaluation report. A lively phrase can communicate enthusiasm and help an event reach an audience. The problem begins when excitement replaces evidence or makes a limited benefit sound universal.\nI suggest looking for concrete details beside the attractive language. What proportion of deliveries arrive on time? Which activities are included? What happens when a customer has a problem? These questions are more useful than arguing about whether something is truly amazing.\nBusinesses can benefit from precision. A realistic promise is easier to keep, and an acknowledged weakness gives customers a reason to trust improvement. Clear information may be quieter than a slogan, but it usually lasts longer.",
+      "success": [
+        "Reklama bahosini tekshiriladigan dalil bilan solishtiradi va muvozanatli tavsiya beradi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "180–200 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: layout — joylashuv; scope — qamrov; overstate — bo‘rttirmoq. Only/almost ni ko‘chirib ma’no o‘zgarishini ayttiring. Juda kuchli sifatni dalilsiz qo‘llashni baholang. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 154,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Bilvosita savol va positive statement tag orqali muloyim aniqlik kiritish.",
+    "reading": {
+      "title": "A Question Is Not an Accusation",
+      "text": "At a meeting about a new cycle route, several residents wanted details about deliveries and emergency access. The chair invited questions, but the first speaker asked, 'You have considered local businesses, haven't you?' The wording sounded polite, yet it also suggested that a particular answer was expected. A trader who still had concerns hesitated to respond.\nLater, another resident asked, 'Could you explain how deliveries will reach the shops during construction?' That question produced a useful diagram and a clear timetable. It did not assume either competence or failure; it requested information that everyone could examine.\nIndirect questions are not automatically neutral, and question tags are not automatically aggressive. Tone, context and the relationship between speakers all matter. However, the structure can influence whether a discussion invites evidence or merely seeks agreement.\nThe chair decided to collect written questions before the next meeting. This may help quieter residents, although it should not replace opportunities to challenge an unclear answer. The aim is a conversation in which people can ask where access will remain open and whether arrangements have been tested. A public meeting should clarify the proposal, not reward whichever participant can attach the most confident 'isn't it?' to an opinion.",
+      "questions": [
+        {
+          "prompt": "What did the delivery question produce?",
+          "answers": [
+            "a diagram and a timetable",
+            "a useful diagram and a clear timetable",
+            "diagram and a timetable",
+            "useful diagram and a clear timetable"
+          ],
+          "explanation": "Dalil: «a useful diagram and a clear timetable». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What will the chair collect before the next meeting?",
+          "answers": [
+            "written questions",
+            "questions in writing"
+          ],
+          "explanation": "Dalil: «collect written questions». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What risk can a tag question create? A: Pressure to agree. B: Guaranteed neutrality. C: Automatic factual proof.",
+          "answers": [
+            "A",
+            "Pressure to agree",
+            "A: Pressure to agree",
+            "pressure to agree"
+          ],
+          "explanation": "Dalil: «suggested that a particular answer was expected». Tag shakli javobni ma’lum tomonga yo‘naltirishi mumkin."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Enquiring About a Training Grant",
+      "text": "Applicant: Could you tell me whether part-time workers can apply for the training grant?\nOfficer: Yes, they can. The main condition concerns the course, not the number of hours they work.\nApplicant: And do you know when decisions will be announced?\nOfficer: The panel meets on the twelfth. Applicants should receive a message within the following week.\nApplicant: The website mentions employer approval. That means my manager must pay part of the fee, doesn't it?\nOfficer: No. Approval confirms that the proposed training is relevant. It does not create a financial obligation for the employer.\nApplicant: I'm glad I checked. Could you explain where supporting documents should be uploaded?\nOfficer: Use the secure application portal, not ordinary email. There is a separate box for each document.\nApplicant: The guidance is quite detailed, isn't it?\nOfficer: It is, although some applicants find the terminology difficult. We're revising the examples.\nApplicant: A sample completed checklist would help me more than another paragraph of definitions.\nOfficer: That's useful feedback. I can send a blank checklist now. Please remember that checking eligibility does not guarantee funding; the panel still compares applications against the published criteria.\nApplicant: Understood. I want to submit a complete application, not assume the outcome before anyone has assessed it.",
+      "questions": [
+        {
+          "prompt": "When does the panel meet?",
+          "answers": [
+            "the twelfth",
+            "12th",
+            "on the twelfth",
+            "twelfth"
+          ],
+          "explanation": "Dalil: «on the twelfth». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Where should documents be uploaded?",
+          "answers": [
+            "the secure application portal",
+            "application portal",
+            "the portal",
+            "secure application portal",
+            "portal"
+          ],
+          "explanation": "Dalil: «the secure application portal». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What misconception is corrected? A: Part-time workers may apply. B: Approval requires employer payment. C: Documents need uploading.",
+          "answers": [
+            "B",
+            "Approval requires employer payment",
+            "B: Approval requires employer payment",
+            "approval requires employer payment"
+          ],
+          "explanation": "Dalil: «It does not create a financial obligation for the employer.». Tasdiq ish beruvchining to‘lov majburiyati emas."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Veloyo‘l uchrashuvida savollarni qanday berish kerak? Bir yo‘naltiruvchi savolni neytral shaklga aylantiring. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Ikki bilvosita savolda darak tartibini, bitta positive tagda mos yordamchi fe’lni qo‘llaydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Trening markazi grant uchun arizalarni ochdi, ish beruvchi tasdig‘i va hujjatlar so‘radi. Do‘stingiz Timga nimani aniqlaganingiz va keyingi rejangiz haqida norasmiy email yozing. 45–55 so‘z yozing.",
+      "model": "Hi Tim,\nI checked the training grant rules. Employer approval doesn't mean the company has to pay, which is a relief. Part-time staff can apply too. I'll upload my documents through the secure portal tomorrow. Could you check whether my checklist is complete before I submit it?\nThanks,\nSamira",
+      "success": [
+        "Tasdiq to‘lov emasligini tushuntiradi va ariza rejasini aytadi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "45–55 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: eligibility — talablarga moslik; obligation — majburiyat; terminology — atamalar. Could you tell me where… ichida inversiya qilmaslikni tekshiring; tag intonatsiyasini ikki xil o‘qing. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 155,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Negative tag, so/neither va stative/dynamic farqida kelishuvni aniq ifodalash.",
+    "reading": {
+      "title": "Agreement with a Condition",
+      "text": "A residents' group is considering a shared garden, but apparent agreement hides different expectations. One member thinks the site should mainly grow vegetables. Another is thinking about a quiet seating area. Both support 'a garden', yet they may be imagining incompatible uses of the same small plot.\nAt the meeting, someone said, 'We don't need formal rules, do we?' Several people nodded. Later discussion revealed concerns about watering, access and the distribution of produce. Agreement with a general statement had not resolved those practical questions.\nThe group now distinguishes shared principles from operational decisions. Members value open access, and so does the housing manager. Some residents cannot commit to weekly duties, and neither can the caretaker. Recognising these limits is more useful than treating hesitation as a lack of community spirit.\nThe proposal includes a trial planting area and a separate bench. It also names a contact person for maintenance problems. This arrangement may seem less ambitious than the original sketch, but it tests whether the group can sustain basic responsibilities before expanding.\nGood cooperation does not require everyone to feel equally enthusiastic about every detail. It requires people to know what they agree to, what remains undecided, and how an attractive idea will function after the first planting afternoon.",
+      "questions": [
+        {
+          "prompt": "What two uses compete?",
+          "answers": [
+            "vegetables and seating",
+            "growing vegetables and a seating area"
+          ],
+          "explanation": "Dalil: «grow vegetables. Another is thinking about a quiet seating area». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Who also values open access?",
+          "answers": [
+            "the housing manager",
+            "housing manager"
+          ],
+          "explanation": "Dalil: «so does the housing manager». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What is the main warning? A: Gardens cannot succeed. B: General agreement may hide different expectations. C: Hesitation proves selfishness.",
+          "answers": [
+            "B",
+            "General agreement may hide different expectations",
+            "B: General agreement may hide different expectations",
+            "general agreement may hide different expectations"
+          ],
+          "explanation": "Dalil: «apparent agreement hides different expectations». Umumiy so‘zga rozilik amaliy tafsilotlarga rozilik emas."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Reacting to a Flexible Work Proposal",
+      "text": "Colleague: I think the flexible-start proposal could help with travel. I'm thinking about starting half an hour earlier.\nPartner: So am I, although I want to check the customer coverage first.\nColleague: We aren't reducing opening hours, are we?\nPartner: No. The office keeps the same hours. Individuals choose different starting times within the agreed limits.\nColleague: I don't want clients to find nobody available.\nPartner: Neither do I. That's why the manager is asking each team for a coverage plan.\nColleague: The proposal sounds fair, but some roles have less flexibility.\nPartner: Yes. I see that problem. I'm seeing the manager tomorrow to discuss how those roles might benefit in another way.\nColleague: Perhaps they could choose preferred break times instead.\nPartner: Possibly. We shouldn't call the system equal simply because the same email goes to everyone.\nColleague: You haven't submitted your plan yet, have you?\nPartner: No. I want to understand the limits before promising a schedule. Flexibility is useful, but it isn't a substitute for coordination.\nColleague: Agreed. Let's compare our draft times today. If they leave a gap at reception, we'll adjust them before the meeting rather than ask customers to admire our flexibility from a locked doorway.",
+      "questions": [
+        {
+          "prompt": "How much earlier is one colleague considering starting?",
+          "answers": [
+            "half an hour",
+            "30 minutes",
+            "thirty minutes"
+          ],
+          "explanation": "Dalil: «half an hour earlier». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Who is the partner meeting tomorrow?",
+          "answers": [
+            "the manager",
+            "manager"
+          ],
+          "explanation": "Dalil: «I'm seeing the manager tomorrow». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What does the locked-door remark imply? A: Draft plans are final. B: Closing is the goal. C: Customer coverage must remain.",
+          "answers": [
+            "C",
+            "Customer coverage must remain",
+            "C: Customer coverage must remain",
+            "customer coverage must remain"
+          ],
+          "explanation": "Dalil: «If they leave a gap at reception, we'll adjust them». Eski xizmat qamrovi yo‘qolmasligi uchun jadval moslashtiriladi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Bog‘ loyihasida rozilikning qaysi qismlari hali aniqlashtirilishi kerak? Sherikning fikriga qo‘shilib, shart kiriting. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "So/neither yordamchi fe’lini moslaydi va think/thinking yoki see/seeing farqini ko‘rsatadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "154-darsdagi grant markaziga rasmiy email yozing: qisman ishlovchi ekaningizni ayting, tasdiq talabi va muddatni aniqlashtiring, tushunarli yo‘riqnoma taklif qiling. 120–150 so‘z yozing.",
+      "model": "Dear Training Grants Officer,\nI am writing to clarify the application requirements for your current training grant. I work part-time and understand that this does not prevent me from applying, provided the course meets the published criteria.\nCould you confirm whether employer approval only establishes the relevance of the course? I would also appreciate clarification of the final date for uploading supporting documents through the secure portal. The panel meets on the twelfth, but I do not want to confuse that date with the submission deadline.\nI am considering a course related to my present role and would like to prepare a complete application. A sample checklist with brief explanations would be particularly useful for applicants unfamiliar with the terminology. It could reduce incomplete submissions without adding another long section to the guidance.\nYours faithfully,\nSamira Usmanova",
+      "success": [
+        "Holat, ikki aniq savol va qo‘llanma taklifini rasmiy uslubda beradi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "120–150 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: coverage — xizmat qamrovi; operational — amaliy boshqaruvga oid; coordination — muvofiqlashtirish. I think holat, I am thinking jarayon; I see tushunish, I am seeing uchrashuv ma’nolarini kontekstda ajrating. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 156,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Haftalik takrorlash: grammatik aniqlik bilan ehtiyotkor baho va savol tuzish.",
+    "reading": {
+      "title": "Editing a Community Report",
+      "text": "The first draft of a neighbourhood survey declared that everyone was delighted with the new park. An editor checked the underlying responses and found a more balanced picture. Most respondents liked the planting, but several were concerned about lighting. The collection of comments was valuable; it was not proof of universal satisfaction.\nThe editor also changed a sentence claiming that the council had only improved the central entrance. The intended meaning was that this entrance was the only area improved, not that improvement was the council's sole activity. Moving one word made the claim easier to understand.\nA photograph showed a beautiful new wooden bench, yet the caption called it 'completely comfortable'. Comfort depends partly on the user, so the editor replaced that judgement with dimensions and a description of its back support. The resulting caption was less enthusiastic but more informative.\nBefore publication, the team asked whether residents could identify which findings were observed and which were interpretations. Several readers requested a simple table. The final report included one, alongside quotations representing different views. Precision did not remove personality from the report. It helped readers see whose experience was being described and where the evidence ended, which is essential when a document may influence the next round of spending.",
+      "questions": [
+        {
+          "prompt": "What concerned several respondents?",
+          "answers": [
+            "lighting",
+            "the lighting"
+          ],
+          "explanation": "Dalil: «concerned about lighting». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What did readers request?",
+          "answers": [
+            "a simple table",
+            "a table",
+            "simple table",
+            "table"
+          ],
+          "explanation": "Dalil: «a simple table». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why replace 'completely comfortable'? A: Dimensions are secret. B: The bench vanished. C: Comfort varies by user.",
+          "answers": [
+            "C",
+            "Comfort varies by user",
+            "C: Comfort varies by user",
+            "comfort varies by user"
+          ],
+          "explanation": "Dalil: «Comfort depends partly on the user». Subyektiv baho o‘rniga tekshiriladigan o‘lcham va tayanch tavsifi berilgan."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Reviewing a Course Advertisement",
+      "text": "Coordinator: The draft says our course is perfect for everyone. That sounds welcoming, doesn't it?\nTutor: It does, but it promises too much. Some applicants need an advanced course, while ours introduces basic design skills.\nCoordinator: Could you suggest a more accurate description?\nTutor: Say who it is intended for and what participants practise. The list of activities is clear, and each task has a practical outcome.\nCoordinator: Nobody needs previous experience, do they?\nTutor: No, but everyone needs access to a suitable device. We should state that beside the booking button.\nCoordinator: I'm thinking about adding a sample task. I think that would explain the level better than several adjectives.\nTutor: So do I. Also, the phrase 'only beginners receive feedback' is wrong. All participants receive feedback; beginners are simply our main audience.\nCoordinator: Good catch. Do you know whether the sample files are ready?\nTutor: Yes, they are. I have tested them with three volunteers, and two found the first instruction confusing.\nCoordinator: Then let's revise it before publishing.\nTutor: Exactly. An inviting advertisement can still be precise. We want learners to arrive with realistic expectations, not spend the first session discovering which parts of 'perfect for everyone' did not include them.",
+      "questions": [
+        {
+          "prompt": "What skills does the course introduce?",
+          "answers": [
+            "basic design skills",
+            "design skills"
+          ],
+          "explanation": "Dalil: «basic design skills». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What must everyone have access to?",
+          "answers": [
+            "a suitable device",
+            "a device",
+            "suitable device",
+            "device"
+          ],
+          "explanation": "Dalil: «access to a suitable device». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Why add a sample task? A: To clarify the level. B: To replace all feedback. C: To exclude beginners.",
+          "answers": [
+            "A",
+            "To clarify the level",
+            "A: To clarify the level",
+            "to clarify the level",
+            "clarify the level"
+          ],
+          "explanation": "Dalil: «explain the level better than several adjectives». Namuna reklama sifatlaridan ko‘ra darajani aniqroq ko‘rsatadi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Mahalla hisobotini tekshiruvchi sifatida uchta noaniq iborani tuzatib, o‘zgarish sababini himoya qiling. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Ega-fe’l mosligi, ravish qamrovi va bilvosita savoldan aniq foydalanadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Ta’lim blogi uchun 'Kurs reklamasida qaysi ma’lumotlar bo‘lishi kerak?' mavzusida post yozing. Namunaviy topshiriq, talablar va fikr-mulohaza haqida dalilli tavsiya bering. 180–200 so‘z yozing.",
+      "model": "A useful course advertisement should help a learner make a decision, not merely produce excitement. I would like to see the intended level, the practical requirements and an example of the work before reading that a course is perfect for everyone.\nA sample task can communicate difficulty more clearly than a label such as beginner-friendly. It shows the kind of instructions learners will meet and the outcome they are expected to produce. However, one sample should not be presented as a complete picture of the course.\nRequirements also need to be visible. If everyone needs a suitable device, that information belongs near the booking button. Hiding it in a long document may lead people to pay for something they cannot access properly.\nFinally, the advertisement should explain feedback. Will a tutor respond individually, will peers discuss the work, or will learners compare their answers with a model? These are different experiences, and none should be implied without being provided.\nSome people argue that detailed information makes advertising dull. I disagree. Clear examples can be engaging, while realistic promises build trust. A course does not need to suit everybody to be valuable; it needs to serve its actual learners well.",
+      "success": [
+        "Reklama jozibasi va aniq kutishlar muvozanatini kamida ikki misolda ko‘rsatadi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "180–200 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: underlying — asosdagi; dimensions — o‘lchamlar; intended — mo‘ljallangan. Uch xil xatoni aralashtiring: grammatik, dalil qamrovi va subyektiv baho; o‘quvchi turini tushuntirsin. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 157,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Future Continuous tasdiq va inkori bilan kelajak xizmat jarayonlarini tushuntirish.",
+    "reading": {
+      "title": "Keeping a Library Open During Repairs",
+      "text": "Next month, builders will be replacing the library roof, but the building will not close completely. Staff will be serving readers from the ground-floor rooms, and a temporary desk will be operating beside the side entrance. The upstairs study area will not be receiving visitors during the work.\nThe manager argues that partial access is better than a full closure. Students will still be collecting reserved books, and families will be attending a reduced programme of activities. However, readers who depend on a quiet workspace may gain little from a noisy ground floor. Calling the library open should not imply that every usual service remains available.\nThe published timetable therefore identifies both operating hours and likely periods of noise. Contractors will be carrying materials through the courtyard before ten, while delivery vehicles will be using a separate gate. Volunteers will not be directing visitors through the work area.\nSome members want a guarantee that the timetable will never change. The manager cannot reasonably provide that, since hidden damage may affect the schedule. Instead, a daily notice will explain any revision and offer alternative study locations. The plan treats continuity as a practical effort to preserve access, not as a promise that repairs can occur without anyone noticing.",
+      "questions": [
+        {
+          "prompt": "Where will the temporary desk operate?",
+          "answers": [
+            "beside the side entrance",
+            "the side entrance",
+            "side entrance"
+          ],
+          "explanation": "Dalil: «beside the side entrance». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "When will materials move through the courtyard?",
+          "answers": [
+            "before ten",
+            "before 10"
+          ],
+          "explanation": "Dalil: «before ten». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why list noise periods? A: Open does not mean every service is normal. B: To promise silence. C: To invite visitors upstairs.",
+          "answers": [
+            "A",
+            "Open does not mean every service is normal",
+            "A: Open does not mean every service is normal",
+            "open does not mean every service is normal"
+          ],
+          "explanation": "Dalil: «Calling the library open should not imply that every usual service remains available.». Ochiqlik barcha xizmatlar odatdagidek ekanini anglatmaydi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "A Station During Platform Works",
+      "text": "Presenter: What will passengers notice during the station improvements?\nPlanner: For the next fortnight, workers will be extending platform two. Trains will be using platforms one and three, and staff will be helping passengers at the main entrance.\nPresenter: Some commuters worry that the temporary arrangement will be confusing.\nPlanner: It may be unfamiliar, so we will be displaying the same colour-coded information online and inside the station. We won't be relying only on announcements, which some passengers cannot hear clearly.\nPresenter: Will the cafe area become a waiting room?\nPlanner: Part of it will. The cafe will still be serving customers, but half the seats will be available without a purchase.\nPresenter: That detail matters. People may otherwise assume they need to buy something.\nPlanner: Exactly. The signs will state it plainly. We also won't be sending wheelchair users along the narrow temporary footbridge; an accessible route is available beside the entrance.\nPresenter: Can you promise the works will feel effortless?\nPlanner: No. Transfers may take longer. We can promise clear information and staff assistance, not pretend construction is invisible.\nPresenter: That sounds less dramatic than 'business as usual'.\nPlanner: It is more useful. A realistic explanation helps people plan, whereas a reassuring slogan may leave them surprised at the platform.",
+      "questions": [
+        {
+          "prompt": "Which platform is being extended?",
+          "answers": [
+            "platform two",
+            "platform 2",
+            "two",
+            "2"
+          ],
+          "explanation": "Dalil: «extending platform two». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Can half the cafe seats be used without buying?",
+          "answers": [
+            "yes",
+            "yes they can"
+          ],
+          "explanation": "Dalil: «half the seats will be available without a purchase». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What does the planner favour? A: A guarantee of no inconvenience. B: Realistic information. C: Announcements alone.",
+          "answers": [
+            "B",
+            "Realistic information",
+            "B: Realistic information",
+            "realistic information"
+          ],
+          "explanation": "Dalil: «A realistic explanation helps people plan». Qiyinchilikni inkor etmasdan aniq ma’lumot berishni afzal ko‘radi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Kutubxonani qisman ochiq saqlash foydasini cheklovlari bilan tushuntiring. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Will be -ing va won't be -ing bilan xizmatlarning davom etishi yoki to‘xtashini ajratadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Kutubxona tomi ta’mirlanadi, pastki qavat ishlaydi, yuqoridagi o‘quv zali yopiladi. Do‘stingiz Aliga norasmiy email: munosabat, o‘qish joyi muammosi va rejangiz. 45–55 so‘z yozing.",
+      "model": "Hi Ali,\nThe library will be repairing its roof next month. Staff will still be lending books downstairs, but we won't be studying in the upstairs room. I'm glad it isn't closing completely, although the noise worries me. I'll check the suggested study spaces before our exams.\nSee you,\nDina",
+      "success": [
+        "Saqlanadigan xizmat va tinch joy ehtiyojini ajratib, reja aytadi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "45–55 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: contractor — pudratchi; continuity — uzluksizlik; transfer — o‘tish. Kelajakdagi vaqt oralig‘ini ko‘rsatib, shu paytda davom etadigan ishni ayttiring; tugallanishni hali talab qilmang. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 158,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Future Continuous savollari va Future Perfect tasdiqi orqali jarayon va natijani ajratish.",
+    "reading": {
+      "title": "Preparing a Small Archive for Opening",
+      "text": "The local history archive will welcome its first visitors in June. By opening day, the team will have catalogued the donated photographs and installed protective covers on the most fragile documents. During the opening week, volunteers will be demonstrating the search system rather than offering unrestricted access to every box.\nWhat will researchers be doing while the final records are checked? They will be using a temporary index and requesting material through staff. This may seem slow, but an incomplete catalogue can cause greater delays if visitors expect everything to be immediately available.\nThe director has separated physical readiness from intellectual completeness. By June, the reading room will have passed its safety inspection, yet interpretation of some documents will continue for months. A collection can be accessible before every historical question has been answered.\nSome supporters want the opening announcement to say the archive is finished. The team prefers 'ready for a first stage of public use'. That wording acknowledges progress without disguising the work ahead. It also encourages families to contribute missing names and dates. The public opening is therefore a milestone in an ongoing process, not a ribbon-cutting ceremony that magically turns every uncertain photograph into a fully explained piece of history.",
+      "questions": [
+        {
+          "prompt": "What will be catalogued by opening day?",
+          "answers": [
+            "donated photographs",
+            "the donated photographs"
+          ],
+          "explanation": "Dalil: «will have catalogued the donated photographs». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What will researchers use while records are checked?",
+          "answers": [
+            "a temporary index",
+            "the temporary index",
+            "temporary index"
+          ],
+          "explanation": "Dalil: «a temporary index». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why avoid saying 'finished'? A: The room is permanently unsafe. B: Interpretation will continue. C: No photographs exist.",
+          "answers": [
+            "B",
+            "Interpretation will continue",
+            "B: Interpretation will continue",
+            "interpretation will continue"
+          ],
+          "explanation": "Dalil: «interpretation of some documents will continue for months». Jismoniy tayyorlik barcha tarixiy savollar hal bo‘lganini bildirmaydi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Checking the Festival Schedule",
+      "text": "Coordinator: What will the technical team be doing at nine on opening morning?\nEngineer: We'll be testing the microphones. By then, we will have installed the main speakers, but the sound check needs an empty square.\nCoordinator: Will stallholders be unloading at the same time?\nEngineer: Not in the central area. They will have completed those deliveries by eight thirty under the current plan.\nCoordinator: One trader has requested a later slot because his driver covers another route first.\nEngineer: We can discuss a side entrance. The deadline exists to keep vehicles away from the sound cables, not to punish someone for asking.\nCoordinator: That's helpful. Will you be available for small changes during the programme?\nEngineer: One technician will be monitoring the stage all day. The others will be working on the indoor sessions.\nCoordinator: By noon, we will have welcomed several hundred visitors, so the information desk needs a clear contact list.\nEngineer: Agreed. Please distinguish urgent faults from ordinary requests. A broken microphone needs immediate action; a speaker wanting slightly more dramatic entrance music can wait.\nCoordinator: I'll make that distinction in the briefing.\nEngineer: Good. A timetable should coordinate different jobs, not make every request look equally urgent simply because it arrives during a busy morning.",
+      "questions": [
+        {
+          "prompt": "What will engineers test at nine?",
+          "answers": [
+            "microphones",
+            "the microphones"
+          ],
+          "explanation": "Dalil: «testing the microphones». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "By what time should central deliveries finish?",
+          "answers": [
+            "eight thirty",
+            "8:30",
+            "8.30"
+          ],
+          "explanation": "Dalil: «by eight thirty». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Why allow discussion of a side entrance? A: Sound cables are unimportant. B: All deadlines are cancelled. C: The rule serves safety, not punishment.",
+          "answers": [
+            "C",
+            "The rule serves safety, not punishment",
+            "C: The rule serves safety, not punishment",
+            "the rule serves safety not punishment",
+            "rule serves safety not punishment"
+          ],
+          "explanation": "Dalil: «not to punish someone for asking». Qoida maqsadi xavfsizlik; shu maqsad saqlansa muqobil yo‘l muhokama qilinadi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Arxiv ochilishini 'tayyor' deb e’lon qilish mezonlarini taklif qiling. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "What/Will…be -ing savoli va by…will have + V3 natijasini ishlatadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "157-darsdagi kutubxona menejeriga rasmiy email yozing: xizmat davomiyligini baholang, tinch o‘qish muammosini ayting, vaqt va muqobil joy haqida ma’lumot so‘rang. 120–150 so‘z yozing.",
+      "model": "Dear Library Manager,\nThank you for explaining how services will continue during the roof repairs. I appreciate that staff will be lending reserved books downstairs rather than closing the building entirely.\nHowever, I normally use the upstairs study room to prepare for examinations. Could you confirm which periods are likely to be particularly noisy and whether an alternative quiet room will be available nearby? A list of suitable locations would help students plan before the work begins.\nBy the start of the repairs, many readers will have arranged their study schedules, so early information would be valuable. I also suggest placing the daily update beside the reservation desk as well as online. This would support visitors who do not regularly check the website and reduce repeated questions for staff.\nYours sincerely,\nDina Rustamova",
+      "success": [
+        "Muammo va ikki aniq ma’lumot so‘rovini hurmatli uslubda beradi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "120–150 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: catalogue — ro‘yxatga tavsiflab kiritmoq; fragile — mo‘rt; milestone — muhim bosqich. By muddat natijasini at paytdagi jarayon bilan ikki ustunda ko‘rsating. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 159,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Future Perfect inkori va savollari bilan muddatdagi cheklovlarni tekshirish.",
+    "reading": {
+      "title": "A Deadline That Does Not Mean Completion",
+      "text": "A town has promised to publish an online map of accessible public buildings by September. Will the survey team have visited every site by then? No. The current schedule covers sixty of the ninety buildings, and the remaining inspections require additional funding. The first release will therefore be useful but incomplete.\nThe project manager wants unvisited sites marked as 'not yet assessed', rather than left blank. A blank space could suggest either that no barrier exists or that the building has been forgotten. Neither interpretation would be reliable. By September, the team will not have verified information supplied informally by every building owner.\nSome councillors fear that visible gaps will make the project look unsuccessful. Disability advocates disagree: knowing where information is missing is itself valuable. They also want the map to distinguish a step-free entrance from full access throughout a building. One positive feature does not answer every visitor's question.\nThe deadline should produce a transparent first version, not an appearance of completeness. Later updates can add verified detail and record changes. A map that admits its limits helps users plan; a polished map that hides them may send someone to a destination they cannot actually enter or use comfortably.",
+      "questions": [
+        {
+          "prompt": "How many buildings are in the first schedule?",
+          "answers": [
+            "sixty",
+            "60"
+          ],
+          "explanation": "Dalil: «sixty of the ninety buildings». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "How should unvisited sites be marked?",
+          "answers": [
+            "not yet assessed"
+          ],
+          "explanation": "Dalil: «'not yet assessed'». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why show gaps? A: No updates are planned. B: Gaps prove full access. C: Missing information is useful to know.",
+          "answers": [
+            "C",
+            "Missing information is useful to know",
+            "C: Missing information is useful to know",
+            "missing information is useful to know"
+          ],
+          "explanation": "Dalil: «knowing where information is missing is itself valuable». Noma’lum holatni aniq belgilash noto‘g‘ri taxminning oldini oladi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Before the Product Demonstration",
+      "text": "Client: Will your team have finished the booking system by Friday's demonstration?\nDeveloper: We will have completed the calendar and confirmation messages, but we won't have tested the payment function thoroughly enough for public use.\nClient: The invitation says people can try the new service.\nDeveloper: They can try a demonstration with sample bookings. We need to distinguish that from accepting real payments.\nClient: Will the security review have been completed?\nDeveloper: Not by Friday. The external reviewer starts next week. I don't want a confident presentation to suggest checks have happened when they haven't.\nClient: Could we hide the payment button and explain the limited scope at the beginning?\nDeveloper: Yes. That would make the session useful without misleading participants. We can ask them about navigation and the clarity of messages.\nClient: Some guests may be disappointed.\nDeveloper: Possibly, but discovering a limit during a demonstration is better than discovering it after someone has paid. Their feedback can still improve the system.\nClient: Then I'll revise the invitation today.\nDeveloper: Thank you. A deadline can define what we are ready to show; it should not pressure us into calling unfinished work complete. The most valuable outcome on Friday may be a clear list of improvements rather than immediate applause.",
+      "questions": [
+        {
+          "prompt": "Which function will not be fully tested?",
+          "answers": [
+            "payment",
+            "the payment function",
+            "payments",
+            "payment function"
+          ],
+          "explanation": "Dalil: «we won't have tested the payment function». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "When does the external reviewer start?",
+          "answers": [
+            "next week"
+          ],
+          "explanation": "Dalil: «starts next week». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What can visitors responsibly test? A: Sample bookings. B: Real payments. C: Completed security checks.",
+          "answers": [
+            "A",
+            "Sample bookings",
+            "A: Sample bookings",
+            "sample bookings"
+          ],
+          "explanation": "Dalil: «a demonstration with sample bookings». Sinov real to‘lov emas, namuna bronlar bilan cheklangan."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Xaritani muddatida qisman nashr qilish tarafdori yoki qarshisi bo‘ling; noma’lum ma’lumotni qanday belgilang? 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Will…have + V3 savoli va won't have + V3 cheklovlarini aniq muddat bilan qo‘llaydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Texnologiya forumi uchun 'To‘liq tugamagan xizmatni namoyish qilish mumkinmi?' mavzusida post yozing. Foyda, xavf va halol chegaralash shartlarini muhokama qiling. 180–200 so‘z yozing.",
+      "model": "A service does not always need to be complete before people can give feedback. I support demonstrations of unfinished work, provided the limits are visible and nobody mistakes a trial for a tested product.\nThe booking system illustrates this. Visitors can comment on the calendar and confirmation messages even though payment testing is incomplete. Their reactions may reveal confusion before the developers invest time in the wrong design.\nHowever, the invitation must explain what participants can actually do. If it promises a new service without qualification, people may reasonably expect real transactions. Hiding an unfinished button is helpful, but an explanation at the start is also necessary. Sample bookings should be clearly labelled, and no claim should imply that an external security review has already happened.\nSome organisers worry that these limits will make the event disappointing. That is possible, yet disappointment is less damaging than misplaced trust. By the demonstration date, the team may not have completed every feature, but it can still have prepared focused questions and a feedback process.\nI would judge the event by what the team learns and communicates, not by applause alone. A useful demonstration makes the next version better while keeping promises realistic.",
+      "success": [
+        "Demo va real foydalanishni ajratib, kamida ikki oshkoralik shartini beradi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "180–200 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: verify — tekshirib tasdiqlamoq; transparent — oshkora; scope — qamrov. Scaffold: will have been completed passiv perfect shaklini tanish ma’no sifatida oching; faol perfect asosiy maqsad. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 160,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Kelajak jarayoni va yakuniga oid wh-savollar hamda qisqa javoblar bilan reja tekshirish.",
+    "reading": {
+      "title": "The Training Programme's Halfway Review",
+      "text": "A workplace training programme has reached its planning stage, and the organisers are defining what learners can reasonably achieve. What will participants have produced by the halfway review? Each will have completed one small project and received written feedback. They will not be expected to master every tool in the software.\nWill tutors be observing practice during the review week? Yes, they will. The observations are intended to reveal where instructions need improvement, not merely to identify individual mistakes. If several people struggle at the same step, the course design may be part of the problem.\nThe programme manager has resisted a suggestion to count logins as the main measure of engagement. A login shows access, but it cannot establish understanding. Equally, a learner who studies downloaded materials may appear inactive on the platform while working carefully offline.\nThe review will therefore combine project evidence, brief learner explanations and tutor observations. By the final meeting, the team will have compared these sources and identified changes for the next group. This approach requires more judgement than a simple activity chart, but it avoids treating visible clicks as learning itself. The aim is demonstrable progress, including an honest account of what learners still need to practise.",
+      "questions": [
+        {
+          "prompt": "What will each learner have completed halfway?",
+          "answers": [
+            "one small project",
+            "a small project",
+            "1 small project",
+            "small project"
+          ],
+          "explanation": "Dalil: «one small project». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Will tutors observe practice?",
+          "answers": [
+            "yes",
+            "yes they will"
+          ],
+          "explanation": "Dalil: «Yes, they will.». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why not rely on logins? A: Access does not prove understanding. B: Offline study is impossible. C: Projects cannot be assessed.",
+          "answers": [
+            "A",
+            "Access does not prove understanding",
+            "A: Access does not prove understanding",
+            "access does not prove understanding"
+          ],
+          "explanation": "Dalil: «A login shows access, but it cannot establish understanding.». Tizimga kirish bilimni isbotlamaydi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Questions Before a Street Survey",
+      "text": "Resident: What will your team have checked by the public meeting?\nResearcher: We will have counted traffic at six locations and compared morning and evening conditions.\nResident: Will you be interviewing people outside the shops too?\nResearcher: Yes, we will. We also plan telephone conversations with residents who cannot attend in person.\nResident: Will you have solved the parking problem by then?\nResearcher: No, we won't. The meeting is for presenting evidence and discussing options, not announcing a completed design.\nResident: What will you have learned about deliveries?\nResearcher: We expect to have recorded their usual times and the space they need. We should then be able to distinguish regular requirements from occasional exceptions.\nResident: Some neighbours think the decision has already been made.\nResearcher: Then we need to explain the process more clearly. Questions should influence the options, not simply decorate a finished proposal.\nResident: Will you be publishing the raw counts?\nResearcher: Yes, we will, with notes explaining when and where they were collected. A number without context can create another argument rather than settle one.\nResident: That would help. I may disagree with the recommendation, but I want to see how you reached it before deciding whether the evidence supports it.",
+      "questions": [
+        {
+          "prompt": "At how many locations will traffic be counted?",
+          "answers": [
+            "six",
+            "6"
+          ],
+          "explanation": "Dalil: «six locations». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Will parking be solved before the meeting?",
+          "answers": [
+            "no",
+            "no they won't"
+          ],
+          "explanation": "Dalil: «No, we won't.». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Why publish contextual notes? A: To conceal locations. B: Counts need collection context. C: To replace discussion.",
+          "answers": [
+            "B",
+            "Counts need collection context",
+            "B: Counts need collection context",
+            "counts need collection context"
+          ],
+          "explanation": "Dalil: «A number without context can create another argument». Sonning qachon va qayerda olingani talqin uchun zarur."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Kursdagi o‘rganish natijasini logindan tashqari qanday tekshirasiz? Uch manbani taqqoslang. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "What will…have…? va Will…be…? savollariga mos qisqa javob beradi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Kurs rahbari oraliq ko‘rikda bitta loyiha va fikr-mulohaza bo‘lishini bildirdi. Do‘stingiz Omariga tayyorgarlik, savol va yordam taklifi haqida norasmiy email yozing. 45–55 so‘z yozing.",
+      "model": "Hi Omar,\nBy the review, we'll have finished one small project, not mastered every tool. That feels manageable. Will you be practising on Tuesday? I will, and we could compare our explanations afterwards. I'll ask the tutor how offline work is recorded so our effort doesn't disappear from the chart.\nBest,\nZebo",
+      "success": [
+        "Loyiha natijasi va mashq jarayonini ajratib, aniq yordam taklif qiladi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "45–55 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: engagement — ishtirok faolligi; demonstrable — dalil bilan ko‘rsatiladigan; raw counts — dastlabki sanoq. Qisqa javobda will qaytishini, have yoki be ni noto‘g‘ri almashtirmaslikni tekshiring. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 161,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "By/by the time, future in the past va Future Continuous/Perfect farqini izchil qo‘llash.",
+    "reading": {
+      "title": "The Launch That Changed Shape",
+      "text": "The team was going to launch a complete neighbourhood history website in May. Volunteers believed they would have enough time to translate every interview before publication. By April, however, several recordings still lacked permission for public use, and translation was taking longer than expected.\nThe revised plan separates a first release from the complete collection. By launch day, the team will have checked permissions for twenty interviews and prepared summaries in two languages. During the first month, translators will be working on longer transcripts while editors collect corrections from families.\nSome volunteers feel the smaller release breaks the original promise. Others argue that publishing unapproved material would be a more serious failure. The coordinator has acknowledged the earlier overconfidence and explained why the timetable changed. This does not erase the disappointment, but it makes the decision open to scrutiny.\nBy the time the full collection appears, the team hopes to have improved both its records and its process for obtaining consent. Meanwhile, the website will clearly identify which material is available and which is still being prepared. A changed plan is not automatically evidence of poor commitment. Sometimes it shows that new information has been taken seriously rather than forced into an unrealistic deadline.",
+      "questions": [
+        {
+          "prompt": "When was the original launch planned?",
+          "answers": [
+            "May",
+            "in May"
+          ],
+          "explanation": "Dalil: «in May». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "How many interviews will have checked permissions?",
+          "answers": [
+            "twenty",
+            "20"
+          ],
+          "explanation": "Dalil: «twenty interviews». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why might the revision be responsible? A: It hides every delay. B: It respects new information and consent. C: It guarantees all translations.",
+          "answers": [
+            "B",
+            "It respects new information and consent",
+            "B: It respects new information and consent",
+            "it respects new information and consent"
+          ],
+          "explanation": "Dalil: «new information has been taken seriously». Yangi rozilik va vaqt ma’lumotlari rejaga ta’sir qilgan."
+        }
+      ]
+    },
+    "listening": {
+      "title": "A Sports Centre's Revised Opening",
+      "text": "Reporter: You were going to reopen the sports centre this weekend. What changed?\nManager: The inspection found a drainage problem near the changing rooms. We had expected the final checks to be straightforward, but the repair needs another week.\nReporter: What will users be able to do meanwhile?\nManager: Outdoor classes will be running as scheduled. By Monday, we will have moved the booked indoor sessions to two partner venues.\nReporter: Will every user receive the same arrangement?\nManager: No. Swimming sessions cannot transfer to a hall, so those bookings will be refunded. We need to explain the differences clearly.\nReporter: Some members say you promised the building would be ready.\nManager: We did announce a date, and we should have made the remaining inspection condition clearer. I understand their frustration.\nReporter: By the time the centre opens, will the drainage work have been checked again?\nManager: Yes. During that check, contractors will still be finishing minor decoration elsewhere, but public routes will be complete.\nReporter: So some work may continue after opening?\nManager: Only outside user areas. We will publish the details rather than call everything finished. People need to know what affects their visit, not receive another broad assurance that later needs a footnote.",
+      "questions": [
+        {
+          "prompt": "What problem delayed reopening?",
+          "answers": [
+            "drainage",
+            "a drainage problem",
+            "drainage problem"
+          ],
+          "explanation": "Dalil: «a drainage problem». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "By when will indoor sessions be moved?",
+          "answers": [
+            "Monday",
+            "by Monday"
+          ],
+          "explanation": "Dalil: «By Monday». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What does the manager acknowledge? A: No date was announced. B: Users caused the fault. C: The date needed clearer conditions.",
+          "answers": [
+            "C",
+            "The date needed clearer conditions",
+            "C: The date needed clearer conditions",
+            "the date needed clearer conditions",
+            "date needed clearer conditions"
+          ],
+          "explanation": "Dalil: «we should have made the remaining inspection condition clearer». Rahbar dastlabki va’daning sharti yetarli ochiq bo‘lmaganini tan oladi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Tarix sayti rejasini o‘zgartirishni qanday tushuntirish kerak? Ishonch va rozilikni hisobga oling. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Was going to/would va by the time bilan hozirgi yangilangan kelajak rejasini ajratadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "160-darsdagi kurs rahbariga rasmiy email: oraliq ko‘rik talabini tushunganingizni bildiring, oflayn ish dalili haqida so‘rang va baholashga taklif bering. 120–150 so‘z yozing.",
+      "model": "Dear Programme Manager,\nThank you for clarifying the expectations for the halfway review. I understand that each participant will have completed one small project and received written feedback by that stage, while tutors will be observing our practice during the review week.\nCould you explain how work completed offline will be considered? I regularly use downloaded materials, so my login record may not reflect the time spent studying. I can provide drafts and a brief explanation of the decisions made in my project.\nI was going to focus mainly on the platform activity chart, but your message has helped me understand the wider evidence required. I suggest allowing every learner to submit a short process note alongside the finished work. This would make progress visible without treating online activity as the only sign of engagement.\nYours sincerely,\nZebo Nurmatova",
+      "success": [
+        "Muddatdagi loyiha, dalil savoli va muqobil tekshiruv taklifini kiritadi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "120–150 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: consent — rozilik; scrutiny — sinchiklab ko‘rib chiqish; drainage — suv chiqarish tizimi. O‘tgan reja bilan hozirgi prognozni ranglarda ajrating. Passiv future perfect tinglashda tayyor ma’no tayanchi. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 162,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "Haftalik takrorlash: kelajak jadvalidagi jarayon, yakun va o‘zgargan rejani dalilli bayon qilish.",
+    "reading": {
+      "title": "Planning the Final Month of a Pilot",
+      "text": "A community transport pilot is approaching its final month. At the beginning, organisers thought they would be ready to recommend a permanent service by this point. In practice, two unusual festival weekends produced demand that may not represent ordinary travel patterns. The evaluation needs to separate those peaks from routine use.\nDuring the final month, drivers will be recording missed requests as well as completed journeys. By the last review meeting, analysts will have compared weekdays, weekends and special events. They will not have enough evidence to predict every seasonal change, and the report should state that limitation.\nSupporters argue that the service already helps people without cars. Critics question whether its cost is sustainable. Both issues matter, so a single count of passengers will not settle the debate. The team also needs information about journey purpose, alternative transport and the consequences of an unavailable ride.\nBy the time a decision is made, residents should have access to the findings and a chance to challenge the interpretation. The pilot was intended to inform a choice, not make that choice inevitable. Continuing, revising or ending it could each be reasonable, depending on the evidence. A useful evaluation explains the conditions behind its recommendation rather than treating activity itself as proof of success.",
+      "questions": [
+        {
+          "prompt": "What distorted demand?",
+          "answers": [
+            "two festival weekends",
+            "2 festival weekends",
+            "festival weekends"
+          ],
+          "explanation": "Dalil: «two unusual festival weekends». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What additional information will drivers record?",
+          "answers": [
+            "missed requests",
+            "unfulfilled requests"
+          ],
+          "explanation": "Dalil: «missed requests». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What is the pilot's purpose? A: Avoid evaluation. B: Guarantee continuation. C: Inform a choice.",
+          "answers": [
+            "C",
+            "Inform a choice",
+            "C: Inform a choice",
+            "inform a choice"
+          ],
+          "explanation": "Dalil: «intended to inform a choice, not make that choice inevitable». Sinov oldindan qarorni kafolatlamaydi, tanlov uchun dalil beradi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "The Final Exhibition Briefing",
+      "text": "Curator: By Thursday evening, we will have installed all the objects in the main gallery. On Friday morning, staff will be testing lighting and visitor routes.\nDirector: Will the audio guides have been checked by then?\nCurator: Yes, but we won't have translated the additional interviews. Those will follow next month, as the updated notice explains.\nDirector: We were going to include them at opening. Are visitors likely to feel misled?\nCurator: They might if we kept the original wording. We have changed the website and contacted booked groups. The main exhibition is complete; the supplementary material is a later addition.\nDirector: What will volunteers be doing during the first weekend?\nCurator: They will be noting repeated questions and places where people hesitate. That feedback may reveal unclear labels.\nDirector: Good. By the time we review the opening, I want more than attendance figures.\nCurator: We will have collected comments from visitors and staff, including people who leave early. Their experience matters too.\nDirector: Then let's state the distinction between completed installation and continuing improvement in the briefing.\nCurator: Agreed. Opening the doors marks readiness to welcome people, not the end of learning about how they use the space. A gallery can be carefully prepared and still benefit from its first audience.",
+      "questions": [
+        {
+          "prompt": "By when will main objects be installed?",
+          "answers": [
+            "Thursday evening",
+            "by Thursday evening"
+          ],
+          "explanation": "Dalil: «By Thursday evening». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "When will additional interview translations follow?",
+          "answers": [
+            "next month"
+          ],
+          "explanation": "Dalil: «next month». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Why observe hesitation? A: It may reveal unclear labels. B: It proves visitors dislike art. C: It replaces installation.",
+          "answers": [
+            "A",
+            "It may reveal unclear labels",
+            "A: It may reveal unclear labels",
+            "it may reveal unclear labels"
+          ],
+          "explanation": "Dalil: «That feedback may reveal unclear labels.». Hesitation yo‘riqnomani tushunishdagi muammoning belgisi bo‘lishi mumkin."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Transport sinovi yakunida qaysi dalillar xizmatni davom ettirish yoki o‘zgartirishga olib keladi? 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Kelajak jarayoni, by muddatidagi yakun va o‘tgan reja shakllarini bir argumentda qo‘llaydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Jamoat xizmatlari forumida 'Sinov loyihasini muvaffaqiyatli deb qachon aytish mumkin?' savoliga post yozing. Transport misoli, cheklov va qaror mezonlarini kiriting. 180–200 so‘z yozing.",
+      "model": "A busy pilot project is not automatically a successful one. Before deciding whether a service should continue, we need to ask what it was intended to achieve and whether the evidence answers that question.\nThe community transport trial shows the problem. Festival weekends attracted many passengers, but those peaks may not represent normal demand. By the final review, the team should have compared ordinary days with special events rather than combining everything into one encouraging total.\nMissed requests matter too. Completed journeys show what the service provided, whereas unavailable rides reveal needs it could not meet. Information about alternative transport would also help explain how much difference the pilot made to people's lives.\nOf course, collecting evidence costs time and money. We cannot postpone every decision until every uncertainty disappears. Nevertheless, a report can acknowledge limits while still offering a practical recommendation. It might support a smaller route, different operating hours or a further seasonal test.\nI would call the evaluation successful if residents can understand why the recommendation follows from the findings. Continuing the service is not the only acceptable result. A well-explained revision may serve the community better than keeping an impressive but unsuitable project unchanged.",
+      "success": [
+        "Qatnashuvdan tashqari kamida ikki mezon va shartli xulosa beradi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "180–200 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: pilot — sinov loyiha; sustainable — davom ettirish mumkin bo‘lgan; supplementary — qo‘shimcha. Har natija yoniga muddat va dalil manbasini qo‘ydiring. Yakuniy tavsiya majburiy ijobiy bo‘lishi shart emas. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 163,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "28-hafta spiral: so‘z turkumi, ega-fe’l va be orqali shaxs haqidagi tavsifni harakat dalilidan ajratish.",
+    "reading": {
+      "title": "A Job Title Is Not a Job Description",
+      "text": "A youth organisation is recruiting a communications assistant. Its first advertisement describes the ideal applicant as creative, confident and flexible. Those adjectives sound positive, but they leave practical questions unanswered. Does flexible mean willing to change working hours, able to use different software, or comfortable switching between tasks? An attractive label is not an observable responsibility.\nThe revised advertisement states what the assistant does: writes short updates, checks information with colleagues and prepares accessible event notices. It also distinguishes essential skills from skills that can be learned after appointment. The successful applicant is a member of a team, not an independent expert in every form of communication.\nSome staff worry that concrete descriptions will attract people who lack ambition. The recruitment lead disagrees. Clear verbs give applicants a better basis for judging their experience, while broad adjectives may reward confidence more than ability. Someone can be a careful writer without being the loudest person in an interview.\nThe team will still discuss attitude and willingness to learn. However, it will ask for examples rather than accept self-description alone. The change does not make personality irrelevant. It prevents a handful of fashionable words from standing in for the actual work and helps both applicants and interviewers understand what a fair assessment should examine.",
+      "questions": [
+        {
+          "prompt": "Which three adjectives appeared first?",
+          "answers": [
+            "creative, confident and flexible",
+            "creative confident flexible"
+          ],
+          "explanation": "Dalil: «creative, confident and flexible». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What will the team ask for instead of self-description alone?",
+          "answers": [
+            "examples",
+            "specific examples",
+            "evidence through examples"
+          ],
+          "explanation": "Dalil: «ask for examples rather than accept self-description alone». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why prefer concrete verbs? A: They clarify actual responsibilities. B: They remove every personal quality. C: They guarantee expert applicants.",
+          "answers": [
+            "A",
+            "They clarify actual responsibilities",
+            "A: They clarify actual responsibilities",
+            "they clarify actual responsibilities"
+          ],
+          "explanation": "Dalil: «Clear verbs give applicants a better basis for judging their experience». Aniq ish fe’llari nomzod tajribasini vazifa bilan solishtirishga imkon beradi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "What Does a 'Quiet Workspace' Mean?",
+      "text": "Member: Your shared office is advertised as a quiet workspace. Is that a rule or just a description of the atmosphere?\nHost: It's a description, but I see why the distinction matters. People work here, and short conversations are normal.\nMember: I edit audio, so quiet has a fairly specific meaning for me. Yesterday two people held a video meeting at the next desk.\nHost: The meeting booths are usually available, but one was out of service. The advertisement doesn't explain that temporary limitation.\nMember: I don't expect complete silence everywhere. I need to know where focused work is possible and which activities belong in the common area.\nHost: We could replace the general claim with separate descriptions of each zone. The rear room is a silent work area. The central tables are a collaborative space, and calls belong in the booths.\nMember: That would help. A place can be welcoming without being suitable for every task.\nHost: Agreed. I'll add the booth status to the booking page as well. I don't want the word quiet to carry a promise the room cannot consistently meet.\nMember: Thank you. I'm happy to use the rear room if the expectations are clear. My headphones are useful, but they aren't a substitute for accurate information.",
+      "questions": [
+        {
+          "prompt": "What work does the member do?",
+          "answers": [
+            "audio editing",
+            "edits audio",
+            "editing audio"
+          ],
+          "explanation": "Dalil: «I edit audio». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Which room is designated silent?",
+          "answers": [
+            "the rear room",
+            "rear room"
+          ],
+          "explanation": "Dalil: «The rear room is a silent work area.». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What change does the member support? A: Silence in every space. B: Clear zones and expectations. C: Removing all meetings.",
+          "answers": [
+            "B",
+            "Clear zones and expectations",
+            "B: Clear zones and expectations",
+            "clear zones and expectations"
+          ],
+          "explanation": "Dalil: «I'm happy to use the rear room if the expectations are clear.». A’zo hamma joyda jimlik emas, mos hudud va aniq qoida istaydi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Ish e’lonidagi 'confident' va 'flexible' tavsiflarini tekshiriladigan vazifalarga aylantiring; adolatli baholash mezonini himoya qiling. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Ega va fe’lni aniq bog‘laydi; be bilan tavsifni harakat fe’li bilan vazifadan ajratadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Umumiy ofis xabari: tinch xona, hamkorlik hududi va qo‘ng‘iroq kabinalari tavsifi yangilanadi; a’zolardan taklif so‘ralgan. Do‘stingiz Mayaga norasmiy email: tajribangiz, munosabatingiz va rejangiz. 45–55 so‘z yozing.",
+      "model": "Hi Maya,\nThe shared office is changing its room descriptions after my noisy visit. I'm pleased because quiet means different things to different people. The rear room is for silent work, while calls belong in booths. I'll book the rear room next time and check whether the booths are available.\nBest,\nNodir",
+      "success": [
+        "Shovqin tajribasi, aniq zonalarga munosabat va keyingi tashrif rejasini beradi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "45–55 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: observable — kuzatiladigan; responsibility — mas’uliyat; booth — alohida kabina. Spiral: sifat va otli be-gapni ish bildiruvchi fe’l bilan solishtiring; B2 fikr mazmunini oddiy gap tuzilishi orqali ham aniq ifodalash mumkin. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 164,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "28-hafta spiral: artikl, birlik-ko‘plik, sanalish va egalik orqali umumiy fikrni aniq buyumdan ajratish.",
+    "reading": {
+      "title": "When a Bag Becomes Evidence",
+      "text": "A railway station's lost-property office receives hundreds of objects each month. Staff can identify a suitcase more easily when its owner provides distinctive details than when the owner simply calls it expensive. A description such as 'a small black bag with a broken silver zip' gives useful evidence; a claim about value does not establish ownership.\nThe office has changed its online form to reflect this. Applicants first name an item, then describe the item with specific features. They are asked about contents without being shown every detail in the public listing. That protects against someone claiming a bag after reading its complete inventory online.\nSome passengers find the questions excessive, particularly when they are already anxious. Staff therefore explain why a piece of information matters instead of requesting more information indefinitely. The aim is enough evidence to make a reasonable match, not an impossible test of memory.\nThe system also distinguishes a passenger's property from equipment belonging to the station. Umbrellas, for example, may look identical but carry different ownership marks. A clear record helps staff return the right object without assuming that the most confident claimant is the rightful owner. In this setting, articles, plurals and possessive forms are small language choices with practical consequences.",
+      "questions": [
+        {
+          "prompt": "Which feature of the example bag is broken?",
+          "answers": [
+            "the silver zip",
+            "silver zip",
+            "the zip",
+            "zip"
+          ],
+          "explanation": "Dalil: «a broken silver zip». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why hide some contents from the public listing? A: To sell the objects. B: To prevent unsupported claims. C: To make all claims impossible.",
+          "answers": [
+            "B",
+            "To prevent unsupported claims",
+            "B: To prevent unsupported claims",
+            "to prevent unsupported claims",
+            "prevent unsupported claims"
+          ],
+          "explanation": "Dalil: «That protects against someone claiming a bag after reading its complete inventory online.». Ichki tafsilotlar haqiqiy egani aniqlash uchun saqlanadi."
+        },
+        {
+          "prompt": "What distinguishes similar umbrellas?",
+          "answers": [
+            "ownership marks",
+            "different ownership marks"
+          ],
+          "explanation": "Dalil: «different ownership marks». Javob matnda bevosita berilgan."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Ordering Supplies Without Confusion",
+      "text": "Assistant: The workshop order says we need paper, two papers and six glass containers. I think someone combined several notes.\nCoordinator: You're right. We need a pack of drawing paper and two copies of the safety document. 'Two papers' is ambiguous here.\nAssistant: And are the containers made of glass, or do you mean six drinking glasses?\nCoordinator: Six glass jars for storing brushes. They need wide openings, not handles.\nAssistant: I'll write that clearly. The supplier's assistant asked whether the teachers' materials should be packed separately from the students' materials.\nCoordinator: Yes. The teachers' box contains demonstration tools. Each student's pack contains a notebook and a pencil, but no cutting equipment.\nAssistant: Some people might say these details are obvious.\nCoordinator: They are obvious to us because we discussed the session. The person packing the order only sees the words. A small grammatical ambiguity can become a large box of the wrong things.\nAssistant: Then I'll send a numbered list with quantities and a short purpose for each item.\nCoordinator: Good. Ask for confirmation before dispatch. Precise wording is not unnecessary formality when somebody else must turn a message into physical objects. It saves both their time and ours, and prevents the brushes from arriving with perfectly attractive but entirely unsuitable drinking glasses.",
+      "questions": [
+        {
+          "prompt": "How many copies of the safety document are needed?",
+          "answers": [
+            "two",
+            "2",
+            "two copies",
+            "2 copies"
+          ],
+          "explanation": "Dalil: «two copies of the safety document». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What should hold the brushes?",
+          "answers": [
+            "glass jars",
+            "six glass jars",
+            "6 glass jars",
+            "jars"
+          ],
+          "explanation": "Dalil: «Six glass jars for storing brushes.». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Why aren't the details obvious to the supplier? A: No quantities matter. B: The supplier attended the discussion. C: The supplier only sees the written order.",
+          "answers": [
+            "C",
+            "The supplier only sees the written order",
+            "C: The supplier only sees the written order",
+            "the supplier only sees the written order",
+            "supplier only sees the written order"
+          ],
+          "explanation": "Dalil: «The person packing the order only sees the words.». Oldingi suhbat konteksti yetkazuvchiga ma’lum emas."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Topilmalar xizmati qancha dalil so‘rashi kerak? Egani himoya qilish va ortiqcha qiyinchilikni solishtiring. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "A/the, sanaladigan-sanalmas ot va egalik shakllari bilan tavsifni aniq beradi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "163-darsdagi umumiy ofis rahbariga rasmiy email: yangilanayotgan hududlar tavsifini baholang, shovqin tajribangizni qisqa ayting va kabina holati haqida aniq ma’lumot so‘rang. 120–150 so‘z yozing.",
+      "model": "Dear Workspace Manager,\nThank you for proposing clearer descriptions of the office's different work areas. During my recent visit, a video meeting at the neighbouring desk made audio editing difficult. I understand that one of the meeting booths was unavailable, but that information was not visible when I booked.\nThe distinction between a silent rear room and a collaborative central area would help members choose an appropriate space. Could you also display the number of working booths on the booking page and indicate where calls should take place when a booth is closed?\nI do not expect silence throughout the building. My concern is that the description should match the service available on the day. Clear information about the rooms and their uses would support both focused work and necessary conversation.\nYours sincerely,\nNodir Aliyev",
+      "success": [
+        "Tajriba, foydali o‘zgarish va ishlamaydigan kabina uchun axborot taklifini kiritadi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "120–150 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: claimant — da’vogar; inventory — buyumlar ro‘yxati; dispatch — jo‘natish. Spiral: a bag → the bag izchilligini, teachers’ va student’s ma’nosini alohida tekshiring. Kontekstsiz paper/glass so‘zlarini tarjima qildirmang. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 165,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "28-hafta spiral: olmosh ishorasi, there is/are va have orqali resurs hamda egalikni aniqlashtirish.",
+    "reading": {
+      "title": "Whose Design Is It?",
+      "text": "A college team has produced a poster for a community event. One student collected photographs, another developed the layout, and a third checked the text. When the poster appeared online, the caption named only the person who uploaded it. The others felt that their work had become invisible.\nThere is no simple rule that every contribution deserves identical credit. Choosing a font and spending several days editing photographs are different tasks. However, there is a clear reason to describe contributions accurately rather than allow the final uploader's name to stand for everyone. The team has a shared folder, but shared access does not settle authorship.\nThe students now keep a short contribution record. Each person describes their own work, and the group checks the descriptions together. This helps them notice both visible design work and less visible tasks such as obtaining permission to use an image.\nSome classmates worry that recording contributions encourages competition. It could, if the record became a scoreboard. Used carefully, it does the opposite: it gives members language for recognising each other's work. The final caption now names the team and links to a brief account of responsibilities. Nobody needs to claim the whole poster in order to receive fair acknowledgement for a meaningful part of it.",
+      "questions": [
+        {
+          "prompt": "Whose name appeared initially?",
+          "answers": [
+            "the uploader's",
+            "the uploader",
+            "the person who uploaded it",
+            "uploader's",
+            "uploader",
+            "person who uploaded it"
+          ],
+          "explanation": "Dalil: «only the person who uploaded it». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What record does the team now keep?",
+          "answers": [
+            "a contribution record",
+            "a short contribution record",
+            "contribution record",
+            "short contribution record"
+          ],
+          "explanation": "Dalil: «a short contribution record». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "How can the record help cooperation? A: By giving one person every credit. B: By proving equal effort automatically. C: By recognising different work.",
+          "answers": [
+            "C",
+            "By recognising different work",
+            "C: By recognising different work",
+            "by recognising different work",
+            "recognising different work"
+          ],
+          "explanation": "Dalil: «recognising each other's work». Qayd har xil hissani tan olishga yordam beradi, avtomatik tenglashtirmaydi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Sharing a Workshop Kit",
+      "text": "Organiser: There are three tool kits in the cupboard, but only one of them belongs to our project. The other two are the college's.\nVolunteer: Which one is ours?\nOrganiser: The blue one with a numbered label. It has a complete list inside the lid.\nVolunteer: Someone has taken a screwdriver from the red kit. I assumed everything here was available to everyone.\nOrganiser: That's an understandable assumption, but shared storage isn't the same as shared ownership. We need to return it and explain the mix-up.\nVolunteer: Do we have enough equipment for Saturday without borrowing theirs?\nOrganiser: We have most of what we need. There isn't a long extension cable in our kit, so I'll request one formally.\nVolunteer: Could we label the shelves as well as the boxes? Nobody should have to remember this conversation to find the right equipment.\nOrganiser: Good suggestion. Each project can have its own marked space, with a separate area for items everyone may borrow.\nVolunteer: That would also help new volunteers avoid feeling blamed for unclear instructions.\nOrganiser: Exactly. Clear boundaries protect cooperation. They aren't a sign that we distrust each other; they prevent an innocent assumption from becoming a missing tool and an unnecessary argument between two otherwise helpful teams.",
+      "questions": [
+        {
+          "prompt": "Which kit belongs to the project?",
+          "answers": [
+            "the blue one",
+            "the blue kit",
+            "blue",
+            "blue one",
+            "blue kit"
+          ],
+          "explanation": "Dalil: «The blue one with a numbered label.». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What is missing from their kit?",
+          "answers": [
+            "a long extension cable",
+            "an extension cable",
+            "extension cable",
+            "long extension cable"
+          ],
+          "explanation": "Dalil: «There isn't a long extension cable». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What principle does the organiser express? A: Clear boundaries support cooperation. B: Shared storage means common ownership. C: New volunteers should know unwritten rules.",
+          "answers": [
+            "A",
+            "Clear boundaries support cooperation",
+            "A: Clear boundaries support cooperation",
+            "clear boundaries support cooperation"
+          ],
+          "explanation": "Dalil: «Clear boundaries protect cooperation.». Aniq egalik va foydalanish chegarasi keraksiz nizoni oldini oladi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Guruh posterida kredit qanday taqsimlanishi kerak? Ko‘rinadigan va ko‘rinmaydigan hissalarni farqlang. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Own/ours/theirs va each other ishoralarini noaniqliksiz qo‘llab, there is/are bilan holatni aytadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Talabalar forumida 'Guruh ishida hammani bir xil qayd etish adolatlimi?' mavzusida post yozing. Poster misoli, qarshi fikr va amaliy kelishuv taklifini kiriting. 180–200 so‘z yozing.",
+      "model": "Equal recognition sounds fair, but group members do not always contribute in the same way. I would name the team as a whole and then describe responsibilities where that information is useful.\nThe poster example shows why. The student who uploaded the finished design received credit, although others supplied photographs, arranged the layout and checked the text. Uploading was necessary, but it did not represent the entire project. A caption naming only the uploader gave readers a misleading picture.\nA contribution record could help, provided it is not used as a competitive scorecard. Some essential work is difficult to measure. Obtaining permission for an image may take several messages but leave no visible mark on the poster. Counting only obvious design changes would overlook that effort.\nI suggest agreeing on credit before publication. Each member can describe their work, and the group can check the wording together. If responsibilities overlap, the description can say so rather than force a false division.\nCritics may argue that this creates unnecessary administration. For a very small task, a shared team credit may be enough. However, when a project affects portfolios or public recognition, a short, accurate explanation is worth the effort.",
+      "success": [
+        "Hissa qaydining foyda va xavfini muhokama qilib, aniq kredit tartibini tavsiya qiladi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "180–200 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: authorship — mualliflik; acknowledgement — e’tirof; contribution — hissa. Spiral: it/they/ours qaysi otga qaytishini chiziq bilan ulang. There is va it is ni resurs borligi va tavsifi sifatida farqlang. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 166,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "28-hafta spiral: buyruq, odatiy Present Simple va hozirgi jarayonni amaliy ko‘rsatmada ajratish.",
+    "reading": {
+      "title": "A Kitchen Changes Its Routine",
+      "text": "A community kitchen serves lunch four days a week. Volunteers usually estimate portions from previous attendance, but this month they are weighing leftovers to understand how much food is wasted. The coordinator stresses that the exercise examines the system, not the generosity of individual cooks.\nThe new instructions are brief: record the number of meals, weigh unused food separately from unavoidable scraps, and note unusual circumstances. Do not change portion sizes merely to make the figures look better. A lower waste total means little if visitors leave hungry.\nOne volunteer questions whether the measurements create extra work without changing decisions. That concern is reasonable. The kitchen already has a busy routine, and collecting data is not an achievement by itself. The coordinator has therefore identified a specific decision: whether smaller initial servings, with easy second helpings, reduce waste while meeting visitors' needs.\nDuring the trial, staff are also asking whether people feel comfortable requesting more. Some may avoid doing so because they do not want to appear demanding. The team will compare the numbers with those comments before adjusting the routine permanently. Let's measure what matters, the coordinator says, rather than encourage everyone to celebrate a tidy spreadsheet while the actual lunch becomes less satisfying.",
+      "questions": [
+        {
+          "prompt": "How often does the kitchen serve lunch?",
+          "answers": [
+            "four days a week",
+            "4 days a week"
+          ],
+          "explanation": "Dalil: «four days a week». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What are volunteers weighing this month?",
+          "answers": [
+            "leftovers",
+            "unused food"
+          ],
+          "explanation": "Dalil: «they are weighing leftovers». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why ask about requesting more? A: Some visitors may feel uncomfortable. B: Everyone wants less food. C: Comments replace all measurement.",
+          "answers": [
+            "A",
+            "Some visitors may feel uncomfortable",
+            "A: Some visitors may feel uncomfortable",
+            "some visitors may feel uncomfortable"
+          ],
+          "explanation": "Dalil: «Some may avoid doing so because they do not want to appear demanding.». Kam chiqindi mehmon ehtiyoji qondirilganini yolg‘iz isbotlamaydi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "Temporary Checks at a Bicycle Hire Desk",
+      "text": "Supervisor: We normally inspect returned bicycles at the end of each hour. This week, we're checking the brakes immediately because several riders reported a problem with one batch.\nAssistant: Does that mean every bicycle is unsafe?\nSupervisor: No. It means we are investigating a specific pattern. Please explain that accurately instead of alarming customers or dismissing their concerns.\nAssistant: What should I record?\nSupervisor: Write the bicycle number and the rider's description. Don't diagnose the fault yourself. Ask the technician to inspect it, and keep it out of circulation until that check is complete.\nAssistant: Some customers are asking whether they can use another bicycle straight away.\nSupervisor: Yes, if a checked one is available. We don't need to stop the whole service while we examine a small group, but we do need to trace those bicycles carefully.\nAssistant: Let's put the temporary procedure beside the ordinary return checklist.\nSupervisor: Good idea. Mark it with this week's date so nobody mistakes it for a permanent change.\nAssistant: Then new staff can see what usually happens and what we are doing differently now.\nSupervisor: Exactly. A temporary response works best when its purpose and limits are clear. Otherwise, yesterday's emergency note can quietly become next year's unexplained rule.",
+      "questions": [
+        {
+          "prompt": "When are bicycles normally inspected?",
+          "answers": [
+            "at the end of each hour",
+            "hourly",
+            "every hour",
+            "the end of each hour",
+            "end of each hour"
+          ],
+          "explanation": "Dalil: «at the end of each hour». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What should be recorded besides the bicycle number?",
+          "answers": [
+            "the rider's description",
+            "rider's description"
+          ],
+          "explanation": "Dalil: «the rider's description». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Why date the temporary procedure? A: To hide the reports. B: To distinguish it from the normal rule. C: To prove every bicycle unsafe.",
+          "answers": [
+            "B",
+            "To distinguish it from the normal rule",
+            "B: To distinguish it from the normal rule",
+            "to distinguish it from the normal rule",
+            "distinguish it from the normal rule"
+          ],
+          "explanation": "Dalil: «so nobody mistakes it for a permanent change». Sana vaqtinchalik tartibni doimiy qoidadan ajratadi."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Oshxona chiqindi sinovini baholang: raqamni yaxshilash va haqiqiy xizmatni yaxshilash farqini tushuntiring. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Present Simple odat, Present Continuous sinov va imperativ ko‘rsatmani farqlaydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Jamoat oshxonasi xabari: bir oylik chiqindi o‘lchovi va kichik dastlabki porsiyalar sinovi rejalangan, ko‘ngillilar fikri so‘ralgan. Do‘stingiz Umidga munosabat, tashvish va yordam rejangiz haqida email yozing. 45–55 so‘z yozing.",
+      "model": "Hi Umid,\nThe kitchen is weighing leftovers this month. I think the trial could help, but smaller portions shouldn't leave people hungry. We usually count meals; now we also need visitors' comments. I'll help record feedback on Friday and ask whether everyone feels comfortable requesting more food.\nSee you,\nSaida",
+      "success": [
+        "O‘lchov foydasi, to‘yish tashvishi va bitta yordam vazifasini kiritadi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "45–55 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: leftovers — ortgan ovqat; scraps — yaroqsiz qoldiq; circulation — foydalanish aylanmasi. Spiral: usually/every bilan now/this month ni ajrating. Don't ko‘rsatmasini doesn't odat inkori bilan solishtiring. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 167,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "28-hafta spiral: savol turlari, vaqt-joy-harakat predloglari va ravishlar orqali jarayonni aniqlashtirish.",
+    "reading": {
+      "title": "The Delivery Map Needs Better Questions",
+      "text": "A small bookshop is reviewing its local delivery route. Orders are increasing, and the owner believes the driver is spending too long between stops. The driver disagrees: the route crosses a busy market street, and access changes during unloading hours. A map showing distance alone cannot explain the delay.\nThe review begins with better questions. Who prepares the parcels before departure? Which entrance does each building use? How long does the driver wait outside locked courtyards? These questions examine the process rather than assume that the person driving is inefficient.\nFor one week, the driver is recording arrival times and waiting reasons. The shop assistant is checking addresses before parcels leave the store. Early notes reveal that several customers give the main street address although deliveries enter through a side lane behind the building. Clear directions may save more time than a shorter line on the map.\nThe owner still needs to control costs, and the records do not prove that every delay is unavoidable. However, they make the discussion more specific. A useful route review considers where people move, when access is possible and how instructions are communicated. It does not treat the fastest theoretical journey as a fair measure of somebody's actual working day.",
+      "questions": [
+        {
+          "prompt": "What street does the route cross?",
+          "answers": [
+            "a busy market street",
+            "the market street",
+            "market street",
+            "busy market street"
+          ],
+          "explanation": "Dalil: «a busy market street». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What is the assistant checking?",
+          "answers": [
+            "addresses",
+            "the addresses"
+          ],
+          "explanation": "Dalil: «checking addresses». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why might clearer directions beat a shorter route? A: Distance never matters. B: Correct entrances reduce waiting. C: Every delay is unavoidable.",
+          "answers": [
+            "B",
+            "Correct entrances reduce waiting",
+            "B: Correct entrances reduce waiting",
+            "correct entrances reduce waiting"
+          ],
+          "explanation": "Dalil: «deliveries enter through a side lane behind the building». To‘g‘ri kirish joyi ko‘rsatilsa keraksiz kutish va aylanib yurish kamayadi."
+        }
+      ]
+    },
+    "listening": {
+      "title": "A Visitor Information Desk Reviews Its Signs",
+      "text": "Coordinator: Why are people still asking how to reach the workshop room? There are signs at the entrance.\nVolunteer: They're asking where to turn after the stairs, not how to enter the building. The sign near the landing points across the corridor, but the room is behind a fire door.\nCoordinator: Who checks that door during events?\nVolunteer: The caretaker. It stays closed, and visitors assume the area beyond it is private.\nCoordinator: How many people have asked this morning?\nVolunteer: Seven. I walked the route with two of them and noticed that the room number disappears from view after the first corner.\nCoordinator: So we need another sign on the landing?\nVolunteer: Yes, and clearer wording about passing through the door. We should check that the directions match the building's access arrangements before putting anything up.\nCoordinator: The original signs look professional.\nVolunteer: They do, but appearance doesn't tell us whether people can follow them. Visitors are moving through an unfamiliar space while carrying bags and looking for the right session.\nCoordinator: Let's test the revised route with someone who hasn't seen the plan.\nVolunteer: Good. If they reach the room independently, we'll have stronger evidence than our own feeling that the arrows are obvious. Familiarity makes many confusing routes look simple to the people who designed them.",
+      "questions": [
+        {
+          "prompt": "What is the room behind?",
+          "answers": [
+            "a fire door",
+            "the fire door",
+            "fire door"
+          ],
+          "explanation": "Dalil: «behind a fire door». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "How many people asked that morning?",
+          "answers": [
+            "seven",
+            "7"
+          ],
+          "explanation": "Dalil: «Seven.». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "Why test with an unfamiliar visitor? A: The caretaker cannot read. B: Professional signs always fail. C: Familiar staff may overlook confusion.",
+          "answers": [
+            "C",
+            "Familiar staff may overlook confusion",
+            "C: Familiar staff may overlook confusion",
+            "familiar staff may overlook confusion"
+          ],
+          "explanation": "Dalil: «Familiarity makes many confusing routes look simple». Joyni biladigan odam yangi mehmon qiyinchiligini sezmasligi mumkin."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Kitob yetkazishdagi kechikishni adolatli tekshirish uchun to‘rtta savol taklif qiling va eng foydali dalilni tanlang. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Subject/object savoli, how long/how many va harakat-joy predloglarini aniq qo‘llaydi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "166-darsdagi oshxona koordinatoriga rasmiy email: sinovga munosabat, ovqat miqdori bo‘yicha tashvish va mijoz fikrini yig‘ish taklifini yozing. 120–150 so‘z yozing.",
+      "model": "Dear Kitchen Coordinator,\nThank you for explaining the current waste-measurement trial. I support collecting better evidence before changing the normal serving routine, and I can help record visitors' comments on Friday.\nCould we ask both whether the initial portion is sufficient and whether people feel comfortable requesting more? The amount of leftover food is useful information, but it may not reveal whether a visitor leaves hungry or avoids asking for a second helping.\nI also suggest recording unusual attendance alongside the daily figures. How many meals are served, and how much unused food remains after each session? Comparing similar days would make the results easier to interpret. Clear instructions should distinguish unavoidable scraps from food that could have been eaten, so volunteers record the same categories consistently.\nYours sincerely,\nSaida Rahimova",
+      "success": [
+        "Isrof va to‘yish mezonlarini birga baholab, kamida ikki aniq savol taklif qiladi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "120–150 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: courtyard — ichki hovli; landing — zina maydonchasi; unavoidable — oldini olib bo‘lmaydigan. Spiral: Who prepares…? va Which entrance does…? tartibini taqqoslang; in/on/at, through/across/behind ma’nosini yo‘l chizig‘ida tekshiring. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  },
+  {
+    "lesson": 168,
+    "level": "B2 yo‘nalishidagi ichki amaliyot",
+    "objective": "28-hafta takrorlash: sodda grammatik aniqlikni murakkab dalil, tavsif va savolda qo‘llash.",
+    "reading": {
+      "title": "Reading an Accommodation Review Carefully",
+      "text": "An accommodation listing describes a guesthouse as central, peaceful and suitable for everyone. Recent reviews seem contradictory. One visitor calls the location excellent because the market is nearby. Another complains about early deliveries in the same street. Both accounts may be accurate: a convenient location can also be noisy at particular times.\nA careful reader distinguishes a general description from a specific experience. 'The rooms are quiet' is broader than 'My room was quiet on a Sunday night.' Similarly, there is a lift does not establish that every entrance or bathroom is accessible. Small grammatical choices affect how much a claim appears to cover.\nThe owner is updating the listing with room positions, entrance details and typical delivery hours. Some colleagues fear that mentioning limitations will discourage bookings. Yet visitors who need silence or step-free access benefit from accurate information before paying, and unsuitable bookings create complaints later.\nReviews also need context. A family, a business traveller and someone attending a nearby event may judge the same feature differently. The best response is not to label one reviewer unreasonable, but to ask what the person needed and what the property actually provided. Clear descriptions support a better match between guests and accommodation, even when they produce fewer but more suitable reservations.",
+      "questions": [
+        {
+          "prompt": "Why did one visitor like the location?",
+          "answers": [
+            "the market was nearby",
+            "a nearby market",
+            "the nearby market",
+            "market was nearby",
+            "nearby market"
+          ],
+          "explanation": "Dalil: «because the market is nearby». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "What is the owner updating?",
+          "answers": [
+            "the listing",
+            "the accommodation listing",
+            "listing",
+            "accommodation listing"
+          ],
+          "explanation": "Dalil: «updating the listing». Javob matnda bevosita berilgan."
+        },
+        {
+          "prompt": "Why can both reviews be accurate? A: One review must be false. B: Every guest has identical needs. C: Convenience and noise can coexist.",
+          "answers": [
+            "C",
+            "Convenience and noise can coexist",
+            "C: Convenience and noise can coexist",
+            "convenience and noise can coexist"
+          ],
+          "explanation": "Dalil: «a convenient location can also be noisy at particular times». Bir joy bir paytda qulay, boshqa jihatdan shovqinli bo‘lishi mumkin."
+        }
+      ]
+    },
+    "listening": {
+      "title": "A Borrowing Service Explains Its Offer",
+      "text": "Interviewer: Your centre lends equipment to local groups. What does a borrower actually receive?\nCoordinator: Each booking includes a listed set of items and basic operating instructions. It doesn't include a technician at the event unless the group arranges that separately.\nInterviewer: Is that distinction clear on the website?\nCoordinator: It is clearer now. We used to describe the service as complete event support, which suggested more than we provide.\nInterviewer: What is changing during the current review?\nCoordinator: We are checking the lists inside every box and asking borrowers which instructions they find unclear. There are also new labels showing whose equipment each box contains.\nInterviewer: Do people object to the more detailed conditions?\nCoordinator: Some do, but most appreciate knowing what is available. For example, a projector has a power cable, but it may not have the adapter a particular laptop needs.\nInterviewer: How do you help them identify that before collection?\nCoordinator: We ask which device they use and send a photograph of the connection. We don't assume everyone knows the technical name.\nInterviewer: So clear information is part of the service itself?\nCoordinator: Exactly. A box full of useful objects is not useful to someone who cannot connect them. Accurate descriptions, practical questions and understandable instructions are as important as the inventory.",
+      "questions": [
+        {
+          "prompt": "What is not automatically included?",
+          "answers": [
+            "a technician",
+            "a technician at the event",
+            "technician support",
+            "technician",
+            "technician at the event"
+          ],
+          "explanation": "Dalil: «It doesn't include a technician at the event». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What photograph does the centre send?",
+          "answers": [
+            "the connection",
+            "a photograph of the connection",
+            "the connector",
+            "connection",
+            "photograph of the connection",
+            "connector"
+          ],
+          "explanation": "Dalil: «a photograph of the connection». Javob suhbatdagi shu ma’lumotga tayanadi."
+        },
+        {
+          "prompt": "What is the central claim? A: Usable information is part of service quality. B: Equipment alone always suffices. C: Borrowers must know every technical term.",
+          "answers": [
+            "A",
+            "Usable information is part of service quality",
+            "A: Usable information is part of service quality",
+            "usable information is part of service quality"
+          ],
+          "explanation": "Dalil: «clear information is part of the service itself». Jihozni foydali ishlatish uchun tushunarli tavsif va yo‘riqnoma ham kerak."
+        }
+      ]
+    },
+    "speaking": {
+      "prompt": "Mehmonxona tavsifidagi umumiy da’volarni aniq savollarga aylantiring; kamroq, lekin mosroq bronlar foydasini muhokama qiling. 2 daqiqa fikr bildiring, keyin sherikning qarshi savoliga 30 soniyada javob bering.",
+      "success": [
+        "Be, have/there is, artikl, olmosh va Present Simple/Continuous dan kamida to‘rtini ma’noga mos ishlatadi.",
+        "Matndan ikki dalil keltiradi, bir qarshi fikrni tan olib javob beradi.",
+        "Belgilangan vaqtni saqlab, bugungi grammatikadan kamida ikki aniq misol ishlatadi."
+      ]
+    },
+    "writing": {
+      "prompt": "Sayohat forumida 'Qarama-qarshi mehmonxona sharhlarini qanday o‘qish kerak?' mavzusida post yozing. Joy misoli, turli ehtiyojlar va bron qilishdan oldingi savollarni kiriting. 180–200 so‘z yozing.",
+      "model": "Contradictory accommodation reviews do not necessarily mean that one visitor is dishonest. People may experience the same place at times or need different things from it. I would read the details before trusting the rating.\nA central guesthouse illustrates this well. The nearby market is convenient for one traveller, while early deliveries disturb another. Both comments can be useful. The question is whether that combination suits my own plans, not which reviewer wins the argument.\nI also look at the scope of each claim. A quiet room on one Sunday night does not prove that every room is quiet throughout the week. Similarly, a building with a lift may still have steps at its entrance. Specific information matters more than a broad promise that a property suits everyone.\nBefore booking, I would ask which direction the room faces and when deliveries usually arrive. If access matters, I would request details of the route from the street to the room rather than rely on one general label.\nOwners may fear that clear limitations discourage customers. However, accurate descriptions can prevent unsuitable reservations and later complaints. A good match is more valuable than a booking based on expectations the property cannot meet.",
+      "success": [
+        "Sharh kontekstini tahlil qiladi, ikki aniq savol va muvozanatli tavsiya beradi.",
+        "Qabul qiluvchi va janrga mos murojaat/uslubni saqlab, fikrlarni mantiqan bog‘laydi.",
+        "180–200 so‘z chegarasini saqlaydi; maqsadli grammatikani kamida ikki marta aniq qo‘llaydi."
+      ]
+    },
+    "teacherNote": "Oldindan: listing — e’lon tavsifi; reservation — bron; adapter — moslashtiruvchi ulagich. Spiral yakuni: da’vodagi ega, vaqt, joy va miqdor qamrovini tekshiring; oddiy grammatik xato murakkab xulosani qanday o‘zgartirishini ko‘rsating. O‘qish: da’vo va dalilni alohida belgilang; xulosa savolida dalil zanjirini ayttiring. Tinglash: matnni yopib ikki marta o‘qing, avval pozitsiyalar, keyin tafsilotlar. Sekin o‘quvchiga argument xaritasi va 45 soniya qo‘shimcha vaqt bering. Kuchli o‘quvchi muallif xulosasining chegarasini aytib, yangi dalil qanday qarorni o‘zgartirishini tushuntirsin. Bu alohida ichki mashq, rasmiy imtihon yoki standart ball va’dasi emas."
+  }
+]

@@ -1,0 +1,4002 @@
+[
+  {
+    "word": "painting",
+    "ipa": "/ˈpeɪntɪŋ/",
+    "meaning": "rangtasvir asari",
+    "example": "The painting cost more than its subject's house.",
+    "translation": "Rasm unda tasvirlangan odamning uyidan qimmat turdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "portrait",
+    "ipa": "/ˈpɔːtreɪt/",
+    "meaning": "portret",
+    "example": "My portrait has better hair than I do.",
+    "translation": "Portretimning sochi menikidan chiroyliroq.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "sketch",
+    "ipa": "/sketʃ/",
+    "meaning": "xomaki chizma",
+    "example": "This sketch began as a coffee stain.",
+    "translation": "Bu xomaki chizma qahva dog‘idan boshlandi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "drawing",
+    "ipa": "/ˈdrɔːɪŋ/",
+    "meaning": "chizilgan rasm",
+    "example": "Her drawing made our ordinary shed look royal.",
+    "translation": "Uning rasmi oddiy omborchamizni shohona ko‘rsatdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "sculpture",
+    "ipa": "/ˈskʌlptʃə/",
+    "meaning": "haykal; haykaltaroshlik asari",
+    "example": "The sculpture frightened pigeons but impressed visitors.",
+    "translation": "Haykal kabutarlarni qo‘rqitdi, mehmonlarni esa hayratlantirdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "sculptor",
+    "ipa": "/ˈskʌlptə/",
+    "meaning": "haykaltarosh",
+    "example": "The sculptor gave the mayor enormous ears.",
+    "translation": "Haykaltarosh hokimga ulkan quloqlar yasadi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "canvas",
+    "ipa": "/ˈkænvəs/",
+    "meaning": "rasm chiziladigan mato",
+    "example": "The blank canvas looked more confident than me.",
+    "translation": "Bo‘sh mato mendan dadilroq ko‘rinardi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "easel",
+    "ipa": "/ˈiːzəl/",
+    "meaning": "rasm uchun taglik; molbert",
+    "example": "My easel stood straighter than my painted tower.",
+    "translation": "Molbertim chizgan minoramdan tikroq turardi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "palette",
+    "ipa": "/ˈpælət/",
+    "meaning": "bo‘yoqlar aralashtiriladigan taxtacha",
+    "example": "My palette looked better than the finished picture.",
+    "translation": "Bo‘yoq taxtacham tayyor rasmdan chiroyliroq ko‘rindi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "watercolour",
+    "ipa": "/ˈwɔːtəkʌlə/",
+    "meaning": "akvarel bo‘yog‘i yoki rasmi",
+    "example": "Rain added its own ideas to my watercolour.",
+    "translation": "Yomg‘ir akvarel rasmimga o‘z g‘oyalarini qo‘shdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "ink",
+    "ipa": "/ɪŋk/",
+    "meaning": "siyoh",
+    "example": "The ink reached my sleeve before the paper.",
+    "translation": "Siyoh qog‘ozdan oldin yengimga yetdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "charcoal",
+    "ipa": "/ˈtʃɑːkəʊl/",
+    "meaning": "rasm chizish uchun ko‘mir",
+    "example": "Charcoal gave my fingers a dramatic new colour.",
+    "translation": "Rasm ko‘miri barmoqlarimga ta’sirli yangi rang berdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "mural",
+    "ipa": "/ˈmjʊərəl/",
+    "meaning": "devoriy rasm",
+    "example": "Our mural turned a dull wall into a jungle.",
+    "translation": "Devoriy rasmimiz zerikarli devorni o‘rmonga aylantirdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "collage",
+    "ipa": "/ˈkɒlɑːʒ/",
+    "meaning": "turli parchalar yopishtirilgan tasvir",
+    "example": "My collage includes last week's shopping list.",
+    "translation": "Kollajimga o‘tgan haftadagi xarid ro‘yxati ham kirgan.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "abstract",
+    "ipa": "/ˈæbstrækt/",
+    "meaning": "mavhum; aniq shaklsiz",
+    "example": "The abstract painting reminded Dad of burnt toast.",
+    "translation": "Mavhum rasm dadamga kuygan nonni eslatdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "lifelike",
+    "ipa": "/ˈlaɪflaɪk/",
+    "meaning": "haqiqiydek ko‘rinadigan",
+    "example": "The lifelike apple fooled one hungry gallery visitor.",
+    "translation": "Haqiqiydek olma galereyadagi bir och mehmonni aldadi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "colourful",
+    "ipa": "/ˈkʌləfəl/",
+    "meaning": "rang-barang",
+    "example": "The colourful poster woke up our grey office.",
+    "translation": "Rang-barang plakat kulrang ofisimizni jonlantirdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "vivid",
+    "ipa": "/ˈvɪvɪd/",
+    "meaning": "yorqin; tiniq",
+    "example": "The vivid colours made the tiny bird unforgettable.",
+    "translation": "Yorqin ranglar mitti qushni unutilmas qildi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "subtle",
+    "ipa": "/ˈsʌtəl/",
+    "meaning": "nozik; uncha sezilmaydigan",
+    "example": "The subtle smile took longer than the entire face.",
+    "translation": "Nozik tabassumni chizish butun yuzdan ko‘proq vaqt oldi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "shading",
+    "ipa": "/ˈʃeɪdɪŋ/",
+    "meaning": "rasmda soya berish",
+    "example": "Careful shading made the flat drawing look round.",
+    "translation": "Ehtiyotkor soya berish yassi rasmni hajmli ko‘rsatdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "texture",
+    "ipa": "/ˈtekstʃə/",
+    "meaning": "sirtning ko‘rinishi va tuzilishi",
+    "example": "The texture resembles cake, but please don't taste it.",
+    "translation": "Sirt tuzilishi tortga o‘xshaydi, lekin tatib ko‘rmang.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "printmaking",
+    "ipa": "/ˈprɪntmeɪkɪŋ/",
+    "meaning": "qolip yoki taxtadan tasvir bosish san’ati",
+    "example": "Printmaking gave us twelve identical pictures of one confused cat.",
+    "translation": "Tasvir bosish orqali bitta gangigan mushukning o‘n ikkita bir xil rasmi chiqdi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "foreground",
+    "ipa": "/ˈfɔːɡraʊnd/",
+    "meaning": "rasmning old qismi",
+    "example": "A giant teapot fills the foreground.",
+    "translation": "Rasmning old qismini ulkan choynak egallagan.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "background",
+    "ipa": "/ˈbækɡraʊnd/",
+    "meaning": "rasmning orqa qismi; fon",
+    "example": "The background contains a suspiciously smiling goat.",
+    "translation": "Orqa qismda shubhali jilmaygan echki bor.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "masterpiece",
+    "ipa": "/ˈmɑːstəpiːs/",
+    "meaning": "shohasar",
+    "example": "Grandma called my crooked vase a masterpiece.",
+    "translation": "Buvim qiyshiq vazamni shohasar dedi.",
+    "topic": "7-oy • Tasviriy san’at"
+  },
+  {
+    "word": "craft",
+    "ipa": "/krɑːft/",
+    "meaning": "qo‘l mehnatiga asoslangan hunar",
+    "example": "Her craft turns old newspapers into elegant baskets.",
+    "translation": "Uning hunari eski gazetalarni nafis savatlarga aylantiradi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "craftsman",
+    "ipa": "/ˈkrɑːftsmən/",
+    "meaning": "hunarmand usta",
+    "example": "The craftsman repaired my chair and my faith in it.",
+    "translation": "Usta kursimni ham, unga bo‘lgan ishonchimni ham tikladi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "pottery",
+    "ipa": "/ˈpɒtəri/",
+    "meaning": "kulolchilik",
+    "example": "Pottery taught me that round is surprisingly difficult.",
+    "translation": "Kulolchilik dumaloq shakl yasash kutilmaganda qiyinligini o‘rgatdi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "ceramic",
+    "ipa": "/səˈræmɪk/",
+    "meaning": "sopoldan yasalgan",
+    "example": "The ceramic cat survives longer than my plants.",
+    "translation": "Sopol mushuk o‘simliklarimdan uzoqroq yashaydi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "clay",
+    "ipa": "/kleɪ/",
+    "meaning": "loydan buyum yasash materiali",
+    "example": "The clay became a bowl after several disagreements.",
+    "translation": "Loy bir necha kelishmovchilikdan keyin kosaga aylandi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "marble",
+    "ipa": "/ˈmɑːbəl/",
+    "meaning": "marmar",
+    "example": "The marble statue looks colder than its welcome.",
+    "translation": "Marmar haykalning ko‘rinishi kutib olishidan ham sovuqroq.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "bronze",
+    "ipa": "/brɒnz/",
+    "meaning": "bronza",
+    "example": "The bronze horse never needs breakfast.",
+    "translation": "Bronza otga hech qachon nonushta kerak emas.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "wooden",
+    "ipa": "/ˈwʊdən/",
+    "meaning": "yog‘ochdan yasalgan",
+    "example": "Our wooden puppet has fewer excuses than my brother.",
+    "translation": "Yog‘och qo‘g‘irchog‘imizning bahonalari ukamnikidan kam.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "carve",
+    "ipa": "/kɑːv/",
+    "meaning": "o‘yib shakl bermoq",
+    "example": "I carve small birds that sometimes resemble potatoes.",
+    "translation": "Men ba’zan kartoshkaga o‘xshaydigan kichik qushlar o‘yaman.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "weave",
+    "ipa": "/wiːv/",
+    "meaning": "to‘qimoq",
+    "example": "They weave baskets while exchanging excellent gossip.",
+    "translation": "Ular qiziqarli gap-so‘zlar aytishib savat to‘qiydi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "embroidery",
+    "ipa": "/ɪmˈbrɔɪdəri/",
+    "meaning": "kashtachilik; kashta",
+    "example": "The embroidery hides where I spilled tea.",
+    "translation": "Kashta choy to‘kkan joyimni yashiradi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "knit",
+    "ipa": "/nɪt/",
+    "meaning": "spitsa bilan to‘qimoq",
+    "example": "I knit scarves longer than my patience.",
+    "translation": "Sabrimdan uzunroq sharflar to‘qiyman.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "handmade",
+    "ipa": "/ˌhændˈmeɪd/",
+    "meaning": "qo‘lda tayyorlangan",
+    "example": "Every handmade cup leans in its own direction.",
+    "translation": "Har bir qo‘lda yasalgan piyola o‘z tomoniga qiyshaygan.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "decorate",
+    "ipa": "/ˈdekəreɪt/",
+    "meaning": "bezatmoq",
+    "example": "We decorate the stall before hiding the messy boxes.",
+    "translation": "Tartibsiz qutilarni yashirishdan oldin rastani bezatamiz.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "decoration",
+    "ipa": "/ˌdekəˈreɪʃən/",
+    "meaning": "bezak",
+    "example": "One decoration fell into the mayor's tea.",
+    "translation": "Bitta bezak hokimning choyiga tushdi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "design",
+    "ipa": "/dɪˈzaɪn/",
+    "meaning": "buyumning tashqi va amaliy loyihasi",
+    "example": "This clever design stops biscuits falling out.",
+    "translation": "Bu aqlli dizayn pechenyelarning tushib ketishiga yo‘l qo‘ymaydi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "layout",
+    "ipa": "/ˈleɪaʊt/",
+    "meaning": "sahifa yoki joydagi qismlarning joylashuvi",
+    "example": "The layout gives the cake photo most space.",
+    "translation": "Sahifa tuzilishi tort suratiga eng ko‘p joy ajratadi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "stencil",
+    "ipa": "/ˈstensəl/",
+    "meaning": "naqsh tushirish uchun kesilgan andaza",
+    "example": "The stencil put perfect stars on my imperfect wall.",
+    "translation": "Andaza notekis devorimga mukammal yulduzlar tushirdi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "shape",
+    "ipa": "/ʃeɪp/",
+    "meaning": "shakl",
+    "example": "The bowl's shape reminds me of a sleepy hat.",
+    "translation": "Kosaning shakli menga uyquchi shlyapani eslatadi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "symmetry",
+    "ipa": "/ˈsɪmətri/",
+    "meaning": "simmetriya; ikki tomonning mutanosibligi",
+    "example": "Perfect symmetry disappeared when I added the ears.",
+    "translation": "Quloqlarni qo‘shganimda mukammal simmetriya yo‘qoldi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "engrave",
+    "ipa": "/ɪnˈɡreɪv/",
+    "meaning": "sirtga yozuv yoki naqsh o‘ymoq",
+    "example": "Please engrave my name correctly this time.",
+    "translation": "Bu safar ismimni to‘g‘ri o‘yib yozing.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "elegant",
+    "ipa": "/ˈelɪɡənt/",
+    "meaning": "nafis; didli",
+    "example": "The elegant vase contains my emergency pencils.",
+    "translation": "Nafis vazada zarurat uchun qalamlarim turadi.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "stylish",
+    "ipa": "/ˈstaɪlɪʃ/",
+    "meaning": "zamonaviy va didli",
+    "example": "Her stylish chair is almost too pretty to use.",
+    "translation": "Uning didli kursisi ishlatishga deyarli ko‘z qiymaydigan darajada chiroyli.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "minimalist",
+    "ipa": "/ˈmɪnɪməlɪst/",
+    "meaning": "kam bezakli va sodda uslubdagi",
+    "example": "The minimalist shop has fewer objects than my pocket.",
+    "translation": "Sodda uslubdagi do‘konda cho‘ntagimdagidan kam buyum bor.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "functional",
+    "ipa": "/ˈfʌŋkʃənəl/",
+    "meaning": "amaliy vazifasini yaxshi bajaradigan",
+    "example": "The teapot is beautiful but not very functional.",
+    "translation": "Choynak chiroyli, lekin ishlatishga uncha qulay emas.",
+    "topic": "7-oy • Hunarmandchilik va dizayn"
+  },
+  {
+    "word": "novel",
+    "ipa": "/ˈnɒvəl/",
+    "meaning": "roman",
+    "example": "The novel made me forget both dinner and bedtime.",
+    "translation": "Roman menga kechki ovqatni ham, uxlash vaqtini ham unuttirdi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "novelist",
+    "ipa": "/ˈnɒvəlɪst/",
+    "meaning": "romannavis",
+    "example": "The novelist borrowed our street and added a murder.",
+    "translation": "Romannavis ko‘chamizni asariga olib, qotillik qo‘shdi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "fiction",
+    "ipa": "/ˈfɪkʃən/",
+    "meaning": "badiiy to‘qima adabiyot",
+    "example": "In fiction, my terrible holiday might sound exciting.",
+    "translation": "Badiiy adabiyotda yomon ta’tilim qiziqarli tuyulishi mumkin.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "non-fiction",
+    "ipa": "/ˌnɒnˈfɪkʃən/",
+    "meaning": "haqiqiy voqea va ma’lumotga asoslangan adabiyot",
+    "example": "Non-fiction taught me more about bees than I wanted.",
+    "translation": "Ilmiy-ommabop adabiyot menga asalarilar haqida istaganimdan ko‘p o‘rgatdi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "poetry",
+    "ipa": "/ˈpəʊətri/",
+    "meaning": "she’riyat",
+    "example": "Poetry makes even my missing sock sound important.",
+    "translation": "She’riyat hatto yo‘qolgan paypog‘imni ham muhim ko‘rsatadi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "poem",
+    "ipa": "/ˈpəʊɪm/",
+    "meaning": "she’r",
+    "example": "My poem about silence received loud applause.",
+    "translation": "Sukunat haqidagi she’rim baland olqish oldi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "poet",
+    "ipa": "/ˈpəʊɪt/",
+    "meaning": "shoir",
+    "example": "The poet found inspiration in the bus queue.",
+    "translation": "Shoir avtobus navbatidan ilhom topdi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "verse",
+    "ipa": "/vɜːs/",
+    "meaning": "she’r bandi",
+    "example": "The final verse finally mentioned the missing cake.",
+    "translation": "Oxirgi band nihoyat yo‘qolgan tortni tilga oldi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "rhyme",
+    "ipa": "/raɪm/",
+    "meaning": "qofiya",
+    "example": "Finding a rhyme delayed dinner by twenty minutes.",
+    "translation": "Qofiya qidirish kechki ovqatni yigirma daqiqaga kechiktirdi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "prose",
+    "ipa": "/prəʊz/",
+    "meaning": "nasr",
+    "example": "Her prose makes a shopping trip sound adventurous.",
+    "translation": "Uning nasri xaridga borishni sarguzashtdek ko‘rsatadi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "short story",
+    "ipa": "/ˌʃɔːt ˈstɔːri/",
+    "meaning": "hikoya",
+    "example": "The short story ended before my tea cooled.",
+    "translation": "Hikoya choyim sovimasidan tugadi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "fairy tale",
+    "ipa": "/ˈfeəri teɪl/",
+    "meaning": "ertak",
+    "example": "In this fairy tale, the princess repairs the castle.",
+    "translation": "Bu ertakda malika qal’ani ta’mirlaydi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "fable",
+    "ipa": "/ˈfeɪbəl/",
+    "meaning": "masal",
+    "example": "The fable teaches honesty through a dishonest fox.",
+    "translation": "Masal yolg‘onchi tulki orqali halollikni o‘rgatadi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "biography",
+    "ipa": "/baɪˈɒɡrəfi/",
+    "meaning": "tarjimayi hol haqidagi asar",
+    "example": "His biography mentions every victory except washing up.",
+    "translation": "Uning tarjimayi holida idish yuvishdan boshqa barcha g‘alabalar bor.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "autobiography",
+    "ipa": "/ˌɔːtəbaɪˈɒɡrəfi/",
+    "meaning": "o‘zi yozgan tarjimayi hol",
+    "example": "Grandpa's autobiography begins with a lost goat.",
+    "translation": "Bobomning o‘zi yozgan tarjimayi holi yo‘qolgan echkidan boshlanadi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "memoir",
+    "ipa": "/ˈmemwɑː/",
+    "meaning": "xotiralar kitobi",
+    "example": "Her memoir made our quiet village sound famous.",
+    "translation": "Uning xotiralar kitobi sokin qishlog‘imizni mashhurdek ko‘rsatdi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "literary",
+    "ipa": "/ˈlɪtərəri/",
+    "meaning": "adabiy",
+    "example": "Our literary evening included poetry and stubborn biscuits.",
+    "translation": "Adabiy kechamizda she’rlar va qattiq pechenyelar bo‘ldi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "genre",
+    "ipa": "/ˈʒɒnrə/",
+    "meaning": "janr; asar turi",
+    "example": "His favourite genre always includes a suspicious neighbour.",
+    "translation": "Uning sevimli janrida doim shubhali qo‘shni bo‘ladi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "fantasy",
+    "ipa": "/ˈfæntəsi/",
+    "meaning": "sehrli to‘qima olam haqidagi janr",
+    "example": "This fantasy has dragons with office jobs.",
+    "translation": "Bu fantastik asarda ofisda ishlaydigan ajdarholar bor.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "science fiction",
+    "ipa": "/ˌsaɪəns ˈfɪkʃən/",
+    "meaning": "ilmiy fantastika",
+    "example": "Science fiction gives our broken toaster a future.",
+    "translation": "Ilmiy fantastika buzilgan tosterimizga kelajak beradi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "thriller",
+    "ipa": "/ˈθrɪlə/",
+    "meaning": "keskin hayajonli asar",
+    "example": "The thriller made every doorbell sound dangerous.",
+    "translation": "Triller har bir eshik qo‘ng‘irog‘ini xavflidek eshittirdi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "mystery",
+    "ipa": "/ˈmɪstəri/",
+    "meaning": "sirli voqeaga asoslangan asar",
+    "example": "The mystery ended with the gardener stealing nothing.",
+    "translation": "Sirli asar bog‘bon hech narsa o‘g‘irlamagani bilan tugadi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "romance",
+    "ipa": "/rəʊˈmæns/",
+    "meaning": "sevgi haqidagi asar",
+    "example": "The romance begins when two people reach for one biscuit.",
+    "translation": "Sevgi asari ikki kishi bitta pechenyega qo‘l uzatganda boshlanadi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "satire",
+    "ipa": "/ˈsætaɪə/",
+    "meaning": "ijtimoiy kamchiliklarni hajv qilish",
+    "example": "The satire made the mayor laugh rather nervously.",
+    "translation": "Hajviy asar hokimni biroz asabiy kuldirdi.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "anthology",
+    "ipa": "/ænˈθɒlədʒi/",
+    "meaning": "turli asarlar to‘plami",
+    "example": "This anthology contains poems shorter than its introduction.",
+    "translation": "Bu to‘plamdagi she’rlar uning kirish so‘zidan qisqaroq.",
+    "topic": "7-oy • Adabiy janrlar"
+  },
+  {
+    "word": "plot",
+    "ipa": "/plɒt/",
+    "meaning": "asar voqealari rivoji",
+    "example": "The plot became clearer when the cat inherited everything.",
+    "translation": "Mushuk hamma narsaga merosxo‘r bo‘lganda voqealar rivoji tushunarliroq bo‘ldi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "narrative",
+    "ipa": "/ˈnærətɪv/",
+    "meaning": "voqealarni bayon qilish",
+    "example": "The narrative follows a baker with terrible timing.",
+    "translation": "Hikoya vaqtdan yomon foydalanadigan novvoy haqida boradi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "narrator",
+    "ipa": "/nəˈreɪtə/",
+    "meaning": "hikoya qiluvchi",
+    "example": "The narrator knows everyone's secrets except his own.",
+    "translation": "Hikoyachi o‘zinikidan boshqa hammaning sirini biladi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "hero",
+    "ipa": "/ˈhɪərəʊ/",
+    "meaning": "bosh qahramon; qahramon",
+    "example": "Our hero saves the town but forgets his keys.",
+    "translation": "Qahramonimiz shaharni qutqaradi, lekin kalitlarini unutadi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "heroine",
+    "ipa": "/ˈherəʊɪn/",
+    "meaning": "ayol bosh qahramon",
+    "example": "The heroine solves the crime before breakfast.",
+    "translation": "Ayol bosh qahramon jinoyatni nonushtagacha fosh qiladi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "villain",
+    "ipa": "/ˈvɪlən/",
+    "meaning": "yovuz qahramon",
+    "example": "The villain writes surprisingly polite letters.",
+    "translation": "Yovuz qahramon kutilmaganda juda odobli xatlar yozadi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "protagonist",
+    "ipa": "/prəˈtæɡənɪst/",
+    "meaning": "asarning markaziy qahramoni",
+    "example": "The protagonist is a librarian afraid of silence.",
+    "translation": "Markaziy qahramon sukunatdan qo‘rqadigan kutubxonachi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "storyline",
+    "ipa": "/ˈstɔːrilaɪn/",
+    "meaning": "asarning asosiy voqealar tizimi",
+    "example": "The storyline follows a detective who keeps losing evidence.",
+    "translation": "Asosiy voqealar dalillarni yo‘qotaveradigan izquvar haqida.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "scene",
+    "ipa": "/siːn/",
+    "meaning": "asardagi alohida voqea yoki sahna",
+    "example": "The funniest scene happens in a serious bank.",
+    "translation": "Eng kulgili sahna jiddiy bankda yuz beradi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "twist",
+    "ipa": "/twɪst/",
+    "meaning": "voqealardagi kutilmagan burilish",
+    "example": "The final twist made me distrust the goldfish.",
+    "translation": "Oxirgi kutilmagan burilish oltin baliqqa shubha uyg‘otdi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "climax",
+    "ipa": "/ˈklaɪmæks/",
+    "meaning": "voqealarning eng keskin nuqtasi",
+    "example": "At the climax, the missing umbrella finally appears.",
+    "translation": "Eng keskin nuqtada yo‘qolgan soyabon nihoyat paydo bo‘ladi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "ending",
+    "ipa": "/ˈendɪŋ/",
+    "meaning": "asar yakuni",
+    "example": "The ending surprised everyone except my clever aunt.",
+    "translation": "Yakun aqlli xolamdan boshqa hammani hayron qoldirdi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "suspense",
+    "ipa": "/səˈspens/",
+    "meaning": "nima bo‘lishini kutish hayajoni",
+    "example": "The suspense ruined my plan for an early night.",
+    "translation": "Voqeani kutish hayajoni erta uxlash rejamni buzdi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "flashback",
+    "ipa": "/ˈflæʃbæk/",
+    "meaning": "oldingi voqeaga qaytish sahnasi",
+    "example": "A flashback explains why the detective hates cake.",
+    "translation": "O‘tmishga qaytish sahnasi izquvar nega tortni yomon ko‘rishini tushuntiradi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "allegory",
+    "ipa": "/ˈæləɡəri/",
+    "meaning": "ramziy ma’noli hikoya yoki tasvir",
+    "example": "The allegory uses greedy rabbits to discuss power.",
+    "translation": "Ramziy hikoya hokimiyatni ochko‘z quyonlar orqali muhokama qiladi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "symbol",
+    "ipa": "/ˈsɪmbəl/",
+    "meaning": "ramz",
+    "example": "The broken clock is a symbol of lost time.",
+    "translation": "Buzilgan soat yo‘qotilgan vaqt ramzi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "metaphor",
+    "ipa": "/ˈmetəfə/",
+    "meaning": "ko‘chma ma’noli o‘xshatish; metafora",
+    "example": "His metaphor turned the office into a sleepy zoo.",
+    "translation": "Uning metaforasi ofisni uyquchi hayvonot bog‘iga aylantirdi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "irony",
+    "ipa": "/ˈaɪrəni/",
+    "meaning": "kinoya; kutilganga zid kulgili holat",
+    "example": "The irony is that the detective lost his own keys.",
+    "translation": "Kinoyali tomoni shuki, izquvar o‘z kalitlarini yo‘qotgan.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "humour",
+    "ipa": "/ˈhjuːmə/",
+    "meaning": "yumor; hazil ruhi",
+    "example": "Her humour makes even a bus timetable entertaining.",
+    "translation": "Uning yumori hatto avtobus jadvalini ham qiziqarli qiladi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "manuscript",
+    "ipa": "/ˈmænjʊskrɪpt/",
+    "meaning": "chop etilmagan asar nusxasi",
+    "example": "The manuscript arrived with coffee on every chapter.",
+    "translation": "Qo‘lyozma har bir bobida qahva izi bilan keldi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "publisher",
+    "ipa": "/ˈpʌblɪʃə/",
+    "meaning": "nashriyot; noshir",
+    "example": "The publisher loved the story but not its length.",
+    "translation": "Noshirga hikoya yoqdi, lekin uzunligi yoqmadi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "publish",
+    "ipa": "/ˈpʌblɪʃ/",
+    "meaning": "nashr qilmoq",
+    "example": "They publish poems that fit on bus tickets.",
+    "translation": "Ular avtobus chiptasiga sig‘adigan she’rlarni nashr qiladi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "edition",
+    "ipa": "/ɪˈdɪʃən/",
+    "meaning": "nashr; chop etilgan variant",
+    "example": "The new edition finally spells my name correctly.",
+    "translation": "Yangi nashr nihoyat ismimni to‘g‘ri yozadi.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "paperback",
+    "ipa": "/ˈpeɪpəbæk/",
+    "meaning": "yumshoq muqovali kitob",
+    "example": "My paperback survived rain but not the puppy.",
+    "translation": "Yumshoq muqovali kitobim yomg‘irga chidadi, kuchukka esa yo‘q.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "hardback",
+    "ipa": "/ˈhɑːdbæk/",
+    "meaning": "qattiq muqovali kitob",
+    "example": "The hardback weighs more than my holiday clothes.",
+    "translation": "Qattiq muqovali kitob ta’til kiyimlarimdan og‘ir.",
+    "topic": "7-oy • Hikoya va kitob nashri"
+  },
+  {
+    "word": "cinema",
+    "ipa": "/ˈsɪnəmə/",
+    "meaning": "kinoteatr; kino san’ati",
+    "example": "The cinema was quiet until Dad opened his crisps.",
+    "translation": "Dadam chipsini ochguncha kinoteatr jim edi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "director",
+    "ipa": "/dəˈrektə/",
+    "meaning": "rejissyor",
+    "example": "The director asked the goat to look surprised.",
+    "translation": "Rejissyor echkidan hayron ko‘rinishni so‘radi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "producer",
+    "ipa": "/prəˈdjuːsə/",
+    "meaning": "prodyuser",
+    "example": "The producer found money for explosions but not lunch.",
+    "translation": "Prodyuser portlashlarga pul topdi, tushlikka esa yo‘q.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "cast",
+    "ipa": "/kɑːst/",
+    "meaning": "aktyorlar tarkibi",
+    "example": "The cast includes my neighbour and three trained ducks.",
+    "translation": "Aktyorlar tarkibida qo‘shnim va uchta o‘rgatilgan o‘rdak bor.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "script",
+    "ipa": "/skrɪpt/",
+    "meaning": "ssenariy",
+    "example": "The script gives the dog the best lines.",
+    "translation": "Ssenariy eng yaxshi gaplarni itga bergan.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "screenplay",
+    "ipa": "/ˈskriːnpleɪ/",
+    "meaning": "film ssenariysi",
+    "example": "Her screenplay turned a parking problem into a thriller.",
+    "translation": "Uning ssenariysi mashina qo‘yish muammosini trillerga aylantirdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "sequel",
+    "ipa": "/ˈsiːkwəl/",
+    "meaning": "asarning davomi",
+    "example": "The sequel brings back the villain's annoying uncle.",
+    "translation": "Davomida yovuz qahramonning jonga tegadigan amakisi qaytadi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "trailer",
+    "ipa": "/ˈtreɪlə/",
+    "meaning": "filmning qisqa reklama lavhasi",
+    "example": "The trailer showed every joke in the film.",
+    "translation": "Treyler filmdagi barcha hazillarni ko‘rsatdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "premiere",
+    "ipa": "/ˈpremieə/",
+    "meaning": "ilk ommaviy namoyish",
+    "example": "At the premiere, everyone photographed the famous dog.",
+    "translation": "Premyerada hamma mashhur itni suratga oldi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "documentary",
+    "ipa": "/ˌdɒkjʊˈmentəri/",
+    "meaning": "hujjatli film",
+    "example": "The documentary made mushrooms seem surprisingly dramatic.",
+    "translation": "Hujjatli film qo‘ziqorinlarni kutilmaganda dramatik ko‘rsatdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "comedy",
+    "ipa": "/ˈkɒmədi/",
+    "meaning": "komediya; kulgili asar",
+    "example": "The comedy made even our serious uncle laugh.",
+    "translation": "Komediya hatto jiddiy amakimizni kuldirdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "horror",
+    "ipa": "/ˈhɒrə/",
+    "meaning": "qo‘rqinchli film janri",
+    "example": "After the horror film, I distrusted our wardrobe.",
+    "translation": "Qo‘rqinchli filmdan keyin javonimizdan shubhalandim.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "animation",
+    "ipa": "/ˌænɪˈmeɪʃən/",
+    "meaning": "animatsiya; harakatlanuvchi chizmalar",
+    "example": "Animation allowed the mountain to ask for tea.",
+    "translation": "Animatsiya tog‘ga choy so‘rash imkonini berdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "cartoon",
+    "ipa": "/kɑːˈtuːn/",
+    "meaning": "multfilm; kulgili chizma",
+    "example": "The cartoon explains taxes using confused penguins.",
+    "translation": "Multfilm soliqlarni gangigan pingvinlar orqali tushuntiradi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "subtitle",
+    "ipa": "/ˈsʌbtaɪtəl/",
+    "meaning": "ekrandagi tarjima yoki matn",
+    "example": "One subtitle turned the hero into a potato.",
+    "translation": "Bitta subtitr qahramonni kartoshkaga aylantirdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "dub",
+    "ipa": "/dʌb/",
+    "meaning": "filmga boshqa tilda ovoz bermoq",
+    "example": "They dub the film using voices from our village.",
+    "translation": "Ular filmni qishlog‘imiz odamlari ovozida dublyaj qiladi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "soundtrack",
+    "ipa": "/ˈsaʊndtræk/",
+    "meaning": "filmning musiqiy va ovozli yo‘li",
+    "example": "The soundtrack makes washing dishes feel heroic.",
+    "translation": "Film musiqasi idish yuvishni qahramonlikdek his qildiradi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "footage",
+    "ipa": "/ˈfʊtɪdʒ/",
+    "meaning": "suratga olingan video material",
+    "example": "The footage proves Dad danced before anyone asked.",
+    "translation": "Video dadam hech kim so‘ramasidan raqsga tushganini isbotlaydi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "close-up",
+    "ipa": "/ˈkləʊs ʌp/",
+    "meaning": "yaqin masofadan olingan tasvir",
+    "example": "The close-up revealed chocolate on the detective's nose.",
+    "translation": "Yaqin tasvir izquvarning burnidagi shokoladni ko‘rsatdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "stunt",
+    "ipa": "/stʌnt/",
+    "meaning": "xavfli sahna harakati; tryuk",
+    "example": "The stunt looked dangerous even from my sofa.",
+    "translation": "Tryuk hatto divanimdan ham xavfli ko‘rindi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "special effects",
+    "ipa": "/ˌspeʃəl ɪˈfekts/",
+    "meaning": "maxsus kino effektlari",
+    "example": "Special effects made our tiny shed explode beautifully.",
+    "translation": "Maxsus effektlar kichik omborchamizni chiroyli portlatdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "box office",
+    "ipa": "/ˈbɒks ˌɒfɪs/",
+    "meaning": "chipta sotish kassasi",
+    "example": "The box office opened before the sleepy audience arrived.",
+    "translation": "Chipta kassasi uyquchi tomoshabinlar kelmasidan ochildi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "blockbuster",
+    "ipa": "/ˈblɒkbʌstə/",
+    "meaning": "juda mashhur va daromadli film",
+    "example": "The blockbuster features one hero and countless broken cars.",
+    "translation": "Mashhur filmda bitta qahramon va sanoqsiz singan mashina bor.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "critic",
+    "ipa": "/ˈkrɪtɪk/",
+    "meaning": "san’at yoki adabiyot tanqidchisi",
+    "example": "The critic praised everything except the actual film.",
+    "translation": "Tanqidchi filmning o‘zidan boshqa hamma narsani maqtadi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "nomination",
+    "ipa": "/ˌnɒmɪˈneɪʃən/",
+    "meaning": "mukofotga nomzod sifatida ko‘rsatish",
+    "example": "The award nomination surprised everyone except the director's mother.",
+    "translation": "Mukofotga nomzodlik rejissyorning onasidan boshqa hammani hayron qoldirdi.",
+    "topic": "7-oy • Kino va ekran"
+  },
+  {
+    "word": "theatre",
+    "ipa": "/ˈθɪətə/",
+    "meaning": "teatr",
+    "example": "The theatre smelled of perfume and nervous actors.",
+    "translation": "Teatrdan atir va hayajonlangan aktyorlar hidi kelardi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "performance",
+    "ipa": "/pəˈfɔːməns/",
+    "meaning": "ijro; tomosha",
+    "example": "Her performance made the cardboard castle feel real.",
+    "translation": "Uning ijrosi karton qal’ani haqiqiydek ko‘rsatdi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "improvise",
+    "ipa": "/ˈɪmprəvaɪz/",
+    "meaning": "tayyorgarliksiz ijro etmoq",
+    "example": "We improvise whenever the actor forgets his royal speech.",
+    "translation": "Aktyor qirollik nutqini unutganda o‘zimizdan to‘qib ijro qilamiz.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "audience",
+    "ipa": "/ˈɔːdiəns/",
+    "meaning": "tomoshabinlar; tinglovchilar",
+    "example": "The audience laughed before I reached the joke.",
+    "translation": "Hazilga yetmasimdan tomoshabinlar kuldi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "spectator",
+    "ipa": "/spekˈteɪtə/",
+    "meaning": "tomoshabin",
+    "example": "One spectator applauded every time the curtain moved.",
+    "translation": "Bir tomoshabin parda qimirlagan har safar olqishladi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "applause",
+    "ipa": "/əˈplɔːz/",
+    "meaning": "qarsak; olqish",
+    "example": "The applause lasted longer than my speech.",
+    "translation": "Olqish nutqimdan uzoqroq davom etdi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "clap",
+    "ipa": "/klæp/",
+    "meaning": "qarsak chalmoq",
+    "example": "Please clap after the song, not during the silence.",
+    "translation": "Qo‘shiqdan keyin qarsak chaling, sukunat paytida emas.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "rehearsal",
+    "ipa": "/rɪˈhɜːsəl/",
+    "meaning": "repetitsiya; tayyorgarlik mashqi",
+    "example": "The rehearsal stopped when the king lost his crown.",
+    "translation": "Qirol tojini yo‘qotganda repetitsiya to‘xtadi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "rehearse",
+    "ipa": "/rɪˈhɜːs/",
+    "meaning": "repetitsiya qilmoq",
+    "example": "We rehearse the argument until everyone agrees.",
+    "translation": "Janjal sahnasini hamma kelishguncha mashq qilamiz.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "audition",
+    "ipa": "/ɔːˈdɪʃən/",
+    "meaning": "rol uchun sinov",
+    "example": "My audition included an accidental fall and genuine panic.",
+    "translation": "Rol sinovimda tasodifiy yiqilish va haqiqiy vahima bo‘ldi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "costume",
+    "ipa": "/ˈkɒstjuːm/",
+    "meaning": "sahna kiyimi",
+    "example": "The costume made our accountant look like royalty.",
+    "translation": "Sahna kiyimi hisobchimizni qirollik vakiliga o‘xshatdi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "prop",
+    "ipa": "/prɒp/",
+    "meaning": "sahnada ishlatiladigan buyum",
+    "example": "The prop sandwich disappeared during the lunch break.",
+    "translation": "Sahna sendvichi tushlik tanaffusida yo‘qoldi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "backstage",
+    "ipa": "/ˌbækˈsteɪdʒ/",
+    "meaning": "sahna ortida",
+    "example": "Backstage, the brave knight searched for his glasses.",
+    "translation": "Sahna ortida jasur ritsar ko‘zoynagini qidirdi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "spotlight",
+    "ipa": "/ˈspɒtlaɪt/",
+    "meaning": "sahna projektori nuri",
+    "example": "The spotlight found me before I remembered my words.",
+    "translation": "So‘zlarimni eslamasimdan projektor nuri menga tushdi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "cue",
+    "ipa": "/kjuː/",
+    "meaning": "sahnaga chiqish yoki gapirish ishorasi",
+    "example": "My cue was a sneeze, which happened too early.",
+    "translation": "Mening ishoram aksirish edi, u juda erta bo‘ldi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "monologue",
+    "ipa": "/ˈmɒnəlɒɡ/",
+    "meaning": "bir kishining uzun nutqi",
+    "example": "His monologue gave everyone else time for tea.",
+    "translation": "Uning monologi boshqalarga choy ichishga vaqt berdi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "tragedy",
+    "ipa": "/ˈtrædʒədi/",
+    "meaning": "fojiali sahna asari",
+    "example": "The tragedy became funny when the sword bent.",
+    "translation": "Qilich egilganda fojiali asar kulgili bo‘lib qoldi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "ballet",
+    "ipa": "/ˈbæleɪ/",
+    "meaning": "balet",
+    "example": "Ballet looks effortless until you try those shoes.",
+    "translation": "O‘sha tuflilarni kiymaguncha balet oson ko‘rinadi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "opera",
+    "ipa": "/ˈɒpərə/",
+    "meaning": "opera",
+    "example": "In opera, even ordering coffee can sound dramatic.",
+    "translation": "Operada hatto qahva buyurtirish ham dramatik eshitilishi mumkin.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "musical",
+    "ipa": "/ˈmjuːzɪkəl/",
+    "meaning": "qo‘shiqli sahna asari; myuzikl",
+    "example": "The musical turned a tax office into a dance floor.",
+    "translation": "Myuzikl soliq idorasini raqs maydoniga aylantirdi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "puppet",
+    "ipa": "/ˈpʌpɪt/",
+    "meaning": "qo‘g‘irchoq teatri qo‘g‘irchog‘i",
+    "example": "The puppet remembered its lines better than I did.",
+    "translation": "Qo‘g‘irchoq gaplarini mendan yaxshiroq esladi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "circus",
+    "ipa": "/ˈsɜːkəs/",
+    "meaning": "sirk",
+    "example": "The circus made my ordinary chair seem boring.",
+    "translation": "Sirk oddiy kursimni zerikarli ko‘rsatdi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "acrobat",
+    "ipa": "/ˈækrəbæt/",
+    "meaning": "akrobat",
+    "example": "The acrobat balanced better than my monthly budget.",
+    "translation": "Akrobat oylik budjetimdan yaxshiroq muvozanat saqladi.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "juggle",
+    "ipa": "/ˈdʒʌɡəl/",
+    "meaning": "buyumlarni havoga otib ilib o‘ynamoq",
+    "example": "I juggle oranges until someone wants breakfast.",
+    "translation": "Kimdir nonushta xohlaguncha apelsinlarni otib ilib o‘ynayman.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "encore",
+    "ipa": "/ˈɒŋkɔː/",
+    "meaning": "tomoshabin talab qilgan qo‘shimcha ijro",
+    "example": "The encore used the only song we still remembered.",
+    "translation": "Qo‘shimcha ijroda esimizda qolgan yagona qo‘shiqni aytdik.",
+    "topic": "7-oy • Teatr va sahna"
+  },
+  {
+    "word": "melody",
+    "ipa": "/ˈmelədi/",
+    "meaning": "kuy; ohang",
+    "example": "The melody stayed with me longer than the lyrics.",
+    "translation": "Kuy matndan ko‘ra uzoqroq yodimda qoldi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "rhythm",
+    "ipa": "/ˈrɪðəm/",
+    "meaning": "ritm; marom",
+    "example": "Our washing machine has a surprisingly good rhythm.",
+    "translation": "Kir mashinamizning ritmi kutilmaganda yaxshi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "harmony",
+    "ipa": "/ˈhɑːməni/",
+    "meaning": "uyg‘un qo‘shilgan musiqiy tovushlar",
+    "example": "The harmony worked until my uncle joined in.",
+    "translation": "Amakim qo‘shilguncha ovozlar uyg‘un edi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "chorus",
+    "ipa": "/ˈkɔːrəs/",
+    "meaning": "qo‘shiq naqorati",
+    "example": "Everyone knew the chorus, including the neighbour's parrot.",
+    "translation": "Naqoratni hamma, hatto qo‘shnining to‘tiqushi ham bilardi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "lyrics",
+    "ipa": "/ˈlɪrɪks/",
+    "meaning": "qo‘shiq matni",
+    "example": "Dad invents new lyrics whenever he forgets the real ones.",
+    "translation": "Dadam haqiqiy matnni unutganda yangi so‘zlar to‘qiydi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "tune",
+    "ipa": "/tjuːn/",
+    "meaning": "kuy",
+    "example": "That tune makes waiting in traffic almost pleasant.",
+    "translation": "O‘sha kuy tirbandlikda kutishni deyarli yoqimli qiladi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "tempo",
+    "ipa": "/ˈtempəʊ/",
+    "meaning": "musiqaning ijro tezligi",
+    "example": "The tempo increased when the drummer saw lunch arriving.",
+    "translation": "Barabanchi tushlik kelganini ko‘rib, ijro tezligi oshdi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "note",
+    "ipa": "/nəʊt/",
+    "meaning": "musiqiy nota; alohida tovush",
+    "example": "One wrong note woke the sleeping judge.",
+    "translation": "Bitta noto‘g‘ri nota uxlayotgan hakamni uyg‘otdi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "chord",
+    "ipa": "/kɔːd/",
+    "meaning": "birga yangraydigan notalar; akkord",
+    "example": "I learnt one chord and started planning a tour.",
+    "translation": "Bitta akkord o‘rganib, gastrol rejalay boshladim.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "compose",
+    "ipa": "/kəmˈpəʊz/",
+    "meaning": "musiqa bastalamoq",
+    "example": "She can compose a song before the kettle boils.",
+    "translation": "U choynak qaynaguncha qo‘shiq bastalay oladi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "composer",
+    "ipa": "/kəmˈpəʊzə/",
+    "meaning": "bastakor",
+    "example": "The composer found a melody in our squeaky gate.",
+    "translation": "Bastakor g‘ichirlagan darvozamizdan kuy topdi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "orchestra",
+    "ipa": "/ˈɔːkɪstrə/",
+    "meaning": "orkestr",
+    "example": "The orchestra needed a larger bus than our team.",
+    "translation": "Orkestrga jamoamiznikidan kattaroq avtobus kerak bo‘ldi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "choir",
+    "ipa": "/kwaɪə/",
+    "meaning": "xor",
+    "example": "The choir made our tiny hall sound enormous.",
+    "translation": "Xor kichik zalimizni ulkandek jaranglatdi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "band",
+    "ipa": "/bænd/",
+    "meaning": "musiqa guruhi",
+    "example": "Our band has three guitars and no transport.",
+    "translation": "Guruhimizda uchta gitara bor, transport esa yo‘q.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "solo",
+    "ipa": "/ˈsəʊləʊ/",
+    "meaning": "yakka ijro",
+    "example": "Her solo silenced even the noisy coffee machine.",
+    "translation": "Uning yakka ijrosi hatto shovqinli qahva mashinasini jim qildi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "duet",
+    "ipa": "/djuˈet/",
+    "meaning": "ikki kishi ijro etadigan asar",
+    "example": "Our duet became a solo when Dad forgot the words.",
+    "translation": "Dadam so‘zlarni unutganda duetimiz yakka ijroga aylandi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "concert",
+    "ipa": "/ˈkɒnsət/",
+    "meaning": "konsert",
+    "example": "The concert ended before my ears stopped ringing.",
+    "translation": "Quloqlarim jaranglashdan to‘xtamasidan konsert tugadi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "gig",
+    "ipa": "/ɡɪɡ/",
+    "meaning": "kichik yoki norasmiy konsert",
+    "example": "Our first gig paid enough for one pizza.",
+    "translation": "Birinchi konsertimiz bir pitsaga yetarli pul keltirdi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "album",
+    "ipa": "/ˈælbəm/",
+    "meaning": "qo‘shiqlar to‘plami; albom",
+    "example": "Her new album improved my least favourite bus journey.",
+    "translation": "Yangi albomi yoqtirmaydigan avtobus safarimni yaxshiladi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "instrument",
+    "ipa": "/ˈɪnstrəmənt/",
+    "meaning": "musiqa asbobi",
+    "example": "This instrument is older than all our excuses.",
+    "translation": "Bu musiqa asbobi barcha bahonalarimizdan eski.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "guitar",
+    "ipa": "/ɡɪˈtɑː/",
+    "meaning": "gitara",
+    "example": "My guitar travels more comfortably than I do.",
+    "translation": "Gitaram mendan qulayroq sayohat qiladi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "violin",
+    "ipa": "/ˌvaɪəˈlɪn/",
+    "meaning": "skripka",
+    "example": "The violin sounded sad before I even played.",
+    "translation": "Hali chalmasimdan skripka g‘amgin eshitildi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "piano",
+    "ipa": "/piˈænəʊ/",
+    "meaning": "pianino",
+    "example": "The piano takes up half our living room.",
+    "translation": "Pianino mehmonxonamizning yarmini egallaydi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "drum",
+    "ipa": "/drʌm/",
+    "meaning": "baraban",
+    "example": "One drum is enough to wake our entire street.",
+    "translation": "Butun ko‘chamizni uyg‘otishga bitta baraban yetadi.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "flute",
+    "ipa": "/fluːt/",
+    "meaning": "fleyta; nay turidagi asbob",
+    "example": "My flute is easier to carry than my ambition.",
+    "translation": "Fleytamni ko‘tarish katta orzularimni ko‘tarishdan osonroq.",
+    "topic": "7-oy • Musiqa va ijro"
+  },
+  {
+    "word": "culture",
+    "ipa": "/ˈkʌltʃə/",
+    "meaning": "madaniyat",
+    "example": "Food introduced me to the culture before any museum did.",
+    "translation": "Muzeylardan oldin taomlar meni madaniyat bilan tanishtirdi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "tradition",
+    "ipa": "/trəˈdɪʃən/",
+    "meaning": "an’ana",
+    "example": "Our family tradition includes arguing over the last dumpling.",
+    "translation": "Oilaviy an’anamizga oxirgi chuchvara ustida tortishish ham kiradi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "custom",
+    "ipa": "/ˈkʌstəm/",
+    "meaning": "urf-odat",
+    "example": "The local custom involves enough tea for everyone twice.",
+    "translation": "Mahalliy urf-odatda hammaga ikki martadan yetadigan choy bor.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "heritage",
+    "ipa": "/ˈherɪtɪdʒ/",
+    "meaning": "madaniy meros",
+    "example": "Grandma protects our heritage one old recipe at a time.",
+    "translation": "Buvim har bir eski retseptni asrab, merosimizni saqlaydi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "identity",
+    "ipa": "/aɪˈdentəti/",
+    "meaning": "o‘zlik; o‘ziga xoslik",
+    "example": "The festival celebrates local identity with music and bread.",
+    "translation": "Festival mahalliy o‘zlikni musiqa va non bilan nishonlaydi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "multicultural",
+    "ipa": "/ˌmʌltiˈkʌltʃərəl/",
+    "meaning": "ko‘p madaniyatli",
+    "example": "The multicultural festival offered more dishes than my plate could hold.",
+    "translation": "Ko‘p madaniyatli festival likopchamga sig‘maydigan darajada ko‘p taom taklif qildi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "festival",
+    "ipa": "/ˈfestɪvəl/",
+    "meaning": "festival; bayram sayli",
+    "example": "The festival filled our quiet square with drums.",
+    "translation": "Festival sokin maydonimizni baraban ovoziga to‘ldirdi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "celebration",
+    "ipa": "/ˌselɪˈbreɪʃən/",
+    "meaning": "bayramona nishonlash",
+    "example": "The celebration continued after the cake disappeared.",
+    "translation": "Tort yo‘qolgandan keyin ham bayram davom etdi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "ceremony",
+    "ipa": "/ˈserəməni/",
+    "meaning": "marosim",
+    "example": "The ceremony began when the important hat arrived.",
+    "translation": "Muhim shlyapa kelganda marosim boshlandi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "ritual",
+    "ipa": "/ˈrɪtʃuəl/",
+    "meaning": "takrorlanadigan marosimiy amal",
+    "example": "Our tea ritual includes warming every cup first.",
+    "translation": "Choy marosimimiz avval har bir piyolani isitishni o‘z ichiga oladi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "parade",
+    "ipa": "/pəˈreɪd/",
+    "meaning": "tantanali yurish",
+    "example": "The parade moved slower than its excited youngest dancer.",
+    "translation": "Tantanali yurish eng hayajonlangan yosh raqqosidan sekinroq yurdi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "carnival",
+    "ipa": "/ˈkɑːnɪvəl/",
+    "meaning": "karnaval; niqobli bayram",
+    "example": "At the carnival, I met three very polite dragons.",
+    "translation": "Karnavalda uchta juda odobli ajdarhoni uchratdim.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "exhibition",
+    "ipa": "/ˌeksɪˈbɪʃən/",
+    "meaning": "ko‘rgazma",
+    "example": "The exhibition made old spoons seem surprisingly valuable.",
+    "translation": "Ko‘rgazma eski qoshiqlarni kutilmaganda qimmatli ko‘rsatdi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "exhibit",
+    "ipa": "/ɪɡˈzɪbɪt/",
+    "meaning": "ko‘rgazmadagi buyum",
+    "example": "My favourite exhibit was a tiny royal bathtub.",
+    "translation": "Sevimli eksponatim mitti qirollik vannasi edi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "artefact",
+    "ipa": "/ˈɑːtɪfækt/",
+    "meaning": "tarixiy qo‘l mehnati buyumi",
+    "example": "The artefact survived centuries but fears my clumsy elbow.",
+    "translation": "Tarixiy buyum asrlarga chidadi, lekin beso‘naqay tirsagimdan qo‘rqadi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "archive",
+    "ipa": "/ˈɑːkaɪv/",
+    "meaning": "arxiv",
+    "example": "The archive contains proof that Grandpa once had long hair.",
+    "translation": "Arxivda bobomning bir paytlar uzun sochli bo‘lganiga dalil bor.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "curator",
+    "ipa": "/kjʊəˈreɪtə/",
+    "meaning": "muzey yoki ko‘rgazma mas’uli",
+    "example": "The curator explained why the broken bowl matters.",
+    "translation": "Ko‘rgazma mas’uli singan kosa nega muhimligini tushuntirdi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "antique",
+    "ipa": "/ænˈtiːk/",
+    "meaning": "qadimiy va qimmatli buyum",
+    "example": "The antique looked ordinary until we saw its price.",
+    "translation": "Qadimiy buyum narxini ko‘rgunimizcha oddiy ko‘rinardi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "treasure",
+    "ipa": "/ˈtreʒə/",
+    "meaning": "juda qadrlamoq; avaylab saqlamoq",
+    "example": "We treasure Grandma's handmade rug despite its tea stains.",
+    "translation": "Choy dog‘lariga qaramay buvimning qo‘lda to‘qigan gilamini avaylaymiz.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "ancient",
+    "ipa": "/ˈeɪnʃənt/",
+    "meaning": "qadimiy",
+    "example": "The ancient bowl held lunch long before our town existed.",
+    "translation": "Qadimiy kosa shahrimiz paydo bo‘lmasidan oldin tushlik uchun ishlatilgan.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "traditional",
+    "ipa": "/trəˈdɪʃənəl/",
+    "meaning": "an’anaviy",
+    "example": "His traditional costume has pockets for modern snacks.",
+    "translation": "Uning an’anaviy kiyimida zamonaviy yeguliklar uchun cho‘ntaklar bor.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "contemporary",
+    "ipa": "/kənˈtempərəri/",
+    "meaning": "hozirgi zamonga oid",
+    "example": "The contemporary sculpture looks like my tangled headphones.",
+    "translation": "Zamonaviy haykal chigallashgan quloqchinimga o‘xshaydi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "folklore",
+    "ipa": "/ˈfəʊklɔː/",
+    "meaning": "xalq og‘zaki ijodi va rivoyatlari",
+    "example": "Local folklore gives every hill a dramatic secret.",
+    "translation": "Mahalliy rivoyatlar har bir tepalikka hayajonli sir beradi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "legend",
+    "ipa": "/ˈledʒənd/",
+    "meaning": "afsona",
+    "example": "The legend explains why nobody trusts that little bridge.",
+    "translation": "Afsona nega hech kim o‘sha ko‘prikka ishonmasligini tushuntiradi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "myth",
+    "ipa": "/mɪθ/",
+    "meaning": "mif; qadimiy afsonaviy hikoya",
+    "example": "The myth begins with a god losing his shoes.",
+    "translation": "Mif xudoning tuflilarini yo‘qotishi bilan boshlanadi.",
+    "topic": "7-oy • Madaniyat va meros"
+  },
+  {
+    "word": "media",
+    "ipa": "/ˈmiːdiə/",
+    "meaning": "ommaviy axborot vositalari",
+    "example": "The media arrived before we finished the welcome banner.",
+    "translation": "OAV vakillari kutib olish bannerini tugatmasimizdan keldi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "press",
+    "ipa": "/pres/",
+    "meaning": "matbuot",
+    "example": "The press wanted facts, but Uncle offered tea.",
+    "translation": "Matbuot faktlar xohladi, amakim esa choy taklif qildi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "newspaper",
+    "ipa": "/ˈnjuːzpeɪpə/",
+    "meaning": "gazeta",
+    "example": "The newspaper called our village surprisingly lively.",
+    "translation": "Gazeta qishlog‘imizni kutilmaganda gavjum deb atadi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "magazine",
+    "ipa": "/ˌmæɡəˈziːn/",
+    "meaning": "jurnal",
+    "example": "This magazine makes even my desk look fashionable.",
+    "translation": "Bu jurnal hatto stolimni ham zamonaviy ko‘rsatadi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "headline",
+    "ipa": "/ˈhedlaɪn/",
+    "meaning": "yangilik sarlavhasi",
+    "example": "The headline made a lost chicken sound international.",
+    "translation": "Sarlavha yo‘qolgan tovuqni xalqaro hodisadek ko‘rsatdi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "article",
+    "ipa": "/ˈɑːtɪkəl/",
+    "meaning": "maqola",
+    "example": "Her article explained the crisis without blaming the weather.",
+    "translation": "Maqolasi inqirozni ob-havoni ayblamasdan tushuntirdi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "column",
+    "ipa": "/ˈkɒləm/",
+    "meaning": "gazeta yoki jurnaldagi muntazam rukn",
+    "example": "His weekly column always finds room for a cake joke.",
+    "translation": "Haftalik ruknida doim tort haqida hazilga joy topiladi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "editorial",
+    "ipa": "/ˌedɪˈtɔːriəl/",
+    "meaning": "nashr fikrini bildiruvchi bosh maqola",
+    "example": "The editorial asked the council to fix our heroic pothole.",
+    "translation": "Bosh maqola kengashdan mashhur yo‘l chuqurimizni tuzatishni so‘radi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "bulletin",
+    "ipa": "/ˈbʊlətɪn/",
+    "meaning": "qisqa yangiliklar xabari",
+    "example": "The bulletin announced sunshine during a heavy shower.",
+    "translation": "Yangiliklar xabari kuchli yomg‘ir paytida quyoshli havo e’lon qildi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "coverage",
+    "ipa": "/ˈkʌvərɪdʒ/",
+    "meaning": "voqeani OAVda yoritish",
+    "example": "The coverage gave our tiny bakery national attention.",
+    "translation": "OAVda yoritilishi kichik nonvoyxonamizni mamlakatga tanitdi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "correspondent",
+    "ipa": "/ˌkɒrɪˈspɒndənt/",
+    "meaning": "maxsus muxbir",
+    "example": "The correspondent reported calmly beside a noisy donkey.",
+    "translation": "Maxsus muxbir shovqinli eshak yonida xotirjam xabar berdi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "journalism",
+    "ipa": "/ˈdʒɜːnəlɪzəm/",
+    "meaning": "jurnalistika",
+    "example": "Good journalism checks the story before the rumour grows.",
+    "translation": "Yaxshi jurnalistika mish-mish tarqalmasidan voqeani tekshiradi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "circulation",
+    "ipa": "/ˌsɜːkjʊˈleɪʃən/",
+    "meaning": "nashrning sotiladigan nusxalari soni",
+    "example": "The paper's circulation rose after it printed Grandma's recipe.",
+    "translation": "Buvimning retsepti bosilgach, gazetaning sotiladigan nusxalari ko‘paydi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "readership",
+    "ipa": "/ˈriːdəʃɪp/",
+    "meaning": "nashr o‘quvchilari",
+    "example": "Our readership includes three schools and one proud aunt.",
+    "translation": "O‘quvchilarimiz orasida uchta maktab va bir faxrli xola bor.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "subscriber",
+    "ipa": "/səbˈskraɪbə/",
+    "meaning": "obunachi",
+    "example": "Our first subscriber was Mum, using three email addresses.",
+    "translation": "Birinchi obunachimiz uchta elektron manzil ishlatgan onam edi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "subscription",
+    "ipa": "/səbˈskrɪpʃən/",
+    "meaning": "obuna",
+    "example": "My subscription delivers more magazines than I can carry.",
+    "translation": "Obunam ko‘tara olganimdan ko‘p jurnal yetkazadi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "periodical",
+    "ipa": "/ˌpɪəriˈɒdɪkəl/",
+    "meaning": "muntazam chiqadigan nashr",
+    "example": "This periodical arrives monthly and stays on Dad's chair forever.",
+    "translation": "Bu davriy nashr har oy kelib, dadamning kursisida abadiy qoladi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "tabloid",
+    "ipa": "/ˈtæblɔɪd/",
+    "meaning": "shov-shuvli xabarlarga moyil kichik formatli gazeta",
+    "example": "The tabloid made our neighbour's haircut front-page news.",
+    "translation": "Shov-shuvli gazeta qo‘shnimning soch turmagini bosh sahifaga chiqardi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "broadsheet",
+    "ipa": "/ˈbrɔːdʃiːt/",
+    "meaning": "jiddiy xabarlar beradigan katta formatli gazeta",
+    "example": "Grandpa's broadsheet occupies most of the breakfast table.",
+    "translation": "Bobomning katta gazetasi nonushta stolining ko‘pini egallaydi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "scoop",
+    "ipa": "/skuːp/",
+    "meaning": "boshqalardan oldin berilgan muhim yangilik",
+    "example": "Her scoop revealed the bakery's secret new flavour.",
+    "translation": "Uning eksklyuziv xabari nonvoyxonaning yangi maxfiy ta’mini ochdi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "caption",
+    "ipa": "/ˈkæpʃən/",
+    "meaning": "surat ostidagi izoh",
+    "example": "The caption called my uncle a local monument.",
+    "translation": "Surat ostidagi yozuv amakimni mahalliy yodgorlik deb atadi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "quotation",
+    "ipa": "/kwəʊˈteɪʃən/",
+    "meaning": "iqtibos; aynan keltirilgan gap",
+    "example": "The quotation sounded wiser than my original conversation.",
+    "translation": "Iqtibos asl suhbatimdan donoroq eshitildi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "impartial",
+    "ipa": "/ɪmˈpɑːʃəl/",
+    "meaning": "xolis; hech kimga yon bosmaydigan",
+    "example": "An impartial review should mention both the cake and its price.",
+    "translation": "Xolis sharh tortni ham, uning narxini ham aytishi kerak.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "factual",
+    "ipa": "/ˈfæktʃuəl/",
+    "meaning": "haqiqiy faktlarga asoslangan",
+    "example": "The factual report was less exciting than Uncle's version.",
+    "translation": "Faktlarga asoslangan xabar amakimning hikoyasidan kamroq hayajonli edi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "sensational",
+    "ipa": "/senˈseɪʃənəl/",
+    "meaning": "shov-shuv uyg‘otadigan",
+    "example": "The sensational headline described a very ordinary puddle.",
+    "translation": "Shov-shuvli sarlavha juda oddiy ko‘lmakni tasvirlagan edi.",
+    "topic": "7-oy • Matbuot va yangiliklar"
+  },
+  {
+    "word": "advertising",
+    "ipa": "/ˈædvətaɪzɪŋ/",
+    "meaning": "reklama faoliyati",
+    "example": "Our advertising made a plain biscuit sound adventurous.",
+    "translation": "Reklamamiz oddiy pechenyeni sarguzashtga boy ko‘rsatdi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "advertisement",
+    "ipa": "/ədˈvɜːtɪsmənt/",
+    "meaning": "reklama e’loni",
+    "example": "The advertisement promised happiness in a very small bottle.",
+    "translation": "Reklama juda kichik shishada baxt va’da qildi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "advert",
+    "ipa": "/ˈædvɜːt/",
+    "meaning": "reklama",
+    "example": "Dad remembers the advert but forgets the product.",
+    "translation": "Dadam reklamani eslaydi, mahsulotni esa unutadi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "advertise",
+    "ipa": "/ˈædvətaɪz/",
+    "meaning": "reklama qilmoq",
+    "example": "We advertise umbrellas whenever the forecast promises sunshine.",
+    "translation": "Ob-havo bashorati quyosh va’da qilganda soyabonlarni reklama qilamiz.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "commercial",
+    "ipa": "/kəˈmɜːʃəl/",
+    "meaning": "televideniye yoki radiodagi reklama",
+    "example": "The commercial made toothpaste look like a holiday.",
+    "translation": "Reklama tish pastasini ta’tildek ko‘rsatdi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "branding",
+    "ipa": "/ˈbrændɪŋ/",
+    "meaning": "biznesning nomi va qiyofasini shakllantirish",
+    "example": "The new branding makes our old bakery look adventurous.",
+    "translation": "Yangi brend qiyofasi eski nonvoyxonamizni sarguzashtga moyil ko‘rsatadi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "marketing",
+    "ipa": "/ˈmɑːkɪtɪŋ/",
+    "meaning": "mahsulotni bozorga chiqarish va targ‘ib qilish",
+    "example": "Good marketing found customers beyond our relatives.",
+    "translation": "Yaxshi marketing qarindoshlarimizdan tashqari ham mijoz topdi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "voucher",
+    "ipa": "/ˈvaʊtʃə/",
+    "meaning": "xarid uchun qiymat yoki chegirma beruvchi kupon",
+    "example": "The voucher tempted Dad into buying another enormous cake.",
+    "translation": "Kupon dadamni yana bir ulkan tort olishga qiziqtirdi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "slogan",
+    "ipa": "/ˈsləʊɡən/",
+    "meaning": "reklama shiori",
+    "example": "Our slogan is easier to remember than our address.",
+    "translation": "Shiorimizni eslash manzilimizni eslashdan osonroq.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "logo",
+    "ipa": "/ˈləʊɡəʊ/",
+    "meaning": "firma belgisi; logotip",
+    "example": "The logo looks like a cat approving our prices.",
+    "translation": "Logotip narxlarimizni ma’qullayotgan mushukka o‘xshaydi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "brochure",
+    "ipa": "/ˈbrəʊʃə/",
+    "meaning": "reklama yoki ma’lumot risolasi",
+    "example": "The brochure makes our tiny office look enormous.",
+    "translation": "Risolada kichik ofisimiz ulkan ko‘rinadi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "leaflet",
+    "ipa": "/ˈliːflət/",
+    "meaning": "bir varaqli axborot yoki reklama qog‘ozi",
+    "example": "The leaflet reached more pigeons than customers.",
+    "translation": "Reklama varag‘i mijozlardan ko‘ra ko‘proq kabutarga yetdi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "flyer",
+    "ipa": "/ˈflaɪə/",
+    "meaning": "tarqatma reklama varaqasi",
+    "example": "One flyer brought in our biggest cake order.",
+    "translation": "Bitta reklama varaqasi eng katta tort buyurtmamizni keltirdi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "billboard",
+    "ipa": "/ˈbɪlbɔːd/",
+    "meaning": "katta tashqi reklama taxtasi",
+    "example": "My face on the billboard surprised the entire family.",
+    "translation": "Reklama taxtasidagi yuzim butun oilani hayron qoldirdi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "poster",
+    "ipa": "/ˈpəʊstə/",
+    "meaning": "plakat",
+    "example": "The poster promised music louder than our neighbours.",
+    "translation": "Plakat qo‘shnilarimizdan balandroq musiqa va’da qildi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "banner",
+    "ipa": "/ˈbænə/",
+    "meaning": "katta reklama yozuvi yoki tasmasi",
+    "example": "Our banner survived rain but not bad spelling.",
+    "translation": "Bannerimiz yomg‘irga chidadi, imlo xatosiga esa yo‘q.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "publicity",
+    "ipa": "/pʌbˈlɪsəti/",
+    "meaning": "jamoatchilik e’tibori; ommaviy tanitish",
+    "example": "The dancing baker brought us free publicity.",
+    "translation": "Raqsga tushgan novvoy bizga bepul tanilish olib keldi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "advertiser",
+    "ipa": "/ˈædvətaɪzə/",
+    "meaning": "reklama beruvchi",
+    "example": "The advertiser wanted the biscuit to look heroic.",
+    "translation": "Reklama beruvchi pechenyening qahramonona ko‘rinishini xohladi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "sponsorship",
+    "ipa": "/ˈspɒnsəʃɪp/",
+    "meaning": "homiylik",
+    "example": "Sponsorship paid for costumes, but not the king's lunch.",
+    "translation": "Homiylik kiyimlarga yetdi, qirolning tushligiga esa yo‘q.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "endorse",
+    "ipa": "/ɪnˈdɔːs/",
+    "meaning": "mahsulotni omma oldida tavsiya qilmoq",
+    "example": "Famous athletes endorse shoes my uncle wears for gardening.",
+    "translation": "Mashhur sportchilar amakim bog‘da kiyadigan tuflilarni tavsiya qiladi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "launch",
+    "ipa": "/lɔːntʃ/",
+    "meaning": "yangi mahsulotni bozorga chiqarmoq",
+    "example": "We launch the new biscuit after one final taste.",
+    "translation": "Yangi pechenyeni oxirgi marta tatigach bozorga chiqaramiz.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "promote",
+    "ipa": "/prəˈməʊt/",
+    "meaning": "targ‘ib qilmoq",
+    "example": "They promote the café with photos of sleepy cats.",
+    "translation": "Ular kafeni uyquchi mushuklar surati bilan targ‘ib qiladi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "tempt",
+    "ipa": "/tempt/",
+    "meaning": "qiziqtirib undamoq; havas uyg‘otmoq",
+    "example": "Those bright adverts tempt me to buy unnecessary shoes.",
+    "translation": "O‘sha yorqin reklamalar keraksiz tufli olishga undaydi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "catchy",
+    "ipa": "/ˈkætʃi/",
+    "meaning": "tez esda qoladigan",
+    "example": "The catchy slogan followed me home on the bus.",
+    "translation": "Esda qolarli shior avtobusda uyimgacha xayolimdan ketmadi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "memorable",
+    "ipa": "/ˈmemərəbəl/",
+    "meaning": "esda qoladigan",
+    "example": "The memorable advert featured a goat in a business suit.",
+    "translation": "Esda qolarli reklamada kostyum kiygan echki qatnashdi.",
+    "topic": "7-oy • Reklama va targ‘ibot"
+  },
+  {
+    "word": "enterprise",
+    "ipa": "/ˈentəpraɪz/",
+    "meaning": "korxona; tadbirkorlik faoliyati",
+    "example": "Their enterprise began with one oven and three hopeful cousins.",
+    "translation": "Korxonasi bitta pech va uch umidli amakivachchadan boshlandi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "firm",
+    "ipa": "/fɜːm/",
+    "meaning": "firma; kompaniya",
+    "example": "The firm sells serious software from a colourful office.",
+    "translation": "Firma rang-barang ofisdan jiddiy dasturiy mahsulot sotadi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "corporation",
+    "ipa": "/ˌkɔːpəˈreɪʃən/",
+    "meaning": "yirik kompaniya; korporatsiya",
+    "example": "The corporation began in a garage smaller than its lift.",
+    "translation": "Korporatsiya hozirgi liftidan kichik garajda boshlangan.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "start-up",
+    "ipa": "/ˈstɑːt ʌp/",
+    "meaning": "yangi tashkil etilgan biznes",
+    "example": "Our start-up has two desks and enormous plans.",
+    "translation": "Yangi biznesimizda ikkita stol va ulkan rejalar bor.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "entrepreneur",
+    "ipa": "/ˌɒntrəprəˈnɜː/",
+    "meaning": "tadbirkor",
+    "example": "The entrepreneur saw a business opportunity in broken umbrellas.",
+    "translation": "Tadbirkor singan soyabonlarda biznes imkoniyatini ko‘rdi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "founder",
+    "ipa": "/ˈfaʊndə/",
+    "meaning": "asoschi",
+    "example": "The founder still washes the office mugs.",
+    "translation": "Asoschi hali ham ofis krujkalarini yuvadi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "owner",
+    "ipa": "/ˈəʊnə/",
+    "meaning": "ega; mulkdor",
+    "example": "The owner knows every customer and their biscuit preference.",
+    "translation": "Do‘kon egasi har bir mijozni va yoqtirgan pechenyesini biladi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "ownership",
+    "ipa": "/ˈəʊnəʃɪp/",
+    "meaning": "egalik huquqi",
+    "example": "Ownership of the café includes responsibility for its grumpy cat.",
+    "translation": "Kafega egalik qilish jahldor mushugiga javobgarlikni ham anglatadi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "co-founder",
+    "ipa": "/ˌkəʊˈfaʊndə/",
+    "meaning": "birgalikda asos solgan kishi",
+    "example": "Our co-founder invented the product and named the office cat.",
+    "translation": "Kompaniyamiz hammuassisi mahsulotni ixtiro qildi va ofis mushugiga nom qo‘ydi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "shareholder",
+    "ipa": "/ˈʃeəhəʊldə/",
+    "meaning": "aksiyador",
+    "example": "The shareholder asked about profits before accepting a biscuit.",
+    "translation": "Aksiyador pechenye olishdan oldin foyda haqida so‘radi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "investor",
+    "ipa": "/ɪnˈvestə/",
+    "meaning": "sarmoyador",
+    "example": "The investor liked our idea more than our office chairs.",
+    "translation": "Sarmoyadorga g‘oyamiz ofis kursilarimizdan ko‘proq yoqdi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "businessperson",
+    "ipa": "/ˈbɪznəspɜːsən/",
+    "meaning": "biznes bilan shug‘ullanuvchi kishi",
+    "example": "The businessperson arrived with two phones and no pen.",
+    "translation": "Ishbilarmon ikkita telefon bilan keldi, qalami esa yo‘q edi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "subsidiary",
+    "ipa": "/səbˈsɪdiəri/",
+    "meaning": "boshqa kompaniyaga qarashli korxona",
+    "example": "The subsidiary makes tiny parts for enormous machines.",
+    "translation": "Sho‘ba korxona ulkan mashinalar uchun mitti qismlar ishlab chiqaradi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "franchise",
+    "ipa": "/ˈfræntʃaɪz/",
+    "meaning": "boshqa firma nomida biznes yuritish huquqi",
+    "example": "Their franchise sells the same cheerful doughnuts everywhere.",
+    "translation": "Ularning franshizasi hamma yerda bir xil quvnoq ponchik sotadi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "multinational",
+    "ipa": "/ˌmʌltiˈnæʃənəl/",
+    "meaning": "bir necha mamlakatda ishlaydigan kompaniya",
+    "example": "The multinational has offices in more countries than I've visited.",
+    "translation": "Xalqaro kompaniyaning idoralari men borgan mamlakatlardan ko‘proq joyda bor.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "management",
+    "ipa": "/ˈmænɪdʒmənt/",
+    "meaning": "rahbariyat; boshqaruv",
+    "example": "Management approved the new machine but debated the kettle.",
+    "translation": "Rahbariyat yangi mashinani ma’qulladi, choynakni esa muhokama qildi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "executive",
+    "ipa": "/ɪɡˈzekjətɪv/",
+    "meaning": "yuqori lavozimli boshqaruvchi",
+    "example": "The executive carried her own chair into the crowded meeting.",
+    "translation": "Boshqaruvchi gavjum yig‘ilishga o‘z kursisini ko‘tarib kirdi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "chairperson",
+    "ipa": "/ˈtʃeəpɜːsən/",
+    "meaning": "yig‘ilish yoki tashkilot raisi",
+    "example": "The chairperson kept the meeting shorter than the lunch break.",
+    "translation": "Rais yig‘ilishni tushlik tanaffusidan qisqaroq o‘tkazdi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "chief",
+    "ipa": "/tʃiːf/",
+    "meaning": "bosh; eng yuqori lavozimli",
+    "example": "Our chief designer still uses a pencil with bite marks.",
+    "translation": "Bosh dizaynerimiz hali ham tishlangan qalam ishlatadi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "workforce",
+    "ipa": "/ˈwɜːkfɔːs/",
+    "meaning": "korxona ishchi-xodimlari",
+    "example": "Our workforce doubles when the summer ice-cream season begins.",
+    "translation": "Yozgi muzqaymoq mavsumi boshlanganda xodimlarimiz soni ikki baravar oshadi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "merger",
+    "ipa": "/ˈmɜːdʒə/",
+    "meaning": "kompaniyalarning birlashishi",
+    "example": "The merger gave us two logos and one confusing name.",
+    "translation": "Birlashish bizga ikkita logotip va bitta chalkash nom berdi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "acquisition",
+    "ipa": "/ˌækwɪˈzɪʃən/",
+    "meaning": "kompaniyani sotib olish",
+    "example": "The acquisition brought a new factory and its resident cat.",
+    "translation": "Kompaniyani sotib olish yangi zavod va u yerdagi mushukni keltirdi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "relocate",
+    "ipa": "/ˌriːləʊˈkeɪt/",
+    "meaning": "biznesni boshqa joyga ko‘chirmoq",
+    "example": "We relocate whenever the boxes outnumber the chairs.",
+    "translation": "Qutilar kursilardan ko‘payganda boshqa joyga ko‘chamiz.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "expansion",
+    "ipa": "/ɪkˈspænʃən/",
+    "meaning": "kengayish",
+    "example": "The expansion finally gave the printer its own corner.",
+    "translation": "Kengayish nihoyat printerga alohida burchak berdi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "found",
+    "ipa": "/faʊnd/",
+    "meaning": "tashkilot yoki korxonaga asos solmoq",
+    "example": "They plan to found a company that repairs broken toys.",
+    "translation": "Ular singan o‘yinchoqlarni ta’mirlaydigan kompaniya tashkil etmoqchi.",
+    "topic": "7-oy • Korxona va tadbirkorlik"
+  },
+  {
+    "word": "strategy",
+    "ipa": "/ˈstrætədʒi/",
+    "meaning": "uzoq muddatli harakat rejasi",
+    "example": "Our strategy includes fewer meetings and better biscuits.",
+    "translation": "Strategiyamiz kamroq yig‘ilish va yaxshiroq pechenyeni nazarda tutadi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "ambitious",
+    "ipa": "/æmˈbɪʃəs/",
+    "meaning": "katta maqsadli; yuksak niyatli",
+    "example": "Our ambitious plan needs more money than our biscuit tin holds.",
+    "translation": "Katta maqsadli rejamizga pechenye qutimizdagidan ko‘proq pul kerak.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "mission",
+    "ipa": "/ˈmɪʃən/",
+    "meaning": "tashkilotning asosiy vazifasi",
+    "example": "Our mission is to make boring paperwork painless.",
+    "translation": "Asosiy vazifamiz zerikarli hujjat ishlarini osonlashtirish.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "vision",
+    "ipa": "/ˈvɪʒən/",
+    "meaning": "kelajak haqidagi katta maqsad",
+    "example": "Her vision turned a shed into a busy workshop.",
+    "translation": "Kelajak haqidagi maqsadi omborchani gavjum ustaxonaga aylantirdi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "milestone",
+    "ipa": "/ˈmaɪlstəʊn/",
+    "meaning": "muhim bosqich yoki yutuq",
+    "example": "Our first hundred customers felt like a delicious milestone.",
+    "translation": "Birinchi yuz mijoz yoqimli muhim yutuq bo‘ldi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "business plan",
+    "ipa": "/ˈbɪznəs plæn/",
+    "meaning": "biznesni yuritish rejasi",
+    "example": "The business plan includes customers beyond my supportive family.",
+    "translation": "Biznes rejada qo‘llovchi oilamdan tashqari mijozlar ham bor.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "cost-effective",
+    "ipa": "/ˌkɒst ɪˈfektɪv/",
+    "meaning": "sarflangan mablag‘ga yarasha yaxshi natijali",
+    "example": "The cost-effective printer uses less ink than my old pen.",
+    "translation": "Tejamkor printer eski ruchkamdan kamroq siyoh ishlatadi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "streamline",
+    "ipa": "/ˈstriːmlaɪn/",
+    "meaning": "ishni soddalashtirib samaraliroq qilmoq",
+    "example": "We streamline ordering so customers can skip six unnecessary forms.",
+    "translation": "Mijozlar oltita keraksiz shaklni o‘tkazib yuborishi uchun buyurtmani soddalashtiramiz.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "effective",
+    "ipa": "/ɪˈfektɪv/",
+    "meaning": "kerakli natijani beradigan",
+    "example": "The effective advert sold every ugly little vase.",
+    "translation": "Natijali reklama barcha xunuk kichik vazalarni sotdi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "productive",
+    "ipa": "/prəˈdʌktɪv/",
+    "meaning": "unumli; sermahsul",
+    "example": "Our most productive hour begins when the chat stops.",
+    "translation": "Eng unumli soatimiz suhbat to‘xtaganda boshlanadi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "productivity",
+    "ipa": "/ˌprɒdʌkˈtɪvəti/",
+    "meaning": "mehnat unumdorligi",
+    "example": "Productivity improved after we fixed the noisy printer.",
+    "translation": "Shovqinli printerni tuzatgach, unumdorlik oshdi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "capacity",
+    "ipa": "/kəˈpæsəti/",
+    "meaning": "ishlab chiqarish imkoniyati yoki sig‘imi",
+    "example": "The bakery reached capacity before the wedding guests arrived.",
+    "translation": "To‘y mehmonlari kelmasidan nonvoyxona to‘liq quvvatda ishlay boshladi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "workflow",
+    "ipa": "/ˈwɜːkfləʊ/",
+    "meaning": "ishlar bajarilishining ketma-ketligi",
+    "example": "The new workflow stopped forms visiting every desk twice.",
+    "translation": "Yangi ish tartibi hujjatlarning har stolga ikki marta borishini to‘xtatdi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "allocate",
+    "ipa": "/ˈæləkeɪt/",
+    "meaning": "mablag‘ yoki resurs ajratmoq",
+    "example": "We allocate more money to repairs than decorations.",
+    "translation": "Bezakdan ko‘ra ta’mirga ko‘proq mablag‘ ajratamiz.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "coordinate",
+    "ipa": "/kəʊˈɔːdɪneɪt/",
+    "meaning": "ishlarni muvofiqlashtirmoq",
+    "example": "She can coordinate three deliveries without losing her tea.",
+    "translation": "U choyini yo‘qotmay uchta yetkazib berishni muvofiqlashtira oladi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "delegate",
+    "ipa": "/ˈdelɪɡeɪt/",
+    "meaning": "vazifani boshqaga topshirmoq",
+    "example": "I delegate tasks, but never the biscuit selection.",
+    "translation": "Vazifalarni topshiraman, lekin pechenye tanlashni hech qachon emas.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "outsource",
+    "ipa": "/ˈaʊtsɔːs/",
+    "meaning": "ishni tashqi ijrochiga topshirmoq",
+    "example": "We outsource deliveries because our bicycle cannot carry sofas.",
+    "translation": "Velosipedimiz divan tashiy olmagani uchun yetkazishni tashqi ijrochiga topshiramiz.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "appraise",
+    "ipa": "/əˈpreɪz/",
+    "meaning": "qiymat yoki sifatni baholamoq",
+    "example": "An expert will appraise the vase before Dad offers a price.",
+    "translation": "Dadam narx aytmasidan mutaxassis vazani baholaydi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "benchmark",
+    "ipa": "/ˈbentʃmɑːk/",
+    "meaning": "solishtirish uchun mezon",
+    "example": "Last year's sales provide a useful benchmark, not a bedtime story.",
+    "translation": "O‘tgan yilgi savdo ertak emas, foydali taqqoslash mezoni.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "viability",
+    "ipa": "/ˌvaɪəˈbɪləti/",
+    "meaning": "ishning amalda muvaffaqiyatli yurish imkoniyati",
+    "example": "The café's viability depends on customers, not just friendly relatives.",
+    "translation": "Kafening muvaffaqiyati faqat mehribon qarindoshlarga emas, mijozlarga bog‘liq.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "obstacle",
+    "ipa": "/ˈɒbstəkəl/",
+    "meaning": "to‘siq; g‘ov",
+    "example": "The biggest obstacle was a doorway narrower than our machine.",
+    "translation": "Eng katta to‘siq mashinamizdan tor eshik edi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "contingency",
+    "ipa": "/kənˈtɪndʒənsi/",
+    "meaning": "yuz berishi mumkin bo‘lgan kutilmagan holat",
+    "example": "Our contingency plan includes a second oven.",
+    "translation": "Kutilmagan holatlar uchun rejamiz ikkinchi pechni ham nazarda tutadi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "sustainable",
+    "ipa": "/səˈsteɪnəbəl/",
+    "meaning": "uzoq muddat davom ettirish mumkin bo‘lgan",
+    "example": "Working without sleep is not a sustainable business plan.",
+    "translation": "Uxlamasdan ishlash uzoqqa bormaydigan biznes rejasidir.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "innovation",
+    "ipa": "/ˌɪnəˈveɪʃən/",
+    "meaning": "yangi usul yoki mahsulot yaratish",
+    "example": "This innovation keeps umbrellas from dripping on customers.",
+    "translation": "Bu yangilik soyabonlardan mijozlarga suv tomishini to‘xtatadi.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "competitive advantage",
+    "ipa": "/kəmˌpetətɪv ədˈvɑːntɪdʒ/",
+    "meaning": "raqiblardan ustunlik beruvchi jihat",
+    "example": "Our competitive advantage is bread ready before sunrise.",
+    "translation": "Raqobatdagi ustunligimiz — quyosh chiqmasidan tayyor non.",
+    "topic": "7-oy • Biznes rejasi va boshqaruvi"
+  },
+  {
+    "word": "finance",
+    "ipa": "/ˈfaɪnæns/",
+    "meaning": "mablag‘; moliyalashtirish",
+    "example": "Finance for the new oven came from three patient relatives.",
+    "translation": "Yangi pech uchun mablag‘ uchta sabrli qarindoshdan keldi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "financial",
+    "ipa": "/faɪˈnænʃəl/",
+    "meaning": "moliyaviy",
+    "example": "My financial plan includes fewer accidental shoe purchases.",
+    "translation": "Moliyaviy rejam tasodifiy tufli xaridlarini kamaytirishni nazarda tutadi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "banking",
+    "ipa": "/ˈbæŋkɪŋ/",
+    "meaning": "bank xizmatlari",
+    "example": "Online banking saved me a queue and a bus fare.",
+    "translation": "Onlayn bank xizmati meni navbat va yo‘l haqidan qutqardi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "savings",
+    "ipa": "/ˈseɪvɪŋz/",
+    "meaning": "jamg‘arilgan pul",
+    "example": "My savings survived everything except the broken fridge.",
+    "translation": "Jamg‘armam buzilgan muzlatkichdan boshqa hamma narsaga chidadi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "deposit",
+    "ipa": "/dɪˈpɒzɪt/",
+    "meaning": "bankka qo‘yilgan yoki avvaldan to‘langan mablag‘",
+    "example": "The deposit secured our oven before another baker bought it.",
+    "translation": "Oldindan to‘lov pechni boshqa novvoy olmasidan bizga band qildi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "withdraw",
+    "ipa": "/wɪðˈdrɔː/",
+    "meaning": "hisobdan pul yechmoq",
+    "example": "I withdraw cash before visiting the cardless village shop.",
+    "translation": "Karta olmaydigan qishloq do‘koniga borishdan oldin naqd pul yechaman.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "withdrawal",
+    "ipa": "/wɪðˈdrɔːəl/",
+    "meaning": "hisobdan pul yechish",
+    "example": "One large withdrawal paid for the entire wedding tent.",
+    "translation": "Bir marta katta pul yechib, butun to‘y chodiriga to‘ladik.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "remittance",
+    "ipa": "/rɪˈmɪtəns/",
+    "meaning": "boshqa joyga yuborilgan pul; pul jo‘natmasi",
+    "example": "The remittance reached Grandma before my birthday card did.",
+    "translation": "Pul jo‘natmasi buvimga tug‘ilgan kun tabrigimdan oldin yetdi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "loan",
+    "ipa": "/ləʊn/",
+    "meaning": "qarz; kredit",
+    "example": "The loan bought a van that finally starts in winter.",
+    "translation": "Kreditga nihoyat qishda ham o‘t oladigan furgon olindi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "borrower",
+    "ipa": "/ˈbɒrəʊə/",
+    "meaning": "qarz oluvchi",
+    "example": "The borrower brought every document except the requested one.",
+    "translation": "Qarz oluvchi so‘ralganidan boshqa barcha hujjatlarni olib keldi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "lender",
+    "ipa": "/ˈlendə/",
+    "meaning": "qarz beruvchi",
+    "example": "The lender asked about income, not my excellent handwriting.",
+    "translation": "Qarz beruvchi chiroyli yozuvimni emas, daromadimni so‘radi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "interest",
+    "ipa": "/ˈɪntrəst/",
+    "meaning": "qarz yoki jamg‘arma uchun hisoblanadigan foiz",
+    "example": "The interest added more to the bill than my lunch.",
+    "translation": "Foiz hisobga tushligim narxidan ko‘proq qo‘shdi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "mortgage",
+    "ipa": "/ˈmɔːɡɪdʒ/",
+    "meaning": "uy sotib olish uchun kredit; ipoteka",
+    "example": "The mortgage lasts longer than our kitchen fashion.",
+    "translation": "Ipoteka oshxonamiz uslubining modasidan uzoqroq davom etadi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "instalment",
+    "ipa": "/ɪnˈstɔːlmənt/",
+    "meaning": "bo‘lib to‘lashdagi navbatdagi to‘lov",
+    "example": "The final instalment made the bicycle feel completely mine.",
+    "translation": "Oxirgi bo‘lib to‘lov velosipedni to‘liq menikidek his qildirdi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "repay",
+    "ipa": "/rɪˈpeɪ/",
+    "meaning": "qarzni qaytarmoq",
+    "example": "I repay my uncle before he mentions it at dinner.",
+    "translation": "Amakim kechki ovqatda eslatmasidan qarzini qaytaraman.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "debt",
+    "ipa": "/det/",
+    "meaning": "qarzdorlik; qarz",
+    "example": "The debt outlasted the holiday that caused it.",
+    "translation": "Qarz uni keltirgan ta’tildan uzoqroq davom etdi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "credit",
+    "ipa": "/ˈkredɪt/",
+    "meaning": "qarzga xarid qilish imkoniyati",
+    "example": "The shop offers credit, but Grandma prefers cash.",
+    "translation": "Do‘kon qarzga olish imkonini beradi, buvim esa naqd pulni afzal ko‘radi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "debit",
+    "ipa": "/ˈdebɪt/",
+    "meaning": "hisobdan chiqarilgan mablag‘",
+    "example": "The unexpected debit turned out to be my forgotten subscription.",
+    "translation": "Hisobdan kutilmagan pul yechilishi unutilgan obunam uchun ekan.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "overdraft",
+    "ipa": "/ˈəʊvədrɑːft/",
+    "meaning": "hisobdagi puldan ortiq sarflash imkoniyati",
+    "example": "An overdraft covered wages while a customer paid late.",
+    "translation": "Mijoz kech to‘laganda overdraft ish haqlarini qopladi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "currency",
+    "ipa": "/ˈkʌrənsi/",
+    "meaning": "valyuta; pul birligi",
+    "example": "I changed currency before discovering the café accepted cards.",
+    "translation": "Kafe karta olishini bilmasimdan valyuta almashtirdim.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "exchange rate",
+    "ipa": "/ɪksˈtʃeɪndʒ reɪt/",
+    "meaning": "valyuta ayirboshlash kursi",
+    "example": "The exchange rate made my souvenir suddenly less attractive.",
+    "translation": "Valyuta kursi esdalik buyumimni birdan kamroq jozibali qildi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "cash machine",
+    "ipa": "/ˈkæʃ məʃiːn/",
+    "meaning": "bankomat",
+    "example": "The cash machine was awake before the rest of town.",
+    "translation": "Bankomat shaharning qolgan qismidan oldin uyg‘oq edi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "standing order",
+    "ipa": "/ˌstændɪŋ ˈɔːdə/",
+    "meaning": "muntazam bir xil summani o‘tkazish topshirig‘i",
+    "example": "My standing order pays rent more reliably than I remember.",
+    "translation": "Doimiy to‘lov topshirig‘im ijarani xotiramdan ishonchliroq to‘laydi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "direct debit",
+    "ipa": "/dəˌrekt ˈdebɪt/",
+    "meaning": "hisobdan avtomatik to‘lovga ruxsat",
+    "example": "The direct debit paid my bill while I slept.",
+    "translation": "Avtomatik to‘lov uxlayotganimda hisobimni to‘ladi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "statement",
+    "ipa": "/ˈsteɪtmənt/",
+    "meaning": "bank hisobi bo‘yicha ko‘chirma",
+    "example": "My bank statement remembers every late-night cake purchase.",
+    "translation": "Bank ko‘chirmam tunda olingan har bir tortni eslaydi.",
+    "topic": "7-oy • Bank va shaxsiy moliya"
+  },
+  {
+    "word": "economy",
+    "ipa": "/ɪˈkɒnəmi/",
+    "meaning": "iqtisodiyot",
+    "example": "The local economy depends on tourism and excellent bread.",
+    "translation": "Mahalliy iqtisodiyot sayyohlik va ajoyib nonga tayanadi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "economic",
+    "ipa": "/ˌiːkəˈnɒmɪk/",
+    "meaning": "iqtisodiy",
+    "example": "Economic growth brought new shops and longer parking searches.",
+    "translation": "Iqtisodiy o‘sish yangi do‘konlar va uzoqroq mashina joyi qidirishni keltirdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "market",
+    "ipa": "/ˈmɑːkɪt/",
+    "meaning": "mahsulot sotiladigan iqtisodiy muhit; bozor",
+    "example": "The market for quiet keyboards is larger than I expected.",
+    "translation": "Jim klaviaturalar bozori men kutganimdan kattaroq.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "demand",
+    "ipa": "/dɪˈmɑːnd/",
+    "meaning": "talab; xaridorlar ehtiyoji",
+    "example": "Demand for umbrellas rose before the first raindrop fell.",
+    "translation": "Birinchi tomchi tushmasidan soyabonga talab oshdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "purchasing power",
+    "ipa": "/ˈpɜːtʃəsɪŋ ˌpaʊə/",
+    "meaning": "pulga qancha tovar olish mumkinligi",
+    "example": "Rising prices reduced the purchasing power of my weekly allowance.",
+    "translation": "Narxlar oshishi haftalik pulimning xarid quvvatini kamaytirdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "purchaser",
+    "ipa": "/ˈpɜːtʃəsə/",
+    "meaning": "xaridor; sotib oluvchi",
+    "example": "The purchaser measured the sofa twice and the doorway once.",
+    "translation": "Xaridor divanni ikki marta, eshikni bir marta o‘lchadi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "surplus",
+    "ipa": "/ˈsɜːpləs/",
+    "meaning": "ehtiyojdan ortiq mahsulot yoki mablag‘",
+    "example": "The surplus of pumpkins inspired a very orange menu.",
+    "translation": "Ortiqcha qovoq juda to‘q sariq taomnomaga sabab bo‘ldi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "inflation",
+    "ipa": "/ɪnˈfleɪʃən/",
+    "meaning": "narxlarning umumiy oshishi; inflyatsiya",
+    "example": "Inflation made my usual lunch an unusual expense.",
+    "translation": "Inflyatsiya odatiy tushligimni noodatiy xarajatga aylantirdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "recession",
+    "ipa": "/rɪˈseʃən/",
+    "meaning": "iqtisodiy pasayish",
+    "example": "During the recession, our repair shop stayed surprisingly busy.",
+    "translation": "Iqtisodiy pasayishda ta’mirlash ustaxonamiz kutilmaganda band bo‘lib qoldi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "boom",
+    "ipa": "/buːm/",
+    "meaning": "iqtisodiyot yoki savdoning tez o‘sishi",
+    "example": "The bicycle boom filled every spare corner with wheels.",
+    "translation": "Velosiped savdosining keskin o‘sishi har bo‘sh burchakni g‘ildirakka to‘ldirdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "growth",
+    "ipa": "/ɡrəʊθ/",
+    "meaning": "o‘sish",
+    "example": "Sales growth forced us to borrow Grandma's garage.",
+    "translation": "Savdo o‘sishi buvimning garajini vaqtincha olishga majbur qildi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "downturn",
+    "ipa": "/ˈdaʊntɜːn/",
+    "meaning": "iqtisodiy faollikning pasayishi",
+    "example": "The downturn made our repair service more popular.",
+    "translation": "Iqtisodiy pasayish ta’mirlash xizmatimizni ommalashtirdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "recovery",
+    "ipa": "/rɪˈkʌvəri/",
+    "meaning": "iqtisodiy tiklanish",
+    "example": "The town's recovery brought light back to empty shops.",
+    "translation": "Shaharning iqtisodiy tiklanishi bo‘sh do‘konlarga yana chiroq yoqdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "prosperity",
+    "ipa": "/prɒˈsperəti/",
+    "meaning": "farovonlik",
+    "example": "The village's prosperity began with a busy railway station.",
+    "translation": "Qishloq farovonligi gavjum temiryo‘l bekatidan boshlandi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "deficit",
+    "ipa": "/ˈdefɪsɪt/",
+    "meaning": "xarajatning daromaddan ortiq qismi; taqchillik",
+    "example": "The budget deficit explained why the office party needed volunteers.",
+    "translation": "Budjet taqchilligi ofis bayramiga nega ko‘ngillilar kerakligini tushuntirdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "wealth",
+    "ipa": "/welθ/",
+    "meaning": "boylik",
+    "example": "His wealth is obvious, but his old bicycle disagrees.",
+    "translation": "Boyligi yaqqol, lekin eski velosipedi bunga qo‘shilmaydi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "unemployment",
+    "ipa": "/ˌʌnɪmˈplɔɪmənt/",
+    "meaning": "ishsizlik",
+    "example": "The new factory reduced unemployment in our town.",
+    "translation": "Yangi zavod shahrimizda ishsizlikni kamaytirdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "industry",
+    "ipa": "/ˈɪndəstri/",
+    "meaning": "sanoat; iqtisodiyot tarmog‘i",
+    "example": "The chocolate industry makes our town smell wonderful.",
+    "translation": "Shokolad sanoati shahrimizni ajoyib hidga to‘ldiradi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "sector",
+    "ipa": "/ˈsektə/",
+    "meaning": "iqtisodiyot sohasi",
+    "example": "The tourism sector keeps my uncle's taxi busy.",
+    "translation": "Sayyohlik sohasi amakimning taksisini band qiladi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "consumer",
+    "ipa": "/kənˈsjuːmə/",
+    "meaning": "iste’molchi",
+    "example": "The consumer wanted less packaging and more chocolate.",
+    "translation": "Iste’molchi kamroq qadoq va ko‘proq shokolad xohladi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "disposable income",
+    "ipa": "/dɪˌspəʊzəbəl ˈɪnkʌm/",
+    "meaning": "soliqlardan keyin qoladigan daromad",
+    "example": "My disposable income looks less impressive beside my rent.",
+    "translation": "Soliqdan keyingi daromadim ijara haqim yonida uncha katta ko‘rinmaydi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "investment",
+    "ipa": "/ɪnˈvestmənt/",
+    "meaning": "sarmoya; investitsiya",
+    "example": "The investment bought a machine that never complains.",
+    "translation": "Sarmoyaga hech qachon nolimaydigan mashina olindi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "competition",
+    "ipa": "/ˌkɒmpəˈtɪʃən/",
+    "meaning": "raqobat",
+    "example": "Competition persuaded both cafés to improve their biscuits.",
+    "translation": "Raqobat ikkala kafeni pechenyesini yaxshilashga undadi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "monopoly",
+    "ipa": "/məˈnɒpəli/",
+    "meaning": "bozorda yagona sotuvchi hukmronligi",
+    "example": "The island bakery has a monopoly on morning rolls.",
+    "translation": "Orol nonvoyxonasi ertalabki bulochkalar bozorida yagona sotuvchi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "deflation",
+    "ipa": "/diːˈfleɪʃən/",
+    "meaning": "narxlarning umumiy pasayishi; deflyatsiya",
+    "example": "During deflation, the shop kept printing lower price labels.",
+    "translation": "Deflyatsiya paytida do‘kon pastroq narxli yorliqlarni qayta-qayta bosdi.",
+    "topic": "7-oy • Iqtisodiyot va bozor"
+  },
+  {
+    "word": "accounting",
+    "ipa": "/əˈkaʊntɪŋ/",
+    "meaning": "buxgalteriya hisobi",
+    "example": "Accounting revealed how expensive our free biscuits were.",
+    "translation": "Buxgalteriya hisobi bepul pechenyelarimiz qanchaga tushganini ko‘rsatdi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "bookkeeping",
+    "ipa": "/ˈbʊkkiːpɪŋ/",
+    "meaning": "daromad va xarajatlarni qayd etish",
+    "example": "Bookkeeping is easier when receipts avoid the washing machine.",
+    "translation": "Cheklar kir mashinasiga tushmasa, hisob yuritish osonroq.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "revenue",
+    "ipa": "/ˈrevənjuː/",
+    "meaning": "savdodan tushgan jami tushum",
+    "example": "Weekend revenue paid for the oven's dramatic repair.",
+    "translation": "Dam olish kunlaridagi tushum pechning katta ta’miriga yetdi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "profit",
+    "ipa": "/ˈprɒfɪt/",
+    "meaning": "xarajatlardan keyingi foyda",
+    "example": "Our first profit bought exactly one celebration cake.",
+    "translation": "Birinchi foydamiz aynan bitta bayram tortiga yetdi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "loss",
+    "ipa": "/lɒs/",
+    "meaning": "moliyaviy zarar",
+    "example": "The shop made a loss after ordering too many umbrellas.",
+    "translation": "Juda ko‘p soyabon buyurtirgach, do‘kon zarar ko‘rdi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "expense",
+    "ipa": "/ɪkˈspens/",
+    "meaning": "xarajat",
+    "example": "The biggest expense was delivering our enormous sign.",
+    "translation": "Eng katta xarajat ulkan peshlavhamizni yetkazish bo‘ldi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "expenditure",
+    "ipa": "/ɪkˈspendɪtʃə/",
+    "meaning": "sarflangan umumiy mablag‘",
+    "example": "Our expenditure on paper fell when the printer broke.",
+    "translation": "Printer buzilganda qog‘ozga sarfimiz kamaydi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "overheads",
+    "ipa": "/ˈəʊvəhedz/",
+    "meaning": "biznesning doimiy umumiy xarajatlari",
+    "example": "High overheads persuaded us to rent a smaller office.",
+    "translation": "Yuqori doimiy xarajatlar kichikroq ofis ijaraga olishga undadi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "margin",
+    "ipa": "/ˈmɑːdʒɪn/",
+    "meaning": "sotuv narxi va tannarx orasidagi farq",
+    "example": "The small margin leaves little room for broken cakes.",
+    "translation": "Kichik foyda farqi singan tortlarga ko‘p imkon qoldirmaydi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "turnover",
+    "ipa": "/ˈtɜːnəʊvə/",
+    "meaning": "muayyan davrdagi jami savdo tushumi",
+    "example": "Annual turnover grew faster than our tiny shop.",
+    "translation": "Yillik savdo tushumi kichik do‘konimizdan tezroq o‘sdi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "cash flow",
+    "ipa": "/ˈkæʃ fləʊ/",
+    "meaning": "pulning kirib-chiqish oqimi",
+    "example": "Late payments made our cash flow less cheerful.",
+    "translation": "Kechikkan to‘lovlar pul oqimimizni uncha quvnoq qilmadi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "invoice",
+    "ipa": "/ˈɪnvɔɪs/",
+    "meaning": "to‘lov uchun hisob-faktura",
+    "example": "The invoice arrived before the supposedly express delivery.",
+    "translation": "Hisob-faktura go‘yoki tezkor yetkazmadan oldin keldi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "audit",
+    "ipa": "/ˈɔːdɪt/",
+    "meaning": "moliyaviy hisoblarni tekshirish",
+    "example": "The audit found every receipt except the one under my tea.",
+    "translation": "Audit choyim ostidagidan boshqa barcha cheklarni topdi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "asset",
+    "ipa": "/ˈæset/",
+    "meaning": "iqtisodiy qiymatga ega mulk; aktiv",
+    "example": "The old delivery van remains our most useful asset.",
+    "translation": "Eski yetkazish furgoni eng foydali mulkimiz bo‘lib qolmoqda.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "liability",
+    "ipa": "/ˌlaɪəˈbɪləti/",
+    "meaning": "to‘lanishi kerak bo‘lgan moliyaviy majburiyat",
+    "example": "The unpaid equipment loan is our largest liability.",
+    "translation": "To‘lanmagan uskuna krediti eng katta majburiyatimiz.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "tax",
+    "ipa": "/tæks/",
+    "meaning": "soliq",
+    "example": "The tax form asks more questions than my curious nephew.",
+    "translation": "Soliq shakli qiziquvchan jiyanimdan ko‘proq savol beradi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "taxpayer",
+    "ipa": "/ˈtækspeɪə/",
+    "meaning": "soliq to‘lovchi",
+    "example": "Every taxpayer deserves clear information about public spending.",
+    "translation": "Har bir soliq to‘lovchi davlat xarajatlari haqida aniq ma’lumotga haqli.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "fee",
+    "ipa": "/fiː/",
+    "meaning": "xizmat yoki qatnashish haqi",
+    "example": "The booking fee cost more than my bus ticket.",
+    "translation": "Band qilish haqi avtobus chiptamdan qimmat bo‘ldi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "charge",
+    "ipa": "/tʃɑːdʒ/",
+    "meaning": "olinadigan haq",
+    "example": "The extra charge covered delivery, not the driver's jokes.",
+    "translation": "Qo‘shimcha haq haydovchining hazillariga emas, yetkazishga olindi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "commission",
+    "ipa": "/kəˈmɪʃən/",
+    "meaning": "savdodan olinadigan vositachilik haqi",
+    "example": "Her commission increased after she sold the giant sofa.",
+    "translation": "Ulkan divanni sotgach, vositachilik haqi oshdi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "payroll",
+    "ipa": "/ˈpeɪrəʊl/",
+    "meaning": "xodimlar ish haqi hisobi va ro‘yxati",
+    "example": "Our payroll includes five people and no office cats.",
+    "translation": "Ish haqi ro‘yxatimizda besh kishi bor, ofis mushuklari yo‘q.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "payslip",
+    "ipa": "/ˈpeɪslɪp/",
+    "meaning": "ish haqi tafsilotlari varaqasi",
+    "example": "My payslip explains where the mysterious deductions went.",
+    "translation": "Ish haqi varaqam sirli ushlanmalar qayerga ketganini tushuntiradi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "arrears",
+    "ipa": "/əˈrɪəz/",
+    "meaning": "muddati o‘tgan qarzdorlik",
+    "example": "The rent arrears finally disappeared from our accounts.",
+    "translation": "Muddati o‘tgan ijara qarzi nihoyat hisoblarimizdan yo‘qoldi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "break even",
+    "ipa": "/ˌbreɪk ˈiːvən/",
+    "meaning": "foyda ham zarar ham qilmaslik",
+    "example": "We break even if every guest buys two cakes.",
+    "translation": "Har mehmon ikkita tort olsa, xarajatimiz qoplanadi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "profitable",
+    "ipa": "/ˈprɒfɪtəbəl/",
+    "meaning": "foyda keltiradigan",
+    "example": "The tiny repair shop proved more profitable than the boutique.",
+    "translation": "Kichik ta’mirlash ustaxonasi butikdan foydaliroq chiqdi.",
+    "topic": "7-oy • Hisob-kitob va xarajatlar"
+  },
+  {
+    "word": "trade",
+    "ipa": "/treɪd/",
+    "meaning": "savdo",
+    "example": "Trade brought new spices and better gossip to the town.",
+    "translation": "Savdo shaharga yangi ziravorlar va qiziqroq gap-so‘zlar olib keldi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "commerce",
+    "ipa": "/ˈkɒmɜːs/",
+    "meaning": "tijorat; savdo faoliyati",
+    "example": "Commerce keeps this sleepy border town surprisingly awake.",
+    "translation": "Tijorat uyquchi chegara shaharchasini kutilmaganda uyg‘oq tutadi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "retail",
+    "ipa": "/ˈriːteɪl/",
+    "meaning": "chakana savdo",
+    "example": "Retail is busiest when everyone remembers birthdays at once.",
+    "translation": "Hamma tug‘ilgan kunlarni birdan eslaganda chakana savdo eng gavjum bo‘ladi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "wholesale",
+    "ipa": "/ˈhəʊlseɪl/",
+    "meaning": "ulgurji savdo",
+    "example": "Buying wholesale filled our garage with cheerful mugs.",
+    "translation": "Ulgurji xarid garajimizni quvnoq krujkalarga to‘ldirdi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "retailer",
+    "ipa": "/ˈriːteɪlə/",
+    "meaning": "chakana sotuvchi",
+    "example": "The retailer displayed the expensive vase beyond my elbow.",
+    "translation": "Chakana sotuvchi qimmat vazani tirsagim yetmaydigan joyga qo‘ydi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "wholesaler",
+    "ipa": "/ˈhəʊlseɪlə/",
+    "meaning": "ulgurji sotuvchi",
+    "example": "The wholesaler sells more buttons than I can count.",
+    "translation": "Ulgurji sotuvchi sanay olganimdan ko‘p tugma sotadi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "supplier",
+    "ipa": "/səˈplaɪə/",
+    "meaning": "mahsulot yetkazib beruvchi",
+    "example": "Our supplier knows Monday requires extra coffee.",
+    "translation": "Yetkazib beruvchimiz dushanbaga ko‘proq qahva kerakligini biladi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "vendor",
+    "ipa": "/ˈvendə/",
+    "meaning": "sotuvchi",
+    "example": "The vendor remembered my order and my terrible pronunciation.",
+    "translation": "Sotuvchi buyurtmamni va yomon talaffuzimni esladi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "merchant",
+    "ipa": "/ˈmɜːtʃənt/",
+    "meaning": "savdogar",
+    "example": "The merchant could describe silk for an entire afternoon.",
+    "translation": "Savdogar ipakni butun tushdan keyin tasvirlab bera olardi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "import",
+    "ipa": "/ˈɪmpɔːt/",
+    "meaning": "chetdan keltirilgan mahsulot; import",
+    "example": "Coffee is our café's most essential import.",
+    "translation": "Qahva kafemizning eng zarur import mahsuloti.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "export",
+    "ipa": "/ˈekspɔːt/",
+    "meaning": "chetga sotilgan mahsulot; eksport",
+    "example": "Dried fruit became the village's most successful export.",
+    "translation": "Quritilgan meva qishloqning eng muvaffaqiyatli eksport mahsulotiga aylandi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "tariff",
+    "ipa": "/ˈtærɪf/",
+    "meaning": "import yoki eksport boji",
+    "example": "The tariff made imported chairs less tempting.",
+    "translation": "Boj import kursilarni kamroq jozibali qildi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "duty-free",
+    "ipa": "/ˌdjuːti ˈfriː/",
+    "meaning": "boj olinmaydigan",
+    "example": "The duty-free shop tested my promise to stop buying perfume.",
+    "translation": "Bojsiz do‘kon atir olmaslik va’damni sinadi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "goods",
+    "ipa": "/ɡʊdz/",
+    "meaning": "tovarlar",
+    "example": "The goods arrived wrapped more carefully than birthday presents.",
+    "translation": "Tovarlar tug‘ilgan kun sovg‘alaridan ehtiyotkorroq o‘ralib keldi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "merchandise",
+    "ipa": "/ˈmɜːtʃəndaɪs/",
+    "meaning": "sotiladigan tovarlar",
+    "example": "The band's merchandise sold faster than its concert tickets.",
+    "translation": "Guruhning esdalik tovarlari konsert chiptalaridan tezroq sotildi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "product",
+    "ipa": "/ˈprɒdʌkt/",
+    "meaning": "mahsulot",
+    "example": "Our newest product solves a problem I never noticed.",
+    "translation": "Eng yangi mahsulotimiz men sezmagan muammoni hal qiladi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "outlet",
+    "ipa": "/ˈaʊtlet/",
+    "meaning": "savdo shoxobchasi",
+    "example": "The new outlet opened beside our hungriest school.",
+    "translation": "Yangi savdo shoxobchasi eng och maktabimiz yonida ochildi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "stall",
+    "ipa": "/stɔːl/",
+    "meaning": "bozor rastasi",
+    "example": "Her stall has more colours than my paint box.",
+    "translation": "Uning rastasida bo‘yoq qutimdagidan ko‘proq rang bor.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "catalogue",
+    "ipa": "/ˈkætəlɒɡ/",
+    "meaning": "mahsulotlar katalogi",
+    "example": "The catalogue made our storage room look irresistible.",
+    "translation": "Katalog omborxonamizni juda jozibali ko‘rsatdi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "e-commerce",
+    "ipa": "/ˈiː kɒmɜːs/",
+    "meaning": "internet orqali savdo",
+    "example": "E-commerce lets Grandma sell scarves without leaving her chair.",
+    "translation": "Elektron savdo buvimga kursisidan turmay sharf sotishga imkon beradi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "transaction",
+    "ipa": "/trænˈzækʃən/",
+    "meaning": "savdo yoki pul o‘tkazish amaliyoti",
+    "example": "The transaction took less time than choosing the cake.",
+    "translation": "To‘lov jarayoni tort tanlashdan kamroq vaqt oldi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "resell",
+    "ipa": "/ˌriːˈsel/",
+    "meaning": "sotib olingan narsani qayta sotmoq",
+    "example": "We resell old chairs after teaching them not to wobble.",
+    "translation": "Eski kursilarni qimirlamaslikka o‘rgatgach, qayta sotamiz.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "negotiation",
+    "ipa": "/nɪˌɡəʊʃiˈeɪʃən/",
+    "meaning": "muzokara",
+    "example": "The negotiation ended when both sides needed lunch.",
+    "translation": "Ikkala tomon ham tushlik istaganda muzokara tugadi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "deal",
+    "ipa": "/diːl/",
+    "meaning": "savdo kelishuvi",
+    "example": "The deal included delivery and a surprisingly friendly goat.",
+    "translation": "Kelishuv yetkazish va kutilmaganda do‘stona echkini ham o‘z ichiga oldi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "haggle",
+    "ipa": "/ˈhæɡəl/",
+    "meaning": "narxni tushirish uchun savdolashmoq",
+    "example": "My aunt can haggle longer than the market stays open.",
+    "translation": "Xolam bozor ochiq turadigan vaqtdan ham uzoq savdolasha oladi.",
+    "topic": "7-oy • Savdo va xalqaro tijorat"
+  },
+  {
+    "word": "manufacture",
+    "ipa": "/ˌmænjʊˈfæktʃə/",
+    "meaning": "sanoat usulida ishlab chiqarmoq",
+    "example": "They manufacture tiny screws for enormous machines.",
+    "translation": "Ular ulkan mashinalar uchun mitti vintlar ishlab chiqaradi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "manufacturer",
+    "ipa": "/ˌmænjʊˈfæktʃərə/",
+    "meaning": "ishlab chiqaruvchi korxona",
+    "example": "The manufacturer sent instructions longer than the product.",
+    "translation": "Ishlab chiqaruvchi mahsulotdan uzunroq yo‘riqnoma yubordi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "production",
+    "ipa": "/prəˈdʌkʃən/",
+    "meaning": "ishlab chiqarish",
+    "example": "Production stopped because one tiny button disappeared.",
+    "translation": "Bitta mitti tugma yo‘qolgani uchun ishlab chiqarish to‘xtadi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "output",
+    "ipa": "/ˈaʊtpʊt/",
+    "meaning": "ishlab chiqarilgan mahsulot hajmi",
+    "example": "Daily output doubled after we repaired the ancient oven.",
+    "translation": "Qadimiy pechni tuzatgach, kunlik mahsulot hajmi ikki baravar oshdi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "machinery",
+    "ipa": "/məˈʃiːnəri/",
+    "meaning": "mashina va mexanizmlar majmui",
+    "example": "The machinery works harder than our entire sales team.",
+    "translation": "Uskunalar butun savdo jamoamizdan ko‘proq ishlaydi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "machine",
+    "ipa": "/məˈʃiːn/",
+    "meaning": "mashina; uskuna",
+    "example": "This machine folds boxes better than I fold shirts.",
+    "translation": "Bu uskuna qutilarni men ko‘ylak taxlaganimdan yaxshiroq taxlaydi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "workbench",
+    "ipa": "/ˈwɜːkbentʃ/",
+    "meaning": "usta ishlaydigan mustahkam stol",
+    "example": "The workbench holds every tool except the one I need.",
+    "translation": "Usta stolida keraklisidan boshqa barcha asbob bor.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "assemble",
+    "ipa": "/əˈsembəl/",
+    "meaning": "qismlarni yig‘moq",
+    "example": "We assemble desks faster than customers choose their colours.",
+    "translation": "Mijozlar rang tanlaguncha stollarni tezroq yig‘amiz.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "batch",
+    "ipa": "/bætʃ/",
+    "meaning": "bir vaqtda tayyorlangan mahsulotlar guruhi",
+    "example": "This batch of biscuits disappeared before the photographs.",
+    "translation": "Bu pechenye partiyasi suratga olishdan oldin yo‘qoldi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "prototype",
+    "ipa": "/ˈprəʊtətaɪp/",
+    "meaning": "sinov uchun dastlabki mahsulot namunasi",
+    "example": "The prototype worked perfectly until someone sat on it.",
+    "translation": "Dastlabki namuna kimdir o‘tirguncha mukammal ishladi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "weld",
+    "ipa": "/weld/",
+    "meaning": "metall qismlarni payvandlamoq",
+    "example": "They weld the frame before arguing about its colour.",
+    "translation": "Ular rangi haqida bahslashishdan oldin ramani payvandlaydi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "conveyor belt",
+    "ipa": "/kənˈveɪə belt/",
+    "meaning": "mahsulot tashuvchi harakatlanuvchi tasma",
+    "example": "The conveyor belt carried biscuits past very hungry workers.",
+    "translation": "Konveyer tasmasi pechenyelarni juda och ishchilar yonidan olib o‘tdi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "assembly line",
+    "ipa": "/əˈsembli laɪn/",
+    "meaning": "ketma-ket yig‘ish liniyasi",
+    "example": "The assembly line made bicycles faster than we could name them.",
+    "translation": "Yig‘ish liniyasi biz nomlaganimizdan tezroq velosiped yasadi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "raw material",
+    "ipa": "/ˌrɔː məˈtɪəriəl/",
+    "meaning": "xomashyo",
+    "example": "Wood is the raw material for our remarkably stubborn chairs.",
+    "translation": "Yog‘och g‘oyat chidamli kursilarimizning xomashyosi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "finished goods",
+    "ipa": "/ˌfɪnɪʃt ˈɡʊdz/",
+    "meaning": "sotishga tayyor mahsulotlar",
+    "example": "The finished goods waited neatly while the office stayed messy.",
+    "translation": "Tayyor mahsulotlar tartibli turdi, ofis esa tartibsiz qoldi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "downtime",
+    "ipa": "/ˈdaʊntaɪm/",
+    "meaning": "uskuna ishlamay turadigan vaqt",
+    "example": "The downtime gave everyone a chance to find lost tools.",
+    "translation": "Uskuna ishlamagan vaqt hammaga yo‘qolgan asboblarni topishga imkon berdi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "test run",
+    "ipa": "/ˈtest rʌn/",
+    "meaning": "ishga tushirib sinab ko‘rish",
+    "example": "The test run produced one perfect cup and two surprises.",
+    "translation": "Sinovda bitta mukammal piyola va ikkita kutilmagan buyum chiqdi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "malfunction",
+    "ipa": "/ˌmælˈfʌŋkʃən/",
+    "meaning": "uskunaning noto‘g‘ri ishlashi",
+    "example": "A malfunction made the toy sing every song backwards.",
+    "translation": "Nosozlik tufayli o‘yinchoq barcha qo‘shiqlarni teskari aytdi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "defective",
+    "ipa": "/dɪˈfektɪv/",
+    "meaning": "nuqsonli",
+    "example": "The defective alarm woke nobody except the repairman.",
+    "translation": "Nuqsonli signal ustadan boshqa hech kimni uyg‘otmadi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "quality control",
+    "ipa": "/ˈkwɒləti kənˌtrəʊl/",
+    "meaning": "mahsulot sifatini nazorat qilish",
+    "example": "Quality control spotted the mug with two tiny handles.",
+    "translation": "Sifat nazorati ikki mitti tutqichli krujkani payqadi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "automation",
+    "ipa": "/ˌɔːtəˈmeɪʃən/",
+    "meaning": "ishlarni avtomatlashtirish",
+    "example": "Automation handles the boring labels while we pack orders.",
+    "translation": "Avtomatlashtirish zerikarli yorliqlarni bajaradi, biz buyurtmalarni qadoqlaymiz.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "automate",
+    "ipa": "/ˈɔːtəmeɪt/",
+    "meaning": "avtomatlashtirmoq",
+    "example": "We automate counting screws, not choosing birthday cakes.",
+    "translation": "Vint sanashni avtomatlashtiramiz, tug‘ilgan kun tortini tanlashni emas.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "mass production",
+    "ipa": "/ˌmæs prəˈdʌkʃən/",
+    "meaning": "katta hajmda bir xil mahsulot ishlab chiqarish",
+    "example": "Mass production made the once-expensive toy affordable.",
+    "translation": "Ommaviy ishlab chiqarish ilgari qimmat o‘yinchoqni arzonlashtirdi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "custom-made",
+    "ipa": "/ˌkʌstəm ˈmeɪd/",
+    "meaning": "maxsus buyurtmaga tayyorlangan",
+    "example": "The custom-made desk fits my room and my long legs.",
+    "translation": "Buyurtma stol xonamga ham, uzun oyoqlarimga ham mos.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "craftsmanship",
+    "ipa": "/ˈkrɑːftsmənʃɪp/",
+    "meaning": "ustalik; mahoratli qo‘l mehnati",
+    "example": "The craftsmanship makes even the hidden drawer beautiful.",
+    "translation": "Ustalik hatto yashirin tortmani ham chiroyli qiladi.",
+    "topic": "7-oy • Ishlab chiqarish"
+  },
+  {
+    "word": "logistics",
+    "ipa": "/ləˈdʒɪstɪks/",
+    "meaning": "tashish va yetkazishni tashkil etish",
+    "example": "The logistics became simpler after we measured the door.",
+    "translation": "Eshikni o‘lchagach, yetkazishni tashkil etish osonlashdi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "freight",
+    "ipa": "/freɪt/",
+    "meaning": "katta hajmda tashiladigan yuk",
+    "example": "The freight included chairs, lamps, and one enormous teapot.",
+    "translation": "Yuk tarkibida kursilar, chiroqlar va bitta ulkan choynak bor edi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "cargo",
+    "ipa": "/ˈkɑːɡəʊ/",
+    "meaning": "kema yoki samolyot yuki",
+    "example": "The cargo smelled wonderfully of fresh oranges.",
+    "translation": "Kema yukidan ajoyib yangi apelsin hidi kelardi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "shipment",
+    "ipa": "/ˈʃɪpmənt/",
+    "meaning": "jo‘natilgan tovarlar partiyasi",
+    "example": "Our shipment arrived before we cleared the warehouse.",
+    "translation": "Tovar partiyamiz omborni bo‘shatmasimizdan yetib keldi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "dispatch",
+    "ipa": "/dɪˈspætʃ/",
+    "meaning": "yuk yoki buyurtmani jo‘natmoq",
+    "example": "We dispatch orders before the afternoon tea debate begins.",
+    "translation": "Tushdan keyingi choy bahsi boshlanmasidan buyurtmalarni jo‘natamiz.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "freight forwarder",
+    "ipa": "/ˈfreɪt ˌfɔːwədə/",
+    "meaning": "yuk tashishni tashkil etuvchi vositachi",
+    "example": "The freight forwarder found room for our enormous chairs.",
+    "translation": "Yuk tashishni tashkil etuvchi vositachi ulkan kursilarimizga joy topdi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "depot",
+    "ipa": "/ˈdepəʊ/",
+    "meaning": "yuk saqlash va jo‘natish markazi",
+    "example": "The depot wakes up before most of the city's alarm clocks.",
+    "translation": "Yuk markazi shahardagi ko‘p budilniklardan oldin uyg‘onadi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "storage",
+    "ipa": "/ˈstɔːrɪdʒ/",
+    "meaning": "saqlash; saqlash joyi",
+    "example": "Storage became expensive when the chairs refused to fold.",
+    "translation": "Kursilar yig‘ilmagach, ularni saqlash qimmatga tushdi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "inventory",
+    "ipa": "/ˈɪnvəntri/",
+    "meaning": "ombordagi mahsulotlar ro‘yxati va zaxirasi",
+    "example": "Our inventory lists everything except the office cat.",
+    "translation": "Zaxiralar ro‘yxatimizda ofis mushugidan boshqa hamma narsa bor.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "pallet",
+    "ipa": "/ˈpælət/",
+    "meaning": "yuk tashishga mo‘ljallangan taglik",
+    "example": "One pallet carried more boxes than my entire flat.",
+    "translation": "Bitta yuk tagligida butun kvartiramdagidan ko‘p quti bor edi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "crate",
+    "ipa": "/kreɪt/",
+    "meaning": "mustahkam yuk qutisi",
+    "example": "The crate protected the vase better than my careful hands.",
+    "translation": "Mustahkam quti vazani ehtiyotkor qo‘llarimdan yaxshiroq asradi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "load",
+    "ipa": "/ləʊd/",
+    "meaning": "yuklamoq",
+    "example": "We load the van before Dad changes the route again.",
+    "translation": "Dadam yo‘nalishni yana o‘zgartirmasidan furgonni yuklaymiz.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "unload",
+    "ipa": "/ˌʌnˈləʊd/",
+    "meaning": "yukni tushirmoq",
+    "example": "Please unload the cakes before the heavy chairs.",
+    "translation": "Og‘ir kursilardan oldin tortlarni tushiring.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "transit",
+    "ipa": "/ˈtrænzɪt/",
+    "meaning": "bir joydan boshqasiga tashilish",
+    "example": "The mugs survived transit but not my first day.",
+    "translation": "Krujkalar tashishga chidadi, birinchi ish kunimga esa yo‘q.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "tracking",
+    "ipa": "/ˈtrækɪŋ/",
+    "meaning": "yuk harakatini kuzatish",
+    "example": "Tracking showed my parcel taking a longer holiday than me.",
+    "translation": "Kuzatuv posilkam mendan uzoqroq ta’til qilayotganini ko‘rsatdi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "barcode",
+    "ipa": "/ˈbɑːkəʊd/",
+    "meaning": "shtrix-kod",
+    "example": "The barcode was easier to read than my handwriting.",
+    "translation": "Shtrix-kodni o‘qish yozuvimni o‘qishdan osonroq edi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "fragile",
+    "ipa": "/ˈfrædʒaɪl/",
+    "meaning": "tez sinadigan; mo‘rt",
+    "example": "The fragile vase travelled with more protection than I did.",
+    "translation": "Mo‘rt vaza mendan ko‘proq himoya bilan sayohat qildi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "handling",
+    "ipa": "/ˈhændlɪŋ/",
+    "meaning": "yukni ko‘tarish va ko‘chirish",
+    "example": "Careful handling kept every chocolate rabbit's ears intact.",
+    "translation": "Ehtiyotkor tashish barcha shokolad quyonlarning qulog‘ini butun saqladi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "haulage",
+    "ipa": "/ˈhɔːlɪdʒ/",
+    "meaning": "katta yuklarni avtomobilda tashish",
+    "example": "The haulage firm moved our bakery without losing a spoon.",
+    "translation": "Yuk tashish firmasi nonvoyxonamizni bir qoshiq yo‘qotmay ko‘chirdi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "consignment",
+    "ipa": "/kənˈsaɪnmənt/",
+    "meaning": "bir manzilga jo‘natiladigan yuk partiyasi",
+    "example": "The consignment contained enough buttons for a thousand coats.",
+    "translation": "Yuk partiyasida mingta paltoga yetadigan tugma bor edi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "backlog",
+    "ipa": "/ˈbæklɒɡ/",
+    "meaning": "yig‘ilib qolgan bajarilmagan ishlar",
+    "example": "The backlog shrank after the printer stopped sulking.",
+    "translation": "Printer injiqlikni bas qilgach, yig‘ilib qolgan ishlar kamaydi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "lead time",
+    "ipa": "/ˈliːd taɪm/",
+    "meaning": "buyurtmadan yetkazishgacha ketadigan vaqt",
+    "example": "The lead time is shorter than our usual decision process.",
+    "translation": "Yetkazish muddati odatiy qaror jarayonimizdan qisqaroq.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "delivery note",
+    "ipa": "/dɪˈlɪvəri nəʊt/",
+    "meaning": "yetkazilgan tovarlar ro‘yxati hujjati",
+    "example": "The delivery note listed ten lamps, but we counted eleven.",
+    "translation": "Yetkazish hujjatida o‘nta chiroq bor edi, biz esa o‘n bitta sanadik.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "recipient",
+    "ipa": "/rɪˈsɪpiənt/",
+    "meaning": "yuborilgan narsani qabul qiluvchi",
+    "example": "The recipient opened the parcel before reading the birthday card.",
+    "translation": "Qabul qiluvchi tabriknomani o‘qimasdan posilkani ochdi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "supply chain",
+    "ipa": "/səˈplaɪ tʃeɪn/",
+    "meaning": "ishlab chiqarishdan xaridorgacha yetkazish tizimi",
+    "example": "One missing lid delayed the whole supply chain.",
+    "translation": "Bitta yetishmagan qopqoq butun ta’minot tizimini kechiktirdi.",
+    "topic": "7-oy • Ombor va yetkazib berish"
+  },
+  {
+    "word": "customer care",
+    "ipa": "/ˌkʌstəmə ˈkeə/",
+    "meaning": "mijozlarga e’tibor va yordam ko‘rsatish",
+    "example": "Good customer care turned my complaint into a thank-you letter.",
+    "translation": "Mijozga yaxshi munosabat shikoyatimni minnatdorlik xatiga aylantirdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "troubleshooting",
+    "ipa": "/ˈtrʌbəlʃuːtɪŋ/",
+    "meaning": "nosozlik sababini aniqlash va tuzatish",
+    "example": "Troubleshooting began with asking whether I had plugged it in.",
+    "translation": "Nosozlikni tekshirish uni tokka ulagan-ulamaganimni so‘rashdan boshlandi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "reimbursement",
+    "ipa": "/ˌriːɪmˈbɜːsmənt/",
+    "meaning": "qilingan xarajatni qaytarib to‘lash",
+    "example": "The reimbursement covered my taxi but not my emergency cake.",
+    "translation": "Xarajat qaytarilishi taksimni qopladi, zaruratdagi tortimni esa yo‘q.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "query",
+    "ipa": "/ˈkwɪəri/",
+    "meaning": "savol; aniqlashtirish so‘rovi",
+    "example": "The query concerned a bill larger than my shopping bag.",
+    "translation": "Savol xarid sumkamdan katta hisob haqida edi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "call centre",
+    "ipa": "/ˈkɔːl ˌsentə/",
+    "meaning": "mijozlar qo‘ng‘iroqlariga javob berish markazi",
+    "example": "The call centre solved my problem before its music annoyed me.",
+    "translation": "Qo‘ng‘iroq markazi musiqasi zeriktirmasidan muammomni hal qildi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "hotline",
+    "ipa": "/ˈhɒtlaɪn/",
+    "meaning": "tezkor murojaatlar telefon liniyasi",
+    "example": "The hotline answered before its cheerful music became annoying.",
+    "translation": "Tezkor liniya quvnoq musiqasi zeriktirmasidan javob berdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "operator",
+    "ipa": "/ˈɒpəreɪtə/",
+    "meaning": "telefon xizmati operatori",
+    "example": "The operator found my order faster than I found my glasses.",
+    "translation": "Operator buyurtmamni men ko‘zoynak topganimdan tezroq topdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "adviser",
+    "ipa": "/ədˈvaɪzə/",
+    "meaning": "maslahatchi",
+    "example": "The adviser found a cheaper plan before I finished complaining.",
+    "translation": "Maslahatchi nolib bo‘lmasimdan arzonroq tarif topdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "client",
+    "ipa": "/ˈklaɪənt/",
+    "meaning": "xizmat oluvchi mijoz",
+    "example": "The client wanted a simple logo, not a family portrait.",
+    "translation": "Mijoz oilaviy portret emas, oddiy logotip xohladi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "clientele",
+    "ipa": "/ˌkliːənˈtel/",
+    "meaning": "doimiy mijozlar doirasi",
+    "example": "Our clientele includes nurses, bakers, and one famous magician.",
+    "translation": "Mijozlarimiz orasida hamshiralar, novvoylar va bir mashhur sehrgar bor.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "satisfaction",
+    "ipa": "/ˌsætɪsˈfækʃən/",
+    "meaning": "mamnunlik; qoniqish",
+    "example": "Customer satisfaction rose when we added real chairs.",
+    "translation": "Haqiqiy kursilar qo‘ygach, mijozlar mamnunligi oshdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "guarantee",
+    "ipa": "/ˌɡærənˈtiː/",
+    "meaning": "kafolat",
+    "example": "The guarantee covers the kettle, not my terrible tea.",
+    "translation": "Kafolat yomon choyimga emas, choynakka tegishli.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "warranty",
+    "ipa": "/ˈwɒrənti/",
+    "meaning": "mahsulotni ta’mirlash yoki almashtirish kafolati",
+    "example": "The warranty lasted longer than my enthusiasm for ironing.",
+    "translation": "Kafolat dazmollashga ishtiyoqimdan uzoqroq davom etdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "replacement",
+    "ipa": "/rɪˈpleɪsmənt/",
+    "meaning": "almashtirib berilgan yangi buyum",
+    "example": "The replacement arrived without the original's annoying squeak.",
+    "translation": "Almashtirilgan buyum avvalgisining jonga tegadigan g‘ichirlashisiz keldi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "goodwill",
+    "ipa": "/ˌɡʊdˈwɪl/",
+    "meaning": "mijozlarning biznesga ishonchi va yaxshi munosabati",
+    "example": "A sincere apology restored goodwill faster than another advert.",
+    "translation": "Samimiy uzr mijozlar ishonchini yana bir reklamadan tezroq tikladi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "cancellation",
+    "ipa": "/ˌkænsəˈleɪʃən/",
+    "meaning": "buyurtma yoki bandlovni bekor qilish",
+    "example": "The cancellation arrived after we printed fifty menus.",
+    "translation": "Bekor qilish xabari ellikta taomnoma bosganimizdan keyin keldi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "refundable",
+    "ipa": "/rɪˈfʌndəbəl/",
+    "meaning": "puli qaytariladigan",
+    "example": "The refundable deposit made booking less frightening.",
+    "translation": "Qaytariladigan oldindan to‘lov band qilishni kamroq qo‘rqinchli qildi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "non-refundable",
+    "ipa": "/ˌnɒn rɪˈfʌndəbəl/",
+    "meaning": "puli qaytarilmaydigan",
+    "example": "The non-refundable ticket encouraged Dad to wake up early.",
+    "translation": "Puli qaytarilmaydigan chipta dadamni erta turishga undadi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "expire",
+    "ipa": "/ɪkˈspaɪə/",
+    "meaning": "amal qilish muddati tugamoq",
+    "example": "These vouchers expire before my brother remembers to use them.",
+    "translation": "Bu vaucherlar ukam ishlatishni eslaguncha muddati tugaydi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "renewal",
+    "ipa": "/rɪˈnjuːəl/",
+    "meaning": "amal qilish muddatini yangilash",
+    "example": "The renewal notice reminded me I owned a gym membership.",
+    "translation": "Yangilash xabari sport zaliga a’zoligimni eslatdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "courtesy",
+    "ipa": "/ˈkɜːtəsi/",
+    "meaning": "xushmuomalalik; hurmatli munosabat",
+    "example": "A little courtesy saved a very awkward conversation.",
+    "translation": "Ozgina xushmuomalalik juda noqulay suhbatni saqlab qoldi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "promptly",
+    "ipa": "/ˈprɒmptli/",
+    "meaning": "tezda; kechiktirmay",
+    "example": "They replied promptly, before my tea was ready.",
+    "translation": "Choyim tayyor bo‘lmasidan ular tezda javob berdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "escalate",
+    "ipa": "/ˈeskəleɪt/",
+    "meaning": "masalani yuqoriroq mas’ulga topshirmoq",
+    "example": "Please escalate the complaint to someone who can authorise repairs.",
+    "translation": "Shikoyatni ta’mirga ruxsat bera oladigan yuqoriroq mas’ulga yuboring.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "get back to",
+    "ipa": "/ɡet ˈbæk tə/",
+    "meaning": "keyinroq javob bermoq; qayta bog‘lanmoq",
+    "example": "I'll get back to you before your coffee gets cold.",
+    "translation": "Qahvangiz sovimasidan sizga javob beraman.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "after-sales",
+    "ipa": "/ˈɑːftə seɪlz/",
+    "meaning": "sotuvdan keyingi xizmatga oid",
+    "example": "The after-sales team explained why my chair kept sinking.",
+    "translation": "Sotuvdan keyingi xizmat jamoasi kursim nega pastlayverishini tushuntirdi.",
+    "topic": "7-oy • Mijozlarga xizmat ko‘rsatish"
+  },
+  {
+    "word": "tender",
+    "ipa": "/ˈtendə/",
+    "meaning": "ish bajarish uchun rasmiy narx taklifi",
+    "example": "Our tender offered better chairs and fewer confusing fees.",
+    "translation": "Rasmiy taklifimiz yaxshiroq kursilar va kamroq chalkash to‘lovlarni taklif etdi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "bid",
+    "ipa": "/bɪd/",
+    "meaning": "sotib olish yoki ish bajarish taklifi",
+    "example": "The winning bid came from the smallest company.",
+    "translation": "G‘olib taklif eng kichik kompaniyadan keldi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "bidder",
+    "ipa": "/ˈbɪdə/",
+    "meaning": "savdoda taklif beruvchi",
+    "example": "One bidder raised a hand just to ask for water.",
+    "translation": "Bir ishtirokchi faqat suv so‘rash uchun qo‘l ko‘tardi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "terms",
+    "ipa": "/tɜːmz/",
+    "meaning": "kelishuv shartlari",
+    "example": "The terms were clearer than the salesman's excited explanation.",
+    "translation": "Shartlar sotuvchining hayajonli tushuntirishidan aniqroq edi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "clause",
+    "ipa": "/klɔːz/",
+    "meaning": "shartnomaning alohida bandi",
+    "example": "One clause explains who cleans the rented chocolate fountain.",
+    "translation": "Bir band ijaradagi shokolad favvorasini kim tozalashini tushuntiradi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "provision",
+    "ipa": "/prəˈvɪʒən/",
+    "meaning": "shartnomadagi maxsus qoida",
+    "example": "The provision allows delivery delays during heavy snow.",
+    "translation": "Maxsus qoida kuchli qorda yetkazishning kechikishiga ruxsat beradi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "contractual",
+    "ipa": "/kənˈtræktʃuəl/",
+    "meaning": "shartnomada belgilangan; shartnomaga oid",
+    "example": "The contractual deadline is Friday, regardless of our printer's mood.",
+    "translation": "Printerimizning kayfiyatidan qat’i nazar, shartnomadagi muddat juma.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "authorisation",
+    "ipa": "/ˌɔːθəraɪˈzeɪʃən/",
+    "meaning": "rasmiy ruxsat",
+    "example": "We need authorisation before ordering that enormous coffee machine.",
+    "translation": "O‘sha ulkan qahva mashinasini buyurtirishdan oldin rasmiy ruxsat kerak.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "signature",
+    "ipa": "/ˈsɪɡnətʃə/",
+    "meaning": "imzo",
+    "example": "My signature looks confident even when I am not.",
+    "translation": "O‘zim dadil bo‘lmasam ham, imzom dadil ko‘rinadi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "sign",
+    "ipa": "/saɪn/",
+    "meaning": "imzolamoq",
+    "example": "Read the contract before you sign beside the coffee stain.",
+    "translation": "Qahva dog‘i yoniga imzo qo‘yishdan oldin shartnomani o‘qing.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "counterpart",
+    "ipa": "/ˈkaʊntəpɑːt/",
+    "meaning": "boshqa tashkilotdagi teng lavozimli hamkor",
+    "example": "My counterpart at the supplier also dislikes surprise invoices.",
+    "translation": "Yetkazib beruvchi korxonadagi hamkasbim ham kutilmagan hisob-fakturalarni yoqtirmaydi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "lease",
+    "ipa": "/liːs/",
+    "meaning": "mulkdan foydalanish uchun ijara shartnomasi",
+    "example": "The lease gives us a shop, not ownership of its pigeons.",
+    "translation": "Ijara shartnomasi bizga do‘kon beradi, kabutarlariga egalikni emas.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "patent",
+    "ipa": "/ˈpeɪtənt/",
+    "meaning": "ixtiroga berilgan huquq hujjati",
+    "example": "Her patent covers a spoon that measures soup temperature.",
+    "translation": "Uning patenti sho‘rva haroratini o‘lchaydigan qoshiqqa tegishli.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "copyright",
+    "ipa": "/ˈkɒpiraɪt/",
+    "meaning": "mualliflik huquqi",
+    "example": "Copyright protects her photographs, including the sleepy goat.",
+    "translation": "Mualliflik huquqi uning suratlarini, jumladan uyquchi echkini ham himoya qiladi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "trademark",
+    "ipa": "/ˈtreɪdmɑːk/",
+    "meaning": "ro‘yxatdan o‘tgan savdo belgisi",
+    "example": "The smiling onion is our registered trademark.",
+    "translation": "Jilmaygan piyoz ro‘yxatdan o‘tgan savdo belgimiz.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "royalty",
+    "ipa": "/ˈrɔɪəlti/",
+    "meaning": "asardan foydalanish uchun muallifga to‘lov",
+    "example": "Each sale earns the writer a small royalty.",
+    "translation": "Har bir sotuv yozuvchiga ozgina mualliflik to‘lovi keltiradi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "incentive",
+    "ipa": "/ɪnˈsentɪv/",
+    "meaning": "rag‘batlantiruvchi sabab yoki mukofot",
+    "example": "Free delivery was the incentive that persuaded Grandma.",
+    "translation": "Buvimni ko‘ndirgan rag‘bat bepul yetkazish bo‘ldi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "bonus",
+    "ipa": "/ˈbəʊnəs/",
+    "meaning": "qo‘shimcha mukofot puli",
+    "example": "My bonus paid for a holiday longer than a weekend.",
+    "translation": "Mukofot pulim dam olish kunidan uzunroq ta’tilga yetdi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "surcharge",
+    "ipa": "/ˈsɜːtʃɑːdʒ/",
+    "meaning": "asosiy narx ustiga qo‘shilgan haq",
+    "example": "The weekend surcharge cost more than my celebratory cake.",
+    "translation": "Dam olish kunidagi qo‘shimcha haq bayram tortimdan qimmat bo‘ldi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "breach",
+    "ipa": "/briːtʃ/",
+    "meaning": "shartnoma yoki qoidani buzish",
+    "example": "Delivering nothing was a clear breach of the agreement.",
+    "translation": "Hech narsa yetkazmaslik kelishuvni ochiq buzish edi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "terminate",
+    "ipa": "/ˈtɜːmɪneɪt/",
+    "meaning": "shartnoma yoki xizmatni rasman tugatmoq",
+    "example": "We decided to terminate the contract after six missed deliveries.",
+    "translation": "Oltita bajarilmagan yetkazishdan keyin shartnomani tugatishga qaror qildik.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "expiry",
+    "ipa": "/ɪkˈspaɪəri/",
+    "meaning": "amal qilish muddatining tugashi",
+    "example": "The expiry date reminded me to use my forgotten voucher.",
+    "translation": "Amal qilish muddati unutilgan kuponimni ishlatishni eslatdi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "stipulate",
+    "ipa": "/ˈstɪpjʊleɪt/",
+    "meaning": "shart sifatida aniq belgilamoq",
+    "example": "The terms stipulate delivery before lunch, not during my nap.",
+    "translation": "Shartlar yetkazishni kunduzgi uyqumda emas, tushlikdan oldin belgilaydi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "compliance",
+    "ipa": "/kəmˈplaɪəns/",
+    "meaning": "talab va qoidalarga rioya etish",
+    "example": "The checklist makes compliance less confusing for new shops.",
+    "translation": "Tekshiruv ro‘yxati yangi do‘konlarga qoidalarga rioya qilishni tushunarliroq qiladi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  },
+  {
+    "word": "binding",
+    "ipa": "/ˈbaɪndɪŋ/",
+    "meaning": "bajarilishi majburiy bo‘lgan",
+    "example": "The binding agreement mattered more than his cheerful promises.",
+    "translation": "Majburiy kelishuv uning quvnoq va’dalaridan muhimroq edi.",
+    "topic": "7-oy • Tijorat kelishuvlari"
+  }
+]

@@ -1,0 +1,4002 @@
+[
+  {
+    "word": "education",
+    "ipa": "/ˌedʒuˈkeɪʃən/",
+    "meaning": "ta’lim",
+    "example": "Education does not end when the school bell rings.",
+    "translation": "Maktab qo‘ng‘irog‘i chalinganda ta’lim tugamaydi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "pupil",
+    "ipa": "/ˈpjuːpəl/",
+    "meaning": "maktab o‘quvchisi",
+    "example": "One pupil brought a pumpkin instead of a football.",
+    "translation": "Bir o‘quvchi futbol to‘pi o‘rniga qovoq olib keldi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "college",
+    "ipa": "/ˈkɒlɪdʒ/",
+    "meaning": "kollej",
+    "example": "My brother studies cooking at college and experiments on us.",
+    "translation": "Akam kollejda oshpazlikni o‘rganadi va bizda tajriba o‘tkazadi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "university",
+    "ipa": "/ˌjuːnɪˈvɜːsəti/",
+    "meaning": "universitet",
+    "example": "At university, she discovered both physics and instant noodles.",
+    "translation": "Universitetda u ham fizikani, ham tezpishar ugra taomini kashf etdi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "campus",
+    "ipa": "/ˈkæmpəs/",
+    "meaning": "universitet hududi",
+    "example": "The campus has three cafés and one very popular cat.",
+    "translation": "Universitet hududida uchta kafe va bitta juda mashhur mushuk bor.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "course",
+    "ipa": "/kɔːs/",
+    "meaning": "o‘quv kursi",
+    "example": "I joined a photography course to improve my blurry pictures.",
+    "translation": "Xira suratlarimni yaxshilash uchun fotografiya kursiga yozildim.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "subject",
+    "ipa": "/ˈsʌbdʒɪkt/",
+    "meaning": "o‘quv fani",
+    "example": "History is her favourite subject because people made such strange decisions.",
+    "translation": "Tarix uning sevimli fani, chunki odamlar juda g‘alati qarorlar qabul qilishgan.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "term",
+    "ipa": "/tɜːm/",
+    "meaning": "o‘quv davri; semestr",
+    "example": "This term, our class will finally learn where commas belong.",
+    "translation": "Bu semestr sinfimiz nihoyat vergullar qayerga qo‘yilishini o‘rganadi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "tuition",
+    "ipa": "/tjuˈɪʃən/",
+    "meaning": "o‘qitish; xususiy dars",
+    "example": "She gives maths tuition using biscuits that rarely survive the lesson.",
+    "translation": "U dars oxirigacha kamdan-kam saqlanadigan pechenyelar yordamida matematikadan xususiy dars beradi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "break",
+    "ipa": "/breɪk/",
+    "meaning": "tanaffus",
+    "example": "During the break, even our strict teacher tells jokes.",
+    "translation": "Tanaffusda hatto qattiqqo‘l o‘qituvchimiz ham hazil aytadi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "assembly",
+    "ipa": "/əˈsembli/",
+    "meaning": "maktabning umumiy yig‘ilishi",
+    "example": "At assembly, the microphone made the headteacher sound like a duck.",
+    "translation": "Umumiy yig‘ilishda mikrofon direktorning ovozini o‘rdaknikiga o‘xshatib qo‘ydi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "headteacher",
+    "ipa": "/ˌhedˈtiːtʃə/",
+    "meaning": "maktab direktori",
+    "example": "Our headteacher knows every pupil and most of their excuses.",
+    "translation": "Maktab direktorimiz har bir o‘quvchini va ularning aksariyat bahonalarini biladi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "tutor",
+    "ipa": "/ˈtjuːtə/",
+    "meaning": "qo‘shimcha dars beruvchi ustoz",
+    "example": "My tutor explains fractions with pizza, which keeps me interested.",
+    "translation": "Ustozim kasrlarni pitsa yordamida tushuntiradi, shuning uchun qiziqishim so‘nmaydi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "classmate",
+    "ipa": "/ˈklɑːsmeɪt/",
+    "meaning": "sinfdosh",
+    "example": "A classmate lent me a ruler longer than my arm.",
+    "translation": "Bir sinfdoshim menga qo‘limdan uzunroq chizg‘ich berib turdi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "learner",
+    "ipa": "/ˈlɜːnə/",
+    "meaning": "o‘rganuvchi",
+    "example": "Every learner needs practice, including my very confused parrot.",
+    "translation": "Har bir o‘rganuvchiga, jumladan, juda gangib qolgan to‘tiqushimga ham mashq kerak.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "beginner",
+    "ipa": "/bɪˈɡɪnə/",
+    "meaning": "boshlovchi",
+    "example": "As a beginner, I could only introduce myself to the computer.",
+    "translation": "Boshlovchi sifatida men kompyuterga faqat o‘zimni tanishtira olardim.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "level",
+    "ipa": "/ˈlevəl/",
+    "meaning": "bilim darajasi",
+    "example": "The next level includes longer texts and fewer pictures of cats.",
+    "translation": "Keyingi darajada uzunroq matnlar va mushuklarning kamroq rasmlari bor.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "training",
+    "ipa": "/ˈtreɪnɪŋ/",
+    "meaning": "kasbiy o‘qitish; tayyorgarlik",
+    "example": "The new staff receive training before touching the mysterious machine.",
+    "translation": "Yangi xodimlar sirli uskunaga tegishdan oldin tayyorgarlikdan o‘tadi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "workshop",
+    "ipa": "/ˈwɜːkʃɒp/",
+    "meaning": "amaliy seminar",
+    "example": "We built a tiny bridge during the engineering workshop.",
+    "translation": "Muhandislik bo‘yicha amaliy seminarda kichkina ko‘prik qurdik.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "lecture",
+    "ipa": "/ˈlektʃə/",
+    "meaning": "ma’ruza",
+    "example": "The lecture on sleep kept everyone surprisingly awake.",
+    "translation": "Uyqu haqidagi ma’ruza, ajablanarlisi, hammani hushyor tutdi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "seminar",
+    "ipa": "/ˈsemɪnɑː/",
+    "meaning": "muhokamali o‘quv mashg‘uloti",
+    "example": "Our seminar became lively when someone mentioned homework for teachers.",
+    "translation": "Kimdir o‘qituvchilar uchun uy vazifasini tilga olganda seminarimiz jonlanib ketdi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "attendance",
+    "ipa": "/əˈtendəns/",
+    "meaning": "davomat",
+    "example": "Attendance improved after the club started offering biscuits.",
+    "translation": "To‘garak pechenye bera boshlagach, davomat yaxshilandi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "register",
+    "ipa": "/ˈredʒɪstə/",
+    "meaning": "davomat ro‘yxati",
+    "example": "The teacher checked the register while two late pupils tried to look invisible.",
+    "translation": "Ikki kechikkan o‘quvchi ko‘rinmas bo‘lishga urinayotganda o‘qituvchi davomat ro‘yxatini tekshirdi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "scholarship",
+    "ipa": "/ˈskɒləʃɪp/",
+    "meaning": "o‘qish uchun stipendiya",
+    "example": "She won a scholarship and bought her lucky pencil a new case.",
+    "translation": "U stipendiya yutib oldi va omadli qalamiga yangi qalamdon sotib oldi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "graduate",
+    "ipa": "/ˈɡrædʒueɪt/",
+    "meaning": "o‘qishni tamomlamoq",
+    "example": "When I graduate, my alarm clock deserves a holiday.",
+    "translation": "O‘qishni tamomlaganimda, budilnigim ta’tilga loyiq bo‘ladi.",
+    "topic": "4-oy • Ta’lim tizimi"
+  },
+  {
+    "word": "maths",
+    "ipa": "/mæθs/",
+    "meaning": "matematika",
+    "example": "Maths helps me divide a cake without starting an argument.",
+    "translation": "Matematika tortni janjalsiz bo‘lishimga yordam beradi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "science",
+    "ipa": "/ˈsaɪəns/",
+    "meaning": "tabiiy fanlar",
+    "example": "In science, we asked why toast always seems to land butter down.",
+    "translation": "Tabiiy fanlar darsida nega qovurilgan non doim yog‘li tomoni bilan tushgandek bo‘lishini so‘radik.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "history",
+    "ipa": "/ˈhɪstəri/",
+    "meaning": "tarix",
+    "example": "History would be easier if kings chose different names.",
+    "translation": "Qirollar har xil ism tanlaganida, tarix osonroq bo‘lardi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "algebra",
+    "ipa": "/ˈældʒɪbrə/",
+    "meaning": "algebra",
+    "example": "In algebra, we spend a surprising amount of time looking for x.",
+    "translation": "Algebrada x ni qidirishga hayratlanarli darajada ko‘p vaqt sarflaymiz.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "biology",
+    "ipa": "/baɪˈɒlədʒi/",
+    "meaning": "biologiya",
+    "example": "Our biology teacher introduced a worm as today's special guest.",
+    "translation": "Biologiya o‘qituvchimiz chuvalchangni bugungi maxsus mehmon deb tanishtirdi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "chemistry",
+    "ipa": "/ˈkemɪstri/",
+    "meaning": "kimyo",
+    "example": "In chemistry, we learnt why random liquids should not become soup.",
+    "translation": "Kimyoda duch kelgan suyuqliklardan nega sho‘rva qilib bo‘lmasligini o‘rgandik.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "physics",
+    "ipa": "/ˈfɪzɪks/",
+    "meaning": "fizika",
+    "example": "Physics explains why my paper plane keeps attacking the floor.",
+    "translation": "Fizika qog‘oz samolyotim nega doim polga hujum qilishini tushuntiradi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "literature",
+    "ipa": "/ˈlɪtrətʃə/",
+    "meaning": "adabiyot",
+    "example": "Literature gives us heroes who have worse Mondays than we do.",
+    "translation": "Adabiyot bizga dushanbasi biznikidan ham yomonroq o‘tadigan qahramonlarni beradi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "art",
+    "ipa": "/ɑːt/",
+    "meaning": "tasviriy san’at",
+    "example": "In art, my portrait looked more like a potato than a person.",
+    "translation": "Tasviriy san’at darsida chizgan portretim odamdan ko‘ra kartoshkaga ko‘proq o‘xshadi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "drama",
+    "ipa": "/ˈdrɑːmə/",
+    "meaning": "teatr san’ati",
+    "example": "Drama taught our quietest pupil to shout like a king.",
+    "translation": "Teatr san’ati eng kamgap o‘quvchimizga qirol kabi baqirishni o‘rgatdi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "economics",
+    "ipa": "/ˌiːkəˈnɒmɪks/",
+    "meaning": "iqtisodiyot fani",
+    "example": "He studies economics but still cannot explain his biscuit budget.",
+    "translation": "U iqtisodiyotni o‘rganadi, lekin pechenye uchun ajratgan pulini hali ham izohlay olmaydi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "computing",
+    "ipa": "/kəmˈpjuːtɪŋ/",
+    "meaning": "kompyuter texnologiyalarini o‘rganish",
+    "example": "Our computing course began with passwords, not building a robot butler.",
+    "translation": "Kompyuter kursimiz robot xizmatkor yaratishdan emas, parollardan boshlandi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "PE",
+    "ipa": "/ˌpiː ˈiː/",
+    "meaning": "jismoniy tarbiya",
+    "example": "During PE, I ran fastest when the ball came towards me.",
+    "translation": "Jismoniy tarbiya darsida to‘p menga qarab kelganda eng tez yugurdim.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "knowledge",
+    "ipa": "/ˈnɒlɪdʒ/",
+    "meaning": "bilim",
+    "example": "Her knowledge of dinosaurs makes museum visits very long.",
+    "translation": "Uning dinozavrlar haqidagi bilimi muzey sayrlarini juda uzaytiradi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "fact",
+    "ipa": "/fækt/",
+    "meaning": "haqiqat; aniq ma’lumot",
+    "example": "One surprising fact can wake up a sleepy class.",
+    "translation": "Bitta hayratlanarli ma’lumot uyqusiragan sinfni uyg‘otishi mumkin.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "idea",
+    "ipa": "/aɪˈdɪə/",
+    "meaning": "g‘oya",
+    "example": "His idea for silent crisps impressed the whole library.",
+    "translation": "Uning ovozsiz chips haqidagi g‘oyasi kutubxonadagilarning barchasini qoyil qoldirdi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "theory",
+    "ipa": "/ˈθɪəri/",
+    "meaning": "nazariya",
+    "example": "We discussed a theory about how children learn, then asked an actual child.",
+    "translation": "Bolalar qanday o‘rganishi haqidagi nazariyani muhokama qildik, keyin haqiqiy boladan so‘radik.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "rule",
+    "ipa": "/ruːl/",
+    "meaning": "qoida",
+    "example": "The first rule of the lab is that nothing counts as lunch.",
+    "translation": "Laboratoriyaning birinchi qoidasi: hech narsa tushlik hisoblanmaydi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "formula",
+    "ipa": "/ˈfɔːmjələ/",
+    "meaning": "formula",
+    "example": "I remembered the formula but forgot where I put my calculator.",
+    "translation": "Formulani esladim, lekin kalkulyatorimni qayerga qo‘yganimni unutdim.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "fraction",
+    "ipa": "/ˈfrækʃən/",
+    "meaning": "kasr",
+    "example": "A fraction of the cake remained after our maths demonstration.",
+    "translation": "Matematika namoyishimizdan keyin tortning bir bo‘lagi qoldi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "percentage",
+    "ipa": "/pəˈsentɪdʒ/",
+    "meaning": "foiz miqdori",
+    "example": "What percentage of your notes is actually drawings of spaceships?",
+    "translation": "Qaydlaringizning necha foizi aslida kosmik kemalar rasmlaridan iborat?",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "calculation",
+    "ipa": "/ˌkælkjəˈleɪʃən/",
+    "meaning": "hisob-kitob",
+    "example": "My calculation says we need twelve pizzas for four people.",
+    "translation": "Hisob-kitobimga ko‘ra, to‘rt kishiga o‘n ikkita pitsa kerak.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "addition",
+    "ipa": "/əˈdɪʃən/",
+    "meaning": "qo‘shish amali",
+    "example": "We practised addition with buttons until one rolled under the cupboard.",
+    "translation": "Bitta tugma javon tagiga dumalab ketguncha tugmalar bilan qo‘shish amalini mashq qildik.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "subtraction",
+    "ipa": "/səbˈtrækʃən/",
+    "meaning": "ayirish amali",
+    "example": "Subtraction became real when my brother ate three of my sweets.",
+    "translation": "Ukam uchta konfetimni yeganda ayirish amali hayotiy tus oldi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "division",
+    "ipa": "/dɪˈvɪʒən/",
+    "meaning": "bo‘lish amali",
+    "example": "Division is easier when nobody eats the teaching materials.",
+    "translation": "Hech kim dars materiallarini yeb qo‘ymasa, bo‘lish amali osonroq bo‘ladi.",
+    "topic": "4-oy • Fanlar va bilim"
+  },
+  {
+    "word": "textbook",
+    "ipa": "/ˈtekstbʊk/",
+    "meaning": "darslik",
+    "example": "My textbook has more sticky notes than actual pages.",
+    "translation": "Darsligimda sahifalardan ham ko‘proq yopishqoq qayd qog‘ozlari bor.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "workbook",
+    "ipa": "/ˈwɜːkbʊk/",
+    "meaning": "mashq daftari",
+    "example": "The workbook looked friendly until page forty.",
+    "translation": "Mashq daftari qirqinchi betgacha do‘stona ko‘rindi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "worksheet",
+    "ipa": "/ˈwɜːkʃiːt/",
+    "meaning": "topshiriqlar varag‘i",
+    "example": "A breeze took my worksheet on an unexpected school trip.",
+    "translation": "Shamol topshiriqlar varag‘imni kutilmagan maktab sayohatiga olib ketdi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "handout",
+    "ipa": "/ˈhændaʊt/",
+    "meaning": "tarqatma material",
+    "example": "The handout explains everything except where I left the handout.",
+    "translation": "Tarqatma material hamma narsani tushuntiradi, faqat uni qayerda qoldirganimni emas.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "whiteboard",
+    "ipa": "/ˈwaɪtbɔːd/",
+    "meaning": "oq yozuv taxtasi",
+    "example": "Someone drew a tiny crown on the whiteboard above my name.",
+    "translation": "Kimdir oq taxtada ismim tepasiga kichkina toj chizdi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "blackboard",
+    "ipa": "/ˈblækbɔːd/",
+    "meaning": "bo‘r bilan yoziladigan taxta",
+    "example": "The blackboard still carries a dinosaur from yesterday's lesson.",
+    "translation": "Bo‘r taxtada hali ham kechagi darsdan qolgan dinozavr bor.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "chalk",
+    "ipa": "/tʃɔːk/",
+    "meaning": "bo‘r",
+    "example": "A piece of chalk turned my black trousers into a cloudy sky.",
+    "translation": "Bir bo‘lak bo‘r qora shimimni bulutli osmonga aylantirdi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "marker",
+    "ipa": "/ˈmɑːkə/",
+    "meaning": "marker; yo‘g‘on yozadigan qalam",
+    "example": "This marker makes every small mistake look important.",
+    "translation": "Bu marker har bir kichik xatoni muhim qilib ko‘rsatadi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "eraser",
+    "ipa": "/ɪˈreɪzə/",
+    "meaning": "o‘chirg‘ich",
+    "example": "My eraser works harder than my pencil during maths.",
+    "translation": "Matematika darsida o‘chirg‘ichim qalamimdan ko‘proq ishlaydi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "ruler",
+    "ipa": "/ˈruːlə/",
+    "meaning": "chizg‘ich",
+    "example": "Use a ruler unless you want another wavy rectangle.",
+    "translation": "Yana to‘lqinsimon to‘rtburchak xohlamasangiz, chizg‘ich ishlating.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "sharpener",
+    "ipa": "/ˈʃɑːpənə/",
+    "meaning": "qalam ochgich",
+    "example": "The sharpener made my pencil ready for its tiny writing career.",
+    "translation": "Qalam ochgich qalamimni kichkina yozuvchilik faoliyatiga tayyorladi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "calculator",
+    "ipa": "/ˈkælkjəleɪtə/",
+    "meaning": "kalkulyator",
+    "example": "Even the calculator seemed surprised by my answer.",
+    "translation": "Hatto kalkulyator ham javobimdan hayron qolgandek edi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "projector",
+    "ipa": "/prəˈdʒektə/",
+    "meaning": "proyektor",
+    "example": "The projector made a small spelling mistake two metres wide.",
+    "translation": "Proyektor kichkina imlo xatosini ikki metr kenglikda ko‘rsatdi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "clipboard",
+    "ipa": "/ˈklɪpbɔːd/",
+    "meaning": "qisqichli yozuv taxtachasi",
+    "example": "With a clipboard in her hand, even my little sister looks official.",
+    "translation": "Qo‘lida qisqichli taxtacha bo‘lsa, hatto singlim ham rasmiy xodimga o‘xshaydi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "folder",
+    "ipa": "/ˈfəʊldə/",
+    "meaning": "hujjatlar jildi",
+    "example": "My folder contains neat notes and one ancient sandwich wrapper.",
+    "translation": "Hujjatlar jildimda tartibli qaydlar va bitta qadimiy sendvich o‘rami bor.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "binder",
+    "ipa": "/ˈbaɪndə/",
+    "meaning": "halqali hujjat jildi",
+    "example": "This binder keeps my papers together better than I keep my thoughts together.",
+    "translation": "Bu halqali jild qog‘ozlarimni men fikrlarimni jamlaganimdan yaxshiroq jamlaydi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "highlighter",
+    "ipa": "/ˈhaɪlaɪtə/",
+    "meaning": "matn ajratish markeri",
+    "example": "I used the highlighter so much that the whole page glowed.",
+    "translation": "Matn ajratish markerini shunchalik ko‘p ishlatdimki, butun sahifa yorishib ketdi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "flashcard",
+    "ipa": "/ˈflæʃkɑːd/",
+    "meaning": "yodlash uchun o‘quv kartochkasi",
+    "example": "This flashcard has a picture so funny that I never forget the word.",
+    "translation": "Bu o‘quv kartochkasidagi rasm shunchalik kulgiliki, so‘zni hech qachon unutmayman.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "protractor",
+    "ipa": "/prəˈtræktə/",
+    "meaning": "transportir; burchak o‘lchagich",
+    "example": "The protractor proved that my perfect corner was not perfect.",
+    "translation": "Transportir mukammal burchagim mukammal emasligini isbotladi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "globe",
+    "ipa": "/ɡləʊb/",
+    "meaning": "globus",
+    "example": "She spun the globe and chose our imaginary holiday destination.",
+    "translation": "U globusni aylantirib, xayoliy ta’til manzilimizni tanladi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "atlas",
+    "ipa": "/ˈætləs/",
+    "meaning": "xaritalar to‘plami; atlas",
+    "example": "Grandpa's atlas knows countries that my new one does not.",
+    "translation": "Bobomning atlasi yangi atlasim bilmaydigan mamlakatlarni biladi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "page",
+    "ipa": "/peɪdʒ/",
+    "meaning": "sahifa",
+    "example": "The missing page contained the answer, of course.",
+    "translation": "Albatta, javob aynan yo‘qolgan sahifada edi.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "chapter",
+    "ipa": "/ˈtʃæptə/",
+    "meaning": "kitob bobi",
+    "example": "This chapter is short enough to read before my tea gets cold.",
+    "translation": "Bu bob choyim soviguncha o‘qib tugatadigan darajada qisqa.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "paragraph",
+    "ipa": "/ˈpærəɡrɑːf/",
+    "meaning": "xatboshi",
+    "example": "Your paragraph needs a full stop before we all run out of breath.",
+    "translation": "Hammamizning nafasimiz tugamasidan xatboshingizga nuqta kerak.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "bookmark",
+    "ipa": "/ˈbʊkmɑːk/",
+    "meaning": "kitob xatcho‘pi",
+    "example": "I used a bus ticket as a bookmark and nearly read past my stop.",
+    "translation": "Avtobus chiptasini xatcho‘p qilib ishlatdim va o‘qib bekatimdan o‘tib ketay dedim.",
+    "topic": "4-oy • Dars jihozlari va materiallari"
+  },
+  {
+    "word": "revise",
+    "ipa": "/rɪˈvaɪz/",
+    "meaning": "imtihon uchun takrorlamoq",
+    "example": "I revise with the fridge closed to avoid long snack breaks.",
+    "translation": "Uzoq tamaddilardan qochish uchun muzlatkichni yopib qo‘yib takrorlayman.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "review",
+    "ipa": "/rɪˈvjuː/",
+    "meaning": "qayta ko‘rib chiqmoq",
+    "example": "Let's review the notes before our memories go on holiday.",
+    "translation": "Xotiramiz ta’tilga chiqishidan oldin qaydlarni qayta ko‘rib chiqaylik.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "memorise",
+    "ipa": "/ˈmeməraɪz/",
+    "meaning": "yodlamoq",
+    "example": "She can memorise a poem faster than I can find my glasses.",
+    "translation": "U men ko‘zoynagimni topgunimcha she’rni yodlay oladi.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "concentrate",
+    "ipa": "/ˈkɒnsəntreɪt/",
+    "meaning": "diqqatni jamlamoq",
+    "example": "It is hard to concentrate when the clock sounds like a woodpecker.",
+    "translation": "Soat qizilishton kabi taqillasa, diqqatni jamlash qiyin.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "focus",
+    "ipa": "/ˈfəʊkəs/",
+    "meaning": "diqqat qaratmoq",
+    "example": "Focus on the instructions, not the squirrel outside.",
+    "translation": "Tashqaridagi olmaxonga emas, ko‘rsatmalarga diqqat qarating.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "explain",
+    "ipa": "/ɪkˈspleɪn/",
+    "meaning": "tushuntirmoq",
+    "example": "Can you explain gravity without dropping my lunch?",
+    "translation": "Tushligimni tushirib yubormasdan tortishish kuchini tushuntira olasizmi?",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "describe",
+    "ipa": "/dɪˈskraɪb/",
+    "meaning": "tasvirlamoq",
+    "example": "Describe your ideal classroom without including a swimming pool.",
+    "translation": "Suzish havzasini qo‘shmasdan ideal sinfxonangizni tasvirlang.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "compare",
+    "ipa": "/kəmˈpeə/",
+    "meaning": "taqqoslamoq",
+    "example": "We compare two essays, and both begin with a talking carrot.",
+    "translation": "Ikki inshoni taqqoslaymiz, ikkalasi ham gapiradigan sabzi bilan boshlanadi.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "summarise",
+    "ipa": "/ˈsʌməraɪz/",
+    "meaning": "qisqacha bayon qilmoq",
+    "example": "Summarise the chapter without making your summary longer than the book.",
+    "translation": "Qisqacha mazmunni kitobdan uzunroq qilmasdan bobni bayon qiling.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "underline",
+    "ipa": "/ˌʌndəˈlaɪn/",
+    "meaning": "tagiga chizmoq",
+    "example": "Underline the main point before your pencil wanders off.",
+    "translation": "Qalamingiz boshqa yoqqa ketib qolmasidan asosiy fikrning tagiga chizing.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "highlight",
+    "ipa": "/ˈhaɪlaɪt/",
+    "meaning": "rang bilan ajratib ko‘rsatmoq",
+    "example": "Highlight only the key words, or we will need sunglasses.",
+    "translation": "Faqat asosiy so‘zlarni rang bilan ajrating, aks holda quyosh ko‘zoynagi kerak bo‘ladi.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "copy",
+    "ipa": "/ˈkɒpi/",
+    "meaning": "ko‘chirib yozmoq",
+    "example": "Copy the address carefully unless you want your letter to travel alone.",
+    "translation": "Xatingiz yolg‘iz sayohat qilishini xohlamasangiz, manzilni diqqat bilan ko‘chiring.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "correct",
+    "ipa": "/kəˈrekt/",
+    "meaning": "xatoni tuzatmoq",
+    "example": "Please correct my spelling before I invite everyone to a desert instead of dessert.",
+    "translation": "Hammani shirinlik o‘rniga sahroga taklif qilishimdan oldin imlomni tuzating.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "complete",
+    "ipa": "/kəmˈpliːt/",
+    "meaning": "to‘ldirib tugatmoq",
+    "example": "Complete the final exercise and your pencil can rest.",
+    "translation": "Oxirgi mashqni tugating, keyin qalamingiz dam olishi mumkin.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "solve",
+    "ipa": "/sɒlv/",
+    "meaning": "yechmoq",
+    "example": "We managed to solve the problem before the bell rescued us.",
+    "translation": "Qo‘ng‘iroq bizni qutqarishidan oldin masalani yechishga ulgurdik.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "calculate",
+    "ipa": "/ˈkælkjəleɪt/",
+    "meaning": "hisoblamoq",
+    "example": "Calculate the total before promising everyone free ice cream.",
+    "translation": "Hammaga bepul muzqaymoq va’da qilishdan oldin jami miqdorni hisoblang.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "guess",
+    "ipa": "/ɡes/",
+    "meaning": "taxmin qilmoq",
+    "example": "I had to guess the answer because my notes were in my other bag.",
+    "translation": "Qaydlarim boshqa sumkamda bo‘lgani uchun javobni taxmin qilishimga to‘g‘ri keldi.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "discuss",
+    "ipa": "/dɪˈskʌs/",
+    "meaning": "muhokama qilmoq",
+    "example": "We will discuss the story after deciding who ate the last biscuit.",
+    "translation": "Oxirgi pechenyeni kim yeganini aniqlagach, hikoyani muhokama qilamiz.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "research",
+    "ipa": "/rɪˈsɜːtʃ/",
+    "meaning": "tadqiq qilmoq; ma’lumot izlamoq",
+    "example": "For homework, we research local history rather than local pizza prices.",
+    "translation": "Uy vazifasi uchun mahalliy pitsa narxlarini emas, mahalliy tarixni o‘rganamiz.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "prepare",
+    "ipa": "/prɪˈpeə/",
+    "meaning": "tayyorlanmoq; tayyorlamoq",
+    "example": "I prepare my bag at night so mornings involve less detective work.",
+    "translation": "Ertalab kamroq qidiruv bilan shug‘ullanish uchun sumkamni kechasi tayyorlayman.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "organise",
+    "ipa": "/ˈɔːɡənaɪz/",
+    "meaning": "tartibga solmoq",
+    "example": "Organise your notes before they form their own paper mountain.",
+    "translation": "Qaydlaringiz alohida qog‘oz tog‘iga aylanmasidan ularni tartibga soling.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "join",
+    "ipa": "/dʒɔɪn/",
+    "meaning": "qo‘shilmoq",
+    "example": "You can join our study group if you promise not to eat the examples.",
+    "translation": "Misollarni yeb qo‘ymaslikka va’da bersangiz, o‘quv guruhimizga qo‘shilishingiz mumkin.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "attend",
+    "ipa": "/əˈtend/",
+    "meaning": "qatnashmoq",
+    "example": "He plans to attend every lecture, including the one about planning.",
+    "translation": "U har bir ma’ruzaga, jumladan, rejalashtirish haqidagisiga ham qatnashmoqchi.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "hand in",
+    "ipa": "/hænd ˈɪn/",
+    "meaning": "topshirmoq",
+    "example": "Hand in your essay before the deadline grows teeth.",
+    "translation": "Muddat tish chiqarishidan oldin inshongizni topshiring.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "catch up",
+    "ipa": "/kætʃ ˈʌp/",
+    "meaning": "yetishib olmoq",
+    "example": "After missing a week, I needed two evenings to catch up.",
+    "translation": "Bir hafta dars qoldirgach, yetishib olishim uchun ikki oqshom kerak bo‘ldi.",
+    "topic": "4-oy • O‘qish va mashq qilish"
+  },
+  {
+    "word": "exam",
+    "ipa": "/ɪɡˈzæm/",
+    "meaning": "imtihon",
+    "example": "The exam began just as my lucky pen ran out of ink.",
+    "translation": "Omadli ruchkamning siyohi tugashi bilan imtihon boshlandi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "test",
+    "ipa": "/test/",
+    "meaning": "bilimni tekshirish sinovi",
+    "example": "Our spelling test included a word nobody could pronounce.",
+    "translation": "Imlo sinovimizda hech kim talaffuz qila olmaydigan so‘z bor edi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "quiz",
+    "ipa": "/kwɪz/",
+    "meaning": "qisqa savol-javob sinovi",
+    "example": "Dad lost the history quiz to someone who still needs help tying shoes.",
+    "translation": "Dadam tarix savol-javobida hali oyoq kiyimini bog‘lashga yordam kerak bo‘lgan bolaga yutqazdi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "mark",
+    "ipa": "/mɑːk/",
+    "meaning": "topshiriq uchun baho yoki ball",
+    "example": "I got one extra mark for remembering my own name.",
+    "translation": "O‘z ismimni eslaganim uchun bitta qo‘shimcha ball oldim.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "grade",
+    "ipa": "/ɡreɪd/",
+    "meaning": "yakuniy yoki harfli baho",
+    "example": "Her grade went from C to A after she moved away from the window.",
+    "translation": "U derazadan uzoqroqqa o‘tgach, bahosi C dan A ga ko‘tarildi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "coursework",
+    "ipa": "/ˈkɔːswɜːk/",
+    "meaning": "kurs davomida baholanadigan ishlar",
+    "example": "My coursework includes three reports and a model that barely stands up.",
+    "translation": "Kurs ishlarim uchta hisobot va zo‘rg‘a tik turadigan maketdan iborat.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "result",
+    "ipa": "/rɪˈzʌlt/",
+    "meaning": "natija",
+    "example": "The result surprised everyone, especially the student who had guessed.",
+    "translation": "Natija hammani, ayniqsa taxmin qilgan o‘quvchini hayron qoldirdi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "pass",
+    "ipa": "/pɑːs/",
+    "meaning": "imtihondan o‘tmoq",
+    "example": "If I pass this exam, my notes are getting a retirement party.",
+    "translation": "Bu imtihondan o‘tsam, qaydlarim uchun nafaqaga chiqish bazmini qilaman.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "fail",
+    "ipa": "/feɪl/",
+    "meaning": "imtihondan yiqilmoq",
+    "example": "You will not fail just because your handwriting looks like spaghetti.",
+    "translation": "Faqat yozuvingiz spagettiga o‘xshagani uchun imtihondan yiqilmaysiz.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "mistake",
+    "ipa": "/mɪˈsteɪk/",
+    "meaning": "xato",
+    "example": "My first mistake was writing Tuesday on a Friday.",
+    "translation": "Birinchi xatom juma kuni seshanba deb yozish bo‘ldi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "error",
+    "ipa": "/ˈerə/",
+    "meaning": "xatolik",
+    "example": "A small error turned fifty students into five hundred on the report.",
+    "translation": "Kichik xatolik hisobotdagi ellik o‘quvchini besh yuztaga aylantirdi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "feedback",
+    "ipa": "/ˈfiːdbæk/",
+    "meaning": "ish haqidagi fikr va tavsiyalar",
+    "example": "The teacher's feedback was kind, even about my square horse.",
+    "translation": "O‘qituvchining fikrlari, hatto to‘rtburchak otim haqida ham, muloyim edi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "correction",
+    "ipa": "/kəˈrekʃən/",
+    "meaning": "tuzatish",
+    "example": "That correction changed the meaning from hungry to angry.",
+    "translation": "O‘sha tuzatish ma’noni ochdan jahldorga o‘zgartirdi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "progress",
+    "ipa": "/ˈprəʊɡres/",
+    "meaning": "o‘qishdagi o‘sish; siljish",
+    "example": "My progress is slow, but at least my dictionary gets regular exercise.",
+    "translation": "O‘sishim sekin, lekin hech bo‘lmasa lug‘atim muntazam mashq qiladi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "certificate",
+    "ipa": "/səˈtɪfɪkət/",
+    "meaning": "sertifikat; guvohnoma",
+    "example": "She framed her certificate before unpacking her course books.",
+    "translation": "U kurs kitoblarini sumkadan olishdan oldin sertifikatini ramkaga soldi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "diploma",
+    "ipa": "/dɪˈpləʊmə/",
+    "meaning": "diplom",
+    "example": "His diploma hangs above the desk where he once cried over homework.",
+    "translation": "Uning diplomi bir paytlar uy vazifasi ustida yig‘lagan stoli tepasida osilib turibdi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "degree",
+    "ipa": "/dɪˈɡriː/",
+    "meaning": "oliy ma’lumot darajasi",
+    "example": "She has a degree in chemistry and a very serious biscuit recipe.",
+    "translation": "Uning kimyo bo‘yicha oliy ma’lumoti va juda jiddiy pechenye retsepti bor.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "qualification",
+    "ipa": "/ˌkwɒlɪfɪˈkeɪʃən/",
+    "meaning": "kasbiy malaka; uni tasdiqlovchi hujjat",
+    "example": "This qualification proves I can repair more than my own mistakes.",
+    "translation": "Bu malaka faqat o‘z xatolarimdan boshqa narsalarni ham tuzata olishimni tasdiqlaydi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "essay",
+    "ipa": "/ˈeseɪ/",
+    "meaning": "insho",
+    "example": "My essay about silence was surprisingly long.",
+    "translation": "Sukunat haqidagi inshom hayratlanarli darajada uzun bo‘ldi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "assignment",
+    "ipa": "/əˈsaɪnmənt/",
+    "meaning": "o‘quv topshirig‘i",
+    "example": "The assignment was to study advertising, not to buy everything.",
+    "translation": "Topshiriq reklamani o‘rganish edi, hamma narsani sotib olish emas.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "task",
+    "ipa": "/tɑːsk/",
+    "meaning": "vazifa",
+    "example": "Our first task was finding a table under all the paper.",
+    "translation": "Birinchi vazifamiz barcha qog‘ozlar ostidan stolni topish edi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "exercise",
+    "ipa": "/ˈeksəsaɪz/",
+    "meaning": "o‘quv mashqi",
+    "example": "This grammar exercise gives my brain more exercise than my legs get.",
+    "translation": "Bu grammatika mashqi miyamni oyoqlarimdan ham ko‘proq mashq qildiradi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "deadline",
+    "ipa": "/ˈdedlaɪn/",
+    "meaning": "topshirishning oxirgi muddati",
+    "example": "The deadline is Friday, which suddenly feels very close.",
+    "translation": "Oxirgi muddat juma, u esa birdan juda yaqin tuyulmoqda.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "retake",
+    "ipa": "/ˌriːˈteɪk/",
+    "meaning": "imtihonni qayta topshirmoq",
+    "example": "I will retake the test with more revision and fewer lucky socks.",
+    "translation": "Sinovni ko‘proq takrorlash va kamroq omadli paypoqlar bilan qayta topshiraman.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "oral",
+    "ipa": "/ˈɔːrəl/",
+    "meaning": "og‘zaki",
+    "example": "The oral exam went well until my stomach answered a question.",
+    "translation": "Og‘zaki imtihon qornim bir savolga javob berguncha yaxshi o‘tdi.",
+    "topic": "4-oy • Imtihon va natijalar"
+  },
+  {
+    "word": "vocabulary",
+    "ipa": "/vəˈkæbjələri/",
+    "meaning": "so‘z boyligi",
+    "example": "My food vocabulary grows faster than my cooking skills.",
+    "translation": "Taomlarga oid so‘z boyligim oshpazlik ko‘nikmalarimdan tezroq o‘sadi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "grammar",
+    "ipa": "/ˈɡræmə/",
+    "meaning": "grammatika",
+    "example": "Grammar helps us explain who ate whose sandwich.",
+    "translation": "Grammatika kim kimning sendvichini yeganini tushuntirishga yordam beradi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "pronunciation",
+    "ipa": "/prəˌnʌnsiˈeɪʃən/",
+    "meaning": "talaffuz",
+    "example": "I practise pronunciation with my dog, a very patient listener.",
+    "translation": "Talaffuzni juda sabrli tinglovchi bo‘lgan itim bilan mashq qilaman.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "spelling",
+    "ipa": "/ˈspelɪŋ/",
+    "meaning": "imlo; so‘zning yozilishi",
+    "example": "My spelling improves when I stop trusting my sleepy fingers.",
+    "translation": "Uyqusiragan barmoqlarimga ishonishni to‘xtatsam, imlom yaxshilanadi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "alphabet",
+    "ipa": "/ˈælfəbet/",
+    "meaning": "alifbo",
+    "example": "The alphabet song lives in my head without paying rent.",
+    "translation": "Alifbo qo‘shig‘i boshimda ijara to‘lamay yashaydi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "vowel",
+    "ipa": "/ˈvaʊəl/",
+    "meaning": "unli tovush yoki harf",
+    "example": "Changing one vowel turned my pet into a pot.",
+    "translation": "Bitta unlini o‘zgartirish uy hayvonimni qozonga aylantirdi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "consonant",
+    "ipa": "/ˈkɒnsənənt/",
+    "meaning": "undosh tovush yoki harf",
+    "example": "That final consonant keeps escaping when I speak quickly.",
+    "translation": "Tez gapirsam, oxirgi undosh doim qochib ketadi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "syllable",
+    "ipa": "/ˈsɪləbəl/",
+    "meaning": "bo‘g‘in",
+    "example": "We clap for each syllable, so the lesson sounds like a tiny concert.",
+    "translation": "Har bir bo‘g‘inda qarsak chalamiz, shuning uchun dars kichik konsertga o‘xshaydi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "noun",
+    "ipa": "/naʊn/",
+    "meaning": "ot so‘z turkumi",
+    "example": "A noun can name a person, a place, or your missing sandwich.",
+    "translation": "Ot shaxsni, joyni yoki yo‘qolgan sendvichingizni bildirishi mumkin.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "verb",
+    "ipa": "/vɜːb/",
+    "meaning": "fe’l",
+    "example": "The verb sleep is easy to remember on Monday morning.",
+    "translation": "Uxlash fe’lini dushanba ertalab eslab qolish oson.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "adjective",
+    "ipa": "/ˈædʒɪktɪv/",
+    "meaning": "sifat",
+    "example": "She added the adjective enormous to describe my tiny lunch.",
+    "translation": "U mening kichkina tushligimni tasvirlash uchun ulkan sifatini qo‘shdi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "adverb",
+    "ipa": "/ˈædvɜːb/",
+    "meaning": "ravish",
+    "example": "The adverb quietly does not describe our study group.",
+    "translation": "Jim ravishi bizning o‘quv guruhimizni tasvirlamaydi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "pronoun",
+    "ipa": "/ˈprəʊnaʊn/",
+    "meaning": "olmosh",
+    "example": "Without a pronoun, I would repeat my brother's name twenty times.",
+    "translation": "Olmoshsiz akamning ismini yigirma marta takrorlagan bo‘lardim.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "preposition",
+    "ipa": "/ˌprepəˈzɪʃən/",
+    "meaning": "predlog; old ko‘makchi",
+    "example": "The wrong preposition put the cat inside the table.",
+    "translation": "Noto‘g‘ri predlog mushukni stolning ichiga joylashtirdi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "tense",
+    "ipa": "/tens/",
+    "meaning": "fe’l zamoni",
+    "example": "Use the past tense for homework you actually finished.",
+    "translation": "Haqiqatan tugatgan uy vazifangiz haqida o‘tgan zamonni ishlating.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "singular",
+    "ipa": "/ˈsɪŋɡjələ/",
+    "meaning": "birlikdagi",
+    "example": "The singular form is useful when only one biscuit remains.",
+    "translation": "Faqat bitta pechenye qolganida birlik shakli foydali bo‘ladi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "plural",
+    "ipa": "/ˈplʊərəl/",
+    "meaning": "ko‘plikdagi",
+    "example": "The plural form tells us that one mouse has invited friends.",
+    "translation": "Ko‘plik shakli bitta sichqon do‘stlarini taklif qilganini bildiradi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "definition",
+    "ipa": "/ˌdefɪˈnɪʃən/",
+    "meaning": "ta’rif; so‘z ma’nosi izohi",
+    "example": "His definition of homework was something that interrupts football.",
+    "translation": "Uning uy vazifasiga bergan ta’rifi futbolni to‘xtatadigan narsa bo‘ldi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "synonym",
+    "ipa": "/ˈsɪnənɪm/",
+    "meaning": "ma’nodosh so‘z; sinonim",
+    "example": "Find a synonym for nice before you describe everything as nice.",
+    "translation": "Hamma narsani yaxshi deb tasvirlashdan oldin yaxshi so‘ziga sinonim toping.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "antonym",
+    "ipa": "/ˈæntənɪm/",
+    "meaning": "qarama-qarshi ma’noli so‘z",
+    "example": "Awake is an antonym of asleep, although my face suggests both.",
+    "translation": "Uyg‘oq uxlayotgan so‘zining antonimi, garchi yuzim ikkalasini ham ifodalasa-da.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "phrase",
+    "ipa": "/freɪz/",
+    "meaning": "ibora; so‘z birikmasi",
+    "example": "The phrase just five minutes rarely means five minutes in our house.",
+    "translation": "Uyimizda atigi besh daqiqa iborasi kamdan-kam besh daqiqani anglatadi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "idiom",
+    "ipa": "/ˈɪdiəm/",
+    "meaning": "ko‘chma ma’noli turg‘un ibora",
+    "example": "That idiom confused me because no actual cats were falling from the sky.",
+    "translation": "O‘sha ibora meni chalg‘itdi, chunki osmondan haqiqiy mushuklar tushmayotgan edi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "accent",
+    "ipa": "/ˈæksənt/",
+    "meaning": "talaffuz ohangi; aksent",
+    "example": "My accent changes whenever I watch too many British detective shows.",
+    "translation": "Britaniya detektiv seriallarini ko‘p ko‘rsam, aksentim o‘zgaradi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "fluent",
+    "ipa": "/ˈfluːənt/",
+    "meaning": "ravon gapira oladigan",
+    "example": "She is fluent in French until someone asks her to explain algebra.",
+    "translation": "Kimdir undan algebrani tushuntirishni so‘ramaguncha u fransuz tilida ravon gapiradi.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "translate",
+    "ipa": "/trænzˈleɪt/",
+    "meaning": "tarjima qilmoq",
+    "example": "Please translate the menu before I accidentally order six soups.",
+    "translation": "Adashib oltita sho‘rva buyurtma qilishimdan oldin taomnomani tarjima qiling.",
+    "topic": "4-oy • Til o‘rganish"
+  },
+  {
+    "word": "accountant",
+    "ipa": "/əˈkaʊntənt/",
+    "meaning": "hisobchi; buxgalter",
+    "example": "The accountant found our missing money in the biscuit budget.",
+    "translation": "Hisobchi yo‘qolgan pulimizni pechenyega ajratilgan mablag‘dan topdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "architect",
+    "ipa": "/ˈɑːkɪtekt/",
+    "meaning": "me’mor",
+    "example": "The architect designed a house with enough shelves for all her books.",
+    "translation": "Me’mor barcha kitoblariga yetadigan javonlari bor uy loyihaladi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "lawyer",
+    "ipa": "/ˈlɔɪə/",
+    "meaning": "huquqshunos; advokat",
+    "example": "Our lawyer reads the small print even on board games.",
+    "translation": "Advokatimiz hatto stol o‘yinlaridagi mayda yozuvlarni ham o‘qiydi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "journalist",
+    "ipa": "/ˈdʒɜːnəlɪst/",
+    "meaning": "jurnalist",
+    "example": "A journalist interviewed the mayor while a goat ate her notes.",
+    "translation": "Echki qaydlarini yeyayotganda jurnalist hokimdan intervyu oldi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "reporter",
+    "ipa": "/rɪˈpɔːtə/",
+    "meaning": "muxbir",
+    "example": "The reporter stayed calm when the dog stole his microphone.",
+    "translation": "It mikrofonini o‘g‘irlaganda muxbir xotirjamligini saqladi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "editor",
+    "ipa": "/ˈedɪtə/",
+    "meaning": "muharrir",
+    "example": "The editor removed three commas and one unnecessary dragon.",
+    "translation": "Muharrir uchta vergul va bitta keraksiz ajdarni olib tashladi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "author",
+    "ipa": "/ˈɔːθə/",
+    "meaning": "muallif; yozuvchi",
+    "example": "The author named the brave hero after her nervous hamster.",
+    "translation": "Yozuvchi jasur qahramonga qo‘rqoq xomyagining ismini berdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "translator",
+    "ipa": "/trænzˈleɪtə/",
+    "meaning": "yozma tarjimon",
+    "example": "The translator made the instructions clear enough for my uncle.",
+    "translation": "Tarjimon ko‘rsatmalarni hatto amakim tushunadigan darajada aniq qildi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "interpreter",
+    "ipa": "/ɪnˈtɜːprɪtə/",
+    "meaning": "og‘zaki tarjimon",
+    "example": "The interpreter translated the joke, and everyone laughed twice.",
+    "translation": "Og‘zaki tarjimon hazilni tarjima qildi va hamma ikki marta kuldi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "programmer",
+    "ipa": "/ˈprəʊɡræmə/",
+    "meaning": "dasturchi",
+    "example": "The programmer taught a computer to complain about Monday.",
+    "translation": "Dasturchi kompyuterga dushanbadan shikoyat qilishni o‘rgatdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "developer",
+    "ipa": "/dɪˈveləpə/",
+    "meaning": "dastur yaratuvchi mutaxassis",
+    "example": "A developer built an app that reminds me to stop using apps.",
+    "translation": "Dastur yaratuvchi menga ilovalardan foydalanishni to‘xtatishni eslatadigan ilova yaratdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "designer",
+    "ipa": "/dɪˈzaɪnə/",
+    "meaning": "dizayner",
+    "example": "The designer made our boring logo look awake at last.",
+    "translation": "Dizayner zerikarli logotipimizga nihoyat uyg‘oq ko‘rinish berdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "electrician",
+    "ipa": "/ɪˌlekˈtrɪʃən/",
+    "meaning": "elektrik",
+    "example": "The electrician fixed the light that kept giving us surprise discos.",
+    "translation": "Elektrik bizga doim kutilmagan diskoteka uyushtiradigan chiroqni tuzatdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "plumber",
+    "ipa": "/ˈplʌmə/",
+    "meaning": "santexnik",
+    "example": "A plumber rescued my ring from a very unpleasant journey down the pipe.",
+    "translation": "Santexnik uzugimni quvur bo‘ylab juda yoqimsiz sayohatdan qutqardi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "mechanic",
+    "ipa": "/mɪˈkænɪk/",
+    "meaning": "mexanik; avtomobil ustasi",
+    "example": "The mechanic understood the strange noise I could only describe as clonk.",
+    "translation": "Men faqat taq deb tasvirlay olgan g‘alati tovushni mexanik tushundi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "carpenter",
+    "ipa": "/ˈkɑːpəntə/",
+    "meaning": "duradgor",
+    "example": "The carpenter built a desk that does not dance when I type.",
+    "translation": "Duradgor yozayotganimda raqsga tushmaydigan stol yasadi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "builder",
+    "ipa": "/ˈbɪldə/",
+    "meaning": "quruvchi",
+    "example": "The builder checked the wall while we argued about its colour.",
+    "translation": "Biz devorning rangi haqida tortishayotganda quruvchi uni tekshirdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "typist",
+    "ipa": "/ˈtaɪpɪst/",
+    "meaning": "matn teruvchi xodim",
+    "example": "The typist finished the page while I was still looking for the comma key.",
+    "translation": "Men hali vergul tugmasini qidirayotganimda matn teruvchi sahifani tugatdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "secretary",
+    "ipa": "/ˈsekrətri/",
+    "meaning": "kotib; kotiba",
+    "example": "The secretary found a free hour in a diary that looked completely full.",
+    "translation": "Kotiba butunlay band ko‘ringan kundalikdan bo‘sh bir soat topdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "assistant",
+    "ipa": "/əˈsɪstənt/",
+    "meaning": "yordamchi xodim",
+    "example": "The assistant brought the files and wisely left the office cat outside.",
+    "translation": "Yordamchi hujjatlarni olib keldi va oqilona yo‘l tutib, ofis mushugini tashqarida qoldirdi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "librarian",
+    "ipa": "/laɪˈbreəriən/",
+    "meaning": "kutubxonachi",
+    "example": "The librarian can silence a room with one raised eyebrow.",
+    "translation": "Kutubxonachi bir qoshini ko‘tarib butun xonani jim qila oladi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "scientist",
+    "ipa": "/ˈsaɪəntɪst/",
+    "meaning": "olim",
+    "example": "The scientist studied sleep while trying very hard to stay awake.",
+    "translation": "Olim uyg‘oq qolishga juda tirishib, uyquni o‘rgandi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "researcher",
+    "ipa": "/rɪˈsɜːtʃə/",
+    "meaning": "tadqiqotchi",
+    "example": "A researcher asked fifty people why they talk to their plants.",
+    "translation": "Tadqiqotchi ellik kishidan nega o‘simliklari bilan gaplashishini so‘radi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "lecturer",
+    "ipa": "/ˈlektʃərə/",
+    "meaning": "oliy ta’lim o‘qituvchisi; ma’ruzachi",
+    "example": "Our lecturer explains statistics using his enormous sock collection.",
+    "translation": "Ma’ruzachimiz statistikani ulkan paypoq to‘plami yordamida tushuntiradi.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "instructor",
+    "ipa": "/ɪnˈstrʌktə/",
+    "meaning": "yo‘riqchi; amaliy mashg‘ulot ustozi",
+    "example": "The driving instructor has a calm voice and very quick feet.",
+    "translation": "Haydash yo‘riqchisining ovozi xotirjam, oyoqlari esa juda chaqqon.",
+    "topic": "4-oy • Kasblar va mutaxassislar"
+  },
+  {
+    "word": "technician",
+    "ipa": "/tekˈnɪʃən/",
+    "meaning": "texnik mutaxassis",
+    "example": "The technician fixed our projector before the giant error message scared anyone.",
+    "translation": "Texnik ulkan xatolik yozuvi kimnidir qo‘rqitishidan oldin proyektorimizni tuzatdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "consultant",
+    "ipa": "/kənˈsʌltənt/",
+    "meaning": "maslahatchi mutaxassis",
+    "example": "The consultant suggested fewer meetings, so we held a meeting about it.",
+    "translation": "Maslahatchi yig‘ilishlarni kamaytirishni taklif qildi, shunda biz bu haqda yig‘ilish o‘tkazdik.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "examiner",
+    "ipa": "/ɪɡˈzæmɪnə/",
+    "meaning": "imtihon oluvchi",
+    "example": "The examiner smiled, which helped more than my lucky socks.",
+    "translation": "Imtihon oluvchi jilmaydi, bu omadli paypoqlarimdan ko‘proq yordam berdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "trainee",
+    "ipa": "/ˌtreɪˈniː/",
+    "meaning": "kasb o‘rganayotgan xodim; stajyor",
+    "example": "The trainee learnt everyone's name before learning where we keep the paper.",
+    "translation": "Stajyor qog‘ozni qayerda saqlashimizni bilishdan oldin hammaning ismini o‘rgandi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "photographer",
+    "ipa": "/fəˈtɒɡrəfə/",
+    "meaning": "suratkash",
+    "example": "The photographer waited until nobody was chewing.",
+    "translation": "Suratkash hech kim ovqat chaynamay qolguncha kutdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "presenter",
+    "ipa": "/prɪˈzentə/",
+    "meaning": "ko‘rsatuv boshlovchisi",
+    "example": "The presenter smiled as the weather map disappeared behind him.",
+    "translation": "Orqasidagi ob-havo xaritasi yo‘qolib qolganida boshlovchi jilmaydi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "broadcaster",
+    "ipa": "/ˈbrɔːdkɑːstə/",
+    "meaning": "televideniye yoki radio boshlovchisi",
+    "example": "The broadcaster's cheerful voice made the traffic jam sound almost pleasant.",
+    "translation": "Radio boshlovchisining quvnoq ovozi tirbandlikni deyarli yoqimli qilib ko‘rsatdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "filmmaker",
+    "ipa": "/ˈfɪlmmeɪkə/",
+    "meaning": "film yaratuvchi",
+    "example": "The filmmaker spent two hours persuading a cat to walk left.",
+    "translation": "Film yaratuvchi mushukni chapga yurishga ko‘ndirish uchun ikki soat sarfladi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "animator",
+    "ipa": "/ˈænɪmeɪtə/",
+    "meaning": "animator; multfilm yaratuvchi",
+    "example": "An animator gave our company logo a very silly walk.",
+    "translation": "Animator kompaniyamiz logotipiga juda kulgili yurish usulini berdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "musician",
+    "ipa": "/mjuˈzɪʃən/",
+    "meaning": "musiqachi",
+    "example": "The musician recognised the tune my printer seemed to be playing.",
+    "translation": "Musiqachi printerim chalayotgandek tuyulgan kuyni tanidi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "actor",
+    "ipa": "/ˈæktə/",
+    "meaning": "aktyor",
+    "example": "The actor played a tree so well that a bird landed on him.",
+    "translation": "Aktyor daraxt rolini shunchalik yaxshi ijro etdiki, ustiga qush qo‘ndi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "actress",
+    "ipa": "/ˈæktrəs/",
+    "meaning": "aktrisa",
+    "example": "The actress forgot her lines but remembered the whole lunch menu.",
+    "translation": "Aktrisa replikalarini unutdi, lekin butun tushlik taomnomasini esladi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "singer",
+    "ipa": "/ˈsɪŋə/",
+    "meaning": "xonanda",
+    "example": "The singer warmed up while the sound engineer searched for earplugs.",
+    "translation": "Xonanda ovozini sozlayotganda ovoz muhandisi quloq tiqinlarini qidirdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "dancer",
+    "ipa": "/ˈdɑːnsə/",
+    "meaning": "raqqos; raqqosa",
+    "example": "The dancer made the difficult step look easier than getting out of bed.",
+    "translation": "Raqqos qiyin qadamni yotoqdan turishdan ham oson qilib ko‘rsatdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "apprentice",
+    "ipa": "/əˈprentɪs/",
+    "meaning": "hunarmand shogirdi",
+    "example": "The apprentice built a chair that surprised everyone by staying upright.",
+    "translation": "Shogird tik turib, hammani hayron qoldirgan stul yasadi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "firefighter",
+    "ipa": "/ˈfaɪəfaɪtə/",
+    "meaning": "o‘t o‘chiruvchi",
+    "example": "The firefighter visited our school and made every toy helmet look tiny.",
+    "translation": "O‘t o‘chiruvchi maktabimizga keldi va uning oldida barcha o‘yinchoq dubulg‘alar juda kichik ko‘rindi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "officer",
+    "ipa": "/ˈɒfɪsə/",
+    "meaning": "politsiya xodimi",
+    "example": "The officer helped a lost child find his dad beside the ice cream van.",
+    "translation": "Politsiya xodimi adashgan bolaga muzqaymoq mashinasi yonidan dadasini topishga yordam berdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "soldier",
+    "ipa": "/ˈsəʊldʒə/",
+    "meaning": "askar",
+    "example": "The soldier packed his bag neatly while I sat on mine to close it.",
+    "translation": "Askar sumkasini tartibli joylayotganda men o‘zimnikini yopish uchun ustiga o‘tirdim.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "tailor",
+    "ipa": "/ˈteɪlə/",
+    "meaning": "kiyim tikuvchi usta",
+    "example": "The tailor added a pocket large enough for my ridiculous phone.",
+    "translation": "Tikuvchi mening g‘alati darajada katta telefonim sig‘adigan cho‘ntak qo‘shdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "hairdresser",
+    "ipa": "/ˈheədresə/",
+    "meaning": "sartarosh",
+    "example": "My hairdresser politely called my home haircut creative.",
+    "translation": "Sartaroshim uyda olgan sochimni muloyimlik bilan ijodiy deb atadi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "barber",
+    "ipa": "/ˈbɑːbə/",
+    "meaning": "erkaklar sartaroshi",
+    "example": "The barber finished my haircut before finishing his story.",
+    "translation": "Sartarosh hikoyasini tugatishdan oldin sochimni olib bo‘ldi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "cleaner",
+    "ipa": "/ˈkliːnə/",
+    "meaning": "tozalovchi xodim",
+    "example": "The cleaner found the key we had spent an hour discussing.",
+    "translation": "Tozalovchi xodim biz bir soat muhokama qilgan kalitni topdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "gardener",
+    "ipa": "/ˈɡɑːdənə/",
+    "meaning": "bog‘bon",
+    "example": "Our gardener can name every plant, while I just say the green one.",
+    "translation": "Bog‘bonimiz har bir o‘simlikning nomini ayta oladi, men esa shunchaki yashili deyman.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "chef",
+    "ipa": "/ʃef/",
+    "meaning": "oshpaz; bosh oshpaz",
+    "example": "The chef tasted the soup and reached for salt without a speech.",
+    "translation": "Bosh oshpaz sho‘rvani tatib ko‘rdi va ortiqcha gapirmay tuzga qo‘l uzatdi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "security guard",
+    "ipa": "/sɪˈkjʊərəti ɡɑːd/",
+    "meaning": "qo‘riqlash xodimi",
+    "example": "The security guard checked my badge, then admired my enormous sandwich.",
+    "translation": "Qo‘riqlash xodimi nishonimni tekshirdi, keyin ulkan sendvichimga qoyil qoldi.",
+    "topic": "4-oy • Amaliy va ijodiy kasblar"
+  },
+  {
+    "word": "staff",
+    "ipa": "/stɑːf/",
+    "meaning": "xodimlar jamoasi",
+    "example": "The staff agreed that the coffee machine deserved its own parking space.",
+    "translation": "Xodimlar qahva mashinasi alohida to‘xtash joyiga loyiq degan fikrga kelishdi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "employee",
+    "ipa": "/ɪmˈplɔɪiː/",
+    "meaning": "yollanma xodim",
+    "example": "Our newest employee found the printer faster than the rest of us.",
+    "translation": "Eng yangi xodimimiz printerni hammamizdan tezroq topdi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "employer",
+    "ipa": "/ɪmˈplɔɪə/",
+    "meaning": "ish beruvchi",
+    "example": "Her employer provides free fruit, but the biscuits disappear first.",
+    "translation": "Uning ish beruvchisi bepul meva beradi, lekin avval pechenyelar tugaydi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "colleague",
+    "ipa": "/ˈkɒliːɡ/",
+    "meaning": "hamkasb",
+    "example": "A colleague taught me the unofficial password to the biscuit cupboard.",
+    "translation": "Hamkasbim menga pechenye javonining norasmiy parolini o‘rgatdi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "boss",
+    "ipa": "/bɒs/",
+    "meaning": "boshliq",
+    "example": "The boss joined our video call with a cat on his shoulder.",
+    "translation": "Boshliq yelkasida mushuk bilan videoqo‘ng‘irog‘imizga qo‘shildi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "workplace",
+    "ipa": "/ˈwɜːkpleɪs/",
+    "meaning": "ish joyi",
+    "example": "Our workplace has excellent lighting and a printer with a difficult personality.",
+    "translation": "Ish joyimizning yoritilishi ajoyib, printerimizning esa fe’li qiyin.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "department",
+    "ipa": "/dɪˈpɑːtmənt/",
+    "meaning": "bo‘lim",
+    "example": "The sales department has claimed the only comfortable sofa.",
+    "translation": "Savdo bo‘limi yagona qulay divanni o‘ziniki qilib oldi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "company",
+    "ipa": "/ˈkʌmpəni/",
+    "meaning": "kompaniya",
+    "example": "The company began with two desks and a very ambitious kettle.",
+    "translation": "Kompaniya ikkita stol va juda katta maqsadli choynak bilan ish boshlagan.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "business",
+    "ipa": "/ˈbɪznəs/",
+    "meaning": "korxona; tadbirkorlik faoliyati",
+    "example": "Her repair business grew because she could fix almost anything except Mondays.",
+    "translation": "Uning ta’mirlash korxonasi o‘sdi, chunki u dushanbadan boshqa deyarli hamma narsani tuzata olardi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "organisation",
+    "ipa": "/ˌɔːɡənaɪˈzeɪʃən/",
+    "meaning": "tashkilot",
+    "example": "This organisation teaches adults to use computers without fearing every beep.",
+    "translation": "Bu tashkilot kattalarga har bir tovushdan qo‘rqmay kompyuterdan foydalanishni o‘rgatadi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "factory",
+    "ipa": "/ˈfæktəri/",
+    "meaning": "fabrika; zavod",
+    "example": "The toy factory makes tiny cars and enormous amounts of noise.",
+    "translation": "O‘yinchoq fabrikasi kichik mashinalar va ulkan miqdorda shovqin chiqaradi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "studio",
+    "ipa": "/ˈstjuːdiəʊ/",
+    "meaning": "ijodiy ish studiyasi",
+    "example": "The recording studio is quiet until someone opens a packet of crisps.",
+    "translation": "Kimdir chips paketini ochmaguncha ovoz yozish studiyasi jim bo‘ladi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "lab",
+    "ipa": "/læb/",
+    "meaning": "laboratoriya",
+    "example": "In the lab, even the sugar must wear a label.",
+    "translation": "Laboratoriyada hatto shakarning ham yorlig‘i bo‘lishi kerak.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "headquarters",
+    "ipa": "/ˌhedˈkwɔːtəz/",
+    "meaning": "tashkilotning bosh idorasi",
+    "example": "The company headquarters has more meeting rooms than our town has cafés.",
+    "translation": "Kompaniyaning bosh idorasida shahrimizdagi kafelardan ko‘proq yig‘ilish xonasi bor.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "canteen",
+    "ipa": "/kænˈtiːn/",
+    "meaning": "ishxona yoki maktab oshxonasi",
+    "example": "The canteen queue moves faster when pudding is on the menu.",
+    "translation": "Taomnomada puding bo‘lsa, oshxona navbati tezroq yuradi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "warehouse",
+    "ipa": "/ˈweəhaʊs/",
+    "meaning": "omborxona",
+    "example": "The warehouse stores enough paper to wrap a very large elephant.",
+    "translation": "Omborxonada juda katta filni o‘rashga yetadigan qog‘oz saqlanadi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "shredder",
+    "ipa": "/ˈʃredə/",
+    "meaning": "hujjatlarni maydalovchi qurilma",
+    "example": "The shredder turns old papers into something that looks like office spaghetti.",
+    "translation": "Hujjat maydalagich eski qog‘ozlarni ofis spagettisiga o‘xshash narsaga aylantiradi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "locker",
+    "ipa": "/ˈlɒkə/",
+    "meaning": "qulflanadigan shaxsiy javoncha",
+    "example": "My locker holds a coat, a helmet, and a mysterious single sock.",
+    "translation": "Javonchamda palto, dubulg‘a va sirli bitta paypoq bor.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "noticeboard",
+    "ipa": "/ˈnəʊtɪsbɔːd/",
+    "meaning": "e’lonlar taxtasi",
+    "example": "The noticeboard advertises a meeting about reducing notices.",
+    "translation": "E’lonlar taxtasida e’lonlarni kamaytirish haqidagi yig‘ilish e’loni bor.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "stationery",
+    "ipa": "/ˈsteɪʃənəri/",
+    "meaning": "yozuv-chizuv buyumlari",
+    "example": "Ordering stationery makes me happier than buying shoes.",
+    "translation": "Yozuv-chizuv buyumlariga buyurtma berish meni oyoq kiyim sotib olishdan ko‘proq quvontiradi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "stapler",
+    "ipa": "/ˈsteɪplə/",
+    "meaning": "stepler; qog‘oz biriktirgich",
+    "example": "The stapler is missing again, probably attending another meeting.",
+    "translation": "Stepler yana yo‘q, ehtimol, boshqa yig‘ilishda qatnashayotgandir.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "staple",
+    "ipa": "/ˈsteɪpəl/",
+    "meaning": "steplerning metall qistirgichi",
+    "example": "One bent staple held up our entire printing job.",
+    "translation": "Bitta egilgan qistirgich butun chop etish ishimizni to‘xtatib qo‘ydi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "paperclip",
+    "ipa": "/ˈpeɪpəklɪp/",
+    "meaning": "qog‘oz qisqichi",
+    "example": "A paperclip kept the contract together while my hands shook.",
+    "translation": "Qo‘llarim titrayotganda qog‘oz qisqichi shartnoma varaqlarini birga ushlab turdi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "envelope",
+    "ipa": "/ˈenvələʊp/",
+    "meaning": "konvert",
+    "example": "The envelope said urgent, but it contained the office party invitation.",
+    "translation": "Konvertda shoshilinch deb yozilgandi, ichida esa ofis bazmiga taklifnoma bor edi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "photocopier",
+    "ipa": "/ˈfəʊtəʊˌkɒpiə/",
+    "meaning": "nusxa ko‘chirish apparati",
+    "example": "The photocopier produced twenty copies of my thumb.",
+    "translation": "Nusxa ko‘chirish apparati bosh barmog‘imning yigirmata nusxasini chiqardi.",
+    "topic": "4-oy • Ish joyi va jihozlari"
+  },
+  {
+    "word": "job",
+    "ipa": "/dʒɒb/",
+    "meaning": "ish; lavozim",
+    "example": "My first job taught me to smile before my morning tea.",
+    "translation": "Birinchi ishim menga ertalabki choydan oldin jilmayishni o‘rgatdi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "career",
+    "ipa": "/kəˈrɪə/",
+    "meaning": "kasbiy faoliyat yo‘li",
+    "example": "His career in computing began with fixing his grandmother's printer.",
+    "translation": "Uning kompyuter sohasidagi faoliyati buvisining printerini tuzatishdan boshlangan.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "profession",
+    "ipa": "/prəˈfeʃən/",
+    "meaning": "maxsus tayyorgarlik talab qiladigan kasb",
+    "example": "Teaching is a profession that requires both knowledge and spare pens.",
+    "translation": "O‘qituvchilik bilimni ham, zaxira ruchkalarni ham talab qiladigan kasb.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "occupation",
+    "ipa": "/ˌɒkjəˈpeɪʃən/",
+    "meaning": "mashg‘ulot; kasb",
+    "example": "On the form, write your occupation, not your dream superhero name.",
+    "translation": "Shaklga orzungizdagi superqahramon ismini emas, kasbingizni yozing.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "promotion",
+    "ipa": "/prəˈməʊʃən/",
+    "meaning": "yuqoriroq lavozimga ko‘tarilish",
+    "example": "Her promotion brought more responsibility and a chair that finally adjusts.",
+    "translation": "Lavozimi ko‘tarilishi unga ko‘proq mas’uliyat va nihoyat sozlanadigan stul olib keldi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "application",
+    "ipa": "/ˌæplɪˈkeɪʃən/",
+    "meaning": "ishga kirish uchun ariza",
+    "example": "I checked my application twice before sending it to the wrong company.",
+    "translation": "Arizamni noto‘g‘ri kompaniyaga yuborishdan oldin ikki marta tekshirdim.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "CV",
+    "ipa": "/ˌsiː ˈviː/",
+    "meaning": "ish tajribasi va ma’lumot haqidagi qisqa hujjat",
+    "example": "My CV fits on one page if I leave out my childhood lemonade stand.",
+    "translation": "Bolalikdagi limonad rastamni kiritmasam, rezyumem bir sahifaga sig‘adi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "interview",
+    "ipa": "/ˈɪntəvjuː/",
+    "meaning": "ishga kirish suhbati",
+    "example": "During the interview, my phone politely reminded me to relax.",
+    "translation": "Ishga kirish suhbatida telefonim muloyimlik bilan bo‘shashishni eslatdi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "candidate",
+    "ipa": "/ˈkændɪdət/",
+    "meaning": "nomzod",
+    "example": "One candidate arrived early enough to help us find the interview room.",
+    "translation": "Bir nomzod shunchalik erta keldiki, suhbat xonasini topishimizga yordam berdi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "experience",
+    "ipa": "/ɪkˈspɪəriəns/",
+    "meaning": "tajriba",
+    "example": "Running a school club gave me experience in solving biscuit disputes.",
+    "translation": "Maktab to‘garagini boshqarish menga pechenye nizolarini hal qilish tajribasini berdi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "salary",
+    "ipa": "/ˈsæləri/",
+    "meaning": "oylik maosh",
+    "example": "My first salary made my bank account look less lonely.",
+    "translation": "Birinchi maoshim bank hisobimni kamroq yolg‘iz ko‘rsatdi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "wage",
+    "ipa": "/weɪdʒ/",
+    "meaning": "ish haqi",
+    "example": "He earns a decent hourly wage for repairing bicycles.",
+    "translation": "U velosipedlarni ta’mirlab, soatiga yaxshi ish haqi oladi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "income",
+    "ipa": "/ˈɪnkʌm/",
+    "meaning": "daromad",
+    "example": "Her income from tutoring pays for books and a heroic amount of tea.",
+    "translation": "Qo‘shimcha darslardan olgan daromadi kitoblar va juda ko‘p choyga yetadi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "pension",
+    "ipa": "/ˈpenʃən/",
+    "meaning": "pensiya",
+    "example": "Grandad uses part of his pension to learn computer skills.",
+    "translation": "Bobom pensiyasining bir qismini kompyuter ko‘nikmalarini o‘rganishga sarflaydi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "contract",
+    "ipa": "/ˈkɒntrækt/",
+    "meaning": "mehnat shartnomasi",
+    "example": "Read the contract before promising to work every Saturday forever.",
+    "translation": "Abadiy har shanba ishlashga va’da berishdan oldin shartnomani o‘qing.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "shift",
+    "ipa": "/ʃɪft/",
+    "meaning": "ish smenasi",
+    "example": "My early shift starts before the neighbour's rooster feels ready.",
+    "translation": "Erta smenam qo‘shnining xo‘rozi o‘zini tayyor his qilishidan oldin boshlanadi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "overtime",
+    "ipa": "/ˈəʊvətaɪm/",
+    "meaning": "ish vaqtidan tashqari mehnat",
+    "example": "We worked overtime to finish the display before the shop opened.",
+    "translation": "Do‘kon ochilguncha ko‘rgazmani tugatish uchun ish vaqtidan tashqari ishladik.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "part-time",
+    "ipa": "/ˌpɑːt ˈtaɪm/",
+    "meaning": "to‘liqsiz ish vaqtidagi",
+    "example": "Her part-time job leaves afternoons free for study and occasional naps.",
+    "translation": "Uning to‘liqsiz ish vaqtidagi ishi tushdan keyinni o‘qish va ba’zan mizg‘ish uchun bo‘sh qoldiradi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "full-time",
+    "ipa": "/ˌfʊl ˈtaɪm/",
+    "meaning": "to‘liq ish vaqtidagi",
+    "example": "A full-time job made me appreciate weekends with fresh enthusiasm.",
+    "translation": "To‘liq ish vaqtidagi ish dam olish kunlarini yangicha ishtiyoq bilan qadrlashimga sabab bo‘ldi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "permanent",
+    "ipa": "/ˈpɜːmənənt/",
+    "meaning": "doimiy",
+    "example": "She found a permanent position and finally unpacked her favourite mug.",
+    "translation": "U doimiy ish topdi va nihoyat sevimli krujkasini qutidan chiqardi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "temporary",
+    "ipa": "/ˈtempərəri/",
+    "meaning": "vaqtinchalik",
+    "example": "My temporary desk is a table that still thinks it belongs in a café.",
+    "translation": "Vaqtinchalik ish stolim hali ham o‘zini kafega tegishli deb o‘ylaydigan stol.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "hire",
+    "ipa": "/ˈhaɪə/",
+    "meaning": "ishga olmoq",
+    "example": "We need to hire someone who understands both numbers and our printer.",
+    "translation": "Raqamlarni ham, printerimizni ham tushunadigan odamni ishga olishimiz kerak.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "employ",
+    "ipa": "/ɪmˈplɔɪ/",
+    "meaning": "ish bilan ta’minlamoq; ishlatmoq",
+    "example": "The company employs twenty people and unofficially supports three office cats.",
+    "translation": "Kompaniya yigirma kishini ish bilan ta’minlaydi va norasmiy ravishda uchta ofis mushugini boqadi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "resign",
+    "ipa": "/rɪˈzaɪn/",
+    "meaning": "o‘z xohishi bilan ishdan ketmoq",
+    "example": "He decided to resign and open the bookshop he always talked about.",
+    "translation": "U ishdan ketib, doim gapiradigan kitob do‘konini ochishga qaror qildi.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "retire",
+    "ipa": "/rɪˈtaɪə/",
+    "meaning": "nafaqaga chiqmoq",
+    "example": "When she retires, she plans to give her alarm clock away.",
+    "translation": "Nafaqaga chiqqach, u budilnigini birovga berishni rejalashtirgan.",
+    "topic": "4-oy • Ishga kirish va mehnat"
+  },
+  {
+    "word": "meeting",
+    "ipa": "/ˈmiːtɪŋ/",
+    "meaning": "yig‘ilish",
+    "example": "The meeting ended early, and nobody knew what to do with the miracle.",
+    "translation": "Yig‘ilish erta tugadi va hech kim bu mo‘jiza bilan nima qilishni bilmadi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "agenda",
+    "ipa": "/əˈdʒendə/",
+    "meaning": "kun tartibi",
+    "example": "The agenda includes budgets, training, and the mysterious fridge smell.",
+    "translation": "Kun tartibiga budjet, o‘qitish va muzlatkichdagi sirli hid kiradi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "minutes",
+    "ipa": "/ˈmɪnɪts/",
+    "meaning": "yig‘ilish bayonnomasi",
+    "example": "The minutes recorded our decisions but kindly ignored my sneeze.",
+    "translation": "Bayonnoma qarorlarimizni qayd etdi, lekin aksirganimni muloyimlik bilan e’tiborsiz qoldirdi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "discussion",
+    "ipa": "/dɪˈskʌʃən/",
+    "meaning": "muhokama",
+    "example": "A discussion about office chairs somehow lasted longer than lunch.",
+    "translation": "Ofis stullari haqidagi muhokama qandaydir qilib tushlikdan ham uzoq davom etdi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "opinion",
+    "ipa": "/əˈpɪnjən/",
+    "meaning": "fikr; qarash",
+    "example": "In my opinion, every long meeting needs a short cake break.",
+    "translation": "Menimcha, har bir uzun yig‘ilishga qisqa tort tanaffusi kerak.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "suggestion",
+    "ipa": "/səˈdʒestʃən/",
+    "meaning": "taklif",
+    "example": "Her suggestion to label the cables saved us a weekly guessing game.",
+    "translation": "Uning kabellarga yorliq qo‘yish taklifi bizni haftalik topishmoqdan qutqardi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "agreement",
+    "ipa": "/əˈɡriːmənt/",
+    "meaning": "kelishuv",
+    "example": "We reached an agreement after sharing the last slice fairly.",
+    "translation": "Oxirgi bo‘lakni adolatli bo‘lishgach, kelishuvga erishdik.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "decision",
+    "ipa": "/dɪˈsɪʒən/",
+    "meaning": "qaror",
+    "example": "The decision to buy a quiet keyboard pleased everyone near my desk.",
+    "translation": "Ovozsiz klaviatura sotib olish qarori stolim yaqinidagi hammani xursand qildi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "vote",
+    "ipa": "/vəʊt/",
+    "meaning": "ovoz bermoq",
+    "example": "We will vote on the new logo after someone removes the accidental moustache.",
+    "translation": "Kimdir tasodifan paydo bo‘lgan mo‘ylovni olib tashlagach, yangi logotip uchun ovoz beramiz.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "leader",
+    "ipa": "/ˈliːdə/",
+    "meaning": "jamoa yetakchisi",
+    "example": "Our leader asks questions before giving answers, which is refreshing.",
+    "translation": "Yetakchimiz javob berishdan oldin savol beradi, bu yoqimli holat.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "partner",
+    "ipa": "/ˈpɑːtnə/",
+    "meaning": "hamkor; sherik",
+    "example": "My project partner brings the ideas, and I bring the working charger.",
+    "translation": "Loyihadagi sherigim g‘oyalarni olib keladi, men esa ishlaydigan quvvatlagichni.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "member",
+    "ipa": "/ˈmembə/",
+    "meaning": "a’zo",
+    "example": "Each team member gets a task, including the person hiding behind the plant.",
+    "translation": "Jamoaning har bir a’zosi, hatto o‘simlik orqasiga yashiringan odam ham vazifa oladi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "role",
+    "ipa": "/rəʊl/",
+    "meaning": "jamoada bajariladigan vazifa; rol",
+    "example": "My role is to check facts before our report becomes a fairy tale.",
+    "translation": "Mening vazifam hisobotimiz ertakka aylanmasidan ma’lumotlarni tekshirish.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "responsibility",
+    "ipa": "/rɪˌspɒnsəˈbɪləti/",
+    "meaning": "mas’uliyat; javobgarlik",
+    "example": "Keeping the customer files safe is a responsibility, not a guessing game.",
+    "translation": "Mijoz hujjatlarini xavfsiz saqlash taxmin o‘yini emas, mas’uliyatdir.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "support",
+    "ipa": "/səˈpɔːt/",
+    "meaning": "qo‘llab-quvvatlamoq",
+    "example": "We support new colleagues by explaining the software and the coffee machine.",
+    "translation": "Yangi hamkasblarga dastur va qahva mashinasini tushuntirib, ularni qo‘llab-quvvatlaymiz.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "cooperate",
+    "ipa": "/kəʊˈɒpəreɪt/",
+    "meaning": "hamkorlik qilmoq",
+    "example": "If we cooperate, this task might finish before my tea does.",
+    "translation": "Hamkorlik qilsak, bu vazifa choyim tugashidan oldin bitishi mumkin.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "share",
+    "ipa": "/ʃeə/",
+    "meaning": "bo‘lishmoq",
+    "example": "Please share your notes, especially the part you wrote while I was sneezing.",
+    "translation": "Qaydlaringizni, ayniqsa men aksirayotganimda yozgan qismini bo‘lishing.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "contribute",
+    "ipa": "/kənˈtrɪbjuːt/",
+    "meaning": "hissa qo‘shmoq",
+    "example": "Everyone can contribute an idea, even one that sounds slightly strange.",
+    "translation": "Har kim bir g‘oya, hatto biroz g‘alati tuyuladiganini ham qo‘shishi mumkin.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "encourage",
+    "ipa": "/ɪnˈkʌrɪdʒ/",
+    "meaning": "ruhlantirmoq; dalda bermoq",
+    "example": "Our trainer encourages us to ask questions before pressing mysterious buttons.",
+    "translation": "Trenerimiz sirli tugmalarni bosishdan oldin savol berishga undaydi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "respect",
+    "ipa": "/rɪˈspekt/",
+    "meaning": "hurmat qilmoq",
+    "example": "Respect your colleagues' time by giving your story a reasonably quick ending.",
+    "translation": "Hikoyangizni uncha cho‘zmay tugatib, hamkasblaringiz vaqtini hurmat qiling.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "patient",
+    "ipa": "/ˈpeɪʃənt/",
+    "meaning": "sabrli",
+    "example": "Our patient trainer explained the same button for the sixth time.",
+    "translation": "Sabrli trenerimiz o‘sha tugmani oltinchi marta tushuntirdi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "polite",
+    "ipa": "/pəˈlaɪt/",
+    "meaning": "xushmuomala; odobli",
+    "example": "A polite email can still say that the printer is driving us mad.",
+    "translation": "Xushmuomala xatda ham printer bizni aqldan ozdirayotganini aytish mumkin.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "reliable",
+    "ipa": "/rɪˈlaɪəbəl/",
+    "meaning": "ishonchli",
+    "example": "She is so reliable that I trust her more than my calendar.",
+    "translation": "U shunchalik ishonchliki, unga taqvimimdan ham ko‘proq ishonaman.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "punctual",
+    "ipa": "/ˈpʌŋktʃuəl/",
+    "meaning": "vaqtida keladigan",
+    "example": "Our punctual colleague arrives before the clock has finished striking nine.",
+    "translation": "Vaqtida keladigan hamkasbimiz soat to‘qqizni urib bo‘lmasidan yetib keladi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "helpful",
+    "ipa": "/ˈhelpfəl/",
+    "meaning": "yordam beradigan; foydali",
+    "example": "A helpful colleague showed me the shortcut after watching my ten clicks.",
+    "translation": "Yordamga tayyor hamkasbim o‘n marta bosganimni ko‘rib, qisqa yo‘lni ko‘rsatdi.",
+    "topic": "4-oy • Jamoada ishlash"
+  },
+  {
+    "word": "project",
+    "ipa": "/ˈprɒdʒekt/",
+    "meaning": "loyiha",
+    "example": "Our project is a school website, not the next space station.",
+    "translation": "Loyihamiz keyingi kosmik stansiya emas, maktab veb-saytidir.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "plan",
+    "ipa": "/plæn/",
+    "meaning": "reja",
+    "example": "The plan looked perfect until we remembered the office closes at six.",
+    "translation": "Ofis oltida yopilishini eslagunimizcha reja mukammal ko‘rindi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "checklist",
+    "ipa": "/ˈtʃeklɪst/",
+    "meaning": "tekshirish uchun vazifalar ro‘yxati",
+    "example": "The checklist reminded us to bring the projector, not just its remote.",
+    "translation": "Tekshiruv ro‘yxati faqat pultni emas, proyektorni ham olib kelishimizni eslatdi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "aim",
+    "ipa": "/eɪm/",
+    "meaning": "ko‘zlangan maqsad",
+    "example": "The aim of the guide is to make the software less frightening.",
+    "translation": "Qo‘llanmaning maqsadi dasturni kamroq qo‘rqinchli qilish.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "target",
+    "ipa": "/ˈtɑːɡɪt/",
+    "meaning": "belgilangan natija yoki ko‘rsatkich",
+    "example": "We reached our monthly target without turning the office into a campsite.",
+    "translation": "Ofisni chodirli lagerga aylantirmay oylik ko‘rsatkichimizga erishdik.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "schedule",
+    "ipa": "/ˈʃedjuːl/",
+    "meaning": "ish jadvali",
+    "example": "My schedule has room for lunch, if I eat while walking.",
+    "translation": "Yurib ovqatlansam, jadvalimda tushlikka joy bor.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "teamwork",
+    "ipa": "/ˈtiːmwɜːk/",
+    "meaning": "jamoaviy mehnat",
+    "example": "Good teamwork means nobody carries all the boxes while everyone else gives advice.",
+    "translation": "Yaxshi jamoaviy mehnatda qolganlar maslahat berib turganida bir kishi barcha qutilarni tashimaydi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "stage",
+    "ipa": "/steɪdʒ/",
+    "meaning": "loyiha bosqichi",
+    "example": "At this stage, our app can do everything except open.",
+    "translation": "Bu bosqichda ilovamiz ochilishdan boshqa hamma ishni qila oladi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "process",
+    "ipa": "/ˈprəʊses/",
+    "meaning": "jarayon",
+    "example": "The approval process involves three people and one very busy inbox.",
+    "translation": "Tasdiqlash jarayoniga uch kishi va bitta juda band kiruvchi xatlar qutisi jalb qilingan.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "method",
+    "ipa": "/ˈmeθəd/",
+    "meaning": "usul",
+    "example": "Her method of sorting files works better than my colourful piles.",
+    "translation": "Uning fayllarni saralash usuli mening rangli uyumlarimdan yaxshiroq ishlaydi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "instruction",
+    "ipa": "/ɪnˈstrʌkʃən/",
+    "meaning": "ko‘rsatma",
+    "example": "The final instruction said relax, so I followed it carefully.",
+    "translation": "Oxirgi ko‘rsatmada dam oling deyilgan edi, men uni puxta bajardim.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "procedure",
+    "ipa": "/prəˈsiːdʒə/",
+    "meaning": "belgilangan ish tartibi",
+    "example": "Follow the safety procedure even if the machine looks friendly.",
+    "translation": "Uskuna do‘stona ko‘rinsa ham, xavfsizlik tartibiga rioya qiling.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "detail",
+    "ipa": "/ˈdiːteɪl/",
+    "meaning": "tafsilot; kichik jihat",
+    "example": "One small detail matters: the invitation needs an actual address.",
+    "translation": "Bitta kichik jihat muhim: taklifnomaga haqiqiy manzil kerak.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "requirement",
+    "ipa": "/rɪˈkwaɪəmənt/",
+    "meaning": "talab",
+    "example": "A working microphone is a requirement for the online presentation.",
+    "translation": "Ishlaydigan mikrofon onlayn taqdimot uchun talab hisoblanadi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "priority",
+    "ipa": "/praɪˈɒrəti/",
+    "meaning": "birinchi navbatdagi vazifa",
+    "example": "Fixing the broken website is our priority; choosing new mugs can wait.",
+    "translation": "Buzilgan saytni tuzatish birinchi vazifamiz; yangi krujkalar tanlash kutishi mumkin.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "budget",
+    "ipa": "/ˈbʌdʒɪt/",
+    "meaning": "ajratilgan mablag‘; budjet",
+    "example": "The budget covers new chairs but sadly no office helicopter.",
+    "translation": "Budjet yangi stullarga yetadi, ammo afsuski, ofis vertolyotiga emas.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "resource",
+    "ipa": "/rɪˈzɔːs/",
+    "meaning": "foydalanish mumkin bo‘lgan manba yoki vosita",
+    "example": "The library is a useful resource when your internet takes a holiday.",
+    "translation": "Internetingiz ta’tilga chiqqanda kutubxona foydali manba bo‘ladi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "equipment",
+    "ipa": "/ɪˈkwɪpmənt/",
+    "meaning": "asbob-uskunalar; jihozlar",
+    "example": "Our recording equipment fits in one bag, unlike the singer's snacks.",
+    "translation": "Ovoz yozish jihozlarimiz bir sumkaga sig‘adi, xonandaning yeguliklaridan farqli ravishda.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "material",
+    "ipa": "/məˈtɪəriəl/",
+    "meaning": "o‘quv yoki ish materiali",
+    "example": "The training material includes a picture of what not to put in a printer.",
+    "translation": "O‘quv materialida printerga nima solmaslik kerakligi ko‘rsatilgan rasm bor.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "document",
+    "ipa": "/ˈdɒkjəmənt/",
+    "meaning": "hujjat",
+    "example": "This document is important enough to deserve a sensible filename.",
+    "translation": "Bu hujjat mantiqli fayl nomiga loyiq darajada muhim.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "report",
+    "ipa": "/rɪˈpɔːt/",
+    "meaning": "hisobot",
+    "example": "The report explains why our busiest hour is just before lunch.",
+    "translation": "Hisobot eng band soatimiz nega tushlik oldidan bo‘lishini tushuntiradi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "draft",
+    "ipa": "/drɑːft/",
+    "meaning": "qoralama",
+    "example": "My first draft contains useful ideas and several unfinished complaints.",
+    "translation": "Birinchi qoralamamda foydali g‘oyalar va bir nechta tugallanmagan shikoyat bor.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "version",
+    "ipa": "/ˈvɜːʃən/",
+    "meaning": "nusxa; talqin",
+    "example": "This version of the timetable finally includes a lunch break.",
+    "translation": "Jadvalning bu nusxasida nihoyat tushlik tanaffusi bor.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "presentation",
+    "ipa": "/ˌprezənˈteɪʃən/",
+    "meaning": "taqdimot",
+    "example": "Her presentation had six slides and no chance for us to get sleepy.",
+    "translation": "Uning taqdimotida oltita slayd bor edi, bizda esa uyqusirashga imkon bo‘lmadi.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "summary",
+    "ipa": "/ˈsʌməri/",
+    "meaning": "qisqacha mazmun",
+    "example": "The summary should be shorter than the report, despite my colleague's efforts.",
+    "translation": "Hamkasbimning urinishlariga qaramay, qisqacha mazmun hisobotdan qisqaroq bo‘lishi kerak.",
+    "topic": "4-oy • Loyiha va ishni rejalash"
+  },
+  {
+    "word": "technology",
+    "ipa": "/tekˈnɒlədʒi/",
+    "meaning": "texnologiya",
+    "example": "Technology lets me attend a meeting without finding matching socks.",
+    "translation": "Texnologiya menga bir xil paypoqlarni topmasdan yig‘ilishda qatnashish imkonini beradi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "device",
+    "ipa": "/dɪˈvaɪs/",
+    "meaning": "qurilma",
+    "example": "This device counts my steps, including trips to the biscuit tin.",
+    "translation": "Bu qurilma qadamlarimni, jumladan, pechenye qutisigacha borganlarimni ham sanaydi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "tablet",
+    "ipa": "/ˈtæblət/",
+    "meaning": "planshet",
+    "example": "Grandma uses her tablet for recipes and surprisingly competitive chess.",
+    "translation": "Buvim planshetini retseptlar va hayratlanarli darajada shiddatli shaxmat uchun ishlatadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "smartphone",
+    "ipa": "/ˈsmɑːtfəʊn/",
+    "meaning": "smartfon",
+    "example": "My smartphone knows the weather but cannot find itself under the sofa.",
+    "translation": "Smartfonim ob-havoni biladi, lekin divan tagida o‘zini topa olmaydi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "monitor",
+    "ipa": "/ˈmɒnɪtə/",
+    "meaning": "monitor",
+    "example": "A larger monitor makes my spreadsheet look more important.",
+    "translation": "Kattaroq monitor elektron jadvalimni muhimroq qilib ko‘rsatadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "printer",
+    "ipa": "/ˈprɪntə/",
+    "meaning": "printer",
+    "example": "The printer waits until I am late before asking for paper.",
+    "translation": "Printer qog‘oz so‘rashdan oldin kech qolishimni kutadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "scanner",
+    "ipa": "/ˈskænə/",
+    "meaning": "skaner",
+    "example": "The scanner captured my drawing and a corner of my sleeve.",
+    "translation": "Skaner rasmimni va yengimning bir chetini nusxaladi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "speaker",
+    "ipa": "/ˈspiːkə/",
+    "meaning": "ovoz chiqaruvchi karnay",
+    "example": "The tiny speaker makes our office sound like a concert hall.",
+    "translation": "Kichkina karnay ofisimizni konsert zalidek jaranglatadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "microphone",
+    "ipa": "/ˈmaɪkrəfəʊn/",
+    "meaning": "mikrofon",
+    "example": "Move the microphone away from your lunch before the whole team hears it.",
+    "translation": "Butun jamoa eshitmasidan mikrofonni tushligingizdan uzoqlashtiring.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "headphones",
+    "ipa": "/ˈhedfəʊnz/",
+    "meaning": "quloqchin",
+    "example": "My headphones help me study while my brother learns the trumpet.",
+    "translation": "Ukam karnay chalishni o‘rganayotganda quloqchinim dars qilishimga yordam beradi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "headset",
+    "ipa": "/ˈhedset/",
+    "meaning": "mikrofonli quloqchin",
+    "example": "With this headset, I look ready to land a plane rather than answer calls.",
+    "translation": "Bu mikrofonli quloqchin bilan qo‘ng‘iroqqa javob berishga emas, samolyotni qo‘ndirishga tayyordek ko‘rinaman.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "webcam",
+    "ipa": "/ˈwebkæm/",
+    "meaning": "veb-kamera",
+    "example": "The webcam revealed the laundry mountain behind my tidy desk.",
+    "translation": "Veb-kamera ozoda stolim ortidagi kir tog‘ini ko‘rsatib qo‘ydi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "smartwatch",
+    "ipa": "/ˈsmɑːtwɒtʃ/",
+    "meaning": "aqlli soat",
+    "example": "My smartwatch reminds me to stand up during meetings about productivity.",
+    "translation": "Aqlli soatim unumdorlik haqidagi yig‘ilishlarda o‘rnimdan turishimni eslatadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "charger",
+    "ipa": "/ˈtʃɑːdʒə/",
+    "meaning": "quvvatlagich",
+    "example": "Whoever brings a charger becomes the hero of the afternoon.",
+    "translation": "Quvvatlagich olib kelgan odam tushdan keyinning qahramoniga aylanadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "battery",
+    "ipa": "/ˈbætəri/",
+    "meaning": "batareya",
+    "example": "My battery reaches one per cent whenever I need directions.",
+    "translation": "Yo‘l ko‘rsatma kerak bo‘lganida batareyam bir foizga tushadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "cable",
+    "ipa": "/ˈkeɪbəl/",
+    "meaning": "kabel",
+    "example": "This cable is long enough to trip over from another room.",
+    "translation": "Bu kabel boshqa xonadan turib ham qoqilib ketadigan darajada uzun.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "wire",
+    "ipa": "/ˈwaɪə/",
+    "meaning": "sim",
+    "example": "The technician replaced a wire thinner than a piece of spaghetti.",
+    "translation": "Texnik spagettidan ham ingichka simni almashtirdi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "USB",
+    "ipa": "/ˌjuː es ˈbiː/",
+    "meaning": "qurilmalarni ulash uchun standart interfeys",
+    "example": "The keyboard connects by USB, once I find the right port behind the desk.",
+    "translation": "Stol ortidan kerakli portni topsam, klaviatura USB orqali ulanadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "processor",
+    "ipa": "/ˈprəʊsesə/",
+    "meaning": "protsessor; kompyuterning hisoblash qismi",
+    "example": "The faster processor finishes calculations before I finish reading the question.",
+    "translation": "Tezroq protsessor savolni o‘qib bo‘lgunimcha hisob-kitoblarni tugatadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "sensor",
+    "ipa": "/ˈsensə/",
+    "meaning": "datchik; sezuvchi qurilma",
+    "example": "The sensor turns on the lights whenever our office cat walks past.",
+    "translation": "Ofis mushugimiz yonidan o‘tganda datchik chiroqlarni yoqadi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "joystick",
+    "ipa": "/ˈdʒɔɪstɪk/",
+    "meaning": "boshqaruv dastagi; joystik",
+    "example": "The joystick helped us steer the little robot away from everyone's shoes.",
+    "translation": "Joystik kichkina robotni hammaning oyoq kiyimidan chetga yo‘naltirishga yordam berdi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "modem",
+    "ipa": "/ˈməʊdem/",
+    "meaning": "modem",
+    "example": "The modem stopped working just as my online class became interesting.",
+    "translation": "Onlayn darsim qiziq bo‘la boshlaganda modem ishlamay qoldi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "touchscreen",
+    "ipa": "/ˈtʌtʃskriːn/",
+    "meaning": "sensorli ekran",
+    "example": "The touchscreen works better when my fingers are not covered in biscuit crumbs.",
+    "translation": "Barmoqlarim pechenye ushoqlariga belanmaganida sensorli ekran yaxshiroq ishlaydi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "hardware",
+    "ipa": "/ˈhɑːdweə/",
+    "meaning": "kompyuterning jismoniy qismlari",
+    "example": "We upgraded the hardware, but my typing speed stayed proudly slow.",
+    "translation": "Kompyuter qismlarini yangiladik, ammo yozish tezligim mag‘rurona sekinligicha qoldi.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "memory",
+    "ipa": "/ˈmeməri/",
+    "meaning": "kompyuter xotirasi",
+    "example": "The computer needs more memory to hold all my unfinished projects.",
+    "translation": "Tugallanmagan barcha loyihalarimni saqlash uchun kompyuterga ko‘proq xotira kerak.",
+    "topic": "4-oy • Texnologiya va qurilmalar"
+  },
+  {
+    "word": "software",
+    "ipa": "/ˈsɒftweə/",
+    "meaning": "dasturiy ta’minot",
+    "example": "The new software checks spelling but cannot improve my jokes.",
+    "translation": "Yangi dastur imloni tekshiradi, lekin hazillarimni yaxshilay olmaydi.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "program",
+    "ipa": "/ˈprəʊɡræm/",
+    "meaning": "kompyuter dasturi",
+    "example": "This program turns numbers into charts and confusion into slightly prettier confusion.",
+    "translation": "Bu dastur raqamlarni diagrammaga, chalkashlikni esa biroz chiroyliroq chalkashlikka aylantiradi.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "app",
+    "ipa": "/æp/",
+    "meaning": "ilova",
+    "example": "I downloaded an app to remind me which apps I should delete.",
+    "translation": "Qaysi ilovalarni o‘chirish kerakligini eslatish uchun ilova yuklab oldim.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "file",
+    "ipa": "/faɪl/",
+    "meaning": "fayl",
+    "example": "Give the file a clear name before it joins the other twelve mysteries.",
+    "translation": "Qolgan o‘n ikkita sirga qo‘shilmasidan faylga aniq nom bering.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "icon",
+    "ipa": "/ˈaɪkɒn/",
+    "meaning": "ekrandagi belgi",
+    "example": "The bin icon looks small, but it can swallow a whole report.",
+    "translation": "Savat belgisi kichik ko‘rinadi, lekin butun hisobotni yutishi mumkin.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "menu",
+    "ipa": "/ˈmenjuː/",
+    "meaning": "dastur buyruqlari ro‘yxati",
+    "example": "I opened the menu looking for settings, not soup.",
+    "translation": "Menyuni sho‘rva emas, sozlamalarni qidirib ochdim.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "toolbar",
+    "ipa": "/ˈtuːlbɑː/",
+    "meaning": "asboblar paneli",
+    "example": "The toolbar has a button for everything except making my deadline later.",
+    "translation": "Asboblar panelida muddatimni kechiktirishdan boshqa hamma ish uchun tugma bor.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "cursor",
+    "ipa": "/ˈkɜːsə/",
+    "meaning": "ekrandagi ko‘rsatkich; kursor",
+    "example": "My cursor disappeared just when I wanted to look professional.",
+    "translation": "Aynan professional ko‘rinmoqchi bo‘lganimda kursorim yo‘qolib qoldi.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "desktop",
+    "ipa": "/ˈdesktɒp/",
+    "meaning": "kompyuter ish stoli",
+    "example": "My desktop is tidy because every file is hiding in one folder.",
+    "translation": "Kompyuter ish stolim tartibli, chunki barcha fayllar bitta papkada yashiringan.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "spreadsheet",
+    "ipa": "/ˈspredʃiːt/",
+    "meaning": "elektron jadval",
+    "example": "Our spreadsheet tracks office expenses, including emergency chocolate.",
+    "translation": "Elektron jadvalimiz ofis xarajatlarini, jumladan, favqulodda shokolad xaridlarini ham hisobga oladi.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "database",
+    "ipa": "/ˈdeɪtəbeɪs/",
+    "meaning": "ma’lumotlar bazasi",
+    "example": "The database contains every customer except the one I need right now.",
+    "translation": "Ma’lumotlar bazasida ayni damda kerak bo‘lganidan tashqari barcha mijozlar bor.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "code",
+    "ipa": "/kəʊd/",
+    "meaning": "dastur kodi",
+    "example": "One missing bracket in the code ruined my peaceful afternoon.",
+    "translation": "Koddagi bitta yetishmayotgan qavs tinch tushdan keyinimni buzdi.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "setting",
+    "ipa": "/ˈsetɪŋ/",
+    "meaning": "sozlama",
+    "example": "I changed one setting and the computer began speaking Italian.",
+    "translation": "Bitta sozlamani o‘zgartirdim va kompyuter italyancha gapira boshladi.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "update",
+    "ipa": "/ʌpˈdeɪt/",
+    "meaning": "dasturini yangilamoq",
+    "example": "Update the app before blaming it for last year's problems.",
+    "translation": "O‘tgan yilgi muammolarda ayblashdan oldin ilovani yangilang.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "install",
+    "ipa": "/ɪnˈstɔːl/",
+    "meaning": "dastur o‘rnatmoq",
+    "example": "We can install the software while the kettle performs its own important task.",
+    "translation": "Choynak o‘zining muhim vazifasini bajarayotganda dasturni o‘rnatishimiz mumkin.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "uninstall",
+    "ipa": "/ˌʌnɪnˈstɔːl/",
+    "meaning": "o‘rnatilgan dasturni olib tashlamoq",
+    "example": "I will uninstall the game before my lunch breaks become suspiciously long.",
+    "translation": "Tushlik tanaffuslarim shubhali darajada cho‘zilmasidan o‘yinni o‘chirib tashlayman.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "delete",
+    "ipa": "/dɪˈliːt/",
+    "meaning": "o‘chirmoq",
+    "example": "Delete the empty file, not the report we spent all week writing.",
+    "translation": "Bir hafta yozgan hisobotimizni emas, bo‘sh faylni o‘chiring.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "edit",
+    "ipa": "/ˈedɪt/",
+    "meaning": "tahrir qilmoq",
+    "example": "Please edit the title before our manager becomes a mango again.",
+    "translation": "Menejerimiz yana mangoga aylanmasidan sarlavhani tahrir qiling.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "paste",
+    "ipa": "/peɪst/",
+    "meaning": "nusxalangan narsani joylamoq",
+    "example": "Paste the address into the box, not into the public chat.",
+    "translation": "Manzilni umumiy chatga emas, maydonga joylang.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "undo",
+    "ipa": "/ʌnˈduː/",
+    "meaning": "oxirgi amalni bekor qilmoq",
+    "example": "Click undo before that accidental purple background becomes our official design.",
+    "translation": "Tasodifiy binafsha fon rasmiy dizaynimizga aylanmasidan bekor qilishni bosing.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "print",
+    "ipa": "/prɪnt/",
+    "meaning": "chop etmoq",
+    "example": "Print one copy first unless you want fifty identical mistakes.",
+    "translation": "Ellikta bir xil xato xohlamasangiz, avval bitta nusxani chop eting.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "scan",
+    "ipa": "/skæn/",
+    "meaning": "skaner qilmoq",
+    "example": "Scan the receipt before the ink fades into a financial mystery.",
+    "translation": "Siyoh o‘chib, moliyaviy sirga aylanmasidan chekni skaner qiling.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "type",
+    "ipa": "/taɪp/",
+    "meaning": "klaviaturada yozmoq",
+    "example": "I type faster when nobody is watching my fingers.",
+    "translation": "Hech kim barmoqlarimga qaramaganda tezroq yozaman.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "click",
+    "ipa": "/klɪk/",
+    "meaning": "sichqoncha tugmasini bosmoq",
+    "example": "Click once; the computer is thinking, not ignoring you.",
+    "translation": "Bir marta bosing; kompyuter sizni mensimayotgani yo‘q, o‘ylayapti.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "drag",
+    "ipa": "/dræɡ/",
+    "meaning": "ekranda bosib surmoq",
+    "example": "Drag the picture into place before it covers the boss's face.",
+    "translation": "Boshliqning yuzini yopib qolmasidan rasmni joyiga suring.",
+    "topic": "4-oy • Dasturlar va kompyuter amallari"
+  },
+  {
+    "word": "online",
+    "ipa": "/ˌɒnˈlaɪn/",
+    "meaning": "internetga ulangan; onlayn",
+    "example": "Our class is online today, so my slippers can attend too.",
+    "translation": "Bugun darsimiz onlayn, shuning uchun shippagim ham qatnashishi mumkin.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "offline",
+    "ipa": "/ˌɒfˈlaɪn/",
+    "meaning": "internetga ulanmagan",
+    "example": "The app works offline, which makes train tunnels less annoying.",
+    "translation": "Ilova internetsiz ishlaydi, bu poyezd tunnellarini kamroq zerikarli qiladi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "browser",
+    "ipa": "/ˈbraʊzə/",
+    "meaning": "veb-sahifalarni ochuvchi dastur; brauzer",
+    "example": "My browser has so many tabs that each title is now one letter.",
+    "translation": "Brauzerimda shunchalik ko‘p varaq ochilganki, har bir sarlavha endi bitta harfdan iborat.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "search engine",
+    "ipa": "/ˈsɜːtʃ endʒɪn/",
+    "meaning": "qidiruv tizimi",
+    "example": "A search engine cannot find my glasses, although I keep asking.",
+    "translation": "Qidiruv tizimi ko‘zoynagimni topa olmaydi, garchi qayta-qayta so‘rasam ham.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "link",
+    "ipa": "/lɪŋk/",
+    "meaning": "havola",
+    "example": "The link took us to a recipe instead of the meeting.",
+    "translation": "Havola bizni yig‘ilishga emas, retseptga olib bordi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "homepage",
+    "ipa": "/ˈhəʊmpeɪdʒ/",
+    "meaning": "saytning bosh sahifasi",
+    "example": "Our homepage now explains what we sell before showing a giant smiling duck.",
+    "translation": "Bosh sahifamiz endi ulkan jilmaygan o‘rdakni ko‘rsatishdan oldin nima sotishimizni tushuntiradi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "webpage",
+    "ipa": "/ˈwebpeɪdʒ/",
+    "meaning": "veb-sahifa",
+    "example": "This webpage loads slowly enough for me to make tea.",
+    "translation": "Bu veb-sahifa choy damlashga ulguradigan darajada sekin yuklanadi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "tab",
+    "ipa": "/tæb/",
+    "meaning": "brauzer varag‘i",
+    "example": "Somewhere in a tab, a video is playing music I cannot stop.",
+    "translation": "Qaysidir brauzer varag‘ida men to‘xtata olmayotgan musiqa videosi o‘ynayapti.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "address",
+    "ipa": "/əˈdres/",
+    "meaning": "internet manzili",
+    "example": "Check the website address before trusting its offer of free laptops.",
+    "translation": "Bepul noutbuklar taklifiga ishonishdan oldin sayt manzilini tekshiring.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "download",
+    "ipa": "/ˌdaʊnˈləʊd/",
+    "meaning": "internetdan qurilmaga yuklab olmoq",
+    "example": "Download the lesson before the village Wi-Fi takes its afternoon nap.",
+    "translation": "Qishloqning Wi-Fi tarmog‘i tushdan keyin mizg‘ishga ketmasidan darsni yuklab oling.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "upload",
+    "ipa": "/ˌʌpˈləʊd/",
+    "meaning": "qurilmadan internetga yuklamoq",
+    "example": "Upload the final photo, preferably the one where my eyes are open.",
+    "translation": "Yakuniy suratni, yaxshisi ko‘zlarim ochiq tushganini yuklang.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "subscribe",
+    "ipa": "/səbˈskraɪb/",
+    "meaning": "obuna bo‘lmoq",
+    "example": "I subscribe to a science newsletter that makes breakfast more interesting.",
+    "translation": "Nonushtani qiziqroq qiladigan ilmiy xabarnomaga obuna bo‘lganman.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "browse",
+    "ipa": "/braʊz/",
+    "meaning": "internet sahifalarini ko‘rib chiqmoq",
+    "example": "I browse the library website when I should be returning its books.",
+    "translation": "Kutubxona kitoblarini qaytarishim kerak bo‘lgan paytda uning saytini ko‘rib o‘tiraman.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "search",
+    "ipa": "/sɜːtʃ/",
+    "meaning": "qidiruv tizimida izlamoq",
+    "example": "Search for the exact phrase unless you want results about dancing onions.",
+    "translation": "Raqsga tushadigan piyozlar haqida natijalar xohlamasangiz, aniq iborani qidiring.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "connect",
+    "ipa": "/kəˈnekt/",
+    "meaning": "tarmoqqa ulamoq; ulanmoq",
+    "example": "Connect to the school network before declaring the internet broken.",
+    "translation": "Internet buzilganini e’lon qilishdan oldin maktab tarmog‘iga ulaning.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "connection",
+    "ipa": "/kəˈnekʃən/",
+    "meaning": "tarmoq ulanishi",
+    "example": "My connection froze with my mouth open during the introduction.",
+    "translation": "Tanishtirish paytida ulanishim og‘zim ochiq holatda qotib qoldi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "network",
+    "ipa": "/ˈnetwɜːk/",
+    "meaning": "kompyuter tarmog‘i",
+    "example": "The office network is busiest when everyone sends Friday reports.",
+    "translation": "Hamma juma hisobotlarini yuborganda ofis tarmog‘i eng band bo‘ladi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "Wi-Fi",
+    "ipa": "/ˈwaɪ faɪ/",
+    "meaning": "simsiz tarmoqqa ulanish texnologiyasi",
+    "example": "The Wi-Fi password is longer than our office welcome speech.",
+    "translation": "Wi-Fi paroli ofisimizdagi qutlov nutqidan uzunroq.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "router",
+    "ipa": "/ˈruːtə/",
+    "meaning": "tarmoq yo‘naltirgichi; router",
+    "example": "The router blinked calmly while we blamed it for everything.",
+    "translation": "Biz hamma narsada ayblayotganimizda router xotirjam miltillab turdi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "signal",
+    "ipa": "/ˈsɪɡnəl/",
+    "meaning": "aloqa signali",
+    "example": "The signal is strongest beside the window and weakest beside my patience.",
+    "translation": "Signal deraza yonida eng kuchli, sabrim yonida esa eng kuchsiz.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "broadband",
+    "ipa": "/ˈbrɔːdbænd/",
+    "meaning": "yuqori tezlikdagi internet aloqasi",
+    "example": "Faster broadband means my video calls now show every embarrassing detail.",
+    "translation": "Tezroq internet videoqo‘ng‘iroqlarim endi har bir noqulay tafsilotni ko‘rsatishini anglatadi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "blog",
+    "ipa": "/blɒɡ/",
+    "meaning": "blog; internet kundaligi",
+    "example": "Her blog explains computer problems using pictures of confused penguins.",
+    "translation": "Uning blogi kompyuter muammolarini gangigan pingvinlar rasmlari bilan tushuntiradi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "forum",
+    "ipa": "/ˈfɔːrəm/",
+    "meaning": "internet muhokama maydoni",
+    "example": "Someone on the forum solved the problem I had blamed on Monday.",
+    "translation": "Forumdagi kimdir men dushanbadan ko‘rgan muammoni hal qildi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "podcast",
+    "ipa": "/ˈpɒdkɑːst/",
+    "meaning": "internetdagi audio eshittirish",
+    "example": "I listen to a language podcast while my laundry goes round.",
+    "translation": "Kirlarim aylanayotganda til o‘rgatuvchi podkast tinglayman.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "webinar",
+    "ipa": "/ˈwebɪnɑː/",
+    "meaning": "internet orqali o‘tkaziladigan seminar",
+    "example": "The webinar taught me useful skills while my cat slept through the whole thing.",
+    "translation": "Mushugim boshidan oxirigacha uxlagan vebinar menga foydali ko‘nikmalar o‘rgatdi.",
+    "topic": "4-oy • Internet va onlayn xizmatlar"
+  },
+  {
+    "word": "communication",
+    "ipa": "/kəˌmjuːnɪˈkeɪʃən/",
+    "meaning": "aloqa; axborot almashish",
+    "example": "Clear communication prevents five people from bringing the same cake.",
+    "translation": "Aniq axborot almashish besh kishining bir xil tort olib kelishiga yo‘l qo‘ymaydi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "conversation",
+    "ipa": "/ˌkɒnvəˈseɪʃən/",
+    "meaning": "suhbat",
+    "example": "Our conversation about work became a serious debate about lunch.",
+    "translation": "Ish haqidagi suhbatimiz tushlik bo‘yicha jiddiy bahsga aylandi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "chat",
+    "ipa": "/tʃæt/",
+    "meaning": "yozishma; chat",
+    "example": "The group chat contains three useful messages and forty pictures of cats.",
+    "translation": "Guruh chatida uchta foydali xabar va qirqta mushuk rasmi bor.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "text",
+    "ipa": "/tekst/",
+    "meaning": "qisqa telefon xabari yubormoq",
+    "example": "Text me the room number so I do not join another wedding by mistake.",
+    "translation": "Yana adashib boshqa to‘yga kirib qolmasligim uchun xona raqamini xabar qilib yuboring.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "reply",
+    "ipa": "/rɪˈplaɪ/",
+    "meaning": "yozma javob bermoq",
+    "example": "Please reply before I invent six possible explanations for your silence.",
+    "translation": "Sukutingiz uchun oltita mumkin bo‘lgan izoh o‘ylab topishimdan oldin javob bering.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "respond",
+    "ipa": "/rɪˈspɒnd/",
+    "meaning": "javob qaytarmoq",
+    "example": "She responds to customer questions faster than I respond to my alarm.",
+    "translation": "U mijoz savollariga men budilnigimga javob berganimdan tezroq javob qaytaradi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "contact",
+    "ipa": "/ˈkɒntækt/",
+    "meaning": "bog‘lanmoq",
+    "example": "Contact the help desk if your computer starts speaking in symbols.",
+    "translation": "Kompyuteringiz belgilar tilida gapira boshlasa, yordam xizmatiga bog‘laning.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "dial",
+    "ipa": "/ˈdaɪəl/",
+    "meaning": "telefon raqamini termoq",
+    "example": "Dial the office number carefully; yesterday I called a pet shop.",
+    "translation": "Ofis raqamini diqqat bilan tering; kecha men hayvonlar do‘koniga qo‘ng‘iroq qilibman.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "hang up",
+    "ipa": "/hæŋ ˈʌp/",
+    "meaning": "telefon suhbatini tugatmoq",
+    "example": "Do not hang up yet; I have finally found the document under my lunch.",
+    "translation": "Hali telefonni qo‘ymang; hujjatni nihoyat tushligim tagidan topdim.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "voicemail",
+    "ipa": "/ˈvɔɪsmeɪl/",
+    "meaning": "ovozli xabar qutisi yoki xabari",
+    "example": "I left a voicemail, then worried that I had forgotten my own name.",
+    "translation": "Ovozli xabar qoldirdim, keyin o‘z ismimni aytishni unutdimmi deb xavotirlandim.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "inbox",
+    "ipa": "/ˈɪnbɒks/",
+    "meaning": "kiruvchi xatlar qutisi",
+    "example": "My inbox fills up faster than the office kettle.",
+    "translation": "Kiruvchi xatlar qutim ofis choynagidan tezroq to‘ladi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "attachment",
+    "ipa": "/əˈtætʃmənt/",
+    "meaning": "xatga biriktirilgan fayl",
+    "example": "The attachment was missing from my email about checking attachments.",
+    "translation": "Biriktirilgan fayllarni tekshirish haqidagi xatimda ilova yo‘q edi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "forward",
+    "ipa": "/ˈfɔːwəd/",
+    "meaning": "xabarni boshqa odamga yubormoq",
+    "example": "Forward the invitation to Ali before he plans a quiet evening.",
+    "translation": "Ali tinch oqshom rejalashtirmasidan taklifnomani unga yuboring.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "receive",
+    "ipa": "/rɪˈsiːv/",
+    "meaning": "qabul qilib olmoq",
+    "example": "Did you receive my message, or is it still touring the internet?",
+    "translation": "Xabarimni oldingizmi yoki u hali ham internet bo‘ylab sayohat qilyaptimi?",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "deliver",
+    "ipa": "/dɪˈlɪvə/",
+    "meaning": "xabarni yetkazmoq",
+    "example": "The service could not deliver my message because the address was imaginary.",
+    "translation": "Manzil xayoliy bo‘lgani uchun xizmat xabarimni yetkaza olmadi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "notification",
+    "ipa": "/ˌnəʊtɪfɪˈkeɪʃən/",
+    "meaning": "bildirishnoma",
+    "example": "A notification interrupted the app that was teaching me to concentrate.",
+    "translation": "Diqqatni jamlashni o‘rgatayotgan ilovamni bildirishnoma bo‘lib qo‘ydi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "alert",
+    "ipa": "/əˈlɜːt/",
+    "meaning": "ogohlantiruvchi xabar yoki signal",
+    "example": "The calendar alert reminded me of a meeting I was already missing.",
+    "translation": "Taqvim ogohlantirishi allaqachon o‘tkazib yuborayotgan yig‘ilishimni eslatdi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "mute",
+    "ipa": "/mjuːt/",
+    "meaning": "mikrofon yoki ovozni o‘chirmoq",
+    "example": "Mute your microphone before your blender joins the discussion.",
+    "translation": "Blenderingiz muhokamaga qo‘shilmasidan mikrofoningizni o‘chiring.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "unmute",
+    "ipa": "/ˌʌnˈmjuːt/",
+    "meaning": "mikrofon yoki ovozni qayta yoqmoq",
+    "example": "Remember to unmute before delivering another brilliant silent speech.",
+    "translation": "Yana bir ajoyib ovozsiz nutq so‘zlashdan oldin mikrofonni yoqishni unutmang.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "volume",
+    "ipa": "/ˈvɒljuːm/",
+    "meaning": "ovoz balandligi",
+    "example": "Turn the volume down unless the next village needs this lecture too.",
+    "translation": "Bu ma’ruza keyingi qishloqqa ham kerak bo‘lmasa, ovozni pasaytiring.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "video",
+    "ipa": "/ˈvɪdiəʊ/",
+    "meaning": "video tasvir yoki yozuv",
+    "example": "The training video stars a stapler that never jams.",
+    "translation": "O‘quv videosining bosh qahramoni hech qachon tiqilib qolmaydigan stepler.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "audio",
+    "ipa": "/ˈɔːdiəʊ/",
+    "meaning": "ovozli yozuv yoki tovush",
+    "example": "The audio is clear enough to hear someone opening biscuits.",
+    "translation": "Ovoz kimdir pechenye ochayotganini eshitadigan darajada aniq.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "broadcast",
+    "ipa": "/ˈbrɔːdkɑːst/",
+    "meaning": "efirga uzatmoq",
+    "example": "They broadcast the school concert, including our surprise microphone squeak.",
+    "translation": "Ular maktab konsertini, jumladan, mikrofonimizning kutilmagan chiyillashini ham efirga uzatishdi.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "announce",
+    "ipa": "/əˈnaʊns/",
+    "meaning": "e’lon qilmoq",
+    "example": "Please announce the winner before my knees stop shaking.",
+    "translation": "Tizzalarim titrashdan to‘xtamasidan g‘olibni e’lon qiling.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "mention",
+    "ipa": "/ˈmenʃən/",
+    "meaning": "tilga olmoq",
+    "example": "Mention the deadline early, not after everyone has put their coats on.",
+    "translation": "Muddatni hamma paltosini kiyganidan keyin emas, oldinroq ayting.",
+    "topic": "4-oy • Aloqa va xabar almashish"
+  },
+  {
+    "word": "account",
+    "ipa": "/əˈkaʊnt/",
+    "meaning": "foydalanuvchi hisobi",
+    "example": "My account has a serious username and a picture of a dancing lemon.",
+    "translation": "Hisobimning foydalanuvchi nomi jiddiy, rasmi esa raqsga tushayotgan limon.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "username",
+    "ipa": "/ˈjuːzəneɪm/",
+    "meaning": "foydalanuvchi nomi",
+    "example": "Choose a username you will not hate explaining at a job interview.",
+    "translation": "Ishga kirish suhbatida tushuntirish noqulay bo‘lmaydigan foydalanuvchi nomini tanlang.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "password",
+    "ipa": "/ˈpɑːswɜːd/",
+    "meaning": "parol",
+    "example": "Max looks offended that his name is not a strong password.",
+    "translation": "Maks o‘z ismi kuchli parol emasligidan xafa ko‘rinadi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "profile",
+    "ipa": "/ˈprəʊfaɪl/",
+    "meaning": "foydalanuvchi sahifasi; profil",
+    "example": "Her profile photo looks professional, unlike the twelve attempts before it.",
+    "translation": "Profil surati undan oldingi o‘n ikki urinishdan farqli ravishda professional ko‘rinadi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "privacy",
+    "ipa": "/ˈprɪvəsi/",
+    "meaning": "shaxsiy ma’lumotlar daxlsizligi",
+    "example": "Check your privacy settings before the whole internet meets your bedroom.",
+    "translation": "Butun internet yotoqxonangiz bilan tanishmasidan maxfiylik sozlamalarini tekshiring.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "private",
+    "ipa": "/ˈpraɪvət/",
+    "meaning": "faqat ruxsat berilganlarga ko‘rinadigan; shaxsiy",
+    "example": "Keep the class group private unless you want strangers checking your homework.",
+    "translation": "Begonalar uy vazifangizni tekshirishini xohlamasangiz, sinf guruhini yopiq saqlang.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "public",
+    "ipa": "/ˈpʌblɪk/",
+    "meaning": "hammaga ochiq",
+    "example": "That post is public, so even your old headteacher could read it.",
+    "translation": "O‘sha post hammaga ochiq, shuning uchun hatto sobiq direktoringiz ham uni o‘qishi mumkin.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "secure",
+    "ipa": "/sɪˈkjʊə/",
+    "meaning": "himoyalangan; xavfsiz",
+    "example": "A secure account needs more protection than your pet's birthday.",
+    "translation": "Himoyalangan hisob uchun uy hayvoningizning tug‘ilgan kunidan ko‘proq himoya kerak.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "verify",
+    "ipa": "/ˈverɪfaɪ/",
+    "meaning": "to‘g‘riligini tasdiqlamoq; tekshirmoq",
+    "example": "Verify the sender's identity before helping a mysterious prince with his banking.",
+    "translation": "Sirli shahzodaga bank ishlarida yordam berishdan oldin jo‘natuvchining kimligini tekshiring.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "protect",
+    "ipa": "/prəˈtekt/",
+    "meaning": "himoya qilmoq",
+    "example": "Protect your files before your laptop decides to have an adventure.",
+    "translation": "Noutbukingiz sarguzashtga otlanishga qaror qilmasidan fayllaringizni himoya qiling.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "permission",
+    "ipa": "/pəˈmɪʃən/",
+    "meaning": "ruxsat",
+    "example": "The torch app asked for permission to read my contacts, which seemed rather curious.",
+    "translation": "Chiroq ilovasi kontaktlarimni o‘qishga ruxsat so‘radi, bu ancha qiziq tuyuldi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "access",
+    "ipa": "/ˈækses/",
+    "meaning": "kirish yoki foydalanish huquqi",
+    "example": "Only the project team has access to our unfinished designs.",
+    "translation": "Tugallanmagan dizaynlarimizdan faqat loyiha jamoasi foydalana oladi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "backup",
+    "ipa": "/ˈbækʌp/",
+    "meaning": "zaxira nusxa",
+    "example": "A backup saved my report when the laptop met a cup of tea.",
+    "translation": "Noutbuk bir piyola choy bilan uchrashganda zaxira nusxa hisobotimni saqlab qoldi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "virus",
+    "ipa": "/ˈvaɪrəs/",
+    "meaning": "kompyuter virusi",
+    "example": "A computer virus does not need a scarf or hot soup.",
+    "translation": "Kompyuter virusiga sharf ham, issiq sho‘rva ham kerak emas.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "spam",
+    "ipa": "/spæm/",
+    "meaning": "keraksiz ommaviy xabarlar",
+    "example": "My spam folder thinks I have won more prizes than any athlete.",
+    "translation": "Spam papkam meni har qanday sportchidan ko‘proq sovrin yutgan deb o‘ylaydi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "scam",
+    "ipa": "/skæm/",
+    "meaning": "firibgarlik; aldov",
+    "example": "The free-laptop offer was a scam with very enthusiastic punctuation.",
+    "translation": "Bepul noutbuk taklifi juda jo‘shqin tinish belgilariga ega firibgarlik edi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "hacker",
+    "ipa": "/ˈhækə/",
+    "meaning": "kompyuter tizimiga ruxsatsiz kiruvchi shaxs",
+    "example": "A hacker would find my cat's name easier to guess than I once thought.",
+    "translation": "Xaker uchun mushugimning ismini topish men ilgari o‘ylaganimdan osonroq bo‘lardi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "block",
+    "ipa": "/blɒk/",
+    "meaning": "xabar yoki foydalanuvchini to‘smoq",
+    "example": "Block the sender who keeps offering you a castle for ten pounds.",
+    "translation": "Sizga o‘n funtga qasr taklif qilaveradigan jo‘natuvchini bloklang.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "filter",
+    "ipa": "/ˈfɪltə/",
+    "meaning": "xabarlarni saralovchi filtr",
+    "example": "The email filter sent the fake prince straight to spam.",
+    "translation": "Xat filtri soxta shahzodani to‘g‘ri spamga jo‘natdi.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "sign up",
+    "ipa": "/saɪn ˈʌp/",
+    "meaning": "ro‘yxatdan o‘tmoq",
+    "example": "You can sign up for the course without telling the website your dog's life story.",
+    "translation": "Saytga itingizning hayotini hikoya qilmasdan kursga ro‘yxatdan o‘tishingiz mumkin.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "unlock",
+    "ipa": "/ʌnˈlɒk/",
+    "meaning": "qulfdan chiqarmoq",
+    "example": "I could not unlock my phone while wearing those enormous gloves.",
+    "translation": "O‘sha ulkan qo‘lqoplarni kiyib telefonimni qulfdan chiqara olmadim.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "reset",
+    "ipa": "/ˌriːˈset/",
+    "meaning": "qayta belgilamoq; tiklamoq",
+    "example": "Reset your password if remembering it requires an archaeological expedition.",
+    "translation": "Parolingizni eslash uchun arxeologik ekspeditsiya kerak bo‘lsa, uni yangidan belgilang.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "recover",
+    "ipa": "/rɪˈkʌvə/",
+    "meaning": "yo‘qolgan fayl yoki hisobni tiklamoq",
+    "example": "We managed to recover the file that I had confidently deleted.",
+    "translation": "Men ishonch bilan o‘chirgan faylni tiklashga muvaffaq bo‘ldik.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "log in",
+    "ipa": "/lɒɡ ˈɪn/",
+    "meaning": "hisobga kirmoq",
+    "example": "Log in before writing your essay, or the website may forget you exist.",
+    "translation": "Insho yozishdan oldin hisobga kiring, aks holda sayt borligingizni unutishi mumkin.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "log out",
+    "ipa": "/lɒɡ ˈaʊt/",
+    "meaning": "hisobdan chiqmoq",
+    "example": "Log out on shared computers before the next person becomes you.",
+    "translation": "Umumiy kompyuterda keyingi odam sizga aylanmasidan hisobdan chiqing.",
+    "topic": "4-oy • Raqamli xavfsizlik"
+  },
+  {
+    "word": "skill",
+    "ipa": "/skɪl/",
+    "meaning": "ko‘nikma",
+    "example": "Explaining a problem calmly is a skill I practise near the printer.",
+    "translation": "Muammoni xotirjam tushuntirish printer yonida mashq qiladigan ko‘nikmamdir.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "ability",
+    "ipa": "/əˈbɪləti/",
+    "meaning": "qobiliyat",
+    "example": "Her ability to remember names makes every school reunion easier.",
+    "translation": "Uning ismlarni eslab qolish qobiliyati har bir sinfdoshlar uchrashuvini osonlashtiradi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "talent",
+    "ipa": "/ˈtælənt/",
+    "meaning": "iste’dod",
+    "example": "He has a talent for turning dull numbers into interesting stories.",
+    "translation": "U zerikarli raqamlarni qiziqarli hikoyalarga aylantirish iste’dodiga ega.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "creativity",
+    "ipa": "/ˌkriːeɪˈtɪvəti/",
+    "meaning": "ijodkorlik",
+    "example": "The broken projector tested our creativity and our drawing skills.",
+    "translation": "Buzilgan proyektor ijodkorligimizni va rasm chizish ko‘nikmalarimizni sinadi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "confidence",
+    "ipa": "/ˈkɒnfɪdəns/",
+    "meaning": "o‘ziga ishonch",
+    "example": "My confidence grew after the audience laughed at the right moment.",
+    "translation": "Tinglovchilar kerakli paytda kulgach, o‘zimga ishonchim oshdi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "patience",
+    "ipa": "/ˈpeɪʃəns/",
+    "meaning": "sabr-toqat",
+    "example": "Learning to code requires patience, especially with missing commas.",
+    "translation": "Kod yozishni o‘rganish, ayniqsa tushib qolgan vergullar bilan, sabr talab qiladi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "concentration",
+    "ipa": "/ˌkɒnsənˈtreɪʃən/",
+    "meaning": "diqqatni bir joyga jamlash",
+    "example": "My concentration survived the traffic but not the smell of fresh bread.",
+    "translation": "Diqqatim transport shovqiniga bardosh berdi, lekin yangi non hidiga emas.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "effort",
+    "ipa": "/ˈefət/",
+    "meaning": "harakat; kuch sarflash",
+    "example": "A little effort every day works better than one heroic night before the exam.",
+    "translation": "Har kuni ozgina harakat qilish imtihon oldidagi bitta qahramonona kechadan yaxshiroq natija beradi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "improvement",
+    "ipa": "/ɪmˈpruːvmənt/",
+    "meaning": "yaxshilanish",
+    "example": "There is a clear improvement: my emails now reach the right people.",
+    "translation": "Aniq yaxshilanish bor: xatlarim endi kerakli odamlarga yetib boryapti.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "achievement",
+    "ipa": "/əˈtʃiːvmənt/",
+    "meaning": "erishilgan yutuq",
+    "example": "Finishing the course was an achievement worth more than a sleepy thumbs-up.",
+    "translation": "Kursni tugatish uyqusirab bosh barmoq ko‘rsatishdan ko‘proq e’tirofga loyiq yutuq edi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "success",
+    "ipa": "/səkˈses/",
+    "meaning": "muvaffaqiyat",
+    "example": "The workshop was a success because everyone left with a working website.",
+    "translation": "Amaliy seminar muvaffaqiyatli o‘tdi, chunki hamma ishlaydigan sayt bilan ketdi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "strength",
+    "ipa": "/streŋθ/",
+    "meaning": "kuchli jihat",
+    "example": "Her main strength is explaining complex ideas without making anyone feel silly.",
+    "translation": "Uning asosiy kuchli jihati murakkab g‘oyalarni hech kimni nodon his qildirmay tushuntirishidir.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "weakness",
+    "ipa": "/ˈwiːknəs/",
+    "meaning": "zaif jihat",
+    "example": "My weakness is public speaking, especially when the microphone whistles back.",
+    "translation": "Zaif jihatim omma oldida gapirish, ayniqsa mikrofon javoban hushtak chalganda.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "capable",
+    "ipa": "/ˈkeɪpəbəl/",
+    "meaning": "qodir; uddalay oladigan",
+    "example": "You are capable of leading the session without hiding behind the slides.",
+    "translation": "Slaydlar ortiga yashirinmasdan mashg‘ulotni boshqarishga qodirsiz.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "skilled",
+    "ipa": "/skɪld/",
+    "meaning": "malakali; mohir",
+    "example": "A skilled technician can hear trouble before the machine starts dancing.",
+    "translation": "Malakali texnik uskuna raqsga tushishidan oldin nosozlikni ovozidan sezadi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "practical",
+    "ipa": "/ˈpræktɪkəl/",
+    "meaning": "amaliy",
+    "example": "The course teaches practical skills, such as fixing a tap without flooding the room.",
+    "translation": "Kurs xonani suvga bostirmay kranni tuzatish kabi amaliy ko‘nikmalarni o‘rgatadi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "creative",
+    "ipa": "/kriˈeɪtɪv/",
+    "meaning": "ijodkor; yangicha fikrlaydigan",
+    "example": "Our creative designer turned a boring instruction sheet into a comic.",
+    "translation": "Ijodkor dizaynerimiz zerikarli ko‘rsatmalar varag‘ini komiksga aylantirdi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "confident",
+    "ipa": "/ˈkɒnfɪdənt/",
+    "meaning": "o‘ziga ishongan",
+    "example": "I felt confident until someone asked me to connect the projector.",
+    "translation": "Kimdir proyektorni ulashimni so‘raguncha o‘zimga ishongan edim.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "independent",
+    "ipa": "/ˌɪndɪˈpendənt/",
+    "meaning": "mustaqil",
+    "example": "Independent learners still ask questions; they just find the answers more actively.",
+    "translation": "Mustaqil o‘rganuvchilar ham savol beradi; ular shunchaki javoblarni faolroq izlaydi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "flexible",
+    "ipa": "/ˈfleksəbəl/",
+    "meaning": "o‘zgarishga moslasha oladigan",
+    "example": "A flexible team can change the plan without treating it as a national disaster.",
+    "translation": "Moslashuvchan jamoa rejani milliy falokat deb bilmasdan o‘zgartira oladi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "accurate",
+    "ipa": "/ˈækjərət/",
+    "meaning": "aniq; xatosiz",
+    "example": "Accurate notes stopped us from ordering a thousand folders instead of a hundred.",
+    "translation": "Aniq qaydlar yuzta o‘rniga mingta jild buyurtma qilishimizga yo‘l qo‘ymadi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "careful",
+    "ipa": "/ˈkeəfəl/",
+    "meaning": "ehtiyotkor; sinchkov",
+    "example": "A careful reader noticed that the meeting date was last Tuesday.",
+    "translation": "Sinchkov o‘quvchi yig‘ilish sanasi o‘tgan seshanba ekanini payqadi.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "develop",
+    "ipa": "/dɪˈveləp/",
+    "meaning": "rivojlantirmoq",
+    "example": "You can develop your speaking skills without giving speeches to the whole bus.",
+    "translation": "Butun avtobusga nutq so‘zlamasdan ham gapirish ko‘nikmalaringizni rivojlantira olasiz.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "improve",
+    "ipa": "/ɪmˈpruːv/",
+    "meaning": "yaxshilamoq",
+    "example": "I want to improve my typing so the keyboard stops winning our daily race.",
+    "translation": "Klaviatura kundalik poygamizda yutishni to‘xtatishi uchun yozishimni yaxshilamoqchiman.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "adapt",
+    "ipa": "/əˈdæpt/",
+    "meaning": "moslashmoq",
+    "example": "We had to adapt when the training room became a temporary storeroom.",
+    "translation": "O‘quv xonasi vaqtinchalik omborga aylanganda moslashishga majbur bo‘ldik.",
+    "topic": "4-oy • Ko‘nikma va rivojlanish"
+  },
+  {
+    "word": "experiment",
+    "ipa": "/ɪkˈsperɪmənt/",
+    "meaning": "tajriba; eksperiment",
+    "example": "Our experiment tested whether music helps plants or just entertains the gardener.",
+    "translation": "Tajribamiz musiqa o‘simliklarga yordam beradimi yoki faqat bog‘bonni ovutadimi, shuni tekshirdi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "survey",
+    "ipa": "/ˈsɜːveɪ/",
+    "meaning": "so‘rovnoma asosidagi o‘rganish",
+    "example": "The survey found that nobody wanted meetings before breakfast.",
+    "translation": "So‘rov hech kim nonushtadan oldin yig‘ilish xohlamasligini aniqladi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "questionnaire",
+    "ipa": "/ˌkwestʃəˈneə/",
+    "meaning": "savollar varag‘i; anketa",
+    "example": "The questionnaire about free time took most of my free time.",
+    "translation": "Bo‘sh vaqt haqidagi anketa bo‘sh vaqtimning ko‘p qismini oldi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "sample",
+    "ipa": "/ˈsɑːmpəl/",
+    "meaning": "tadqiqot uchun namuna",
+    "example": "We took a sample of pond water and found a very busy tiny world.",
+    "translation": "Hovuz suvidan namuna oldik va juda serharakat mitti olamni topdik.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "data",
+    "ipa": "/ˈdeɪtə/",
+    "meaning": "ma’lumotlar",
+    "example": "Our data shows that the office gets quieter when the biscuits run out.",
+    "translation": "Ma’lumotlarimiz pechenye tugaganda ofis tinchroq bo‘lishini ko‘rsatadi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "evidence",
+    "ipa": "/ˈevɪdəns/",
+    "meaning": "dalil",
+    "example": "Crumbs on the keyboard are evidence that someone ignored the no-food rule.",
+    "translation": "Klaviaturadagi ushoqlar kimdir ovqatlanmaslik qoidasini buzganining dalilidir.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "source",
+    "ipa": "/sɔːs/",
+    "meaning": "ma’lumot manbasi",
+    "example": "Check the source before believing that penguins invented email.",
+    "translation": "Pingvinlar elektron pochtani ixtiro qilganiga ishonishdan oldin manbani tekshiring.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "reference",
+    "ipa": "/ˈrefərəns/",
+    "meaning": "foydalanilgan manbaga havola",
+    "example": "Add a reference so readers know the fact did not come from your hamster.",
+    "translation": "O‘quvchilar ma’lumot xomyagingizdan kelmaganini bilishi uchun manbaga havola qo‘shing.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "topic",
+    "ipa": "/ˈtɒpɪk/",
+    "meaning": "mavzu",
+    "example": "She chose sleep as her research topic and promised to stay awake.",
+    "translation": "U tadqiqot mavzusi sifatida uyquni tanladi va uxlamaslikka va’da berdi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "title",
+    "ipa": "/ˈtaɪtəl/",
+    "meaning": "sarlavha",
+    "example": "The title caught my attention because it mentioned both robots and sandwiches.",
+    "translation": "Sarlavha ham robotlarni, ham sendvichlarni tilga olgani uchun e’tiborimni tortdi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "purpose",
+    "ipa": "/ˈpɜːpəs/",
+    "meaning": "maqsad; vazifa",
+    "example": "The purpose of the experiment is learning, not decorating the ceiling.",
+    "translation": "Tajribaning maqsadi shiftni bezash emas, bilim olish.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "prediction",
+    "ipa": "/prɪˈdɪkʃən/",
+    "meaning": "oldindan aytilgan taxmin",
+    "example": "My prediction was wrong, but at least the paper bridge looked elegant.",
+    "translation": "Taxminim noto‘g‘ri chiqdi, lekin hech bo‘lmasa qog‘oz ko‘prik nafis ko‘rindi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "observe",
+    "ipa": "/əbˈzɜːv/",
+    "meaning": "diqqat bilan kuzatmoq",
+    "example": "Observe the ants without offering them your entire lunch.",
+    "translation": "Chumolilarni butun tushligingizni taklif qilmasdan kuzating.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "observation",
+    "ipa": "/ˌɒbzəˈveɪʃən/",
+    "meaning": "kuzatuv; kuzatishda aniqlangan holat",
+    "example": "My first observation was that the snail had no interest in our timetable.",
+    "translation": "Birinchi kuzatuvim shuki, shilliqqurt jadvalimizga umuman qiziqmadi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "investigate",
+    "ipa": "/ɪnˈvestɪɡeɪt/",
+    "meaning": "tekshirib o‘rganmoq",
+    "example": "We will investigate why one classroom is always colder than the corridor.",
+    "translation": "Nega bitta sinfxona doim yo‘lakdan sovuqroq bo‘lishini tekshirib o‘rganamiz.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "discovery",
+    "ipa": "/dɪˈskʌvəri/",
+    "meaning": "kashfiyot; yangi topilma",
+    "example": "Our biggest discovery was that the sensor had been upside down.",
+    "translation": "Eng katta topilmamiz datchik teskari o‘rnatilganini aniqlash bo‘ldi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "analyse",
+    "ipa": "/ˈænəlaɪz/",
+    "meaning": "tahlil qilmoq",
+    "example": "We analyse the results before celebrating our imaginary scientific genius.",
+    "translation": "Xayoliy ilmiy daholigimizni nishonlashdan oldin natijalarni tahlil qilamiz.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "analysis",
+    "ipa": "/əˈnæləsɪs/",
+    "meaning": "tahlil",
+    "example": "The analysis showed that my favourite explanation was completely wrong.",
+    "translation": "Tahlil men yoqtirgan izoh butunlay noto‘g‘ri ekanini ko‘rsatdi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "count",
+    "ipa": "/kaʊnt/",
+    "meaning": "sanamoq",
+    "example": "Count the responses twice, unless you want one student to become three.",
+    "translation": "Bitta o‘quvchi uchtaga aylanishini xohlamasangiz, javoblarni ikki marta sanang.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "measurement",
+    "ipa": "/ˈmeʒəmənt/",
+    "meaning": "o‘lchov; o‘lchash natijasi",
+    "example": "One careless measurement turned our model house into a very narrow tower.",
+    "translation": "Bitta e’tiborsiz o‘lchov maket uyimizni juda ingichka minoraga aylantirdi.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "record",
+    "ipa": "/rɪˈkɔːd/",
+    "meaning": "qayd etmoq",
+    "example": "Record each result immediately, before your memory improves the story.",
+    "translation": "Xotirangiz hikoyani bezashidan oldin har bir natijani darhol qayd eting.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "collect",
+    "ipa": "/kəˈlekt/",
+    "meaning": "ma’lumot yoki namuna to‘plamoq",
+    "example": "We collect temperature readings, not excuses for missing science class.",
+    "translation": "Biz tabiiy fanlar darsini qoldirish bahonalarini emas, harorat ko‘rsatkichlarini to‘playmiz.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "group",
+    "ipa": "/ɡruːp/",
+    "meaning": "guruhlarga ajratmoq",
+    "example": "Group the answers by topic before your desk becomes a paper jungle.",
+    "translation": "Stolingiz qog‘oz changalzoriga aylanmasidan javoblarni mavzu bo‘yicha guruhlang.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "conclude",
+    "ipa": "/kənˈkluːd/",
+    "meaning": "xulosa chiqarmoq",
+    "example": "We can conclude that one sleepy volunteer is not enough for this study.",
+    "translation": "Bitta uyqusiragan ko‘ngilli bu tadqiqot uchun yetarli emas degan xulosa chiqarishimiz mumkin.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "conclusion",
+    "ipa": "/kənˈkluːʒən/",
+    "meaning": "xulosa",
+    "example": "Our conclusion was simple: the plants needed water, not motivational speeches.",
+    "translation": "Xulosamiz oddiy edi: o‘simliklarga ruhlantiruvchi nutqlar emas, suv kerak ekan.",
+    "topic": "4-oy • Tadqiqot usullari"
+  },
+  {
+    "word": "scientific",
+    "ipa": "/ˌsaɪənˈtɪfɪk/",
+    "meaning": "ilmiy",
+    "example": "A scientific explanation needs more than my uncle's confident nod.",
+    "translation": "Ilmiy izoh uchun amakimning ishonchli bosh irg‘ashidan ko‘proq narsa kerak.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "digital",
+    "ipa": "/ˈdɪdʒɪtəl/",
+    "meaning": "raqamli",
+    "example": "The digital scale gave a precise answer that the baker did not expect.",
+    "translation": "Raqamli tarozi novvoy kutmagan aniq javobni berdi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "microscope",
+    "ipa": "/ˈmaɪkrəskəʊp/",
+    "meaning": "mikroskop",
+    "example": "Under the microscope, a drop of water looked busier than our office.",
+    "translation": "Mikroskop ostida bir tomchi suv ofisimizdan ham gavjumroq ko‘rindi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "telescope",
+    "ipa": "/ˈtelɪskəʊp/",
+    "meaning": "teleskop",
+    "example": "The telescope showed us the moon without revealing any cheese.",
+    "translation": "Teleskop bizga Oyni ko‘rsatdi, lekin hech qanday pishloqni ochib bermadi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "lens",
+    "ipa": "/lenz/",
+    "meaning": "linza",
+    "example": "Clean the lens before announcing that every star has a fingerprint.",
+    "translation": "Har bir yulduzda barmoq izi borligini e’lon qilishdan oldin linzani tozalang.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "test tube",
+    "ipa": "/ˈtest tjuːb/",
+    "meaning": "probirka",
+    "example": "The test tube was tiny, but our excitement was enormous.",
+    "translation": "Probirka kichkina edi, hayajonimiz esa ulkan.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "thermometer",
+    "ipa": "/θəˈmɒmɪtə/",
+    "meaning": "termometr; harorat o‘lchagich",
+    "example": "The thermometer confirmed that the classroom was warmer than our welcome.",
+    "translation": "Termometr sinfxona kutib olishimizdan ham iliqroq ekanini tasdiqladi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "Celsius",
+    "ipa": "/ˈselsiəs/",
+    "meaning": "Selsiy harorat shkalasi",
+    "example": "The lab was twenty degrees Celsius, but my tea had other plans.",
+    "translation": "Laboratoriyada harorat yigirma daraja Selsiy edi, lekin choyimning rejalari boshqacha edi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "millimetre",
+    "ipa": "/ˈmɪlɪmiːtə/",
+    "meaning": "millimetr",
+    "example": "A millimetre sounds tiny until your robot misses a doorway by one.",
+    "translation": "Robot eshikdan bir millimetr tufayli o‘tolmay qolmaguncha, bu birlik juda kichik tuyuladi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "unit",
+    "ipa": "/ˈjuːnɪt/",
+    "meaning": "o‘lchov birligi",
+    "example": "Write the unit beside the number, or your bridge might be three bananas long.",
+    "translation": "Raqam yoniga o‘lchov birligini yozing, aks holda ko‘prigingiz uch banan uzunlikda bo‘lishi mumkin.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "length",
+    "ipa": "/leŋθ/",
+    "meaning": "uzunlik",
+    "example": "We measured the length of the cable before celebrating its usefulness.",
+    "translation": "Kabelning foydaliligini nishonlashdan oldin uzunligini o‘lchadik.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "width",
+    "ipa": "/wɪdθ/",
+    "meaning": "kenglik",
+    "example": "The width of the robot matters when the classroom door is narrow.",
+    "translation": "Sinfxona eshigi tor bo‘lsa, robotning kengligi muhim bo‘ladi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "height",
+    "ipa": "/haɪt/",
+    "meaning": "balandlik",
+    "example": "The height of our paper tower impressed everyone until someone sneezed.",
+    "translation": "Kimdir aksirguncha qog‘oz minoramizning balandligi hammani qoyil qoldirdi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "diameter",
+    "ipa": "/daɪˈæmɪtə/",
+    "meaning": "diametr; aylana markazidan o‘tuvchi kesma uzunligi",
+    "example": "We measured the diameter of the wheel before discovering it would not fit our robot.",
+    "translation": "G‘ildirak robotimizga sig‘masligini bilishdan oldin uning diametrini o‘lchadik.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "weight",
+    "ipa": "/weɪt/",
+    "meaning": "vazn; og‘irlik",
+    "example": "The weight of the books bent our experimental cardboard shelf.",
+    "translation": "Kitoblarning og‘irligi tajriba uchun yasalgan karton tokchamizni egib qo‘ydi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "centimetre",
+    "ipa": "/ˈsentɪmiːtə/",
+    "meaning": "santimetr",
+    "example": "One extra centimetre made our model too wide for its carefully built box.",
+    "translation": "Bitta ortiqcha santimetr maketimizni puxta yasalgan qutisiga sig‘maydigan darajada keng qilib qo‘ydi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "speed",
+    "ipa": "/spiːd/",
+    "meaning": "tezlik",
+    "example": "The robot's speed increased after we removed the unnecessary toy passenger.",
+    "translation": "Keraksiz o‘yinchoq yo‘lovchini olib tashlagach, robotning tezligi oshdi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "average",
+    "ipa": "/ˈævərɪdʒ/",
+    "meaning": "o‘rtacha qiymat",
+    "example": "The average rose sharply when we included the headteacher's enormous bookshelf.",
+    "translation": "Direktorning ulkan kitob javonini qo‘shganimizda o‘rtacha qiymat keskin oshdi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "total",
+    "ipa": "/ˈtəʊtəl/",
+    "meaning": "jami miqdor",
+    "example": "The total includes every survey response, even the one written in purple crayon.",
+    "translation": "Jami miqdorga har bir so‘rov javobi, hatto binafsha mumqalamda yozilgani ham kiradi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "maximum",
+    "ipa": "/ˈmæksɪməm/",
+    "meaning": "eng katta miqdor; maksimum",
+    "example": "The maximum was twelve clicks, which seemed a lot for opening one file.",
+    "translation": "Eng katta miqdor o‘n ikki marta bosish bo‘ldi, bu bitta faylni ochish uchun ko‘pdek tuyuldi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "minimum",
+    "ipa": "/ˈmɪnɪməm/",
+    "meaning": "eng kichik miqdor; minimum",
+    "example": "The minimum was two seconds, set by someone who clearly wanted lunch.",
+    "translation": "Eng kichik vaqt ikki soniya bo‘ldi, uni tushlikni juda xohlagan kimdir qayd etdi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "diagram",
+    "ipa": "/ˈdaɪəɡræm/",
+    "meaning": "tuzilishni tushuntiruvchi chizma",
+    "example": "My diagram explains the machine better than my excited hand movements.",
+    "translation": "Chizmam uskunani hayajonli qo‘l harakatlarimdan yaxshiroq tushuntiradi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "chart",
+    "ipa": "/tʃɑːt/",
+    "meaning": "diagramma; ko‘rsatkichlar jadvali",
+    "example": "The chart shows that our coffee use rises with the number of meetings.",
+    "translation": "Diagramma yig‘ilishlar soni oshishi bilan qahva iste’molimiz ham oshishini ko‘rsatadi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "graph",
+    "ipa": "/ɡrɑːf/",
+    "meaning": "grafik",
+    "example": "The graph went up so steeply that someone drew a tiny climber on it.",
+    "translation": "Grafik shunchalik tik ko‘tarildiki, kimdir unga mitti alpinist chizdi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  },
+  {
+    "word": "trend",
+    "ipa": "/trend/",
+    "meaning": "o‘zgarish yo‘nalishi; tendensiya",
+    "example": "The graph shows a clear trend: fewer people answer surveys on Friday afternoons.",
+    "translation": "Grafik aniq yo‘nalishni ko‘rsatadi: juma kuni tushdan keyin so‘rovlarga kamroq odam javob beradi.",
+    "topic": "4-oy • Ilmiy asboblar va o‘lchovlar"
+  }
+]

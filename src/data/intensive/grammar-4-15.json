@@ -1,0 +1,3034 @@
+{
+  "4.1": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: This parcel is for Sara. Please give it to ___.",
+      "answers": [
+        "her"
+      ],
+      "explanation": "Sara ayol kishini bildiradi; to predlogidan keyin her ishlatiladi."
+    },
+    {
+      "prompt": "To‘ldiruvchi olmoshni tanlang: The children are outside. Can you see ___? (they / them)",
+      "answers": [
+        "them"
+      ],
+      "explanation": "See fe’lining to‘ldiruvchisi uchun them kerak; they ega shakli."
+    }
+  ],
+  "4.2": [
+    {
+      "prompt": "To‘g‘ri juftlikni yozing: ___ invited ___. (She / Her; we / us)",
+      "answers": [
+        "She, us"
+      ],
+      "explanation": "Birinchi o‘rin ega uchun she, ikkinchisi to‘ldiruvchi uchun us."
+    },
+    {
+      "prompt": "Xatoni tuzatib butun gapni yozing: Him helps me.",
+      "answers": [
+        "He helps me."
+      ],
+      "explanation": "Ega o‘rnida him emas, he ishlatiladi. Me to‘ldiruvchi sifatida to‘g‘ri."
+    }
+  ],
+  "4.3": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: We own this little café. It is ___ café.",
+      "answers": [
+        "our"
+      ],
+      "explanation": "Bizga tegishlilik ot oldida our bilan ifodalanadi."
+    },
+    {
+      "prompt": "Tanlang: The dog is wagging ___ tail. (its / it's)",
+      "answers": [
+        "its"
+      ],
+      "explanation": "Its egalik bildiradi; it's esa it is yoki it has qisqartmasi."
+    }
+  ],
+  "4.4": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: These keys belong to me. They are ___.",
+      "answers": [
+        "mine"
+      ],
+      "explanation": "Otdan keyin mustaqil egalik olmoshi mine ishlatiladi."
+    },
+    {
+      "prompt": "Tanlang: This garden belongs to them. It is ___. (their / theirs)",
+      "answers": [
+        "theirs"
+      ],
+      "explanation": "Keyin ot kelmaganligi uchun theirs kerak."
+    }
+  ],
+  "4.5": [
+    {
+      "prompt": "Ikki javobni tartib bilan yozing: Is this ___ scarf, or is it ___? (your/yours; her/hers)",
+      "answers": [
+        "your, hers"
+      ],
+      "explanation": "Scarf oldidan your; ot takrorlanmagan ikkinchi o‘rinda hers ishlatiladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: That seat is my.",
+      "answers": [
+        "That seat is mine."
+      ],
+      "explanation": "Mustaqil egalik uchun my emas, mine kerak."
+    }
+  ],
+  "4.6": [
+    {
+      "prompt": "Yaqiningizdagi bitta soatga ishora qiling: ___ is a beautiful clock. (This / That)",
+      "answers": [
+        "This"
+      ],
+      "explanation": "This yaqin turgan birlikdagi narsaga ishora qiladi."
+    },
+    {
+      "prompt": "Uzoqdagi bitta binoga ishora qiling: ___ is our clinic. (This / That)",
+      "answers": [
+        "That"
+      ],
+      "explanation": "That uzoqdagi birlikdagi narsa uchun ishlatiladi."
+    }
+  ],
+  "4.7": [
+    {
+      "prompt": "Qo‘lingizdagi bir nechta rasmlar: ___ are my photos. (These / Those)",
+      "answers": [
+        "These"
+      ],
+      "explanation": "Yaqindagi ko‘plikdagi narsalar uchun these kerak."
+    },
+    {
+      "prompt": "Ko‘chaning narigi tomonidagi daraxtlar: ___ are apple trees. (These / Those)",
+      "answers": [
+        "Those"
+      ],
+      "explanation": "Those uzoqdagi ko‘plikdagi narsalarga ishora qiladi."
+    }
+  ],
+  "4.8": [
+    {
+      "prompt": "Egalikni so‘rang: ___ gloves are these? — They are Dad's.",
+      "answers": [
+        "Whose"
+      ],
+      "explanation": "Whose narsaning kimga tegishli ekanini so‘raydi."
+    },
+    {
+      "prompt": "Whose bilan savol tuzing: This umbrella belongs to Lena. «Bu soyabon kimniki?»",
+      "answers": [
+        "Whose umbrella is this?"
+      ],
+      "explanation": "Whose ot oldida keladi; so‘roq tartibi is this bo‘ladi."
+    }
+  ],
+  "4.9": [
+    {
+      "prompt": "Otni takrorlamang: I don't want the large plate. I want the small ___.",
+      "answers": [
+        "one"
+      ],
+      "explanation": "Birlikdagi plate o‘rniga one qo‘yiladi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: These socks are wet. Bring the dry ___.",
+      "answers": [
+        "ones"
+      ],
+      "explanation": "Ko‘plikdagi socks o‘rniga ones ishlatiladi."
+    }
+  ],
+  "4.10": [
+    {
+      "prompt": "Tanlang: The room is empty. There is ___ inside. (somebody / nobody)",
+      "answers": [
+        "nobody"
+      ],
+      "explanation": "Xona bo‘sh bo‘lsa, hech kim yo‘q: nobody. Fe’lga yana not qo‘shilmaydi."
+    },
+    {
+      "prompt": "Oddiy savolni to‘ldiring: Does ___ know the address? (anybody / nobody)",
+      "answers": [
+        "anybody"
+      ],
+      "explanation": "Oddiy savolda biror kishi ma’nosida anybody ishlatiladi."
+    }
+  ],
+  "4.11": [
+    {
+      "prompt": "Tanlang: I opened the box, but there was ___ in it. It was empty. (something / nothing)",
+      "answers": [
+        "nothing"
+      ],
+      "explanation": "Bo‘sh qutida hech narsa yo‘q: nothing."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: I haven't eaten ___ today. (something / anything)",
+      "answers": [
+        "anything"
+      ],
+      "explanation": "Inkor gapda biror narsa ma’nosida anything kerak."
+    }
+  ],
+  "4.12": [
+    {
+      "prompt": "Fe’lni tanlang: Every visitor ___ a badge. (gets / get)",
+      "answers": [
+        "gets"
+      ],
+      "explanation": "Every bilan birlikdagi ot va birlikdagi fe’l ishlatiladi."
+    },
+    {
+      "prompt": "Fe’lni tanlang: Each of the twins ___ a bicycle. (has / have)",
+      "answers": [
+        "has"
+      ],
+      "explanation": "Each alohida har bir kishini bildiradi va has bilan moslashadi."
+    }
+  ],
+  "4.13": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: Be careful with the knife; don't hurt ___. (you — bitta odam)",
+      "answers": [
+        "yourself"
+      ],
+      "explanation": "Harakat o‘sha shaxsning o‘ziga qaytsa, yourself kerak."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: We painted the kitchen ___. Nobody helped us.",
+      "answers": [
+        "ourselves"
+      ],
+      "explanation": "We uchun o‘zlik olmoshi ourselves; ishni o‘zimiz bajarganimizni bildiradi."
+    }
+  ],
+  "4.14": [
+    {
+      "prompt": "O‘zaro harakatni tanlang: The two friends send ___ postcards. (themselves / each other)",
+      "answers": [
+        "each other"
+      ],
+      "explanation": "Ular bir-biriga yuboradi, o‘zlariga emas; each other kerak."
+    },
+    {
+      "prompt": "«Ular bir-birini tushunishadi» gapini understand va each other bilan yozing.",
+      "answers": [
+        "They understand each other."
+      ],
+      "explanation": "Each other ikki yoki undan ortiq kishining o‘zaro harakatini bildiradi."
+    }
+  ],
+  "5.1": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: There ___ a bakery beside our flat.",
+      "answers": [
+        "is"
+      ],
+      "explanation": "A bakery birlikdagi sanaladigan ot, shuning uchun there is kerak."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: There are some milk in the jug.",
+      "answers": [
+        "There is some milk in the jug.",
+        "There's some milk in the jug."
+      ],
+      "explanation": "Milk sanalmaydigan ot bo‘lib, is bilan ishlatiladi."
+    }
+  ],
+  "5.2": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: There ___ four candles on the cake.",
+      "answers": [
+        "are"
+      ],
+      "explanation": "Four candles ko‘plik bo‘lgani uchun are ishlatiladi."
+    },
+    {
+      "prompt": "There are bilan gap tuzing: «Oshxonada uchta stul bor».",
+      "answers": [
+        "There are three chairs in the kitchen."
+      ],
+      "explanation": "Ko‘plikdagi three chairs borligini there are bildiradi."
+    }
+  ],
+  "5.3": [
+    {
+      "prompt": "Inkor qiling: There is a mirror here.",
+      "answers": [
+        "There is not a mirror here.",
+        "There isn't a mirror here.",
+        "There's not a mirror here."
+      ],
+      "explanation": "There is inkorida is dan keyin not qo‘yiladi."
+    },
+    {
+      "prompt": "Inkor qiling; some o‘rniga any ishlating: There are some towels upstairs.",
+      "answers": [
+        "There are not any towels upstairs.",
+        "There aren't any towels upstairs."
+      ],
+      "explanation": "Ko‘plikdagi inkor uchun are not; some odatda any ga almashadi."
+    }
+  ],
+  "5.4": [
+    {
+      "prompt": "Yes/no savoliga aylantiring: There is a chemist nearby.",
+      "answers": [
+        "Is there a chemist nearby?"
+      ],
+      "explanation": "Savolda is there dan oldinga chiqadi."
+    },
+    {
+      "prompt": "Yes/no savoliga aylantiring; any ishlating: There are some seats left.",
+      "answers": [
+        "Are there any seats left?"
+      ],
+      "explanation": "Ko‘plikda savol are there bilan boshlanadi; some o‘rniga any keladi."
+    }
+  ],
+  "5.5": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: How many bedrooms ___ in this flat? (there are / are there)",
+      "answers": [
+        "are there"
+      ],
+      "explanation": "How many savolida tartib are there bo‘ladi."
+    },
+    {
+      "prompt": "How many bilan «Bog‘da nechta olma daraxti bor?» deb so‘rang.",
+      "answers": [
+        "How many apple trees are there in the garden?"
+      ],
+      "explanation": "How many dan keyin ko‘plikdagi ot va are there keladi."
+    }
+  ],
+  "5.6": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Is there a balcony?",
+      "answers": [
+        "Yes, there is."
+      ],
+      "explanation": "Birlikdagi is there savoliga yes, there is deb javob beriladi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Are there any clean cups?",
+      "answers": [
+        "No, there are not.",
+        "No, there aren't."
+      ],
+      "explanation": "Ko‘plikdagi savolning qisqa inkor javobi there are not yoki there aren't."
+    }
+  ],
+  "5.7": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: ___ is a bus stop outside. It is very busy.",
+      "answers": [
+        "There"
+      ],
+      "explanation": "Yangi narsaning mavjudligini there is bildiradi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: There is a new café here. ___ is open today.",
+      "answers": [
+        "It"
+      ],
+      "explanation": "Oldin aytilgan café ga qayta ishora qilish uchun it kerak."
+    }
+  ],
+  "5.8": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: My aunt ___ three cats. (have / has)",
+      "answers": [
+        "has"
+      ],
+      "explanation": "Uchinchi shaxs birlikdagi my aunt bilan has ishlatiladi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: You ___ a lovely garden. (have / has)",
+      "answers": [
+        "have"
+      ],
+      "explanation": "You bilan have ishlatiladi."
+    }
+  ],
+  "5.9": [
+    {
+      "prompt": "Inkor qiling; have got ishlatmang: I have a spare key.",
+      "answers": [
+        "I do not have a spare key.",
+        "I don't have a spare key."
+      ],
+      "explanation": "I bilan inkor do not have shaklida tuziladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Ben doesn't has a helmet.",
+      "answers": [
+        "Ben doesn't have a helmet.",
+        "Ben does not have a helmet."
+      ],
+      "explanation": "Doesn't dan keyin asosiy fe’l have shaklida qoladi."
+    }
+  ],
+  "5.10": [
+    {
+      "prompt": "Have got ishlatmay savol tuzing: They have a printer.",
+      "answers": [
+        "Do they have a printer?",
+        "Do they've a printer?"
+      ],
+      "explanation": "They bilan egalik savoli do they have shaklida tuziladi."
+    },
+    {
+      "prompt": "Have got ishlatmay savol tuzing: Rosa has a brother.",
+      "answers": [
+        "Does Rosa have a brother?"
+      ],
+      "explanation": "Does kelganda has o‘rniga have ishlatiladi."
+    }
+  ],
+  "5.11": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: We ___ got enough chairs. (have / has)",
+      "answers": [
+        "have"
+      ],
+      "explanation": "We bilan have got ishlatiladi."
+    },
+    {
+      "prompt": "Have got shaklida qayta yozing: The hotel has a pool.",
+      "answers": [
+        "The hotel has got a pool."
+      ],
+      "explanation": "Uchinchi shaxs birlik uchun has got egalik bildiradi."
+    }
+  ],
+  "5.12": [
+    {
+      "prompt": "Inkor qiling: I have got a charger.",
+      "answers": [
+        "I have not got a charger.",
+        "I haven't got a charger.",
+        "I've not got a charger."
+      ],
+      "explanation": "Have got inkorida not have dan keyin keladi."
+    },
+    {
+      "prompt": "Inkor qiling: She has got a passport.",
+      "answers": [
+        "She has not got a passport.",
+        "She hasn't got a passport.",
+        "She's not got a passport."
+      ],
+      "explanation": "Has got inkorida has not got ishlatiladi."
+    }
+  ],
+  "5.13": [
+    {
+      "prompt": "Have got savoliga aylantiring: You have got a bicycle.",
+      "answers": [
+        "Have you got a bicycle?"
+      ],
+      "explanation": "Have ega oldiga chiqadi; do ishlatilmaydi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Has Leo got a ticket?",
+      "answers": [
+        "No, he has not.",
+        "No, he hasn't.",
+        "No, he's not."
+      ],
+      "explanation": "Has got savoliga qisqa javobda has ishlatiladi, got takrorlanmaydi."
+    }
+  ],
+  "5.14": [
+    {
+      "prompt": "Buyruqni to‘ldiring: ___ your name at the top. (Write / Writes)",
+      "answers": [
+        "Write"
+      ],
+      "explanation": "Buyruq gap asosiy fe’lning oddiy shakli bilan boshlanadi."
+    },
+    {
+      "prompt": "Buyruq shakliga keltiring; please ishlatmang: You must sit here.",
+      "answers": [
+        "Sit here."
+      ],
+      "explanation": "Buyruqda you va must tushiriladi; sit oddiy shaklda keladi."
+    }
+  ],
+  "5.15": [
+    {
+      "prompt": "Salbiy buyruqqa aylantiring: Touch the wet paint.",
+      "answers": [
+        "Do not touch the wet paint.",
+        "Don't touch the wet paint."
+      ],
+      "explanation": "Salbiy buyruq do not va oddiy fe’l bilan tuziladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Don't running in the corridor.",
+      "answers": [
+        "Don't run in the corridor.",
+        "Do not run in the corridor."
+      ],
+      "explanation": "Don't dan keyin -ing emas, run shakli kerak."
+    }
+  ],
+  "5.16": [
+    {
+      "prompt": "Let's bilan taklif yozing: «Pitsa buyurtiraylik».",
+      "answers": [
+        "Let's order pizza."
+      ],
+      "explanation": "Let's dan keyin fe’lning oddiy shakli order keladi."
+    },
+    {
+      "prompt": "Let's not bilan «Bugun kech qolmaylik» deb yozing.",
+      "answers": [
+        "Let's not be late today."
+      ],
+      "explanation": "Let's not salbiy taklif bildiradi; sifatdan oldin be kerak."
+    }
+  ],
+  "6.1": [
+    {
+      "prompt": "Present Simple: They ___ the floor every Friday. (clean)",
+      "answers": [
+        "clean"
+      ],
+      "explanation": "They bilan ijobiy gapda fe’lga -s qo‘shilmaydi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: We eats breakfast at seven.",
+      "answers": [
+        "We eat breakfast at seven."
+      ],
+      "explanation": "We bilan eat oddiy shakli ishlatiladi."
+    }
+  ],
+  "6.2": [
+    {
+      "prompt": "Present Simple: My uncle ___ bread every morning. (buy)",
+      "answers": [
+        "buys"
+      ],
+      "explanation": "My uncle uchinchi shaxs birlik, buy ga -s qo‘shiladi."
+    },
+    {
+      "prompt": "Present Simple: The lift ___ on every floor. (stop)",
+      "answers": [
+        "stops"
+      ],
+      "explanation": "The lift o‘rniga it keladi; ijobiy gapda stops kerak."
+    }
+  ],
+  "6.3": [
+    {
+      "prompt": "He bilan ishlatish uchun wash fe’lining shaklini yozing.",
+      "answers": [
+        "washes"
+      ],
+      "explanation": "Wash -sh bilan tugaydi, shuning uchun -es qo‘shiladi."
+    },
+    {
+      "prompt": "She bilan ishlatish uchun carry fe’lining shaklini yozing.",
+      "answers": [
+        "carries"
+      ],
+      "explanation": "Undoshdan keyingi y o‘rniga -ies keladi: carries."
+    }
+  ],
+  "6.4": [
+    {
+      "prompt": "Present Simple: My cousin ___ a red scooter. (have)",
+      "answers": [
+        "has"
+      ],
+      "explanation": "Have ning uchinchi shaxs birlik shakli has."
+    },
+    {
+      "prompt": "Ikki javobni tartib bilan yozing: Dad ___ the shopping, then ___ home. (do; go)",
+      "answers": [
+        "does, goes"
+      ],
+      "explanation": "Uchinchi shaxs birlikda do → does, go → goes bo‘ladi."
+    }
+  ],
+  "6.5": [
+    {
+      "prompt": "Inkor qiling: We eat meat.",
+      "answers": [
+        "We do not eat meat.",
+        "We don't eat meat."
+      ],
+      "explanation": "We bilan do not va fe’lning oddiy shakli ishlatiladi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: They ___ work at night. (do not / does not)",
+      "answers": [
+        "do not",
+        "don't"
+      ],
+      "explanation": "They ko‘plik ega bo‘lgani uchun do not ishlatiladi."
+    }
+  ],
+  "6.6": [
+    {
+      "prompt": "Inkor qiling: My sister wears glasses.",
+      "answers": [
+        "My sister does not wear glasses.",
+        "My sister doesn't wear glasses."
+      ],
+      "explanation": "Does not dan keyin wears emas, wear keladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: The shop doesn't opens early.",
+      "answers": [
+        "The shop doesn't open early.",
+        "The shop does not open early."
+      ],
+      "explanation": "Doesn't dan keyin fe’lga -s qo‘shilmaydi."
+    }
+  ],
+  "6.7": [
+    {
+      "prompt": "Yes/no savol tuzing: You collect stamps.",
+      "answers": [
+        "Do you collect stamps?"
+      ],
+      "explanation": "You bilan Present Simple savoli do yordamida tuziladi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: ___ your parents cook together? (Do / Does)",
+      "answers": [
+        "Do"
+      ],
+      "explanation": "Your parents ko‘plik bo‘lgani uchun do kerak."
+    }
+  ],
+  "6.8": [
+    {
+      "prompt": "Yes/no savol tuzing: Nina drives to work.",
+      "answers": [
+        "Does Nina drive to work?"
+      ],
+      "explanation": "Does ega oldidan keladi, drives esa drive ga aylanadi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Does this bus stops here?",
+      "answers": [
+        "Does this bus stop here?"
+      ],
+      "explanation": "Does dan keyingi asosiy fe’l stop bo‘lishi kerak."
+    }
+  ],
+  "6.9": [
+    {
+      "prompt": "Where bilan savol tuzing: Omar works in a bakery. Joyni so‘rang.",
+      "answers": [
+        "Where does Omar work?"
+      ],
+      "explanation": "Joy where bilan so‘raladi; uchinchi shaxsda does va work kerak."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: Why ___ they leave so early? (do / does)",
+      "answers": [
+        "do"
+      ],
+      "explanation": "They bilan wh-savolda do yordamchisi ishlatiladi."
+    }
+  ],
+  "6.10": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Do you enjoy gardening?",
+      "answers": [
+        "Yes, I do."
+      ],
+      "explanation": "Do you savoliga suhbatdosh I do deb javob beradi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Does your father cycle?",
+      "answers": [
+        "No, he does not.",
+        "No, he doesn't."
+      ],
+      "explanation": "Does savoliga inkor qisqa javob he does not yoki he doesn't bo‘ladi."
+    }
+  ],
+  "6.11": [
+    {
+      "prompt": "Savol so‘zini tanlang: ___ do you finish work? — At six. (What / Where / When)",
+      "answers": [
+        "When"
+      ],
+      "explanation": "At six vaqtni bildiradi; savol when bilan boshlanadi."
+    },
+    {
+      "prompt": "Savol so‘zini tanlang: ___ do you keep your shoes? — Under the bed. (What / Where / When)",
+      "answers": [
+        "Where"
+      ],
+      "explanation": "Under the bed joyni bildirgani uchun where kerak."
+    }
+  ],
+  "6.12": [
+    {
+      "prompt": "Odatni ifodalang: Every winter, we ___ scarves for our cousins. (make)",
+      "answers": [
+        "make"
+      ],
+      "explanation": "Every winter takroriy odatni bildiradi; we bilan make ishlatiladi."
+    },
+    {
+      "prompt": "Present Simple bilan to‘ldiring: On Saturdays, Rita ___ her grandmother. (phone)",
+      "answers": [
+        "phones"
+      ],
+      "explanation": "Takrorlanuvchi harakatda uchinchi shaxs birlikka -s qo‘shiladi."
+    }
+  ],
+  "6.13": [
+    {
+      "prompt": "Umumiy haqiqat: The Earth ___ around the Sun. (move)",
+      "answers": [
+        "moves"
+      ],
+      "explanation": "Umumiy haqiqat Present Simple bilan ifodalanadi; Earth birlik."
+    },
+    {
+      "prompt": "To‘g‘ri shaklni tanlang: Ice ___ in warm air. (melts / is melting) Umumiy xossa nazarda tutilgan.",
+      "answers": [
+        "melts"
+      ],
+      "explanation": "Umumiy xossa uchun Present Simple ishlatiladi."
+    }
+  ],
+  "6.14": [
+    {
+      "prompt": "Often ni odatiy o‘ringa qo‘ying: He visits his aunt.",
+      "answers": [
+        "He often visits his aunt."
+      ],
+      "explanation": "Often asosiy fe’ldan oldin keladi."
+    },
+    {
+      "prompt": "Never ni odatiy o‘ringa qo‘ying: Our teacher is late.",
+      "answers": [
+        "Our teacher is never late."
+      ],
+      "explanation": "Chastota ravishi be fe’lidan keyin keladi."
+    }
+  ],
+  "6.15": [
+    {
+      "prompt": "«Haftasiga uch marta» iborasini inglizcha yozing.",
+      "answers": [
+        "three times a week"
+      ],
+      "explanation": "Three times takrorlar sonini, a week vaqt oralig‘ini bildiradi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: ___ do you water the plants? — Every two days.",
+      "answers": [
+        "How often"
+      ],
+      "explanation": "Harakatning takrorlanish chastotasi how often bilan so‘raladi."
+    }
+  ],
+  "6.16": [
+    {
+      "prompt": "Tanlang: ___ your brother at home? (Is / Does)",
+      "answers": [
+        "Is"
+      ],
+      "explanation": "At home joy holati; asosiy harakat fe’li yo‘q, shuning uchun is kerak."
+    },
+    {
+      "prompt": "Tanlang: ___ your brother work from home? (Is / Does)",
+      "answers": [
+        "Does"
+      ],
+      "explanation": "Work harakat fe’li, Present Simple savolida does kerak."
+    }
+  ],
+  "7.1": [
+    {
+      "prompt": "Present Continuous: The children ___ a snowman. (build)",
+      "answers": [
+        "are building"
+      ],
+      "explanation": "The children ko‘plik, shuning uchun are va building ishlatiladi."
+    },
+    {
+      "prompt": "Present Continuous: I ___ dinner now. (prepare)",
+      "answers": [
+        "am preparing"
+      ],
+      "explanation": "I bilan am; prepare ning -ing shakli preparing."
+    }
+  ],
+  "7.2": [
+    {
+      "prompt": "Inkor qiling: She is washing the car.",
+      "answers": [
+        "She is not washing the car.",
+        "She isn't washing the car.",
+        "She's not washing the car.",
+        "She has not washing the car.",
+        "She hasn't washing the car."
+      ],
+      "explanation": "Inkor uchun is dan keyin not qo‘yiladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: We not are waiting outside.",
+      "answers": [
+        "We are not waiting outside.",
+        "We aren't waiting outside.",
+        "We're not waiting outside."
+      ],
+      "explanation": "Not yordamchi are dan keyin keladi."
+    }
+  ],
+  "7.3": [
+    {
+      "prompt": "Yes/no savolga aylantiring: He is carrying a ladder.",
+      "answers": [
+        "Is he carrying a ladder?"
+      ],
+      "explanation": "Is ega oldiga chiqadi; carrying o‘zgarmaydi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: ___ the twins playing chess? (Is / Are)",
+      "answers": [
+        "Are"
+      ],
+      "explanation": "The twins ko‘plik bo‘lgani uchun are kerak."
+    }
+  ],
+  "7.4": [
+    {
+      "prompt": "Where bilan savol tuzing: They are having lunch in the garden. Joyni so‘rang.",
+      "answers": [
+        "Where are they having lunch?"
+      ],
+      "explanation": "Where dan keyin are, ega va -ing shakli keladi."
+    },
+    {
+      "prompt": "What bilan savol tuzing: Lena is painting a chair. Bo‘yayotgan narsani so‘rang.",
+      "answers": [
+        "What is Lena painting?"
+      ],
+      "explanation": "What to‘ldiruvchini so‘raydi; is ega oldida turadi."
+    }
+  ],
+  "7.5": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Are you wearing a hat?",
+      "answers": [
+        "Yes, I am."
+      ],
+      "explanation": "Are you savoliga I am bilan javob beriladi; ijobiy qisqa javobda I'm yolg‘iz ishlatilmaydi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Is Sam using the computer?",
+      "answers": [
+        "No, he is not.",
+        "No, he isn't.",
+        "No, he's not."
+      ],
+      "explanation": "Is savolining qisqa inkor javobi he is not yoki qisqartirilgan shakllaridir."
+    }
+  ],
+  "7.6": [
+    {
+      "prompt": "Bake fe’lining -ing shaklini yozing.",
+      "answers": [
+        "baking"
+      ],
+      "explanation": "Oxirgi talaffuz qilinmaydigan e tushib, -ing qo‘shiladi."
+    },
+    {
+      "prompt": "Read fe’lining -ing shaklini yozing.",
+      "answers": [
+        "reading"
+      ],
+      "explanation": "Read ga bevosita -ing qo‘shiladi."
+    }
+  ],
+  "7.7": [
+    {
+      "prompt": "Sit fe’lining -ing shaklini yozing.",
+      "answers": [
+        "sitting"
+      ],
+      "explanation": "Qisqa urg‘uli unli va bitta undosh bilan tugagani uchun t ikkilantiriladi."
+    },
+    {
+      "prompt": "Tie fe’lining -ing shaklini yozing.",
+      "answers": [
+        "tying"
+      ],
+      "explanation": "-ie tugashi -y ga almashadi va -ing qo‘shiladi."
+    }
+  ],
+  "7.8": [
+    {
+      "prompt": "Hozirgi harakat: Look! A squirrel ___ our nuts. (eat)",
+      "answers": [
+        "is eating"
+      ],
+      "explanation": "Look hozir sodir bo‘layotgan ishga ishora qiladi; is eating kerak."
+    },
+    {
+      "prompt": "Tanlang: Be quiet! The baby ___ right now. (sleeps / is sleeping)",
+      "answers": [
+        "is sleeping"
+      ],
+      "explanation": "Right now ayni paytni bildiradi, shuning uchun Present Continuous ishlatiladi."
+    }
+  ],
+  "7.9": [
+    {
+      "prompt": "Vaqtinchalik holat: We ___ with friends until our kitchen is repaired. (stay; Present Continuous)",
+      "answers": [
+        "are staying"
+      ],
+      "explanation": "Ta’mir tugaguncha davom etadigan vaqtinchalik holat are staying bilan ifodalanadi."
+    },
+    {
+      "prompt": "Vaqtinchalik ishni tanlang: This month, Eva ___ at the café instead of her usual office. (works / is working)",
+      "answers": [
+        "is working"
+      ],
+      "explanation": "This month va odatiy ishga zid holat vaqtinchalik faoliyatni bildiradi."
+    }
+  ],
+  "7.10": [
+    {
+      "prompt": "O‘zgarishni ifodalang: My little brother ___ taller every month. (get; Present Continuous)",
+      "answers": [
+        "is getting"
+      ],
+      "explanation": "Davom etayotgan o‘zgarish is getting bilan ifodalanadi; t ikkilantiriladi."
+    },
+    {
+      "prompt": "O‘zgarishni to‘ldiring: More people ___ bicycles these days. (use; Present Continuous)",
+      "answers": [
+        "are using"
+      ],
+      "explanation": "Hozirgi tendensiya are using bilan ifodalanadi."
+    }
+  ],
+  "7.11": [
+    {
+      "prompt": "Ikki shaklni tartib bilan yozing: I usually ___ tea, but today I ___ coffee. (drink; have)",
+      "answers": [
+        "drink, am having"
+      ],
+      "explanation": "Usually odat uchun Present Simple; today dagi vaqtinchalik holat uchun Present Continuous."
+    },
+    {
+      "prompt": "Tanlang: Mum normally cooks, but Dad ___ dinner tonight. (makes / is making)",
+      "answers": [
+        "is making"
+      ],
+      "explanation": "Tonight odatiy tartibdan farqli vaziyatni bildiradi; is making kerak."
+    }
+  ],
+  "7.12": [
+    {
+      "prompt": "Xatoni tuzatib yozing: I am believing you.",
+      "answers": [
+        "I believe you."
+      ],
+      "explanation": "Believe holat fe’li bo‘lib, bu ma’noda odatda Continuous bilan ishlatilmaydi."
+    },
+    {
+      "prompt": "Tanlang: This bag ___ to my aunt. (belongs / is belonging)",
+      "answers": [
+        "belongs"
+      ],
+      "explanation": "Belong egalik holatini bildiradi va odatda Simple shaklida ishlatiladi."
+    }
+  ],
+  "8.1": [
+    {
+      "prompt": "Cheklangan tanlovni so‘rang: ___ of these two jackets is yours? (What / Which)",
+      "answers": [
+        "Which"
+      ],
+      "explanation": "Ma’lum ikkita narsa orasidagi tanlov uchun which ishlatiladi."
+    },
+    {
+      "prompt": "Ochiq savolni to‘ldiring: ___ is your favourite food? (What / Which) Variantlar berilmagan.",
+      "answers": [
+        "What"
+      ],
+      "explanation": "Oldindan cheklangan variantlar bo‘lmasa, what ishlatiladi."
+    }
+  ],
+  "8.2": [
+    {
+      "prompt": "Tanlang: ___ repaired your bicycle? — My uncle. (Who / Whose)",
+      "answers": [
+        "Who"
+      ],
+      "explanation": "Ishni bajargan shaxs who bilan so‘raladi."
+    },
+    {
+      "prompt": "Tanlang: ___ bicycle is beside the gate? — My uncle's. (Who / Whose)",
+      "answers": [
+        "Whose"
+      ],
+      "explanation": "Kimga tegishlilikni whose so‘raydi."
+    }
+  ],
+  "8.3": [
+    {
+      "prompt": "Savol so‘zini yozing: ___ are you carrying an umbrella? — Because rain is expected.",
+      "answers": [
+        "Why"
+      ],
+      "explanation": "Because bilan javob sababni bildiradi, shuning uchun why kerak."
+    },
+    {
+      "prompt": "Savol so‘zini yozing: ___ do you get to the island? — By boat.",
+      "answers": [
+        "How"
+      ],
+      "explanation": "Usul yoki transport turini how so‘raydi."
+    }
+  ],
+  "8.4": [
+    {
+      "prompt": "Mos savol iborasini yozing: ___ is your nephew? — He's eight.",
+      "answers": [
+        "How old"
+      ],
+      "explanation": "Yosh how old bilan so‘raladi."
+    },
+    {
+      "prompt": "Ikki iborani tartib bilan yozing: ___ is the station? — Two kilometres. ___ is the film? — Ninety minutes. (How far / How long)",
+      "answers": [
+        "How far, How long"
+      ],
+      "explanation": "How far masofani, how long davomiylikni so‘raydi."
+    }
+  ],
+  "8.5": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: ___ flour do we need?",
+      "answers": [
+        "How much"
+      ],
+      "explanation": "Flour sanalmaydigan ot, shuning uchun how much."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: ___ eggs are in the basket?",
+      "answers": [
+        "How many"
+      ],
+      "explanation": "Eggs ko‘plikdagi sanaladigan ot, shuning uchun how many."
+    }
+  ],
+  "8.6": [
+    {
+      "prompt": "Ega haqida Who bilan savol tuzing: Maya feeds the rabbits.",
+      "answers": [
+        "Who feeds the rabbits?"
+      ],
+      "explanation": "Who eganing o‘rnini egallaydi; do yoki does qo‘shilmaydi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Who does lives upstairs?",
+      "answers": [
+        "Who lives upstairs?"
+      ],
+      "explanation": "Ega savolida yordamchi does kerak emas; lives saqlanadi."
+    }
+  ],
+  "8.7": [
+    {
+      "prompt": "To‘ldiruvchi haqida Who bilan savol tuzing: You visit your grandmother on Sundays.",
+      "answers": [
+        "Who do you visit on Sundays?"
+      ],
+      "explanation": "Who to‘ldiruvchini so‘raydi, shuning uchun do yordamchisi kerak."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Who she calls every evening?",
+      "answers": [
+        "Who does she call every evening?"
+      ],
+      "explanation": "To‘ldiruvchi savolida does she call tartibi ishlatiladi."
+    }
+  ],
+  "8.8": [
+    {
+      "prompt": "Tanlang: The coins are ___ my pocket. (in / on / at)",
+      "answers": [
+        "in"
+      ],
+      "explanation": "Cho‘ntak ichidagi narsalar uchun in ishlatiladi."
+    },
+    {
+      "prompt": "Tanlang: A calendar hangs ___ the wall. (in / on / at)",
+      "answers": [
+        "on"
+      ],
+      "explanation": "Sirtga joylashgan narsa on bilan ifodalanadi."
+    }
+  ],
+  "8.9": [
+    {
+      "prompt": "Tanlang: The bank is ___ the café and the bakery. (under / between / behind)",
+      "answers": [
+        "between"
+      ],
+      "explanation": "Ikkita joy orasida bo‘lsa between kerak."
+    },
+    {
+      "prompt": "«Stol tagida» ma’nosini to‘ldiring: The puppy is ___ the table.",
+      "answers": [
+        "under"
+      ],
+      "explanation": "Under biror narsaning tagidagi joyni bildiradi."
+    }
+  ],
+  "8.10": [
+    {
+      "prompt": "Tanlang: She stepped ___ the kitchen from the hall. (into / at)",
+      "answers": [
+        "into"
+      ],
+      "explanation": "Tashqaridan ichkariga harakat uchun into ishlatiladi."
+    },
+    {
+      "prompt": "Tanlang: We walked ___ the bridge to the other side. (across / into)",
+      "answers": [
+        "across"
+      ],
+      "explanation": "Bir tomondan ikkinchisiga kesib o‘tish across bilan ifodalanadi."
+    }
+  ],
+  "8.11": [
+    {
+      "prompt": "Ikki predlogni tartib bilan yozing: The lesson starts ___ ten ___ Thursday.",
+      "answers": [
+        "at, on"
+      ],
+      "explanation": "Soat oldidan at, hafta kuni oldidan on ishlatiladi."
+    },
+    {
+      "prompt": "Tanlang: My birthday is ___ February. (at / in / on)",
+      "answers": [
+        "in"
+      ],
+      "explanation": "Oy nomidan oldin in keladi."
+    }
+  ],
+  "8.12": [
+    {
+      "prompt": "Tanlang: Wash your hands ___ eating. (before / until)",
+      "answers": [
+        "before"
+      ],
+      "explanation": "Ovqatlanishdan avvalgi harakat uchun before kerak."
+    },
+    {
+      "prompt": "Tanlang: Please stay here ___ I return. (until / after)",
+      "answers": [
+        "until"
+      ],
+      "explanation": "Harakatning qachongacha davom etishini until bildiradi."
+    }
+  ],
+  "8.13": [
+    {
+      "prompt": "Ikki bo‘shliqni to‘ldiring: The library is open ___ eight ___ four.",
+      "answers": [
+        "from, to"
+      ],
+      "explanation": "Boshlanish va tugash nuqtalari from ... to bilan ko‘rsatiladi."
+    },
+    {
+      "prompt": "Ikki predlogni tartib bilan yozing: I slept ___ two hours ___ the flight. (for / during)",
+      "answers": [
+        "for, during"
+      ],
+      "explanation": "For davomiylikni, during esa qaysi voqea paytida ekanini bildiradi."
+    }
+  ],
+  "8.14": [
+    {
+      "prompt": "Careful so‘zidan ravish yasang: Please carry the vase ___.",
+      "answers": [
+        "carefully"
+      ],
+      "explanation": "Harakatning qanday bajarilishini careful + ly, ya’ni carefully bildiradi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: The children played happy.",
+      "answers": [
+        "The children played happily."
+      ],
+      "explanation": "Played harakatini sifat emas, happily ravishi tavsiflaydi; y → i bo‘ladi."
+    }
+  ],
+  "8.15": [
+    {
+      "prompt": "Tanlang: My aunt sings very ___. (good / well)",
+      "answers": [
+        "well"
+      ],
+      "explanation": "Sing fe’lini tavsiflash uchun good ning ravish shakli well kerak."
+    },
+    {
+      "prompt": "Tanlang: This horse runs ___. (fast / fastly)",
+      "answers": [
+        "fast"
+      ],
+      "explanation": "Fast sifat ham, ravish ham bo‘la oladi; fastly ishlatilmaydi."
+    }
+  ],
+  "8.16": [
+    {
+      "prompt": "Ravish → joy → vaqt tartibida gap yozing: Tom practised / yesterday / in his room / quietly.",
+      "answers": [
+        "Tom practised quietly in his room yesterday."
+      ],
+      "explanation": "Bu topshiriqda quietly harakat usuli, in his room joy, yesterday vaqt sifatida ketma-ket keladi."
+    },
+    {
+      "prompt": "Belgilangan tartibni tanlang: ega + fe’l + ravish + joy + vaqt. A: We ate slowly at home last night. B: We ate last night slowly at home. Faqat harfni yozing.",
+      "answers": [
+        "A"
+      ],
+      "explanation": "A varianti so‘ralgan tartibga mos: slowly, at home, last night."
+    }
+  ],
+  "9.1": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: The kitchen ___ very cold yesterday. (was / were)",
+      "answers": [
+        "was"
+      ],
+      "explanation": "The kitchen birlikdagi ega; o‘tgan zamonda was kerak."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: You ___ at the concert last night. (was / were)",
+      "answers": [
+        "were"
+      ],
+      "explanation": "You bilan o‘tgan zamon be shakli were bo‘ladi."
+    }
+  ],
+  "9.2": [
+    {
+      "prompt": "Inkor qiling: I was hungry after lunch.",
+      "answers": [
+        "I was not hungry after lunch.",
+        "I wasn't hungry after lunch."
+      ],
+      "explanation": "Was inkorida was not yoki wasn't ishlatiladi."
+    },
+    {
+      "prompt": "Inkor qiling: The shops were open.",
+      "answers": [
+        "The shops were not open.",
+        "The shops weren't open."
+      ],
+      "explanation": "Ko‘plik ega bilan were not ishlatiladi."
+    }
+  ],
+  "9.3": [
+    {
+      "prompt": "Yes/no savolga aylantiring: The film was funny.",
+      "answers": [
+        "Was the film funny?"
+      ],
+      "explanation": "Was ega oldiga chiqadi; did kerak emas."
+    },
+    {
+      "prompt": "Yes/no savolga aylantiring: Your cousins were tired.",
+      "answers": [
+        "Were your cousins tired?"
+      ],
+      "explanation": "Ko‘plikda savol were bilan boshlanadi."
+    }
+  ],
+  "9.4": [
+    {
+      "prompt": "Where bilan savol tuzing: The keys were in my coat.",
+      "answers": [
+        "Where were the keys?"
+      ],
+      "explanation": "Joy so‘ralganda where dan keyin were va ega keladi."
+    },
+    {
+      "prompt": "Why bilan savol tuzing: Ali was nervous.",
+      "answers": [
+        "Why was Ali nervous?"
+      ],
+      "explanation": "O‘tgan be savolida why was + ega tartibi ishlatiladi."
+    }
+  ],
+  "9.5": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Was your sister at the party?",
+      "answers": [
+        "Yes, she was."
+      ],
+      "explanation": "Was savoliga she was bilan javob beriladi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Were you and Ben late?",
+      "answers": [
+        "No, we were not.",
+        "No, we weren't."
+      ],
+      "explanation": "You and Ben ga javob beruvchi we ishlatadi; inkorda were not kerak."
+    }
+  ],
+  "9.6": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: There ___ a strange noise outside last night.",
+      "answers": [
+        "was"
+      ],
+      "explanation": "Birlikdagi a strange noise uchun there was ishlatiladi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: There ___ five ducks on the pond yesterday.",
+      "answers": [
+        "were"
+      ],
+      "explanation": "Five ducks ko‘plik bo‘lgani uchun there were kerak."
+    }
+  ],
+  "9.7": [
+    {
+      "prompt": "Inkor qiling: There was a queue at the door.",
+      "answers": [
+        "There was not a queue at the door.",
+        "There wasn't a queue at the door."
+      ],
+      "explanation": "Birlikdagi mavjudlik inkori there was not bilan tuziladi."
+    },
+    {
+      "prompt": "Inkor qiling; any ishlating: There were some biscuits left.",
+      "answers": [
+        "There were not any biscuits left.",
+        "There weren't any biscuits left."
+      ],
+      "explanation": "Ko‘plik inkorida were not va any ishlatiladi."
+    }
+  ],
+  "9.8": [
+    {
+      "prompt": "Yes/no savolga aylantiring: There was a storm last night.",
+      "answers": [
+        "Was there a storm last night?"
+      ],
+      "explanation": "Savolda was there tartibi keladi."
+    },
+    {
+      "prompt": "Savolga aylantiring; any ishlating: There were some people upstairs.",
+      "answers": [
+        "Were there any people upstairs?"
+      ],
+      "explanation": "Ko‘plikdagi borlik savoli were there any bilan boshlanadi."
+    }
+  ],
+  "9.9": [
+    {
+      "prompt": "Past Simple: We ___ the fence yesterday. (paint)",
+      "answers": [
+        "painted"
+      ],
+      "explanation": "Muntazam paint fe’liga -ed qo‘shiladi."
+    },
+    {
+      "prompt": "Past Simple: Nora ___ her room last weekend. (clean)",
+      "answers": [
+        "cleaned"
+      ],
+      "explanation": "Tugallangan o‘tgan ish uchun cleaned ishlatiladi."
+    }
+  ],
+  "9.10": [
+    {
+      "prompt": "Past Simple: He ___ his keys under the sofa. (find)",
+      "answers": [
+        "found"
+      ],
+      "explanation": "Find fe’lining o‘tgan zamon shakli found."
+    },
+    {
+      "prompt": "Past Simple: I ___ a long letter last night. (write)",
+      "answers": [
+        "wrote"
+      ],
+      "explanation": "Write ning Past Simple shakli wrote; written V3 shaklidir."
+    }
+  ],
+  "9.11": [
+    {
+      "prompt": "Plan fe’lining Past Simple shaklini yozing.",
+      "answers": [
+        "planned"
+      ],
+      "explanation": "Oxirgi n ikkilantiriladi va -ed qo‘shiladi: planned."
+    },
+    {
+      "prompt": "Needed so‘zidagi -ed talaffuzini tanlang: /t/, /d/, /ɪd/.",
+      "answers": [
+        "/ɪd/"
+      ],
+      "explanation": "Asos /d/ tovushi bilan tugagani uchun -ed alohida /ɪd/ bo‘g‘ini bo‘ladi."
+    }
+  ],
+  "9.12": [
+    {
+      "prompt": "Inkor qiling: They bought a new sofa.",
+      "answers": [
+        "They did not buy a new sofa.",
+        "They didn't buy a new sofa."
+      ],
+      "explanation": "Did not dan keyin bought emas, buy ishlatiladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: She didn't took my umbrella.",
+      "answers": [
+        "She didn't take my umbrella.",
+        "She did not take my umbrella."
+      ],
+      "explanation": "Didn't dan keyin fe’lning asosiy take shakli kerak."
+    }
+  ],
+  "9.13": [
+    {
+      "prompt": "Yes/no savolga aylantiring: Max cooked breakfast.",
+      "answers": [
+        "Did Max cook breakfast?"
+      ],
+      "explanation": "Did ega oldiga chiqadi va cooked o‘rniga cook keladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Did they found the address?",
+      "answers": [
+        "Did they find the address?"
+      ],
+      "explanation": "Did bilan found emas, find ishlatiladi."
+    }
+  ],
+  "9.14": [
+    {
+      "prompt": "What bilan savol tuzing: You ate pasta. Yegan narsani so‘rang.",
+      "answers": [
+        "What did you eat?"
+      ],
+      "explanation": "O‘tgan zamon to‘ldiruvchi savoli did you eat bilan tuziladi."
+    },
+    {
+      "prompt": "When bilan savol tuzing: The guests arrived at noon.",
+      "answers": [
+        "When did the guests arrive?"
+      ],
+      "explanation": "Vaqtni when so‘raydi; did dan keyin arrive kerak."
+    }
+  ],
+  "9.15": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Did you lock the gate?",
+      "answers": [
+        "Yes, I did."
+      ],
+      "explanation": "Past Simple qisqa javobida did ishlatiladi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Did the boys enjoy the soup?",
+      "answers": [
+        "No, they did not.",
+        "No, they didn't."
+      ],
+      "explanation": "The boys o‘rniga they keladi; inkor yordamchisi did not."
+    }
+  ],
+  "9.16": [
+    {
+      "prompt": "«Uch hafta oldin» iborasini inglizcha yozing.",
+      "answers": [
+        "three weeks ago"
+      ],
+      "explanation": "O‘tgan vaqt oralig‘idan keyin ago keladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: We moved here in last year.",
+      "answers": [
+        "We moved here last year."
+      ],
+      "explanation": "Last year oldidan in qo‘yilmaydi."
+    }
+  ],
+  "9.17": [
+    {
+      "prompt": "Tanlang: ___ the restaurant crowded yesterday? (Was / Did)",
+      "answers": [
+        "Was"
+      ],
+      "explanation": "Crowded sifat bo‘lgani uchun o‘tgan be shakli was kerak."
+    },
+    {
+      "prompt": "Tanlang: ___ the restaurant close early yesterday? (Was / Did)",
+      "answers": [
+        "Did"
+      ],
+      "explanation": "Close harakat fe’li bo‘lib, o‘tgan zamon savolida did ishlatiladi."
+    }
+  ],
+  "10.1": [
+    {
+      "prompt": "Past Continuous: At nine yesterday, I ___ the curtains. (wash)",
+      "answers": [
+        "was washing"
+      ],
+      "explanation": "I bilan was va -ing shakli ishlatiladi."
+    },
+    {
+      "prompt": "Past Continuous: The neighbours ___ outside at midnight. (talk)",
+      "answers": [
+        "were talking"
+      ],
+      "explanation": "Ko‘plikdagi ega bilan were talking ishlatiladi."
+    }
+  ],
+  "10.2": [
+    {
+      "prompt": "Inkor qiling: Leo was watching the match.",
+      "answers": [
+        "Leo was not watching the match.",
+        "Leo wasn't watching the match."
+      ],
+      "explanation": "Was dan keyin not qo‘yiladi, watching saqlanadi."
+    },
+    {
+      "prompt": "Inkor qiling: We were sitting near the door.",
+      "answers": [
+        "We were not sitting near the door.",
+        "We weren't sitting near the door."
+      ],
+      "explanation": "We bilan were not va -ing shakli ishlatiladi."
+    }
+  ],
+  "10.3": [
+    {
+      "prompt": "Yes/no savolga aylantiring: She was carrying a suitcase.",
+      "answers": [
+        "Was she carrying a suitcase?"
+      ],
+      "explanation": "Was ega oldiga chiqadi."
+    },
+    {
+      "prompt": "Yes/no savolga aylantiring: They were arguing about dinner.",
+      "answers": [
+        "Were they arguing about dinner?"
+      ],
+      "explanation": "Ko‘plikdagi savol were they bilan boshlanadi."
+    }
+  ],
+  "10.4": [
+    {
+      "prompt": "What bilan savol tuzing: You were fixing the clock. Tuzatilayotgan narsani so‘rang.",
+      "answers": [
+        "What were you fixing?"
+      ],
+      "explanation": "What to‘ldiruvchini almashtiradi; were you fixing tartibi saqlanadi."
+    },
+    {
+      "prompt": "Where bilan savol tuzing: Rosa was waiting outside the cinema.",
+      "answers": [
+        "Where was Rosa waiting?"
+      ],
+      "explanation": "Joy savolida where was Rosa waiting ishlatiladi."
+    }
+  ],
+  "10.5": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Were you wearing boots?",
+      "answers": [
+        "Yes, I was."
+      ],
+      "explanation": "Savoldagi you ga javobda I, were o‘rniga was ishlatiladi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Was your brother listening?",
+      "answers": [
+        "No, he was not.",
+        "No, he wasn't."
+      ],
+      "explanation": "Past Continuous qisqa javobida was ishlatiladi, listening takrorlanmaydi."
+    }
+  ],
+  "10.6": [
+    {
+      "prompt": "Ikki fe’lni tartib bilan yozing: I ___ a shower when the doorbell ___. (have; ring)",
+      "answers": [
+        "was having, rang"
+      ],
+      "explanation": "Davom etayotgan ish was having; uni bo‘lgan qisqa voqea rang."
+    },
+    {
+      "prompt": "Tanlang: The lights went out while we ___ chess. (played / were playing)",
+      "answers": [
+        "were playing"
+      ],
+      "explanation": "Chiroq o‘chgan paytda shaxmat o‘yini davom etayotgan edi."
+    }
+  ],
+  "10.7": [
+    {
+      "prompt": "Davom etayotgan holatni kiritadigan so‘zni tanlang: ___ I was baking, Dad was gardening. (While / After)",
+      "answers": [
+        "While"
+      ],
+      "explanation": "While bir vaqtda davom etayotgan ikki ishni bog‘laydi."
+    },
+    {
+      "prompt": "Qisqa voqeani kiritadigan so‘zni tanlang: I was cutting bread ___ I heard a crash. (when / while)",
+      "answers": [
+        "when"
+      ],
+      "explanation": "When bu yerda davom etayotgan ishni bo‘lgan qisqa voqeani kiritadi."
+    }
+  ],
+  "10.8": [
+    {
+      "prompt": "Used to bilan qayta yozing: As a child, I played with toy trains, but I don't now.",
+      "answers": [
+        "I used to play with toy trains."
+      ],
+      "explanation": "Used to endi bo‘lmaydigan o‘tgan odatni bildiradi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: Grandma ___ work in a post office, but she is retired now.",
+      "answers": [
+        "used to"
+      ],
+      "explanation": "Oldingi, hozir tugagan holat used to bilan ifodalanadi."
+    }
+  ],
+  "10.9": [
+    {
+      "prompt": "Inkor qiling: We used to eat spicy food.",
+      "answers": [
+        "We did not use to eat spicy food.",
+        "We didn't use to eat spicy food."
+      ],
+      "explanation": "Did not dan keyin used emas, use to yoziladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: He didn't used to wear a tie.",
+      "answers": [
+        "He didn't use to wear a tie.",
+        "He did not use to wear a tie."
+      ],
+      "explanation": "Didn't yordamchisidan keyin use shakli keladi."
+    }
+  ],
+  "10.10": [
+    {
+      "prompt": "Savolga aylantiring: Your dad used to own a motorbike.",
+      "answers": [
+        "Did your dad use to own a motorbike?"
+      ],
+      "explanation": "Did bilan savolda use to ishlatiladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Did she used to sing in a band?",
+      "answers": [
+        "Did she use to sing in a band?"
+      ],
+      "explanation": "Savolda did o‘tgan zamonni bildiradi; use to o‘zgarmaydi."
+    }
+  ],
+  "10.11": [
+    {
+      "prompt": "Would bilan qayta yozing: When we were little, we played cards every rainy evening.",
+      "answers": [
+        "When we were little, we would play cards every rainy evening.",
+        "When we were little, we'd play cards every rainy evening."
+      ],
+      "explanation": "O‘tgan davr aniq bo‘lsa, would takroriy harakatni bildirishi mumkin."
+    },
+    {
+      "prompt": "Tanlang: Every night on that holiday, Dad ___ us a story. (would tell / would told)",
+      "answers": [
+        "would tell"
+      ],
+      "explanation": "Would dan keyin oddiy fe’l shakli tell ishlatiladi."
+    }
+  ],
+  "10.12": [
+    {
+      "prompt": "Eski holat uchun tanlang: I ___ be afraid of dogs. (used to / would)",
+      "answers": [
+        "used to"
+      ],
+      "explanation": "O‘tgan holat yoki hissiyot uchun used to mos; odatiy would bu holatda ishlatilmaydi."
+    },
+    {
+      "prompt": "Bitta tugallangan voqeani tanlang: Last Tuesday, I ___ my old neighbour. (met / used to meet)",
+      "answers": [
+        "met"
+      ],
+      "explanation": "Aniq bir martalik voqea Past Simple bilan ifodalanadi."
+    }
+  ],
+  "11.1": [
+    {
+      "prompt": "Will bilan to‘ldiring: Don't worry. I ___ the bags. (carry)",
+      "answers": [
+        "will carry"
+      ],
+      "explanation": "Will dan keyin fe’lning oddiy shakli keladi."
+    },
+    {
+      "prompt": "Will bilan ijobiy gap tuzing: «Ular ertaga telefon qilishadi».",
+      "answers": [
+        "They will phone tomorrow.",
+        "They will call tomorrow.",
+        "They'll phone tomorrow.",
+        "They'll call tomorrow."
+      ],
+      "explanation": "Kelajak ijobiy gapida ega + will + oddiy fe’l ishlatiladi."
+    }
+  ],
+  "11.2": [
+    {
+      "prompt": "Will inkoriga aylantiring: She will forget your birthday.",
+      "answers": [
+        "She will not forget your birthday.",
+        "She won't forget your birthday.",
+        "She'll not forget your birthday."
+      ],
+      "explanation": "Will inkori will not yoki won't."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: I won't to argue.",
+      "answers": [
+        "I won't argue.",
+        "I will not argue.",
+        "I'll not argue."
+      ],
+      "explanation": "Won't dan keyin to kelmaydi; oddiy argue ishlatiladi."
+    }
+  ],
+  "11.3": [
+    {
+      "prompt": "Yes/no savolga aylantiring: The parcel will arrive tomorrow.",
+      "answers": [
+        "Will the parcel arrive tomorrow?"
+      ],
+      "explanation": "Will ega oldiga chiqariladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Will she brings a camera?",
+      "answers": [
+        "Will she bring a camera?"
+      ],
+      "explanation": "Will dan keyin -s qo‘shilmaydi; bring kerak."
+    }
+  ],
+  "11.4": [
+    {
+      "prompt": "When bilan savol tuzing: They will return next Friday.",
+      "answers": [
+        "When will they return?"
+      ],
+      "explanation": "When dan keyin will, ega va asosiy fe’l keladi."
+    },
+    {
+      "prompt": "What bilan savol tuzing: You will bring a salad. Olib kelinadigan narsani so‘rang.",
+      "answers": [
+        "What will you bring?"
+      ],
+      "explanation": "What to‘ldiruvchini so‘raydi; will you bring tartibi kerak."
+    }
+  ],
+  "11.5": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Will you phone me later?",
+      "answers": [
+        "Yes, I will."
+      ],
+      "explanation": "Ijobiy qisqa javob I will; I'll yolg‘iz ishlatilmaydi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Will Nina need a lift?",
+      "answers": [
+        "No, she will not.",
+        "No, she won't.",
+        "No, she'll not."
+      ],
+      "explanation": "Will savoliga inkor qisqa javob she will not yoki she won't."
+    }
+  ],
+  "11.6": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: The soup will ___ ready soon.",
+      "answers": [
+        "be"
+      ],
+      "explanation": "Will dan keyin sifatni bog‘lash uchun be kerak."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: They will at the station at noon.",
+      "answers": [
+        "They will be at the station at noon.",
+        "They'll be at the station at noon."
+      ],
+      "explanation": "Joy holati oldidan will be ishlatiladi."
+    }
+  ],
+  "11.7": [
+    {
+      "prompt": "Going to bilan to‘ldiring: I ___ a cake this evening. (make)",
+      "answers": [
+        "am going to make"
+      ],
+      "explanation": "I bilan am going to va oddiy fe’l ishlatiladi."
+    },
+    {
+      "prompt": "Going to bilan to‘ldiring: Our neighbours ___ their fence. (paint)",
+      "answers": [
+        "are going to paint"
+      ],
+      "explanation": "Ko‘plikdagi ega bilan are going to keladi."
+    }
+  ],
+  "11.8": [
+    {
+      "prompt": "Inkor qiling: He is going to sell his bicycle.",
+      "answers": [
+        "He is not going to sell his bicycle.",
+        "He isn't going to sell his bicycle.",
+        "He's not going to sell his bicycle.",
+        "He has not going to sell his bicycle.",
+        "He hasn't going to sell his bicycle."
+      ],
+      "explanation": "Inkor uchun is dan keyin not qo‘shiladi."
+    },
+    {
+      "prompt": "Inkor qiling: We are going to invite the whole class.",
+      "answers": [
+        "We are not going to invite the whole class.",
+        "We aren't going to invite the whole class.",
+        "We're not going to invite the whole class."
+      ],
+      "explanation": "Are not going to rejaning inkorini bildiradi."
+    }
+  ],
+  "11.9": [
+    {
+      "prompt": "Yes/no savolga aylantiring: You are going to bake bread.",
+      "answers": [
+        "Are you going to bake bread?"
+      ],
+      "explanation": "Are ega oldiga chiqadi; going to saqlanadi."
+    },
+    {
+      "prompt": "Yes/no savolga aylantiring: Sara is going to stay here.",
+      "answers": [
+        "Is Sara going to stay here?"
+      ],
+      "explanation": "Birlik ega bilan savol is bilan boshlanadi."
+    }
+  ],
+  "11.10": [
+    {
+      "prompt": "Where bilan savol tuzing: They are going to have lunch at the café.",
+      "answers": [
+        "Where are they going to have lunch?"
+      ],
+      "explanation": "Joy so‘rog‘ida where are they going to tartibi ishlatiladi."
+    },
+    {
+      "prompt": "What bilan savol tuzing: He is going to repair the chair. Narsani so‘rang.",
+      "answers": [
+        "What is he going to repair?"
+      ],
+      "explanation": "What to‘ldiruvchini so‘raydi; is he going to repair kerak."
+    }
+  ],
+  "11.11": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Are you going to take a taxi?",
+      "answers": [
+        "Yes, I am."
+      ],
+      "explanation": "Going to savolida qisqa javob be bilan tuziladi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Is Ben going to cook tonight?",
+      "answers": [
+        "No, he is not.",
+        "No, he isn't.",
+        "No, he's not."
+      ],
+      "explanation": "Qisqa javobda is not ishlatiladi; going to takrorlanmaydi."
+    }
+  ],
+  "11.12": [
+    {
+      "prompt": "Kelishilgan uchrashuvni Present Continuous bilan yozing: We ___ the dentist at eleven tomorrow. (see)",
+      "answers": [
+        "are seeing"
+      ],
+      "explanation": "Oldindan kelishilgan qabul are seeing bilan ifodalanishi mumkin."
+    },
+    {
+      "prompt": "Present Continuous bilan to‘ldiring: Tickets are booked. Lena ___ to Rome on Friday. (fly)",
+      "answers": [
+        "is flying"
+      ],
+      "explanation": "Chipta olingan aniq reja Present Continuous bilan beriladi."
+    }
+  ],
+  "11.13": [
+    {
+      "prompt": "Jadvalni Present Simple bilan yozing: The museum ___ at nine tomorrow. (open)",
+      "answers": [
+        "opens"
+      ],
+      "explanation": "Rasmiy jadvaldagi kelajak voqeasi Present Simple bilan ifodalanadi."
+    },
+    {
+      "prompt": "Jadval: Our bus ___ at 6.20 tomorrow morning. (leave; Present Simple)",
+      "answers": [
+        "leaves"
+      ],
+      "explanation": "Jadval uchun leaves ishlatiladi, garchi vaqt kelajak bo‘lsa ham."
+    }
+  ],
+  "11.14": [
+    {
+      "prompt": "Hozir qabul qilingan qaror: The phone is ringing. I ___ it. (will answer / am going to answer)",
+      "answers": [
+        "will answer"
+      ],
+      "explanation": "Ayni paytda qabul qilingan qaror uchun will odatiy tanlov."
+    },
+    {
+      "prompt": "Ko‘rinib turgan dalil: That glass is on the edge! It ___. (will fall / is going to fall)",
+      "answers": [
+        "is going to fall"
+      ],
+      "explanation": "Hozirgi dalil asosidagi taxmin uchun going to ishlatiladi."
+    }
+  ],
+  "11.15": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: I'll text you when I ___ the hotel. (reach)",
+      "answers": [
+        "reach"
+      ],
+      "explanation": "Kelajak vaqt ergash gapida when dan keyin Present Simple ishlatiladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: We will eat as soon as Dad will arrive.",
+      "answers": [
+        "We will eat as soon as Dad arrives.",
+        "We'll eat as soon as Dad arrives."
+      ],
+      "explanation": "As soon as dan keyin kelajak ma’nosida ham Present Simple kerak."
+    }
+  ],
+  "11.16": [
+    {
+      "prompt": "Shall I bilan «Sumkangizni ko‘tarib beraymi?» deb yozing.",
+      "answers": [
+        "Shall I carry your bag?"
+      ],
+      "explanation": "Shall I yordam taklif qilishda ishlatiladi."
+    },
+    {
+      "prompt": "Shall we bilan «Tanaffus qilaylikmi?» deb yozing.",
+      "answers": [
+        "Shall we take a break?",
+        "Shall we have a break?",
+        "Shall we've a break?"
+      ],
+      "explanation": "Shall we birgalikda harakat qilishni taklif etadi."
+    }
+  ],
+  "12.1": [
+    {
+      "prompt": "Break fe’lining V3 shaklini yozing.",
+      "answers": [
+        "broken"
+      ],
+      "explanation": "Break — broke — broken; Perfect zamonlarda V3 broken kerak."
+    },
+    {
+      "prompt": "Choose fe’lining V3 shaklini yozing.",
+      "answers": [
+        "chosen"
+      ],
+      "explanation": "Choose — chose — chosen; V3 chosen bo‘ladi."
+    }
+  ],
+  "12.2": [
+    {
+      "prompt": "Present Perfect: We ___ all the sandwiches. (eat)",
+      "answers": [
+        "have eaten"
+      ],
+      "explanation": "We bilan have, eat ning V3 shakli eaten ishlatiladi."
+    },
+    {
+      "prompt": "Present Perfect: I ___ my keys again. (lose)",
+      "answers": [
+        "have lost"
+      ],
+      "explanation": "I bilan have va lose ning V3 shakli lost keladi."
+    }
+  ],
+  "12.3": [
+    {
+      "prompt": "Present Perfect: The cat ___ the vase. (break)",
+      "answers": [
+        "has broken"
+      ],
+      "explanation": "The cat uchinchi shaxs birlik, shuning uchun has broken."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: My uncle have bought a boat.",
+      "answers": [
+        "My uncle has bought a boat."
+      ],
+      "explanation": "My uncle bilan has ishlatiladi; bought V3 shakli to‘g‘ri."
+    }
+  ],
+  "12.4": [
+    {
+      "prompt": "Inkor qiling: They have tried this cheese.",
+      "answers": [
+        "They have not tried this cheese.",
+        "They haven't tried this cheese.",
+        "They've not tried this cheese."
+      ],
+      "explanation": "Present Perfect inkorida have dan keyin not keladi."
+    },
+    {
+      "prompt": "Inkor qiling: Eva has sent the invitations.",
+      "answers": [
+        "Eva has not sent the invitations.",
+        "Eva hasn't sent the invitations.",
+        "Eva's not sent the invitations."
+      ],
+      "explanation": "Has not sent inkor shakli; sent V3 bo‘lib qoladi."
+    }
+  ],
+  "12.5": [
+    {
+      "prompt": "Yes/no savolga aylantiring: You have locked the window.",
+      "answers": [
+        "Have you locked the window?"
+      ],
+      "explanation": "Have ega oldiga chiqadi, V3 saqlanadi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Has he ate the last biscuit?",
+      "answers": [
+        "Has he eaten the last biscuit?"
+      ],
+      "explanation": "Has dan keyin Past Simple ate emas, V3 eaten kerak."
+    }
+  ],
+  "12.6": [
+    {
+      "prompt": "What bilan savol tuzing: You have drawn a horse. Chizilgan narsani so‘rang.",
+      "answers": [
+        "What have you drawn?"
+      ],
+      "explanation": "Wh-savol what + have + ega + V3 tartibida tuziladi."
+    },
+    {
+      "prompt": "Where bilan savol tuzing: She has put the tickets in her bag.",
+      "answers": [
+        "Where has she put the tickets?"
+      ],
+      "explanation": "Joy so‘rog‘i where bilan boshlanadi; has ega oldida turadi."
+    }
+  ],
+  "12.7": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Have you visited this village before?",
+      "answers": [
+        "Yes, I have."
+      ],
+      "explanation": "Present Perfect qisqa javobida have ishlatiladi, visited takrorlanmaydi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Has your brother made dinner?",
+      "answers": [
+        "No, he has not.",
+        "No, he hasn't.",
+        "No, he's not."
+      ],
+      "explanation": "Has savoliga he has not yoki he hasn't deb javob beriladi."
+    }
+  ],
+  "12.8": [
+    {
+      "prompt": "Hayotiy tajriba savolini to‘ldiring: Have you ___ ridden a camel? (ever / never)",
+      "answers": [
+        "ever"
+      ],
+      "explanation": "Ever savolda shu paytgacha biror marta bo‘lgan tajribani so‘raydi."
+    },
+    {
+      "prompt": "Never bilan qayta yozing: I have not flown in a helicopter at any time in my life.",
+      "answers": [
+        "I have never flown in a helicopter.",
+        "I've never flown in a helicopter."
+      ],
+      "explanation": "Never o‘zi inkor ma’nosini beradi; not olib tashlanadi."
+    }
+  ],
+  "12.9": [
+    {
+      "prompt": "Just ni odatiy o‘ringa qo‘ying: The guests have arrived.",
+      "answers": [
+        "The guests have just arrived."
+      ],
+      "explanation": "Just have bilan V3 orasida kelib, ish yaqinda tugaganini bildiradi."
+    },
+    {
+      "prompt": "Present Perfect va just bilan to‘ldiring: Dad ___ the light. (just; fix)",
+      "answers": [
+        "has just fixed"
+      ],
+      "explanation": "Has + just + V3 yaqinda tugagan ishni bildiradi."
+    }
+  ],
+  "12.10": [
+    {
+      "prompt": "Already ni yordamchi bilan V3 orasiga qo‘ying: We have ordered lunch.",
+      "answers": [
+        "We have already ordered lunch.",
+        "We've already ordered lunch."
+      ],
+      "explanation": "Already ish kutilganidan oldin yoki allaqachon bajarilganini bildiradi."
+    },
+    {
+      "prompt": "Present Perfect: She ___ that film. (already; see)",
+      "answers": [
+        "has already seen"
+      ],
+      "explanation": "She bilan has; already V3 seen dan oldin keladi."
+    }
+  ],
+  "12.11": [
+    {
+      "prompt": "Tanlang: The plumber hasn't arrived ___. (yet / still)",
+      "answers": [
+        "yet"
+      ],
+      "explanation": "Inkor gap oxirida kutilayotgan ish uchun yet ishlatiladi."
+    },
+    {
+      "prompt": "Still ni ega bilan yordamchi orasiga qo‘ying: He hasn't answered.",
+      "answers": [
+        "He still hasn't answered.",
+        "He still has not answered."
+      ],
+      "explanation": "Still davom etayotgan kutilish yoki inkorni ta’kidlaydi va has not dan oldin keladi."
+    }
+  ],
+  "12.12": [
+    {
+      "prompt": "Tanlang: We have lived in this street ___ 2019. (for / since)",
+      "answers": [
+        "since"
+      ],
+      "explanation": "2019 boshlanish nuqtasi, shuning uchun since kerak."
+    },
+    {
+      "prompt": "Tanlang: She has had that bicycle ___ six years. (for / since)",
+      "answers": [
+        "for"
+      ],
+      "explanation": "Six years davomiylikni bildiradi, shuning uchun for ishlatiladi."
+    }
+  ],
+  "12.13": [
+    {
+      "prompt": "Present Perfect bilan to‘ldiring: This week isn't over. I ___ three cakes this week. (bake)",
+      "answers": [
+        "have baked"
+      ],
+      "explanation": "Hali tugamagan hafta ichidagi natija have baked bilan ifodalanadi."
+    },
+    {
+      "prompt": "Present Perfect bilan to‘ldiring: It's only noon. We ___ five customers today. (help)",
+      "answers": [
+        "have helped"
+      ],
+      "explanation": "Today hali davom etayotgan vaqt oralig‘i; have helped shu paytgacha bo‘lgan natijani beradi."
+    }
+  ],
+  "12.14": [
+    {
+      "prompt": "Tanlang: Mum has ___ to the pharmacy. She'll be back soon. (been / gone)",
+      "answers": [
+        "gone"
+      ],
+      "explanation": "Gone ketgan va hali qaytmaganini bildiradi."
+    },
+    {
+      "prompt": "Tanlang: I've ___ to that castle twice; I have photos at home. (been / gone)",
+      "answers": [
+        "been"
+      ],
+      "explanation": "Been tashrif buyurib qaytilgan tajribani bildiradi."
+    }
+  ],
+  "12.15": [
+    {
+      "prompt": "Tanlang: I ___ my cousin yesterday. (have seen / saw)",
+      "answers": [
+        "saw"
+      ],
+      "explanation": "Yesterday tugallangan aniq o‘tgan vaqt, shuning uchun Past Simple."
+    },
+    {
+      "prompt": "Tanlang: Oh no! I ___ my wallet, so I can't pay now. (have lost / lose)",
+      "answers": [
+        "have lost"
+      ],
+      "explanation": "O‘tgan ishning hozirgi natijasi bor: hamyon yo‘q va hozir to‘lay olmaydi."
+    }
+  ],
+  "12.16": [
+    {
+      "prompt": "How long bilan savol tuzing: You have owned this house for ten years.",
+      "answers": [
+        "How long have you owned this house?"
+      ],
+      "explanation": "Davom etayotgan egalik holatining muddati Present Perfect bilan so‘raladi."
+    },
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: How long ___ she ___ a member of this club? (be) Ikki javobni tartib bilan yozing.",
+      "answers": [
+        "has, been"
+      ],
+      "explanation": "She bilan has, be ning V3 shakli been kerak; holat hozirgacha davom etadi."
+    }
+  ],
+  "13.1": [
+    {
+      "prompt": "Present Perfect Continuous: We ___ for the missing cat since dawn. (look)",
+      "answers": [
+        "have been looking"
+      ],
+      "explanation": "We bilan have been va -ing shakli ishlatiladi."
+    },
+    {
+      "prompt": "Present Perfect Continuous: Maya ___ the piano all morning. (practise)",
+      "answers": [
+        "has been practising"
+      ],
+      "explanation": "Maya birlik ega, shuning uchun has been practising."
+    }
+  ],
+  "13.2": [
+    {
+      "prompt": "Inkor qiling: I have been working late recently.",
+      "answers": [
+        "I have not been working late recently.",
+        "I haven't been working late recently.",
+        "I've not been working late recently."
+      ],
+      "explanation": "Inkor uchun have dan keyin not qo‘yiladi."
+    },
+    {
+      "prompt": "Inkor qiling: He has been eating properly.",
+      "answers": [
+        "He has not been eating properly.",
+        "He hasn't been eating properly.",
+        "He's not been eating properly."
+      ],
+      "explanation": "Has not been + -ing davomiy inkor shaklini hosil qiladi."
+    }
+  ],
+  "13.3": [
+    {
+      "prompt": "Yes/no savolga aylantiring: You have been painting the fence.",
+      "answers": [
+        "Have you been painting the fence?"
+      ],
+      "explanation": "Have ega oldiga chiqadi; been painting saqlanadi."
+    },
+    {
+      "prompt": "Yes/no savolga aylantiring: The baby has been crying.",
+      "answers": [
+        "Has the baby been crying?"
+      ],
+      "explanation": "Birlikdagi ega savolida has oldinga chiqadi."
+    }
+  ],
+  "13.4": [
+    {
+      "prompt": "How long bilan savol tuzing: They have been repairing the roof for two days.",
+      "answers": [
+        "How long have they been repairing the roof?"
+      ],
+      "explanation": "How long davomiylikni so‘raydi; have they been repairing tartibi kerak."
+    },
+    {
+      "prompt": "What bilan savol tuzing: You have been drawing birds. Chizilayotgan narsani so‘rang.",
+      "answers": [
+        "What have you been drawing?"
+      ],
+      "explanation": "What dan keyin have, ega, been va -ing keladi."
+    }
+  ],
+  "13.5": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Have you been exercising regularly?",
+      "answers": [
+        "Yes, I have."
+      ],
+      "explanation": "Qisqa javobda faqat have yordamchisi qoladi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Has Lena been working from home?",
+      "answers": [
+        "No, she has not.",
+        "No, she hasn't.",
+        "No, she's not."
+      ],
+      "explanation": "Has been savolining qisqa inkor javobi she has not."
+    }
+  ],
+  "13.6": [
+    {
+      "prompt": "Tugallangan miqdorni tanlang: I ___ six emails so far. (have sent / have been sending)",
+      "answers": [
+        "have sent"
+      ],
+      "explanation": "Aniq tugallangan miqdor six emails Present Perfect Simple bilan beriladi."
+    },
+    {
+      "prompt": "Faoliyat davomiyligini tanlang: Her hands are covered in paint because she ___ the walls all afternoon. (has painted / has been painting)",
+      "answers": [
+        "has been painting"
+      ],
+      "explanation": "Faoliyat davomiyligi va ko‘rinib turgan izi uchun Continuous mos."
+    }
+  ],
+  "13.7": [
+    {
+      "prompt": "Past Perfect: By the time we arrived, the film ___. (begin)",
+      "answers": [
+        "had begun"
+      ],
+      "explanation": "Avvalroq boshlangan ish had va V3 begun bilan ifodalanadi."
+    },
+    {
+      "prompt": "Past Perfect: I recognised the café because I ___ there before. (eat)",
+      "answers": [
+        "had eaten"
+      ],
+      "explanation": "O‘tmishdagi tanishdan oldingi tajriba had eaten bilan beriladi."
+    }
+  ],
+  "13.8": [
+    {
+      "prompt": "Inkor qiling: She had packed her coat before leaving.",
+      "answers": [
+        "She had not packed her coat before leaving.",
+        "She hadn't packed her coat before leaving.",
+        "She'd not packed her coat before leaving."
+      ],
+      "explanation": "Past Perfect inkori had not va V3 bilan tuziladi."
+    },
+    {
+      "prompt": "Past Perfect inkori: We ___ the warning before we entered. (not; see)",
+      "answers": [
+        "had not seen",
+        "hadn't seen"
+      ],
+      "explanation": "Oldingi o‘tgan voqeaning inkori had not seen shaklida bo‘ladi."
+    }
+  ],
+  "13.9": [
+    {
+      "prompt": "Yes/no savolga aylantiring: They had eaten before the concert.",
+      "answers": [
+        "Had they eaten before the concert?"
+      ],
+      "explanation": "Had ega oldiga chiqadi, eaten V3 qoladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Had she took the medicine before breakfast?",
+      "answers": [
+        "Had she taken the medicine before breakfast?"
+      ],
+      "explanation": "Had dan keyin took emas, V3 taken kerak."
+    }
+  ],
+  "13.10": [
+    {
+      "prompt": "Why bilan savol tuzing: He had hidden the letter.",
+      "answers": [
+        "Why had he hidden the letter?"
+      ],
+      "explanation": "Past Perfect wh-savolida why had he hidden tartibi ishlatiladi."
+    },
+    {
+      "prompt": "What bilan savol tuzing: They had prepared soup before we arrived. Taomni so‘rang.",
+      "answers": [
+        "What had they prepared before we arrived?"
+      ],
+      "explanation": "What to‘ldiruvchini so‘raydi; had ega oldiga chiqadi."
+    }
+  ],
+  "13.11": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Had you heard the news before lunch?",
+      "answers": [
+        "Yes, I had."
+      ],
+      "explanation": "Past Perfect qisqa javobida had ishlatiladi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Had the guests left before midnight?",
+      "answers": [
+        "No, they had not.",
+        "No, they hadn't.",
+        "No, they'd not."
+      ],
+      "explanation": "Ko‘plikdagi guests o‘rniga they; inkorda had not keladi."
+    }
+  ],
+  "13.12": [
+    {
+      "prompt": "Oldin sodir bo‘lgan ishni Past Perfectda yozing: I couldn't enter because I ___ my key at home. (leave)",
+      "answers": [
+        "had left"
+      ],
+      "explanation": "Kalitni qoldirish kira olmaslikdan oldin bo‘lgan, shuning uchun had left."
+    },
+    {
+      "prompt": "Ketma-ket yangi voqeani tanlang: After we had checked the address, we ___ a taxi. (called / had called)",
+      "answers": [
+        "called"
+      ],
+      "explanation": "Tekshirish avvalroq had checked; undan keyingi voqea called bilan aytiladi."
+    }
+  ],
+  "13.13": [
+    {
+      "prompt": "Past Perfect Continuous: My arms hurt because I ___ heavy boxes for hours. (carry)",
+      "answers": [
+        "had been carrying"
+      ],
+      "explanation": "O‘tgan natijadan oldin uzoq davom etgan faoliyat had been carrying bilan ifodalanadi."
+    },
+    {
+      "prompt": "Past Perfect Continuous: She ___ all day before she took a break. (sew)",
+      "answers": [
+        "had been sewing"
+      ],
+      "explanation": "O‘tgan bir nuqtagacha davom etgan ish had been + -ing bilan beriladi."
+    }
+  ],
+  "13.14": [
+    {
+      "prompt": "Inkor qiling: They had been sleeping well before the trip.",
+      "answers": [
+        "They had not been sleeping well before the trip.",
+        "They hadn't been sleeping well before the trip.",
+        "They'd not been sleeping well before the trip."
+      ],
+      "explanation": "Inkor had dan keyin not qo‘yish orqali tuziladi."
+    },
+    {
+      "prompt": "Past Perfect Continuous inkori: I ___ attention, so I missed the announcement. (not; pay)",
+      "answers": [
+        "had not been paying",
+        "hadn't been paying"
+      ],
+      "explanation": "Oldingi davom etayotgan faoliyatning inkori had not been paying."
+    }
+  ],
+  "13.15": [
+    {
+      "prompt": "Yes/no savolga aylantiring: He had been driving for five hours.",
+      "answers": [
+        "Had he been driving for five hours?"
+      ],
+      "explanation": "Had ega oldiga chiqadi; been driving saqlanadi."
+    },
+    {
+      "prompt": "Yes/no savolga aylantiring: You had been running before breakfast.",
+      "answers": [
+        "Had you been running before breakfast?"
+      ],
+      "explanation": "Past Perfect Continuous savoli had + ega + been + -ing bilan tuziladi."
+    }
+  ],
+  "13.16": [
+    {
+      "prompt": "How long bilan savol tuzing: She had been teaching there for a year before she moved.",
+      "answers": [
+        "How long had she been teaching there before she moved?"
+      ],
+      "explanation": "How long oldingi davomiylikni so‘raydi; had she been teaching kerak."
+    },
+    {
+      "prompt": "What bilan savol tuzing: They had been discussing the wedding. Muhokama mavzusini so‘rang.",
+      "answers": [
+        "What had they been discussing?"
+      ],
+      "explanation": "What to‘ldiruvchini almashtiradi; had they been discussing tartibi qoladi."
+    }
+  ],
+  "13.17": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Had you been waiting outside?",
+      "answers": [
+        "Yes, I had."
+      ],
+      "explanation": "Qisqa javobda had saqlanadi, been waiting takrorlanmaydi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Had Sara been looking for you?",
+      "answers": [
+        "No, she had not.",
+        "No, she hadn't.",
+        "No, she'd not."
+      ],
+      "explanation": "Had savoliga inkor javob she had not yoki she hadn't."
+    }
+  ],
+  "13.18": [
+    {
+      "prompt": "Tugallangan natijani tanlang: By six, he ___ all ten chairs. (had repaired / had been repairing)",
+      "answers": [
+        "had repaired"
+      ],
+      "explanation": "All ten chairs tugallangan aniq miqdorni bildiradi, shuning uchun Simple."
+    },
+    {
+      "prompt": "Davomiy sababni tanlang: Her eyes were tired because she ___ for hours. (had read / had been reading)",
+      "answers": [
+        "had been reading"
+      ],
+      "explanation": "Charchoqning davomiy sababi had been reading bilan aniq ifodalanadi."
+    }
+  ],
+  "14.1": [
+    {
+      "prompt": "Qiyosiy shakl: This suitcase is ___ than mine. (heavy)",
+      "answers": [
+        "heavier"
+      ],
+      "explanation": "Undosh + y bilan tugagan heavy qiyosiy shaklda heavier bo‘ladi."
+    },
+    {
+      "prompt": "Qiyosiy shakl: The blue rope is ___ than the red one. (long)",
+      "answers": [
+        "longer"
+      ],
+      "explanation": "Qisqa sifatga -er qo‘shiladi: longer."
+    }
+  ],
+  "14.2": [
+    {
+      "prompt": "Qiyosiy shakl: This chair is ___ than that stool. (comfortable)",
+      "answers": [
+        "more comfortable"
+      ],
+      "explanation": "Uzun sifat oldidan more qo‘yiladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: This story is interestinger than that one.",
+      "answers": [
+        "This story is more interesting than that one."
+      ],
+      "explanation": "Interesting uzun sifat bo‘lib, -er emas, more bilan qiyoslanadi."
+    }
+  ],
+  "14.3": [
+    {
+      "prompt": "Qiyosiy shakl: My cough is ___ today than yesterday. (bad)",
+      "answers": [
+        "worse"
+      ],
+      "explanation": "Bad ning noto‘g‘ri qiyosiy shakli worse."
+    },
+    {
+      "prompt": "Qiyosiy shakl: This route is ___ than the other one. (good)",
+      "answers": [
+        "better"
+      ],
+      "explanation": "Good ning qiyosiy shakli better bo‘ladi."
+    }
+  ],
+  "14.4": [
+    {
+      "prompt": "Orttirma shakl, artikl bilan: This is ___ room in the house. (small)",
+      "answers": [
+        "the smallest"
+      ],
+      "explanation": "Orttirma darajada the va -est ishlatiladi."
+    },
+    {
+      "prompt": "Orttirma shakl, artikl bilan: That was ___ day of the holiday. (hot)",
+      "answers": [
+        "the hottest"
+      ],
+      "explanation": "Hot da t ikkilantirilib -est qo‘shiladi; oldidan the keladi."
+    }
+  ],
+  "14.5": [
+    {
+      "prompt": "Orttirma shakl, artikl bilan: It was ___ meal of the week. (bad)",
+      "answers": [
+        "the worst"
+      ],
+      "explanation": "Bad ning orttirma shakli the worst."
+    },
+    {
+      "prompt": "Orttirma shakl, artikl bilan: This is ___ sofa in the shop. (expensive)",
+      "answers": [
+        "the most expensive"
+      ],
+      "explanation": "Uzun sifatning orttirma darajasi the most bilan tuziladi."
+    }
+  ],
+  "14.6": [
+    {
+      "prompt": "Ikki bo‘shliqni tartib bilan to‘ldiring: My bag is ___ heavy ___ yours. Ularning vazni bir xil.",
+      "answers": [
+        "as, as"
+      ],
+      "explanation": "Tenglik as + sifat + as bilan ifodalanadi."
+    },
+    {
+      "prompt": "Not as ... as bilan qayta yozing: The kitchen is smaller than the living room.",
+      "answers": [
+        "The kitchen is not as big as the living room.",
+        "The kitchen is not as large as the living room.",
+        "The kitchen isn't as big as the living room.",
+        "The kitchen isn't as large as the living room."
+      ],
+      "explanation": "Not as big/large as ikkinchi joydan kichikroq ekanini bildiradi."
+    }
+  ],
+  "14.7": [
+    {
+      "prompt": "Ravishning qiyosiy shakli: Please speak ___ than before. (slowly)",
+      "answers": [
+        "more slowly"
+      ],
+      "explanation": "Ko‘p -ly ravishlari more bilan qiyoslanadi."
+    },
+    {
+      "prompt": "Ravishning qiyosiy shakli: Nina sings ___ than I do. (well)",
+      "answers": [
+        "better"
+      ],
+      "explanation": "Well ning qiyosiy shakli better bo‘ladi."
+    }
+  ],
+  "14.8": [
+    {
+      "prompt": "Tanlang: This box is ___ heavier than that one. (very / much)",
+      "answers": [
+        "much"
+      ],
+      "explanation": "Qiyosiy sifatni kuchaytirish uchun much ishlatiladi, very emas."
+    },
+    {
+      "prompt": "Kichik farqni ifodalang: My new flat is ___ bigger. (a bit / far)",
+      "answers": [
+        "a bit"
+      ],
+      "explanation": "A bit kichik farqni, far esa katta farqni bildiradi."
+    }
+  ],
+  "14.9": [
+    {
+      "prompt": "Tanlang: I bought ___ oranges for the picnic. (some / any)",
+      "answers": [
+        "some"
+      ],
+      "explanation": "Oddiy ijobiy gapda some ishlatiladi."
+    },
+    {
+      "prompt": "Ikkala bo‘shliq uchun javoblarni tartib bilan yozing: There are not ___ clean spoons. Are there ___ in the drawer? (some / any)",
+      "answers": [
+        "any, any"
+      ],
+      "explanation": "Oddiy inkor va neytral savollarda any ishlatiladi."
+    }
+  ],
+  "14.10": [
+    {
+      "prompt": "Taklifni to‘ldiring: Would you like ___ juice? (some / any)",
+      "answers": [
+        "some"
+      ],
+      "explanation": "Ichimlik taklif qilinayotgan savolda some odatiy tanlov."
+    },
+    {
+      "prompt": "Iltimosni to‘ldiring: Could I have ___ more bread, please? (some / any)",
+      "answers": [
+        "some"
+      ],
+      "explanation": "Biror narsa so‘ralayotgan muloyim iltimosda some ishlatiladi."
+    }
+  ],
+  "14.11": [
+    {
+      "prompt": "Tanlang: How ___ luggage have you got? (much / many)",
+      "answers": [
+        "much"
+      ],
+      "explanation": "Luggage sanalmaydigan ot, shuning uchun much kerak."
+    },
+    {
+      "prompt": "Ikki javobni tartib bilan yozing: How ___ plates do we need? We have ___ guests. (many / much; a lot of / a lot)",
+      "answers": [
+        "many, a lot of"
+      ],
+      "explanation": "Sanaladigan ko‘plik plates bilan many ishlatiladi. Ot oldida a lot of kerak; a lot bu o‘rinda of siz kelmaydi."
+    }
+  ],
+  "14.12": [
+    {
+      "prompt": "Ijobiy ma’no: We have ___ eggs, so we can make an omelette. (few / a few)",
+      "answers": [
+        "a few"
+      ],
+      "explanation": "A few oz bo‘lsa-da borligini, foydalanish mumkinligini ta’kidlaydi."
+    },
+    {
+      "prompt": "Yetishmaslik ma’nosi: We have ___ chairs; most guests will have to stand. (few / a few)",
+      "answers": [
+        "few"
+      ],
+      "explanation": "Few sonning juda kam va yetarli emasligini bildiradi."
+    }
+  ],
+  "14.13": [
+    {
+      "prompt": "Yetarli oz miqdor: There's ___ milk left, enough for one cup. (little / a little)",
+      "answers": [
+        "a little"
+      ],
+      "explanation": "A little oz miqdor borligini ijobiy ko‘rsatadi."
+    },
+    {
+      "prompt": "Yetishmaslik: We have ___ time; we cannot finish today. (little / a little)",
+      "answers": [
+        "little"
+      ],
+      "explanation": "Little sanalmaydigan time miqdori juda kamligini bildiradi."
+    }
+  ],
+  "14.14": [
+    {
+      "prompt": "Tanlang: This coffee is ___ hot to drink. (too / enough)",
+      "answers": [
+        "too"
+      ],
+      "explanation": "Too hot ortiqcha issiq, ichish uchun yaroqsiz darajani bildiradi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: The shelf isn't enough strong.",
+      "answers": [
+        "The shelf isn't strong enough.",
+        "The shelf is not strong enough."
+      ],
+      "explanation": "Enough sifatdan keyin keladi: strong enough."
+    }
+  ],
+  "14.15": [
+    {
+      "prompt": "Ikkalasi ham yo‘q: ___ of these two keys opens the door. (Both / Neither)",
+      "answers": [
+        "Neither"
+      ],
+      "explanation": "Neither ikkita variantning hech biri mos emasligini bildiradi."
+    },
+    {
+      "prompt": "Ikki javobni tartib bilan yozing: ___ chairs are free. You can sit on ___ of them. (Both / Either; either / both) Bitta o‘rindiqni tanlash nazarda tutilgan.",
+      "answers": [
+        "Both, either"
+      ],
+      "explanation": "Both ikkala stulni bildiradi. Either of them esa ularning xohlagan bittasini tanlashga imkon beradi."
+    }
+  ],
+  "14.16": [
+    {
+      "prompt": "Bo‘shliqni to‘ldiring: Most ___ the guests arrived early.",
+      "answers": [
+        "of"
+      ],
+      "explanation": "The bilan belgilangan aniq guruh oldidan most of ishlatiladi."
+    },
+    {
+      "prompt": "Nol miqdorni tanlang: ___ of the invitations has been sent. (All / None)",
+      "answers": [
+        "None"
+      ],
+      "explanation": "None of guruhdagi hech biri emasligini bildiradi; bu gapda birlikdagi has qabul qilinadi."
+    }
+  ],
+  "15.1": [
+    {
+      "prompt": "Can bilan yozing: «Singlim shaxmat o‘ynay oladi».",
+      "answers": [
+        "My sister can play chess."
+      ],
+      "explanation": "Qobiliyat can va fe’lning oddiy shakli bilan ifodalanadi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: He can speaks French.",
+      "answers": [
+        "He can speak French."
+      ],
+      "explanation": "Can dan keyin -s qo‘shilmagan speak kerak."
+    }
+  ],
+  "15.2": [
+    {
+      "prompt": "Inkor qiling: I can lift this box.",
+      "answers": [
+        "I cannot lift this box.",
+        "I can't lift this box."
+      ],
+      "explanation": "Can inkori cannot yoki can't bo‘ladi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: They don't can skate.",
+      "answers": [
+        "They cannot skate.",
+        "They can't skate."
+      ],
+      "explanation": "Can bilan do yordamchisi ishlatilmaydi; cannot yoki can't kerak."
+    }
+  ],
+  "15.3": [
+    {
+      "prompt": "Yes/no savolga aylantiring: Your aunt can sew.",
+      "answers": [
+        "Can your aunt sew?"
+      ],
+      "explanation": "Can ega oldiga chiqadi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Does he can whistle?",
+      "answers": [
+        "Can he whistle?"
+      ],
+      "explanation": "Can savolni o‘zi tuzadi; does kerak emas."
+    }
+  ],
+  "15.4": [
+    {
+      "prompt": "What bilan savol tuzing: She can repair bicycles. Tuzata oladigan narsani so‘rang.",
+      "answers": [
+        "What can she repair?"
+      ],
+      "explanation": "What dan keyin can, ega va fe’l keladi."
+    },
+    {
+      "prompt": "How many bilan savol tuzing: He can speak three languages.",
+      "answers": [
+        "How many languages can he speak?"
+      ],
+      "explanation": "How many languages to‘ldiruvchini so‘raydi; can he speak tartibi ishlatiladi."
+    }
+  ],
+  "15.5": [
+    {
+      "prompt": "Qisqa ijobiy javob yozing: Can you juggle?",
+      "answers": [
+        "Yes, I can."
+      ],
+      "explanation": "Qobiliyat savoliga qisqa ijobiy javob can bilan beriladi."
+    },
+    {
+      "prompt": "Qisqa salbiy javob yozing: Can your dad ski?",
+      "answers": [
+        "No, he cannot.",
+        "No, he can't."
+      ],
+      "explanation": "Qisqa salbiy javobda cannot yoki can't ishlatiladi."
+    }
+  ],
+  "15.6": [
+    {
+      "prompt": "Oldingi qobiliyat: At six, she ___ ride a bicycle. (can / could)",
+      "answers": [
+        "could"
+      ],
+      "explanation": "O‘tmishdagi umumiy qobiliyat could bilan ifodalanadi."
+    },
+    {
+      "prompt": "Could bilan qayta yozing: As a teenager, I was able to run very fast.",
+      "answers": [
+        "As a teenager, I could run very fast."
+      ],
+      "explanation": "Could oldingi davrdagi umumiy qobiliyat o‘rniga ishlatiladi."
+    }
+  ],
+  "15.7": [
+    {
+      "prompt": "Inkor qiling: We could hear the guide.",
+      "answers": [
+        "We could not hear the guide.",
+        "We couldn't hear the guide."
+      ],
+      "explanation": "Could inkori could not yoki couldn't."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: I didn't could tie my shoes at four.",
+      "answers": [
+        "I could not tie my shoes at four.",
+        "I couldn't tie my shoes at four."
+      ],
+      "explanation": "Could bilan did ishlatilmaydi; inkor could not orqali tuziladi."
+    }
+  ],
+  "15.8": [
+    {
+      "prompt": "Yes/no savolga aylantiring: She could read music at eight.",
+      "answers": [
+        "Could she read music at eight?"
+      ],
+      "explanation": "Could ega oldiga chiqadi; read o‘zgarmaydi."
+    },
+    {
+      "prompt": "Xatoni tuzatib yozing: Did you could swim when you were seven?",
+      "answers": [
+        "Could you swim when you were seven?"
+      ],
+      "explanation": "Oldingi qobiliyat savolida did emas, could yordamchisi kerak."
+    }
+  ],
+  "15.9": [
+    {
+      "prompt": "Kelajak qobiliyati: After the lesson, you ___ use this machine. (be able to; will bilan)",
+      "answers": [
+        "will be able to"
+      ],
+      "explanation": "Can ning will can shakli yo‘q; will be able to ishlatiladi."
+    },
+    {
+      "prompt": "Present Perfect bilan to‘ldiring: I ___ sleep properly since the noise stopped. (be able to)",
+      "answers": [
+        "have been able to"
+      ],
+      "explanation": "Perfect zamonda have been able to shakli ishlatiladi."
+    }
+  ],
+  "15.10": [
+    {
+      "prompt": "Aniq muvaffaqiyat: After several attempts, we ___ open the stuck window. (managed to / could)",
+      "answers": [
+        "managed to"
+      ],
+      "explanation": "Qiyinchilikdan keyingi bitta muvaffaqiyat managed to bilan aniq ifodalanadi."
+    },
+    {
+      "prompt": "Was able to bilan to‘ldiring: The door was heavy, but she ___ push it open.",
+      "answers": [
+        "was able to"
+      ],
+      "explanation": "Bitta vaziyatda erishilgan ijobiy natija was able to bilan beriladi."
+    }
+  ],
+  "15.11": [
+    {
+      "prompt": "May I bilan ruxsat so‘rang: «Bu yerda suratga olsam maylimi?»",
+      "answers": [
+        "May I take a photo here?",
+        "May I take a photograph here?",
+        "May I take photos here?"
+      ],
+      "explanation": "May I rasmiyroq va muloyim ruxsat so‘rash shakli."
+    },
+    {
+      "prompt": "Could I bilan ruxsat so‘rang: «Telefoningizdan foydalansam maylimi?»",
+      "answers": [
+        "Could I use your phone?"
+      ],
+      "explanation": "Could I muloyim ruxsat so‘rashda hozirgi vaziyat uchun ishlatiladi."
+    }
+  ],
+  "15.12": [
+    {
+      "prompt": "Could you bilan iltimos qiling: «Bu qutini ko‘tarib bera olasizmi?» Carry ishlating.",
+      "answers": [
+        "Could you carry this box?"
+      ],
+      "explanation": "Could you + oddiy fe’l muloyim iltimos tuzadi."
+    },
+    {
+      "prompt": "Would you bilan iltimos qiling: «Iltimos, ovozni pasaytirasizmi?» Turn down the volume ishlating; please oxirida.",
+      "answers": [
+        "Would you turn down the volume, please?"
+      ],
+      "explanation": "Would you bu yerda boshqa odamdan ish qilishni muloyim so‘raydi."
+    }
+  ],
+  "15.13": [
+    {
+      "prompt": "Ruxsatni to‘ldiring: We ___ bring our own food. (be allowed to; Present Simple)",
+      "answers": [
+        "are allowed to"
+      ],
+      "explanation": "We bilan are allowed to ruxsat borligini bildiradi."
+    },
+    {
+      "prompt": "O‘tgan ruxsatni inkor qiling: They were allowed to park here.",
+      "answers": [
+        "They were not allowed to park here.",
+        "They weren't allowed to park here."
+      ],
+      "explanation": "O‘tgan ruxsat inkori were not allowed to bilan tuziladi."
+    }
+  ],
+  "15.14": [
+    {
+      "prompt": "Would like bilan istak bildiring: «Men deraza yonidagi stolni xohlardim».",
+      "answers": [
+        "I would like a table by the window.",
+        "I would like a table near the window.",
+        "I'd like a table by the window.",
+        "I'd like a table near the window."
+      ],
+      "explanation": "Would like muloyim istak bildiradi; undan keyin ot birikmasi kelishi mumkin."
+    },
+    {
+      "prompt": "Would you like bilan taklif qiling: «Bizga qo‘shilishni xohlaysizmi?» Join us ishlating.",
+      "answers": [
+        "Would you like to join us?"
+      ],
+      "explanation": "Would like dan keyingi harakat to + fe’l bilan keladi."
+    }
+  ]
+}

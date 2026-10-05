@@ -1,0 +1,378 @@
+{
+  "22.1": [
+    {"prompt":"Faqat mos fe’lni yozing: The guide ___ us that the cave was closed. (said / told)","answers":["told"],"explanation":"Tell fe’lidan keyin kimga aytilgani bevosita keladi: told us. Say bilan esa said to us bo‘lardi."},
+    {"prompt":"Faqat mos fe’lni yozing: The mechanic ___ that the engine needed oil. (said / told)","answers":["said"],"explanation":"Bu gapda tinglovchi to‘ldiruvchi sifatida berilmagan. Shuning uchun said that ishlatiladi; told odatda kimga aytilganini talab qiladi."}
+  ],
+  "22.2": [
+    {"prompt":"Zamonni bir pog‘ona ortga surib, faqat bo‘shliqni to‘ldiring: Nina said, ‘I am excited.’ → Nina said that she ___ excited.","answers":["was"],"explanation":"O‘tgan zamondagi said bilan am shakli was ga o‘zgaradi; Nina haqida she ishlatiladi."},
+    {"prompt":"Tasdiq xabarni backshift bilan to‘ldiring, faqat fe’lni yozing: The boys said, ‘We need a ladder.’ → The boys said that they ___ a ladder.","answers":["needed"],"explanation":"Need hozirgi oddiy zamondan needed o‘tgan oddiy zamoniga o‘tadi. We olmoshi esa they bo‘ladi."}
+  ],
+  "22.3": [
+    {"prompt":"Backshift qiling. Faqat bo‘shliqni yozing, qisqartma ishlatmang: Eva said, ‘I do not eat meat.’ → Eva said that she ___ meat.","answers":["did not eat"],"explanation":"Do not eat bir pog‘ona ortga surilganda did not eat bo‘ladi. Did dan keyin eat asosiy shaklda qoladi."},
+    {"prompt":"Faqat bo‘shliqni to‘ldiring, zamonni ortga suring va qisqartma ishlatmang: The twins said, ‘We are not angry.’ → The twins said that they ___ angry.","answers":["were not"],"explanation":"Are not o‘tgan zamonda were not bo‘ladi. Ko‘plikdagi they egasiga were mos keladi."}
+  ],
+  "22.4": [
+    {"prompt":"Present Continuous ni Past Continuous ga o‘tkazing; faqat bo‘shliqni yozing: Omar said, ‘I am measuring the wall.’ → Omar said that he ___ the wall.","answers":["was measuring"],"explanation":"Davomiy zamonning backshift shakli was/were + -ing: am measuring → was measuring."},
+    {"prompt":"Present Simple ni Past Simple ga o‘tkazing; faqat fe’lni yozing: Lila said, ‘My uncle owns a bakery.’ → Lila said that her uncle ___ a bakery.","answers":["owned"],"explanation":"Owns hozirgi zamondan owned o‘tgan zamoniga o‘zgaradi. Egalik ma’nosi saqlanadi."}
+  ],
+  "22.5": [
+    {"prompt":"Past Simple ni Past Perfect ga suring; faqat bo‘shliqni yozing: Ben said, ‘I broke the handle.’ → Ben said that he ___ the handle.","answers":["had broken"],"explanation":"Broke ning Past Perfect shakli had broken: had + break fe’lining uchinchi shakli."},
+    {"prompt":"Present Perfect ni Past Perfect ga suring; faqat bo‘shliqni yozing: Ada said, ‘I have checked the figures.’ → Ada said that she ___ the figures.","answers":["had checked"],"explanation":"Have checked backshift qilinganda had checked bo‘ladi; sifatdosh checked o‘zgarmaydi."}
+  ],
+  "22.6": [
+    {"prompt":"Modal fe’lni ortga suring; faqat bo‘shliqni yozing: Dan said, ‘I will reserve a table.’ → Dan said that he ___ reserve a table.","answers":["would"],"explanation":"O‘zlashtirma gapda will ning backshift shakli would. Undan keyin reserve asosiy shaklda keladi."},
+    {"prompt":"Modal fe’lni ortga suring; faqat bo‘shliqni yozing: Rosa said, ‘I can translate this menu.’ → Rosa said that she ___ translate that menu.","answers":["could"],"explanation":"Can o‘zlashtirma gapda could ga o‘tadi. Bu yerda tarjima qila olish qobiliyati xabar qilinmoqda."}
+  ],
+  "22.7": [
+    {"prompt":"Xabar hozir aytilmoqda. Zamonni ortga surmang; faqat fe’lni yozing: Farida says, ‘I teach biology.’ → Farida says that she ___ biology.","answers":["teaches"],"explanation":"Says hozirgi zamonda bo‘lgani uchun backshift kerak emas. She egasi bilan teach ga -es qo‘shiladi."},
+    {"prompt":"Hali ham to‘g‘ri bo‘lgan ilmiy faktni backshift qilmasdan to‘ldiring: The lecturer said that the Earth ___ around the Sun. (moves / moved)","answers":["moves"],"explanation":"Umumiy ilmiy haqiqatni hozirgi zamonda saqlash mumkin. Topshiriq zamonni ortga surmaslikni so‘rayapti, shuning uchun moves tanlanadi."}
+  ],
+  "22.8": [
+    {"prompt":"Faqat egalik olmoshini yozing: Mark said, ‘My passport has expired.’ → Mark said that ___ passport had expired.","answers":["his"],"explanation":"My so‘zi dastlab Markka tegishli. Mark haqida boshqa kishi xabar berganda his bo‘ladi."},
+    {"prompt":"Men ayol kishiman. Tom menga ‘You are the winner,’ dedi. Faqat ega olmoshini yozing: Tom told me that ___ was the winner.","answers":["I"],"explanation":"Tomning you olmoshi gapni hozir yetkazayotgan menga tegishli, shuning uchun I ishlatiladi."}
+  ],
+  "22.9": [
+    {"prompt":"Dushanba kuni Leo ‘I will return tomorrow,’ dedi. Buni payshanba kuni yetkazyapsiz. Tomorrow o‘rniga the bilan boshlanuvchi iborani yozing: Leo said he would return ___.","answers":["the next day","the following day"],"explanation":"Boshqa kuni xabar berilganda tomorrow asl gap aytilgan kundan keyingi kunni bildiradi: the next day yoki the following day."},
+    {"prompt":"Mira muzeyda ‘I work here,’ dedi. Endi boshqa binodasiz. Here o‘rniga mos bitta so‘zni yozing: Mira said she worked ___.","answers":["there"],"explanation":"Xabar boshqa joydan berilayotgani uchun here o‘rniga there keladi; muzey nazarda tutilmoqda."}
+  ],
+  "22.10": [
+    {"prompt":"Faqat bog‘lovchini yozing: ‘Have you paid the fee?’ → The clerk asked me ___ I had paid the fee. (if / that)","answers":["if"],"explanation":"Ha/yo‘q savoli o‘zlashtirilganda if yoki whether bilan kiritiladi. Berilgan variantlardan if to‘g‘ri."},
+    {"prompt":"Faqat A yoki B ni yozing. ‘Is the lift working?’ savolining to‘g‘ri o‘zlashtirma shakli qaysi? A) She asked whether was the lift working. B) She asked whether the lift was working.","answers":["B"],"explanation":"O‘zlashtirma savolda ega yordamchi fe’ldan oldin keladi: the lift was working. Savoldagi inversiya saqlanmaydi."}
+  ],
+  "22.11": [
+    {"prompt":"Faqat A yoki B ni yozing. ‘Why did the alarm ring?’ → A) He asked why the alarm had rung. B) He asked why had the alarm rung.","answers":["A"],"explanation":"Wh-so‘z saqlanadi, lekin keyin oddiy gap tartibi ishlatiladi: the alarm had rung. Past Simple backshift bilan Past Perfect bo‘ladi."},
+    {"prompt":"Faqat noto‘g‘ri so‘z tartibini tuzatib, butun gapni yozing: She asked how much did the coat cost. Past Simple ni saqlang.","answers":["She asked how much the coat cost."],"explanation":"O‘zlashtirma wh-savolda did yordamchisi bilan savol tartibi ishlatilmaydi. Cost fe’lining Past Simple shakli ham cost."}
+  ],
+  "22.12": [
+    {"prompt":"Buyruqni to‘ldiring; faqat bo‘shliqni yozing: ‘Fasten your seat belt,’ the pilot told me. → The pilot told me ___ my seat belt.","answers":["to fasten"],"explanation":"Buyruq told + shaxs + to-infinitive orqali yetkaziladi: told me to fasten."},
+    {"prompt":"Buyruqni to‘ldiring; faqat bo‘shliqni yozing: ‘Put on your helmets,’ the instructor told us. → The instructor told us ___ our helmets.","answers":["to put on"],"explanation":"Told us dan keyin to put on keladi. Put on birikmasining ikkala qismi ham saqlanadi."}
+  ],
+  "22.13": [
+    {"prompt":"Inkor buyruqni yetkazing; faqat bo‘shliqni yozing: ‘Do not feed the deer,’ the ranger told us. → The ranger told us ___ the deer.","answers":["not to feed"],"explanation":"Inkor buyruqda not to + asosiy fe’l qo‘llanadi: not to feed."},
+    {"prompt":"Inkor buyruqni yetkazing; faqat bo‘shliqni yozing: ‘Do not share the password,’ the manager told Kim. → The manager told Kim ___ the password.","answers":["not to share"],"explanation":"Told Kim dan keyin taqiq not to share shaklida beriladi; do not bu tuzilmada ishlatilmaydi."}
+  ],
+  "22.14": [
+    {"prompt":"Iltimosni ask bilan yetkazing; faqat bo‘shliqni yozing: ‘Please carry this tray,’ the waiter said to me. → The waiter asked me ___ that tray.","answers":["to carry"],"explanation":"Iltimos asked + shaxs + to-infinitive bilan yetkaziladi: asked me to carry."},
+    {"prompt":"Faqat xato fe’l shaklini tuzatib, butun gapni yozing: The visitor asked us showing her the exit.","answers":["The visitor asked us to show her the exit."],"explanation":"Ask someone to do something qolipi kerak. Showing o‘rniga to show ishlatiladi."}
+  ],
+  "22.15": [
+    {"prompt":"Faqat qavsdagi fe’lning kerakli shaklini yozing: The courier promised ___ before sunset. (return)","answers":["to return"],"explanation":"Promise dan keyin to-infinitive keladi: promised to return — qaytishga va’da berdi."},
+    {"prompt":"Faqat A yoki B ni yozing. Qaysi variantda ikkala fe’l qolipi ham to‘g‘ri? A) She offered lending a torch, but he refused taking it. B) She offered to lend a torch, but he refused to take it.","answers":["B"],"explanation":"Offer va refuse fe’llaridan keyin to-infinitive ishlatiladi: offered to lend va refused to take."}
+  ],
+  "22.16": [
+    {"prompt":"Faqat qavsdagi fe’lning kerakli shaklini yozing: The designer suggested ___ a larger font. (use)","answers":["using"],"explanation":"Suggest dan keyin bevosita fe’l kelsa, -ing shakli ishlatiladi: suggested using."},
+    {"prompt":"Faqat A yoki B ni yozing. A) He admitted to scratch the desk but denied to break the lamp. B) He admitted scratching the desk but denied breaking the lamp.","answers":["B"],"explanation":"Admit va deny dan keyin gerund kelishi mumkin: admitted scratching, denied breaking. A variantidagi to + asosiy fe’l noto‘g‘ri."}
+  ],
+  "23.1": [
+    {"prompt":"Odamni aniqlovchi olmoshni tanlang; faqat javobni yozing: The nurse ___ treated my ankle was very gentle. (who / which)","answers":["who"],"explanation":"Nurse odamni bildiradi, shuning uchun berilgan variantlardan who mos keladi."},
+    {"prompt":"Faqat xato olmoshni almashtirib, butun gapni yozing. Who ishlating: Do you know the chef which won the prize?","answers":["Do you know the chef who won the prize?"],"explanation":"Chef odam bo‘lgani uchun which emas, who kerak. Who ergash gapning egasi ham hisoblanadi."}
+  ],
+  "23.2": [
+    {"prompt":"Faqat mos olmoshni yozing: The battery ___ powers this sensor is tiny. (which / who)","answers":["which"],"explanation":"Battery narsa bo‘lgani uchun which qo‘llanadi. Bu aniqlovchi gapda that ham mumkin, ammo variantlarda which berilgan."},
+    {"prompt":"Bo‘shliqqa which yoki that dan mos keladiganini yozing: Is this the cable ___ connects the printer to the laptop?","answers":["which","that"],"explanation":"Narsani aniqlovchi defining relative gapda which ham, that ham ishlatilishi mumkin."}
+  ],
+  "23.3": [
+    {"prompt":"Egalikni bildiruvchi bitta nisbiy olmoshni yozing: The athlete ___ coach retired is looking for a new trainer.","answers":["whose"],"explanation":"Murabbiy sportchiga tegishli ekanini whose coach birikmasi ko‘rsatadi."},
+    {"prompt":"Faqat mos so‘zni yozing: Have you met the artist ___ paintings hang in the lobby? (who / whose)","answers":["whose"],"explanation":"Paintings oldidan egalik bildiruvchi whose kerak: rasmlari vestibyulda osilgan rassom."}
+  ],
+  "23.4": [
+    {"prompt":"Joyni ifodalovchi where yoki which ni tanlang: We found a café ___ cyclists can refill their bottles. Faqat so‘zni yozing.","answers":["where"],"explanation":"Ergash gap kafeda sodir bo‘ladigan harakatni bildiradi; where bu yerda at which ma’nosida."},
+    {"prompt":"Faqat bitta so‘zni tuzating va butun gapni yozing: This is the studio which we record our podcast. Which o‘rniga joy ravishini qo‘ying.","answers":["This is the studio where we record our podcast."],"explanation":"We record our podcast gapiga joy ma’nosi kerak. Where — in which, ya’ni o‘sha studiyada degani."}
+  ],
+  "23.5": [
+    {"prompt":"Faqat mos so‘zni yozing: Do you recall the winter ___ the lake froze completely? (when / where)","answers":["when"],"explanation":"Winter vaqtni bildiradi; shu davrda sodir bo‘lgan hodisa when bilan bog‘lanadi."},
+    {"prompt":"Vaqtni bildiruvchi nisbiy ravishni yozing: There was a period ___ our village had no electricity. (when / whose)","answers":["when"],"explanation":"Period vaqt oralig‘i. When ergash gapni shu davr bilan bog‘laydi."}
+  ],
+  "23.6": [
+    {"prompt":"Faqat A yoki B ni yozing. Qaysi gapda zarur ega olmoshi bor? A) The dog that guards the warehouse belongs to Aziz. B) The dog guards the warehouse belongs to Aziz.","answers":["A"],"explanation":"That guards fe’lining egasi bo‘lib kelgan. Ega vazifasidagi nisbiy olmoshni tushirib bo‘lmaydi."},
+    {"prompt":"Faqat A yoki B ni yozing. To‘g‘ri savolni tanlang: A) Where is the parcel arrived this morning? B) Where is the parcel that arrived this morning?","answers":["B"],"explanation":"Arrived fe’lining egasi that. Uni olib tashlash ikki gapni grammatik bog‘lovchisiz qoldiradi."}
+  ],
+  "23.7": [
+    {"prompt":"Faqat to‘ldiruvchi nisbiy olmoshini olib tashlab, gapni qayta yozing: The recipe that you recommended was delicious.","answers":["The recipe you recommended was delicious."],"explanation":"That recommended fe’lining to‘ldiruvchisi; ega you bo‘lgani uchun that ni tushirish mumkin."},
+    {"prompt":"Faqat A yoki B ni yozing. Qaysi gapda nisbiy olmoshni tushirish mumkin? A) The scarf which I knitted is green. B) The scarf which covers the statue is green.","answers":["A"],"explanation":"A da which to‘ldiruvchi, I esa ega. B da which covers fe’lining egasi, shuning uchun tushirilmaydi."}
+  ],
+  "23.8": [
+    {"prompt":"Faqat mos olmoshni yozing: Dr Evans, ___ trained in Canada, now runs our clinic. (who / that)","answers":["who"],"explanation":"Vergul bilan ajratilgan qo‘shimcha ma’lumot gapida odam uchun who ishlatiladi; that ishlatilmaydi."},
+    {"prompt":"Faqat mos olmoshni yozing: Our new scanner, ___ arrived on Tuesday, is already in use. (which / that)","answers":["which"],"explanation":"Non-defining relative gapda narsa uchun which kerak. That vergul bilan ajratilgan bunday gapga mos emas."}
+  ],
+  "23.9": [
+    {"prompt":"Faqat mos so‘zni yozing: Elena, ___ daughter is a violinist, invited us to a concert. (whose / who)","answers":["whose"],"explanation":"Daughter oldidan egalikni bildiruvchi whose ishlatiladi. Bu qo‘shimcha ma’lumotli gaplarda ham mumkin."},
+    {"prompt":"Faqat mos so‘zni yozing: Lisbon, ___ we spent our honeymoon, has steep streets. (where / which)","answers":["where"],"explanation":"Ergash gapda Lisbon harakat sodir bo‘lgan joy. Where bu yerda in which ma’nosini beradi."}
+  ],
+  "23.10": [
+    {"prompt":"Faqat A yoki B ni yozing. Bir nechta ammam bor; faqat shifokor bo‘lganini ajratmoqchiman. A) My aunt who is a doctor works nights. B) My aunt, who is a doctor, works nights.","answers":["A"],"explanation":"Qaysi amma ekanini aniqlash uchun who is a doctor zarur. Defining relative gap vergulsiz yoziladi."},
+    {"prompt":"Faqat A yoki B ni yozing. Bitta velosipedim bor; rangini qo‘shimcha ma’lumot sifatida aytaman. A) My bicycle which is yellow needs new tyres. B) My bicycle, which is yellow, needs new tyres.","answers":["B"],"explanation":"Velosiped allaqachon aniq, rang esa qo‘shimcha ma’lumot. Non-defining gap ikki tomondan vergul bilan ajratiladi."}
+  ],
+  "23.11": [
+    {"prompt":"Rasmiy uslubdagi mos olmoshni yozing: The consultant with ___ we negotiated was patient. (whom / that)","answers":["whom"],"explanation":"Oldinga chiqarilgan predlogdan keyin odam uchun whom ishlatiladi: with whom. With that bu nisbiy tuzilmada mumkin emas."},
+    {"prompt":"Faqat A yoki B ni yozing. Nisbiy gapning oddiy va rasmiy shakllari qaysi juftlikda to‘g‘ri? A) the grant I applied for / the grant for which I applied B) the grant I applied for / the grant for that I applied","answers":["A"],"explanation":"Oddiy uslubda predlog oxirda qolishi mumkin. Rasmiy shaklda predlog oldinga chiqsa, narsa uchun which kerak, that emas."}
+  ],
+  "23.12": [
+    {"prompt":"Butun oldingi fikrga ishora qiluvchi olmoshni tanlang: The team finished two days early, ___ surprised the client. (which / what)","answers":["which"],"explanation":"Which bu yerda bitta otga emas, jamoaning ikki kun oldin tugatganiga ishora qiladi."},
+    {"prompt":"Faqat A yoki B ni yozing. ‘The bus never arrived, which made us late.’ gapida which nimaga ishora qiladi? A) Avtobusning kelmaganiga. B) Faqat bus otiga.","answers":["A"],"explanation":"Kechikishga avtobusning kelmagani sabab bo‘lgan. Which oldingi gapdagi butun vaziyatni anglatadi."}
+  ],
+  "23.13": [
+    {"prompt":"Who is qismini tushirib, fe’lni -ing shaklida saqlang. Butun gapni yozing: The technician who is testing the alarm needs silence.","answers":["The technician testing the alarm needs silence."],"explanation":"Faol davomiy harakatni ifodalovchi who is testing qisqartirilganda testing qoladi."},
+    {"prompt":"Qisqartirilgan faol aniqlovchi uchun fe’l shaklini yozing: Passengers ___ to Rome should go to gate twelve. (travel)","answers":["travelling","traveling"],"explanation":"Yo‘lovchilar harakatni bajaradi, shuning uchun -ing shakli kerak. Travelling Britaniya, traveling Amerika imlosi."}
+  ],
+  "23.14": [
+    {"prompt":"Which were qismini olib tashlab, butun gapni yozing: The samples which were collected yesterday are frozen.","answers":["The samples collected yesterday are frozen."],"explanation":"Passiv aniqlovchi qisqartirilganda V3 qoladi: collected. Namunalar harakatni bajarmaydi, ular yig‘ilgan."},
+    {"prompt":"Qisqartirilgan passiv aniqlovchidagi fe’l shaklini yozing: The jewellery ___ from the gallery has been recovered. (steal)","answers":["stolen"],"explanation":"Zargarlik buyumlari o‘g‘irlangan, shuning uchun steal ning V3 shakli stolen kerak; stealing faol ma’no beradi."}
+  ],
+  "24.1": [
+    {"prompt":"Faqat qavsdagi fe’lning kerakli shaklini yozing: Do you mind ___ the window? (close)","answers":["closing"],"explanation":"Mind fe’lidan keyin gerund, ya’ni -ing shakli keladi: mind closing."},
+    {"prompt":"Faqat xato fe’l shaklini tuzatib, butun gapni yozing: We avoid to park near the hospital.","answers":["We avoid parking near the hospital."],"explanation":"Avoid dan keyin to-infinitive emas, -ing shakli kerak: avoid parking."}
+  ],
+  "24.2": [
+    {"prompt":"Faqat qavsdagi fe’lning kerakli shaklini yozing: The council agreed ___ the playground. (rebuild)","answers":["to rebuild"],"explanation":"Agree fe’lidan keyin to-infinitive keladi: agreed to rebuild."},
+    {"prompt":"Faqat fe’l shaklini to‘ldiring: Did the climbers manage ___ the summit? (reach)","answers":["to reach"],"explanation":"Manage to do something biror ishni uddalashni bildiradi. Shu sababli to reach kerak."}
+  ],
+  "24.3": [
+    {"prompt":"Faqat fe’l shaklini yozing: The vet advised us ___ the cat indoors. (keep)","answers":["to keep"],"explanation":"Advise + shaxs + to-infinitive qolipi qo‘llanadi: advised us to keep."},
+    {"prompt":"Faqat xato fe’l shaklini tuzatib, butun gapni yozing: The guard warned them staying away from the cliff.","answers":["The guard warned them to stay away from the cliff."],"explanation":"Warn someone to do something qolipida shaxsdan keyin to-infinitive keladi: warned them to stay."}
+  ],
+  "24.4": [
+    {"prompt":"Faqat fe’l shaklini yozing: The storm made the ferry ___ course. (change)","answers":["change"],"explanation":"Faol gapdagi make + to‘ldiruvchi dan keyin to siz asosiy fe’l keladi: made the ferry change."},
+    {"prompt":"Faqat xato fe’l shaklini tuzatib, butun gapni yozing: Please let the soup to cool.","answers":["Please let the soup cool."],"explanation":"Let + to‘ldiruvchi + bare infinitive qolipi kerak. Cool oldidan to ishlatilmaydi."}
+  ],
+  "24.5": [
+    {"prompt":"Faqat fe’l shaklini yozing: You must not ___ this switch with wet hands. (touch)","answers":["touch"],"explanation":"Modal must dan keyin, inkor gapda ham, fe’lning to siz asosiy shakli keladi."},
+    {"prompt":"Faqat xato fe’l shaklini tuzatib, butun savolni yozing: Could you to weigh this suitcase?","answers":["Could you weigh this suitcase?"],"explanation":"Could modal fe’lidan keyin weigh keladi; to weigh ishlatilmaydi."}
+  ],
+  "24.6": [
+    {"prompt":"Faqat fe’l shaklini yozing: They left without ___ goodbye. (say)","answers":["saying"],"explanation":"Without predlogidan keyin fe’l gerund shaklida keladi: without saying."},
+    {"prompt":"Faqat fe’l shaklini yozing: Are you looking forward to ___ your cousins? (see)","answers":["seeing"],"explanation":"Look forward to birikmasidagi to predlogdir. Undan keyin infinitive emas, seeing kerak."}
+  ],
+  "24.7": [
+    {"prompt":"Maqsadni to + fe’l bilan ifodalang; faqat bo‘shliqni yozing: We hired a van ___ the furniture. (move)","answers":["to move"],"explanation":"Furgon yollashning maqsadi mebellarni ko‘chirish. Maqsad to move infinitivi bilan beriladi."},
+    {"prompt":"Maqsadni to + fe’l bilan ifodalang; faqat bo‘shliqni yozing: She set an alarm ___ the early train. (catch)","answers":["to catch"],"explanation":"Budilnik qo‘yishdan maqsad poyezdga ulgurish; to catch shu maqsadni ko‘rsatadi."}
+  ],
+  "24.8": [
+    {"prompt":"Gap egasini gerund shaklida yozing: ___ regularly improves your stamina. (cycle)","answers":["Cycling"],"explanation":"Harakat gap egasi bo‘lganda gerund ishlatilishi mumkin: cycling. Cycle oxiridagi e tushadi."},
+    {"prompt":"Faqat A yoki B ni yozing. Qaysi gapda -ing shakli ega vazifasida? A) We practise drawing every evening. B) Drawing requires patience.","answers":["B"],"explanation":"B gapida Drawing requires fe’lining egasi. A gapida drawing practise fe’lining to‘ldiruvchisi."}
+  ],
+  "24.9": [
+    {"prompt":"Faqat fe’l shaklini yozing: We were relieved ___ the good news. (hear)","answers":["to hear"],"explanation":"Relieved sifatidan keyin hisning sababini to-infinitive bilan berish mumkin: relieved to hear."},
+    {"prompt":"Faqat fe’l shaklini yozing: Is this device safe ___ underwater? (use)","answers":["to use"],"explanation":"Safe sifatidan keyin to-infinitive keladi: safe to use — ishlatish xavfsiz."}
+  ],
+  "24.10": [
+    {"prompt":"Faqat A yoki B ni yozing. ‘Quti juda og‘ir, uni ko‘tara olmayman’ ma’nosini tanlang: A) The box is too heavy for me to lift. B) The box is heavy enough for me to lift.","answers":["A"],"explanation":"Too + sifat + to-infinitive ortiqcha daraja harakatga to‘sqinlik qilishini bildiradi. Enough esa yetarlilikni anglatadi."},
+    {"prompt":"Faqat A yoki B ni yozing. ‘Narvon tomga yetadigan darajada uzun’ ma’nosini tanlang: A) The ladder is enough long to reach the roof. B) The ladder is long enough to reach the roof.","answers":["B"],"explanation":"Enough sifatdan keyin keladi: long enough. Undan keyin to-infinitive ishlatiladi."}
+  ],
+  "24.11": [
+    {"prompt":"U endi tirnog‘ini tishlamaydi. Faqat mos shaklni yozing: He stopped ___ his nails. (biting / to bite)","answers":["biting"],"explanation":"Stop + -ing o‘sha harakatni to‘xtatishni bildiradi: tirnoq tishlashni bas qildi."},
+    {"prompt":"Sayyohlar yurishni vaqtincha to‘xtatib, xaritani tekshirishdi. Faqat mos shaklni yozing: The hikers stopped ___ the map. (checking / to check)","answers":["to check"],"explanation":"Stop to do boshqa harakatni bajarish uchun to‘xtashni bildiradi. Bu yerda yurish xaritani tekshirish uchun to‘xtatilgan."}
+  ],
+  "24.12": [
+    {"prompt":"Bajarilishi kerak bo‘lgan ishni eslatyapsiz. Faqat mos shaklni yozing: Remember ___ the plants before you leave. (watering / to water)","answers":["to water"],"explanation":"Remember to do hali bajarilishi kerak bo‘lgan ishni esdan chiqarmaslikni bildiradi."},
+    {"prompt":"Bolaligimdagi voqea xotiramda. Faqat mos shaklni yozing: I will never forget ___ the ocean for the first time. (seeing / to see)","answers":["seeing"],"explanation":"Forget doing o‘tmishda sodir bo‘lgan voqeani unutish bilan bog‘liq. Never forget seeing — ko‘rganimni hech qachon unutmayman."}
+  ],
+  "24.13": [
+    {"prompt":"Yechim sifatida usulni sinab ko‘rishni tavsiya qiling: If the sauce is too sour, try ___ a little honey. (adding / to add) Faqat shaklni yozing.","answers":["adding"],"explanation":"Try doing bir usulni sinab, natijasini ko‘rishni bildiradi; bu yerda asal qo‘shish tajriba sifatida taklif qilinmoqda."},
+    {"prompt":"Urinish bo‘lgan, lekin ish amalga oshmagan. Faqat mos shaklni yozing: I tried ___ the fallen tree, but it was too heavy. (lifting / to lift)","answers":["to lift"],"explanation":"Try to do qiyin ishni bajarishga urinishni bildiradi. Daraxtni ko‘tarish bu yerda muvaffaqiyatsiz bo‘lgan."}
+  ],
+  "24.14": [
+    {"prompt":"Avvalgi, hozir yo‘q odatni ifodalang; faqat fe’l shaklini yozing: I used to ___ stamps, but I no longer do. (collect)","answers":["collect"],"explanation":"Used to + asosiy fe’l o‘tmishdagi odatni bildiradi. Undan keyin collecting emas, collect keladi."},
+    {"prompt":"Hozirgi ko‘nikkanlikni ifodalang; faqat fe’l shaklini yozing: The baker is used to ___ before dawn. (work)","answers":["working"],"explanation":"Be used to birikmasi ko‘nikkanlikni bildiradi. Bu yerdagi to predlog bo‘lgani uchun working kerak."}
+  ],
+  "24.15": [
+    {"prompt":"Faqat fe’l shaklini yozing: It took me a month to get used to ___ on the left. (drive)","answers":["driving"],"explanation":"Get used to ko‘nikish jarayonini bildiradi; to dan keyin -ing shakli keladi."},
+    {"prompt":"Faqat A yoki B ni yozing. Yangi sharoitga ko‘nikish ma’nosidagi to‘g‘ri gapni tanlang: A) The puppy is getting used to its new home. B) The puppy is getting use to its new home.","answers":["A"],"explanation":"To‘g‘ri birikma get used to. Undan keyin gerund ham, its new home kabi ot birikmasi ham kelishi mumkin."}
+  ],
+  "24.16": [
+    {"prompt":"Faqat A yoki B ni yozing. Olmosh bilan to‘g‘ri gapni tanlang: A) Please turn down it. B) Please turn it down.","answers":["B"],"explanation":"Turn down ajraladigan phrasal verb. To‘ldiruvchi olmosh bo‘lsa, it fe’l va yuklama orasida turadi."},
+    {"prompt":"Faqat A yoki B ni yozing. A) I came across it in the attic. B) I came it across in the attic.","answers":["A"],"explanation":"Come across — tasodifan topmoq — ajralmaydigan birikma. It across dan keyin keladi."}
+  ],
+  "24.17": [
+    {"prompt":"Faqat kerakli predlogni yozing: Who is responsible ___ locking the laboratory? (for / to)","answers":["for"],"explanation":"Responsible sifati for predlogi bilan keladi: responsible for doing something."},
+    {"prompt":"Faqat kerakli predlogni yozing: The hotel apologised ___ the delay. (for / at)","answers":["for"],"explanation":"Apologise for biror holat yoki ish uchun uzr so‘rashni bildiradi. Bu yerda kechikish uchun uzr so‘ralgan."}
+  ],
+  "24.18": [
+    {"prompt":"Ishni mutaxassis bajargan. Faqat fe’l shaklini yozing: We had the kitchen tiles ___ last week. (replace)","answers":["replaced"],"explanation":"Have + narsa + V3 xizmatni boshqaga bajartirishni bildiradi: had the tiles replaced."},
+    {"prompt":"Xizmatni boshqaga bajartirish qolipida faqat bo‘shliqni yozing: Can I get these documents ___ today? (print)","answers":["printed"],"explanation":"Get + narsa + V3 qolipida printed kerak. Savol hujjatlarni chop ettirish imkonini so‘raydi."}
+  ],
+  "25.1": [
+    {"prompt":"Ikki muqobil tanlovni bog‘lang. Faqat mos so‘zni yozing: You may pay by card ___ use cash. (and / but / or)","answers":["or"],"explanation":"Or muqobil tanlovlarni bildiradi: karta bilan yoki naqd to‘lash mumkin."},
+    {"prompt":"Qarama-qarshi fikrni ulang; faqat bog‘lovchini yozing: The suitcase looks small, ___ it holds a lot. (and / but / or)","answers":["but"],"explanation":"Tashqi kichik hajm va katta sig‘im qarama-qarshi qo‘yilmoqda; but shu zidlikni bildiradi."}
+  ],
+  "25.2": [
+    {"prompt":"Faqat mos bog‘lovchini yozing: The flight was cancelled ___ fog covered the runway. (because / because of)","answers":["because"],"explanation":"Fog covered the runway ega va fe’lli gap bo‘lgani uchun because kerak; because of dan keyin ot birikmasi keladi."},
+    {"prompt":"Since sabab ma’nosida ishlatilgan gapni tanlang. Faqat A yoki B ni yozing: A) Since the shop is closed, we will order online. B) We have ordered online since March.","answers":["A"],"explanation":"A gapida since — do‘kon yopiqligi sababli degani. B gapida since vaqtning boshlanish nuqtasini bildiradi."}
+  ],
+  "25.3": [
+    {"prompt":"Faqat mos iborani yozing: The museum closed early ___ a power failure. (because / because of)","answers":["because of"],"explanation":"A power failure ot birikmasi, shu sababli uning oldidan because of ishlatiladi."},
+    {"prompt":"Faqat mos iborani yozing: Several trains were delayed ___ heavy snowfall. (due to / since)","answers":["due to"],"explanation":"Heavy snowfall ot birikmasi. Due to + ot birikmasi sababni bildiradi; sabab bildiruvchi since esa ega-fe’lli gap bilan keladi."}
+  ],
+  "25.4": [
+    {"prompt":"Natijani bildiruvchi bog‘lovchini tanlang: The battery was flat, ___ the car would not start. (so / because) Faqat so‘zni yozing.","answers":["so"],"explanation":"Birinchi qism sabab, ikkinchisi natija. So avtomobilning yurmaganini natija sifatida bog‘laydi."},
+    {"prompt":"Faqat mos iborani yozing: The factory installed better filters. ___, the air nearby became cleaner. (As a result / For example)","answers":["As a result"],"explanation":"Havoning tozalanishi filtrlar o‘rnatilishining natijasi. As a result shu natijani ko‘rsatadi."}
+  ],
+  "25.5": [
+    {"prompt":"Faqat mos bog‘lovchini yozing: ___ the route was steep, the children reached the top. (Although / Despite)","answers":["Although"],"explanation":"The route was steep ega-fe’lli gap. Although undan oldin kelib, kutilmagan qarama-qarshilikni bildiradi."},
+    {"prompt":"Faqat A yoki B ni yozing. To‘g‘ri gapni tanlang: A) Even though the shop was busy, but the assistant remained calm. B) Even though the shop was busy, the assistant remained calm.","answers":["B"],"explanation":"Even though bilan boshlangan zidlov ergash gapdan keyin shu vazifa uchun yana but qo‘shilmaydi."}
+  ],
+  "25.6": [
+    {"prompt":"Faqat fe’l shaklini yozing: Despite ___ a headache, Karim finished the rehearsal. (have)","answers":["having"],"explanation":"Despite dan keyin ot yoki -ing shakli keladi: despite having a headache."},
+    {"prompt":"Faqat yetishmayotgan bitta so‘zni yozing: In spite ___ the noise, the baby stayed asleep.","answers":["of"],"explanation":"To‘liq birikma in spite of. Undan keyin the noise kabi ot birikmasi kelishi mumkin."}
+  ],
+  "25.7": [
+    {"prompt":"Qarama-qarshi fikrni bog‘lang; faqat mos so‘zni yozing: The tickets were expensive. ___, every seat was sold. (Nevertheless / Therefore)","answers":["Nevertheless"],"explanation":"Qimmatlikka qaramay hamma joy sotilgan. Nevertheless kutilmagan zid natijani bildiradi."},
+    {"prompt":"Faqat mos so‘zni yozing: The instructions looked simple. ___, assembling the desk took hours. (However / Moreover)","answers":["However"],"explanation":"Oddiy ko‘ringan yo‘riqnoma bilan uzoq davom etgan yig‘ish jarayoni zid. However qarama-qarshi fikrni kiritadi."}
+  ],
+  "25.8": [
+    {"prompt":"Ikki kishining qarama-qarshi odatini bog‘lang: I save every receipt, ___ my brother throws them away. (whereas / because) Faqat so‘zni yozing.","answers":["whereas"],"explanation":"Whereas ikki turli odatni taqqoslab, qarama-qarshi qo‘yadi; sabab bildirmaydi."},
+    {"prompt":"Faqat A yoki B ni yozing. Qaysi gapda while vaqtni emas, qarama-qarshilikni bildiradi? A) While I was washing up, the phone rang. B) The north is dry, while the south is humid.","answers":["B"],"explanation":"B gapida while ikki hududning iqlimini taqqoslaydi. A gapida esa hodisa qachon bo‘lganini ko‘rsatadi."}
+  ],
+  "25.9": [
+    {"prompt":"Faqat mos so‘zni yozing: The tunnel was ___ narrow that two cars could not pass. (so / such)","answers":["so"],"explanation":"Narrow sifatidan oldin so ishlatiladi: so + sifat + that + natija."},
+    {"prompt":"Faqat mos so‘zni yozing: The actor spoke ___ softly that we could barely hear him. (so / such)","answers":["so"],"explanation":"Softly ravish; so + ravish + that qolipi uning darajasi keltirib chiqargan natijani bildiradi."}
+  ],
+  "25.10": [
+    {"prompt":"Faqat mos so‘zni yozing: It was ___ an exciting final that nobody left early. (so / such)","answers":["such"],"explanation":"An exciting final ot birikmasi. Such + a/an + sifat + ot + that qolipi ishlatiladi."},
+    {"prompt":"Faqat mos so‘zni yozing: They gave us ___ useful directions that we found the cabin immediately. (so / such)","answers":["such"],"explanation":"Useful directions sifat va ko‘plikdagi otdan iborat. Such qo‘llanadi, ammo ko‘plik ot oldidan a/an kelmaydi."}
+  ],
+  "25.11": [
+    {"prompt":"Faqat yetishmayotgan so‘zni yozing: We left quietly in order ___ wake the patients. (not to / to not to)","answers":["not to"],"explanation":"Inkor maqsad in order not to + fe’l bilan beriladi: bemorlarni uyg‘otmaslik uchun."},
+    {"prompt":"Faqat kerakli so‘zni yozing: The archivist wore gloves so as ___ protect the old letters. (to / for)","answers":["to"],"explanation":"Maqsad bildiruvchi to‘liq birikma so as to. Undan keyin protect asosiy shaklda keladi."}
+  ],
+  "25.12": [
+    {"prompt":"Faqat mos iborani yozing: I emailed the diagram ___ the engineer could check it before the meeting. (so that / in order to)","answers":["so that"],"explanation":"Keyingi qismning o‘z egasi va modal fe’li bor: the engineer could. Bunday maqsad gapini so that bog‘laydi."},
+    {"prompt":"Faqat A yoki B ni yozing. Grammatik jihatdan to‘g‘ri maqsad gapini tanlang: A) We lowered the shelf so that the children could reach it. B) We lowered the shelf so that the children to reach it.","answers":["A"],"explanation":"So that dan keyin ega va tuslangan fe’l kerak. Could reach shu vazifani bajaradi; to reach mustaqil kesim emas."}
+  ],
+  "25.13": [
+    {"prompt":"Kelajak haqida gap: faqat to‘g‘ri fe’l shaklini yozing: I will message you as soon as the plane ___. (lands / will land)","answers":["lands"],"explanation":"Kelajak ma’nosidagi as soon as vaqt ergash gapida odatda Present Simple ishlatiladi, will qo‘yilmaydi."},
+    {"prompt":"Kutishning tugash chegarasini ko‘rsating; faqat bog‘lovchini yozing: Do not unplug the device ___ the update is complete. (until / after)","answers":["until"],"explanation":"Not ... until yangilanish tugamaguncha qurilmani uzmaslikni bildiradi. Until kutilayotgan chegara vaqtini belgilaydi."}
+  ],
+  "25.14": [
+    {"prompt":"Oldindan ehtiyot chorasi nazarda tutilgan. Faqat iborani yozing: Save an offline copy ___ the internet fails during the presentation. (in case / if)","answers":["in case"],"explanation":"In case ehtimoliy muammo yuz berishidan oldin tayyorlanishni bildiradi: internet uzilib qolishi ehtimoliga qarshi nusxa saqlanadi."},
+    {"prompt":"Yordamni faqat muammo yuz bergandagina chaqiring. Faqat bog‘lovchini yozing: Call the technician ___ the screen goes black. (if / in case)","answers":["if"],"explanation":"If shartni bildiradi: ekran o‘chsa, shundan keyin texnik chaqiriladi. Bu oldindan ehtiyot chorasi emas."}
+  ],
+  "25.15": [
+    {"prompt":"Ikkalasida ham yo‘qligini bildiring; faqat bog‘lovchini yozing: Neither the cabin ___ the tent has electricity. (or / nor)","answers":["nor"],"explanation":"Neither ... nor juftligi ikki narsani ham inkor qiladi. Neither bilan nor moslashadi."},
+    {"prompt":"Faqat A yoki B ni yozing. Qaysi variantda ikkala juft bog‘lovchi to‘g‘ri? A) Both tea or juice are available; choose either tea and juice. B) Both tea and juice are available; choose either tea or juice.","answers":["B"],"explanation":"Both ... and ikkalasini qo‘shadi. Either ... or esa ikkita variantdan birini tanlashni bildiradi."}
+  ],
+  "25.16": [
+    {"prompt":"Faqat A yoki B ni yozing. Parallel tuzilmani tanlang: A) The course teaches not only coding but also drawing. B) The course teaches not only coding but also to draw.","answers":["A"],"explanation":"Not only va but also dan keyingi qismlar bir xil grammatik shaklda bo‘lishi kerak: coding va drawing."},
+    {"prompt":"Faqat yetishmayotgan so‘zni yozing: The new pump is not only quieter ___ also cheaper.","answers":["but"],"explanation":"Juft bog‘lovchi not only ... but also. Quieter va cheaper parallel qiyosiy sifatlardir."}
+  ],
+  "25.17": [
+    {"prompt":"Qo‘shimcha dalil kiriting; faqat mos so‘zni yozing: The hostel is close to the station. ___, breakfast is included. (Moreover / However)","answers":["Moreover"],"explanation":"Ikkinchi gap yana bir afzallikni qo‘shmoqda. Moreover qo‘shimcha dalilni kiritadi."},
+    {"prompt":"Misolni kiriting; faqat mos iborani yozing: Some metals are very light. ___, aluminium is widely used in aircraft. (For instance / As a result)","answers":["For instance"],"explanation":"Aluminium oldingi umumiy fikrga misol bo‘lmoqda. For instance misol keltirish uchun ishlatiladi."}
+  ],
+  "25.18": [
+    {"prompt":"Faqat A yoki B ni yozing. Standart yozma ingliz tilida tinish belgilarini to‘g‘ri tanlang: A) The deadline was tight; however, we submitted the report on time. B) The deadline was tight, however, we submitted the report on time.","answers":["A"],"explanation":"However ikki mustaqil gapni faqat vergul bilan ulay olmaydi. Uning oldidan nuqtali vergul, keyin vergul qo‘yish to‘g‘ri."},
+    {"prompt":"Faqat A yoki B ni yozing. To‘g‘ri tinish belgili variantni tanlang: A) The ferry was full, therefore, we waited for the next one. B) The ferry was full. Therefore, we waited for the next one.","answers":["B"],"explanation":"Therefore oldidan nuqta qo‘yish mustaqil gaplarni to‘g‘ri ajratadi. A variantida ikki mustaqil gap faqat vergul bilan noto‘g‘ri ulangan."}
+  ],
+  "26.1": [
+    {"prompt":"Faqat mos fe’lni yozing: The box of spare cables ___ under the counter. (is / are)","answers":["is"],"explanation":"Eganing bosh so‘zi birlikdagi box. Of spare cables ichidagi ko‘plik kesimni o‘zgartirmaydi."},
+    {"prompt":"Faqat mos fe’lni yozing: The windows in the upstairs bedroom ___ replacing. (need / needs)","answers":["need"],"explanation":"Asosiy ega windows ko‘plikda. Bedroom birligi ta’sir qilmaydi; need ishlatiladi."}
+  ],
+  "26.2": [
+    {"prompt":"Faqat mos fe’lni yozing: Somebody ___ left a scarf on the bus. (has / have)","answers":["has"],"explanation":"Somebody grammatik jihatdan birlikdagi olmosh, shuning uchun has bilan moslashadi."},
+    {"prompt":"Faqat mos fe’lni yozing: Does everything ___ correctly now? (work / works)","answers":["work"],"explanation":"Everything birlik bo‘lgani uchun yordamchi does ishlatilgan. Does dan keyingi asosiy fe’l work shaklida qoladi."}
+  ],
+  "26.3": [
+    {"prompt":"Umumiy ma’noda gapiring. Faqat the yoki artikl kerak bo‘lmasa zero deb yozing: ___ patience is essential when training animals.","answers":["zero"],"explanation":"Patience umumiy ma’nodagi sanalmaydigan ot. Bu yerda artikl ishlatilmaydi."},
+    {"prompt":"Muayyan sabr nazarda tutilgan. Faqat a, the yoki zero dan birini yozing: ___ patience you showed yesterday impressed me.","answers":["the"],"explanation":"You showed yesterday qismi aynan qaysi sabr haqida gap ketayotganini aniqlaydi. Shuning uchun the kerak."}
+  ],
+  "26.4": [
+    {"prompt":"Faqat the yoki artikl kerak bo‘lmasa zero deb yozing: They sailed along ___ Danube last summer.","answers":["the"],"explanation":"Daryo nomlari odatda the bilan ishlatiladi: the Danube."},
+    {"prompt":"Britaniya ingliz tilida mahbuslik holati nazarda tutilgan. Faqat the yoki zero deb yozing: He spent three years in ___ prison for robbery.","answers":["zero"],"explanation":"In prison mahbus sifatida qamoqda bo‘lishni bildiradi va artiklsiz ishlatiladi. Muayyan bino nazarda tutilsa the prison bo‘lishi mumkin."}
+  ],
+  "26.5": [
+    {"prompt":"Material ma’nosi nazarda tutilgan. Faqat mos variantni yozing: This sculpture is made of ___. (glass / a glass)","answers":["glass"],"explanation":"Glass material sifatida sanalmaydigan ot. A glass esa bitta ichimlik stakanini bildiradi."},
+    {"prompt":"Ikkita porsiya ichimlik buyurtma qiling; faqat mos variantni yozing: Could we have ___, please? (two coffees / two coffee)","answers":["two coffees"],"explanation":"Coffee odatda sanalmaydi, lekin kafeda porsiya yoki finjon ma’nosida sanaladigan ot bo‘lib, two coffees deyiladi."}
+  ],
+  "26.6": [
+    {"prompt":"Faqat A yoki B ni yozing. Neytral uslubdagi tabiiy sifat tartibini tanlang: A) a small round mirror B) a round small mirror","answers":["A"],"explanation":"Odatdagi sifat tartibida hajm shakldan oldin keladi: small — hajm, round — shakl."},
+    {"prompt":"Faqat A yoki B ni yozing. Neytral uslubdagi tabiiy sifat tartibini tanlang: A) a leather red Italian bag B) a red Italian leather bag","answers":["B"],"explanation":"Bu sifatlarga odatdagi tartib rang, kelib chiqish, material: red, Italian, leather."}
+  ],
+  "26.7": [
+    {"prompt":"Faqat mos sifatni yozing: The instructions were so ___ that nobody could assemble the shelf. (confused / confusing)","answers":["confusing"],"explanation":"Yo‘riqnoma chalkashlikni keltirib chiqaradi, shu sababli confusing. Confused esa chalkashgan kishining holatini bildiradi."},
+    {"prompt":"Faqat mos sifatni yozing: Were you ___ by the sudden announcement? (surprised / surprising)","answers":["surprised"],"explanation":"Odamning his-tuyg‘usi surprised bilan ifodalanadi. Surprising hayratga sabab bo‘luvchi narsa yoki holatga tegishli."}
+  ],
+  "26.8": [
+    {"prompt":"Oddiy darajalanuvchi sifat bilan standart birikmani tanlang; faqat variantni yozing: The room was ___. (very warm / absolutely warm)","answers":["very warm"],"explanation":"Warm darajalanuvchi sifat; very uning darajasini kuchaytiradi. Absolutely odatda mutlaq yoki kuchli chegaraviy sifatlar bilan keladi."},
+    {"prompt":"Kuchli ma’noli sifat bilan odatiy kuchaytirgichni tanlang: After the overnight hike, we were ___ exhausted. (absolutely / very) Faqat so‘zni yozing.","answers":["absolutely"],"explanation":"Exhausted juda qattiq charchagan degan kuchli ma’noli sifat. Standart birikma absolutely exhausted."}
+  ],
+  "26.9": [
+    {"prompt":"Faqat A yoki B ni yozing. ‘Faqat Maya taklifni rad etdi; boshqalar qabul qildi’ ma’nosi qaysi? A) Only Maya rejected the offer. B) Maya only rejected the offer.","answers":["A"],"explanation":"Only ega Maya oldida tursa, boshqa odamlarni istisno qiladi. Fe’l oldida tursa, odatda harakatning o‘zini cheklaydi."},
+    {"prompt":"Faqat A yoki B ni yozing. ‘He almost dropped the vase.’ nimani bildiradi? A) U vazaning deyarli hammasini tashladi. B) U vazani tushirib yuboray dedi, lekin tushirmadi.","answers":["B"],"explanation":"Almost dropped harakat sodir bo‘lishiga sal qolganini bildiradi. Almost bu yerda buyum miqdorini emas, harakatni o‘zgartiradi."}
+  ],
+  "26.10": [
+    {"prompt":"Faqat A yoki B ni yozing. To‘g‘ri bilvosita savolni tanlang: A) Could you tell me if does this bus stop at the stadium? B) Could you tell me if this bus stops at the stadium?","answers":["B"],"explanation":"If dan keyin oddiy gap tartibi kerak: this bus stops. Does bilan savol inversiyasi ishlatilmaydi."},
+    {"prompt":"Ha/yo‘q mazmunidagi bilvosita savolni to‘ldiring. Faqat bog‘lovchini yozing: Do you know ___ the pharmacy accepts cards? (whether / that)","answers":["whether"],"explanation":"Noaniq ha/yo‘q ma’lumotini so‘rashda whether yoki if ishlatiladi. Berilgan variantlardan whether mos."}
+  ],
+  "26.11": [
+    {"prompt":"Faqat A yoki B ni yozing. A) Can you explain why the machine keeps stopping? B) Can you explain why does the machine keep stopping?","answers":["A"],"explanation":"Bilvosita wh-savolda why dan keyin ega va kesim oddiy tartibda keladi; does bilan inversiya qilinmaydi."},
+    {"prompt":"Faqat so‘z tartibidagi xatoni tuzatib, butun savolni yozing: Do you know when is the next performance?","answers":["Do you know when the next performance is?"],"explanation":"Bilvosita savol qismida ega the next performance is fe’lidan oldin keladi."}
+  ],
+  "26.12": [
+    {"prompt":"Faqat qisqa tasdiqlovchi savol qismini yozing; inkor yordamchini qisqartiring: The printer works now, ___?","answers":["doesn't it","doesn’t it"],"explanation":"Tasdiq Present Simple gapiga inkor tag qo‘shiladi. Printer uchun it, works uchun does yordamchisi kerak: doesn’t it."},
+    {"prompt":"Faqat tag qismini yozing; inkor yordamchini qisqartiring: Your parents have arrived, ___?","answers":["haven't they","haven’t they"],"explanation":"Tasdiq Present Perfect gapiga haven’t they qo‘shiladi. Parents ko‘plikda, shuning uchun they ishlatiladi."}
+  ],
+  "26.13": [
+    {"prompt":"Faqat tag qismini yozing: The driver did not see the sign, ___? Haydovchi erkak.","answers":["did he"],"explanation":"Inkor Past Simple gapidan keyin tasdiq yordamchi did keladi. Erkak haydovchi uchun he ishlatiladi."},
+    {"prompt":"Faqat tag qismini yozing: These berries are not poisonous, ___?","answers":["are they"],"explanation":"Inkor are not gapidan keyin tasdiq are they keladi. Ko‘plikdagi berries o‘rnida they ishlatiladi."}
+  ],
+  "26.14": [
+    {"prompt":"‘Men ham’ deb qo‘shiling. Javobni So bilan boshlang: ‘I can juggle.’ — ‘___.’","answers":["So can I"],"explanation":"Tasdiq gapga qo‘shilishda so + yordamchi/modal + ega keladi. Can modal fe’li takrorlanadi."},
+    {"prompt":"‘Men ham bormaganman’ deb qo‘shiling. Javobni Neither bilan boshlang: ‘I have never visited Iceland.’ — ‘___.’","answers":["Neither have I"],"explanation":"Never inkor ma’nosini beradi. Inkor fikrga qo‘shilish uchun neither + have + I ishlatiladi."}
+  ],
+  "26.15": [
+    {"prompt":"Bilish ma’nosidagi holatni ifodalang. Faqat mos shaklni yozing: I ___ exactly what you mean. (understand / am understanding)","answers":["understand"],"explanation":"Understand bu ma’noda holat fe’li. Oddiy hozirgi zamondagi understand tabiiy shakl hisoblanadi."},
+    {"prompt":"Hozir bajarilayotgan faol tekshirishni ifodalang. Faqat mos shaklni yozing: The chef ___ the soup to check the salt. (tastes / is tasting)","answers":["is tasting"],"explanation":"Taste bu yerda ataylab tatib ko‘rish harakati. Shu sababli hozirgi davomiy zamon is tasting ishlatiladi."}
+  ],
+  "27.1": [
+    {"prompt":"Future Continuous bilan to‘ldiring; faqat bo‘shliqni yozing, qisqartma ishlatmang: At this time on Saturday, we ___ over the Alps. (fly)","answers":["will be flying"],"explanation":"Kelajakdagi aniq paytda davom etadigan harakat will be + -ing bilan ifodalanadi: will be flying."},
+    {"prompt":"Future Continuous bilan to‘ldiring; faqat bo‘shliqni yozing, qisqartma ishlatmang: At ten tomorrow, the technicians ___ the new cameras. (install)","answers":["will be installing"],"explanation":"Ertaga soat o‘nda jarayon davom etadi. Tasdiq shakli will be installing bo‘ladi."}
+  ],
+  "27.2": [
+    {"prompt":"Future Continuous inkor shaklini yozing; faqat bo‘shliqni to‘ldiring, qisqartma ishlatmang: I ___ the car at lunchtime tomorrow, so you can borrow it. (not / use)","answers":["will not be using"],"explanation":"Inkor Future Continuous will not be + -ing bilan tuziladi: will not be using."},
+    {"prompt":"Berilgan gapni Future Continuous inkor shakliga aylantiring. Butun gapni yozing, qisqartma ishlatmang: The band will be rehearsing at noon.","answers":["The band will not be rehearsing at noon."],"explanation":"Will dan keyin not qo‘shiladi, be rehearsing esa saqlanadi. Inkor aynan kelajakdagi davomiy jarayonga tegishli."}
+  ],
+  "27.3": [
+    {"prompt":"Gapni Future Continuous ha/yo‘q savoliga aylantiring. Butun savolni yozing: The children will be camping this weekend.","answers":["Will the children be camping this weekend?"],"explanation":"Savolda will egadan oldinga chiqadi. Be camping egadan keyin qoladi."},
+    {"prompt":"Faqat A yoki B ni yozing. To‘g‘ri Future Continuous savolini tanlang: A) Will you be staying at the lodge tonight? B) Will you staying at the lodge tonight?","answers":["A"],"explanation":"Future Continuous savolida will + ega + be + -ing kerak. B variantida be tushib qolgan."}
+  ],
+  "27.4": [
+    {"prompt":"Qavsdagi fe’lni Future Continuous savolida qo‘llang. Bo‘shliqlardagi so‘zlarni tartib bilan bitta javob qilib yozing: Where ___ you ___ during the renovation? (sleep)","answers":["will be sleeping"],"explanation":"To‘liq savol Where will you be sleeping during the renovation? bo‘ladi. Birinchi bo‘shliq will, ikkinchisi be sleeping."},
+    {"prompt":"Faqat A yoki B ni yozing. Future Continuous wh-savolini tanlang: A) What equipment you will be testing tomorrow? B) What equipment will you be testing tomorrow?","answers":["B"],"explanation":"Wh-iboradan keyin will egadan oldin keladi: What equipment will you be testing? Bu bevosita savol tartibi."}
+  ],
+  "27.5": [
+    {"prompt":"Future Perfect bilan to‘ldiring; faqat bo‘shliqni yozing, qisqartma ishlatmang: By September, Aisha ___ her driving course. (complete)","answers":["will have completed"],"explanation":"Kelajakdagi muddatgacha tugaydigan ish will have + V3 bilan beriladi: will have completed."},
+    {"prompt":"Future Perfect bilan to‘ldiring; faqat bo‘shliqni yozing, qisqartma ishlatmang: By midnight, the rescuers ___ the missing hikers. (find)","answers":["will have found"],"explanation":"Find fe’lining V3 shakli found. Future Perfect tasdiq qolipi will have found bo‘ladi."}
+  ],
+  "27.6": [
+    {"prompt":"Future Perfect inkor shaklini yozing; qisqartma ishlatmang, faqat bo‘shliqni to‘ldiring: By Monday, the paint ___ completely. (not / dry)","answers":["will not have dried"],"explanation":"Future Perfect inkori will not have + V3. Dry fe’lining V3 shakli dried."},
+    {"prompt":"Gapni Future Perfect inkor shakliga aylantiring. Butun gapni yozing, qisqartma ishlatmang: They will have sold all the tickets by dawn.","answers":["They will not have sold all the tickets by dawn."],"explanation":"Will dan keyin not qo‘yiladi. Have sold saqlanib, tonggacha barcha chiptalar sotilib bo‘lmasligini bildiradi."}
+  ],
+  "27.7": [
+    {"prompt":"Gapni Future Perfect ha/yo‘q savoliga aylantiring. Butun savolni yozing: The snow will have melted by April.","answers":["Will the snow have melted by April?"],"explanation":"Future Perfect savolida will egadan oldin, have + V3 esa undan keyin keladi."},
+    {"prompt":"Faqat A yoki B ni yozing. To‘g‘ri Future Perfect savolini tanlang: A) Will the guests have eaten by the time we arrive? B) Will the guests have ate by the time we arrive?","answers":["A"],"explanation":"Have dan keyin V3 kerak. Eat fe’lining V3 shakli eaten; ate esa Past Simple shakli."}
+  ],
+  "27.8": [
+    {"prompt":"Tasdiq qisqa javob yozing: ‘Will you be leading the tour tomorrow?’ — ‘___.’ O‘zingiz haqingizda I bilan javob bering.","answers":["Yes, I will."],"explanation":"Future Continuous qisqa javobida faqat will yordamchisi takrorlanadi: Yes, I will. Be leading takrorlanmaydi."},
+    {"prompt":"Inkor qisqa javob yozing: ‘Will the students be using this lab tonight?’ — ‘___.’ They ishlating; qisqartma mumkin.","answers":["No, they will not.","No, they won't.","No, they won’t."],"explanation":"Students o‘rnida they keladi. Inkor qisqa javob No, they will not yoki No, they won’t shaklida bo‘ladi."}
+  ],
+  "27.9": [
+    {"prompt":"How many bilan boshlang. Faqat A yoki B ni yozing: A) How many chapters will you have edited by Tuesday? B) How many chapters you will have edited by Tuesday?","answers":["A"],"explanation":"Bevosita wh-savolda will egadan oldin turadi. Have edited kelajakdagi muddatgacha tugallangan ishni so‘raydi."},
+    {"prompt":"Future Perfect wh-savolini to‘ldiring; bo‘shliqlardagi so‘zlarni tartib bilan yozing: Which cities ___ she ___ by the end of the tour? (visit)","answers":["will have visited"],"explanation":"To‘liq savol Which cities will she have visited by the end of the tour? Birinchi bo‘shliqqa will, ikkinchisiga have visited qo‘yiladi."}
+  ],
+  "27.10": [
+    {"prompt":"Tasdiq qisqa javob yozing: ‘Will Jamila have submitted her thesis by June?’ — ‘___.’ She ishlating.","answers":["Yes, she will."],"explanation":"Future Perfect savoliga qisqa javob will bilan beriladi: Yes, she will. Have submitted qaytarilmaydi."},
+    {"prompt":"Inkor qisqa javob yozing: ‘Will you have saved enough by winter?’ — ‘___.’ I ishlating; qisqartma mumkin.","answers":["No, I will not.","No, I won't.","No, I won’t."],"explanation":"Future Perfect qisqa javobida asosiy yordamchi will saqlanadi. Inkor shakli will not yoki won’t."}
+  ],
+  "27.11": [
+    {"prompt":"Soat uchda safar hali davom etadi. Faqat mos iborani yozing: At three, we ___. (will be travelling / will have arrived)","answers":["will be travelling"],"explanation":"O‘sha vaqtdagi davom etayotgan jarayon Future Continuous bilan beriladi. Will have arrived esa yetib kelish tugaganini bildiradi."},
+    {"prompt":"Hisobot soat beshgacha to‘liq tayyor bo‘ladi. Faqat mos iborani yozing: By five, I ___ the report. (will be writing / will have written)","answers":["will have written"],"explanation":"Tugallangan natija va yakun muddati Future Perfect ni talab qiladi: will have written."}
+  ],
+  "27.12": [
+    {"prompt":"‘Payshanbagacha tayyorlab bo‘lamiz’ ma’nosini bering. Faqat predlogni yozing: We will have prepared the contract ___ Thursday. (by / until)","answers":["by"],"explanation":"By ish tugallanishining eng kech muddatini bildiradi. Until esa odatda shu vaqtgacha davom etishni ko‘rsatadi."},
+    {"prompt":"Kelajakdagi vaqt ergash gapini to‘ldiring; faqat mos fe’lni yozing: By the time the audience ___, we will have tested every microphone. (arrives / will arrive)","answers":["arrives"],"explanation":"By the time dan keyingi kelajak ma’noli vaqt gapida Present Simple ishlatiladi: arrives. Asosiy gap Future Perfect da."}
+  ],
+  "27.13": [
+    {"prompt":"O‘tmishdagi amalga oshmagan rejani was going to bilan bering. Faqat bo‘shliqni yozing: I ___ a picnic, but the forecast changed. (organise)","answers":["was going to organise","was going to organize"],"explanation":"Was going to + fe’l o‘tmishda rejalashtirilgan ishni bildiradi. Ob-havo prognozi o‘zgargani uchun reja amalga oshmagan."},
+    {"prompt":"O‘tmish nuqtasidan keyingi voqeani bildiring; faqat modal fe’lni yozing: In 2015, nobody knew that this small company ___ become a global brand. (will / would)","answers":["would"],"explanation":"2015-yildagi o‘tmish nuqtasidan kelajakni ifodalash uchun would ishlatiladi. Bu future in the past shakli."}
+  ]
+}

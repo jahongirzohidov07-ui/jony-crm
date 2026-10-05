@@ -1,0 +1,4002 @@
+[
+  {
+    "word": "honest",
+    "ipa": "/ˈɒnɪst/",
+    "meaning": "halol; rostgo‘y",
+    "example": "An honest child returned my wallet but kept the sweet I offered.",
+    "translation": "Rostgo‘y bola hamyonimni qaytardi, lekin men taklif qilgan konfetni oldi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "gentle",
+    "ipa": "/ˈdʒentl/",
+    "meaning": "muloyim; yumshoq muomalali",
+    "example": "Her gentle voice calmed the child and nearly put me to sleep.",
+    "translation": "Uning muloyim ovozi bolani tinchlantirib, meni ham deyarli uxlatdi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "well-mannered",
+    "ipa": "/ˌwel ˈmænəd/",
+    "meaning": "yaxshi tarbiya ko‘rgan",
+    "example": "The well-mannered boy thanked everyone, including the sleeping dog.",
+    "translation": "Yaxshi tarbiya ko‘rgan bola hammaga, hatto uxlayotgan itga ham rahmat aytdi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "generous",
+    "ipa": "/ˈdʒenərəs/",
+    "meaning": "saxiy",
+    "example": "My generous aunt gave everyone cake, including the taxi driver.",
+    "translation": "Saxiy xolam hammaga, hatto taksi haydovchisiga ham tort berdi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "dependable",
+    "ipa": "/dɪˈpendəbl/",
+    "meaning": "ishonsa bo‘ladigan",
+    "example": "She's dependable: if she promises cake, bring a plate.",
+    "translation": "Unga ishonsa bo‘ladi: tort va’da qilsa, likopcha olib kel.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "loyal",
+    "ipa": "/ˈlɔɪəl/",
+    "meaning": "sodiq",
+    "example": "My loyal friend supported me through three terrible haircuts.",
+    "translation": "Sodiq do‘stim uchta dahshatli soch turmagimga qaramay yonimda bo‘ldi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "brave",
+    "ipa": "/breɪv/",
+    "meaning": "jasur",
+    "example": "She was brave enough to tell Grandma the soup needed salt.",
+    "translation": "U buvisiga sho‘rvaga tuz kerakligini aytishga jur’at etdi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "outgoing",
+    "ipa": "/ˌaʊtˈɡəʊɪŋ/",
+    "meaning": "ochiqko‘ngil; kirishimli",
+    "example": "My outgoing sister made three friends while I was choosing a seat.",
+    "translation": "Men o‘rindiq tanlayotganimda kirishimli singlim uchta do‘st orttirdi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "cheerful",
+    "ipa": "/ˈtʃɪəfl/",
+    "meaning": "quvnoq",
+    "example": "Our cheerful neighbour whistles even when he takes out rubbish.",
+    "translation": "Quvnoq qo‘shnimiz hatto axlat olib chiqayotganda ham hushtak chaladi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "sensible",
+    "ipa": "/ˈsensəbl/",
+    "meaning": "oqilona ish tutadigan",
+    "example": "Wearing flat shoes to chase a puppy was a sensible choice.",
+    "translation": "Kuchukchani quvish uchun poshnasiz tufli kiyish oqilona tanlov edi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "thoughtful",
+    "ipa": "/ˈθɔːtfl/",
+    "meaning": "e’tiborli; g‘amxo‘r",
+    "example": "A thoughtful friend brought dinner when our baby was born.",
+    "translation": "Farzandimiz tug‘ilganida e’tiborli do‘stimiz kechki ovqat olib keldi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "modest",
+    "ipa": "/ˈmɒdɪst/",
+    "meaning": "kamtar",
+    "example": "Despite winning, she was modest and praised her opponent's socks.",
+    "translation": "G‘alaba qozonganiga qaramay, u kamtarlik qilib raqibining paypog‘ini maqtadi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "responsible",
+    "ipa": "/rɪˈspɒnsəbl/",
+    "meaning": "mas’uliyatli",
+    "example": "The responsible teenager watered the plants before watering his brother.",
+    "translation": "Mas’uliyatli o‘smir ukasiga suv sepishdan oldin gullarni sug‘ordi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "considerate",
+    "ipa": "/kənˈsɪdərət/",
+    "meaning": "boshqalarni o‘ylaydigan",
+    "example": "Be considerate and practise your trumpet after breakfast.",
+    "translation": "Boshqalarni ham o‘ylab, karnayni nonushtadan keyin mashq qil.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "optimistic",
+    "ipa": "/ˌɒptɪˈmɪstɪk/",
+    "meaning": "yaxshilikka umid qiladigan",
+    "example": "I'm optimistic: perhaps the burnt toast will taste better with jam.",
+    "translation": "Yaxshilikka umid qilaman: balki kuygan non murabbo bilan mazaliroq bo‘lar.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "sincere",
+    "ipa": "/sɪnˈsɪə/",
+    "meaning": "samimiy",
+    "example": "His sincere apology included a replacement for my broken mug.",
+    "translation": "U samimiy uzr so‘rab, singan krujkam o‘rniga yangisini ham berdi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "warm-hearted",
+    "ipa": "/ˌwɔːm ˈhɑːtɪd/",
+    "meaning": "mehribon; qalbi iliq",
+    "example": "Our warm-hearted neighbour brings soup whenever anyone sneezes.",
+    "translation": "Mehribon qo‘shnimiz kimdir aksirsa bas, sho‘rva olib keladi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "easy-going",
+    "ipa": "/ˌiːzi ˈɡəʊɪŋ/",
+    "meaning": "xotirjam; chiqishimli",
+    "example": "My easy-going flatmate doesn't mind my collection of unusual mugs.",
+    "translation": "Chiqishimli xonadoshim g‘alati krujkalar to‘plamimga qarshi emas.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "calm",
+    "ipa": "/kɑːm/",
+    "meaning": "bosiq; xotirjam",
+    "example": "She remained calm while everyone searched for the missing birthday cake.",
+    "translation": "Hamma yo‘qolgan tug‘ilgan kun tortini izlayotganda u xotirjam qoldi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "caring",
+    "ipa": "/ˈkeərɪŋ/",
+    "meaning": "mehribon; g‘amxo‘r",
+    "example": "My caring brother made soup and only asked for one medal.",
+    "translation": "G‘amxo‘r akam sho‘rva tayyorlab, atigi bitta medal so‘radi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "fair",
+    "ipa": "/feə/",
+    "meaning": "adolatli",
+    "example": "A fair referee cannot give extra points to his favourite nephew.",
+    "translation": "Adolatli hakam sevimli jiyaniga qo‘shimcha ochko bera olmaydi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "level-headed",
+    "ipa": "/ˌlevl ˈhedɪd/",
+    "meaning": "vazmin; oqilona fikrlaydigan",
+    "example": "My level-headed aunt switched off the oven before discussing the smoke.",
+    "translation": "Vazmin xolam tutunni muhokama qilishdan oldin pechni o‘chirdi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "curious",
+    "ipa": "/ˈkjʊəriəs/",
+    "meaning": "qiziquvchan",
+    "example": "The curious child wanted to know whether dentists fear sweets.",
+    "translation": "Qiziquvchan bola tish shifokorlari shirinlikdan qo‘rqadimi, bilmoqchi edi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "self-reliant",
+    "ipa": "/ˌself rɪˈlaɪənt/",
+    "meaning": "o‘ziga tayanadigan",
+    "example": "She's self-reliant and can even assemble furniture without phoning Dad.",
+    "translation": "U o‘ziga tayanadi, hatto dadamga qo‘ng‘iroq qilmasdan mebel yig‘a oladi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "sociable",
+    "ipa": "/ˈsəʊʃəbl/",
+    "meaning": "odamlar bilan tez chiqishadigan",
+    "example": "Our sociable uncle made friends while waiting for the lift.",
+    "translation": "Odamlar bilan tez chiqishadigan amakimiz lift kutayotib do‘st orttirdi.",
+    "topic": "5-oy • Ijobiy xarakter"
+  },
+  {
+    "word": "selfish",
+    "ipa": "/ˈselfɪʃ/",
+    "meaning": "xudbin",
+    "example": "Taking the last six biscuits was rather selfish.",
+    "translation": "Oxirgi oltita pechenyeni olish ancha xudbinlik edi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "stubborn",
+    "ipa": "/ˈstʌbən/",
+    "meaning": "qaysar",
+    "example": "My stubborn brother insisted the map was upside down, not us.",
+    "translation": "Qaysar akam biz adashmadik, xarita teskari deb turib oldi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "rude",
+    "ipa": "/ruːd/",
+    "meaning": "qo‘pol; odobsiz",
+    "example": "It is rude to yawn loudly during someone's wedding speech.",
+    "translation": "Birovning to‘ydagi nutqi paytida ovoz chiqarib esnash odobsizlikdir.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "lazy",
+    "ipa": "/ˈleɪzi/",
+    "meaning": "dangasa",
+    "example": "I felt lazy enough to call my brother in the next room.",
+    "translation": "Shunchalik dangasalik tutdiki, qo‘shni xonadagi ukamga telefon qildim.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "jealous",
+    "ipa": "/ˈdʒeləs/",
+    "meaning": "rashkchi; hasad qilgan",
+    "example": "He was jealous of the attention our new puppy received.",
+    "translation": "U yangi kuchukchamizga ko‘rsatilayotgan e’tiborga hasad qildi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "greedy",
+    "ipa": "/ˈɡriːdi/",
+    "meaning": "ochko‘z",
+    "example": "The greedy guest asked whether the cake stand was edible too.",
+    "translation": "Ochko‘z mehmon tort tagligini ham yesa bo‘ladimi deb so‘radi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "bossy",
+    "ipa": "/ˈbɒsi/",
+    "meaning": "buyruq beraveradigan",
+    "example": "My bossy cousin even tells the kettle when to boil.",
+    "translation": "Buyruq beraveradigan amakivachcham hatto choynakka ham qachon qaynashni aytadi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "impatient",
+    "ipa": "/ɪmˈpeɪʃnt/",
+    "meaning": "sabrsiz",
+    "example": "The impatient man pressed the lift button twelve times.",
+    "translation": "Sabrsiz odam lift tugmasini o‘n ikki marta bosdi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "arrogant",
+    "ipa": "/ˈærəɡənt/",
+    "meaning": "kibrli",
+    "example": "He sounded arrogant when he called himself the king of sandwiches.",
+    "translation": "O‘zini sendvichlar qiroli deb ataganida, u kibrli eshitildi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "self-conscious",
+    "ipa": "/ˌself ˈkɒnʃəs/",
+    "meaning": "o‘zini noqulay his qiladigan",
+    "example": "I felt self-conscious in my new hat until everyone tried it on.",
+    "translation": "Hamma yangi shlyapamni kiyib ko‘rmaguncha, unda o‘zimni noqulay his qildim.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "shy",
+    "ipa": "/ʃaɪ/",
+    "meaning": "uyatchan",
+    "example": "Our shy cousin introduced himself to the curtains first.",
+    "translation": "Uyatchan amakivachchamiz avval o‘zini pardalarga tanishtirdi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "careless",
+    "ipa": "/ˈkeələs/",
+    "meaning": "beparvo; ehtiyotsiz",
+    "example": "A careless reply sent our dinner plans to the whole office.",
+    "translation": "E’tiyotsizlik bilan yuborilgan javob kechki ovqat rejamizni butun ofisga tarqatdi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "moody",
+    "ipa": "/ˈmuːdi/",
+    "meaning": "kayfiyati tez o‘zgaradigan",
+    "example": "My moody flatmate may offer tea or a long silence.",
+    "translation": "Kayfiyati tez o‘zgaradigan xonadoshim choy taklif qilishi ham, uzoq jim qolishi ham mumkin.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "sensitive",
+    "ipa": "/ˈsensətɪv/",
+    "meaning": "ko‘ngli nozik",
+    "example": "He's sensitive about his cooking, so don't call the soup wallpaper glue.",
+    "translation": "U taomlari haqida gap ketsa tez ranjiydi, shuning uchun sho‘rvani gulqog‘oz yelimi dema.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "strict",
+    "ipa": "/strɪkt/",
+    "meaning": "qattiqqo‘l",
+    "example": "Our strict coach allows jokes, but only after ten press-ups.",
+    "translation": "Qattiqqo‘l murabbiyimiz hazilga ruxsat beradi, ammo avval o‘n marta qo‘lda tayanib turish kerak.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "mean",
+    "ipa": "/miːn/",
+    "meaning": "baxil",
+    "example": "It was mean of him to charge his sister for one biscuit.",
+    "translation": "Singlisidan bitta pechenye uchun pul olish uning baxilligini ko‘rsatdi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "immature",
+    "ipa": "/ˌɪməˈtjʊə/",
+    "meaning": "o‘zini bolalarcha tutadigan",
+    "example": "His immature response was to hide my slippers.",
+    "translation": "Uning bolalarcha javobi shippagimni yashirish bo‘ldi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "pessimistic",
+    "ipa": "/ˌpesɪˈmɪstɪk/",
+    "meaning": "yomonlikni kutadigan; umidsiz",
+    "example": "My pessimistic uncle packs two umbrellas for an indoor party.",
+    "translation": "Har narsaning yomon tomonini kutadigan amakim bino ichidagi bazmga ikkita soyabon oladi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "dishonest",
+    "ipa": "/dɪsˈɒnɪst/",
+    "meaning": "yolg‘onchi; insofsiz",
+    "example": "Calling a broken chair a rocking chair is dishonest.",
+    "translation": "Singan stulni tebranadigan kursi deb atash insofsizlikdir.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "childish",
+    "ipa": "/ˈtʃaɪldɪʃ/",
+    "meaning": "bolalarcha; bachkana",
+    "example": "Our childish argument ended when Mum took away both remote controls.",
+    "translation": "Bachkana tortishuvimiz oyim ikkala pultni olib qo‘yganda tugadi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "nosy",
+    "ipa": "/ˈnəʊzi/",
+    "meaning": "birovning ishiga burnini suqadigan",
+    "example": "My nosy neighbour knows my visitors before I do.",
+    "translation": "Birovning ishiga burnini suqadigan qo‘shnim mehmonlarimni mendan oldin biladi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "fussy",
+    "ipa": "/ˈfʌsi/",
+    "meaning": "injiq; sinchiklab tanlaydigan",
+    "example": "She's fussy about tea and interviews every new teapot.",
+    "translation": "U choy masalasida injiq, har bir yangi choynakni go‘yo suhbatdan o‘tkazadi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "clumsy",
+    "ipa": "/ˈklʌmzi/",
+    "meaning": "beso‘naqay",
+    "example": "I'm too clumsy to carry soup while answering the phone.",
+    "translation": "Telefonga javob berib sho‘rva ko‘tarish uchun haddan tashqari beso‘naqayman.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "forgetful",
+    "ipa": "/fəˈɡetfl/",
+    "meaning": "unutuvchan",
+    "example": "My forgetful grandad wrote a reminder to read his reminders.",
+    "translation": "Unutuvchan bobom eslatmalarini o‘qish uchun eslatma yozdi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "competitive",
+    "ipa": "/kəmˈpetətɪv/",
+    "meaning": "bellashishni yaxshi ko‘radigan",
+    "example": "Our competitive aunt turns washing up into a race.",
+    "translation": "Bellashishni yaxshi ko‘radigan xolamiz idish yuvishni musobaqaga aylantiradi.",
+    "topic": "5-oy • Qiyin xarakter xususiyatlari"
+  },
+  {
+    "word": "pleased",
+    "ipa": "/pliːzd/",
+    "meaning": "mamnun",
+    "example": "I was pleased with my haircut until the wind redesigned it.",
+    "translation": "Shamol sochimni qayta bezaguncha, yangi turmagimdan mamnun edim.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "delighted",
+    "ipa": "/dɪˈlaɪtɪd/",
+    "meaning": "juda xursand",
+    "example": "Grandma was delighted when we finally understood her phone joke.",
+    "translation": "Telefon haqidagi hazilini nihoyat tushunganimizda buvim juda xursand bo‘ldi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "relieved",
+    "ipa": "/rɪˈliːvd/",
+    "meaning": "yengil tortgan",
+    "example": "I felt relieved when the strange noise turned out to be Dad snoring.",
+    "translation": "G‘alati tovush dadamning xurragi ekanini bilib yengil tortdim.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "proud",
+    "ipa": "/praʊd/",
+    "meaning": "faxrlangan",
+    "example": "She was proud of her first loaf, even though it looked like a shoe.",
+    "translation": "Birinchi noni tufliga o‘xshasa ham, u undan faxrlandi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "grateful",
+    "ipa": "/ˈɡreɪtfl/",
+    "meaning": "minnatdor",
+    "example": "We were grateful to the guest who rescued dinner with pizza.",
+    "translation": "Pitsa olib kelib kechki ovqatni qutqargan mehmondan minnatdor edik.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "excited",
+    "ipa": "/ɪkˈsaɪtɪd/",
+    "meaning": "hayajonlangan; zavqlangan",
+    "example": "The children were excited about camping in the living room.",
+    "translation": "Bolalar mehmonxonada chodir tikib tunashdan zavqlanishdi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "hopeful",
+    "ipa": "/ˈhəʊpfl/",
+    "meaning": "umidvor",
+    "example": "I'm hopeful that my next cake will need a knife, not a hammer.",
+    "translation": "Keyingi tortimga bolg‘a emas, pichoq kerak bo‘lishidan umidvorman.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "content",
+    "ipa": "/kənˈtent/",
+    "meaning": "qanoatlangan; mamnun",
+    "example": "With warm socks and a book, she felt completely content.",
+    "translation": "Issiq paypoq va kitob bilan u o‘zini butunlay mamnun his qildi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "relaxed",
+    "ipa": "/rɪˈlækst/",
+    "meaning": "bo‘shashgan; xotirjam",
+    "example": "Dad looked relaxed until the puppy stole his newspaper.",
+    "translation": "Kuchukcha gazetasini olib qochguncha dadam xotirjam ko‘rinardi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "amused",
+    "ipa": "/əˈmjuːzd/",
+    "meaning": "kulgisi kelgan",
+    "example": "The receptionist looked amused by my attempt to push a pull door.",
+    "translation": "Tortiladigan eshikni itarishga uringanimni ko‘rib qabulxonadagi xodimaning kulgisi keldi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "enthusiastic",
+    "ipa": "/ɪnˌθjuːziˈæstɪk/",
+    "meaning": "ishtiyoqli",
+    "example": "He's enthusiastic about jogging, especially the breakfast afterwards.",
+    "translation": "U yugurishga, ayniqsa undan keyingi nonushtaga juda ishtiyoqli.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "comfortable",
+    "ipa": "/ˈkʌmftəbl/",
+    "meaning": "o‘zini erkin his qiladigan",
+    "example": "I felt comfortable with the group after someone else spilled tea.",
+    "translation": "Yana kimdir choy to‘kib yuborgach, guruh ichida o‘zimni erkin his qildim.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "satisfied",
+    "ipa": "/ˈsætɪsfaɪd/",
+    "meaning": "qoniqqan",
+    "example": "The cat seemed satisfied with my apology and new cushion.",
+    "translation": "Mushuk uzrim va yangi yostiqdan qoniqqanday ko‘rindi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "joy",
+    "ipa": "/dʒɔɪ/",
+    "meaning": "quvonch",
+    "example": "Finding a forgotten biscuit brought me unexpected joy.",
+    "translation": "Unutilgan pechenyeni topish menga kutilmagan quvonch berdi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "pleasure",
+    "ipa": "/ˈpleʒə/",
+    "meaning": "zavq; mamnuniyat",
+    "example": "It was a pleasure to hear my alarm on my day off and ignore it.",
+    "translation": "Dam olish kunim budilnikni eshitib, unga e’tibor bermaslik zavqli edi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "relief",
+    "ipa": "/rɪˈliːf/",
+    "meaning": "yengillik",
+    "example": "What a relief to discover the exam was tomorrow, not today!",
+    "translation": "Imtihon bugun emas, ertaga ekanini bilish naqadar yengillik!",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "happiness",
+    "ipa": "/ˈhæpinəs/",
+    "meaning": "baxt; xursandchilik",
+    "example": "Finding money in an old coat brought a minute of pure happiness.",
+    "translation": "Eski paltodan pul topish bir daqiqalik sof baxt keltirdi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "excitement",
+    "ipa": "/ɪkˈsaɪtmənt/",
+    "meaning": "hayajon",
+    "example": "In his excitement, he put his party hat on the dog.",
+    "translation": "U hayajondan bayram qalpog‘ini itga kiydirib qo‘ydi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "pride",
+    "ipa": "/praɪd/",
+    "meaning": "faxr",
+    "example": "Dad showed us his repaired shelf with obvious pride.",
+    "translation": "Dadam tuzatgan tokchasini yaqqol faxr bilan ko‘rsatdi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "affection",
+    "ipa": "/əˈfekʃn/",
+    "meaning": "mehr",
+    "example": "My uncle shows affection by giving everyone enormous sandwiches.",
+    "translation": "Amakim hammaga ulkan sendvich berib mehrini ko‘rsatadi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "peaceful",
+    "ipa": "/ˈpiːsfl/",
+    "meaning": "osoyishta",
+    "example": "The house felt peaceful until someone found the karaoke machine.",
+    "translation": "Kimdir karaoke qurilmasini topguncha uy osoyishta edi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "cheer up",
+    "ipa": "/ˌtʃɪər ˈʌp/",
+    "meaning": "kayfiyati ko‘tarilmoq",
+    "example": "She cheered up when her brother arrived wearing two different shoes.",
+    "translation": "Akasi ikki xil tufli kiyib kelganida uning kayfiyati ko‘tarildi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "look forward to",
+    "ipa": "/lʊk ˈfɔːwəd tə/",
+    "meaning": "intizorlik bilan kutmoq",
+    "example": "I look forward to Sundays because my alarm gets a holiday.",
+    "translation": "Yakshanbani intizorlik bilan kutaman, chunki budilnigim dam oladi.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "enjoy",
+    "ipa": "/ɪnˈdʒɔɪ/",
+    "meaning": "zavqlanmoq",
+    "example": "We enjoy talking about exercise over a large cake.",
+    "translation": "Katta tort yeb, jismoniy mashqlar haqida suhbatlashishdan zavqlanamiz.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "admire",
+    "ipa": "/ədˈmaɪə/",
+    "meaning": "qoyil qolmoq",
+    "example": "I admire anyone who can fold a fitted sheet neatly.",
+    "translation": "Rezinkali choyshabni chiroyli taxlay oladigan har kimga qoyil qolaman.",
+    "topic": "5-oy • Yoqimli hislar"
+  },
+  {
+    "word": "anxious",
+    "ipa": "/ˈæŋkʃəs/",
+    "meaning": "xavotirli",
+    "example": "I felt anxious when the dentist said my name twice.",
+    "translation": "Tish shifokori ismimni ikki marta aytganda xavotirlandim.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "worried",
+    "ipa": "/ˈwʌrid/",
+    "meaning": "tashvishlangan",
+    "example": "Mum was worried because even the dog refused my biscuits.",
+    "translation": "Hatto it ham pechenyelarimni yemagani uchun oyim tashvishlandi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "upset",
+    "ipa": "/ʌpˈset/",
+    "meaning": "xafa",
+    "example": "He was upset when his balloon left the party early.",
+    "translation": "Shari bazmdan erta uchib ketganida u xafa bo‘ldi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "disappointed",
+    "ipa": "/ˌdɪsəˈpɔɪntɪd/",
+    "meaning": "hafsalasi pir bo‘lgan",
+    "example": "I was disappointed to find sewing needles in the biscuit tin.",
+    "translation": "Pechenye qutisidan tikuv ignalari chiqib, hafsalam pir bo‘ldi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "embarrassed",
+    "ipa": "/ɪmˈbærəst/",
+    "meaning": "xijolat bo‘lgan",
+    "example": "She felt embarrassed after waving at her own reflection.",
+    "translation": "O‘z aksiga qo‘l silkitganidan keyin u xijolat bo‘ldi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "ashamed",
+    "ipa": "/əˈʃeɪmd/",
+    "meaning": "uyalgan; pushaymon",
+    "example": "I felt ashamed for blaming my brother when I had eaten the cake.",
+    "translation": "Tortni o‘zim yeb, ukamni ayblaganimdan uyaldim.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "guilty",
+    "ipa": "/ˈɡɪlti/",
+    "meaning": "o‘zini aybdor his qilgan",
+    "example": "He felt guilty about laughing at his friend's serious poem.",
+    "translation": "Do‘stining jiddiy she’riga kulgani uchun u o‘zini aybdor his qildi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "lonely",
+    "ipa": "/ˈləʊnli/",
+    "meaning": "yolg‘iz; yolg‘izlikni his qilgan",
+    "example": "Feeling lonely, I invited a friend and accidentally invited his whole family.",
+    "translation": "Yolg‘izlikni his qilib, do‘stimni chaqirdim va bilmasdan uning butun oilasini ham taklif qilibman.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "nervous",
+    "ipa": "/ˈnɜːvəs/",
+    "meaning": "hayajondan bezovta",
+    "example": "Before my speech, I was nervous enough to introduce myself to the microphone.",
+    "translation": "Nutqimdan oldin shunchalik hayajonlandimki, o‘zimni mikrofonga tanishtirdim.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "frustrated",
+    "ipa": "/frʌˈstreɪtɪd/",
+    "meaning": "ishi yurishmay asabiylashgan",
+    "example": "I grew frustrated when the password hint said 'your password'.",
+    "translation": "Parol eslatmasida «parolingiz» deb yozilganda asabiylashdim.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "annoyed",
+    "ipa": "/əˈnɔɪd/",
+    "meaning": "jahli chiqqan",
+    "example": "She was annoyed that my phone alarm interrupted her dream holiday.",
+    "translation": "Telefonim budilnigi tushidagi ta’tilni buzganidan uning jahli chiqdi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "furious",
+    "ipa": "/ˈfjʊəriəs/",
+    "meaning": "juda g‘azablangan",
+    "example": "Dad was furious when someone used his passport as a shopping list.",
+    "translation": "Kimdir pasportiga xarid ro‘yxatini yozganida dadam juda g‘azablandi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "terrified",
+    "ipa": "/ˈterɪfaɪd/",
+    "meaning": "dahshatga tushgan",
+    "example": "I was terrified until the shadow turned out to be a coat.",
+    "translation": "Soya paltoniki ekanini bilguncha dahshatga tushdim.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "miserable",
+    "ipa": "/ˈmɪzrəbl/",
+    "meaning": "juda baxtsiz; dilgir",
+    "example": "Wet shoes made me miserable all afternoon.",
+    "translation": "Ho‘l tufli tufayli tushdan keyin rosa dilgir bo‘ldim.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "homesick",
+    "ipa": "/ˈhəʊmsɪk/",
+    "meaning": "uyini sog‘ingan",
+    "example": "I felt homesick when nobody argued about who made the best tea.",
+    "translation": "Kim eng yaxshi choy damlashi haqida hech kim tortishmaganda uyimni sog‘indim.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "confused",
+    "ipa": "/kənˈfjuːzd/",
+    "meaning": "gangib qolgan; tushunmay qolgan",
+    "example": "The twins looked confused when I wished only one of them a happy birthday.",
+    "translation": "Faqat bittasini tug‘ilgan kuni bilan tabriklaganimda egizaklar gangib qolishdi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "shocked",
+    "ipa": "/ʃɒkt/",
+    "meaning": "lol qolgan; qattiq hayratlangan",
+    "example": "We were shocked when our quiet uncle started singing opera.",
+    "translation": "Kamgap amakimiz opera kuylay boshlaganda lol qoldik.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "doubt",
+    "ipa": "/daʊt/",
+    "meaning": "shubha",
+    "example": "I had a doubt about his story when the fish became bigger than the boat.",
+    "translation": "Baliq qayiqdan kattalashib ketgan joyida uning hikoyasiga shubham tug‘ildi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "fear",
+    "ipa": "/fɪə/",
+    "meaning": "qo‘rquv",
+    "example": "Her fear of spiders includes the plastic ones on my desk.",
+    "translation": "U stolimdagi plastik o‘rgimchaklardan ham qo‘rqadi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "anger",
+    "ipa": "/ˈæŋɡə/",
+    "meaning": "g‘azab",
+    "example": "His anger disappeared when the missing sandwich fell out of his bag.",
+    "translation": "Yo‘qolgan sendvich sumkasidan tushib ketgach, uning g‘azabi tarqaldi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "worry",
+    "ipa": "/ˈwʌri/",
+    "meaning": "tashvishlanmoq",
+    "example": "Don't worry about the noise; Dad is learning the flute.",
+    "translation": "Shovqindan tashvishlanma; dadam nay chalishni o‘rganyapti.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "regret",
+    "ipa": "/rɪˈɡret/",
+    "meaning": "afsuslanmoq",
+    "example": "I regret teaching my little brother how to whistle.",
+    "translation": "Ukamga hushtak chalishni o‘rgatganimdan afsuslanaman.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "stress",
+    "ipa": "/stres/",
+    "meaning": "ruhiy zo‘riqish",
+    "example": "Packing for a holiday causes more stress than my holidays remove.",
+    "translation": "Ta’tilga yuk yig‘ish ta’tilim ketkazadiganidan ko‘proq ruhiy zo‘riqish tug‘diradi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "calm down",
+    "ipa": "/ˌkɑːm ˈdaʊn/",
+    "meaning": "tinchlanmoq",
+    "example": "He calmed down once we explained that the tattoo was a sticker.",
+    "translation": "Tatuirovka yopishtirma ekanini tushuntirganimizdan keyin u tinchlandi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "burst into tears",
+    "ipa": "/bɜːst ˌɪntə ˈtɪəz/",
+    "meaning": "birdan yig‘lab yubormoq",
+    "example": "The little boy burst into tears when his ice cream fell off the cone.",
+    "translation": "Muzqaymog‘i vafli karnaychasidan tushib ketganda bolakay birdan yig‘lab yubordi.",
+    "topic": "5-oy • Og‘ir hislar"
+  },
+  {
+    "word": "friendship",
+    "ipa": "/ˈfrendʃɪp/",
+    "meaning": "do‘stlik",
+    "example": "Our friendship survived a holiday and one very small tent.",
+    "translation": "Do‘stligimiz ta’til va juda kichik bitta chodir sinovidan o‘tdi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "companion",
+    "ipa": "/kəmˈpænjən/",
+    "meaning": "hamroh",
+    "example": "My walking companion stops at every bench to rest.",
+    "translation": "Sayrdagi hamrohim dam olish uchun har bir skameyka yonida to‘xtaydi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "stranger",
+    "ipa": "/ˈstreɪndʒə/",
+    "meaning": "notanish kishi",
+    "example": "A stranger waved at me, so I checked whether I was wearing his coat.",
+    "translation": "Notanish kishi menga qo‘l silkitdi, men esa uning paltosini kiyib olmaganmidim deb tekshirdim.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "acquaintance",
+    "ipa": "/əˈkweɪntəns/",
+    "meaning": "tanish odam",
+    "example": "An acquaintance greeted me warmly, but I couldn't remember his name.",
+    "translation": "Bir tanishim iliq salomlashdi, lekin ismini eslay olmadim.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "flatmate",
+    "ipa": "/ˈflætmeɪt/",
+    "meaning": "ijaradosh",
+    "example": "My flatmate labels his cheese as if it might escape.",
+    "translation": "Ijaradoshim pishlog‘iga go‘yo qochib ketadigandek yorliq yopishtiradi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "roommate",
+    "ipa": "/ˈruːmmeɪt/",
+    "meaning": "xonadosh",
+    "example": "My roommate talks in his sleep, but never answers my questions.",
+    "translation": "Xonadoshim uyqusida gapiradi, ammo savollarimga hech javob bermaydi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "playmate",
+    "ipa": "/ˈpleɪmeɪt/",
+    "meaning": "birga o‘ynaydigan do‘st",
+    "example": "My son's playmate arrived with plans to turn the garden into a zoo.",
+    "translation": "O‘g‘limning o‘yin do‘sti bog‘ni hayvonot bog‘iga aylantirish rejalari bilan keldi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "schoolmate",
+    "ipa": "/ˈskuːlmeɪt/",
+    "meaning": "maktabdosh",
+    "example": "An old schoolmate recognised my laugh before recognising my face.",
+    "translation": "Eski maktabdoshim yuzimdan oldin kulgimni tanidi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "mate",
+    "ipa": "/meɪt/",
+    "meaning": "do‘st; o‘rtoq",
+    "example": "My mate arrived to help and immediately asked about snacks.",
+    "translation": "O‘rtog‘im yordam berishga kelib, darrov yeguliklarni so‘radi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "newcomer",
+    "ipa": "/ˈnjuːkʌmə/",
+    "meaning": "yangi kelgan kishi",
+    "example": "The newcomer soon learned which chair belonged to Grandma.",
+    "translation": "Yangi kelgan kishi qaysi kursi buvimniki ekanini tezda bilib oldi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "circle",
+    "ipa": "/ˈsɜːkl/",
+    "meaning": "do‘stlar davrasi",
+    "example": "Her circle of friends includes three people who all claim to make the best tea.",
+    "translation": "Uning do‘stlar davrasida eng yaxshi choyni men damlayman deydigan uch kishi bor.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "introduce",
+    "ipa": "/ˌɪntrəˈdjuːs/",
+    "meaning": "tanishtirmoq",
+    "example": "Let me introduce my cousin before he introduces his six cats.",
+    "translation": "Amakivachcham oltita mushugini tanishtirishidan oldin, uni tanishtiray.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "greet",
+    "ipa": "/ɡriːt/",
+    "meaning": "salomlashib kutib olmoq",
+    "example": "She greeted every visitor with a smile and a huge biscuit.",
+    "translation": "U har bir mehmonni tabassum va katta pechenye bilan kutib oldi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "invite",
+    "ipa": "/ɪnˈvaɪt/",
+    "meaning": "taklif qilmoq",
+    "example": "We invited six people, but twelve arrived with good explanations.",
+    "translation": "Oltita odamni taklif qildik, ammo o‘n ikkitasi asosli izohlar bilan keldi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "befriend",
+    "ipa": "/bɪˈfrend/",
+    "meaning": "do‘st tutinmoq",
+    "example": "She befriended the quiet newcomer by offering half her sandwich.",
+    "translation": "U sendvichining yarmini taklif qilib, kamgap yangi kelgan bilan do‘st tutindi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "socialise",
+    "ipa": "/ˈsəʊʃəlaɪz/",
+    "meaning": "odamlar bilan muloqotda vaqt o‘tkazmoq",
+    "example": "We socialise over tea and pretend not to count the biscuits.",
+    "translation": "Choy ustida muloqot qilib, pechenyelarni sanamayotgandek bo‘lamiz.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "trust",
+    "ipa": "/trʌst/",
+    "meaning": "ishonmoq",
+    "example": "I trust her with my secrets, but not my last chocolate.",
+    "translation": "Sirlarimni unga ishonaman, ammo oxirgi shokoladimni emas.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "closeness",
+    "ipa": "/ˈkləʊsnəs/",
+    "meaning": "yaqinlik",
+    "example": "Their closeness grew during long walks and arguments about silly films.",
+    "translation": "Uzoq sayrlar va kulgili filmlar haqidagi bahslar ularning yaqinligini oshirdi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "get along",
+    "ipa": "/ˌɡet əˈlɒŋ/",
+    "meaning": "chiqishmoq",
+    "example": "We get along because neither of us likes washing dishes.",
+    "translation": "Ikkalamiz ham idish yuvishni yoqtirmaganimiz uchun chiqishamiz.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "hang out",
+    "ipa": "/ˌhæŋ ˈaʊt/",
+    "meaning": "birga vaqt o‘tkazmoq",
+    "example": "We hang out at her flat and spend an hour choosing a film.",
+    "translation": "Uning uyida birga vaqt o‘tkazib, bir soat film tanlaymiz.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "keep in touch",
+    "ipa": "/ˌkiːp ɪn ˈtʌtʃ/",
+    "meaning": "aloqani uzmaslik",
+    "example": "We keep in touch by sending photos of our cooking disasters.",
+    "translation": "Pishirishdagi muvaffaqiyatsizliklarimiz suratlarini yuborib aloqani saqlaymiz.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "get together",
+    "ipa": "/ˌɡet təˈɡeðə/",
+    "meaning": "uchrashib yig‘ilmoq",
+    "example": "We get together every Friday to discuss everything except our unfinished chores.",
+    "translation": "Har juma tugamagan yumushlarimizdan boshqa hamma narsani muhokama qilish uchun yig‘ilamiz.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "reunion",
+    "ipa": "/ˌriːˈjuːniən/",
+    "meaning": "uzoq ayriliqdan keyingi uchrashuv",
+    "example": "At our school reunion, everyone still blamed the same boy for the broken window.",
+    "translation": "Maktabdoshlar uchrashuvida hamma hamon singan deraza uchun o‘sha bolani aybladi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "bond",
+    "ipa": "/bɒnd/",
+    "meaning": "yaqin rishta",
+    "example": "A shared dislike of early mornings created a bond between us.",
+    "translation": "Erta tongni birdek yoqtirmasligimiz oramizda yaqin rishta yaratdi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "popular",
+    "ipa": "/ˈpɒpjələ/",
+    "meaning": "ko‘pchilik yoqtiradigan",
+    "example": "He became popular after learning everyone's tea preferences.",
+    "translation": "Hammaning choy borasidagi didini bilib olgach, uni ko‘pchilik yoqtira boshladi.",
+    "topic": "5-oy • Do‘stlik va tanishuv"
+  },
+  {
+    "word": "relationship",
+    "ipa": "/rɪˈleɪʃnʃɪp/",
+    "meaning": "munosabat",
+    "example": "Their relationship improved when they bought a second blanket.",
+    "translation": "Ikkinchi ko‘rpani sotib olishgach, ularning munosabati yaxshilandi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "spouse",
+    "ipa": "/spaʊs/",
+    "meaning": "turmush o‘rtog‘i",
+    "example": "Each guest could bring a spouse, but Uncle also brought his guitar.",
+    "translation": "Har bir mehmon turmush o‘rtog‘ini olib kelishi mumkin edi, ammo amakim gitarasini ham olib keldi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "couple",
+    "ipa": "/ˈkʌpl/",
+    "meaning": "juftlik",
+    "example": "The couple disagreed about everything except dessert.",
+    "translation": "Juftlik shirinlikdan boshqa hamma masalada kelisha olmadi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "boyfriend",
+    "ipa": "/ˈbɔɪfrend/",
+    "meaning": "sevgili yigit",
+    "example": "Her boyfriend brought flowers and a bag to carry the shopping.",
+    "translation": "Uning sevgilisi gul va xaridlarni tashish uchun sumka olib keldi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "girlfriend",
+    "ipa": "/ˈɡɜːlfrend/",
+    "meaning": "sevgili qiz",
+    "example": "My girlfriend knows I am nervous when I start discussing the weather.",
+    "translation": "Ob-havo haqida gapira boshlasam, sevgilim hayajonlanayotganimni biladi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "romantic",
+    "ipa": "/rəʊˈmæntɪk/",
+    "meaning": "romantik; ishqiy",
+    "example": "Our romantic dinner included candles because we forgot to pay for electricity.",
+    "translation": "Romantik kechki ovqatimiz sham yorug‘ida bo‘ldi, chunki elektr haqini to‘lashni unutgan edik.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "marriage",
+    "ipa": "/ˈmærɪdʒ/",
+    "meaning": "nikoh; er-xotinlik",
+    "example": "Their marriage has lasted longer than any of their washing machines.",
+    "translation": "Ularning nikohi kir yuvish mashinalarining har biridan ham uzoq yashadi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "wedding",
+    "ipa": "/ˈwedɪŋ/",
+    "meaning": "nikoh to‘yi",
+    "example": "At the wedding, my little cousin caught the flowers and asked for cake instead.",
+    "translation": "To‘yda kichik amakivachcham gullarni ilib olib, o‘rniga tort so‘radi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "bride",
+    "ipa": "/braɪd/",
+    "meaning": "kelin",
+    "example": "The bride wore trainers under her dress for serious dancing.",
+    "translation": "Kelin yaxshilab raqs tushish uchun ko‘ylagi ostidan krossovka kiygan edi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "groom",
+    "ipa": "/ɡruːm/",
+    "meaning": "kuyov",
+    "example": "The groom checked his pocket for the ring every thirty seconds.",
+    "translation": "Kuyov har o‘ttiz soniyada uzukni tekshirib cho‘ntagini paypasladi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "engaged",
+    "ipa": "/ɪnˈɡeɪdʒd/",
+    "meaning": "unashtirilgan",
+    "example": "They got engaged after agreeing that neither could cook.",
+    "translation": "Ikkalasi ham ovqat pishira olmasligiga kelishib, ular unashtirildi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "propose",
+    "ipa": "/prəˈpəʊz/",
+    "meaning": "turmush qurishni taklif qilmoq",
+    "example": "He planned to propose, but the waiter nearly served the ring with dessert.",
+    "translation": "U turmush qurishni taklif qilmoqchi edi, ammo ofitsiant uzukni deyarli shirinlik bilan tortib yubordi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "marry",
+    "ipa": "/ˈmæri/",
+    "meaning": "turmush qurmoq",
+    "example": "She wants to marry someone who can find things in the fridge.",
+    "translation": "U muzlatkichdan narsalarni topa oladigan odamga turmushga chiqmoqchi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "divorce",
+    "ipa": "/dɪˈvɔːs/",
+    "meaning": "ajrashish",
+    "example": "After the divorce, they remained friends and shared care of the dog.",
+    "translation": "Ajrashgandan keyin ular do‘st bo‘lib qolib, itga birgalikda qarashdi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "split up",
+    "ipa": "/ˌsplɪt ˈʌp/",
+    "meaning": "juftlik munosabatini tugatmoq",
+    "example": "They split up last year but still send each other birthday cards.",
+    "translation": "Ular o‘tgan yili ayrilishdi, ammo hamon bir-biriga tug‘ilgan kun tabriknomalarini yuborishadi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "relative",
+    "ipa": "/ˈrelətɪv/",
+    "meaning": "qarindosh",
+    "example": "A relative I barely knew recognised my laugh immediately.",
+    "translation": "O‘zim zo‘rg‘a taniydigan bir qarindoshim kulgimni darrov tanidi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "sibling",
+    "ipa": "/ˈsɪblɪŋ/",
+    "meaning": "aka-uka yoki opa-singil",
+    "example": "Having a sibling means someone remembers all your embarrassing hairstyles.",
+    "translation": "Aka-uka yoki opa-singling bo‘lsa, kimdir barcha kulgili soch turmaklaringni eslab yuradi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "twin",
+    "ipa": "/twɪn/",
+    "meaning": "egizak",
+    "example": "My twin borrowed my jacket and then complained that we looked alike.",
+    "translation": "Egizagim kurtkamni olib kiyib, keyin bir xil ko‘rinishimizdan shikoyat qildi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "niece",
+    "ipa": "/niːs/",
+    "meaning": "jiyan qiz",
+    "example": "My niece gave me a drawing of myself with twelve fingers.",
+    "translation": "Jiyanim menga o‘n ikki barmoqli qilib chizgan rasmimni berdi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "nephew",
+    "ipa": "/ˈnefjuː/",
+    "meaning": "jiyan o‘g‘il",
+    "example": "My nephew thinks my beard is a useful place to hide pencils.",
+    "translation": "Jiyanim soqolimni qalam yashirishga qulay joy deb o‘ylaydi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "mother-in-law",
+    "ipa": "/ˈmʌðər ɪn lɔː/",
+    "meaning": "qaynona",
+    "example": "My mother-in-law kindly taught me how to rescue burnt rice.",
+    "translation": "Qaynonam kuygan guruchni qanday qutqarishni mehr bilan o‘rgatdi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "father-in-law",
+    "ipa": "/ˈfɑːðər ɪn lɔː/",
+    "meaning": "qaynota",
+    "example": "My father-in-law brings his own tools even when invited only for tea.",
+    "translation": "Qaynotam faqat choyga taklif qilinganda ham asboblarini olib keladi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "anniversary",
+    "ipa": "/ˌænɪˈvɜːsəri/",
+    "meaning": "yillik sana; yillik bayram",
+    "example": "For our anniversary, we returned to the café where I spilled my first coffee.",
+    "translation": "Yillik sanamizda men birinchi qahvani to‘kkan kafega qaytdik.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "break up",
+    "ipa": "/ˌbreɪk ˈʌp/",
+    "meaning": "sevgi munosabatini tugatmoq",
+    "example": "They broke up but agreed that the dog could visit both homes.",
+    "translation": "Ular munosabatini tugatishdi, ammo it ikkala uyga ham borib turishiga kelishishdi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "fall in love",
+    "ipa": "/ˌfɔːl ɪn ˈlʌv/",
+    "meaning": "sevib qolmoq",
+    "example": "They fell in love while arguing about the last library chair.",
+    "translation": "Ular kutubxonadagi oxirgi bo‘sh stul ustida tortishib turib bir-birini sevib qolishdi.",
+    "topic": "5-oy • Yaqin munosabatlar"
+  },
+  {
+    "word": "argue",
+    "ipa": "/ˈɑːɡjuː/",
+    "meaning": "tortishmoq",
+    "example": "We argued about the route while the dog walked home without us.",
+    "translation": "Yo‘l ustida tortishayotganimizda it bizsiz uyga ketdi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "argument",
+    "ipa": "/ˈɑːɡjumənt/",
+    "meaning": "tortishuv",
+    "example": "Our argument about dinner ended when the power went off.",
+    "translation": "Kechki ovqat haqidagi tortishuvimiz elektr o‘chganda tugadi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "disagree",
+    "ipa": "/ˌdɪsəˈɡriː/",
+    "meaning": "fikriga qo‘shilmaslik",
+    "example": "I disagree with anyone who calls one biscuit a proper snack.",
+    "translation": "Bitta pechenyeni yetarli yegulik deydigan odamning fikriga qo‘shilmayman.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "quarrel",
+    "ipa": "/ˈkwɒrəl/",
+    "meaning": "janjal; arazli tortishuv",
+    "example": "A quarrel over a borrowed jumper lasted longer than winter.",
+    "translation": "Olib turilgan jemper ustidagi janjal qishdan ham uzoq davom etdi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "conflict",
+    "ipa": "/ˈkɒnflɪkt/",
+    "meaning": "ziddiyat",
+    "example": "The conflict between the neighbours began with a very loud rooster.",
+    "translation": "Qo‘shnilar orasidagi ziddiyat juda baland qichqiradigan xo‘rozdan boshlandi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "complain",
+    "ipa": "/kəmˈpleɪn/",
+    "meaning": "shikoyat qilmoq",
+    "example": "He complained about the music while tapping his foot to it.",
+    "translation": "U oyog‘i bilan kuyga jo‘r bo‘lib turib, musiqadan shikoyat qildi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "complaint",
+    "ipa": "/kəmˈpleɪnt/",
+    "meaning": "shikoyat",
+    "example": "My only complaint was that the free cake had disappeared too quickly.",
+    "translation": "Yagona shikoyatim bepul tort juda tez tugab qolgani edi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "blame",
+    "ipa": "/bleɪm/",
+    "meaning": "ayblamoq",
+    "example": "Don't blame the dog; he can't reach the biscuit cupboard.",
+    "translation": "Itni ayblama; uning bo‘yi pechenye javoniga yetmaydi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "accuse",
+    "ipa": "/əˈkjuːz/",
+    "meaning": "ayb qo‘ymoq",
+    "example": "She accused me of hiding the remote, which was under her own cushion.",
+    "translation": "U pultni yashirganlikda meni aybladi, holbuki pult o‘z yostig‘i tagida edi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "deny",
+    "ipa": "/dɪˈnaɪ/",
+    "meaning": "inkor etmoq",
+    "example": "He denied eating chocolate despite the evidence on his chin.",
+    "translation": "Iyakdagi dalilga qaramay, u shokolad yeganini inkor etdi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "criticise",
+    "ipa": "/ˈkrɪtɪsaɪz/",
+    "meaning": "tanqid qilmoq",
+    "example": "You can criticise my singing after you hear my brother's.",
+    "translation": "Akamning kuylashini eshitganingdan keyin menikini tanqid qilishing mumkin.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "insult",
+    "ipa": "/ɪnˈsʌlt/",
+    "meaning": "haqorat qilmoq",
+    "example": "Don't insult his hat; he knitted it during a very long winter.",
+    "translation": "Uning shlyapasini haqorat qilma; uni juda uzun qishda to‘qigan.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "offend",
+    "ipa": "/əˈfend/",
+    "meaning": "ranjitmoq",
+    "example": "I didn't mean to offend her when I called her serious painting cheerful.",
+    "translation": "Uning jiddiy suratini quvnoq deb ataganimda uni ranjitmoqchi emasdim.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "interrupt",
+    "ipa": "/ˌɪntəˈrʌpt/",
+    "meaning": "gapini bo‘lmoq",
+    "example": "Please don't interrupt unless the kettle is actually on fire.",
+    "translation": "Choynak rostdan yonmayotgan bo‘lsa, iltimos, gapimni bo‘lma.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "ignore",
+    "ipa": "/ɪɡˈnɔː/",
+    "meaning": "e’tiborsiz qoldirmoq",
+    "example": "She ignored my advice and successfully repaired the chair.",
+    "translation": "U maslahatimni e’tiborsiz qoldirib, stulni muvaffaqiyatli tuzatdi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "threaten",
+    "ipa": "/ˈθretn/",
+    "meaning": "do‘q qilmoq; tahdid qilmoq",
+    "example": "Dad threatened to sing if we didn't get out of bed.",
+    "translation": "O‘rnimizdan turmasak, dadam qo‘shiq aytishini aytib do‘q qildi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "shout",
+    "ipa": "/ʃaʊt/",
+    "meaning": "baqirmoq",
+    "example": "There is no need to shout; your microphone is already on.",
+    "translation": "Baqirish shart emas; mikrofoningiz allaqachon yoqilgan.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "scream",
+    "ipa": "/skriːm/",
+    "meaning": "chinqirmoq",
+    "example": "I screamed when a cold spoon touched my neck.",
+    "translation": "Bo‘ynimga sovuq qoshiq tekkanda chinqirib yubordim.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "tease",
+    "ipa": "/tiːz/",
+    "meaning": "mazax qilib hazillashmoq",
+    "example": "My cousins tease me about the time I got lost in our own garden.",
+    "translation": "Amakivachchalarim o‘z bog‘imizda adashganimni eslatib meni mazax qilishadi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "gossip",
+    "ipa": "/ˈɡɒsɪp/",
+    "meaning": "g‘iybat; mish-mish gaplar",
+    "example": "Office gossip travels faster than the lift.",
+    "translation": "Ofisdagi g‘iybat liftdan tezroq tarqaladi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "rumour",
+    "ipa": "/ˈruːmə/",
+    "meaning": "mish-mish",
+    "example": "A rumour that the boss was leaving turned out to mean he was going to lunch.",
+    "translation": "Boshliq ketayotgani haqidagi mish-mish uning tushlikka chiqishini anglatgan ekan.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "lie",
+    "ipa": "/laɪ/",
+    "meaning": "yolg‘on",
+    "example": "His lie about finishing the washing up was exposed by the mountain of plates.",
+    "translation": "Idishlarni yuvib bo‘lgani haqidagi yolg‘onini tog‘day uyilgan likopchalar fosh qildi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "misunderstand",
+    "ipa": "/ˌmɪsʌndəˈstænd/",
+    "meaning": "noto‘g‘ri tushunmoq",
+    "example": "I misunderstood 'bring something light' and arrived with a lamp.",
+    "translation": "«Yengil narsa olib kel» degan gapni noto‘g‘ri tushunib, chiroq olib keldim.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "disrespectful",
+    "ipa": "/ˌdɪsrɪˈspektfl/",
+    "meaning": "hurmatsiz",
+    "example": "Reading jokes during her speech was disrespectful.",
+    "translation": "Uning nutqi paytida latifalar o‘qish hurmatsizlik edi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "fall out",
+    "ipa": "/ˌfɔːl ˈaʊt/",
+    "meaning": "arazlashib qolmoq",
+    "example": "The brothers fell out over who had to wash the enormous pan.",
+    "translation": "Ulkan tovani kim yuvishi masalasida aka-uka arazlashib qolishdi.",
+    "topic": "5-oy • Kelishmovchiliklar"
+  },
+  {
+    "word": "apologise",
+    "ipa": "/əˈpɒlədʒaɪz/",
+    "meaning": "uzr so‘ramoq",
+    "example": "I apologised for the noise before revealing my new drum kit.",
+    "translation": "Yangi barabanlarimni ko‘rsatishdan oldin shovqin uchun uzr so‘radim.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "apology",
+    "ipa": "/əˈpɒlədʒi/",
+    "meaning": "uzr",
+    "example": "His apology was longer than the speech he had interrupted.",
+    "translation": "Uning uzri o‘zi gapini bo‘lgan odamning nutqidan ham uzun edi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "forgive",
+    "ipa": "/fəˈɡɪv/",
+    "meaning": "kechirmoq",
+    "example": "She forgave me for shrinking her jumper, but the teddy bear kept it.",
+    "translation": "U jemperini kichraytirib qo‘yganimni kechirdi, lekin jemper ayiqchada qoldi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "excuse me",
+    "ipa": "/ɪkˈskjuːz miː/",
+    "meaning": "kechirasiz; uzr",
+    "example": "Excuse me, I think you are wearing my coat and holding your own.",
+    "translation": "Kechirasiz, menimcha, mening paltomni kiyib, o‘zingiznikini ushlab turibsiz.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "make up",
+    "ipa": "/ˌmeɪk ˈʌp/",
+    "meaning": "yarashmoq",
+    "example": "We made up after discovering that neither of us had eaten the missing cake.",
+    "translation": "Yo‘qolgan tortni ikkalamiz ham yemaganimizni bilib yarashdik.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "compromise",
+    "ipa": "/ˈkɒmprəmaɪz/",
+    "meaning": "o‘zaro yon berib kelishmoq",
+    "example": "We compromised and watched half a film before going for a walk.",
+    "translation": "O‘zaro yon berib, sayrga chiqishdan oldin filmning yarmini ko‘rdik.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "value",
+    "ipa": "/ˈvæljuː/",
+    "meaning": "qadrlamoq",
+    "example": "I value your honesty, even when it concerns my terrible haircut.",
+    "translation": "Hatto yomon soch turmagim haqida bo‘lsa ham, rostgo‘yligingni qadrlayman.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "back up",
+    "ipa": "/ˌbæk ˈʌp/",
+    "meaning": "gapini qo‘llab-quvvatlamoq",
+    "example": "My sister backed me up when I said the dog had opened the cupboard.",
+    "translation": "Javonni it ochganini aytganimda singlim gapimni qo‘lladi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "motivate",
+    "ipa": "/ˈməʊtɪveɪt/",
+    "meaning": "ishtiyoq uyg‘otmoq; ruhlantirmoq",
+    "example": "Her praise motivated me to cook again, despite the first burnt pie.",
+    "translation": "Uning maqtovi birinchi pirog kuyganiga qaramay, yana pishirishga ruhlantirdi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "comfort",
+    "ipa": "/ˈkʌmfət/",
+    "meaning": "ovutmoq; tasalli bermoq",
+    "example": "I comforted my niece after her snowman lost its head.",
+    "translation": "Qor odamining boshi tushib ketgach, jiyanimni ovutdim.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "reassure",
+    "ipa": "/ˌriːəˈʃʊə/",
+    "meaning": "xotirjam qilmoq",
+    "example": "The dentist reassured me that the loud drill was next door.",
+    "translation": "Tish shifokori baland parma ovozi qo‘shni xonadan kelayotganini aytib meni xotirjam qildi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "sympathy",
+    "ipa": "/ˈsɪmpəθi/",
+    "meaning": "hamdardlik",
+    "example": "I had sympathy for him after the puppy ate his homework for real.",
+    "translation": "Kuchukcha uy vazifasini rostdan yegach, men unga hamdard bo‘ldim.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "understanding",
+    "ipa": "/ˌʌndəˈstændɪŋ/",
+    "meaning": "hamdardlik bilan tushunish",
+    "example": "She showed understanding when I arrived wearing two different shoes.",
+    "translation": "Ikki xil tuflida kelganimda u holatimni tushunib munosabat bildirdi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "kindness",
+    "ipa": "/ˈkaɪndnəs/",
+    "meaning": "mehribonlik",
+    "example": "Her kindness included pretending my first cake was delicious.",
+    "translation": "Uning mehribonligi birinchi tortimni mazali deb ko‘rsatishida ham namoyon bo‘ldi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "hug",
+    "ipa": "/hʌɡ/",
+    "meaning": "quchoqlamoq",
+    "example": "He hugged his brother carefully because they were both holding ice cream.",
+    "translation": "Ikkalasi ham muzqaymoq ushlab turgani uchun u ukasini ehtiyotkorlik bilan quchoqladi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "praise",
+    "ipa": "/preɪz/",
+    "meaning": "maqtamoq",
+    "example": "Mum praised my clean room before opening the cupboard.",
+    "translation": "Oyim javonni ochishidan oldin toza xonamni maqtadi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "compliment",
+    "ipa": "/ˈkɒmplɪmənt/",
+    "meaning": "iltifot; maqtov gapi",
+    "example": "Her compliment about my hat made me wear it all week.",
+    "translation": "Shlyapam haqidagi iltifoti sabab uni hafta bo‘yi kiyib yurdim.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "appreciate",
+    "ipa": "/əˈpriːʃieɪt/",
+    "meaning": "qadrlamoq",
+    "example": "I appreciate your help, especially the part where you brought biscuits.",
+    "translation": "Yordamingizni, ayniqsa pechenye olib kelganingizni qadrlayman.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "accept",
+    "ipa": "/əkˈsept/",
+    "meaning": "qabul qilmoq",
+    "example": "He accepted my apology and the slightly damaged replacement cake.",
+    "translation": "U uzrimni va o‘rniga olib kelgan sal shikastlangan tortni qabul qildi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "pull together",
+    "ipa": "/ˌpʊl təˈɡeðə/",
+    "meaning": "bir yoqadan bosh chiqarib harakat qilmoq",
+    "example": "We pulled together to clean the flat before Mum arrived.",
+    "translation": "Oyim kelmasidan uyni tozalash uchun bir yoqadan bosh chiqardik.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "defend",
+    "ipa": "/dɪˈfend/",
+    "meaning": "himoya qilmoq",
+    "example": "He defended his little sister when the older children laughed at her drawing.",
+    "translation": "Katta bolalar singlisining rasmiga kulganda u singlisini himoya qildi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "look after",
+    "ipa": "/lʊk ˈɑːftə/",
+    "meaning": "qaramoq; g‘amxo‘rlik qilmoq",
+    "example": "I looked after my nephew, who gave me a list of his rules.",
+    "translation": "Jiyanimga qaradim, u esa menga o‘z qoidalari ro‘yxatini berdi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "stand by",
+    "ipa": "/ˈstænd baɪ/",
+    "meaning": "qiyinchilikda yonida bo‘lmoq",
+    "example": "My friends stood by me after my terrible performance in the school play.",
+    "translation": "Maktab spektaklida yomon o‘ynaganimdan keyin do‘stlarim yonimda turishdi.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "let down",
+    "ipa": "/ˌlet ˈdaʊn/",
+    "meaning": "ishonchini oqlamaslik",
+    "example": "I let my sister down by forgetting her concert, so I apologised.",
+    "translation": "Konsertini unutib singlimning ishonchini oqlamadim, shuning uchun uzr so‘radim.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "cheer on",
+    "ipa": "/ˌtʃɪər ˈɒn/",
+    "meaning": "olqishlab ruhlantirmoq",
+    "example": "We cheered on our grandad as he finished his first fun run.",
+    "translation": "Bobomiz ilk havaskorlar yugurishini tugatayotganida uni olqishlab ruhlantirdik.",
+    "topic": "5-oy • Yarashish va qo‘llab-quvvatlash"
+  },
+  {
+    "word": "symptom",
+    "ipa": "/ˈsɪmptəm/",
+    "meaning": "kasallik alomati",
+    "example": "My only symptom was a cough, but Dad brought three blankets.",
+    "translation": "Yagona alomatim yo‘tal edi, ammo dadam uchta ko‘rpa olib keldi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "fever",
+    "ipa": "/ˈfiːvə/",
+    "meaning": "isitma",
+    "example": "His fever kept him in bed, where he became the family TV expert.",
+    "translation": "Isitmasi uni yotoqda ushlab turdi va u oilaning televizor mutaxassisiga aylandi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "cough",
+    "ipa": "/kɒf/",
+    "meaning": "yo‘tal",
+    "example": "My cough interrupted the film at all the quiet moments.",
+    "translation": "Yo‘talim filmning barcha sokin joylarini buzdi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "sneeze",
+    "ipa": "/sniːz/",
+    "meaning": "aksirmoq",
+    "example": "I sneezed just as the photographer said 'perfect'.",
+    "translation": "Suratkash «ajoyib» degan zahoti aksirdim.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "headache",
+    "ipa": "/ˈhedeɪk/",
+    "meaning": "bosh og‘rig‘i",
+    "example": "I had a headache, so my brother practised his trumpet somewhere else.",
+    "translation": "Boshim og‘rigani uchun ukam karnayni boshqa joyda mashq qildi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "stomachache",
+    "ipa": "/ˈstʌmək eɪk/",
+    "meaning": "qorin og‘rig‘i",
+    "example": "A stomachache made me regret the third piece of cake.",
+    "translation": "Qorin og‘rig‘i uchinchi bo‘lak tortni yeganimdan afsuslantirdi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "toothache",
+    "ipa": "/ˈtuːθeɪk/",
+    "meaning": "tish og‘rig‘i",
+    "example": "My toothache finally persuaded me to call the dentist.",
+    "translation": "Tish og‘rig‘im nihoyat meni tish shifokoriga qo‘ng‘iroq qilishga undadi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "backache",
+    "ipa": "/ˈbækeɪk/",
+    "meaning": "bel og‘rig‘i",
+    "example": "After moving the sofa, we shared both tea and backache.",
+    "translation": "Divanni ko‘chirgandan keyin choy ham, bel og‘rig‘i ham hammamizga nasib etdi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "sore",
+    "ipa": "/sɔː/",
+    "meaning": "achishib og‘riyotgan",
+    "example": "My throat is sore, so my terrible singing is cancelled today.",
+    "translation": "Tomog‘im achishib og‘riyapti, shuning uchun bugun yomon qo‘shiqlarim bekor.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "dizzy",
+    "ipa": "/ˈdɪzi/",
+    "meaning": "boshi aylanayotgan",
+    "example": "I felt dizzy after spinning round to show off my new coat.",
+    "translation": "Yangi paltomni ko‘z-ko‘z qilib aylangach, boshim aylandi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "sick",
+    "ipa": "/sɪk/",
+    "meaning": "ko‘ngli ayniyotgan",
+    "example": "The smell of the old milk made me feel sick.",
+    "translation": "Eski sutning hidi ko‘nglimni aynitdi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "pale",
+    "ipa": "/peɪl/",
+    "meaning": "rangi oqarib ketgan",
+    "example": "He looked pale, so we asked him to sit down.",
+    "translation": "Rangi oqarib ketgani uchun undan o‘tirishni so‘radik.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "swollen",
+    "ipa": "/ˈswəʊlən/",
+    "meaning": "shishgan",
+    "example": "My swollen ankle would not fit into my favourite shoe.",
+    "translation": "Shishgan to‘pig‘im sevimli tuflimga sig‘madi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "rash",
+    "ipa": "/ræʃ/",
+    "meaning": "toshma",
+    "example": "The rash on my arm made me stop trying that new soap.",
+    "translation": "Qo‘limdagi toshma yangi sovunni ishlatishni to‘xtatishimga sabab bo‘ldi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "itch",
+    "ipa": "/ɪtʃ/",
+    "meaning": "qichishmoq",
+    "example": "My nose always seems to itch when both hands are covered in flour.",
+    "translation": "Ikkala qo‘lim unga belanganida burnim doim qichishadigandek tuyuladi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "pain",
+    "ipa": "/peɪn/",
+    "meaning": "og‘riq",
+    "example": "The pain in my foot explained why I was walking like a penguin.",
+    "translation": "Oyog‘imdagi og‘riq nega pingvindek yurayotganimni tushuntirdi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "ache",
+    "ipa": "/eɪk/",
+    "meaning": "simillab og‘rimoq",
+    "example": "My shoulders ache after carrying all those picnic bags.",
+    "translation": "Barcha sayr sumkalarini ko‘targanimdan keyin yelkalarim simillab og‘riyapti.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "breathless",
+    "ipa": "/ˈbreθləs/",
+    "meaning": "nafasi qisilgan",
+    "example": "I was breathless after climbing the stairs with a giant teddy bear.",
+    "translation": "Ulkan ayiqchani ko‘tarib zinadan chiqqach, nafasim qisildi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "shiver",
+    "ipa": "/ˈʃɪvə/",
+    "meaning": "titramoq",
+    "example": "We shivered outside while Dad searched every pocket for the key.",
+    "translation": "Dadam kalitni barcha cho‘ntaklaridan qidirayotganda tashqarida titrab turdik.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "sweat",
+    "ipa": "/swet/",
+    "meaning": "terlamoq",
+    "example": "I sweat when I dance, even if the dance lasts one minute.",
+    "translation": "Raqs atigi bir daqiqa davom etsa ham terlayman.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "flu",
+    "ipa": "/fluː/",
+    "meaning": "gripp",
+    "example": "The flu ruined his weekend plans but improved his knowledge of daytime TV.",
+    "translation": "Gripp uning dam olish rejalarini buzdi, ammo kunduzgi ko‘rsatuvlar haqidagi bilimini oshirdi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "infection",
+    "ipa": "/ɪnˈfekʃn/",
+    "meaning": "infeksiya",
+    "example": "The doctor checked my ear for an infection while I tried to sit still.",
+    "translation": "Men qimirlamay o‘tirishga urinayotganimda shifokor qulog‘imni infeksiyaga tekshirdi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "allergy",
+    "ipa": "/ˈælədʒi/",
+    "meaning": "allergiya",
+    "example": "My allergy to cats makes visiting my aunt a very sneezy experience.",
+    "translation": "Mushuklarga allergiyam tufayli xolamnikida ko‘p aksiraman.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "exhausted",
+    "ipa": "/ɪɡˈzɔːstɪd/",
+    "meaning": "holdan toygan",
+    "example": "We were exhausted after entertaining five children and one energetic grandmother.",
+    "translation": "Beshta bola va bitta serg‘ayrat buvining ko‘nglini olgach, holdan toydik.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "unwell",
+    "ipa": "/ʌnˈwel/",
+    "meaning": "tobi yo‘q",
+    "example": "She felt unwell and left the party before the embarrassing games began.",
+    "translation": "Tobi yo‘qligi uchun u noqulay o‘yinlar boshlanishidan oldin bazmdan ketdi.",
+    "topic": "5-oy • Kasallik alomatlari"
+  },
+  {
+    "word": "injury",
+    "ipa": "/ˈɪndʒəri/",
+    "meaning": "jarohat",
+    "example": "His knee injury came from dancing, although he preferred to say sport.",
+    "translation": "U sportdan deb aytishni ma’qul ko‘rsa-da, tizzasidagi jarohat raqsdan edi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "bruise",
+    "ipa": "/bruːz/",
+    "meaning": "ko‘kargan joy",
+    "example": "This bruise is a souvenir from the coffee table.",
+    "translation": "Bu ko‘kargan joy jurnal stolchasidan esdalik.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "scratch",
+    "ipa": "/skrætʃ/",
+    "meaning": "tirnalgan joy",
+    "example": "The scratch on my arm came from a rose, not an angry tiger.",
+    "translation": "Qo‘limdagi tirnalgan joy g‘azabli yo‘lbarsdan emas, atirguldan edi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "blister",
+    "ipa": "/ˈblɪstə/",
+    "meaning": "qavariq; suvli pufakcha",
+    "example": "My new shoes gave me a blister and a reason to sit down.",
+    "translation": "Yangi tuflilarim oyog‘imni qavartirib, o‘tirish uchun sabab berdi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "wound",
+    "ipa": "/wuːnd/",
+    "meaning": "yara",
+    "example": "The nurse cleaned the wound while I stared bravely at the ceiling.",
+    "translation": "Hamshira yarani tozalayotganda shiftga jasurlarcha tikildim.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "sprain",
+    "ipa": "/spreɪn/",
+    "meaning": "payini cho‘zib olmoq",
+    "example": "He sprained his ankle while celebrating a goal he hadn't scored.",
+    "translation": "U o‘zi urmagan golni nishonlayotib to‘pig‘ining payini cho‘zib oldi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "fracture",
+    "ipa": "/ˈfræktʃə/",
+    "meaning": "suyak sinishi",
+    "example": "The X-ray showed a fracture, ending my plans to dance that evening.",
+    "translation": "Rentgen suyak singanini ko‘rsatib, o‘sha kechki raqs rejalarimni bekor qildi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "bleed",
+    "ipa": "/bliːd/",
+    "meaning": "qonamoq",
+    "example": "My finger started to bleed after an argument with a sharp envelope.",
+    "translation": "O‘tkir konvert bilan «tortishuvdan» keyin barmog‘im qonay boshladi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "hurt",
+    "ipa": "/hɜːt/",
+    "meaning": "og‘rimoq",
+    "example": "My feet hurt after I wore stylish shoes to a long wedding.",
+    "translation": "Uzoq davom etgan to‘yga zamonaviy tufli kiyganimdan keyin oyoqlarim og‘ridi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "slip",
+    "ipa": "/slɪp/",
+    "meaning": "sirpanmoq",
+    "example": "I slipped on a wet floor but managed to save my sandwich.",
+    "translation": "Ho‘l polda sirpandim, ammo sendvichimni saqlab qoldim.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "stumble",
+    "ipa": "/ˈstʌmbl/",
+    "meaning": "qoqilib ketmoq",
+    "example": "I stumbled over my own bag while warning everyone to be careful.",
+    "translation": "Hammaga ehtiyot bo‘lishni aytayotib o‘z sumkamga qoqildim.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "faint",
+    "ipa": "/feɪnt/",
+    "meaning": "hushidan ketmoq",
+    "example": "He nearly fainted at the sight of blood, even in a cartoon.",
+    "translation": "U hatto multfilmda qon ko‘rib ham hushidan ketay dedi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "conscious",
+    "ipa": "/ˈkɒnʃəs/",
+    "meaning": "hushi joyida",
+    "example": "After the fall, she was conscious and asking where her glasses were.",
+    "translation": "Yiqilganidan keyin uning hushi joyida edi va ko‘zoynagini so‘rayotgandi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "unconscious",
+    "ipa": "/ʌnˈkɒnʃəs/",
+    "meaning": "hushsiz",
+    "example": "The man was unconscious, so someone immediately called an ambulance.",
+    "translation": "Erkak hushsiz edi, shuning uchun kimdir darrov tez yordam chaqirdi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "stretcher",
+    "ipa": "/ˈstretʃə/",
+    "meaning": "zambil",
+    "example": "They carried the injured player on a stretcher while he waved to his mum.",
+    "translation": "Jarohatlangan o‘yinchini zambilda olib ketishayotganda u onasiga qo‘l silkitdi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "emergency",
+    "ipa": "/ɪˈmɜːdʒənsi/",
+    "meaning": "shoshilinch vaziyat",
+    "example": "In an emergency, clear information matters more than a long story.",
+    "translation": "Shoshilinch vaziyatda uzun hikoyadan ko‘ra aniq ma’lumot muhimroq.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "bandage",
+    "ipa": "/ˈbændɪdʒ/",
+    "meaning": "bint; bog‘lam",
+    "example": "The bandage on my hand made washing dishes difficult, which my brother doubted.",
+    "translation": "Qo‘limdagi bog‘lam idish yuvishni qiyinlashtirdi, akam esa bunga shubhalandi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "plaster",
+    "ipa": "/ˈplɑːstə/",
+    "meaning": "yopishqoq yara tasmasi",
+    "example": "My niece chose a plaster with dinosaurs for her tiny cut.",
+    "translation": "Jiyanim kichik kesigiga dinozavrli yopishqoq tasma tanladi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "scar",
+    "ipa": "/skɑː/",
+    "meaning": "chandiq",
+    "example": "This scar comes from a bicycle accident, not a battle with a shark.",
+    "translation": "Bu chandiq akula bilan jangdan emas, velosiped halokatidan qolgan.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "ankle",
+    "ipa": "/ˈæŋkl/",
+    "meaning": "to‘piq",
+    "example": "A mosquito chose my ankle from all the people at the picnic.",
+    "translation": "Chivin sayrdagi barcha odamlar ichidan mening to‘pig‘imni tanladi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "wrist",
+    "ipa": "/rɪst/",
+    "meaning": "bilak bo‘g‘imi",
+    "example": "The bracelet was too big for my wrist but perfect for the teddy bear.",
+    "translation": "Bilaguzuk bilagimga katta, ayiqchaga esa juda mos edi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "elbow",
+    "ipa": "/ˈelbəʊ/",
+    "meaning": "tirsak",
+    "example": "My elbow knocked over the salt during an enthusiastic story.",
+    "translation": "Hayajon bilan hikoya qilayotib tirsagim bilan tuzni ag‘dardim.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "chest",
+    "ipa": "/tʃest/",
+    "meaning": "ko‘krak qafasi",
+    "example": "The doctor listened to my chest with a very cold stethoscope.",
+    "translation": "Shifokor ko‘kragimni juda sovuq stetoskop bilan tingladi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "throat",
+    "ipa": "/θrəʊt/",
+    "meaning": "tomoq",
+    "example": "A dry throat made my welcome speech sound like a frog's greeting.",
+    "translation": "Quruq tomog‘im sabab tabrik nutqim qurbaqaning salomiga o‘xshadi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "skin",
+    "ipa": "/skɪn/",
+    "meaning": "teri",
+    "example": "My skin turned red where I had forgotten the sunscreen.",
+    "translation": "Quyoshdan himoya kremini surtishni unutgan joyimdagi teri qizardi.",
+    "topic": "5-oy • Jarohatlar va tana"
+  },
+  {
+    "word": "appointment",
+    "ipa": "/əˈpɔɪntmənt/",
+    "meaning": "qabulga belgilangan vaqt",
+    "example": "I arrived early for my appointment and read a magazine older than my nephew.",
+    "translation": "Qabulga erta kelib, jiyanimdan ham eski jurnalni o‘qidim.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "clinic",
+    "ipa": "/ˈklɪnɪk/",
+    "meaning": "klinika",
+    "example": "The clinic had comfortable chairs, but nobody wanted to stay longer.",
+    "translation": "Klinikada qulay stullar bor edi, ammo hech kim uzoqroq qolishni istamadi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "pharmacy",
+    "ipa": "/ˈfɑːməsi/",
+    "meaning": "dorixona",
+    "example": "At the pharmacy, I forgot the medicine's name but remembered its orange box.",
+    "translation": "Dorixonada dori nomini unutdim, ammo to‘q sariq qutisini esladim.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "pharmacist",
+    "ipa": "/ˈfɑːməsɪst/",
+    "meaning": "farmatsevt; dorixona xodimi",
+    "example": "The pharmacist patiently listened to my description of a mysterious blue box.",
+    "translation": "Farmatsevt sirli ko‘k quti haqidagi ta’rifimni sabr bilan tingladi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "medicine",
+    "ipa": "/ˈmedsn/",
+    "meaning": "dori",
+    "example": "The medicine tasted awful, so I made a face even before taking it.",
+    "translation": "Dorining ta’mi yomon edi, shuning uchun ichishdan oldinoq yuzimni burishtirdim.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "ointment",
+    "ipa": "/ˈɔɪntmənt/",
+    "meaning": "dorivor surtma",
+    "example": "The ointment came in a tiny tube with surprisingly long instructions.",
+    "translation": "Dorivor surtma ajablanarli uzun yo‘riqnomali kichik tubikda edi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "pill",
+    "ipa": "/pɪl/",
+    "meaning": "hapdori; tabletka",
+    "example": "She checked the label before taking the pill, unlike her impatient husband.",
+    "translation": "U sabrsiz eridan farqli ravishda hapdorini ichishdan oldin yorliqni tekshirdi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "prescription",
+    "ipa": "/prɪˈskrɪpʃn/",
+    "meaning": "dori retsepti",
+    "example": "I put the prescription in my pocket and checked it five times.",
+    "translation": "Retseptni cho‘ntagimga solib, besh marta tekshirdim.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "dose",
+    "ipa": "/dəʊs/",
+    "meaning": "dori miqdori; doza",
+    "example": "The label explained the dose more clearly than my uncle did.",
+    "translation": "Yorliqda dori miqdori amakimning tushuntirishidan aniqroq yozilgan edi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "treatment",
+    "ipa": "/ˈtriːtmənt/",
+    "meaning": "davolash; muolaja",
+    "example": "Her treatment finished before she finished the clinic's crossword.",
+    "translation": "U klinikadagi krossvordni tugatmasidan muolajasi tugadi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "cure",
+    "ipa": "/kjʊə/",
+    "meaning": "davolovchi vosita; davo",
+    "example": "He hoped for a quick cure so he could return to his dance class.",
+    "translation": "Raqs darsiga qaytish uchun u tez ta’sir qiladigan davodan umid qildi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "get better",
+    "ipa": "/ˌɡet ˈbetə/",
+    "meaning": "sog‘aymoq",
+    "example": "I hope you get better before your uncle offers to sing for you again.",
+    "translation": "Amakingiz yana kuylab berishni taklif qilishidan oldin sog‘ayishingizni tilayman.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "heal",
+    "ipa": "/hiːl/",
+    "meaning": "bitmoq; tuzalmoq",
+    "example": "The cut healed, but I still treated that envelope with respect.",
+    "translation": "Kesik bitdi, ammo men o‘sha konvertga hamon hurmat bilan qarardim.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "examine",
+    "ipa": "/ɪɡˈzæmɪn/",
+    "meaning": "tibbiy tekshirmoq",
+    "example": "The doctor examined my knee while I explained my ambitious dance move.",
+    "translation": "Men katta raqs harakatimni tushuntirayotganda shifokor tizzamni tekshirdi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "pulse",
+    "ipa": "/pʌls/",
+    "meaning": "tomir urishi",
+    "example": "The nurse checked my pulse while I tried not to talk about lunch.",
+    "translation": "Tushlik haqida gapirmaslikka urinayotganimda hamshira tomir urishimni tekshirdi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "injection",
+    "ipa": "/ɪnˈdʒekʃn/",
+    "meaning": "ukol",
+    "example": "The injection was over before I finished my brave speech.",
+    "translation": "Jasurlik haqidagi nutqimni tugatmasimdan ukol tugadi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "vaccination",
+    "ipa": "/ˌvæksɪˈneɪʃn/",
+    "meaning": "emlash",
+    "example": "After the vaccination, my nephew proudly showed everyone his little plaster.",
+    "translation": "Emlashdan keyin jiyanim kichik plastirini hammaga faxr bilan ko‘rsatdi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "operation",
+    "ipa": "/ˌɒpəˈreɪʃn/",
+    "meaning": "jarrohlik amaliyoti",
+    "example": "After the operation, he was more interested in lunch than in television.",
+    "translation": "Operatsiyadan keyin uni televizordan ko‘ra tushlik ko‘proq qiziqtirdi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "surgeon",
+    "ipa": "/ˈsɜːdʒən/",
+    "meaning": "jarroh",
+    "example": "The surgeon explained everything clearly, even to my worried uncle.",
+    "translation": "Jarroh hamma narsani, hatto xavotirdagi amakimga ham aniq tushuntirdi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "ward",
+    "ipa": "/wɔːd/",
+    "meaning": "kasalxona bo‘limi",
+    "example": "Everyone in the ward knew when my uncle received visitors.",
+    "translation": "Kasalxona bo‘limidagi hamma amakimga mehmon kelganini bilardi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "check-up",
+    "ipa": "/ˈtʃek ʌp/",
+    "meaning": "umumiy tibbiy ko‘rik",
+    "example": "My check-up took less time than finding a parking space.",
+    "translation": "Tibbiy ko‘rigim mashina qo‘yish joyini topishdan kamroq vaqt oldi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "X-ray",
+    "ipa": "/ˈeks reɪ/",
+    "meaning": "rentgen tasviri",
+    "example": "The X-ray showed my bones, but thankfully not my embarrassing dance moves.",
+    "translation": "Rentgen suyaklarimni ko‘rsatdi, xayriyatki, uyatli raqs harakatlarimni emas.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "medical",
+    "ipa": "/ˈmedɪkl/",
+    "meaning": "tibbiy",
+    "example": "She packed her medical records more carefully than her holiday clothes.",
+    "translation": "U tibbiy hujjatlarini ta’til kiyimlaridan ham ehtiyotkorroq joyladi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "health",
+    "ipa": "/helθ/",
+    "meaning": "sog‘liq",
+    "example": "My health matters more than winning our neighbourhood cake-eating contest.",
+    "translation": "Sog‘lig‘im mahallamizdagi tort yeyish musobaqasida g‘olib bo‘lishdan muhimroq.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "side effect",
+    "ipa": "/ˈsaɪd ɪfekt/",
+    "meaning": "nojo‘ya ta’sir",
+    "example": "Sleepiness was a possible side effect listed on the medicine box.",
+    "translation": "Uyquchanlik dori qutisida keltirilgan ehtimoliy nojo‘ya ta’sirlardan biri edi.",
+    "topic": "5-oy • Shifokor va davolanish"
+  },
+  {
+    "word": "healthy",
+    "ipa": "/ˈhelθi/",
+    "meaning": "sog‘lom; sog‘liqqa foydali",
+    "example": "A healthy breakfast does not become healthier when you photograph it.",
+    "translation": "Foydali nonushta uni suratga olganingiz bilan yanada foydaliroq bo‘lib qolmaydi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "fitness",
+    "ipa": "/ˈfɪtnəs/",
+    "meaning": "jismoniy chiniqqanlik",
+    "example": "My fitness improved when the lift stopped working.",
+    "translation": "Lift ishlamay qolgach, jismoniy chiniqqanligim yaxshilandi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "activity",
+    "ipa": "/ækˈtɪvəti/",
+    "meaning": "faollik; harakat",
+    "example": "More physical activity sounded easy until I met the stairs.",
+    "translation": "Zinapoyaga duch kelgunimcha ko‘proq jismoniy faollik oson tuyuldi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "loosen up",
+    "ipa": "/ˌluːsn ˈʌp/",
+    "meaning": "mushaklarni yozib olish",
+    "example": "We loosened up before dancing so our knees wouldn't complain.",
+    "translation": "Tizzalarimiz shikoyat qilmasin deb raqsdan oldin mushaklarimizni yozdik.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "unwind",
+    "ipa": "/ˌʌnˈwaɪnd/",
+    "meaning": "hordiq chiqarib bo‘shashmoq",
+    "example": "I unwind after work by watering plants and ignoring my phone.",
+    "translation": "Ishdan keyin gullarni sug‘orib va telefonimga qaramay hordiq chiqaraman.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "meditate",
+    "ipa": "/ˈmedɪteɪt/",
+    "meaning": "diqqatni jamlab sokin o‘tirmoq; meditatsiya qilmoq",
+    "example": "I tried to meditate, but the cat thought my lap was a new bed.",
+    "translation": "Meditatsiya qilishga urindim, ammo mushuk tizzamni yangi yotoq deb o‘yladi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "breathe",
+    "ipa": "/briːð/",
+    "meaning": "nafas olmoq",
+    "example": "After the race, I needed a moment to breathe before telling my heroic story.",
+    "translation": "Poygadan keyin qahramonlik hikoyamni aytishdan oldin nafas rostlashim kerak edi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "nap",
+    "ipa": "/næp/",
+    "meaning": "qisqa kunduzgi uyqu",
+    "example": "My ten-minute nap somehow lasted until dinner.",
+    "translation": "O‘n daqiqalik kunduzgi uyqum qandaydir qilib kechki ovqatgacha cho‘zildi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "snore",
+    "ipa": "/snɔː/",
+    "meaning": "xurrak otmoq",
+    "example": "Grandad snores so loudly that nobody hears the film.",
+    "translation": "Bobom shunchalik baland xurrak otadiki, hech kim filmni eshitmaydi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "yawn",
+    "ipa": "/jɔːn/",
+    "meaning": "esnamoq",
+    "example": "I yawned during my own story and decided to finish it quickly.",
+    "translation": "O‘z hikoyamni aytayotib esnadim va uni tezroq tugatishga qaror qildim.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "awake",
+    "ipa": "/əˈweɪk/",
+    "meaning": "uyg‘oq",
+    "example": "I was wide awake, but my brain had not arrived at work yet.",
+    "translation": "Men butunlay uyg‘oq edim, ammo miyam hali ishga yetib kelmagan edi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "asleep",
+    "ipa": "/əˈsliːp/",
+    "meaning": "uxlayotgan",
+    "example": "He was asleep before he finished complaining about the uncomfortable pillow.",
+    "translation": "Noqulay yostiqdan shikoyat qilib bo‘lmasidan u uxlab qoldi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "bedtime",
+    "ipa": "/ˈbedtaɪm/",
+    "meaning": "uxlash vaqti",
+    "example": "At bedtime, my nephew suddenly has seventeen important questions.",
+    "translation": "Uxlash paytida jiyanimning birdan o‘n yettita muhim savoli paydo bo‘ladi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "insomnia",
+    "ipa": "/ɪnˈsɒmniə/",
+    "meaning": "uyqusizlik",
+    "example": "During a week of insomnia, I became very familiar with the ceiling.",
+    "translation": "Bir haftalik uyqusizlik paytida shiftni juda yaxshi o‘rganib oldim.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "energy",
+    "ipa": "/ˈenədʒi/",
+    "meaning": "quvvat",
+    "example": "The children had enough energy to chase the adults after the picnic.",
+    "translation": "Sayrdan keyin bolalarda kattalarni quvishga ham yetarli quvvat bor edi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "appetite",
+    "ipa": "/ˈæpɪtaɪt/",
+    "meaning": "ishtaha",
+    "example": "The long walk gave me an appetite large enough to surprise Grandma.",
+    "translation": "Uzoq sayrdan keyin ishtaham buvimni ham hayratlantiradigan darajada ochildi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "diet",
+    "ipa": "/ˈdaɪət/",
+    "meaning": "ovqatlanish tartibi",
+    "example": "His diet includes vegetables, although he negotiates with every carrot.",
+    "translation": "Uning ovqatlanish tartibida sabzavotlar bor, garchi har bir sabzi bilan kelishishga urinsa ham.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "nutrition",
+    "ipa": "/njuːˈtrɪʃn/",
+    "meaning": "oziqlanish",
+    "example": "We discussed nutrition while carefully avoiding the subject of yesterday's cake.",
+    "translation": "Kecha yegan tort mavzusini ehtiyotkorlik bilan chetlab, oziqlanish haqida gaplashdik.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "vitamin",
+    "ipa": "/ˈvɪtəmɪn/",
+    "meaning": "vitamin",
+    "example": "She read about each vitamin instead of believing her uncle's loud advice.",
+    "translation": "U amakisining baland ovozdagi maslahatiga ishonish o‘rniga har bir vitamin haqida o‘qidi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "hygiene",
+    "ipa": "/ˈhaɪdʒiːn/",
+    "meaning": "gigiyena; ozodalik qoidalari",
+    "example": "The lesson on hygiene made the children inspect Dad's fingernails.",
+    "translation": "Gigiyena darsi bolalarni dadamning tirnoqlarini tekshirishga undadi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "habit",
+    "ipa": "/ˈhæbɪt/",
+    "meaning": "odat",
+    "example": "I have a habit of checking the fridge when I need a break.",
+    "translation": "Dam kerak bo‘lganda muzlatkichni tekshirish odatim bor.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "routine",
+    "ipa": "/ruːˈtiːn/",
+    "meaning": "kundalik tartib",
+    "example": "My morning routine begins with finding the alarm under my pillow.",
+    "translation": "Ertalabki tartibim yostiq ostidagi budilnikni topishdan boshlanadi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "cut down on",
+    "ipa": "/kʌt ˈdaʊn ɒn/",
+    "meaning": "iste’molini kamaytirmoq",
+    "example": "I'm trying to cut down on sugar, and my tea seems surprised.",
+    "translation": "Shakar iste’molini kamaytirishga harakat qilyapman, choyim esa hayronday.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "give up",
+    "ipa": "/ˌɡɪv ˈʌp/",
+    "meaning": "odatni tashlamoq",
+    "example": "He gave up smoking and started collecting unusual mugs instead.",
+    "translation": "U chekishni tashlab, o‘rniga g‘alati krujkalar yig‘a boshladi.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "work out",
+    "ipa": "/ˌwɜːk ˈaʊt/",
+    "meaning": "jismoniy mashq qilmoq",
+    "example": "We work out together, then argue about who deserves the biggest sandwich.",
+    "translation": "Birga mashq qilamiz, keyin eng katta sendvich kimga tegishini tortishamiz.",
+    "topic": "5-oy • Sog‘lom odatlar va dam"
+  },
+  {
+    "word": "dialogue",
+    "ipa": "/ˈdaɪəlɒɡ/",
+    "meaning": "ikki tomonlama suhbat; dialog",
+    "example": "An honest dialogue helped us settle the argument about our noisy flat.",
+    "translation": "Samimiy suhbat shovqinli uyimiz haqidagi bahsni hal qilishga yordam berdi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "debate",
+    "ipa": "/dɪˈbeɪt/",
+    "meaning": "qarama-qarshi fikrlar muhokamasi; bahs",
+    "example": "Our debate about house rules ended with everyone washing one dish.",
+    "translation": "Uy qoidalari haqidagi bahsimiz hamma bittadan idish yuvishi bilan tugadi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "confide",
+    "ipa": "/kənˈfaɪd/",
+    "meaning": "ishonib sir aytmoq",
+    "example": "I confided in my sister about my fear of giving a speech.",
+    "translation": "Nutq so‘zlash qo‘rquvimni singlimga ishonib aytdim.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "refer to",
+    "ipa": "/rɪˈfɜː tə/",
+    "meaning": "tilga olmoq; ishora qilmoq",
+    "example": "Please don't refer to my burnt cake during the wedding speech.",
+    "translation": "Iltimos, to‘ydagi nutqda kuygan tortimni tilga olmang.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "spell out",
+    "ipa": "/ˌspel ˈaʊt/",
+    "meaning": "batafsil va aniq tushuntirmoq",
+    "example": "Mum spelled out the rules before leaving us alone with the cake.",
+    "translation": "Oyim bizni tort bilan yolg‘iz qoldirishdan oldin qoidalarni aniq tushuntirdi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "sum up",
+    "ipa": "/ˌsʌm ˈʌp/",
+    "meaning": "qisqacha xulosa qilmoq",
+    "example": "To sum up our picnic: lovely people, wet sandwiches.",
+    "translation": "Sayrimizni qisqacha aytsam: ajoyib odamlar, ho‘l sendvichlar.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "acknowledge",
+    "ipa": "/əkˈnɒlɪdʒ/",
+    "meaning": "tan olmoq; qabul qilganini bildirmoq",
+    "example": "He acknowledged my warning with a nod, then touched the wet paint.",
+    "translation": "U bosh irg‘ab ogohlantirishimni eshitganini bildirdi, keyin ho‘l bo‘yoqqa tegdi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "react",
+    "ipa": "/riˈækt/",
+    "meaning": "munosabat bildirmoq",
+    "example": "How did your mother react when she saw your purple hair?",
+    "translation": "Binafsha sochingizni ko‘rganda onangiz qanday munosabat bildirdi?",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "declare",
+    "ipa": "/dɪˈkleə/",
+    "meaning": "qat’iy yoki ochiq aytmoq",
+    "example": "He declared that he could cook, then asked where we kept the eggs.",
+    "translation": "U ovqat pishira olishini qat’iy aytib, keyin tuxum qayerdaligini so‘radi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "inform",
+    "ipa": "/ɪnˈfɔːm/",
+    "meaning": "xabardor qilmoq",
+    "example": "Please inform your guests that the parrot repeats everything.",
+    "translation": "Mehmonlaringizni to‘tiqush hamma gapni takrorlashidan xabardor qiling.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "remind",
+    "ipa": "/rɪˈmaɪnd/",
+    "meaning": "eslatmoq",
+    "example": "Remind me to buy milk before I pour water on my cereal again.",
+    "translation": "Yana yormamga suv quyishimdan oldin sut olishni eslat.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "clarify",
+    "ipa": "/ˈklærɪfaɪ/",
+    "meaning": "aniqlik kiritmoq",
+    "example": "Could you clarify whether 'early' means before lunch or before sunrise?",
+    "translation": "«Erta» deganingiz tushlikdan oldinmi yoki quyosh chiqishidan oldinmi, aniqlashtirasizmi?",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "pronounce",
+    "ipa": "/prəˈnaʊns/",
+    "meaning": "talaffuz qilmoq",
+    "example": "I can pronounce her surname now, but only after a deep breath.",
+    "translation": "Endi uning familiyasini talaffuz qila olaman, ammo avval chuqur nafas olishim kerak.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "whisper",
+    "ipa": "/ˈwɪspə/",
+    "meaning": "pichirlamoq",
+    "example": "He whispered the secret so loudly that the next table listened.",
+    "translation": "U sirni shunchalik baland pichirladiki, qo‘shni stol ham eshitdi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "mutter",
+    "ipa": "/ˈmʌtə/",
+    "meaning": "g‘udranmoq",
+    "example": "Dad muttered about the instructions while holding them upside down.",
+    "translation": "Dadam yo‘riqnomani teskari ushlab, undan g‘udrandi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "remark",
+    "ipa": "/rɪˈmɑːk/",
+    "meaning": "qisqa fikr; izoh",
+    "example": "Her remark about my giant hat started a very cheerful conversation.",
+    "translation": "Uning ulkan shlyapam haqidagi izohi juda quvnoq suhbatni boshlab berdi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "comment",
+    "ipa": "/ˈkɒment/",
+    "meaning": "fikr bildirmoq",
+    "example": "Nobody commented on the cake's unusual shape until it fell over.",
+    "translation": "Tort yiqilib tushmaguncha hech kim uning noodatiy shakli haqida fikr bildirmadi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "point out",
+    "ipa": "/ˌpɔɪnt ˈaʊt/",
+    "meaning": "e’tiborini qaratmoq; ko‘rsatib aytmoq",
+    "example": "She pointed out that I was searching for glasses already on my head.",
+    "translation": "U boshimda turgan ko‘zoynakni qidirayotganimni aytib qo‘ydi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "bring up",
+    "ipa": "/ˌbrɪŋ ˈʌp/",
+    "meaning": "mavzuni ko‘tarmoq",
+    "example": "Don't bring up my driving test while Uncle is drinking tea.",
+    "translation": "Amakim choy ichayotganda haydovchilik imtihonim mavzusini ko‘tarma.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "speak up",
+    "ipa": "/ˌspiːk ˈʌp/",
+    "meaning": "balandroq gapirmoq",
+    "example": "Please speak up; the blender is winning this conversation.",
+    "translation": "Iltimos, balandroq gapiring; bu suhbatda blender yutyapti.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "get across",
+    "ipa": "/ˌɡet əˈkrɒs/",
+    "meaning": "fikrini tushuntira olmoq",
+    "example": "I finally got my point across by drawing the broken chair.",
+    "translation": "Singan stulning rasmini chizib, nihoyat fikrimni tushuntira oldim.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "saying",
+    "ipa": "/ˈseɪɪŋ/",
+    "meaning": "maqol; hikmatli ibora",
+    "example": "Grandma has a saying for every problem, including broken kettles.",
+    "translation": "Buvimda har bir muammoga, hatto singan choynakka ham maqol bor.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "meaning",
+    "ipa": "/ˈmiːnɪŋ/",
+    "meaning": "ma’no",
+    "example": "I understood the meaning of his smile when I saw the hidden cake.",
+    "translation": "Yashirilgan tortni ko‘rib, uning tabassumi ma’nosini tushundim.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "enquiry",
+    "ipa": "/ɪnˈkwaɪəri/",
+    "meaning": "ma’lumot so‘rash; so‘rov",
+    "example": "My polite enquiry about dinner received a very long answer.",
+    "translation": "Kechki ovqat haqidagi odobli so‘rovimga juda uzun javob berildi.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "small talk",
+    "ipa": "/ˈsmɔːl tɔːk/",
+    "meaning": "yengil kundalik suhbat",
+    "example": "I made small talk about the weather while trying to remember her name.",
+    "translation": "Uning ismini eslashga urinib, ob-havo haqida yengil suhbat qurdim.",
+    "topic": "5-oy • Suhbat olib borish"
+  },
+  {
+    "word": "voice",
+    "ipa": "/vɔɪs/",
+    "meaning": "ovoz",
+    "example": "I recognised his voice before I saw his enormous new moustache.",
+    "translation": "Ulkan yangi mo‘ylovini ko‘rmasimdan uning ovozini tanidim.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "tone",
+    "ipa": "/təʊn/",
+    "meaning": "ohang",
+    "example": "Her calm tone made even the bad news easier to hear.",
+    "translation": "Uning bosiq ohangi hatto yomon xabarni ham eshitishni osonlashtirdi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "hesitation",
+    "ipa": "/ˌhezɪˈteɪʃn/",
+    "meaning": "ikkilanish; gapda to‘xtalish",
+    "example": "His hesitation before answering made us suspect he had eaten the cake.",
+    "translation": "Javob berishdan oldingi ikkilanishi tortni u yegan deb gumon qilishimizga sabab bo‘ldi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "gesture",
+    "ipa": "/ˈdʒestʃə/",
+    "meaning": "imo-ishora",
+    "example": "One gesture from Grandma stopped the whole table from talking.",
+    "translation": "Buvimning bitta ishorasi butun dasturxon atrofidagilarni jim qildi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "expression",
+    "ipa": "/ɪkˈspreʃn/",
+    "meaning": "yuz ifodasi",
+    "example": "His expression changed when he discovered the cake was made of soap.",
+    "translation": "Tort sovundan yasalganini bilgach, uning yuz ifodasi o‘zgardi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "smile",
+    "ipa": "/smaɪl/",
+    "meaning": "tabassum qilmoq",
+    "example": "She smiled when she noticed my shoes were on the wrong feet.",
+    "translation": "Tuflilarimni teskari kiyganimni ko‘rib u tabassum qildi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "laugh",
+    "ipa": "/lɑːf/",
+    "meaning": "kulmoq",
+    "example": "We laughed so much that the dog came to investigate.",
+    "translation": "Shunchalik ko‘p kuldikki, it tekshirish uchun keldi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "giggle",
+    "ipa": "/ˈɡɪɡl/",
+    "meaning": "qiqirlab kulmoq",
+    "example": "The children giggled when the teacher's chair squeaked.",
+    "translation": "O‘qituvchining stuli g‘ijirlaganda bolalar qiqirlab kulishdi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "frown",
+    "ipa": "/fraʊn/",
+    "meaning": "qoshini chimirmoq",
+    "example": "She frowned at the instructions as if they had insulted her.",
+    "translation": "U yo‘riqnomaga go‘yo uni haqorat qilgandek qoshini chimirib qaradi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "nod",
+    "ipa": "/nɒd/",
+    "meaning": "bosh irg‘amoq",
+    "example": "I nodded to show agreement, not to order another bowl of soup.",
+    "translation": "Yana sho‘rva buyurtirish uchun emas, rozilik bildirish uchun bosh irg‘adim.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "shrug",
+    "ipa": "/ʃrʌɡ/",
+    "meaning": "yelka qisib qo‘ymoq",
+    "example": "He shrugged when asked where the missing socks went.",
+    "translation": "Yo‘qolgan paypoqlar qayerga ketganini so‘rashganda u yelka qisdi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "beckon",
+    "ipa": "/ˈbekən/",
+    "meaning": "imo bilan chaqirmoq",
+    "example": "She beckoned me over, and I hoped it wasn't my turn to sing.",
+    "translation": "U meni imo bilan chaqirdi, men esa kuylash navbatim bo‘lmasin deb umid qildim.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "stare",
+    "ipa": "/steə/",
+    "meaning": "tikilib qaramoq",
+    "example": "Everyone stared at the man carrying a full-sized plastic horse.",
+    "translation": "Hamma haqiqiy ot kattaligidagi plastik otni ko‘targan odamga tikildi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "glance",
+    "ipa": "/ɡlɑːns/",
+    "meaning": "bir qarab qo‘ymoq",
+    "example": "She glanced at the clock when his story reached its third beginning.",
+    "translation": "Hikoyasi uchinchi marta boshlanganda u soatga bir qarab qo‘ydi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "eye contact",
+    "ipa": "/ˈaɪ kɒntækt/",
+    "meaning": "ko‘zga qarab aloqa qilish",
+    "example": "He avoided eye contact when Mum asked who had eaten the strawberries.",
+    "translation": "Oyim qulupnaylarni kim yeganini so‘raganda u ko‘zga qarashdan qochdi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "body language",
+    "ipa": "/ˈbɒdi læŋɡwɪdʒ/",
+    "meaning": "tana tili; tana orqali ifoda",
+    "example": "Her body language said she wanted to leave before her words did.",
+    "translation": "Gapirishidan oldinoq tana harakatlari uning ketmoqchi ekanini ko‘rsatdi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "silence",
+    "ipa": "/ˈsaɪləns/",
+    "meaning": "sukunat",
+    "example": "An awkward silence followed my joke about the wrong person.",
+    "translation": "Boshqa odam haqida hazil qilib yuborganimdan keyin noqulay sukunat cho‘kdi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "pause",
+    "ipa": "/pɔːz/",
+    "meaning": "qisqa to‘xtalish; pauza",
+    "example": "There was a long pause while he tried to remember his own postcode.",
+    "translation": "O‘z pochta indeksini eslashga urinayotganda uzoq pauza bo‘ldi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "sigh",
+    "ipa": "/saɪ/",
+    "meaning": "xo‘rsinmoq",
+    "example": "Dad sighed when the instructions mentioned forty-seven screws.",
+    "translation": "Yo‘riqnomada qirq yettita vint tilga olinganda dadam xo‘rsindi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "loud",
+    "ipa": "/laʊd/",
+    "meaning": "baland ovozli",
+    "example": "His loud laugh frightened a pigeon off the windowsill.",
+    "translation": "Uning baland kulgisi deraza tokchasidagi kaptarni cho‘chitib yubordi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "clear",
+    "ipa": "/klɪə/",
+    "meaning": "aniq; tushunarli",
+    "example": "Her instructions were clear, but my left and right still got confused.",
+    "translation": "Uning ko‘rsatmalari aniq edi, ammo men baribir chap bilan o‘ngni adashtirdim.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "awkward",
+    "ipa": "/ˈɔːkwəd/",
+    "meaning": "noqulay; o‘ng‘aysiz",
+    "example": "It was awkward when I forgot the name of the person I was introducing.",
+    "translation": "Tanishtirayotgan odamimning ismini unutganim noqulay bo‘ldi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "formal",
+    "ipa": "/ˈfɔːml/",
+    "meaning": "rasmiy",
+    "example": "His formal greeting sounded strange at a picnic in our garden.",
+    "translation": "Bog‘imizdagi sayrda uning rasmiy salomi g‘alati eshitildi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "informal",
+    "ipa": "/ɪnˈfɔːml/",
+    "meaning": "norasmiy; erkin",
+    "example": "The meeting was informal, so even the chairperson wore slippers.",
+    "translation": "Uchrashuv norasmiy edi, shuning uchun rais ham shippak kiygan edi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "sarcastic",
+    "ipa": "/sɑːˈkæstɪk/",
+    "meaning": "kinoyali",
+    "example": "Her sarcastic 'lovely weather' came as rain filled her shoe.",
+    "translation": "Tuflisi yomg‘irga to‘layotganida u kinoya bilan «ajoyib ob-havo» dedi.",
+    "topic": "5-oy • Ovoz va imo-ishoralar"
+  },
+  {
+    "word": "preference",
+    "ipa": "/ˈprefrəns/",
+    "meaning": "afzal ko‘rish; did",
+    "example": "My preference for quiet evenings surprised nobody who had heard my neighbours.",
+    "translation": "Sokin oqshomlarni afzal ko‘rishim qo‘shnilarimni eshitgan hech kimni ajablantirmadi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "advice",
+    "ipa": "/ədˈvaɪs/",
+    "meaning": "maslahat",
+    "example": "Her best advice was to read the recipe before inviting twenty guests.",
+    "translation": "Uning eng yaxshi maslahati yigirmata mehmon chaqirishdan oldin retseptni o‘qish edi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "proposal",
+    "ipa": "/prəˈpəʊzl/",
+    "meaning": "taklif",
+    "example": "My proposal to skip the speeches and serve dinner was extremely popular.",
+    "translation": "Nutqlarni o‘tkazib yuborib, ovqat tortish taklifim hammaga juda yoqdi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "request",
+    "ipa": "/rɪˈkwest/",
+    "meaning": "iltimos; so‘rov",
+    "example": "His request for silence was interrupted by his own phone.",
+    "translation": "Uning jimlik haqidagi iltimosini o‘z telefoni bo‘ldi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "favour",
+    "ipa": "/ˈfeɪvə/",
+    "meaning": "iltifotli yordam; yaxshilik",
+    "example": "Could you do me a favour and distract Mum from the broken vase?",
+    "translation": "Menga bir yaxshilik qilib, oyimni singan vazadan chalg‘ita olasanmi?",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "consent",
+    "ipa": "/kənˈsent/",
+    "meaning": "rozilik",
+    "example": "I asked for her consent before sharing the funny photograph.",
+    "translation": "Kulgili suratni ulashishdan oldin uning roziligini so‘radim.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "allow",
+    "ipa": "/əˈlaʊ/",
+    "meaning": "ruxsat bermoq",
+    "example": "They allow dogs in the café, but not on the piano.",
+    "translation": "Kafeda itlarga ruxsat berishadi, ammo pianino ustida emas.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "refuse",
+    "ipa": "/rɪˈfjuːz/",
+    "meaning": "rad etmoq",
+    "example": "He refused to sing until someone promised to close the windows.",
+    "translation": "Kimdir derazalarni yopishga va’da bermaguncha u kuylashdan bosh tortdi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "offer",
+    "ipa": "/ˈɒfə/",
+    "meaning": "taklif etmoq",
+    "example": "She offered to cut my hair, and I suddenly remembered an appointment.",
+    "translation": "U sochimni qirqishni taklif qildi va birdan uchrashuvim borligi esimga tushdi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "suggest",
+    "ipa": "/səˈdʒest/",
+    "meaning": "taklif qilmoq; tavsiya bermoq",
+    "example": "I suggest we test the tent before the rain does.",
+    "translation": "Chodirni yomg‘irdan oldin o‘zimiz sinab ko‘rishni taklif qilaman.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "recommend",
+    "ipa": "/ˌrekəˈmend/",
+    "meaning": "tavsiya qilmoq",
+    "example": "My dentist didn't recommend the enormous bag of sweets.",
+    "translation": "Tish shifokorim ulkan konfet paketini tavsiya qilmadi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "advise",
+    "ipa": "/ədˈvaɪz/",
+    "meaning": "maslahat bermoq",
+    "example": "She advised me to check my pockets before blaming the washing machine.",
+    "translation": "U kir yuvish mashinasini ayblashdan oldin cho‘ntaklarimni tekshirishni maslahat berdi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "persuade",
+    "ipa": "/pəˈsweɪd/",
+    "meaning": "ko‘ndirmoq",
+    "example": "We persuaded Grandad to join the dance, then couldn't make him stop.",
+    "translation": "Bobomni raqsga qo‘shilishga ko‘ndirdik, keyin esa to‘xtata olmadik.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "convince",
+    "ipa": "/kənˈvɪns/",
+    "meaning": "ishontirmoq",
+    "example": "I couldn't convince my niece that the moon wasn't following our car.",
+    "translation": "Jiyanimni oy mashinamizga ergashmayotganiga ishontira olmadim.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "agree",
+    "ipa": "/əˈɡriː/",
+    "meaning": "rozi bo‘lmoq; qo‘shilmoq",
+    "example": "We finally agreed that nobody wanted to cook.",
+    "translation": "Nihoyat hech kim ovqat pishirishni istamayotganiga kelishdik.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "approve",
+    "ipa": "/əˈpruːv/",
+    "meaning": "ma’qullamoq",
+    "example": "Grandma approved of my new haircut after adjusting it herself.",
+    "translation": "Buvim yangi soch turmagimni o‘zi tuzatgach ma’qulladi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "object",
+    "ipa": "/əbˈdʒekt/",
+    "meaning": "e’tiroz bildirmoq",
+    "example": "Nobody objected when we replaced the long speech with lunch.",
+    "translation": "Uzun nutqni tushlikka almashtirganimizda hech kim e’tiroz bildirmadi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "insist",
+    "ipa": "/ɪnˈsɪst/",
+    "meaning": "qat’iy turib olmoq",
+    "example": "He insisted on carrying everything, then asked us to carry him.",
+    "translation": "U hamma narsani o‘zi ko‘tarishga qat’iy turib oldi, keyin o‘zini ko‘tarishimizni so‘radi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "prefer",
+    "ipa": "/prɪˈfɜː/",
+    "meaning": "afzal ko‘rmoq",
+    "example": "I prefer honest advice to compliments about my burnt cake.",
+    "translation": "Kuygan tortim haqidagi maqtovdan ko‘ra samimiy maslahatni afzal ko‘raman.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "view",
+    "ipa": "/vjuː/",
+    "meaning": "nuqtayi nazar",
+    "example": "Her view changed after she tried camping in the rain.",
+    "translation": "Yomg‘irda chodirda tunab ko‘rgach, uning nuqtayi nazari o‘zgardi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "reason",
+    "ipa": "/ˈriːzn/",
+    "meaning": "sabab",
+    "example": "His reason for being late involved a duck and sounded surprisingly believable.",
+    "translation": "Kechikishining sababi o‘rdak bilan bog‘liq edi va ajablanarli darajada ishonarli eshitildi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "explanation",
+    "ipa": "/ˌekspləˈneɪʃn/",
+    "meaning": "izoh; tushuntirish",
+    "example": "Your explanation needs to include why the cat is wearing my tie.",
+    "translation": "Izohingda mushuk nega mening galstugimni taqqanini ham aytishing kerak.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "reasonable",
+    "ipa": "/ˈriːznəbl/",
+    "meaning": "oqilona; asosli",
+    "example": "Asking for one quiet evening seemed reasonable to everyone except the drummer.",
+    "translation": "Bir oqshom jimlik so‘rash barabanchidan boshqa hammaga asosli tuyuldi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "unfair",
+    "ipa": "/ˌʌnˈfeə/",
+    "meaning": "adolatsiz",
+    "example": "It seemed unfair that the person who cooked also had to wash up.",
+    "translation": "Ovqat pishirgan odam idishlarni ham yuvishi adolatsiz tuyuldi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "honestly",
+    "ipa": "/ˈɒnɪstli/",
+    "meaning": "rostini aytganda; halol ravishda",
+    "example": "Honestly, I liked the box more than the present.",
+    "translation": "Rostini aytsam, sovg‘adan ko‘ra qutisi ko‘proq yoqdi.",
+    "topic": "5-oy • Fikrlar va iltimoslar"
+  },
+  {
+    "word": "dilemma",
+    "ipa": "/daɪˈlemə/",
+    "meaning": "ikki qiyin tanlov orasidagi holat",
+    "example": "My dilemma was whether to admit I broke the vase or let Dad blame the cat.",
+    "translation": "Vazani sindirganimni tan olish yoki dadamning mushukni ayblashiga yo‘l qo‘yish orasida qoldim.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "decide",
+    "ipa": "/dɪˈsaɪd/",
+    "meaning": "qaror qilmoq",
+    "example": "We decided to stay home after packing for three hours.",
+    "translation": "Uch soat yuk yig‘gach, uyda qolishga qaror qildik.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "choice",
+    "ipa": "/tʃɔɪs/",
+    "meaning": "tanlov",
+    "example": "Choosing the quiet table was a good choice until the band arrived.",
+    "translation": "Orkestr kelguncha sokin stolni tanlash yaxshi tanlov edi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "option",
+    "ipa": "/ˈɒpʃn/",
+    "meaning": "variant; imkoniyat",
+    "example": "Our last option was to ask Grandma, who already knew the answer.",
+    "translation": "Oxirgi variant javobni allaqachon biladigan buvimdan so‘rash edi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "alternative",
+    "ipa": "/ɔːlˈtɜːnətɪv/",
+    "meaning": "muqobil yo‘l yoki variant",
+    "example": "A picnic indoors was a dry alternative to our original plan.",
+    "translation": "Uy ichidagi sayr dastlabki rejamizga quruq muqobil bo‘ldi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "consider",
+    "ipa": "/kənˈsɪdə/",
+    "meaning": "o‘ylab ko‘rmoq",
+    "example": "Consider the neighbours before buying your child a drum.",
+    "translation": "Farzandingizga baraban olishdan oldin qo‘shnilarni o‘ylab ko‘ring.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "evaluate",
+    "ipa": "/ɪˈvæljueɪt/",
+    "meaning": "baholab ko‘rmoq",
+    "example": "We evaluated the options before trusting Uncle with the birthday cake.",
+    "translation": "Tug‘ilgan kun tortini amakimga ishonishdan oldin variantlarni baholadik.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "weigh up",
+    "ipa": "/ˌweɪ ˈʌp/",
+    "meaning": "yaxshi-yomon tomonlarini o‘lchab ko‘rmoq",
+    "example": "We weighed up the options before letting Dad choose the film.",
+    "translation": "Dadamga film tanlashga ruxsat berishdan oldin variantlarni o‘lchab ko‘rdik.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "hesitate",
+    "ipa": "/ˈhezɪteɪt/",
+    "meaning": "ikkilanmoq",
+    "example": "I hesitated before accepting a second helping of his experimental soup.",
+    "translation": "Uning tajriba uchun pishirgan sho‘rvasidan yana olishdan oldin ikkilandim.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "uncertain",
+    "ipa": "/ʌnˈsɜːtn/",
+    "meaning": "ishonchi komil bo‘lmagan",
+    "example": "She was uncertain whether to trust a hairdresser with orange eyebrows.",
+    "translation": "U to‘q sariq qoshli sartaroshga ishonishga ikkilanardi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "certain",
+    "ipa": "/ˈsɜːtn/",
+    "meaning": "ishonchi komil",
+    "example": "I was certain I had locked the door, but I checked it anyway.",
+    "translation": "Eshikni qulflaganimga ishonchim komil edi, ammo baribir tekshirdim.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "likely",
+    "ipa": "/ˈlaɪkli/",
+    "meaning": "ehtimoli katta",
+    "example": "He's likely to agree if you mention that lunch is included.",
+    "translation": "Tushlik ham borligini aytsangiz, uning rozi bo‘lish ehtimoli katta.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "unlikely",
+    "ipa": "/ʌnˈlaɪkli/",
+    "meaning": "ehtimoli kam",
+    "example": "It's unlikely that my brother will volunteer to wash the windows.",
+    "translation": "Akam derazalarni yuvishga ko‘ngilli bo‘lishi ehtimoli kam.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "possible",
+    "ipa": "/ˈpɒsəbl/",
+    "meaning": "mumkin; imkoni bor",
+    "example": "Is it possible to leave this party without taking more cake?",
+    "translation": "Yana tort olmasdan bu bazmdan ketish mumkinmi?",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "impossible",
+    "ipa": "/ɪmˈpɒsəbl/",
+    "meaning": "imkonsiz",
+    "example": "Keeping the surprise secret from my nosy aunt was impossible.",
+    "translation": "Syurprizni hamma narsaga qiziqadigan xolamdan sir tutish imkonsiz edi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "suitable",
+    "ipa": "/ˈsuːtəbl/",
+    "meaning": "mos; munosib",
+    "example": "These shoes are suitable for a photo, but probably not a walk.",
+    "translation": "Bu tuflilar suratga mos, lekin sayrga unchalik emasdir.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "necessary",
+    "ipa": "/ˈnesəsəri/",
+    "meaning": "zarur",
+    "example": "Was it necessary to invite the entire football team to breakfast?",
+    "translation": "Butun futbol jamoasini nonushtaga taklif qilish zarurmidi?",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "urgency",
+    "ipa": "/ˈɜːdʒənsi/",
+    "meaning": "shoshilinchlik",
+    "example": "The urgency in his voice made us realise that the bath was overflowing.",
+    "translation": "Ovozidagi shoshilinchlik vannadan suv toshayotganini anglatdi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "consequence",
+    "ipa": "/ˈkɒnsɪkwəns/",
+    "meaning": "oqibat",
+    "example": "A sticky kitchen was the consequence of leaving my nephew with the jam.",
+    "translation": "Jiyanimni murabbo bilan yolg‘iz qoldirish oqibatida oshxona yopishqoq bo‘lib qoldi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "risk",
+    "ipa": "/rɪsk/",
+    "meaning": "tavakkal; xavf",
+    "example": "Letting Dad choose my clothes was a risk I would not take again.",
+    "translation": "Kiyimlarimni dadamga tanlatish boshqa qilmaydigan tavakkalim edi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "benefit",
+    "ipa": "/ˈbenɪfɪt/",
+    "meaning": "foyda; afzallik",
+    "example": "One benefit of living alone is never arguing about the last biscuit.",
+    "translation": "Yolg‘iz yashashning bir afzalligi oxirgi pechenye ustida hech tortishmaslikdir.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "drawback",
+    "ipa": "/ˈdrɔːbæk/",
+    "meaning": "kamchilik",
+    "example": "The only drawback of the quiet room was its very loud clock.",
+    "translation": "Sokin xonaning yagona kamchiligi juda baland chiqillaydigan soati edi.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "intend",
+    "ipa": "/ɪnˈtend/",
+    "meaning": "niyat qilmoq",
+    "example": "I intend to apologise before she discovers the second broken cup.",
+    "translation": "U ikkinchi singan piyolani topmasidan uzr so‘rash niyatidaman.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "make up your mind",
+    "ipa": "/meɪk ʌp jɔː ˈmaɪnd/",
+    "meaning": "bir qarorga kelmoq",
+    "example": "Please make up your mind before the ice cream melts.",
+    "translation": "Muzqaymoq erimasidan bir qarorga kel, iltimos.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "change your mind",
+    "ipa": "/tʃeɪndʒ jɔː ˈmaɪnd/",
+    "meaning": "fikridan qaytmoq",
+    "example": "You can change your mind about the haircut before I make the first cut.",
+    "translation": "Qaychini birinchi marta ishlatishimdan oldin soch turmagi haqidagi fikringdan qaytishing mumkin.",
+    "topic": "5-oy • Qaror va tanlov"
+  },
+  {
+    "word": "problem",
+    "ipa": "/ˈprɒbləm/",
+    "meaning": "muammo",
+    "example": "The problem wasn't the missing key; it was the cat sitting on it.",
+    "translation": "Muammo kalit yo‘qolganida emas, mushuk uning ustida o‘tirganida edi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "trouble",
+    "ipa": "/ˈtrʌbl/",
+    "meaning": "qiyinchilik; tashvish",
+    "example": "We had trouble opening the jar until Grandma arrived.",
+    "translation": "Buvim kelguncha bankani ochishga qiynaldik.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "difficulty",
+    "ipa": "/ˈdɪfɪkəlti/",
+    "meaning": "qiyinchilik",
+    "example": "My main difficulty was carrying an umbrella and three birthday cakes.",
+    "translation": "Asosiy qiyinchiligim soyabon va uchta tug‘ilgan kun tortini ko‘tarish edi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "hassle",
+    "ipa": "/ˈhæsl/",
+    "meaning": "ovora qiladigan ish; tashvish",
+    "example": "Finding matching socks is too much hassle before breakfast.",
+    "translation": "Nonushtadan oldin bir xil paypoq topish ortiqcha ovora bo‘lishdir.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "inconvenience",
+    "ipa": "/ˌɪnkənˈviːniəns/",
+    "meaning": "noqulaylik",
+    "example": "The broken lift was an inconvenience, especially for the man delivering our sofa.",
+    "translation": "Buzuq lift, ayniqsa divanimizni yetkazayotgan odamga, noqulaylik tug‘dirdi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "accident",
+    "ipa": "/ˈæksɪdənt/",
+    "meaning": "baxtsiz hodisa; tasodifiy ko‘ngilsizlik",
+    "example": "The accident with the paint left my brother with a green shoe.",
+    "translation": "Bo‘yoq bilan bo‘lgan tasodifiy ko‘ngilsizlikdan akamning tuflisi yashil bo‘lib qoldi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "damage",
+    "ipa": "/ˈdæmɪdʒ/",
+    "meaning": "shikast; zarar",
+    "example": "We checked the damage after the puppy discovered the cushions.",
+    "translation": "Kuchukcha yostiqlarni topib olgach, yetkazilgan zararni tekshirdik.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "fault",
+    "ipa": "/fɔːlt/",
+    "meaning": "ayb",
+    "example": "It wasn't my fault that the chair made a noise during the speech.",
+    "translation": "Nutq paytida stul ovoz chiqargani mening aybim emas edi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "mess",
+    "ipa": "/mes/",
+    "meaning": "tartibsizlik; betartib holat",
+    "example": "My room was such a mess that I found last year's birthday card.",
+    "translation": "Xonam shunchalik betartib ediki, o‘tgan yilgi tabriknomamni topdim.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "spill",
+    "ipa": "/spɪl/",
+    "meaning": "to‘kib yubormoq",
+    "example": "I spilled tea just as I promised to be more careful.",
+    "translation": "Ehtiyotkorroq bo‘lishga va’da bergan zahotim choyni to‘kib yubordim.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "leak",
+    "ipa": "/liːk/",
+    "meaning": "sizib chiqmoq",
+    "example": "My bottle leaked into my bag and washed my shopping list.",
+    "translation": "Idishimdagi suv sumkamga sizib chiqib, xarid ro‘yxatimni yuvib yubordi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "stuck",
+    "ipa": "/stʌk/",
+    "meaning": "tiqilib qolgan; qimirlamaydigan",
+    "example": "My hand was stuck in the biscuit jar, which was hard to explain.",
+    "translation": "Qo‘lim pechenye bankasiga tiqilib qoldi, buni tushuntirish qiyin edi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "missing",
+    "ipa": "/ˈmɪsɪŋ/",
+    "meaning": "yo‘qolgan; topilmayotgan",
+    "example": "The missing remote appeared when Dad finally stood up.",
+    "translation": "Dadam nihoyat turganida yo‘qolgan pult topildi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "broken",
+    "ipa": "/ˈbrəʊkən/",
+    "meaning": "singan; buzilgan",
+    "example": "The broken clock was correct twice a day, which impressed my nephew.",
+    "translation": "Buzuq soat kuniga ikki marta to‘g‘ri vaqtni ko‘rsatardi, bu jiyanimni lol qoldirdi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "faulty",
+    "ipa": "/ˈfɔːlti/",
+    "meaning": "nosoz",
+    "example": "A faulty doorbell kept announcing visitors who didn't exist.",
+    "translation": "Nosoz eshik qo‘ng‘irog‘i yo‘q mehmonlar kelganini bildiraverdi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "unavailable",
+    "ipa": "/ˌʌnəˈveɪləbl/",
+    "meaning": "mavjud emas; foydalanib bo‘lmaydigan",
+    "example": "The lift was unavailable, so our shopping got a tour of the stairs.",
+    "translation": "Liftdan foydalanib bo‘lmasdi, shuning uchun xaridlarimiz zinapoyani aylanib chiqdi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "crowded",
+    "ipa": "/ˈkraʊdɪd/",
+    "meaning": "odamga to‘la; gavjum",
+    "example": "The kitchen was so crowded that stirring the soup required permission.",
+    "translation": "Oshxona shunchalik gavjum ediki, sho‘rvani aralashtirishga ruxsat kerak edi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "mix-up",
+    "ipa": "/ˈmɪks ʌp/",
+    "meaning": "chalkashlik",
+    "example": "A mix-up with the invitations brought my dentist to our family picnic.",
+    "translation": "Taklifnomalardagi chalkashlik sabab tish shifokorim oilaviy sayrimizga keldi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "misplace",
+    "ipa": "/ˌmɪsˈpleɪs/",
+    "meaning": "qayerga qo‘yganini unutmoq",
+    "example": "I misplaced my glasses and searched while wearing them.",
+    "translation": "Ko‘zoynagimni qayerga qo‘yganimni unutib, uni taqib olgan holda qidirdim.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "lock out",
+    "ipa": "/ˌlɒk ˈaʊt/",
+    "meaning": "tashqarida qulflab qoldirmoq",
+    "example": "My brother accidentally locked me out while I was wearing slippers.",
+    "translation": "Shippakda turganimda akam bilmasdan meni tashqarida qulflab qoldirdi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "run out of",
+    "ipa": "/rʌn ˈaʊt əv/",
+    "meaning": "tugatib qo‘ymoq; qolmaslik",
+    "example": "We ran out of tea just as Grandma arrived with six friends.",
+    "translation": "Buvim olti dugonasi bilan kelganida choyimiz tugab qoldi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "tangle",
+    "ipa": "/ˈtæŋɡl/",
+    "meaning": "chigal; chalkashib qolgan uyum",
+    "example": "My headphones came out of my pocket in a perfect tangle.",
+    "translation": "Quloqchinlarim cho‘ntagimdan butunlay chigallashib chiqdi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "nuisance",
+    "ipa": "/ˈnjuːsns/",
+    "meaning": "bezovta qiladigan narsa yoki kishi",
+    "example": "The buzzing fly was a nuisance during our serious conversation.",
+    "translation": "Jiddiy suhbatimizda vizillagan pashsha bezovta qildi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "snag",
+    "ipa": "/snæɡ/",
+    "meaning": "kichik kutilmagan to‘siq",
+    "example": "We hit a snag when the new sofa was wider than the door.",
+    "translation": "Yangi divan eshikdan kengroq chiqqanda kutilmagan to‘siqqa duch keldik.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "setback",
+    "ipa": "/ˈsetbæk/",
+    "meaning": "ishni orqaga suradigan muvaffaqiyatsizlik",
+    "example": "Burning the first cake was a setback, but the second one survived.",
+    "translation": "Birinchi tortning kuyishi ishni orqaga surdi, ammo ikkinchisi omon qoldi.",
+    "topic": "5-oy • Kundalik noqulayliklar"
+  },
+  {
+    "word": "solution",
+    "ipa": "/səˈluːʃn/",
+    "meaning": "yechim",
+    "example": "Our solution to the missing chairs was a picnic on the floor.",
+    "translation": "Yetishmagan stullar muammosiga yechimimiz polda sayr dasturxoni yozish bo‘ldi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "fix",
+    "ipa": "/fɪks/",
+    "meaning": "tuzatmoq",
+    "example": "He fixed the squeaky door, but now it refuses to close.",
+    "translation": "U g‘ijirlaydigan eshikni tuzatdi, ammo endi eshik yopilmaydi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "resolve",
+    "ipa": "/rɪˈzɒlv/",
+    "meaning": "hal qilmoq",
+    "example": "We resolved the argument by letting the youngest child choose dinner.",
+    "translation": "Kechki ovqatni eng kichik bolaga tanlatib tortishuvni hal qildik.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "deal with",
+    "ipa": "/ˈdiːl wɪð/",
+    "meaning": "shug‘ullanmoq; hal etmoq",
+    "example": "I'll deal with the broken chair after I rescue Dad from it.",
+    "translation": "Dadamni undan qutqarganimdan keyin singan stul bilan shug‘ullanaman.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "cope",
+    "ipa": "/kəʊp/",
+    "meaning": "uddalamoq; bardosh bermoq",
+    "example": "She coped with three noisy guests and a kettle that wouldn't boil.",
+    "translation": "U uchta shovqinli mehmon va qaynamaydigan choynak tashvishini ham epladi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "manage",
+    "ipa": "/ˈmænɪdʒ/",
+    "meaning": "uddalamoq",
+    "example": "I managed to carry all the bags without dropping the eggs.",
+    "translation": "Tuxumlarni tushirmasdan barcha sumkalarni ko‘tarishni uddaladim.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "overcome",
+    "ipa": "/ˌəʊvəˈkʌm/",
+    "meaning": "yengib o‘tmoq",
+    "example": "He overcame his fear of singing and immediately wanted an audience.",
+    "translation": "U kuylash qo‘rquvini yengib, darrov tomoshabin istab qoldi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "prevent",
+    "ipa": "/prɪˈvent/",
+    "meaning": "oldini olmoq",
+    "example": "A lid would have prevented the soup from decorating my bag.",
+    "translation": "Qopqoq sho‘rvaning sumkamni bezashining oldini olgan bo‘lardi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "avoid",
+    "ipa": "/əˈvɔɪd/",
+    "meaning": "chetlab o‘tmoq; qochmoq",
+    "example": "I avoid arguments about football by offering everyone tea.",
+    "translation": "Hammaga choy taklif qilib, futbol haqidagi tortishuvlardan qochaman.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "put up with",
+    "ipa": "/pʊt ˈʌp wɪð/",
+    "meaning": "chidamoq",
+    "example": "My flatmate puts up with my singing because I wash the dishes.",
+    "translation": "Idishlarni yuvganim uchun ijaradoshim qo‘shiqlarimga chidaydi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "sort out",
+    "ipa": "/ˌsɔːt ˈaʊt/",
+    "meaning": "hal qilib tartibga solmoq",
+    "example": "Let's sort out the sleeping arrangements before Uncle claims the sofa.",
+    "translation": "Amakim divanni egallamasidan yotish joylarini hal qilib olaylik.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "get over",
+    "ipa": "/ˌɡet ˈəʊvə/",
+    "meaning": "yengib o‘tmoq; o‘ziga kelmoq",
+    "example": "It took him a week to get over the embarrassment of calling his teacher Mum.",
+    "translation": "O‘qituvchisini «oyi» deb yuborganidagi xijolatdan chiqishiga bir hafta ketdi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "carry on",
+    "ipa": "/ˌkæri ˈɒn/",
+    "meaning": "davom etmoq",
+    "example": "She carried on telling her story while we searched for the escaped hamster.",
+    "translation": "Qochgan og‘maxonni qidirayotganimizda u hikoyasini davom ettirdi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "hold on",
+    "ipa": "/ˌhəʊld ˈɒn/",
+    "meaning": "biroz kutmoq",
+    "example": "Hold on while I find a pen that actually writes.",
+    "translation": "Rostdan yozadigan qalam topgunimcha biroz kuting.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "put off",
+    "ipa": "/ˌpʊt ˈɒf/",
+    "meaning": "keyinga qoldirmoq",
+    "example": "I put off cleaning my room until I couldn't find the door.",
+    "translation": "Eshikni topa olmay qolgunimcha xonamni tozalashni kechiktirdim.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "turn down",
+    "ipa": "/ˌtɜːn ˈdaʊn/",
+    "meaning": "taklifni rad etmoq",
+    "example": "I turned down his offer to cut my hair with kitchen scissors.",
+    "translation": "Oshxona qaychisi bilan sochimni qirqish taklifini rad etdim.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "turn up",
+    "ipa": "/ˌtɜːn ˈʌp/",
+    "meaning": "kutilmaganda topilmoq yoki paydo bo‘lmoq",
+    "example": "The missing invitation turned up inside the book I had lent her.",
+    "translation": "Yo‘qolgan taklifnoma unga berib turgan kitobim ichidan topildi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "get rid of",
+    "ipa": "/ɡet ˈrɪd əv/",
+    "meaning": "qutulmoq; yo‘qotmoq",
+    "example": "We couldn't get rid of the smell of burnt toast until we opened every window.",
+    "translation": "Barcha derazani ochmaguncha kuygan non hididan qutula olmadik.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "tackle",
+    "ipa": "/ˈtækl/",
+    "meaning": "muammoni hal qilishga kirishmoq",
+    "example": "We tackled the pile of dishes after a short motivational speech.",
+    "translation": "Qisqa ruhlantiruvchi nutqdan keyin uyulgan idishlarni yuvishga kirishdik.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "struggle",
+    "ipa": "/ˈstrʌɡl/",
+    "meaning": "qiynalmoq; zo‘r berib urinmoq",
+    "example": "I struggled to open the packet while the children offered useless advice.",
+    "translation": "Bolalar foydasiz maslahat berayotganida paketni ochishga qiynaldim.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "persistence",
+    "ipa": "/pəˈsɪstəns/",
+    "meaning": "tinimsiz urinish; qat’iyat",
+    "example": "Her persistence finally persuaded the whole family to tidy the garage.",
+    "translation": "Uning tinimsiz urinishi nihoyat butun oilani garajni yig‘ishtirishga ko‘ndirdi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "attempt",
+    "ipa": "/əˈtempt/",
+    "meaning": "urinish",
+    "example": "My first attempt at fixing the shelf produced a smaller shelf.",
+    "translation": "Tokchani tuzatishga birinchi urinishim kichikroq tokcha hosil qildi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "succeed",
+    "ipa": "/səkˈsiːd/",
+    "meaning": "muvaffaq bo‘lmoq",
+    "example": "We succeeded in opening the jar just as nobody wanted jam anymore.",
+    "translation": "Hech kim murabbo istamay qolgan paytda bankani ochishga muvaffaq bo‘ldik.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "get used to",
+    "ipa": "/ɡet ˈjuːst tə/",
+    "meaning": "ko‘nikmoq",
+    "example": "I got used to my neighbour's singing, but visitors still look worried.",
+    "translation": "Qo‘shnimning qo‘shiqlariga ko‘nikdim, ammo mehmonlar hamon xavotirli ko‘rinadi.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "adjust",
+    "ipa": "/əˈdʒʌst/",
+    "meaning": "ko‘nikmoq; moslashmoq",
+    "example": "I am adjusting to early mornings, one enormous yawn at a time.",
+    "translation": "Har safar katta esnab, erta tonglarga asta-sekin ko‘nikyapman.",
+    "topic": "5-oy • Muammolarni yengish"
+  },
+  {
+    "word": "imagination",
+    "ipa": "/ɪˌmædʒɪˈneɪʃn/",
+    "meaning": "tasavvur",
+    "example": "My nephew's imagination turned the sofa into a dangerous volcano.",
+    "translation": "Jiyanimning tasavvuri divanni xavfli vulqonga aylantirdi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "attention",
+    "ipa": "/əˈtenʃn/",
+    "meaning": "diqqat; e’tibor",
+    "example": "The speaker lost our attention when a kitten entered the room.",
+    "translation": "Xonaga mushukcha kirganda notiq e’tiborimizni yo‘qotdi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "thought",
+    "ipa": "/θɔːt/",
+    "meaning": "fikr; o‘y",
+    "example": "The thought of another long speech made me reach for a biscuit.",
+    "translation": "Yana uzun nutq haqidagi o‘y meni pechenyega qo‘l uzatishga undadi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "distraction",
+    "ipa": "/dɪˈstrækʃn/",
+    "meaning": "chalg‘ituvchi narsa",
+    "example": "The dancing pigeon outside was a serious distraction.",
+    "translation": "Tashqaridagi raqs tushayotgan kaptar qattiq chalg‘itdi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "awareness",
+    "ipa": "/əˈweənəs/",
+    "meaning": "xabardorlik; anglash",
+    "example": "His awareness of other people's feelings improved after he became a father.",
+    "translation": "Ota bo‘lganidan keyin u boshqalarning hislarini yaxshiroq anglay boshladi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "belief",
+    "ipa": "/bɪˈliːf/",
+    "meaning": "ishonch; e’tiqod",
+    "example": "Her belief that every problem needs tea is difficult to argue with.",
+    "translation": "Uning har bir muammoga choy kerak degan ishonchi bilan bahslashish qiyin.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "expectation",
+    "ipa": "/ˌekspekˈteɪʃn/",
+    "meaning": "kutgan natija; umid",
+    "example": "My expectation of a quiet evening ended when the relatives arrived.",
+    "translation": "Qarindoshlar kelganda sokin oqshom haqidagi umidim tugadi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "impression",
+    "ipa": "/ɪmˈpreʃn/",
+    "meaning": "taassurot",
+    "example": "My first impression was that he was serious, until he showed his dinosaur socks.",
+    "translation": "Dinozavrli paypog‘ini ko‘rsatguncha u jiddiy odam degan ilk taassurotim bor edi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "assumption",
+    "ipa": "/əˈsʌmpʃn/",
+    "meaning": "taxmin; faraz",
+    "example": "My assumption that the box contained shoes was destroyed by a loud meow.",
+    "translation": "Qutida tufli bor degan taxminimni baland miyov buzdi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "realise",
+    "ipa": "/ˈrɪəlaɪz/",
+    "meaning": "anglab yetmoq",
+    "example": "I realised I was at the wrong party when nobody recognised me.",
+    "translation": "Hech kim tanimaganda noto‘g‘ri bazmga kelganimni angladim.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "recognise",
+    "ipa": "/ˈrekəɡnaɪz/",
+    "meaning": "tanimoq",
+    "example": "She recognised me despite my new beard and unfortunate hat.",
+    "translation": "Yangi soqolim va beso‘naqay shlyapamga qaramay, u meni tanidi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "recall",
+    "ipa": "/rɪˈkɔːl/",
+    "meaning": "eslamoq",
+    "example": "I couldn't recall his name, but I remembered his terrible jokes.",
+    "translation": "Ismini eslay olmadim, ammo bemaza hazillari esimda edi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "reflect",
+    "ipa": "/rɪˈflekt/",
+    "meaning": "mulohaza qilmoq",
+    "example": "I reflected on my mistake while cleaning jam off the ceiling.",
+    "translation": "Shiftdagi murabboni tozalayotib xatoim haqida mulohaza qildim.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "wonder",
+    "ipa": "/ˈwʌndə/",
+    "meaning": "qiziqib o‘ylamoq",
+    "example": "I wonder why the dog looks guilty whenever we say 'cushion'.",
+    "translation": "Nega «yostiq» deganimizda it aybdordek ko‘rinadi, deb o‘ylayman.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "imagine",
+    "ipa": "/ɪˈmædʒɪn/",
+    "meaning": "tasavvur qilmoq",
+    "example": "Imagine explaining this broken vase to someone who already looks annoyed.",
+    "translation": "Bu singan vazani allaqachon jahli chiqqan odamga tushuntirishni tasavvur qil.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "suppose",
+    "ipa": "/səˈpəʊz/",
+    "meaning": "deb o‘ylamoq; faraz qilmoq",
+    "example": "I suppose the dog needs a bath more than I need clean trousers.",
+    "translation": "Menimcha, menga toza shimdan ko‘ra itga cho‘milish ko‘proq kerak.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "assume",
+    "ipa": "/əˈsjuːm/",
+    "meaning": "tekshirmay taxmin qilmoq",
+    "example": "I assumed he was the host because he was guarding the cake.",
+    "translation": "Tortni qo‘riqlayotgani uchun uni mezbon deb taxmin qildim.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "expect",
+    "ipa": "/ɪkˈspekt/",
+    "meaning": "kutmoq; deb hisoblamoq",
+    "example": "I expected a quiet visit, but Grandma had hired a karaoke machine.",
+    "translation": "Sokin mehmondorchilik kutgandim, ammo buvim karaoke qurilmasini ijaraga olgan ekan.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "notice",
+    "ipa": "/ˈnəʊtɪs/",
+    "meaning": "payqamoq",
+    "example": "Nobody noticed my new haircut until I mentioned it six times.",
+    "translation": "Olti marta aytmagunimcha hech kim yangi soch turmagimni payqamadi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "aware",
+    "ipa": "/əˈweə/",
+    "meaning": "xabardor; anglagan",
+    "example": "I was aware of the problem before the soup reached my shoes.",
+    "translation": "Sho‘rva tuflilarimgacha yetmasidan muammoni anglagan edim.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "absent-minded",
+    "ipa": "/ˌæbsənt ˈmaɪndɪd/",
+    "meaning": "xayoli parishon",
+    "example": "My absent-minded uncle thanked the cash machine.",
+    "translation": "Xayoli parishon amakim bankomatga rahmat aytdi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "daydream",
+    "ipa": "/ˈdeɪdriːm/",
+    "meaning": "xayol surmoq",
+    "example": "I daydream about holidays while waiting for my toast.",
+    "translation": "Nonim qizarishini kutib, ta’til haqida xayol suraman.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "instinct",
+    "ipa": "/ˈɪnstɪŋkt/",
+    "meaning": "ichki sezgi; instinkt",
+    "example": "My first instinct was to hide the broken cup, but I told the truth.",
+    "translation": "Birinchi ichki turtkim singan piyolani yashirish edi, ammo rostini aytdim.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "intention",
+    "ipa": "/ɪnˈtenʃn/",
+    "meaning": "niyat",
+    "example": "My intention was to help, not to glue the drawer shut.",
+    "translation": "Niyatim tortmani yelimlab yopish emas, yordam berish edi.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "judgement",
+    "ipa": "/ˈdʒʌdʒmənt/",
+    "meaning": "baholash qobiliyati; hukm",
+    "example": "I trust her judgement about people, but not about extremely spicy soup.",
+    "translation": "Odamlarni baholashiga ishonaman, ammo juda achchiq sho‘rva masalasida emas.",
+    "topic": "5-oy • Fikrlash va idrok"
+  },
+  {
+    "word": "personality",
+    "ipa": "/ˌpɜːsəˈnæləti/",
+    "meaning": "shaxsiyat; fe’l-atvor",
+    "example": "Her cheerful personality made even waiting in a queue enjoyable.",
+    "translation": "Uning quvnoq fe’l-atvori hatto navbat kutishni ham yoqimli qildi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "character",
+    "ipa": "/ˈkærəktə/",
+    "meaning": "xarakter; insoniy sifatlar",
+    "example": "Sharing the last slice showed more of his character than his long speech.",
+    "translation": "Oxirgi bo‘lakni bo‘lishishi uning xarakterini uzun nutqidan ko‘proq ko‘rsatdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "attitude",
+    "ipa": "/ˈætɪtjuːd/",
+    "meaning": "munosabat; qarash",
+    "example": "His attitude to cleaning changed when he got his own flat.",
+    "translation": "O‘z uyiga ega bo‘lgach, uning tozalikka munosabati o‘zgardi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "behaviour",
+    "ipa": "/bɪˈheɪvjə/",
+    "meaning": "xulq-atvor",
+    "example": "The children's behaviour improved when Grandma raised one eyebrow.",
+    "translation": "Buvim bitta qoshini ko‘targanda bolalarning xulqi yaxshilandi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "maturity",
+    "ipa": "/məˈtʃʊərəti/",
+    "meaning": "yetuklik; bosiqlik",
+    "example": "He showed maturity by apologising before anyone mentioned the broken lamp.",
+    "translation": "Hech kim singan chiroqni aytmasidan uzr so‘rab, u yetukligini ko‘rsatdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "courage",
+    "ipa": "/ˈkʌrɪdʒ/",
+    "meaning": "jasorat",
+    "example": "It took courage to admit that the terrible cake was mine.",
+    "translation": "Yomon tortni o‘zim pishirganimni tan olish jasorat talab qildi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "honesty",
+    "ipa": "/ˈɒnɪsti/",
+    "meaning": "halollik; rostgo‘ylik",
+    "example": "Her honesty helped me realise that my singing needed practice.",
+    "translation": "Uning rostgo‘yligi kuylashim uchun mashq kerakligini anglashimga yordam berdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "independence",
+    "ipa": "/ˌɪndɪˈpendəns/",
+    "meaning": "mustaqillik",
+    "example": "Moving out gave him independence and a new respect for washing machines.",
+    "translation": "Alohida yashash unga mustaqillik va kir yuvish mashinalariga yangi hurmat berdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "determination",
+    "ipa": "/dɪˌtɜːmɪˈneɪʃn/",
+    "meaning": "qat’iyat",
+    "example": "With great determination, she untangled the necklace before dinner.",
+    "translation": "Katta qat’iyat bilan u kechki ovqatdan oldin marjon chigalini yozdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "ambition",
+    "ipa": "/æmˈbɪʃn/",
+    "meaning": "katta maqsad; orzu",
+    "example": "His ambition is to make a cake that stands up without support.",
+    "translation": "Uning katta maqsadi tayanchsiz tik turadigan tort tayyorlash.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "motivation",
+    "ipa": "/ˌməʊtɪˈveɪʃn/",
+    "meaning": "ishtiyoq; harakatga undovchi sabab",
+    "example": "My motivation to clean increased when I heard that guests were coming.",
+    "translation": "Mehmon kelishini eshitgach, tozalashga ishtiyoqim oshdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "self-esteem",
+    "ipa": "/ˌself ɪˈstiːm/",
+    "meaning": "o‘zini qadrlash",
+    "example": "Learning to swim improved her self-esteem more than buying fancy goggles.",
+    "translation": "Suzishni o‘rganish uning o‘zini qadrlashini qimmat ko‘zoynak olishdan ko‘proq oshirdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "discipline",
+    "ipa": "/ˈdɪsəplɪn/",
+    "meaning": "intizom; o‘zini boshqarish",
+    "example": "It takes discipline to stop after one biscuit in this house.",
+    "translation": "Bu uyda bitta pechenyedan keyin to‘xtash uchun intizom kerak.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "willpower",
+    "ipa": "/ˈwɪlpaʊə/",
+    "meaning": "iroda kuchi",
+    "example": "My willpower lasted until someone opened the chocolate box.",
+    "translation": "Irodam kimdir shokolad qutisini ochguncha chidadi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "virtue",
+    "ipa": "/ˈvɜːtʃuː/",
+    "meaning": "fazilat",
+    "example": "Honesty is a virtue, though my uncle's comments about haircuts test it.",
+    "translation": "Rostgo‘ylik fazilat, garchi amakimning soch turmagi haqidagi gaplari buni sinasa ham.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "flaw",
+    "ipa": "/flɔː/",
+    "meaning": "fe’ldagi kamchilik",
+    "example": "His biggest flaw is promising to help and then forgetting.",
+    "translation": "Uning eng katta kamchiligi yordam va’da qilib, keyin unutishidir.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "gift",
+    "ipa": "/ɡɪft/",
+    "meaning": "tabiiy qobiliyat; iste’dod",
+    "example": "She has a gift for making strangers feel welcome.",
+    "translation": "U notanish kishilarni samimiy kutib olishning tabiiy qobiliyatiga ega.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "self-control",
+    "ipa": "/ˌself kənˈtrəʊl/",
+    "meaning": "o‘zini tuta bilish",
+    "example": "Not laughing at his enormous hat required real self-control.",
+    "translation": "Uning ulkan shlyapasiga kulmaslik uchun chinakam o‘zini tuta bilish kerak edi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "potential",
+    "ipa": "/pəˈtenʃl/",
+    "meaning": "rivojlanish imkoniyati; salohiyat",
+    "example": "The teacher saw potential in my acting, even when I forgot every line.",
+    "translation": "Hamma gapimni unutganimda ham o‘qituvchi aktyorlik salohiyatimni ko‘rdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "mature",
+    "ipa": "/məˈtʃʊə/",
+    "meaning": "ulg‘ayib oqil bo‘lmoq",
+    "example": "He matured after moving out and stopped calling Mum about every missing sock.",
+    "translation": "Alohida yashagach u ulg‘ayib, har yo‘qolgan paypoq uchun oyisiga qo‘ng‘iroq qilmay qo‘ydi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "learn from",
+    "ipa": "/ˈlɜːn frɒm/",
+    "meaning": "saboq olmoq",
+    "example": "I learned from my mistake and kept the birthday cake away from the dog.",
+    "translation": "Xatoimdan saboq olib, tug‘ilgan kun tortini itdan uzoqda saqladim.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "achieve",
+    "ipa": "/əˈtʃiːv/",
+    "meaning": "erishmoq",
+    "example": "She achieved her goal of speaking confidently, even with a noisy microphone.",
+    "translation": "Shovqinli mikrofonga qaramay, u ishonch bilan gapirish maqsadiga erishdi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "deserve",
+    "ipa": "/dɪˈzɜːv/",
+    "meaning": "loyiq bo‘lmoq",
+    "example": "After listening to that long story, you deserve a second slice of cake.",
+    "translation": "O‘sha uzun hikoyani tinglaganingdan keyin ikkinchi bo‘lak tortga loyiqsan.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "commitment",
+    "ipa": "/kəˈmɪtmənt/",
+    "meaning": "sadoqat; qat’iy mas’uliyat",
+    "example": "Keeping a plant alive requires commitment, as my empty pots prove.",
+    "translation": "Bo‘sh tuvaklarim ko‘rsatganidek, o‘simlikni yashatish qat’iy mas’uliyat talab qiladi.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  },
+  {
+    "word": "promise",
+    "ipa": "/ˈprɒmɪs/",
+    "meaning": "va’da bermoq",
+    "example": "I promised to arrive on time and set three alarms.",
+    "translation": "Vaqtida kelishga va’da berib, uchta budilnik qo‘ydim.",
+    "topic": "5-oy • Shaxsiy o‘sish"
+  }
+]

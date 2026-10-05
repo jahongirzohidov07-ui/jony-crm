@@ -2299,6 +2299,8 @@ def my_exam_order_cancel(oid: int, payload: schemas.ExamOrderDecision,
         raise HTTPException(400, "Bu buyurtmani endi bekor qilib bo'lmaydi")
     o.status = "cancelled"
     o.decision_note = payload.note
+    # Bekor qilingan buyurtma examinerlarda "kechikdi" bo'lib qolmasin
+    _close_order_tasks(db, o, "ustoz buyurtmani bekor qildi")
     db.commit()
     audit.log(db, user, entity="exam_order", action="cancel",
               entity_id=o.id, note=payload.note, commit=True)

@@ -432,6 +432,16 @@ def _apply_exam_marks(db: Session, exam: models.Exam,
     was_first_entry = exam.status == "approved"
     if exam.status == "approved":
         exam.status = "done"
+    # Buyurtma orqali kelgan imtihon: natija kiritildi = imtihon
+    # o'tkazildi. Buyurtma yopiladi va uning vazifalari (examinerlarning
+    # "Imtihon buyurtmasi EXM-…", ustozning "Imtihon tasdiqlandi") o'zi
+    # bajarildi bo'ladi — qo'lda belgi qo'yish shart emas (2026-10-05).
+    order = (db.query(models.ExamOrder)
+             .filter(models.ExamOrder.exam_id == exam.id).first())
+    if order is not None:
+        if order.status == "accepted":
+            order.status = "done"
+        _close_order_tasks(db, order, "imtihon natijalari kiritildi")
     db.commit()
 
     if was_first_entry and notify.enabled():
@@ -1043,6 +1053,10 @@ def _order_accept_by(db: Session, o, user) -> None:
         examiner_id=user.id)
     db.add(ex); db.flush()
     o.exam_id = ex.id
+    # Boshqa examinerlardagi "Imtihon buyurtmasi" nusxalari endi
+    # keraksiz; qabul qilganniki imtihon o'tguncha eslatma bo'lib qoladi.
+    _close_order_tasks(db, o, f"buyurtmani {user.full_name} qabul qildi",
+                       heads=EXAM_ORDER_INVITE_HEADS, keep_user_id=user.id)
 
 @router.post("/api/exam-orders/{oid}/reject")
 def exam_order_reject(oid: int, payload: schemas.ExamOrderDecision,
@@ -1065,6 +1079,7 @@ def exam_order_reject(oid: int, payload: schemas.ExamOrderDecision,
     o.decision_note = payload.note
     o.accepted_by = user.id
     o.accepted_at = datetime.utcnow()
+    _close_order_tasks(db, o, "buyurtma rad etildi")
     db.commit(); db.refresh(o)
 
     out = _exam_order_out(db, o)
@@ -1209,6 +1224,10 @@ def exam_order_reschedule_answer(oid: int, payload: schemas.ExamOrderAnswer,
                 o.accepted_at = datetime.utcnow()
                 if ex is not None:
                     ex.examiner_id = examiner.id
+                _close_order_tasks(db, o, f"imtihonni {examiner.full_name} "
+                                          f"o'tkazadi",
+                                   heads=EXAM_ORDER_INVITE_HEADS,
+                                   keep_user_id=examiner.id)
         elif examiner is not None:
             _order_accept_by(db, o, examiner)
         else:
@@ -1226,6 +1245,11 @@ def exam_order_reschedule_answer(oid: int, payload: schemas.ExamOrderAnswer,
     o.proposed_date = None
     o.proposed_time = None
     o.proposed_from_status = None
+    # Ustoz javob berdi — "ko'chirish taklifi" vazifasi bajarildi;
+    # imtihon kuni o'zgargan bo'lsa, kutayotgan vazifalar muddati ham.
+    _close_order_tasks(db, o, "ustoz taklifga javob berdi",
+                       heads=("Imtihon vaqtini ko'chirish taklifi",))
+    _sync_order_task_deadlines(db, o)
     db.commit(); db.refresh(o)
     if examiner is not None:
         _hr_task_for(db, examiner.id, title=title, body=body,
@@ -1312,6 +1336,7 @@ def exam_order_change_time(oid: int, payload: schemas.ExamOrderTimeChange,
         ex = db.query(models.Exam).get(o.exam_id)
         if ex is not None:
             ex.date = o.date
+    _sync_order_task_deadlines(db, o)
     db.commit(); db.refresh(o)
     new = f"{roles.uz_date_full(o.date)} {o.time or ''}".strip()
 
@@ -1358,6 +1383,7 @@ def exam_order_done(oid: int, payload: schemas.ExamOrderDecision,
     ex = db.query(models.Exam).get(o.exam_id) if o.exam_id else None
     if ex and ex.status == "approved":
         ex.status = "done"
+    _close_order_tasks(db, o, "imtihon o'tkazildi")
     db.commit()
     audit.log(db, user, entity="exam_order", action="done",
               entity_id=o.id, branch_id=o.branch_id, commit=True)

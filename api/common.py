@@ -5979,6 +5979,105 @@ def _hr_task_for(db: Session, user_id: int, *, title: str, body: str,
     db.flush()
     _ensure_public_id(db, "task", task)
 
+
+# IMTIHON BUYURTMASI VAZIFALARI O'ZI YOPILADI (2026-10-05, Jahongir:
+# "examinerga ptichkani bosmaguncha turibdi, test natijalarini
+# kirgizsa o'zi avtomat yo'q bo'ladigan bo'lsin"). Buyurtma bo'yicha
+# tizim vazifalari sarlavhasida buyurtma raqami bor: "<boshi> EXM-…"
+# yoki "<boshi> EXM-… — <xodim ismi>". Ilgari ular faqat qo'lda
+# yopilardi — imtihon o'tib, natija kiritilgandan keyin ham
+# "N kun kechikdi" bo'lib osilib turardi.
+EXAM_ORDER_TASK_HEADS = (
+    "Imtihon buyurtmasi",                  # examinerlar: yangi so'rov
+    "Imtihon vaqti o'zgardi",              # examinerlar: ustoz vaqtni surdi
+    "Ustoz imtihon vaqtini o'zgartirdi",   # qabul qilgan examiner
+    "Ustoz ko'chirishni qabul qildi",      # taklif qilgan examiner
+    "Ustoz ko'chirishga rozi emas",        # taklif qilgan examiner
+    "Imtihon tasdiqlandi",                 # ustoz
+    "Imtihon vaqtini ko'chirish taklifi",  # ustoz: javob berishi kerak
+)
+# Yangi so'rov haqidagi vazifalar — har bir examinerga alohida nusxa.
+# Kimdir qabul qilsa, qolganlarniki keraksiz bo'ladi.
+EXAM_ORDER_INVITE_HEADS = ("Imtihon buyurtmasi", "Imtihon vaqti o'zgardi")
+
+
+def _order_open_tasks(db: Session, o, heads=EXAM_ORDER_TASK_HEADS) -> list:
+    """Buyurtmaning hali yopilmagan tizim vazifalari. Sarlavha aniq
+    solishtiriladi: "Imtihon buyurtmasi rad etildi EXM-…" (ustozga
+    xabar) "Imtihon buyurtmasi" boshiga tushib qolmaydi."""
+    pid = getattr(o, "public_id", None)
+    if not pid:
+        return []
+    exact = tuple(f"{h} {pid}" for h in heads)
+    rows = (db.query(models.Task)
+            .filter(models.Task.title.like(f"%{pid}%"),
+                    models.Task.status.notin_(roles.TASK_CLOSED)).all())
+    return [t for t in rows
+            if any(t.title == e or t.title.startswith(e + " — ")
+                   for e in exact)]
+
+
+def _close_order_tasks(db: Session, o, why: str, *,
+                       heads=EXAM_ORDER_TASK_HEADS,
+                       keep_user_id=None) -> int:
+    """Buyurtma bo'yicha ochiq vazifalarni "bajarildi" qiladi (commit
+    qilmaydi). keep_user_id — shu xodimning vazifasi qoldiriladi
+    (masalan, qabul qilgan examinerniki: u hali imtihonni o'tkazadi)."""
+    n = 0
+    for t in _order_open_tasks(db, o, heads):
+        if keep_user_id is not None and t.assignee_id == keep_user_id:
+            continue
+        t.status = "done"
+        t.done_at = datetime.utcnow()
+        if not t.result:
+            t.result = f"Avtomat yopildi: {why}"
+        n += 1
+    return n
+
+
+def _sync_order_task_deadlines(db: Session, o) -> None:
+    """Imtihon kuni o'zgarsa, uni kutayotgan vazifalar muddati ham
+    o'sha kunga suriladi — aks holda imtihondan oldin "kechikdi"
+    bo'lib chiqardi."""
+    if not o.date:
+        return
+    for t in _order_open_tasks(db, o, ("Imtihon buyurtmasi",
+                                       "Imtihon tasdiqlandi")):
+        t.deadline = o.date
+
+
+def close_stale_exam_order_tasks(db: Session) -> int:
+    """Eski osilib qolgan vazifalarni bir yo'la yopish (deploydan keyin
+    bir marta va kunlik cron'da). Imtihoni o'tgan / natijasi kiritilgan,
+    rad etilgan yoki bekor qilingan buyurtmalarning barcha vazifalari;
+    qabul qilingan buyurtmada — boshqa examinerlarning nusxalari."""
+    import re as _re
+    head_re = _re.compile(
+        r"^(%s) (EXM-\d+)(?: — .*)?$"
+        % "|".join(_re.escape(h) for h in EXAM_ORDER_TASK_HEADS))
+    rows = (db.query(models.Task)
+            .filter(models.Task.title.like("%EXM-%"),
+                    models.Task.status.notin_(roles.TASK_CLOSED)).all())
+    pids = {m.group(2) for t in rows if (m := head_re.match(t.title or ""))}
+    if not pids:
+        return 0
+    n = 0
+    orders = (db.query(models.ExamOrder)
+              .filter(models.ExamOrder.public_id.in_(pids)).all())
+    for o in orders:
+        ex = db.query(models.Exam).get(o.exam_id) if o.exam_id else None
+        held = ex is not None and (ex.status == "done" or bool(ex.results))
+        if held and o.status == "accepted":
+            o.status = "done"
+        if o.status in ("done", "rejected", "cancelled") or held:
+            n += _close_order_tasks(db, o, "imtihon yopilgan")
+        elif o.status == "accepted" and o.accepted_by:
+            n += _close_order_tasks(db, o, "boshqa examiner qabul qilgan",
+                                    heads=EXAM_ORDER_INVITE_HEADS,
+                                    keep_user_id=o.accepted_by)
+    db.commit()
+    return n
+
 def _seed_hr_structure(db: Session) -> None:
     """Bo'lim va lavozim ro'yxati. Bir marta yoziladi — ilgari har
     cold start'da 24 ta tekshiruv so'rovi ketardi (2026-08-14)."""
@@ -7622,6 +7721,12 @@ __all__ = [
     "_homework_stats",
     "_hr_task",
     "_hr_task_for",
+    "EXAM_ORDER_TASK_HEADS",
+    "EXAM_ORDER_INVITE_HEADS",
+    "_order_open_tasks",
+    "_close_order_tasks",
+    "_sync_order_task_deadlines",
+    "close_stale_exam_order_tasks",
     "_hr_user",
     "_income_by_method",
     "_league_for",

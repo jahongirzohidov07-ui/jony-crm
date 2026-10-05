@@ -268,6 +268,10 @@ def cron_daily(request: Request, db: Session = Depends(get_db)):
         # Instagram: har post raqamlari avtomat (2026-09-26). Token
         # bo'lmasa bir zumda qaytadi.
         ("ig_sync", lambda: __import__("ig_connect").cron_sync(db)),
+        # Imtihoni o'tgan / yopilgan buyurtmalarning osilib qolgan
+        # vazifalari (2026-10-05) — natija kiritishda yopiladi, bu
+        # yerda esa qolib ketganlari tutib olinadi.
+        ("exam_order_tasks", lambda: _cm.close_stale_exam_order_tasks(db)),
     ):
         try:
             _fn()

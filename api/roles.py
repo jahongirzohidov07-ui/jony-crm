@@ -146,6 +146,14 @@ FINANCE_ACCESS = FULL_ACCESS + [FINANCE_DIRECTOR, ACCOUNTANT]
 # kiritadi. Foyda-zarar, budjet va oyliklar esa unga OCHILMADI —
 # ular boshqacha darajadagi ma'lumot.
 CASHFLOW_ACCESS = FINANCE_ACCESS + [ADMINISTRATOR, SALES_MANAGER]
+# CHEKLANGAN FILIALLAR (2026-10-06, Jahongir: "shu cashflow adminlarga
+# ko'rinmasin, Zafar filialidagilarga. Ularga faqat bugun urilgan pullar
+# va umumiy hisobi ko'rinsin. Qolgan filial turaversin"). Shu filial
+# administratori Pul oqimida faqat BUGUNGI tushumni ko'radi — oylik
+# kassa daftari, kirim/chiqim/kassa qoldig'i va trend yopiq. Filial
+# nomida shu so'z bo'lsa yetadi (katta-kichik harf farqsiz).
+CASHFLOW_LIMITED_BRANCHES = ("zafar",)
+CASHFLOW_LIMITED_ROLES = [ADMINISTRATOR, SALES_MANAGER]
 # Xarajat KIRITISH va tahrirlash. O'CHIRISH ataylab bunga kirmaydi
 # (pastdagi EXPENSE_DELETE) — kiritilgan xarajatni o'chirish pul
 # hisobotini o'zgartiradi, shuning uchun moliyada qoladi.

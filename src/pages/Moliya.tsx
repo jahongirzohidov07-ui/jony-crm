@@ -260,11 +260,24 @@ function CashflowTab() {
     ? `${MONTHS[range.fm - 1]} ${range.fy} — ${MONTHS[range.tm - 1]} ${range.ty}`
     : `${MONTHS[month - 1]} ${year}`;
 
+  // CHEKLANGAN FILIAL (2026-10-06, Jahongir: "shu cashflow adminlarga
+  // ko'rinmasin, Zafar filialidagilarga. Ularga faqat bugun urilgan
+  // pullar va umumiy hisobi ko'rinsin"). Server kassa daftarini 403
+  // bilan qaytaradi — bunda faqat bugungi tushum kartasi qoladi.
+  const [limited, setLimited] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     api
       .get<CashflowLedger>(`/reports/cashflow-ledger?${qs}`)
       .then(setData)
+      .catch((e) => {
+        if (String((e as Error)?.message || "").includes("CASHFLOW_LIMITED")
+            || (e as { status?: number })?.status === 403) {
+          setLimited(true);
+        }
+        setData(null);
+      })
       .finally(() => setLoading(false));
   }, [qs, reloadKey]);
 
@@ -275,6 +288,17 @@ function CashflowTab() {
       .catch(() => setTrend(null));
   }, []);
 
+  if (limited) {
+    return (
+      <div>
+        <CashDayCard reloadKey={reloadKey} />
+        <p className="text-xs text-slate-400">
+          Bu filialda administratorga Pul oqimidan faqat bugungi tushum
+          ko'rinadi. Oylik kassa daftari rahbariyatda.
+        </p>
+      </div>
+    );
+  }
   if (loading) return <p className="text-slate-400 text-sm">Yuklanmoqda...</p>;
   if (!data) return null;
 

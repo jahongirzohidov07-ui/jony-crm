@@ -106,7 +106,9 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
           kim to'ladi, qancha, qaysi usulda
         </span>
         <div className="flex-1" />
-        <div className="flex items-center gap-1">
+        {/* Cheklangan filial administratori faqat bugunni ko'radi
+            (2026-10-06) — kun almashtirish tugmalari yashiriladi. */}
+        <div className={`flex items-center gap-1 ${data?.today_only ? "hidden" : ""}`}>
           <button
             onClick={() => setDay(shiftDay(day, -1))}
             className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50"

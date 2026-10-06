@@ -519,6 +519,26 @@ def report_student_app_usage(
     }
 
 
+def _cashflow_limited(db: Session, user) -> bool:
+    """Shu xodimga Pul oqimidan faqat BUGUNGI tushum ochiqmi
+    (roles.CASHFLOW_LIMITED_BRANCHES — Zafar filiali administratorlari)."""
+    if getattr(user, "role", None) not in roles.CASHFLOW_LIMITED_ROLES:
+        return False
+    bid = getattr(user, "branch_id", None)
+    if not bid:
+        return False
+    b = db.query(models.Branch).get(bid)
+    name = (b.name or "").lower() if b else ""
+    return any(k in name for k in roles.CASHFLOW_LIMITED_BRANCHES)
+
+
+def _deny_if_cashflow_limited(db: Session, user) -> None:
+    if _cashflow_limited(db, user):
+        raise HTTPException(
+            403, "CASHFLOW_LIMITED: bu filialda administratorga Pul "
+                 "oqimidan faqat bugungi tushum ko'rinadi")
+
+
 @router.get("/api/reports/cashflow")
 def report_cashflow(
     months: int = 6,
@@ -527,6 +547,7 @@ def report_cashflow(
 ):
     """Oxirgi N oy uchun pul oqimi: qancha kirdi (naqd/plastik/terminal
     kesimida), qancha chiqdi (xarajat + ustozlar ish haqi), sof qoldiq."""
+    _deny_if_cashflow_limited(db, user)
     months = max(1, min(months, 24))
     today = date.today()
     rows = []
@@ -1518,6 +1539,10 @@ def cash_day(
         d = date.fromisoformat(day) if day else roles.local_today()
     except ValueError:
         raise HTTPException(400, "Sana noto'g'ri (YYYY-MM-DD)")
+    # Cheklangan filial administratori — faqat BUGUN (2026-10-06)
+    today_only = _cashflow_limited(db, user)
+    if today_only:
+        d = roles.local_today()
     d0, d1 = _utc_window(d, d)
 
     pq = (db.query(models.Payment, models.Student)
@@ -1583,6 +1608,7 @@ def cash_day(
         "by_receiver": sorted(by_receiver.values(),
                               key=lambda x: -x["amount"]),
         "rows": rows,
+        "today_only": today_only,
     }
 
 
@@ -1685,6 +1711,7 @@ def cashflow_ledger(
     qilib bergin"): to_year/to_month berilsa — year/month oyidan
     to_year/to_month oyigacha (ko'pi bilan 24 oy). "months" — har oy
     kirim/chiqim/kassa jamlanmasi."""
+    _deny_if_cashflow_limited(db, user)
     start, end = billing.month_bounds(year, month)
     if to_year and to_month:
         if not 1 <= to_month <= 12:

@@ -45,6 +45,8 @@ export interface CashDayReceiver {
 }
 
 export interface CashDayData {
+  /** Cheklangan filial administratori: faqat bugun (2026-10-06). */
+  today_only?: boolean;
   date: string;
   total: number;
   count: number;

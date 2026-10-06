@@ -35,7 +35,9 @@ def ck(n, g, w):
         fails.append(n)
 
 
-b = models.Branch(name="Zafar"); db.add(b); db.commit()
+# Zafar filiali 2026-10-06 dan cheklangan (faqat bugungi tushum —
+# test_cashflow_limited.py), shuning uchun umumiy holat boshqa filialda.
+b = models.Branch(name="Bekobod 1"); db.add(b); db.commit()
 
 
 def mk(u, r):

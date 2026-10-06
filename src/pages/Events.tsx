@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { formatPhone } from "../components/PhoneInput";
 import { PartyPopper, Cake, Copy, Check, Plus, Pencil, Trash2, X, CalendarDays } from "lucide-react";
 import { api } from "../lib/api";
+import { MissingDatesDialog } from "../components/MissingDates";
 
 /**
  * TADBIRLAR (2026-09-14).
@@ -140,11 +141,14 @@ function BirthdaysTab() {
   const [who, setWho] = useState<"" | "student" | "staff">("");
   const [copied, setCopied] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  // Sanasi kiritilmaganlar (2026-10-06)
+  const [missing, setMissing] = useState(false);
+  const [rev, setRev] = useState(0);
 
   useEffect(() => {
     setErr(null);
-    api.get<Birthdays>(`/events/birthdays?days=${days}`).then(setD).catch((e) => setErr(e.message));
-  }, [days]);
+    api.get<Birthdays>(`/events/birthdays?days=${days}`, rev > 0).then(setD).catch((e) => setErr(e.message));
+  }, [days, rev]);
 
   const rows = useMemo(() => (d ? d.rows.filter((r) => !who || r.who === who) : []), [d, who]);
 
@@ -193,13 +197,29 @@ function BirthdaysTab() {
           <option value="student">O'quvchilar</option>
           <option value="staff">Xodimlar</option>
         </select>
+        {/* SANASI KIRITILMAGANLAR (2026-10-06, Jahongir: "bitta click bilan
+            tug'ilgan kuni yoki ishga kirgan sanasi kiritilmaganlar") */}
+        <button type="button" onClick={() => setMissing(true)}
+          className="ml-auto inline-flex items-center gap-1.5 text-sm font-medium border border-amber-300 bg-amber-50 text-amber-800 rounded-lg px-3 py-1.5 hover:bg-amber-100">
+          Sanasi kiritilmaganlar
+          {(d.missing_students + d.missing_staff) > 0 && (
+            <span className="rounded-full bg-amber-600 text-white text-[11px] px-1.5">{d.missing_students + d.missing_staff}</span>
+          )}
+        </button>
       </div>
 
       {(d.missing_students > 0 || d.missing_staff > 0) && (
         <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
           Tug'ilgan sanasi kiritilmagan: {d.missing_students} ta o'quvchi, {d.missing_staff} ta xodim.
-          Ularning tug'ilgan kuni bu ro'yxatda chiqmaydi — kartasiga sanani kiriting.
+          Ularning tug'ilgan kuni bu ro'yxatda chiqmaydi —{" "}
+          <button type="button" onClick={() => setMissing(true)} className="underline font-medium">
+            shu yerdan kiriting
+          </button>.
         </p>
+      )}
+
+      {missing && (
+        <MissingDatesDialog onClose={() => setMissing(false)} onChanged={() => setRev((x) => x + 1)} />
       )}
 
       {rows.length === 0 ? (

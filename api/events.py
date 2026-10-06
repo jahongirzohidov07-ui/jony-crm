@@ -278,3 +278,128 @@ def delete_event(
     audit.log(db, user, entity="event", action="delete", entity_id=eid,
               entity_label=title, commit=True)
     return {"ok": True}
+
+
+# =====================================================================
+#  SANASI KIRITILMAGANLAR (2026-10-06, Jahongir: "tadbirlarga bitta
+#  click bilan tug'ilgan kuni yoki ishga kirgan sanasi kiritilmaganlar
+#  degan knopka qo'shib ber, xodim ismiga bosib akkauntiga tug'ilgan kun
+#  biriktirib qo'ya olay").
+#
+#  Tug'ilgan kun / yubiley ro'yxati kartadagi sanadan hisoblanadi —
+#  sanasi yo'q odam umuman chiqmaydi. Bu ro'yxat ularni topadi va event
+#  menejer (yoki HR) shu yerning o'zida sanani yozadi. FAQAT shu ikki
+#  maydon o'zgaradi — xodim kartasining boshqa joyiga tegilmaydi.
+# =====================================================================
+_DATES_EDIT = list(dict.fromkeys(list(roles.EVENTS_MANAGE)
+                                 + [roles.HR_MANAGER]))
+
+
+def _parse_day(v, label: str):
+    if v in (None, ""):
+        return None
+    try:
+        return date.fromisoformat(str(v)[:10])
+    except ValueError:
+        raise HTTPException(400, f"{label} noto'g'ri")
+
+
+@router.get("/api/events/missing-dates")
+def event_missing_dates(branch_id: int | None = None,
+                        db: Session = Depends(get_db),
+                        user=Depends(require_role(*roles.EVENTS_ACCESS))):
+    branches = {b.id: b.name for b in
+                db.query(models.Branch.id, models.Branch.name).all()}
+    groups = {g.id: g.name for g in
+              db.query(models.Group.id, models.Group.name).all()}
+    staff = scope_to_branch(db.query(models.User), models.User, user,
+                            branch_id).filter(
+        models.User.is_active == 1,
+        models.User.role.notin_(roles.EXTERNAL_ROLES)).order_by(
+        models.User.full_name).all()
+    srows = []
+    for u in staff:
+        if u.birth_date and u.hired_date:
+            continue
+        srows.append({
+            "who": "staff", "id": u.id, "full_name": u.full_name,
+            "sub": roles.UZ_LABELS.get(u.role, u.role),
+            "branch": branches.get(u.branch_id), "phone": u.phone,
+            "birth_date": u.birth_date.isoformat() if u.birth_date else None,
+            "hired_date": u.hired_date.isoformat() if u.hired_date else None,
+            # Asoschi kartasini faqat asoschi tahrirlaydi
+            "locked": u.role == roles.FOUNDER and user.role != roles.FOUNDER,
+        })
+    studs = scope_to_branch(db.query(models.Student), models.Student, user,
+                            branch_id).filter(
+        models.Student.status.notin_(_STUDENT_GONE),
+        models.Student.birth_date.is_(None)).order_by(
+        models.Student.full_name).all()
+    strows = [{
+        "who": "student", "id": s.id, "full_name": s.full_name,
+        "sub": groups.get(s.group_id), "branch": branches.get(s.branch_id),
+        "phone": s.phone, "birth_date": None, "hired_date": None,
+        "locked": False,
+    } for s in studs]
+    return {
+        "staff": srows, "students": strows,
+        "no_birth_staff": sum(1 for r in srows if not r["birth_date"]),
+        "no_hired_staff": sum(1 for r in srows if not r["hired_date"]),
+        "can_edit": user.role in tuple(_DATES_EDIT),
+    }
+
+
+@router.put("/api/events/dates/{who}/{obj_id}")
+def event_set_dates(who: str, obj_id: int, payload: dict = Body(...),
+                    db: Session = Depends(get_db),
+                    user=Depends(require_role(*_DATES_EDIT))):
+    """Tug'ilgan sana (va xodimda ishga kirgan sana) — faqat shu ikkisi."""
+    today = date.today()
+    bd = _parse_day(payload.get("birth_date"), "Tug'ilgan sana")
+    hd = _parse_day(payload.get("hired_date"), "Ishga kirgan sana")
+    if bd is not None:
+        if bd >= today:
+            raise HTTPException(400, "Tug'ilgan sana bugundan oldin bo'lsin")
+        if not (3 <= today.year - bd.year <= 100):
+            raise HTTPException(400, "Tug'ilgan sana yilini tekshiring")
+    if hd is not None and hd > today:
+        raise HTTPException(400, "Ishga kirgan sana kelajakda bo'lmaydi")
+    if who == "staff":
+        obj = scope_to_branch(db.query(models.User), models.User,
+                              user).filter(models.User.id == obj_id).first()
+        if obj is None or obj.role in tuple(roles.EXTERNAL_ROLES):
+            raise HTTPException(404, "Xodim topilmadi")
+        if obj.role == roles.FOUNDER and user.role != roles.FOUNDER:
+            raise HTTPException(403, "Asoschi kartasini faqat asoschi "
+                                     "tahrirlaydi")
+        fields = {"birth_date": bd, "hired_date": hd}
+    elif who == "student":
+        obj = scope_to_branch(db.query(models.Student), models.Student,
+                              user).filter(models.Student.id == obj_id).first()
+        if obj is None:
+            raise HTTPException(404, "O'quvchi topilmadi")
+        fields = {"birth_date": bd}
+    else:
+        raise HTTPException(400, "Noto'g'ri tur")
+    changed = []
+    for f, v in fields.items():
+        if f not in payload:
+            continue
+        old = getattr(obj, f)
+        if old != v:
+            setattr(obj, f, v)
+            changed.append((f, old, v))
+    if not changed:
+        return {"ok": True, "changed": 0}
+    for f, old, v in changed:
+        audit.log(db, user, entity="user" if who == "staff" else "student",
+                  action="update", entity_id=obj.id,
+                  entity_label=obj.full_name,
+                  field=("Tug'ilgan sana" if f == "birth_date"
+                         else "Ishga kirgan sana"),
+                  old_value=old.isoformat() if old else None,
+                  new_value=v.isoformat() if v else None,
+                  note="Tadbirlar: sanasi kiritilmaganlar",
+                  branch_id=obj.branch_id)
+    db.commit()
+    return {"ok": True, "changed": len(changed)}

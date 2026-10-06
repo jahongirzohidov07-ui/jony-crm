@@ -1,0 +1,49 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, GraduationCap, Download } from 'lucide-react';
+import brand from '../assets/brand-icon.png';
+import { assessGerman, germanPlacementQuestions as questions, placementMonths } from '../lib/germanPlacement';
+
+const key = 'jony-german-placement-v1';
+type Attempt = { answers: Record<string, number>; index: number; started: boolean; done: boolean };
+const empty = (): Attempt => ({answers:{},index:0,started:false,done:false});
+function restore(): Attempt {
+ try {
+  const value = JSON.parse(sessionStorage.getItem(key) || 'null');
+  if (!value || !value.answers || !Number.isInteger(value.index) || value.index<0 || value.index>=questions.length) return empty();
+  const answers: Record<string,number> = {};
+  for (const q of questions) if (Number.isInteger(value.answers[q.id]) && value.answers[q.id]>=-1 && value.answers[q.id]<4) answers[q.id]=value.answers[q.id];
+  return {answers,index:value.index,started:!!value.started,done:!!value.done && Object.keys(answers).length===questions.length};
+ } catch {return empty();}
+}
+const button='inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-800 hover:border-blue-500 disabled:opacity-40';
+const primary=`${button} !bg-blue-600 !text-white !border-blue-600`;
+const skillNames={grammar:'Grammatika',vocabulary:'Lug‘at',reading:'O‘qib tushunish'};
+export default function GermanPlacement() {
+ const [attempt,setAttempt]=useState<Attempt>(restore);
+ const [storageError,setStorageError]=useState(false);
+ const q=questions[attempt.index];
+ const answered=Object.keys(attempt.answers).length;
+ const result=assessGerman(attempt.answers);
+ useEffect(()=>{try {sessionStorage.setItem(key,JSON.stringify(attempt));}catch{setStorageError(true);}},[attempt]);
+ useEffect(()=>{window.scrollTo(0,0);},[attempt.index,attempt.done]);
+ function reset(){if(window.confirm('Joriy javoblar o‘chiriladi. Yangi o‘quvchi uchun test ochilsinmi?'))setAttempt(empty());}
+ function download(){
+  const text=['JONY DEUTSCH — KIRISH DIAGNOSTIKASI',new Date().toLocaleDateString('uz-UZ'),`Natija: ${result.score}/48`,result.label,`Tavsiya: ${result.month}-oy, ${result.lesson}-dars`,
+   ...result.blocks.map(b=>`${b.label}: ${b.correct}/${b.total}`),'Qaytarish: '+(result.gaps.join(', ')||'Asosiy bo‘shliq topilmadi.'),
+   'Dastlabki kurs tavsiyasi. Tinglash, gapirish va yozishni ustoz tekshirgach guruh tanlanadi. Goethe sertifikati yoki rasmiy CEFR bahosi emas.'].join('\n');
+  const url=URL.createObjectURL(new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='jony-nemis-kirish-natijasi.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ }
+ return <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900"><div className="mx-auto max-w-3xl space-y-6">
+  <header className="rounded-3xl bg-slate-950 p-6 text-white md:p-9"><div className="flex items-center gap-3"><img src={brand} alt="Jony" className="h-10 w-10 rounded-xl"/><span className="text-sm tracking-widest text-blue-200">JONY DEUTSCH</span></div><h1 className="mt-5 text-3xl font-bold">Nemis tilini qayerdan boshlaymiz?</h1><p className="mt-3 leading-7 text-slate-300">Kirish testi · A1–B1 · 48 savol · taxminan 25–35 daqiqa</p></header>
+  {storageError&&<p role="status" className="rounded-xl bg-amber-50 p-4">Bu brauzer javoblarni saqlay olmadi. Test tugaguncha sahifani yangilamang.</p>}
+  {!attempt.started ? <section className="rounded-2xl bg-white p-6 shadow-sm"><GraduationCap className="text-blue-600" size={32}/><h2 className="mt-3 text-xl font-bold">Sizga mos boshlanish nuqtasi</h2><p className="mt-3 leading-7 text-slate-600">Grammatika, lug‘at va o‘qib tushunish tekshiriladi. Yakunda 6 oylik kursimizning qaysi oyi va darsidan boshlash tavsiya etilishi chiqadi.</p><ul className="my-5 list-disc space-y-2 pl-5 text-sm leading-6"><li>Lug‘at, tarjimon va boshqa odamning yordamisiz ishlang.</li><li>Bilmagan savolda “Bilmayman”ni tanlang. Savollar asta-sekin qiyinlashadi.</li><li>Javoblar shu brauzer oynasida vaqtincha saqlanadi. Natijani yuklab administratorga ko‘rsating; CRMga avtomatik yozilmaydi.</li><li>Bu dastlabki tavsiya. Tinglash, gapirish va yozish ustoz bilan alohida tekshiriladi.</li></ul><button className={primary} onClick={()=>setAttempt({...empty(),started:true})}>Testni boshlash <ArrowRight size={18}/></button></section>
+  : !attempt.done ? <section className="rounded-2xl bg-white p-5 shadow-sm md:p-8"><div className="mb-3 flex justify-between gap-3 text-sm text-slate-500"><span>{placementMonths[q.month-1]} · {skillNames[q.skill]}</span><span>{attempt.index+1} / 48</span></div><progress aria-label="Javob berilgan savollar" value={answered} max={48} className="mb-6 h-2 w-full accent-blue-600"/>{q.text&&<p lang="de" className="mb-6 rounded-xl bg-blue-50 p-5 text-lg leading-8">{q.text}</p>}<fieldset><legend lang="de" className="mb-5 text-xl font-semibold leading-8">{q.prompt}</legend><div className="space-y-3">{[...q.options,'Bilmayman'].map((option,i)=>{const value=i===4?-1:i;return <label key={`${q.id}-${i}`} className={`flex cursor-pointer items-center gap-3 rounded-xl border p-4 ${attempt.answers[q.id]===value?'border-blue-600 bg-blue-50':'border-slate-200 hover:bg-slate-50'}`}><input type="radio" name={q.id} checked={attempt.answers[q.id]===value} onChange={()=>setAttempt({...attempt,answers:{...attempt.answers,[q.id]:value}})}/><span lang={i===4?'uz':'de'}>{option}</span></label>;})}</div></fieldset><div className="mt-7 flex flex-wrap justify-between gap-3"><button className={button} disabled={attempt.index===0} onClick={()=>setAttempt({...attempt,index:attempt.index-1})}>Oldingi</button><button className={primary} disabled={attempt.answers[q.id]===undefined || (attempt.index===47&&answered<48)} onClick={()=>setAttempt(attempt.index===47?{...attempt,done:true}:{...attempt,index:attempt.index+1})}>{attempt.index===47?'Natijani ko‘rish':'Keyingi'} <ArrowRight size={16}/></button></div><p className="mt-4 text-xs text-slate-400">{answered} ta savolga javob berildi. “Bilmayman” ham javob hisoblanadi.</p></section>
+  : <><section className="rounded-2xl border border-blue-200 bg-white p-6 md:p-8"><p className="text-sm font-semibold text-blue-600">DASTLABKI TAVSIYA · {result.score}/48</p><h2 className="mt-3 text-2xl font-bold">{result.label}</h2><p className="my-4 text-lg">{result.month}-oy · <strong>{result.lesson}-dars</strong>{result.allPassed?' · Goethe model sinovi':' · bosqich boshidan'}</p><p className="text-sm leading-7 text-slate-600">{result.allPassed?'Olti bosqichdagi bilim tekshiruvidan o‘tdingiz. Endi rasmiy formatdagi to‘rt ko‘nikma sinovini ustoz bilan bajaring.':'Birinchi mustahkamlanmagan bosqichdan boshlash tavsiya qilinadi. Keyingi qiyin savollar to‘g‘ri bo‘lsa ham, poydevordagi bo‘shliq tashlab ketilmaydi.'} Bu rasmiy Goethe natijasi yoki to‘liq CEFR darajasi emas.</p><div className="mt-5 flex flex-wrap gap-3"><button className={primary} onClick={download}><Download size={16}/>Natijani yuklash</button><Link className={button} to={`/plans/german?tab=lessons&lesson=${result.lesson}`}>Ustoz uchun tavsiya darsi <ArrowRight size={16}/></Link></div></section>
+   <section className="rounded-2xl bg-white p-6"><h2 className="mb-4 text-lg font-bold">Bosqichlar bo‘yicha natija</h2><div className="grid gap-3 sm:grid-cols-2">{result.blocks.map(b=><div className="rounded-xl bg-slate-50 p-4" key={b.month}><div className="flex justify-between"><strong>{b.label}</strong><span>{b.correct}/8</span></div><p className={`mt-2 text-sm ${b.passed?'text-emerald-700':'text-amber-700'}`}>{b.passed?'Bilim mezoni bajarildi':'Mustahkamlash kerak'}</p></div>)}</div><p className="mt-4 text-xs leading-6 text-slate-500">Ichki tavsiya mezoni: har bosqichda kamida 6/8, shundan grammatika 3/4 va o‘qish 1/2. Bu mezon rasmiy Goethe baholashi emas.</p><div className="mt-5 flex flex-wrap gap-3">{result.skills.map(s=><span className="rounded-lg border p-3 text-sm" key={s.skill}>{skillNames[s.skill]}: <strong>{s.correct}/{s.total}</strong></span>)}</div></section>
+   {result.gaps.length>0&&<section className="rounded-2xl bg-white p-6"><h2 className="font-bold">Avval shu mavzularni qaytaring</h2><ul className="mt-3 list-disc space-y-2 pl-5 text-sm">{result.gaps.map(t=><li key={t}>{t}</li>)}</ul></section>}
+   <section className="rounded-2xl bg-white p-6"><h2 className="font-bold">Guruhga qo‘yishdan oldin · ustoz bilan 10–15 daqiqa</h2><ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-7"><li><strong>Tinglash:</strong> tavsiya etilgan darsdagi Hören matnini ko‘rsatmasdan ikki marta eshittiring; savollarini bajartiring.</li><li><strong>Gapirish:</strong> A1 — o‘zi va kundalik hayoti; A2 — kechagi voqea va kelajak rejasi; B1 — onlayn o‘qishning foyda va kamchiliklari haqida fikrini sabab bilan aytsin.</li><li><strong>Yozish:</strong> A1 — o‘zi haqida 4–5 gap; A2 — uchrashuvni ko‘chirish haqida qisqa xabar; B1 — kurs haqidagi fikrini sabab va taklif bilan yozsin.</li><li>Ustoz mustaqil tushunish, vazifani bajarish va tushunarli ifodani tekshirib, yakuniy boshlanish nuqtasini tasdiqlasin. Qiyinchilik bo‘lsa oldingi bosqichni ham tekshirsin.</li></ol></section></>}
+  {attempt.started&&<button className={button} onClick={reset}>Yangi o‘quvchi uchun test</button>}
+  <p className="text-center text-xs leading-6 text-slate-500">Jony ichki diagnostikasi. <a className="underline" href="https://www.goethe.de/ins/au/en/m/spr/kur/tes.html" target="_blank" rel="noreferrer">Goethe daraja aniqlash haqida</a></p>
+ </div></main>;
+}

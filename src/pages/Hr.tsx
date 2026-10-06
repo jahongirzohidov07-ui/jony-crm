@@ -45,6 +45,7 @@ import { exportToExcel } from "../lib/exportXlsx";
 import { HrVacancyReport } from "../components/HrVacancyReport";
 import { ChecklistTab } from "../components/HrChecklist";
 import { ExaminerStatusTab } from "../components/HrExaminers";
+import { StaffRestoreModal } from "../components/StaffRestore";
 
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "calendar"
@@ -2524,6 +2525,7 @@ function SoloSupportTab() {
 type ExitRow = {
   id: number;
   kind: string;
+  teacher_id?: number | null;
   full_name: string;
   username: string;
   role_label: string;
@@ -2570,6 +2572,8 @@ function ExitedStaffTab() {
   const [reason, setReason] = useState("");
   const [year, setYear] = useState("");
   const [edit, setEdit] = useState<ExitRow | null>(null);
+  // Ishga qaytarish (2026-10-06)
+  const [restoring, setRestoring] = useState<ExitRow | null>(null);
 
   const load = useCallback(() => {
     api.fresh<ExitData>("/archive/staff").then(setD).catch(() => setD(null));
@@ -2751,7 +2755,7 @@ function ExitedStaffTab() {
                     </span>
                   )}
                 </td>
-                <td className="px-3 py-2.5 text-right">
+                <td className="px-3 py-2.5 text-right whitespace-nowrap">
                   {r.kind === "user" && (
                     <button
                       onClick={() => setEdit(r)}
@@ -2760,6 +2764,15 @@ function ExitedStaffTab() {
                       To'ldirish
                     </button>
                   )}
+                  {/* ISHGA QAYTARISH (2026-10-06, Jahongir: "arxivdagi
+                      ketgan xodimlarni akkauntlarini tiklash qaytarishni
+                      ham qo'shib ber hrga") */}
+                  <button
+                    onClick={() => setRestoring(r)}
+                    className="ml-3 text-xs font-medium text-emerald-700 hover:underline"
+                  >
+                    Qaytarish
+                  </button>
                 </td>
               </tr>
             ))}
@@ -2776,6 +2789,13 @@ function ExitedStaffTab() {
 
       <p className="text-xs text-slate-500 mt-3">{d.hint}</p>
 
+      {restoring && (
+        <StaffRestoreModal
+          row={restoring}
+          onClose={() => setRestoring(null)}
+          onDone={load}
+        />
+      )}
       {edit && (
         <ExitEditModal
           row={edit}

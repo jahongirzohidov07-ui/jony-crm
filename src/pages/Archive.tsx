@@ -13,6 +13,7 @@ import {
   GROUP_MANAGE,
 } from "../lib/roles";
 import { ArchivedGroupsTab } from "../components/GroupArchive";
+import { StaffRestoreModal } from "../components/StaffRestore";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
@@ -491,6 +492,7 @@ function StaffTab() {
   const [q, setQ] = useState("");           // ism/lavozim/filial qidiruvi
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<ArchiveStaffRow | null>(null);
+  const [restoring, setRestoring] = useState<ArchiveStaffRow | null>(null);
 
   function load() {
     setLoading(true);
@@ -517,16 +519,10 @@ function StaffTab() {
   const canEdit = can(user?.role, HR_ACCESS);
   const canRehire = can(user?.role, STAFF_VIEWERS);
 
-  async function rehire(r: ArchiveStaffRow) {
-    if (!confirm(`${r.full_name} ishga qaytarilsinmi?`)) return;
-    try {
-      if (r.kind === "teacher" && r.teacher_id)
-        await api.put(`/teachers/${r.teacher_id}`, { is_active: 1 });
-      else await api.put(`/users/${r.id}`, { is_active: true });
-      load();
-    } catch (e) {
-      alert(e instanceof Error ? e.message : "Xatolik");
-    }
+  // Ishga qaytarish — HR "Ketganlar arxivi" bilan bitta oyna
+  // (2026-10-06): parolni tiklash, qizil yo'lak ogohlantirishi.
+  function rehire(r: ArchiveStaffRow) {
+    setRestoring(r);
   }
 
   return (
@@ -664,6 +660,13 @@ function StaffTab() {
         </div>
       )}
 
+      {restoring && (
+        <StaffRestoreModal
+          row={{ ...restoring, kind: restoring.kind ?? "user" }}
+          onClose={() => setRestoring(null)}
+          onDone={load}
+        />
+      )}
       {editing && (
         <ExitModal
           row={editing}

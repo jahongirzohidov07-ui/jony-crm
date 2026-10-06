@@ -136,8 +136,11 @@ ck("bo'lmagan o'yin — 404", c.get("/api/plans/ielts_1_0/5/games.pdf?id=yoq", h
 ck("bo'lmagan dars — 404", c.get("/api/plans/ielts_1_0/99/games", headers=T).status_code, 404)
 ck("noma'lum darajada o'yin yo'q — 404", c.get("/api/plans/ielts_9_0/1/games", headers=T).status_code, 404)
 g5 = c.get("/api/plans/ielts_5_0/1/games", headers=T).json()["games"]
-ck("5.0 1-dars (lug'atsiz skill darsi): 8 ta o'yin, avtomatlarsiz",
-   (len(g5), [x["id"] for x in g5 if x.get("auto")]), (8, []))
+# 2026-10-05 audit: 5.0 darslariga 12–15 ta CORE lug'at qo'shildi —
+# 1-darsda 14 so'z, shuning uchun 8 muallif o'yini + lug'atdan Memory
+ck("5.0 1-dars: 8 ta muallif o'yini + lug'atdan Memory",
+   (len([x for x in g5 if not x.get("auto")]), [x["id"] for x in g5 if x.get("auto")]),
+   (8, ["memory_vocab"]))
 g7 = c.get("/api/plans/ielts_7_0/1/games", headers=T).json()["games"]
 ck("7.0 1-dars: 8 + lug'atdan Bingo va Memory", len(g7) >= 10, True)
 ck("7.0 PDF", c.get("/api/plans/ielts_7_0/32/games.pdf", headers=T).content[:4], b"%PDF")

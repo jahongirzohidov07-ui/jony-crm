@@ -662,7 +662,9 @@ function GrammarTab({ L }: { L: Lesson }) {
       {intro.length > 0 && <Section title="Tushuntirish"><Bullets items={intro} /></Section>}
       {formulas.length > 0 && <Section title="Formulalar"><Table head={["Mavzu", "Formula", "Misol", "Tarjima"]} rows={formulas} /></Section>}
       {pres.length > 0 && <Section title="Ustoz–o'quvchi savol-javob"><Table head={["Ustoz", "O'quvchi"]} rows={pres} /></Section>}
-      {notes.length > 0 && <Section title="Ustoz uchun eslatma"><Bullets items={notes} /></Section>}
+      {/* Eslatmada javob ham bo'ladi (5.0 L25: "4 va 7-savol ikkalasi B") —
+          ekranda ustozga ochiq, chop etishda chiqmaydi (2026-10-05, audit) */}
+      {notes.length > 0 && <div className="print:hidden"><Section title="Ustoz uchun eslatma"><Bullets items={notes} /></Section></div>}
       {mistakes.length > 0 && <Section title="Tipik xatolar"><Table head={["Xato", "To'g'ri", "Nega"]} rows={mistakes} /></Section>}
       {!intro.length && !formulas.length && !pres.length && <p className="text-sm text-slate-500">Bu darsda grammatika bo'limi yo'q.</p>}
     </>
@@ -781,7 +783,7 @@ function Gap({ n, ans }: { n: number; ans?: string }) {
  * emas; avval answers[N-1] olinardi va 16 mashqda 11 band noto'g'ri, 45 band
  * bo'sh javob chiqardi (audit 3.2, 2026-09-30). Bir qatorda bir nechta bo'sh
  * joy bo'lsa javob " / " bo'yicha tartib bilan taqsimlanadi. */
-function rowGaps(text: string, j: number, answers: string[] | undefined, show: boolean) {
+function rowGaps(text: string, j: number, answers: string[] | undefined, show: boolean, no?: number) {
   const ans = answers?.[j];
   const count = (text.match(GAP_RE) ?? []).length;
   const parts = count > 1 && ans && ans.includes(" / ") ? ans.split(" / ") : null;
@@ -789,7 +791,7 @@ function rowGaps(text: string, j: number, answers: string[] | undefined, show: b
   let last = 0; let k = 0;
   text.replace(GAP_RE, (m, num, idx: number) => {
     out.push(text.slice(last, idx));
-    const n = num ? Number(num) : j + 1;
+    const n = num ? Number(num) : no ?? j + 1;
     const val = !show ? undefined : parts ? (parts[k] ?? parts[parts.length - 1]) : ans;
     out.push(<Gap key={k++} n={n} ans={val} />);
     last = idx + m.length;
@@ -844,6 +846,18 @@ function Cell({ text, answers, show }: { text: string; answers?: string[]; show:
 const TH = "text-left bg-brand-50 text-brand-800 border border-slate-200 px-3 py-2 font-semibold text-xs uppercase tracking-wide";
 const TD = "border border-slate-200 px-3 py-2 align-top text-slate-800";
 
+/** Bandning O'Z raqami (2026-10-05, audit): kitobdagi savol raqami ("6 The
+ * escalators…", "11. knew", "7–8 Which TWO…", "9 — …") yoki "1-qadam." /
+ * "3-savol:" yorlig'i. Avval # ustunida j+1 chiqardi: IELTS 6–10, 32–36
+ * savollari 1..n bo'lib qolardi, "1-qadam." esa ikki marta raqamlanardi.
+ * Faqat HAMMA bandda bo'lsa olinadi — "1999 sanasini…" kabi matn adashmasin. */
+const ITEM_NO = /^\s*(\d{1,2}(?:\s*[–-]\s*\d{1,2})?|\d{1,2}-(?:qadam|savol|bosqich|qator|gap))(?:[.:)]|\s+[—–-])?(?:\s+|$)/;
+function ownNos(items: string[]): { no: string; text: string }[] | null {
+  const ms = items.map((it) => it.match(ITEM_NO));
+  if (!ms.length || ms.some((m) => !m)) return null;
+  return ms.map((m, j) => ({ no: m![1].replace(/\s+/g, ""), text: items[j].slice(m![0].length) }));
+}
+
 /** Mashq tanasi — layout bo'yicha jadval/juftlik/oqim ko'rinishi.
  * TeacherRun (jonli dars) ham shu komponentni chaqiradi, shuning uchun
  * ikkala ekranda mashq bir xil ko'rinadi (2026-09-26). */
@@ -856,6 +870,10 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
   const labelOf = (j: number) => { const n = parseInt(items[j] ?? "", 10); return Number.isNaN(n) ? j + 1 : n; };
   const byNo: string[] = [];
   if (answers) items.forEach((_, j) => { byNo[labelOf(j) - 1] = answers[j]; });
+  // Jadval/ro'yxat qatorida bandning o'z raqami va raqamsiz matni (mcq kabi)
+  const nos = ownNos(items);
+  const noOf = (j: number) => nos?.[j].no ?? String(j + 1);
+  const textOf = (j: number) => nos?.[j].text ?? items[j];
 
   if (lay === "grid" && ex.head && ex.rows) {
     return (
@@ -889,10 +907,10 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
       <div className="overflow-x-auto mt-3">
         <table className="w-full text-sm border-collapse">
           <thead><tr><th className={`${TH} w-10`}>#</th><th className={TH}>So'z / ibora</th><th className={TH}>Javob</th></tr></thead>
-          <tbody>{items.map((it, j) => (
+          <tbody>{items.map((_, j) => (
             <tr key={j} className={j % 2 ? "bg-slate-50/60" : ""}>
-              <td className={`${TD} text-center font-bold text-brand-700`}>{j + 1}</td>
-              <td className={`${TD} font-medium`}>{it}</td>
+              <td className={`${TD} text-center font-bold text-brand-700 whitespace-nowrap`}>{noOf(j)}</td>
+              <td className={`${TD} font-medium`}>{textOf(j)}</td>
               <td className={TD}>{show
                 ? <><span className="font-semibold text-emerald-700">{answers?.[j]}</span><Why text={why[j]} /></>
                 : <span className="inline-block w-28 border-b-2 border-dotted border-slate-400">&nbsp;</span>}</td>
@@ -907,13 +925,13 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
     return (
       <div className="overflow-x-auto mt-3">
         <table className="w-full text-sm border-collapse">
-          <tbody>{items.map((it, j) => {
-            const [l, r] = splitPair(it);
+          <tbody>{items.map((_, j) => {
+            const [l, r] = splitPair(textOf(j));
             return (
               <tr key={j} className={j % 2 ? "bg-slate-50/60" : ""}>
-                <td className={`${TD} w-10 text-center font-bold text-brand-700`}>{j + 1}</td>
+                <td className={`${TD} w-10 text-center font-bold text-brand-700 whitespace-nowrap`}>{noOf(j)}</td>
                 {l && <td className={`${TD} font-medium text-slate-600 w-2/5`}>{l}</td>}
-                <td className={TD} colSpan={l ? 1 : 2}>{rowGaps(r, j, answers, show)}<Why text={show ? why[j] : undefined} /></td>
+                <td className={TD} colSpan={l ? 1 : 2}>{rowGaps(r, j, answers, show, parseInt(noOf(j), 10))}<Why text={show ? why[j] : undefined} /></td>
               </tr>
             );
           })}</tbody>
@@ -1014,10 +1032,10 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
         <div className="overflow-x-auto mt-3">
           <table className="w-full text-sm border-collapse">
             <thead><tr><th className={`${TH} w-10`}>#</th><th className={TH}>{colA}</th><th className={`${TH} w-40`}>{colB}</th></tr></thead>
-            <tbody>{items.map((it, j) => (
+            <tbody>{items.map((_, j) => (
               <tr key={j} className={j % 2 ? "bg-slate-50/60" : ""}>
-                <td className={`${TD} text-center font-bold text-brand-700`}>{j + 1}</td>
-                <td className={TD}>{it.replace(/^\d+\s+/, "")}<Why text={show ? why[j] : undefined} /></td>
+                <td className={`${TD} text-center font-bold text-brand-700 whitespace-nowrap`}>{noOf(j)}</td>
+                <td className={TD}>{textOf(j)}<Why text={show ? why[j] : undefined} /></td>
                 <td className={TD}>{show
                   ? <span className="font-semibold text-emerald-700">{answers?.[j]}</span>
                   : <span className="inline-block w-24 border-b-2 border-dotted border-slate-400">&nbsp;</span>}</td>
@@ -1032,17 +1050,20 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
   // Oddiy ro'yxat (savollar, gap to'ldirish): raqamli, bo'sh joy katak bilan
   return (
     <ol className="mt-3 space-y-2">
-      {items.map((it, j) => (
-        <li key={j} className="text-sm text-slate-800 flex gap-2">
-          <span className="font-bold text-brand-700 w-6 shrink-0 text-right">{j + 1}.</span>
-          <div className="flex-1">
-            {/_{3,}|\(\d+\)/.test(it)
-              ? <Lines text={it} render={(t) => rowGaps(t, j, answers, show)} />
-              : <><Lines text={it} render={(t) => t} />{show && answers?.[j] && <span className="ml-2 font-semibold text-emerald-700">→ {answers[j]}</span>}</>}
-            <Why text={show ? why[j] : undefined} />
-          </div>
-        </li>
-      ))}
+      {items.map((_, j) => {
+        const it = textOf(j);
+        return (
+          <li key={j} className="text-sm text-slate-800 flex gap-2">
+            <span className="font-bold text-brand-700 min-w-6 shrink-0 text-right whitespace-nowrap">{noOf(j)}.</span>
+            <div className="flex-1">
+              {/_{3,}|\(\d+\)/.test(it)
+                ? <Lines text={it} render={(t) => rowGaps(t, j, answers, show, parseInt(noOf(j), 10))} />
+                : <><Lines text={it} render={(t) => t} />{show && answers?.[j] && <span className="ml-2 font-semibold text-emerald-700">→ {answers[j]}</span>}</>}
+              <Why text={show ? why[j] : undefined} />
+            </div>
+          </li>
+        );
+      })}
     </ol>
   );
 }
@@ -1089,19 +1110,48 @@ function ExList({ list }: { list: Ex[] }) {
               {Array.isArray(ex.answers) ? ex.answers.join("; ") : ex.answers}
             </div>
           )}
-          {ex.note && <div className="text-xs text-slate-500 mt-2">{ex.note}</div>}
+          <TeacherNote text={ex.note} />
         </div>
       ))}
     </>
   );
 }
 
-/** Matndagi _so'z_ belgisi — tagiga chizilgan (paraphrase) so'z. */
-function renderRich(t: string): React.ReactNode {
-  const parts = t.split(/(_[^_]+_)/g);
-  return parts.map((p, i) => p.length > 2 && p.startsWith("_") && p.endsWith("_")
-    ? <span key={i} className="underline decoration-brand-500 decoration-2 underline-offset-2 font-medium">{p.slice(1, -1)}</span>
-    : <span key={i}>{p}</span>);
+/** Mashq izohi ("note") — FAQAT ustoz uchun: tuzoqlar, tekshirish tartibi,
+ * ko'pincha javobning o'zi ham (5.0 L25 "B ikki marta (4 va 7)").
+ * "Javobni ko'rsat" ortiga yashirilmadi: reja sahifasi ustozniki va ko'p
+ * maslahat javobni ochishdan OLDIN kerak, javobsiz mashqda esa tugma ham
+ * yo'q. Lekin chop etishda chiqmaydi; TeacherRun buni faqat ustoz rejimida
+ * chizadi, proyektorda hech qachon (2026-10-05, audit: izohlar jonli darsda
+ * umuman ko'rinmasdi). */
+export function TeacherNote({ text }: { text?: string }) {
+  if (!text) return null;
+  return (
+    <div className="text-xs text-slate-500 mt-2 border-l-2 border-amber-300 pl-2 print:hidden">
+      <span className="font-semibold text-amber-700">Ustoz uchun:</span> {text}
+    </div>
+  );
+}
+
+/** Matndagi _so'z_ belgisi — tagiga chizilgan (paraphrase / javob joyi) so'z.
+ * Bu faqat USTOZ uchun yordam: plain=true (proyektor) da va chop etishda
+ * matn oddiy chiqadi — chiziqsiz va pastki chiziq belgisiz (2026-10-05,
+ * audit: 5.0 L11 "Air conditioning", "The ballpoint pen" da javob joylari
+ * sinfga ochiq ko'rinardi). "___" bo'sh joy va "a_b" kabi yakka chiziq
+ * tegilmaydi; backend (assignments.strip_marks) ham shu qoida bilan. */
+const MARK_RE = /(^|[^\w])_(?!_)([^_\n]*?[^_\s])_(?!\w)/g;
+export function renderRich(t: string, plain = false): React.ReactNode {
+  if (plain) return t.replace(MARK_RE, "$1$2");
+  const out: React.ReactNode[] = [];
+  let last = 0;
+  for (const m of t.matchAll(MARK_RE)) {
+    const at = (m.index ?? 0) + m[1].length;
+    out.push(t.slice(last, at));
+    out.push(<span key={at} className="underline decoration-brand-500 decoration-2 underline-offset-2 font-medium print:no-underline print:font-normal">{m[2]}</span>);
+    last = (m.index ?? 0) + m[0].length;
+  }
+  out.push(t.slice(last));
+  return out;
 }
 
 function Paraphrases({ rows }: { rows: [string, string][] }) {

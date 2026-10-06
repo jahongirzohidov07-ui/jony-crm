@@ -19,8 +19,15 @@ type Sub = { id: number; status: string; attempt: number; auto_score: number | n
   rubric_scores?: Record<string, number> | null };
 type Item = { id: number; kind: string; skill: string; title: string; auto: boolean; due_at: string | null;
   questions_count: number; max_score: number | null; submission: Sub | null; overdue: boolean };
-type Q = { kind: "mcq" | "gap" | "tf" | "text" | "audio"; prompt: string; sub?: string | null; options?: string[]; answer?: unknown; explain?: string | null };
-type Detail = Item & { instr?: string | null; text?: { text: string[]; glossary: string[] } | null; questions: Q[];
+/** Mashq konteksti (2026-10-05, ustozlar auditi): vazifa sarlavhasi va
+ * ko'rsatmasi, box (so'zlar ro'yxati yoki matn), summary/jadval/sxema
+ * (head + rows), yozma vazifa bandlari — avval o'quvchiga yetib bormasdi. */
+type Ctx = { title?: string; instr?: string; box?: string[]; head?: string[]; rows?: string[][]; items?: string[] };
+/** gap/tf da options — tanlanadigan variantlar (box, A–D, TRUE/FALSE/NOT GIVEN);
+ * no — kitobdagi savol raqami (IELTS "Questions 5–8") */
+type Q = { kind: "mcq" | "gap" | "tf" | "text" | "audio"; prompt: string; sub?: string | null; options?: string[]; answer?: unknown; explain?: string | null;
+  no?: string | null; ctx?: Ctx[] | null };
+type Detail = Item & { instr?: string | null; text?: { text: string[] | null; glossary: string[] | null } | null; questions: Q[];
   answers?: Record<string, unknown>; rubric?: [string, number][] | null };
 type Card = { w: string; uz: string; ex: string; ipa?: string };
 type Today = { lesson_no: number; title: string; grammar: string; vocab_topic: string; cards: Card[]; homework: string[]; formulas: string[][] };
@@ -166,6 +173,42 @@ function ItemRow({ i }: { i: Item }) {
   );
 }
 
+/** ";;" — katak ichidagi alohida qatorlar (reja formati) */
+function Lines({ text }: { text: string }) {
+  const ls = text.split(/\s*;;\s*/);
+  return <>{ls.map((l, k) => <div key={k}>{l}</div>)}</>;
+}
+
+/** Mashq konteksti: summary/jadval/sxema, box, yozma vazifa bandlari (2026-10-05) */
+function CtxBlock({ c }: { c: Ctx }) {
+  const table = !!c.rows?.length && (!!c.head?.length || c.rows.some((r) => r.length > 1));
+  return (
+    <div className="bg-white rounded-xl border border-brand-200 p-3 text-sm text-slate-800 space-y-2">
+      {c.title && <div className="font-semibold text-slate-900">{c.title}</div>}
+      {c.instr && <div className="text-slate-700">{c.instr}</div>}
+      {table && (
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs border-collapse">
+            {!!c.head?.length && <thead><tr>{c.head.map((h, k) => <th key={k} className="border border-slate-200 bg-slate-50 px-2 py-1 text-left font-semibold">{h}</th>)}</tr></thead>}
+            <tbody>{c.rows!.map((r, k) => (
+              <tr key={k}>{r.map((x, j) => <td key={j} className="border border-slate-200 px-2 py-1 align-top"><Lines text={x} /></td>)}</tr>
+            ))}</tbody>
+          </table>
+        </div>
+      )}
+      {!table && !!c.rows?.length && (
+        <div className="space-y-1">{c.rows.map((r, k) => (
+          <div key={k} className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5"><Lines text={r[0] ?? ""} /></div>
+        ))}</div>
+      )}
+      {!!c.box?.length && (
+        <div className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 space-y-0.5">{c.box.map((b, k) => <div key={k}>{b}</div>)}</div>
+      )}
+      {!!c.items?.length && <ol className="list-decimal pl-5 space-y-0.5">{c.items.map((x, k) => <li key={k}>{x}</li>)}</ol>}
+    </div>
+  );
+}
+
 // ---------- Topshiriqni bajarish ----------
 function DoAssignment({ aid }: { aid: number }) {
   const nav = useNavigate();
@@ -216,9 +259,10 @@ function DoAssignment({ aid }: { aid: number }) {
       <h1 className="text-base font-semibold text-slate-900">{d.title}</h1>
       {d.instr && <p className="text-sm text-slate-700">{d.instr}</p>}
       {d.text && (
-        <div className="bg-white rounded-xl border border-slate-200 p-3 text-sm leading-relaxed">
-          {d.text.text.map((p, i) => <p key={i} className="mb-2">{p}</p>)}
-          <div className="text-[11px] text-slate-500 bg-slate-50 rounded px-2 py-1">{d.text.glossary.join(" · ")}</div>
+        <div className="bg-white rounded-xl border border-slate-200 p-3 text-sm leading-relaxed text-slate-800">
+          {(d.text.text ?? []).map((p, i) => <p key={i} className="mb-2">{p}</p>)}
+          {/* glossary yo'q readingda sahifa yiqilardi (null.join) */}
+          {(d.text.glossary ?? []).length > 0 && <div className="text-[11px] text-slate-500 bg-slate-50 rounded px-2 py-1">{(d.text.glossary ?? []).join(" · ")}</div>}
         </div>
       )}
 
@@ -242,30 +286,52 @@ function DoAssignment({ aid }: { aid: number }) {
           const rv: ReviewRow | { i: number; ok: boolean; given: unknown; answer: unknown; explain?: string | null } | null =
             done ? (review?.find((r) => r.i === i) ?? s?.result?.items.find((r) => r.i === i) ?? null) : null;
           const wrong = rv && !rv.ok;
+          const pick = (v: string) => setAns({ ...ans, [String(i)]: v });
           return (
-            <div key={i} className={`bg-white rounded-xl border p-3 ${wrong ? "border-rose-300" : rv ? "border-emerald-300" : "border-slate-200"}`}>
-              <div className="text-sm font-medium text-slate-900">{i + 1}. {q.prompt}</div>
+            <div key={i} className="space-y-3">
+            {q.ctx?.map((c, k) => <CtxBlock key={k} c={c} />)}
+            <div className={`bg-white rounded-xl border p-3 ${wrong ? "border-rose-300" : rv ? "border-emerald-300" : "border-slate-200"}`}>
+              <div className="text-sm font-medium text-slate-900">{q.no ?? i + 1}. {q.prompt}</div>
               {q.sub && <div className="text-xs text-slate-500">{q.sub}</div>}
               {q.kind === "mcq" && (
                 <div className="grid grid-cols-1 gap-1.5 mt-2">
                   {q.options?.map((o, k) => (
                     <button key={k} disabled={done} onClick={() => setAns({ ...ans, [String(i)]: k })}
-                            className={`text-left text-sm rounded-lg px-3 py-2 border ${ans[String(i)] === k ? "bg-brand-600 text-white border-brand-600" : "bg-white border-slate-200"} ${done && q.answer === k ? "ring-2 ring-emerald-400" : ""}`}>
+                            className={`text-left text-sm rounded-lg px-3 py-2 border ${ans[String(i)] === k ? "bg-brand-600 text-white border-brand-600" : "bg-white border-slate-200 text-slate-800"} ${done && q.answer === k ? "ring-2 ring-emerald-400" : ""}`}>
                       {o}
                     </button>
                   ))}
                 </div>
               )}
-              {q.kind === "gap" && (
+              {q.kind === "gap" && !q.options?.length && (
                 <input disabled={done} value={String(ans[String(i)] ?? "")} onChange={(e) => setAns({ ...ans, [String(i)]: e.target.value })}
-                       placeholder="Javob…" className="mt-2 w-full text-sm border border-slate-200 rounded-lg px-3 py-2" />
+                       placeholder="Javob…" className="mt-2 w-full text-sm text-slate-900 border border-slate-200 rounded-lg px-3 py-2" />
+              )}
+              {/* Box / A–D variantlari — yozish o'rniga tanlanadi (qisqalari tugma, uzunlari ro'yxat) */}
+              {q.kind === "gap" && !!q.options?.length && (
+                q.options.every((o) => o.length <= 40) ? (
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {q.options.map((o) => (
+                      <button key={o} disabled={done} onClick={() => pick(o)}
+                              className={`text-sm rounded-lg px-3 py-1.5 border ${ans[String(i)] === o ? "bg-brand-600 text-white border-brand-600" : "bg-white border-slate-200 text-slate-800"}`}>
+                        {o}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <select disabled={done} value={String(ans[String(i)] ?? "")} onChange={(e) => pick(e.target.value)}
+                          className="mt-2 w-full text-sm text-slate-900 border border-slate-200 rounded-lg px-3 py-2 bg-white">
+                    <option value="">Tanlang…</option>
+                    {q.options.map((o) => <option key={o} value={o}>{o}</option>)}
+                  </select>
+                )
               )}
               {q.kind === "tf" && (
                 <div className="flex gap-2 mt-2">
-                  {["T", "F"].map((v) => (
-                    <button key={v} disabled={done} onClick={() => setAns({ ...ans, [String(i)]: v })}
-                            className={`flex-1 rounded-lg py-2 text-sm border ${ans[String(i)] === v ? "bg-brand-600 text-white border-brand-600" : "bg-white border-slate-200"}`}>
-                      {v === "T" ? "To'g'ri" : "Noto'g'ri"}
+                  {(q.options?.length ? q.options : ["T", "F"]).map((v) => (
+                    <button key={v} disabled={done} onClick={() => pick(v)}
+                            className={`flex-1 rounded-lg py-2 text-sm border ${ans[String(i)] === v ? "bg-brand-600 text-white border-brand-600" : "bg-white border-slate-200 text-slate-800"}`}>
+                      {q.options?.length ? v : v === "T" ? "To'g'ri" : "Noto'g'ri"}
                     </button>
                   ))}
                 </div>
@@ -288,6 +354,7 @@ function DoAssignment({ aid }: { aid: number }) {
                   {wrong ? <>✗ To'g'ri javob: <b>{q.kind === "mcq" && q.options ? q.options[Number(rv.answer)] : String(rv.answer)}</b>{rv.explain ? ` — ${rv.explain}` : ""}</> : "✓ To'g'ri"}
                 </div>
               )}
+            </div>
             </div>
           );
         })}

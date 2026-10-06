@@ -12,7 +12,8 @@ import SpeakRecorder from "../../components/SpeakRecorder";
  */
 
 type Row = { submission_id: number; assignment_id: number; title: string; kind: string; student: string; group: string; submitted_at: string | null; has_ai: boolean };
-type Q = { kind: string; prompt: string; answer?: unknown; options?: string[] };
+/** no — kitobdagi savol raqami (rejadan yuborilgan reading, 2026-10-05) */
+type Q = { kind: string; prompt: string; answer?: unknown; options?: string[]; no?: string | null };
 type AiReview = { score: number | null; max: number; errors: { wrong: string; right: string; why_uz: string }[]; comment_uz: string; heuristic?: boolean };
 type Detail = {
   id: number; student: string; status: string; text: string | null; transcript: string | null; media_id: number | null;
@@ -115,7 +116,7 @@ function CheckOne({ sid }: { sid: number }) {
       <div className="bg-white rounded-xl border border-slate-200 p-3 text-sm">
         {a.questions.map((q, i) => (
           <div key={i} className="mb-2">
-            <div className="text-xs text-slate-500">{i + 1}. {q.prompt}</div>
+            <div className="text-xs text-slate-500">{q.no ?? i + 1}. {q.prompt}</div>
             {q.kind === "text" && <div className="whitespace-pre-wrap mt-1">{d.text || String(d.answers[String(i)] ?? "")}</div>}
             {q.kind !== "text" && q.kind !== "audio" && (
               <div className="mt-1">{String(d.answers[String(i)] ?? "—")}

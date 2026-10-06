@@ -222,7 +222,25 @@ def _pick_distractors(rnd, pool, correct, n=3):
     return rnd.sample(cands, n)
 
 
+def _sub_leaks(sub, correct) -> bool:
+    """Savol ostidagi yozuv (sub) to'g'ri javobni o'zida aytadimi?
+    Masalan "I wish I ___ taller." ostida "wish + were" — javob "were"."""
+    s = re.sub(r"\s+", " ", (sub or "").lower())
+    a = re.sub(r"\s+", " ", (correct or "").strip().lower()).strip(" .!?")
+    return bool(s and a and re.search(
+        r"(?<![\w'])" + re.escape(a) + r"(?![\w'])", s))
+
+
 def _mk(rnd, kind, prompt, correct, distractors, explain=None, sub=None):
+    # JAVOBNI AYTIB QO'YADIGAN SUB (2026-10-05, dars rejalari auditi):
+    # 3960 ta Kahoot savolidan 161 tasida sub qoida nomi bilan birga
+    # javobning o'zini ko'rsatardi ("wish + were", "Used to", "since").
+    # Sub savol bilan birga proyektorga va o'quvchi testiga chiqadi,
+    # explain esa faqat javobdan keyin — shunday sub izoh boshiga
+    # ko'chiriladi: qoida yo'qolmaydi, lekin javobni oldindan aytmaydi.
+    if sub and _sub_leaks(sub, correct):
+        explain = f"{sub}. {explain}" if explain else sub
+        sub = None
     opts = [correct] + list(distractors)
     rnd.shuffle(opts)
     return {"kind": kind, "prompt": prompt, "options": opts,

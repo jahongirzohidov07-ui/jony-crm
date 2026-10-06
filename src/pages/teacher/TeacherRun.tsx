@@ -6,7 +6,7 @@ import {
 import { api } from "../../lib/api";
 // Mashqlarni reja ekranidagi bilan BIR XIL ko'rsatish uchun (2026-09-26):
 // grid/pairs/flow/mcq/tfng/match/qa/list ko'rinishlari shu komponentda.
-import { ExBody, AuthImage, AuthAudio } from "../LessonPlans";
+import { ExBody, AuthImage, AuthAudio, renderRich, TeacherNote } from "../LessonPlans";
 
 /**
  * DARS REJIMI — "Darsni boshlash" (2026-09-18, Jahongir: "Dars paytida
@@ -357,7 +357,9 @@ export default function TeacherRun() {
                   <Card title={readings(P).length > 1 ? `${ri + 1}. ${R.title}` : R.title}>
                     {R.qtype && <p className="text-xs text-slate-500 mb-2">{R.qtype}</p>}
                     {!proj && R.book_ref && <p className="text-xs text-slate-500 mb-2">{R.book_ref}</p>}
-                    {(R.text ?? []).map((t, i) => <p key={i} className="mb-2 leading-relaxed">{t}</p>)}
+                    {/* _javob joyi_ belgisi: ustozga tagiga chizilgan, proyektorda oddiy
+                        matn — avval ikkala rejimda ham "_..._" xom chiqardi (2026-10-05) */}
+                    {(R.text ?? []).map((t, i) => <p key={i} className="mb-2 leading-relaxed">{renderRich(t, proj)}</p>)}
                     {/* Kitob sahifasi / chizma rasmi — Run'da ko'rinmasdi (audit 5-qadam) */}
                     {R.image && <div className="my-2"><AuthImage name={R.image} alt={R.title} /></div>}
                     {/* Paraphrase ro'yxati — javob kaliti, proyektorda o'quvchiga ko'rinmasin */}
@@ -533,6 +535,10 @@ function ExList({ list, proj, show, setShow, prefix, big }: {
             {!ex.layout && on && (!ex.items || !Array.isArray(ex.answers)) && ex.answers && (
               <div className="text-emerald-700 mt-2">{Array.isArray(ex.answers) ? ex.answers.join("; ") : ex.answers}</div>
             )}
+            {/* Ustoz izohi (tuzoqlar, ko'pincha javob ham) — avval jonli darsda
+                umuman chiqmasdi, faqat reja sahifasida edi. Faqat ustoz
+                rejimida; proyektorda hech qachon (2026-10-05, audit) */}
+            {!proj && <TeacherNote text={ex.note} />}
           </div>
         );
       })}

@@ -19,6 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import json
 import re
 from datetime import datetime, timedelta
+from itertools import permutations, product
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -109,6 +110,47 @@ def norm(s: str) -> str:
     return s
 
 
+def _split_top(e: str) -> list:
+    """'/', ';', 'or', 'yoki' bo'yicha bo'lish — qavs ICHIDA bo'linmaydi
+    (2026-10-05): avval '(a light / light ham qabul qilinadi)' bo'linib,
+    yarim qavsli yaroqsiz variantlar chiqardi."""
+    groups = []
+
+    def _hide(m):
+        groups.append(m.group(0))
+        return f"\x00{len(groups) - 1}\x00"
+    masked = re.sub(r"\([^()]*\)", _hide, e)
+    parts = re.split(r"\s*(?:/|;|\bor\b|\byoki\b)\s*", masked)
+    return [re.sub(r"\x00(\d+)\x00", lambda m: groups[int(m.group(1))], p) for p in parts]
+
+
+_ALT_SPLIT = r"\s*(?:/|,|\byoki\b|\bor\b)\s*"
+
+
+def _paren_variants(s: str) -> list:
+    """Qavsdagi so'zlar IXTIYORIY (2026-10-05, ustozlar auditi): '(paper)
+    bookmarks' — 'bookmarks' ham, 'paper bookmarks' ham to'g'ri; 'The wallet
+    (which / that) I use' — uchala shakl. Avval norm() qavsni butunlay
+    o'chirardi va to'liq javob xato chiqardi. Izohdagi aniq muqobil ham javob:
+    '(X ham to'g'ri / ham mos / ham qabul qilinadi)', '(yoki X)'."""
+    s = s.replace("’", "'").replace("‘", "'")
+    groups = re.findall(r"\(([^()]*)\)", s)
+    if not groups:
+        return [s]
+    choices = [[""] + [x for x in re.split(r"\s*/\s*", g) if x.strip()] for g in groups]
+    combos = list(product(*choices))[:64] if len(groups) <= 3 else [("",) * len(groups)]
+    out = []
+    for combo in combos + [tuple(groups)]:
+        it = iter(combo)
+        out.append(re.sub(r"\(([^()]*)\)", lambda m: f" {next(it)} ", s))
+    for g in groups:
+        m = (re.match(r"(.+?)\s+ham\s+(?:to'g'ri|mos|qabul qilinadi)\b", g.strip())
+             or re.match(r"yoki\b\s*:?\s*(.+)", g.strip()))
+        if m:
+            out += re.split(_ALT_SPLIT, m.group(1).split(";")[-1])
+    return out
+
+
 def alternatives(expected) -> list:
     if isinstance(expected, list):
         out = []
@@ -116,9 +158,31 @@ def alternatives(expected) -> list:
             out += alternatives(e)
         return out
     e = str(expected or "")
-    parts = re.split(r"\s*(?:/|;|\bor\b|\byoki\b)\s*", e)
     # butun javob ('am / is' — ikki bo'sh joy) ham, har bir varianti ham qabul qilinadi
-    return [x for x in [norm(e)] + [norm(p) for p in parts] if x]
+    out = []
+    for p in [e] + _split_top(e):
+        for v in _paren_variants(p):
+            x = norm(v)
+            if x and x not in out:
+                out.append(x)
+    return out
+
+
+# TRUE / FALSE / NOT GIVEN va YES / NO / NOT GIVEN (2026-10-05, audit 4-band):
+# avval faqat "T"/"F" harfi T/F deb tanilardi, "TRUE", "NOT GIVEN" esa
+# yoziladigan bo'sh joy bo'lib, "T" yoki "NG" xato chiqardi; "NO" kutilganda
+# "no" ham "f" ga aylanib, birinchi harf ("n") bilan solishtirilardi.
+_TF_KEY = {"t": "t", "true": "t", "to'g'ri": "t", "togri": "t", "ha": "t", "yes": "t", "y": "t",
+           "f": "f", "false": "f", "noto'g'ri": "f", "notogri": "f", "yo'q": "f", "no": "f",
+           "ng": "ng", "not given": "ng", "notgiven": "ng", "n/g": "ng", "berilmagan": "ng"}
+
+
+def _tf_key(s, yn: bool = False):
+    g = re.sub(r"^\d{1,2}[.)]?\s+", "", norm(str(s if s is not None else "")))
+    g = re.split(r"\s+[—–-]\s+|\s*:\s+", g)[0].strip().rstrip(".").strip()
+    if g == "n":                  # YES/NO/NOT GIVEN da "N" — NO; TRUE/FALSE da noaniq
+        return "f" if yn else None
+    return _TF_KEY.get(g)
 
 
 def is_correct(kind: str, given, expected) -> bool:
@@ -128,12 +192,13 @@ def is_correct(kind: str, given, expected) -> bool:
         except (TypeError, ValueError):
             return False
     if kind == "tf":
-        g = norm(str(given))
-        if g in ("t", "true", "to'g'ri", "togri", "ha", "yes"):
-            g = "t"
-        elif g in ("f", "false", "noto'g'ri", "notogri", "yo'q", "no"):
-            g = "f"
-        return g[:1] == norm(str(expected))[:1]
+        e_raw = norm(str(expected))
+        yn = bool(re.match(r"(?:\d{1,2}[.)]?\s+)?(?:yes|no|y|n)\b", e_raw))
+        e = _tf_key(expected, yn) or e_raw[:1]
+        g = _tf_key(given, yn)
+        if g is None and e in ("t", "f"):      # eski xulq: "tru" -> "t"
+            g = norm(str(given))[:1] or None
+        return g == e
     g = norm(str(given))
     return bool(g) and g in alternatives(expected)
 
@@ -146,7 +211,9 @@ def auto_grade(questions: list, answers: dict) -> dict:
             continue
         mx += 1
         given = answers.get(str(i), answers.get(i))
-        ok = is_correct(q["kind"], given, q.get("answer"))
+        # "accept" — rejadan tuzilganda hisoblangan qabul qilinadigan shakllar
+        # (box harfi/so'zi, raqamsiz javob); eski topshiriqlarda yo'q (2026-10-05)
+        ok = is_correct(q["kind"], given, q.get("accept") or q.get("answer"))
         score += int(ok)
         items.append({"i": i, "ok": ok, "given": given, "answer": q.get("answer"), "explain": q.get("explain")})
     return {"score": score, "max": mx, "items": items}
@@ -155,29 +222,261 @@ def auto_grade(questions: list, answers: dict) -> dict:
 # ---------------------------------------------------------------
 #  Rejadan topshiriq tuzish
 # ---------------------------------------------------------------
-def _ex_to_questions(ex: dict) -> list:
-    """Reja mashqi -> savollar. items+answers (ro'yxat) bo'lsa gap/tf, aks holda erkin."""
+# Rejadan yuborilgan reading/uy vazifasi (2026-10-05, katta ustozlar auditi):
+# o'quvchiga box (so'zlar ro'yxati), summary/jadval matni, vazifa ko'rsatmasi
+# yetib bormasdi; "C beach" kabi javobda "C" yoki "beach" xato chiqardi;
+# TRUE/FALSE/NOT GIVEN yozib kiritilardi. Endi har mashqning birinchi savoliga
+# "ctx" (kontekst) qo'shiladi, box/variantlar tanlanadigan "options" bo'ladi,
+# qabul qilinadigan shakllar "accept" da saqlanadi (o'quvchiga ko'rinmaydi).
+_ROMAN = ("i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x", "xi", "xii")
+_NO_RE = re.compile(r"^\s*(\d{1,2}(?:\s*[–-]\s*\d{1,2})?)(?:[.)]\s*|\s+)(?=\S)")
+_TFW = {"T": "TRUE", "F": "FALSE", "TRUE": "TRUE", "FALSE": "FALSE", "NG": "NOT GIVEN", "NOT GIVEN": "NOT GIVEN"}
+_YNW = {"Y": "YES", "N": "NO", "YES": "YES", "NO": "NO", "NG": "NOT GIVEN", "NOT GIVEN": "NOT GIVEN"}
+
+
+def _item_nos(items: list) -> list:
+    """Bandlarning IELTS raqami ('5 The escalators…', '21. elephant', jadvalda
+    faqat '7'). Hammasi ketma-ket bo'lsagina raqam deb olinadi — '1990 was…'
+    kabi matndagi son adashtirmasin."""
+    nos, prev = [], None
+    for it in items:
+        s = str(it)
+        m = re.fullmatch(r"\s*(\d{1,2})\s*", s) or _NO_RE.match(s)
+        if not m:
+            return [None] * len(items)
+        n = re.sub(r"\s", "", m.group(1))
+        a, _, b = n.replace("–", "-").partition("-")
+        if prev is not None and int(a) != prev + 1:
+            return [None] * len(items)
+        prev = int(b or a)
+        nos.append(n)
+    return nos
+
+
+def _strip_no(a: str, no, j: int) -> str:
+    """Javob boshidagi band raqami: '11. knew', '1 — B', '1) C (1888)' (o'quvchi
+    'knew' yozsa xato chiqardi). '6.15' kabi vaqt tegilmaydi."""
+    m = re.match(r"^\s*(\d{1,2})\s*(?:[.)]\s+|[—–-]\s+)(?=\S)", a)
+    if m and m.group(1) in (str(j + 1), re.split(r"[–-]", str(no or ""))[0]):
+        return a[m.end():].strip()
+    return a.strip()
+
+
+def _box_map(box) -> dict:
+    """Harflangan box ('C beach', 'A) cinema', 'iv. A young ruler…') ->
+    {'C': ('beach', 'C beach')}. Oddiy so'zlar ro'yxati yoki matn — {}."""
+    if not isinstance(box, list) or len(box) < 2:
+        return {}
+    out = {}
+    for b in box:
+        m = re.match(r"^\s*([A-Za-z]|[ivx]{1,4})(?:[).]\s*|\s+)(?:[—–-]\s+)?(\S.*)$", str(b))
+        if not m or m.group(1) in out:
+            return {}
+        out[m.group(1)] = (m.group(2).strip(), str(b))
+    labs = list(out)
+    if labs == list(_ROMAN[:len(labs)]) or (
+            all(len(x) == 1 for x in labs) and all(ord(y) - ord(x) == 1 for x, y in zip(labs, labs[1:]))):
+        return out
+    return {}
+
+
+def _box_label(core: str, bm: dict):
+    """'C beach' / 'C' / 'F — teacher' / 'iv' / 'C (1888)' -> box harfi; javob
+    so'zi box'dagi so'zga mos kelmasa — None (yolg'iz harf faqat shu yerda)."""
+    m = re.match(r"^([A-Za-z]{1,4})[).]?(?:\s+[—–-])?(?:\s+(.*))?$", core.strip())
+    if not m or m.group(1) not in bm:
+        return None
+    rest = (m.group(2) or "").strip()
+    if not rest or rest.startswith("(") or norm(rest) == norm(bm[m.group(1)][0]):
+        return m.group(1)
+    return None
+
+
+def _inline_opts(item: str):
+    """'1 Why…? A) x B) y C) z' -> ('1 Why…?', ['A) x', 'B) y', 'C) z'])."""
+    parts = re.split(r"\s+(?=[A-Ea-e]\)\s)", item)
+    letters = [p[0].upper() for p in parts[1:]]
+    if len(parts) < 3 or letters != [chr(65 + k) for k in range(len(letters))]:
+        return None, []
+    return parts[0].strip(), [p.strip() for p in parts[1:]]
+
+
+def _tf_lead(a: str):
+    """'1. FALSE — sabab', 'F (fourteen)', 'NOT GIVEN' -> ('FALSE', 'sabab').
+    'T-H-O-R-N-T-O-N' (harflab yozish) yoki 'No, I'm not' — T/F emas."""
+    s = re.sub(r"^\s*\d{1,2}(?:[.)]\s+|\s*[—–-]\s+)", "", a.strip())
+    m = re.match(r"(?i)(not\s+given|true|false|yes|no|ng|t|f|y|n)\.?(?=\s*$|\s*\(|\s*[—–:]|\s+-\s)", s)
+    if not m:
+        return None, ""
+    return re.sub(r"\s+", " ", m.group(1)).upper(), s[m.end():].strip(" —–-:")
+
+
+def _gap_line(ex: dict, n: str) -> str:
+    """Bandi faqat '7' bo'lgan summary/jadval/sxema savoli uchun '(7)' turgan
+    qator yoki gap (audit 2-band: Rubik, sticky note, jeans)."""
+    pat = re.compile(r"\(\s*%s\s*\)" % re.escape(n))
+    hd = ex.get("head") or []
+    for r in ex.get("rows") or []:
+        cells = r if isinstance(r, list) else [r]
+        for j, cell in enumerate(cells):
+            for line in re.split(r"\s*;;\s*", str(cell)):
+                if not pat.search(line):
+                    continue
+                if len(line) > 120:            # summary xatboshisi -> shu gap
+                    line = next((s for s in re.split(r"(?<=[.!?])\s+", line) if pat.search(s)), line)
+                lab = []
+                if j > 0 and not pat.search(str(cells[0])) and len(str(cells[0])) <= 40:
+                    lab.append(str(cells[0]))
+                if 0 < j < len(hd) and len(line) <= 40:
+                    lab.append(str(hd[j]))
+                return (" — ".join(lab) + ": " if lab else "") + line.strip()
+    return ""
+
+
+def _ctx(ex: dict, head: bool) -> Optional[dict]:
+    """O'quvchi mashqni bajarishi uchun kerak bo'lgan hamma narsa: box
+    (so'zlar ro'yxati yoki matn), summary/jadval/sxema (head + rows), eski
+    "table"; readingda vazifa sarlavhasi va ko'rsatmasi ham. "note" — ustoz
+    izohi (ortiqcha so'zlar, javoblar), o'quvchiga berilmaydi."""
+    c = {}
+    if head:
+        for k in ("title", "instr"):
+            if isinstance(ex.get(k), str) and ex[k].strip():
+                c[k] = ex[k].strip()
+    if isinstance(ex.get("box"), list) and ex["box"]:
+        c["box"] = [str(b) for b in ex["box"]]
+    rows, hd = ex.get("rows"), ex.get("head")
+    if not rows and isinstance(ex.get("table"), list) and len(ex["table"]) > 1:
+        hd, rows = ex["table"][0], ex["table"][1:]
+    if isinstance(rows, list) and rows:
+        c["rows"] = [[str(x) for x in r] if isinstance(r, list) else [str(r)] for r in rows]
+        if isinstance(hd, list) and hd:
+            c["head"] = [str(h) for h in hd]
+    return c or None
+
+
+def _uniq(xs: list) -> list:
+    out = []
+    for x in xs:
+        if x and x not in out:
+            out.append(x)
+    return out
+
+
+def _ex_to_questions(ex: dict, head: bool = False) -> list:
+    """Reja mashqi -> savollar. items+answers (ro'yxat) bo'lsa tf/gap, aks holda
+    erkin. head=True — reading vazifasi: sarlavha va ko'rsatma ham ctx ga."""
     items, answers = ex.get("items"), ex.get("answers")
     out = []
     if isinstance(items, list) and isinstance(answers, list) and len(items) == len(answers) \
             and all(isinstance(a, str) for a in answers):
-        for it, a in zip(items, answers):
-            a0 = a.strip()
-            if re.fullmatch(r"[TF]\b.*", a0):
-                out.append({"kind": "tf", "prompt": it, "answer": a0[0], "explain": a0})
-            elif len(a0) <= 60:
-                out.append({"kind": "gap", "prompt": it, "answer": a0, "explain": None})
+        nos = _item_nos(items)
+        why = ex.get("why") if isinstance(ex.get("why"), list) else []
+        leads = [_tf_lead(_strip_no(a, nos[j], j)) for j, a in enumerate(answers)]
+        bm = _box_map(ex.get("box"))
+        fam = None   # butun mashq T/F (yoki Y/N) bo'lsagina yolg'iz "F", "N" — T/F
+        if leads and not bm and ex.get("layout") not in ("match", "mcq"):
+            ls = [x for x, _ in leads]
+            if all(x in _TFW for x in ls) and not (
+                    all(x in ("NG", "NOT GIVEN") for x in ls) and "YES" in str(ex.get("instr")).upper()):
+                fam = "tf"
+            elif all(x in _YNW for x in ls):
+                fam = "yn"
+        has_ng = any(x in ("NG", "NOT GIVEN") for x, _ in leads) or bool(
+            re.search(r"NOT GIVEN|\bNG\b", f"{ex.get('instr') or ''} {ex.get('title') or ''}".upper()))
+        boxed, unboxed = [], 0
+        for j, (it, a) in enumerate(zip(items, answers)):
+            no, it = nos[j], str(it)
+            if no and re.fullmatch(r"\s*\d{1,2}\s*", it):
+                prompt = _gap_line(ex, no) or f"({no}) ___"
             else:
-                out.append({"kind": "text", "prompt": it, "answer": a0})
+                prompt = (_NO_RE.sub("", it, count=1) if no else it).strip() or it.strip() or f"({j + 1}) ___"
+            a0 = _strip_no(a, no, j)
+            w = why[j].strip() if j < len(why) and isinstance(why[j], str) and why[j].strip() else None
+            q = {"kind": "gap", "prompt": prompt, "answer": a0, "explain": w}
+            if no:
+                q["no"] = no
+            lead, rest = leads[j]
+            word = ((_YNW if fam == "yn" else _TFW).get(lead) if fam
+                    else lead if lead in ("TRUE", "FALSE", "NOT GIVEN") else None)
+            stem, opts = _inline_opts(prompt)
+            ml = re.match(r"^([A-Ea-e](?:\s*(?:,|and|&)\s*[A-Ea-e])*)(?![A-Za-z])", a0) if opts else None
+            letters = [x.upper() for x in re.findall(r"[A-Ea-e]", ml.group(1))] if ml else []
+            # "Paragraph A" bandiga "A — iii" javobi: o'quvchi faqat "iii" yozadi
+            pm = re.fullmatch(r"(?:Paragraph\s+)?([A-H])", prompt)
+            m2 = re.match(r"^([A-H])\s*[—–-]\s*(\S.*)$", a0) if pm else None
+            core = m2.group(2).strip() if m2 and m2.group(1) == pm.group(1) else a0
+            label = _box_label(core, bm) if bm else None
+            acc = [a0, a.strip()]
+            if word:
+                opts_tf = ["YES", "NO"] if fam == "yn" else ["TRUE", "FALSE"]
+                q.update(kind="tf", answer=word, options=opts_tf + (["NOT GIVEN"] if has_ng else []),
+                         explain=w or (a0 if rest else None))
+                acc = []
+            elif letters and all(ord(x) - 65 < len(opts) for x in letters):
+                if len(letters) == 1:          # bitta variant — tanlanadi
+                    o = opts[ord(letters[0]) - 65]
+                    q.update(prompt=stem, answer=o, options=opts,
+                             explain=w or (a0[ml.end():].strip(" —–-:") or None))
+                    acc += [letters[0], o, o[2:].strip()]
+                else:                          # "Choose TWO" (variantlar savol matnida): B, C = C, B = BC
+                    q["answer"] = ", ".join(letters)
+                    acc += [sep.join(p) for p in permutations(letters) for sep in (", ", ",", " ", "", " and ")]
+            elif label:
+                txt, raw = bm[label]
+                q["answer"] = core
+                acc += [core, label, txt, f"{label} {txt}", raw]
+                boxed.append(q)
+            elif len(a0) <= 60:
+                q["answer"] = core
+                acc.append(core)
+                unboxed += 1
+            else:
+                q = {"kind": "text", "prompt": prompt, "answer": a0, **({"no": no} if no else {})}
+                acc = []
+            acc = _uniq(acc)
+            if acc and acc != [q["answer"]]:
+                q["accept"] = acc
+            out.append(q)
+        box = ex.get("box") if isinstance(ex.get("box"), list) else []
+        if boxed and not unboxed:
+            for q in boxed:                    # hamma javob box harfi bilan — tanlanadi
+                q["options"] = [str(b) for b in box]
+        elif box and not bm and unboxed:       # oddiy so'zlar ro'yxati (in, on, at…)
+            gaps = [q for q in out if q["kind"] == "gap" and not q.get("options")]
+            if gaps and all(any(norm(b) == norm(x) for b in box for x in [q["answer"]] + q["answer"].split("/"))
+                            for q in gaps):
+                for q in gaps:
+                    q["options"] = [str(b) for b in box]
     else:
         out.append({"kind": "text", "prompt": ex.get("instr") or ex.get("title") or "",
                     "answer": answers if isinstance(answers, str) else "; ".join(answers or [])})
+    c = _ctx(ex, head)
+    if c and out:
+        if c.get("instr") == out[0]["prompt"]:
+            c.pop("instr")
+        out[0]["ctx"] = [c]
     return out
 
 
 def _mcq(qs: list) -> list:
     return [{"kind": "mcq", "prompt": q["prompt"], "sub": q.get("sub"), "options": q["options"],
              "answer": q["correct"], "explain": q.get("explain")} for q in qs]
+
+
+# Reading matnidagi _ibora_ belgisi — paraphrase / javob joyi, USTOZ uchun
+# yordam (reja ekranida tagiga chiziladi). O'quvchiga belgisiz oddiy matn
+# boradi (2026-10-05, audit: 5.0 L11 "Air conditioning", "The ballpoint pen"
+# da javob joylari o'quvchi topshirig'ida ochiq turardi). "___" bo'sh joy va
+# "clarice_willard@" kabi yakka pastki chiziq tegilmaydi.
+_MARK_RE = re.compile(r"(?<!\w)_(?!_)([^_\n]*?[^_\s])_(?!\w)")
+
+
+def strip_marks(text):
+    """Matn yoki xatboshilar ro'yxati — _belgi_ siz (boshqa tur o'zgarmaydi)."""
+    if isinstance(text, list):
+        return [strip_marks(t) for t in text]
+    return _MARK_RE.sub(r"\1", text) if isinstance(text, str) else text
 
 
 def _readings(L: dict) -> list:
@@ -222,11 +521,19 @@ def build_from_plan(L: dict, part: str, course: Optional[str] = None) -> Optiona
         if not (0 <= i < len(rs)):
             return None
         R = rs[i]
-        qs = []
+        qs, carry = [], []
         for t in R.get("tasks", []):
-            qs += _ex_to_questions(t)
+            tq = _ex_to_questions(t, head=True)
+            if not tq:      # savolsiz jadval (7.0 L19 "o'quvchiga toza nusxa") — keyingi savolga
+                carry += [c for c in [_ctx(t, True)] if c]
+                continue
+            if carry:
+                tq[0]["ctx"], carry = carry + (tq[0].get("ctx") or []), []
+            qs += tq
+        if carry and qs:
+            qs[-1]["ctx"] = (qs[-1].get("ctx") or []) + carry
         return {"kind": "reading", "skill": "reading", "title": f"{no}-dars — Reading: {R['title']}",
-                "text": R.get("text"), "glossary": R.get("glossary"), "questions": qs}
+                "text": strip_marks(R.get("text")), "glossary": R.get("glossary"), "questions": qs}
     if part.startswith("hw:") or part.startswith("class:"):
         src = L["homework"] if part.startswith("hw:") else L["class_ex"]
         i = int(part.split(":")[1])
@@ -234,14 +541,21 @@ def build_from_plan(L: dict, part: str, course: Optional[str] = None) -> Optiona
             return None
         ex = src[i]
         typ = ((ex.get("type") or "") + " " + (ex.get("title") or "")).lower()
+        # Yozma/og'zaki vazifaning bandlari ("If the weather is bad tomorrow, ___"),
+        # box va jadvali ham o'quvchiga boradi — avval faqat ko'rsatma borardi (2026-10-05)
+        wctx = _ctx(ex, False) or {}
+        if isinstance(ex.get("items"), list) and ex["items"]:
+            wctx["items"] = [str(x) for x in ex["items"]]
         if "og'zaki" in typ or "speaking" in typ or "ovozli" in typ:
+            q = {"kind": "audio", "prompt": ex.get("instr") or ex["title"], "answer": ""}
             return {"kind": "speaking", "skill": "speaking", "title": f"{no}-dars — {ex['title']}",
-                    "questions": [{"kind": "audio", "prompt": ex.get("instr") or ex["title"], "answer": ""}],
+                    "questions": [dict(q, ctx=[wctx]) if wctx else q],
                     "rubric": rubric_for("speaking", course)}
         if "yozma" in typ or "ijodiy" in typ or "writing" in typ or ("gap tuzish" in typ and not ex.get("items")):
+            q = {"kind": "text", "prompt": ex.get("instr") or ex["title"],
+                 "answer": ex.get("answers") if isinstance(ex.get("answers"), str) else ""}
             return {"kind": "writing", "skill": "writing", "title": f"{no}-dars — {ex['title']}",
-                    "questions": [{"kind": "text", "prompt": ex.get("instr") or ex["title"],
-                                   "answer": ex.get("answers") if isinstance(ex.get("answers"), str) else ""}],
+                    "questions": [dict(q, ctx=[wctx]) if wctx else q],
                     "rubric": rubric_for("writing", course)}
         qs = _ex_to_questions(ex)
         auto = all(q["kind"] in AUTO_KINDS for q in qs)
@@ -257,7 +571,9 @@ def build_from_plan(L: dict, part: str, course: Optional[str] = None) -> Optiona
 
 
 def _public_q(q: dict) -> dict:
-    return {k: v for k, v in q.items() if k != "answer"}
+    # "accept" (qabul qilinadigan shakllar) va "explain" ("F (fourteen)") ham
+    # javobni ochib qo'yadi — topshirishdan oldin berilmaydi (2026-10-05)
+    return {k: v for k, v in q.items() if k not in ("answer", "accept", "explain")}
 
 
 # ---------------------------------------------------------------
@@ -265,9 +581,12 @@ def _public_q(q: dict) -> dict:
 # ---------------------------------------------------------------
 def _a_out(db, a, with_questions=False, hide_answers=True) -> dict:
     qs = json.loads(a.questions or "[]")
+    text = json.loads(a.text) if a.text else None
+    if isinstance(text, dict):     # tuzatishdan oldin yuborilganlari ham belgisiz (2026-10-05)
+        text["text"] = strip_marks(text.get("text"))
     out = {"id": a.id, "group_id": a.group_id, "student_id": a.student_id, "course": a.course,
            "lesson_no": a.lesson_no, "kind": a.kind, "skill": a.skill, "title": a.title,
-           "instr": a.instr, "text": json.loads(a.text) if a.text else None,
+           "instr": a.instr, "text": text,
            "auto": bool(a.auto), "due_at": a.due_at.isoformat() if a.due_at else None,
            "sent_at": a.sent_at.isoformat() if a.sent_at else None, "status": a.status,
            "rubric": json.loads(a.rubric) if a.rubric else None, "questions_count": len(qs),
@@ -326,7 +645,7 @@ def assignable(course: str, no: int, user=Depends(require_role(*roles.TEACHING_A
     for i, R in enumerate(_readings(L)):
         part = "reading" if i == 0 else f"reading:{i}"   # eski linklar buzilmasin
         b = build_from_plan(L, part, course)
-        if not b:
+        if not b or not b.get("questions"):   # savolsiz kitob sahifasi — yuborib bo'lmaydi (2026-10-05)
             continue
         out.append({"part": part, "label": f"Reading: {R.get('title') or i + 1}",
                     "auto": bool(all(q["kind"] in AUTO_KINDS

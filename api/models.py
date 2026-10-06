@@ -572,6 +572,20 @@ class Lesson(Base):
     teacher = relationship("Teacher")
 
 
+class GermanPlacementResult(Base):
+    __tablename__ = "german_placement_results"
+    id = Column(Integer, primary_key=True)
+    attempt_id = Column(String(64), nullable=False, unique=True, index=True)
+    payload_hash = Column(String(64), nullable=False)
+    lead_id = Column(Integer, ForeignKey("leads.id"), nullable=False, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=False, index=True)
+    full_name = Column(String(120), nullable=False)
+    phone = Column(String(20), nullable=False)
+    result_json = Column(Text, nullable=False)
+    answers_json = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
 class Lead(Base):
     """Hali o'quvchiga aylanmagan potensial mijoz (lid).
 

@@ -113,6 +113,7 @@ import conduct as _r_conduct
 import events as _r_events
 import comments as _r_comments
 import content as _r_content
+import german_placement as _r_german_placement
 import dashboard as _r_dashboard
 import drill as _r_drill
 import examiners as _r_examiners
@@ -174,6 +175,7 @@ app.include_router(_r_conduct.router)
 app.include_router(_r_events.router)
 app.include_router(_r_comments.router)
 app.include_router(_r_content.router)
+app.include_router(_r_german_placement.router)
 app.include_router(_r_dashboard.router)
 app.include_router(_r_drill.router)
 app.include_router(_r_examiners.router)

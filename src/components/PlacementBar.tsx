@@ -1,3 +1,4 @@
+import GermanPlacementResults from './GermanPlacementResults';
 import { useEffect, useState } from "react";
 import { formatPhone } from "./PhoneInput";
 import { X, Copy, Send, Play, Link as LinkIcon, GraduationCap, Trash2 } from "lucide-react";
@@ -114,6 +115,7 @@ export default function PlacementBar({ leads, onChanged }: {
         </button>
       </div>
       <a href="/nemis-test" target="_blank" rel="noreferrer" className="mt-3 inline-flex rounded-lg border border-blue-200 bg-white px-3 py-2 text-sm font-semibold text-blue-700">Nemis tili kirish testi · A1–B1 →</a>
+      <GermanPlacementResults/>
       {live.length > 0 && (
         <p className="mt-2 text-xs text-amber-700">
           Kutilmoqda: {live.map((r) => r.name + (r.status === "running" ? ` (${r.answered}/50)` : "")).join(", ")}

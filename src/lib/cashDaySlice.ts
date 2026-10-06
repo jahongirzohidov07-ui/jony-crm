@@ -44,9 +44,25 @@ export interface CashDayReceiver {
   count: number;
 }
 
+/** Qo'shimcha daromad (kitob sotuvi, mock va h.k.) — 2026-10-06. */
+export interface CashDayOther {
+  id: number;
+  category: string;
+  label: string;
+  amount: number;
+  method: string;
+  method_label: string;
+  note: string | null;
+  created_by: string | null;
+  branch: string;
+}
+
 export interface CashDayData {
   /** Cheklangan filial administratori: faqat bugun (2026-10-06). */
   today_only?: boolean;
+  other_rows?: CashDayOther[];
+  other_total?: number;
+  grand_total?: number;
   date: string;
   total: number;
   count: number;

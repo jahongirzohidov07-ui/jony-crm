@@ -681,6 +681,35 @@ class Expense(Base):
     consumable = relationship("Consumable")
 
 
+class OtherIncome(Base):
+    """QO'SHIMCHA DAROMAD (2026-10-06, Jahongir: "qo'shimcha daromadlar
+    bo'limini qo'shib ber, administratorlar qila oladigan bo'lsin, pul
+    oqimida ko'rinishi kerak").
+
+    O'quvchi to'lovidan TASHQARI kassaga kirgan pul — kitob sotuvi,
+    mock imtihon, sertifikat, ijara, tadbir va h.k. Pul oqimida KIRIM
+    bo'lib chiqadi va kassa qoldig'iga qo'shiladi.
+
+    O'chirilmaydi: archived_at qo'yiladi (hech narsa yo'qolmasin) —
+    arxivdagi yozuv hech bir hisobga kirmaydi."""
+    __tablename__ = "other_incomes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    date = Column(Date, nullable=False, default=date.today, index=True)
+    category = Column(String, nullable=False, default="other")
+    amount = Column(Float, nullable=False)
+    method = Column(String, nullable=True, default="cash")
+    note = Column(String, nullable=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
+                       index=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    archived_at = Column(DateTime, nullable=True)
+    archived_by = Column(String, nullable=True)
+
+    branch = relationship("Branch")
+
+
 class TeacherPayout(Base):
     """Bir ustozning bir guruhdagi bir oy ("period" = YYYY-MM) uchun
     hisoblangan ish haqi - billing.py'dagi payroll formulasi natijasi.

@@ -191,6 +191,12 @@ export const CASH_ACCESS = [
   ...FINANCE_ACCESS, SALES_HEAD, SALES_MANAGER, ADMINISTRATOR,
 ];
 
+/** Qo'shimcha daromad kiritish/tuzatish (2026-10-06). Arxivlash —
+ *  faqat FINANCE_ACCESS (backend: OTHER_INCOME_ARCHIVE). */
+export const OTHER_INCOME_ACCESS = [
+  ...FINANCE_ACCESS, ADMINISTRATOR, SALES_MANAGER,
+];
+
 /** Lidlar bilan ishlaydiganlar. */
 export const LEAD_ACCESS = [
   ...FULL_ACCESS,

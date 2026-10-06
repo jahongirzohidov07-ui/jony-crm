@@ -160,6 +160,21 @@ CASHFLOW_LIMITED_ROLES = [ADMINISTRATOR, SALES_MANAGER]
 EXPENSE_ACCESS = FINANCE_ACCESS + [ADMINISTRATOR, SALES_MANAGER]
 EXPENSE_DELETE = FINANCE_ACCESS
 
+# QO'SHIMCHA DAROMAD (2026-10-06): administrator kiritadi va tuzatadi,
+# arxivlash (o'chirish o'rniga) — faqat moliya, xarajatdagi kabi.
+OTHER_INCOME_ACCESS = FINANCE_ACCESS + [ADMINISTRATOR, SALES_MANAGER]
+OTHER_INCOME_ARCHIVE = FINANCE_ACCESS
+OTHER_INCOME_CATEGORY_DEFS = [
+    ("book_sale", "Kitob / qo'llanma sotuvi"),
+    ("mock_exam", "Mock imtihon"),
+    ("certificate", "Sertifikat"),
+    ("rent", "Ijara (xona, joy)"),
+    ("event", "Tadbir / lager"),
+    ("merch", "Forma / mahsulot sotuvi"),
+    ("other", "Boshqa"),
+]
+OTHER_INCOME_CATEGORIES = [k for k, _ in OTHER_INCOME_CATEGORY_DEFS]
+
 # Kassa: pul qabul qilish, qarzdorlar bilan ishlash, to'lov foizi.
 # Administrator va sotuv menejeri shu ishni qiladi — lekin FOYDANI
 # ko'rmaydi. Shuning uchun bu FINANCE_ACCESS dan alohida turadi.

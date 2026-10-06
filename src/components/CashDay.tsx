@@ -196,6 +196,43 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
             </div>
           </div>
 
+          {/* Qo'shimcha daromad (2026-10-06) — o'quvchi to'lovidan
+              tashqari kirim; kassaga jami alohida ko'rsatiladi. */}
+          {!who && (data.other_rows?.length ?? 0) > 0 && (
+            <div className="mx-4 mb-3 rounded-lg border border-violet-200 bg-violet-50/60">
+              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 px-3 py-2">
+                <p className="text-xs font-medium text-violet-800">
+                  Qo'shimcha daromad: {formatSom(data.other_total || 0)}
+                </p>
+                <p className="text-xs text-slate-600">
+                  Kassaga jami:{" "}
+                  <b className="text-slate-900">
+                    {formatSom(data.grand_total ?? data.total)}
+                  </b>
+                </p>
+              </div>
+              <ul className="divide-y divide-violet-100 text-sm">
+                {data.other_rows!.map((o) => (
+                  <li key={o.id} className="flex flex-wrap items-center gap-x-3 px-3 py-1.5">
+                    <span className="text-slate-800">{o.label}</span>
+                    {o.note && <span className="text-slate-500 text-xs">{o.note}</span>}
+                    <span
+                      className={`text-xs border rounded-full px-2 py-0.5 ${
+                        METHOD_TONE[o.method] || METHOD_TONE.other
+                      }`}
+                    >
+                      {o.method_label}
+                    </span>
+                    <span className="text-xs text-slate-400">{o.created_by || "—"}</span>
+                    <span className="ml-auto font-semibold text-emerald-700 tabular-nums">
+                      +{formatSom(o.amount)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Kim qabul qildi — bosilsa shu xodim kesimiga o'tadi */}
           {data.by_receiver.length > 0 && (
             <div className="px-4 pb-3 flex flex-wrap gap-2">

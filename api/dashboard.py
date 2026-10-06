@@ -557,6 +557,11 @@ def report_cashflow(
         period = _period_key(y, m)
 
         methods = _income_by_method(db, user, start, end)
+        # Qo'shimcha daromad ham kirim (2026-10-06) — usuli bo'yicha
+        other_inc = 0.0
+        for o in _other_incomes(db, user, None, start, end):
+            methods[_oi_method(o)] += o.amount
+            other_inc += o.amount
         income = sum(methods.values())
         exp_total, _ = _expenses_total(db, user, start, end)
         payroll = _payroll_total(db, user, period)
@@ -567,6 +572,7 @@ def report_cashflow(
             "card": methods["card"],
             "terminal": methods["terminal"],
             "other": methods["other"],
+            "other_income": other_inc,
             "income": income,
             "expenses": exp_total,
             "payroll": payroll,
@@ -574,7 +580,7 @@ def report_cashflow(
             "net": income - exp_total - payroll,
         })
 
-    keys = ["cash", "card", "terminal", "other", "income",
+    keys = ["cash", "card", "terminal", "other", "other_income", "income",
             "expenses", "payroll", "outflow", "net"]
     return {"rows": rows, "totals": {k: sum(r[k] for r in rows) for k in keys}}
 
@@ -1593,8 +1599,31 @@ def cash_day(
             "note": p.note,
         })
 
+    # Qo'shimcha daromad (2026-10-06) — o'quvchi to'lovlaridan alohida
+    # ko'rsatiladi; "kassaga jami" = to'lovlar + qo'shimcha daromad.
+    oi_labels = dict(roles.OTHER_INCOME_CATEGORY_DEFS)
+    other_rows = []
+    for o in sorted(_other_incomes(db, user, branch_id, d, d),
+                    key=lambda x: -(x.id or 0)):
+        m_ = _oi_method(o)
+        other_rows.append({
+            "id": o.id,
+            "category": o.category,
+            "label": oi_labels.get(o.category, o.category),
+            "amount": o.amount,
+            "method": m_,
+            "method_label": roles.PAYMENT_METHOD_LABELS.get(m_, m_),
+            "note": o.note,
+            "created_by": o.created_by,
+            "branch": branches.get(o.branch_id) or "—",
+        })
+    other_total = round(sum(r["amount"] for r in other_rows), 2)
+
     return {
         "date": d.isoformat(),
+        "other_rows": other_rows,
+        "other_total": other_total,
+        "grand_total": round(total + other_total, 2),
         "total": round(total, 2),
         "count": len(rows),
         "by_method": [{
@@ -1610,6 +1639,25 @@ def cash_day(
         "rows": rows,
         "today_only": today_only,
     }
+
+
+def _other_incomes(db: Session, user, branch_id, lo: date, hi: date):
+    """QO'SHIMCHA DAROMADLAR (2026-10-06) — [lo, hi] (ikkalasi ham
+    kiradi) oralig'idagi, arxivga o'tmagan yozuvlar. Filial chegarasi
+    xarajatlar bilan bir xil — kassa daftari va qoldiq mos tushsin."""
+    OI = getattr(models, "OtherIncome", None)
+    if OI is None:
+        return []
+    q = scope_to_branch(db.query(OI), OI, user).filter(
+        OI.archived_at.is_(None), OI.date >= lo, OI.date <= hi)
+    if branch_id and user.role in tuple(roles.ORG_WIDE_ROLES):
+        q = q.filter(OI.branch_id == branch_id)
+    return q.all()
+
+
+def _oi_method(o) -> str:
+    m = getattr(o, "method", None) or "cash"
+    return m if m in roles.PAYMENT_METHODS else "cash"
 
 
 # Kassa qoldig'i shu kundan boshlab yuritiladi (2026-10-02, Jahongir:
@@ -1674,6 +1722,11 @@ def _cf_opening(db: Session, user, branch_id, start: date) -> dict:
                                          func.sum(models.Expense.amount))
                         .group_by(models.Expense.method).all()):
         bal[_bk(method)] -= float(amt or 0)
+
+    # Qo'shimcha daromad — kassaga kirgan pul (2026-10-06)
+    for o in _other_incomes(db, user, branch_id, CF_OPENING_FROM,
+                            start - timedelta(days=1)):
+        bal[_oi_method(o)] += float(o.amount or 0)
 
     _tp_branch = func.coalesce(models.TeacherPayment.branch_id,
                                models.Teacher.branch_id)
@@ -1763,6 +1816,27 @@ def cashflow_ledger(
             "branch": branches.get(st.branch_id) or "—",
             "category": "new_payment" if is_new else "old_payment",
             "note": p.note,
+        })
+
+    # --- Qo'shimcha daromadlar (2026-10-06) — kirim ---
+    oi_labels = dict(roles.OTHER_INCOME_CATEGORY_DEFS)
+    other_sum = 0.0
+    for o in _other_incomes(db, user, branch_id, start, end):
+        method = _oi_method(o)
+        kirim[method] += o.amount
+        other_sum += o.amount
+        lbl = oi_labels.get(o.category, o.category)
+        rows.append({
+            "id": f"oi{o.id}",
+            "date": o.date.isoformat(),
+            "amount": o.amount,
+            "title": f"{lbl}" + (f" — {o.note}" if o.note else ""),
+            "student_id": None,
+            "method": method,
+            "direction": "in",
+            "branch": branches.get(o.branch_id) or "—",
+            "category": "other_income",
+            "note": o.note,
         })
 
     # --- Chiqimlar ---
@@ -1932,6 +2006,7 @@ def cashflow_ledger(
         "kassa": block(kassa),
         "new_payments": {"count": new_cnt, "amount": new_sum},
         "old_payments": {"count": old_cnt, "amount": old_sum},
+        "other_income": round(other_sum, 2),
         "months": months_out,
         "rows": rows,
     }

@@ -457,6 +457,187 @@ def delete_expense(
     db.commit()
     return {"ok": True}
 
+
+# ---------------------------------------------------------------
+#  QO'SHIMCHA DAROMAD (2026-10-06)
+#  Jahongir: "qo'shimcha daromadlar bo'limini qo'shib ber
+#  administratorlar qila oladigan bo'lsin, pul oqimida ko'rinishi
+#  kerak u ham". O'quvchi to'lovidan tashqari kirim. Pul oqimida
+#  (kassa daftari, kun kassasi, kassa qoldig'i, trend) KIRIM bo'ladi.
+# ---------------------------------------------------------------
+_OI_LABELS = dict(roles.OTHER_INCOME_CATEGORY_DEFS)
+
+
+def _oi_out(o: models.OtherIncome) -> dict:
+    return {
+        "id": o.id,
+        "date": o.date.isoformat() if o.date else None,
+        "category": o.category,
+        "category_label": _OI_LABELS.get(o.category, o.category),
+        "amount": o.amount,
+        "method": o.method or "cash",
+        "method_label": roles.PAYMENT_METHOD_LABELS.get(
+            o.method or "cash", o.method),
+        "note": o.note,
+        "branch_id": o.branch_id,
+        "branch": o.branch.name if o.branch else None,
+        "created_by": o.created_by,
+        "created_at": o.created_at.isoformat() if o.created_at else None,
+    }
+
+
+def _oi_clean(data: dict, *, partial: bool) -> dict:
+    """Kiritilgan maydonlarni tekshiradi; faqat ruxsat etilganlarini
+    qaytaradi."""
+    out: dict = {}
+    if "category" in data or not partial:
+        cat = data.get("category") or "other"
+        if cat not in roles.OTHER_INCOME_CATEGORIES:
+            raise HTTPException(400, "Noto'g'ri daromad turi")
+        out["category"] = cat
+    if "amount" in data or not partial:
+        try:
+            amt = float(data.get("amount") or 0)
+        except (TypeError, ValueError):
+            raise HTTPException(400, "Summa noto'g'ri")
+        if amt <= 0:
+            raise HTTPException(400, "Summa noldan katta bo'lishi kerak")
+        out["amount"] = round(amt, 2)
+    if "method" in data or not partial:
+        m = data.get("method") or "cash"
+        if m not in roles.PAYMENT_METHODS:
+            raise HTTPException(400, "To'lov usuli noto'g'ri")
+        out["method"] = m
+    if "date" in data or not partial:
+        raw = data.get("date")
+        try:
+            d = date.fromisoformat(raw) if raw else roles.local_today()
+        except (TypeError, ValueError):
+            raise HTTPException(400, "Sana noto'g'ri (YYYY-MM-DD)")
+        if d > roles.local_today():
+            raise HTTPException(400, "Kelajakdagi sana bilan kiritib bo'lmaydi")
+        out["date"] = d
+    if "note" in data:
+        out["note"] = (str(data.get("note") or "").strip() or None)
+    return out
+
+
+def _oi_in_scope(db: Session, oid: int, user) -> models.OtherIncome:
+    o = db.query(models.OtherIncome).get(oid)
+    if not o or o.archived_at is not None:
+        raise HTTPException(404, "Daromad yozuvi topilmadi")
+    if not _in_user_branches(db, user, o.branch_id):
+        raise HTTPException(403, "Bu yozuv boshqa filialga tegishli")
+    return o
+
+
+@router.get("/api/other-incomes")
+def list_other_incomes(
+    year: Optional[int] = None,
+    month: Optional[int] = None,
+    branch_id: Optional[int] = None,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.OTHER_INCOME_ACCESS)),
+):
+    """Bir oylik qo'shimcha daromadlar (arxivdagilar kirmaydi)."""
+    today = roles.local_today()
+    y, m = year or today.year, month or today.month
+    start, end = billing.month_bounds(y, m)
+    q = (scope_to_branch(db.query(models.OtherIncome), models.OtherIncome,
+                         user, branch_id)
+         .filter(models.OtherIncome.archived_at.is_(None),
+                 models.OtherIncome.date >= start,
+                 models.OtherIncome.date <= end))
+    rows = [_oi_out(o) for o in q.order_by(models.OtherIncome.date.desc(),
+                                           models.OtherIncome.id.desc()).all()]
+    by_cat: dict = {}
+    for r in rows:
+        by_cat[r["category"]] = by_cat.get(r["category"], 0) + r["amount"]
+    return {
+        "period": f"{y:04d}-{m:02d}",
+        "rows": rows,
+        "total": round(sum(r["amount"] for r in rows), 2),
+        "by_category": [{"category": k, "label": _OI_LABELS.get(k, k),
+                         "amount": round(v, 2)}
+                        for k, v in sorted(by_cat.items(),
+                                           key=lambda kv: -kv[1])],
+        "categories": [{"key": k, "label": lbl}
+                       for k, lbl in roles.OTHER_INCOME_CATEGORY_DEFS],
+        "can_archive": user.role in tuple(roles.OTHER_INCOME_ARCHIVE),
+    }
+
+
+@router.post("/api/other-incomes")
+def create_other_income(
+    payload: dict = Body(...),
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.OTHER_INCOME_ACCESS)),
+):
+    data = _oi_clean(payload or {}, partial=False)
+    bid = payload.get("branch_id") if payload else None
+    if bid in ("", 0):
+        bid = None
+    if bid is None:
+        bid = user.branch_id
+    if bid is not None:
+        try:
+            bid = int(bid)
+        except (TypeError, ValueError):
+            raise HTTPException(400, "Filial noto'g'ri")
+        if not db.query(models.Branch).get(bid):
+            raise HTTPException(404, "Filial topilmadi")
+        if not _in_user_branches(db, user, bid):
+            raise HTTPException(403, "Bu filialga kiritish huquqi yo'q")
+    o = models.OtherIncome(**data, branch_id=bid,
+                           created_by=user.full_name or user.username)
+    db.add(o)
+    db.commit()
+    db.refresh(o)
+    audit.log(db, user, entity="other_income", action="create",
+              entity_id=o.id,
+              entity_label=o.note or _OI_LABELS.get(o.category, o.category),
+              field=o.category, new_value=o.amount, branch_id=o.branch_id,
+              commit=True)
+    return _oi_out(o)
+
+
+@router.put("/api/other-incomes/{oid}")
+def update_other_income(
+    oid: int,
+    payload: dict = Body(...),
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.OTHER_INCOME_ACCESS)),
+):
+    o = _oi_in_scope(db, oid, user)
+    data = _oi_clean(payload or {}, partial=True)
+    audit.log_changes(db, user, entity="other_income", obj=o, changes=data,
+                      label_attr="note")
+    for k, v in data.items():
+        setattr(o, k, v)
+    db.commit()
+    db.refresh(o)
+    return _oi_out(o)
+
+
+@router.delete("/api/other-incomes/{oid}")
+def archive_other_income(
+    oid: int,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.OTHER_INCOME_ARCHIVE)),
+):
+    """O'chirilmaydi — arxivga o'tadi (hisoblardan chiqadi, bazada
+    qoladi)."""
+    o = _oi_in_scope(db, oid, user)
+    o.archived_at = datetime.utcnow()
+    o.archived_by = user.full_name or user.username
+    audit.log(db, user, entity="other_income", action="delete",
+              entity_id=o.id,
+              entity_label=o.note or _OI_LABELS.get(o.category, o.category),
+              field=o.category, old_value=o.amount, branch_id=o.branch_id,
+              note="Arxivga o'tkazildi")
+    db.commit()
+    return {"ok": True}
+
 @router.post("/api/checks/schedule")
 def check_schedule(
     payload: schemas.ScheduleCheck,

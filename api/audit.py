@@ -62,6 +62,7 @@ ENTITIES = {
     "payment": "To'lov",
     "contract": "Shartnoma",
     "expense": "Xarajat",
+    "other_income": "Qo'shimcha daromad",
     "branch": "Filial",
     "complaint": "Shikoyat",
     "reward": "Sovg'a",

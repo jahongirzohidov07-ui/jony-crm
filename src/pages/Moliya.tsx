@@ -21,7 +21,8 @@ import {
 import { useAuth } from "../lib/AuthContext";
 import {
   FINANCE_ACCESS, CASH_ACCESS, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, founderLike,
-  SALARY_FIX } from "../lib/roles";
+  SALARY_FIX, OTHER_INCOME_ACCESS } from "../lib/roles";
+import { OtherIncomeTab } from "../components/OtherIncome";
 import Debtors from "./Debtors";
 import LessonRefundsReview from "../components/LessonRefundsReview";
 import {
@@ -42,7 +43,7 @@ import { PayImportTab } from "../components/PayImport";
 import { CashDayCard } from "../components/CashDay";
 import { MonthCloseView, PnlBoard } from "../components/MonthClose";
 
-type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "billing" | "breakeven" | "budget" | "calendar" | "paid" | "lcup" | "trash" | "fixes";
+type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "other_income" | "billing" | "breakeven" | "budget" | "calendar" | "paid" | "lcup" | "trash" | "fixes";
 
 /**
  * Administrator (sotuv menejeri) kassa bilan ishlaydi — qarzdorlar,
@@ -57,6 +58,7 @@ const CASH_TABS: { key: Tab; label: string }[] = [
   { key: "debtors", label: "Qarzdorlar" },
   { key: "cashflow", label: "Pul oqimi" },
   { key: "expenses", label: "Xarajatlar" },
+  { key: "other_income", label: "Qo'shimcha daromad" },
   { key: "billing", label: "Oylik hisob-kitob" },
 ];
 
@@ -69,6 +71,7 @@ const FULL_TABS: { key: Tab; label: string }[] = [
   { key: "budget", label: "Budjet" },
   { key: "calendar", label: "To'lov kalendari" },
   { key: "expenses", label: "Xarajatlar" },
+  { key: "other_income", label: "Qo'shimcha daromad" },
   { key: "billing", label: "Oylik hisob-kitob" },
 ];
 
@@ -217,6 +220,7 @@ function PaymentKindTable({ data }: { data: CashflowLedger }) {
 function ledgerCategoryLabel(r: LedgerRow): string {
   if (r.direction === "balance") return "Oldingi oydan qoldiq";
   if (r.direction === "in") {
+    if (r.category === "other_income") return "Qo'shimcha daromad";
     return r.category === "new_payment" ? "Yangi to'lov" : "Eski to'lov";
   }
   if (r.category === "teacher_salary") return "Ustozlar oyligi";
@@ -561,7 +565,7 @@ function CashflowTab() {
                       <td>{r.branch}</td>
                       <td>{ledgerCategoryLabel(r)}</td>
                       <td className="pr-3 text-right">
-                        {canPayEdit && !bal && (
+                        {canPayEdit && !bal && r.category !== "other_income" && (
                           <button
                             onClick={() =>
                               setEditing({
@@ -1392,7 +1396,9 @@ export default function Moliya() {
   const { user } = useAuth();
   const full = can(user?.role, FINANCE_ACCESS);
   const TABS = [
-    ...(full ? FULL_TABS : CASH_TABS),
+    // Qo'shimcha daromad — faqat kirita oladiganlarga (sotuv rahbari yo'q)
+    ...(full ? FULL_TABS : CASH_TABS).filter(
+      (t) => t.key !== "other_income" || can(user?.role, OTHER_INCOME_ACCESS)),
     ...(can(user?.role, PAYMENT_LIST_VIEW) ? [PAID_TAB] : []),
     ...(full ? [TRASH_TAB] : []),
     ...(can(user?.role, CASH_ACCESS) ? [FIX_TAB] : []),
@@ -1464,6 +1470,7 @@ export default function Moliya() {
         {tab === "cashflow" && <CashflowSwitch />}
         {tab === "pnl" && <PnlBoard />}
         {tab === "expenses" && <ExpensesTab />}
+        {tab === "other_income" && <OtherIncomeTab />}
         {tab === "billing" && <BillingTab />}
         {tab === "breakeven" && <BreakEvenTab />}
         {tab === "overview" && <FinanceOverviewTab />}

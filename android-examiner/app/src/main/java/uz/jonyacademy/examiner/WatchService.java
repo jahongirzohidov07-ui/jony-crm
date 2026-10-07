@@ -68,6 +68,7 @@ public class WatchService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Api.init(this);
         channels(this);
     }
 

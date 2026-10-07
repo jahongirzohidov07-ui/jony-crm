@@ -2254,9 +2254,9 @@ def my_exam_order_add(payload: schemas.ExamOrderIn,
     # tushadi (Jahongir: "shu filialdagi examinerlaga bildirishnoma
     # bo'lib tushsin, xabar kelsin"). Ilgari bitta odamga (ko'pincha
     # asoschiga) tushardi - examinerlar ko'rmay qolardi.
+    # Qo'shimcha lavozimi examiner bo'lganlar ham (2026-10-07)
     _exs = (db.query(models.User)
-            .filter(models.User.role.in_((roles.EXAMINER,
-                                          roles.HEAD_EXAMINER)),
+            .filter(_any_role_cond((roles.EXAMINER, roles.HEAD_EXAMINER)),
                     models.User.is_active == 1).all())
     _extra = {ub.user_id for ub in db.query(models.UserBranch)
               .filter(models.UserBranch.branch_id == g.branch_id).all()}

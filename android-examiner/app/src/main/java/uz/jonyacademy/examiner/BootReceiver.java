@@ -8,6 +8,7 @@ import android.content.Intent;
 public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context c, Intent i) {
+        Api.init(c);
         if (Api.token(c) != null) {
             WatchService.start(c);
         }

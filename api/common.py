@@ -1626,6 +1626,33 @@ def _smm_achievement_task(db: Session, s: models.Student, *,
         branch_id=s.branch_id,
         priority="high")
 
+def _any_role_cond(role_list):
+    """SQL sharti: xodimning ASOSIY yoki QO'SHIMCHA lavozimi ro'yxatda.
+
+    2026-10-07, Jahongir: "examinerlarni valantyordan juniorga
+    o'zgartirgandim ... mahbuba va Jasmina examinerlarda ko'rinmayabdi".
+    Examinerlik qo'shimcha lavozim bo'lgan xodim examinerlar ro'yxatida,
+    daraja (volontyor/junior) tanlovida, oyliklarda va yangi buyurtma
+    xabarida chiqmasdi — hamma joy faqat User.role ga qarardi."""
+    rl = tuple(role_list)
+    return or_(models.User.role.in_(rl),
+               models.User.id.in_(
+                   select(models.UserRole.user_id)
+                   .where(models.UserRole.role.in_(rl))))
+
+
+def _has_any_role(db: Session, u, role_list) -> bool:
+    """Bitta xodim — asosiy yoki qo'shimcha lavozimi ro'yxatda."""
+    if u is None:
+        return False
+    rl = tuple(role_list)
+    if u.role in rl:
+        return True
+    return db.query(models.UserRole.id).filter(
+        models.UserRole.user_id == u.id,
+        models.UserRole.role.in_(rl)).first() is not None
+
+
 def _support_cond():
     """SQL sharti: xodim SUPPORT TEACHER — asosiy lavozimi YOKI qo'shimcha
     lavozimi (user_roles) bo'yicha.
@@ -7673,6 +7700,7 @@ __all__ = [
     "_ensure_staff_date_tasks",
     "_ensure_teacher_card",
     "_support_cond", "_is_support_user", "_ensure_support_cards",
+    "_any_role_cond", "_has_any_role",
     "_exam_order_form",
     "_exam_order_out",
     "_exam_summary",

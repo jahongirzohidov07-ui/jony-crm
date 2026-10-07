@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle saved) {
         super.onCreate(saved);
+        Api.init(this);
         setContentView(R.layout.activity_main);
         // Och fon ustida soat/ikonkalar to'q rangda ko'rinsin
         if (Build.VERSION.SDK_INT >= 30) {
@@ -239,6 +240,9 @@ public class MainActivity extends Activity {
                     + "sessionStorage.removeItem('jony_crm_user');"
                     + "localStorage.setItem('jony_crm_token',"
                     + JSONObject.quote(t) + ");"
+                    + (Api.activeRole(this) != null
+                       ? "localStorage.setItem('jonyos_role',"
+                         + JSONObject.quote(Api.activeRole(this)) + ");" : "")
                     + "localStorage.setItem('jony_crm_user',"
                     + JSONObject.quote(user) + ");"
                     + "location.reload();}catch(e){}})()", null);

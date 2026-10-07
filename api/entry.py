@@ -5118,8 +5118,9 @@ def staff_grades_list(branch_id: int | None = None,
         graded = (roles.EXAMINER, roles.HEAD_EXAMINER)
     elif only == "support":
         graded = (roles.SUPPORT_TEACHER, roles.HEAD_SUPPORT)
+    # Qo'shimcha lavozim ham (2026-10-07: Mahbuba, Jasmina holati)
     us = (db.query(models.User)
-          .filter(models.User.role.in_(graded),
+          .filter(_C._any_role_cond(graded),
                   models.User.is_active == 1)
           .order_by(models.User.full_name).all())
     us = [u for u in us if user.role in tuple(roles.ORG_WIDE_ROLES)
@@ -5134,9 +5135,16 @@ def staff_grades_list(branch_id: int | None = None,
     for u in us:
         r = db.query(_SG).filter(_SG.user_id == u.id).first()
         g = (r.grade if r and r.grade else "volunteer")
+        _lbl = roles.UZ_LABELS.get(u.role, u.role)
+        if u.role not in graded:
+            _xr = next((r.role for r in db.query(models.UserRole)
+                        .filter(models.UserRole.user_id == u.id).all()
+                        if r.role in graded), None)
+            if _xr:
+                _lbl = f"{_lbl} + {roles.UZ_LABELS.get(_xr, _xr)}"
         rows.append({
             "user_id": u.id, "name": u.full_name,
-            "role": roles.UZ_LABELS.get(u.role, u.role),
+            "role": _lbl,
             "branch": u.branch.name if u.branch else None,
             "phone": u.phone,
             "updated_by": r.updated_by if r else None,
@@ -5165,7 +5173,7 @@ def staff_grade_set(target_id: int, payload: dict = Body(...),
     u = db.query(models.User).get(target_id)
     if not u:
         raise HTTPException(404, "Xodim topilmadi")
-    if u.role not in _GRADED_ROLES:
+    if not _C._has_any_role(db, u, _GRADED_ROLES):
         raise HTTPException(
             400, "Daraja faqat examiner va support teacherga qo'yiladi")
     row = db.query(_SG).filter(_SG.user_id == u.id).first()

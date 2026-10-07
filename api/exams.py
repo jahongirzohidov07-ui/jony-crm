@@ -1266,8 +1266,7 @@ def _order_examiners(db: Session, branch_id) -> list:
     qo'shimcha filiali shu bo'lgan yoki filialsiz). Filialda examiner
     bo'lmasa — hammasiga. Buyurtma yaratish bilan bir xil qoida."""
     exs = (db.query(models.User)
-           .filter(models.User.role.in_((roles.EXAMINER,
-                                         roles.HEAD_EXAMINER)),
+           .filter(_any_role_cond((roles.EXAMINER, roles.HEAD_EXAMINER)),
                    models.User.is_active == 1).all())
     extra = {ub.user_id for ub in db.query(models.UserBranch)
              .filter(models.UserBranch.branch_id == branch_id).all()}

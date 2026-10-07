@@ -51,6 +51,7 @@ final class Api {
 
     static void clear(Context c) {
         prefs(c).edit().remove("token").remove("name").remove("user")
+                .remove("active_role")
                 .remove("push_web").apply();
     }
 
@@ -71,12 +72,29 @@ final class Api {
         String out = post("/api/auth/login", body.toString(), null);
         JSONObject j = new JSONObject(out);
         String role = j.optString("role", "");
-        if (!role.startsWith("examiner") && !role.equals("head_examiner")
-                && !role.equals("founder")) {
-            throw new IllegalStateException(
-                    "Bu ilova examinerlar uchun. Sizning lavozimingiz: "
-                            + role);
+        String active = null;
+        if (!isExaminer(role) && !role.equals("founder")) {
+            // QO'SHIMCHA LAVOZIM (2026-10-07: Mahbuba, Jasmina holati).
+            // Asosiy lavozimi boshqa, examinerlik — qo'shimcha bo'lsa
+            // ham kiradi; ilova so'rovlari "examiner" lavozimida ketadi.
+            JSONObject me = new JSONObject(
+                    get("/api/me", j.getString("access_token")));
+            JSONArray rs = me.optJSONArray("roles");
+            for (int i = 0; rs != null && i < rs.length(); i++) {
+                String k = rs.getJSONObject(i).optString("key");
+                if (isExaminer(k)) {
+                    active = k;
+                    break;
+                }
+            }
+            if (active == null) {
+                throw new IllegalStateException(
+                        "Bu ilova examinerlar uchun. Sizning lavozimingiz: "
+                                + role);
+            }
+            role = active;
         }
+        prefs(c).edit().putString("active_role", active).apply();
         saveToken(c, j.getString("access_token"),
                 j.optString("full_name", username));
         // Sayt (AuthContext) ochilishi bilan foydalanuvchini ham shu
@@ -90,6 +108,15 @@ final class Api {
         prefs(c).edit().putString("user", u.toString())
                 .putBoolean("push_web", true).apply();
         return j.optString("full_name", username);
+    }
+
+    static boolean isExaminer(String r) {
+        return r != null && (r.equals("examiner") || r.equals("head_examiner"));
+    }
+
+    /** Qo'shimcha lavozim bilan kirgan bo'lsa — "examiner" (yoki null). */
+    static String activeRole(Context c) {
+        return prefs(c).getString("active_role", null);
     }
 
     /** Imtihon navbati: tasdiqlanmagan so'rovlar. */
@@ -133,11 +160,21 @@ final class Api {
         return read(c, token);
     }
 
+    private static Context appCtx;
+
+    static void init(Context c) {
+        appCtx = c.getApplicationContext();
+    }
+
     private static HttpURLConnection open(String path, String method,
                                           String token) throws Exception {
         HttpURLConnection c = (HttpURLConnection)
                 new URL(BASE + path).openConnection();
         c.setRequestMethod(method);
+        String ar = appCtx != null ? activeRole(appCtx) : null;
+        if (token != null && ar != null) {
+            c.setRequestProperty("X-Active-Role", ar);
+        }
         c.setConnectTimeout(12000);
         c.setReadTimeout(15000);
         if (token != null) {

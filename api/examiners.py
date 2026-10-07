@@ -291,8 +291,7 @@ def add_examiner_adjustment(payload: schemas.ExaminerAdjustIn,
                                 *roles.EXAMINER_PENALTY_SET))):
     """Qo'lda ball ayirish (ESLATMA): sabab majburiy."""
     target = db.query(models.User).get(payload.user_id)
-    if not target or target.role not in (roles.EXAMINER,
-                                         roles.HEAD_EXAMINER):
+    if not target or not _has_any_role(db, target, (roles.EXAMINER, roles.HEAD_EXAMINER)):
         raise HTTPException(404, "Examiner topilmadi")
     if not (payload.reason or "").strip():
         raise HTTPException(400, "Sababni yozing — ball sababsiz ayirilmaydi")
@@ -338,14 +337,16 @@ def examiner_salary_list(year: int | None = None, month: int | None = None,
     today = roles.local_today()
     y, m = year or today.year, month or today.month
     ex_users = db.query(models.User).filter(
-        models.User.role.in_((roles.EXAMINER, roles.HEAD_EXAMINER)),
+        _any_role_cond((roles.EXAMINER, roles.HEAD_EXAMINER)),
         models.User.is_active == 1).order_by(models.User.full_name).all()
     rows = []
     for u in ex_users:
         d = _examiner_month(db, u.id, y, m)
         d["user_id"] = u.id
         d["name"] = u.full_name
-        d["role"] = roles.UZ_LABELS.get(u.role, u.role)
+        d["role"] = (roles.UZ_LABELS.get(u.role, u.role)
+                     if u.role in (roles.EXAMINER, roles.HEAD_EXAMINER)
+                     else f"{roles.UZ_LABELS.get(u.role, u.role)} + Examiner")
         rows.append(d)
     rows.sort(key=lambda r: -r["salary"])
     return {

@@ -60,6 +60,9 @@ def _load_course(course: str) -> Optional[dict]:
 
 
 def _lesson(course: str, no: int) -> dict:
+    if course == "intensive":
+        from intensive_course import lesson
+        return lesson(no)
     if course.startswith("outline_"):
         raise HTTPException(404, "Kurs topilmadi")
     d = _load_course(course)

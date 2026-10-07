@@ -203,7 +203,7 @@ def is_correct(kind: str, given, expected) -> bool:
     return bool(g) and g in alternatives(expected)
 
 
-def auto_grade(questions: list, answers: dict) -> dict:
+def auto_grade(questions: list, answers: dict, literal_answers: bool = False) -> dict:
     """answers: {"0": ..., "1": ...} -> {score, max, items:[{i, ok, given, answer}]}"""
     items, score, mx = [], 0, 0
     for i, q in enumerate(questions):
@@ -214,6 +214,11 @@ def auto_grade(questions: list, answers: dict) -> dict:
         # "accept" — rejadan tuzilganda hisoblangan qabul qilinadigan shakllar
         # (box harfi/so'zi, raqamsiz javob); eski topshiriqlarda yo'q (2026-10-05)
         ok = is_correct(q["kind"], given, q.get("accept") or q.get("answer"))
+        if literal_answers and q["kind"] == "gap":
+            # Intensive authors supply an explicit list of accepted complete answers.
+            expected = q.get("answer") or []
+            expected = expected if isinstance(expected, list) else [expected]
+            ok = bool(norm(str(given or ""))) and any(norm(str(given or "")) == norm(str(x)) for x in expected)
         score += int(ok)
         items.append({"i": i, "ok": ok, "given": given, "answer": q.get("answer"), "explain": q.get("explain")})
     return {"score": score, "max": mx, "items": items}
@@ -499,6 +504,9 @@ def build_from_plan(L: dict, part: str, course: Optional[str] = None) -> Optiona
     | writing | speaking. Tuzib bo'lmasa None (masalan lug'atsiz darsda
     lug'at testi) — xato tashlanmaydi (audit 4.1, 2026-09-30)."""
     no = L["no"]
+    if course == "intensive":
+        from intensive_course import assignment
+        return assignment(no, part)
     if part == "vocab":
         qs = build_questions(L, "vocab", 20, course=course)
         if len(qs) < MIN_AUTO_QS:
@@ -934,6 +942,8 @@ def _me(db, user):
 
 
 def _visible(a, st) -> bool:
+    if a.kind == "intensive_review" and a.sent_at and a.sent_at > datetime.utcnow():
+        return False
     if a.student_id and a.student_id != st.id:
         return False
     tg = json.loads(a.targets or "[]")
@@ -958,6 +968,8 @@ def my_assignments(db: Session = Depends(get_db), user=Depends(require_role(role
     if st.group_id:
         q = (db.query(models.Assignment)
              .filter(models.Assignment.group_id == st.group_id, models.Assignment.status == "sent")
+             .filter((models.Assignment.kind != "intensive_review") | (models.Assignment.sent_at <= datetime.utcnow()))
+             .filter((models.Assignment.student_id.is_(None)) | (models.Assignment.student_id == st.id))
              .order_by(models.Assignment.id.desc()).limit(60))
         for a in q.all():
             if not _visible(a, st):
@@ -1075,6 +1087,9 @@ def submit(aid: int, body: SubmitIn, db: Session = Depends(get_db), user=Depends
     a = db.query(models.Assignment).get(aid)
     if not a or a.group_id != st.group_id or not _visible(a, st):
         raise HTTPException(404, "Topshiriq topilmadi")
+    if a.course == "intensive":
+        # Serialize first submissions so concurrent requests cannot schedule twice.
+        a = db.query(models.Assignment).filter(models.Assignment.id == aid).with_for_update().one()
     qs = json.loads(a.questions or "[]")
     prev = (db.query(models.AssignmentSubmission)
             .filter(models.AssignmentSubmission.assignment_id == a.id, models.AssignmentSubmission.student_id == st.id)
@@ -1101,10 +1116,13 @@ def submit(aid: int, body: SubmitIn, db: Session = Depends(get_db), user=Depends
             except Exception:
                 pass
     if a.auto:
-        res = auto_grade(qs, body.answers or {})
+        res = auto_grade(qs, body.answers or {}, literal_answers=a.course == "intensive")
         s.auto_score, s.auto_max = float(res["score"]), float(res["max"])
         s.result = json.dumps(res, ensure_ascii=False)
         s.status, s.graded_at, s.graded_by = "graded", datetime.utcnow(), "Avtomat"
+        if a.course == "intensive":
+            from intensive_course import schedule_reviews
+            schedule_reviews(db, a, s, res)
         coins = 1 if (attempt == 1 and res["max"] and res["score"] == res["max"]) else 0   # 100% birinchi urinish — 1 coin
         s.coins = coins
         if coins:

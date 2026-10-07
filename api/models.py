@@ -572,6 +572,12 @@ class Lesson(Base):
     teacher = relationship("Teacher")
 
 
+class IntensiveReviewSchedule(Base):
+    __tablename__ = "intensive_review_schedules"
+    assignment_id = Column(Integer, ForeignKey("assignments.id"), primary_key=True)
+    student_id = Column(Integer, ForeignKey("students.id"), primary_key=True)
+
+
 class GermanPlacementResult(Base):
     __tablename__ = "german_placement_results"
     id = Column(Integer, primary_key=True)

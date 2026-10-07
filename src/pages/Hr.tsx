@@ -46,13 +46,14 @@ import { HrVacancyReport } from "../components/HrVacancyReport";
 import { ChecklistTab } from "../components/HrChecklist";
 import { ExaminerStatusTab } from "../components/HrExaminers";
 import { StaffRestoreModal } from "../components/StaffRestore";
+import { PayrollTab } from "../components/Payroll";
 
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "calendar"
   | "rubric" | "dates" | "attendance" | "nps"
   | "workforce" | "requests" | "hrvacancies" | "library" | "onbsteps"
   | "penalty" | "blacklist" | "solo" | "exited" | "drill" | "checklist"
-  | "examiners";
+  | "examiners" | "payroll";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "overview", label: "Umumiy holat" },
@@ -77,6 +78,10 @@ const TABS: { key: Tab; label: string }[] = [
   // 2026-10-05, Jahongir: "hr uchun examinerlarni valantyor va examiner
   // qilib o'zgartirishni qo'shib ber"
   { key: "examiners", label: "Examinerlar" },
+  // 2026-10-07, Jahongir: "hrga supportlarni examinerlarni oyligi
+  // ko'rinadigan bo'lim ochib ber" — Hisobotlar -> Ish haqi dagi
+  // jadvallarning o'zi (HR menyusida Hisobotlar yo'q).
+  { key: "payroll", label: "Oyliklar" },
   // 2026-08-20, Jahongir: "hamma xodimga xar xilda onboarding"
   { key: "onbsteps", label: "Onboarding" },
   // 2026-09-23, Jahongir: "hr qo'sha olsin u o'quvchilarni"
@@ -1465,6 +1470,7 @@ export default function Hr() {
       {activeTab === "library" && <LibraryTab />}
       {activeTab === "checklist" && <ChecklistTab />}
       {activeTab === "examiners" && <ExaminerStatusTab />}
+      {activeTab === "payroll" && <PayrollTab only={["examiner", "support"]} />}
       {activeTab === "onbsteps" && <OnboardingStepsTab />}
       {activeTab === "solo" && <SoloSupportTab />}
       {activeTab === "exited" && <ExitedStaffTab />}

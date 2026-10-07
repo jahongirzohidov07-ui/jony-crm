@@ -5233,6 +5233,21 @@ def staff_grade_rates_set(payload: dict = Body(...),
 _cur_ex_sal = _find_endpoint("/api/examiners/salary", "GET")
 _cur_su_sal = _find_endpoint("/api/support/salary", "GET")
 
+def _grade_totals(data: dict) -> dict:
+    """Daraja qo'llangandan KEYIN jamilar qayta hisoblanadi
+    (2026-10-07). Ilgari faqat "hisoblangan" yangilanardi — "berilgan"
+    va "qoldiq" jami eski (volontyorga ham min oylik) qiymatda qolib,
+    qatorlarda hammasi 0/"To'landi" bo'lsa ham tepada qoldiq ko'rinardi."""
+    rows = data.get("rows") or []
+    data["total"] = round(sum(float(r.get("salary") or 0) for r in rows), 0)
+    if any("paid" in r for r in rows):
+        data["paid_total"] = round(
+            sum(float(r.get("paid") or 0) for r in rows), 0)
+        data["left_total"] = round(
+            sum(float(r.get("left") or 0) for r in rows), 0)
+    return data
+
+
 if _cur_ex_sal is not None:
     _drop_route("/api/examiners/salary", "GET")
 
@@ -5246,7 +5261,7 @@ if _cur_ex_sal is not None:
         data = _cur_ex_sal(year=year, month=month, db=db, user=user)
         rows = _apply_grade(db, data.get("rows") or [], "user_id")
         data["rows"] = rows
-        data["total"] = round(sum(r["salary"] for r in rows), 0)
+        _grade_totals(data)
         return data
 
 if _cur_su_sal is not None:
@@ -5265,7 +5280,7 @@ if _cur_su_sal is not None:
         rows = _apply_grade(db, data.get("rows") or [], "user_id")
         rows = _rows_in_branch(db, rows, branch_id)
         data["rows"] = rows
-        data["total"] = round(sum(r["salary"] for r in rows), 0)
+        _grade_totals(data)
         return data
 
 

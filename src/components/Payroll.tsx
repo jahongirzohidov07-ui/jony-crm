@@ -434,17 +434,22 @@ function PayrollTable({ url, title, hint }: {
  *  oyliklari BIR JOYDA (2026-08-20, Jahongir: "oyliklar bo'limini
  *  hisobotlardan moliyaga olib o't"). Ustoz oyligi va uning o'quvchi
  *  kesimidagi tafsiloti ilgari Hisobotlar sahifasida edi. */
-export function PayrollTab() {
-  type Sub = "teacher" | "teacher_detail" | "examiner" | "support"
-    | "staff" | "grades";
+export type PayrollSub = "teacher" | "teacher_detail" | "examiner" | "support"
+  | "staff" | "grades";
+
+/** only — faqat shu bo'limlar (HR → Oyliklar: examiner va support,
+ *  2026-10-07). Berilmasa — huquqqa qarab hammasi. */
+export function PayrollTab({ only }: { only?: PayrollSub[] } = {}) {
+  type Sub = PayrollSub;
   const { user } = useAuth();
   // Ustoz oyligi ilgari Hisobotlar sahifasida edi va u yerni faqat
   // moliya ko'rardi — ko'chirishda HUQUQ KENGAYIB KETMASLIGI uchun
   // shu ikki bo'lim ham FINANCE_ACCESS bilan yopiladi. HR va o'quv
   // rahbari avvalgidek faqat examiner/support oyligini ko'radi.
   const finance = can(user?.role, FINANCE_ACCESS);
-  const [sub, setSub] = useState<Sub>(finance ? "teacher" : "examiner");
-  const SUBS: { key: Sub; label: string }[] = [
+  const [sub, setSub] = useState<Sub>(
+    only ? only[0] : finance ? "teacher" : "examiner");
+  const ALL_SUBS: { key: Sub; label: string }[] = [
     ...(finance ? [
       { key: "teacher" as Sub, label: "Ustozlar oyligi" },
       // 2026-08-13, Jahongir: "har bir o'quvchidan qancha summa nechta
@@ -458,6 +463,7 @@ export function PayrollTab() {
     { key: "staff", label: "Ma'muriy xodimlar" },
     { key: "grades", label: "Darajalar" },
   ];
+  const SUBS = ALL_SUBS.filter((x) => !only || only.includes(x.key));
 
   return (
     <div>

@@ -1,0 +1,6 @@
+status=success
+sdk= gradle_setup=
+signed=no
+commit=dd1da4e16e588e7d1e5af98cd5a33f3697dc1a7c
+run=https://github.com/jahongirzohidov07-ui/jony-crm/actions/runs/37611828430
+time=2026-10-07T11:08:36Z

@@ -8,7 +8,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
+
 
 /**
  * NUTQNI TANISH (2026-10-07).
@@ -17,16 +17,21 @@ import java.util.function.Consumer;
  * uchun speaking mashqidagi "gapirganingiz matnga aylansin" qismi
  * telefonning o'z nutq tanish xizmati orqali ishlaydi. Natija sahifaga
  * window.__jonySr(id, tur, matn) bilan qaytadi (lib/nativeBridge.ts).
- * Bir vaqtda bitta tinglash — yangisi boshlansa eskisi to'xtaydi.
+ * Bir vaqtda bitta tinglash â€” yangisi boshlansa eskisi to'xtaydi.
  */
 final class SpeechBridge {
 
     private final Context ctx;
-    private final Consumer<String> js;
+    /** Sahifaga JS yuboruvchi (API 23 da java.util.function yo'q). */
+    interface Js {
+        void accept(String code);
+    }
+
+    private final Js js;
     private SpeechRecognizer rec;
     private String currentId;
 
-    SpeechBridge(Context ctx, Consumer<String> js) {
+    SpeechBridge(Context ctx, Js js) {
         this.ctx = ctx;
         this.js = js;
     }

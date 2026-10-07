@@ -9,6 +9,14 @@
     <!-- Android 13+: bildirishnoma ko'rsatish ruxsati -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Bu imkoniyatlar MAJBURIY EMAS: mikrofonsiz planshet, landshaft
+         ekranli qurilma va televizorda ham ilova o'rnatilsin (aks holda
+         Play 1 200+ qurilmani ro'yxatdan chiqarardi). -->
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.screen.portrait" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
     <!-- KAMERA ruxsati so'ralmaydi: rasmni telefonning o'z kamera
          ilovasi oladi. Ovoz (TTS) va nutq tanish xizmatlarini topish
          uchun Android 11+ da ular shu yerda e'lon qilinadi. -->

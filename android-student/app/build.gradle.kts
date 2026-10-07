@@ -4,7 +4,7 @@ plugins {
 
 // IMZO (2026-10-07). Kalit repozitoriyda TURMAYDI: GitHub Actions uni
 // Secrets'dan vaqtincha faylga yozadi va shu o'zgaruvchilar orqali
-// beradi. Mahalliy yig'ishda o'zgaruvchilar bo'lmasa — imzosiz release.
+// beradi. Mahalliy yig'ishda o'zgaruvchilar bo'lmasa â€” imzosiz release.
 val ksFile = System.getenv("JONY_KEYSTORE_FILE")
 
 android {
@@ -12,14 +12,14 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        // Play'dagi ilova bilan BIR XIL paket — oddiy yangilanish
+        // Play'dagi ilova bilan BIR XIL paket â€” oddiy yangilanish
         applicationId = "uz.jonyos.jonystudent"
-        minSdk = 24
+        minSdk = 23
         targetSdk = 36
         // 1-versiya (PWABuilder) versionCode=1 edi; yangisi kattaroq
         // bo'lishi shart. Har yangi relizda oshiriladi.
-        versionCode = 20
-        versionName = "2.0.0"
+        versionCode = 21
+        versionName = "2.0.1"
     }
 
     signingConfigs {

@@ -3,13 +3,15 @@ import wordData from '../data/intensive-vocabulary.json';
 import checks from '../data/intensive-checks.json';
 import notes from '../data/intensive-teacher-notes.json';
 import topicExerciseData from '../data/intensive-topic-exercises.json';
+import foundationExercises from '../data/intensive-exercises-foundation.json';
+import advancedExercises from '../data/intensive-exercises-advanced.json';
 
 export type Word = { id: number; topic: string; word: string; ipa: string; meaning: string; example: string; translation: string };
 export type Question = { id: string; prompt: string; answers: string[]; explanation: string; hint?: string; caseSensitive?: boolean };
 export const words: Word[] = wordData;
 export const grammar = modules;
 export const teacherNotes = notes;
-const topicExercises = topicExerciseData as Record<string, Omit<Question, 'id'>[]>;
+export const topicExercises = Object.fromEntries(Object.entries(topicExerciseData).map(([id, questions]) => [id, [...questions, ...((foundationExercises as Record<string, Omit<Question, 'id'>[]>)[id] ?? []), ...((advancedExercises as Record<string, Omit<Question, 'id'>[]>)[id] ?? [])]])) as Record<string, Omit<Question, 'id'>[]>;
 export const monthNames = ['Fundament: gap va so‘z', 'Kundalik muloqot', 'O‘tmish va kelajak', 'Natija, taqqoslash, modallar', 'Shart va taxmin', 'Murakkab gaplar', 'Aniqlik va ko‘nikmalar', 'Integratsiya va yakuniy takrorlash'];
 export const topics = modules.flatMap((m, mi) => m.items.map(([title, example], ti) => ({ id: `${mi + 1}.${ti + 1}`, module: mi, title, example, goal: m.goal })));
 // 27 foundation-to-B2 modules, followed by five spiral-review weeks.

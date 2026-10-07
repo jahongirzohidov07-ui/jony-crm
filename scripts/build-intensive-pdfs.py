@@ -17,6 +17,7 @@ parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--sections',nargs='+',choices=['teacher','vocabulary','grammar'],default=['teacher','vocabulary','grammar'])
 SECTIONS=parser.parse_args().sections
 D=json.loads((OUT/'course-export.json').read_text(encoding='utf-8'))
+GUIDANCE=json.loads((ROOT/'src/data/intensive-lesson-guidance.json').read_text(encoding='utf-8'))
 NOTES=json.loads((ROOT/'src/data/intensive-teacher-notes.json').read_text(encoding='utf-8'))
 for name,file in [('Jony','arial.ttf'),('JonyBold','arialbd.ttf')]:pdfmetrics.registerFont(TTFont(name,'C:/Windows/Fonts/'+file))
 pdfmetrics.registerFontFamily('Jony',normal='Jony',bold='JonyBold')
@@ -41,7 +42,7 @@ def table(rows,widths):
 if 'teacher' in SECTIONS:
     # Teacher playbook: daily instructions and exact assigned topic IDs, not an empty calendar.
     story=cover('Ustoz qo‘llanmasi','8 oy · 32 hafta · 192 dars','Har yangi ustoz bir xil tartibda ishlashi uchun: dars oldi tayyorgarlik, 120 daqiqalik ssenariy, mavzu va so‘z oralig‘i, 120 daqiqalik uy vazifasi, tekshiruv mezonlari.')
-    story += [p('Kursdan foydalanish','title'),p('1. Oy → hafta → darsni oching. Bugungi grammar kartalari va so‘zlarni ko‘rib chiqing.\n2. Har shakl: namuna → birga mashq → mustaqil ishlatish.\n3. Har 10 so‘zdan keyin mashq; har 20 so‘zdan keyin aralash qaytarish.\n4. Javoblarni oldindan ko‘rsatmang. Tekshirgach xatolarni qayta ishlang.\n5. Har haftaning 6-kuni yangi material emas, aralash mashq va tekshiruv.\n6. 32 hafta — o‘quv bloki. Bayram va qayta o‘tishlar kalendardagi zaxira kunlariga joylanadi.'),p('Birinchi dars: orientatsiya','h'),p('0–15: kurs maqsadi. 15–30: xarita, daftar va uy vazifasi tartibi. 30–45: noun va adjective. 45–60: birinchi 10 so‘z. 60–65: tanaffus. 65–80: keyingi so‘zlar. 80–95: mashqni birga bajarish. 95–110: tinglash va gapirish. 110–120: uy ishini namoyish qilish.'),p('Natijani qanday tekshiramiz?','h'),p('Chiqish bileti: 3 so‘z + 2 grammar savoli. 4/5 dan past bo‘lsa, keyingi dars boshida aynan xato mavzu qaytariladi. Erkin gaplarda shakl, ma’no va yangi lug‘atni mustaqil ishlatish tekshiriladi. Onlayn mashq ballari rasmiy baho sifatida saqlanmaydi.'),p('Material tayyorligi','h'),p('Har dars uchun grammar, 25 yangi so‘z (har 6-kun takrorlash), reading, listening, speaking va writing topshiriqlari bor. To‘rt ko‘nikma matnlari, kalitlari va namunalari oyma-oy alohida PDFda ham berilgan. O‘qituvchi o‘quvchining mustaqil ishlashini baholaydi; B2 tayyorligini rasmiy mezonlar bilan alohida tekshiradi.'),PageBreak()]
+    story += [p('Kursdan foydalanish','title'),p('1. Oy → hafta → darsni oching. Bugungi grammar kartalari va so‘zlarni ko‘rib chiqing.\n2. Har shakl: namuna → birga mashq → mustaqil ishlatish.\n3. Har 10 so‘zdan keyin mashq; har 20 so‘zdan keyin aralash qaytarish.\n4. Javoblarni oldindan ko‘rsatmang. Tekshirgach xatolarni qayta ishlang.\n5. Har haftaning 6-kuni yangi material emas, aralash mashq va tekshiruv.\n6. 32 hafta — o‘quv bloki. Bayram va qayta o‘tishlar kalendardagi zaxira kunlariga joylanadi.'),p('Birinchi dars: orientatsiya','h'),p('0–15: kurs maqsadi. 15–30: xarita, daftar va uy vazifasi tartibi. 30–45: noun va adjective. 45–60: birinchi 10 so‘z. 60–65: tanaffus. 65–80: keyingi so‘zlar. 80–95: mashqni birga bajarish. 95–110: tinglash va gapirish. 110–120: uy ishini namoyish qilish.'),p('Natijani qanday tekshiramiz?','h'),p('Chiqish bileti: 3 so‘z + 2 grammar savoli. 4/5 dan past bo‘lsa, keyingi dars boshida aynan xato mavzu qaytariladi. Erkin gaplarda shakl, ma’no va yangi lug‘atni mustaqil ishlatish tekshiriladi. Sinf mashqlari vaqtinchalik. Dars sahifasidan guruhga yuborilgan topshiriq natijalari o‘quvchi kabinetida saqlanadi. Birinchi urinishdagi xatolar 1, 3, 7 kundan keyin shaxsiy qaytarish bo‘lib ochiladi.'),p('Material tayyorligi','h'),p('Har dars uchun grammar, 25 yangi so‘z (har 6-kun takrorlash), reading, listening, speaking va writing topshiriqlari bor. To‘rt ko‘nikma matnlari, kalitlari va namunalari oyma-oy alohida PDFda ham berilgan. O‘qituvchi o‘quvchining mustaqil ishlashini baholaydi; B2 tayyorligini rasmiy mezonlar bilan alohida tekshiradi.'),PageBreak()]
     for key,title in [('timeline','Oddiy dars · 120 daqiqa'),('reviewTimeline','Takrorlash darsi · 120 daqiqa'),('homework','Uy vazifasi · 120 daqiqa')]:
         story.append(p(title,'title'));minute=0
         for duration,label,instruction in D[key]:
@@ -56,6 +57,10 @@ if 'teacher' in SECTIONS:
             if lesson['review']:titles='Hafta grammatikasi, 20 aralash so‘z, tinglash va erkin gaplar; xatolarni tuzatish.'
             status='Lug‘at tayyor' if lesson['wordsReady'] else f"Lug‘at to‘liq emas: {len(lesson['words'])}/{lesson['end']-lesson['start']+1}"
             story.append(KeepTogether([p(f"{lesson['no']}-dars · {lesson['day']}-kun",'sub'),p(titles,'small'),p(f"Grammar kartalari: {ids}\nSo‘zlar {lesson['start']}–{lesson['end']} · {status}",'small')]))
+            guide=GUIDANCE[lesson['no']-1]
+            for label,value in [('Maqsad',guide['objective']),('Doska', '\n'.join(guide['board'])),('Tushuntirish',guide['explain']),('Tekshiruv','\n'.join(guide['checkQuestions'])),('Kutiladigan xato',guide['commonMistake']),('Yordam va qo‘shimcha',guide['differentiation']),('Chiqish bileti','\n'.join(guide['exitTicket'])),('Aniq uy vazifasi','\n'.join(guide['homework']))]:
+                story.extend([p(label,'sub'),p(value,'small')])
+            story.append(Spacer(1,12))
         story += [p('Uyga vazifa: yuqoridagi 120 daqiqalik uy ishi tartibi, faqat bugun o‘tilgan mavzu va so‘zlar. Keyingi darsda 5 so‘z va 2 yangi gap bilan tekshiring.','small'),PageBreak()]
     save('jony-intensive-teacher-guide.pdf',story[:-1])
 
@@ -101,7 +106,7 @@ if 'vocabulary' in SECTIONS:
 
 if 'grammar' in SECTIONS:
     # Every map topic gets analysis, exact-model reconstruction and independent production.
-    story=cover('Grammar mashqlari',f"{len(D['topics'])} mavzu · 27 bo‘lim · 876 izohli tekshiruv savoli",'Har mavzuda: tuzilmani tahlil qilish, namunani tiklash, ikki yangi tekshiruv savoli va ikki mustaqil misol. Javoblar kitob oxirida; erkin gaplarni ustoz tekshiradi.')
+    story=cover('Grammar mashqlari',f"{len(D['topics'])} mavzu · 27 bo‘lim · {sum(len(v) for v in D['topicExercises'].values())+len(D['checks'])} izohli tekshiruv savoli",'Har mavzuda: tuzilmani tahlil qilish, namunani tiklash, oltita yangi tekshiruv savoli va ikki mustaqil misol. Javoblar kitob oxirida; erkin gaplarni ustoz tekshiradi.')
     for mi,module in enumerate(D['grammar']):
         story += [p(f'{mi+1}. {module["title"]}','title'),p(module['goal'])]
         story += [p('Ustozga: '+NOTES[mi][0],'small'),p('Tushunishni tekshiring: '+NOTES[mi][1],'small'),p('Xatolar: '+NOTES[mi][2],'small'),Spacer(1,10)]

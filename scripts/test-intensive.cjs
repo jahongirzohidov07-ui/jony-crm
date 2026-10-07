@@ -34,7 +34,7 @@ test('every vocabulary block has complete unique entries and answerable 10/20 wo
 test('grammar topics all have model practice and separate explained checks',()=>{
   assert.equal(output.teacherNotes.length,output.grammar.length);
   for(const notes of output.teacherNotes){assert.equal(notes.length,3);assert.ok(notes.every(n=>n.length>20));}
-  for(const t of output.topics){const qs=output.topicPractice(t.id);assert.equal(qs.length,3, `Topic ${t.id} needs model plus two authored questions`);assert.ok(output.isCorrect(t.example,qs[0].answers));for(const q of qs.slice(1)){assert.ok(q.explanation.length>15);assert.ok(q.answers.length>0);assert.ok(output.isCorrect(q.answers[0],q.answers));}}
+  for(const t of output.topics){const qs=output.topicPractice(t.id);assert.equal(qs.length,7, `Topic ${t.id} needs model plus six authored questions`);assert.ok(output.isCorrect(t.example,qs[0].answers));for(const q of qs.slice(1)){assert.ok(q.explanation.length>15);assert.ok(q.answers.length>0);assert.ok(output.isCorrect(q.answers[0],q.answers));}}
   const qs=output.grammarChecks(output.grammar.map((_,i)=>i));assert.equal(qs.length,54);assert.equal(new Set(qs.map(q=>q.id)).size,54);
   for(const q of qs){assert.ok(q.explanation);assert.ok(output.isCorrect(q.answers[0],q.answers));}
   assert.ok(output.isCorrect("  MUSTN'T! ",["mustn’t"]));assert.ok(!output.isCorrect('are',['is']));assert.ok(output.isCorrect('I am Ali.',['I am Ali'],true));assert.ok(!output.isCorrect('i am ali',['I am Ali'],true));
@@ -53,7 +53,7 @@ test('all 192 lessons have their complete assigned vocabulary',()=>{
 test('daily grammar assessment never asks an untaught topic',()=>{
   for(let no=1;no<=162;no++){
     const plan=output.lessonPlan(no);if(plan.review)continue;
-    const qs=output.lessonGrammarPractice(no);assert.equal(qs.length,plan.topics.length*2);
+    const qs=output.lessonGrammarPractice(no);assert.equal(qs.length,plan.topics.length*6);
     const allowed=new Set(plan.topics.flatMap(t=>output.topicPractice(t.id).map(q=>q.id)));
     assert.ok(qs.every(q=>allowed.has(q.id)));
   }
@@ -73,4 +73,4 @@ test('192 authored skill packs contain distinct reading/listening, answer keys a
   }
   assert.equal(new Set(allTexts).size,384);
 });
-if(process.argv.includes('--export'))fs.writeFileSync(path.resolve(__dirname,'../public/intensive/course-export.json'),JSON.stringify({lessons:Array.from({length:192},(_,i)=>output.lessonPlan(i+1)),timeline:output.standardTimeline,reviewTimeline:output.reviewTimeline,homework:output.homework,grammar:output.grammar,topics:output.topics,words:output.words,checks:output.grammarChecks(output.grammar.map((_,i)=>i)),topicExercises:require('../src/data/intensive-topic-exercises.json')},null,2));
+if(process.argv.includes('--export'))fs.writeFileSync(path.resolve(__dirname,'../public/intensive/course-export.json'),JSON.stringify({lessons:Array.from({length:192},(_,i)=>output.lessonPlan(i+1)),timeline:output.standardTimeline,reviewTimeline:output.reviewTimeline,homework:output.homework,grammar:output.grammar,topics:output.topics,words:output.words,checks:output.grammarChecks(output.grammar.map((_,i)=>i)),topicExercises:output.topicExercises},null,2));

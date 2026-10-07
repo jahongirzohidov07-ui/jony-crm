@@ -139,6 +139,21 @@ r = c.get(f"/api/examiners/salary?branch_id={b2.id}", headers=HF).json()
 ck("boshqa filialda bo'sh", len(r["rows"]), 0)
 ck("boshqa filial jami 0", r.get("total") or 0, 0)
 
+print("\n=== 6. VOLONTYORLAR PASTDA ===")
+vol = models.User(username="vol1", password_hash=hash_password("x"),
+                  full_name="Aaa Volontyor", role=roles.EXAMINER,
+                  branch_id=b.id, is_active=1)
+db.add(vol); db.commit()
+for url in ("/api/examiners/salary", "/api/support/salary"):
+    rows = c.get(url, headers=HF).json()["rows"]
+    flags = [float(x.get("grade_coef", 1)) == 0 for x in rows]
+    ck(f"{url}: volontyorlar oxirida", flags == sorted(flags), True)
+rows = c.get("/api/examiners/salary", headers=HF).json()["rows"]
+names = [x["name"] for x in rows]
+vi = names.index("Aaa Volontyor")
+ck("Mahbuba (junior) volontyordan oldin", names.index("Mahbuba") < vi, True)
+ck("volontyor oyligi hamon 0", rows[vi].get("salary"), 0)
+
 print()
 if fails:
     print(f"XATO: {len(fails)} ta tekshiruv o'tmadi")

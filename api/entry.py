@@ -5248,6 +5248,13 @@ def _grade_totals(data: dict) -> dict:
     return data
 
 
+def _volunteers_last(rows: list) -> list:
+    """Volontyorlar (koeffitsiyent 0) ro'yxat OXIRIGA tushadi, qolganlar
+    tartibi o'zgarmaydi (Jahongir, 2026-10-07: "valantyorlarni ham
+    pastga tushir"). Hisob o'zgarmaydi — ularga oylik hamon 0."""
+    return sorted(rows, key=lambda r: float(r.get("grade_coef", 1)) == 0)
+
+
 if _cur_ex_sal is not None:
     _drop_route("/api/examiners/salary", "GET")
 
@@ -5264,7 +5271,7 @@ if _cur_ex_sal is not None:
         # Filial filtri (2026-10-07, HR -> Oyliklar): asosiy yoki
         # qo'shimcha filiali shu bo'lgan examinerlar
         rows = _rows_in_branch(db, rows, branch_id)
-        data["rows"] = rows
+        data["rows"] = _volunteers_last(rows)
         _grade_totals(data)
         return data
 
@@ -5283,7 +5290,7 @@ if _cur_su_sal is not None:
         data = _cur_su_sal(year=year, month=month, db=db, user=user)
         rows = _apply_grade(db, data.get("rows") or [], "user_id")
         rows = _rows_in_branch(db, rows, branch_id)
-        data["rows"] = rows
+        data["rows"] = _volunteers_last(rows)
         _grade_totals(data)
         return data
 

@@ -3,6 +3,7 @@ import { Wallet, Info, MinusCircle, Download } from "lucide-react";
 import { api } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { exportToExcel } from "../lib/exportXlsx";
+import { branchQs } from "../components/BranchPicker";
 
 const MONTHS_UP = ["YANVAR", "FEVRAL", "MART", "APREL", "MAY", "IYUN",
   "IYUL", "AVGUST", "SENTABR", "OKTABR", "NOYABR", "DEKABR"];
@@ -423,7 +424,7 @@ function PenaltyEditor({
 }
 
 /** Rahbariyat: barcha examinerlar oyligi + jarima va ball ayirish. */
-export function ExaminerPayAdminTab() {
+export function ExaminerPayAdminTab({ branchId }: { branchId?: number | null } = {}) {
   const [period, setPeriod] = useState(thisMonth());
   const [d, setD] = useState<Any>(null);
   const [err, setErr] = useState("");
@@ -433,11 +434,12 @@ export function ExaminerPayAdminTab() {
 
   const load = () => {
     api
-      .get<Any>("/examiners/salary" + qs(period))
+      .get<Any>("/examiners/salary" + qs(period)
+        + branchQs(branchId))
       .then(setD)
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   };
-  useEffect(load, [period]);
+  useEffect(load, [period, branchId]);
 
   const addAdj = async (userId: number) => {
     setBusy(true);

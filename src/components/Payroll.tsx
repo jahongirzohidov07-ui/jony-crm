@@ -4,12 +4,14 @@ import { formatPhone } from "./PhoneInput";
 import { TeacherPayrollTab, SalaryDetailTab } from "./TeacherPayroll";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
+import { BranchPicker, branchQs } from "./BranchPicker";
 import { PayEditModal, type PayEditTarget } from "./PayEditModal";
 import { QuickPayment } from "./QuickPayment";
 import { PAYMENT_EDIT, FINANCE_ACCESS, can } from "../lib/roles";
 import { Wallet, Check, Trash2, Search, Download, Pencil } from "lucide-react";
 import {
   api,
+  getGlobalBranch,
   type StaffPayrollList,
   type StaffPayrollRow,
   type StaffSalaryHistory,
@@ -249,10 +251,13 @@ function PayModal({
  * Examiner yoki support teacher oyliklari jadvali. Har qatorda
  * "To'lash" tugmasi — Moliya bo'limidan chiqmasdan oylik beriladi.
  */
-function PayrollTable({ url, title, hint }: {
+function PayrollTable({ url, title, hint, branchId }: {
   url: string;
   title: string;
   hint: string;
+  /** Filial filtri (2026-10-07): undefined — tepadagi umumiy
+   *  tanlagich ishlaydi; null — barcha filiallar; son — shu filial */
+  branchId?: number | null;
 }) {
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
@@ -263,14 +268,14 @@ function PayrollTable({ url, title, hint }: {
   function load() {
     setErr("");
     api
-      .get<StaffPayrollList>(`${url}?year=${year}&month=${month}`)
+      .get<StaffPayrollList>(`${url}?year=${year}&month=${month}${branchQs(branchId)}`)
       .then(setD)
       .catch((e) => {
         setD(null);
         setErr(e instanceof Error ? e.message : "Xatolik");
       });
   }
-  useEffect(load, [url, year, month]);
+  useEffect(load, [url, year, month, branchId]);
 
   if (err) return <p className="text-sm text-slate-500 py-8">{err}</p>;
   if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
@@ -449,6 +454,13 @@ export function PayrollTab({ only }: { only?: PayrollSub[] } = {}) {
   const finance = can(user?.role, FINANCE_ACCESS);
   const [sub, setSub] = useState<Sub>(
     only ? only[0] : finance ? "teacher" : "examiner");
+  // FILIAL FILTRI (2026-10-07, Jahongir: "filial bo'yicha filtr ham
+  // qo'shib ber") — examiner va support oyliklari uchun
+  // Boshlang'ich qiymat — tepadagi umumiy filial tanlagichidan
+  const [branchId, setBranchId] = useState<number | null>(() => {
+    const g = getGlobalBranch();
+    return g ? Number(g) : null;
+  });
   const ALL_SUBS: { key: Sub; label: string }[] = [
     ...(finance ? [
       { key: "teacher" as Sub, label: "Ustozlar oyligi" },
@@ -481,6 +493,9 @@ export function PayrollTab({ only }: { only?: PayrollSub[] } = {}) {
             {s.label}
           </button>
         ))}
+        {(sub === "examiner" || sub === "support") && (
+          <BranchPicker value={branchId} onChange={setBranchId} className="ml-auto" />
+        )}
       </div>
 
       {sub === "teacher" ? (
@@ -491,6 +506,7 @@ export function PayrollTab({ only }: { only?: PayrollSub[] } = {}) {
         <>
           <PayrollTable
             url="/examiners/salary"
+            branchId={branchId}
             title="Examiner oyliklari"
             hint="Oylik o'tkazilgan imtihonlardan avtomat hisoblanadi:
                   daraja bo'yicha baza ball + qatnashgan o'quvchi. Jarima va
@@ -503,12 +519,13 @@ export function PayrollTab({ only }: { only?: PayrollSub[] } = {}) {
             <p className="text-sm font-medium text-slate-700 mb-2">
               Imtihonlar kesimida (examinerni bosing)
             </p>
-            <ExaminerPayAdminTab />
+            <ExaminerPayAdminTab branchId={branchId} />
           </div>
         </>
       ) : sub === "support" ? (
         <PayrollTable
           url="/support/salary"
+          branchId={branchId}
           title="Support teacher oyliklari"
           hint="Oylik seanslardan avtomat hisoblanadi: (soat x 0.30 +
                 o'quvchi x 0.20 + test koef x 0.50) x 10 000 so'm.

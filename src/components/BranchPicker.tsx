@@ -72,3 +72,8 @@ export function BranchPicker({
 export function branchParam(id: number | null): string {
   return id ? `&branch_id=${id}` : "";
 }
+
+/** Sahifadagi tanlagich (HR -> Oyliklar, 2026-10-07) tepadagidan ustun turishi uchun branch_id doim
+ *  aniq yuboriladi: 0 = barcha filiallar (backend filtrlamaydi). */
+export const branchQs = (id: number | null | undefined) =>
+  id === undefined ? "" : `&branch_id=${id ?? 0}`;

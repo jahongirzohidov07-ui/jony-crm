@@ -127,6 +127,18 @@ r = c.post("/api/examiner-adjustments", headers=HF,
            json={"user_id": MAH, "points": 5, "reason": "kechikdi"})
 ck("ball ayirish o'tadi", r.status_code, 200)
 
+print("\n=== 5. FILIAL FILTRI (HR -> Oyliklar) ===")
+b2 = models.Branch(name="Boshqa"); db.add(b2); db.commit()
+for url in ("/api/examiners/salary", "/api/support/salary"):
+    r = c.get(f"{url}?branch_id={b.id}", headers=HF)
+    ck(f"{url} o'z filiali 200", r.status_code, 200)
+r = c.get(f"/api/examiners/salary?branch_id={b.id}", headers=HF).json()
+ck("o'z filialida Mahbuba bor",
+   "Mahbuba" in {x["name"] for x in r["rows"]}, True)
+r = c.get(f"/api/examiners/salary?branch_id={b2.id}", headers=HF).json()
+ck("boshqa filialda bo'sh", len(r["rows"]), 0)
+ck("boshqa filial jami 0", r.get("total") or 0, 0)
+
 print()
 if fails:
     print(f"XATO: {len(fails)} ta tekshiruv o'tmadi")

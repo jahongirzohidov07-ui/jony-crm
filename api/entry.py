@@ -5253,6 +5253,7 @@ if _cur_ex_sal is not None:
 
     @app.get("/api/examiners/salary")
     def examiner_salary_v3(year: int | None = None, month: int | None = None,
+                           branch_id: int | None = None,
                            db: Session = Depends(get_db),
                            user=Depends(require_role(
                                *list(dict.fromkeys(
@@ -5260,6 +5261,9 @@ if _cur_ex_sal is not None:
                                    + _PAYROLL_VIEW))))):
         data = _cur_ex_sal(year=year, month=month, db=db, user=user)
         rows = _apply_grade(db, data.get("rows") or [], "user_id")
+        # Filial filtri (2026-10-07, HR -> Oyliklar): asosiy yoki
+        # qo'shimcha filiali shu bo'lgan examinerlar
+        rows = _rows_in_branch(db, rows, branch_id)
         data["rows"] = rows
         _grade_totals(data)
         return data

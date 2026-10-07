@@ -1,12 +1,12 @@
-# JONY STUDENT ANDROID ILOVASI — imzolangan AAB yig'ish (2026-10-07).
+# JONY STUDENT ANDROID ILOVASI â€” imzolangan AAB yig'ish (2026-10-07).
 #
 # Kompyuterda Android SDK yo'q, shuning uchun ilova shu yerda yig'iladi.
-# Imzo kaliti repozitoriyda TURMAYDI — GitHub Secrets'dan olinadi:
-#   JONY_KEYSTORE_B64      — signing.keystore fayli, base64 ko'rinishida
-#   JONY_KEYSTORE_PASSWORD — keystore paroli
-#   JONY_KEY_ALIAS         — kalit nomi (alias)
-#   JONY_KEY_PASSWORD      — kalit paroli
-# Secrets bo'lmasa ham yig'iladi (imzosiz) — kod to'g'riligini tekshirish uchun.
+# Imzo kaliti repozitoriyda TURMAYDI â€” GitHub Secrets'dan olinadi:
+#   JONY_KEYSTORE_B64      â€” signing.keystore fayli, base64 ko'rinishida
+#   JONY_KEYSTORE_PASSWORD â€” keystore paroli
+#   JONY_KEY_ALIAS         â€” kalit nomi (alias)
+#   JONY_KEY_PASSWORD      â€” kalit paroli
+# Secrets bo'lmasa ham yig'iladi (imzosiz) â€” kod to'g'riligini tekshirish uchun.
 #
 # Natija: Actions -> shu ish -> Artifacts -> "jony-student-aab", hamda
 # "android-build" shoxchasiga AAB va yig'ish jurnali yoziladi.
@@ -90,6 +90,7 @@ jobs:
           tail -n 200 "$RUNNER_TEMP/build.log" > "$RUNNER_TEMP/out/build-log.txt" 2>/dev/null || echo "jurnal yo'q" > "$RUNNER_TEMP/out/build-log.txt"
           {
             echo "status=$STATUS"
+            echo "sdk=${{ steps.sdk.outcome }} gradle_setup=${{ steps.gradlesetup.outcome }}"
             echo "signed=$SIGNED"
             echo "commit=$GITHUB_SHA"
             echo "run=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"

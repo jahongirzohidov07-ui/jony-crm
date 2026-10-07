@@ -52,12 +52,18 @@ jobs:
       - name: Imzo kaliti
         env:
           KS_B64: ${{ secrets.JONY_KEYSTORE_B64 }}
+          KS_PW: ${{ secrets.JONY_KEYSTORE_PASSWORD }}
         run: |
-          if [ -n "$KS_B64" ]; then
-            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/upload.keystore"
-            echo "JONY_KEYSTORE_FILE=$RUNNER_TEMP/upload.keystore" >> "$GITHUB_ENV"
+          # Secret noto'g'ri bo'lsa ham yig'ish TO'XTAMAYDI — imzosiz AAB
+          # chiqadi va kompyuterda IMZOLASH.bat bilan imzolanadi.
+          KS="$RUNNER_TEMP/upload.keystore"
+          if [ -n "$KS_B64" ] && echo "$KS_B64" | tr -d ' \r\n' | base64 -d > "$KS" 2>/dev/null \
+             && keytool -list -keystore "$KS" -storepass "$KS_PW" > /dev/null 2>&1; then
+            echo "JONY_KEYSTORE_FILE=$KS" >> "$GITHUB_ENV"
             echo "SIGNED=yes" >> "$GITHUB_ENV"
           else
+            rm -f "$KS"
+            echo "::warning::Imzo secret'lari yo'q yoki noto'g'ri — imzosiz AAB yig'iladi"
             echo "SIGNED=no" >> "$GITHUB_ENV"
           fi
 

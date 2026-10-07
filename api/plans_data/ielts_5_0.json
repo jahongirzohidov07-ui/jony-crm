@@ -4260,8 +4260,8 @@
       "Freya Stark travelled to many areas of the Middle East, often alone.",
       "Freya Stark was an explorer who lived during a time when explorers were regarded as heroes. She travelled to distant areas of the Middle East, where few Europeans - especially women - had travelled before. She also travelled extensively in Turkey, Greece, Italy, Nepal and Afghanistan.",
       "Stark was born in Paris in 1893. Although she had no formal education as a child, she moved about with her artist parents and learned French, German and Italian. She entered London University in 1912, but at the start of World War I, she joined the nurse corps and was sent to Italy. After the war, she returned to London and attended the School of Oriental Studies. Her studies there led to extensive travel in the Middle East, enabling her to eventually become fluent in Persian, Russian and Turkish.",
-      "Stark became well known as a traveller and explorer in the Middle East. She travelled to the Lebanon in 1927 at the age of 33 when she had saved enough money, and while there, she studied Arabic.",
-      "In 1928, she travelled by donkey to the Jebel Druze, a mountainous area in Syria. During another trip, she went to a distant region of the Elburz, a mountain range in Iran, where she made a map. She was searching for information about an ancient Muslim sect known as the Assassins, which she wrote about in Valley of the Assassins (1934), a classic for which she was awarded a Gold Medal by the Royal Geographical Society. For the next 12 years, she continued her career as a traveller and writer, establishing a style which combined an account of her journeys with personal commentary on the people, places, customs, history and politics of the Middle East."
+      "Stark became well known as a traveller and explorer in the Middle East. She travelled to the Lebanon in 1927 at the age of 34 when she had saved enough money, and while there, she studied Arabic.",
+      "In 1928, she travelled by donkey to the Jebel Druze, a mountainous area in Syria. During another trip, she went to a distant region of the Elburz, a mountain range in Iran, where she made a map. She was searching for information about an ancient Muslim sect known as the Assassins. For her journeys in Iran, she was awarded the Back Award by the Royal Geographical Society in 1933, and she wrote about them in The Valleys of the Assassins (1934), a classic of travel writing. For the next 12 years, she continued her career as a traveller and writer, establishing a style which combined an account of her journeys with personal commentary on the people, places, customs, history and politics of the Middle East."
      ],
      "paraphrases": [
       [
@@ -4287,6 +4287,10 @@
       [
        "was awarded",
        "won"
+      ],
+      [
+       "journeys",
+       "travels"
       ],
       [
        "for the next 12 years",
@@ -4323,7 +4327,7 @@
         "nurse",
         "Arabic",
         "donkey",
-        "Gold Medal",
+        "Back Award",
         "12 years"
        ],
        "why": [
@@ -4331,10 +4335,10 @@
         "\"She joined the nurse corps and was sent to Italy\". \"Worked as a\" dan keyin kasb keladi.",
         "\"She travelled to the Lebanon ... and while there, she studied Arabic\". \"Learned\" = \"studied\".",
         "\"She travelled by donkey to the Jebel Druze, a mountainous area in Syria\". \"Syrian mountains\" = \"mountainous area in Syria\".",
-        "\"A classic for which she was awarded a Gold Medal\". \"Won\" = \"was awarded\"; kitob — Valley of the Assassins (1934).",
+        "\"For her journeys in Iran, she was awarded the Back Award by the Royal Geographical Society in 1933\". \"Won\" = \"was awarded\"; \"travels\" = \"journeys\". Ikki so'z, chegarada.",
         "\"For the next 12 years, she continued her career\". \"A further\" = \"the next\"."
        ],
-       "note": "Flow chart — USUALLY guruhi: bosqichlar odatda matn tartibida. 1-javobni topgach, 2-javobni undan keyingi gaplardan qidiring.",
+       "note": "Flow chart — USUALLY guruhi: bosqichlar odatda matn tartibida. 1-javobni topgach, 2-javobni undan keyingi gaplardan qidiring. Ustoz uchun: matn faktlar bo'yicha tuzatilgan — Stark 1927 da 34 yoshda edi; kitobning to'g'ri nomi The Valleys of the Assassins (1934); eski matndagi \"Gold Medal\" noto'g'ri edi: Royal Geographical Society unga 1933 da Erondagi safarlari uchun mukofot bergan (Founder's Medal esa 1942 da). 5-savol kaliti shunga moslab yangilandi.",
        "layout": "flow",
        "rows": [
         [
@@ -4356,7 +4360,7 @@
          "Made a journey to the Syrian mountains on a (4)"
         ],
         [
-         "In 1934, won a (5) for a book"
+         "In 1933, won the (5) for her travels in Iran"
         ],
         [
          "Spent a further (6) in the Middle East"
@@ -39505,7 +39509,7 @@
     "Doskada yoki devorda: xom ball — band jadvali, Listening va Reading alohida ustun bo'lib turadi.",
     "Har o'quvchiga \"Ikki haftalik reja\" varaqasi — 6 qatorli, oxirida ustoz imzosi uchun joy.",
     "O'quvchi daftari: shu darsda \"Xatolar daftari\" bo'limi ochiladi va bundan keyin doimiy yuritiladi.",
-    "Tahlil darsi: har o'quvchining examiner tasdiqlagan Writing natijasi — 4 mezon bo'yicha ball, inglizcha izoh va grammatika/lug'at xatolari ro'yxati (o'z ekranida yoki chop etilgan nusxada)."
+    "Tahlil darsi: har o'quvchining examiner tasdiqlagan Writing natijasi — har Task uchun 4 mezon bo'yicha ball, inglizcha izoh va grammatika/lug'at xatolari ro'yxati. O'quvchi ilovasida bu tafsilot ko'rinmaydi (faqat umumiy ball): ustoz uni guruh → Imtihonlar → mock testi natijalar jadvalidagi \"AI\" belgisidan ochadi va har o'quvchiga chop etilgan nusxasini beradi."
    ],
    "timeline": [
     [
@@ -39579,7 +39583,7 @@
      "Examiner javoblar varaqasi har savol uchun uchta narsani ko'rsatadi: o'quvchi nima yozgan, to'g'ri javob nima edi va savolning MAVZU BELGISI. Mavzu belgisi bo'yicha saralansa, 13 ta alohida xato 3 ta naqshga aylanadi: masalan \"Part 1 raqam va sana\", \"Matching Headings\", \"Passage 3 oxirgi savollari\".",
      "Naqsh ko'ringandan keyingina reja yoziladi. Reja aniq bo'lishi shart: nima qilinadi, qancha, qaysi kuni, kim tekshiradi va ikki haftadan keyin qaysi raqam o'zgarishi kerak.",
      "Listening sessiyada faqat BIR MARTA eshittirilgan (yozuv yoki examiner o'qishi), shuning uchun \"audioni yana eshitaman\" deb bo'lmaydi — tahlil faqat javoblar varaqasi orqali qilinadi.",
-     "Har mock uchun 5 ta variant (A-E) bor va havola ochilganda tizim qismlarni variantlar orasida aralashtiradi. Ya'ni bitta varaqni yodlab qo'yib bo'lmaydi — faqat ko'nikma o'sadi.",
+     "Mock bazasida har bo'lim (Listening, Reading, Writing) uchun 5 ta variant (A–E) bor. Examiner guruh uchun havola yaratganda (odatiy \"Aralash\" rejimi) tizim har qismni — Listening Part, Reading Passage, Writing Task — tasodifiy variantdan oladi. Ya'ni qaysi savollar tushishini oldindan hech kim bilmaydi va bitta varaqni yodlab qo'yib bo'lmaydi — faqat ko'nikma o'sadi.",
      "WRITING natijasi: JonyOS AI examiner Writing'ni 4 IELTS mezoni bo'yicha baholaydi — Task Achievement (Task 1) / Task Response (Task 2), Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy; Task 2 ikki barobar hisoblanadi. U inglizcha examiner izohi va grammatika/lug'at xatolari ro'yxatini beradi. Ustoz (examiner) 48 soat ichida bahoni tekshiradi yoki o'zgartiradi, shundan keyin natija e'lon qilinadi. Har mezonga faqat butun ball qo'yiladi."
     ],
     "formulas": [
@@ -39705,7 +39709,7 @@
      ],
      [
       "Mock savollari keyingi safar takrorlanadimi?",
-      "Yo'q. 5 ta variant bor va tizim qismlarni aralashtirib beradi. Yodlash ishlamaydi."
+      "Oldindan bilib bo'lmaydi. Har bo'lim uchun 5 ta variant bor va havola yaratilganda tizim har qismni tasodifiy variantdan oladi — biror qism tasodifan takrorlanishi mumkin, lekin qaysi biri ekanini hech kim bilmaydi. Yodlash ishlamaydi."
      ],
      [
       "Bandim tushib ketdi, nega?",
@@ -39713,7 +39717,7 @@
      ],
      [
       "Writing bandi qayerda?",
-      "Writing'ni JonyOS AI examiner 4 mezon bo'yicha baholaydi (Task 2 ikki barobar), inglizcha izoh va xatolar ro'yxatini beradi; ustoz 48 soat ichida tekshiradi yoki o'zgartiradi, keyin natija e'lon qilinadi. Bugun Writing'ga 20 daqiqa ajratilgan (6-mashq)."
+      "Writing'ni JonyOS AI examiner 4 mezon bo'yicha baholaydi (Task 2 ikki barobar), inglizcha izoh va xatolar ro'yxatini beradi; examiner 48 soat ichida tekshiradi yoki o'zgartiradi, keyin natija e'lon qilinadi. O'quvchi ilovasida faqat umumiy Writing bandi ko'rinadi — mezonlar, izoh va xatolar nusxasini ustoz beradi. Bugun Writing'ga 20 daqiqa ajratilgan (6-mashq)."
      ],
      [
       "Ikki haftada band ko'tariladimi?",
@@ -40013,7 +40017,7 @@
     {
      "title": "6-mashq: Writing — AI examiner izohi bo'yicha tahlil",
      "type": "Yozma, individual, 20 daqiqa",
-     "instr": "Har o'quvchi examiner tasdiqlagan Writing natijasini ochadi: 4 mezon bo'yicha ball, inglizcha examiner izohi va grammatika/lug'at xatolari ro'yxati. Besh qadamni daftarda bajaring. O'ng ustunda namuna (Aziz) — ko'chirmang, o'z natijangiz bilan ishlang.",
+     "instr": "Har o'quvchi ustoz bergan Writing natijasi nusxasi bilan ishlaydi (examiner tasdiqlagan AI bahosi; o'quvchi ilovasida bu tafsilot ko'rinmaydi): har Task uchun 4 mezon bo'yicha ball, inglizcha examiner izohi va grammatika/lug'at xatolari ro'yxati. Besh qadamni daftarda bajaring. O'ng ustunda namuna (Aziz) — ko'chirmang, o'z natijangiz bilan ishlang.",
      "items": [
       "1-qadam. Task 1 va Task 2 uchun 4 mezon bo'yicha ballaringizni yozing: Task Achievement (Task 1) / Task Response (Task 2), Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy.",
       "2-qadam. Eng past mezonni belgilang. Task 2 ikki barobar hisoblanishini eslang: qaysi task'dagi past ball Writing bandini ko'proq tushirgan?",
@@ -41225,7 +41229,7 @@
      [
       "2-bosqich",
       "O'rtachani ko'rsating",
-      "7+6+7+6 = 6.5",
+      "(7+6+7+6) : 4 = 6.5",
       "Bitta zaif mezon tortadi"
      ],
      [
@@ -41472,7 +41476,7 @@
     {
      "title": "2-mashq: Ballni hisoblang",
      "type": "Og'zaki, 5 daqiqa",
-     "instr": "To'rt mezon ballidan umumiy bahoni chiqaring.",
+     "instr": "To'rt mezon ballidan umumiy bahoni chiqaring. O'rtacha .25 yoki .75 bilan tugasa, taxminiy bahoni ehtiyot uchun pastga — eng yaqin butun yoki yarim ballga — yaxlitlang.",
      "items": [
       "TR 6 · CC 6 · LR 6 · GRA 6",
       "TR 7 · CC 7 · LR 6 · GRA 6",
@@ -41484,20 +41488,20 @@
      "answers": [
       "6.0",
       "6.5",
+      "taxminan 6.5",
       "6.5",
-      "6.5",
-      "7.0",
+      "taxminan 7.0",
       "6.5"
      ],
      "why": [
       "Hamma mezon bir xil.",
       "26 : 4 = 6.5.",
-      "27 : 4 = 6.75, pastga yaxlitlanadi.",
+      "27 : 4 = 6.75. Writing bahosi uchun yaxlitlash qoidasi rasman e'lon qilinmagan, shuning uchun taxminiy bahoni ehtiyot uchun pastga olamiz — 6.5.",
       "Bitta zaif mezon butun bahoni tortdi.",
-      "29 : 4 = 7.25, pastga yaxlitlanadi.",
+      "29 : 4 = 7.25 — ehtiyot uchun pastga, 7.0. Rasmiy qoida faqat umumiy (Overall) ball uchun: u yerda .25 keyingi yarim ballga ko'tariladi.",
       "Ikki mezonni ko'tarish kerak."
      ],
-     "note": "Xulosa: 7.0 olish uchun BARCHA mezonda 7 ga yaqin ball kerak. Bitta mezonni tashlab ketib bo'lmaydi.",
+     "note": "Xulosa: 7.0 olish uchun BARCHA mezonda 7 ga yaqin ball kerak. Bitta mezonni tashlab ketib bo'lmaydi. Yaxlitlash haqida aniq ayting: rasmiy e'lon qilingan qoida faqat umumiy (Overall) ball uchun — to'rt bo'lim (L, R, W, S) o'rtachasi .25 bilan tugasa keyingi yarim ballga, .75 bilan tugasa keyingi butun ballga ko'tariladi. Writing bahosi mezonlardan qanday yaxlitlanishi rasman e'lon qilinmagan, shuning uchun darsdagi taxminiy bahoni ehtiyot uchun pastga yaxlitlaymiz — haqiqiy baho yarim ball yuqori chiqishi ham mumkin.",
      "layout": "qa"
     },
     {

@@ -236,8 +236,9 @@ type Tab = "plan" | "grammar" | "vocab" | "class" | "games" | "reading" | "liste
 /** Dars qaysi bo'limlarga ega — shular ko'rinadi. Skill darslarida
  * (IELTS 5.0) grammatika/lug'at yo'q, o'rniga "Savol turi" turadi. */
 /** Ko'nikma kurslari: "grammar" maydonida savol turi strategiyasi turadi
- * (audit: UI "Grammatika" deb ko'rsatardi). Backend: liveplay.SKILL_COURSES. */
-const SKILL_COURSES = ["ielts_5_0", "ielts_6_0", "ielts_7_0"];
+ * (audit: UI "Grammatika" deb ko'rsatardi). Backend: liveplay.SKILL_COURSES.
+ * TeacherRun ham shu ro'yxatni oladi (2026-10-07, proyektorda kalitlar). */
+export const SKILL_COURSES = ["ielts_5_0", "ielts_6_0", "ielts_7_0"];
 
 function tabsFor(L: Lesson, games = 0, course = ""): { key: Tab; label: string }[] {
   const G = L.grammar ?? ({} as Lesson["grammar"]);
@@ -389,7 +390,7 @@ function LessonView({ course, no }: { course: string; no: number }) {
       </div>
 
       {active === "plan" && <PlanTab L={L} games={games} openGames={() => setTab("games")} />}
-      {active === "grammar" && <GrammarTab L={L} />}
+      {active === "grammar" && <GrammarTab L={L} course={course} />}
       {active === "vocab" && <VocabTab L={L} course={course} />}
       {active === "class" && <ExList list={L.class_ex ?? []} />}
       {active === "games" && <GamesTab games={games} course={course} no={L.no} />}
@@ -653,14 +654,17 @@ function GameContent({ g, show }: { g: Game; show: boolean }) {
   }
 }
 
-function GrammarTab({ L }: { L: Lesson }) {
+function GrammarTab({ L, course }: { L: Lesson; course: string }) {
   // 1-dars (mindset) kabi darslarda formulalar/xatolar bo'lmasligi mumkin
   const G = L.grammar ?? ({} as Lesson["grammar"]);
   const intro = G.intro ?? [], formulas = G.formulas ?? [], pres = G.presentation ?? [], notes = G.notes ?? [], mistakes = G.mistakes ?? [];
+  // 5.0–7.0 da 4-ustun tarjima emas, ustozga maslahat ("Nimani kutishni
+  // bilasiz", "Imlo xatosi — 0 ball") — "Tarjima" deb chiqardi (2026-10-07, audit)
+  const lastCol = SKILL_COURSES.includes(course) ? "Izoh" : "Tarjima";
   return (
     <>
       {intro.length > 0 && <Section title="Tushuntirish"><Bullets items={intro} /></Section>}
-      {formulas.length > 0 && <Section title="Formulalar"><Table head={["Mavzu", "Formula", "Misol", "Tarjima"]} rows={formulas} /></Section>}
+      {formulas.length > 0 && <Section title="Formulalar"><Table head={["Mavzu", "Formula", "Misol", lastCol]} rows={formulas} /></Section>}
       {pres.length > 0 && <Section title="Ustoz–o'quvchi savol-javob"><Table head={["Ustoz", "O'quvchi"]} rows={pres} /></Section>}
       {/* Eslatmada javob ham bo'ladi (5.0 L25: "4 va 7-savol ikkalasi B") —
           ekranda ustozga ochiq, chop etishda chiqmaydi (2026-10-05, audit) */}
@@ -763,16 +767,20 @@ function fillBlank(item: string, answer: string): React.ReactNode {
    qilib tushunarli qilib qoy ... quruq sozlar gaplar bolmasin"). Savol turi
    o'z shaklida chiqadi: jadval, forma/qaydlar, jarayon sxemasi, variantlar,
    T/F/NG jadvali, sarlavhalar mosligi. Bo'sh joylar raqamli katak bo'lib
-   turadi; "Javobni ko'rsat" bosilganda javob shu katakning o'zida chiqadi. */
-const GAP_RE = /\((\d+)\)|_{3,}/g;
+   turadi; "Javobni ko'rsat" bosilganda javob shu katakning o'zida chiqadi.
+   "(3) ______" — BITTA bo'sh joy (2026-10-07, audit): avval "(3)" va "______"
+   ikki katak bo'lib chiqardi — ikkinchisi qator raqami yoki "0" bilan, javob
+   esa " / " bo'yicha ikkiga bo'linardi (1.0, 3.0, 4.0 dagi 20 mashq). */
+const GAP_RE = /\((\d+)\)(?:\s*_{3,})?|_{3,}/g;
 
 function Gap({ n, ans }: { n: number; ans?: string }) {
   if (ans !== undefined) {
     return <span className="mx-0.5 px-1.5 rounded bg-emerald-50 text-emerald-700 font-semibold border-b-2 border-emerald-500">{ans}</span>;
   }
+  // n = 0 — raqamsiz bo'sh joy (ball varag'idagi "____"): "0" yorlig'i chiqmaydi (2026-10-07)
   return (
     <span className="mx-0.5 inline-flex items-center gap-1 align-baseline">
-      <span className="text-[11px] font-bold text-white bg-brand-600 rounded px-1">{n}</span>
+      {n > 0 && <span className="text-[11px] font-bold text-white bg-brand-600 rounded px-1">{n}</span>}
       <span className="inline-block w-20 border-b-2 border-dotted border-slate-400">&nbsp;</span>
     </span>
   );
@@ -858,6 +866,19 @@ function ownNos(items: string[]): { no: string; text: string }[] | null {
   return ms.map((m, j) => ({ no: m![1].replace(/\s+/g, ""), text: items[j].slice(m![0].length) }));
 }
 
+/** Bandlar raqamsiz bo'lsa — sarlavha/ko'rsatmadagi "Questions 7–11" dan
+ * birinchi savol raqami (2026-10-07, audit): 5.0 L28/L33 da bo'sh joylar
+ * 7–11, 23–26 o'rniga 1–5, 1–4 bo'lib chiqardi. Faqat oraliq uzunligi band
+ * soniga teng bo'lsa olinadi ("Choose TWO" kabi juft savollar adashmasin). */
+const Q_RANGE = /\bQuestions?\s+(\d{1,2})\s*[–-]\s*(\d{1,2})\b/i;
+function firstNo(ex: Ex, count: number): number {
+  for (const s of [ex.title, ex.instr]) {
+    const m = (s ?? "").match(Q_RANGE);
+    if (m && Number(m[2]) - Number(m[1]) + 1 === count) return Number(m[1]);
+  }
+  return 1;
+}
+
 /** Mashq tanasi — layout bo'yicha jadval/juftlik/oqim ko'rinishi.
  * TeacherRun (jonli dars) ham shu komponentni chaqiradi, shuning uchun
  * ikkala ekranda mashq bir xil ko'rinadi (2026-09-26). */
@@ -870,9 +891,17 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
   const labelOf = (j: number) => { const n = parseInt(items[j] ?? "", 10); return Number.isNaN(n) ? j + 1 : n; };
   const byNo: string[] = [];
   if (answers) items.forEach((_, j) => { byNo[labelOf(j) - 1] = answers[j]; });
+  // items'siz jadval (1.0 L8/L17/L19, 3.0 L3/L16–L18): javoblar "(N)"
+  // belgilariga tartib bilan bog'lanadi — avval "Javobni ko'rsat" bosilsa
+  // ham kataklar bo'sh qolardi (2026-10-07, audit). Soni teng bo'lsagina.
+  if (answers && !items.length && ex.rows) {
+    const marks = [...new Set(ex.rows.flat().flatMap((c) => [...c.matchAll(/\((\d+)\)/g)].map((m) => Number(m[1]))))];
+    if (marks.length === answers.length) marks.forEach((n, i) => { byNo[n - 1] = answers[i]; });
+  }
   // Jadval/ro'yxat qatorida bandning o'z raqami va raqamsiz matni (mcq kabi)
   const nos = ownNos(items);
-  const noOf = (j: number) => nos?.[j].no ?? String(j + 1);
+  const first = firstNo(ex, items.length);
+  const noOf = (j: number) => nos?.[j].no ?? String(first + j);
   const textOf = (j: number) => nos?.[j].text ?? items[j];
 
   if (lay === "grid" && ex.head && ex.rows) {
@@ -998,7 +1027,7 @@ export function ExBody({ ex, show }: { ex: Ex; show: boolean }) {
           const correct = new Set(lead.match(/[A-E]/g) ?? []);
           return (
             <div key={j} className="rounded-lg border border-slate-200 p-3">
-              <div className="text-sm font-medium text-slate-800"><span className="font-bold text-brand-700 mr-1">{qn ?? j + 1}.</span>{q}</div>
+              <div className="text-sm font-medium text-slate-800"><span className="font-bold text-brand-700 mr-1">{qn ?? first + j}.</span>{q}</div>
               <div className="grid sm:grid-cols-2 gap-1.5 mt-2">
                 {opts.map((o, k) => {
                   const letter = o.charAt(0).toUpperCase();

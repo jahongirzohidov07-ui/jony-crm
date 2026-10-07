@@ -6,7 +6,7 @@ import {
 import { api } from "../../lib/api";
 // Mashqlarni reja ekranidagi bilan BIR XIL ko'rsatish uchun (2026-09-26):
 // grid/pairs/flow/mcq/tfng/match/qa/list ko'rinishlari shu komponentda.
-import { ExBody, AuthImage, AuthAudio, renderRich, TeacherNote } from "../LessonPlans";
+import { ExBody, AuthImage, AuthAudio, renderRich, TeacherNote, SKILL_COURSES } from "../LessonPlans";
 
 /**
  * DARS REJIMI — "Darsni boshlash" (2026-09-18, Jahongir: "Dars paytida
@@ -84,6 +84,11 @@ export default function TeacherRun() {
   const [dueDays, setDueDays] = useState(2);
   const [sent, setSent] = useState("");
   const [stagesOpen, setStagesOpen] = useState(false);   // telefonda ro'yxatni ochish
+  // Proyektorda kalitli kartalar qaysi run uchun ochilgan (2026-10-07, audit:
+  // 6.0 tinglash darslarida "Tipik xatolar", formulalar misoli va lug'at — SB
+  // javoblarining o'zi; eslatmani o'qimagan ustoz ularni tekshiruvdan oldin
+  // proyektorga chiqarib qo'yardi). Har run uchun alohida, boshida yopiq.
+  const [keysRun, setKeysRun] = useState<number | null>(null);
 
   useEffect(() => {
     api.post<Run>(`/lessons/${lessonId}/run`).then((r) => { setRun(r); setNotes(r.notes || ""); })
@@ -193,6 +198,14 @@ export default function TeacherRun() {
   // Kahoot faqat savol manbai bor darsda (IELTS 5.0 da lug'at ham, kahoot ham
   // yo'q — tugma har safar "savol tuzib bo'lmadi" xatosini berardi)
   const canKahoot = !!(P && ((P.kahoot ?? []).length || (P.vocab?.core ?? []).length));
+  // 5.0–7.0: proyektorda "Tipik xatolar", formulalarning "Misol" ustuni va
+  // lug'at jadvali ustoz ochmaguncha yopiq; ustoz rejimida hammasi ko'rinadi
+  const skillCourse = SKILL_COURSES.includes(run.course);
+  const keysOpen = keysRun === run.id;
+  const lockKeys = proj && skillCourse && !keysOpen;
+  const keysBar = !proj && skillCourse
+    ? <KeysToggle open={keysOpen} onToggle={() => setKeysRun(keysOpen ? null : run.id)} />
+    : null;
 
   return (
     <div className={`min-h-screen ${proj ? "bg-white" : "bg-slate-50"}`}>
@@ -323,6 +336,7 @@ export default function TeacherRun() {
           {!P && <p className="text-sm text-slate-500">Reja matni topilmadi.</p>}
           {P && tab === "grammar" && (
             <div className={`space-y-4 ${big}`}>
+              {keysBar}
               {(P.grammar?.intro ?? []).length > 0 && <Card title="Tushuntirish"><ul className="list-disc pl-5 space-y-1">{P.grammar.intro.map((t, i) => <li key={i}>{t}</li>)}</ul></Card>}
               {(P.grammar?.formulas ?? []).length > 0 && <Card title="Formulalar">
                 <table className="w-full border-collapse"><tbody>
@@ -330,19 +344,23 @@ export default function TeacherRun() {
                     <tr key={i} className={i % 2 ? "bg-slate-50" : ""}>
                       <td className="border border-slate-200 px-2 py-1.5 font-semibold w-1/6">{f[0]}</td>
                       <td className="border border-slate-200 px-2 py-1.5 font-mono text-brand-700">{f[1]}</td>
-                      <td className="border border-slate-200 px-2 py-1.5">{f[2]}</td>
+                      {!lockKeys && <td className="border border-slate-200 px-2 py-1.5">{f[2]}</td>}
                       <td className="border border-slate-200 px-2 py-1.5 text-slate-500">{f[3]}</td>
                     </tr>
                   ))}
                 </tbody></table>
               </Card>}
               {!proj && (P.grammar?.presentation ?? []).length > 0 && <Card title="Ustoz–o'quvchi savol-javob"><table className="w-full"><tbody>{P.grammar.presentation.map((p, i) => <tr key={i}><td className="border border-slate-200 px-2 py-1 w-1/2">{p[0]}</td><td className="border border-slate-200 px-2 py-1 text-emerald-700">{p[1]}</td></tr>)}</tbody></table></Card>}
-              {(P.grammar?.mistakes ?? []).length > 0 && <Card title="Tipik xatolar"><table className="w-full"><tbody>{P.grammar.mistakes.map((m, i) => <tr key={i}><td className="border border-slate-200 px-2 py-1 text-rose-600 line-through">{m[0]}</td><td className="border border-slate-200 px-2 py-1 text-emerald-700">{m[1]}</td>{!proj && <td className="border border-slate-200 px-2 py-1 text-slate-500">{m[2]}</td>}</tr>)}</tbody></table></Card>}
+              {(P.grammar?.mistakes ?? []).length > 0 && lockKeys && <LockedCard title="Tipik xatolar" />}
+              {(P.grammar?.mistakes ?? []).length > 0 && !lockKeys && <Card title="Tipik xatolar"><table className="w-full"><tbody>{P.grammar.mistakes.map((m, i) => <tr key={i}><td className="border border-slate-200 px-2 py-1 text-rose-600 line-through">{m[0]}</td><td className="border border-slate-200 px-2 py-1 text-emerald-700">{m[1]}</td>{!proj && <td className="border border-slate-200 px-2 py-1 text-slate-500">{m[2]}</td>}</tr>)}</tbody></table></Card>}
               {!proj && (P.grammar?.notes ?? []).length > 0 && <Card title="Ustoz uchun eslatma (maxfiy)"><ul className="list-disc pl-5">{P.grammar.notes.map((t, i) => <li key={i}>{t}</li>)}</ul></Card>}
             </div>
           )}
+          {/* Lug'atsiz darsda (6.0 L9/L18 — mock) tugma chiqmaydi */}
+          {P && tab === "vocab" && keysBar && P.vocab?.core && <div className="mb-3">{keysBar}</div>}
           {P && tab === "vocab" && (
             !P.vocab?.core ? <p className="text-sm text-slate-500">Bu darsda lug'at yo'q.</p> :
+            lockKeys ? <LockedCard title={`CORE 20 — ${P.vocab_topic}`} /> :
             <Card title={`CORE 20 — ${P.vocab_topic}`}>
               <table className={`w-full ${big}`}><thead><tr className="bg-slate-50"><th className="border border-slate-200 px-2 py-1 text-left">So'z</th><th className="border border-slate-200 px-2 py-1 text-left">O'qilishi</th><th className="border border-slate-200 px-2 py-1 text-left">Tarjima</th><th className="border border-slate-200 px-2 py-1 text-left">Misol</th></tr></thead>
                 <tbody>{P.vocab.core.map((w, i) => <tr key={i} className={i % 2 ? "bg-slate-50/60" : ""}><td className="border border-slate-200 px-2 py-1 font-semibold">{w[0]}</td><td className="border border-slate-200 px-2 py-1 text-slate-500">{w[4] ? `/${w[4]}/` : ""}</td><td className="border border-slate-200 px-2 py-1">{w[1]}</td><td className="border border-slate-200 px-2 py-1">{w[2]}{!proj && w[3] ? <span className="text-slate-400"> — {w[3]}</span> : null}</td></tr>)}</tbody>
@@ -442,6 +460,28 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
     <div className="bg-white rounded-xl border border-slate-200 p-4">
       <h3 className="font-semibold text-slate-800 mb-2">{title}</h3>
       {children}
+    </div>
+  );
+}
+
+/** Proyektorda yopiq karta — sarlavha qoladi, javoblar chiqmaydi (2026-10-07) */
+function LockedCard({ title }: { title: string }) {
+  return <Card title={title}><p className="text-sm text-slate-400">Javoblar tekshiruvdan keyin ochiladi.</p></Card>;
+}
+
+/** Faqat ustoz rejimida: proyektorda kalitli kartalarni ochish/yopish
+ * (2026-10-07, audit). Proyektor ekranida tugma ko'rinmaydi. */
+function KeysToggle({ open, onToggle }: { open: boolean; onToggle: () => void }) {
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-2 text-xs bg-amber-50 border border-amber-200 text-amber-900 rounded-xl px-3 py-2">
+      <span>
+        Proyektorda «Tipik xatolar», formulalar misoli va lug'at jadvali {open ? <b>ochiq</b> : "yopiq"} —
+        ularda SB/WB javoblari bor, tekshiruvdan keyin oching.
+      </span>
+      <button onClick={onToggle}
+              className={`rounded-lg px-3 py-1.5 font-semibold ${open ? "bg-white border border-amber-300 text-amber-800" : "bg-amber-600 text-white"}`}>
+        {open ? "Proyektorda yopish" : "Proyektorda ochish"}
+      </button>
     </div>
   );
 }

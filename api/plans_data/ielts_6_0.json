@@ -2332,8 +2332,8 @@
       "RECEPTIONIST: Thank you. And your address here in the city?",
       "AZIZ: I'm in student accommodation at the moment. It's Flat 6, 29 Harbour Street. Oh, sorry — not 29. It's 92. Ninety-two Harbour Street.",
       "RECEPTIONIST: 92 Harbour Street. And a phone number?",
-      "AZIZ: My mobile is oh-seven-seven-three-one, four-eight-two, nine-five-oh.",
-      "RECEPTIONIST: 07731 482 950. Now, which type of membership would you like? We have full, off-peak and student.",
+      "AZIZ: My mobile is oh-seven-seven-double-oh, nine-double-oh, four-eight-two.",
+      "RECEPTIONIST: 07700 900 482. Now, which type of membership would you like? We have full, off-peak and student.",
       "AZIZ: Hmm. My classes finish at four every day, so off-peak might suit me... but does the student one include the pool?",
       "RECEPTIONIST: Yes, it does. Off-peak doesn't.",
       "AZIZ: Then student, please. I definitely want to swim.",
@@ -2367,14 +2367,14 @@
        ],
        "answers": [
         "92",
-        "07731 482 950",
+        "07700 900 482",
         "student",
         "asthma",
         "poster"
        ],
        "why": [
         "\"Not 29. It's 92\". Tuzoq: birinchi aytilgan raqam — tuzatiladi.",
-        "\"Oh-seven-seven-three-one\" — \"oh\" = 0. Raqam guruhlab aytiladi: 5 + 3 + 3.",
+        "\"Oh-seven-seven-double-oh, nine-double-oh\" — \"oh\" = 0, \"double oh\" = 00. Raqam guruhlab aytiladi: 5 + 3 + 3.",
         "\"Then student, please\". Tuzoq: \"off-peak might suit me\" — oxirgi qaror emas.",
         "\"I do have asthma, though\". Tuzoq: \"my knee\" — \"completely fine now\".",
         "\"The first time I heard about the centre was from a poster\". Tuzoq: \"a classmate recommended\" — keyinroq bo'lgan, formada \"first\" so'ralgan."
@@ -2541,14 +2541,14 @@
     {
      "kind": "grammar",
      "sub": "Raqamlar",
-     "q": "You hear 'oh-one-six-one, double-four-six, two-oh-nine-one'. Which number do you write?",
+     "q": "You hear 'oh-one-six-one, four-nine-six, oh-double-seven-two'. Which number do you write?",
      "options": [
-      "0161 446 2091",
-      "0161 46 2091",
-      "0161 4446 2091",
-      "161 446 2091"
+      "0161 496 0772",
+      "0161 496 072",
+      "0161 496 07772",
+      "161 496 0772"
      ],
-     "explain": "\"Oh\" = 0, \"double four\" = 44; raqam guruhlab aytiladi va son bilan yoziladi."
+     "explain": "\"Oh\" = 0, \"double seven\" = 77; raqam guruhlab aytiladi va son bilan yoziladi."
     },
     {
      "kind": "grammar",
@@ -11478,7 +11478,7 @@
     "Mock sessiyasida to'liq imtihonni topshirdingiz, bugun sinfda javoblar varaqasini savol-savol o'qidik va Writing izohini ko'rdik. Uyda xuddi shu ishni HAMMA xato bo'yicha oxirigacha qilasiz.",
     "Birinchi vazifa — xatolar daftari: har xato uchun oltita ustun — savol raqami, sizning javobingiz, to'g'ri javob, savol turi, sabab raqami (1–7) va qaytiladigan dars. Oxirida har sabab va har tur necha marta chiqqanini sanang.",
     "Ikkinchi vazifa — ikki haftalik reja: eng katta ikki naqsh bo'yicha 6 qator; har qatorda qaysi dars, qancha mashq, qaysi kun va kim tekshiradi.",
-    "Uchinchi vazifa — eng zaif savol turi bo'yicha YANGI material: Reading uchun 30-Day Reading Challenge'dagi shu turdagi hali ishlanmagan passage, Listening uchun JonyOS mock bazasidagi mos Section (raqamini ustoz beradi). Vaqt bilan ishlang, har javob yonida isbot gap bo'lsin. Darsdagi Practice'larni qayta ishlamang — ularning javoblari sizga allaqachon ma'lum.",
+    "Uchinchi vazifa — eng zaif savol turi bo'yicha YANGI material: Reading uchun 30-Day Reading Challenge'dagi shu turdagi hali ishlanmagan passage, Listening uchun ustoz guruhdagi zaif turlar bo'yicha guruhga yuboradigan Section'lardan o'z turingiz bor bittasi (audio va savol varag'i rasmi; audio bir marta, to'xtatmasdan tinglanadi). Vaqt bilan ishlang, har javob yonida isbot gap bo'lsin. Listening javoblarini ustoz belgilagan muddatgacha ustozga yuboring; muddat tugagach ustoz guruhga skript va javob kaliti rasmini yuboradi — isbot gapni shundan yozasiz. Darsdagi Practice'larni qayta ishlamang — ularning javoblari sizga allaqachon ma'lum.",
     "To'rtinchi vazifa — Writing: AI izohi bo'yicha Task 2 dagi eng past mezon uchun Task 2 dan bitta body xatboshini qayta yozing; xatolar ro'yxatidan yana 5 ta xatoni tuzating.",
     "Beshinchi vazifa — Speaking intervyusi: administrator mock haftasidagi jadvalni guruh chatiga yuboradi — o'z 15 daqiqalik slotingizga 5 daqiqa oldin keling; tayyorgarlik uchun uchta Part 2 turini (a person / a place / an event) uyda ovozli yozib yuboring."
    ],
@@ -11500,7 +11500,7 @@
     {
      "title": "Eng zaif tur: yangi passage yoki Section",
      "type": "Reading / Listening",
-     "instr": "Xaritadan topilgan darsning strategiyasini takrorlang, keyin shu turdagi YANGI materialni vaqt bilan bajaring: Reading — 30-Day Reading Challenge'dagi hali ishlanmagan passage, Listening — JonyOS mock bazasidagi mos Section (raqamini ustoz beradi); har javob yonida isbot.",
+     "instr": "Xaritadan topilgan darsning strategiyasini takrorlang, keyin shu turdagi YANGI materialni vaqt bilan bajaring: Reading — 30-Day Reading Challenge'dagi hali ishlanmagan passage, Listening — ustoz guruhdagi zaif turlar bo'yicha guruhga yuboradigan, hali ishlanmagan Section'lardan o'z turingiz bor bittasi (audio va savol varag'i rasmi, masalan Cambridge IELTS kitoblaridan), audio bir marta, to'xtatmasdan tinglanadi; har javob yonida isbot (Listening'da javoblarni muddatgacha ustozga yuborasiz; isbot — muddat tugagach ustoz guruhga yuboradigan skript va javob kaliti rasmidan).",
      "answers": "Maqsad: shu turda 80% dan yuqori natija.",
      "layout": "list"
     },
@@ -13200,7 +13200,7 @@
      "NOTES: gaplar to'liq emas (\"Will pay up to £ ___\", \"Needs quote for ___ during holiday\"). Bo'shliq atrofidagi so'z turi aytadi: £ dan keyin — raqam; \"for\" dan keyin — ot; \"a ___\" — birlikdagi ot. Notes'da bor so'zni (£, \"on plane\") javobga qo'shmang.",
      "TABLE: avval jadval sarlavhasi va ustun nomlarini o'qing (type of holiday / accommodation / advantage). Suhbat odatda QATOR bo'yicha boradi: bitta joy haqida uchala ustun, keyin keyingi joy. Qatordagi tayyor katakchalar (\"watching animals\", \"village house\") — qayerda turganingizni bildiruvchi \"belgi\".",
      "TUZOQLAR: 1) tuzatish — \"I originally planned three weeks, but actually two would be better\" → oxirgi javob; 2) yaqin raqamlar — \"over 300 groups and around 150,000 members\" → jadvalda \"300 ___\" — demak \"groups\"; 3) o'xshash ma'noli ibora — audioda avval \"salaried people\" (boshqa loyihalar haqida), keyin \"very few, if any, paid staff\"; notes'dagi \"do not have any\" ga ikkinchisi mos, javob — \"paid staff\".",
-     "Transfer: raqam — son bilan va vergul bilan (1,750; 130,000); ko'plik -s (cyclists, fences); imlo (vegetarian, insurance). Nom bosh harf bilan (City Farms, Action)."
+     "Transfer: raqam — son bilan va vergul bilan (1,750; 130,000); ko'plik -s (cyclists, fences); imlo (vegetarian, insurance). Nomlarni (City Farms, Action) bosh harf bilan yozish — yaxshi odat (Writing'da esa shart), lekin Listening va Reading'da katta-kichik harf hisobga olinmaydi: \"City Farms\" ham, \"city farms\" ham to'g'ri."
     ],
     "formulas": [
      [
@@ -13861,7 +13861,7 @@
         "\"Volunteers on that do diving or collect biodiversity data on tropical rainforest species\". \"Going into the rain forest\" notes'da bor.",
         "\"A big project aimed at clearing up litter in rural areas\". \"In the countryside\" = \"in rural areas\".",
         "\"Keeping the routes safe and attractive for cyclists\". Ko'plik -s bilan.",
-        "\"Within cities we also have the City Farms projects\". Nom — bosh harf bilan.",
+        "\"Within cities we also have the City Farms projects\". Nomni bosh harf bilan yozish — yaxshi odat (Writing'da shart), lekin Listening'da katta-kichik harf hisobga olinmaydi: \"city farms\" ham qabul qilinadi.",
         "\"Many of our projects have very few, if any, paid staff\". \"Do not have any\" = \"very few, if any\". Tuzoq: avval \"salaried people\" aytiladi, lekin u BOSHQA loyihalar haqida (u yerda maoshli xodimlar bor). Ikkalasi ham ikki so'z — hal qiluvchi narsa chegara emas, ma'no."
        ],
        "layout": "grid",

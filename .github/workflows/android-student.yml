@@ -1,0 +1,107 @@
+# JONY STUDENT ANDROID ILOVASI — imzolangan AAB yig'ish (2026-10-07).
+#
+# Kompyuterda Android SDK yo'q, shuning uchun ilova shu yerda yig'iladi.
+# Imzo kaliti repozitoriyda TURMAYDI — GitHub Secrets'dan olinadi:
+#   JONY_KEYSTORE_B64      — signing.keystore fayli, base64 ko'rinishida
+#   JONY_KEYSTORE_PASSWORD — keystore paroli
+#   JONY_KEY_ALIAS         — kalit nomi (alias)
+#   JONY_KEY_PASSWORD      — kalit paroli
+# Secrets bo'lmasa ham yig'iladi (imzosiz) — kod to'g'riligini tekshirish uchun.
+#
+# Natija: Actions -> shu ish -> Artifacts -> "jony-student-aab", hamda
+# "android-build" shoxchasiga AAB va yig'ish jurnali yoziladi.
+name: android-student
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "android-student/**"
+      - ".github/workflows/android-student.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-student
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Android SDK (platform 36)
+        run: |
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKM" --licenses > /dev/null || true
+          "$SDKM" "platforms;android-36" "build-tools;36.0.0" > /dev/null
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.11.1"
+
+      - name: Imzo kaliti
+        env:
+          KS_B64: ${{ secrets.JONY_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/upload.keystore"
+            echo "JONY_KEYSTORE_FILE=$RUNNER_TEMP/upload.keystore" >> "$GITHUB_ENV"
+            echo "SIGNED=yes" >> "$GITHUB_ENV"
+          else
+            echo "SIGNED=no" >> "$GITHUB_ENV"
+          fi
+
+      - name: AAB yig'ish
+        id: build
+        env:
+          JONY_KEYSTORE_PASSWORD: ${{ secrets.JONY_KEYSTORE_PASSWORD }}
+          JONY_KEY_ALIAS: ${{ secrets.JONY_KEY_ALIAS }}
+          JONY_KEY_PASSWORD: ${{ secrets.JONY_KEY_PASSWORD }}
+        run: |
+          set -o pipefail
+          gradle -p android-student bundleRelease --no-daemon --stacktrace 2>&1 | tee "$RUNNER_TEMP/build.log"
+
+      - name: Imzoni tekshirish
+        if: success() && env.SIGNED == 'yes'
+        run: |
+          keytool -printcert -jarfile android-student/app/build/outputs/bundle/release/app-release.aab | grep -E "SHA256:" | tee -a "$RUNNER_TEMP/build.log"
+
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: jony-student-aab
+          path: android-student/app/build/outputs/bundle/release/app-release.aab
+
+      - name: Natijani android-build shoxchasiga yozish
+        if: always()
+        run: |
+          STATUS="${{ steps.build.outcome }}"
+          mkdir -p "$RUNNER_TEMP/out"
+          tail -n 200 "$RUNNER_TEMP/build.log" > "$RUNNER_TEMP/out/build-log.txt" 2>/dev/null || echo "jurnal yo'q" > "$RUNNER_TEMP/out/build-log.txt"
+          {
+            echo "status=$STATUS"
+            echo "signed=$SIGNED"
+            echo "commit=$GITHUB_SHA"
+            echo "run=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            date -u +"time=%Y-%m-%dT%H:%M:%SZ"
+          } > "$RUNNER_TEMP/out/STATUS.txt"
+          AAB=android-student/app/build/outputs/bundle/release/app-release.aab
+          [ -f "$AAB" ] && cp "$AAB" "$RUNNER_TEMP/out/jony-student-release.aab"
+          cd "$RUNNER_TEMP/out"
+          git init -q
+          git config user.name "jony-build-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -q -b android-build
+          git add -A
+          git commit -q -m "Android yig'ish: $STATUS ($GITHUB_SHA)"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" android-build

@@ -1,6 +1,8 @@
 import "../../student-design.css";
 import { studentTabFor } from "../../lib/studentNavigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { isOnline, startOfflineSync } from "../../lib/offline";
+import { getLang } from "../../lib/lang";
 import { Link, Outlet, Navigate, useLocation } from "react-router-dom";
 import { Home, BookOpen, Trophy, Gift, User } from "lucide-react";
 import { useAuth } from "../../lib/AuthContext";
@@ -60,6 +62,29 @@ export default function StudentLayout() {
     };
   }, []);
 
+  // OFFLINE REJIM (2026-10-07): servis worker ilova qobig'ini
+  // saqlaydi, offline to'plam va javoblar navbati internet bilan
+  // bog'lanadi. Offline sahifa bo'lagi oldindan yuklanadi — internet
+  // uzilganda ham ochilsin.
+  const [online, setOnline] = useState(isOnline());
+  const isStudent = user?.role === "student";
+  useEffect(() => {
+    if (!isStudent) return;
+    const on = () => setOnline(true);
+    const off = () => setOnline(false);
+    window.addEventListener("online", on);
+    window.addEventListener("offline", off);
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+    startOfflineSync(getLang());
+    if (isOnline()) import("./StudentOffline").catch(() => undefined);
+    return () => {
+      window.removeEventListener("online", on);
+      window.removeEventListener("offline", off);
+    };
+  }, [isStudent]);
+
   if (!user) return <Navigate to="/login" replace />;
   // Ilova rejimida xodim hisobi bilan ochilsa — xodim paneliga OLIB
   // KETILMAYDI (2026-08-18, "xodimlar ham akkauntlariga kirib
@@ -73,6 +98,14 @@ export default function StudentLayout() {
 
   return (
     <div className="student-app" data-design-version="jony-2026-09">
+      {!online && path !== "/student/offline" && (
+        <Link
+          to="/student/offline"
+          className="block bg-amber-500 text-white text-center text-sm font-medium py-2 px-3"
+        >
+          Internet yo'q — offline mashqlarni ochish →
+        </Link>
+      )}
       <main className="student-content" id="student-content"><Outlet /></main>
       <nav aria-label="Asosiy menyu" className="student-nav fixed bottom-0 inset-x-0 z-40 border-t">
         <div className="max-w-md mx-auto grid grid-cols-5 pt-1.5 pb-1">

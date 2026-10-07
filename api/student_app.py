@@ -3361,6 +3361,79 @@ def grammar_answer(payload: schemas.GrammarAnswerIn,
 
 
 # =====================================================================
+#  OFFLINE MASHQ TO'PLAMI (2026-10-07, Jahongir: "ilovada offline
+#  rejimda ham mashqlar ishlash mumkin bo'lsin").
+#
+#  Internet bor paytda ilova shu to'plamni yuklab, telefonda saqlaydi.
+#  Internet yo'qolsa mashq to'plamdan ishlaydi va javob telefonda
+#  tekshiriladi. Javoblar navbatga yoziladi, internet qaytgach ODDIY
+#  /vocab/answer va /grammar/answer manzillariga yuboriladi — XP'ni
+#  baribir SERVER qayta tekshirib beradi (mijozning "to'g'ri" degani
+#  hisobga olinmaydi). Shu sababli to'plamda javob borligi reytingni
+#  buzmaydi: noto'g'ri javob serverda baribir noto'g'ri.
+#
+#  Grammatikadan faqat variant tanlanadigan turlar (fill, error) —
+#  ular telefonda ham aniq tekshiriladi.
+# =====================================================================
+OFFLINE_VOCAB_SIZE = 300
+OFFLINE_GRAMMAR_SIZE = 200
+
+
+@router.get("/api/student/offline/pack")
+def student_offline_pack(language: str = "en",
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(roles.STUDENT))):
+    s = _me(db, user)
+    if language not in ("en", "ru", "de", "ko"):
+        language = "en"
+
+    pool = _active_words(db, None, None, language).all()
+    words = (_pick_vocab_words(db, s.id, pool,
+                               min(OFFLINE_VOCAB_SIZE, len(pool)))
+             if pool else [])
+    vocab = [{"id": w.id, "word": w.word, "translation": w.translation}
+             for w in words
+             if (w.word or "").strip() and (w.translation or "").strip()]
+
+    glang = language if language in GRAMMAR_LANGS else "en"
+    all_q = _gram_lang(db.query(models.GrammarQuestion)
+                       .filter(models.GrammarQuestion.is_active == 1),
+                       glang).all()
+    solved = {qid for (qid,) in
+              db.query(func.distinct(models.GrammarAttempt.question_id))
+              .filter(models.GrammarAttempt.student_id == s.id,
+                      models.GrammarAttempt.correct == 1).all()}
+    open_levels = set(_gram_unlocked(all_q, solved))
+    cand = [q for q in all_q
+            if q.kind in ("fill", "error")
+            and (q.level or "A1") in open_levels
+            and (q.answer or "").strip()]
+    fresh = [q for q in cand if q.id not in solved]
+    done = [q for q in cand if q.id in solved]
+    random.shuffle(fresh)
+    random.shuffle(done)
+    picked = (fresh + done)[:OFFLINE_GRAMMAR_SIZE]
+    grammar = []
+    for q in picked:
+        try:
+            item = _gram_item(q, solved)
+        except Exception:
+            continue
+        item["answer"] = (q.answer or "").strip()
+        item["explain"] = q.explain
+        grammar.append(item)
+
+    return {
+        "language": language,
+        "generated_at": datetime.utcnow().isoformat(),
+        "vocab": vocab,
+        "grammar": grammar,
+        "vocab_xp": roles.VOCAB_XP_PER_CORRECT,
+        "grammar_xp": roles.GRAMMAR_XP_PER_CORRECT,
+    }
+
+
+# =====================================================================
 #  LIGALAR (2026-08-25)
 #
 #  Jahongir: "keyin ligalarga kotarish bor unga coin beryabsan lekin

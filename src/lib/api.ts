@@ -331,7 +331,12 @@ async function doRequestInner<T>(
   } catch {
     // Tarmoq darajasidagi xato (internet uzildi, server ishlamayapti
     // va h.k.) — bularda ham hech narsa ko'rsatilmasdan qolmasin.
-    pushToast("Tarmoq bilan bog'lanib bo'lmadi. Internetni tekshiring.");
+    // Telefon umuman offline bo'lsa (2026-10-07) har so'rovga toast
+    // chiqarib o'quvchini bezovta qilmaymiz — Jony Student'da tepada
+    // "Internet yo'q — offline mashqlar" yozuvi turadi.
+    if (typeof navigator === "undefined" || navigator.onLine !== false) {
+      pushToast("Tarmoq bilan bog'lanib bo'lmadi. Internetni tekshiring.");
+    }
     throw new ApiError("Tarmoq bilan bog'lanib bo'lmadi");
   }
 

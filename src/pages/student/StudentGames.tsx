@@ -2,7 +2,7 @@ import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage, StudentIcon } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, CloudOff } from "lucide-react";
 import { JsaLogo, JSA } from "../../components/Jsa";
 import { api } from "../../lib/api";
 import { fmtNum, type DailyGoal, type ContinueCard } from "../../lib/studentApi";
@@ -220,6 +220,21 @@ export default function StudentGames() {
           )}
         </Link>
       )}
+
+      {/* ---- Offline mashqlar (2026-10-07): internet yo'q joyda ham */}
+      <Link to="/student/offline"
+        className="flex items-center gap-3 rounded-3xl p-4 mt-3 bg-white active:scale-[0.98] transition">
+        <span className="w-12 h-12 shrink-0 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+          <CloudOff size={24} />
+        </span>
+        <div className="flex-1 min-w-0">
+          <p className="text-[17px] font-extrabold text-slate-900">Offline mashqlar</p>
+          <p className="text-[12px] text-slate-500 leading-snug mt-0.5">
+            Internet yo'q joyda ham lug'at va grammatika — ballar keyin qo'shiladi
+          </p>
+        </div>
+        <ChevronRight size={17} className="text-slate-300 shrink-0" />
+      </Link>
     </div>
   );
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jony Student</string>
+    <string name="offline_title">Internet yo\'q</string>
+    <string name="offline_body">Ilovani birinchi marta ochish uchun internet kerak. Bir marta ochilgandan keyin offline mashqlar internetsiz ham ishlaydi.</string>
+    <string name="retry">Qayta urinish</string>
+    <string name="channel_name">Jony Student xabarlari</string>
+    <string name="channel_desc">Imtihon, topshiriq, natija va to\'lov haqida xabarlar</string>
+</resources>

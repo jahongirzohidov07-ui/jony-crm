@@ -3,9 +3,12 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { detectAppMode } from './lib/appMode'
+import { installNativeBridge } from './lib/nativeBridge'
 
 // Jony Student PWA'dan ochilganini birinchi qatorda aniqlab olamiz
 detectAppMode()
+// Android ilovasi (2-versiya) ichida: ovoz va nutq tanish ko'prigi
+installNativeBridge()
 
 // YANGI VERSIYA CHIQQANDA (2026-08-24 kengaytirildi).
 //

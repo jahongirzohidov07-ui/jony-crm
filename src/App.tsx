@@ -92,6 +92,7 @@ const Settings = lazy(() => import("./pages/Settings"));
 // paneli bilan; xodimlar paneliga aralashmaydi).
 const StudentLayout = lazy(() => import("./pages/student/StudentLayout"));
 const StudentHome = lazy(() => import("./pages/student/StudentHome"));
+const StudentOffline = lazy(() => import("./pages/student/StudentOffline"));
 // Darslar / topshiriqlar (2026-09-18)
 const StudentLessons = lazy(() => import("./pages/student/StudentLessons"));
 const TeacherCheck = lazy(() => import("./pages/teacher/TeacherCheck"));
@@ -374,6 +375,8 @@ function AppRoutes() {
           }
         >
           <Route index element={<StudentHome />} />
+          {/* Offline mashqlar (2026-10-07) */}
+          <Route path="offline" element={<StudentOffline />} />
           <Route path="games" element={<StudentGames />} />
           <Route path="lessons" element={<StudentLessons />} />
           <Route path="lessons/:aid" element={<StudentLessons />} />

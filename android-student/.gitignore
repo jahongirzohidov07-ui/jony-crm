@@ -1,0 +1,10 @@
+# Yig'ilgan fayllar va mahalliy sozlamalar git'ga kirmaydi
+.gradle/
+build/
+local.properties
+*.apk
+*.aab
+# Imzo kaliti HECH QACHON git'ga qo'yilmaydi (GitHub Secrets'da turadi)
+*.jks
+*.keystore
+keystore.properties

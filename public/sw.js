@@ -24,10 +24,37 @@
 //
 // API so'rovlariga ("/api/...") HECH QACHON aralashmaydi — davomat,
 // balans va boshqa raqamlar doim jonli tarmoqdan olinishi SHART.
-const CACHE = "jonyos-v3";
+const CACHE = "jonyos-v4";
 
-self.addEventListener("install", () => {
+// OFFLINE REJIM (2026-10-07, Jahongir: "ilovada offline rejimda ham
+// mashqlar ishlash mumkin bo'lsin"). O'rnatilganda ilova qobig'i
+// (index.html va unga bog'langan asosiy JS/CSS) oldindan saqlanadi —
+// internet yo'q paytda ham ilova ochiladi. Xato bo'lsa o'rnatish
+// to'xtamaydi (keyingi ochilishda baribir keshga tushadi).
+async function precacheShell() {
+  try {
+    const cache = await caches.open(CACHE);
+    const res = await fetch("/index.html", { cache: "no-store" });
+    if (!res || !res.ok) return;
+    const html = await res.clone().text();
+    await cache.put("/index.html", res);
+    const urls = new Set(["/student.webmanifest", "/pwa-192.png"]);
+    const re = /(?:src|href)="(\/assets\/[^"]+)"/g;
+    let m;
+    while ((m = re.exec(html))) urls.add(m[1]);
+    await Promise.all(
+      [...urls].map((u) =>
+        fetch(u).then((r) => (r && r.ok ? cache.put(u, r) : null)).catch(() => null)
+      )
+    );
+  } catch (e) {
+    /* tarmoq yo'q — keyinroq */
+  }
+}
+
+self.addEventListener("install", (event) => {
   self.skipWaiting();
+  event.waitUntil(precacheShell());
 });
 
 self.addEventListener("activate", (event) => {
@@ -67,7 +94,9 @@ self.addEventListener("fetch", (event) => {
           return res;
         })
         .catch(() =>
-          caches.match(request).then((c) => c || caches.match("/index.html"))
+          caches
+            .match(request, { ignoreSearch: true })
+            .then((c) => c || caches.match("/index.html"))
         )
     );
     return;

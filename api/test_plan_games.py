@@ -47,7 +47,7 @@ def ck(name, got, want):
 # ============================================================ A
 print("=== A. HAR DARSDA HAMMA O'YINLAR ===")
 COUNTS = {"ielts_1_0": 28, "ielts_2_0": 25, "ielts_3_0": 26, "ielts_4_0": 25,
-          "ielts_5_0": 48, "ielts_6_0": 20, "ielts_7_0": 32}
+          "ielts_5_0": 48, "ielts_6_0": 25, "ielts_7_0": 32}   # 6.0: +5 Task 1 darsi (21–25)
 bad_lessons, missing = [], []
 for course, n in COUNTS.items():
     lessons = _load_course(course)["lessons"]
@@ -61,7 +61,7 @@ for course, n in COUNTS.items():
         errs = P.check_lesson(games)
         if errs:
             bad_lessons.append((f"{course}:{L['no']}", errs[:3]))
-ck("hamma 202 darsda (1.0-7.0) mualliflik o'yinlari bor", missing, [])
+ck("hamma 207 darsda (1.0-7.0) mualliflik o'yinlari bor", missing, [])
 ck("hamma darslar tekshiruvdan o'tadi (8 tur, chegaralar)", bad_lessons, [])
 
 L = _load_course("ielts_2_0")["lessons"][6]
@@ -95,8 +95,8 @@ for course in COUNTS:
             pages_min = min(pages_min, pdf.count(b"/Type /Page\n") or pdf.count(b"/Type /Page"))
         except Exception as ex:                    # noqa: BLE001
             pdf_err.append(f"{course}:{L['no']} {type(ex).__name__}: {ex}")
-print(f"   202 dars PDF: {time.time() - t0:.1f} s")
-ck("202 darsning hammasi PDF bo'ladi", pdf_err, [])
+print(f"   207 dars PDF: {time.time() - t0:.1f} s")
+ck("207 darsning hammasi PDF bo'ladi", pdf_err, [])
 # lug'atsiz skill darsida 8 o'yin (Bingo/Memory yo'q) — kamida 16 sahifa
 ck("har PDF'da kamida 16 sahifa (har o'yin: ustoz + material)", pages_min >= 16, True)
 

@@ -13851,6 +13851,3479 @@
      ]
     }
    }
+  ],
+  "21": [
+   {
+    "id": "auction_t1line",
+    "type": "auction",
+    "title": "Grammar Auction: rose by or rose to?",
+    "stage": "Sinf mashqlari (2–4-mashqlar) dan keyin, WRITING NORMATIV dan oldin (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 kishilik jamoalar (3–4 jamoa)",
+    "goal": "Line graph javobidagi tipik xatolarni topish: by / to / at / of / in predloglari, birlik (in thousands), sabab yozish, prognoz zamoni va overview'da raqam yozmaslik.",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga auksion varag'ini bering: boshlang'ich pul — 1000. Uch grafik (namuna, muzeylar, isitish) ekranda yoki chop etilgan bo'lsin.",
+     "Ustoz gapni o'qiydi yoki doskaga yozadi. Jamoalar 30 soniya maslahatlashadi: predlog, birlik, zamon va raqam grafikka mosmi?",
+     "Jamoalar gapni 'sotib olish' uchun pul tikadi (kamida 50, qadam 50). Eng ko'p tikgan jamoa gapni oladi.",
+     "Gap TO'G'RI bo'lsa — jamoa tikkan pulini qaytarib oladi va +100 bonus; XATO bo'lsa — tikilgan pul yo'qoladi.",
+     "Xato gapni birinchi bo'lib to'g'ri tuzatgan va sababini aytgan jamoa +50 oladi (masalan: 'by — farq, to — yangi qiymat').",
+     "Oxirida eng ko'p TO'G'RI gap sotib olgan jamoa g'olib (teng bo'lsa — puli ko'p jamoa)."
+    ],
+    "materials": [
+     "Auksion varag'i (har jamoaga) va uch grafik: ielts6_21_sample, ielts6_21_class, ielts6_21_hw"
+    ],
+    "data": {
+     "money": 1000,
+     "items": [
+      {
+       "s": "Social media use rose by 105 minutes between 2012 and 2024.",
+       "ok": true,
+       "why": "by — farq: 150 − 45 = 105 daqiqa."
+      },
+      {
+       "s": "TV viewing fell to 80 minutes between 2012 and 2024.",
+       "ok": false,
+       "fix": "TV viewing fell by 80 minutes between 2012 and 2024.",
+       "why": "140 − 60 = 80 — bu farq, demak 'by'; 'to' dan keyin yangi qiymat (60) keladi."
+      },
+      {
+       "s": "There was a sharp rise of social media use after 2015.",
+       "ok": false,
+       "fix": "There was a sharp rise in social media use after 2015.",
+       "why": "rise IN + nima; OF dan keyin raqam keladi (a rise of 105 minutes)."
+      },
+      {
+       "s": "The Art Gallery peaked at 200,000 visitors in 2010.",
+       "ok": true,
+       "why": "peak AT + cho'qqi qiymati; birlik (,000) bor — to'g'ri."
+      },
+      {
+       "s": "The Science Museum had 310 visitors in 2020.",
+       "ok": false,
+       "fix": "The Science Museum had 310,000 visitors in 2020.",
+       "why": "Grafik 'in thousands' — birlik tushib qolsa raqam noto'g'ri bo'ladi."
+      },
+      {
+       "s": "Overall, social media use overtook TV viewing in around 2018.",
+       "ok": true,
+       "why": "Overview: kesishish — asosiy xususiyat; yil + 'in around' — to'g'ri."
+      },
+      {
+       "s": "TV viewing fell because young people preferred their phones.",
+       "ok": false,
+       "fix": "TV viewing fell from 140 to 60 minutes a day.",
+       "why": "Sabab grafikda yo'q — izoh yozilmaydi, faqat fakt va raqam."
+      },
+      {
+       "s": "In 2018, social media use was just over 100 minutes a day.",
+       "ok": true,
+       "why": "105 — 100 dan biroz ko'p: 'just over 100' — to'g'ri taxmin."
+      },
+      {
+       "s": "Heat pumps rose to 35% in 2030.",
+       "ok": false,
+       "fix": "Heat pumps are projected to rise to 35% by 2030.",
+       "why": "2030 — prognoz: is projected to + by 2030, past simple emas."
+      },
+      {
+       "s": "Reading time plateaued at 25 minutes between 2018 and 2021.",
+       "ok": true,
+       "why": "plateau at + qiymat: 2018 va 2021 da 25 — to'g'ri."
+      },
+      {
+       "s": "Visitors to the History Museum dropped from 250,000 to 180,000.",
+       "ok": true,
+       "why": "from (boshlanish) ... to (yangi qiymat): 2000 → 2010 — to'g'ri."
+      },
+      {
+       "s": "Overall, the Science Museum rose from 120,000 to 310,000 visitors.",
+       "ok": false,
+       "fix": "Overall, the Science Museum grew continuously and became the most popular.",
+       "why": "Overview'da raqam yozilmaydi — raqamlar P3 va P4 ga."
+      }
+     ]
+    }
+   },
+   {
+    "id": "board_t1line",
+    "type": "board",
+    "title": "Board Game: key points, prepositions and forecasts",
+    "stage": "Namuna javobdan keyin, sinf mashqlari o'rniga yoki ulardan keyin (20 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 20,
+    "players": "3–4 o'yinchi har taxtada",
+    "goal": "Uch grafikdan asosiy nuqtalarni (boshlanish, cho'qqi, eng past, oxir, kesishish) topish, ikki strukturani almashtirish, by / to / at / of predloglari, taxmin so'zlari va prognoz tilini og'zaki mashq qilish.",
+    "skill": "mixed",
+    "rules": [
+     "Har guruhga taxta, zar, fishkalar va uch grafikning nusxasini bering. Javoblar kalitini guruhdagi bitta 'hakam' ushlab turadi.",
+     "Navbati kelgan o'yinchi zar tashlaydi va katakdagi topshiriqni inglizcha bajaradi: grafikdan raqam topadi, gapni o'giradi yoki predlogni aytadi.",
+     "Hakam kalit bilan tekshiradi: 'e.g.' bilan berilgan javoblar namuna — mazmuni, raqami va grammatikasi to'g'ri bo'lsa qabul qilinadi.",
+     "Xato yoki javob yo'q bo'lsa — o'yinchi oldingi joyiga qaytadi. Pushti kataklardagi buyruq bajariladi (oldinga, orqaga, navbat o'tkazish).",
+     "FINISH ga birinchi yetgan o'yinchi g'olib. Vaqt tugasa — eng oldinda turgan o'yinchi g'olib."
+    ],
+    "materials": [
+     "Taxta, zar va fishkalar (har guruhga)",
+     "Uch grafik nusxasi: yoshlar vaqti (2012–2024), muzeylar (2000–2020), isitish (1990–2030)"
+    ],
+    "data": {
+     "squares": [
+      {
+       "t": "Say the past forms: rise, fall, overtake.",
+       "a": "rose – risen; fell – fallen; overtook – overtaken"
+      },
+      {
+       "t": "Sample graph: what were TV viewing figures in 2012 and 2024?",
+       "a": "140 minutes a day in 2012 → 60 minutes a day in 2024."
+      },
+      {
+       "t": "Sample graph: when did social media overtake TV?",
+       "a": "In around 2018 (105 vs 100 minutes a day)."
+      },
+      {
+       "t": "Name the five key points of a line, plus one more feature.",
+       "a": "Start, turning point, highest point, lowest point, end + where lines cross."
+      },
+      {
+       "t": "Social media: 45 → 150 minutes. Say it with BY and TO.",
+       "a": "It rose by 105 minutes, to 150 minutes a day."
+      },
+      {
+       "t": "Change to a noun phrase: 'TV viewing fell steadily.'",
+       "a": "There was a steady fall in TV viewing."
+      },
+      {
+       "t": "Change to verb + adverb: 'There was a sharp rise in social media use.'",
+       "a": "Social media use rose sharply."
+      },
+      {
+       "t": "Fill the gap: 'The Art Gallery peaked ___ 200,000 visitors.'",
+       "a": "at (peak at + the highest value)"
+      },
+      {
+       "t": "Fill the gap: 'There was a rise ___ 190,000 in Science Museum visitors.'",
+       "a": "of (a rise of + the difference)"
+      },
+      {
+       "t": "No label on the graph; the point is a little above 100. Say it.",
+       "a": "e.g. just over 100 / approximately 100 minutes"
+      },
+      {
+       "t": "TV fell by 80 of its 140 minutes. Give the percentage with 'almost'.",
+       "a": "e.g. TV viewing fell by almost 60% (80 ÷ 140 ≈ 57%)."
+      },
+      {
+       "t": "Reading: 35 → 30 → 25 → 25 → 30. Describe it in one sentence.",
+       "a": "e.g. It dipped to 25, plateaued, then rose slightly to 30 minutes."
+      },
+      {
+       "t": "Museums: which line had its lowest point in 2010? What was it?",
+       "a": "The History Museum: 180,000 visitors."
+      },
+      {
+       "t": "Museums: give the Art Gallery's start, peak and end.",
+       "a": "90,000 (2000) → peak of 200,000 (2010) → 150,000 (2020)."
+      },
+      {
+       "t": "Museums: which two lines were above the History Museum in 2010?",
+       "a": "Science (210,000) and the Art Gallery (200,000); History had 180,000."
+      },
+      {
+       "t": "Correct it: 'The Science Museum had 310 visitors in 2020.'",
+       "a": "It had 310,000 visitors (the graph is in thousands)."
+      },
+      {
+       "t": "Heating: say the 2030 figure for heat pumps correctly.",
+       "a": "e.g. Heat pumps are projected to reach 35% by 2030."
+      },
+      {
+       "t": "Heating: describe gas from 1990 to 2020 with 'steadily'.",
+       "a": "e.g. Gas heating fell steadily from 70% to 50% of homes."
+      },
+      {
+       "t": "Heating: which line is projected to overtake electric heaters?",
+       "a": "Heat pumps: 15% (2020) → 35% (2030), above electric heaters (25%)."
+      },
+      {
+       "t": "Make a sentence about gas with 'is expected to' and 'by 2030'.",
+       "a": "e.g. Gas heating is expected to fall to 40% by 2030."
+      },
+      {
+       "t": "Overview or detail? 'TV viewing fell from 140 to 60 minutes.'",
+       "a": "Detail (P3) — it has numbers; an overview has none."
+      },
+      {
+       "t": "Give an overview of the sample graph without numbers.",
+       "a": "e.g. Overall, social media use rose dramatically and overtook TV, which declined."
+      },
+      {
+       "t": "Explain 'plateau' using the reading line.",
+       "a": "Stay at one level: reading plateaued at 25 minutes (2018–2021)."
+      },
+      {
+       "t": "How do you split the 20 minutes in today's normativ?",
+       "a": "2 minutes to plan + 18 minutes to write."
+      }
+     ]
+    }
+   },
+   {
+    "id": "dominoes_t1line",
+    "type": "dominoes",
+    "title": "Dominoes: preposition + number from the graphs",
+    "stage": "3-mashq (predloglar) dan keyin, grafikdan raqam o'qish mashqi (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftlik yoki 3 kishilik guruh",
+    "goal": "Gap boshidagi predlogga (by, to, at, from, of) va grafikdagi asosiy nuqtaga qarab to'g'ri raqam va birlikni topish — by farq, to yangi qiymat, at cho'qqi ekanini amalda ko'rish.",
+    "skill": "vocab",
+    "rules": [
+     "Har guruhga bir to'plam qirqilgan domino toshini va uch grafikni bering; toshlarni aralashtiring.",
+     "START toshini qo'ying. Uning o'ng yarmidagi gap boshiga (masalan, 'Social media use rose by') grafik bo'yicha mos raqamli davomni toping va ulang.",
+     "Maslahat: avval qaysi grafik ekanini aniqlang (daqiqa — yoshlar, ming kishi — muzeylar, % — isitish), keyin predlogga qarang: by — farq, to — yangi qiymat, at — cho'qqi.",
+     "Zanjirni FINISH gacha davom ettiring. Birinchi tugatgan guruh har juftlikni to'liq gap qilib o'qiydi; ustoz raqamlarni grafik bilan tekshiradi.",
+     "Zanjiri to'g'ri va raqamlari xatosiz birinchi guruh g'olib."
+    ],
+    "materials": [
+     "Qirqilgan domino toshlari (har guruhga 1 to'plam) va uch grafik nusxasi"
+    ],
+    "data": {
+     "pairs": [
+      [
+       "Social media use rose by",
+       "105 minutes a day (2012–2024)"
+      ],
+      [
+       "TV viewing fell to",
+       "60 minutes a day in 2024"
+      ],
+      [
+       "The Art Gallery peaked at",
+       "200,000 visitors in 2010"
+      ],
+      [
+       "History Museum visitors dropped from",
+       "250,000 to 180,000"
+      ],
+      [
+       "There was a rise of",
+       "190,000 in Science Museum visitors"
+      ],
+      [
+       "Gas heating is projected to fall to",
+       "40% of homes by 2030"
+      ],
+      [
+       "Heat pumps are expected to reach",
+       "35% of homes by 2030"
+      ],
+      [
+       "Reading time plateaued at",
+       "25 minutes (2018–2021)"
+      ],
+      [
+       "TV viewing fell by almost",
+       "60% over the whole period"
+      ],
+      [
+       "In 2018, social media use was just over",
+       "100 minutes a day"
+      ],
+      [
+       "In 2012, TV took up roughly",
+       "three times as much time as social media"
+      ],
+      [
+       "Electric heaters rose gradually from",
+       "20% to 30% (1990–2020)"
+      ],
+      [
+       "The Science Museum grew from",
+       "120,000 to 310,000 visitors"
+      ],
+      [
+       "By 2020, the Art Gallery had fallen to",
+       "150,000 visitors"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "taboo_t1line",
+    "type": "taboo",
+    "title": "Taboo: line graph and approximation words",
+    "stage": "'Line graph: asosiy xususiyatlar' dan oldin, trend so'zlarini isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "2 jamoa",
+    "goal": "Line graph so'zlarini (overtake, plateau, turning point, dip, recover) va taxmin hamda prognoz so'zlarini (approximately, just over, projected, respectively) inglizcha tushuntirish.",
+    "skill": "vocab",
+    "rules": [
+     "Sinfni 2 jamoaga bo'ling. Jamoadan bitta o'quvchi chiqib, kartani oladi.",
+     "60 soniyada so'zni jamoasiga inglizcha tushuntiradi — so'zning o'zi va 3 ta taqiqlangan so'z aytilmaydi. Havoda chiziq chizib ko'rsatish yoki bugungi grafiklardan misol keltirish mumkin.",
+     "Jamoa topsa +1 ball, keyingi kartaga o'tiladi. Taqiqlangan so'z aytilsa — karta raqib jamoaga o'tadi, ular topsa +1 ball.",
+     "O'zbekcha gapirish mumkin emas. Topilgan so'z bilan grafik haqida bitta to'g'ri gap aytilsa — jamoaga +1 bonus.",
+     "Kartalar tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "data": {
+     "cards": [
+      {
+       "word": "overtake",
+       "taboo": [
+        "pass",
+        "higher",
+        "cross"
+       ]
+      },
+      {
+       "word": "plateau",
+       "taboo": [
+        "flat",
+        "level",
+        "same"
+       ]
+      },
+      {
+       "word": "peak",
+       "taboo": [
+        "top",
+        "highest",
+        "maximum"
+       ]
+      },
+      {
+       "word": "turning point",
+       "taboo": [
+        "change",
+        "direction",
+        "corner"
+       ]
+      },
+      {
+       "word": "dip",
+       "taboo": [
+        "fall",
+        "small",
+        "short"
+       ]
+      },
+      {
+       "word": "recover",
+       "taboo": [
+        "back",
+        "again",
+        "rise"
+       ]
+      },
+      {
+       "word": "fluctuate",
+       "taboo": [
+        "up",
+        "down",
+        "change"
+       ]
+      },
+      {
+       "word": "decline",
+       "taboo": [
+        "fall",
+        "decrease",
+        "down"
+       ]
+      },
+      {
+       "word": "steadily",
+       "taboo": [
+        "constant",
+        "regular",
+        "slowly"
+       ]
+      },
+      {
+       "word": "approximately",
+       "taboo": [
+        "about",
+        "around",
+        "exact"
+       ]
+      },
+      {
+       "word": "just over",
+       "taboo": [
+        "more",
+        "little",
+        "above"
+       ]
+      },
+      {
+       "word": "is projected to",
+       "taboo": [
+        "future",
+        "expect",
+        "forecast"
+       ]
+      },
+      {
+       "word": "respectively",
+       "taboo": [
+        "order",
+        "each",
+        "same"
+       ]
+      },
+      {
+       "word": "threefold",
+       "taboo": [
+        "three",
+        "times",
+        "triple"
+       ]
+      },
+      {
+       "word": "trend",
+       "taboo": [
+        "direction",
+        "general",
+        "pattern"
+       ]
+      },
+      {
+       "word": "key features",
+       "taboo": [
+        "main",
+        "important",
+        "overview"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "find_t1line",
+    "type": "find_someone",
+    "title": "Find someone who… spends more time online",
+    "stage": "Dars boshida, 'Takrorlash' dan keyin harakatli isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "Butun sinf, har kim o'zi",
+    "goal": "Bugungi grafiklar mavzusida (ekran vaqti, TV, kitob, muzey, uyni isitish) to'g'ri savol tuzish va javobni taxmin so'zlari (roughly, about, just over) va trend tili bilan aytish.",
+    "skill": "speaking",
+    "rules": [
+     "Har o'quvchiga so'rovnoma varag'ini bering. Hamma o'rnidan turadi.",
+     "O'quvchilar sinfda yurib, har qator uchun savolni O'ZLARI tuzib so'raydi (masalan: Do you spend more time on social media now than three years ago?).",
+     "'Yes' degan odamning ismini yozadi va raqam so'raydigan qo'shimcha savol beradi (Roughly how many minutes a day? How much has it risen?).",
+     "Bitta odamning ismi ko'pi bilan 2 marta yozilishi mumkin.",
+     "Birinchi bo'lib 8 qatorni to'ldirgan o'quvchi 'Stop!' deydi va 2 natijani trend + taxmin tili bilan aytadi (masalan: 'Aziz's screen time has risen to roughly 3 hours a day')."
+    ],
+    "data": {
+     "items": [
+      {
+       "t": "…spends more time on social media now than three years ago.",
+       "q": "Do you spend more time on social media now than three years ago?"
+      },
+      {
+       "t": "…watches less TV now than when they were a child.",
+       "q": "Do you watch less TV now than when you were a child?"
+      },
+      {
+       "t": "…reads books for at least 30 minutes a day.",
+       "q": "Do you read books for at least 30 minutes a day?"
+      },
+      {
+       "t": "…knows roughly how many minutes a day they spend on their phone.",
+       "q": "Do you know roughly how many minutes a day you spend on your phone?"
+      },
+      {
+       "t": "…has checked their phone's screen-time graph this week.",
+       "q": "Have you checked your phone's screen-time graph this week?"
+      },
+      {
+       "t": "…has visited a museum in the last year.",
+       "q": "Have you visited a museum in the last year?"
+      },
+      {
+       "t": "…has been to an art gallery.",
+       "q": "Have you ever been to an art gallery?"
+      },
+      {
+       "t": "…lives in a home that is heated by gas.",
+       "q": "Is your home heated by gas?"
+      },
+      {
+       "t": "…has seen a heat pump or solar panels on a house.",
+       "q": "Have you ever seen a heat pump or solar panels on a house?"
+      },
+      {
+       "t": "…has a hobby that has become more popular recently.",
+       "q": "Do you have a hobby that has become more popular recently?"
+      },
+      {
+       "t": "…can name a price that has risen sharply this year.",
+       "q": "Can you name a price that has risen sharply this year?"
+      },
+      {
+       "t": "…expects to read more books next year than this year.",
+       "q": "Do you expect to read more books next year than this year?"
+      }
+     ]
+    }
+   },
+   {
+    "id": "speaking_t1line",
+    "type": "speaking_cards",
+    "title": "Speaking cards: screen time, museums and home energy",
+    "stage": "Keyingi dars boshida yoki Speaking darsida, IELTS Speaking Part 1/3 (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftliklar",
+    "goal": "Bugungi grafiklar mavzulari (ijtimoiy tarmoq, TV, kitob, muzeylar, uyni isitish) bo'yicha Part 1 va Part 3 savollariga trend tili, taxmin so'zlari va prognoz (is likely to, will probably) bilan javob berish.",
+    "skill": "speaking",
+    "rules": [
+     "Kartalarni teskari dasta qilib qo'ying. Birinchi o'quvchi karta oladi va savolni sherigiga o'qiydi.",
+     "Sherigi 20–40 soniya javob beradi: Part 1 savollariga 2–3 gap, Part 3 ('Why…?', 'Will…?') savollariga sabab va misol bilan 4–5 gap.",
+     "Tinglovchi ball sanaydi: har trend so'zi (rose, declined, peaked, overtook…) +1, har taxmin so'zi (roughly, about, just over) +1, kelajak haqida prognoz (is likely to / will probably) +1.",
+     "Rollar almashadi. 12 daqiqadan keyin eng ko'p ball olgan o'quvchi g'olib."
+    ],
+    "data": {
+     "cards": [
+      "Roughly how much time do you spend on social media a day? Has it risen or fallen recently?",
+      "Do you watch TV as much as you did five years ago? Why or why not?",
+      "Has the time you spend reading books changed since you were a child? How?",
+      "When did you last visit a museum? Would you like to go again?",
+      "Which would you rather visit: a science museum, a history museum or an art gallery? Why?",
+      "Why do you think young people spend more time online than older people?",
+      "Do you think TV will disappear in the next twenty years? Why or why not?",
+      "How can schools encourage young people to read more books?",
+      "Should museums be free for students? Why or why not?",
+      "How are homes in Uzbekistan usually heated in winter? Is this changing?",
+      "Do you think more homes will use clean energy by 2030? Why?",
+      "Is it easy to make predictions about the future? Give an example.",
+      "Do you trust the statistics and graphs you see on social media? Why?",
+      "What is one habit of yours that has changed steadily over the last few years?"
+     ]
+    }
+   },
+   {
+    "id": "scramble_t1line",
+    "type": "scramble",
+    "title": "Sentence Race: line graph sentences",
+    "stage": "Namuna javob tahlilidan keyin, WRITING NORMATIV dan oldin (8 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 8,
+    "players": "3–4 kishilik jamoalar",
+    "goal": "Line graph javobining gap qoliplari: kirish (compares how many…), overview (overtook), struktura B (There was a steady fall in…), predloglar (by, at, to), taxmin (just over), prognoz (are projected to) va respectively.",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga bitta konvert (bitta gapning qirqilgan so'zlari) beriladi.",
+     "Jamoa so'zlarni to'g'ri tartibda teradi. Maslahat: bosh harfli so'z — gap boshi, nuqtali so'z — gap oxiri, vergulli so'z — birinchi qism tugashi.",
+     "Tayyor bo'lgach, jamoa gapni ovoz chiqarib o'qiydi. To'g'ri bo'lsa +1 ball va keyingi konvert; gap qaysi grafikka va javobning qaysi xatboshisiga (kirish, overview, P3/P4) tegishli ekanini aytsa +1 bonus.",
+     "Hamma konvertlar tugaganda eng ko'p ball olgan jamoa g'olib; teng bo'lsa — oxirgi gapni tezroq tergan jamoa."
+    ],
+    "data": {
+     "sentences": [
+      "The line graph compares how many minutes young people spent on three activities.",
+      "Overall, social media use rose dramatically and overtook TV viewing.",
+      "There was a steady fall in TV viewing throughout the period.",
+      "Social media use rose by 105 minutes between 2012 and 2024.",
+      "The Art Gallery peaked at 200,000 visitors in 2010.",
+      "Reading time plateaued at 25 minutes before rising slightly to 30.",
+      "In 2018, social media use was just over 100 minutes a day.",
+      "Heat pumps are projected to reach 35% of homes by 2030.",
+      "In 2020, the Science and History Museums had 310,000 and 240,000 visitors respectively.",
+      "History Museum visitors fell to 180,000 before recovering to 240,000."
+     ]
+    }
+   },
+   {
+    "id": "quiz_t1line",
+    "type": "quiz_board",
+    "title": "Quiz Board: key points, prepositions and approximations",
+    "stage": "Dars oxirida, 'Xulosa va vazifa' dan oldin umumiy takror (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 jamoa",
+    "goal": "Grafikdan asosiy nuqtalarni o'qish, by / to / at / of / in predloglari, taxmin so'zlari (just over, roughly, almost) va line graph javobidagi tipik xatolarni o'yin shaklida takrorlash.",
+    "skill": "mixed",
+    "rules": [
+     "Taxtani doskaga chizing (4 ustun × 100–500). Uch grafik ekranda bo'lsin. Jamoalar navbat bilan bo'lim va ballni tanlaydi (masalan: 'Prepositions 300').",
+     "Ustoz savolni o'qiydi; jamoa 20 soniya maslahatlashib, bitta vakil orqali javob beradi.",
+     "To'g'ri — ball jamoaga. Xato — boshqa jamoalar qo'l ko'tarib javob berishi mumkin (to'g'ri bo'lsa ball ularga).",
+     "'Fix it!' bo'limida gapning to'liq to'g'ri shakli aytilishi kerak; mazmuni va grammatikasi to'g'ri bo'lgan boshqa variant ham qabul qilinadi.",
+     "Ishlatilgan katak o'chiriladi. Hamma katak tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "data": {
+     "categories": [
+      {
+       "name": "Key points",
+       "qs": [
+        {
+         "q": "Sample graph: how many minutes a day did young people spend on social media in 2012?",
+         "a": "45 minutes"
+        },
+        {
+         "q": "Sample graph: in which year did social media overtake TV?",
+         "a": "In around 2018 (105 vs 100 minutes)"
+        },
+        {
+         "q": "Museums: what was the Art Gallery's highest point?",
+         "a": "200,000 visitors in 2010"
+        },
+        {
+         "q": "Museums: which museum had the fewest visitors in 2010?",
+         "a": "The History Museum (180,000)"
+        },
+        {
+         "q": "Museums: by how much did Science Museum visitors grow from 2000 to 2020?",
+         "a": "By 190,000 (120,000 → 310,000), more than 2.5 times"
+        }
+       ]
+      },
+      {
+       "name": "Prepositions",
+       "qs": [
+        {
+         "q": "'Social media use rose ___ 150 minutes a day.' (the new value)",
+         "a": "to"
+        },
+        {
+         "q": "'TV viewing fell ___ 80 minutes.' (the difference)",
+         "a": "by"
+        },
+        {
+         "q": "'The Art Gallery peaked ___ 200,000 visitors.'",
+         "a": "at"
+        },
+        {
+         "q": "'There was a fall ___ 80 minutes ___ TV viewing.'",
+         "a": "of … in"
+        },
+        {
+         "q": "'Gas is projected to fall to 40% ___ 2030.' (not later than 2030)",
+         "a": "by"
+        }
+       ]
+      },
+      {
+       "name": "Approximations",
+       "qs": [
+        {
+         "q": "No label; the point is a little above 100. Say it with 'just'.",
+         "a": "just over 100"
+        },
+        {
+         "q": "No label; the point is a little below 100. Say it with 'just'.",
+         "a": "just under 100"
+        },
+        {
+         "q": "'In 2012, TV took up ___ three times as much time as social media (140 vs 45).'",
+         "a": "roughly / approximately (140 ÷ 45 ≈ 3.1)"
+        },
+        {
+         "q": "TV fell by 80 of its 140 minutes. Give the percentage with 'almost'.",
+         "a": "almost 60% (80 ÷ 140 ≈ 57%)"
+        },
+        {
+         "q": "Name the three 'A' words for approximate figures (slide 46).",
+         "a": "approximately, around, about"
+        }
+       ]
+      },
+      {
+       "name": "Fix it!",
+       "qs": [
+        {
+         "q": "'Social media use rised sharply after 2015.'",
+         "a": "Social media use rose sharply after 2015."
+        },
+        {
+         "q": "'TV viewing decreased with 80 minutes.'",
+         "a": "TV viewing decreased by 80 minutes."
+        },
+        {
+         "q": "'Reading time remained stable on 25 minutes.'",
+         "a": "Reading time remained stable at 25 minutes."
+        },
+        {
+         "q": "'Heat pumps rose to 35% in 2030.'",
+         "a": "Heat pumps are projected to rise to 35% by 2030."
+        },
+        {
+         "q": "'Overall, TV fell from 140 to 60 minutes because of phones.'",
+         "a": "Overall, TV viewing declined steadily. (no numbers, no reason)"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "22": [
+   {
+    "id": "auction_t1bar",
+    "type": "auction",
+    "title": "Grammar Auction: comparing bars correctly",
+    "stage": "Til banki va 2-mashqdan keyin, namuna javobdan oldin (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 kishilik jamoalar (3–4 jamoa)",
+    "goal": "Bar chart javobidagi tipik xatolarni topish: vaqtsiz grafikda o'zgarish fe'li, number/amount, many/much, birlik (thousands), 'percentage' va 'than that of'.",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga auksion varag'ini bering: boshlang'ich pul — 1000.",
+     "Ustoz gapni o'qiydi yoki doskaga yozadi. Jamoalar 30 soniya maslahatlashadi: solishtirish tili, number/amount, birlik va grafik turi (vaqt bor-yo'q) to'g'rimi?",
+     "Jamoalar gapni 'sotib olish' uchun pul tikadi (kamida 50, qadam 50). Eng ko'p tikgan jamoa gapni oladi.",
+     "Gap TO'G'RI bo'lsa — jamoa tikkan pulini qaytarib oladi va +100 bonus; XATO bo'lsa — tikilgan pul yo'qoladi.",
+     "Xato gapni birinchi bo'lib to'g'ri tuzatgan va sababini aytgan jamoa +50 oladi (masalan: 'money — sanalmaydi, demak amount').",
+     "Oxirida eng ko'p TO'G'RI gap sotib olgan jamoa g'olib (teng bo'lsa — puli ko'p jamoa)."
+    ],
+    "data": {
+     "money": 1000,
+     "items": [
+      {
+       "s": "A far higher proportion of men than women played football (30% compared with 6%).",
+       "ok": true,
+       "why": "a higher proportion of X than Y + compared with — to'g'ri solishtirish."
+      },
+      {
+       "s": "Football decreased from men to women.",
+       "ok": false,
+       "fix": "A far smaller proportion of women than men played football.",
+       "why": "Vaqtsiz grafikda o'zgarish fe'li (decreased) ishlatilmaydi."
+      },
+      {
+       "s": "The figures for walking among men and women were 52% and 61% respectively.",
+       "ok": true,
+       "why": "respectively — raqamlar tartibi gapdagi tartibga mos (men 52%, women 61%)."
+      },
+      {
+       "s": "The number of money that 41–60-year-olds spent on food was $70.",
+       "ok": false,
+       "fix": "The amount of money that 41–60-year-olds spent on food was $70.",
+       "why": "money — sanalmaydigan ot → the amount of."
+      },
+      {
+       "s": "Northbridge had 42 international students in 2025.",
+       "ok": false,
+       "fix": "Northbridge had 42,000 international students in 2025.",
+       "why": "O'qda 'thousands' — birlik tushib qolgan (slayd 43)."
+      },
+      {
+       "s": "Proportionally, five times as many men as women played football.",
+       "ok": true,
+       "why": "30 ÷ 6 = 5; foiz bo'lgani uchun 'proportionally' — to'g'ri."
+      },
+      {
+       "s": "Walking was 61 percentage for women.",
+       "ok": false,
+       "fix": "61% of women walked at least once a week.",
+       "why": "percentage — ot; raqam bilan % yoki per cent yoziladi."
+      },
+      {
+       "s": "18–25-year-olds spent twice as many on mobile and internet as 41–60-year-olds.",
+       "ok": false,
+       "fix": "18–25-year-olds spent twice as much on mobile and internet as 41–60-year-olds.",
+       "why": "Pul (money) sanalmaydi → twice as much ($20 va $10)."
+      },
+      {
+       "s": "Swimming attracted 22% of women, while the figure for men was 18%.",
+       "ok": true,
+       "why": "while + the figure for — ikkinchi raqam takrorsiz berilgan."
+      },
+      {
+       "s": "The number of international students in Westford tripled between 2015 and 2025.",
+       "ok": true,
+       "why": "Vaqt bor (2015 → 2025) — o'zgarish tili kerak: 9,000 → 27,000 = tripled."
+      },
+      {
+       "s": "The percentage of women who swam was slightly higher than men.",
+       "ok": false,
+       "fix": "The percentage of women who swam was slightly higher than that of men.",
+       "why": "Ulush ulush bilan solishtiriladi: than that of men ('than men' emas)."
+      },
+      {
+       "s": "In 2015, Eastport had the highest number of international students, at 35,000.",
+       "ok": true,
+       "why": "the highest number of + birlik bilan raqam (35,000) — to'g'ri."
+      }
+     ]
+    }
+   },
+   {
+    "id": "board_t1bar",
+    "type": "board",
+    "title": "Board Game: bar charts — highest, lowest, biggest gap",
+    "stage": "Sinf mashqlaridan keyin, WRITING NORMATIV dan oldin yoki keyingi darsda (20 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 20,
+    "players": "3–4 o'yinchi har taxtada",
+    "goal": "Vaqt bor-yo'qligini aniqlash, eng ko'p/eng kam va eng keskin farqni topish, number/amount va birlikni to'g'ri yozish hamda solishtirish iboralari bilan og'zaki gap tuzish.",
+    "skill": "mixed",
+    "rules": [
+     "Har guruhga taxta, zar, fishkalar va uchala grafikni (namuna, sinf, uy vazifasi) bering. Javoblar kalitini guruhdagi bitta 'hakam' ushlab turadi.",
+     "Navbati kelgan o'yinchi zar tashlaydi va katakdagi topshiriqni inglizcha bajaradi: grafik turini aytadi, raqamni topadi yoki solishtirish gapini tuzadi.",
+     "Hakam kalit bilan tekshiradi: 'e.g.' bilan berilgan javoblar namuna — raqamlar to'g'ri va grammatika xatosiz bo'lsa qabul qilinadi.",
+     "Xato yoki javob yo'q bo'lsa — o'yinchi oldingi joyiga qaytadi. Pushti kataklardagi buyruq bajariladi (oldinga, orqaga, navbat o'tkazish).",
+     "FINISH ga birinchi yetgan o'yinchi g'olib. Vaqt tugasa — eng oldinda turgan o'yinchi g'olib."
+    ],
+    "data": {
+     "squares": [
+      {
+       "t": "Time or no time? 'The chart shows car sales in 2010, 2015 and 2020.'",
+       "a": "Time — a trend chart: rose, fell, doubled."
+      },
+      {
+       "t": "Time or no time? 'The chart shows cinema ticket prices in six cities.'",
+       "a": "No time — a comparison chart: higher than, the most expensive."
+      },
+      {
+       "t": "number or amount? 'the ___ of money spent on food'",
+       "a": "the amount of money (money is uncountable)"
+      },
+      {
+       "t": "number or amount? 'the ___ of international students'",
+       "a": "the number of students (students are countable)"
+      },
+      {
+       "t": "Correct it: 'Walking was 61 percentage for women.'",
+       "a": "61% (61 per cent) of women walked at least once a week."
+      },
+      {
+       "t": "Correct it: 'Football decreased from men to women.'",
+       "a": "A far smaller proportion of women than men played football."
+      },
+      {
+       "t": "Sample chart: which activity was the most popular for both sexes?",
+       "a": "Walking (52% of men and 61% of women)."
+      },
+      {
+       "t": "Sample chart: what was the lowest figure, and for whom?",
+       "a": "4% — men doing yoga."
+      },
+      {
+       "t": "Sample chart: where was the biggest gap between men and women?",
+       "a": "Football: 30% of men vs 6% of women (24 points)."
+      },
+      {
+       "t": "Use 'whereas': gym — men 38%, women 27%.",
+       "a": "e.g. 38% of men went to the gym, whereas only 27% of women did."
+      },
+      {
+       "t": "Use 'respectively': walking — men 52%, women 61%.",
+       "a": "e.g. The figures for men and women were 52% and 61% respectively."
+      },
+      {
+       "t": "Use 'the figure for': swimming — women 22%, men 18%.",
+       "a": "e.g. 22% of women went swimming, while the figure for men was 18%."
+      },
+      {
+       "t": "Class chart: which city had the most students in 2015? And in 2025?",
+       "a": "Eastport in 2015 (35,000); Northbridge in 2025 (42,000)."
+      },
+      {
+       "t": "Class chart: which city saw a fall? From what to what?",
+       "a": "Southvale: from 22,000 to 15,000."
+      },
+      {
+       "t": "Class chart: Westford went from 9,000 to 27,000. Say it with one verb.",
+       "a": "It tripled."
+      },
+      {
+       "t": "Class chart: Northbridge 18,000 → 42,000. Doubled or more than doubled?",
+       "a": "More than doubled (42 ÷ 18 ≈ 2.3)."
+      },
+      {
+       "t": "Homework chart: mobile and internet — 18–25 $20, 41–60 $10. Use 'twice as'.",
+       "a": "e.g. The youngest group spent twice as much as the oldest ($20 and $10)."
+      },
+      {
+       "t": "Homework chart: which item cost the most in every age group?",
+       "a": "Food ($40, $65 and $70)."
+      },
+      {
+       "t": "Overview or detail? 'Overall, walking was by far the most popular activity.'",
+       "a": "Overview — a general feature with no numbers."
+      },
+      {
+       "t": "Why shouldn't you compare every bar with every other bar?",
+       "a": "It becomes a list (Band 5). Group the data into two logical groups (P3, P4)."
+      },
+      {
+       "t": "Sample chart: how is the data grouped into P3 and P4?",
+       "a": "P3: men ahead (football, gym); P4: women ahead (walking, swimming, yoga)."
+      },
+      {
+       "t": "Paraphrase: 'at least once a week'.",
+       "a": "e.g. every week / weekly / regularly"
+      },
+      {
+       "t": "A bar ends a little below 40%. Describe it without an exact number.",
+       "a": "e.g. just under 40% / approximately 40%"
+      },
+      {
+       "t": "Compare two things in your own life using 'twice as … as'.",
+       "a": "e.g. I spend twice as much time on my phone as on reading."
+      }
+     ]
+    }
+   },
+   {
+    "id": "dominoes_t1bar",
+    "type": "dominoes",
+    "title": "Dominoes: figures ↔ comparison phrases",
+    "stage": "Til bankidan keyin, 3-mashqdan oldin — raqamni iboraga aylantirish (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftlik yoki 3 kishilik guruh",
+    "goal": "Uchala grafik raqamlarini to'g'ri solishtirish iborasiga ulash: five times as many, twice as much, tripled, slightly higher, considerably lower, the majority of, respectively.",
+    "skill": "vocab",
+    "rules": [
+     "Har guruhga bir to'plam qirqilgan domino toshini bering va aralashtiring; uchala grafik ko'z oldida tursin.",
+     "START toshini qo'ying. Uning o'ng yarmidagi raqamlarga (masalan, 'Football: men 30%, women 6%') mos ibora yozilgan toshni toping va ulang.",
+     "Zanjirni FINISH gacha davom ettiring. Maslahat: avval nisbatni hisoblang (30 ÷ 6 = 5), keyin farq kattami-kichikmi (slightly yoki considerably) — o'ylang.",
+     "Birinchi tugatgan guruh zanjirni o'qiydi va har juftlik bilan bitta to'liq gap aytadi (masalan: 'Proportionally, five times as many men as women played football.'); ustoz tekshiradi.",
+     "Zanjiri to'g'ri va gaplari xatosiz birinchi guruh g'olib."
+    ],
+    "data": {
+     "pairs": [
+      [
+       "Football: men 30%, women 6%",
+       "proportionally, five times as many men"
+      ],
+      [
+       "Mobile and internet: 18–25 $20, 41–60 $10",
+       "twice as much for the youngest group"
+      ],
+      [
+       "Westford: 9,000 → 27,000",
+       "tripled"
+      ],
+      [
+       "Northbridge: 18,000 → 42,000",
+       "more than doubled"
+      ],
+      [
+       "Eastport: 35,000 → 38,000",
+       "rose slightly"
+      ],
+      [
+       "Southvale: 22,000 → 15,000",
+       "fell by almost a third"
+      ],
+      [
+       "Swimming: women 22%, men 18%",
+       "slightly higher for women"
+      ],
+      [
+       "Yoga: men 4%, women 19%",
+       "considerably lower for men"
+      ],
+      [
+       "Walking: women 61%",
+       "the majority of women"
+      ],
+      [
+       "Football: women only 6%",
+       "only a small minority of women"
+      ],
+      [
+       "Food: 41–60 $70, 26–40 $65",
+       "marginally higher for the oldest group"
+      ],
+      [
+       "Entertainment: 18–25 $35, 41–60 $15",
+       "more than twice as much for the youngest"
+      ],
+      [
+       "Transport: 26–40 $35, others $25 and $30",
+       "highest among 26–40-year-olds"
+      ],
+      [
+       "Walking: men 52%, women 61%",
+       "52% and 61% respectively"
+      ],
+      [
+       "Gym: men 38%, women 27%",
+       "while the figure for women was 27%"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "taboo_t1bar",
+    "type": "taboo",
+    "title": "Taboo: the language of comparison",
+    "stage": "Dars boshida, 'Takrorlash' dan keyin solishtirish so'zlarini isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "2 jamoa",
+    "goal": "Solishtirish so'zlari (whereas, respectively, exceed, outnumber, by far) va bar chart atamalarini (proportion, figure, unit, axis) inglizcha tushuntirish.",
+    "skill": "vocab",
+    "rules": [
+     "Sinfni 2 jamoaga bo'ling. Jamoadan bitta o'quvchi chiqib, kartani oladi.",
+     "60 soniyada so'zni jamoasiga inglizcha tushuntiradi — so'zning o'zi va 3 ta taqiqlangan so'z aytilmaydi. Doskaga ikki ustun chizib, misol ko'rsatish mumkin (raqamsiz).",
+     "Jamoa topsa +1 ball, keyingi kartaga o'tiladi. Taqiqlangan so'z aytilsa — karta raqib jamoaga o'tadi, ular topsa +1 ball.",
+     "Imo-ishora va chizma mumkin, o'zbekcha gapirish mumkin emas.",
+     "Kartalar tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "data": {
+     "cards": [
+      {
+       "word": "compared with",
+       "taboo": [
+        "compare",
+        "than",
+        "both"
+       ]
+      },
+      {
+       "word": "whereas",
+       "taboo": [
+        "while",
+        "but",
+        "contrast"
+       ]
+      },
+      {
+       "word": "respectively",
+       "taboo": [
+        "order",
+        "each",
+        "same"
+       ]
+      },
+      {
+       "word": "proportion",
+       "taboo": [
+        "part",
+        "share",
+        "per cent"
+       ]
+      },
+      {
+       "word": "percentage",
+       "taboo": [
+        "hundred",
+        "per cent",
+        "number"
+       ]
+      },
+      {
+       "word": "the majority",
+       "taboo": [
+        "most",
+        "more than half",
+        "many"
+       ]
+      },
+      {
+       "word": "a minority",
+       "taboo": [
+        "few",
+        "small",
+        "less than half"
+       ]
+      },
+      {
+       "word": "exceed",
+       "taboo": [
+        "more",
+        "than",
+        "higher"
+       ]
+      },
+      {
+       "word": "gap",
+       "taboo": [
+        "difference",
+        "space",
+        "between"
+       ]
+      },
+      {
+       "word": "outnumber",
+       "taboo": [
+        "more",
+        "number",
+        "than"
+       ]
+      },
+      {
+       "word": "twice",
+       "taboo": [
+        "two",
+        "double",
+        "times"
+       ]
+      },
+      {
+       "word": "bar chart",
+       "taboo": [
+        "graph",
+        "column",
+        "rectangle"
+       ]
+      },
+      {
+       "word": "figure",
+       "taboo": [
+        "number",
+        "data",
+        "amount"
+       ]
+      },
+      {
+       "word": "unit",
+       "taboo": [
+        "thousand",
+        "measure",
+        "dollar"
+       ]
+      },
+      {
+       "word": "axis",
+       "taboo": [
+        "line",
+        "side",
+        "numbers"
+       ]
+      },
+      {
+       "word": "by far",
+       "taboo": [
+        "much",
+        "very",
+        "a lot"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "find_t1bar",
+    "type": "find_someone",
+    "title": "Find someone who… spends more on food than fun",
+    "stage": "Dars boshida yoki 'Xulosa va vazifa' dan oldin harakatli mashq (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "Butun sinf, har kim o'zi",
+    "goal": "Grafiklar mavzusidagi (sport, xarajat, chet elda o'qish) savollarni to'g'ri tuzish va natijani solishtirish tili bilan aytish: twice as many, the majority of, whereas.",
+    "skill": "speaking",
+    "rules": [
+     "Har o'quvchiga so'rovnoma varag'ini bering. Hamma o'rnidan turadi.",
+     "O'quvchilar sinfda yurib, har qator uchun savolni O'ZLARI tuzib so'raydi (masalan: Do you go to a gym at least once a week?).",
+     "'Yes' degan odamning ismini yozadi va bitta qo'shimcha savol beradi (How often? How much a week? Why?).",
+     "Bitta odamning ismi ko'pi bilan 2 marta yozilishi mumkin.",
+     "Birinchi bo'lib 8 qatorni to'ldirgan o'quvchi 'Stop!' deydi va natijani 2 ta solishtirish gapi bilan aytadi (masalan: 'Twice as many people walk as go to the gym.')."
+    ],
+    "data": {
+     "items": [
+      {
+       "t": "…walks for at least 30 minutes on most days.",
+       "q": "Do you walk for at least 30 minutes on most days?"
+      },
+      {
+       "t": "…goes to a gym at least once a week.",
+       "q": "Do you go to a gym at least once a week?"
+      },
+      {
+       "t": "…has tried yoga.",
+       "q": "Have you ever tried yoga?"
+      },
+      {
+       "t": "…plays football more often than anyone else in their family.",
+       "q": "Do you play football more often than anyone else in your family?"
+      },
+      {
+       "t": "…can swim further than 100 metres.",
+       "q": "Can you swim further than 100 metres?"
+      },
+      {
+       "t": "…spends more on food than on transport each week.",
+       "q": "Do you spend more on food than on transport each week?"
+      },
+      {
+       "t": "…spends less on entertainment now than two years ago.",
+       "q": "Do you spend less on entertainment now than two years ago?"
+      },
+      {
+       "t": "…spends twice as much time online as on homework.",
+       "q": "Do you spend twice as much time online as on homework?"
+      },
+      {
+       "t": "…knows someone who is studying abroad.",
+       "q": "Do you know anyone who is studying abroad?"
+      },
+      {
+       "t": "…would like to study in another country.",
+       "q": "Would you like to study in another country?"
+      },
+      {
+       "t": "…has a bigger family than their best friend.",
+       "q": "Is your family bigger than your best friend's?"
+      },
+      {
+       "t": "…has read a bar chart outside English class this year.",
+       "q": "Have you read a bar chart outside English class this year?"
+      }
+     ]
+    }
+   },
+   {
+    "id": "speaking_t1bar",
+    "type": "speaking_cards",
+    "title": "Speaking cards: sport, spending and studying abroad",
+    "stage": "Keyingi dars boshida yoki Speaking darsida, IELTS Speaking Part 1/3 (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftliklar",
+    "goal": "Grafik mavzulari (sport, xarajat, chet elda o'qish) bo'yicha Part 1 va Part 3 savollariga solishtirish tili bilan javob berish: more … than, whereas, twice as, by far, the majority of.",
+    "skill": "speaking",
+    "rules": [
+     "Kartalarni teskari dasta qilib qo'ying. Birinchi o'quvchi karta oladi va savolni sherigiga o'qiydi.",
+     "Sherigi 20–40 soniya javob beradi: Part 1 savollariga 2–3 gap, Part 3 ('Why…?', 'Should…?') savollariga sabab va misol bilan 4–5 gap.",
+     "Tinglovchi javobdagi solishtirish iboralarini (than, whereas, while, twice as, by far, the majority of, compared with…) sanaydi: har biri +1 ball.",
+     "Rollar almashadi. 12 daqiqadan keyin eng ko'p ball olgan o'quvchi g'olib."
+    ],
+    "data": {
+     "cards": [
+      "Which is more popular among your friends: going to the gym or playing football? Why?",
+      "Do men and women in Uzbekistan usually do different sports? Give an example.",
+      "How much do you walk every day? Is it more or less than a few years ago?",
+      "Why do you think yoga is more popular among women than men in many countries?",
+      "What do young people in your city spend most of their money on?",
+      "Do older and younger people spend money in different ways? How?",
+      "Is it better to spend money on experiences or on things? Why?",
+      "Why do some cities attract far more international students than others?",
+      "Would you prefer to study in a big city or a small town abroad? Why?",
+      "Compare two sports you know: which is cheaper, healthier and more popular?",
+      "Should the government spend more on sports facilities than on roads? Why?",
+      "Who does the most exercise in your family, and who does the least?",
+      "What is the most popular way to travel to school or work in your town?",
+      "Do people today exercise more or less than people 30 years ago? Why?"
+     ]
+    }
+   },
+   {
+    "id": "scramble_t1bar",
+    "type": "scramble",
+    "title": "Sentence Race: bar chart answer sentences",
+    "stage": "Namuna javob tahlilidan keyin, 3-mashqdan oldin (8 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 8,
+    "players": "3–4 kishilik jamoalar",
+    "goal": "Bar chart javobining gaplari: kirish (compares the proportion of…), overview (by far the most popular), solishtirish (five times as many, while the figure for, respectively) va trend bar (tripled, overtook).",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga bitta konvert (bitta gapning qirqilgan so'zlari) beriladi.",
+     "Jamoa so'zlarni to'g'ri tartibda teradi. Maslahat: bosh harfli so'z — gap boshi, nuqtali so'z — gap oxiri, vergulli so'z — birinchi qism tugashi.",
+     "Tayyor bo'lgach, jamoa gapni ovoz chiqarib o'qiydi. To'g'ri bo'lsa +1 ball va keyingi konvert; gap qaysi grafikka (namuna, sinf, uy vazifasi) va qaysi xatboshiga (kirish, overview, P3/P4) tegishli ekanini aytsa +1 bonus.",
+     "Hamma konvertlar tugaganda eng ko'p ball olgan jamoa g'olib; teng bo'lsa — oxirgi gapni tezroq tergan jamoa."
+    ],
+    "data": {
+     "sentences": [
+      "The bar chart compares the proportion of men and women who exercised.",
+      "Overall, walking was by far the most popular activity for both sexes.",
+      "Proportionally, five times as many men as women played football.",
+      "Swimming attracted 22% of women, while the figure for men was 18%.",
+      "Yoga was practised by 19% of women but only 4% of men.",
+      "The figures for walking were 52% and 61% respectively.",
+      "Northbridge overtook Eastport as the most popular destination by 2025.",
+      "The number of international students in Westford tripled over the decade.",
+      "Southvale was the only city where student numbers fell.",
+      "Food accounted for the largest share of spending in every age group."
+     ]
+    }
+   },
+   {
+    "id": "quiz_t1bar",
+    "type": "quiz_board",
+    "title": "Quiz Board: bar charts, units and comparisons",
+    "stage": "Dars oxirida, 'Xulosa va vazifa' dan oldin umumiy takror (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 jamoa",
+    "goal": "Trend va solishtirma bar farqi, number/amount/percentage va birlik, namuna grafik raqamlari va solishtirish iboralarini o'yin shaklida takrorlash.",
+    "skill": "mixed",
+    "rules": [
+     "Taxtani doskaga chizing (4 ustun × 100–500). Jamoalar navbat bilan bo'lim va ballni tanlaydi (masalan: 'Say it! 300').",
+     "Ustoz savolni o'qiydi; jamoa 20 soniya maslahatlashib, bitta vakil orqali javob beradi.",
+     "To'g'ri — ball jamoaga. Xato — boshqa jamoalar qo'l ko'tarib javob berishi mumkin (to'g'ri bo'lsa ball ularga).",
+     "'Say it!' bo'limida 'e.g.' bilan berilgan javoblar namuna: raqamlari to'g'ri va grammatikasi xatosiz har qanday javob qabul qilinadi.",
+     "Ishlatilgan katak o'chiriladi. Hamma katak tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "data": {
+     "categories": [
+      {
+       "name": "Time or no time?",
+       "qs": [
+        {
+         "q": "'The bar chart compares the heights of five towers.' Trend or comparison?",
+         "a": "Comparison (no time)"
+        },
+        {
+         "q": "'The bar chart shows museum visitors each month from January to June.' Trend or comparison?",
+         "a": "Trend — months are time"
+        },
+        {
+         "q": "Can you write 'increased' about a bar chart with only one year?",
+         "a": "No — use comparison language (higher than, whereas)"
+        },
+        {
+         "q": "A bar chart shows 2015 and 2025. What do you describe first: the change or the comparison?",
+         "a": "The change first (rose, tripled), then compare within each year"
+        },
+        {
+         "q": "The chart also gives projections for 2040. Which verb forms do you need?",
+         "a": "will / is expected to / is projected to + verb"
+        }
+       ]
+      },
+      {
+       "name": "Numbers and units",
+       "qs": [
+        {
+         "q": "'the ___ of students' — number or amount?",
+         "a": "number (students are countable)"
+        },
+        {
+         "q": "'the ___ of time' — number or amount?",
+         "a": "amount (time is uncountable)"
+        },
+        {
+         "q": "Correct it: 'Walking was 61 percentage for women.'",
+         "a": "61% (61 per cent) of women walked …"
+        },
+        {
+         "q": "'Twice as many money' or 'twice as much money'?",
+         "a": "twice as much money (money is uncountable)"
+        },
+        {
+         "q": "The axis says 'thousands' and the bar shows 27. How do you write it in a sentence?",
+         "a": "27,000 students (not 27)"
+        }
+       ]
+      },
+      {
+       "name": "The sample chart",
+       "qs": [
+        {
+         "q": "Which activity was the most popular for both men and women?",
+         "a": "Walking (52% of men, 61% of women)"
+        },
+        {
+         "q": "In which two activities were men ahead?",
+         "a": "Football and the gym"
+        },
+        {
+         "q": "What was the lowest figure on the chart, and for whom?",
+         "a": "4% — men doing yoga"
+        },
+        {
+         "q": "Football: men 30%, women 6%. Which 'times' phrase fits?",
+         "a": "Proportionally, five times as many men as women"
+        },
+        {
+         "q": "In which activity did women have their widest lead? How big was the gap?",
+         "a": "Yoga: 19% vs 4% — 15 percentage points"
+        }
+       ]
+      },
+      {
+       "name": "Say it!",
+       "qs": [
+        {
+         "q": "Use 'whereas': gym — men 38%, women 27%.",
+         "a": "e.g. 38% of men used a gym, whereas only 27% of women did."
+        },
+        {
+         "q": "Use 'respectively': walking — men 52%, women 61%.",
+         "a": "e.g. The figures for men and women were 52% and 61% respectively."
+        },
+        {
+         "q": "Use 'the figure for': swimming — women 22%, men 18%.",
+         "a": "e.g. 22% of women swam, while the figure for men was 18%."
+        },
+        {
+         "q": "Use 'outnumber': 2025 — Northbridge 42,000, Eastport 38,000.",
+         "a": "e.g. In 2025, students in Northbridge outnumbered those in Eastport."
+        },
+        {
+         "q": "Homework chart: food — $40, $65 and $70 for the three age groups. Use 'respectively'.",
+         "a": "e.g. The three groups spent $40, $65 and $70 on food respectively."
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "23": [
+   {
+    "id": "auction_t1pie",
+    "type": "auction",
+    "title": "Grammar Auction: accounted for, made up of, tenfold",
+    "stage": "Til banki (2-mashq) dan keyin, namunadan oldin (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 kishilik jamoalar (3–4 jamoa)",
+    "goal": "Ulush tilidagi tipik xatolarni topish: 'accounted for' da 'for', passiv 'was made up of', kasr iboralarining aniqligi, 'doubled/tenfold' hisobi, overview'da raqam yo'qligi va joy nomlari imlosi.",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga auksion varag'ini bering: boshlang'ich pul — 1000.",
+     "Ustoz gapni o'qiydi yoki doskaga yozadi. Jamoalar 30 soniya maslahatlashadi va grafik/jadval bilan tekshiradi: grammatika, ibora va raqam to'g'rimi?",
+     "Jamoalar gapni 'sotib olish' uchun pul tikadi (kamida 50, qadam 50). Eng ko'p tikgan jamoa gapni oladi.",
+     "Gap TO'G'RI bo'lsa — jamoa tikkan pulini qaytarib oladi va +100 bonus; XATO bo'lsa — tikilgan pul yo'qoladi.",
+     "Xato gapni birinchi bo'lib to'g'ri tuzatgan va sababini aytgan jamoa +50 oladi (masalan: '2% → 20% — doubled emas, tenfold').",
+     "Oxirida eng ko'p TO'G'RI gap sotib olgan jamoa g'olib (teng bo'lsa — puli ko'p jamoa)."
+    ],
+    "materials": [
+     "Proyektorda ielts6_23_sample.png (ikki pie) va ielts6_23_class.png (metro jadvali)."
+    ],
+    "data": {
+     "money": 1000,
+     "items": [
+      {
+       "s": "In 2005, coal accounted for almost half of all electricity (48%).",
+       "ok": true,
+       "why": "accounted for + ulush; 48% — almost half, to'g'ri."
+      },
+      {
+       "s": "In 2005, coal accounted 48% of the electricity produced.",
+       "ok": false,
+       "fix": "In 2005, coal accounted for 48% of the electricity produced.",
+       "why": "'accounted' dan keyin albatta 'for' keladi."
+      },
+      {
+       "s": "Electricity production in 2025 was made up of six sources.",
+       "ok": true,
+       "why": "Passiv: butun → qismlar, 'was made up of' — to'g'ri."
+      },
+      {
+       "s": "Electricity production was made up by six different sources.",
+       "ok": false,
+       "fix": "Electricity production was made up of six different sources.",
+       "why": "Passivda 'by' emas, 'of': was made up of."
+      },
+      {
+       "s": "Solar power doubled between 2005 and 2025, from 2% to 20%.",
+       "ok": false,
+       "fix": "Solar power rose tenfold between 2005 and 2025, from 2% to 20%.",
+       "why": "2 × 10 = 20: o'n barobar (tenfold), 'doubled' — xato hisob."
+      },
+      {
+       "s": "Wind power quadrupled, rising from 3% to 12%.",
+       "ok": true,
+       "why": "3 × 4 = 12 — quadrupled, aniq."
+      },
+      {
+       "s": "Coal's share more than halved, falling from 48% to 22%.",
+       "ok": true,
+       "why": "48 ning yarmi 24; 22 undan kam — more than halved."
+      },
+      {
+       "s": "Gas made up just over a third of production in 2005 (30%).",
+       "ok": false,
+       "fix": "Gas made up just under a third of production in 2005 (30%).",
+       "why": "30% < 33%: just UNDER a third."
+      },
+      {
+       "s": "Eastport's metro carried twice as many passengers as Northbridge's.",
+       "ok": true,
+       "why": "2,400 va 1,200 million — aynan ikki barobar."
+      },
+      {
+       "s": "Overall, coal fell from 48% to 22%, while solar rose from 2% to 20%.",
+       "ok": false,
+       "fix": "Overall, the country relied far less on fossil fuels, while renewables grew.",
+       "why": "Overview'da raqam yozilmaydi; guruh bo'yicha umumiy fikr."
+      },
+      {
+       "s": "The share of solar power rose by 18 percentage points.",
+       "ok": true,
+       "why": "20 − 2 = 18 percentage points — to'g'ri birlik."
+      },
+      {
+       "s": "Northbrige had the longest metro network, at 400 km.",
+       "ok": false,
+       "fix": "Northbridge had the longest metro network, at 400 km.",
+       "why": "Joy nomi jadvaldagidek: Northbridge (slayd 44)."
+      }
+     ]
+    }
+   },
+   {
+    "id": "board_t1pie",
+    "type": "board",
+    "title": "Board Game: fractions, shares and the metro table",
+    "stage": "Sinf mashqlaridan (3–4-mashq) keyin, WRITING NORMATIV dan oldin (20 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 20,
+    "players": "3–4 o'yinchi har taxtada",
+    "goal": "Foizni kasr iborasi bilan aytish, accounted for / made up of, solishtirishni hisoblash (doubled, quadrupled, tenfold) va jadvaldan guruh hamda asosiy ma'lumotni tanlashni og'zaki mashq qilish.",
+    "skill": "mixed",
+    "rules": [
+     "Har guruhga taxta, zar va fishkalar bering. Hamma START katagidan boshlaydi; javoblar kalitini guruhdagi bitta 'hakam' ushlab turadi.",
+     "Navbati kelgan o'yinchi zar tashlaydi va katakdagi topshiriqni inglizcha bajaradi: foizni ibora bilan aytadi, bo'shliqni to'ldiradi yoki gap tuzadi.",
+     "Hakam kalit bilan tekshiradi: 'e.g.' bilan berilgan javoblar namuna — mazmuni, raqami va grammatikasi to'g'ri bo'lsa qabul qilinadi.",
+     "Xato yoki javob yo'q bo'lsa — o'yinchi oldingi joyiga qaytadi. Pushti kataklardagi buyruq bajariladi (oldinga, orqaga, navbat o'tkazish).",
+     "FINISH ga birinchi yetgan o'yinchi g'olib. Vaqt tugasa — eng oldinda turgan o'yinchi g'olib."
+    ],
+    "materials": [
+     "Har guruhga ielts6_23_sample.png va ielts6_23_class.png nusxasi (yoki proyektorda)."
+    ],
+    "data": {
+     "squares": [
+      {
+       "t": "Say it as a fraction phrase: 25%.",
+       "a": "a quarter"
+      },
+      {
+       "t": "Say it as a fraction phrase: 32%.",
+       "a": "just under a third"
+      },
+      {
+       "t": "Say it as a fraction phrase: 76%.",
+       "a": "just over three quarters"
+      },
+      {
+       "t": "Say it as a fraction phrase: 48%.",
+       "a": "just under half / almost half"
+      },
+      {
+       "t": "Say it as a fraction phrase: 20%.",
+       "a": "a fifth"
+      },
+      {
+       "t": "Say it as a fraction phrase: 80%.",
+       "a": "four fifths / the vast majority"
+      },
+      {
+       "t": "Fill the gap: 'In 2005, coal accounted ___ 48% of electricity.'",
+       "a": "for"
+      },
+      {
+       "t": "Fill the gap: 'Production in 2025 was made up ___ six sources.'",
+       "a": "of (passive: the whole → its parts)"
+      },
+      {
+       "t": "Solar 2% → 20%: doubled, tripled or tenfold?",
+       "a": "Tenfold (× 10) — a tenfold increase."
+      },
+      {
+       "t": "Wind 3% → 12%: which verb is accurate?",
+       "a": "quadrupled (× 4)"
+      },
+      {
+       "t": "Coal 48% → 22%: 'halved' or 'more than halved'?",
+       "a": "More than halved — half of 48 is 24, and 22 is less."
+      },
+      {
+       "t": "Solar 2% → 20%: by how many percentage points did it rise?",
+       "a": "18 percentage points"
+      },
+      {
+       "t": "One pie chart for one year: is there time? What language do you need?",
+       "a": "No time — comparison: the largest share, higher than, whereas."
+      },
+      {
+       "t": "Two pies, 2005 and 2025: what language do you need?",
+       "a": "Comparison AND change: fell, rose, more than halved."
+      },
+      {
+       "t": "Name the two groups in the electricity pies.",
+       "a": "Fossil fuels (coal, gas) and renewables (solar, wind, hydro)."
+      },
+      {
+       "t": "Which source had the largest share in 2025?",
+       "a": "Gas, at 28%."
+      },
+      {
+       "t": "Make a sentence with 'the smallest share' about the 2005 pie.",
+       "a": "e.g. In 2005, solar power had the smallest share, at only 2%."
+      },
+      {
+       "t": "Metro table: which two cities go in P3? Why?",
+       "a": "Northbridge and Eastport — the two oldest, largest and busiest."
+      },
+      {
+       "t": "Metro table: what is surprising about Eastport?",
+       "a": "Its network is shorter than Northbridge's, but it carries twice as many."
+      },
+      {
+       "t": "Spell the city with the longest metro network.",
+       "a": "N-O-R-T-H-B-R-I-D-G-E (400 km)"
+      },
+      {
+       "t": "Compare the networks: Northbridge (400 km) and Westford (48 km).",
+       "a": "e.g. Northbridge's was more than eight times longer than Westford's."
+      },
+      {
+       "t": "A table has 5 rows and 4 columns. Do you report all 20 numbers?",
+       "a": "No — 2–3 key figures per group, about 8–10 in total."
+      },
+      {
+       "t": "Make it passive: 'Six sources made up the total.'",
+       "a": "The total was made up of six sources."
+      },
+      {
+       "t": "Use a fraction phrase: how much of your day do you spend sleeping?",
+       "a": "e.g. I spend about a third of my day sleeping."
+      }
+     ]
+    }
+   },
+   {
+    "id": "dominoes_t1pie",
+    "type": "dominoes",
+    "title": "Dominoes: 25% ↔ a quarter",
+    "stage": "Til banki (1-mashq: foiz → ibora) bilan birga (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftlik yoki 3 kishilik guruh",
+    "goal": "Foizni kasr iborasiga va ikki raqam orasidagi o'zgarishni aniq solishtirish iborasiga (quadrupled, a tenfold increase, more than halved) tez aylantirish.",
+    "skill": "vocab",
+    "rules": [
+     "Har guruhga bir to'plam qirqilgan domino toshini bering va aralashtiring.",
+     "START toshini qo'ying. Uning o'ng yarmidagi foiz yoki o'zgarishga ('2% → 20%') mos iborasi yozilgan toshni toping va ulang ('a tenfold increase').",
+     "Zanjirni FINISH gacha davom ettiring. Maslahat: 'just under / just over' ni hisoblang (32% — 33% dan sal kam), o'zgarishda bo'lishni bajaring (20 ÷ 2 = 10).",
+     "Birinchi tugatgan guruh zanjirni o'qiydi va 3 ta ibora bilan bugungi pie chart haqida gap aytadi (masalan: 'Gas made up just under a third in 2005.'); ustoz tekshiradi.",
+     "Zanjiri to'g'ri va gaplari xatosiz birinchi guruh g'olib."
+    ],
+    "data": {
+     "pairs": [
+      [
+       "25%",
+       "a quarter"
+      ],
+      [
+       "50%",
+       "exactly half"
+      ],
+      [
+       "32%",
+       "just under a third"
+      ],
+      [
+       "48%",
+       "just under half"
+      ],
+      [
+       "54%",
+       "just over half"
+      ],
+      [
+       "76%",
+       "just over three quarters"
+      ],
+      [
+       "20%",
+       "a fifth"
+      ],
+      [
+       "10%",
+       "a tenth"
+      ],
+      [
+       "2%",
+       "a tiny fraction"
+      ],
+      [
+       "80%",
+       "four fifths / the vast majority"
+      ],
+      [
+       "2% → 20%",
+       "a tenfold increase"
+      ],
+      [
+       "3% → 12%",
+       "quadrupled"
+      ],
+      [
+       "48% → 22%",
+       "more than halved"
+      ],
+      [
+       "17% → 46%",
+       "almost tripled"
+      ],
+      [
+       "12% → 14%",
+       "grew only slightly"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "taboo_t1pie",
+    "type": "taboo",
+    "title": "Taboo: shares, fractions and tables",
+    "stage": "Dars boshida, 'Pie chart + Table: asosiy xususiyatlar' dan oldin isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "2 jamoa",
+    "goal": "Ulush va solishtirish so'zlarini (proportion, share, the vast majority, tenfold, percentage points) va grafik atamalarini inglizcha tushuntirish.",
+    "skill": "vocab",
+    "rules": [
+     "Sinfni 2 jamoaga bo'ling. Jamoadan bitta o'quvchi chiqib, kartani oladi.",
+     "60 soniyada so'zni jamoasiga inglizcha tushuntiradi — so'zning o'zi va 3 ta taqiqlangan so'z aytilmaydi. Doskaga doira chizib, bo'lagini ko'rsatish mumkin.",
+     "Jamoa topsa +1 ball, keyingi kartaga o'tiladi. Taqiqlangan so'z aytilsa — karta raqib jamoaga o'tadi, ular topsa +1 ball.",
+     "Imo-ishora va rasm chizish mumkin, o'zbekcha gapirish va raqamni yozib ko'rsatish mumkin emas.",
+     "Kartalar tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "data": {
+     "cards": [
+      {
+       "word": "proportion",
+       "taboo": [
+        "part",
+        "percentage",
+        "share"
+       ]
+      },
+      {
+       "word": "share",
+       "taboo": [
+        "part",
+        "piece",
+        "divide"
+       ]
+      },
+      {
+       "word": "a quarter",
+       "taboo": [
+        "four",
+        "25",
+        "one"
+       ]
+      },
+      {
+       "word": "the vast majority",
+       "taboo": [
+        "most",
+        "almost all",
+        "big"
+       ]
+      },
+      {
+       "word": "a small fraction",
+       "taboo": [
+        "tiny",
+        "little",
+        "part"
+       ]
+      },
+      {
+       "word": "accounted for",
+       "taboo": [
+        "made up",
+        "part",
+        "percentage"
+       ]
+      },
+      {
+       "word": "fossil fuels",
+       "taboo": [
+        "coal",
+        "gas",
+        "oil"
+       ]
+      },
+      {
+       "word": "renewable sources",
+       "taboo": [
+        "solar",
+        "wind",
+        "green"
+       ]
+      },
+      {
+       "word": "tenfold",
+       "taboo": [
+        "ten",
+        "times",
+        "increase"
+       ]
+      },
+      {
+       "word": "quadrupled",
+       "taboo": [
+        "four",
+        "times",
+        "rose"
+       ]
+      },
+      {
+       "word": "halved",
+       "taboo": [
+        "half",
+        "fell",
+        "two"
+       ]
+      },
+      {
+       "word": "percentage points",
+       "taboo": [
+        "difference",
+        "percent",
+        "gap"
+       ]
+      },
+      {
+       "word": "pie chart",
+       "taboo": [
+        "circle",
+        "slice",
+        "percent"
+       ]
+      },
+      {
+       "word": "table",
+       "taboo": [
+        "rows",
+        "columns",
+        "numbers"
+       ]
+      },
+      {
+       "word": "metro",
+       "taboo": [
+        "underground",
+        "train",
+        "station"
+       ]
+      },
+      {
+       "word": "passengers",
+       "taboo": [
+        "people",
+        "travel",
+        "ticket"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "find_t1pie",
+    "type": "find_someone",
+    "title": "Find someone who… uses the metro every week",
+    "stage": "Dars boshida, 'Takrorlash' dan keyin harakatli isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "Butun sinf, har kim o'zi",
+    "goal": "Ulush, energiya, transport va ko'chish mavzusida to'g'ri savol tuzish (Present Perfect / Present Simple) va natijani kasr iborasi bilan aytish.",
+    "skill": "speaking",
+    "rules": [
+     "Har o'quvchiga so'rovnoma varag'ini bering. Hamma o'rnidan turadi.",
+     "O'quvchilar sinfda yurib, har qator uchun savolni O'ZLARI tuzib so'raydi (masalan: Do you use the Tashkent metro at least once a week?).",
+     "'Yes' degan odamning ismini yozadi va bitta qo'shimcha savol beradi (How often? How much of your day? Why?).",
+     "Bitta odamning ismi ko'pi bilan 2 marta yozilishi mumkin.",
+     "Birinchi bo'lib 8 qatorni to'ldirgan o'quvchi 'Stop!' deydi. Oxirida sinf natijani kasr iborasi bilan aytadi (masalan: 'Just over half of the class use the metro every week')."
+    ],
+    "data": {
+     "items": [
+      {
+       "t": "…uses the Tashkent metro at least once a week.",
+       "q": "Do you use the Tashkent metro at least once a week?"
+      },
+      {
+       "t": "…has travelled on a metro in another country.",
+       "q": "Have you ever travelled on a metro in another country?"
+      },
+      {
+       "t": "…knows when the Tashkent metro first opened.",
+       "q": "Do you know when the Tashkent metro first opened?"
+      },
+      {
+       "t": "…spends more than a quarter of their day on their phone.",
+       "q": "Do you spend more than a quarter of your day on your phone?"
+      },
+      {
+       "t": "…spends about half of their pocket money on food.",
+       "q": "Do you spend about half of your pocket money on food?"
+      },
+      {
+       "t": "…has seen solar panels on a house or building in their area.",
+       "q": "Have you seen solar panels on a house or building in your area?"
+      },
+      {
+       "t": "…has noticed their family's electricity bill rise this year.",
+       "q": "Has your family's electricity bill risen this year?"
+      },
+      {
+       "t": "…has moved to a different city to study or work.",
+       "q": "Have you ever moved to a different city to study or work?"
+      },
+      {
+       "t": "…has a relative who moved to the capital for work.",
+       "q": "Has anyone in your family moved to the capital for work?"
+      },
+      {
+       "t": "…has drawn a pie chart for a school project.",
+       "q": "Have you ever drawn a pie chart for a school project?"
+      },
+      {
+       "t": "…can say 76% as a fraction phrase.",
+       "q": "Can you say 76% as a fraction phrase?"
+      },
+      {
+       "t": "…thinks a table is harder to describe than a pie chart.",
+       "q": "Do you think a table is harder to describe than a pie chart?"
+      }
+     ]
+    }
+   },
+   {
+    "id": "speaking_t1pie",
+    "type": "speaking_cards",
+    "title": "Speaking cards: energy, transport and moving to the capital",
+    "stage": "Keyingi dars boshida yoki Speaking darsida, IELTS Speaking Part 1/3 (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftliklar",
+    "goal": "Energiya, jamoat transporti va poytaxtga ko'chish mavzusida Part 1 va Part 3 savollariga ulush tili bilan (a quarter, the vast majority, a small fraction, accounted for) javob berish.",
+    "skill": "speaking",
+    "rules": [
+     "Kartalarni teskari dasta qilib qo'ying. Birinchi o'quvchi karta oladi va savolni sherigiga o'qiydi.",
+     "Sherigi 20–40 soniya javob beradi: Part 1 savollariga 2–3 gap, Part 3 ('Why…?', 'Will…?') savollariga sabab va misol bilan 4–5 gap.",
+     "Tinglovchi javobdagi ulush iboralarini (a quarter, half, the vast majority, a small fraction, most of, the largest share…) sanaydi: har biri +1 ball.",
+     "Rollar almashadi. 12 daqiqadan keyin eng ko'p ball olgan o'quvchi g'olib."
+    ],
+    "data": {
+     "cards": [
+      "What proportion of your free time do you spend online? Has it changed recently?",
+      "How do most people in your city get to work or school?",
+      "Have you ever used a metro system? What was it like?",
+      "Should cities spend more money on public transport or on new roads? Why?",
+      "Do older and younger people use public transport differently? How?",
+      "Why do you think some countries are using less coal than before?",
+      "Could solar power become popular in Uzbekistan? Why or why not?",
+      "How do you and your family try to save energy at home?",
+      "Will people use much more renewable energy in twenty years' time? Why?",
+      "Why do so many young people move to the capital city?",
+      "What are the advantages and disadvantages of living in a capital city?",
+      "Would you move to another city for work or study? What would be the main reason?",
+      "Which is easier to understand: a pie chart or a table? Why?",
+      "Roughly what share of a family's budget goes on transport and energy in your country?"
+     ]
+    }
+   },
+   {
+    "id": "scramble_t1pie",
+    "type": "scramble",
+    "title": "Sentence Race: sentences from the pie and table answers",
+    "stage": "Namuna javob o'qilgandan keyin, sinf mashqlaridan oldin (8 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 8,
+    "players": "3–4 kishilik jamoalar",
+    "goal": "Namuna va normativ javobidagi gaplar: accounted for / made up of, kasr iboralari, past perfect (had more than halved), whereas va jadval overview'i.",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga bitta konvert (bitta gapning qirqilgan so'zlari) beriladi.",
+     "Jamoa so'zlarni to'g'ri tartibda teradi. Maslahat: bosh harfli so'z — gap boshi, nuqtali so'z — gap oxiri, vergulli so'z — birinchi qism tugashi.",
+     "Tayyor bo'lgach, jamoa gapni ovoz chiqarib o'qiydi. To'g'ri bo'lsa +1 ball va keyingi konvert; gap qaysi xatboshiga (overview, P3, P4) tegishli ekanini aytsa +1 bonus.",
+     "Hamma konvertlar tugaganda eng ko'p ball olgan jamoa g'olib; teng bo'lsa — oxirgi gapni tezroq tergan jamoa."
+    ],
+    "data": {
+     "sentences": [
+      "Overall, the country relied far less on fossil fuels in 2025.",
+      "In 2005, coal accounted for almost half of all electricity.",
+      "By 2025, coal's share had more than halved to 22%.",
+      "Gas made up just under a third of production in 2005.",
+      "Electricity production in 2025 was made up of six sources.",
+      "Solar power rose from a mere 2% to a fifth.",
+      "Wind power quadrupled, whereas hydroelectricity grew only slightly.",
+      "The two oldest systems were by far the largest and busiest.",
+      "Eastport carried twice as many passengers as Northbridge.",
+      "Lakeside was the smallest system in every respect."
+     ]
+    }
+   },
+   {
+    "id": "quiz_t1pie",
+    "type": "quiz_board",
+    "title": "Quiz Board: fractions, share verbs and accuracy",
+    "stage": "Dars oxirida, 'Xulosa va vazifa' dan oldin umumiy takror (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 jamoa",
+    "goal": "Foiz → kasr iboralari, accounted for / made up of / constituted, solishtirish aniqligi (slayd 45) va pie/jadvaldan asosiy ma'lumotni o'yin shaklida takrorlash.",
+    "skill": "mixed",
+    "rules": [
+     "Taxtani doskaga chizing (4 ustun × 100–500). Jamoalar navbat bilan bo'lim va ballni tanlaydi (masalan: 'Is it accurate? 300').",
+     "Ustoz savolni o'qiydi; jamoa 20 soniya maslahatlashib (grafikka qarash mumkin), bitta vakil orqali javob beradi.",
+     "To'g'ri — ball jamoaga. Xato — boshqa jamoalar qo'l ko'tarib javob berishi mumkin (to'g'ri bo'lsa ball ularga).",
+     "'Is it accurate?' bo'limida faqat 'Yes/No' yetmaydi: 'No' bo'lsa, to'g'ri solishtirishni ham ayting.",
+     "Ishlatilgan katak o'chiriladi. Hamma katak tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "materials": [
+     "Proyektorda ielts6_23_sample.png va ielts6_23_class.png."
+    ],
+    "data": {
+     "categories": [
+      {
+       "name": "Fractions",
+       "qs": [
+        {
+         "q": "25% = ?",
+         "a": "a quarter"
+        },
+        {
+         "q": "20% = ?",
+         "a": "a fifth"
+        },
+        {
+         "q": "32% = just ___ a third",
+         "a": "under"
+        },
+        {
+         "q": "Say 76% as a fraction phrase.",
+         "a": "just over three quarters"
+        },
+        {
+         "q": "Which is bigger: 'just under half' or 'just over a third'?",
+         "a": "just under half (e.g. 48% vs 35%)"
+        }
+       ]
+      },
+      {
+       "name": "Share verbs",
+       "qs": [
+        {
+         "q": "Coal accounted ___ 48% of the electricity.",
+         "a": "for"
+        },
+        {
+         "q": "The total was made up ___ six sources.",
+         "a": "of"
+        },
+        {
+         "q": "A formal verb that means 'made up'?",
+         "a": "constituted"
+        },
+        {
+         "q": "Correct it: 'Electricity was made up by six sources.'",
+         "a": "Electricity was made up of six sources."
+        },
+        {
+         "q": "Make it passive: 'Five reasons made up the total.'",
+         "a": "The total was made up of five reasons."
+        }
+       ]
+      },
+      {
+       "name": "Is it accurate?",
+       "qs": [
+        {
+         "q": "Solar 2% → 20%: 'Solar power doubled.'",
+         "a": "No — it rose tenfold (a tenfold increase)."
+        },
+        {
+         "q": "Wind 3% → 12%: 'Wind power tripled.'",
+         "a": "No — it quadrupled (× 4)."
+        },
+        {
+         "q": "Coal 48% → 22%: 'Coal's share more than halved.'",
+         "a": "Yes — half of 48 is 24, and 22 is less."
+        },
+        {
+         "q": "Eastport 2,400 million, Northbridge 1,200 million: 'twice as many passengers'?",
+         "a": "Yes — exactly twice as many."
+        },
+        {
+         "q": "Northbridge 400 km, Westford 48 km: 'five times longer'?",
+         "a": "No — more than eight times longer (400 ÷ 48 ≈ 8.3)."
+        }
+       ]
+      },
+      {
+       "name": "Charts & data",
+       "qs": [
+        {
+         "q": "Which source was the largest in 2005?",
+         "a": "Coal (48%)"
+        },
+        {
+         "q": "Which source was the largest in 2025?",
+         "a": "Gas (28%)"
+        },
+        {
+         "q": "Which metro system was the oldest?",
+         "a": "Northbridge (opened in 1890)"
+        },
+        {
+         "q": "Combined share of renewables (hydro, solar, wind) in 2005 and in 2025?",
+         "a": "17% and 46%"
+        },
+        {
+         "q": "Metro table: how do you group the five cities for P3 and P4?",
+         "a": "Old and big: Northbridge, Eastport; newer and small: the other three"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "24": [
+   {
+    "id": "auction_t1process",
+    "type": "auction",
+    "title": "Grammar Auction: is melted, is woven — or not?",
+    "stage": "Til banki (1-mashq: aktiv → passiv) dan keyin, namunadan oldin (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 kishilik jamoalar (3–4 jamoa)",
+    "goal": "Process diagram'dagi tipik xatolarni topish: passiv shakli (are + III), noto'g'ri fe'llar (spun, woven), trend tili va izoh ishlatmaslik, tabiiy jarayonda aktiv.",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga auksion varag'ini bering: boshlang'ich pul — 1000.",
+     "Ustoz gapni o'qiydi yoki doskaga yozadi. Jamoalar 30 soniya maslahatlashadi: passiv shakli, fe'lning III shakli, trend tili yoki izoh bormi?",
+     "Jamoalar gapni 'sotib olish' uchun pul tikadi (kamida 50, qadam 50). Eng ko'p tikgan jamoa gapni oladi.",
+     "Gap TO'G'RI bo'lsa — jamoa tikkan pulini qaytarib oladi va +100 bonus; XATO bo'lsa — tikilgan pul yo'qoladi.",
+     "Xato gapni birinchi bo'lib to'g'ri tuzatgan va sababini aytgan jamoa +50 oladi (masalan: 'weave – wove – woven, weaved emas').",
+     "Oxirida eng ko'p TO'G'RI gap sotib olgan jamoa g'olib (teng bo'lsa — puli ko'p jamoa)."
+    ],
+    "data": {
+     "money": 1000,
+     "items": [
+      {
+       "s": "First, used bottles are collected from recycling bins.",
+       "ok": true,
+       "why": "Present simple passive (are + III) va 'First' — jarayonning to'g'ri boshlanishi."
+      },
+      {
+       "s": "The bottles are transport by lorry to a recycling plant.",
+       "ok": false,
+       "fix": "The bottles are transported by lorry to a recycling plant.",
+       "why": "Passiv = be + III shakl: are transported. 'by lorry' qoladi — diagrammada bor."
+      },
+      {
+       "s": "Once they arrive, the bottles are sorted by colour and type.",
+       "ok": true,
+       "why": "'Once' + vergul oldingi bosqich bilan bog'laydi; passiv to'g'ri."
+      },
+      {
+       "s": "Next, the flakes melted at about 260°C.",
+       "ok": false,
+       "fix": "Next, the flakes are melted at about 260°C.",
+       "why": "Sun'iy jarayon — present simple passive; 'melted' bu yerda aktiv o'tgan zamon."
+      },
+      {
+       "s": "Subsequently, the fibres are spun into yarn.",
+       "ok": true,
+       "why": "spin – spun – spun; 'Subsequently' — 'then' ning rasmiy varianti."
+      },
+      {
+       "s": "Finally, the yarn is weaved into fabric.",
+       "ok": false,
+       "fix": "Finally, the yarn is woven into fabric.",
+       "why": "weave — noto'g'ri fe'l: weave – wove – woven ('weaved' emas)."
+      },
+      {
+       "s": "The number of bottles increases sharply at stage 3.",
+       "ok": false,
+       "fix": "At stage 3, the bottles are sorted by colour and type.",
+       "why": "Jarayonda trend yo'q (slayd 32) — bosqichni tasvirlang."
+      },
+      {
+       "s": "The bottles are washed, after which their labels are removed.",
+       "ok": true,
+       "why": "'after which' oldidan vergul — ikki bosqich bitta murakkab gapda."
+      },
+      {
+       "s": "The flakes are melted because plastic is cheaper than cotton.",
+       "ok": false,
+       "fix": "The flakes are melted at about 260°C.",
+       "why": "Diagrammada sabab yo'q — izoh bermang (slayd 26); haroratni ayting."
+      },
+      {
+       "s": "The larva feeds on mulberry leaves for four to six weeks.",
+       "ok": true,
+       "why": "Tabiiy jarayonda aktiv to'g'ri: feeds; vaqt (4–6 weeks) aytilgan."
+      },
+      {
+       "s": "The tea leaves is withered for 12–18 hours.",
+       "ok": false,
+       "fix": "The tea leaves are withered for 12–18 hours.",
+       "why": "Ega ko'plikda (leaves) → are + III shakl."
+      },
+      {
+       "s": "Overall, this is a nine-stage man-made process, from collecting bottles to making clothes.",
+       "ok": true,
+       "why": "Overview: tur + bosqichlar soni + boshi va oxiri, raqamli detalsiz."
+      }
+     ]
+    }
+   },
+   {
+    "id": "board_t1process",
+    "type": "board",
+    "title": "Board Game: stages, passives and sequencers",
+    "stage": "Sinf mashqlaridan keyin yoki keyingi dars boshida takror sifatida (20 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 20,
+    "players": "3–4 o'yinchi har taxtada",
+    "goal": "Uchta diagramma (plastik butilka, ipak qurti, qora choy) faktlari, present simple passive, ketma-ketlik so'zlari va process overview formulasini og'zaki mashq qilish.",
+    "skill": "mixed",
+    "rules": [
+     "Har guruhga taxta, zar va fishkalar bering. Hamma START katagidan boshlaydi; javoblar kalitini guruhdagi bitta 'hakam' ushlab turadi.",
+     "Navbati kelgan o'yinchi zar tashlaydi va katakdagi topshiriqni inglizcha bajaradi: passivga aylantiradi, gaplarni birlashtiradi yoki diagramma faktini aytadi.",
+     "Hakam kalit bilan tekshiradi: 'e.g.' bilan berilgan javoblar namuna — mazmuni va grammatikasi to'g'ri bo'lsa qabul qilinadi.",
+     "Xato yoki javob yo'q bo'lsa — o'yinchi oldingi joyiga qaytadi. Pushti kataklardagi buyruq bajariladi (oldinga, orqaga, navbat o'tkazish).",
+     "FINISH ga birinchi yetgan o'yinchi g'olib. Vaqt tugasa — eng oldinda turgan o'yinchi g'olib."
+    ],
+    "data": {
+     "squares": [
+      {
+       "t": "Make it passive: 'Workers collect the bottles.'",
+       "a": "The bottles are collected."
+      },
+      {
+       "t": "Give the past participles: spin, weave.",
+       "a": "spin – spun; weave – woven"
+      },
+      {
+       "t": "Name the three things in a process overview.",
+       "a": "Type (man-made / natural), number of stages, start and end."
+      },
+      {
+       "t": "Plastic bottles to clothes: man-made or natural? Linear or a cycle?",
+       "a": "Man-made and linear."
+      },
+      {
+       "t": "How many stages are there in the plastic bottle diagram?",
+       "a": "Nine."
+      },
+      {
+       "t": "At what temperature are the flakes melted?",
+       "a": "At about 260°C."
+      },
+      {
+       "t": "Finish the sentence: 'Once the bottles arrive at the plant, ...'",
+       "a": "e.g. they are sorted by colour and type."
+      },
+      {
+       "t": "Join with 'after which': The bottles are washed. Their labels are removed.",
+       "a": "The bottles are washed, after which their labels are removed."
+      },
+      {
+       "t": "Join with 'before being': The flakes are dried. They are melted.",
+       "a": "The flakes are dried before being melted."
+      },
+      {
+       "t": "Why is 'The number of bottles rises' wrong in a process answer?",
+       "a": "A process has no trends — describe the stage instead."
+      },
+      {
+       "t": "Silkworm: how long does the larva feed on mulberry leaves?",
+       "a": "For four to six weeks."
+      },
+      {
+       "t": "Active or passive? 'At the end of the cycle, a moth ___ (emerge).'",
+       "a": "emerges — active; natural stages are often active."
+      },
+      {
+       "t": "Silkworm: how many eggs does the moth lay?",
+       "a": "Between 300 and 500."
+      },
+      {
+       "t": "At which stage does silk production branch off from the life cycle?",
+       "a": "At the cocoon stage."
+      },
+      {
+       "t": "Make it passive: 'Workers boil the cocoons.'",
+       "a": "The cocoons are boiled."
+      },
+      {
+       "t": "Close the cycle: 'The moth lays eggs, and ...'",
+       "a": "the cycle (then) begins again."
+      },
+      {
+       "t": "Black tea: how long are the leaves withered?",
+       "a": "For 12–18 hours."
+      },
+      {
+       "t": "Black tea: at what temperature is the tea dried?",
+       "a": "At about 120°C."
+      },
+      {
+       "t": "You can't count the stages exactly. Hedge: 'The system has six stages.'",
+       "a": "The system appears to consist of six stages."
+      },
+      {
+       "t": "Give a more formal word for 'then' at the start of a sentence.",
+       "a": "Subsequently (also: Next, At the following stage)."
+      },
+      {
+       "t": "Rewrite with a hyphen: 'a process of eight stages'.",
+       "a": "an eight-stage process"
+      },
+      {
+       "t": "Make it passive: 'The company ships the packed tea to shops.'",
+       "a": "The packed tea is shipped to shops."
+      },
+      {
+       "t": "Say four different sequencers in a logical order.",
+       "a": "e.g. First → Next → Once ... → after which → Finally"
+      },
+      {
+       "t": "Why is 'in order to form fibres' not a personal comment?",
+       "a": "The purpose is written on the diagram arrow, so it is a fact."
+      }
+     ]
+    }
+   },
+   {
+    "id": "dominoes_t1process",
+    "type": "dominoes",
+    "title": "Dominoes: workers collect ↔ are collected",
+    "stage": "Til banki bosqichida, 1-mashq (aktiv → passiv) bilan birga yoki undan keyin (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftlik yoki 3 kishilik guruh",
+    "goal": "Aktiv gapni process tiliga — present simple passive ga aylantirish: ijrochi (workers, machines) tushadi, ko'plik/birlik (is/are) va noto'g'ri fe'llar (spun, woven, unwound).",
+    "skill": "grammar",
+    "rules": [
+     "Har guruhga bir to'plam qirqilgan domino toshini bering va aralashtiring.",
+     "START toshini qo'ying. Uning o'ng yarmidagi aktiv gapga (masalan, 'machines spin the fibres') mos passiv shakl ('the fibres are spun') yozilgan toshni toping va ulang.",
+     "Zanjirni FINISH gacha davom ettiring. Maslahat: ega ko'plikda bo'lsa — are, sanalmaydigan ot (tea) bo'lsa — is; ijrochi passivda tushib qoladi.",
+     "Birinchi tugatgan guruh zanjirni o'qiydi va 3 ta passivni ketma-ketlik so'zi bilan gapga aylantiradi (masalan: 'Next, the fibres are spun into yarn.'); ustoz tekshiradi.",
+     "Zanjiri to'g'ri va gaplari xatosiz birinchi guruh g'olib."
+    ],
+    "data": {
+     "pairs": [
+      [
+       "workers collect the bottles",
+       "the bottles are collected"
+      ],
+      [
+       "lorries transport the bottles",
+       "they are transported by lorry"
+      ],
+      [
+       "staff sort the bottles",
+       "the bottles are sorted"
+      ],
+      [
+       "a machine shreds the bottles",
+       "the bottles are shredded"
+      ],
+      [
+       "the factory melts the flakes",
+       "the flakes are melted"
+      ],
+      [
+       "machines spin the fibres",
+       "the fibres are spun"
+      ],
+      [
+       "workers weave the yarn",
+       "the yarn is woven"
+      ],
+      [
+       "workers boil the cocoons",
+       "the cocoons are boiled"
+      ],
+      [
+       "they unwind the threads",
+       "the threads are unwound"
+      ],
+      [
+       "workers pick the leaves by hand",
+       "the leaves are picked by hand"
+      ],
+      [
+       "machines roll the leaves",
+       "the leaves are rolled"
+      ],
+      [
+       "the factory dries the tea",
+       "the tea is dried"
+      ],
+      [
+       "staff pack the tea",
+       "the tea is packed"
+      ],
+      [
+       "the company ships the tea",
+       "the tea is shipped"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "taboo_t1process",
+    "type": "taboo",
+    "title": "Taboo: process words",
+    "stage": "Til banki boshida, jarayon so'zlarini isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "2 jamoa",
+    "goal": "Process diagram so'zlarini (stage, shred, melt, fibre, yarn, cocoon, wither, linear, subsequently…) inglizcha tushuntirish va diagrammadagi bosqichlarni so'z bilan tasvirlash.",
+    "skill": "vocab",
+    "rules": [
+     "Sinfni 2 jamoaga bo'ling. Jamoadan bitta o'quvchi chiqib, kartani oladi.",
+     "60 soniyada so'zni jamoasiga inglizcha tushuntiradi — so'zning o'zi va 3 ta taqiqlangan so'z aytilmaydi. Diagrammadagi bosqichni misol qilish mumkin ('In the bottle diagram, this happens after washing').",
+     "Jamoa topsa +1 ball, keyingi kartaga o'tiladi. Taqiqlangan so'z aytilsa — karta raqib jamoaga o'tadi, ular topsa +1 ball.",
+     "Imo-ishora mumkin, o'zbekcha gapirish mumkin emas.",
+     "Kartalar tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "data": {
+     "cards": [
+      {
+       "word": "stage",
+       "taboo": [
+        "step",
+        "part",
+        "phase"
+       ]
+      },
+      {
+       "word": "process",
+       "taboo": [
+        "stages",
+        "how",
+        "make"
+       ]
+      },
+      {
+       "word": "recycle",
+       "taboo": [
+        "again",
+        "use",
+        "waste"
+       ]
+      },
+      {
+       "word": "shred",
+       "taboo": [
+        "cut",
+        "small",
+        "pieces"
+       ]
+      },
+      {
+       "word": "melt",
+       "taboo": [
+        "hot",
+        "liquid",
+        "ice"
+       ]
+      },
+      {
+       "word": "fibre",
+       "taboo": [
+        "thin",
+        "thread",
+        "hair"
+       ]
+      },
+      {
+       "word": "yarn",
+       "taboo": [
+        "thread",
+        "spin",
+        "wool"
+       ]
+      },
+      {
+       "word": "weave",
+       "taboo": [
+        "fabric",
+        "cloth",
+        "thread"
+       ]
+      },
+      {
+       "word": "fabric",
+       "taboo": [
+        "cloth",
+        "material",
+        "clothes"
+       ]
+      },
+      {
+       "word": "cocoon",
+       "taboo": [
+        "silkworm",
+        "case",
+        "moth"
+       ]
+      },
+      {
+       "word": "mulberry",
+       "taboo": [
+        "tree",
+        "leaves",
+        "fruit"
+       ]
+      },
+      {
+       "word": "life cycle",
+       "taboo": [
+        "born",
+        "die",
+        "again"
+       ]
+      },
+      {
+       "word": "wither",
+       "taboo": [
+        "dry",
+        "leaves",
+        "soft"
+       ]
+      },
+      {
+       "word": "man-made",
+       "taboo": [
+        "natural",
+        "people",
+        "factory"
+       ]
+      },
+      {
+       "word": "linear",
+       "taboo": [
+        "line",
+        "straight",
+        "cycle"
+       ]
+      },
+      {
+       "word": "subsequently",
+       "taboo": [
+        "then",
+        "after",
+        "next"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "find_t1process",
+    "type": "find_someone",
+    "title": "Find someone who… recycles plastic bottles",
+    "stage": "Dars boshida, 'Takrorlash' dan keyin harakatli isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "Butun sinf, har kim o'zi",
+    "goal": "Qayta ishlash, choy, ipak va narsalar qanday yasalishi haqida to'g'ri savol tuzish (Present Perfect / Present Simple) va javobda present simple passive ishlatish (It is made from…, They are collected…).",
+    "skill": "speaking",
+    "rules": [
+     "Har o'quvchiga so'rovnoma varag'ini bering. Hamma o'rnidan turadi.",
+     "O'quvchilar sinfda yurib, har qator uchun savolni O'ZLARI tuzib so'raydi (masalan: Have you recycled any plastic bottles this month?).",
+     "'Yes' degan odamning ismini yozadi va passiv javob talab qiladigan qo'shimcha savol beradi (How is it made? Where are they collected?).",
+     "Bitta odamning ismi ko'pi bilan 2 marta yozilishi mumkin.",
+     "Birinchi bo'lib 8 qatorni to'ldirgan o'quvchi 'Stop!' deydi va 2 ta natijani passiv bilan aytadi (masalan: 'In Aziz's home, rubbish is sorted into three bins')."
+    ],
+    "data": {
+     "items": [
+      {
+       "t": "…has recycled plastic bottles this month.",
+       "q": "Have you recycled any plastic bottles this month?"
+      },
+      {
+       "t": "…drinks black tea every day.",
+       "q": "Do you drink black tea every day?"
+      },
+      {
+       "t": "…has watched bread or naan being made.",
+       "q": "Have you ever watched bread or naan being made?"
+      },
+      {
+       "t": "…knows what silk is made from.",
+       "q": "Do you know what silk is made from?"
+      },
+      {
+       "t": "…owns something made of silk.",
+       "q": "Do you own anything made of silk?"
+      },
+      {
+       "t": "…has visited a factory.",
+       "q": "Have you ever visited a factory?"
+      },
+      {
+       "t": "…sorts rubbish at home.",
+       "q": "Do you sort your rubbish at home?"
+      },
+      {
+       "t": "…has followed a recipe with more than five steps.",
+       "q": "Have you ever followed a recipe with more than five steps?"
+      },
+      {
+       "t": "…has seen a butterfly or moth come out of a cocoon.",
+       "q": "Have you ever seen a butterfly or moth come out of a cocoon?"
+      },
+      {
+       "t": "…can explain how tea is made.",
+       "q": "Can you explain how tea is made?"
+      },
+      {
+       "t": "…has worn clothes made from recycled materials.",
+       "q": "Have you ever worn clothes made from recycled materials?"
+      },
+      {
+       "t": "…has made something by hand, such as a scarf or a cake.",
+       "q": "Have you ever made something by hand, such as a scarf or a cake?"
+      }
+     ]
+    }
+   },
+   {
+    "id": "speaking_t1process",
+    "type": "speaking_cards",
+    "title": "Speaking cards: how things are made",
+    "stage": "Keyingi dars boshida yoki Speaking darsida, IELTS Speaking Part 1/3 (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftliklar",
+    "goal": "Qayta ishlash, ishlab chiqarish, an'anaviy hunarlar va kundalik jarayonlar mavzusida Part 1 va Part 3 savollariga passiv va ketma-ketlik so'zlari bilan javob berish.",
+    "skill": "speaking",
+    "rules": [
+     "Kartalarni teskari dasta qilib qo'ying. Birinchi o'quvchi karta oladi va savolni sherigiga o'qiydi.",
+     "Sherigi 20–40 soniya javob beradi: Part 1 savollariga 2–3 gap, Part 3 ('Why…?', 'Should…?') savollariga sabab va misol bilan 4–5 gap.",
+     "Tinglovchi javobdagi passiv fe'llar (is made, are collected) va ketma-ketlik so'zlarini (first, next, once, finally) sanaydi: har biri +1 ball.",
+     "Rollar almashadi. 12 daqiqadan keyin eng ko'p ball olgan o'quvchi g'olib."
+    ],
+    "data": {
+     "cards": [
+      "Describe how your favourite dish is made, step by step. Use First, Next and Finally.",
+      "Is recycling common in your neighbourhood? What is usually recycled?",
+      "Do you prefer tea or coffee? How is it usually prepared in your home?",
+      "Would you buy clothes made from recycled plastic? Why or why not?",
+      "Why are many products now made by machines rather than by hand?",
+      "Describe a natural process you learned about at school, for example the water cycle.",
+      "Should recycling be compulsory for every family? Why or why not?",
+      "What are the advantages of buying products that are made locally?",
+      "Uzbekistan has a long tradition of silk making. Why is it important to keep traditional crafts alive?",
+      "How has the way people buy clothes changed in recent years?",
+      "Do people throw away too many things nowadays? What could be done about it?",
+      "Explain to a tourist how plov is cooked. Use at least three passive verbs.",
+      "Which interests you more: natural processes, like life cycles, or man-made ones, like factories? Why?",
+      "In the future, will more of our clothes be made from recycled materials? Why?"
+     ]
+    }
+   },
+   {
+    "id": "scramble_t1process",
+    "type": "scramble",
+    "title": "Sentence Race: process sentences",
+    "stage": "Namuna javob o'qilgandan keyin, 2-mashq (ketma-ketlik) dan oldin (8 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 8,
+    "players": "3–4 kishilik jamoalar",
+    "goal": "Process javobining gaplari: overview (nine stages), passiv bosqichlar (are collected, is woven), ketma-ketlik so'zlari (Once, after which, At the following stage), tabiiy siklda aktiv (feeds, lays).",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga bitta konvert (bitta gapning qirqilgan so'zlari) beriladi.",
+     "Jamoa so'zlarni to'g'ri tartibda teradi. Maslahat: bosh harfli so'z — gap boshi, nuqtali so'z — gap oxiri, vergulli so'z — birinchi qism tugashi.",
+     "Tayyor bo'lgach, jamoa gapni ovoz chiqarib o'qiydi. To'g'ri bo'lsa +1 ball va keyingi konvert; gap qaysi diagrammaga (butilka / ipak qurti / choy) va qaysi xatboshiga (overview, P3, P4) tegishli ekanini aytsa +1 bonus.",
+     "Hamma konvertlar tugaganda eng ko'p ball olgan jamoa g'olib; teng bo'lsa — oxirgi gapni tezroq tergan jamoa."
+    ],
+    "data": {
+     "sentences": [
+      "First, used bottles are collected from recycling bins.",
+      "Once they arrive, they are sorted by colour and type.",
+      "The bottles are washed, after which their labels are removed.",
+      "At the following stage, the clean bottles are shredded into flakes.",
+      "Next, the flakes are melted at about 260°C.",
+      "Finally, the yarn is woven into fabric.",
+      "Overall, this is a man-made process consisting of nine stages.",
+      "The larva feeds on mulberry leaves for four to six weeks.",
+      "The leaves are withered for 12–18 hours before being rolled.",
+      "The moth lays eggs, and the cycle then begins again."
+     ]
+    }
+   },
+   {
+    "id": "quiz_t1process",
+    "type": "quiz_board",
+    "title": "Quiz Board: passives, overview and the three diagrams",
+    "stage": "Dars oxirida, 'Xulosa va vazifa' dan oldin umumiy takror (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 jamoa",
+    "goal": "Present simple passive, process overview formulasi, ketma-ketlik so'zlari va uchta diagramma faktlarini o'yin shaklida takrorlash.",
+    "skill": "mixed",
+    "rules": [
+     "Taxtani doskaga chizing (4 ustun × 100–500). Jamoalar navbat bilan bo'lim va ballni tanlaydi (masalan: 'Sequencers 300').",
+     "Ustoz savolni o'qiydi; jamoa 20 soniya maslahatlashib, bitta vakil orqali javob beradi.",
+     "To'g'ri — ball jamoaga. Xato — boshqa jamoalar qo'l ko'tarib javob berishi mumkin (to'g'ri bo'lsa ball ularga).",
+     "'e.g.' bilan berilgan javoblar namuna: mazmuni va grammatikasi to'g'ri bo'lgan har qanday javob qabul qilinadi.",
+     "Ishlatilgan katak o'chiriladi. Hamma katak tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "data": {
+     "categories": [
+      {
+       "name": "Passive forms",
+       "qs": [
+        {
+         "q": "Make it passive: 'They collect the bottles from recycling bins.'",
+         "a": "The bottles are collected from recycling bins."
+        },
+        {
+         "q": "What is the past participle of 'spin'?",
+         "a": "spun"
+        },
+        {
+         "q": "What is the past participle of 'weave'?",
+         "a": "woven"
+        },
+        {
+         "q": "Correct it: 'The packed tea are shipped to shops.'",
+         "a": "The packed tea is shipped to shops ('tea' is uncountable)."
+        },
+        {
+         "q": "Why is 'A moth emerges' active, not passive?",
+         "a": "'Emerge' has no object — natural stages are often active."
+        }
+       ]
+      },
+      {
+       "name": "The overview",
+       "qs": [
+        {
+         "q": "Name the three things in a process overview.",
+         "a": "Type, number of stages, start and end"
+        },
+        {
+         "q": "Should the overview mention 260°C?",
+         "a": "No — numbers and details go in P3 and P4."
+        },
+        {
+         "q": "Which phrase do you use if you cannot count the stages exactly?",
+         "a": "appears to consist of …"
+        },
+        {
+         "q": "Rewrite as one adjective: 'a process with nine stages'.",
+         "a": "a nine-stage process"
+        },
+        {
+         "q": "Give two trend words that should NOT appear in a process answer.",
+         "a": "e.g. rose, increased, peaked, fell"
+        }
+       ]
+      },
+      {
+       "name": "Sequencers",
+       "qs": [
+        {
+         "q": "Which sequencer introduces the last stage?",
+         "a": "Finally"
+        },
+        {
+         "q": "Give a more formal word for 'then'.",
+         "a": "Subsequently"
+        },
+        {
+         "q": "Join with 'after which': The bottles are sorted. Then they are washed.",
+         "a": "The bottles are sorted, after which they are washed."
+        },
+        {
+         "q": "Join with 'before being': The flakes are dried. Then they are melted.",
+         "a": "The flakes are dried before being melted."
+        },
+        {
+         "q": "Join with 'once': The tea leaves arrive. They are spread out to wither.",
+         "a": "Once the tea leaves arrive, they are spread out to wither."
+        }
+       ]
+      },
+      {
+       "name": "The diagrams",
+       "qs": [
+        {
+         "q": "Plastic bottles to clothes: how many stages are there?",
+         "a": "Nine"
+        },
+        {
+         "q": "Plastic bottles: what is formed when the liquid plastic is forced through tiny holes?",
+         "a": "Fibres"
+        },
+        {
+         "q": "Silkworm: how long does it take for the eggs to hatch?",
+         "a": "About 10 days"
+        },
+        {
+         "q": "Silk production: what happens to the cocoons, and then to the threads?",
+         "a": "The cocoons are boiled, then the threads are unwound."
+        },
+        {
+         "q": "Black tea: which two stages have a time given, and how long are they?",
+         "a": "Withering (12–18 hours) and oxidising (1–3 hours)"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "25": [
+   {
+    "id": "auction_t1map",
+    "type": "auction",
+    "title": "Grammar Auction: was replaced by, made way for, is to be built",
+    "stage": "Sinf mashqlaridan (2–4-mashq) keyin, WRITING NORMATIV dan oldin (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 kishilik jamoalar (3–4 jamoa)",
+    "goal": "Xarita tilidagi tipik xatolarni topish: passivda was/will be tushib qolishi, 'replaced by' teskari yozilishi, 'adjacent to', 'to the west of', izoh (slayd 26) va joy nomlari imlosi (slayd 44).",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga auksion varag'ini bering: boshlang'ich pul — 1000.",
+     "Ustoz gapni o'qiydi yoki doskaga yozadi. Jamoalar 30 soniya maslahatlashadi: passiv shakli, predlog, ma'no (nima nimaning o'rniga keldi) va joy nomi to'g'rimi?",
+     "Jamoalar gapni 'sotib olish' uchun pul tikadi (kamida 50, qadam 50). Eng ko'p tikgan jamoa gapni oladi.",
+     "Gap TO'G'RI bo'lsa — jamoa tikkan pulini qaytarib oladi va +100 bonus; XATO bo'lsa — tikilgan pul yo'qoladi.",
+     "Xato gapni birinchi bo'lib to'g'ri tuzatgan va sababini aytgan jamoa +50 oladi (masalan: 'by dan keyin YANGI narsa keladi').",
+     "Oxirida eng ko'p TO'G'RI gap sotib olgan jamoa g'olib (teng bo'lsa — puli ko'p jamoa)."
+    ],
+    "data": {
+     "money": 1000,
+     "items": [
+      {
+       "s": "The maps illustrate the changes that took place in Greenbank between 2000 and 2025.",
+       "ok": true,
+       "why": "Ikki davr xaritasi uchun kirish shabloni (slayd 47) — to'g'ri."
+      },
+      {
+       "s": "The factory replaced by a shopping centre.",
+       "ok": false,
+       "fix": "The factory was replaced by a shopping centre.",
+       "why": "Passivda was tushib qolmasin: was + V3."
+      },
+      {
+       "s": "To the north of the river, the farmland made way for a large housing estate.",
+       "ok": true,
+       "why": "made way for — faol ibora, was kerak emas; to the north of + mo'ljal."
+      },
+      {
+       "s": "A housing estate was replaced by the farmland.",
+       "ok": false,
+       "fix": "The farmland was replaced by a housing estate.",
+       "why": "'by' dan keyin YANGI narsa keladi; teskari yozilsa ma'no buziladi."
+      },
+      {
+       "s": "A large car park was built adjacent to the shopping centre.",
+       "ok": true,
+       "why": "adjacent to — yonma-yon; was built — o'tgan passiv."
+      },
+      {
+       "s": "The library will extend to the south.",
+       "ok": false,
+       "fix": "The library will be extended to the south.",
+       "why": "Taklif rejasida ham passiv kerak: will be / is to be + V3."
+      },
+      {
+       "s": "The tennis courts are to be replaced by a sports hall.",
+       "ok": true,
+       "why": "Ko'plik: are to be + V3 — rasmiy reja uslubi."
+      },
+      {
+       "s": "The fishing huts were demolished because the village needed more tourists.",
+       "ok": false,
+       "fix": "The fishing huts were demolished and replaced by a hotel and restaurants.",
+       "why": "Izoh: xaritada sabab ko'rsatilmagan (slayd 26) — faqat o'zgarishni yozing."
+      },
+      {
+       "s": "The main road and the road bridge remained unchanged.",
+       "ok": true,
+       "why": "remained unchanged — faol shakl; o'zgarmaganini bir gapda aytish yetarli."
+      },
+      {
+       "s": "A new entrance will be opened on East Rood.",
+       "ok": false,
+       "fix": "A new entrance will be opened on East Road.",
+       "why": "Joy nomi aynan xaritadagidek (slayd 44): imlo TA va LR bahosini tushiradi."
+      },
+      {
+       "s": "The farmland to the south of the lake was converted into a golf course.",
+       "ok": true,
+       "why": "converted into — yer qoldi, vazifasi o'zgardi."
+      },
+      {
+       "s": "A pedestrian bridge was constructed in the west of the road bridge.",
+       "ok": false,
+       "fix": "A pedestrian bridge was constructed to the west of the road bridge.",
+       "why": "Mo'ljalga nisbatan — to the west of; 'in the west of' — hudud ichida."
+      }
+     ]
+    }
+   },
+   {
+    "id": "board_t1map",
+    "type": "board",
+    "title": "Board Game: map language, templates and the three maps",
+    "stage": "NORMATIV dan keyin yoki keyingi Writing darsi boshida — Task 1 blok takrori (20 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 20,
+    "players": "3–4 o'yinchi har taxtada",
+    "goal": "Uchta xarita (Greenbank, kampus, qishloq) bo'yicha joylashuv va o'zgarish gaplarini og'zaki aytish, kirish shablonlari, overview va P3/P4 guruhlashni takrorlash.",
+    "skill": "mixed",
+    "rules": [
+     "Har guruhga taxta, zar, fishkalar va uchta xaritaning chop etilgan nusxasini bering. Javoblar kalitini guruhdagi bitta 'hakam' ushlab turadi.",
+     "Navbati kelgan o'yinchi zar tashlaydi va katakdagi topshiriqni inglizcha, to'liq gap bilan bajaradi; xarita savollarida xaritaga qarash mumkin.",
+     "Hakam kalit bilan tekshiradi: 'e.g.' bilan berilgan javoblar namuna — mazmuni va grammatikasi to'g'ri bo'lsa qabul qilinadi.",
+     "Xato yoki javob yo'q bo'lsa — o'yinchi oldingi joyiga qaytadi. Pushti kataklardagi buyruq bajariladi (oldinga, orqaga, navbat o'tkazish).",
+     "FINISH ga birinchi yetgan o'yinchi g'olib. Vaqt tugasa — eng oldinda turgan o'yinchi g'olib."
+    ],
+    "materials": [
+     "3 xarita: Greenbank (ielts6_25_sample), kampus (ielts6_25_class), qishloq (ielts6_25_hw) — har guruhga bir to'plam"
+    ],
+    "data": {
+     "squares": [
+      {
+       "t": "'In the north of the area' or 'to the north of the river' — what is the difference?",
+       "a": "in = inside the area; to = outside it, in relation to a landmark."
+      },
+      {
+       "t": "Name the two kinds of map task.",
+       "a": "Two periods (past → present) and present → proposed plan."
+      },
+      {
+       "t": "'The maps show a town in 1995 and 2020.' Which verb form?",
+       "a": "Past passive: was/were + V3 (was built, was demolished)."
+      },
+      {
+       "t": "'The plans show a park now and the proposed changes.' Which verb form?",
+       "a": "Future passive: will be + V3 / is to be + V3."
+      },
+      {
+       "t": "Say the introduction template for two past maps.",
+       "a": "The maps illustrate the changes that took place in ... between ... and ..."
+      },
+      {
+       "t": "Say the introduction template for a proposed plan.",
+       "a": "The plans compare the present layout of ... with the proposed changes for ..."
+      },
+      {
+       "t": "Greenbank 2025: where was the housing estate built?",
+       "a": "To the north of the river, in the west and centre of the northern bank."
+      },
+      {
+       "t": "Greenbank 2025: where is the large car park?",
+       "a": "Adjacent to the shopping centre, on its eastern side."
+      },
+      {
+       "t": "Greenbank 2025: what is opposite the large car park, across the river?",
+       "a": "The school, in the north-east."
+      },
+      {
+       "t": "Greenbank 2025: where does the cycle path run?",
+       "a": "Alongside the river, along the whole northern bank."
+      },
+      {
+       "t": "Greenbank: what happened to the factory?",
+       "a": "It was demolished and replaced by a shopping centre."
+      },
+      {
+       "t": "Campus plan: what will happen to the tennis courts?",
+       "a": "They will be / are to be replaced by a sports hall."
+      },
+      {
+       "t": "Campus plan: where will the car park be relocated?",
+       "a": "To the north-east corner, next to a new entrance from East Road."
+      },
+      {
+       "t": "Campus plan: what will be built where the car park is now?",
+       "a": "Student accommodation (the car park will make way for it)."
+      },
+      {
+       "t": "Campus plan: name two things that will remain unchanged.",
+       "a": "The lake and the main entrance on North Road."
+      },
+      {
+       "t": "Make it future: 'The library was extended.'",
+       "a": "The library will be extended / is to be extended."
+      },
+      {
+       "t": "Correct it: 'The factory replaced by a shopping centre.'",
+       "a": "The factory was replaced by a shopping centre."
+      },
+      {
+       "t": "OK or not? 'The factory was demolished because people wanted shops.'",
+       "a": "Not OK: it is an explanation — a map shows no reasons (slide 26)."
+      },
+      {
+       "t": "Greenbank overview: give the two biggest changes, no numbers.",
+       "a": "e.g. Overall, the area became largely residential, and crossing the river became easier."
+      },
+      {
+       "t": "Greenbank: how do you group Paragraphs 3 and 4?",
+       "a": "By area: P3 — the northern bank; P4 — the southern bank and the bridges."
+      },
+      {
+       "t": "Must you describe every tree, path and bench? Why?",
+       "a": "No — select the key changes only (slide 28)."
+      },
+      {
+       "t": "Spell the two road names on the campus plan.",
+       "a": "N-O-R-T-H Road and E-A-S-T Road — copy names exactly as on the map."
+      },
+      {
+       "t": "Village map: how did the jetty change between 1990 and 2025?",
+       "a": "It was extended from 20 to 60 metres (three times longer)."
+      },
+      {
+       "t": "Describe one real change in your neighbourhood with a map verb.",
+       "a": "e.g. An old cinema was demolished and replaced by a supermarket."
+      }
+     ]
+    }
+   },
+   {
+    "id": "dominoes_t1map",
+    "type": "dominoes",
+    "title": "Dominoes: was demolished ↔ the demolition of",
+    "stage": "'Til banki' da, o'zgarish passividan keyin — overview uchun ot shakllari (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftlik yoki 3 kishilik guruh",
+    "goal": "O'zgarishni ikki usulda aytish: passiv fe'l (was demolished) ↔ ot birikmasi (the demolition of) — overview'da takrordan qochish uchun ('the main change was the replacement of farmland with housing').",
+    "skill": "vocab",
+    "rules": [
+     "Har guruhga bir to'plam qirqilgan domino toshini bering va aralashtiring.",
+     "START toshini qo'ying. Uning o'ng yarmidagi passiv gapga (masalan, 'the park was extended') mos ot birikmasi ('the extension of the park') yozilgan toshni toping va ulang.",
+     "Zanjirni FINISH gacha davom ettiring. Maslahat: ot qo'shimchalari -tion, -sion, -al, -ance, -ment, -ing; 'replaced by' → 'the replacement of ... WITH'.",
+     "Birinchi tugatgan guruh zanjirni o'qiydi va 3 ta ot birikmasi bilan overview gapi aytadi (masalan: 'The main change was the demolition of the factory.'); ustoz tekshiradi.",
+     "Zanjiri to'g'ri va gaplari xatosiz birinchi guruh g'olib."
+    ],
+    "data": {
+     "pairs": [
+      [
+       "the factory was demolished",
+       "the demolition of the factory"
+      ],
+      [
+       "the park was extended",
+       "the extension of the park"
+      ],
+      [
+       "a school was constructed",
+       "the construction of a school"
+      ],
+      [
+       "farmland was replaced by housing",
+       "the replacement of farmland with housing"
+      ],
+      [
+       "farmland was converted into a golf course",
+       "the conversion of farmland into a golf course"
+      ],
+      [
+       "the car park will be relocated",
+       "the relocation of the car park"
+      ],
+      [
+       "the road was widened",
+       "the widening of the road"
+      ],
+      [
+       "a playground was added",
+       "the addition of a playground"
+      ],
+      [
+       "part of the forest was cleared",
+       "the clearance of part of the forest"
+      ],
+      [
+       "the area was urbanised",
+       "the urbanisation of the area"
+      ],
+      [
+       "a new entrance will be opened",
+       "the opening of a new entrance"
+      ],
+      [
+       "the fishing huts were removed",
+       "the removal of the fishing huts"
+      ],
+      [
+       "the jetty was lengthened",
+       "the lengthening of the jetty"
+      ],
+      [
+       "the riverside was redeveloped",
+       "the redevelopment of the riverside"
+      ]
+     ]
+    }
+   },
+   {
+    "id": "taboo_t1map",
+    "type": "taboo",
+    "title": "Taboo: map words and directions",
+    "stage": "'Map: asosiy xususiyatlar' dan oldin, xarita so'zlarini isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "2 jamoa",
+    "goal": "Xarita so'zlarini (demolish, adjacent to, opposite, alongside, relocate, layout, facilities, residential…) inglizcha tushuntirish va doskadagi kompas yordamida yo'nalishni aytish.",
+    "skill": "vocab",
+    "rules": [
+     "Sinfni 2 jamoaga bo'ling. Jamoadan bitta o'quvchi chiqib, kartani oladi.",
+     "60 soniyada so'zni jamoasiga inglizcha tushuntiradi — so'zning o'zi va 3 ta taqiqlangan so'z aytilmaydi. Doskadagi kompasni ko'rsatish yoki havoda xarita chizish mumkin.",
+     "Jamoa topsa +1 ball, keyingi kartaga o'tiladi. Taqiqlangan so'z aytilsa — karta raqib jamoaga o'tadi, ular topsa +1 ball.",
+     "Imo-ishora mumkin, o'zbekcha gapirish mumkin emas.",
+     "Kartalar tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "data": {
+     "cards": [
+      {
+       "word": "demolish",
+       "taboo": [
+        "knock down",
+        "destroy",
+        "building"
+       ]
+      },
+      {
+       "word": "adjacent to",
+       "taboo": [
+        "next to",
+        "beside",
+        "near"
+       ]
+      },
+      {
+       "word": "opposite",
+       "taboo": [
+        "across",
+        "facing",
+        "other side"
+       ]
+      },
+      {
+       "word": "alongside",
+       "taboo": [
+        "along",
+        "beside",
+        "parallel"
+       ]
+      },
+      {
+       "word": "relocate",
+       "taboo": [
+        "move",
+        "place",
+        "new"
+       ]
+      },
+      {
+       "word": "convert",
+       "taboo": [
+        "change",
+        "into",
+        "use"
+       ]
+      },
+      {
+       "word": "extend",
+       "taboo": [
+        "bigger",
+        "longer",
+        "add"
+       ]
+      },
+      {
+       "word": "layout",
+       "taboo": [
+        "plan",
+        "design",
+        "arrangement"
+       ]
+      },
+      {
+       "word": "facilities",
+       "taboo": [
+        "services",
+        "buildings",
+        "equipment"
+       ]
+      },
+      {
+       "word": "residential",
+       "taboo": [
+        "houses",
+        "live",
+        "homes"
+       ]
+      },
+      {
+       "word": "housing estate",
+       "taboo": [
+        "flats",
+        "homes",
+        "area"
+       ]
+      },
+      {
+       "word": "pedestrian bridge",
+       "taboo": [
+        "walk",
+        "river",
+        "cross"
+       ]
+      },
+      {
+       "word": "jetty",
+       "taboo": [
+        "boat",
+        "lake",
+        "wooden"
+       ]
+      },
+      {
+       "word": "campsite",
+       "taboo": [
+        "tents",
+        "camping",
+        "sleep"
+       ]
+      },
+      {
+       "word": "north-east",
+       "taboo": [
+        "north",
+        "east",
+        "compass"
+       ]
+      },
+      {
+       "word": "remain unchanged",
+       "taboo": [
+        "same",
+        "stay",
+        "change"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "id": "find_t1map",
+    "type": "find_someone",
+    "title": "Find someone who… lives opposite a shop",
+    "stage": "Dars boshida, 'Takrorlash' dan keyin harakatli isitish (10 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 10,
+    "players": "Butun sinf, har kim o'zi",
+    "goal": "Joy va o'zgarishlar haqida to'g'ri savol tuzish (Present Perfect / Present Simple) va javobda joylashuv iboralari (opposite, adjacent to, to the north of) hamda o'zgarish passivini ishlatish.",
+    "skill": "speaking",
+    "rules": [
+     "Har o'quvchiga so'rovnoma varag'ini bering. Hamma o'rnidan turadi.",
+     "O'quvchilar sinfda yurib, har qator uchun savolni O'ZLARI tuzib so'raydi (masalan: Do you live opposite a shop or a supermarket?).",
+     "'Yes' degan odamning ismini yozadi va 'qayerda?' yoki 'nima bilan almashtirildi?' degan qo'shimcha savol beradi (Where exactly is it? What was it replaced by?).",
+     "Bitta odamning ismi ko'pi bilan 2 marta yozilishi mumkin.",
+     "Birinchi bo'lib 8 qatorni to'ldirgan o'quvchi 'Stop!' deydi va 2 ta natijani xarita tili bilan aytadi (masalan: 'Aziza lives opposite a supermarket, to the east of the park.')."
+    ],
+    "data": {
+     "items": [
+      {
+       "t": "…has seen an old building demolished in their neighbourhood.",
+       "q": "Have you ever seen an old building demolished in your neighbourhood?"
+      },
+      {
+       "t": "…lives adjacent to a park or a playground.",
+       "q": "Do you live adjacent to a park or a playground?"
+      },
+      {
+       "t": "…lives opposite a shop or a supermarket.",
+       "q": "Do you live opposite a shop or a supermarket?"
+      },
+      {
+       "t": "…has walked or cycled alongside a river or canal this month.",
+       "q": "Have you walked or cycled alongside a river or canal this month?"
+      },
+      {
+       "t": "…knows which direction their bedroom window faces.",
+       "q": "Do you know which direction your bedroom window faces?"
+      },
+      {
+       "t": "…has seen farmland turned into housing near their town.",
+       "q": "Have you seen farmland turned into housing near your town?"
+      },
+      {
+       "t": "…has stayed at a campsite or a lakeside hotel.",
+       "q": "Have you ever stayed at a campsite or a lakeside hotel?"
+      },
+      {
+       "t": "…has a favourite café in a building that used to be something else.",
+       "q": "Is your favourite café in a building that used to be something else?"
+      },
+      {
+       "t": "…has used an online map this week to find a place.",
+       "q": "Have you used an online map this week to find a place?"
+      },
+      {
+       "t": "…would like a new sports hall to be built at our academy.",
+       "q": "Would you like a new sports hall to be built at our academy?"
+      },
+      {
+       "t": "…can name a building in Tashkent that was recently extended.",
+       "q": "Can you name a building in Tashkent that was recently extended?"
+      },
+      {
+       "t": "…thinks their district has become more urbanised in the last five years.",
+       "q": "Do you think your district has become more urbanised in the last five years?"
+      }
+     ]
+    }
+   },
+   {
+    "id": "speaking_t1map",
+    "type": "speaking_cards",
+    "title": "Speaking cards: places, plans and changing towns",
+    "stage": "Keyingi dars boshida yoki Speaking darsida, IELTS Speaking Part 1/3 (12 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 12,
+    "players": "Juftliklar",
+    "goal": "Mahalla, shahar va kampusdagi o'zgarishlar haqida Part 1 va Part 3 savollariga joylashuv iboralari va o'zgarish fe'llari (was demolished, was replaced by, will be built) bilan javob berish.",
+    "skill": "speaking",
+    "rules": [
+     "Kartalarni teskari dasta qilib qo'ying. Birinchi o'quvchi karta oladi va savolni sherigiga o'qiydi.",
+     "Sherigi 20–40 soniya javob beradi: Part 1 savollariga 2–3 gap, Part 3 ('Why…?', 'Should…?', 'Who should…?') savollariga sabab va misol bilan 4–5 gap.",
+     "Tinglovchi javobdagi xarita so'zlarini (opposite, adjacent to, alongside, to the north of, demolished, replaced by, converted into, extended…) sanaydi: har biri +1 ball.",
+     "Rollar almashadi. 12 daqiqadan keyin eng ko'p ball olgan o'quvchi g'olib."
+    ],
+    "data": {
+     "cards": [
+      "Describe the area around your home. What is to the north of it, and what is opposite it?",
+      "Have any buildings in your neighbourhood been demolished or replaced recently? What by?",
+      "Do you prefer paper maps or map apps on your phone? Why?",
+      "How good are you at giving directions to visitors? Give an example.",
+      "What new facility would you like to be built near your home, and where should it go?",
+      "Is it better to convert old factories into shops and flats or to demolish them? Why?",
+      "Why do many cities replace farmland with housing estates? Is this a problem?",
+      "Should towns build more cycle paths alongside rivers and main roads? Why or why not?",
+      "How has your school or college campus changed since you first started there?",
+      "What do you think your city centre will look like in twenty years?",
+      "Should historic buildings always remain unchanged, even if a city needs more space?",
+      "What makes a lakeside or riverside area attractive to tourists?",
+      "Who should decide how a neighbourhood is redeveloped: local people or the government?",
+      "If you could redesign our academy building, what would you add, extend or relocate?"
+     ]
+    }
+   },
+   {
+    "id": "scramble_t1map",
+    "type": "scramble",
+    "title": "Sentence Race: map sentences from all three maps",
+    "stage": "Namuna (Greenbank) tahlilidan keyin, 'Sinf mashqlari' dan oldin (8 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 8,
+    "players": "3–4 kishilik jamoalar",
+    "goal": "Xarita javobi gaplari: kirish shablonlari, overview, o'tgan passiv (was demolished, was converted into), kelajak passivi (are to be replaced, will be relocated) va joylashuv iboralari.",
+    "skill": "grammar",
+    "rules": [
+     "Har jamoaga bitta konvert (bitta gapning qirqilgan so'zlari) beriladi.",
+     "Jamoa so'zlarni to'g'ri tartibda teradi. Maslahat: bosh harfli so'z — gap boshi, nuqtali so'z — gap oxiri; 'was / will be / are to be' dan keyin V3 keladi.",
+     "Tayyor bo'lgach, jamoa gapni ovoz chiqarib o'qiydi. To'g'ri bo'lsa +1 ball va keyingi konvert; gap qaysi xaritaga (Greenbank, kampus, qishloq) va qaysi xatboshiga (kirish, overview, P3/P4) tegishli ekanini aytsa +1 bonus.",
+     "Hamma konvertlar tugaganda eng ko'p ball olgan jamoa g'olib; teng bo'lsa — oxirgi gapni tezroq tergan jamoa."
+    ],
+    "data": {
+     "sentences": [
+      "The maps illustrate the changes that took place in Greenbank.",
+      "The plans compare the present layout of the campus with the proposed changes.",
+      "Overall, the area became far more residential and commercial.",
+      "The factory was demolished and replaced by a shopping centre.",
+      "A large car park was built adjacent to the shopping centre.",
+      "A cycle path was built alongside the river.",
+      "The tennis courts are to be replaced by a sports hall.",
+      "The car park will be relocated to the north-east corner.",
+      "The farmland to the south of the lake was converted into a golf course.",
+      "The main road and the road bridge remained unchanged."
+     ]
+    }
+   },
+   {
+    "id": "quiz_t1map",
+    "type": "quiz_board",
+    "title": "Quiz Board: maps, verbs and templates",
+    "stage": "'Xulosa va vazifa' dan oldin — xarita va Task 1 blok yakuniy takrori (15 daqiqa). Ustoz 1–3 o'yin tanlaydi, qolgani — takror uchun.",
+    "minutes": 15,
+    "players": "3–4 jamoa",
+    "goal": "Uchta xaritadagi joylashuv, o'zgarish fe'llari, kirish va overview shablonlari hamda uchta tipik xatoni (izoh, overview + xulosa, hammasini sanash) o'yin shaklida takrorlash.",
+    "skill": "mixed",
+    "rules": [
+     "Taxtani doskaga chizing (4 ustun × 100–500). Jamoalar navbat bilan bo'lim va ballni tanlaydi (masalan: 'Map verbs 300').",
+     "Ustoz savolni o'qiydi; jamoa 20 soniya maslahatlashib, bitta vakil orqali javob beradi. 'Where is it?' bo'limida xaritaga qarash mumkin.",
+     "To'g'ri — ball jamoaga. Xato — boshqa jamoalar qo'l ko'tarib javob berishi mumkin (to'g'ri bo'lsa ball ularga).",
+     "'Spot the error' bo'limida jamoa xatoni topib, to'g'ri gapni aytishi kerak; mazmuni to'g'ri bo'lgan har qanday tuzatish qabul qilinadi.",
+     "Ishlatilgan katak o'chiriladi. Hamma katak tugaganda ko'p ball olgan jamoa g'olib."
+    ],
+    "materials": [
+     "3 xarita: Greenbank (ielts6_25_sample), kampus (ielts6_25_class), qishloq (ielts6_25_hw) — proyektorda yoki har jamoaga"
+    ],
+    "data": {
+     "categories": [
+      {
+       "name": "Where is it?",
+       "qs": [
+        {
+         "q": "Greenbank 2025: what is in the north-east of the area?",
+         "a": "The school"
+        },
+        {
+         "q": "Greenbank 2025: what is adjacent to the shopping centre?",
+         "a": "A large car park (on its eastern side)"
+        },
+        {
+         "q": "Campus plan: where will the café be built?",
+         "a": "To the north-east of the lake"
+        },
+        {
+         "q": "Village 2025: what now lies between the lake and the forest?",
+         "a": "A campsite (on the western part of the old forest)"
+        },
+        {
+         "q": "'in the south-west of the area' vs 'to the south-west of the park' — what is the difference?",
+         "a": "in = inside the area; to = outside, in relation to a landmark"
+        }
+       ]
+      },
+      {
+       "name": "Map verbs",
+       "qs": [
+        {
+         "q": "A building was knocked down = it was ___",
+         "a": "demolished"
+        },
+        {
+         "q": "Farmland became a golf course = it was ___ into a golf course",
+         "a": "converted"
+        },
+        {
+         "q": "The jetty grew from 20 m to 60 m = it was ___",
+         "a": "extended (also: lengthened)"
+        },
+        {
+         "q": "Active phrase without 'was': the fields ___ ___ ___ new homes",
+         "a": "made way for"
+        },
+        {
+         "q": "Formal plan style: a café ___ ___ ___ built next year",
+         "a": "is to be (built)"
+        }
+       ]
+      },
+      {
+       "name": "Templates",
+       "qs": [
+        {
+         "q": "Which map task uses 'at present and the proposed changes'?",
+         "a": "Present → proposed plan (future: will be / is to be + V3)"
+        },
+        {
+         "q": "Complete: 'The maps illustrate the changes that ___ ___ in…'",
+         "a": "took place"
+        },
+        {
+         "q": "Complete: 'The plans compare the present ___ of the campus with…'",
+         "a": "layout"
+        },
+        {
+         "q": "What two things go into a map overview?",
+         "a": "The two biggest changes + the area's general character; no numbers"
+        },
+        {
+         "q": "Greenbank: how do you group Paragraphs 3 and 4?",
+         "a": "By area: P3 the northern bank; P4 the southern bank and bridges"
+        }
+       ]
+      },
+      {
+       "name": "Spot the error",
+       "qs": [
+        {
+         "q": "'The factory replaced by a shopping centre.'",
+         "a": "was replaced by"
+        },
+        {
+         "q": "'The library will extend to the south.'",
+         "a": "will be extended / is to be extended"
+        },
+        {
+         "q": "'A shopping centre was replaced by the factory.'",
+         "a": "Reversed: The factory was replaced by a shopping centre"
+        },
+        {
+         "q": "'Greenbenk' and 'East Rood': what is wrong, and which criteria lose marks?",
+         "a": "Spelling: Greenbank, East Road — TA and LR"
+        },
+        {
+         "q": "'The huts were demolished because tourists wanted hotels.'",
+         "a": "Explanation — maps show no reasons; delete 'because…'"
+        }
+       ]
+      }
+     ]
+    }
+   }
   ]
  }
 }

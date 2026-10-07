@@ -222,6 +222,61 @@
    "test_after": "",
    "words": 0,
    "writing": "Task 1"
+  },
+  {
+   "no": 21,
+   "title": "Writing Task 1 (3): Line graph — trendlar, asosiy nuqtalar va taxminiy raqamlar",
+   "grammar_topic": "Line graph: trend tili (fe'l + ravish va sifat + ot), asosiy nuqtalar (boshlanish, burilish, cho'qqi, eng past, oxir), taxmin va prognoz",
+   "vocab_topic": "Trend va raqam tili: rise, decline, peak, plateau, overtake, fluctuate; approximately, just over, roughly; is expected to",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": "Task 1"
+  },
+  {
+   "no": 22,
+   "title": "Writing Task 1 (4): Bar chart — trend yoki solishtirma grafik, eng ko'p va eng kam",
+   "grammar_topic": "Bar chart: vaqtli (trend) va vaqtsiz (solishtirma) bar grafikni ajratish; solishtirish tili (higher than, twice as many, the figure for), number / amount / proportion / percentage, birlik aniqligi",
+   "vocab_topic": "Solishtirish tili: compared with, whereas, twice as many as, slightly higher, the highest proportion, the figure for, respectively",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": "Task 1"
+  },
+  {
+   "no": 23,
+   "title": "Writing Task 1 (5): Pie chart + Table — ulushlar, kasrlar va jadvaldan asosiy ma'lumotni tanlash",
+   "grammar_topic": "Pie chart va table: foiz → kasr iboralari (a quarter, just under a third), accounted for / made up, ikki pie solishtirish, jadvaldan qator/ustunni guruhlash, solishtirish aniqligi",
+   "vocab_topic": "Ulush tili: proportion, share, a quarter, just under a third, the vast majority, a small fraction, accounted for, made up, doubled, a tenfold increase",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": "Task 1"
+  },
+  {
+   "no": 24,
+   "title": "Writing Task 1 (6): Process diagram — bosqichlar, passiv va ketma-ketlik",
+   "grammar_topic": "Process diagram: bosqichlarni sanash (overview), present simple passive, ketma-ketlik bog'lovchilari (first, next, once, after which, finally), sun'iy (man-made) va tabiiy (natural) jarayon, tarmoqlanuvchi jarayon",
+   "vocab_topic": "Jarayon tili: is collected, is transported, is sorted, is melted, is spun, is woven; first, next, once, after which, at the following stage, finally; consists of, stages",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": "Task 1"
+  },
+  {
+   "no": 25,
+   "title": "Writing Task 1 (7): Map — joylashuv, o'zgarishlar va kirish shablonlari",
+   "grammar_topic": "Map: joylashuv va yo'nalish (to the north of, adjacent to, opposite, alongside), o'zgarish passivi (was demolished, was replaced by, was converted into, made way for), o'tgan va kelajak (taklif qilingan) xaritalar, kirish shablonlari; Task 1 blok yakuni",
+   "vocab_topic": "Xarita tili: north-east, adjacent to, opposite, alongside, was demolished, was replaced by, was converted into, was extended, made way for, remained unchanged, is to be built",
+   "audios": "",
+   "reading": true,
+   "test_after": "",
+   "words": 0,
+   "writing": "Task 1"
   }
  ]
 }

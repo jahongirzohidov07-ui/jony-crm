@@ -3,6 +3,7 @@ import { formatPhone } from "../components/PhoneInput";
 import { useSearchParams } from "react-router-dom";
 import {
   Plus, Trash2, Pencil, Users, UserCheck, Clock, Briefcase, X,
+  ClipboardList,
 } from "lucide-react";
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -47,6 +48,7 @@ import { ChecklistTab } from "../components/HrChecklist";
 import { ExaminerStatusTab } from "../components/HrExaminers";
 import { StaffRestoreModal } from "../components/StaffRestore";
 import { PayrollTab } from "../components/Payroll";
+import { InterviewSheet } from "../components/InterviewSheet";
 
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "calendar"
@@ -353,6 +355,8 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
   const [modal, setModal] = useState(false);
   const [editing, setEditing] = useState<Candidate | null>(null);
   const [card, setCard] = useState<number | null>(null);
+  // Suhbat varaqasi (2026-10-08) — savol, javob va ball
+  const [sheet, setSheet] = useState<number | null>(null);
   const [schedule, setSchedule] = useState<
     { id: number; name: string; stage: string } | null
   >(null);
@@ -763,6 +767,13 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                   </td>
                   <td className="pr-3 text-right whitespace-nowrap">
                     <button
+                      onClick={() => setSheet(c.id)}
+                      className="inline-flex items-center gap-1 px-2 py-1 mr-1 rounded-md text-xs text-brand-700 bg-brand-50 hover:bg-brand-100"
+                      title="Suhbat varaqasi: savollar, javoblar va baho"
+                    >
+                      <ClipboardList size={13} /> Suhbat
+                    </button>
+                    <button
                       onClick={() => open(c)}
                       className="p-1.5 text-slate-400 hover:text-brand-600"
                     >
@@ -792,6 +803,13 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
             setSchedule(null);
             load();
           }}
+        />
+      )}
+
+      {sheet !== null && (
+        <InterviewSheet
+          candidateId={sheet}
+          onClose={() => { setSheet(null); load(); }}
         />
       )}
 

@@ -3085,6 +3085,33 @@ class Scorecard(Base):
                         onupdate=datetime.utcnow)
 
 
+class InterviewSheet(Base):
+    """SUHBAT VARAQASI (2026-10-08, Jahongir: "savol va javobini
+    yozishga bo'sh joy qoldirib ishni osonlashtir").
+
+    Savollar interview_guide.GUIDE da. Bu yerda faqat javoblar:
+    {"q8": {"a": "matn", "s": 4}, "o3": {"ok": true}}. Har
+    suhbatdoshning O'Z varaqasi — Scorecard dagi kabi."""
+    __tablename__ = "interview_sheets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    candidate_id = Column(Integer, ForeignKey("candidates.id"),
+                          nullable=False, index=True)
+    author_id = Column(Integer, ForeignKey("users.id"), index=True)
+    answers = Column(Text)
+    recommendation = Column(String)
+    strengths = Column(Text)
+    concerns = Column(Text)
+    note = Column(Text)
+    # Serverda hisoblanadi: 1-5 ballar o'rtachasi foizda
+    percent = Column(Float)
+    answered = Column(Integer, default=0)
+    guide_version = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
 class Offer(Base):
     """Nomzodga yozma taklif. Har o'zgartirish yangi VERSIYA bo'lib
     saqlanadi — muzokara tarixi hech qachon yo'qolmaydi."""

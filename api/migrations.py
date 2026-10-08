@@ -216,6 +216,12 @@ MIGRATIONS = [
     ("0025_expense_period", [
         "ALTER TABLE expenses ADD COLUMN period VARCHAR",
     ]),
+    # 2026-10-08: nomzod suhbat varaqasi (interview_sheets) — jadvalni
+    # create_all yaratadi; bu qator shtampni ko'taradi.
+    ("0026_interview_sheets", [
+        "CREATE INDEX IF NOT EXISTS ix_interview_sheets_cand_author "
+        "ON interview_sheets (candidate_id, author_id)",
+    ]),
 
 ]
 

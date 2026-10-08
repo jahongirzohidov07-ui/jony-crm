@@ -31,6 +31,7 @@ import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import copy
 import json
 from datetime import datetime
 from typing import Optional
@@ -483,7 +484,29 @@ GUIDE = [
     },
 ]
 
-QUESTIONS = {q["id"]: q for sec in GUIDE for q in sec["items"]}
+KINDS = ("score", "check", "note")
+FIELDS = ("why", "look", "good", "bad")
+
+
+def current_guide(db: Session) -> list:
+    """HR tahrirlagan ro'yxat yoki (bo'lmasa) standart GUIDE."""
+    row = db.query(models.InterviewGuideConfig).get(1)
+    if row and row.data:
+        try:
+            data = json.loads(row.data)
+            if isinstance(data, list) and data:
+                return data
+        except ValueError:
+            pass
+    return copy.deepcopy(GUIDE)
+
+
+def questions_of(sections: list) -> dict:
+    return {q["id"]: q for sec in sections for q in sec["items"]}
+
+
+# Standart ro'yxat savollari (testlar va hujjat yaratish uchun)
+QUESTIONS = questions_of(GUIDE)
 
 
 def _recommendations():
@@ -491,26 +514,37 @@ def _recommendations():
             for k, l, t, _v in roles.RECOMMENDATIONS]
 
 
-def guide_payload() -> dict:
+def guide_payload(db: Session, user=None) -> dict:
+    sections = current_guide(db)
+    qs = questions_of(sections)
+    row = db.query(models.InterviewGuideConfig).get(1)
+    custom = bool(row and row.data)
     return {
-        "version": GUIDE_VERSION,
-        "sections": GUIDE,
+        "version": (row.updated_at.isoformat()
+                    if custom and row.updated_at else GUIDE_VERSION),
+        "sections": sections,
         "recommendations": _recommendations(),
-        "total": len(QUESTIONS),
-        "core_total": sum(1 for q in QUESTIONS.values() if q["core"]),
+        "total": len(qs),
+        "core_total": sum(1 for q in qs.values() if q.get("core")),
+        "customized": custom,
+        "updated_by": row.updated_by if custom else None,
+        "updated_at": (row.updated_at.isoformat()
+                       if custom and row.updated_at else None),
+        "can_edit": bool(user and user.role in roles.HR_ACCESS),
     }
 
 
-def _clean_answers(raw) -> dict:
+def _clean_answers(raw, qs: dict) -> dict:
     """Faqat ma'lum savollar, ball 1-5, kuzatuv ha/yo'q. Bo'sh qiymatlar
     tashlab yuboriladi — varaqa ixcham qoladi."""
     out = {}
     for qid, v in (raw or {}).items():
-        q = QUESTIONS.get(qid)
+        q = qs.get(qid)
         if not q or not isinstance(v, dict):
             continue
         item = {}
-        a = (v.get("a") or "").strip() if isinstance(v.get("a"), str) else ""
+        a = v.get("a") if isinstance(v.get("a"), str) else ""
+        a = a.strip()
         if a:
             item["a"] = a[:5000]
         if q["kind"] == "score" and v.get("s") not in (None, ""):
@@ -528,15 +562,20 @@ def _clean_answers(raw) -> dict:
     return out
 
 
-def sheet_stats(answers: dict) -> dict:
+def sheet_stats(answers: dict, sections: list) -> dict:
     """Foiz = 1-5 ballar o'rtachasi (5 = 100%). Kuzatuvlar foizga
-    kirmaydi — ular faqat qo'shimcha belgi."""
-    scores = [v["s"] for v in answers.values() if "s" in v]
-    checks = [v["ok"] for v in answers.values() if "ok" in v]
+    kirmaydi — ular faqat qo'shimcha belgi. HR o'chirgan savolning eski
+    javobi hisobga kirmaydi (javob bazada qoladi)."""
+    qs = questions_of(sections)
+    live = {k: v for k, v in answers.items() if k in qs}
+    scores = [v["s"] for k, v in live.items()
+              if "s" in v and qs[k]["kind"] == "score"]
+    checks = [v["ok"] for k, v in live.items()
+              if "ok" in v and qs[k]["kind"] == "check"]
     by_section = []
-    for sec in GUIDE:
-        ss = [answers[q["id"]]["s"] for q in sec["items"]
-              if "s" in answers.get(q["id"], {})]
+    for sec in sections:
+        ss = [live[q["id"]]["s"] for q in sec["items"]
+              if "s" in live.get(q["id"], {}) and q["kind"] == "score"]
         by_section.append({
             "key": sec["key"], "title": sec["title"],
             "avg": round(sum(ss) / len(ss), 1) if ss else None,
@@ -545,7 +584,7 @@ def sheet_stats(answers: dict) -> dict:
     return {
         "percent": (round(sum(scores) / len(scores) / 5 * 100, 1)
                     if scores else None),
-        "answered": sum(1 for v in answers.values()
+        "answered": sum(1 for v in live.values()
                         if v.get("a") or "s" in v or "ok" in v),
         "checks_ok": sum(1 for c in checks if c),
         "checks_total": len(checks),
@@ -553,14 +592,21 @@ def sheet_stats(answers: dict) -> dict:
     }
 
 
-def _sheet_out(db: Session, s: models.InterviewSheet) -> dict:
+def _rec_info(key):
+    for k, l, t, v in roles.RECOMMENDATIONS:
+        if k == key:
+            return l, t, v
+    return None, None, None
+
+
+def _sheet_out(db: Session, s: models.InterviewSheet,
+               sections: list) -> dict:
     try:
         answers = json.loads(s.answers or "{}")
     except ValueError:
         answers = {}
     author = db.query(models.User).get(s.author_id) if s.author_id else None
-    rec = {k: (l, t) for k, l, t, _v in roles.RECOMMENDATIONS}
-    lbl, tone = rec.get(s.recommendation, (None, None))
+    lbl, tone, _v = _rec_info(s.recommendation)
     return {
         "id": s.id,
         "author_id": s.author_id,
@@ -572,8 +618,56 @@ def _sheet_out(db: Session, s: models.InterviewSheet) -> dict:
         "strengths": s.strengths,
         "concerns": s.concerns,
         "note": s.note,
-        **sheet_stats(answers),
+        **sheet_stats(answers, sections),
         "updated_at": s.updated_at.isoformat() if s.updated_at else None,
+    }
+
+
+def evaluation(sheets: list, sections: list) -> dict:
+    """BAHOLASH — barcha suhbatdoshlar varaqalari birga.
+
+    Foiz — har varaqa foizining o'rtachasi (har suhbatdosh teng ovoz).
+    Bo'limlar — hamma varaqalardagi ballar o'rtachasi. Tavsiyalar
+    sanaladi: fikrlar tarqoq bo'lsa, buni ko'rsatish muhim."""
+    vals = [s["percent"] for s in sheets if s["percent"] is not None]
+    avg = round(sum(vals) / len(vals), 1) if vals else None
+    band, band_tone = roles.scorecard_band(avg)
+    by_section = []
+    for i, sec in enumerate(sections):
+        parts = [s["by_section"][i] for s in sheets
+                 if i < len(s["by_section"]) and s["by_section"][i]["avg"]
+                 is not None]
+        n = sum(p["count"] for p in parts)
+        tot = sum(p["avg"] * p["count"] for p in parts)
+        by_section.append({"key": sec["key"], "title": sec["title"],
+                           "avg": round(tot / n, 1) if n else None,
+                           "count": n})
+    recs = []
+    for k, l, t, _v in roles.RECOMMENDATIONS:
+        c = sum(1 for s in sheets if s["recommendation"] == k)
+        if c:
+            recs.append({"key": k, "label": l, "tone": t, "count": c})
+    rv = [_rec_info(s["recommendation"])[2] for s in sheets
+          if s["recommendation"]]
+    final = None
+    if rv:
+        mean = sum(rv) / len(rv)
+        final = min(roles.RECOMMENDATIONS,
+                    key=lambda r: abs(r[3] - mean))
+    spread = (max(vals) - min(vals)) if len(vals) > 1 else 0
+    return {
+        "percent": avg,
+        "band": band,
+        "band_tone": band_tone,
+        "pass_percent": roles.SCORECARD_PASS,
+        "interviewers": len(sheets),
+        "by_section": by_section,
+        "recommendations": recs,
+        "final_label": final[1] if final else None,
+        "final_tone": final[2] if final else None,
+        # 20 foizdan katta farq — suhbatdoshlar fikri tarqoq
+        "split": spread >= 20,
+        "spread": round(spread, 1),
     }
 
 
@@ -581,14 +675,19 @@ def _candidate(db: Session, cid: int, user) -> models.Candidate:
     c = db.query(models.Candidate).get(cid)
     if not c:
         raise HTTPException(404, "Nomzod topilmadi")
-    # O'quv bo'limi rahbariga faqat ustoz nomzodlari (hr_ats dagi qoida)
-    if user.role == roles.ACADEMIC_HEAD:
-        pos = (getattr(c, "position", None) or "").lower()
-        if pos != "teacher" and not getattr(c, "subject", None):
-            raise HTTPException(
-                403, "Bu nomzod ustoz emas — sizga faqat ustoz "
-                     "nomzodlari ko'rinadi.")
+    if not _visible(user, c):
+        raise HTTPException(
+            403, "Bu nomzod ustoz emas — sizga faqat ustoz "
+                 "nomzodlari ko'rinadi.")
     return c
+
+
+def _visible(user, c) -> bool:
+    """O'quv bo'limi rahbariga faqat ustoz nomzodlari (hr_ats qoidasi)."""
+    if user.role != roles.ACADEMIC_HEAD:
+        return True
+    pos = (getattr(c, "position", None) or "").lower()
+    return pos == "teacher" or bool(getattr(c, "subject", None))
 
 
 def _sync_interview_score(db: Session, c: models.Candidate):
@@ -601,18 +700,144 @@ def _sync_interview_score(db: Session, c: models.Candidate):
         c.interview_score = round(sum(vals) / len(vals) / 10, 1)
 
 
+def _recompute_all(db: Session, sections: list):
+    """Savollar o'zgarganda saqlangan foizlar ham yangilanadi —
+    o'chirilgan savol bahosi ro'yxatlarda qolib ketmasin."""
+    touched = set()
+    for s in db.query(models.InterviewSheet).all():
+        try:
+            answers = json.loads(s.answers or "{}")
+        except ValueError:
+            continue
+        st = sheet_stats(answers, sections)
+        if s.percent != st["percent"] or s.answered != st["answered"]:
+            s.percent, s.answered = st["percent"], st["answered"]
+            touched.add(s.candidate_id)
+    db.flush()
+    for cid in touched:
+        c = db.query(models.Candidate).get(cid)
+        if c:
+            _sync_interview_score(db, c)
+
+
+# ------------------------------------------------------------- savollar
 @router.get("/api/hr/interview-guide")
-def interview_guide(user=Depends(require_role(*roles.HR_CANDIDATE_VIEW))):
-    """Bo'sh savollar ro'yxati — chop etish uchun ham."""
-    return guide_payload()
+def interview_guide(db: Session = Depends(get_db),
+                    user=Depends(require_role(*roles.HR_CANDIDATE_VIEW))):
+    """Savollar ro'yxati — tahrirlash va bo'sh blank chop etish uchun."""
+    return guide_payload(db, user)
 
 
+class GuideIn(BaseModel):
+    sections: list
+
+
+def _txt(v, limit) -> str:
+    return (v if isinstance(v, str) else "").strip()[:limit]
+
+
+def _validate(sections: list) -> list:
+    """HR yuborgan ro'yxatni tekshiradi. Mavjud savol id si saqlanadi
+    (eski javoblar unga bog'langan), yangisiga yangi id beriladi."""
+    if not isinstance(sections, list) or not sections:
+        raise HTTPException(400, "Kamida bitta bo'lim bo'lishi kerak")
+    if len(sections) > 20:
+        raise HTTPException(400, "Bo'limlar 20 tadan oshmasin")
+    used = set()
+    for sec in sections:
+        for q in (sec.get("items") or []) if isinstance(sec, dict) else []:
+            if isinstance(q, dict) and isinstance(q.get("id"), str):
+                used.add(q["id"])
+    n = [0]
+
+    def new_id(prefix):
+        while True:
+            n[0] += 1
+            cand = f"{prefix}{n[0]}"
+            if cand not in used:
+                used.add(cand)
+                return cand
+
+    out, seen, sec_keys, total = [], set(), set(), 0
+    for sec in sections:
+        if not isinstance(sec, dict):
+            raise HTTPException(400, "Bo'lim noto'g'ri")
+        title = _txt(sec.get("title"), 200)
+        if not title:
+            raise HTTPException(400, "Bo'lim nomini yozing")
+        key = _txt(sec.get("key"), 40)
+        if not key or key in sec_keys:
+            key = new_id("s")
+        sec_keys.add(key)
+        items = []
+        for q in sec.get("items") or []:
+            if not isinstance(q, dict):
+                continue
+            text = _txt(q.get("text"), 600)
+            if not text:
+                raise HTTPException(
+                    400, f"'{title}' bo'limida savol matni bo'sh")
+            kind = q.get("kind") if q.get("kind") in KINDS else "score"
+            qid = q.get("id") if isinstance(q.get("id"), str) else ""
+            qid = qid[:20]
+            if not qid or qid in seen:
+                qid = new_id("u")
+            seen.add(qid)
+            item = {"id": qid, "text": text, "kind": kind,
+                    "core": bool(q.get("core")),
+                    "only": _txt(q.get("only"), 80) or None}
+            for f in FIELDS:
+                item[f] = _txt(q.get(f), 1000)
+            items.append(item)
+        total += len(items)
+        out.append({"key": key, "title": title,
+                    "hint": _txt(sec.get("hint"), 1000), "items": items})
+    if total == 0:
+        raise HTTPException(400, "Kamida bitta savol bo'lishi kerak")
+    if total > 150:
+        raise HTTPException(400, "Savollar 150 tadan oshmasin")
+    return out
+
+
+@router.put("/api/hr/interview-guide")
+def interview_guide_save(payload: GuideIn, db: Session = Depends(get_db),
+                         user=Depends(require_role(*roles.HR_ACCESS))):
+    sections = _validate(payload.sections)
+    row = db.query(models.InterviewGuideConfig).get(1)
+    if not row:
+        row = models.InterviewGuideConfig(id=1)
+        db.add(row)
+    row.data = json.dumps(sections, ensure_ascii=False)
+    row.updated_by = user.full_name or user.username
+    row.updated_at = datetime.utcnow()
+    db.flush()
+    _recompute_all(db, sections)
+    db.commit()
+    return guide_payload(db, user)
+
+
+@router.post("/api/hr/interview-guide/reset")
+def interview_guide_reset(db: Session = Depends(get_db),
+                          user=Depends(require_role(*roles.HR_ACCESS))):
+    """Standart (kod ichidagi) ro'yxatga qaytarish."""
+    row = db.query(models.InterviewGuideConfig).get(1)
+    if row:
+        db.delete(row)
+        db.flush()
+    _recompute_all(db, copy.deepcopy(GUIDE))
+    db.commit()
+    return guide_payload(db, user)
+
+
+# -------------------------------------------------------------- varaqa
 @router.get("/api/candidates/{cid}/interview-sheet")
 def interview_sheet_get(cid: int, db: Session = Depends(get_db),
                         user=Depends(require_role(
                             *roles.HR_CANDIDATE_VIEW))):
     c = _candidate(db, cid, user)
-    sheets = [_sheet_out(db, s) for s in db.query(models.InterviewSheet)
+    sections = current_guide(db)
+    sheets = [_sheet_out(db, s, sections)
+              for s in db.query(models.InterviewSheet)
               .filter(models.InterviewSheet.candidate_id == cid)
               .order_by(models.InterviewSheet.updated_at.desc()).all()]
     return {
@@ -620,10 +845,11 @@ def interview_sheet_get(cid: int, db: Session = Depends(get_db),
                       "phone": c.phone,
                       "position": getattr(c, "position", None),
                       "subject": getattr(c, "subject", None)},
-        "guide": guide_payload(),
+        "guide": guide_payload(db, user),
         "mine": next((s for s in sheets if s["author_id"] == user.id),
                      None),
         "others": [s for s in sheets if s["author_id"] != user.id],
+        "evaluation": evaluation(sheets, sections),
     }
 
 
@@ -646,15 +872,26 @@ def interview_sheet_save(cid: int, payload: SheetIn,
     if payload.recommendation and payload.recommendation not in \
             roles.RECOMMENDATION_LABELS:
         raise HTTPException(400, "Tavsiya noto'g'ri")
-    answers = _clean_answers(payload.answers)
+    sections = current_guide(db)
     s = db.query(models.InterviewSheet).filter(
         models.InterviewSheet.candidate_id == cid,
         models.InterviewSheet.author_id == user.id).first()
+    # O'chirilgan savolning eski javobi ham saqlanib qoladi — savol
+    # qayta tiklansa, javob yo'qolmagan bo'ladi
+    old = {}
+    if s:
+        try:
+            old = json.loads(s.answers or "{}")
+        except ValueError:
+            old = {}
+    qs = questions_of(sections)
+    answers = {k: v for k, v in old.items() if k not in qs}
+    answers.update(_clean_answers(payload.answers, qs))
     if not s:
         s = models.InterviewSheet(candidate_id=cid, author_id=user.id,
                                   created_at=datetime.utcnow())
         db.add(s)
-    st = sheet_stats(answers)
+    st = sheet_stats(answers, sections)
     s.answers = json.dumps(answers, ensure_ascii=False)
     s.recommendation = payload.recommendation or None
     s.strengths = (payload.strengths or "").strip() or None
@@ -662,9 +899,40 @@ def interview_sheet_save(cid: int, payload: SheetIn,
     s.note = (payload.note or "").strip() or None
     s.percent = st["percent"]
     s.answered = st["answered"]
-    s.guide_version = GUIDE_VERSION
+    s.guide_version = guide_payload(db)["version"]
     s.updated_at = datetime.utcnow()
     db.flush()
     _sync_interview_score(db, c)
     db.commit(); db.refresh(s)
-    return _sheet_out(db, s)
+    return _sheet_out(db, s, sections)
+
+
+# ------------------------------------------------- ro'yxat uchun baholash
+@router.get("/api/hr/interview-summary")
+def interview_summary(db: Session = Depends(get_db),
+                      user=Depends(require_role(
+                          *roles.HR_CANDIDATE_VIEW))):
+    """Nomzodlar jadvali uchun: har nomzodning suhbat bahosi bir
+    so'rovda (har qator uchun alohida so'rov yubormaslik uchun)."""
+    sections = current_guide(db)
+    by_cand: dict = {}
+    for s in db.query(models.InterviewSheet).all():
+        by_cand.setdefault(s.candidate_id, []).append(s)
+    cands = {c.id: c for c in db.query(models.Candidate).filter(
+        models.Candidate.id.in_(list(by_cand) or [0])).all()}
+    out = {}
+    for cid, rows in by_cand.items():
+        c = cands.get(cid)
+        if not c or not _visible(user, c):
+            continue
+        sheets = [{"percent": r.percent, "recommendation": r.recommendation,
+                   "by_section": []} for r in rows]
+        ev = evaluation(sheets, [])
+        out[str(cid)] = {
+            "percent": ev["percent"], "band": ev["band"],
+            "band_tone": ev["band_tone"],
+            "interviewers": ev["interviewers"],
+            "final_label": ev["final_label"],
+            "final_tone": ev["final_tone"], "split": ev["split"],
+        }
+    return {"rows": out}

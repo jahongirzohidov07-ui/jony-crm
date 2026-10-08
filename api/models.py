@@ -3112,6 +3112,18 @@ class InterviewSheet(Base):
                         onupdate=datetime.utcnow)
 
 
+class InterviewGuideConfig(Base):
+    """HR o'zgartirgan suhbat savollari (bitta qator, id=1). Qator
+    bo'lmasa — kod ichidagi standart ro'yxat (interview_guide.GUIDE)
+    ishlaydi. 2026-10-08, Jahongir: savollarni HR o'zi tahrirlasin."""
+    __tablename__ = "interview_guide_config"
+
+    id = Column(Integer, primary_key=True)
+    data = Column(Text)              # [{"key","title","hint","items":[...]}]
+    updated_by = Column(String)
+    updated_at = Column(DateTime, default=datetime.utcnow)
+
+
 class Offer(Base):
     """Nomzodga yozma taklif. Har o'zgartirish yangi VERSIYA bo'lib
     saqlanadi — muzokara tarixi hech qachon yo'qolmaydi."""

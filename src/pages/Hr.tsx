@@ -49,6 +49,19 @@ import { ExaminerStatusTab } from "../components/HrExaminers";
 import { StaffRestoreModal } from "../components/StaffRestore";
 import { PayrollTab } from "../components/Payroll";
 import { InterviewSheet } from "../components/InterviewSheet";
+import { InterviewGuideEditor } from "../components/InterviewGuideEditor";
+
+/** Nomzodning suhbat bahosi (barcha suhbatdoshlar bo'yicha) */
+type InterviewSum = {
+  percent: number | null; band: string; band_tone: string;
+  interviewers: number; final_label: string | null; split: boolean;
+};
+const IV_TONE: Record<string, string> = {
+  emerald: "bg-emerald-50 text-emerald-700 hover:bg-emerald-100",
+  teal: "bg-teal-50 text-teal-700 hover:bg-teal-100",
+  amber: "bg-amber-50 text-amber-800 hover:bg-amber-100",
+  red: "bg-red-50 text-red-700 hover:bg-red-100",
+};
 
 type Tab = "overview" | "ats" | "lifecycle" | "funnel" | "candidates" | "vacancies" | "staff"
   | "calendar"
@@ -357,6 +370,8 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
   const [card, setCard] = useState<number | null>(null);
   // Suhbat varaqasi (2026-10-08) — savol, javob va ball
   const [sheet, setSheet] = useState<number | null>(null);
+  const [guideEd, setGuideEd] = useState(false);
+  const [ivs, setIvs] = useState<Record<string, InterviewSum>>({});
   const [schedule, setSchedule] = useState<
     { id: number; name: string; stage: string } | null
   >(null);
@@ -382,7 +397,12 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
         setVacancies(v);
       })
       .finally(() => setLoading(false));
+    loadIvs();
   };
+  const loadIvs = () =>
+    api.get<{ rows: Record<string, InterviewSum> }>("/hr/interview-summary", true)
+      .then((d) => setIvs(d.rows))
+      .catch(() => setIvs({}));
   useEffect(load, []);
 
   const open = async (c?: Candidate) => {
@@ -662,12 +682,21 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                 Bosqich: stageLabel(c.stage),
                 Manba: candidateSourceLabel(c.source),
                 Filial: c.branch ?? "",
+                "Suhbat bahosi": ivs[c.id]?.percent != null ? `${ivs[c.id].percent}%` : "",
+                "Suhbat xulosasi": ivs[c.id] ? (ivs[c.id].final_label || ivs[c.id].band) : "",
                 Sana: c.created_at?.slice(0, 10) ?? "",
               })))
           }
           className="px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-slate-300"
         >
           Excel
+        </button>
+        <button
+          onClick={() => setGuideEd(true)}
+          title="Suhbat savollarini ko'rish, o'zgartirish va bo'sh blank chop etish"
+          className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:border-slate-300"
+        >
+          <ClipboardList size={15} /> Suhbat savollari
         </button>
         <button
           onClick={() => open()}
@@ -766,13 +795,28 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
                     {c.created_at ? formatDate(c.created_at.slice(0, 10)) : "—"}
                   </td>
                   <td className="pr-3 text-right whitespace-nowrap">
-                    <button
-                      onClick={() => setSheet(c.id)}
-                      className="inline-flex items-center gap-1 px-2 py-1 mr-1 rounded-md text-xs text-brand-700 bg-brand-50 hover:bg-brand-100"
-                      title="Suhbat varaqasi: savollar, javoblar va baho"
-                    >
-                      <ClipboardList size={13} /> Suhbat
-                    </button>
+                    {(() => {
+                      const iv = ivs[c.id];
+                      const scored = iv && iv.percent != null;
+                      return (
+                        <button
+                          onClick={() => setSheet(c.id)}
+                          className={`inline-flex items-center gap-1 px-2 py-1 mr-1 rounded-md text-xs font-medium ${scored
+                            ? IV_TONE[iv.band_tone] || IV_TONE.amber
+                            : "text-brand-700 bg-brand-50 hover:bg-brand-100"}`}
+                          title={scored
+                            ? `Suhbat bahosi: ${iv.percent}% — ${iv.band}`
+                              + (iv.final_label ? ` · ${iv.final_label}` : "")
+                              + ` · ${iv.interviewers} suhbatdosh`
+                              + (iv.split ? " · fikrlar tarqoq" : "")
+                            : "Suhbat varaqasi: savollar, javoblar va baho"}
+                        >
+                          <ClipboardList size={13} />
+                          {scored ? `${iv.percent}%` : "Suhbat"}
+                          {scored && iv.split && <span title="Fikrlar tarqoq">⚠</span>}
+                        </button>
+                      );
+                    })()}
                     <button
                       onClick={() => open(c)}
                       className="p-1.5 text-slate-400 hover:text-brand-600"
@@ -810,6 +854,13 @@ function CandidatesTab({ branches }: { branches: Branch[] }) {
         <InterviewSheet
           candidateId={sheet}
           onClose={() => { setSheet(null); load(); }}
+        />
+      )}
+
+      {guideEd && (
+        <InterviewGuideEditor
+          onClose={() => setGuideEd(false)}
+          onSaved={loadIvs}
         />
       )}
 

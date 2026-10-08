@@ -133,6 +133,74 @@ ck("yo'q nomzod — 404",
    c.get("/api/candidates/99999/interview-sheet", headers=HH).status_code,
    404)
 
+print("\n=== 6. BAHOLASH (hamma suhbatdoshlar) ===")
+c.put(url, headers=HF, json={"answers": {"q1": {"s": 3}},
+                              "recommendation": "maybe"})
+d = c.get(url, headers=HH).json()
+ev = d["evaluation"]
+ck("o'rtacha foiz (90+60)/2", ev["percent"], 75.0)
+ck("daraja", ev["band"], "Mos keladi")
+ck("suhbatdoshlar", ev["interviewers"], 2)
+ck("tavsiyalar sanaladi",
+   sorted((r["key"], r["count"]) for r in ev["recommendations"]),
+   [("maybe", 1), ("yes", 1)])
+ck("fikrlar tarqoq (30% farq)", ev["split"], True)
+sec1 = next(s for s in ev["by_section"] if s["key"] == "intro")
+ck("1-bo'lim o'rtachasi (4+3)/2", sec1["avg"], 3.5)
+sm = c.get("/api/hr/interview-summary", headers=HH).json()["rows"]
+ck("ro'yxat uchun xulosa", sm[str(CID)]["percent"], 75.0)
+ck("o'quv bo'limiga ustoz bo'lmagan nomzod xulosasi ko'rinmaydi",
+   str(CID) in c.get("/api/hr/interview-summary",
+                     headers=HO).json()["rows"], False)
+
+print("\n=== 7. SAVOLLARNI TAHRIRLASH ===")
+g = c.get("/api/hr/interview-guide", headers=HH).json()
+ck("HR tahrirlay oladi", g["can_edit"], True)
+ck("standart ro'yxat", g["customized"], False)
+secs = g["sections"]
+intro = next(s for s in secs if s["key"] == "intro")
+intro["items"] = [q for q in intro["items"] if q["id"] != "q1"]   # o'chirish
+intro["items"].append({"text": "Nega ingliz tilini o'rgatmoqchisiz?",
+                       "kind": "score", "core": True,
+                       "good": "O'z tajribasidan aytadi"})
+secs.append({"title": "Qo'shimcha", "items": [
+    {"text": "Haydovchilik guvohnomangiz bormi?", "kind": "note"}]})
+r = c.put("/api/hr/interview-guide", headers=HH, json={"sections": secs})
+ck("saqlandi", r.status_code, 200)
+g2 = r.json()
+ck("endi o'zgartirilgan", g2["customized"], True)
+ids2 = [q["id"] for s in g2["sections"] for q in s["items"]]
+ck("q1 o'chdi", "q1" in ids2, False)
+new_ids = [i for i in ids2 if i.startswith("u")]
+ck("yangi savollarga id berildi", len(new_ids), 2)
+ck("id lar takrorlanmaydi", len(ids2), len(set(ids2)))
+ck("yangi bo'lim kaliti bor",
+   bool(g2["sections"][-1]["key"]), True)
+# q1 o'chdi — HR varaqasi foizi qayta hisoblanadi: faqat q8 (5) qoladi
+d = c.get(url, headers=HH).json()
+ck("o'chgan savol bahosi hisobga kirmaydi", d["mine"]["percent"], 100.0)
+ck("eski javob bazada saqlangan", d["mine"]["answers"]["q1"]["s"], 4)
+r = c.put(url, headers=HH, json={"answers": {
+    new_ids[0]: {"a": "Bolalarni yaxshi ko'radi", "s": 2},
+    "q8": {"a": "Konversiya 25% -> 35%", "s": 5}}})
+ck("yangi savolga javob", r.json()["answers"][new_ids[0]]["s"], 2)
+ck("eski q1 javobi yo'qolmadi", r.json()["answers"].get("q1", {}).get("s"), 4)
+ck("ruxsat: o'quv bo'limi tahrirlay olmaydi",
+   c.put("/api/hr/interview-guide", headers=HO,
+         json={"sections": secs}).status_code, 403)
+ck("bo'sh savol matni — 400",
+   c.put("/api/hr/interview-guide", headers=HH,
+         json={"sections": [{"title": "X", "items": [{"text": " "}]}]}
+         ).status_code, 400)
+ck("bo'sh ro'yxat — 400",
+   c.put("/api/hr/interview-guide", headers=HH,
+         json={"sections": []}).status_code, 400)
+r = c.post("/api/hr/interview-guide/reset", headers=HH)
+ck("asl holiga qaytdi", r.json()["customized"], False)
+d = c.get(url, headers=HH).json()
+ck("q1 qaytdi — eski bahosi yana hisobda",
+   d["mine"]["percent"], 90.0)
+
 print()
 if fails:
     print(f"XATO: {len(fails)} ta tekshiruv o'tmadi")

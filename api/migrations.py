@@ -222,6 +222,10 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_interview_sheets_cand_author "
         "ON interview_sheets (candidate_id, author_id)",
     ]),
+    # 2026-10-08: HR tahrirlagan suhbat savollari (interview_guide_config)
+    ("0027_interview_guide_config", [
+        "SELECT 1",
+    ]),
 
 ]
 

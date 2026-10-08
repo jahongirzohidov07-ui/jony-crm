@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { X, Printer, Lightbulb, Check, Loader2 } from "lucide-react";
+import { X, Printer, Lightbulb, Check, Loader2, Settings2, Users } from "lucide-react";
 import { api } from "../lib/api";
+import { InterviewGuideEditor } from "./InterviewGuideEditor";
 
 /**
  * SUHBAT VARAQASI (2026-10-08, Jahongir: "nomzodlar degan joyiga
@@ -13,15 +14,25 @@ import { api } from "../lib/api";
  */
 
 type Kind = "score" | "check" | "note";
-type GuideQ = {
+export type GuideQ = {
   id: string; text: string; why: string; look: string;
   good: string; bad: string; kind: Kind; core: boolean; only: string | null;
 };
-type Section = { key: string; title: string; hint: string; items: GuideQ[] };
+export type Section = { key: string; title: string; hint: string; items: GuideQ[] };
 type Rec = { key: string; label: string; tone: string };
-type Guide = {
+export type Guide = {
   version: string; sections: Section[]; recommendations: Rec[];
   total: number; core_total: number;
+  customized: boolean; updated_by: string | null; updated_at: string | null;
+  can_edit: boolean;
+};
+type Evaluation = {
+  percent: number | null; band: string; band_tone: string;
+  pass_percent: number; interviewers: number;
+  by_section: { key: string; title: string; avg: number | null; count: number }[];
+  recommendations: { key: string; label: string; tone: string; count: number }[];
+  final_label: string | null; final_tone: string | null;
+  split: boolean; spread: number;
 };
 type Answer = { a?: string; s?: number; ok?: boolean };
 type Sheet = {
@@ -38,10 +49,29 @@ type Data = {
   candidate: { id: number; full_name: string; phone: string | null;
     position: string | null; subject: string | null };
   guide: Guide; mine: Sheet | null; others: Sheet[];
+  evaluation: Evaluation;
 };
 
-const qNo = (id: string) =>
-  id.startsWith("o") ? "K" + id.slice(1) : id.slice(1);
+/** Ketma-ket raqam: kuzatuvlar K1, K2...; savollar 1, 2, 3...
+ *  HR savol qo'shsa yoki o'chirsa ham raqamlar tartibli qoladi. */
+export function numbering(sections: Section[]): Record<string, string> {
+  const out: Record<string, string> = {};
+  let k = 0, n = 0;
+  sections.forEach((sec) => sec.items.forEach((q) => {
+    out[q.id] = q.kind === "check" ? `K${++k}` : String(++n);
+  }));
+  return out;
+}
+
+const TONE_BAR: Record<string, string> = {
+  emerald: "bg-emerald-500", teal: "bg-teal-500", amber: "bg-amber-500",
+  orange: "bg-orange-500", red: "bg-red-500", slate: "bg-slate-300",
+};
+const TONE_TEXT: Record<string, string> = {
+  emerald: "text-emerald-700 bg-emerald-50", teal: "text-teal-700 bg-teal-50",
+  amber: "text-amber-800 bg-amber-50", orange: "text-orange-700 bg-orange-50",
+  red: "text-red-700 bg-red-50", slate: "text-slate-600 bg-slate-100",
+};
 
 const SCORE_TONE = ["", "bg-red-500", "bg-orange-500", "bg-amber-500",
   "bg-lime-500", "bg-emerald-600"];
@@ -74,11 +104,13 @@ export function InterviewSheet({ candidateId, onClose, onSaved }: {
   const timer = useRef<number | null>(null);
   const dirty = useRef(false);
 
-  useEffect(() => {
+  const [editor, setEditor] = useState(false);
+  const loadSheet = useCallback((keepMine = false) =>
     api.get<Data>(`/candidates/${candidateId}/interview-sheet`, true)
       .then((d) => {
         setData(d);
         const m = d.mine;
+        if (m && keepMine) { setStats(m); return; }
         if (m) {
           setAnswers(m.answers || {});
           setRec(m.recommendation);
@@ -88,8 +120,8 @@ export function InterviewSheet({ candidateId, onClose, onSaved }: {
           setStats(m);
         }
       })
-      .catch((e) => setErr(e.message || "Yuklab bo'lmadi"));
-  }, [candidateId]);
+      .catch((e) => setErr(e.message || "Yuklab bo'lmadi")), [candidateId]);
+  useEffect(() => { loadSheet(); }, [loadSheet]);
 
   const payload = useMemo(() => ({
     answers, recommendation: rec, strengths, concerns, note,
@@ -107,11 +139,13 @@ export function InterviewSheet({ candidateId, onClose, onSaved }: {
       setStats(s);
       setStatus(dirty.current ? "dirty" : "saved");
       onSaved?.();
+      // Umumiy baholash ham yangilansin (javoblar maydoniga tegilmaydi)
+      if (!dirty.current) loadSheet(true);
     } catch {
       dirty.current = true;
       setStatus("error");
     }
-  }, [candidateId, onSaved]);
+  }, [candidateId, onSaved, loadSheet]);
 
   // Avto-saqlash: oxirgi o'zgarishdan 1.2 soniya o'tib
   const touch = () => {
@@ -168,6 +202,7 @@ export function InterviewSheet({ candidateId, onClose, onSaved }: {
 
   const g = data.guide;
   const total = coreOnly ? g.core_total : g.total;
+  const nums = numbering(g.sections);
 
   return (
     <Shell onClose={close}>
@@ -208,6 +243,13 @@ export function InterviewSheet({ candidateId, onClose, onSaved }: {
                 ))}
               </select>
             )}
+            <button
+              onClick={() => setEditor(true)}
+              className="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50"
+              title={g.can_edit ? "Savollarni qo'shish, o'zgartirish, o'chirish" : "Savollar ro'yxati"}
+            >
+              <Settings2 size={15} /> <span className="hidden sm:inline">Savollar</span>
+            </button>
             <button
               onClick={() => printSheet(g, data.candidate.full_name,
                 viewing || (stats ? { ...stats, answers } : null), coreOnly)}
@@ -261,6 +303,7 @@ export function InterviewSheet({ candidateId, onClose, onSaved }: {
                 {items.map((q) => (
                   <QuestionCard
                     key={q.id}
+                    no={nums[q.id]}
                     q={q}
                     hints={hints}
                     value={shownAnswers[q.id] || {}}
@@ -272,6 +315,8 @@ export function InterviewSheet({ candidateId, onClose, onSaved }: {
             </section>
           );
         })}
+
+        <EvaluationPanel ev={data.evaluation} />
 
         {/* Xulosa */}
         <section className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5">
@@ -319,12 +364,81 @@ export function InterviewSheet({ candidateId, onClose, onSaved }: {
           </p>
         </section>
       </div>
+      {editor && (
+        <InterviewGuideEditor
+          onClose={() => setEditor(false)}
+          onSaved={async () => { await save(); loadSheet(true); }}
+        />
+      )}
     </Shell>
   );
 }
 
-function QuestionCard({ q, hints, value, readOnly, onChange }: {
-  q: GuideQ; hints: boolean; value: Answer; readOnly: boolean;
+/** BAHOLASH — barcha suhbatdoshlar varaqalari bo'yicha umumiy natija. */
+function EvaluationPanel({ ev }: { ev: Evaluation }) {
+  if (!ev.interviewers) return null;
+  return (
+    <section className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-3">
+        <h3 className="font-semibold text-slate-800">Baholash</h3>
+        <span className="text-xs text-slate-500 inline-flex items-center gap-1">
+          <Users size={13} /> {ev.interviewers} suhbatdosh
+        </span>
+        <span className={`ml-auto px-2.5 py-1 rounded-lg text-sm font-semibold ${TONE_TEXT[ev.band_tone] || TONE_TEXT.slate}`}>
+          {ev.percent != null ? `${ev.percent}% · ` : ""}{ev.band}
+        </span>
+      </div>
+      {ev.percent != null && (
+        <div className="relative h-2.5 rounded-full bg-slate-100 mb-1">
+          <div className={`h-full rounded-full ${TONE_BAR[ev.band_tone] || TONE_BAR.slate}`}
+            style={{ width: `${Math.min(100, ev.percent)}%` }} />
+          <div className="absolute -top-1 h-[18px] w-0.5 bg-slate-500" style={{ left: `${ev.pass_percent}%` }}
+            title={`O'tish chegarasi ${ev.pass_percent}%`} />
+        </div>
+      )}
+      <p className="text-[11px] text-slate-400 mb-3">
+        Chiziq — o'tish chegarasi ({ev.pass_percent}%). 85% dan yuqori — kuchli nomzod.
+      </p>
+      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5">
+        {ev.by_section.filter((s) => s.avg != null).map((s) => (
+          <div key={s.key} className="text-xs">
+            <div className="flex justify-between text-slate-600">
+              <span className="truncate pr-2">{s.title}</span>
+              <b className="text-slate-800">{s.avg}/5</b>
+            </div>
+            <div className="h-1.5 rounded-full bg-slate-100 mt-0.5">
+              <div className={`h-full rounded-full ${s.avg! >= 4 ? "bg-emerald-500" : s.avg! >= 3 ? "bg-amber-500" : "bg-red-500"}`}
+                style={{ width: `${(s.avg! / 5) * 100}%` }} />
+            </div>
+          </div>
+        ))}
+      </div>
+      {ev.recommendations.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1.5 mt-3 text-xs">
+          <span className="text-slate-500">Tavsiyalar:</span>
+          {ev.recommendations.map((r) => (
+            <span key={r.key} className={`px-2 py-0.5 rounded ${TONE_TEXT[r.tone] || TONE_TEXT.slate}`}>
+              {r.label}{r.count > 1 ? ` × ${r.count}` : ""}
+            </span>
+          ))}
+          {ev.final_label && ev.interviewers > 1 && (
+            <span className="ml-auto text-slate-600">
+              Umumiy: <b>{ev.final_label}</b>
+            </span>
+          )}
+        </div>
+      )}
+      {ev.split && (
+        <p className="mt-3 text-xs text-amber-800 bg-amber-50 rounded-lg px-3 py-2">
+          Suhbatdoshlar fikri tarqoq ({ev.spread}% farq). Qaror qilishdan oldin birga muhokama qiling.
+        </p>
+      )}
+    </section>
+  );
+}
+
+function QuestionCard({ no, q, hints, value, readOnly, onChange }: {
+  no: string; q: GuideQ; hints: boolean; value: Answer; readOnly: boolean;
   onChange: (p: Answer) => void;
 }) {
   const ta = useRef<HTMLTextAreaElement>(null);
@@ -339,7 +453,7 @@ function QuestionCard({ q, hints, value, readOnly, onChange }: {
     <div className={`bg-white rounded-xl border p-3.5 sm:p-4 ${filled ? "border-brand-200" : "border-slate-200"}`}>
       <div className="flex gap-3">
         <span className={`shrink-0 w-7 h-7 rounded-full text-xs font-semibold flex items-center justify-center ${filled ? "bg-brand-600 text-white" : "bg-slate-100 text-slate-500"}`}>
-          {qNo(q.id)}
+          {no}
         </span>
         <div className="min-w-0 flex-1">
           <p className="font-medium text-slate-800 leading-snug">
@@ -479,6 +593,7 @@ const esc = (s: string) =>
  *  Javob bo'lmasa — qog'ozda to'ldirish uchun bo'sh qatorlar. */
 export function printSheet(g: Guide, name: string, sheet: Sheet | null, coreOnly = false) {
   const ans = sheet?.answers || {};
+  const nums = numbering(g.sections);
   const today = new Date().toLocaleDateString("uz-UZ");
   const body = g.sections.map((sec) => {
     const items = sec.items.filter((q) => !coreOnly || q.core);
@@ -495,7 +610,7 @@ export function printSheet(g: Guide, name: string, sheet: Sheet | null, coreOnly
         const answer = a.a
           ? `<div class="ans">${esc(a.a).replace(/\n/g, "<br>")}</div>`
           : `<div class="lines">${"<div></div>".repeat(q.kind === "check" ? 1 : 3)}</div>`;
-        return `<div class="q"><p class="t"><b>${qNo(q.id)}.</b> ${esc(q.text)}${q.core ? ' <i>(asosiy)</i>' : ""}${q.only ? ` <i>[${esc(q.only)}]</i>` : ""}</p>` +
+        return `<div class="q"><p class="t"><b>${nums[q.id]}.</b> ${esc(q.text)}${q.core ? ' <i>(asosiy)</i>' : ""}${q.only ? ` <i>[${esc(q.only)}]</i>` : ""}</p>` +
           (q.good || q.bad
             ? `<p class="gb">${q.good ? "✅ " + esc(q.good) : ""}${q.good && q.bad ? "<br>" : ""}${q.bad ? "❌ " + esc(q.bad) : ""}</p>`
             : "") +
@@ -514,7 +629,7 @@ h1{font-size:18px;margin:0}h2{font-size:14px;margin:18px 0 4px;border-bottom:1px
 .score span.on{background:#111;color:#fff}.sum div{border-bottom:1px dotted #999;height:20px}
 </style></head><body>
 <h1>Suhbat varaqasi</h1>
-<p class="meta">Nomzod: <b>${esc(name)}</b> · Sana: ${today}${sheet?.author ? ` · Suhbatdosh: ${esc(sheet.author)}` : " · Suhbatdosh: ____________"}${sheet?.percent != null ? ` · Ball: ${sheet.percent}%` : ""}</p>
+<p class="meta">Nomzod: <b>${name ? esc(name) : "____________________"}</b> · Sana: ${today}${sheet?.author ? ` · Suhbatdosh: ${esc(sheet.author)}` : " · Suhbatdosh: ____________"}${sheet?.percent != null ? ` · Ball: ${sheet.percent}%` : ""}</p>
 ${body}
 <h2>Xulosa</h2>
 <p>Tavsiya: ${rec ? `<b>${esc(rec)}</b>` : g.recommendations.map((r) => "☐ " + esc(r.label)).join("&nbsp;&nbsp; ")}</p>

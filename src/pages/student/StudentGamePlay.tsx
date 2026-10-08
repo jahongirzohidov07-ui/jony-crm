@@ -6,6 +6,7 @@ import {
 } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Check, RotateCcw, X } from "lucide-react";
+import { getLang, learningText } from "../../lib/lang";
 import { api } from "../../lib/api";
 import type { AnswerResult, RoundItem, VocabRound } from "../../lib/studentApi";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
@@ -39,7 +40,7 @@ export default function StudentGamePlay() {
   // Unit tanlangan bo'lsa o'yin faqat shu unit so'zlaridan (2026-08-10)
   const [sp] = useSearchParams();
   const unit = sp.get("unit") || "";
-  const lang = sp.get("lang") || "en";
+  const lang = sp.get("lang") || getLang();
   // Nechta so'z mashq qilinadi (2026-08-21). Bo'sh = server standarti (10).
   const count = sp.get("count") || "";
   const [round, setRound] = useState<VocabRound | null>(null);
@@ -187,7 +188,7 @@ export default function StudentGamePlay() {
      ikkinchi bosqichga o'tish ekrani. */
   if (phase === "bridge") {
     return (
-      <Shell title={round.label}>
+      <Shell title={learningText(round.label, lang)}>
         <div className="student-panel bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
           <p className="text-5xl mb-2">🔁</p>
           <p className="text-lg font-bold text-slate-900">
@@ -219,7 +220,7 @@ export default function StudentGamePlay() {
     const total = countWords(round.items);
     const pct = total ? Math.round((correctCount / total) * 100) : 0;
     return (
-      <Shell title={round.label}>
+      <Shell title={learningText(round.label, lang)}>
         <div className="student-panel bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
           <p className="text-5xl mb-2">
             {pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "💪"}
@@ -259,7 +260,7 @@ export default function StudentGamePlay() {
   const progress = ((idx + (feedback ? 1 : 0)) / (list.length || 1)) * 100;
 
   return (
-    <Shell title={round.label}>
+    <Shell title={learningText(round.label, lang)}>
       <div className="mb-4">
         <div className="student-game-progress flex justify-between text-[11px] mb-1">
           <span>
@@ -496,7 +497,7 @@ function Spelling({
 
   return (
     <form onSubmit={submit}>
-      <p className="text-xs text-slate-500 text-center">Shu so'zni inglizcha yozing</p>
+      <p className="text-xs text-slate-500 text-center">Shu so‘zni o‘rganayotgan tilda yozing</p>
       <p className="text-2xl font-bold text-slate-900 text-center py-4">
         {item.prompt}
       </p>

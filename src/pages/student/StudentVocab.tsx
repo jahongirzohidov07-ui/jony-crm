@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { api } from "../../lib/api";
 import type { StudentHome, VocabStats } from "../../lib/studentApi";
-import { getLang, LANGS } from "../../lib/lang";
+import { getLang, LANGS, learningText } from "../../lib/lang";
 import { Flag } from "../../components/Flag";
 import { XpHex } from "../../components/Jsa";
 import { fmtNum } from "../../lib/studentApi";
@@ -318,10 +318,10 @@ export default function StudentVocab() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-slate-800">
-                      {gm.label}
+                      {learningText(gm.label, lang)}
                     </p>
                     <p className="text-[11px] text-slate-400 truncate">
-                      {gm.hint}
+                      {learningText(gm.hint, lang)}
                     </p>
                   </div>
                   <ChevronRight size={16} className="text-slate-300" />

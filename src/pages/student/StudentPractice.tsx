@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { api } from "../../lib/api";
 import { autoNextDelay, useAutoNext } from "../../lib/useAutoNext";
-import { getLang } from "../../lib/lang";
+import { getLang, learningText, skillLabel } from "../../lib/lang";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -80,12 +80,12 @@ function speak(text: string, rate = 0.95) {
 /** Natijada so'zlarni bo'yash: aytilganlari yashil, qolgani qizil. */
 function ColoredWords({ target, heard }: { target: string; heard: string }) {
   const said = new Set(
-    heard.toLowerCase().replace(/[^a-z' ]/g, " ").split(/\s+/),
+    heard.toLowerCase().replace(/[^\p{L}\p{M}' ]/gu, " ").split(/\s+/),
   );
   return (
     <p className="text-sm leading-relaxed mt-1">
       {target.split(/\s+/).map((w, i) => {
-        const clean = w.toLowerCase().replace(/[^a-z']/g, "");
+        const clean = w.toLowerCase().replace(/[^\p{L}\p{M}']/gu, "");
         return (
           <span
             key={i}
@@ -108,14 +108,14 @@ export default function StudentPractice() {
   const m = META[skill || ""] || META.listening;
   // O'rganilayotgan til — listening shu til so'zlaridan tuziladi
   const lang = getLang();
-  ttsLang = skill === "listening" ? TTS_LANGS[lang] || "en-US" : "en-US";
+  ttsLang = TTS_LANGS[lang] || "en-US";
   const [kind, setKind] = useState<string | null>(null);
   // DARAJA BO'LIMLARI (2026-08-24, Jahongir: "reading listening
   // qismini a1 dan boshlab c2 darajagacha... bo'lim chiqib").
   // Boshqa tillar listeningida daraja yo'q — u faqat so'z diktanti.
   // 2026-08-24 (Jahongir: "Writingni ham darajalanmagan u ham")
   const needLevel =
-    skill === "reading" || skill === "writing" ||
+    (skill === "reading" && lang === "en") || skill === "writing" ||
     (skill === "listening" && lang === "en");
   const [level, setLevel] = useState<string | null>(null);
   const [levels, setLevels] = useState<Any[]>([]);
@@ -141,10 +141,10 @@ export default function StudentPractice() {
   useEffect(() => {
     if (!needLevel) return;
     api
-      .get<Any>(`/student/practice/${skill}/levels`)
+      .get<Any>(`/student/practice/${skill}/levels?language=${lang}`)
       .then((r) => setLevels(r.levels || []))
       .catch(() => setLevels([]));
-  }, [skill, needLevel]);
+  }, [skill, needLevel, lang]);
 
   const load = useCallback(() => {
     if (kind === null) return;
@@ -162,7 +162,7 @@ export default function StudentPractice() {
     const oldKinds = ["read_mcq", "dictation", "write_translate", "speak_read"];
     const parts: string[] = [];
     if (!oldKinds.includes(kind)) parts.push(`kind=${kind}`);
-    if (skill === "listening") parts.push(`language=${lang}`);
+    parts.push(`language=${lang}`);
     if (needLevel && level) parts.push(`level=${level}`);
     // Mashqlar soni (2026-08-24: "mashqlarni ham kopaytir").
     //
@@ -185,7 +185,7 @@ export default function StudentPractice() {
   useEffect(() => {
     setKind(null);
     setLevel(null);
-  }, [skill]);
+  }, [skill, lang]);
 
   const items: Any[] = d?.items || [];
   const q = items[idx];
@@ -258,7 +258,7 @@ export default function StudentPractice() {
 
   async function lookupWord(raw: string) {
     const w = raw.replace(/[^A-Za-z'-]/g, "").toLowerCase();
-    if (!w) return;
+    if (!w || lang !== "en") return;
     if (dictCache.current[w]) {
       setDict(dictCache.current[w]);
       return;
@@ -289,7 +289,7 @@ export default function StudentPractice() {
     setErr("");
     const rec = new SR();
     recRef.current = rec;
-    rec.lang = "en-US";
+    rec.lang = TTS_LANGS[lang] || "en-US";
     rec.interimResults = false;
     rec.maxAlternatives = 1;
     setListening(true);
@@ -415,7 +415,7 @@ export default function StudentPractice() {
             {!finished && kind && items.length > 0
               ? <>{Math.min(idx + 1, items.length)}
                  <span className="text-slate-400"> / {items.length}</span></>
-              : m.label}
+              : skillLabel(skill || "", m.label, lang)}
           </p>
           {!finished && kind && items.length > 0 && (
             <div className="flex-1 h-2 rounded-full overflow-hidden"
@@ -511,7 +511,7 @@ export default function StudentPractice() {
         {kind === null && (!needLevel || level !== null) && (
           <div className="student-panel bg-white rounded-xl shadow-sm border border-slate-200 p-4">
             <p className="text-sm font-semibold text-slate-800 mb-3">
-              Qaysi turdagi mashqni xohlaysiz?
+              {skill === "reading" && lang !== "en" ? "Tanlangan tilda o‘qish mashqlari hali mavjud emas." : "Qaysi turdagi mashqni xohlaysiz?"}
             </p>
             <div className="flex items-center gap-1.5 mb-3">
               <span className="text-[11px] text-slate-400 mr-1">Soni:</span>
@@ -531,7 +531,7 @@ export default function StudentPractice() {
             </div>
             {/* JONY TEACHER — AI SUHBAT (2026-09-06 auditi: ekran bor
                 edi, lekin unga hech qayerdan havola yo'q edi). */}
-            {skill === "speaking" && (
+            {skill === "speaking" && lang === "en" && (
               <Link
                 to="/student/speaking"
                 className="w-full flex items-center gap-3 rounded-xl p-3.5 mb-2
@@ -555,8 +555,7 @@ export default function StudentPractice() {
               {(KINDS[skill || ""] || [])
                 .filter(
                   ([k]) =>
-                    !(skill === "listening" && lang !== "en" &&
-                      k !== "dictation"),
+                    (lang === "en" || ["dictation", "write_translate", "speak_read"].includes(k)),
                 )
                 .map(([k, lbl, hint]) => (
                 <button
@@ -569,7 +568,7 @@ export default function StudentPractice() {
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-slate-800">{lbl}</p>
-                    <p className="text-[11px] text-slate-400">{hint}</p>
+                    <p className="text-[11px] text-slate-400">{learningText(hint, lang)}</p>
                   </div>
                 </button>
               ))}

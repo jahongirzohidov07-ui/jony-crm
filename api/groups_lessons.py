@@ -835,8 +835,7 @@ def save_attendance(
             if len(absents) < 2:
                 continue
             lesson_ids_ = list({a.lesson_id for a in rows_})
-            for a in rows_:
-                db.delete(a)
+            archive_attendance(db, rows_, "trial_dropout")
             db.flush()
             for lid_ in lesson_ids_:
                 ls_ = db.query(models.Lesson).get(lid_)
@@ -891,8 +890,8 @@ def save_attendance(
             if any((a.present or 0) != 0 for a in last3):
                 continue
             lesson_ids = [a.lesson_id for a in last3]
-            for a in last3:
-                db.delete(a)
+            _dates = sorted(str(a.lesson.date) for a in last3 if a.lesson)
+            archive_attendance(db, last3, "auto_freeze")
             db.flush()
             for lid_ in lesson_ids:
                 ls_ = db.query(models.Lesson).get(lid_)
@@ -916,7 +915,9 @@ def save_attendance(
             db.commit()
             audit.log(db, None, entity="student", action="auto_freeze",
                       entity_id=st.id, entity_label=st.full_name,
-                      note=st.frozen_note, commit=True)
+                      note=(f"{st.frozen_note}. Arxivga olingan "
+                            f"yo'qlamalar: {', '.join(_dates)}"),
+                      branch_id=st.branch_id, commit=True)
     except Exception:
         db.rollback()
 

@@ -764,6 +764,27 @@ class Attendance(Base):
     student = relationship("Student")
 
 
+class AttendanceArchive(Base):
+    """Avtomuzlatishda (va sinovdan chiqishda) o'chirilgan yo'qlamalar
+    ARXIVI (2026-10-08, Jahongir: "arxivga o'tkaz"). Jadvalda va ustoz
+    oyligida ko'rinmaydi — xuddi o'chirilgandek; lekin tarix yo'qolmaydi
+    va kerak bo'lsa qayta tiklanadi."""
+    __tablename__ = "attendance_archive"
+
+    id = Column(Integer, primary_key=True, index=True)
+    orig_id = Column(Integer, nullable=True)
+    lesson_id = Column(Integer, nullable=False, index=True)
+    student_id = Column(Integer, nullable=False, index=True)
+    present = Column(Integer, nullable=True)
+    homework = Column(Integer, nullable=True)
+    note = Column(String, nullable=True)
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, nullable=True)
+    reason = Column(String, nullable=True)       # auto_freeze | ...
+    archived_at = Column(DateTime, default=datetime.utcnow)
+    restored_at = Column(DateTime, nullable=True)
+
+
 class DailyGrade(Base):
     """Ustozning bir dars uchun o'quvchiga qo'ygan bahosi (1-5).
 

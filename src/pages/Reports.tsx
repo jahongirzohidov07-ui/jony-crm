@@ -1,4 +1,5 @@
 import ExamMonthlyReport from "../components/ExamMonthlyReport";
+import FreezeLosses from "../components/FreezeLosses";
 import { useEffect, useState } from "react";
 import { formatPhone } from "../components/PhoneInput";
 import {
@@ -28,7 +29,7 @@ import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
 
 type Tab = "payroll" | "expenses" | "discipline" | "tasks" | "funnel" | "sales" | "kpi" | "app"
-  | "discounts" | "exams";
+  | "discounts" | "exams" | "freeze";
 
 // OYLIKLAR BO'LIMI MOLIYADAN SHU YERGA KO'CHDI (2026-08-20,
 // Jahongir: "uzr molyia bolimidan hisobotlarga olib ot demoqchi
@@ -1193,6 +1194,9 @@ export default function Reports() {
         : [];
   const examAccess = can(user?.role, EXAM_VIEW);
   if (examAccess) base.push({ key: "exams", label: "Oylik imtihon hisoboti" });
+  // 2026-10-08: avtomuzlatishda yo'qolgan yo'qlamalar (faqat ko'rish)
+  if (["founder", "academic_head", "hr_manager"].includes(user?.role || ""))
+    base.push({ key: "freeze", label: "Muzlatish tekshiruvi" });
   const tabs = canDiscount
     ? [...base, { key: "discounts" as Tab, label: "Chegirmalar" }]
     : base;
@@ -1244,6 +1248,7 @@ export default function Reports() {
       {tab === "kpi" && <KpiTab canAdmin={user?.role === FOUNDER} />}
       {tab === "app" && <StudentAppTab />}
       {tab === "discounts" && <DiscountsPage />}
+      {tab === "freeze" && <FreezeLosses />}
     </div>
   );
 }

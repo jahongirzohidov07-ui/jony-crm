@@ -7472,6 +7472,22 @@ def _seed_mark(db: Session, key: str) -> None:
         db.rollback()
 
 
+def archive_attendance(db: Session, rows, reason: str) -> int:
+    """Yo'qlamani O'CHIRISH O'RNIGA arxivga ko'chiradi (2026-10-08).
+    Jadval va oylik uchun natija o'chirish bilan bir xil; tarix esa
+    attendance_archive'da saqlanadi. Chaqiruvchi commit qiladi."""
+    n = 0
+    for a in rows:
+        db.add(models.AttendanceArchive(
+            orig_id=a.id, lesson_id=a.lesson_id, student_id=a.student_id,
+            present=a.present, homework=a.homework, note=a.note,
+            created_by=a.created_by, created_at=a.created_at,
+            reason=reason))
+        db.delete(a)
+        n += 1
+    return n
+
+
 def _cleanup_frozen_absences(db: Session) -> int:
     """Muzlatilgan o'quvchilarning oxirgi ketma-ket "kelmadi"
     yozuvlarini o'chiradi - ustoz oyligidan chiqsin.
@@ -7512,8 +7528,7 @@ def _cleanup_frozen_absences(db: Session) -> int:
             if len(chain) < 3:
                 continue
             lesson_ids = [a.lesson_id for a in chain]
-            for a in chain:
-                db.delete(a)
+            archive_attendance(db, chain, "frozen_cleanup")
             db.flush()
             for lid_ in lesson_ids:
                 ls_ = db.query(models.Lesson).get(lid_)
@@ -7732,6 +7747,7 @@ __all__ = [
     "_fraud_alert",
     "_freeze_task",
     "auto_freeze_notify",
+    "archive_attendance",
     "_gam_card",
     "_in_user_branches",
     "_get_student_in_scope",

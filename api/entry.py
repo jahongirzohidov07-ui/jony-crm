@@ -11364,3 +11364,6 @@ import push  # noqa: E402,F401
 
 # Imtihon natijasi va xatolar tahlili — o'quvchiga (2026-10-03)
 import exam_review  # noqa: E402,F401
+
+# Avtomuzlatishda yo'qolgan yo'qlamalar ro'yxati (2026-10-08)
+import freeze_review  # noqa: E402,F401

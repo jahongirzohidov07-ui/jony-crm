@@ -80,7 +80,9 @@ export function ChecklistTab() {
     const k = `${r.user_id}:${c.key}`;
     setBusy(k);
     try {
-      await api.put(`/library/${c.id}/people/${r.user_id}`, { passed: next });
+      // Video (avtomat kuzatiladigan) ham qo'lda belgilanadi (2026-10-10)
+      const base = c.source === "pd" ? "/pd" : "/library";
+      await api.put(`${base}/${c.id}/people/${r.user_id}`, { passed: next });
       load();
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Xatolik");
@@ -119,9 +121,9 @@ export function ChecklistTab() {
           <h2 className="text-lg font-semibold text-slate-900">Checklist</h2>
           <p className="text-sm text-slate-500">
             Kim qaysi videoni ko'rdi, qaysi kitobni o'qidi — o'tdi / o'tmadi.
-            Video belgisini pleyer o'zi qo'yadi; kitob va boshqa
-            materiallarni katakni bosib belgilaysiz. Ustun nomini bosib
-            tahrirlaysiz.
+            Video ko'rilganda pleyer o'zi "o'tdi" qo'yadi, lekin istalgan
+            katakni (video ham, kitob ham) bosib o'zingiz o'tdi / o'tmadi
+            qilishingiz mumkin. Ustun nomini bosib tahrirlaysiz.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -252,7 +254,8 @@ export function ChecklistTab() {
                       ? `O'tdi${cell?.at ? ` — ${cell.at}` : ""}${cell?.by ? ` (${cell.by})` : ""}`
                         + (markable ? "\nBosing — bekor qilish" : "")
                       : `O'tmadi${cell?.percent ? ` — ${cell.percent}%` : ""}`
-                        + (markable ? "\nBosing — o'tdi deb belgilash" : "\nVideo ko'rilganda o'zi belgilanadi");
+                        + (markable ? "\nBosing — o'tdi deb belgilash" : "\nVideo ko'rilganda o'zi belgilanadi")
+                        + (c.source === "pd" && cell?.percent ? `\nKo'rgani: ${cell.percent}%` : "");
                     return (
                       <td key={c.key} className="border-b border-r border-slate-100 p-1 text-center">
                         <button

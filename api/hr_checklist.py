@@ -95,7 +95,8 @@ def hr_checklist(role: str = roles.SUPPORT_TEACHER,
                              "targets": _targets(v.target_roles),
                              "url": (f"https://youtu.be/{v.yt_id}"
                                      if v.yt_id else None),
-                             "can_mark": False})
+                             # 2026-10-10: HR qo'lda ham belgilay oladi
+                             "can_mark": True})
     if LI is not None:
         labels = {"video": "Video", "book": "Kitob", "file": "Fayl",
                   "link": "Havola"}
@@ -138,7 +139,7 @@ def hr_checklist(role: str = roles.SUPPORT_TEACHER,
                 pct = int(getattr(w, "percent", 0) or 0)
                 at = (w.done_at.strftime("%d.%m.%Y")
                       if ok and getattr(w, "done_at", None) else None)
-                by = None
+                by = getattr(w, "marked_by", None) if ok else None
             else:
                 p = lpr.get((u.id, c["id"]))
                 ok = bool(p is not None and p.passed)
@@ -146,7 +147,13 @@ def hr_checklist(role: str = roles.SUPPORT_TEACHER,
                 at = (p.passed_at.strftime("%d.%m.%Y")
                       if ok and getattr(p, "passed_at", None) else None)
                 by = getattr(p, "passed_by", None) if ok else None
-            cells[c["key"]] = {"passed": ok, "percent": 100 if ok else pct,
+            if c["source"] == "pd":
+                # Video: haqiqiy ko'rish foizi saqlanadi (qo'lda "o'tdi"
+                # qilinsa ham necha foiz ko'rgani ko'rinib tursin)
+                cells[c["key"]] = {"passed": ok, "percent": pct,
+                                   "at": at, "by": by}
+            else:
+                cells[c["key"]] = {"passed": ok, "percent": 100 if ok else pct,
                                "at": at, "by": by}
             if c["required"]:
                 need += 1

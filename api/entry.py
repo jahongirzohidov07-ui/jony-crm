@@ -9480,6 +9480,9 @@ if getattr(models, "PdVideo", None) is None:
         opens = Column(Integer, default=0)     # necha marta ochgan
         done = Column(Integer, default=0)
         done_at = Column(DateTime)
+        # HR qo'lda belgilagan bo'lsa — kim (2026-10-10, Jahongir:
+        # "videoni ko'rmasa ham o'tdi o'tmadi belgilay olay")
+        marked_by = Column(String)
         first_at = Column(DateTime, default=_dt.utcnow)
         last_at = Column(DateTime, default=_dt.utcnow, onupdate=_dt.utcnow)
 
@@ -9652,6 +9655,7 @@ def pd_beat(video_id: int, payload: dict = Body(...),
     if w.percent >= _PD_DONE and not w.done:
         w.done = 1
         w.done_at = _dt.utcnow()
+        w.marked_by = None          # o'zi ko'rib o'tdi — qo'lda emas
     db.commit()
     return {"percent": w.percent, "done": bool(w.done),
             "seconds": int(w.seconds or 0)}
@@ -9674,6 +9678,38 @@ def pd_open(video_id: int, db: Session = Depends(get_db),
     db.commit()
     return {"ok": True, "resume": int(w.max_pos or 0),
             "percent": int(w.percent or 0)}
+
+
+@app.put("/api/pd/{video_id}/people/{target_id}")
+def pd_mark(video_id: int, target_id: int, payload: dict = Body(...),
+            db: Session = Depends(get_db),
+            user=Depends(require_role(*_LIB_MANAGE))):
+    """HR videoni QO'LDA "o'tdi" / "o'tmadi" qiladi (2026-10-10, Jahongir:
+    "checklistda videoni ko'rmasa ham o'tdi o'tmadi belgilay olay").
+    Ko'rish foizi (percent, bo'laklar) o'zgarmaydi — u haqiqiy ko'rishni
+    ko'rsatib turadi; faqat "o'tdi" belgisi va kim qo'ygani yoziladi."""
+    v = db.query(_PDV).get(video_id)
+    if not v:
+        raise HTTPException(404, "Video topilmadi")
+    u = db.query(models.User).get(target_id)
+    if not u:
+        raise HTTPException(404, "Xodim topilmadi")
+    w = (db.query(_PDW)
+         .filter(_PDW.video_id == video_id, _PDW.user_id == target_id).first())
+    if w is None:
+        w = _PDW(video_id=video_id, user_id=target_id, opens=0,
+                 marks="0" * _pd_buckets(v.duration))
+        db.add(w)
+    ok = bool(payload.get("passed"))
+    w.done = 1 if ok else 0
+    w.done_at = _dt.utcnow() if ok else None
+    w.marked_by = user.full_name
+    db.commit()
+    audit.log(db, user, entity="user", action="update", entity_id=u.id,
+              entity_label=u.full_name, field=f"Video: {v.title}",
+              new_value="o'tdi (qo'lda)" if ok else "o'tmadi (qo'lda)",
+              commit=True)
+    return {"ok": True, "passed": ok, "percent": int(w.percent or 0)}
 
 
 # --- Boshqaruv: video qo'shish ----------------------------------------

@@ -113,8 +113,10 @@ print("\n=== 3. USTUNLAR ===")
 titles = [col["title"] for col in d["columns"]]
 ck("supportga tegishli faollar", titles,
    ["Dars metodikasi", "Support qo'llanmasi", "Qo'shimcha havola"])
-ck("video belgilanmaydi, kutubxona belgilanadi",
-   [col["can_mark"] for col in d["columns"]], [False, True, True])
+# 2026-10-10: video ham qo'lda belgilanadi (Jahongir: "videoni ko'rmasa
+# ham o'tdi o'tmadi belgilay olay")
+ck("video ham, kutubxona ham belgilanadi",
+   [col["can_mark"] for col in d["columns"]], [True, True, True])
 
 print("\n=== 4. KATAKLAR ===")
 rows = {x["name"]: x for x in d["rows"]}

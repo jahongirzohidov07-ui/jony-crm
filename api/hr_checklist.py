@@ -165,7 +165,9 @@ def hr_checklist(role: str = roles.SUPPORT_TEACHER,
             "cells": cells, "required": need, "passed": passed,
             "percent": round(passed * 100 / need) if need else 0,
         })
-    rows.sort(key=lambda r: (r["percent"], r["name"]))
+    # O'tganlar TEPADA (2026-10-10, Jahongir: "o'tganlar pastda emas
+    # yuqoriga chiqsin"): ko'p o'tgan birinchi, teng bo'lsa ism bo'yicha
+    rows.sort(key=lambda r: (-r["percent"], -r["passed"], r["name"]))
     return {
         "role": role, "role_label": roles.UZ_LABELS.get(role, role),
         "columns": cols, "rows": rows,

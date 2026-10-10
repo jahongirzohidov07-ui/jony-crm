@@ -67,6 +67,16 @@ db = SessionLocal()
 ck("auditda", db.query(models.AuditLog).filter(
     models.AuditLog.field == "Video: Metodika 1").count(), 2)
 db.close()
+# Tartib: o'tganlar tepada
+db = SessionLocal()
+db.add(models.User(username="sup2", password_hash=hash_password("x"),
+                   full_name="AAA Support", role=roles.SUPPORT_TEACHER,
+                   is_active=1))
+db.commit(); db.close()
+c.put(f"/api/pd/{VID}/people/{SUP}", headers=H, json={"passed": True})
+d = c.get(f"/api/hr/checklist?role={roles.SUPPORT_TEACHER}", headers=H).json()
+ck("o'tgan tepada", [x["name"] for x in d["rows"]], ["SUP", "AAA Support"])
+
 print()
 if fails:
     print(f"{len(fails)} ta XATO: {fails}"); sys.exit(1)

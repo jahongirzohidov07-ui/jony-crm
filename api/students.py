@@ -3177,6 +3177,68 @@ def _activate_referrals(db: Session, student_id: int) -> int:
             pass
     return n
 
+# O'QUVCHI PAROLINI ALMASHTIRISH (2026-10-10, Jahongir: "o'quvchi
+# ma'lumotlari tahrirlashda parol almashtirishni ham qo'shib ber").
+# Kim: rahbariyat, administratorlar va HR — ustozlar emas.
+STUDENT_PASSWORD_ROLES = list(dict.fromkeys(
+    list(roles.FREEZE_ROLES) + [roles.ADMINISTRATOR, roles.HR_MANAGER]))
+
+
+def _student_user(db: Session, s):
+    u = db.query(models.User).get(s.user_id) if s.user_id else None
+    # Faqat O'QUVCHI hisobi — xodim akkauntiga tegilmaydi
+    return u if u is not None and u.role == roles.STUDENT else None
+
+
+@router.get("/api/students/{student_id}/account")
+def student_account(student_id: int, db: Session = Depends(get_db),
+                    user=Depends(require_role(*STUDENT_PASSWORD_ROLES))):
+    s = _get_student_in_scope(db, student_id, user)
+    u = _student_user(db, s)
+    return {"has_account": u is not None,
+            "username": u.username if u else None,
+            "default_password": roles.DEFAULT_PASSWORD}
+
+
+@router.put("/api/students/{student_id}/password")
+def student_set_password(student_id: int, payload: dict,
+                         db: Session = Depends(get_db),
+                         user=Depends(require_role(*STUDENT_PASSWORD_ROLES))):
+    """Yangi parol qo'yadi. {"password": "..."} yoki {"reset": true} —
+    standart parolga (jonyjony) qaytaradi. Hisobi bo'lmasa — telefon
+    raqami bilan avval ochiladi."""
+    s = _get_student_in_scope(db, student_id, user)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    u = _student_user(db, s)
+    if u is None:
+        if s.user_id:
+            raise HTTPException(400, "Bu o'quvchiga xodim hisobi bog'langan"
+                                     " — parolni Xodimlar bo'limidan o'zgartiring")
+        if not _ensure_student_account(db, s):
+            raise HTTPException(400, "Kirish hisobi ochilmadi: o'quvchining "
+                                     "telefon raqamini kiriting (login shu bo'ladi)")
+        db.refresh(s)
+        u = _student_user(db, s)
+        if u is None:
+            raise HTTPException(400, "Kirish hisobi ochilmadi")
+    if payload.get("reset"):
+        pw = roles.DEFAULT_PASSWORD
+    else:
+        pw = str(payload.get("password") or "")
+        if not roles.password_ok(pw):
+            raise HTTPException(400, roles.PASSWORD_RULE_TEXT)
+    u.password_hash = hash_password(pw)
+    db.commit()
+    # Parol o'zi auditga YOZILMAYDI — faqat o'zgargani
+    audit.log(db, user, entity="student", action="update", entity_id=s.id,
+              entity_label=s.full_name, branch_id=s.branch_id,
+              field="Kirish paroli",
+              new_value=("standart parolga qaytarildi" if payload.get("reset")
+                         else "yangi parol qo'yildi"), commit=True)
+    return {"ok": True, "username": u.username}
+
+
 @router.post("/api/students/{student_id}/link-account")
 def link_student_account(
     student_id: int,

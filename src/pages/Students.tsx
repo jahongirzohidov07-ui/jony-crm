@@ -226,6 +226,8 @@ function StudentModal({
             )}
           </div>
 
+          {editing && <StudentPasswordBox studentId={initial!.id} />}
+
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
@@ -237,6 +239,90 @@ function StudentModal({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** O'QUVCHI PAROLI (2026-10-10, Jahongir: "o'quvchi ma'lumotlari
+ *  tahrirlashda parol almashtirishni ham qo'shib ber"). Rahbariyat,
+ *  administratorlar va HR ko'radi. Asosiy "Saqlash"dan alohida
+ *  saqlanadi — ism/telefon o'zgarishi bilan aralashmasin. */
+const PASSWORD_ROLES = ["founder", "sales_manager", "academic_head",
+  "branch_manager", "administrator", "hr_manager"];
+
+function StudentPasswordBox({ studentId }: { studentId: number }) {
+  const { user } = useAuth();
+  const allowed = PASSWORD_ROLES.includes(user?.role || "");
+  type Acc = { has_account: boolean; username: string | null; default_password: string };
+  const [acc, setAcc] = useState<Acc | null>(null);
+  const [pw, setPw] = useState("");
+  const [show, setShow] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  useEffect(() => {
+    if (!allowed) return;
+    api.get<Acc>(`/students/${studentId}/account`).then(setAcc).catch(() => {});
+  }, [studentId, allowed]);
+  if (!allowed) return null;
+
+  async function save(reset: boolean) {
+    setBusy(true);
+    setMsg(null);
+    try {
+      const r = await api.put<{ username: string }>(
+        `/students/${studentId}/password`, reset ? { reset: true } : { password: pw });
+      setMsg({ ok: true, text: reset
+        ? `Parol "${acc?.default_password || "jonyjony"}" ga qaytarildi. Login: ${r.username}`
+        : `Yangi parol saqlandi. Login: ${r.username}` });
+      setPw("");
+      setAcc((a) => (a ? { ...a, has_account: true, username: r.username } : a));
+    } catch (e) {
+      setMsg({ ok: false, text: e instanceof Error ? e.message : "Xatolik" });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+      <p className="text-xs font-medium text-slate-600 mb-1">
+        <Shield size={12} className="inline mr-1 -mt-0.5" />
+        Jony Student ilovasiga kirish
+      </p>
+      <p className="text-xs text-slate-500 mb-2">
+        {acc === null ? "Yuklanmoqda..."
+          : acc.has_account ? <>Login: <b className="text-slate-800">{acc.username}</b></>
+          : "Hali kirish hisobi yo'q — parol qo'yilsa telefon raqami login bo'lib ochiladi."}
+      </p>
+      <div className="flex gap-2">
+        <input
+          type={show ? "text" : "password"}
+          autoComplete="new-password"
+          placeholder="Yangi parol"
+          className="flex-1 min-w-0 rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+          value={pw}
+          onChange={(e) => setPw(e.target.value)}
+        />
+        <button type="button" onClick={() => setShow((v) => !v)}
+          className="px-2 text-xs text-slate-500 hover:text-slate-700">
+          {show ? "Yashir" : "Ko'rsat"}
+        </button>
+        <button type="button" onClick={() => save(false)} disabled={busy || !pw}
+          className="px-3 py-2 rounded-lg bg-slate-800 text-white text-xs font-medium disabled:opacity-50">
+          Parolni saqlash
+        </button>
+      </div>
+      <p className="text-[11px] text-slate-400 mt-1">
+        Kamida 8 belgi, ichida harf ham, raqam ham bo'lsin.
+      </p>
+      <button type="button" onClick={() => save(true)} disabled={busy}
+        className="text-xs text-brand-700 hover:underline mt-1 disabled:opacity-50">
+        Standart parolga qaytarish ({acc?.default_password || "jonyjony"})
+      </button>
+      {msg && (
+        <p className={`text-xs mt-1.5 ${msg.ok ? "text-emerald-700" : "text-red-600"}`}>{msg.text}</p>
+      )}
     </div>
   );
 }

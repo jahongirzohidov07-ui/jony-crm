@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, CloudOff } from "lucide-react";
 import { JsaLogo, JSA } from "../../components/Jsa";
+import { getLang, skillLabel } from "../../lib/lang";
 import { api } from "../../lib/api";
 import { fmtNum, type DailyGoal, type ContinueCard } from "../../lib/studentApi";
 
@@ -50,6 +51,7 @@ const LABEL: Record<string, string> = {
 };
 
 export default function StudentGames() {
+  const lang = getLang();
   const [d, setD] = useState<Learn | null>(null);
   const [err, setErr] = useState("");
 
@@ -65,7 +67,7 @@ export default function StudentGames() {
   if (!d)
     return <StudentLoading />;
 
-  const cont = d.continue;
+  const cont = lang === "en" ? d.continue : null;
   const daily = d.daily;
   // 2026-08-21, Jahongir: "daraja uchun XP soni juda kam bolib qolgan
   // 2x ga oshir" — endi har daraja 200 XP (backend roles.XP_PER_LEVEL).
@@ -150,13 +152,13 @@ export default function StudentGames() {
       <h2 className="text-lg font-bold text-white mt-5">Til ko'nikmalari</h2>
       <div className="grid grid-cols-2 gap-2 mt-3">
         {d.sections.map((s) => (
-          <Link key={s.key} to={s.href}
+          <Link key={s.key} to={lang !== "en" && s.key === "speaking" ? "/student/practice/speaking" : s.href}
             className="student-panel student-skill-card bg-white rounded-2xl p-3 active:scale-[0.98] transition">
             <StudentImage src={SEC_ICON[s.key] || "/jsicons/learn-lesson.png"} alt=""
                  className="w-12 h-12" />
             <div className="flex items-center mt-2">
               <p className="text-[17px] font-extrabold text-slate-900 flex-1 truncate">
-                {s.label}
+                {skillLabel(s.key, s.label, lang)}
               </p>
               <ChevronRight size={17} className="text-slate-300 shrink-0" />
             </div>
@@ -175,7 +177,7 @@ export default function StudentGames() {
       </div>
 
       {/* ------------------------------------------- Daraja testi */}
-      <Link to="/student/level-test"
+      {lang === "en" && <Link to="/student/level-test"
         className="block rounded-3xl p-4 mt-3 text-white"
         style={{
           background:
@@ -197,9 +199,11 @@ export default function StudentGames() {
         </div>
       </Link>
 
+      }
+
       {/* ---- CEFR / IELTS (2026-08-24, Jahongir: "alohida bo'lim
            ochilishi kerak... intermediate tugatganda ochiladigan") */}
-      {d.ielts && (
+      {lang === "en" && d.ielts && (
         <Link to={d.ielts.href || "/student/ielts"}
           className="flex items-center gap-3 rounded-3xl p-4 mt-3 bg-white active:scale-[0.98] transition">
           <StudentImage src="/jsicons/learn-exam.png" alt="" className="w-12 h-12 shrink-0" />

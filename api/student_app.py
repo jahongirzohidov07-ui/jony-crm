@@ -567,7 +567,7 @@ def _ielts_gate(db: Session, student_id: int) -> dict:
 @router.get("/api/student/practice/{skill}/levels")
 def practice_levels(skill: str,
                     db: Session = Depends(get_db),
-                    user=Depends(require_role(roles.STUDENT))):
+                    user=Depends(require_role(roles.STUDENT)), language: str = "en"):
     """Reading/Listening daraja bo'limlari: har darajada nechta mashq
     bor va nechtasi yechilgan (2026-08-24, Jahongir: "a1 dan boshlab
     c2 darajagacha... bo'lim chiqib").
@@ -578,6 +578,8 @@ def practice_levels(skill: str,
     s = _me(db, user)
     if skill not in ("reading", "listening", "writing"):
         raise HTTPException(404, "Bu ko'nikmada daraja bo'limi yo'q")
+    if language not in ("en", "ru", "de", "ko"):
+        raise HTTPException(400, "Noma’lum til")
     total = {lv: 0 for lv in PRACTICE_LEVELS}
     solved_n = {lv: 0 for lv in PRACTICE_LEVELS}
     solved = {r for (r,) in
@@ -589,13 +591,14 @@ def practice_levels(skill: str,
     for pid, lv in (db.query(models.PracticeItem.id,
                              models.PracticeItem.level)
                     .filter(models.PracticeItem.skill == skill,
-                            models.PracticeItem.is_active == 1).all()):
+                            models.PracticeItem.is_active == 1,
+                            language == "en").all()):
         lv = lv if lv in total else "A1"
         total[lv] += 1
         if f"pi:{pid}" in solved:
             solved_n[lv] += 1
 
-    if skill == "reading":
+    if skill == "reading" and language == "en":
         tl = {t.id: (t.level if t.level in total else "A1")
               for t in db.query(models.ReadingText)
               .filter(models.ReadingText.is_active == 1).all()}
@@ -606,9 +609,9 @@ def practice_levels(skill: str,
             total[lv] += 1
             if f"read:{q.id}" in solved:
                 solved_n[lv] += 1
-    else:
+    elif skill != "reading":
         # listening va writing — grammatika jumlalaridan
-        for q in _gram_sentences(db):
+        for q in _gram_sentences(db, language=language):
             lv = (q.level or "A1")
             lv = lv if lv in total else "A1"
             total[lv] += 1
@@ -619,7 +622,7 @@ def practice_levels(skill: str,
         "skill": skill,
         "levels": [{
             "level": lv,
-            "label": PRACTICE_LEVEL_LABELS[lv],
+            "label": PRACTICE_LEVEL_LABELS[lv] if language == "en" else lv,
             "total": total[lv],
             "solved": min(solved_n[lv], total[lv]),
             "percent": (round(min(solved_n[lv], total[lv]) * 100
@@ -2352,7 +2355,7 @@ def _same_stem(a: str, b: str) -> bool:
     return False
 
 
-def _writing_feedback(given: str, expected: str) -> str:
+def _writing_feedback(given: str, expected: str, language: str = "en") -> str:
     """NEGA xato — o'quvchining javobini to'g'risi bilan so'zma-so'z
     taqqoslab, o'zbekcha tushuntirish qaytaradi.
 
@@ -2367,6 +2370,14 @@ def _writing_feedback(given: str, expected: str) -> str:
     import collections as _c
     g = _norm_loose(given).split()
     e = _norm_loose(expected).split()
+    if language != "en":
+        if g == e:
+            return ""
+        if not g:
+            return "Javob bo‘sh qoldi. Berilgan ma’noga mos gap yozing."
+        if sorted(g) == sorted(e):
+            return "So‘zlar to‘g‘ri, lekin tartibi xato. Namunadagi so‘z tartibi bilan solishtiring."
+        return f"Javobingizni «{expected}» bilan solishtiring: so‘z shakli, tartibi va imlosini tekshiring."
     if not g:
         return ("Javob bo'sh qoldi. Ingliz tilida gap tuzganda "
                 "hech bo'lmasa ega va fe'l bo'lishi shart.")
@@ -2539,14 +2550,16 @@ def practice_round(skill: str, kind: str | None = None,
     # olinadi; boshqa tillarda inglizcha jumla/dialog mashqlari
     # umuman aralashmaydi.
     if language not in ("en", "ru", "de", "ko"):
-        language = "en"
+        raise HTTPException(400, "Noma’lum til")
     # YANGI TURLAR (2026-08-11, Jahongir spetsifikatsiyasi).
     # Bu mashqlar (dialog, tartiblash...) faqat ingliz tilida yozilgan,
-    # shuning uchun boshqa til tanlangan bo'lsa oddiy diktantga o'tamiz.
+    # boshqa til tanlanganda bu turlarni aniq xabar bilan to'xtatamiz.
     if level not in PRACTICE_LEVELS:
         level = None
-    if (kind and kind in PRACTICE_NEW_KINDS.get(skill, ())
-            and not (skill == "listening" and language != "en")):
+    # ReadingText/PracticeItem are English-only banks. Never fall back to them.
+    if language != "en" and (skill == "reading" or kind in PRACTICE_NEW_KINDS.get(skill, ())):
+        raise HTTPException(404, "Tanlangan tilda bu mashq turi hali mavjud emas")
+    if kind and kind in PRACTICE_NEW_KINDS.get(skill, ()):
         return _pi_round(db, s, skill, kind, level, count)
 
     solved = {r for (r,) in
@@ -2626,7 +2639,7 @@ def practice_round(skill: str, kind: str | None = None,
     if skill == "writing":
         # 2026-08-24 (Jahongir: "Writingni ham darajalanmagan u ham"):
         # daraja va son endi bu yerda ham ishlaydi.
-        sents = _gram_sentences(db)
+        sents = _gram_sentences(db, language=language)
         if level:
             sents = [q for q in sents if (q.level or "A1") == level]
         if level and not sents:
@@ -2644,7 +2657,7 @@ def practice_round(skill: str, kind: str | None = None,
         return {"skill": skill, "items": items}
 
     if skill == "speaking":
-        pool = prefer_fresh(_gram_sentences(db),
+        pool = prefer_fresh(_gram_sentences(db, language=language),
                             lambda q: f"gram:{q.id}")
         items = [{
             "ref": f"gram:{q.id}", "kind": "speak_read",
@@ -2841,7 +2854,8 @@ def practice_answer(payload: schemas.PracticeAnswerIn,
     # gapni korsatib nega u yozgan javob xato va nega togri javob
     # togriligini tushuntirish kerak."
     why = ("" if ok or skill != "writing"
-           else _writing_feedback(payload.answer or "", expected or ""))
+           else _writing_feedback(payload.answer or "", expected or "",
+                                  (q.language or "en") if kind == "gram" else "en"))
     return {"correct": ok, "expected": expected, "explain": explain,
             "why": why,
             "first_time": ok and not was, "xp": xp_given}

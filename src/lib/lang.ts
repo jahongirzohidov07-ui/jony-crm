@@ -4,7 +4,7 @@
  *
  * Botning o'zida 4 til kursi bor - hammasi yuklangan. Tanlov
  * localStorage'da, lug'at sahifalari shu tilga qarab ishlaydi.
- * Grammatika hozircha faqat ingliz tilida. */
+ * Mashqlar til tanlovini saqlaydi. */
 export const LANGS = [
   { code: "en", label: "Ingliz tili" },
   { code: "ru", label: "Rus tili" },
@@ -19,4 +19,17 @@ export function getLang(): string {
 
 export function setLang(code: string) {
   localStorage.setItem("jonyos_lang", code);
+}
+
+/** UI text for the selected learning language; game IDs remain compatible. */
+export function learningText(text: string, lang: string): string {
+  if (lang === "en") return text;
+  const name = ({de:"Nemis",ru:"Rus",ko:"Koreys"} as Record<string,string>)[lang] || "Tanlangan";
+  return text.replace(/Ingliz/g, name).replace(/ingliz/g, name.toLowerCase())
+    .replace(/English/g, name + " tili").replace(/\bEN\b/g, lang.toUpperCase());
+}
+export function skillLabel(skill: string, fallback: string, lang: string): string {
+  if (lang === "en") return fallback;
+  const labels: Record<string,string> = {grammar:"Grammatika",vocabulary:"Lug‘at",reading:"O‘qish",listening:"Tinglash",writing:"Yozish",speaking:"Gapirish"};
+  return labels[skill] || fallback;
 }

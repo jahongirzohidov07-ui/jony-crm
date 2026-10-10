@@ -314,7 +314,7 @@ export default function StudentGrammar() {
       </div>
 
       {/* ------------------------------------------- daraja nomi */}
-      <h2 className="text-[24px] font-extrabold text-white mt-5">{curName}</h2>
+      <h2 className="text-[24px] font-extrabold text-white mt-5">{lang === "en" ? curName : sel.toUpperCase()}</h2>
       <p className="text-sm text-slate-400 mt-1">
         {curLocked
           ? "Oldingi darajani tugating — bu bosqich ochiladi"
@@ -350,7 +350,7 @@ export default function StudentGrammar() {
               <Lock size={17} className="text-slate-400" />
             </span>
             <p className="text-sm text-slate-300">
-              {curName} hali qulf — oldingi darajadagi barcha mavzularni
+              {lang === "en" ? curName : sel.toUpperCase()} hali qulf — oldingi darajadagi barcha mavzularni
               tugating.
             </p>
           </div>

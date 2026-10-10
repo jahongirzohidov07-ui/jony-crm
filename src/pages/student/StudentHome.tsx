@@ -76,7 +76,7 @@ export default function StudentHome() {
 
   const ov = d.overall;
   const daily = d.daily;
-  const cont = d.continue;
+  const cont = lang === "en" ? d.continue : null;
   const firstName = (d.name || "").split(" ").slice(-1)[0] || d.name;
   const pct = ov?.next ? Math.round(ov.next.progress_percent) : 100;
   // 2026-08-25: daraja oralig'i endi har darajada har xil — 500 deb
@@ -407,7 +407,7 @@ export default function StudentHome() {
         )}
 
         {/* ===================== MAQSAD: IELTS (GoalCard) ======== */}
-        <GoalCard />
+        {lang === "en" && <GoalCard />}
 
         {d.streak === 0 && (
           <p className="text-xs text-slate-500 -mt-1.5 px-1">
@@ -508,8 +508,7 @@ export default function StudentHome() {
               ))}
             </div>
             <p className="text-[11px] text-slate-400 mt-3">
-              Lug'at mashqlari tanlangan tilda bo'ladi. Grammatika hozircha
-              ingliz tilida.
+              Lug‘at, grammatika va mavjud ko‘nikma mashqlari tanlangan tilga mos ochiladi.
             </p>
           </div>
         </div>

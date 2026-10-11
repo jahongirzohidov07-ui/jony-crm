@@ -304,6 +304,9 @@ export function buildNav(
       // qo'shilib ... oyliklar tarixi bo'lsin") — oylar bo'yicha tarix
       { to: "/my-finance", label: "Moliya", icon: Wallet },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
+      // HR kutubxonasi (2026-10-11) — ustoz O'quv bo'limiga kira oladi,
+      // shuning uchun yuqoridagi umumiy "Kutubxona" bandi unga qo'shilmagan
+      { to: "/library", label: "Kutubxona", icon: BookOpen },
     ];
     items = TEACHER_MENU
       .map((to) => items.find((i) => i.to === to))

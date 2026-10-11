@@ -321,6 +321,13 @@ export function buildNav(
       { to: "/my-finance", label: "Moliya", icon: Wallet },
       { to: "/my-results", label: "Mening natijalarim", icon: PieChart },
       mockItem,
+      // O'SISH UCHUN VIDEOLAR VA KUTUBXONA (2026-10-11, Jahongir:
+      // "supportlarda o'sish uchun hr belgilagan videolar ko'radigan
+      // bo'lim yo'q mobil versiyada"). Qisqa menyu qayta tuzilganda
+      // ikkalasi tushib qolgan edi — HR checklistdagi video va kitoblar
+      // aynan shu ikki sahifada ochiladi.
+      { to: "/development", label: "Shaxsiy rivojlanish", icon: Clapperboard },
+      { to: "/library", label: "Kutubxona", icon: BookOpen },
     ];
   }
   return items;

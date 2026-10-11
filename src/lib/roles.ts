@@ -434,6 +434,8 @@ export const TEACHER_MENU = [
   "/my-results",
   "/my-career",
   "/development",
+  // HR kutubxonasi (2026-10-11) — checklistdagi kitob/havolalar shu yerda
+  "/library",
   "/gamification",
   "/complaints",
   "/tasks",

@@ -1,0 +1,4828 @@
+[
+  {
+    "no": 1,
+    "month": 1,
+    "week": 1,
+    "title": "Salom va birinchi ism",
+    "objective": "Tayanch kartadan foydalanib salomlashadi, ismini aytadi va suhbatdosh ismini so‘rab uch replikali almashinuvni bajaradi.",
+    "grammar": {
+      "title": "Ism aytish qolipi va А, М, О, Т, К harflari",
+      "rule": "Меня зовут… — «Mening ismim…» degan tayyor qolip; hozir so‘zlarni alohida tuslash talab qilinmaydi. А, М, О, Т, К harflarini taning. Urg‘u kuchliroq eshitiladigan bo‘g‘indir: То́ма, зову́т. Misollardagi urg‘u belgisi yozuvni o‘rgatish uchun berilgan.",
+      "examples": [
+        {
+          "ru": "Меня зовут То́ма.",
+          "uz": "Mening ismim Toma."
+        },
+        {
+          "ru": "Как тебя зовут?",
+          "uz": "Isming nima?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Kartadan «А» harfini toping: М, А, Т.",
+          "answer": "А",
+          "explanation": "Bu harf o‘zbekcha «a» tovushiga yaqin."
+        },
+        {
+          "prompt": "Ism qolipini to‘ldiring: Меня ___ Тома.",
+          "answer": "зовут",
+          "explanation": "Ism aytishda hozircha butun qolipni yodlaymiz."
+        },
+        {
+          "prompt": "Norasmiy salomni tanlang: Привет! / Спасибо!",
+          "answer": "Привет!",
+          "explanation": "Привет — tanish odamga salom; Спасибо — rahmat."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Здравствуйте!",
+        "uz": "Assalomu alaykum!"
+      },
+      {
+        "ru": "Привет!",
+        "uz": "Salom!"
+      },
+      {
+        "ru": "Меня зовут…",
+        "uz": "Mening ismim…"
+      },
+      {
+        "ru": "Как тебя зовут?",
+        "uz": "Isming nima?"
+      },
+      {
+        "ru": "Очень приятно.",
+        "uz": "Tanishganimdan xursandman."
+      },
+      {
+        "ru": "Да.",
+        "uz": "Ha."
+      },
+      {
+        "ru": "Спасибо!",
+        "uz": "Rahmat!"
+      },
+      {
+        "ru": "До свидания!",
+        "uz": "Xayr!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Привет!",
+        "uz": "Salom!"
+      },
+      {
+        "speaker": "B",
+        "ru": "Привет!",
+        "uz": "Salom!"
+      },
+      {
+        "speaker": "A",
+        "ru": "Меня зовут Тома. Как тебя зовут?",
+        "uz": "Mening ismim Toma. Isming nima?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Меня зовут Али.",
+        "uz": "Mening ismim Ali."
+      },
+      {
+        "speaker": "A",
+        "ru": "Очень приятно, Али.",
+        "uz": "Tanishganimdan xursandman, Ali."
+      },
+      {
+        "speaker": "B",
+        "ru": "Очень приятно, Тома.",
+        "uz": "Tanishganimdan xursandman, Toma."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A ning ismi nima?",
+        "answer": "Тома."
+      },
+      {
+        "prompt": "B ning ismi nima?",
+        "answer": "Али."
+      },
+      {
+        "prompt": "Ular qaysi so‘z bilan salomlashdi?",
+        "answer": "Привет!"
+      }
+    ],
+    "roleplay": {
+      "a": "Siz Toma ismli yangi o‘quvchisiz. Kartadagi qolip bilan ismingizni ayting va sherigingiz ismini so‘rang.",
+      "b": "Siz Alisiz. Salomga javob bering, ismingizni ayting va tanishganingizdan xursandligingizni bildiring.",
+      "twist": "Ism kartalarini almashtiring; qolip o‘zgarmasin.",
+      "success": "Har ikki ishtirokchi salom, ism va tanishuv iborasini tushunarli aytadi."
+    },
+    "teacherTip": "Зовут urg‘usini birinchi bo‘g‘inga qo‘yishni tuzating: зовУт. Qiynalganlarga rasmli ism kartasi va aks-sado takrorini bering; tez o‘zlashtirganlar kartasiz aytsin. Erkin gap tuzdirilmang.",
+    "homework": [
+      "Ismingiz bilan salomlashuvni uch marta ovozga yozing.",
+      "А, М, О, Т, К harflarini yozib, Тома ismidan tanishlarini belgilang.",
+      "Yaqiningiz bilan ism so‘rash qolipini ikki marta mashq qiling."
+    ],
+    "exit": "Kartaga qarab salom bering, ismingizni ayting va ism so‘rang; uch vazifadan uchalasini bajaring."
+  },
+  {
+    "no": 2,
+    "month": 1,
+    "week": 1,
+    "title": "Sinfda tushunish va yordam so‘rash",
+    "objective": "O‘qituvchiga sizlab murojaat qiladi va tushunmaganda uch tayyor yordam iborasidan mosini aytadi.",
+    "grammar": {
+      "title": "Ты va вы; Е, Н, С, Р, У harflari",
+      "rule": "Ты bir kishiga norasmiy, вы esa hurmat bilan yoki bir necha kishiga murojaat qilishda ishlatiladi. Как вас зовут? — hurmat shaklidagi tayyor savol. Е, Н, С, Р, У harflarini qo‘shamiz: Н — «n», С — «s», Р — «r», У — «u»; Е so‘z boshida «ye» eshitiladi. Buyruq iboralari hozircha tayyor qolipdir.",
+      "examples": [
+        {
+          "ru": "Как вас зовут?",
+          "uz": "Ismingiz nima?"
+        },
+        {
+          "ru": "Повторите, пожалуйста.",
+          "uz": "Iltimos, takrorlang."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "O‘qituvchidan ism so‘rang: Как ___ зовут?",
+          "answer": "вас",
+          "explanation": "O‘qituvchiga hurmat shakli tanlanadi."
+        },
+        {
+          "prompt": "Р harfi «p»mi yoki «r»mi?",
+          "answer": "r",
+          "explanation": "Kirillcha Р lotincha p kabi o‘qilmaydi."
+        },
+        {
+          "prompt": "Eshitmay qoldingiz. Mos iborani ayting.",
+          "answer": "Повторите, пожалуйста.",
+          "explanation": "Bu qolip suhbatdoshdan takrorlashni so‘raydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Как вас зовут?",
+        "uz": "Ismingiz nima?"
+      },
+      {
+        "ru": "Меня зовут…",
+        "uz": "Mening ismim…"
+      },
+      {
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      },
+      {
+        "ru": "Медленнее, пожалуйста.",
+        "uz": "Iltimos, sekinroq."
+      },
+      {
+        "ru": "Я не понимаю.",
+        "uz": "Men tushunmayapman."
+      },
+      {
+        "ru": "Ещё раз, пожалуйста.",
+        "uz": "Iltimos, yana bir marta."
+      },
+      {
+        "ru": "Спасибо.",
+        "uz": "Rahmat."
+      },
+      {
+        "ru": "Пожалуйста.",
+        "uz": "Marhamat; arzimaydi."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Как вас зовут?",
+        "uz": "Assalomu alaykum! Ismingiz nima?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Меня зовут Анна.",
+        "uz": "Mening ismim Anna."
+      },
+      {
+        "speaker": "A",
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      },
+      {
+        "speaker": "B",
+        "ru": "Анна.",
+        "uz": "Anna."
+      },
+      {
+        "speaker": "A",
+        "ru": "Спасибо, Анна.",
+        "uz": "Rahmat, Anna."
+      },
+      {
+        "speaker": "B",
+        "ru": "Пожалуйста.",
+        "uz": "Arzimaydi."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B o‘zini qanday tanishtirdi?",
+        "answer": "Меня зовут Анна."
+      },
+      {
+        "prompt": "A nimani so‘radi?",
+        "answer": "Повторите, пожалуйста."
+      },
+      {
+        "prompt": "Suhbatdagi murojaat sizlashmi? Ruscha dalil ayting.",
+        "answer": "Как вас зовут?"
+      }
+    ],
+    "roleplay": {
+      "a": "Siz yangi o‘quvchisiz; ustozning ismini bilishingiz kerak. Birinchi javobni eshitmadingiz.",
+      "b": "Sizning ismingiz Anna. Ismingizni ayting, iltimosdan keyin aniq takrorlang.",
+      "twist": "A bu safar takrorlash o‘rniga sekinroq gapirishni so‘rasin.",
+      "success": "A sizlab savol beradi, yordam so‘raydi va rahmat aytadi; B mos javob qaytaradi."
+    },
+    "teacherTip": "O‘zbekchadagi sizga mos ravishda bu vaziyatda Как тебя emas, Как вас kerakligini ko‘rsating. Boshlovchi kartadan tanlasin; kuchliroq o‘quvchi yordam iborasini mustaqil almashtirsin.",
+    "homework": [
+      "Uch yordam iborasini ovozga yozing va iltimos so‘zini tekshiring.",
+      "Е, Н, С, Р, У harflarini yozing, Р va У ning o‘qilishini yoniga belgilang.",
+      "Sherigingizdan ism so‘rab, ataylab bir marta takrorlashni iltimos qiling."
+    ],
+    "exit": "Ustoz ismini sizlab so‘rang va tez aytilgan javobga mos yordam iborasini ayting: ikki vazifa bajarilsin."
+  },
+  {
+    "no": 3,
+    "month": 1,
+    "week": 1,
+    "title": "Kutubxona to‘garagida tanishuv",
+    "objective": "Yangi to‘garakdagi tanishuvda ism so‘rash va aniqlashtirishni birlashtirib, kartalar yordamida to‘rt almashinuvni bajaradi.",
+    "grammar": {
+      "title": "Integratsiya: ism qoliplari; И, Л, П, Б, В harflari",
+      "rule": "Меня зовут… va Как вас зовут? qoliplarini yangi tanishuvda qayta ishlatamiz. Yangi grammatika talab qilinmaydi. И, Л, П, Б, В harflarini qo‘shamiz: В — «v», Б — «b». Али́ ismidagi urg‘u oxirgi bo‘g‘inda; ismni egasining talaffuziga mos aytamiz.",
+      "examples": [
+        {
+          "ru": "Меня зовут Али.",
+          "uz": "Mening ismim Ali."
+        },
+        {
+          "ru": "Ещё раз, пожалуйста.",
+          "uz": "Iltimos, yana bir marta."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanishuvni to‘ldiring: Меня ___ Лола.",
+          "answer": "зовут",
+          "explanation": "Oldingi ism qolipi yangi ism bilan ishlatiladi."
+        },
+        {
+          "prompt": "В va Б dan «v» tovushini tanlang.",
+          "answer": "В",
+          "explanation": "Б esa «b» tovushini bildiradi."
+        },
+        {
+          "prompt": "Yangi katta yoshli tanishga savol: Как ___ зовут?",
+          "answer": "вас",
+          "explanation": "Hali yaqin tanish bo‘lmagan odamga sizlash mos."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Здравствуйте!",
+        "uz": "Assalomu alaykum!"
+      },
+      {
+        "ru": "Как вас зовут?",
+        "uz": "Ismingiz nima?"
+      },
+      {
+        "ru": "Меня зовут Лола.",
+        "uz": "Mening ismim Lola."
+      },
+      {
+        "ru": "Ещё раз, пожалуйста.",
+        "uz": "Iltimos, yana bir marta."
+      },
+      {
+        "ru": "Медленнее, пожалуйста.",
+        "uz": "Iltimos, sekinroq."
+      },
+      {
+        "ru": "Очень приятно.",
+        "uz": "Tanishganimdan xursandman."
+      },
+      {
+        "ru": "Спасибо.",
+        "uz": "Rahmat."
+      },
+      {
+        "ru": "До свидания!",
+        "uz": "Xayr!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Меня зовут Лола.",
+        "uz": "Assalomu alaykum! Mening ismim Lola."
+      },
+      {
+        "speaker": "B",
+        "ru": "Здравствуйте, Лола!",
+        "uz": "Assalomu alaykum, Lola!"
+      },
+      {
+        "speaker": "A",
+        "ru": "Как вас зовут?",
+        "uz": "Ismingiz nima?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Меня зовут Али.",
+        "uz": "Mening ismim Ali."
+      },
+      {
+        "speaker": "A",
+        "ru": "Ещё раз, пожалуйста.",
+        "uz": "Iltimos, yana bir marta."
+      },
+      {
+        "speaker": "B",
+        "ru": "Али.",
+        "uz": "Ali."
+      },
+      {
+        "speaker": "A",
+        "ru": "Очень приятно, Али.",
+        "uz": "Tanishganimdan xursandman, Ali."
+      },
+      {
+        "speaker": "B",
+        "ru": "Очень приятно, Лола.",
+        "uz": "Tanishganimdan xursandman, Lola."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Kim avval o‘z ismini aytdi?",
+        "answer": "Лола."
+      },
+      {
+        "prompt": "Kim ismini takrorladi?",
+        "answer": "Али."
+      },
+      {
+        "prompt": "Lola takrorlashni qanday so‘radi?",
+        "answer": "Ещё раз, пожалуйста."
+      }
+    ],
+    "roleplay": {
+      "a": "Kutubxonadagi yangi to‘garakka keldingiz. Kartangizda Lola ismi bor; yoningizdagi a’zoning ismini bilib oling.",
+      "b": "Kartangizda Ali ismi bor. A so‘rasa ismingizni takrorlang, keyin tanishuvni yakunlang.",
+      "twist": "Ikkinchi urinishda boshqa tanish ism kartasini oling va sekinroq aytishni so‘rang.",
+      "success": "Salom, ikki ism, bitta aniqlashtirish va tanishuv yakuni aytiladi; erkin yangi gap talab qilinmaydi."
+    },
+    "teacherTip": "В ni lotincha B deb o‘qishni Вера va Б harflarini qiyoslab tuzating; ism butunicha ustoz ortidan aytilsin. Qo‘llab-quvvatlash uchun replikalar tartibini bering; kuchliroq juftlar faqat ism kartalaridan foydalansin.",
+    "homework": [
+      "To‘garakdagi tanishuvning ikkala rolini ovozga yozing.",
+      "И, Л, П, Б, В harflaridan ustoz aytganini besh urinishda ko‘rsating.",
+      "Ismingizni kirillda namuna bo‘yicha yozing va urg‘uli bo‘g‘inni belgilang."
+    ],
+    "exit": "Yangi ism kartasi bilan tanishib, bitta takrorlash iltimosini qo‘shing; to‘rt almashinuvni tayanch bilan yakunlang."
+  },
+  {
+    "no": 4,
+    "month": 1,
+    "week": 2,
+    "title": "Men o‘quvchiman, siz ustozsiz",
+    "objective": "O‘zini va ikki kishini rol kartalari orqali tanishtirib, uchta sodda gap hamda bitta kim savolini aytadi.",
+    "grammar": {
+      "title": "Olmoshlar va hozirgi zamonda bog‘lamasiz gap; Д, З, Й, Г, Ы",
+      "rule": "Я, ты, он, она, мы, вы, они — kishilik olmoshlari. Hozirgi zamonda «man/san/dir» o‘rniga alohida fe’l qo‘yilmaydi: Я студент. Erkak uchun студент, ayol uchun студентка deyiladi. Д, З, Й, Г, Ы ni taning; Ы oddiy И emas, til biroz orqaroqda turadi. Это… tanishtirish qolipidir.",
+      "examples": [
+        {
+          "ru": "Я студентка.",
+          "uz": "Men talaba qizman."
+        },
+        {
+          "ru": "Он учитель.",
+          "uz": "U erkak o‘qituvchi."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ayol kishini ko‘rsating: ___ студентка.",
+          "answer": "Она",
+          "explanation": "Ayol kishi uchun она ishlatiladi."
+        },
+        {
+          "prompt": "Erkak rol kartasi: Я ___ . (студент / студентка)",
+          "answer": "студент",
+          "explanation": "Rol kartasidagi erkakka студент mos."
+        },
+        {
+          "prompt": "«Biz» olmoshini tanlang: мы / вы.",
+          "answer": "мы",
+          "explanation": "Мы — biz; вы — siz yoki sizlar."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Кто это?",
+        "uz": "Bu kim?"
+      },
+      {
+        "ru": "Это Анна.",
+        "uz": "Bu Anna."
+      },
+      {
+        "ru": "Я студент.",
+        "uz": "Men talaba yigitman."
+      },
+      {
+        "ru": "Я студентка.",
+        "uz": "Men talaba qizman."
+      },
+      {
+        "ru": "Он учитель.",
+        "uz": "U erkak o‘qituvchi."
+      },
+      {
+        "ru": "Она учительница.",
+        "uz": "U ayol o‘qituvchi."
+      },
+      {
+        "ru": "А вы?",
+        "uz": "Siz-chi?"
+      },
+      {
+        "ru": "Очень приятно.",
+        "uz": "Tanishganimdan xursandman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Меня зовут Али. Я студент. А вы?",
+        "uz": "Mening ismim Ali. Men talaba yigitman. Siz-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Меня зовут Анна. Я учительница.",
+        "uz": "Mening ismim Anna. Men ayol o‘qituvchiman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Очень приятно. Кто это?",
+        "uz": "Tanishganimdan xursandman. Bu kim?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Это Лола. Она студентка.",
+        "uz": "Bu Lola. U talaba qiz."
+      },
+      {
+        "speaker": "A",
+        "ru": "А это?",
+        "uz": "Bu-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Это Тимур. Он учитель.",
+        "uz": "Bu Timur. U erkak o‘qituvchi."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Ali kim?",
+        "answer": "Он студент."
+      },
+      {
+        "prompt": "Lola kim?",
+        "answer": "Она студентка."
+      },
+      {
+        "prompt": "Timur kim?",
+        "answer": "Он учитель."
+      }
+    ],
+    "roleplay": {
+      "a": "Siz Ali — talaba rolidasiz. Anna bilan tanishing va ikkita fotosuratdagi kishilarni so‘rang.",
+      "b": "Siz Anna — ustozsiz. Sizda Lola talaba, Timur ustoz ekanligi yozilgan rasm kartalari bor.",
+      "twist": "Rasmlarning joyini almashtiring; A olmoshni eshitib to‘g‘ri rasmni ko‘rsatsin.",
+      "success": "Uch rol gapida olmosh va shaxs jinsi mos keladi; kamida bitta Кто это? savoli beriladi."
+    },
+    "teacherTip": "O‘zbekchadagi jins farqlamaydigan «u» ta’sirida он/она almashishini rasm bilan tuzating. Qiynalganlarga olmosh va ot juftligini bering; kuchliroq o‘quvchi uchinchi rasmni kartasiz tanishtirsin.",
+    "homework": [
+      "Uch rol kartasini olmosh bilan ovozli tanishtiring.",
+      "Д, З, Й, Г, Ы ni yozib, мы va вы so‘zlarini o‘qing.",
+      "Я, он, она bilan bittadan namunaviy rol gapini yozing."
+    ],
+    "exit": "Uch rasm haqida bittadan gap ayting; kamida ikki gapda olmosh va rol shakli to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 5,
+    "month": 1,
+    "week": 2,
+    "title": "Bu nima va qayerda?",
+    "objective": "To‘rtta tanish buyumni nomlaydi va что/где savollari orqali ikki buyumning joyini aniqlaydi.",
+    "grammar": {
+      "title": "Кто, что, где savollari; Ж, Ш, Ч, Щ, Х",
+      "rule": "Кто odamni, что buyumni, где joyni so‘raydi. Это ручка gapida fe’l kerak emas. Joyni hozircha здесь va там bilan aytamiz. Ж, Ш, Ч, Щ, Х ni qo‘shamiz: Ч yumshoq «ch», Щ cho‘ziq yumshoq shovqin; Ж va Ш qattiq aytiladi. Ruscha Х bo‘g‘izda keskin siqilmaydi.",
+      "examples": [
+        {
+          "ru": "Что это? Это книга.",
+          "uz": "Bu nima? Bu kitob."
+        },
+        {
+          "ru": "Где ручка? Ручка здесь.",
+          "uz": "Ruchka qayerda? Ruchka shu yerda."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Buyum haqida so‘rang: ___ это?",
+          "answer": "Что",
+          "explanation": "Buyumga что savoli beriladi."
+        },
+        {
+          "prompt": "Joyni so‘rang: ___ книга?",
+          "answer": "Где",
+          "explanation": "Где — qayerda degani."
+        },
+        {
+          "prompt": "«Ruchka u yerda» gapini to‘ldiring: Ручка ___ .",
+          "answer": "там",
+          "explanation": "Там uzoqroq joyni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Что это?",
+        "uz": "Bu nima?"
+      },
+      {
+        "ru": "Это книга.",
+        "uz": "Bu kitob."
+      },
+      {
+        "ru": "Это ручка.",
+        "uz": "Bu ruchka."
+      },
+      {
+        "ru": "Это телефон.",
+        "uz": "Bu telefon."
+      },
+      {
+        "ru": "Это сумка.",
+        "uz": "Bu sumka."
+      },
+      {
+        "ru": "Где книга?",
+        "uz": "Kitob qayerda?"
+      },
+      {
+        "ru": "Здесь.",
+        "uz": "Shu yerda."
+      },
+      {
+        "ru": "Там.",
+        "uz": "U yerda."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Что это?",
+        "uz": "Bu nima?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Это сумка.",
+        "uz": "Bu sumka."
+      },
+      {
+        "speaker": "A",
+        "ru": "Где книга?",
+        "uz": "Kitob qayerda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Книга здесь.",
+        "uz": "Kitob shu yerda."
+      },
+      {
+        "speaker": "A",
+        "ru": "А где ручка?",
+        "uz": "Ruchka-chi, qayerda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Ручка там.",
+        "uz": "Ruchka u yerda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B avval qaysi buyumni nomladi?",
+        "answer": "Сумка."
+      },
+      {
+        "prompt": "Kitob qayerda?",
+        "answer": "Здесь."
+      },
+      {
+        "prompt": "Ruchka qayerda?",
+        "answer": "Там."
+      }
+    ],
+    "roleplay": {
+      "a": "Sizdagi rasmda kitob va ruchka joyi belgilanmagan. B dan joylarini so‘rang.",
+      "b": "Sizning kartangizda kitob yaqin, ruchka uzoq. Sumka va telefonni ham ko‘rsating, lekin javobni A savolidan keyin bering.",
+      "twist": "Kitob va ruchka joyini almashtiring va savollarni qaytaring.",
+      "success": "A ikkita joy savolini beradi; B здесь va там ni joylashuvga mos ishlatadi."
+    },
+    "teacherTip": "Buyumga Кто это? deyishni odam va buyum rasmlarini yonma-yon qo‘yib tuzating. Yordamga muhtojlar ikki buyum bilan ishlasin; kuchliroqlar to‘rttasini aralashtirib so‘rasin.",
+    "homework": [
+      "Uyda to‘rtta buyumni ko‘rsatib Это… bilan ovoz yozing.",
+      "Ж, Ш, Ч, Щ, Х ni yozing; ручка dagi Ч ni belgilang.",
+      "Ikki buyum uchun Где…? savoli va здесь/там javobini yozing."
+    ],
+    "exit": "Tasodifiy ikki buyumga что va где bilan savol bering, ikkala joy javobini to‘g‘ri tushunib ko‘rsating."
+  },
+  {
+    "no": 6,
+    "month": 1,
+    "week": 2,
+    "title": "Ustaxonada buyumni topish",
+    "objective": "Yangi ustaxona vaziyatida tanish buyumni so‘rab topadi va tushunmaganda aniqlashtiradi; qolgan kirill belgilarini namunadan taniydi.",
+    "grammar": {
+      "title": "Integratsiya: buyum va joy; Ё, Э, Ю, Я, Ф, Ц, Ь, Ъ",
+      "rule": "Что это?, Где…?, здесь/там va yordam qoliplarini qayta ishlatamiz. Ё, Э, Ю, Я, Ф, Ц hamda Ь, Ъ bilan 33 kirill belgisini tanishtirish tugaydi. Ь va Ъ mustaqil tovush emas; Ь oldingi undosh yumshoqligini ko‘rsatishi mumkin. Ё odatda urg‘uli. Harflarni mustaqil mukammal o‘qish hali talab qilinmaydi.",
+      "examples": [
+        {
+          "ru": "Где телефон?",
+          "uz": "Telefon qayerda?"
+        },
+        {
+          "ru": "Телефон здесь.",
+          "uz": "Telefon shu yerda."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Joy savolini tugating: ___ телефон?",
+          "answer": "Где",
+          "explanation": "Oldingi joy savoli yangi buyum bilan qaytariladi."
+        },
+        {
+          "prompt": "Mustaqil tovushi yo‘q belgilarni tanlang: Ф, Ь, Ъ.",
+          "answer": "Ь, Ъ",
+          "explanation": "Bular harf-belgilar bo‘lib, o‘zicha unli yoki undosh tovush bermaydi."
+        },
+        {
+          "prompt": "Javob tushunarsiz bo‘ldi. Takrorlashni so‘rang.",
+          "answer": "Повторите, пожалуйста.",
+          "explanation": "Tanish yordam qolipi ustaxonada ham ishlaydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Здравствуйте!",
+        "uz": "Assalomu alaykum!"
+      },
+      {
+        "ru": "Где телефон?",
+        "uz": "Telefon qayerda?"
+      },
+      {
+        "ru": "Телефон здесь.",
+        "uz": "Telefon shu yerda."
+      },
+      {
+        "ru": "Что это?",
+        "uz": "Bu nima?"
+      },
+      {
+        "ru": "Это сумка.",
+        "uz": "Bu sumka."
+      },
+      {
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      },
+      {
+        "ru": "Я не понимаю.",
+        "uz": "Men tushunmayapman."
+      },
+      {
+        "ru": "Спасибо!",
+        "uz": "Rahmat!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Где телефон?",
+        "uz": "Assalomu alaykum! Telefon qayerda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Телефон здесь.",
+        "uz": "Telefon shu yerda."
+      },
+      {
+        "speaker": "A",
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      },
+      {
+        "speaker": "B",
+        "ru": "Здесь. А сумка там.",
+        "uz": "Shu yerda. Sumka esa u yerda."
+      },
+      {
+        "speaker": "A",
+        "ru": "Спасибо! А что это?",
+        "uz": "Rahmat! Bu-chi, nima?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Это книга.",
+        "uz": "Bu kitob."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Telefon qayerda?",
+        "answer": "Здесь."
+      },
+      {
+        "prompt": "Sumka qayerda?",
+        "answer": "Там."
+      },
+      {
+        "prompt": "Oxirida qaysi buyum nomlandi?",
+        "answer": "Книга."
+      }
+    ],
+    "roleplay": {
+      "a": "Telefon ustaxonasida tanish telefon rasmini qidiryapsiz. Joyini so‘rang va bitta javobni takrorlatib oling.",
+      "b": "Siz ustaxona xodimisiz. Telefon yaqin, sumka uzoqda; A so‘ragan uchinchi buyum kitob.",
+      "twist": "Telefon va sumka rasmlarini almashtiring; A eshitganiga qarab kerakli rasmni olsin.",
+      "success": "Bitta joy savoli, bitta buyum savoli va bitta aniqlashtirish aytiladi; telefon to‘g‘ri topiladi."
+    },
+    "teacherTip": "Ь ni alohida «i» deb aytishni to‘xtating: belgi tovush emasligini ko‘rsating. Sust o‘quvchi tovush-harf kartasidan foydalansin; tez o‘quvchi avvalgi dars harflarini ham aralash kartadan topsin.",
+    "homework": [
+      "Ustaxona suhbatini rasmlar bilan ovozga yozing.",
+      "Kirill jadvalidagi 33 belgidan qiynalgan beshtasini belgilang va namuna bilan takrorlang.",
+      "Телефон, сумка, книга so‘zlarini namunadan ko‘chirib, bittadan joy gapini yozing."
+    ],
+    "exit": "Buyumning joyini savol bilan aniqlang, javobni takrorlating va to‘g‘ri rasmni tanlang; uch vazifa bajarilsin."
+  },
+  {
+    "no": 7,
+    "month": 1,
+    "week": 3,
+    "title": "Ruchka so‘rash va ruxsat olish",
+    "objective": "Ikki buyum uchun odobli iltimos qiladi va ruxsat savoliga mos javobni tushunadi.",
+    "grammar": {
+      "title": "Дайте… va Можно…? tayyor qoliplari",
+      "rule": "Дайте, пожалуйста, ручку — buyum so‘rashning tayyor qolipi. Ручка so‘zi bu qolipda ручку bo‘ladi; hozir boshqa otlarga mustaqil qoida yoyilmaydi. Можно войти? va Можно сесть? ruxsat so‘rash uchun butunicha o‘rganiladi. Mumkin bo‘lsa Можно, mumkin bo‘lmasa Нельзя deyiladi.",
+      "examples": [
+        {
+          "ru": "Дайте, пожалуйста, ручку.",
+          "uz": "Iltimos, ruchka bering."
+        },
+        {
+          "ru": "Можно сесть?",
+          "uz": "O‘tirsam maylimi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tayyor iltimosni to‘ldiring: Дайте, пожалуйста, ___ . (ручка / ручку)",
+          "answer": "ручку",
+          "explanation": "Berilgan iltimos qolipida ручку ishlatiladi."
+        },
+        {
+          "prompt": "Xonaga kirish uchun ruxsat so‘rang.",
+          "answer": "Можно войти?",
+          "explanation": "Bu butunicha o‘rganiladigan ruxsat savoli."
+        },
+        {
+          "prompt": "Ruxsat yo‘q: Можно сесть? — ___ .",
+          "answer": "Нельзя",
+          "explanation": "Нельзя mumkin emasligini bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Дайте, пожалуйста, ручку.",
+        "uz": "Iltimos, ruchka bering."
+      },
+      {
+        "ru": "Дайте, пожалуйста, книгу.",
+        "uz": "Iltimos, kitob bering."
+      },
+      {
+        "ru": "Можно войти?",
+        "uz": "Kirsam maylimi?"
+      },
+      {
+        "ru": "Можно сесть?",
+        "uz": "O‘tirsam maylimi?"
+      },
+      {
+        "ru": "Можно.",
+        "uz": "Mumkin."
+      },
+      {
+        "ru": "Нельзя.",
+        "uz": "Mumkin emas."
+      },
+      {
+        "ru": "Вот, пожалуйста.",
+        "uz": "Mana, marhamat."
+      },
+      {
+        "ru": "Спасибо.",
+        "uz": "Rahmat."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Можно войти?",
+        "uz": "Kirsam maylimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Можно.",
+        "uz": "Mumkin."
+      },
+      {
+        "speaker": "A",
+        "ru": "Дайте, пожалуйста, книгу.",
+        "uz": "Iltimos, kitob bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот, пожалуйста.",
+        "uz": "Mana, marhamat."
+      },
+      {
+        "speaker": "A",
+        "ru": "Спасибо. Можно сесть?",
+        "uz": "Rahmat. O‘tirsam maylimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Можно.",
+        "uz": "Mumkin."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "A qaysi buyumni so‘radi?",
+        "answer": "Книгу."
+      },
+      {
+        "prompt": "Kirishga ruxsat berildimi?",
+        "answer": "Да, можно."
+      },
+      {
+        "prompt": "Oxirgi ruxsat savoli nima edi?",
+        "answer": "Можно сесть?"
+      }
+    ],
+    "roleplay": {
+      "a": "Sinfga kirmoqchisiz va yozish uchun ruchka kerak. Kirishga ruxsat hamda ruchka so‘rang.",
+      "b": "Sizda ruchka va kitob bor. Kirishga ruxsat bering, so‘ralgan buyumni uzating.",
+      "twist": "A kitob so‘rasin; B o‘tirish mumkin emasligi yozilgan kartani olsin.",
+      "success": "A ikki odobli qolipni aytadi, B buyumni va ruxsat javobini kartaga mos tanlaydi."
+    },
+    "teacherTip": "Дайте ручка deyishni to‘liq Дайте ручку qolipini qaytarish bilan tuzating. Boshlovchiga tayyor ikkita iltimosni bering; kuchliroq o‘quvchi ruxsat va iltimosni kartasiz birlashtirsin.",
+    "homework": [
+      "Ruchka va kitob so‘rashni ikki alohida ovozli xabarda ayting.",
+      "Можно войти? va Можно сесть? savollarini yozing.",
+      "Sherigingizning mumkin/mumkin emas kartasiga qarab uchta ruxsat almashinuvi qiling."
+    ],
+    "exit": "Buyum so‘rang va bitta ruxsat savolini bering; ikkala qolip ham tushunarli va odobli bo‘lsin."
+  },
+  {
+    "no": 8,
+    "month": 1,
+    "week": 3,
+    "title": "Xatoni muloyim tuzatish",
+    "objective": "Ism yoki buyum haqidagi uch taxminni tasdiqlaydi yoxud inkor qilib to‘g‘ri ma’lumotni aytadi.",
+    "grammar": {
+      "title": "Не bilan inkor va savol ohangi",
+      "rule": "Sodda ot gapda не inkor qilinayotgan so‘z oldidan keladi: Это не книга. Ha/yo‘q savolida so‘z tartibi saqlanishi mumkin, savol ohangi ko‘tariladi: Это книга? Javobda Нет, это… bilan tuzatish beriladi. Нет va не vazifasi bir xil emas: Нет — mustaqil javob.",
+      "examples": [
+        {
+          "ru": "Это не телефон. Это книга.",
+          "uz": "Bu telefon emas. Bu kitob."
+        },
+        {
+          "ru": "Вы Анна? — Нет, я Лола.",
+          "uz": "Siz Annasizmi? — Yo‘q, men Lolaman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Inkorni qo‘ying: Это ___ ручка.",
+          "answer": "не",
+          "explanation": "Не inkor qilinayotgan ot oldida turadi."
+        },
+        {
+          "prompt": "Savolga tuzatish: Вы Али? Siz Timursiz.",
+          "answer": "Нет, я Тимур.",
+          "explanation": "Нет bilan rad etib, to‘g‘ri ism aytiladi."
+        },
+        {
+          "prompt": "Rasmda kitob: Это книга? Qisqa tasdiq ayting.",
+          "answer": "Да, это книга.",
+          "explanation": "Да taxmin to‘g‘riligini tasdiqlaydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Это книга?",
+        "uz": "Bu kitobmi?"
+      },
+      {
+        "ru": "Да, это книга.",
+        "uz": "Ha, bu kitob."
+      },
+      {
+        "ru": "Нет, это ручка.",
+        "uz": "Yo‘q, bu ruchka."
+      },
+      {
+        "ru": "Это не телефон.",
+        "uz": "Bu telefon emas."
+      },
+      {
+        "ru": "Вы Анна?",
+        "uz": "Siz Annasizmi?"
+      },
+      {
+        "ru": "Нет, я Лола.",
+        "uz": "Yo‘q, men Lolaman."
+      },
+      {
+        "ru": "Извините.",
+        "uz": "Kechirasiz."
+      },
+      {
+        "ru": "Всё понятно.",
+        "uz": "Hammasi tushunarli."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Вы Анна?",
+        "uz": "Assalomu alaykum! Siz Annasizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, я Лола.",
+        "uz": "Yo‘q, men Lolaman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Извините. Это телефон?",
+        "uz": "Kechirasiz. Bu telefonmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, это не телефон. Это книга.",
+        "uz": "Yo‘q, bu telefon emas. Bu kitob."
+      },
+      {
+        "speaker": "A",
+        "ru": "А это ручка?",
+        "uz": "Bu esa ruchkami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, это ручка.",
+        "uz": "Ha, bu ruchka."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B ning haqiqiy ismi nima?",
+        "answer": "Лола."
+      },
+      {
+        "prompt": "Telefon deb o‘ylangan buyum nima edi?",
+        "answer": "Книга."
+      },
+      {
+        "prompt": "Oxirgi taxmin to‘g‘rimi?",
+        "answer": "Да, это ручка."
+      }
+    ],
+    "roleplay": {
+      "a": "Sizda Anna ismi va telefon taxmini yozilgan karta bor. Ikkalasini B dan tekshiring.",
+      "b": "Siz Lolasiz, buyumingiz kitob. Noto‘g‘ri taxminlarni tuzatib, to‘g‘ri ma’lumot bering.",
+      "twist": "Uchinchi savolda to‘g‘ri taxmin qiling; B tasdiqlasin.",
+      "success": "Uch taxmindan kamida ikkitasi to‘liq tasdiq yoki tuzatish bilan javoblanadi."
+    },
+    "teacherTip": "Это нет книга xatosini не ning ot oldidagi joyini ko‘rsatib tuzating. Tayanchga muhtojlarga Да/Нет kartalari bering; kuchliroq juftlik nega noto‘g‘ri ekanini yangi grammatika ishlatmasdan to‘g‘ri ot bilan aytsin.",
+    "homework": [
+      "Ikki noto‘g‘ri taxminni tuzatgan ovozli xabar yozing.",
+      "Это не… bilan uchta tanish buyum haqida gap yozing.",
+      "Sherigingiz bilan bir to‘g‘ri, ikki noto‘g‘ri ism taxminini tekshiring."
+    ],
+    "exit": "Ikki noto‘g‘ri taxminni Нет bilan rad etib tuzating, bir to‘g‘ri taxminni Да bilan tasdiqlang."
+  },
+  {
+    "no": 9,
+    "month": 1,
+    "week": 3,
+    "title": "Mehmonlar stolida nishonni aniqlash",
+    "objective": "Tadbirga kirishdagi yangi vaziyatda ism xatosini tuzatadi, ruchka so‘raydi va yo‘l-yo‘riqni aniqlashtiradi.",
+    "grammar": {
+      "title": "Integratsiya: savol, inkor va iltimos",
+      "rule": "Oldingi Вы…?, Нет, я… va Дайте, пожалуйста… qoliplari mehmonlar stolida birlashadi. Nishondagi ismga qarab shaxsni tekshiramiz; yangi fe’l shakli tuzish talab qilinmaydi. Не inkor qilinayotgan ism yoki ot oldida turadi.",
+      "examples": [
+        {
+          "ru": "Вы Тимур? — Нет, я Али.",
+          "uz": "Siz Timursizmi? — Yo‘q, men Aliman."
+        },
+        {
+          "ru": "Дайте, пожалуйста, ручку.",
+          "uz": "Iltimos, ruchka bering."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ismingiz Ali: Вы Тимур? Savolni tuzating.",
+          "answer": "Нет, я Али.",
+          "explanation": "Tanish inkor qolipi yangi ro‘yxat vaziyatiga ko‘chiriladi."
+        },
+        {
+          "prompt": "Iltimosni tartiblang: ручку / дайте / пожалуйста.",
+          "answer": "Дайте, пожалуйста, ручку.",
+          "explanation": "Tayyor iltimos qolipi saqlanadi."
+        },
+        {
+          "prompt": "Xodim tez gapirdi. Mos qolipni ayting.",
+          "answer": "Медленнее, пожалуйста.",
+          "explanation": "Tezlikni kamaytirish so‘raladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Вы Тимур?",
+        "uz": "Siz Timursizmi?"
+      },
+      {
+        "ru": "Нет, я Али.",
+        "uz": "Yo‘q, men Aliman."
+      },
+      {
+        "ru": "Извините.",
+        "uz": "Kechirasiz."
+      },
+      {
+        "ru": "Дайте, пожалуйста, ручку.",
+        "uz": "Iltimos, ruchka bering."
+      },
+      {
+        "ru": "Вот, пожалуйста.",
+        "uz": "Mana, marhamat."
+      },
+      {
+        "ru": "Где книга?",
+        "uz": "Kitob qayerda?"
+      },
+      {
+        "ru": "Медленнее, пожалуйста.",
+        "uz": "Iltimos, sekinroq."
+      },
+      {
+        "ru": "Спасибо.",
+        "uz": "Rahmat."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Вы Тимур?",
+        "uz": "Assalomu alaykum! Siz Timursizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, я Али.",
+        "uz": "Yo‘q, men Aliman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Извините, Али.",
+        "uz": "Kechirasiz, Ali."
+      },
+      {
+        "speaker": "B",
+        "ru": "Дайте, пожалуйста, ручку.",
+        "uz": "Iltimos, ruchka bering."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вот, пожалуйста.",
+        "uz": "Mana, marhamat."
+      },
+      {
+        "speaker": "B",
+        "ru": "Спасибо. Где книга?",
+        "uz": "Rahmat. Kitob qayerda?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Книга там.",
+        "uz": "Kitob u yerda."
+      },
+      {
+        "speaker": "B",
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Mehmonning ismi nima?",
+        "answer": "Али."
+      },
+      {
+        "prompt": "Mehmon nimani berishni so‘radi?",
+        "answer": "Ручку."
+      },
+      {
+        "prompt": "Xodim kitob joyini qanday aytdi?",
+        "answer": "Книга там."
+      }
+    ],
+    "roleplay": {
+      "a": "Tadbir xodimisiz. Ro‘yxatda Timur yozilgan, ruchka oldingizda, kitob uzoq stolda. Mehmon ismini tekshiring.",
+      "b": "Siz Alisiz; ro‘yxatdagi xatoni tuzating. Ruchka oling va kitob joyini so‘rab, javobni aniqlashtiring.",
+      "twist": "Xodim bu safar to‘g‘ri ismni aytsin, kitob yaqin joyga ko‘chsin.",
+      "success": "Mehmon ismni tekshiradi, iltimos qiladi, joyni aniqlaydi va bir marta yordam so‘raydi."
+    },
+    "teacherTip": "Нет, меня Али o‘rniga Нет, я Али yoki Меня зовут Али kerakligini bitta qolipni tanlab tuzating. Sust juftga replika kartalari, kuchliroqqa faqat vaziyat kartalari bering.",
+    "homework": [
+      "Mehmon rolini to‘rtta replikada ovozga yozing.",
+      "Ismni tasdiqlash va tuzatish uchun bittadan javob yozing.",
+      "Uch buyumni joylashtirib, sherikning здесь/там javoblarini tekshiring."
+    ],
+    "exit": "Yangi ism kartasi bilan ismni tuzatish, buyum so‘rash va aniqlashtirishdan iborat uch vazifani bajaring."
+  },
+  {
+    "no": 10,
+    "month": 1,
+    "week": 4,
+    "title": "Til va kelgan joyimiz",
+    "objective": "Tayyor geografik qoliplar bilan ismi, shahri va tili haqida uch ma’lumot beradi hamda ikkita savol so‘raydi.",
+    "grammar": {
+      "title": "Откуда вы? va til haqidagi qoliplar",
+      "rule": "Я из Ташкента va Я из Самарканда — kelgan joyni aytishning tayyor qoliplari; из dan keyingi shaklni hozir namunadan oling. Я говорю по-узбекски va Я немного говорю по-русски ham butunicha o‘rganiladi, boshqa fe’llarni tuslash hali talab qilinmaydi. Откуда — qayerdan degani.",
+      "examples": [
+        {
+          "ru": "Я из Ташкента.",
+          "uz": "Men Toshkentdanman."
+        },
+        {
+          "ru": "Я немного говорю по-русски.",
+          "uz": "Men ruscha biroz gapiraman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Namunadan to‘ldiring: Я из ___ . (Ташкент / Ташкента)",
+          "answer": "Ташкента",
+          "explanation": "Bu qolipda shahar nomi Ташкента shaklida beriladi."
+        },
+        {
+          "prompt": "Kelib chiqish savoli: ___ вы?",
+          "answer": "Откуда",
+          "explanation": "Откуда kelgan joyni so‘raydi."
+        },
+        {
+          "prompt": "«O‘zbekcha gapiraman» qolipini tugating: Я говорю ___ .",
+          "answer": "по-узбекски",
+          "explanation": "Tilni bildirish uchun shu tayyor shakl ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Откуда вы?",
+        "uz": "Siz qayerdansiz?"
+      },
+      {
+        "ru": "Я из Ташкента.",
+        "uz": "Men Toshkentdanman."
+      },
+      {
+        "ru": "Я из Самарканда.",
+        "uz": "Men Samarqanddanman."
+      },
+      {
+        "ru": "Вы говорите по-русски?",
+        "uz": "Ruscha gapirasizmi?"
+      },
+      {
+        "ru": "Я говорю по-узбекски.",
+        "uz": "Men o‘zbekcha gapiraman."
+      },
+      {
+        "ru": "Я немного говорю по-русски.",
+        "uz": "Men ruscha biroz gapiraman."
+      },
+      {
+        "ru": "А вы?",
+        "uz": "Siz-chi?"
+      },
+      {
+        "ru": "Медленнее, пожалуйста.",
+        "uz": "Iltimos, sekinroq."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Меня зовут Лола. Откуда вы?",
+        "uz": "Mening ismim Lola. Siz qayerdansiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я из Самарканда. А вы?",
+        "uz": "Men Samarqanddanman. Siz-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я из Ташкента. Вы говорите по-русски?",
+        "uz": "Men Toshkentdanman. Ruscha gapirasizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я немного говорю по-русски.",
+        "uz": "Men ruscha biroz gapiraman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А по-узбекски?",
+        "uz": "O‘zbekcha-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, я говорю по-узбекски.",
+        "uz": "Ha, men o‘zbekcha gapiraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Lola qayerdan?",
+        "answer": "Из Ташкента."
+      },
+      {
+        "prompt": "B qayerdan?",
+        "answer": "Из Самарканда."
+      },
+      {
+        "prompt": "B ruscha qancha gapiradi?",
+        "answer": "Немного."
+      }
+    ],
+    "roleplay": {
+      "a": "Til almashuviga keldingiz. Kartangiz: Lola, Toshkent, o‘zbekcha. Sherikning shahri va ruscha bilishini so‘rang.",
+      "b": "Kartangiz: Ali, Samarqand, ruscha biroz. Javob bering va A ning shahrini so‘rang.",
+      "twist": "Shahar kartalarini almashtiring; ustoz bergan shakldan foydalaning.",
+      "success": "Har kishi uch ma’lumotni qolip bilan aytadi; juftlik ikki xil savol ishlatadi."
+    },
+    "teacherTip": "Я из Ташкент shaklini butun Я из Ташкента birikmasi bilan tuzating. Sust o‘quvchi geografik kartani o‘qisin; kuchliroq o‘quvchi javobdan keyin А вы? bilan savolni qaytarsin.",
+    "homework": [
+      "Ism, namuna shahar va tilingiz haqida uch gapli ovoz yozing.",
+      "Ikki shahar uchun Я из… qolipini yozing.",
+      "Sherik bilan Откуда вы? va Вы говорите по-русски? savollarini almashtiring."
+    ],
+    "exit": "Uch shaxsiy ma’lumotni ayting va sherikka shahar hamda til haqida ikki savol bering; kartadan foydalanish mumkin."
+  },
+  {
+    "no": 11,
+    "month": 1,
+    "week": 4,
+    "title": "To‘g‘ri eshitdimmi?",
+    "objective": "Noto‘g‘ri eshitilgan ism, shahar va buyumni uch tekshiruv savoli bilan aniqlashtiradi.",
+    "grammar": {
+      "title": "Tekshiruv savoli va Не… а… tuzatishi",
+      "rule": "Savol ohangi bilan eshitilgan ma’lumot tekshiriladi: Вы из Ташкента? Ikki ma’lumotni qarama-qarshi qo‘yishda не… а… ishlatiladi: Не Анна, а Лола. Shahar bilan oldingi из shakllarini saqlang. Как это по-русски? — tarjimani so‘rashning tayyor qolipi.",
+      "examples": [
+        {
+          "ru": "Не Анна, а Лола.",
+          "uz": "Anna emas, Lola."
+        },
+        {
+          "ru": "Вы из Самарканда? — Да.",
+          "uz": "Siz Samarqanddanmisiz? — Ha."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tuzatishni to‘ldiring: Не Анна, ___ Лола.",
+          "answer": "а",
+          "explanation": "А to‘g‘ri variantni oldingi noto‘g‘ri variantga qarshi qo‘yadi."
+        },
+        {
+          "prompt": "«Bu ruscha nima deyiladi?» tayyor savolini ayting.",
+          "answer": "Как это по-русски?",
+          "explanation": "Bu qolip noma’lum buyum nomini so‘rashga yordam beradi."
+        },
+        {
+          "prompt": "B Samarqanddan: Вы из Ташкента? Javob bering.",
+          "answer": "Нет, я из Самарканда.",
+          "explanation": "Inkor va to‘g‘ri shahar bir javobda keladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Правильно?",
+        "uz": "To‘g‘rimi?"
+      },
+      {
+        "ru": "Да, правильно.",
+        "uz": "Ha, to‘g‘ri."
+      },
+      {
+        "ru": "Не Анна, а Лола.",
+        "uz": "Anna emas, Lola."
+      },
+      {
+        "ru": "Вы из Ташкента?",
+        "uz": "Siz Toshkentdanmisiz?"
+      },
+      {
+        "ru": "Нет, я из Самарканда.",
+        "uz": "Yo‘q, men Samarqanddanman."
+      },
+      {
+        "ru": "Как это по-русски?",
+        "uz": "Bu ruscha nima deyiladi?"
+      },
+      {
+        "ru": "Ещё раз, пожалуйста.",
+        "uz": "Iltimos, yana bir marta."
+      },
+      {
+        "ru": "Теперь понятно.",
+        "uz": "Endi tushunarli."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Вы Анна, правильно?",
+        "uz": "Siz Annasiz, to‘g‘rimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Не Анна, а Лола.",
+        "uz": "Anna emas, Lola."
+      },
+      {
+        "speaker": "A",
+        "ru": "Извините. Вы из Ташкента?",
+        "uz": "Kechirasiz. Siz Toshkentdanmisiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, я из Самарканда.",
+        "uz": "Yo‘q, men Samarqanddanman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Теперь понятно. А как это по-русски?",
+        "uz": "Endi tushunarli. Bu ruscha nima deyiladi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Ручка.",
+        "uz": "Ruchka."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B qaysi ismni tuzatdi?",
+        "answer": "Анна."
+      },
+      {
+        "prompt": "B qaysi shahardan?",
+        "answer": "Из Самарканда."
+      },
+      {
+        "prompt": "Buyumning ruscha nomi qanday?",
+        "answer": "Ручка."
+      }
+    ],
+    "roleplay": {
+      "a": "Sherigingiz haqidagi varaqda Anna va Toshkent yozilgan. Ma’lumotni tekshiring, keyin ko‘rsatilgan buyum nomini so‘rang.",
+      "b": "Siz Lola, Samarqanddansiz. Ikkita xatoni tuzating; buyum kitob ekanini ayting.",
+      "twist": "B ning yangi kartasida ism to‘g‘ri, shahar xato bo‘lsin; javobni shunga moslang.",
+      "success": "A uch tekshiruvni bajaradi, B kamida bitta не… а… tuzatishini ishlatadi."
+    },
+    "teacherTip": "O‘zbekcha tartib ta’siridagi Анна не o‘rniga Не Анна ketma-ketligini eshittiring. Sust o‘quvchi ikki variantdan tanlasin; kuchliroq o‘quvchi tekshiruv savoliga Правильно? qo‘shsin.",
+    "homework": [
+      "Ikki ismni не… а… bilan tuzatib ovoz yozing.",
+      "Uch tekshiruv savolini yozing: ism, shahar, buyum.",
+      "Yaqiningizdan tanish buyumning ruscha nomini qolip bilan so‘rang."
+    ],
+    "exit": "Ataylab xato aytilgan ism va shaharni tuzating, bir buyum nomini so‘rang; uch vazifadan kamida ikkitasi mustaqil bajarilsin."
+  },
+  {
+    "no": 12,
+    "month": 1,
+    "week": 4,
+    "title": "Birinchi oy sinovi: mehmonlar markazi",
+    "objective": "Yangi mehmonlar markazi vaziyatida o‘zini tanishtiradi, ikki ma’lumotni aniqlaydi, iltimos va suhbatni tiklash iborasini ishlatadi.",
+    "grammar": {
+      "title": "Oylik integratsiya: tanishuv, savol va iltimos",
+      "rule": "Bu darsda yangi grammatika yo‘q. Ism va shahar qoliplari, bog‘lamasiz gap, что/где, tasdiq-inkor va odobli iltimoslar bir vazifada qo‘llanadi. Qiyinchilik bo‘lsa Повторите, пожалуйста bilan suhbat davom ettiriladi. Kirill tayanchi saqlanadi.",
+      "examples": [
+        {
+          "ru": "Я Лола. Я из Ташкента.",
+          "uz": "Men Lolaman. Men Toshkentdanman."
+        },
+        {
+          "ru": "Это не книга. Это телефон.",
+          "uz": "Bu kitob emas. Bu telefon."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Mehmon ismini so‘rang, sizlab.",
+          "answer": "Как вас зовут?",
+          "explanation": "Rasmiyroq xizmat vaziyatida вас qo‘llanadi."
+        },
+        {
+          "prompt": "Xato buyumni tuzating: Это книга? Rasmda telefon.",
+          "answer": "Нет, это телефон.",
+          "explanation": "Inkor ortidan to‘g‘ri ma’lumot beriladi."
+        },
+        {
+          "prompt": "Markazda yozish uchun ruchka so‘rang.",
+          "answer": "Дайте, пожалуйста, ручку.",
+          "explanation": "O‘rganilgan tayyor iltimos qayta ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Здравствуйте!",
+        "uz": "Assalomu alaykum!"
+      },
+      {
+        "ru": "Меня зовут…",
+        "uz": "Mening ismim…"
+      },
+      {
+        "ru": "Я из Ташкента.",
+        "uz": "Men Toshkentdanman."
+      },
+      {
+        "ru": "А вы?",
+        "uz": "Siz-chi?"
+      },
+      {
+        "ru": "Где книга?",
+        "uz": "Kitob qayerda?"
+      },
+      {
+        "ru": "Дайте, пожалуйста, ручку.",
+        "uz": "Iltimos, ruchka bering."
+      },
+      {
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      },
+      {
+        "ru": "До свидания!",
+        "uz": "Xayr!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Вы Анна?",
+        "uz": "Assalomu alaykum! Siz Annasizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, я Лола. Я из Ташкента.",
+        "uz": "Yo‘q, men Lolaman. Men Toshkentdanman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Очень приятно. Я Али.",
+        "uz": "Tanishganimdan xursandman. Men Aliman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Дайте, пожалуйста, ручку.",
+        "uz": "Iltimos, ruchka bering."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вот, пожалуйста.",
+        "uz": "Mana, marhamat."
+      },
+      {
+        "speaker": "B",
+        "ru": "Спасибо. Где книга?",
+        "uz": "Rahmat. Kitob qayerda?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Книга здесь.",
+        "uz": "Kitob shu yerda."
+      },
+      {
+        "speaker": "B",
+        "ru": "Спасибо. До свидания!",
+        "uz": "Rahmat. Xayr!"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Mehmon qayerdan?",
+        "answer": "Из Ташкента."
+      },
+      {
+        "prompt": "Xodimning ismi nima?",
+        "answer": "Али."
+      },
+      {
+        "prompt": "Kitob qayerda?",
+        "answer": "Здесь."
+      }
+    ],
+    "roleplay": {
+      "a": "Mehmonlar markazi xodimisiz. Mehmonni Anna deb o‘ylayapsiz; ruchka sizda, kitob uzoqda. Ismni tekshiring va so‘rovlarga javob bering.",
+      "b": "Siz Lola, Samarqanddansiz. Xatoni tuzating, ruchka so‘rang, kitob joyini biling va bitta javobni takrorlating.",
+      "twist": "Yangi kartada ism to‘g‘ri, kitob esa yaqin; rollarni almashtiring.",
+      "success": "Besh vazifa: tanishtirish, tuzatish, iltimos, joy so‘rash va aniqlashtirish; kamida to‘rttasi bajariladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. Tanishtirish, savol, tuzatish, iltimos va aniqlashtirishni kuzating. Это нет… xatosini suhbatdan keyin не bilan tuzating. Tayanchga ibora banki, ilg‘orga faqat rasm bering. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Sinovdagi bitta qiyin almashinuvni tuzatib ovoz yozing.",
+      "O‘zingiz ko‘p adashtirgan beshta kirill belgisini namuna so‘z bilan yozing.",
+      "Boshqa sherik bilan mehmon vazifasini yangi ism kartasida takrorlang."
+    ],
+    "exit": "Yangi kartada besh nutq vazifasidan kamida to‘rttasini bajaring va 14/20 oling; ishlatilgan yordam alohida qayd etilsin."
+  },
+  {
+    "no": 13,
+    "month": 2,
+    "week": 5,
+    "title": "Oilamni suratda tanishtiraman",
+    "objective": "Oilaviy suratdagi to‘rt kishini qarindoshlik nomlari bilan tanishtiradi va ikki kim savoliga javob beradi.",
+    "grammar": {
+      "title": "Мой va моя bilan qarindoshlik",
+      "rule": "Мой erkak jinsidagi ot bilan, моя ayol jinsidagi ot bilan ishlatiladi: мой брат, моя сестра. Shakl egasining emas, aytilayotgan otning jinsiga bog‘liq: qiz ham мой брат deydi. Это dan keyin tanishtirilayotgan ot bosh shaklda qoladi.",
+      "examples": [
+        {
+          "ru": "Это мой брат.",
+          "uz": "Bu mening akam yoki ukam."
+        },
+        {
+          "ru": "Это моя сестра.",
+          "uz": "Bu mening opam yoki singlim."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Это ___ мама.",
+          "answer": "моя",
+          "explanation": "Мама ayol jinsidagi ot."
+        },
+        {
+          "prompt": "To‘ldiring: Это ___ папа.",
+          "answer": "мой",
+          "explanation": "Папа -а bilan tugasa ham erkak kishini bildiradi."
+        },
+        {
+          "prompt": "Qiz bola akasini tanishtirsin: Это ___ брат.",
+          "answer": "мой",
+          "explanation": "Egalik shakli gapiruvchi qizga emas, брат otiga moslashadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Это моя семья.",
+        "uz": "Bu mening oilam."
+      },
+      {
+        "ru": "Это моя мама.",
+        "uz": "Bu mening onam."
+      },
+      {
+        "ru": "Это мой папа.",
+        "uz": "Bu mening otam."
+      },
+      {
+        "ru": "Это мой брат.",
+        "uz": "Bu mening akam yoki ukam."
+      },
+      {
+        "ru": "Это моя сестра.",
+        "uz": "Bu mening opam yoki singlim."
+      },
+      {
+        "ru": "Это моя бабушка.",
+        "uz": "Bu mening buvim."
+      },
+      {
+        "ru": "Это мой дедушка.",
+        "uz": "Bu mening bobom."
+      },
+      {
+        "ru": "Кто это?",
+        "uz": "Bu kim?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Это моя семья.",
+        "uz": "Bu mening oilam."
+      },
+      {
+        "speaker": "B",
+        "ru": "Кто это?",
+        "uz": "Bu kim?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Это моя мама. Её зовут Анна.",
+        "uz": "Bu mening onam. Uning ismi Anna."
+      },
+      {
+        "speaker": "B",
+        "ru": "А это ваш брат?",
+        "uz": "Bu esa sizning akangiz yoki ukangizmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, это мой брат. Его зовут Али.",
+        "uz": "Ha, bu mening akam. Uning ismi Ali."
+      },
+      {
+        "speaker": "B",
+        "ru": "Очень приятно.",
+        "uz": "Tanishganimdan xursandman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Anna A ga kim bo‘ladi?",
+        "answer": "Мама."
+      },
+      {
+        "prompt": "Akasi yoki ukasining ismi nima?",
+        "answer": "Али."
+      },
+      {
+        "prompt": "A nimani tanishtiryapti?",
+        "answer": "Семью."
+      }
+    ],
+    "roleplay": {
+      "a": "Sizda ona, ota, aka va singilning xayoliy surati bor. To‘rt kishini tanishtiring.",
+      "b": "Siz suratdagi odamlarni bilmaysiz. Ikkitasini Кто это? bilan so‘rang va bitta taxminni tekshiring.",
+      "twist": "A opa va uka kartalarini olsin; ruscha nomlar yosh farqini ko‘rsatmasligini hisobga oling.",
+      "success": "To‘rt qarindoshlik gapidan kamida uchtasida мой/моя to‘g‘ri tanlanadi."
+    },
+    "teacherTip": "Мой мама xatosini мама → моя juftligi bilan tuzating. Её зовут…, Его зовут… va ваш брат ni hozir tayyor qolip deb bering. Sustlarga surat-taglavha, kuchliroqlarga ismlarni qo‘shish vazifasini bering.",
+    "homework": [
+      "Haqiqiy yoki xayoliy oiladagi to‘rt kishini ovozli tanishtiring.",
+      "Мой bilan ikki, моя bilan ikki qarindoshlik birikmasini yozing.",
+      "Sherik bilan oilaviy rasmlar haqida ikki kim savolini mashq qiling."
+    ],
+    "exit": "To‘rt qarindoshni tanishtiring; kamida uchta мой/моя birikmasi to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 14,
+    "month": 2,
+    "week": 5,
+    "title": "Menda bor, sizda-chi?",
+    "objective": "Oila va kundalik buyumlar haqida uch egalik gapini aytadi, ikkita bor-yo‘qlik savolini beradi.",
+    "grammar": {
+      "title": "У меня есть va У вас есть?",
+      "rule": "Biror narsa yoki yaqin kishining borligini У меня есть… bilan aytamiz; ot bosh shaklda qoladi: У меня есть сестра. Suhbatdoshdan У вас есть…? deb so‘raladi. Qisqa javoblar Да, есть va Нет; keng inkor shakli keyin o‘rganiladi.",
+      "examples": [
+        {
+          "ru": "У меня есть брат.",
+          "uz": "Mening akam yoki ukam bor."
+        },
+        {
+          "ru": "У вас есть телефон?",
+          "uz": "Sizda telefon bormi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: У ___ есть книга.",
+          "answer": "меня",
+          "explanation": "O‘zimizda borligini у меня bilan aytamiz."
+        },
+        {
+          "prompt": "Otni tanlang: У меня есть ___ . (сестра / сестру)",
+          "answer": "сестра",
+          "explanation": "Есть bilan mavjudlik gapida ot bosh shaklda qoladi."
+        },
+        {
+          "prompt": "Sizda telefon bor. У вас есть телефон? savoliga qisqa javob.",
+          "answer": "Да, есть.",
+          "explanation": "Qisqa tasdiqda otni takrorlash shart emas."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "У меня есть брат.",
+        "uz": "Mening akam yoki ukam bor."
+      },
+      {
+        "ru": "У меня есть сестра.",
+        "uz": "Mening opam yoki singlim bor."
+      },
+      {
+        "ru": "У меня есть телефон.",
+        "uz": "Menda telefon bor."
+      },
+      {
+        "ru": "У меня есть книга.",
+        "uz": "Menda kitob bor."
+      },
+      {
+        "ru": "У вас есть ручка?",
+        "uz": "Sizda ruchka bormi?"
+      },
+      {
+        "ru": "Да, есть.",
+        "uz": "Ha, bor."
+      },
+      {
+        "ru": "Нет.",
+        "uz": "Yo‘q."
+      },
+      {
+        "ru": "А у вас?",
+        "uz": "Sizda-chi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "У вас есть брат?",
+        "uz": "Akangiz yoki ukangiz bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, есть. А у вас?",
+        "uz": "Ha, bor. Sizda-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "У меня есть сестра.",
+        "uz": "Mening singlim bor."
+      },
+      {
+        "speaker": "B",
+        "ru": "А у вас есть книга?",
+        "uz": "Sizda kitob bormi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, есть. Вот, пожалуйста.",
+        "uz": "Ha, bor. Mana, marhamat."
+      },
+      {
+        "speaker": "B",
+        "ru": "Спасибо.",
+        "uz": "Rahmat."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B da aka yoki uka bormi?",
+        "answer": "Да, есть."
+      },
+      {
+        "prompt": "A qaysi qarindoshini aytdi?",
+        "answer": "Сестра."
+      },
+      {
+        "prompt": "A qaysi buyumni uzatdi?",
+        "answer": "Книгу."
+      }
+    ],
+    "roleplay": {
+      "a": "Kartangizda singil, kitob va telefon bor. B ning oilasi va buyumlaridan ikkitasini aniqlang.",
+      "b": "Kartangizda aka va ruchka bor, kitob yo‘q. Savollarga kartaga mos qisqa javob bering, so‘ng A dan kitob so‘rang.",
+      "twist": "B ga kitob kartasi ham berilsin; avvalgi javobni yangilang.",
+      "success": "Juftlik ikki savol beradi va uchta у меня есть gapini to‘g‘ri tuzadi."
+    },
+    "teacherTip": "Я есть книга shaklini o‘zbekcha «menda» bilan bog‘lab У меня есть ga almashtiring. Sustlarga у меня/у вас kartalari, kuchliroqlarga А у вас? bilan savolni qaytarish vazifasini bering.",
+    "homework": [
+      "Sizda bor uch narsani ovozga yozing.",
+      "У вас есть…? bilan ikki savol yozing.",
+      "Xayoliy buyum kartalari bilan bor/yo‘q javoblarini sherik bilan mashq qiling."
+    ],
+    "exit": "Ikki borlik savolini bering va o‘zingizdagi uch narsani у меня есть bilan ayting; kamida to‘rtta gap to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 15,
+    "month": 2,
+    "week": 5,
+    "title": "Poyezdda tanishish va kitob almashish",
+    "objective": "Yangi yo‘lovchi bilan oila haqida ma’lumot almashadi va tanish iltimos qolipi yordamida kitob oladi.",
+    "grammar": {
+      "title": "Integratsiya: qarindoshlik va borlik",
+      "rule": "Мой/моя qarindoshlikni ko‘rsatadi; у меня есть borlikni bildiradi. Poyezddagi suhbatda shu ikkisini oldingi ism, shahar va iltimos qoliplari bilan birlashtiramiz. Yangi kelishikni mustaqil yasash talab qilinmaydi.",
+      "examples": [
+        {
+          "ru": "Это моя сестра.",
+          "uz": "Bu mening singlim."
+        },
+        {
+          "ru": "У вас есть книга?",
+          "uz": "Sizda kitob bormi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Suratni tanishtiring: Это ___ брат.",
+          "answer": "мой",
+          "explanation": "Брат erkak jinsidagi ot."
+        },
+        {
+          "prompt": "Borlikni ifodalang: У меня ___ книга.",
+          "answer": "есть",
+          "explanation": "Есть bu gapda borlikni bildiradi."
+        },
+        {
+          "prompt": "Kitob olish uchun oldingi iltimosni ayting.",
+          "answer": "Дайте, пожалуйста, книгу.",
+          "explanation": "Mavjudlikda книга, tayyor iltimosda книгу ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Откуда вы?",
+        "uz": "Siz qayerdansiz?"
+      },
+      {
+        "ru": "Я из Самарканда.",
+        "uz": "Men Samarqanddanman."
+      },
+      {
+        "ru": "Это моя семья.",
+        "uz": "Bu mening oilam."
+      },
+      {
+        "ru": "Это мой брат.",
+        "uz": "Bu mening akam yoki ukam."
+      },
+      {
+        "ru": "У вас есть книга?",
+        "uz": "Sizda kitob bormi?"
+      },
+      {
+        "ru": "Да, есть.",
+        "uz": "Ha, bor."
+      },
+      {
+        "ru": "Дайте, пожалуйста, книгу.",
+        "uz": "Iltimos, kitob bering."
+      },
+      {
+        "ru": "Вот, пожалуйста.",
+        "uz": "Mana, marhamat."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Я Лола. Откуда вы?",
+        "uz": "Assalomu alaykum! Men Lolaman. Siz qayerdansiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я из Самарканда. Меня зовут Али.",
+        "uz": "Men Samarqanddanman. Mening ismim Ali."
+      },
+      {
+        "speaker": "A",
+        "ru": "Это мой брат. А у вас есть брат?",
+        "uz": "Bu mening akam. Sizning akangiz yoki ukangiz bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет. У меня есть сестра.",
+        "uz": "Yo‘q. Mening singlim bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "У вас есть книга?",
+        "uz": "Sizda kitob bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, есть.",
+        "uz": "Ha, bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Дайте, пожалуйста, книгу.",
+        "uz": "Iltimos, kitob bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот, пожалуйста.",
+        "uz": "Mana, marhamat."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Ali qayerdan?",
+        "answer": "Из Самарканда."
+      },
+      {
+        "prompt": "Alining qaysi qarindoshi bor?",
+        "answer": "Сестра."
+      },
+      {
+        "prompt": "Lola nimani so‘rab oldi?",
+        "answer": "Книгу."
+      }
+    ],
+    "roleplay": {
+      "a": "Poyezddagi yo‘lovchisiz. Akangizning surati bor, o‘qish uchun kitob kerak. Tanishib, qarindosh haqida so‘rang va kitob oling.",
+      "b": "Samarqandlik yo‘lovchisiz; singlingiz va kitobingiz bor. Savollarga javob bering, kitobni taklif etilgan qolip bilan uzating.",
+      "twist": "B da kitob bo‘lmasin, A da esa kitob bo‘lsin; yordam beruvchi rol almashsin.",
+      "success": "Tanishuv, bir qarindoshlik savoli va kitob olishga doir ikki almashinuv bajariladi."
+    },
+    "teacherTip": "У меня есть книгу xatosida ikki qolipni yonma-yon ayting: есть книга / дайте книгу. Sust o‘quvchi ikkalasini kartadan olsin; kuchliroq o‘quvchi shahar savolini ham qo‘shsin.",
+    "homework": [
+      "Yo‘lovchi suhbatidagi o‘z replikalaringizni ovozga yozing.",
+      "Есть книга va дайте книгу bilan bittadan to‘liq gap yozing.",
+      "Boshqa qarindosh kartasi bilan suhbatni sherik bilan qaytaring."
+    ],
+    "exit": "Notanish yo‘lovchi rolida oila haqida savol bering, javob qaytaring va kitobni odob bilan so‘rang; uch vazifa bajarilsin."
+  },
+  {
+    "no": 16,
+    "month": 2,
+    "week": 6,
+    "title": "Buyumni belgilari bilan tasvirlash",
+    "objective": "Uch tanish buyumni rang yoki o‘lcham bilan tasvirlaydi va tavsif bo‘yicha kerakli buyumni tanlaydi.",
+    "grammar": {
+      "title": "Ot jinsi va sifatning moslashuvi",
+      "rule": "Ko‘p otlarda undosh oxiri erkak jinsini, -а/-я ayol jinsini, -о/-е o‘rta jinsni ko‘rsatadi; istisnolar bor. Sifat moslashadi: новый телефон, новая сумка, новое окно. Мой/моя ga o‘rta jins uchun моё qo‘shiladi. Большой sifatining shakllari: большая, большое.",
+      "examples": [
+        {
+          "ru": "Это новая сумка.",
+          "uz": "Bu yangi sumka."
+        },
+        {
+          "ru": "Это большое окно.",
+          "uz": "Bu katta deraza."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Moslang: ___ телефон. (новый / новая)",
+          "answer": "новый",
+          "explanation": "Телефон erkak jinsida."
+        },
+        {
+          "prompt": "Moslang: ___ сумка. (красный / красная)",
+          "answer": "красная",
+          "explanation": "Сумка ayol jinsida, sifat -ая oladi."
+        },
+        {
+          "prompt": "Moslang: ___ окно. (большая / большое)",
+          "answer": "большое",
+          "explanation": "Окно o‘rta jinsida, bu sifat -ое oladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Новый телефон.",
+        "uz": "Yangi telefon."
+      },
+      {
+        "ru": "Новая сумка.",
+        "uz": "Yangi sumka."
+      },
+      {
+        "ru": "Большое окно.",
+        "uz": "Katta deraza."
+      },
+      {
+        "ru": "Красная ручка.",
+        "uz": "Qizil ruchka."
+      },
+      {
+        "ru": "Красный телефон.",
+        "uz": "Qizil telefon."
+      },
+      {
+        "ru": "Это моя сумка.",
+        "uz": "Bu mening sumkam."
+      },
+      {
+        "ru": "Это моё фото.",
+        "uz": "Bu mening suratim."
+      },
+      {
+        "ru": "Какая сумка?",
+        "uz": "Qanday sumka?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Это ваша сумка?",
+        "uz": "Bu sizning sumkangizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, это моя новая сумка.",
+        "uz": "Ha, bu mening yangi sumkam."
+      },
+      {
+        "speaker": "A",
+        "ru": "А это новый телефон?",
+        "uz": "Bu esa yangi telefonmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, это моё фото.",
+        "uz": "Yo‘q, bu mening suratim."
+      },
+      {
+        "speaker": "A",
+        "ru": "А где красная ручка?",
+        "uz": "Qizil ruchka qayerda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Красная ручка здесь.",
+        "uz": "Qizil ruchka shu yerda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Sumka qanday?",
+        "answer": "Новая."
+      },
+      {
+        "prompt": "Telefon deb o‘ylangan narsa nima?",
+        "answer": "Фото."
+      },
+      {
+        "prompt": "Ruchka qanday rangda?",
+        "answer": "Красная."
+      }
+    ],
+    "roleplay": {
+      "a": "Sizga yangi sumka, qizil ruchka va katta deraza rasmlari kerak. Belgilarini aytib B dan tanlashni so‘rang.",
+      "b": "Sizda har buyumning ikki xil rasmi bor. A tavsifini tinglab to‘g‘risini ko‘rsating va Это… bilan tasdiqlang.",
+      "twist": "A qizil telefonni so‘rasin; sifat oxirini buyumga mos o‘zgartirsin.",
+      "success": "Uch tavsifdan kamida ikkitasida sifat jinsi to‘g‘ri, uchta rasm tanlovi to‘g‘ri bo‘ladi."
+    },
+    "teacherTip": "O‘zbekchada sifat o‘zgarmagani uchun новая телефон xatosini rangli ot-sifat juftlari bilan tuzating. Ваша сумка ni savol uchun tayyor qolip sifatida bering. Sustlarga ikki jins, kuchliroqlarga uch jins kartalari bering.",
+    "homework": [
+      "Uch buyumni sifat bilan ovozli tasvirlang.",
+      "Новый sifatining uch jinsdagi birikmasini yozing.",
+      "Sherik tavsiflagan uch rasmni tanlab, tanlovni ruscha tasdiqlang."
+    ],
+    "exit": "Телефон, сумка, окно bilan uchta sifatli birikma ayting; kamida ikkitasi jins jihatdan to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 17,
+    "month": 2,
+    "week": 6,
+    "title": "Egasi kim va nimasi yo‘q?",
+    "objective": "Uch buyumning egasini so‘raydi va ikki tanish buyum yo‘qligini cheklangan qolip bilan aytadi.",
+    "grammar": {
+      "title": "Чей/чья/чьё va У меня нет…",
+      "rule": "Чей telefon kabi erkak jinsidagi, чья sumka kabi ayol jinsidagi, чьё фото kabi o‘rta jinsdagi otga mos. Yo‘qlikda нет dan keyin shakl o‘zgaradi: телефон → телефона, ручка → ручки, книга → книги. Hozir shu uch shaklni qolip bilan ishlating. Фото o‘zgarmaydi.",
+      "examples": [
+        {
+          "ru": "Чья это сумка? — Моя.",
+          "uz": "Bu kimning sumkasi? — Meniki."
+        },
+        {
+          "ru": "У меня нет телефона.",
+          "uz": "Menda telefon yo‘q."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Egasini so‘rang: ___ это телефон?",
+          "answer": "Чей",
+          "explanation": "Телефон erkak jinsidagi ot."
+        },
+        {
+          "prompt": "Yo‘qlikni to‘ldiring: У меня нет ___ . (ручка / ручки)",
+          "answer": "ручки",
+          "explanation": "Нет dan keyin berilgan qolipda ручки ishlatiladi."
+        },
+        {
+          "prompt": "Фото uchun savol so‘zini tanlang: чей / чьё.",
+          "answer": "чьё",
+          "explanation": "Фото o‘rta jinsdagi o‘zgarmas ot."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Чей это телефон?",
+        "uz": "Bu kimning telefoni?"
+      },
+      {
+        "ru": "Чья это сумка?",
+        "uz": "Bu kimning sumkasi?"
+      },
+      {
+        "ru": "Чьё это фото?",
+        "uz": "Bu kimning surati?"
+      },
+      {
+        "ru": "Это мой телефон.",
+        "uz": "Bu mening telefonim."
+      },
+      {
+        "ru": "Это не моя сумка.",
+        "uz": "Bu mening sumkam emas."
+      },
+      {
+        "ru": "У меня нет телефона.",
+        "uz": "Menda telefon yo‘q."
+      },
+      {
+        "ru": "У меня нет ручки.",
+        "uz": "Menda ruchka yo‘q."
+      },
+      {
+        "ru": "У меня нет книги.",
+        "uz": "Menda kitob yo‘q."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Чья это сумка?",
+        "uz": "Bu kimning sumkasi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Это моя сумка.",
+        "uz": "Bu mening sumkam."
+      },
+      {
+        "speaker": "A",
+        "ru": "У вас есть ручка?",
+        "uz": "Sizda ruchka bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, у меня нет ручки.",
+        "uz": "Yo‘q, menda ruchka yo‘q."
+      },
+      {
+        "speaker": "A",
+        "ru": "А чей это телефон?",
+        "uz": "Bu esa kimning telefoni?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Это мой телефон.",
+        "uz": "Bu mening telefonim."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Sumka kimniki: A yoki B?",
+        "answer": "B."
+      },
+      {
+        "prompt": "B da nima yo‘q?",
+        "answer": "Ручки."
+      },
+      {
+        "prompt": "Telefon kimniki: A yoki B?",
+        "answer": "B."
+      }
+    ],
+    "roleplay": {
+      "a": "Stolda telefon, sumka va surat bor; egalari noma’lum. Uchalasining egasini B dan so‘rang.",
+      "b": "Telefon va surat sizniki, sumka sizniki emas. Ruchka va kitobingiz yo‘q; A so‘raganda to‘liq yo‘qlik gapini ayting.",
+      "twist": "A ga ruchka bering; u endi B ning iltimosiga yordam bera oladi.",
+      "success": "Uch egalik savolidan kamida ikkitasi mos jinsda, ikkita нет qolipi to‘g‘ri aytiladi."
+    },
+    "teacherTip": "У меня нет ручка xatosini есть ручка / нет ручки qiyosi bilan tuzating. Sust o‘quvchi yo‘qlik shakllari kartasidan foydalansin; kuchliroq o‘quvchi egalik va yo‘qlikni ketma-ket aytsin.",
+    "homework": [
+      "Ikki buyum yo‘qligini ovozli ayting.",
+      "Чей, чья, чьё bilan bittadan savol yozing.",
+      "Sherik bilan uch buyum egasini yashirin kartalardan aniqlang."
+    ],
+    "exit": "Ikki egalik savoli va ikki yo‘qlik gapini ayting; to‘rttadan kamida uchtasi shaklan to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 18,
+    "month": 2,
+    "week": 6,
+    "title": "Sport markazida yo‘qolgan buyum",
+    "objective": "Yangi topilmalar vaziyatida buyumni ikki belgi bilan tanitadi, egasini tekshiradi va yetishmayotgan narsani aytadi.",
+    "grammar": {
+      "title": "Integratsiya: tavsif, egalik va yo‘qlik",
+      "rule": "Sifat ot jinsiga moslashadi, чей/чья/чьё esa egani so‘raydi. У меня нет… faqat o‘rganilgan shakllar bilan ishlatiladi. Bu darsda oldingi tuzatish va joy savollari sport markazidagi topilmalar stoliga ko‘chiriladi.",
+      "examples": [
+        {
+          "ru": "Это моя новая сумка.",
+          "uz": "Bu mening yangi sumkam."
+        },
+        {
+          "ru": "У меня нет телефона.",
+          "uz": "Menda telefon yo‘q."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Это моя ___ сумка. (новый / новая)",
+          "answer": "новая",
+          "explanation": "Сумка ayol jinsida."
+        },
+        {
+          "prompt": "Topilgan telefon egasini so‘rang.",
+          "answer": "Чей это телефон?",
+          "explanation": "Telefon uchun чей ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: У меня нет ___ . (телефон / телефона)",
+          "answer": "телефона",
+          "explanation": "Oldingi yo‘qlik qolipidagi shakl qaytariladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Извините.",
+        "uz": "Kechirasiz."
+      },
+      {
+        "ru": "Где сумка?",
+        "uz": "Sumka qayerda?"
+      },
+      {
+        "ru": "Какая сумка?",
+        "uz": "Qanday sumka?"
+      },
+      {
+        "ru": "Новая, красная.",
+        "uz": "Yangi, qizil."
+      },
+      {
+        "ru": "Это моя сумка.",
+        "uz": "Bu mening sumkam."
+      },
+      {
+        "ru": "Чей это телефон?",
+        "uz": "Bu kimning telefoni?"
+      },
+      {
+        "ru": "Это не мой телефон.",
+        "uz": "Bu mening telefonim emas."
+      },
+      {
+        "ru": "У меня нет телефона.",
+        "uz": "Menda telefon yo‘q."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Извините, где сумка?",
+        "uz": "Kechirasiz, sumka qayerda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Какая сумка?",
+        "uz": "Qanday sumka?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Новая, красная.",
+        "uz": "Yangi, qizil."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот. Это ваша сумка?",
+        "uz": "Mana. Bu sizning sumkangizmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, это моя сумка. У меня нет телефона.",
+        "uz": "Ha, bu mening sumkam. Menda telefon yo‘q."
+      },
+      {
+        "speaker": "B",
+        "ru": "Это ваш телефон?",
+        "uz": "Bu sizning telefoningizmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет, это не мой телефон.",
+        "uz": "Yo‘q, bu mening telefonim emas."
+      },
+      {
+        "speaker": "B",
+        "ru": "Понятно.",
+        "uz": "Tushunarli."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Sumka qaysi rangda?",
+        "answer": "Красная."
+      },
+      {
+        "prompt": "A da yana nima yo‘q?",
+        "answer": "Телефона."
+      },
+      {
+        "prompt": "Ko‘rsatilgan telefon A nikimi?",
+        "answer": "Нет."
+      }
+    ],
+    "roleplay": {
+      "a": "Sport markazida yangi qizil sumkangizni qidiryapsiz. Telefoningiz ham yoningizda yo‘q. Tavsif va yo‘qlikni ayting.",
+      "b": "Topilmalar stolida ikkita sumka va bitta telefon bor. Sumka belgilarini so‘rang, mosini ko‘rsating va telefon egasini tekshiring.",
+      "twist": "Telefon kartasidagi belgi A kartasiga mos tushsin; A bu safar tasdiqlasin.",
+      "success": "Ikki sifatli tavsif, egalik tasdig‘i yoki inkori va bitta yo‘qlik gapi tushunarli aytiladi."
+    },
+    "teacherTip": "Мой сумка xatosida egasining jinsi emas, buyum nomi boshqarishini eslating. Sustlarga sifatlarning tayyor juftini bering; kuchliroqlar ikki noto‘g‘ri buyumni rad etib mosini topsin.",
+    "homework": [
+      "Yo‘qolgan sumka haqida uch replikali ovoz yozing.",
+      "Telefon va sumka uchun bittadan egalik hamda tavsif gapini yozing.",
+      "Rasmlarni yashirib, sherikning tavsifidan topilmani tanlang."
+    ],
+    "exit": "Ikki belgi bilan sumkani toping, telefon egaligini tekshiring va bitta yo‘qlik gapini ayting; uch vazifa bajarilsin."
+  },
+  {
+    "no": 19,
+    "month": 2,
+    "week": 7,
+    "title": "Raqamni eshitish va qayta tekshirish",
+    "objective": "0–12 sonlarini taniydi, olti raqamli xayoliy kodni aytadi va sherik aytgan kodni tekshiradi.",
+    "grammar": {
+      "title": "0–12 sonlari va Какой номер? qolipi",
+      "rule": "Sonlar: ноль, один, два, три, четыре, пять, шесть, семь, восемь, девять, десять, одиннадцать, двенадцать. Bu darsda sonlar kod va raqam sifatida aytiladi; sonlardan keyingi ot shakllari talab qilinmaydi. Какой номер? — raqamni so‘rash qolipi. Shaxsiy telefon o‘rniga xayoliy kod ishlating.",
+      "examples": [
+        {
+          "ru": "Номер пять.",
+          "uz": "Raqami besh."
+        },
+        {
+          "ru": "Ноль, два, семь, один, восемь, три.",
+          "uz": "Nol, ikki, yetti, bir, sakkiz, uch."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "8 ni ruscha ayting.",
+          "answer": "восемь",
+          "explanation": "Bu mustaqil son nomi."
+        },
+        {
+          "prompt": "11 va 12 ni tartib bilan ayting.",
+          "answer": "одиннадцать, двенадцать",
+          "explanation": "Ikki sonni urg‘usini saqlab farqlaymiz."
+        },
+        {
+          "prompt": "Kod 504. Raqamlarni alohida ayting.",
+          "answer": "пять, ноль, четыре",
+          "explanation": "Kodda har bir raqam alohida o‘qilishi mumkin."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Какой номер?",
+        "uz": "Qaysi raqam?"
+      },
+      {
+        "ru": "Номер два.",
+        "uz": "Raqami ikki."
+      },
+      {
+        "ru": "Ноль, один, два.",
+        "uz": "Nol, bir, ikki."
+      },
+      {
+        "ru": "Три, четыре, пять.",
+        "uz": "Uch, to‘rt, besh."
+      },
+      {
+        "ru": "Шесть, семь, восемь.",
+        "uz": "Olti, yetti, sakkiz."
+      },
+      {
+        "ru": "Девять, десять.",
+        "uz": "To‘qqiz, o‘n."
+      },
+      {
+        "ru": "Одиннадцать, двенадцать.",
+        "uz": "O‘n bir, o‘n ikki."
+      },
+      {
+        "ru": "Повторите номер, пожалуйста.",
+        "uz": "Iltimos, raqamni takrorlang."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Какой номер?",
+        "uz": "Qaysi raqam?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Номер двенадцать.",
+        "uz": "Raqami o‘n ikki."
+      },
+      {
+        "speaker": "A",
+        "ru": "Одиннадцать?",
+        "uz": "O‘n birmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, двенадцать.",
+        "uz": "Yo‘q, o‘n ikki."
+      },
+      {
+        "speaker": "A",
+        "ru": "Двенадцать, правильно?",
+        "uz": "O‘n ikki, to‘g‘rimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, правильно.",
+        "uz": "Ha, to‘g‘ri."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "To‘g‘ri raqam nechchi?",
+        "answer": "Двенадцать."
+      },
+      {
+        "prompt": "A dastlab qaysi son deb o‘yladi?",
+        "answer": "Одиннадцать."
+      },
+      {
+        "prompt": "Oxirgi taxmin tasdiqlandimi?",
+        "answer": "Да, правильно."
+      }
+    ],
+    "roleplay": {
+      "a": "Kartangizdagi xayoliy kod 027183. B ga raqamlarni ayting, uning qaytarishini tekshiring.",
+      "b": "Kod sizda yo‘q. Tinglab yozing, bir marta takrorlashni so‘rang va kodni qayta o‘qing.",
+      "twist": "Yangi kod 609452 bo‘lsin; rollar almashsin.",
+      "success": "Olti raqamning barchasi aniqlashtirishdan so‘ng mos keladi; kamida bir tekshiruv savoli aytiladi."
+    },
+    "teacherTip": "Восемь oxiridagi yumshoqlikni ortiqcha «i» qo‘shmasdan mashq qildiring. Sustlarga raqam-so‘z jadvali, kuchliroqlarga 11 va 12 qatnashgan xona raqamlari bering.",
+    "homework": [
+      "Ikki olti raqamli xayoliy kodni ovozga yozing.",
+      "0–12 sonlarini yozib, 11 va 12 ni alohida belgilang.",
+      "Sherik aytgan kodni yozing va ruscha qayta tekshiring."
+    ],
+    "exit": "Olti raqamli kodni ayting va boshqa kodni to‘g‘ri qayta o‘qing; bitta aniqlashtirishdan foydalanish mumkin."
+  },
+  {
+    "no": 20,
+    "month": 2,
+    "week": 7,
+    "title": "Yoshni aytish va so‘rash",
+    "objective": "13–31 oralig‘idagi yoshni qolip bilan aytadi va uch kishi haqidagi yosh ma’lumotini savol orqali aniqlaydi.",
+    "grammar": {
+      "title": "Мне… лет va sonning oxiriga mos yil shakli",
+      "rule": "Yosh «menga» ma’nosidagi мне bilan aytiladi: Мне двадцать лет. 13–19: тринадцать, четырнадцать, пятнадцать, шестнадцать, семнадцать, восемнадцать, девятнадцать; 20 — двадцать, 30 — тридцать. 21/31 год, 22–24 года, 25–30 лет; 11–14 bilan har doim лет. Сколько вам лет? — yosh savoli; Ему/ей… tayyor shaxs qoliplari.",
+      "examples": [
+        {
+          "ru": "Мне двадцать один год.",
+          "uz": "Men yigirma bir yoshdaman."
+        },
+        {
+          "ru": "Ей двадцать четыре года.",
+          "uz": "U ayol yigirma to‘rt yoshda."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Мне двадцать два ___ .",
+          "answer": "года",
+          "explanation": "22 oxiri ikki, lekin 12 emas: года ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Мне четырнадцать ___ .",
+          "answer": "лет",
+          "explanation": "11–14 sonlari лет talab qiladi."
+        },
+        {
+          "prompt": "31 yoshni tayyor qolip bilan ayting.",
+          "answer": "Мне тридцать один год.",
+          "explanation": "31 oxiri bir bo‘lgani uchun год ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Сколько вам лет?",
+        "uz": "Yoshingiz nechada?"
+      },
+      {
+        "ru": "Мне двадцать лет.",
+        "uz": "Men yigirma yoshdaman."
+      },
+      {
+        "ru": "Мне двадцать один год.",
+        "uz": "Men yigirma bir yoshdaman."
+      },
+      {
+        "ru": "Мне двадцать два года.",
+        "uz": "Men yigirma ikki yoshdaman."
+      },
+      {
+        "ru": "Ему пятнадцать лет.",
+        "uz": "U o‘g‘il o‘n besh yoshda."
+      },
+      {
+        "ru": "Ей восемнадцать лет.",
+        "uz": "U qiz o‘n sakkiz yoshda."
+      },
+      {
+        "ru": "А вашей сестре?",
+        "uz": "Opangiz yoki singlingiz-chi?"
+      },
+      {
+        "ru": "Не хочу отвечать.",
+        "uz": "Javob berishni xohlamayman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Сколько вам лет?",
+        "uz": "Yoshingiz nechada?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Мне двадцать два года. А вам?",
+        "uz": "Men yigirma ikki yoshdaman. Siz-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне двадцать один год.",
+        "uz": "Men yigirma bir yoshdaman."
+      },
+      {
+        "speaker": "B",
+        "ru": "А вашей сестре?",
+        "uz": "Singlingiz-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Ей восемнадцать лет.",
+        "uz": "U o‘n sakkiz yoshda."
+      },
+      {
+        "speaker": "B",
+        "ru": "А моему брату пятнадцать лет.",
+        "uz": "Mening ukam esa o‘n besh yoshda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B necha yoshda?",
+        "answer": "Двадцать два года."
+      },
+      {
+        "prompt": "A necha yoshda?",
+        "answer": "Двадцать один год."
+      },
+      {
+        "prompt": "A ning singlisi necha yoshda?",
+        "answer": "Восемнадцать лет."
+      }
+    ],
+    "roleplay": {
+      "a": "Xayoliy kartangiz: siz 21, singlingiz 18 yoshda. B ning yoshi va ukasi yoshini aniqlang.",
+      "b": "Xayoliy kartangiz: siz 24, ukangiz 13 yoshda. Javob bering, A ning yoshini so‘rang.",
+      "twist": "Kartadagi yoshlarni 31 va 22 ga almashtiring; yil so‘zining shaklini tekshiring.",
+      "success": "Uch yosh ma’lumoti olinadi; kamida ikkitasida год/года/лет to‘g‘ri aytiladi."
+    },
+    "teacherTip": "Я двадцать лет xatosini Мне двадцать лет qolipi bilan tuzating. А вашей сестре?, А вашему брату?, Моему брату… hamda rad javobini tayyor qolip deb bering. Sustlarga son jadvali; kuchliroqlarga 14/24 qiyosini bering. Haqiqiy yoshni aytish majburiy emas.",
+    "homework": [
+      "Uch xayoliy kishining yoshini ovozga yozing.",
+      "14, 21, 24, 30, 31 uchun yosh birikmalarini yozing.",
+      "Sherik bilan ikki yosh savolini bering va javoblarini qayta ayting."
+    ],
+    "exit": "14, 22 va 31 yosh kartalarini to‘liq qolipda ayting; uch son va kamida ikki yil shakli to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 21,
+    "month": 2,
+    "week": 7,
+    "title": "Oilaviy foto ko‘rgazmasida ma’lumot",
+    "objective": "Yangi ko‘rgazma vaziyatida surat raqamini, qarindoshlikni va yoshni savollar bilan aniqlab, xato sonni tuzatadi.",
+    "grammar": {
+      "title": "Integratsiya: raqam, oila va yosh",
+      "rule": "Номер… da son mustaqil raqamni bildiradi; Мне/ему/ей… gapida esa yoshdan keyin год/года/лет keladi. Мой/моя va Это… bilan suratdagi odam tanishtiriladi. Bu dars oldingi shakllarni yangi ma’lumot almashuvida qo‘llaydi.",
+      "examples": [
+        {
+          "ru": "Фото номер двадцать один.",
+          "uz": "Yigirma bir raqamli surat."
+        },
+        {
+          "ru": "Это моя сестра. Ей двадцать один год.",
+          "uz": "Bu mening opam. U yigirma bir yoshda."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Raqamni ayting: Фото номер 13.",
+          "answer": "Фото номер тринадцать.",
+          "explanation": "Surat raqamida год kabi so‘z qo‘shilmaydi."
+        },
+        {
+          "prompt": "Yoshni to‘ldiring: Ей двадцать один ___ .",
+          "answer": "год",
+          "explanation": "21 yoshda год shakli kerak."
+        },
+        {
+          "prompt": "Xato raqamni tuzating: 12 emas, 20.",
+          "answer": "Не двенадцать, а двадцать.",
+          "explanation": "Oldingi не… а… qolipi sonlarga ham qo‘llanadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Какой номер?",
+        "uz": "Qaysi raqam?"
+      },
+      {
+        "ru": "Фото номер двадцать.",
+        "uz": "Yigirma raqamli surat."
+      },
+      {
+        "ru": "Кто это?",
+        "uz": "Bu kim?"
+      },
+      {
+        "ru": "Это моя сестра.",
+        "uz": "Bu mening opam yoki singlim."
+      },
+      {
+        "ru": "Сколько ей лет?",
+        "uz": "U necha yoshda?"
+      },
+      {
+        "ru": "Ей двадцать один год.",
+        "uz": "U yigirma bir yoshda."
+      },
+      {
+        "ru": "Не двенадцать, а двадцать.",
+        "uz": "O‘n ikki emas, yigirma."
+      },
+      {
+        "ru": "Теперь понятно.",
+        "uz": "Endi tushunarli."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Какой номер?",
+        "uz": "Qaysi raqam?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Фото номер двадцать.",
+        "uz": "Yigirma raqamli surat."
+      },
+      {
+        "speaker": "A",
+        "ru": "Двенадцать?",
+        "uz": "O‘n ikkimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Не двенадцать, а двадцать.",
+        "uz": "O‘n ikki emas, yigirma."
+      },
+      {
+        "speaker": "A",
+        "ru": "Кто это?",
+        "uz": "Bu kim?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Это моя сестра.",
+        "uz": "Bu mening opam."
+      },
+      {
+        "speaker": "A",
+        "ru": "Сколько ей лет?",
+        "uz": "U necha yoshda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Ей двадцать один год.",
+        "uz": "U yigirma bir yoshda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Suratning to‘g‘ri raqami nechchi?",
+        "answer": "Двадцать."
+      },
+      {
+        "prompt": "Suratda kim bor?",
+        "answer": "Сестра."
+      },
+      {
+        "prompt": "U necha yoshda?",
+        "answer": "Двадцать один год."
+      }
+    ],
+    "roleplay": {
+      "a": "Ko‘rgazma ro‘yxatini to‘ldiryapsiz: surat raqami, qarindosh va yosh noma’lum. Uch ma’lumotni B dan so‘rang.",
+      "b": "Suratingiz 20-raqamli; unda 21 yoshli opangiz bor. Raqam noto‘g‘ri qaytarilsa tuzating.",
+      "twist": "Yangi kartada 13-raqamli suratda 24 yoshli aka bo‘lsin; unga mos olmoshni ayting.",
+      "success": "Uch ma’lumot to‘g‘ri qayd etiladi, kamida bitta son qayta tekshiriladi."
+    },
+    "teacherTip": "Номер двадцать один год kabi raqam va yoshni aralashtirishni ikki ustun bilan tuzating. Sustlarga Сколько ему/ей лет? tayanchini bering; kuchliroqlar ma’lumotni uch gapda qayta aytsin.",
+    "homework": [
+      "Bitta xayoliy suratni raqami, qarindoshi va yoshi bilan ovozli tanishtiring.",
+      "Raqam va yosh uchun 21 bilan ikkita farqli gap yozing.",
+      "Sherik ataylab noto‘g‘ri qaytargan ikki sonni tuzating."
+    ],
+    "exit": "Yangi surat bo‘yicha raqam, shaxs va yoshni savollar bilan aniqlang; uch ma’lumot ham mos bo‘lsin."
+  },
+  {
+    "no": 22,
+    "month": 2,
+    "week": 8,
+    "title": "Soat nechada boshlanadi?",
+    "objective": "To‘liq soatlarni aytadi, hozirgi vaqt va tadbir vaqtini farqlab uch savol-javob bajaradi.",
+    "grammar": {
+      "title": "Который час? va Во сколько?",
+      "rule": "Hozirgi vaqt: Сейчас час, два/три/четыре часа, пять–двенадцать часов. Tadbir vaqti uchun в qo‘shiladi: в час, в два часа, в пять часов. Hozir faqat to‘liq soatlar ishlatiladi. Который час? — hozirgi vaqt, Во сколько урок? — darsning vaqti. Kechki vaqt в семь вечера kabi tayyor birikma bilan aniqlanadi.",
+      "examples": [
+        {
+          "ru": "Сейчас три часа.",
+          "uz": "Hozir soat uch."
+        },
+        {
+          "ru": "Урок в пять часов.",
+          "uz": "Dars soat beshda."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Hozir 4:00: Сейчас четыре ___ .",
+          "answer": "часа",
+          "explanation": "Ikki, uch, to‘rtdan keyin часа keladi."
+        },
+        {
+          "prompt": "Dars 6:00 da: Урок ___ шесть часов.",
+          "answer": "в",
+          "explanation": "Voqea vaqtini aytishda в ishlatiladi."
+        },
+        {
+          "prompt": "Tadbir vaqtini so‘rang: ___ урок?",
+          "answer": "Во сколько",
+          "explanation": "Bu savol tadbir qachon bo‘lishini so‘raydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Который час?",
+        "uz": "Soat necha?"
+      },
+      {
+        "ru": "Сейчас час.",
+        "uz": "Hozir soat bir."
+      },
+      {
+        "ru": "Сейчас два часа.",
+        "uz": "Hozir soat ikki."
+      },
+      {
+        "ru": "Сейчас пять часов.",
+        "uz": "Hozir soat besh."
+      },
+      {
+        "ru": "Во сколько урок?",
+        "uz": "Dars soat nechada?"
+      },
+      {
+        "ru": "Урок в три часа.",
+        "uz": "Dars soat uchda."
+      },
+      {
+        "ru": "В семь вечера.",
+        "uz": "Kechki soat yettida."
+      },
+      {
+        "ru": "Повторите время, пожалуйста.",
+        "uz": "Iltimos, vaqtni takrorlang."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Который час?",
+        "uz": "Soat necha?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Сейчас два часа.",
+        "uz": "Hozir soat ikki."
+      },
+      {
+        "speaker": "A",
+        "ru": "Во сколько урок?",
+        "uz": "Dars soat nechada?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Урок в три часа.",
+        "uz": "Dars soat uchda."
+      },
+      {
+        "speaker": "A",
+        "ru": "В три, правильно?",
+        "uz": "Uchda, to‘g‘rimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, в три.",
+        "uz": "Ha, uchda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Hozir soat necha?",
+        "answer": "Два часа."
+      },
+      {
+        "prompt": "Dars soat nechada?",
+        "answer": "В три часа."
+      },
+      {
+        "prompt": "A qaysi vaqtni qayta tekshirdi?",
+        "answer": "В три."
+      }
+    ],
+    "roleplay": {
+      "a": "Soatingiz yo‘q, dars vaqtini ham bilmaysiz. B dan hozirgi vaqt va dars vaqtini so‘rang.",
+      "b": "Kartangiz: hozir 5:00, dars kechki 7:00. Ikkala vaqtni farqlab ayting.",
+      "twist": "Dars vaqti kechki 8:00 ga almashtirilsin; A aniqlashtirsin.",
+      "success": "Hozirgi vaqt в siz, dars vaqti в bilan aytiladi; uch almashinuv tushunarli bajariladi."
+    },
+    "teacherTip": "Сейчас в два часа xatosini «hozir necha?» va «nechada?» savollari orqali tuzating. Sustlarga soat rasmi va tayyor birikma, kuchliroqlarga 1/3/7 bilan turli shakllar bering.",
+    "homework": [
+      "Uch soat rasmi uchun hozirgi vaqtni ovozli ayting.",
+      "1:00, 3:00, 6:00 dagi darslar haqida uch gap yozing.",
+      "Sherik bilan hozirgi va tadbir vaqtini alohida so‘rang."
+    ],
+    "exit": "Hozirgi vaqtni ayting, dars vaqtini so‘rang va javobni qayta tekshiring; в ning qo‘llanishi to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 23,
+    "month": 2,
+    "week": 8,
+    "title": "Ishlayman yoki o‘qiyman",
+    "objective": "Ish va o‘qish holatini to‘rtta cheklangan fe’l shakli bilan aytadi va suhbatdoshning mashg‘ulotini so‘raydi.",
+    "grammar": {
+      "title": "Я работаю/учусь va Вы работаете/учитесь",
+      "rule": "Hozirgi zamondagi ikki fe’lni cheklangan juftlarda o‘rganamiz: я работаю — вы работаете; я учусь — вы учитесь. Учиться fe’lidagi -сь/-сь shaklning bir qismi, uni tushirmang. Inkor fe’ldan oldin: Я не работаю. Где вы работаете? savoliga В школе, В офисе kabi tayyor joy birikmalari bilan javob bering.",
+      "examples": [
+        {
+          "ru": "Я работаю в школе.",
+          "uz": "Men maktabda ishlayman."
+        },
+        {
+          "ru": "Я не работаю, я учусь.",
+          "uz": "Men ishlamayman, o‘qiyman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Sizlab so‘rang: Вы ___ ? (работаю / работаете)",
+          "answer": "работаете",
+          "explanation": "Вы bilan shu o‘rganilgan shakl ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Я ___ . (учусь / учитесь)",
+          "answer": "учусь",
+          "explanation": "Я uchun учусь shakli kerak."
+        },
+        {
+          "prompt": "«Men ishlamayman» gapini tuzing.",
+          "answer": "Я не работаю.",
+          "explanation": "Не fe’lning oldida keladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Вы работаете?",
+        "uz": "Siz ishlaysizmi?"
+      },
+      {
+        "ru": "Я работаю.",
+        "uz": "Men ishlayman."
+      },
+      {
+        "ru": "Я не работаю.",
+        "uz": "Men ishlamayman."
+      },
+      {
+        "ru": "Вы учитесь?",
+        "uz": "Siz o‘qiysizmi?"
+      },
+      {
+        "ru": "Я учусь.",
+        "uz": "Men o‘qiyman."
+      },
+      {
+        "ru": "Где вы работаете?",
+        "uz": "Qayerda ishlaysiz?"
+      },
+      {
+        "ru": "Я работаю в офисе.",
+        "uz": "Men ofisda ishlayman."
+      },
+      {
+        "ru": "Я учусь в школе.",
+        "uz": "Men maktabda o‘qiyman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Вы работаете?",
+        "uz": "Siz ishlaysizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, я работаю в школе. А вы?",
+        "uz": "Ha, men maktabda ishlayman. Siz-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я не работаю, я учусь.",
+        "uz": "Men ishlamayman, o‘qiyman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вы учитесь в школе?",
+        "uz": "Siz maktabda o‘qiysizmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет, в университете.",
+        "uz": "Yo‘q, universitetda."
+      },
+      {
+        "speaker": "B",
+        "ru": "Понятно.",
+        "uz": "Tushunarli."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B qayerda ishlaydi?",
+        "answer": "В школе."
+      },
+      {
+        "prompt": "A ishlaydimi?",
+        "answer": "Нет."
+      },
+      {
+        "prompt": "A qayerda o‘qiydi?",
+        "answer": "В университете."
+      }
+    ],
+    "roleplay": {
+      "a": "Siz universitet talabasi rolidasiz, ishlamaysiz. B ning ish holati va joyini aniqlang.",
+      "b": "Siz ofisda ishlaysiz, hozir o‘qimaysiz. A ga javob bering va uning o‘qishini so‘rang.",
+      "twist": "A ham ishlaydi, ham o‘qiydi degan karta olsin; и bilan ikki tanish gapni bog‘lasin.",
+      "success": "Har kishi bir holat va bir joyni aytadi; kamida ikki savolda вы shakli to‘g‘ri bo‘ladi."
+    },
+    "teacherTip": "Я учу bilan Я учусь ni chalkashtirishni «o‘zim o‘qiyman» ma’nosida учусь qolipi orqali tuzating. В университете ni tayyor birikma deb bering. Sustlarga ikki fe’l jufti, kuchliroqlarga и/не bilan qo‘shma javob bering.",
+    "homework": [
+      "Xayoliy ish yoki o‘qish holatingizni uch gapda ovozga yozing.",
+      "Я/вы uchun ikki fe’lning to‘rtta shaklini yozing.",
+      "Sherikdan ish yoki o‘qish joyini so‘rab, javobni qayta tekshiring."
+    ],
+    "exit": "Ish yoki o‘qish holatingizni ikki gapda ayting, sherikka ikki savol bering; kamida uch fe’l shakli to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 24,
+    "month": 2,
+    "week": 8,
+    "title": "Ikkinchi oy sinovi: oilaviy klub anketasi",
+    "objective": "Yangi oilaviy klubga yozilish vaziyatida oila, yosh, mashg‘ulot va uchrashuv vaqti haqida oltita ma’lumot almashadi.",
+    "grammar": {
+      "title": "Oylik integratsiya: oila, yosh, borlik va vaqt",
+      "rule": "Yangi grammatika kiritilmaydi. У меня есть…, мой/моя, yoshdagi год/года/лет, я работаю/учусь va tadbir vaqtida в qayta qo‘llanadi. Savol turi javobni belgilaydi: сколько лет — yosh, во сколько — tadbir vaqti, где — joy.",
+      "examples": [
+        {
+          "ru": "У меня есть сестра. Ей двадцать два года.",
+          "uz": "Mening opam bor. U yigirma ikki yoshda."
+        },
+        {
+          "ru": "Я работаю. Встреча в семь вечера.",
+          "uz": "Men ishlayman. Uchrashuv kechki yettida."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Yosh: Ей двадцать три ___ .",
+          "answer": "года",
+          "explanation": "23 bilan года ishlatiladi."
+        },
+        {
+          "prompt": "Uchrashuv 7:00 da: Встреча ___ семь часов.",
+          "answer": "в",
+          "explanation": "Tadbir vaqtiga в kerak."
+        },
+        {
+          "prompt": "Sizlab ish holatini so‘rang.",
+          "answer": "Вы работаете?",
+          "explanation": "Вы ga работаете mos keladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "У меня есть сестра.",
+        "uz": "Mening opam yoki singlim bor."
+      },
+      {
+        "ru": "Ей двадцать два года.",
+        "uz": "U yigirma ikki yoshda."
+      },
+      {
+        "ru": "Я работаю в офисе.",
+        "uz": "Men ofisda ishlayman."
+      },
+      {
+        "ru": "У меня нет ручки.",
+        "uz": "Menda ruchka yo‘q."
+      },
+      {
+        "ru": "Дайте, пожалуйста, ручку.",
+        "uz": "Iltimos, ruchka bering."
+      },
+      {
+        "ru": "Во сколько встреча?",
+        "uz": "Uchrashuv soat nechada?"
+      },
+      {
+        "ru": "В семь вечера.",
+        "uz": "Kechki soat yettida."
+      },
+      {
+        "ru": "Правильно?",
+        "uz": "To‘g‘rimi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Как вас зовут?",
+        "uz": "Assalomu alaykum! Ismingiz nima?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я Лола. У меня есть сестра.",
+        "uz": "Men Lolaman. Mening opam bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Сколько ей лет?",
+        "uz": "U necha yoshda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Ей двадцать два года.",
+        "uz": "U yigirma ikki yoshda."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вы работаете?",
+        "uz": "Siz ishlaysizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, в офисе. Во сколько встреча?",
+        "uz": "Ha, ofisda. Uchrashuv soat nechada?"
+      },
+      {
+        "speaker": "A",
+        "ru": "В семь вечера.",
+        "uz": "Kechki soat yettida."
+      },
+      {
+        "speaker": "B",
+        "ru": "В семь, правильно? Спасибо.",
+        "uz": "Yettida, to‘g‘rimi? Rahmat."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Lolaning opasi necha yoshda?",
+        "answer": "Двадцать два года."
+      },
+      {
+        "prompt": "Lola qayerda ishlaydi?",
+        "answer": "В офисе."
+      },
+      {
+        "prompt": "Uchrashuv qachon?",
+        "answer": "В семь вечера."
+      }
+    ],
+    "roleplay": {
+      "a": "Oilaviy klub xodimisiz. Ism, qarindosh, uning yoshi va ish/o‘qish holatini bilishingiz kerak. Uchrashuv kechki oltida, ruchka sizda.",
+      "b": "Kartangiz: Ali, singlingiz 18 yoshda, siz universitetda o‘qiysiz. Ruchkangiz yo‘q. Anketa ma’lumotlarini ayting, ruchka so‘rang va vaqtni tekshiring.",
+      "twist": "Yangi kartada opa 24 yoshda, siz ofisda ishlaysiz, uchrashuv yettida; rollarni almashtiring.",
+      "success": "Ism, qarindosh, yosh, mashg‘ulot, buyum ehtiyoji va vaqt bo‘yicha olti ma’lumotdan kamida beshtasi to‘g‘ri yetkaziladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. Oila haqidagi olti ma’lumot va vaqtni aniqlashtirishni kuzating. Мне… года xatosini soniga qarab keyin tuzating. Tayanchga so‘z banki, ilg‘orga qo‘shimcha aniqlashtirish bering. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Sinovda noto‘g‘ri aytilgan ikki gapni to‘g‘rilab ovozga yozing.",
+      "Xayoliy klub a’zosi haqida ism, yosh va mashg‘ulotni yozing.",
+      "Uchrashuv vaqtini ikki xil kartada sherik bilan qayta kelishing."
+    ],
+    "exit": "Yangi anketa vaziyatida olti ma’lumotdan beshtasini yetkazing, vaqtni tekshiring va kamida 14/20 ball oling; yordam darajasi qayd etilsin."
+  },
+  {
+    "no": 25,
+    "month": 3,
+    "week": 9,
+    "title": "Kim nima qiladi?",
+    "objective": "O‘zi va yana ikki kishi odatiy mashg‘ulotini beshta gapda aytadi, fe’lni olmoshga moslaydi.",
+    "grammar": {
+      "title": "Hozirgi zamon: читать, работать, отдыхать",
+      "rule": "Читать namunasi: я читаю, ты читаешь, он/она читает, мы читаем, вы читаете, они читают. Работать va отдыхать ham shu qolipda. Ruscha hozirgi zamon odatni ham, ayni paytdagi ishni ham bildirishi mumkin; каждый день — har kuni, сейчас — hozir ma’noni aniqlaydi.",
+      "examples": [
+        {
+          "ru": "Мы читаем каждый день.",
+          "uz": "Biz har kuni o‘qiymiz."
+        },
+        {
+          "ru": "Она сейчас отдыхает.",
+          "uz": "U hozir dam olyapti."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Ты ___ . (читать)",
+          "answer": "читаешь",
+          "explanation": "Ты shaklida -ешь ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Мы ___ . (работать)",
+          "answer": "работаем",
+          "explanation": "Мы shaklida -ем ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Они ___ . (отдыхать)",
+          "answer": "отдыхают",
+          "explanation": "Они shaklida bu fe’l -ют bilan tugaydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Что ты делаешь?",
+        "uz": "Nima qilyapsan?"
+      },
+      {
+        "ru": "Я читаю.",
+        "uz": "Men o‘qiyapman."
+      },
+      {
+        "ru": "Он работает.",
+        "uz": "U ishlayapti."
+      },
+      {
+        "ru": "Она отдыхает.",
+        "uz": "U dam olyapti."
+      },
+      {
+        "ru": "Мы читаем каждый день.",
+        "uz": "Biz har kuni o‘qiymiz."
+      },
+      {
+        "ru": "Они сейчас работают.",
+        "uz": "Ular hozir ishlayapti."
+      },
+      {
+        "ru": "А ты?",
+        "uz": "Sen-chi?"
+      },
+      {
+        "ru": "Я тоже.",
+        "uz": "Men ham."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Что ты делаешь?",
+        "uz": "Nima qilyapsan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я читаю. А ты?",
+        "uz": "Men o‘qiyapman. Sen-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я сейчас отдыхаю. А Анна?",
+        "uz": "Men hozir dam olyapman. Anna-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Она работает.",
+        "uz": "U ishlayapti."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вы читаете каждый день?",
+        "uz": "Sizlar har kuni o‘qiysizlarmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, мы читаем каждый день.",
+        "uz": "Ha, biz har kuni o‘qiymiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B hozir nima qilyapti?",
+        "answer": "Читает."
+      },
+      {
+        "prompt": "Anna nima qilyapti?",
+        "answer": "Работает."
+      },
+      {
+        "prompt": "B guruhi qanchalik tez-tez o‘qiydi?",
+        "answer": "Каждый день."
+      }
+    ],
+    "roleplay": {
+      "a": "Kartangizda siz dam olyapsiz, Ali ishlayapti. B dan uning va Anna mashg‘ulotini so‘rang.",
+      "b": "Siz kitob o‘qiyapsiz, Anna dam olyapti. Ma’lumot bering, so‘ng A bilan guruhingiz har kuni o‘qishini ayting.",
+      "twist": "Hamma kartalar «ishlash»ga o‘zgarsin; мы va они bilan yangi gap ayting.",
+      "success": "Besh gapdan kamida to‘rttasida shaxs va fe’l shakli mos bo‘ladi."
+    },
+    "teacherTip": "O‘zbekchada ega tushishi mumkin, lekin mashqda shaxsni eshitish uchun olmoshni ayttiring; мы читают xatosini мы читаем bilan tuzating. Sustlarga uch shaxs, kuchliroqlarga barcha olti shaxsni bering. Вы ning sizlar ma’nosini dialogda ko‘rsating.",
+    "homework": [
+      "Uch kishi va bir guruhning mashg‘ulotini ovozga yozing.",
+      "Читать fe’lini olti olmosh bilan yozing.",
+      "Sherikning ikki mashg‘ulotini so‘rab, javobini он/она bilan qayta ayting."
+    ],
+    "exit": "Я, ты, она, мы, они kartalari bilan beshta mashg‘ulot gapini ayting; kamida to‘rttasi to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 26,
+    "month": 3,
+    "week": 9,
+    "title": "Gaplashamiz va tomosha qilamiz",
+    "objective": "Til va tomosha odatlari haqida uch savol beradi, o‘zi hamda guruh uchun mos fe’l shakllarida javob qaytaradi.",
+    "grammar": {
+      "title": "Hozirgi zamon: говорить va смотреть",
+      "rule": "Говорить: я говорю, ты говоришь, он/она говорит, мы говорим, вы говорите, они говорят. Смотреть: смотрю, смотришь, смотрит, смотрим, смотрите, смотрят. Bu guruhdagi -ишь/-ит/-им/-ите oldingi -ешь/-ет/-ем/-ете dan farq qiladi. Смотреть фильм va смотреть видео hozir tayyor birikmalar sifatida ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Мы говорим по-русски.",
+          "uz": "Biz ruscha gaplashamiz."
+        },
+        {
+          "ru": "Они смотрят фильм.",
+          "uz": "Ular film tomosha qilishyapti."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Ты ___ по-русски. (говорить)",
+          "answer": "говоришь",
+          "explanation": "Ты uchun bu guruhda -ишь kerak."
+        },
+        {
+          "prompt": "To‘ldiring: Мы ___ видео. (смотреть)",
+          "answer": "смотрим",
+          "explanation": "Мы shakli смотрим bo‘ladi."
+        },
+        {
+          "prompt": "To‘ldiring: Они ___ фильм. (смотреть)",
+          "answer": "смотрят",
+          "explanation": "Они uchun смотрят, смотреть emas."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Ты говоришь по-русски?",
+        "uz": "Sen ruscha gapirasanmi?"
+      },
+      {
+        "ru": "Я говорю немного.",
+        "uz": "Men biroz gapiraman."
+      },
+      {
+        "ru": "Мы говорим по-узбекски.",
+        "uz": "Biz o‘zbekcha gaplashamiz."
+      },
+      {
+        "ru": "Они говорят по-русски.",
+        "uz": "Ular ruscha gaplashadi."
+      },
+      {
+        "ru": "Что вы смотрите?",
+        "uz": "Nima tomosha qilyapsiz?"
+      },
+      {
+        "ru": "Я смотрю видео.",
+        "uz": "Men video tomosha qilyapman."
+      },
+      {
+        "ru": "Мы смотрим фильм.",
+        "uz": "Biz film tomosha qilyapmiz."
+      },
+      {
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Ты говоришь по-русски?",
+        "uz": "Sen ruscha gapirasanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, немного. А вы?",
+        "uz": "Ha, biroz. Sizlar-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Мы говорим по-русски каждый день.",
+        "uz": "Biz har kuni ruscha gaplashamiz."
+      },
+      {
+        "speaker": "B",
+        "ru": "Что вы смотрите?",
+        "uz": "Sizlar nima tomosha qilyapsizlar?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Мы смотрим фильм. А ты?",
+        "uz": "Biz film tomosha qilyapmiz. Sen-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я смотрю видео.",
+        "uz": "Men video tomosha qilyapman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B ruscha qay darajada gapiradi?",
+        "answer": "Немного."
+      },
+      {
+        "prompt": "A guruhi nima tomosha qilyapti?",
+        "answer": "Фильм."
+      },
+      {
+        "prompt": "B nima tomosha qilyapti?",
+        "answer": "Видео."
+      }
+    ],
+    "roleplay": {
+      "a": "Siz guruh vakilisiz: har kuni ruscha gaplashasiz, hozir film ko‘ryapsiz. B ning tili va mashg‘ulotini so‘rang.",
+      "b": "Siz ruscha biroz gapirasiz, hozir video ko‘ryapsiz. Guruh nima qilayotganini aniqlang.",
+      "twist": "A endi guruhdan tashqarida turib ular haqida они bilan aytsin.",
+      "success": "Uch savol va uch javobda kamida to‘rtta говорить/смотреть shakli to‘g‘ri ishlatiladi."
+    },
+    "teacherTip": "Мы говорием kabi ortiqcha bo‘g‘inni мы говорим bilan tuzating. Sustlarga говорить jadvali, kuchliroqlarga читать bilan aralash shaxs kartalari bering; ikki tuslanish oxirini ajratsin.",
+    "homework": [
+      "Я, мы, они bilan til va tomosha haqida uch ovozli gap ayting.",
+      "Смотреть fe’lining olti shaklini yozing.",
+      "Sherik bilan Что вы смотрите? savoliga ikki xil javob mashq qiling."
+    ],
+    "exit": "Я, мы va они uchun bittadan gap, B ga bitta savol ayting; to‘rtta fe’l shaklidan kamida uchtasi mos bo‘lsin."
+  },
+  {
+    "no": 27,
+    "month": 3,
+    "week": 9,
+    "title": "Yotoqxona umumiy xonasida",
+    "objective": "Yangi umumiy xona vaziyatida uch kishining hozirgi mashg‘ulotini aniqlab, o‘qish yoki tomosha faoliyatini tanlaydi.",
+    "grammar": {
+      "title": "Integratsiya: ikki tuslanish va aniqlashtirish",
+      "rule": "Читаю/читаем/читают va смотрю/смотрим/смотрят ni shaxsga qarab tanlaymiz. Что…? savoli mashg‘ulotni, кто…? esa odamni aniqlaydi. Oldingi нет va не… а… bilan noto‘g‘ri taxminni tuzatamiz. Yangi tuslanish kiritilmaydi.",
+      "examples": [
+        {
+          "ru": "Они не читают, они смотрят фильм.",
+          "uz": "Ular o‘qishmayapti, film tomosha qilishyapti."
+        },
+        {
+          "ru": "Мы сейчас отдыхаем.",
+          "uz": "Biz hozir dam olyapmiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Они ___ видео. (смотреть)",
+          "answer": "смотрят",
+          "explanation": "Они uchun ikkinchi guruh shakli смотрят."
+        },
+        {
+          "prompt": "To‘ldiring: Мы ___ . (читать)",
+          "answer": "читаем",
+          "explanation": "Мы uchun birinchi guruh shakli читаем."
+        },
+        {
+          "prompt": "Taxminni tuzating: Анна работает? U dam olyapti.",
+          "answer": "Нет, она отдыхает.",
+          "explanation": "Oldingi inkor javobi to‘g‘ri mashg‘ulot bilan davom etadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Что вы делаете?",
+        "uz": "Nima qilyapsizlar?"
+      },
+      {
+        "ru": "Мы читаем.",
+        "uz": "Biz o‘qiyapmiz."
+      },
+      {
+        "ru": "Они смотрят фильм.",
+        "uz": "Ular film tomosha qilishyapti."
+      },
+      {
+        "ru": "Кто это?",
+        "uz": "Bu kim?"
+      },
+      {
+        "ru": "Она сейчас отдыхает.",
+        "uz": "U hozir dam olyapti."
+      },
+      {
+        "ru": "Вы говорите по-русски?",
+        "uz": "Sizlar ruscha gaplashasizlarmi?"
+      },
+      {
+        "ru": "Да, немного.",
+        "uz": "Ha, biroz."
+      },
+      {
+        "ru": "Можно сесть?",
+        "uz": "O‘tirsam maylimi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Что вы делаете?",
+        "uz": "Assalomu alaykum! Nima qilyapsizlar?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Мы читаем. А они смотрят фильм.",
+        "uz": "Biz o‘qiyapmiz. Ular esa film tomosha qilishyapti."
+      },
+      {
+        "speaker": "A",
+        "ru": "А Анна работает?",
+        "uz": "Anna ishlayaptimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, она сейчас отдыхает.",
+        "uz": "Yo‘q, u hozir dam olyapti."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вы говорите по-русски?",
+        "uz": "Sizlar ruscha gaplashasizlarmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, немного.",
+        "uz": "Ha, biroz."
+      },
+      {
+        "speaker": "A",
+        "ru": "Можно сесть?",
+        "uz": "O‘tirsam maylimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Можно.",
+        "uz": "Mumkin."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B guruhi nima qilyapti?",
+        "answer": "Читает."
+      },
+      {
+        "prompt": "B ko‘rsatgan boshqa odamlar nima qilyapti?",
+        "answer": "Смотрят фильм."
+      },
+      {
+        "prompt": "Anna ishlayaptimi?",
+        "answer": "Нет, она отдыхает."
+      }
+    ],
+    "roleplay": {
+      "a": "Yotoqxonada umumiy xonaga keldingiz. O‘qiydigan guruhga qo‘shilmoqchisiz; ikki guruh va Annaning mashg‘ulotini so‘rang.",
+      "b": "Sizning guruhingiz o‘qiyapti, boshqa guruh video ko‘ryapti, Anna ishlayapti. A ga ma’lumot bering va o‘tirishga ruxsat bering.",
+      "twist": "Guruhlar mashg‘ulotlarini almashtirsin; A savollar bilan o‘qiydigan guruhni yana topsin.",
+      "success": "Uch mashg‘ulot to‘g‘ri aniqlanadi, shaxs-fe’l mosligi kamida uch javobda saqlanadi."
+    },
+    "teacherTip": "Они смотрит xatosini bir kishi va ko‘p kishi rasmlari bilan tuzating. Sustlarga fe’l oxiri ko‘rsatilgan karta, kuchliroqlarga taxminni tekshirish va tuzatish vazifasini bering.",
+    "homework": [
+      "Umumiy xonadagi uch mashg‘ulot haqida ovozli hisobot ayting.",
+      "Мы va они bilan читать/смотреть uchun to‘rtta gap yozing.",
+      "Sherikning noto‘g‘ri mashg‘ulot taxminini ikki marta tuzating."
+    ],
+    "exit": "Yangi rasmda uch guruh yoki kishining mashg‘ulotini aniqlang va o‘tirishga ruxsat so‘rang; to‘rt vazifadan uchtasi mustaqil bajarilsin."
+  },
+  {
+    "no": 28,
+    "month": 3,
+    "week": 10,
+    "title": "Kundalik tartibim",
+    "objective": "Kun tartibini ertalabdan kechgacha to‘rtta bog‘langan gapda aytadi va ikki ishning vaqtini so‘raydi.",
+    "grammar": {
+      "title": "Kun qismlari va kundalik fe’llar",
+      "rule": "Утром, днём, вечером — ertalab, kunduzi, kechqurun. Tartib uchun потом ishlatiladi. Завтракать va ужинать oldingi читать kabi: завтракаю/завтракаешь, ужинаю/ужинаешь. Вставать fe’lining hozir kerakli shakllari я встаю, ты встаёшь, он/она встаёт; boshqalari hozir talab qilinmaydi. Vaqt в bilan keladi.",
+      "examples": [
+        {
+          "ru": "Утром я встаю в семь.",
+          "uz": "Ertalab men yettida turaman."
+        },
+        {
+          "ru": "Потом я завтракаю.",
+          "uz": "Keyin men nonushta qilaman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я ___ в семь. (вставать)",
+          "answer": "встаю",
+          "explanation": "O‘rganilayotgan maxsus shakl встаю."
+        },
+        {
+          "prompt": "To‘ldiring: Ты ___ в восемь? (завтракать)",
+          "answer": "завтракаешь",
+          "explanation": "Bu fe’l читать namunasi bo‘yicha tuslanadi."
+        },
+        {
+          "prompt": "«Kechqurun»ni tanlang: утром / вечером.",
+          "answer": "вечером",
+          "explanation": "Вечером kunning kechki qismini bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Утром я встаю в семь.",
+        "uz": "Ertalab yettida turaman."
+      },
+      {
+        "ru": "Потом я завтракаю.",
+        "uz": "Keyin nonushta qilaman."
+      },
+      {
+        "ru": "Днём я работаю.",
+        "uz": "Kunduzi ishlayman."
+      },
+      {
+        "ru": "Вечером я отдыхаю.",
+        "uz": "Kechqurun dam olaman."
+      },
+      {
+        "ru": "Я ужинаю в семь.",
+        "uz": "Men yettida kechki ovqat yeyman."
+      },
+      {
+        "ru": "Во сколько ты встаёшь?",
+        "uz": "Soat nechada turasan?"
+      },
+      {
+        "ru": "Во сколько ты завтракаешь?",
+        "uz": "Soat nechada nonushta qilasan?"
+      },
+      {
+        "ru": "А потом?",
+        "uz": "Keyin-chi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Во сколько ты встаёшь?",
+        "uz": "Soat nechada turasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В семь. Потом я завтракаю.",
+        "uz": "Yettida. Keyin nonushta qilaman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А днём?",
+        "uz": "Kunduzi-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Днём я работаю.",
+        "uz": "Kunduzi ishlayman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Что ты делаешь вечером?",
+        "uz": "Kechqurun nima qilasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я ужинаю в семь, потом отдыхаю.",
+        "uz": "Yettida kechki ovqat yeyman, keyin dam olaman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B ertalab qachon turadi?",
+        "answer": "В семь."
+      },
+      {
+        "prompt": "B kunduzi nima qiladi?",
+        "answer": "Работает."
+      },
+      {
+        "prompt": "B kechki ovqatdan keyin nima qiladi?",
+        "answer": "Отдыхает."
+      }
+    ],
+    "roleplay": {
+      "a": "Ertalab yettida turasiz, sakkizda nonushta qilasiz, kunduzi o‘qiysiz. B bilan tartibingizni solishtiring.",
+      "b": "Siz oltida turasiz, yettida nonushta qilasiz, kunduzi ishlaysiz. Ikki vaqtni so‘rang va kechki dam olishni ayting.",
+      "twist": "Dam olish kuni kartasida turish vaqti to‘qqiz bo‘lsin; faqat o‘zgargan ma’lumotni yangilang.",
+      "success": "To‘rtta tartibli gap, ikki vaqt savoli va kamida bir потом ishlatiladi."
+    },
+    "teacherTip": "Утро я… o‘rniga vaqt ma’nosida Утром я… kerakligini tuzating. Sustlarga ertalab-kunduz-kechqurun rasm yo‘li; kuchliroqlarga B ning tartibini он/она bilan qayta aytish vazifasini bering.",
+    "homework": [
+      "Kun tartibingizni to‘rt gapda ovozga yozing.",
+      "Ikki ish va ularning vaqtini yozing.",
+      "Sherikdan turish va nonushta vaqtini so‘rab, farqni kartada belgilang."
+    ],
+    "exit": "Ertalab, kunduz va kechqurunni qamrab olgan to‘rtta gap ayting; ikkita vaqt va bir потом bo‘lsin."
+  },
+  {
+    "no": 29,
+    "month": 3,
+    "week": 10,
+    "title": "Nimani qilishni yaxshi ko‘raman?",
+    "objective": "Uch qiziqishini fe’lning boshlang‘ich shakli bilan aytadi va sherik bilan bitta umumiy qiziqishni topadi.",
+    "grammar": {
+      "title": "Любить + fe’lning boshlang‘ich shakli",
+      "rule": "Я люблю, ты любишь, он/она любит, мы любим, вы любите, они любят. Любить dan keyin faoliyatni bildiruvchi fe’l o‘zgarmaydi: люблю читать, любит гулять. Inkor не люблю. Гулять — sayr qilmoq; слушать музыку — musiqa tinglamoq tayyor birikmasi. Я тоже va Я не люблю… bilan munosabat bildiring.",
+      "examples": [
+        {
+          "ru": "Я люблю читать.",
+          "uz": "Men o‘qishni yaxshi ko‘raman."
+        },
+        {
+          "ru": "Она любит слушать музыку.",
+          "uz": "U musiqa tinglashni yaxshi ko‘radi."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я люблю ___ . (читаю / читать)",
+          "answer": "читать",
+          "explanation": "Люблю dan keyin ikkinchi fe’l boshlang‘ich shaklda qoladi."
+        },
+        {
+          "prompt": "To‘ldiring: Она ___ гулять. (любить)",
+          "answer": "любит",
+          "explanation": "Она uchun любит shakli kerak."
+        },
+        {
+          "prompt": "Inkor qiling: Я люблю смотреть видео.",
+          "answer": "Я не люблю смотреть видео.",
+          "explanation": "Не asosiy люблю fe’li oldida turadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Что ты любишь делать?",
+        "uz": "Nima qilishni yaxshi ko‘rasan?"
+      },
+      {
+        "ru": "Я люблю читать.",
+        "uz": "Men o‘qishni yaxshi ko‘raman."
+      },
+      {
+        "ru": "Я люблю гулять.",
+        "uz": "Men sayr qilishni yaxshi ko‘raman."
+      },
+      {
+        "ru": "Я люблю слушать музыку.",
+        "uz": "Men musiqa tinglashni yaxshi ko‘raman."
+      },
+      {
+        "ru": "Я не люблю смотреть видео.",
+        "uz": "Men video ko‘rishni yaxshi ko‘rmayman."
+      },
+      {
+        "ru": "Я тоже.",
+        "uz": "Men ham."
+      },
+      {
+        "ru": "А я люблю читать.",
+        "uz": "Men esa o‘qishni yaxshi ko‘raman."
+      },
+      {
+        "ru": "Мы любим гулять.",
+        "uz": "Biz sayr qilishni yaxshi ko‘ramiz."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Что ты любишь делать?",
+        "uz": "Nima qilishni yaxshi ko‘rasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я люблю читать. А ты?",
+        "uz": "Men o‘qishni yaxshi ko‘raman. Sen-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я люблю гулять и слушать музыку.",
+        "uz": "Men sayr qilishni va musiqa tinglashni yaxshi ko‘raman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я тоже люблю гулять.",
+        "uz": "Men ham sayr qilishni yaxshi ko‘raman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Ты любишь смотреть видео?",
+        "uz": "Sen video ko‘rishni yaxshi ko‘rasanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, не люблю.",
+        "uz": "Yo‘q, yaxshi ko‘rmayman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B avval qaysi qiziqishini aytdi?",
+        "answer": "Читать."
+      },
+      {
+        "prompt": "Ikkalasi nima qilishni yaxshi ko‘radi?",
+        "answer": "Гулять."
+      },
+      {
+        "prompt": "B video ko‘rishni yaxshi ko‘radimi?",
+        "answer": "Нет."
+      }
+    ],
+    "roleplay": {
+      "a": "Kartangiz: o‘qish va sayr qilish yoqadi, video yoqmaydi. B bilan umumiy qiziqishni toping.",
+      "b": "Kartangiz: musiqa tinglash va sayr qilish yoqadi. A ning uch faoliyatga munosabatini so‘rang.",
+      "twist": "B kartasida sayr o‘rniga o‘qish bo‘lsin; umumiy qiziqishni yangilang.",
+      "success": "Uch qiziqish gapi, ikkita savol va мы любим… bilan bir umumiy xulosa aytiladi."
+    },
+    "teacherTip": "Я люблю читаю xatosini ikkinchi fe’lning читать shaklini ajratib tuzating. Sustlarga faoliyat rasmlari bilan tayyor infinitivlar, kuchliroqlarga sherik haqida он/она любит gapini tuzdiring.",
+    "homework": [
+      "Ikki yoqtiradigan va bir yoqtirmaydigan faoliyatni ovozga yozing.",
+      "Люблю/любит/любим + читать bilan uch gap yozing.",
+      "Yaqiningizdan ikki qiziqishini so‘rab, umumiy bittasini aniqlang."
+    ],
+    "exit": "Uch faoliyatga munosabatingizni ayting, savol bilan umumiy qiziqishni toping; ikkinchi fe’l uchala gapda boshlang‘ich shaklda bo‘lsin."
+  },
+  {
+    "no": 30,
+    "month": 3,
+    "week": 10,
+    "title": "Sayohat guruhiga hamroh tanlash",
+    "objective": "Yangi sayohat guruhi vaziyatida qiziqish va kun tartibini solishtirib, mos hamrohni uch dalil bilan tanlaydi.",
+    "grammar": {
+      "title": "Integratsiya: odat, vaqt va qiziqish",
+      "rule": "Я встаю… odatni, Я люблю… qiziqishni bildiradi. Люблю dan keyin infinitiv saqlanadi; vaqt oldida в, kun qismi uchun утром/вечером ishlatiladi. Sherik haqida u o‘rniga он yoki она va tegishli fe’l shakli qo‘llanadi. Yangi grammatik qoida yo‘q.",
+      "examples": [
+        {
+          "ru": "Она встаёт в семь и любит гулять.",
+          "uz": "U yettida turadi va sayr qilishni yaxshi ko‘radi."
+        },
+        {
+          "ru": "Мы вечером отдыхаем.",
+          "uz": "Biz kechqurun dam olamiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Он любит ___ . (гуляет / гулять)",
+          "answer": "гулять",
+          "explanation": "Любит dan keyingi fe’l boshlang‘ich shaklda."
+        },
+        {
+          "prompt": "To‘ldiring: Она ___ в восемь. (вставать)",
+          "answer": "встаёт",
+          "explanation": "Oldingi uchinchi shaxs shakli qaytariladi."
+        },
+        {
+          "prompt": "Birgalikdagi odat: Мы вечером ___ . (отдыхать)",
+          "answer": "отдыхаем",
+          "explanation": "Мы bilan -ем shakli kerak."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Во сколько ты встаёшь?",
+        "uz": "Soat nechada turasan?"
+      },
+      {
+        "ru": "Я встаю в семь.",
+        "uz": "Men yettida turaman."
+      },
+      {
+        "ru": "Что ты любишь делать?",
+        "uz": "Nima qilishni yaxshi ko‘rasan?"
+      },
+      {
+        "ru": "Я люблю гулять.",
+        "uz": "Men sayr qilishni yaxshi ko‘raman."
+      },
+      {
+        "ru": "Я тоже.",
+        "uz": "Men ham."
+      },
+      {
+        "ru": "Вечером я читаю.",
+        "uz": "Kechqurun men o‘qiyman."
+      },
+      {
+        "ru": "Мы любим слушать музыку.",
+        "uz": "Biz musiqa tinglashni yaxshi ko‘ramiz."
+      },
+      {
+        "ru": "А потом?",
+        "uz": "Keyin-chi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Во сколько ты встаёшь?",
+        "uz": "Soat nechada turasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В семь. А ты?",
+        "uz": "Yettida. Sen-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я тоже. Ты любишь гулять?",
+        "uz": "Men ham. Sayr qilishni yaxshi ko‘rasanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, люблю. А вечером я читаю.",
+        "uz": "Ha, yaxshi ko‘raman. Kechqurun esa o‘qiyman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Я вечером слушаю музыку.",
+        "uz": "Men kechqurun musiqa tinglayman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я тоже люблю слушать музыку.",
+        "uz": "Men ham musiqa tinglashni yaxshi ko‘raman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Ikkalasi qachon turadi?",
+        "answer": "В семь."
+      },
+      {
+        "prompt": "B kechqurun nima qiladi?",
+        "answer": "Читает."
+      },
+      {
+        "prompt": "Ikkalasiga yoqadigan tinglash faoliyati nima?",
+        "answer": "Слушать музыку."
+      }
+    ],
+    "roleplay": {
+      "a": "Guruhli sayohat uchun hamroh tanlaysiz. Yettida turasiz, sayr va musiqa yoqadi. B dan odati va qiziqishlarini so‘rang.",
+      "b": "Sizda ikki hamroh kartasi: Anna yettida turadi, sayr va musiqa yoqadi; Timur to‘qqizda turadi, video yoqadi. Ma’lumotni savoldan keyin oching.",
+      "twist": "A kechroq turadigan va video yoqtiradigan sayohatchi kartasini olsin; tanlov o‘zgarsin.",
+      "success": "A bir ismni tanlaydi va o‘rganilgan gaplar bilan uch mos ma’lumotni aytadi."
+    },
+    "teacherTip": "Она люблю xatosini любит shakli bilan qayta ayttiring. Слушаю ni слушать ning tanish birinchi tuslanish shakli sifatida ko‘rsating. Sustlarga taqqoslash jadvali, kuchliroqlarga kartasiz uchinchi shaxsdagi xulosa bering.",
+    "homework": [
+      "Tanlangan hamroh haqida uch gapli ovozli tavsif bering.",
+      "O‘z odatingiz va qiziqishingiz haqida bittadan farqli gap yozing.",
+      "Ikki xayoliy hamroh kartasini tuzib, sherikka savol orqali tanlating."
+    ],
+    "exit": "Ikki hamroh kartasidan mosini tanlang; vaqt, odat va qiziqish bo‘yicha uchta to‘g‘ri gap bilan tanlovni ko‘rsating."
+  },
+  {
+    "no": 31,
+    "month": 3,
+    "week": 11,
+    "title": "Haftaning qaysi kuni bo‘shsiz?",
+    "objective": "Haftalik jadvaldan uch kun haqidagi ma’lumotni aytadi va ikki kishi uchun bir umumiy bo‘sh kunni aniqlaydi.",
+    "grammar": {
+      "title": "Hafta kunlari bilan в va bo‘shlik shakllari",
+      "rule": "Kun qoliplari: в понедельник, во вторник, в среду, в четверг, в пятницу, в субботу, в воскресенье. Среда, пятница, суббота shu birikmalarda -у oladi. Erkak Я свободен, ayol Я свободна deydi; guruh yoki sizlab savolda Вы свободны? ishlatiladi. Когда? — qachon savoli.",
+      "examples": [
+        {
+          "ru": "В среду я работаю.",
+          "uz": "Chorshanba kuni men ishlayman."
+        },
+        {
+          "ru": "В пятницу я свободна.",
+          "uz": "Juma kuni men bo‘shman, ayol aytadi."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: ___ вторник я работаю.",
+          "answer": "Во",
+          "explanation": "Вторник bilan talaffuz uchun во shakli ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: В ___ я отдыхаю. (среда / среду)",
+          "answer": "среду",
+          "explanation": "Hafta kuni qolipida среда → среду."
+        },
+        {
+          "prompt": "Erkak rol kartasi: В субботу я ___ . (свободен / свободна)",
+          "answer": "свободен",
+          "explanation": "Bu qisqa sifat erkak gapiruvchiga moslashadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Когда вы свободны?",
+        "uz": "Qachon bo‘shsiz?"
+      },
+      {
+        "ru": "В понедельник.",
+        "uz": "Dushanba kuni."
+      },
+      {
+        "ru": "Во вторник.",
+        "uz": "Seshanba kuni."
+      },
+      {
+        "ru": "В среду.",
+        "uz": "Chorshanba kuni."
+      },
+      {
+        "ru": "В четверг.",
+        "uz": "Payshanba kuni."
+      },
+      {
+        "ru": "В пятницу.",
+        "uz": "Juma kuni."
+      },
+      {
+        "ru": "В субботу.",
+        "uz": "Shanba kuni."
+      },
+      {
+        "ru": "В воскресенье.",
+        "uz": "Yakshanba kuni."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Анна, когда вы свободны?",
+        "uz": "Anna, qachon bo‘shsiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В пятницу. А вы, Али?",
+        "uz": "Juma kuni. Siz-chi, Ali?"
+      },
+      {
+        "speaker": "A",
+        "ru": "В пятницу я работаю. В субботу я свободен.",
+        "uz": "Juma kuni men ishlayman. Shanba kuni bo‘shman."
+      },
+      {
+        "speaker": "B",
+        "ru": "В субботу я тоже свободна.",
+        "uz": "Shanba kuni men ham bo‘shman."
+      },
+      {
+        "speaker": "A",
+        "ru": "В субботу в три?",
+        "uz": "Shanba kuni uchdami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, в три.",
+        "uz": "Ha, uchda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Anna avval qaysi kunni aytdi?",
+        "answer": "В пятницу."
+      },
+      {
+        "prompt": "Ali juma kuni nima qiladi?",
+        "answer": "Работает."
+      },
+      {
+        "prompt": "Ikkalasiga mos kun va vaqt qaysi?",
+        "answer": "В субботу в три."
+      }
+    ],
+    "roleplay": {
+      "a": "Ali rolidasiz: juma ishlaysiz, shanba va yakshanba bo‘shsiz. B bilan umumiy bo‘sh kun toping.",
+      "b": "Anna rolidasiz: juma va shanba bo‘shsiz, yakshanba ishlaysiz. A dan kunlarini so‘rab, mosini ayting.",
+      "twist": "A shanba ham ishlashi yozilgan kartani olsin; B bilan mos kun yo‘qligini Нет javobi bilan aniqlang.",
+      "success": "Uch kun haqida ma’lumot aytiladi; umumiy kun yoki mos kun yo‘qligi to‘g‘ri aniqlanadi."
+    },
+    "teacherTip": "В среда xatosini hafta jadvalidagi В среду qolipi bilan tuzating. Sustlarga yetti kunning tayyor shakllari, kuchliroqlarga ikki jadvalni ko‘rmasdan savol orqali taqqoslash vazifasini bering.",
+    "homework": [
+      "Uch hafta kuni va ulardagi mashg‘ulotingizni ovozga yozing.",
+      "Yetti kunning в/во bilan shaklini yozing.",
+      "Sherik bilan bir umumiy bo‘sh kunni savollar orqali toping."
+    ],
+    "exit": "Uch kun bo‘yicha savol-javob qilib umumiy bo‘sh kunni aniqlang; kamida ikki kun shakli to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 32,
+    "month": 3,
+    "week": 11,
+    "title": "Uchrashuvni aniq vaqtga belgilash",
+    "objective": "Raqamli soat usulida ikki vaqtni taklif qiladi, mos kelmaganini rad etadi va uchrashuvni kun, vaqt, joy bilan tasdiqlaydi.",
+    "grammar": {
+      "title": "Raqamli vaqt va Встретимся? qolipi",
+      "rule": "15:30 — пятнадцать тридцать, 16:45 — шестнадцать сорок пять. Yangi o‘nliklar: сорок — 40, пятьдесят — 50. Raqamli vaqt usulida час/минута so‘zlarini tushirish mumkin. Uchrashuv uchun в пятнадцать тридцать deyiladi. Встретимся…? — «…da uchrashamizmi?» tayyor taklif qolipi; kelasi zamonni erkin tuslash talab qilinmaydi. Мне подходит — menga mos.",
+      "examples": [
+        {
+          "ru": "Встретимся в пятницу в пятнадцать тридцать?",
+          "uz": "Juma kuni 15:30 da uchrashamizmi?"
+        },
+        {
+          "ru": "В шестнадцать сорок пять мне подходит.",
+          "uz": "16:45 menga mos keladi."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "16:30 ni so‘z bilan ayting.",
+          "answer": "шестнадцать тридцать",
+          "explanation": "Raqamli usulda avval soat, keyin daqiqa aytiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Встретимся ___ пятнадцать сорок пять?",
+          "answer": "в",
+          "explanation": "Uchrashuv vaqti oldida в kerak."
+        },
+        {
+          "prompt": "Vaqt mos kelmasa ayting: Мне ___ подходит.",
+          "answer": "не",
+          "explanation": "Не mos emasligini bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Встретимся в пятницу?",
+        "uz": "Juma kuni uchrashamizmi?"
+      },
+      {
+        "ru": "Во сколько?",
+        "uz": "Soat nechada?"
+      },
+      {
+        "ru": "В пятнадцать тридцать.",
+        "uz": "15:30 da."
+      },
+      {
+        "ru": "Мне подходит.",
+        "uz": "Menga mos keladi."
+      },
+      {
+        "ru": "Мне не подходит.",
+        "uz": "Menga mos kelmaydi."
+      },
+      {
+        "ru": "А в шестнадцать сорок пять?",
+        "uz": "16:45 da-chi?"
+      },
+      {
+        "ru": "Где встретимся?",
+        "uz": "Qayerda uchrashamiz?"
+      },
+      {
+        "ru": "В кафе.",
+        "uz": "Kafeda."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Встретимся в пятницу?",
+        "uz": "Juma kuni uchrashamizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Во сколько?",
+        "uz": "Ha. Soat nechada?"
+      },
+      {
+        "speaker": "A",
+        "ru": "В пятнадцать тридцать.",
+        "uz": "15:30 da."
+      },
+      {
+        "speaker": "B",
+        "ru": "Мне не подходит. А в шестнадцать сорок пять?",
+        "uz": "Menga mos kelmaydi. 16:45 da-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне подходит. Где встретимся?",
+        "uz": "Menga mos keladi. Qayerda uchrashamiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В кафе.",
+        "uz": "Kafeda."
+      },
+      {
+        "speaker": "A",
+        "ru": "В пятницу в шестнадцать сорок пять, в кафе?",
+        "uz": "Juma kuni 16:45 da, kafedami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, правильно.",
+        "uz": "Ha, to‘g‘ri."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B birinchi vaqtni qabul qildimi?",
+        "answer": "Нет."
+      },
+      {
+        "prompt": "Yakuniy vaqt nechchi?",
+        "answer": "Шестнадцать сорок пять."
+      },
+      {
+        "prompt": "Uchrashuv qayerda?",
+        "answer": "В кафе."
+      }
+    ],
+    "roleplay": {
+      "a": "Juma 15:30 yoki 16:45 da uchrasha olasiz. Birinchi vaqtni taklif qiling va joyni so‘rang.",
+      "b": "Sizga faqat 16:45 mos, joy — kafe. Mos kelmagan vaqtni rad etib, boshqa vaqtni taklif qiling.",
+      "twist": "Kafe o‘rniga tanish в школе joy qolipi berilsin; yakuniy tasdiqni yangilang.",
+      "success": "Ikki vaqt muhokama qilinadi, kun-vaqt-joy bitta yakuniy tasdiqda aniq aytiladi."
+    },
+    "teacherTip": "В пятнадцать тринадцать va в пятнадцать тридцать ni adashtirishda 13/30 raqamlarini ko‘rsatib eshittiring. Sustlarga raqam-so‘z kartasi, kuchliroqlarga 15:50 kabi yangi kombinatsiya bering. Встретимся ni hozircha o‘zgartirmang.",
+    "homework": [
+      "15:30, 16:45, 17:50 vaqtlarini ovozga yozing.",
+      "Kun, vaqt va joy qatnashgan bitta uchrashuv tasdig‘ini yozing.",
+      "Sherik bilan bir vaqtni rad etib, ikkinchisiga kelishing."
+    ],
+    "exit": "Bitta vaqtni taklif qiling, qarshi taklifga javob bering va kun-vaqt-joyni uchta to‘g‘ri ma’lumot bilan tasdiqlang."
+  },
+  {
+    "no": 33,
+    "month": 3,
+    "week": 11,
+    "title": "Qo‘shniga kitobni qaytarish uchun kelishuv",
+    "objective": "Yangi buyum topshirish vaziyatida egani tekshiradi va ikki jadvaldan mos kun, aniq vaqt hamda joyni kelishadi.",
+    "grammar": {
+      "title": "Integratsiya: egalik va uchrashuv tafsilotlari",
+      "rule": "Это ваша книга? egalikni tekshiradigan tayyor savol. Когда вы свободны?, Встретимся…? va Мне не подходит oldingi darslardan olinadi. Kun va aniq vaqt oldida в/во qoliplari saqlanadi. Kitobni qaytarish maqsadi vaziyat kartasida beriladi; yangi fe’lni ishlab chiqish shart emas.",
+      "examples": [
+        {
+          "ru": "Встретимся во вторник в восемнадцать тридцать?",
+          "uz": "Seshanba kuni 18:30 da uchrashamizmi?"
+        },
+        {
+          "ru": "Это ваша книга? — Да, моя.",
+          "uz": "Bu sizning kitobingizmi? — Ha, meniki."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Встретимся ___ вторник?",
+          "answer": "во",
+          "explanation": "Вторник bilan во ishlatiladi."
+        },
+        {
+          "prompt": "18:45 dagi uchrashuv vaqtini ayting.",
+          "answer": "В восемнадцать сорок пять.",
+          "explanation": "Tadbir vaqti в bilan boshlanadi."
+        },
+        {
+          "prompt": "Kitob sizniki emasligini ayting.",
+          "answer": "Это не моя книга.",
+          "explanation": "Книга ayol jinsida, моя ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Это ваша книга?",
+        "uz": "Bu sizning kitobingizmi?"
+      },
+      {
+        "ru": "Да, моя.",
+        "uz": "Ha, meniki."
+      },
+      {
+        "ru": "Когда вы свободны?",
+        "uz": "Qachon bo‘shsiz?"
+      },
+      {
+        "ru": "Во вторник.",
+        "uz": "Seshanba kuni."
+      },
+      {
+        "ru": "В восемнадцать тридцать?",
+        "uz": "18:30 dami?"
+      },
+      {
+        "ru": "Мне не подходит.",
+        "uz": "Menga mos kelmaydi."
+      },
+      {
+        "ru": "А в восемнадцать сорок пять?",
+        "uz": "18:45 da-chi?"
+      },
+      {
+        "ru": "Где встретимся?",
+        "uz": "Qayerda uchrashamiz?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Это ваша книга?",
+        "uz": "Bu sizning kitobingizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, моя. Когда вы свободны?",
+        "uz": "Ha, meniki. Qachon bo‘shsiz?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Во вторник в восемнадцать тридцать.",
+        "uz": "Seshanba kuni 18:30 da."
+      },
+      {
+        "speaker": "B",
+        "ru": "Мне не подходит. А в восемнадцать сорок пять?",
+        "uz": "Menga mos kelmaydi. 18:45 da-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне подходит. Где встретимся?",
+        "uz": "Menga mos keladi. Qayerda uchrashamiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В кафе.",
+        "uz": "Kafeda."
+      },
+      {
+        "speaker": "A",
+        "ru": "Во вторник в восемнадцать сорок пять, в кафе.",
+        "uz": "Seshanba kuni 18:45 da, kafeda."
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, спасибо.",
+        "uz": "Ha, rahmat."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Kitob kimniki: A yoki B?",
+        "answer": "B."
+      },
+      {
+        "prompt": "B ga qaysi vaqt mos kelmadi?",
+        "answer": "Восемнадцать тридцать."
+      },
+      {
+        "prompt": "Yakuniy kelishuvning kuni va joyi qaysi?",
+        "answer": "Во вторник, в кафе."
+      }
+    ],
+    "roleplay": {
+      "a": "Qo‘shningizning kitobi sizda. Seshanba 18:30 va 18:45 bo‘shsiz; kitob egasini tekshirib topshirish uchun uchrashuv belgilang.",
+      "b": "Kitob sizniki. Seshanba 18:30 ishlaysiz, 18:45 bo‘shsiz; kafe mos joy. Javob va qarshi taklif bering.",
+      "twist": "B seshanba band bo‘lsin; ikkala kartada chorshanba 19:00 bo‘sh vaqt qo‘shilsin.",
+      "success": "Egalik to‘g‘ri aniqlanadi; rad javobi va qarshi taklifdan keyin kun, vaqt, joy tasdiqlanadi."
+    },
+    "teacherTip": "В вторник xatosini во вторник ni birga takrorlatib tuzating. Sustlarga ikki vaqtli jadval, kuchliroqlarga uch kunli jadval bering; kelishuv ma’lumotlarini yozmasdan oxirida qaytarsin.",
+    "homework": [
+      "Kitob topshirish kelishuvining yakuniy ovozli xabarini yozing.",
+      "Ikki mos va bitta mos bo‘lmagan vaqtni ruscha yozing.",
+      "Boshqa buyum bilan egalik savoli va uchrashuv kelishuvini mashq qiling."
+    ],
+    "exit": "Buyum egasini tekshiring va ikki jadvaldan kun, vaqt, joyni kelishing; to‘rtta asosiy ma’lumotning barchasi mos bo‘lsin."
+  },
+  {
+    "no": 34,
+    "month": 3,
+    "week": 12,
+    "title": "Taklif qilish va muloyim rad etish",
+    "objective": "Ikki faoliyatni taklif qiladi, imkoniyati va istagini farqlab javob beradi hamda muqobil taklif aytadi.",
+    "grammar": {
+      "title": "Хочу va могу + infinitiv; Давай…",
+      "rule": "Я хочу — xohlayman, я могу — qila olaman; ты хочешь/можешь, вы хотите/можете. Keyingi fe’l boshlang‘ich shaklda: хочу гулять, могу читать. Давай + infinitiv bir tanish kishiga birga bajarish taklifi: Давай гулять. Давайте shakli hurmat yoki guruhga ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Я хочу гулять, но не могу.",
+          "uz": "Men sayr qilishni xohlayman, lekin qila olmayman."
+        },
+        {
+          "ru": "Давай смотреть фильм.",
+          "uz": "Kel, film tomosha qilamiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я могу ___ по-русски. (говорю / говорить)",
+          "answer": "говорить",
+          "explanation": "Могу dan keyin boshlang‘ich shakl keladi."
+        },
+        {
+          "prompt": "Do‘stga savol: Ты ___ гулять? (хочу / хочешь)",
+          "answer": "хочешь",
+          "explanation": "Ты uchun хочешь ishlatiladi."
+        },
+        {
+          "prompt": "Guruhga taklifni tanlang: Давай / Давайте читать.",
+          "answer": "Давайте читать.",
+          "explanation": "Guruhga Давайте shakli mos."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Ты хочешь гулять?",
+        "uz": "Sayr qilishni xohlaysanmi?"
+      },
+      {
+        "ru": "Давай гулять.",
+        "uz": "Kel, sayr qilamiz."
+      },
+      {
+        "ru": "Давайте смотреть фильм.",
+        "uz": "Keling, film tomosha qilamiz."
+      },
+      {
+        "ru": "Я хочу, но не могу.",
+        "uz": "Xohlayman, lekin qila olmayman."
+      },
+      {
+        "ru": "Я сейчас работаю.",
+        "uz": "Men hozir ishlayapman."
+      },
+      {
+        "ru": "А вечером?",
+        "uz": "Kechqurun-chi?"
+      },
+      {
+        "ru": "Вечером могу.",
+        "uz": "Kechqurun qila olaman."
+      },
+      {
+        "ru": "Хорошо, давай.",
+        "uz": "Yaxshi, kel shunday qilamiz."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Ты хочешь гулять?",
+        "uz": "Sayr qilishni xohlaysanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я хочу, но сейчас не могу. Я работаю.",
+        "uz": "Xohlayman, lekin hozir qila olmayman. Men ishlayapman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А вечером?",
+        "uz": "Kechqurun-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Вечером могу.",
+        "uz": "Kechqurun qila olaman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Давай гулять в семь.",
+        "uz": "Kel, yettida sayr qilamiz."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо, давай.",
+        "uz": "Yaxshi, kel shunday qilamiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B sayr qilishni xohlaydimi?",
+        "answer": "Да."
+      },
+      {
+        "prompt": "Nega hozir qila olmaydi?",
+        "answer": "Сейчас работает."
+      },
+      {
+        "prompt": "Qaysi vaqtga kelishishdi?",
+        "answer": "В семь вечера."
+      }
+    ],
+    "roleplay": {
+      "a": "Do‘stingiz bilan hozir sayr qilmoqchisiz, kechqurun ham bo‘shsiz. Taklif qiling va mos vaqt toping.",
+      "b": "Sayr qilishni xohlaysiz, lekin hozir ishlayapsiz. Kechki yettida bo‘shsiz; istak va imkoniyatni alohida ayting.",
+      "twist": "B sayrni xohlamaydi, lekin film ko‘rishni xohlaydi; muqobil faoliyat taklif qilsin.",
+      "success": "Taklif, muloyim rad javobi, sabab va muqobil taklif aytiladi; ikki infinitiv to‘g‘ri ishlatiladi."
+    },
+    "teacherTip": "Я могу говорю xatosida faqat birinchi fe’l tuslanishini ko‘rsating. Sustlarga хочу/могу ma’no kartalari, kuchliroqlarga ты va вы bilan bir xil taklifni moslashtirish vazifasini bering.",
+    "homework": [
+      "Bir taklif va ikki turli javobni ovozga yozing.",
+      "Хочу va могу bilan ikkita farqli gap yozing.",
+      "Sherik bilan mos kelmagan faoliyat o‘rniga boshqasini tanlang."
+    ],
+    "exit": "Taklifga istak va imkoniyatni aytib javob bering, keyin muqobil taklif qiling; uch vazifa va ikki infinitiv to‘g‘ri bo‘lsin."
+  },
+  {
+    "no": 35,
+    "month": 3,
+    "week": 12,
+    "title": "Bandlik sababini tushuntirish",
+    "objective": "Odatlari haqida chastota bilan gapiradi, uchrashuvga mos kelmaslik sababini aytadi va boshqa vaqtni kelishadi.",
+    "grammar": {
+      "title": "Обычно, иногда, каждый день va потому что",
+      "rule": "Обычно — odatda, иногда — ba’zan, каждый день — har kuni. Bu birliklar hozirgi zamondagi odatni aniqlaydi. Потому что sababni bog‘laydi: Не могу, потому что работаю. Но qarama-qarshilikni bildiradi: хочу, но не могу. Sabab qismida ham shaxsga mos fe’l kerak.",
+      "examples": [
+        {
+          "ru": "Я обычно читаю вечером.",
+          "uz": "Men odatda kechqurun o‘qiyman."
+        },
+        {
+          "ru": "Я не могу, потому что работаю.",
+          "uz": "Men qila olmayman, chunki ishlayapman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Sababni bog‘lang: Я не могу, ___ работаю.",
+          "answer": "потому что",
+          "explanation": "Ikkinchi qism imkon yo‘qligining sababini beradi."
+        },
+        {
+          "prompt": "«Ba’zan»ni tanlang: обычно / иногда.",
+          "answer": "иногда",
+          "explanation": "Иногда ish har safar emasligini bildiradi."
+        },
+        {
+          "prompt": "Qarama-qarshilik: Я хочу гулять, ___ не могу.",
+          "answer": "но",
+          "explanation": "Но istak va imkonning mos kelmasligini bog‘laydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я обычно работаю утром.",
+        "uz": "Men odatda ertalab ishlayman."
+      },
+      {
+        "ru": "Я иногда смотрю видео.",
+        "uz": "Men ba’zan video ko‘raman."
+      },
+      {
+        "ru": "Я читаю каждый день.",
+        "uz": "Men har kuni o‘qiyman."
+      },
+      {
+        "ru": "Почему?",
+        "uz": "Nega?"
+      },
+      {
+        "ru": "Потому что я работаю.",
+        "uz": "Chunki men ishlayapman."
+      },
+      {
+        "ru": "В это время я учусь.",
+        "uz": "Bu vaqtda men o‘qiyman."
+      },
+      {
+        "ru": "А в другое время?",
+        "uz": "Boshqa vaqtda-chi?"
+      },
+      {
+        "ru": "Давай в восемь.",
+        "uz": "Kel, sakkizda qilamiz."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Ты обычно читаешь вечером?",
+        "uz": "Odatda kechqurun o‘qiysanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, но иногда смотрю видео.",
+        "uz": "Ha, lekin ba’zan video ko‘raman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Давай гулять в шесть.",
+        "uz": "Kel, oltida sayr qilamiz."
+      },
+      {
+        "speaker": "B",
+        "ru": "В шесть не могу, потому что я учусь.",
+        "uz": "Oltida qila olmayman, chunki men o‘qiyman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А в восемь?",
+        "uz": "Sakkizda-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В восемь могу. Давай.",
+        "uz": "Sakkizda qila olaman. Kel, shunday qilamiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "B odatda kechqurun nima qiladi?",
+        "answer": "Читает."
+      },
+      {
+        "prompt": "Nega oltida sayr qila olmaydi?",
+        "answer": "Потому что учится."
+      },
+      {
+        "prompt": "Qaysi vaqt mos bo‘ldi?",
+        "answer": "В восемь."
+      }
+    ],
+    "roleplay": {
+      "a": "Do‘stingizning kechki odatini biling, keyin soat oltida sayr taklif qiling. Agar rad etsa, sabab va boshqa vaqtni so‘rang.",
+      "b": "Odatda kechqurun o‘qiysiz; oltida darsingiz bor, sakkizda bo‘shsiz. Sababni потому что bilan tushuntiring.",
+      "twist": "B sakkizda ham ishlasin, A to‘qqizda bo‘sh bo‘lsin; yangi mos vaqtni toping.",
+      "success": "Bitta odat, bitta sababli rad javobi va qayta kelishilgan vaqt aytiladi; uch ma’lumot sherik tomonidan tasdiqlanadi."
+    },
+    "teacherTip": "Потому что dan keyin Я учиться kabi infinitivni qo‘yishni Я учусь bilan tuzating. Savol javobidagi учится ni tushunish uchun u shakli sifatida bering, mustaqil tuslashni talab qilmang. Sustlarga sabab kartasi, kuchliroqlarga yangi sabab va vaqt bering.",
+    "homework": [
+      "Обычно va иногда qatnashgan ikki odatni ovozga yozing.",
+      "Потому что bilan ikki sababli rad javobini yozing.",
+      "Sherik bilan bir uchrashuvni boshqa vaqtga og‘zaki ko‘chiring."
+    ],
+    "exit": "Odatiy mashg‘ulotni ayting, taklifni sabab bilan rad eting va boshqa vaqtni kelishing; uch nutq vazifasi mustaqil bajarilsin."
+  },
+  {
+    "no": 36,
+    "month": 3,
+    "week": 12,
+    "title": "Uchinchi oy sinovi: suhbat sherigi bilan reja",
+    "objective": "Yangi mustaqil mashq sherigi bilan tanishadi, odat va qiziqishlarni solishtiradi, to‘qnashgan jadvallarni muhokama qilib kun-vaqt-joyni kelishadi.",
+    "grammar": {
+      "title": "Oylik integratsiya: tanishuvdan kelishuvgacha",
+      "rule": "Yangi grammatika yo‘q. Я работаю/учусь, hozirgi zamon fe’llari, люблю/могу + infinitiv, потому что va uchrashuv qoliplari bir suhbatda ishlatiladi. Odat va ayni paytdagi mashg‘ulotni обычно/сейчас bilan farqlang. Kun, vaqt va joy oxirida qayta tekshiriladi.",
+      "examples": [
+        {
+          "ru": "Я люблю говорить по-русски, но в пятницу не могу.",
+          "uz": "Men ruscha gaplashishni yaxshi ko‘raman, lekin juma kuni qila olmayman."
+        },
+        {
+          "ru": "Встретимся в субботу в шестнадцать тридцать, в кафе?",
+          "uz": "Shanba kuni 16:30 da kafeda uchrashamizmi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Мы ___ по-русски. (говорить)",
+          "answer": "говорим",
+          "explanation": "Мы uchun говорим shakli ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Я люблю ___ . (читаю / читать)",
+          "answer": "читать",
+          "explanation": "Люблю dan keyin infinitiv keladi."
+        },
+        {
+          "prompt": "Sababli rad javobini to‘ldiring: Не могу, ___ работаю.",
+          "answer": "потому что",
+          "explanation": "Sabab bog‘lovchisi tanlanadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Расскажите о себе, пожалуйста.",
+        "uz": "Iltimos, o‘zingiz haqingizda ayting."
+      },
+      {
+        "ru": "Я работаю в офисе.",
+        "uz": "Men ofisda ishlayman."
+      },
+      {
+        "ru": "Я люблю читать.",
+        "uz": "Men o‘qishni yaxshi ko‘raman."
+      },
+      {
+        "ru": "Когда вы свободны?",
+        "uz": "Qachon bo‘shsiz?"
+      },
+      {
+        "ru": "Не могу, потому что работаю.",
+        "uz": "Qila olmayman, chunki ishlayman."
+      },
+      {
+        "ru": "Мне подходит.",
+        "uz": "Menga mos keladi."
+      },
+      {
+        "ru": "Где встретимся?",
+        "uz": "Qayerda uchrashamiz?"
+      },
+      {
+        "ru": "Давайте проверим.",
+        "uz": "Keling, tekshirib olaylik."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я Али. Я работаю в офисе и люблю читать. А вы?",
+        "uz": "Men Aliman. Ofisda ishlayman va o‘qishni yaxshi ko‘raman. Siz-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я Анна. Я учусь и тоже люблю читать.",
+        "uz": "Men Annaman. Men o‘qiyman va o‘qishni ham yaxshi ko‘raman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Встретимся в пятницу в пятнадцать тридцать?",
+        "uz": "Juma kuni 15:30 da uchrashamizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Не могу, потому что учусь. А в субботу в шестнадцать тридцать?",
+        "uz": "Qila olmayman, chunki o‘qiyman. Shanba kuni 16:30 da-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне подходит. Где встретимся?",
+        "uz": "Menga mos keladi. Qayerda uchrashamiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В кафе. Давайте читать и говорить по-русски.",
+        "uz": "Kafeda. Keling, o‘qiymiz va ruscha gaplashamiz."
+      },
+      {
+        "speaker": "A",
+        "ru": "Хорошо. В субботу в шестнадцать тридцать, в кафе?",
+        "uz": "Yaxshi. Shanba kuni 16:30 da, kafedami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, правильно.",
+        "uz": "Ha, to‘g‘ri."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Ikkalasining umumiy qiziqishi nima?",
+        "answer": "Читать."
+      },
+      {
+        "prompt": "Anna juma kuni nega uchrasha olmaydi?",
+        "answer": "Потому что учится."
+      },
+      {
+        "prompt": "Yakuniy kun, vaqt va joyni ayting.",
+        "answer": "В субботу в шестнадцать тридцать, в кафе."
+      }
+    ],
+    "roleplay": {
+      "a": "Yangi suhbat sherigi qidiryapsiz. Kartangiz: Ali, ofisda ishlaysiz, odatda kechqurun o‘qiysiz, sayr ham yoqadi. Juma 17:30 va shanba 16:45 bo‘shsiz; uchrashuv taklif qiling.",
+      "b": "Kartangiz: Lola, universitetda o‘qiysiz, odatda kechqurun musiqa tinglaysiz, o‘qish ham yoqadi. Juma 17:30 da dars, shanba 16:45 bo‘sh; kafe mos. Sabab aytib qarshi taklif bering.",
+      "twist": "Kafe mos emas degan karta bering; o‘rganilgan в школе joyiga kelishib, barcha tafsilotlarni qayta tasdiqlang.",
+      "success": "Tanishtirish, odat, qiziqish, savol, sababli rad, muqobil taklif, kun-vaqt-joy tasdig‘i va aniqlashtirishdan kamida yettitasi bajariladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. Sakkiz nutq vazifasi va yakuniy kun-vaqt-joyning aniqligini kuzating. Я люблю читаю xatosini infinitiv bilan tuzating. Расскажите о себе va Давайте проверим tayyor boshqaruv qoliplari. Tayanchga so‘z banki, ilg‘orga kutilmagan jadval o‘zgarishi bering. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Sinovdagi kelishuvni kun, vaqt, joy va faoliyat bilan ovozga yozing.",
+      "Ustoz ko‘rsatgan ikki xatoni tuzatib, har biriga yangi misol yozing.",
+      "Yangi sherik bilan boshqa kun va vaqt kartalarida suhbatni takrorlang; moslikni ikkalangiz tekshiring."
+    ],
+    "exit": "Yangi kartada sakkiz vazifadan kamida yettitasini bajaring, kamida 14/20 ball oling va kun-vaqt-joyni xatosiz tasdiqlang; yordam darajasi yozib qo‘yilsin."
+  }
+]

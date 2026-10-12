@@ -1,0 +1,4748 @@
+[
+  {
+    "no": 73,
+    "month": 7,
+    "week": 25,
+    "title": "Ijaraga uy izlayapman",
+    "objective": "Uy egasiga 4 ta talabni aytadi va ijara haqida 3 ta savol beradi.",
+    "grammar": {
+      "title": "Мне нужна квартира",
+      "rule": "Kerakli narsani aytishda shaxs jo‘nalish kelishigida bo‘ladi: мне, вам. Нужен erkak, нужна ayol, нужно o‘rta jinsdagi birlik otga, нужны ko‘plikka moslashadi.",
+      "examples": [
+        {
+          "ru": "Мне нужна квартира рядом с метро.",
+          "uz": "Menga metro yonidan kvartira kerak."
+        },
+        {
+          "ru": "Вам нужен балкон?",
+          "uz": "Sizga balkon kerakmi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Мне ___ комната.",
+          "answer": "нужна",
+          "explanation": "Комната ayol jinsida, shuning uchun нужна ishlatiladi."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Нам ___ два ключа.",
+          "answer": "нужны",
+          "explanation": "Ikki kalit talab qilinyapti; bu tuzilmada ko‘plikdagi нужны ishlatiladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Sizga stol kerakmi?",
+          "answer": "Вам нужен стол?",
+          "explanation": "Sizga — вам; стол erkak jinsida bo‘lgani uchun нужен."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я ищу квартиру.",
+        "uz": "Men kvartira qidiryapman."
+      },
+      {
+        "ru": "Мне нужна одна комната.",
+        "uz": "Menga bitta xona kerak."
+      },
+      {
+        "ru": "Рядом с метро",
+        "uz": "Metro yonida"
+      },
+      {
+        "ru": "На длительный срок",
+        "uz": "Uzoq muddatga"
+      },
+      {
+        "ru": "Сколько стоит аренда?",
+        "uz": "Ijara qancha turadi?"
+      },
+      {
+        "ru": "Коммунальные услуги включены?",
+        "uz": "Kommunal to‘lovlar kiradimi?"
+      },
+      {
+        "ru": "Можно посмотреть квартиру?",
+        "uz": "Kvartirani ko‘rsa bo‘ladimi?"
+      },
+      {
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Я ищу квартиру рядом с метро.",
+        "uz": "Assalomu alaykum! Metro yonidan kvartira qidiryapman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Есть однокомнатная квартира. Вам нужен балкон?",
+        "uz": "Bir xonali kvartira bor. Sizga balkon kerakmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет, но мне нужна мебель. Сколько стоит аренда?",
+        "uz": "Yo‘q, lekin menga mebel kerak. Ijara qancha?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Тридцать тысяч рублей в месяц. Коммунальные услуги отдельно.",
+        "uz": "Oyiga o‘ttiz ming rubl. Kommunal to‘lovlar alohida."
+      },
+      {
+        "speaker": "A",
+        "ru": "Можно посмотреть квартиру завтра?",
+        "uz": "Ertaga kvartirani ko‘rsa bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, приходите в шесть вечера.",
+        "uz": "Ha, kechki oltida keling."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где A ищет квартиру?",
+        "answer": "Рядом с метро."
+      },
+      {
+        "prompt": "Что нужно A: балкон или мебель?",
+        "answer": "Мебель."
+      },
+      {
+        "prompt": "Когда можно посмотреть квартиру?",
+        "answer": "Завтра в шесть вечера."
+      }
+    ],
+    "roleplay": {
+      "a": "Siz ijarachisiz. Metroga yaqin, mebelli uy kerak; budjetingiz 32 ming rubl. Narx va ko‘rish vaqtini aniqlang.",
+      "b": "Siz uy egasisiz. Uy 30 ming, kommunal to‘lov alohida, balkon yo‘q. Ertaga soat oltida ko‘rsata olasiz.",
+      "twist": "Ijarachi endi balkonni ham istaydi; uy egasi mavjud variantni yana aniq tushuntiradi.",
+      "success": "4 talab yoki afzallik aytiladi, 3 savol beriladi, narx va uchrashuv vaqti qayta tasdiqlanadi."
+    },
+    "teacherTip": "O‘zbekchadagi o‘zgarmas «kerak» ta’sirida «мне нужен комната» deyilishini tuzating: otning jinsini topdiring. Tayanchga ehtiyoji borlarga нужен/нужна kartasi, kuchlilarga ko‘plikdagi ikki talab bering.",
+    "homework": [
+      "Ovozli xabarda uyga oid 4 talabni ayting.",
+      "Juftingizdan ijara haqida 3 savol so‘rab, javobini qayta ayting.",
+      "Нужен, нужна, нужно, нужны bilan 4 ta alohida gap yozing."
+    ],
+    "exit": "E’longa qaramay kerakli uyni 3 gapda tasvirlang va narxni so‘rang."
+  },
+  {
+    "no": 74,
+    "month": 7,
+    "week": 25,
+    "title": "Ikki kvartirani taqqoslaymiz",
+    "objective": "Ikki uy variantini 3 mezon bo‘yicha taqqoslaydi va tanlovini aytadi.",
+    "grammar": {
+      "title": "Дешевле, больше, ближе",
+      "rule": "Sodda qiyosiy shakl jinsga qarab o‘zgarmaydi: квартира дешевле, дом дешевле. Ikkinchi variant чем orqali kiritiladi; хороший so‘zining qiyosi лучше bo‘ladi.",
+      "examples": [
+        {
+          "ru": "Эта квартира дешевле, чем та.",
+          "uz": "Bu kvartira unisidan arzonroq."
+        },
+        {
+          "ru": "Первый дом ближе к метро.",
+          "uz": "Birinchi uy metroga yaqinroq."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Qiyosiy shaklni yozing: Эта комната (большой).",
+          "answer": "Эта комната больше.",
+          "explanation": "Большой so‘zining qiyosi больше; ayol jinsiga alohida qo‘shimcha qo‘shilmaydi."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Этот вариант лучше, ___ тот.",
+          "answer": "чем",
+          "explanation": "Чем ikki variantni taqqoslashga xizmat qiladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Ikkinchi uy arzonroq.",
+          "answer": "Второй дом дешевле.",
+          "explanation": "Дом erkak jinsida, shuning uchun второй; дешевле o‘zgarmaydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Этот вариант дешевле.",
+        "uz": "Bu variant arzonroq."
+      },
+      {
+        "ru": "Здесь больше места.",
+        "uz": "Bu yerda joy ko‘proq."
+      },
+      {
+        "ru": "Ближе к остановке",
+        "uz": "Bekatga yaqinroq"
+      },
+      {
+        "ru": "Дальше от центра",
+        "uz": "Markazdan uzoqroq"
+      },
+      {
+        "ru": "На каком этаже?",
+        "uz": "Nechanchi qavatda?"
+      },
+      {
+        "ru": "В доме есть лифт?",
+        "uz": "Uyda lift bormi?"
+      },
+      {
+        "ru": "Мне подходит второй вариант.",
+        "uz": "Menga ikkinchi variant mos keladi."
+      },
+      {
+        "ru": "Сколько стоит аренда?",
+        "uz": "Ijara qancha turadi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Первый вариант стоит тридцать тысяч, а второй?",
+        "uz": "Birinchi variant o‘ttiz ming turadi, ikkinchisi-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Второй дешевле: двадцать восемь тысяч.",
+        "uz": "Ikkinchisi arzonroq: yigirma sakkiz ming."
+      },
+      {
+        "speaker": "A",
+        "ru": "А какая квартира ближе к метро?",
+        "uz": "Qaysi kvartira metroga yaqinroq?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Первая. Но во второй больше места.",
+        "uz": "Birinchisi. Lekin ikkinchisida joy ko‘proq."
+      },
+      {
+        "speaker": "A",
+        "ru": "На каком этаже вторая квартира? Есть лифт?",
+        "uz": "Ikkinchi kvartira nechanchi qavatda? Lift bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "На пятом, лифт есть. Давайте её посмотрим.",
+        "uz": "Beshinchida, lift bor. Keling, uni ko‘ramiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какая квартира дешевле?",
+        "answer": "Вторая."
+      },
+      {
+        "prompt": "Какая квартира ближе к метро?",
+        "answer": "Первая."
+      },
+      {
+        "prompt": "На каком этаже вторая квартира?",
+        "answer": "На пятом."
+      }
+    ],
+    "roleplay": {
+      "a": "Birinchi uy: 30 ming, metroga 5 daqiqa, kichik. Siz uchun yo‘lning yaqinligi muhim; sherigingizdagi variantni so‘rang.",
+      "b": "Ikkinchi uy: 28 ming, metroga 15 daqiqa, katta. Siz uchun joy va narx muhim; ikkala variantdan birini taklif qiling.",
+      "twist": "Birinchi uyda lift yo‘qligi ma’lum bo‘ladi; tanlovni qayta muhokama qiling.",
+      "success": "Narx, kattalik va masofa bo‘yicha 3 to‘g‘ri taqqoslash hamda bitta kelishilgan tanlov eshitiladi."
+    },
+    "teacherTip": "«Квартира дешевлея» kabi jins qo‘shimchasini qo‘shishni tuzating: дешевле barcha otlar bilan bir xil. Qiynalayotganlarga narxli rasmlar, ilg‘orlarga лифт va этаж bo‘yicha qo‘shimcha mezon bering.",
+    "homework": [
+      "Ikki xonani 3 mezonda taqqoslab ovoz yozing.",
+      "Sherigingiz bilan qaysi variant mosligini navbatma-navbat ayting.",
+      "Больше, дешевле, ближе bilan uchta taqqoslash yozing."
+    ],
+    "exit": "Ikki yangi e’lon asosida 3 taqqoslash ayting va birini tanlang."
+  },
+  {
+    "no": 75,
+    "month": 7,
+    "week": 25,
+    "title": "Safar uchun vaqtinchalik turar joy",
+    "objective": "Yangi shaharda ikki mehmon uyini taqqoslab, 3 kechaga mos xonani kelishadi.",
+    "grammar": {
+      "title": "Birlashtirish: нужна va qiyoslash",
+      "rule": "Talab uchun мне нужна + ayol jinsidagi ot, вариант bilan мне нужен ishlatiladi. Tanlashda дешевле, больше, ближе shakllari o‘zgarmaydi; bu darsda avvalgi qoliplar yangi vaziyatda qo‘llanadi.",
+      "examples": [
+        {
+          "ru": "Мне нужна комната на три ночи.",
+          "uz": "Menga uch kechaga xona kerak."
+        },
+        {
+          "ru": "Этот гостевой дом ближе к вокзалу.",
+          "uz": "Bu mehmon uyi vokzalga yaqinroq."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Мне ___ тихая комната.",
+          "answer": "нужна",
+          "explanation": "Комната ayol jinsidagi birlik ot."
+        },
+        {
+          "prompt": "So‘zlardan gap tuzing: вариант / этот / дешевле.",
+          "answer": "Этот вариант дешевле.",
+          "explanation": "Avval variant ko‘rsatiladi, so‘ng uning qiyosiy belgisi aytiladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Menga vokzalga yaqinroq variant kerak.",
+          "answer": "Мне нужен вариант ближе к вокзалу.",
+          "explanation": "Вариант erkak jinsida; ближе к вокзалу tayyor masofa qolipi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "На три ночи",
+        "uz": "Uch kechaga"
+      },
+      {
+        "ru": "Есть свободная комната?",
+        "uz": "Bo‘sh xona bormi?"
+      },
+      {
+        "ru": "Мне нужна тихая комната.",
+        "uz": "Menga tinch xona kerak."
+      },
+      {
+        "ru": "Сколько стоит ночь?",
+        "uz": "Bir kecha qancha turadi?"
+      },
+      {
+        "ru": "Этот вариант ближе.",
+        "uz": "Bu variant yaqinroq."
+      },
+      {
+        "ru": "Завтрак включён?",
+        "uz": "Nonushta kiradimi?"
+      },
+      {
+        "ru": "Я выбираю эту комнату.",
+        "uz": "Men shu xonani tanlayman."
+      },
+      {
+        "ru": "Повторите адрес, пожалуйста.",
+        "uz": "Manzilni takrorlang, iltimos."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Мне нужна комната на три ночи, рядом с вокзалом.",
+        "uz": "Menga uch kechaga vokzal yonidan xona kerak."
+      },
+      {
+        "speaker": "B",
+        "ru": "В первом доме ночь стоит две тысячи, во втором — тысячу восемьсот.",
+        "uz": "Birinchi uyda bir kecha ikki ming, ikkinchisida ming sakkiz yuz turadi."
+      },
+      {
+        "speaker": "A",
+        "ru": "Второй дешевле. А какой дом ближе к вокзалу?",
+        "uz": "Ikkinchisi arzonroq. Qaysi uy vokzalga yaqinroq?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Первый. Там ещё и тише.",
+        "uz": "Birinchisi. U yer yana tinchroq ham."
+      },
+      {
+        "speaker": "A",
+        "ru": "Тогда выбираю первый. Завтрак включён?",
+        "uz": "Unda birinchisini tanlayman. Nonushta kiradimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Записываю вас на три ночи.",
+        "uz": "Ha. Sizni uch kechaga yozib qo‘yaman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "На сколько ночей нужна комната?",
+        "answer": "На три ночи."
+      },
+      {
+        "prompt": "Сколько стоит ночь во втором доме?",
+        "answer": "Тысячу восемьсот рублей."
+      },
+      {
+        "prompt": "Какой дом выбирает A?",
+        "answer": "Первый."
+      }
+    ],
+    "roleplay": {
+      "a": "Ko‘rgazmaga boshqa shaharga keldingiz. Uch kechaga tinch xona kerak, har kechaga 2100 rubl ajratasiz. Narx va joylashuvni so‘rang.",
+      "b": "Axborot xodimisiz. Vokzal yonidagi uy 2000, uzoqrog‘i 1800 rubl. Faqat birinchisida nonushta bor. Mos variantni topishga yordam bering.",
+      "twist": "Safar bir kechaga uzaydi; yangi muddat va umumiy narxni aniqlashtiring.",
+      "success": "Talab aytiladi, 2 variant taqqoslanadi, kechalar soni va tanlangan narx og‘zaki tasdiqlanadi."
+    },
+    "teacherTip": "Bu ko‘chirish mashqida yangi qoida kiritmang. «Мне нужно комната»ni otga ishora qilib tuzattiring. Boshlang‘ichlarga talab kartasi, kuchlilarga nonushtasiz uchinchi variant bering.",
+    "homework": [
+      "Mehmon uyiga uch kechalik so‘rovni ovozga yozing.",
+      "Juftingiz bilan muddatni uch kechadan to‘rt kechaga o‘zgartirishni mashq qiling.",
+      "Ikki turar joy uchun narx va 2 farq ko‘rsatilgan qisqa e’lon yozing."
+    ],
+    "exit": "Yangi ikkita taklifdan birini tanlab, ehtiyoj, taqqoslash va muddatni 4 gapda ayting."
+  },
+  {
+    "no": 76,
+    "month": 7,
+    "week": 26,
+    "title": "Uy egasidan yordam so‘rash",
+    "objective": "Uy egasiga ikki aniq iltimosni kimga kerakligini ko‘rsatib aytadi va javobni aniqlashtiradi.",
+    "grammar": {
+      "title": "Дайте мне, покажите нам",
+      "rule": "Biror narsani oluvchi shaxs jo‘nalish kelishigida keladi: мне, вам, нам. Дайте va покажите hurmat shaklidagi iltimoslar; пожалуйста ularni yumshatadi.",
+      "examples": [
+        {
+          "ru": "Дайте мне, пожалуйста, второй ключ.",
+          "uz": "Iltimos, menga ikkinchi kalitni bering."
+        },
+        {
+          "ru": "Покажите нам, пожалуйста, кухню.",
+          "uz": "Iltimos, bizga oshxonani ko‘rsating."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Дайте ___ ключ. (men)",
+          "answer": "мне",
+          "explanation": "Kalitni oluvchi «men» — мне shaklida bo‘ladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Bizga hammomni ko‘rsating, iltimos.",
+          "answer": "Покажите нам ванную, пожалуйста.",
+          "explanation": "Bizga — нам; ko‘rsatiladigan joy винительный kelishigida: ванную."
+        },
+        {
+          "prompt": "Hurmat shakliga o‘tkazing: Дай мне адрес.",
+          "answer": "Дайте мне адрес, пожалуйста.",
+          "explanation": "Notanish kishiga дайте va пожалуйста bilan murojaat qilinadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Дайте мне второй ключ, пожалуйста.",
+        "uz": "Menga ikkinchi kalitni bering, iltimos."
+      },
+      {
+        "ru": "Покажите нам кухню.",
+        "uz": "Bizga oshxonani ko‘rsating."
+      },
+      {
+        "ru": "Пришлите мне адрес.",
+        "uz": "Menga manzilni yuboring."
+      },
+      {
+        "ru": "Объясните мне, пожалуйста.",
+        "uz": "Menga tushuntiring, iltimos."
+      },
+      {
+        "ru": "Где лежит ключ?",
+        "uz": "Kalit qayerda turibdi?"
+      },
+      {
+        "ru": "Можно ещё раз?",
+        "uz": "Yana bir marta mumkinmi?"
+      },
+      {
+        "ru": "Спасибо за помощь.",
+        "uz": "Yordam uchun rahmat."
+      },
+      {
+        "ru": "Я всё понял. / Я всё поняла.",
+        "uz": "Hammasini tushundim. (erkak / ayol)"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Дайте мне, пожалуйста, второй ключ.",
+        "uz": "Iltimos, menga ikkinchi kalitni bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Он в ящике у двери. Возьмите его.",
+        "uz": "U eshik yonidagi tortmada. Uni oling."
+      },
+      {
+        "speaker": "A",
+        "ru": "Спасибо. Покажите нам, пожалуйста, кладовку.",
+        "uz": "Rahmat. Iltimos, bizga omborchani ko‘rsating."
+      },
+      {
+        "speaker": "B",
+        "ru": "Она справа от кухни. Там стоит пылесос.",
+        "uz": "U oshxonaning o‘ng tomonida. U yerda changyutgich turibdi."
+      },
+      {
+        "speaker": "A",
+        "ru": "И пришлите мне ваш номер телефона.",
+        "uz": "Menga telefon raqamingizni ham yuboring."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо, сейчас пришлю сообщение.",
+        "uz": "Xo‘p, hozir xabar yuboraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где второй ключ?",
+        "answer": "В ящике у двери."
+      },
+      {
+        "prompt": "Где кладовка?",
+        "answer": "Справа от кухни."
+      },
+      {
+        "prompt": "Что B пришлёт?",
+        "answer": "Свой номер телефона."
+      }
+    ],
+    "roleplay": {
+      "a": "Yangi ijarachisiz. Ikkinchi kalit, omborcha joyi va uy egasining raqami kerak. Har birini aniq so‘rang.",
+      "b": "Uy egasisiz. Kalit tortmada, omborcha oshxona yonida. Telefon raqamini xabar orqali yubora olasiz, kalitni o‘zingiz olib bera olmaysiz.",
+      "twist": "Tortmada kalit topilmadi; boshqa joyni so‘rab aniqlashtiring.",
+      "success": "Kamida 2 iltimosda мне yoki нам to‘g‘ri ishlatiladi va bir noaniq javob qayta so‘raladi."
+    },
+    "teacherTip": "«Дайте я» xatosida harakatni oluvchi shaxsni so‘rang va мне shaklini qaytartiring. Tayanch guruhiga 3 olmosh kartasi, ilg‘orlarga biz nomidan нам bilan so‘rov bering.",
+    "homework": [
+      "Uy egasiga 3 muloyim iltimosni ovozli xabar qiling.",
+      "Juftingizning bir noaniq javobini qayta so‘rashni mashq qiling.",
+      "Мне, нам, вам qatnashgan 3 iltimos yozing."
+    ],
+    "exit": "Kalit va manzilni ikki muloyim iltimos bilan so‘rang, bitta javobni tasdiqlang."
+  },
+  {
+    "no": 77,
+    "month": 7,
+    "week": 26,
+    "title": "Kim bilan yashaysiz?",
+    "objective": "Kim bilan yashashi va kim bilan ko‘chib kelishini 4 gapda aytib, sherigining holatini so‘raydi.",
+    "grammar": {
+      "title": "С кем? — С другом, с сестрой",
+      "rule": "Birga bo‘lishda с + творительный ishlatiladi: друг → с другом, сестра → с сестрой. Olmoshlar tayyor shaklda olinadi: со мной, с вами, с ним, с ней.",
+      "examples": [
+        {
+          "ru": "Я живу с сестрой.",
+          "uz": "Men opam bilan yashayman."
+        },
+        {
+          "ru": "Можно прийти с другом?",
+          "uz": "Do‘stim bilan kelsam bo‘ladimi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Qavsni oching: Я живу с (брат).",
+          "answer": "Я живу с братом.",
+          "explanation": "Брат so‘zi с dan keyin братом shakliga o‘tadi."
+        },
+        {
+          "prompt": "Qavsni oching: Мы придём с (подруга).",
+          "answer": "Мы придём с подругой.",
+          "explanation": "Подруга so‘zining bu kelishikdagi shakli подругой."
+        },
+        {
+          "prompt": "Ruscha ayting: U men bilan yashaydi. (ayol)",
+          "answer": "Она живёт со мной.",
+          "explanation": "Men bilan — со мной; она bilan живёт ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "С кем вы живёте?",
+        "uz": "Kim bilan yashaysiz?"
+      },
+      {
+        "ru": "Я живу с братом.",
+        "uz": "Men akam bilan yashayman."
+      },
+      {
+        "ru": "Я живу один. / Я живу одна.",
+        "uz": "Men yolg‘iz yashayman. (erkak / ayol)"
+      },
+      {
+        "ru": "Мы снимаем квартиру вместе.",
+        "uz": "Biz birga kvartira ijaraga olganmiz."
+      },
+      {
+        "ru": "Можно прийти с другом?",
+        "uz": "Do‘stim bilan kelsam bo‘ladimi?"
+      },
+      {
+        "ru": "Она приедет со мной.",
+        "uz": "U men bilan keladi."
+      },
+      {
+        "ru": "Нам нужны два ключа.",
+        "uz": "Bizga ikkita kalit kerak."
+      },
+      {
+        "ru": "Давайте познакомимся.",
+        "uz": "Keling, tanishamiz."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Вы будете жить один?",
+        "uz": "Siz yolg‘iz yashaysizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, я буду жить с братом.",
+        "uz": "Yo‘q, men akam bilan yashayman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Он тоже приедет завтра?",
+        "uz": "U ham ertaga keladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, он приедет со мной. Нам нужны два ключа.",
+        "uz": "Ha, u men bilan keladi. Bizga ikkita kalit kerak."
+      },
+      {
+        "speaker": "A",
+        "ru": "Хорошо. Приходите вместе в семь.",
+        "uz": "Xo‘p. Yettida birga keling."
+      },
+      {
+        "speaker": "B",
+        "ru": "Спасибо. Мы с братом будем вовремя.",
+        "uz": "Rahmat. Akam bilan vaqtida kelamiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "С кем будет жить B?",
+        "answer": "С братом."
+      },
+      {
+        "prompt": "Сколько ключей им нужно?",
+        "answer": "Два."
+      },
+      {
+        "prompt": "Во сколько они придут?",
+        "answer": "В семь."
+      }
+    ],
+    "roleplay": {
+      "a": "Opangiz bilan uyga ko‘chasiz. U faqat kechki yettida keladi. Uy egasidan birga kelish va ikkita kalit olishni so‘rang.",
+      "b": "Uy egasisiz. Kimlar yashashini bilishingiz kerak. Oltida yoki yettida uchrashish mumkin; har yashovchiga bittadan kalit bor.",
+      "twist": "Ko‘chirishga bir do‘st ham yordam beradi; u uyda yashamasligini tushuntiring.",
+      "success": "3 ta с birikmasi aytiladi, yashovchi va yordamga keluvchi farqlanadi, vaqt kelishiladi."
+    },
+    "teacherTip": "«С мой брат»ni «с братом» bilan tuzattiring; o‘zbekchadagi «bilan»dan oldingi ot o‘zgarmasligiga e’tibor qarating. Tayanchga tayyor juftliklar, kuchlilarga с ним/с ней bilan qayta aytish bering.",
+    "homework": [
+      "Haqiqiy yoki o‘ylab topilgan uy a’zolari haqida 4 gapni yozib oling.",
+      "Juftingizdan kim bilan yashashi va kim bilan kelishini so‘rang.",
+      "С другом, с сестрой, со мной bilan 3 gap yozing."
+    ],
+    "exit": "Kim bilan yashashingizni va uchrashuvga kim bilan kelishingizni ayting, sherigingizga С кем savolini bering."
+  },
+  {
+    "no": 78,
+    "month": 7,
+    "week": 26,
+    "title": "Yotoqxonaga birga joylashish",
+    "objective": "Yotoqxona xodimi bilan xonadosh, kalit va xona talablari bo‘yicha kelishuvga erishadi.",
+    "grammar": {
+      "title": "Birlashtirish: с кем va кому",
+      "rule": "Birga yashovchini с + творительный orqali aytamiz: с подругой. Kalit kimga kerakligini нам yoki мне bildiradi. Нужна xona bilan, нужны kalitlar bilan moslashadi.",
+      "examples": [
+        {
+          "ru": "Я буду жить с подругой.",
+          "uz": "Men dugonam bilan yashayman."
+        },
+        {
+          "ru": "Дайте нам, пожалуйста, два ключа.",
+          "uz": "Iltimos, bizga ikkita kalit bering."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Qavsni oching: Я приехала с (сестра).",
+          "answer": "Я приехала с сестрой.",
+          "explanation": "С bilan birga keluvchi shaxs творительный shaklida: сестрой."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: ___ нужна комната на двоих. (bizga)",
+          "answer": "Нам",
+          "explanation": "Talab kimga tegishli ekanini jo‘nalish kelishigidagi нам bildiradi."
+        },
+        {
+          "prompt": "Ruscha ayting: Bizga ikki kalit bering, iltimos.",
+          "answer": "Дайте нам два ключа, пожалуйста.",
+          "explanation": "Дайте hurmat shakli, нам esa oluvchilarni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Мы приехали на курсы.",
+        "uz": "Biz kurslarga keldik."
+      },
+      {
+        "ru": "Комната на двоих",
+        "uz": "Ikki kishilik xona"
+      },
+      {
+        "ru": "Я буду жить с подругой.",
+        "uz": "Men dugonam bilan yashayman."
+      },
+      {
+        "ru": "Нам нужны два ключа.",
+        "uz": "Bizga ikkita kalit kerak."
+      },
+      {
+        "ru": "Где общая кухня?",
+        "uz": "Umumiy oshxona qayerda?"
+      },
+      {
+        "ru": "Покажите нам комнату.",
+        "uz": "Bizga xonani ko‘rsating."
+      },
+      {
+        "ru": "Здесь тише?",
+        "uz": "Bu yer tinchroqmi?"
+      },
+      {
+        "ru": "Можно другую комнату?",
+        "uz": "Boshqa xona mumkinmi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Мы приехали на курсы. Нам нужна комната на двоих.",
+        "uz": "Biz kurslarga keldik. Bizga ikki kishilik xona kerak."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вы будете жить с сестрой?",
+        "uz": "Opangiz bilan yashaysizmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет, с подругой. Можно комнату подальше от кухни?",
+        "uz": "Yo‘q, dugonam bilan. Oshxonadan uzoqroq xona mumkinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Есть комната на третьем этаже. Там тише.",
+        "uz": "Uchinchi qavatda xona bor. U yer tinchroq."
+      },
+      {
+        "speaker": "A",
+        "ru": "Подходит. Дайте нам, пожалуйста, два ключа.",
+        "uz": "Mos keladi. Iltimos, bizga ikkita kalit bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот ключи. Сейчас покажу вам комнату.",
+        "uz": "Mana kalitlar. Hozir sizga xonani ko‘rsataman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Зачем приехали гости?",
+        "answer": "На курсы."
+      },
+      {
+        "prompt": "С кем будет жить A?",
+        "answer": "С подругой."
+      },
+      {
+        "prompt": "Где находится предложенная комната?",
+        "answer": "На третьем этаже."
+      }
+    ],
+    "roleplay": {
+      "a": "Boshqa shahardagi kurs yotoqxonasiga do‘stingiz bilan keldingiz. Tinch ikki kishilik xona, ikki kalit va oshxona yo‘nalishi kerak.",
+      "b": "Yotoqxona xodimisiz. Ikkinchi qavat oshxonaga yaqin, uchinchisi tinchroq. Kalitlar hozircha bitta; ikkinchisini kechqurun berasiz.",
+      "twist": "Xonadosh bugun emas, ertaga keladi; kalitni kim olishini kelishing.",
+      "success": "Xonadosh aytiladi, ikki xona taqqoslanadi, kalitga iltimos va uni olish kelishuvi bildiriladi."
+    },
+    "teacherTip": "Yangi qoida bermay с другом va нам shakllarini qayta ishlating. «Дайте мы»ni o‘quvchining o‘ziga tuzattiring. Tayanchga vazifa ro‘yxati, ilg‘orlarga kelish vaqtini o‘zgartirish shartini bering.",
+    "homework": [
+      "Yotoqxonaga joylashish bo‘yicha 5 gaplik ovozli so‘rov yozing.",
+      "Juftingiz bilan yetishmayotgan ikkinchi kalit haqida gaplashing.",
+      "Xonadoshga xona, qavat va kalit haqida 3 gapli xabar yozing."
+    ],
+    "exit": "Yangi yotoqxona kartasi bilan xonadoshingizni tanishtiring, xona va kalitni so‘rang."
+  },
+  {
+    "no": 79,
+    "month": 7,
+    "week": 27,
+    "title": "Uyda nima ishlamayapti?",
+    "objective": "Uydagi 3 nosozlikdan birini joyi va boshlanish vaqti bilan tushuntirib, usta chaqirishni so‘raydi.",
+    "grammar": {
+      "title": "Не работает, нет воды",
+      "rule": "Qurilma bilan не работает, ko‘plikda не работают deyiladi. Biror narsa yo‘qligida нет dan keyin родительный ishlatiladi: вода → воды, свет → света. Muammo boshlangan vaqt с утра kabi tayyor birikmada beriladi.",
+      "examples": [
+        {
+          "ru": "В ванной не работает свет.",
+          "uz": "Hammomda chiroq ishlamayapti."
+        },
+        {
+          "ru": "С утра нет горячей воды.",
+          "uz": "Ertalabdan beri issiq suv yo‘q."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: На кухне нет (вода).",
+          "answer": "На кухне нет воды.",
+          "explanation": "Нет dan keyin вода so‘zi воды bo‘ladi."
+        },
+        {
+          "prompt": "To‘g‘ri shaklni qo‘ying: Розетки не (работает / работают).",
+          "answer": "Розетки не работают.",
+          "explanation": "Розетки ko‘plikda, fe’l ham ko‘plikda bo‘ladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Hammomda chiroq ishlamayapti.",
+          "answer": "В ванной не работает свет.",
+          "explanation": "В ванной joyni, не работает свет nosozlikni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "У нас проблема.",
+        "uz": "Bizda muammo bor."
+      },
+      {
+        "ru": "Нет горячей воды.",
+        "uz": "Issiq suv yo‘q."
+      },
+      {
+        "ru": "Свет не работает.",
+        "uz": "Chiroq ishlamayapti."
+      },
+      {
+        "ru": "Кран течёт.",
+        "uz": "Jo‘mrakdan suv sizyapti."
+      },
+      {
+        "ru": "Это началось утром.",
+        "uz": "Bu ertalab boshlandi."
+      },
+      {
+        "ru": "Пришлите мастера, пожалуйста.",
+        "uz": "Usta yuboring, iltimos."
+      },
+      {
+        "ru": "Когда он сможет прийти?",
+        "uz": "U qachon kela oladi?"
+      },
+      {
+        "ru": "Я буду дома.",
+        "uz": "Men uyda bo‘laman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте. В ванной нет горячей воды.",
+        "uz": "Assalomu alaykum. Hammomda issiq suv yo‘q."
+      },
+      {
+        "speaker": "B",
+        "ru": "А на кухне вода есть?",
+        "uz": "Oshxonada suv bormi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, на кухне всё нормально. Это началось утром.",
+        "uz": "Ha, oshxonada hammasi yaxshi. Bu ertalab boshlandi."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я пришлю мастера после обеда.",
+        "uz": "Tushlikdan keyin usta yuboraman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Я буду дома после трёх. Передайте ему, пожалуйста.",
+        "uz": "Men uchdan keyin uyda bo‘laman. Unga ayting, iltimos."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо, он сначала вам позвонит.",
+        "uz": "Xo‘p, u avval sizga qo‘ng‘iroq qiladi."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где нет горячей воды?",
+        "answer": "В ванной."
+      },
+      {
+        "prompt": "Когда началась проблема?",
+        "answer": "Утром."
+      },
+      {
+        "prompt": "Когда A будет дома?",
+        "answer": "После трёх."
+      }
+    ],
+    "roleplay": {
+      "a": "Hammomda ertalabdan issiq suv yo‘q, oshxonada bor. Uchdan keyin uyda bo‘lasiz. Muammoni uy egasiga ayting.",
+      "b": "Uy egasisiz. Usta tushdan keyin kelishi mumkin. Muammo qayerdaligini va ijarachi qachon uyda bo‘lishini aniqlang.",
+      "twist": "Usta kechroq kelishini aytadi; yangi vaqtni tasdiqlang.",
+      "success": "Joy, nosozlik va boshlanish vaqti aytiladi; ustaga iltimos va uyda bo‘lish vaqti kelishiladi."
+    },
+    "teacherTip": "«Нет вода»ni «нет воды»ga tuzating; «не работает» bilan «нет»ni bitta qolipga qo‘shmasin. Tayanchga suv/chiroq rasmlari, ilg‘orlarga ikki xonadagi farqli holatni bering.",
+    "homework": [
+      "Uydagi o‘ylab topilgan nosozlik haqida ovozli xabar yozing.",
+      "Sherigingizga usta kelish vaqtini qayta aytib tasdiqlang.",
+      "Нет va не работает bilan jami 4 gap yozing."
+    ],
+    "exit": "Bitta nosozlikni qayerda va qachondan beri ekanini aytib, yordam so‘rang."
+  },
+  {
+    "no": 80,
+    "month": 7,
+    "week": 27,
+    "title": "Uy ishlarini taqsimlash",
+    "objective": "Uchta uy ishini bajaruvchi shaxs va kuni bilan taqsimlab, bir vazifani almashtirishni kelishadi.",
+    "grammar": {
+      "title": "Я буду убирать, ты будешь мыть",
+      "rule": "Kelajakdagi jarayon uchun буду/будешь/будет/будем/будете/будут + infinitiv ishlatiladi. Shaxsga qarab faqat быть fe’li o‘zgaradi: мы будем убирать. Bu qolip ishning tugallanganini alohida bildirmaydi.",
+      "examples": [
+        {
+          "ru": "В субботу я буду убирать кухню.",
+          "uz": "Shanba kuni men oshxonani tozalayman."
+        },
+        {
+          "ru": "Мы будем мыть окна вместе.",
+          "uz": "Biz derazalarni birga yuvamiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Ты ___ мыть посуду.",
+          "answer": "будешь",
+          "explanation": "Ты bilan kelasi zamon yordamchi fe’li будешь bo‘ladi."
+        },
+        {
+          "prompt": "Xatoni tuzating: Мы будем убираем комнату.",
+          "answer": "Мы будем убирать комнату.",
+          "explanation": "Будем dan keyin tuslanmagan убирать kerak."
+        },
+        {
+          "prompt": "Ruscha ayting: Men yakshanba kuni kir yuvaman.",
+          "answer": "В воскресенье я буду стирать.",
+          "explanation": "Я буду + стирать kelajakdagi mashg‘ulotni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Кто будет мыть посуду?",
+        "uz": "Idishlarni kim yuvadi?"
+      },
+      {
+        "ru": "Я буду убирать кухню.",
+        "uz": "Men oshxonani tozalayman."
+      },
+      {
+        "ru": "Давай распределим дела.",
+        "uz": "Kel, ishlarni taqsimlaylik."
+      },
+      {
+        "ru": "Я могу в субботу.",
+        "uz": "Men shanba kuni qila olaman."
+      },
+      {
+        "ru": "Давай поменяемся.",
+        "uz": "Kel, almashaylik."
+      },
+      {
+        "ru": "Ты вынесешь мусор?",
+        "uz": "Axlatni olib chiqasanmi?"
+      },
+      {
+        "ru": "Будем делать вместе.",
+        "uz": "Birga qilamiz."
+      },
+      {
+        "ru": "Договорились.",
+        "uz": "Kelishdik."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Давай распределим дела на выходные.",
+        "uz": "Kel, dam olish kunlaridagi ishlarni taqsimlaylik."
+      },
+      {
+        "speaker": "B",
+        "ru": "В субботу я буду убирать кухню. А ты?",
+        "uz": "Shanba kuni men oshxonani tozalayman. Sen-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я буду стирать. Кто будет мыть окна?",
+        "uz": "Men kir yuvaman. Derazalarni kim yuvadi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Давай вместе в воскресенье.",
+        "uz": "Kel, yakshanba kuni birga yuvaylik."
+      },
+      {
+        "speaker": "A",
+        "ru": "В воскресенье я работаю. Можно в субботу вечером?",
+        "uz": "Yakshanba kuni ishlayman. Shanba kechqurun mumkinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, договорились. Окна будем мыть в субботу.",
+        "uz": "Ha, kelishdik. Derazalarni shanba kuni yuvamiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что будет делать B?",
+        "answer": "Убирать кухню."
+      },
+      {
+        "prompt": "Почему A не может в воскресенье?",
+        "answer": "В воскресенье A работает."
+      },
+      {
+        "prompt": "Когда они будут мыть окна?",
+        "answer": "В субботу вечером."
+      }
+    ],
+    "roleplay": {
+      "a": "Shanba ertalab bo‘shsiz, yakshanba ishlaysiz. Kir yuvishni olasiz. Uch uy ishini xonadoshingiz bilan taqsimlang.",
+      "b": "Shanba kechqurun bo‘shsiz. Oshxonani tozalay olasiz, derazalar uchun sherik kerak. Birgalikdagi vaqtni toping.",
+      "twist": "Shanba ertalab suv bo‘lmaydi; kir yuvish vaqtini almashtiring.",
+      "success": "3 ishning kim va qachon bajarishi aytiladi; kamida 2 буду/будем birikmasi va bitta o‘zgartirish kelishuvi eshitiladi."
+    },
+    "teacherTip": "«Буду стираю»ni to‘xtatib, буду dan so‘ng infinitivni qaytartiring. Tayanchga fe’l kartalari, kuchlilarga uchinchi xonadosh uchun он будет shaklini qo‘shing.",
+    "homework": [
+      "Dam olish kunidagi uch uy ishingizni ovozga yozing.",
+      "Juftingiz bilan bir ishning vaqtini almashtiring.",
+      "Я, мы, он bilan kelajakdagi uch mashg‘ulot yozing."
+    ],
+    "exit": "Uch uy ishini odamlar va kunlarga taqsimlang, sherigingizning o‘zgarishiga javob bering."
+  },
+  {
+    "no": 81,
+    "month": 7,
+    "week": 27,
+    "title": "Mahalla xonasini tadbirga tayyorlash",
+    "objective": "Umumiy xonadagi muammoni bildirib, tadbir oldidan uch tayyorgarlik vazifasini kelishadi.",
+    "grammar": {
+      "title": "Birlashtirish: muammo, iltimos va reja",
+      "rule": "Mavjud muammo не работает yoki нет + родительный bilan aytiladi. Kimga yordam kerakligi нам bilan, kelajakdagi mashg‘ulot будем + infinitiv bilan ifodalanadi; avvalgi qoliplar bir suhbatda bog‘lanadi.",
+      "examples": [
+        {
+          "ru": "В зале нет воды. Пришлите нам мастера.",
+          "uz": "Zalda suv yo‘q. Bizga usta yuboring."
+        },
+        {
+          "ru": "Мы будем убирать зал с соседями.",
+          "uz": "Biz zalni qo‘shnilar bilan tozalaymiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: В зале нет (свет).",
+          "answer": "В зале нет света.",
+          "explanation": "Нет bilan свет → света bo‘ladi."
+        },
+        {
+          "prompt": "Qavsni oching: Мы будем (мыть) столы.",
+          "answer": "Мы будем мыть столы.",
+          "explanation": "Будем dan keyin infinitiv saqlanadi."
+        },
+        {
+          "prompt": "Ruscha ayting: Bizga kalit bering, iltimos.",
+          "answer": "Дайте нам ключ, пожалуйста.",
+          "explanation": "Kalitni oluvchilar «bizga» — нам."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Мы готовим зал к встрече.",
+        "uz": "Biz zalni uchrashuvga tayyorlayapmiz."
+      },
+      {
+        "ru": "Не хватает стульев.",
+        "uz": "Stullar yetishmayapti."
+      },
+      {
+        "ru": "Свет не работает.",
+        "uz": "Chiroq ishlamayapti."
+      },
+      {
+        "ru": "Дайте нам ключ.",
+        "uz": "Bizga kalit bering."
+      },
+      {
+        "ru": "Я буду мыть столы.",
+        "uz": "Men stollarni yuvaman."
+      },
+      {
+        "ru": "Кто будет убирать зал?",
+        "uz": "Zalni kim tozalaydi?"
+      },
+      {
+        "ru": "С соседями",
+        "uz": "Qo‘shnilar bilan"
+      },
+      {
+        "ru": "Всё правильно?",
+        "uz": "Hammasi to‘g‘rimi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Мы готовим зал к встрече, но свет не работает.",
+        "uz": "Zalni uchrashuvga tayyorlayapmiz, lekin chiroq ishlamayapti."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я позвоню мастеру. Что ещё нужно?",
+        "uz": "Men ustaga qo‘ng‘iroq qilaman. Yana nima kerak?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Дайте нам ключ от кладовки. Там стоят стулья.",
+        "uz": "Bizga omborcha kalitini bering. U yerda stullar turibdi."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот ключ. Кто будет убирать зал?",
+        "uz": "Mana kalit. Zalni kim tozalaydi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я буду убирать с соседями, а Олег будет мыть столы.",
+        "uz": "Men qo‘shnilar bilan tozalayman, Oleg esa stollarni yuvadi."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Я принесу стулья после прихода мастера.",
+        "uz": "Xo‘p. Usta kelganidan keyin men stullarni olib kelaman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что не работает в зале?",
+        "answer": "Свет."
+      },
+      {
+        "prompt": "Зачем нужен ключ от кладовки?",
+        "answer": "Чтобы взять стулья."
+      },
+      {
+        "prompt": "Кто будет мыть столы?",
+        "answer": "Олег."
+      }
+    ],
+    "roleplay": {
+      "a": "Mahalla tadbirini tayyorlayapsiz. Zalda chiroq ishlamaydi, omborchadagi stullar kerak. Siz ikki qo‘shni bilan tozalaysiz.",
+      "b": "Xona mas’ulisiz. Ombor kaliti sizda. Usta tushdan keyin keladi; stollarni yuvishga bir yordamchi topa olasiz.",
+      "twist": "Usta tadbirdan oldin ulgurmaydi; kunduzgi boshqa xonadan foydalanishni kelishing.",
+      "success": "Muammo aniq aytiladi, kalit so‘raladi, 3 vazifa taqsimlanadi va yangi xona bo‘yicha qaror bildiriladi."
+    },
+    "teacherTip": "«Мы будем убираем»ni suhbatdan keyin o‘quvchiga qayta tuzattiring. Yangi grammatika talab qilmang. Tayanchga vazifalar rasmi, ilg‘orlarga boshqa xona taklifini mustaqil tushuntirishni bering.",
+    "homework": [
+      "Tadbir xonasi uchun yordam so‘rovini ovozga yozing.",
+      "Juftingiz bilan xona o‘zgargani haqidagi xabarni qayta ayting.",
+      "Uch kishilik tayyorgarlik ro‘yxatini to‘liq ruscha gaplarda yozing."
+    ],
+    "exit": "Rasmda ko‘rsatilgan yangi muammoni ayting, bir iltimos va ikki tayyorgarlik rejasini bildiring."
+  },
+  {
+    "no": 82,
+    "month": 7,
+    "week": 28,
+    "title": "Uy qoidalari haqida kelishish",
+    "objective": "Uy egasidan ikki harakatga ruxsat so‘raydi va uch uy qoidasini to‘g‘ri qayta aytadi.",
+    "grammar": {
+      "title": "Можно va нельзя + infinitiv",
+      "rule": "Можно ruxsat yoki imkoniyatni, нельзя taqiqni bildiradi; ulardan keyin infinitiv keladi. Bu shakllar shaxs va songa qarab o‘zgarmaydi: нам можно, вам нельзя. Savolda ohang yoki вопрос belgisi ruxsat so‘rashni bildiradi.",
+      "examples": [
+        {
+          "ru": "Можно пригласить друзей?",
+          "uz": "Do‘stlarni taklif qilsam bo‘ladimi?"
+        },
+        {
+          "ru": "После одиннадцати нельзя шуметь.",
+          "uz": "O‘n birdan keyin shovqin qilish mumkin emas."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Xatoni tuzating: Можно я курить здесь?",
+          "answer": "Можно курить здесь?",
+          "explanation": "Tanlangan qolipda можно dan keyin shaxssiz infinitiv keladi."
+        },
+        {
+          "prompt": "Taqiq qiling: Здесь можно шуметь.",
+          "answer": "Здесь нельзя шуметь.",
+          "explanation": "Ruxsat o‘rniga нельзя qo‘yilsa taqiq hosil bo‘ladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Balkonda kir quritsa bo‘ladimi?",
+          "answer": "Можно сушить бельё на балконе?",
+          "explanation": "Можно + сушить ruxsat so‘raydi; joy на балконе bilan beriladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Какие здесь правила?",
+        "uz": "Bu yerda qanday qoidalar bor?"
+      },
+      {
+        "ru": "Можно пригласить друзей?",
+        "uz": "Do‘stlarni taklif qilsa bo‘ladimi?"
+      },
+      {
+        "ru": "Нельзя шуметь ночью.",
+        "uz": "Tunda shovqin qilish mumkin emas."
+      },
+      {
+        "ru": "Здесь нельзя курить.",
+        "uz": "Bu yerda chekish mumkin emas."
+      },
+      {
+        "ru": "Можно с животными?",
+        "uz": "Hayvonlar bilan mumkinmi?"
+      },
+      {
+        "ru": "До скольких можно?",
+        "uz": "Soat nechagacha mumkin?"
+      },
+      {
+        "ru": "Я буду соблюдать правила.",
+        "uz": "Men qoidalarga rioya qilaman."
+      },
+      {
+        "ru": "Правильно понимаю?",
+        "uz": "To‘g‘ri tushunyapmanmi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Какие здесь правила? Можно пригласить друзей?",
+        "uz": "Bu yerda qanday qoidalar bor? Do‘stlarni taklif qilsa bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, но после одиннадцати нельзя шуметь.",
+        "uz": "Ha, lekin o‘n birdan keyin shovqin qilish mumkin emas."
+      },
+      {
+        "speaker": "A",
+        "ru": "А можно сушить бельё на балконе?",
+        "uz": "Balkonda kir quritsa bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Но курить на балконе нельзя.",
+        "uz": "Ha. Lekin balkonda chekish mumkin emas."
+      },
+      {
+        "speaker": "A",
+        "ru": "Понятно: гостей приглашать можно, ночью шуметь нельзя.",
+        "uz": "Tushunarli: mehmon taklif qilish mumkin, tunda shovqin qilish mumkin emas."
+      },
+      {
+        "speaker": "B",
+        "ru": "Верно. И дверь в подъезд всегда нужно закрывать.",
+        "uz": "To‘g‘ri. Kirish yo‘lagining eshigini ham doim yopish kerak."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Можно ли приглашать друзей?",
+        "answer": "Да, можно."
+      },
+      {
+        "prompt": "После какого часа нельзя шуметь?",
+        "answer": "После одиннадцати."
+      },
+      {
+        "prompt": "Можно ли курить на балконе?",
+        "answer": "Нет, нельзя."
+      }
+    ],
+    "roleplay": {
+      "a": "Uyda tug‘ilgan kun o‘tkazmoqchisiz. Mehmonlar va musiqa bo‘yicha ruxsat so‘rang; balkondan foydalanishni ham aniqlang.",
+      "b": "Uy egasisiz. Mehmon mumkin, o‘n birdan keyin shovqin mumkin emas, balkonda chekish taqiqlangan. Uch qoidani tushuntiring.",
+      "twist": "Mehmonlardan biri mushuk olib kelmoqchi; buning mumkinligini alohida kelishing.",
+      "success": "2 ruxsat savoli va 3 qoida qayta aytiladi; ruxsat bilan taqiq aralashtirilmaydi."
+    },
+    "teacherTip": "«Нельзя шумит» o‘rniga нельзя шуметь ni tuzattiring. Tayanchga mumkin/taqiq belgilarini, ilg‘orlarga qoidani uy egasiga qayta tekshirtirish vazifasini bering.",
+    "homework": [
+      "Uyingiz uchun 3 qoidani ovozga yozing.",
+      "Juftingizdan ikki harakatga ruxsat so‘rang.",
+      "Можно va нельзя bilan 4 ta yozma qoida tuzing."
+    ],
+    "exit": "Ikki ruxsat so‘rang va eshitgan bitta taqiqni o‘z gapingiz bilan qaytaring."
+  },
+  {
+    "no": 83,
+    "month": 7,
+    "week": 28,
+    "title": "Ko‘chish sanasini aniqlashtirish",
+    "objective": "Ko‘chib kirish, kalit olish va to‘lov sanalarini uchta alohida savol bilan aniqlashtiradi.",
+    "grammar": {
+      "title": "Когда? — Пятого октября",
+      "rule": "Sana kunini aytishda tartib son va oy родительный shaklida keladi: пятого октября. Boshlanish sanasi с пятого октября, oxirgi muddat до пятого октября deyiladi. Birgalikdagi uchrashuv taklifi uchun Давайте встретимся tayyor qolipi ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Я перееду пятого октября.",
+          "uz": "Men beshinchi oktabrda ko‘chaman."
+        },
+        {
+          "ru": "Давайте встретимся третьего октября.",
+          "uz": "Keling, uchinchi oktabrda uchrashamiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘g‘ri shaklni tanlang: Я приеду (пятое / пятого) октября.",
+          "answer": "пятого",
+          "explanation": "Qachon sodir bo‘lishini bildirgan sanada пятого kerak."
+        },
+        {
+          "prompt": "Ruscha ayting: Oltinchi oktabrdan.",
+          "answer": "С шестого октября.",
+          "explanation": "Boshlanish chegarasi с va родительный shakllari bilan ifodalanadi."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Давайте ___ завтра. (uchrashmoq)",
+          "answer": "встретимся",
+          "explanation": "Давайте встретимся birgalikdagi taklif qolipi; bu yerda tugallangan turdagi fe’lning birinchi shaxs ko‘plik shakli ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Когда можно переехать?",
+        "uz": "Qachon ko‘chib kirsa bo‘ladi?"
+      },
+      {
+        "ru": "С пятого октября",
+        "uz": "Beshinchi oktabrdan"
+      },
+      {
+        "ru": "Когда я получу ключи?",
+        "uz": "Kalitlarni qachon olaman?"
+      },
+      {
+        "ru": "До какого числа нужно заплатить?",
+        "uz": "Qaysi sanagacha to‘lash kerak?"
+      },
+      {
+        "ru": "Давайте уточним дату.",
+        "uz": "Keling, sanani aniqlashtiraylik."
+      },
+      {
+        "ru": "Мне подходит эта дата.",
+        "uz": "Menga bu sana mos."
+      },
+      {
+        "ru": "Можно на день позже?",
+        "uz": "Bir kun keyinroq mumkinmi?"
+      },
+      {
+        "ru": "Пришлите подтверждение.",
+        "uz": "Tasdiq yuboring."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Когда можно переехать?",
+        "uz": "Qachon ko‘chib kirsa bo‘ladi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "С пятого октября. Ключи можно получить четвёртого.",
+        "uz": "Beshinchi oktabrdan. Kalitlarni to‘rtinchida olish mumkin."
+      },
+      {
+        "speaker": "A",
+        "ru": "До какого числа нужно заплатить?",
+        "uz": "Qaysi sanagacha to‘lash kerak?"
+      },
+      {
+        "speaker": "B",
+        "ru": "До третьего октября. Вам подходит?",
+        "uz": "Uchinchi oktabrgacha. Sizga mosmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. Значит, платёж до третьего, ключи четвёртого, переезд пятого.",
+        "uz": "Ha. Demak, to‘lov uchinchigacha, kalitlar to‘rtinchida, ko‘chish beshinchida."
+      },
+      {
+        "speaker": "B",
+        "ru": "Всё верно. Пришлю вам подтверждение.",
+        "uz": "Hammasi to‘g‘ri. Sizga tasdiq yuboraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Когда можно переехать?",
+        "answer": "С пятого октября."
+      },
+      {
+        "prompt": "Когда можно получить ключи?",
+        "answer": "Четвёртого октября."
+      },
+      {
+        "prompt": "До какого числа нужно заплатить?",
+        "answer": "До третьего октября."
+      }
+    ],
+    "roleplay": {
+      "a": "Yangi uyga beshinchi oktabrda ko‘chmoqchisiz. Kalitni bir kun oldin olishingiz kerak; to‘lov muddatini bilmaysiz.",
+      "b": "Uy egasisiz. Uy beshinchidan bo‘sh, kalit to‘rtinchida beriladi, to‘lov uchinchigacha. Uch sanani aniq ayting.",
+      "twist": "Ijarachi to‘rtinchida kelolmaydi; kalitni beshinchi kuni ertalab olishni kelishing.",
+      "success": "3 sana savoli beriladi va to‘lov, kalit, ko‘chish sanalari adashtirilmay qayta aytiladi."
+    },
+    "teacherTip": "«Пять октября»ni «пятого октября»ga tuzating, sanani raqam bilan ko‘rsatib talaffuz qildiring. Tayanchga uch sanali karta, ilg‘orlarga oy almashadigan ko‘chish vaziyatini bering.",
+    "homework": [
+      "Uch muhim sanani ajratib ovozli tasdiq yozing.",
+      "Juftingiz bilan kalit olishni bir kun keyinga ko‘chiring.",
+      "To‘lov, kalit va ko‘chish haqidagi uch bandli xabar yozing."
+    ],
+    "exit": "Yangi sana kartasidan to‘lov muddati, kalit va ko‘chish kunini ovoz chiqarib tasdiqlang."
+  },
+  {
+    "no": 84,
+    "month": 7,
+    "week": 28,
+    "title": "Yettinchi oy sinovi: oilaviy ko‘chish",
+    "objective": "Notanish ijara vaziyatida uy tanlaydi, oilasi ehtiyojini bildiradi, nosozlik va sanalar bo‘yicha kelishuv tuzadi.",
+    "grammar": {
+      "title": "Oylik birlashtirish: uy tanlash va kelishish",
+      "rule": "Talablar нужен/нужна/нужны bilan otga moslanadi, taqqoslashda дешевле o‘zgarmaydi. Birga yashash с + творительный, iltimos oluvchisi мне/нам bilan aytiladi. Sanalar пятого октября kabi qaytariladi; yangi qoida kiritilmaydi.",
+      "examples": [
+        {
+          "ru": "Мы будем жить с дочерью. Нам нужны два ключа.",
+          "uz": "Biz qizimiz bilan yashaymiz. Bizga ikkita kalit kerak."
+        },
+        {
+          "ru": "Эта квартира дешевле. Можно переехать шестого октября?",
+          "uz": "Bu kvartira arzonroq. Oltinchi oktabrda ko‘chsa bo‘ladimi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Нам ___ квартира побольше.",
+          "answer": "нужна",
+          "explanation": "Квартира ayol jinsida; побольше kattaroq uy istagini bildiradi."
+        },
+        {
+          "prompt": "Qavsni oching: Я буду жить с (жена).",
+          "answer": "Я буду жить с женой.",
+          "explanation": "С bilan жена → женой bo‘ladi."
+        },
+        {
+          "prompt": "Xatoni tuzating: В ванной нет вода.",
+          "answer": "В ванной нет воды.",
+          "explanation": "Нет dan keyin воды ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Мы переезжаем с ребёнком.",
+        "uz": "Biz farzandimiz bilan ko‘chyapmiz."
+      },
+      {
+        "ru": "Нам нужна квартира побольше.",
+        "uz": "Bizga kattaroq kvartira kerak."
+      },
+      {
+        "ru": "Этот вариант тише.",
+        "uz": "Bu variant tinchroq."
+      },
+      {
+        "ru": "Дайте нам два ключа.",
+        "uz": "Bizga ikkita kalit bering."
+      },
+      {
+        "ru": "В ванной нет воды.",
+        "uz": "Hammomda suv yo‘q."
+      },
+      {
+        "ru": "Когда придёт мастер?",
+        "uz": "Usta qachon keladi?"
+      },
+      {
+        "ru": "Можно переехать шестого октября?",
+        "uz": "Oltinchi oktabrda ko‘chsa bo‘ladimi?"
+      },
+      {
+        "ru": "Давайте всё уточним.",
+        "uz": "Keling, hammasini aniqlashtiraylik."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Мы переезжаем с ребёнком. Нам нужна тихая квартира.",
+        "uz": "Biz farzandimiz bilan ko‘chyapmiz. Bizga tinch kvartira kerak."
+      },
+      {
+        "speaker": "B",
+        "ru": "Квартира во дворе тише, но на три тысячи дороже.",
+        "uz": "Hovli ichidagi kvartira tinchroq, lekin uch mingga qimmatroq."
+      },
+      {
+        "speaker": "A",
+        "ru": "Она нам подходит. Можно переехать шестого октября?",
+        "uz": "U bizga mos. Oltinchi oktabrda ko‘chsa bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Но сейчас в ванной нет воды, мастер придёт пятого.",
+        "uz": "Ha. Lekin hozir hammomda suv yo‘q, usta beshinchida keladi."
+      },
+      {
+        "speaker": "A",
+        "ru": "Хорошо. Нам нужны два ключа. Когда их можно получить?",
+        "uz": "Xo‘p. Bizga ikkita kalit kerak. Ularni qachon olsa bo‘ladi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Шестого утром. После одиннадцати вечера здесь нельзя шуметь.",
+        "uz": "Oltinchi kuni ertalab. Bu yerda kechki o‘n birdan keyin shovqin mumkin emas."
+      },
+      {
+        "speaker": "A",
+        "ru": "Значит, мастер придёт пятого, а мы переедем шестого утром?",
+        "uz": "Demak, usta beshinchida keladi, biz esa oltinchi kuni ertalab ko‘chamizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Верно. Два ключа будут у меня.",
+        "uz": "To‘g‘ri. Ikkita kalit menda bo‘ladi."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какая квартира тише?",
+        "answer": "Квартира во дворе."
+      },
+      {
+        "prompt": "Когда придёт мастер?",
+        "answer": "Пятого октября."
+      },
+      {
+        "prompt": "Когда семья получит ключи?",
+        "answer": "Шестого октября утром."
+      }
+    ],
+    "roleplay": {
+      "a": "Oilaviy ko‘chish uchun tinch uy va ikki kalit kerak. Budjet 38 ming. Ikki variantni so‘rang, ko‘chish va muammoni hal qilish kunini kelishing.",
+      "b": "Agent: ko‘cha tomondagi uy 34 ming, hovlidagi 37 ming. Hovlidagi uyda suv beshinchi oktabrda tiklanishi rejalangan. Kalitlar oltinchida, tunda shovqin taqiqlangan.",
+      "twist": "Usta bir kun kechikadi. Oila boshqa sanani yoki boshqa uyni tanlab, yangi kelishuvni aytsin.",
+      "success": "2 variant taqqoslanadi, 2 ehtiyoj va 2 savol aytiladi, nosozlik hamda 2 sana tasdiqlanadi, o‘zgarishga javob beriladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. Ikki ehtiyoj, taqqoslash, savollar va ko‘chish rejasini kuzating. С жена xatosini sinovdan keyin с женой bilan tuzattiring. Tayanchga kalit so‘zlar, ilg‘orga kutilmagan narx o‘zgarishi bering. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Sinovdagi kelishuvni 6 gapli ovozli xabarda qayta ayting.",
+      "Sherigingiz bilan rollarni almashtirib boshqa ko‘chish sanasini kelishing.",
+      "O‘zingiz qilgan 2 xatoni to‘g‘ri shakli bilan yozing va yangi misol qo‘shing."
+    ],
+    "exit": "Yangi kartada yordamsiz kamida 8 mazmunli replika ayting: 2 ehtiyoj, 1 taqqoslash, 2 savol, muammo, sana tasdig‘i va o‘zgarishga javob; kamida 14/20 ball oling."
+  },
+  {
+    "no": 85,
+    "month": 8,
+    "week": 29,
+    "title": "Qayeringiz og‘riyapti?",
+    "objective": "O‘zini qanday his qilayotganini, og‘riq joyini va boshlangan vaqtini 4 gapda tushuntiradi.",
+    "grammar": {
+      "title": "У меня болит / болят",
+      "rule": "Og‘riq egasi у меня, у вас bilan ifodalanadi. Tana a’zosi birlikda bo‘lsa болит, ko‘plikda bo‘lsa болят ishlatiladi: болит спина, болят ноги. Og‘riq qachon boshlanganini со вчерашнего дня kabi vaqt birikmasi aniqlaydi.",
+      "examples": [
+        {
+          "ru": "У меня болит спина.",
+          "uz": "Mening belim og‘riyapti."
+        },
+        {
+          "ru": "У меня болят ноги со вчерашнего дня.",
+          "uz": "Kechadan beri oyoqlarim og‘riyapti."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: У меня (болит / болят) голова.",
+          "answer": "У меня болит голова.",
+          "explanation": "Голова birlikda, fe’l болит bo‘ladi."
+        },
+        {
+          "prompt": "Tanlang: У меня (болит / болят) руки.",
+          "answer": "У меня болят руки.",
+          "explanation": "Руки ko‘plikda, fe’l болят bo‘ladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Kechadan beri tomog‘im og‘riyapti.",
+          "answer": "У меня болит горло со вчерашнего дня.",
+          "explanation": "Горло birlikda; davom etayotgan boshlanish vaqtini со вчерашнего дня bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я плохо себя чувствую.",
+        "uz": "O‘zimni yomon his qilyapman."
+      },
+      {
+        "ru": "У меня болит голова.",
+        "uz": "Boshim og‘riyapti."
+      },
+      {
+        "ru": "У меня болит горло.",
+        "uz": "Tomog‘im og‘riyapti."
+      },
+      {
+        "ru": "У меня болят ноги.",
+        "uz": "Oyoqlarim og‘riyapti."
+      },
+      {
+        "ru": "Со вчерашнего дня",
+        "uz": "Kechadan beri"
+      },
+      {
+        "ru": "Боль здесь.",
+        "uz": "Og‘riq shu yerda."
+      },
+      {
+        "ru": "Мне нужен врач.",
+        "uz": "Menga shifokor kerak."
+      },
+      {
+        "ru": "Мне трудно объяснить по-русски.",
+        "uz": "Buni ruscha tushuntirish menga qiyin."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте. Я плохо себя чувствую.",
+        "uz": "Assalomu alaykum. O‘zimni yomon his qilyapman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Что у вас болит?",
+        "uz": "Qayeringiz og‘riyapti?"
+      },
+      {
+        "speaker": "A",
+        "ru": "У меня болит горло со вчерашнего дня.",
+        "uz": "Kechadan beri tomog‘im og‘riyapti."
+      },
+      {
+        "speaker": "B",
+        "ru": "А голова болит?",
+        "uz": "Boshingiz ham og‘riyaptimi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет. Мне трудно объяснить по-русски. Можно говорить медленнее?",
+        "uz": "Yo‘q. Ruscha tushuntirish menga qiyin. Sekinroq gapirish mumkinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Конечно. Я задам короткие вопросы.",
+        "uz": "Albatta. Men qisqa savollar beraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что болит у A?",
+        "answer": "Горло."
+      },
+      {
+        "prompt": "Когда началась боль?",
+        "answer": "Вчера."
+      },
+      {
+        "prompt": "О чём просит A?",
+        "answer": "Говорить медленнее."
+      }
+    ],
+    "roleplay": {
+      "a": "Bemor rolidasiz: kechadan beri tomoq og‘riyapti, bosh og‘rimaydi. Xodimga holatni ayting va sekin gapirishni so‘rang.",
+      "b": "Qabul xodimisiz. Qayeri og‘riyotganini va qachon boshlanganini aniqlang, javobni qayta tekshiring; tashxis bermang.",
+      "twist": "Bemor bir so‘zni bilmaydi; tana joyini ko‘rsatib боль здесь deydi.",
+      "success": "Og‘riq joyi, vaqti, bitta inkor va tushunishni yengillashtirish iltimosi aytiladi."
+    },
+    "teacherTip": "«Я болит голова»ni у меня болит голова shakliga qaytaring. Tayanchga tana rasmi, ilg‘orlarga birlik va ko‘plikdagi ikki alomat bering. Baholash faqat muloqotga tegishli; tashxis talab qilmang.",
+    "homework": [
+      "O‘ylab topilgan alomatni joyi va vaqti bilan ovozga yozing.",
+      "Juftingizning Что болит? savoliga ikki xil javob bering.",
+      "Болит va болят bilan 4 gap yozing."
+    ],
+    "exit": "Bir alomat, boshlanish vaqti va bitta yo‘q alomatni ayting, sekinroq gapirishni so‘rang."
+  },
+  {
+    "no": 86,
+    "month": 8,
+    "week": 29,
+    "title": "Shifokor qabuliga yozilish",
+    "objective": "Qabulxonada mutaxassis, kun va soatni aniqlab, uchrashuvni og‘zaki tasdiqlaydi.",
+    "grammar": {
+      "title": "К врачу va у врача",
+      "rule": "Qabulga borish yo‘nalishi к + дательный bilan aytiladi: к врачу, к терапевту. Qabulda bo‘lish у + родительный bilan: у врача. Записаться к врачу qabulga yozilishni bildiradigan tayyor birikma.",
+      "examples": [
+        {
+          "ru": "Я хочу записаться к терапевту.",
+          "uz": "Men terapevt qabuliga yozilmoqchiman."
+        },
+        {
+          "ru": "Завтра я буду у врача.",
+          "uz": "Ertaga men shifokor qabulida bo‘laman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Я иду ___ врачу.",
+          "answer": "к",
+          "explanation": "Yo‘nalish uchun к врачу ishlatiladi."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Сейчас я ___ врача.",
+          "answer": "у",
+          "explanation": "Hozir kimning qabulida ekanini у врача bildiradi."
+        },
+        {
+          "prompt": "Qavsni oching: Запишите меня к (терапевт).",
+          "answer": "Запишите меня к терапевту.",
+          "explanation": "К dan keyin терапевт → терапевту bo‘ladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я хочу записаться к врачу.",
+        "uz": "Shifokor qabuliga yozilmoqchiman."
+      },
+      {
+        "ru": "Есть свободное время на завтра?",
+        "uz": "Ertaga bo‘sh vaqt bormi?"
+      },
+      {
+        "ru": "К какому специалисту?",
+        "uz": "Qaysi mutaxassisga?"
+      },
+      {
+        "ru": "Мне удобно после обеда.",
+        "uz": "Menga tushdan keyin qulay."
+      },
+      {
+        "ru": "Запишите меня, пожалуйста.",
+        "uz": "Meni yozib qo‘ying, iltimos."
+      },
+      {
+        "ru": "Что нужно взять с собой?",
+        "uz": "O‘zim bilan nima olishim kerak?"
+      },
+      {
+        "ru": "В каком кабинете?",
+        "uz": "Qaysi xonada?"
+      },
+      {
+        "ru": "Повторите время приёма.",
+        "uz": "Qabul vaqtini takrorlang."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я хочу записаться к терапевту на завтра.",
+        "uz": "Men ertaga terapevt qabuliga yozilmoqchiman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Есть время в десять и в три часа.",
+        "uz": "Soat o‘nda va uchda vaqt bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне удобно в три. Что нужно взять с собой?",
+        "uz": "Menga uchda qulay. O‘zim bilan nima olishim kerak?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Для записи в нашей клинике возьмите документ. Назовите ваше имя.",
+        "uz": "Bizning klinikamizda ro‘yxatdan o‘tish uchun hujjat oling. Ismingizni ayting."
+      },
+      {
+        "speaker": "A",
+        "ru": "Дилшод Каримов. Значит, завтра в три. В каком кабинете?",
+        "uz": "Dilshod Karimov. Demak, ertaga uchda. Qaysi xonada?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В двенадцатом. Вы записаны.",
+        "uz": "O‘n ikkinchida. Siz yozildingiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "К кому записывается A?",
+        "answer": "К терапевту."
+      },
+      {
+        "prompt": "Какое время выбирает A?",
+        "answer": "Три часа."
+      },
+      {
+        "prompt": "В каком кабинете будет приём?",
+        "answer": "В двенадцатом."
+      }
+    ],
+    "roleplay": {
+      "a": "Ertaga tushdan keyin terapevtga yozilmoqchisiz. Xona, vaqt va olib kelinadigan hujjatni so‘rang.",
+      "b": "Shartli klinika xodimisiz. Ertaga o‘nda yoki uchda qabul bor, xona 12. Ro‘yxat uchun ism va hujjat kerakligini ayting.",
+      "twist": "Uchdagi vaqt band bo‘lib qoldi; keyingi kun uchun boshqa vaqt taklif qiling.",
+      "success": "Mutaxassis nomi aytiladi, vaqt tanlanadi, xona va kerakli narsa so‘ralib, yakuniy sana-soat tasdiqlanadi."
+    },
+    "teacherTip": "«К врач» va «у врачу»ni yo‘nalish/joy juftligi orqali tuzattiring. Tayanchga к врачу — у врача kartasi, ilg‘orlarga vaqtni ko‘chirish bering. Hujjat talabi dialogdagi shartli klinikaga tegishli ekanini saqlang.",
+    "homework": [
+      "Qabulga yozilish uchun ovozli so‘rov qiling.",
+      "Sherigingiz bilan ikki vaqtdan mosini tanlang va qayta tasdiqlang.",
+      "К врачу va у врача bilan ikkitadan gap yozing."
+    ],
+    "exit": "Qabulga yoziling: mutaxassisni ayting, vaqt va xonani so‘rang, javobni qaytaring."
+  },
+  {
+    "no": 87,
+    "month": 8,
+    "week": 29,
+    "title": "Safarda tibbiy qabul topish",
+    "objective": "Mehmonxona xodimidan qabulga yozilishda yordam so‘rab, alomat va uchrashuv ma’lumotlarini uzatadi.",
+    "grammar": {
+      "title": "Birlashtirish: alomat va yo‘nalish",
+      "rule": "Holat у меня болит + birlik tana a’zosi bilan aytiladi. Shifokorga yozilish к врачу, yordam kimga kerakligi мне bilan ifodalanadi. Bu vaziyatda avvalgi og‘riq, iltimos va vaqt qoliplari qayta ishlatiladi.",
+      "examples": [
+        {
+          "ru": "У меня болит ухо. Помогите мне записаться к врачу.",
+          "uz": "Qulog‘im og‘riyapti. Shifokor qabuliga yozilishimga yordam bering."
+        },
+        {
+          "ru": "Мне удобно в четыре часа.",
+          "uz": "Menga soat to‘rtda qulay."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: У меня (болит / болят) ухо.",
+          "answer": "У меня болит ухо.",
+          "explanation": "Ухо birlikda, shuning uchun болит."
+        },
+        {
+          "prompt": "Qavsni oching: Помогите (я), пожалуйста.",
+          "answer": "Помогите мне, пожалуйста.",
+          "explanation": "Yordam oluvchi shaxs jo‘nalish kelishigida: мне."
+        },
+        {
+          "prompt": "Ruscha ayting: Men shifokor qabuliga yozilmoqchiman.",
+          "answer": "Я хочу записаться к врачу.",
+          "explanation": "Qabulga yozilish uchun записаться к врачу qolipi ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я остановился здесь. / Я остановилась здесь.",
+        "uz": "Men shu yerda turibman. (erkak / ayol)"
+      },
+      {
+        "ru": "Помогите мне записаться к врачу.",
+        "uz": "Shifokor qabuliga yozilishimga yordam bering."
+      },
+      {
+        "ru": "У меня болит ухо.",
+        "uz": "Qulog‘im og‘riyapti."
+      },
+      {
+        "ru": "Я не знаю адрес клиники.",
+        "uz": "Klinika manzilini bilmayman."
+      },
+      {
+        "ru": "Напишите адрес, пожалуйста.",
+        "uz": "Manzilni yozing, iltimos."
+      },
+      {
+        "ru": "Можно прийти с переводчиком?",
+        "uz": "Tarjimon bilan kelsa bo‘ladimi?"
+      },
+      {
+        "ru": "В четыре часа",
+        "uz": "Soat to‘rtda"
+      },
+      {
+        "ru": "Я правильно понимаю?",
+        "uz": "To‘g‘ri tushunyapmanmi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Помогите мне записаться к врачу. У меня болит ухо.",
+        "uz": "Shifokor qabuliga yozilishimga yordam bering. Qulog‘im og‘riyapti."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я могу позвонить в клинику рядом с гостиницей.",
+        "uz": "Mehmonxona yonidagi klinikaga qo‘ng‘iroq qila olaman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Спасибо. Мне удобно после трёх.",
+        "uz": "Rahmat. Menga uchdan keyin qulay."
+      },
+      {
+        "speaker": "B",
+        "ru": "Есть приём в четыре. Вам подходит?",
+        "uz": "Soat to‘rtda qabul bor. Sizga mosmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. Напишите адрес и узнайте, можно ли прийти с переводчиком.",
+        "uz": "Ha. Manzilni yozing va tarjimon bilan kelish mumkinligini bilib bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот адрес. В клинике сказали, что с переводчиком можно.",
+        "uz": "Mana manzil. Klinikada tarjimon bilan mumkinligini aytishdi."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что болит у A?",
+        "answer": "Ухо."
+      },
+      {
+        "prompt": "Где находится клиника?",
+        "answer": "Рядом с гостиницей."
+      },
+      {
+        "prompt": "На какое время есть приём?",
+        "answer": "На четыре часа."
+      }
+    ],
+    "roleplay": {
+      "a": "Safardasiz, qulog‘ingiz og‘riyapti. Klinikani bilmaysiz, uchdan keyin bo‘shsiz. Mehmonxona xodimidan yozilish va manzil bo‘yicha yordam so‘rang.",
+      "b": "Mehmonxona xodimisiz. Yaqin klinika to‘rtda qabul qiladi. Manzilni yozib bera olasiz; tarjimon bilan kelish mumkinligini klinikadan tekshirish rolini bajaring.",
+      "twist": "Bemor manzilni noto‘g‘ri qaytaradi; xodim uy raqamini aniqlashtiradi.",
+      "success": "Alomat aytiladi, yordam so‘raladi, vaqt va manzil qayta tasdiqlanadi, tarjimon haqida savol beriladi."
+    },
+    "teacherTip": "«Помогите меня»ni мне bilan tuzattiring. Tayanchga alomat va vaqt kartasi, ilg‘orlarga noto‘g‘ri eshitilgan manzilni tuzatish bering. Tibbiy yechim emas, axborotni to‘g‘ri uzatishni baholang.",
+    "homework": [
+      "Safarda qabul topish uchun 4 gapli ovozli yordam so‘rovi yozing.",
+      "Sherigingiz aytgan manzilni qayta o‘qib tekshiring.",
+      "Tarjimonga uchrashuv va joy haqida qisqa xabar yozing."
+    ],
+    "exit": "Mehmonxonada yordam so‘rang, alomatni ayting va yangi qabul vaqti hamda manzilini tasdiqlang."
+  },
+  {
+    "no": 88,
+    "month": 8,
+    "week": 30,
+    "title": "Qabulga qanday tayyorlanishni so‘rash",
+    "objective": "Qabul tartibi haqida uchta savol berib, xodim aytgan ikki talabni qayta tasdiqlaydi.",
+    "grammar": {
+      "title": "Мне нужно / надо + infinitiv",
+      "rule": "Нужно va надо + infinitiv bajarilishi kerak bo‘lgan harakatni bildiradi va jinsga moslashmaydi: мне нужно прийти. Kerakli narsa ot bilan aytilsa, moslashuv bor: мне нужна справка. Savolda Что нужно сделать? ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Мне нужно заполнить анкету?",
+          "uz": "Men anketani to‘ldirishim kerakmi?"
+        },
+        {
+          "ru": "Вам надо подойти к стойке.",
+          "uz": "Siz peshtaxta yoniga borishingiz kerak."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Мне (нужна / нужно) заполнить анкету.",
+          "answer": "Мне нужно заполнить анкету.",
+          "explanation": "Keyin infinitiv kelgani uchun o‘zgarmas нужно ishlatiladi."
+        },
+        {
+          "prompt": "Tanlang: Мне (нужна / нужно) справка.",
+          "answer": "Мне нужна справка.",
+          "explanation": "Справка ayol jinsidagi ot, shuning uchun нужна."
+        },
+        {
+          "prompt": "Ruscha ayting: Men qayerga borishim kerak?",
+          "answer": "Куда мне нужно подойти?",
+          "explanation": "Куда yo‘nalishni, мне harakat bajaruvchini, нужно подойти zaruratni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Что нужно сделать перед приёмом?",
+        "uz": "Qabuldan oldin nima qilish kerak?"
+      },
+      {
+        "ru": "Мне нужно заполнить анкету?",
+        "uz": "Anketani to‘ldirishim kerakmi?"
+      },
+      {
+        "ru": "Куда мне подойти?",
+        "uz": "Men qayerga boray?"
+      },
+      {
+        "ru": "Что взять с собой?",
+        "uz": "O‘zim bilan nima olay?"
+      },
+      {
+        "ru": "Нужно прийти раньше?",
+        "uz": "Oldinroq kelish kerakmi?"
+      },
+      {
+        "ru": "Уточните у врача, пожалуйста.",
+        "uz": "Shifokordan aniqlashtiring, iltimos."
+      },
+      {
+        "ru": "Запишите это, пожалуйста.",
+        "uz": "Buni yozib bering, iltimos."
+      },
+      {
+        "ru": "Я правильно понял? / Я правильно поняла?",
+        "uz": "To‘g‘ri tushundimmi? (erkak / ayol)"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Что нужно сделать перед приёмом в вашей клинике?",
+        "uz": "Sizning klinikangizda qabuldan oldin nima qilish kerak?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нужно подойти к стойке и заполнить анкету.",
+        "uz": "Peshtaxta yoniga borib, anketani to‘ldirish kerak."
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне надо прийти раньше?",
+        "uz": "Men oldinroq kelishim kerakmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, для оформления приходите немного раньше.",
+        "uz": "Ha, rasmiylashtirish uchun biroz oldinroq keling."
+      },
+      {
+        "speaker": "A",
+        "ru": "А вопросы о подготовке к обследованию можно задать врачу?",
+        "uz": "Tekshiruvga tayyorgarlik haqidagi savollarni shifokorga bersa bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, я передам ему ваш вопрос. Инструкцию даст врач.",
+        "uz": "Ha, savolingizni unga yetkazaman. Ko‘rsatmani shifokor beradi."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что нужно заполнить?",
+        "answer": "Анкету."
+      },
+      {
+        "prompt": "Зачем предлагают прийти раньше?",
+        "answer": "Для оформления."
+      },
+      {
+        "prompt": "Кто даст инструкцию по подготовке к обследованию?",
+        "answer": "Врач."
+      }
+    ],
+    "roleplay": {
+      "a": "Birinchi marta qabulga borasiz. Anketa, kelish vaqti va tekshiruvga tayyorgarlikni kimdan so‘rashni aniqlang.",
+      "b": "Qabul xodimisiz. Avval peshtaxta va anketa kerak. Tibbiy tayyorgarlik savolini shifokorga uzating; o‘zingiz ko‘rsatma bermang.",
+      "twist": "Anketadagi bir savol tushunarsiz; bemor oddiyroq izoh so‘raydi.",
+      "success": "3 savol beriladi, 2 ma’muriy talab qaytariladi, tibbiy savol tegishli mutaxassisga yo‘naltiriladi."
+    },
+    "teacherTip": "«Мне нужна заполнить»ni ot va infinitiv kartalarini ajratib tuzating. Tayanchga Что нужно…? boshi, ilg‘orlarga tushunarsiz bandni qayta so‘rash bering. Mashq uchun tibbiy tayyorgarlik talablarini o‘ylab topmang.",
+    "homework": [
+      "Qabulga tayyorgarlik haqida 3 savolni ovozga yozing.",
+      "Juftingizning ikki ma’muriy ko‘rsatmasini qayta ayting.",
+      "Нужна справка va нужно заполнить bilan ikki juft gap yozing."
+    ],
+    "exit": "Qabul tartibi bo‘yicha 3 savol bering va 2 javobni kerak shaklida qaytaring."
+  },
+  {
+    "no": 89,
+    "month": 8,
+    "week": 30,
+    "title": "Ko‘rsatmani aniqlashtirish",
+    "objective": "Eshitmagan ko‘rsatmani muloyim qayta so‘raydi, sodda izoh va yozma nusxa oladi.",
+    "grammar": {
+      "title": "Повторите, объясните, напишите",
+      "rule": "Notanish kishiga hurmat bilan murojaatda buyruq-istakning -те shakli ishlatiladi: повторите, объясните. Пожалуйста iltimosni yumshatadi. Можно + infinitiv ham muloyim so‘rov beradi: можно повторить?",
+      "examples": [
+        {
+          "ru": "Объясните это проще, пожалуйста.",
+          "uz": "Buni soddaroq tushuntiring, iltimos."
+        },
+        {
+          "ru": "Напишите название, пожалуйста.",
+          "uz": "Nomini yozib bering, iltimos."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Hurmat shakliga o‘tkazing: Повтори вопрос.",
+          "answer": "Повторите вопрос, пожалуйста.",
+          "explanation": "Повторите dagi -те hurmat yoki ko‘plikni bildiradi."
+        },
+        {
+          "prompt": "So‘rovni tugating: Можно ___ ещё раз? (takrorlamoq)",
+          "answer": "повторить",
+          "explanation": "Можно dan keyin infinitiv keladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Buni soddaroq tushuntiring, iltimos.",
+          "answer": "Объясните это проще, пожалуйста.",
+          "explanation": "Объясните hurmatli iltimos, проще esa soddaroq degani."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Takrorlang, iltimos."
+      },
+      {
+        "ru": "Объясните проще.",
+        "uz": "Soddaroq tushuntiring."
+      },
+      {
+        "ru": "Говорите медленнее, пожалуйста.",
+        "uz": "Sekinroq gapiring, iltimos."
+      },
+      {
+        "ru": "Напишите название.",
+        "uz": "Nomini yozing."
+      },
+      {
+        "ru": "Я не понимаю это слово.",
+        "uz": "Bu so‘zni tushunmayapman."
+      },
+      {
+        "ru": "Что это значит?",
+        "uz": "Bu nimani anglatadi?"
+      },
+      {
+        "ru": "Можно проверить, правильно ли я понял?",
+        "uz": "To‘g‘ri tushunganimni tekshirsam bo‘ladimi? (erkak)"
+      },
+      {
+        "ru": "Теперь понятно, спасибо.",
+        "uz": "Endi tushunarli, rahmat."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "После регистрации пройдите в кабинет восемнадцать.",
+        "uz": "Ro‘yxatdan o‘tgach, o‘n sakkizinchi xonaga boring."
+      },
+      {
+        "speaker": "B",
+        "ru": "Повторите номер кабинета, пожалуйста.",
+        "uz": "Xona raqamini takrorlang, iltimos."
+      },
+      {
+        "speaker": "A",
+        "ru": "Восемнадцать. Там врач объяснит следующий шаг.",
+        "uz": "O‘n sakkiz. U yerda shifokor keyingi qadamni tushuntiradi."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я не понимаю слово «регистрация». Объясните проще.",
+        "uz": "«Регистрация» so‘zini tushunmayapman. Soddaroq tushuntiring."
+      },
+      {
+        "speaker": "A",
+        "ru": "Сначала назовите имя сотруднику у стойки, потом идите в кабинет.",
+        "uz": "Avval peshtaxtadagi xodimga ismingizni ayting, keyin xonaga boring."
+      },
+      {
+        "speaker": "B",
+        "ru": "Теперь понятно. Напишите номер кабинета, пожалуйста.",
+        "uz": "Endi tushunarli. Xona raqamini yozing, iltimos."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "В какой кабинет нужно пройти?",
+        "answer": "В восемнадцатый."
+      },
+      {
+        "prompt": "Какое слово непонятно B?",
+        "answer": "Регистрация."
+      },
+      {
+        "prompt": "Что нужно сделать сначала?",
+        "answer": "Назвать имя сотруднику у стойки."
+      }
+    ],
+    "roleplay": {
+      "a": "Qabul xodimisiz. Avval ismni tekshirish, keyin 18-xonaga borish kerakligini ayting. Sherigingiz so‘rasa sodda izoh bering.",
+      "b": "Bemor rolidasiz. Xona raqamini eshitmadingiz, регистрация so‘zini tushunmadingiz. Takror, sodda izoh va yozuv so‘rang.",
+      "twist": "Xona raqami 18 dan 28 ga o‘zgardi; yangi raqamni qayta aytib tasdiqlang.",
+      "success": "3 turli muloyim iltimos aytiladi va yakuniy harakatlar to‘g‘ri tartibda qaytariladi."
+    },
+    "teacherTip": "Notanish kishiga «повтори» deyishni «повторите, пожалуйста»ga o‘zgartiring. Tayanchga iltimos boshlari, ilg‘orlarga bir paytda ham raqamni, ham atamani aniqlashtirish vazifasini bering.",
+    "homework": [
+      "Uch xil tushunmaganlik holati uchun ovozli iltimos yozing.",
+      "Juftingiz aytgan murakkab so‘zni oddiyroq izohlashni so‘rang.",
+      "Повторите, объясните, напишите bilan uchta vaziyatli gap yozing."
+    ],
+    "exit": "Noaniq xona raqami va atamani ikki turli iltimos bilan aniqlashtiring, keyingi qadamni qaytaring."
+  },
+  {
+    "no": 90,
+    "month": 8,
+    "week": 30,
+    "title": "Tekshiruv markazida yo‘l topish",
+    "objective": "Notanish markazda ro‘yxatdan o‘tish tartibi va xona almashishini aniqlab, navbatdagi ikki qadamni aytadi.",
+    "grammar": {
+      "title": "Birlashtirish: нужно, можно va muloyim iltimos",
+      "rule": "Нужно + infinitiv zarur harakatni, можно + infinitiv ruxsat savolini bildiradi. Tushunarsiz ma’lumotni повторите yoki объясните bilan qayta so‘raymiz. Oldingi ma’muriy muloqot qoliplari yangi markazda ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Мне нужно сначала заполнить анкету?",
+          "uz": "Avval anketani to‘ldirishim kerakmi?"
+        },
+        {
+          "ru": "Можно войти? Повторите номер, пожалуйста.",
+          "uz": "Kirish mumkinmi? Raqamni takrorlang, iltimos."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Мне нужно ___ к стойке. (bormoq)",
+          "answer": "подойти",
+          "explanation": "Нужно dan keyin infinitiv keladi."
+        },
+        {
+          "prompt": "Hurmat shaklini qo‘ying: (Объясни) порядок, пожалуйста.",
+          "answer": "Объясните порядок, пожалуйста.",
+          "explanation": "Xodimga hurmat shaklida объясните deyiladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Shu yerda kutish mumkinmi?",
+          "answer": "Можно ждать здесь?",
+          "explanation": "Можно ждать ruxsat haqidagi savol, здесь joyni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я здесь впервые.",
+        "uz": "Men bu yerga birinchi marta keldim."
+      },
+      {
+        "ru": "Куда сначала подойти?",
+        "uz": "Avval qayerga boray?"
+      },
+      {
+        "ru": "Нужно взять талон?",
+        "uz": "Navbat taloni olish kerakmi?"
+      },
+      {
+        "ru": "Можно ждать здесь?",
+        "uz": "Shu yerda kutsa bo‘ladimi?"
+      },
+      {
+        "ru": "Кабинет перенесли?",
+        "uz": "Qabul boshqa xonaga ko‘chirildimi?"
+      },
+      {
+        "ru": "Повторите номер этажа.",
+        "uz": "Qavat raqamini takrorlang."
+      },
+      {
+        "ru": "Где находится лифт?",
+        "uz": "Lift qayerda joylashgan?"
+      },
+      {
+        "ru": "Сначала сюда, потом туда?",
+        "uz": "Avval bu yerga, keyin u yergami?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я здесь впервые. Мне нужно взять талон?",
+        "uz": "Men bu yerga birinchi marta keldim. Talon olishim kerakmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, сначала возьмите талон у стойки.",
+        "uz": "Ha, avval peshtaxtadan talon oling."
+      },
+      {
+        "speaker": "A",
+        "ru": "Потом идти в кабинет шесть?",
+        "uz": "Keyin oltinchi xonaga boraymi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Сегодня приём в кабинете шестнадцать, на втором этаже.",
+        "uz": "Bugun qabul o‘n oltinchi xonada, ikkinchi qavatda."
+      },
+      {
+        "speaker": "A",
+        "ru": "Повторите, пожалуйста: шестнадцать, второй этаж? Где лифт?",
+        "uz": "Takrorlang, iltimos: o‘n olti, ikkinchi qavatmi? Lift qayerda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, всё верно. Лифт слева от стойки.",
+        "uz": "Ha, hammasi to‘g‘ri. Lift peshtaxtaning chap tomonida."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что нужно взять сначала?",
+        "answer": "Талон."
+      },
+      {
+        "prompt": "В каком кабинете сегодня приём?",
+        "answer": "В шестнадцатом."
+      },
+      {
+        "prompt": "Где лифт?",
+        "answer": "Слева от стойки."
+      }
+    ],
+    "roleplay": {
+      "a": "Tekshiruv markaziga birinchi marta keldingiz. Eski xabarda 6-xona yozilgan. Avvalgi qadam, haqiqiy xona va liftni aniqlang.",
+      "b": "Markaz xodimisiz. Avval talon olinadi, bugun qabul 16-xonada, ikkinchi qavatda. Lift peshtaxtaning chapida.",
+      "twist": "Lift ishlamayapti; mehmon xodimdan boshqa qulay yo‘lni aniqlab berishini so‘rasin.",
+      "success": "3 axborot bo‘shlig‘i aniqlanadi, bitta qayta so‘rov aytiladi va ikki qadam to‘g‘ri tartibda takrorlanadi."
+    },
+    "teacherTip": "«Нужно возьмите»ni «нужно взять» yoki «возьмите»ga ajratib tuzating. Tayanchga ikki qadamli sxema, ilg‘orlarga lift haqidagi yangi to‘siqni bering. Tibbiy tekshiruv mazmunini o‘rgatish talab qilinmaydi.",
+    "homework": [
+      "Markazga kelgan do‘stga ikki qadamni ovozli xabarda ayting.",
+      "Juftingiz bilan 6 va 16 raqamlarini qayta so‘rashni mashq qiling.",
+      "Talondan xonagacha yo‘lni 4 sodda gap bilan yozing."
+    ],
+    "exit": "Yangi markaz kartasi bo‘yicha boshlang‘ich qadamni so‘rang, xona o‘zgarishini tekshiring va yo‘lni qayta ayting."
+  },
+  {
+    "no": 91,
+    "month": 8,
+    "week": 31,
+    "title": "Qabulda muhim ma’lumotni aytish",
+    "objective": "Mutaxassisga ma’lum allergiya yoki dori ro‘yxati haqida aytadi va bilmagan tafsilotini taxmin qilmay bildiradi.",
+    "grammar": {
+      "title": "У меня есть / нет; я не знаю",
+      "rule": "Ma’lumot borligini у меня есть + bosh kelishik bildiradi: есть список. Yo‘qligi нет + родительный bilan: нет списка. Ma’lum bo‘lmagan narsada я не знаю deyiladi; bu ma’lumot yo‘qligini aniq inkor qilishdan farq qiladi.",
+      "examples": [
+        {
+          "ru": "У меня есть список лекарств.",
+          "uz": "Menda dorilar ro‘yxati bor."
+        },
+        {
+          "ru": "Я не знаю название. У меня нет упаковки.",
+          "uz": "Nomini bilmayman. Menda qutisi yo‘q."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Qavsni oching: У меня нет (список).",
+          "answer": "У меня нет списка.",
+          "explanation": "Нет dan keyin список → списка bo‘ladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Menda dorilar ro‘yxati bor.",
+          "answer": "У меня есть список лекарств.",
+          "explanation": "Bor narsa список bosh kelishikda; лекарств nimaning ro‘yxati ekanini bildiradi."
+        },
+        {
+          "prompt": "Dori nomi esingizda yo‘q. Mos javobni ayting.",
+          "answer": "Я не помню название лекарства.",
+          "explanation": "Не помню ma’lumot yodda emasligini ochiq bildiradi, taxmin qilmaydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "У меня аллергия на этот препарат.",
+        "uz": "Menda shu doriga allergiya bor."
+      },
+      {
+        "ru": "Я принимаю это лекарство.",
+        "uz": "Men shu dorini qabul qilaman."
+      },
+      {
+        "ru": "Вот список лекарств.",
+        "uz": "Mana dorilar ro‘yxati."
+      },
+      {
+        "ru": "Я не помню название.",
+        "uz": "Nomini eslay olmayapman."
+      },
+      {
+        "ru": "У меня нет упаковки.",
+        "uz": "Menda qutisi yo‘q."
+      },
+      {
+        "ru": "Я не знаю точно.",
+        "uz": "Aniq bilmayman."
+      },
+      {
+        "ru": "Можно показать фотографию?",
+        "uz": "Rasmini ko‘rsatsam bo‘ladimi?"
+      },
+      {
+        "ru": "Я уточню и сообщу.",
+        "uz": "Aniqlashtirib xabar beraman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Вы принимаете какие-нибудь лекарства?",
+        "uz": "Siz biror dori qabul qilasizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, вот список. Ещё у меня аллергия на один препарат.",
+        "uz": "Ha, mana ro‘yxat. Yana menda bir doriga allergiya bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вы помните его название?",
+        "uz": "Uning nomini eslaysizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Сейчас не помню. У меня нет упаковки, но есть фотография.",
+        "uz": "Hozir eslay olmayapman. Qutisi yo‘q, lekin rasmi bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Покажите фотографию, пожалуйста.",
+        "uz": "Rasmni ko‘rsating, iltimos."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот. Остальные сведения я уточню и сообщу.",
+        "uz": "Mana. Qolgan ma’lumotlarni aniqlashtirib xabar beraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что B даёт врачу?",
+        "answer": "Список лекарств."
+      },
+      {
+        "prompt": "Помнит ли B название препарата?",
+        "answer": "Нет, сейчас не помнит."
+      },
+      {
+        "prompt": "Что есть у B вместо упаковки?",
+        "answer": "Фотография."
+      }
+    ],
+    "roleplay": {
+      "a": "Shartli bemor kartasi: dori ro‘yxati bor, bir doriga ma’lum allergiya bor, nomi yodda emas, rasmi telefonda. Buni mutaxassisga yetkazing.",
+      "b": "Mutaxassis rolidasiz. Ro‘yxatni so‘rang, allergiya haqidagi ma’lumotni aniqlashtiring, rasmni ko‘rsatishni iltimos qiling. Davolash belgilamang.",
+      "twist": "Telefon rasmini ochib bo‘lmayapti; bemor ma’lumotni keyin qanday yuborishni so‘rasin.",
+      "success": "Ma’lum 2 fakt va noma’lum 1 tafsilot ajratiladi, ma’lumotni ko‘rsatish yoki keyin yetkazish yo‘li kelishiladi."
+    },
+    "teacherTip": "«Нет упаковка»ni нет упаковки bilan tuzating. «Bilmayman»ni «yo‘q» deb almashtirmaslikni mashq qildiring. Tayanchga bor/yo‘q/bilmayman kartalari, ilg‘orlarga yo‘qolgan rasm vaziyatini bering; faqat o‘ylab topilgan shaxsiy ma’lumot ishlatilsin.",
+    "homework": [
+      "Shartli kartadagi ma’lum va noma’lum ma’lumotlarni ovozga yozing.",
+      "Juftingizga ro‘yxat borligini aytib, uni ko‘rsatishga ruxsat so‘rang.",
+      "Есть, нет, не знаю, не помню bilan 4 gap yozing."
+    ],
+    "exit": "Kartadan ikkita ma’lum faktni ayting, noma’lum nomni tan oling va aniqlashtirish yo‘lini taklif qiling."
+  },
+  {
+    "no": 92,
+    "month": 8,
+    "week": 31,
+    "title": "Tarjimon va hamroh so‘rash",
+    "objective": "Qabulda tarjimon yoki hamroh zarurligini tushuntirib, ikki ruxsat va bitta yordam so‘rovini bildiradi.",
+    "grammar": {
+      "title": "Можно мне…? Мне нужен…",
+      "rule": "Можно мне + infinitiv aynan o‘zimga ruxsat so‘rash uchun ishlatiladi. Yordamchi shaxs kerak bo‘lsa мне нужен переводчик deyiladi. Kim bilan kirishni с + творительный bildiradi: с переводчиком, с сестрой.",
+      "examples": [
+        {
+          "ru": "Можно мне войти с переводчиком?",
+          "uz": "Tarjimon bilan kirsam bo‘ladimi?"
+        },
+        {
+          "ru": "Мне нужен переводчик. Я плохо понимаю по-русски.",
+          "uz": "Menga tarjimon kerak. Rus tilini yaxshi tushunmayman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Qavsni oching: Можно войти с (переводчик)?",
+          "answer": "Можно войти с переводчиком?",
+          "explanation": "С bilan переводчик → переводчиком bo‘ladi."
+        },
+        {
+          "prompt": "Tanlang: Мне (нужен / нужна) переводчик.",
+          "answer": "Мне нужен переводчик.",
+          "explanation": "Переводчик grammatik jihatdan erkak jinsidagi ot."
+        },
+        {
+          "prompt": "Ruscha ayting: Savolni yozib olsam bo‘ladimi?",
+          "answer": "Можно мне записать вопрос?",
+          "explanation": "Можно мне + записать aynan so‘zlovchi uchun ruxsat so‘raydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Мне нужен переводчик.",
+        "uz": "Menga tarjimon kerak."
+      },
+      {
+        "ru": "Можно войти с сестрой?",
+        "uz": "Opam bilan kirsa bo‘ladimi?"
+      },
+      {
+        "ru": "Она поможет мне понять.",
+        "uz": "U menga tushunishga yordam beradi."
+      },
+      {
+        "ru": "Я хочу ответить сам. / Я хочу ответить сама.",
+        "uz": "O‘zim javob bermoqchiman. (erkak / ayol)"
+      },
+      {
+        "ru": "Можно записать вопрос?",
+        "uz": "Savolni yozib olsa bo‘ladimi?"
+      },
+      {
+        "ru": "Обращайтесь ко мне, пожалуйста.",
+        "uz": "Iltimos, menga murojaat qiling."
+      },
+      {
+        "ru": "Я не всё понимаю.",
+        "uz": "Hammasini tushunmayapman."
+      },
+      {
+        "ru": "Помогите мне уточнить.",
+        "uz": "Aniqlashtirishimga yordam bering."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Можно мне войти с сестрой? Я не всё понимаю по-русски.",
+        "uz": "Opam bilan kirsam bo‘ladimi? Ruscha hammasini tushunmayman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я уточню у врача. Вам нужен переводчик?",
+        "uz": "Shifokordan aniqlashtiraman. Sizga tarjimon kerakmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. Сестра поможет, но я хочу ответить сам.",
+        "uz": "Ha. Opam yordam beradi, lekin o‘zim javob bermoqchiman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Врач согласен. Он будет обращаться к вам.",
+        "uz": "Shifokor rozi. U sizga murojaat qiladi."
+      },
+      {
+        "speaker": "A",
+        "ru": "Спасибо. Можно записывать вопросы?",
+        "uz": "Rahmat. Savollarni yozib borsam bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, можете записывать их в блокнот.",
+        "uz": "Ha, ularni daftarga yozib borishingiz mumkin."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "С кем хочет войти A?",
+        "answer": "С сестрой."
+      },
+      {
+        "prompt": "Кто хочет отвечать на вопросы?",
+        "answer": "Сам A."
+      },
+      {
+        "prompt": "Куда можно записывать вопросы?",
+        "answer": "В блокнот."
+      }
+    ],
+    "roleplay": {
+      "a": "Ruscha ayrim so‘zlarni tushunmaysiz. Opangiz yordam beradi, lekin javobni o‘zingiz aytmoqchisiz. Hamroh va yozib olish haqida ruxsat so‘rang.",
+      "b": "Qabul xodimisiz. Hamroh haqidagi savolni shifokor bilan aniqlashtiring. Daftarga savol yozish mumkinligini bildiring, bemorning o‘ziga murojaat qiling.",
+      "twist": "Opa kelolmaydi; bemor markazda tarjimon topish imkonini so‘rasin.",
+      "success": "Hamroh yoki tarjimon ehtiyoji tushuntiriladi, 2 ruxsat savoli va 1 yordam iltimosi aytiladi."
+    },
+    "teacherTip": "«С сестра»ni с сестрой bilan tuzating; hamrohni bemor o‘rniga javob berishga majburlamang. Tayanchga Можно мне…? qolipi, ilg‘orlarga hamroh kelolmasligi bo‘yicha yangi so‘rov bering.",
+    "homework": [
+      "Hamroh so‘rash uchun 4 gapli ovozli xabar tayyorlang.",
+      "Juftingiz bilan o‘zingiz javob bermoqchi ekaningizni muloyim aytishni mashq qiling.",
+      "Tarjimon kerakligi va ikki ruxsat savolini yozing."
+    ],
+    "exit": "Tarjimon so‘rang, kim bilan kirishni ayting va savolni yozib olishga ruxsat oling."
+  },
+  {
+    "no": 93,
+    "month": 8,
+    "week": 31,
+    "title": "Sport markazida o‘zini yomon his qilish",
+    "objective": "Sport markazida mashg‘ulotni to‘xtatish istagini bildirib, xodimdan aloqa va til bo‘yicha yordam so‘raydi.",
+    "grammar": {
+      "title": "Birlashtirish: holat, ehtiyoj va ruxsat",
+      "rule": "Holat мне плохо yoki у меня болит… bilan aytiladi. Yordam uchun мне нужен + ot, harakat uchun мне нужно + infinitiv ishlatiladi. Можно + infinitiv ruxsatni, -те shakli muloyim iltimosni bildiradi.",
+      "examples": [
+        {
+          "ru": "Мне плохо. Мне нужно поговорить с сотрудником.",
+          "uz": "O‘zimni yomon his qilyapman. Xodim bilan gaplashishim kerak."
+        },
+        {
+          "ru": "Можно позвонить сестре? Помогите мне, пожалуйста.",
+          "uz": "Opamga qo‘ng‘iroq qilsam bo‘ladimi? Menga yordam bering, iltimos."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Мне (нужен / нужно) сотрудник.",
+          "answer": "Мне нужен сотрудник.",
+          "explanation": "Сотрудник erkak jinsidagi ot; нужен mos keladi."
+        },
+        {
+          "prompt": "Tanlang: Мне (нужна / нужно) позвонить.",
+          "answer": "Мне нужно позвонить.",
+          "explanation": "Позвонить infinitiv bo‘lgani uchun нужно o‘zgarmaydi."
+        },
+        {
+          "prompt": "Ruscha ayting: Menga yordam bering, iltimos.",
+          "answer": "Помогите мне, пожалуйста.",
+          "explanation": "Помогите hurmatli iltimos, мне yordam oluvchini bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Мне плохо.",
+        "uz": "O‘zimni yomon his qilyapman."
+      },
+      {
+        "ru": "Я хочу остановиться.",
+        "uz": "To‘xtamoqchiman."
+      },
+      {
+        "ru": "Позовите сотрудника, пожалуйста.",
+        "uz": "Xodimni chaqiring, iltimos."
+      },
+      {
+        "ru": "Мне нужна помощь.",
+        "uz": "Menga yordam kerak."
+      },
+      {
+        "ru": "Можно позвонить сестре?",
+        "uz": "Opamga qo‘ng‘iroq qilsam bo‘ladimi?"
+      },
+      {
+        "ru": "Я не могу точно объяснить.",
+        "uz": "Aniq tushuntira olmayapman."
+      },
+      {
+        "ru": "Она поможет с переводом.",
+        "uz": "U tarjima qilishga yordam beradi."
+      },
+      {
+        "ru": "Повторите вопрос медленнее.",
+        "uz": "Savolni sekinroq takrorlang."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Мне плохо. Я хочу остановиться. Позовите сотрудника.",
+        "uz": "O‘zimni yomon his qilyapman. To‘xtamoqchiman. Xodimni chaqiring."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я сотрудник центра. Какая помощь вам нужна?",
+        "uz": "Men markaz xodimiman. Sizga qanday yordam kerak?"
+      },
+      {
+        "speaker": "A",
+        "ru": "У меня болит голова. Мне трудно объяснить по-русски.",
+        "uz": "Boshim og‘riyapti. Ruscha tushuntirish menga qiyin."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вам помочь связаться с врачом?",
+        "uz": "Shifokor bilan bog‘lanishga yordam beraymi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, пожалуйста. И можно позвонить сестре? Она поможет с переводом.",
+        "uz": "Ha, iltimos. Opamga ham qo‘ng‘iroq qilsam bo‘ladimi? U tarjima qilishga yordam beradi."
+      },
+      {
+        "speaker": "B",
+        "ru": "Конечно. Я помогу вам связаться с ними.",
+        "uz": "Albatta. Ular bilan bog‘lanishingizga yordam beraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что хочет сделать A сначала?",
+        "answer": "Остановиться."
+      },
+      {
+        "prompt": "Что болит у A?",
+        "answer": "Голова."
+      },
+      {
+        "prompt": "Зачем A хочет позвонить сестре?",
+        "answer": "Она поможет с переводом."
+      }
+    ],
+    "roleplay": {
+      "a": "Sport markazida bosh og‘rig‘ini aytib, mashg‘ulotni to‘xtatmoqchisiz. Xodim, shifokor bilan aloqa va opangizning tarjima yordamini so‘rang.",
+      "b": "Markaz xodimisiz. Qanday yordam kerakligini aniqlang, kerakli odam bilan bog‘lanishni taklif qiling. Dori yoki davolash usulini tavsiya qilmang.",
+      "twist": "Opaning raqami noto‘g‘ri eshitildi; raqamni ikki qismga bo‘lib qayta tekshiring.",
+      "success": "Holat va to‘xtash istagi aytiladi, 2 yordam so‘rovi bildiriladi, aloqa tafsiloti tekshiriladi."
+    },
+    "teacherTip": "«Мне нужен помощь»ni помощь ayol jinsida ekanini ko‘rsatib нужна помощь ga tuzating. Tayanchga 4 kalit ibora, ilg‘orlarga aloqa raqamini tuzatish bering. Mashqning vazifasi yordam so‘rash, birinchi yordam usullarini o‘rgatish emas.",
+    "homework": [
+      "Markaz xodimiga 4 gapli yordam so‘rovini ovozga yozing.",
+      "Juftingiz bilan o‘ylab topilgan raqamni qayta tekshiring.",
+      "Нужна помощь, нужен сотрудник, нужно позвонить bilan uch gap yozing."
+    ],
+    "exit": "Yangi jamoat joyida holatingizni ayting, xodim va aloqa yordamini so‘rang, bitta savolni aniqlashtiring."
+  },
+  {
+    "no": 94,
+    "month": 8,
+    "week": 32,
+    "title": "Qabul vaqtini ko‘chirish",
+    "objective": "Mavjud qabulni aniqlab, kelolmasligini aytadi va boshqa kun-soatga yozilishni kelishadi.",
+    "grammar": {
+      "title": "Не могу прийти; перенести на…",
+      "rule": "Могу shaxsga ko‘ra tuslanadi: я могу, вы можете; undan keyin infinitiv keladi. Qabulni boshqa vaqtga ko‘chirish перенести на + vaqt bilan ifodalanadi: на пятницу, на десять часов. Bu vaqtni belgilash qolipidir.",
+      "examples": [
+        {
+          "ru": "Я не могу прийти завтра.",
+          "uz": "Men ertaga kela olmayman."
+        },
+        {
+          "ru": "Можно перенести приём на пятницу?",
+          "uz": "Qabulni jumaga ko‘chirsa bo‘ladimi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Xatoni tuzating: Я не могу приду завтра.",
+          "answer": "Я не могу прийти завтра.",
+          "explanation": "Могу dan keyin tuslangan приду emas, infinitiv прийти kerak."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Перенесите приём ___ среду.",
+          "answer": "на",
+          "explanation": "Yangi kun перенести на среду qolipida aytiladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Siz dushanba kuni kela olasizmi?",
+          "answer": "Вы можете прийти в понедельник?",
+          "explanation": "Вы bilan можете; kelish kuni в понедельник bilan beriladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "У меня запись на завтра.",
+        "uz": "Men ertangi qabulga yozilganman."
+      },
+      {
+        "ru": "Я не могу прийти.",
+        "uz": "Men kela olmayman."
+      },
+      {
+        "ru": "Можно перенести приём?",
+        "uz": "Qabulni ko‘chirsa bo‘ladimi?"
+      },
+      {
+        "ru": "На другой день",
+        "uz": "Boshqa kunga"
+      },
+      {
+        "ru": "Есть время в пятницу?",
+        "uz": "Juma kuni vaqt bormi?"
+      },
+      {
+        "ru": "Отмените прежнюю запись.",
+        "uz": "Oldingi yozuvni bekor qiling."
+      },
+      {
+        "ru": "Подтвердите новое время.",
+        "uz": "Yangi vaqtni tasdiqlang."
+      },
+      {
+        "ru": "Спасибо, теперь мне удобно.",
+        "uz": "Rahmat, endi menga qulay."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "У меня запись на завтра в десять, но я не могу прийти.",
+        "uz": "Ertaga o‘nga yozilganman, lekin kela olmayman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вы хотите отменить приём или перенести?",
+        "uz": "Qabulni bekor qilmoqchimisiz yoki ko‘chirmoqchimisiz?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Перенести на пятницу. Есть время после обеда?",
+        "uz": "Jumaga ko‘chirmoqchiman. Tushdan keyin vaqt bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Есть в два часа. Назовите фамилию.",
+        "uz": "Soat ikkida bor. Familiyangizni ayting."
+      },
+      {
+        "speaker": "A",
+        "ru": "Рахимова. Значит, прежняя запись отменена, новая — в пятницу в два?",
+        "uz": "Rahimova. Demak, oldingi yozuv bekor, yangisi juma ikkigami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, всё верно. Ждём вас в пятницу.",
+        "uz": "Ha, hammasi to‘g‘ri. Sizni juma kuni kutamiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "На какое время была прежняя запись?",
+        "answer": "На завтра в десять."
+      },
+      {
+        "prompt": "На какой день переносится приём?",
+        "answer": "На пятницу."
+      },
+      {
+        "prompt": "Во сколько новый приём?",
+        "answer": "В два часа."
+      }
+    ],
+    "roleplay": {
+      "a": "Ertaga o‘ndagi qabulingizga kelolmaysiz. Juma tushdan keyin bo‘shsiz. Eski yozuvni aniqlab, yangisini kelishing.",
+      "b": "Qabul xodimisiz. Jumada ikkida yoki to‘rtda bo‘sh joy bor. Familiya va eski vaqtni so‘rang, bekor qilingan va yangi yozuvni farqlang.",
+      "twist": "Juma ham mos kelmay qoldi; bemor yangi kun so‘raydi, xodim dushanbani taklif qiladi.",
+      "success": "Eski kun-soat aytiladi, kelolmaslik bildiriladi, yangi vaqt so‘raladi va ikkala yozuv holati tasdiqlanadi."
+    },
+    "teacherTip": "«Могу приду»ni могу прийти bilan tuzating. Tayanchga eski/yangi ikki ustunli karta, ilg‘orlarga ketma-ket ikki vaqt o‘zgarishini bering.",
+    "homework": [
+      "Qabulni ko‘chirish haqidagi ovozli xabarni yozing.",
+      "Juftingiz bilan bekor qilish va ko‘chirishni ikki alohida vaziyatda mashq qiling.",
+      "Eski va yangi vaqt ko‘rsatilgan 4 gapli tasdiq yozing."
+    ],
+    "exit": "Kartadagi eski qabulni ayting, yangi vaqt so‘rang va oxirgi kelishuvni xatosiz takrorlang."
+  },
+  {
+    "no": 95,
+    "month": 8,
+    "week": 32,
+    "title": "Boshqa odam uchun shoshilinch yordam so‘rash",
+    "objective": "Yordam chaqirish suhbatida joy, kuzatilgan holat va aloqa raqamini aytib, savolni qayta so‘raydi.",
+    "grammar": {
+      "title": "Ему / ей нужна помощь",
+      "rule": "Yordam kerak bo‘lgan erkak uchun ему, ayol uchun ей ishlatiladi. Нужна помощь da moslashuv yordam oluvchining jinsiga emas, помощь otiga bog‘liq. У него va у неё esa kimdagi holatni bildiradi.",
+      "examples": [
+        {
+          "ru": "Ей нужна помощь.",
+          "uz": "Unga yordam kerak. (ayol)"
+        },
+        {
+          "ru": "Ему трудно говорить.",
+          "uz": "Unga gapirish qiyin. (erkak)"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ayol haqida ayting: ___ нужна помощь.",
+          "answer": "Ей нужна помощь.",
+          "explanation": "Ayolga — ей; помощь sababli нужна saqlanadi."
+        },
+        {
+          "prompt": "Xatoni tuzating: Ему нужен помощь.",
+          "answer": "Ему нужна помощь.",
+          "explanation": "Нужна so‘zi помощь ayol jinsidagi otiga moslashadi."
+        },
+        {
+          "prompt": "Ruscha ayting: Unga gapirish qiyin. (ayol)",
+          "answer": "Ей трудно говорить.",
+          "explanation": "Qiyinchilikni boshdan kechiruvchi ayol ей bilan ifodalanadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Вызовите скорую помощь, пожалуйста.",
+        "uz": "Tez yordam chaqiring, iltimos."
+      },
+      {
+        "ru": "Человеку плохо.",
+        "uz": "Bir odamning ahvoli yomon."
+      },
+      {
+        "ru": "Ему нужна помощь.",
+        "uz": "Unga yordam kerak. (erkak)"
+      },
+      {
+        "ru": "Мы находимся у входа.",
+        "uz": "Biz kirish joyidamiz."
+      },
+      {
+        "ru": "Адрес такой…",
+        "uz": "Manzil quyidagicha…"
+      },
+      {
+        "ru": "Она отвечает на вопросы.",
+        "uz": "U savollarga javob beryapti."
+      },
+      {
+        "ru": "Я не знаю, что произошло.",
+        "uz": "Nima bo‘lganini bilmayman."
+      },
+      {
+        "ru": "Повторите вопрос, пожалуйста.",
+        "uz": "Savolni takrorlang, iltimos."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Нужна скорая помощь. Женщине плохо у входа в библиотеку.",
+        "uz": "Tez yordam kerak. Kutubxona kirishida bir ayolning ahvoli yomon."
+      },
+      {
+        "speaker": "B",
+        "ru": "Назовите адрес. Она отвечает на вопросы?",
+        "uz": "Manzilni ayting. U savollarga javob beryaptimi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Улица Мира, дом восемь. Да, отвечает, но ей трудно говорить.",
+        "uz": "Mir ko‘chasi, sakkizinchi uy. Ha, javob beryapti, lekin gapirishi qiyin."
+      },
+      {
+        "speaker": "B",
+        "ru": "Что произошло? Назовите ваш номер телефона.",
+        "uz": "Nima bo‘ldi? Telefon raqamingizni ayting."
+      },
+      {
+        "speaker": "A",
+        "ru": "Я не знаю, что произошло. Номер: девятьсот, сто, двадцать, тридцать.",
+        "uz": "Nima bo‘lganini bilmayman. Raqam: to‘qqiz yuz, yuz, yigirma, o‘ttiz."
+      },
+      {
+        "speaker": "B",
+        "ru": "Адрес записан. Уточню ещё несколько деталей.",
+        "uz": "Manzil yozildi. Yana bir nechta tafsilotni aniqlashtiraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где находится женщина?",
+        "answer": "У входа в библиотеку, улица Мира, дом восемь."
+      },
+      {
+        "prompt": "Отвечает ли она на вопросы?",
+        "answer": "Да, но ей трудно говорить."
+      },
+      {
+        "prompt": "Знает ли A, что произошло?",
+        "answer": "Нет, не знает."
+      }
+    ],
+    "roleplay": {
+      "a": "Kutubxona kirishida bir ayolga yordam kerak. Shartli manzil: Mir ko‘chasi 8. U savollarga javob beradi, lekin gapirishi qiyin. Sababni bilmaysiz.",
+      "b": "Yordam chaqiruvini qabul qiluvchi rolidasiz. Manzil, kirish joyi, kuzatilgan holat va mashq uchun berilgan aloqa raqamini so‘rang. Tibbiy ko‘rsatma bermang.",
+      "twist": "Manzil 8 o‘rniga 18 deb eshitildi; chaqiruvchi raqamni darhol tuzatsin.",
+      "success": "Joy va kuzatilgan holat taxminsiz yetkaziladi, noma’lum sabab ochiq aytiladi, manzil xatosi tuzatiladi va aloqa raqami beriladi."
+    },
+    "teacherTip": "Ему/ей ni adashtirishda shaxs kartasiga, нужна ni tuzatishda помощь otiga e’tibor qarating. Tayanchga manzil va holat yozilgan karta, ilg‘orlarga noto‘g‘ri eshitilgan uy raqamini bering. Bu faqat o‘quv rolli suhbati: haqiqiy xizmatga qo‘ng‘iroq qildirmang, tashxis va muolaja baholanmaydi.",
+    "homework": [
+      "O‘ylab topilgan manzil va kuzatilgan holat haqida ovozli mashq yozing.",
+      "Juftingiz bilan 8 va 18 raqamlarini farqlab tasdiqlang.",
+      "Ему va ей bilan yordam ehtiyojini bildiruvchi 4 gap yozing."
+    ],
+    "exit": "Shartli chaqiruvda manzil, kirish joyi, kuzatilgan holat va aloqa raqamini ayting; bitta noto‘g‘ri raqamni tuzating."
+  },
+  {
+    "no": 96,
+    "month": 8,
+    "week": 32,
+    "title": "Sakkizinchi oy sinovi: yangi markazda qabul",
+    "objective": "Yangi tibbiy markazda o‘zi uchun qabul tashkil qiladi, alomat va til ehtiyojini aytadi, vaqt o‘zgarishini kelishadi.",
+    "grammar": {
+      "title": "Oylik birlashtirish: holat, zarurat, ruxsat",
+      "rule": "У меня болит/болят tana a’zosining soniga moslanadi. Мне нужно + infinitiv harakatni, мне нужен переводчик shaxs ehtiyojini bildiradi. Можно va hurmatli iltimoslar orqali ma’lumot aniqlashtiriladi; avvalgi qoidalar yangi suhbatda qo‘llanadi.",
+      "examples": [
+        {
+          "ru": "У меня болит спина. Мне нужно записаться к врачу.",
+          "uz": "Belim og‘riyapti. Shifokor qabuliga yozilishim kerak."
+        },
+        {
+          "ru": "Можно прийти с переводчиком? Повторите время.",
+          "uz": "Tarjimon bilan kelsa bo‘ladimi? Vaqtni takrorlang."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: У меня (болит / болят) ноги.",
+          "answer": "У меня болят ноги.",
+          "explanation": "Ноги ko‘plikda, fe’l болят bo‘ladi."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Мне ___ перенести приём.",
+          "answer": "нужно",
+          "explanation": "Перенести infinitiviga o‘zgarmas нужно ulanadi."
+        },
+        {
+          "prompt": "Qavsni oching: Я приду с (переводчик).",
+          "answer": "Я приду с переводчиком.",
+          "explanation": "Hamrohlikdagi с bilan переводчиком ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я впервые в этом центре.",
+        "uz": "Men bu markazga birinchi marta keldim."
+      },
+      {
+        "ru": "У меня болит спина.",
+        "uz": "Belim og‘riyapti."
+      },
+      {
+        "ru": "Со вчерашнего дня",
+        "uz": "Kechadan beri"
+      },
+      {
+        "ru": "Мне нужен переводчик.",
+        "uz": "Menga tarjimon kerak."
+      },
+      {
+        "ru": "Нужно заполнить анкету?",
+        "uz": "Anketani to‘ldirish kerakmi?"
+      },
+      {
+        "ru": "Можно перенести приём?",
+        "uz": "Qabulni ko‘chirsa bo‘ladimi?"
+      },
+      {
+        "ru": "Напишите новое время.",
+        "uz": "Yangi vaqtni yozing."
+      },
+      {
+        "ru": "Я не знаю точно.",
+        "uz": "Aniq bilmayman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я впервые в этом центре. У меня болит спина со вчерашнего дня.",
+        "uz": "Men bu markazga birinchi marta keldim. Kechadan beri belim og‘riyapti."
+      },
+      {
+        "speaker": "B",
+        "ru": "Могу предложить запись к врачу на завтра в десять.",
+        "uz": "Ertaga o‘nga shifokor qabuliga yozishni taklif qila olaman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне нужен переводчик. Он свободен только после обеда. Можно прийти с ним?",
+        "uz": "Menga tarjimon kerak. U faqat tushdan keyin bo‘sh. U bilan kelsa bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Уточню. Да, можно в три. Нужно сначала заполнить анкету.",
+        "uz": "Aniqlashtiraman. Ha, uchda mumkin. Avval anketani to‘ldirish kerak."
+      },
+      {
+        "speaker": "A",
+        "ru": "Запишите меня на три. Что ещё взять с собой?",
+        "uz": "Meni uchga yozing. O‘zim bilan yana nima olay?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В нашей клинике для оформления нужен документ. Приём в кабинете девять.",
+        "uz": "Bizning klinikamizda rasmiylashtirish uchun hujjat kerak. Qabul to‘qqizinchi xonada."
+      },
+      {
+        "speaker": "A",
+        "ru": "Значит, завтра в три, с переводчиком, сначала анкета, потом кабинет девять?",
+        "uz": "Demak, ertaga uchda, tarjimon bilan, avval anketa, keyin to‘qqizinchi xonami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Всё верно. Я напишу вам эти сведения.",
+        "uz": "Hammasi to‘g‘ri. Sizga bu ma’lumotlarni yozib beraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "С какого дня болит спина у A?",
+        "answer": "Со вчерашнего дня."
+      },
+      {
+        "prompt": "Почему A просит время после обеда?",
+        "answer": "Переводчик свободен только после обеда."
+      },
+      {
+        "prompt": "Что нужно сделать перед посещением кабинета?",
+        "answer": "Заполнить анкету."
+      }
+    ],
+    "roleplay": {
+      "a": "Yangi markazda shifokorga yozilasiz. Shartli bel og‘rig‘i kecha boshlangan. Tarjimon faqat tushdan keyin bo‘sh. Anketa, xona va vaqtni aniqlang.",
+      "b": "Markaz xodimisiz. Ertaga o‘nda va uchda vaqt bor. Avval anketa, keyin 9-xona; shartli markaz ro‘yxati uchun hujjat kerak. Hamroh masalasini aniqlashtiring.",
+      "twist": "Uchdagi qabul boshqa kunga ko‘chirildi; bemor va tarjimonga mos yangi vaqt toping.",
+      "success": "Alomat va vaqti, til ehtiyoji, 3 savol, ma’muriy tartib va yangi kun-soat tasdig‘i eshitiladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. Axborot yetkazish, qayta so‘rash va uchrashuv tartibini kuzating. Мне нужна прийти ni нужно прийти ga tuzating. Tayanchga rasmlar, ilg‘orga ikkinchi vaqt o‘zgarishi bering. Tibbiy bilim emas, til orqali muloqot baholanadi. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Qabul tafsilotlarini tarjimonga yuboriladigan ovozli xabar sifatida ayting.",
+      "Sherigingiz bilan rollarni almashtirib yangi markaz vaziyatini qayta bajaring.",
+      "Sinovdagi ikki til xatosini tuzatib, har biriga yangi gap yozing."
+    ],
+    "exit": "Yordamsiz 8 mazmunli replika ayting: alomat, boshlanish vaqti, til ehtiyoji, 3 savol, tartib tasdig‘i va o‘zgargan vaqtga javob; kamida 14/20 ball oling."
+  },
+  {
+    "no": 97,
+    "month": 9,
+    "week": 33,
+    "title": "Ish va o‘qish maqsadini aytish",
+    "objective": "O‘z ish yoki o‘qish tajribasini 4 gapda tanishtirib, tanlovining ikki sababini aytadi.",
+    "grammar": {
+      "title": "Потому что — sababni aytish",
+      "rule": "Потому что dan keyingi gap sababni bildiradi. Avval tanlov yoki holat, keyin sabab keladi; yozuvda потому что oldidan vergul qo‘yiladi. Nega? savoliga javob Почему? — Потому что… shaklida ham boshlanishi mumkin.",
+      "examples": [
+        {
+          "ru": "Я ищу работу рядом с домом, потому что учусь вечером.",
+          "uz": "Kechqurun o‘qiganim uchun uyga yaqin ish qidiryapman."
+        },
+        {
+          "ru": "Я выбрала этот курс, потому что мне нужен русский для работы.",
+          "uz": "Ish uchun rus tili kerakligi sababli shu kursni tanladim. (ayol)"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ikki gapni потому что bilan birlashtiring: Я учусь вечером. Днём я работаю.",
+          "answer": "Я учусь вечером, потому что днём я работаю.",
+          "explanation": "Kechqurun o‘qishning sababi kunduzgi ish ekanligi ikkinchi qismda aytiladi."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Я ищу эту работу, ___ умею работать с клиентами.",
+          "answer": "потому что",
+          "explanation": "Ikkinchi qism ishni tanlash sababini ko‘rsatadi."
+        },
+        {
+          "prompt": "Ruscha ayting: Men til o‘rganyapman, chunki ishda ruscha gaplashaman.",
+          "answer": "Я учу язык, потому что на работе говорю по-русски.",
+          "explanation": "Потому что ikkita to‘liq fikrni sabab aloqasi bilan bog‘laydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я ищу работу.",
+        "uz": "Men ish qidiryapman."
+      },
+      {
+        "ru": "Я учусь на вечерних курсах.",
+        "uz": "Men kechki kurslarda o‘qiyman."
+      },
+      {
+        "ru": "У меня есть опыт.",
+        "uz": "Menda tajriba bor."
+      },
+      {
+        "ru": "Я работаю с клиентами.",
+        "uz": "Men mijozlar bilan ishlayman."
+      },
+      {
+        "ru": "Мне подходит этот график.",
+        "uz": "Menga bu ish jadvali mos."
+      },
+      {
+        "ru": "Потому что я учусь вечером",
+        "uz": "Chunki kechqurun o‘qiyman"
+      },
+      {
+        "ru": "Расскажите о себе.",
+        "uz": "O‘zingiz haqingizda gapirib bering."
+      },
+      {
+        "ru": "Можно уточнить обязанности?",
+        "uz": "Vazifalarni aniqlashtirsam bo‘ladimi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Расскажите о себе. Почему вы ищете работу утром?",
+        "uz": "O‘zingiz haqingizda gapirib bering. Nega ertalabki ish qidiryapsiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Мне подходит утро, потому что вечером я учусь.",
+        "uz": "Menga ertalab mos, chunki kechqurun o‘qiyman."
+      },
+      {
+        "speaker": "A",
+        "ru": "У вас есть опыт работы с клиентами?",
+        "uz": "Mijozlar bilan ishlash tajribangiz bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, я работал в магазине. Мне нравится общаться с людьми.",
+        "uz": "Ha, men do‘konda ishlaganman. Odamlar bilan gaplashishni yoqtiraman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Почему вас интересует наша вакансия?",
+        "uz": "Bizning bo‘sh ish o‘rnimiz nega sizni qiziqtiryapti?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Потому что офис рядом с домом и график мне подходит.",
+        "uz": "Chunki ofis uyimga yaqin va jadval menga mos."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Когда учится B?",
+        "answer": "Вечером."
+      },
+      {
+        "prompt": "Где раньше работал B?",
+        "answer": "В магазине."
+      },
+      {
+        "prompt": "Почему вакансия подходит B?",
+        "answer": "Офис рядом с домом и график подходит."
+      }
+    ],
+    "roleplay": {
+      "a": "Ishga nomzodsiz: kechqurun o‘qiysiz, do‘konda tajribangiz bor, ertalab ishlamoqchisiz. O‘zingizni tanishtirib, ikki sabab ayting.",
+      "b": "Ish beruvchi rolidasiz. Ertalabki mijozlar bilan ishlash vazifasi uchun tajriba va jadvalni aniqlang. Nomzodga bitta vazifani tushuntiring.",
+      "twist": "Haftada bir kun ish tushdan keyin bo‘ladi; nomzod mos yoki mos emasligini sababi bilan aytsin.",
+      "success": "4 tanishtirish gapi, 2 sabab va vazifa haqidagi 1 savol aytiladi."
+    },
+    "teacherTip": "O‘zbekcha gap tartibi ta’sirida потому что qismini asosiy gap bilan aralashtirishni ikki rangli sabab/natija kartasi bilan tuzating. Tayanchga gap boshlari, ilg‘orlarga jadval istisnosini sabab bilan izohlash bering.",
+    "homework": [
+      "Ish yoki o‘qish uchun 4 gapli ovozli tanishtiruv yozing.",
+      "Juftingizning ikkita Почему? savoliga sabab bilan javob bering.",
+      "Потому что bilan ikki tanlov sababini yozing."
+    ],
+    "exit": "O‘zingizni 4 gapda tanishtiring va ish yoki kurs tanlash uchun 2 sabab ayting."
+  },
+  {
+    "no": 98,
+    "month": 9,
+    "week": 33,
+    "title": "Ariza va hujjatlar",
+    "objective": "Ariza topshirish uchun kerakli hujjatlarni so‘raydi, yetishmayotgan hujjat va keyingi qadamni tushuntiradi.",
+    "grammar": {
+      "title": "Поэтому — natijani aytish",
+      "rule": "Поэтому natijani kiritadi: avval sabab, keyin uning oqibati aytiladi. Потому что bilan tartib teskaridir: natija, потому что sabab. Yozuvda поэтому oldidan vergul qo‘yiladi.",
+      "examples": [
+        {
+          "ru": "У меня нет копии, поэтому я принесу её завтра.",
+          "uz": "Menda nusxa yo‘q, shuning uchun uni ertaga olib kelaman."
+        },
+        {
+          "ru": "Я работаю днём, поэтому выбираю вечерний курс.",
+          "uz": "Men kunduz ishlayman, shuning uchun kechki kursni tanlayman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bog‘lang: У меня нет фотографии. Я отправлю её позже.",
+          "answer": "У меня нет фотографии, поэтому я отправлю её позже.",
+          "explanation": "Surat yo‘qligi sabab, keyin yuborish natija sifatida aytiladi."
+        },
+        {
+          "prompt": "Tanlang: Я принесу копию завтра, (поэтому / потому что) сегодня её нет.",
+          "answer": "Я принесу копию завтра, потому что сегодня её нет.",
+          "explanation": "Ikkinchi qism sabab bo‘lgani uchun потому что kerak."
+        },
+        {
+          "prompt": "Ruscha ayting: Men kechqurun bandman, shuning uchun ertalabki kursni tanlayman.",
+          "answer": "Я занят вечером, поэтому выбираю утренний курс. / Я занята вечером, поэтому выбираю утренний курс.",
+          "explanation": "Занят/занята so‘zlovchiga mos, поэтому natijani bog‘laydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я хочу подать заявление.",
+        "uz": "Men ariza topshirmoqchiman."
+      },
+      {
+        "ru": "Какие документы нужны?",
+        "uz": "Qanday hujjatlar kerak?"
+      },
+      {
+        "ru": "Нужна копия?",
+        "uz": "Nusxa kerakmi?"
+      },
+      {
+        "ru": "У меня нет фотографии.",
+        "uz": "Menda surat yo‘q."
+      },
+      {
+        "ru": "Я принесу её завтра.",
+        "uz": "Uni ertaga olib kelaman."
+      },
+      {
+        "ru": "Где поставить подпись?",
+        "uz": "Qayerga imzo qo‘yish kerak?"
+      },
+      {
+        "ru": "Можно отправить по почте?",
+        "uz": "Elektron pochta orqali yuborsa bo‘ladimi?"
+      },
+      {
+        "ru": "Поэтому я выбираю эту группу.",
+        "uz": "Shuning uchun shu guruhni tanlayman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я хочу подать заявление на курс. Какие документы нужны?",
+        "uz": "Kursga ariza topshirmoqchiman. Qanday hujjatlar kerak?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В нашем центре нужны анкета и фотография. Какую группу выбираете?",
+        "uz": "Bizning markazda anketa va surat kerak. Qaysi guruhni tanlaysiz?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я работаю днём, поэтому выбираю вечернюю группу.",
+        "uz": "Men kunduz ishlayman, shuning uchun kechki guruhni tanlayman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Фотография у вас с собой?",
+        "uz": "Xo‘p. Surat yoningizdami?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет, поэтому отправлю её завтра. Можно по электронной почте?",
+        "uz": "Yo‘q, shuning uchun ertaga yuboraman. Elektron pochta orqali mumkinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Сегодня заполните анкету и подпишите её внизу.",
+        "uz": "Ha. Bugun anketani to‘ldiring va pastiga imzo qo‘ying."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какие документы нужны в этом центре?",
+        "answer": "Анкета и фотография."
+      },
+      {
+        "prompt": "Почему A выбирает вечернюю группу?",
+        "answer": "Потому что днём работает."
+      },
+      {
+        "prompt": "Когда A отправит фотографию?",
+        "answer": "Завтра."
+      }
+    ],
+    "roleplay": {
+      "a": "Kursga ariza topshirasiz. Kunduz ishlaysiz, suratingiz yoningizda yo‘q. Kerakli hujjat, imzo joyi va keyin yuborish yo‘lini so‘rang.",
+      "b": "Shartli o‘quv markazi xodimisiz. Anketa va surat kerak; suratni ertaga elektron pochta orqali qabul qilasiz. Guruhni tanlatib, imzo joyini tushuntiring.",
+      "twist": "Elektron pochta manzili noaniq eshitildi; uni yozib berishni so‘rang.",
+      "success": "Hujjatlar aniqlanadi, 2 поэтому bilan sabab-natija aytiladi, yetishmagan hujjatni yetkazish usuli kelishiladi."
+    },
+    "teacherTip": "Потому что va поэтому ni almashtirishda sabab va natija kartalarini joyini o‘zgartirib tuzating. Tayanchga ikki qisqa gap, ilg‘orlarga bir fikrni ikkala bog‘lovchi bilan qayta tuzish bering.",
+    "homework": [
+      "Ariza topshirishdagi kamchilik va yechimni ovozga yozing.",
+      "Juftingiz bilan kerakli hujjatlarni savol-javob qiling.",
+      "Bitta vaziyatni потому что va поэтому bilan ikki usulda yozing."
+    ],
+    "exit": "Yetishmagan hujjatni ayting, поэтому bilan keyingi qadamni bildiring va yuborish yo‘lini so‘rang."
+  },
+  {
+    "no": 99,
+    "month": 9,
+    "week": 33,
+    "title": "Kutubxonadagi suhbat klubiga qo‘shilish",
+    "objective": "Kutubxonadagi ikki klubdan jadvaliga mosini tanlab, ro‘yxatdan o‘tish talabini aniqlaydi.",
+    "grammar": {
+      "title": "Birlashtirish: sabab va natija",
+      "rule": "Tanlovni izohlashda потому что dan keyin sabab, поэтому dan keyin natija keladi. Kerakli hujjatlar нужны bilan, zarur harakatlar нужно + infinitiv bilan aytiladi. Avvalgi qoliplar kutubxona klubiga ko‘chiriladi.",
+      "examples": [
+        {
+          "ru": "Я выбираю субботнюю группу, потому что работаю по будням.",
+          "uz": "Ish kunlari ishlaganim uchun shanba guruhini tanlayman."
+        },
+        {
+          "ru": "У меня нет анкеты, поэтому я заполню её здесь.",
+          "uz": "Menda anketa yo‘q, shuning uchun uni shu yerda to‘ldiraman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Я работаю в пятницу, (поэтому / потому что) приду в субботу.",
+          "answer": "Я работаю в пятницу, поэтому приду в субботу.",
+          "explanation": "Shanba kelish sababning natijasi bo‘lib kelmoqda."
+        },
+        {
+          "prompt": "Tanlang: Мне подходит эта группа, (поэтому / потому что) встреча утром.",
+          "answer": "Мне подходит эта группа, потому что встреча утром.",
+          "explanation": "Uchrashuvning ertalabligi tanlov sababidir."
+        },
+        {
+          "prompt": "Ruscha ayting: Qanday hujjatlar kerak?",
+          "answer": "Какие документы нужны?",
+          "explanation": "Документы ko‘plikda, so‘roq va kesim ham ko‘plikda."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я хочу участвовать в разговорном клубе.",
+        "uz": "Suhbat klubida qatnashmoqchiman."
+      },
+      {
+        "ru": "Когда проходят встречи?",
+        "uz": "Uchrashuvlar qachon bo‘ladi?"
+      },
+      {
+        "ru": "Есть группа по субботам?",
+        "uz": "Shanba kunlari guruh bormi?"
+      },
+      {
+        "ru": "Мне подходит утро.",
+        "uz": "Menga ertalab mos."
+      },
+      {
+        "ru": "Как записаться?",
+        "uz": "Qanday yozilish mumkin?"
+      },
+      {
+        "ru": "Нужно заполнить анкету?",
+        "uz": "Anketani to‘ldirish kerakmi?"
+      },
+      {
+        "ru": "Я работаю по будням.",
+        "uz": "Men ish kunlari ishlayman."
+      },
+      {
+        "ru": "Поэтому приду в субботу.",
+        "uz": "Shuning uchun shanba kuni kelaman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я хочу участвовать в разговорном клубе. Когда встречи?",
+        "uz": "Suhbat klubida qatnashmoqchiman. Uchrashuvlar qachon?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Есть группа в пятницу вечером и в субботу утром.",
+        "uz": "Juma kechqurun va shanba ertalab guruh bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Я работаю в пятницу, поэтому выбираю субботу. Как записаться?",
+        "uz": "Juma kuni ishlayman, shuning uchun shanbani tanlayman. Qanday yozilaman?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Заполните короткую анкету у стойки.",
+        "uz": "Peshtaxta yonida qisqa anketani to‘ldiring."
+      },
+      {
+        "speaker": "A",
+        "ru": "Можно прийти с другом? Ему тоже нужна практика.",
+        "uz": "Do‘stim bilan kelsam bo‘ladimi? Unga ham mashq kerak."
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, но ему тоже нужно заполнить анкету.",
+        "uz": "Ha, lekin u ham anketani to‘ldirishi kerak."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какие две группы предлагает B?",
+        "answer": "В пятницу вечером и в субботу утром."
+      },
+      {
+        "prompt": "Почему A выбирает субботу?",
+        "answer": "В пятницу A работает."
+      },
+      {
+        "prompt": "Что нужно сделать другу?",
+        "answer": "Тоже заполнить анкету."
+      }
+    ],
+    "roleplay": {
+      "a": "Ruscha mashq uchun kutubxona klubiga qo‘shilmoqchisiz. Juma ishlaysiz, shanba bo‘shsiz. Do‘stingiz ham qatnashmoqchi.",
+      "b": "Kutubxonachi rolidasiz. Juma kechki va shanba ertalabki guruh bor. Har qatnashchi alohida anketa to‘ldiradi; shanba guruhida ikki joy qolgan.",
+      "twist": "Do‘st faqat juma kelishi mumkin; ikki kishining tanlovini alohida tushuntiring.",
+      "success": "2 jadval solishtiriladi, sabab va natija bog‘lovchilari bilan 2 izoh aytiladi, ikki kishining ro‘yxat talabi tasdiqlanadi."
+    },
+    "teacherTip": "«Поэтому я работаю» deb sababni natija o‘rniga aytishni kontekst savoli bilan tuzattiring. Tayanchga jadval rasmi, ilg‘orlarga do‘stning boshqa tanlovini izohlash bering. Yangi qoida kiritmang.",
+    "homework": [
+      "Klub tanlovingizni sabab bilan ovozga yozing.",
+      "Juftingiz bilan ikki xil jadvalga mos guruh toping.",
+      "O‘zingiz va do‘stingizning ro‘yxatdan o‘tishi haqida 4 gap yozing."
+    ],
+    "exit": "Yangi ikki klub jadvalidan birini tanlang, sababini ayting va do‘stingiz uchun ro‘yxat talabini so‘rang."
+  },
+  {
+    "no": 100,
+    "month": 9,
+    "week": 34,
+    "title": "Telefon xabarini qoldirish",
+    "objective": "Telefonda ism, xabar, aloqa raqami va qayta qo‘ng‘iroq vaqtini aniq qoldiradi.",
+    "grammar": {
+      "title": "Передайте ему / ей, что…",
+      "rule": "Xabar oluvchisi дательный shaklida aytiladi: ему, ей, Анне. Передайте…, что… qolipida что dan keyin yetkaziladigan xabar keladi. Xabarni qabul qilgan kishi asosiy ism, vaqt va raqamni qaytarib tekshiradi.",
+      "examples": [
+        {
+          "ru": "Передайте Анне, что я позвоню завтра.",
+          "uz": "Annaga ertaga qo‘ng‘iroq qilishimni ayting."
+        },
+        {
+          "ru": "Передайте ему мой номер, пожалуйста.",
+          "uz": "Unga raqamimni bering, iltimos. (erkak)"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Qavsni oching: Передайте (Анна), что я звонил.",
+          "answer": "Передайте Анне, что я звонил.",
+          "explanation": "Xabar oluvchi ayol ismi Анна → Анне bo‘ladi."
+        },
+        {
+          "prompt": "Ayol haqida to‘ldiring: Передайте ___ мой номер.",
+          "answer": "ей",
+          "explanation": "Ayolga degan ma’no ей bilan beriladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Unga ertaga kelishimni ayting. (erkakka)",
+          "answer": "Передайте ему, что я приду завтра.",
+          "explanation": "Ему oluvchi, что dan keyingi gap esa xabar mazmuni."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Можно поговорить с Анной?",
+        "uz": "Anna bilan gaplashsa bo‘ladimi?"
+      },
+      {
+        "ru": "Её сейчас нет.",
+        "uz": "U hozir yo‘q. (ayol)"
+      },
+      {
+        "ru": "Можно оставить сообщение?",
+        "uz": "Xabar qoldirsa bo‘ladimi?"
+      },
+      {
+        "ru": "Передайте, что я звонил. / Передайте, что я звонила.",
+        "uz": "Qo‘ng‘iroq qilganimni ayting. (erkak / ayol)"
+      },
+      {
+        "ru": "Как вас представить?",
+        "uz": "Sizni kim deb tanishtiray?"
+      },
+      {
+        "ru": "Запишите мой номер.",
+        "uz": "Raqamimni yozib oling."
+      },
+      {
+        "ru": "Пусть перезвонит после трёх.",
+        "uz": "Uchdan keyin qayta qo‘ng‘iroq qilsin."
+      },
+      {
+        "ru": "Повторю для проверки.",
+        "uz": "Tekshirish uchun takrorlayman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте. Можно поговорить с Анной?",
+        "uz": "Assalomu alaykum. Anna bilan gaplashsa bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Её сейчас нет. Хотите оставить сообщение?",
+        "uz": "U hozir yo‘q. Xabar qoldirmoqchimisiz?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. Я Азиз, звоню по поводу вакансии. Передайте, что я могу прийти завтра.",
+        "uz": "Ha. Men Azizman, bo‘sh ish o‘rni haqida qo‘ng‘iroq qilyapman. Ertaga kela olishimni ayting."
+      },
+      {
+        "speaker": "B",
+        "ru": "Записываю. На какой номер перезвонить?",
+        "uz": "Yozyapman. Qaysi raqamga qayta qo‘ng‘iroq qilaylik?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Девятьсот один, двести, тридцать, сорок. Лучше после трёх.",
+        "uz": "To‘qqiz yuz bir, ikki yuz, o‘ttiz, qirq. Uchdan keyin yaxshiroq."
+      },
+      {
+        "speaker": "B",
+        "ru": "Проверю: Азиз, по поводу вакансии, можете прийти завтра. Перезвонить после трёх на номер девятьсот один, двести, тридцать, сорок.",
+        "uz": "Tekshiraman: Aziz, bo‘sh ish o‘rni haqida, ertaga kela olasiz. Uchdan keyin to‘qqiz yuz bir, ikki yuz, o‘ttiz, qirq raqamiga qayta qo‘ng‘iroq qilish kerak."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Кому звонит Азиз?",
+        "answer": "Анне."
+      },
+      {
+        "prompt": "По какому вопросу он звонит?",
+        "answer": "По поводу вакансии."
+      },
+      {
+        "prompt": "Когда лучше перезвонить?",
+        "answer": "После трёх."
+      }
+    ],
+    "roleplay": {
+      "a": "Aziz rolida bo‘sh ish o‘rni haqida Annaga qo‘ng‘iroq qilyapsiz. Ertaga kela olasiz, qayta aloqa uchdan keyin qulay. Shartli raqam qoldiring.",
+      "b": "Kotib rolidasiz. Anna yo‘q. Ism, mavzu, qayta aloqa vaqti va raqamini so‘rang, yozib olingan ma’lumotni qaytaring.",
+      "twist": "Raqamning oxirgi ikki soni almashib ketdi; qo‘ng‘iroq qiluvchi tuzatsin.",
+      "success": "Xabar 4 asosiy unsur bilan qoldiriladi: ism, mazmun, raqam, qayta qo‘ng‘iroq vaqti; bitta xato tuzatiladi."
+    },
+    "teacherTip": "«Передайте она»ni ей bilan tuzating; telefon raqamida faqat grammatikaga emas, aniqlikka baho bering. Tayanchga xabar blanki, ilg‘orlarga boshqa xodimga yo‘naltirilgan xabar bering.",
+    "homework": [
+      "Kotib uchun 4 unsurli ovozli xabar yozing.",
+      "Juftingiz aytgan shartli raqam va vaqtni qaytarib tekshiring.",
+      "Передайте ему va передайте ей bilan ikkita telefon xabari yozing."
+    ],
+    "exit": "Ism, xabar, raqam va vaqt qoldiring; kotib noto‘g‘ri qaytargan bitta tafsilotni tuzating."
+  },
+  {
+    "no": 101,
+    "month": 9,
+    "week": 34,
+    "title": "Ariza tayyormi yoki hali yozilyaptimi?",
+    "objective": "Ariza va xat ustidagi jarayonni tugallangan natijadan farqlab, 4 holat haqida hisobot beradi.",
+    "grammar": {
+      "title": "Заполнял — заполнил; писал — написал",
+      "rule": "Несовершенный вид jarayonni bildiradi: заполнял, писал; bu shaklning o‘zi ish tugaganini bildirmaydi. Совершенный вид natijani bildiradi: заполнил, написал. O‘tgan zamonda so‘zlovchi jinsiga mos -л yoki -ла ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Я заполнял анкету утром, но ещё не закончил.",
+          "uz": "Ertalab anketani to‘ldirayotgan edim, lekin hali tugatmadim. (erkak)"
+        },
+        {
+          "ru": "Я заполнила анкету и отправила её.",
+          "uz": "Men anketani to‘ldirib bo‘ldim va yubordim. (ayol)"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Natijani tanlang: Анкета готова. Я её (заполнял / заполнил).",
+          "answer": "Я её заполнил.",
+          "explanation": "Анкета готова tugallangan natijani ko‘rsatadi, shuning uchun заполнил."
+        },
+        {
+          "prompt": "Jarayonni tanlang: Весь вечер я (писала / написала) письмо, но не закончила.",
+          "answer": "Весь вечер я писала письмо, но не закончила.",
+          "explanation": "Davomli, tugamagan jarayon uchun писала kerak."
+        },
+        {
+          "prompt": "Ayol nomidan ayting: Men arizani yozib bo‘ldim.",
+          "answer": "Я написала заявление.",
+          "explanation": "Написала tugallangan yozishni va ayol so‘zlovchini bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Вы уже заполнили анкету?",
+        "uz": "Anketani to‘ldirib bo‘ldingizmi?"
+      },
+      {
+        "ru": "Я ещё заполняю.",
+        "uz": "Men hali to‘ldiryapman."
+      },
+      {
+        "ru": "Анкета готова.",
+        "uz": "Anketa tayyor."
+      },
+      {
+        "ru": "Я написал письмо. / Я написала письмо.",
+        "uz": "Xatni yozib bo‘ldim. (erkak / ayol)"
+      },
+      {
+        "ru": "Я ещё не закончил. / Я ещё не закончила.",
+        "uz": "Men hali tugatmadim. (erkak / ayol)"
+      },
+      {
+        "ru": "Остался один вопрос.",
+        "uz": "Bitta savol qoldi."
+      },
+      {
+        "ru": "Проверьте, пожалуйста.",
+        "uz": "Tekshiring, iltimos."
+      },
+      {
+        "ru": "Теперь можно отправить?",
+        "uz": "Endi yuborsa bo‘ladimi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Вы уже заполнили анкету?",
+        "uz": "Anketani to‘ldirib bo‘ldingizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Ещё нет. Я заполняла её утром, но остался один вопрос.",
+        "uz": "Hali yo‘q. Ertalab to‘ldirayotgan edim, lekin bitta savol qoldi."
+      },
+      {
+        "speaker": "A",
+        "ru": "Какой вопрос?",
+        "uz": "Qaysi savol?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Про опыт работы. Я написала ответ отдельно. Проверьте, пожалуйста.",
+        "uz": "Ish tajribasi haqidagisi. Javobni alohida yozdim. Tekshiring, iltimos."
+      },
+      {
+        "speaker": "A",
+        "ru": "Ответ понятный. Можно перенести его в анкету.",
+        "uz": "Javob tushunarli. Uni anketaga ko‘chirsa bo‘ladi."
+      },
+      {
+        "speaker": "B",
+        "ru": "Спасибо. Теперь всё заполнила. Можно отправить?",
+        "uz": "Rahmat. Endi hammasini to‘ldirdim. Yuborsa bo‘ladimi?"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Готова ли анкета в начале разговора?",
+        "answer": "Нет, остался один вопрос."
+      },
+      {
+        "prompt": "О чём оставшийся вопрос?",
+        "answer": "Об опыте работы."
+      },
+      {
+        "prompt": "Что B написала отдельно?",
+        "answer": "Ответ на вопрос об опыте работы."
+      }
+    ],
+    "roleplay": {
+      "a": "Arizani tekshiruvchi xodimsiz. Anketa tugaganini so‘rang, tushunarsiz savolga ma’muriy izoh bering va tayyor holatini tekshiring.",
+      "b": "Nomzodsiz. Ertalab anketani to‘ldirgansiz, lekin tajriba bandi tugamagan. Javob alohida yozilgan. Uni tekshirtirib, anketani yakunlang.",
+      "twist": "Ariza tayyor, lekin yuborilmagan ekan; tayyorlash va yuborish holatini alohida ayting.",
+      "success": "Jarayon va tugallanish haqida 4 xabar aytiladi, yozish bilan yuborish natijasi ajratiladi."
+    },
+    "teacherTip": "O‘zbekchada «yozdim» ikkala ma’noda ishlashi mumkin; ruscha писал natijani kafolatlamasligini tayyor/tayyor emas kartasida ko‘rsating. Tayanchga fe’l juftlari, ilg‘orlarga bir ish tugab, boshqasi tugamagan holat bering.",
+    "homework": [
+      "Anketa va xatning ikki xil holatini ovozga yozing.",
+      "Juftingizdan ikki ish tugaganmi deb so‘rang va javobini aniqlashtiring.",
+      "Писал/написал va заполняла/заполнила bilan 4 kontekstli gap yozing."
+    ],
+    "exit": "Ikki hujjat bo‘yicha qaysi ish jarayonda, qaysisi tugaganini 4 gapda ayting."
+  },
+  {
+    "no": 102,
+    "month": 9,
+    "week": 34,
+    "title": "Kurs loyihasi haqida telefon xabari",
+    "objective": "Yo‘q o‘qituvchiga loyiha holati va qayta aloqa iltimosini kotib orqali aniq yetkazadi.",
+    "grammar": {
+      "title": "Birlashtirish: xabar va ish holati",
+      "rule": "Передайте…, что… orqali birovga xabar qoldiriladi. Jarayon писал, tugallangan natija написал bilan aytiladi; ещё не отправил yuborish hali tugamaganini bildiradi. Sabab потому что bilan aniqlashtiriladi.",
+      "examples": [
+        {
+          "ru": "Передайте преподавателю, что я написал текст.",
+          "uz": "O‘qituvchiga matnni yozib bo‘lganimni ayting. (erkak)"
+        },
+        {
+          "ru": "Я ещё не отправила файл, потому что не знаю адрес.",
+          "uz": "Manzilni bilmaganim uchun faylni hali yubormadim. (ayol)"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Natijani tanlang: Текст готов, я его (писал / написал).",
+          "answer": "Текст готов, я его написал.",
+          "explanation": "Tayyor matn tugallangan natija, shuning uchun написал."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Передайте ___, что проект готов. (unga, ayolga)",
+          "answer": "ей",
+          "explanation": "Xabar oluvchi ayol ей shaklida aytiladi."
+        },
+        {
+          "prompt": "Bog‘lang: Я не отправил файл. Я не знаю адрес.",
+          "answer": "Я не отправил файл, потому что не знаю адрес.",
+          "explanation": "Ikkinchi qism yubormaslik sababini bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я звоню по поводу проекта.",
+        "uz": "Loyiha haqida qo‘ng‘iroq qilyapman."
+      },
+      {
+        "ru": "Преподаватель сейчас занят?",
+        "uz": "O‘qituvchi hozir bandmi?"
+      },
+      {
+        "ru": "Передайте ей сообщение.",
+        "uz": "Unga xabarni yetkazing. (ayol)"
+      },
+      {
+        "ru": "Я написал текст. / Я написала текст.",
+        "uz": "Matnni yozib bo‘ldim. (erkak / ayol)"
+      },
+      {
+        "ru": "Файл ещё не отправлен.",
+        "uz": "Fayl hali yuborilmagan."
+      },
+      {
+        "ru": "Мне нужен адрес электронной почты.",
+        "uz": "Menga elektron pochta manzili kerak."
+      },
+      {
+        "ru": "Попросите её перезвонить.",
+        "uz": "Undan qayta qo‘ng‘iroq qilishni so‘rang."
+      },
+      {
+        "ru": "Повторите сообщение для проверки.",
+        "uz": "Tekshirish uchun xabarni takrorlang."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я звоню по поводу проекта. Можно поговорить с преподавателем Ириной?",
+        "uz": "Loyiha haqida qo‘ng‘iroq qilyapman. O‘qituvchi Irina bilan gaplashsa bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Она на занятии. Могу передать сообщение.",
+        "uz": "U darsda. Xabar yetkaza olaman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Я Тимур. Я написал текст, но ещё не отправил файл, потому что не знаю адрес.",
+        "uz": "Men Timurman. Matnni yozib bo‘ldim, lekin manzilni bilmaganim uchun faylni hali yubormadim."
+      },
+      {
+        "speaker": "B",
+        "ru": "Записала. Нужно, чтобы она вам перезвонила?",
+        "uz": "Yozib oldim. U sizga qayta qo‘ng‘iroq qilishi kerakmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, после пяти. Мой номер есть в анкете.",
+        "uz": "Ha, beshdan keyin. Raqamim anketada bor."
+      },
+      {
+        "speaker": "B",
+        "ru": "Передам: Тимур написал текст, нужен адрес для отправки. Перезвонить после пяти.",
+        "uz": "Yetkazaman: Timur matnni yozib bo‘lgan, yuborish uchun manzil kerak. Beshdan keyin qo‘ng‘iroq qilish kerak."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где сейчас Ирина?",
+        "answer": "На занятии."
+      },
+      {
+        "prompt": "Почему Тимур не отправил файл?",
+        "answer": "Он не знает адрес электронной почты."
+      },
+      {
+        "prompt": "Когда нужно перезвонить Тимуру?",
+        "answer": "После пяти."
+      }
+    ],
+    "roleplay": {
+      "a": "Kurs loyihasining matnini tugatdingiz, lekin yuborish manzilini bilmaysiz. O‘qituvchi Irinaga kotib orqali holat va beshdan keyingi aloqa iltimosini qoldiring.",
+      "b": "Kurs kotibisiz. Irina darsda. Kim qo‘ng‘iroq qilgani, nima tugagani, nima yetishmayotgani va qayta aloqa vaqtini yozib, qaytaring.",
+      "twist": "Kotib «fayl yuborilgan» deb qaytaradi; nomzod bu tafsilotni muloyim tuzatsin.",
+      "success": "4 tafsilotli xabar qoldiriladi, tugallangan va tugallanmagan ish ajratiladi, xato qaytarish tuzatiladi."
+    },
+    "teacherTip": "«Написал»ni avtomatik «отправил» deb tushunmaslikni ikki alohida holat bilan mashq qildiring. Tayanchga xabar jadvali, ilg‘orlarga noto‘g‘ri yetkazilgan holatni tuzatish bering. Yangi fe’l turi qoidasi kiritmang.",
+    "homework": [
+      "O‘qituvchiga loyiha holati haqida ovozli xabar yozing.",
+      "Juftingiz xabarni qaytarsin; bitta ataylab noto‘g‘ri tafsilotni tuzating.",
+      "Tugagan, tugamagan ish va aloqa vaqtini ko‘rsatgan 4 gapli eslatma yozing."
+    ],
+    "exit": "Yangi loyiha kartasi bo‘yicha ism, ikki ish holati va qayta aloqa vaqtini ayting; qaytarilgan xatoni tuzating."
+  },
+  {
+    "no": 103,
+    "month": 9,
+    "week": 35,
+    "title": "Jarayon va tayyor natija haqida hisobot",
+    "objective": "Uch topshiriqning jarayoni va natijasini farqlab, tugallanish holatini hamkasbiga tushuntiradi.",
+    "grammar": {
+      "title": "Читал — прочитал; проверял — проверил",
+      "rule": "Читал va проверял bajarilgan jarayonni bildiradi, natija haqida alohida kafolat bermaydi. Прочитал va проверил ishning tugaganini ko‘rsatadi. Davomiylikni весь вечер kabi ibora bilan jarayonga bog‘lash mumkin; уже tugallangan natija bilan ko‘p ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Я весь вечер читал инструкцию, но не всё понял.",
+          "uz": "Men kech bo‘yi yo‘riqnomani o‘qidim, lekin hammasini tushunmadim. (erkak)"
+        },
+        {
+          "ru": "Я уже проверила список. Ошибок нет.",
+          "uz": "Men ro‘yxatni tekshirib bo‘ldim. Xato yo‘q. (ayol)"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Jarayonni tanlang: Я (проверял / проверил) список, когда вы позвонили.",
+          "answer": "Я проверял список, когда вы позвонили.",
+          "explanation": "Qo‘ng‘iroq paytida davom etayotgan harakat uchun проверял ishlatiladi."
+        },
+        {
+          "prompt": "Natijani tanlang: Все страницы готовы. Я всё (проверяла / проверила).",
+          "answer": "Все страницы готовы. Я всё проверила.",
+          "explanation": "Hammasi tayyor bo‘lgani tugallangan tekshiruvni bildiradi."
+        },
+        {
+          "prompt": "Erkak nomidan ayting: Men xatni o‘qib bo‘ldim.",
+          "answer": "Я прочитал письмо.",
+          "explanation": "Прочитал xatni to‘liq o‘qib tugatishni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Как идёт работа?",
+        "uz": "Ish qanday ketyapti?"
+      },
+      {
+        "ru": "Я ещё читаю инструкцию.",
+        "uz": "Men hali yo‘riqnomani o‘qiyapman."
+      },
+      {
+        "ru": "Я уже прочитал. / Я уже прочитала.",
+        "uz": "Men o‘qib bo‘ldim. (erkak / ayol)"
+      },
+      {
+        "ru": "Список проверен.",
+        "uz": "Ro‘yxat tekshirilgan."
+      },
+      {
+        "ru": "Осталась одна страница.",
+        "uz": "Bitta sahifa qoldi."
+      },
+      {
+        "ru": "Нужна ваша проверка.",
+        "uz": "Sizning tekshiruvingiz kerak."
+      },
+      {
+        "ru": "Я нашёл ошибку. / Я нашла ошибку.",
+        "uz": "Men xato topdim. (erkak / ayol)"
+      },
+      {
+        "ru": "Что делать дальше?",
+        "uz": "Keyin nima qilish kerak?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Как идёт работа? Вы прочитали инструкцию?",
+        "uz": "Ish qanday ketyapti? Yo‘riqnomani o‘qib bo‘ldingizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, уже прочитал. Сейчас проверяю список участников.",
+        "uz": "Ha, o‘qib bo‘ldim. Hozir qatnashchilar ro‘yxatini tekshiryapman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вчера вы тоже его проверяли?",
+        "uz": "Kecha ham uni tekshirayotganmidingiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, но не закончил. Сегодня осталась одна страница.",
+        "uz": "Ha, lekin tugatmadim. Bugun bitta sahifa qoldi."
+      },
+      {
+        "speaker": "A",
+        "ru": "А адреса вы проверили?",
+        "uz": "Manzillarni tekshirib bo‘ldingizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, адреса проверил. В одном была ошибка, теперь всё верно.",
+        "uz": "Ha, manzillarni tekshirdim. Bittasida xato bor edi, endi hammasi to‘g‘ri."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Прочитал ли B инструкцию?",
+        "answer": "Да, уже прочитал."
+      },
+      {
+        "prompt": "Сколько страниц списка осталось?",
+        "answer": "Одна."
+      },
+      {
+        "prompt": "В чём была ошибка?",
+        "answer": "В одном адресе."
+      }
+    ],
+    "roleplay": {
+      "a": "Hamkasbingizdan uch ish — yo‘riqnoma, qatnashchilar ro‘yxati, manzillar — holatini so‘rang. Tayyor va davom etayotgan ishlarni ajrating.",
+      "b": "Yo‘riqnomani o‘qib bo‘lgansiz, ro‘yxatni kecha tekshirgansiz, lekin bir sahifa qolgan. Manzillar tekshirilgan. Har bir holatni aniq ayting.",
+      "twist": "Ro‘yxatga yana besh kishi qo‘shildi; eski tekshiruv va yangi ishni alohida tushuntiring.",
+      "success": "3 topshiriq holati aytiladi, kamida bir jarayon va ikki tugallangan natija to‘g‘ri farqlanadi."
+    },
+    "teacherTip": "«Я читал» javobidan «tugatdi» deb xulosa qilmang; «Уже всё?» bilan natijani tekshirtiring. Tayanchga jarayon/tayyor belgisi, ilg‘orlarga tekshirilgan ro‘yxatning yangi nusxasini bering.",
+    "homework": [
+      "Uch ish bo‘yicha jarayon va natijani ovozga yozing.",
+      "Juftingizning «Я читал» javobidan keyin tugaganini aniqlashtiring.",
+      "Читал/прочитал va проверяла/проверила bilan 4 farqli vaziyat yozing."
+    ],
+    "exit": "Uch topshiriq kartasini olib, nima jarayonda, nima tugaganini ayting va qolgan ishni ko‘rsating."
+  },
+  {
+    "no": 104,
+    "month": 9,
+    "week": 35,
+    "title": "Kechikishni tushuntirish va yangi muddat",
+    "objective": "Topshiriq kechikishini sabab, mavjud natija va yangi muddat bilan tushuntirib, kelishuv oladi.",
+    "grammar": {
+      "title": "Потому что va поэтому bilan hisobot",
+      "rule": "Tugallanmagan natija ещё не + совершенный вид o‘tgan zamonida aytiladi: ещё не отправил. Sabab потому что bilan keladi; undan chiqadigan keyingi harakat поэтому bilan bog‘lanadi. O‘tgan zamon jinsini so‘zlovchiga moslang.",
+      "examples": [
+        {
+          "ru": "Я ещё не отправила отчёт, потому что нет адреса.",
+          "uz": "Manzil yo‘qligi uchun hisobotni hali yubormadim. (ayol)"
+        },
+        {
+          "ru": "Адрес появился, поэтому я отправлю отчёт сегодня.",
+          "uz": "Manzil paydo bo‘ldi, shuning uchun hisobotni bugun yuboraman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bog‘lang: Я не закончил таблицу. Не хватает данных.",
+          "answer": "Я не закончил таблицу, потому что не хватает данных.",
+          "explanation": "Ma’lumot yetishmasligi tugallanmagan ishning sababidir."
+        },
+        {
+          "prompt": "Bog‘lang: Данные пришли. Я закончу сегодня.",
+          "answer": "Данные пришли, поэтому я закончу сегодня.",
+          "explanation": "Bugun tugatish yangi ma’lumot kelishining natijasi sifatida aytiladi."
+        },
+        {
+          "prompt": "Ayol nomidan ayting: Men faylni hali yubormadim.",
+          "answer": "Я ещё не отправила файл.",
+          "explanation": "Ещё не hali sodir bo‘lmagan natijani, отправила ayol so‘zlovchini bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Хочу уточнить срок.",
+        "uz": "Muddatni aniqlashtirmoqchiman."
+      },
+      {
+        "ru": "Работа ещё не готова.",
+        "uz": "Ish hali tayyor emas."
+      },
+      {
+        "ru": "Не хватает данных.",
+        "uz": "Ma’lumotlar yetishmayapti."
+      },
+      {
+        "ru": "Я жду ответ.",
+        "uz": "Javob kutyapman."
+      },
+      {
+        "ru": "Основная часть готова.",
+        "uz": "Asosiy qismi tayyor."
+      },
+      {
+        "ru": "Можно отправить завтра?",
+        "uz": "Ertaga yuborsa bo‘ladimi?"
+      },
+      {
+        "ru": "Я закончу к трём.",
+        "uz": "Men uchgacha tugataman."
+      },
+      {
+        "ru": "Сообщу, когда будет готово.",
+        "uz": "Tayyor bo‘lganda xabar beraman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Таблица готова? Нужно отправить её сегодня.",
+        "uz": "Jadval tayyormi? Uni bugun yuborish kerak."
+      },
+      {
+        "speaker": "B",
+        "ru": "Основная часть готова, но я не закончил, потому что не хватает данных.",
+        "uz": "Asosiy qismi tayyor, lekin ma’lumot yetishmagani uchun tugatmadim."
+      },
+      {
+        "speaker": "A",
+        "ru": "Каких данных вы ждёте?",
+        "uz": "Qanday ma’lumotlarni kutyapsiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Число участников придёт завтра утром. Можно отправить таблицу завтра к трём?",
+        "uz": "Qatnashchilar soni ertaga ertalab keladi. Jadvalni ertaga uchgacha yuborsa bo‘ladimi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. Сегодня пришлите готовую часть.",
+        "uz": "Ha. Bugun tayyor qismini yuboring."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Сегодня отправлю готовую часть, а завтра — всю таблицу.",
+        "uz": "Xo‘p. Bugun tayyor qismini, ertaga esa butun jadvalni yuboraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Почему таблица не готова полностью?",
+        "answer": "Не хватает данных о числе участников."
+      },
+      {
+        "prompt": "Когда B ждёт данные?",
+        "answer": "Завтра утром."
+      },
+      {
+        "prompt": "Что нужно отправить сегодня?",
+        "answer": "Готовую часть."
+      }
+    ],
+    "roleplay": {
+      "a": "Rahbar rolidasiz. Bugun jadval kerak, lekin qisman tayyor ishni ham qabul qilasiz. Yetishmagan ma’lumot va aniq yangi muddatni so‘rang.",
+      "b": "Jadvalning asosiy qismi tayyor, qatnashchilar soni ertaga keladi. Bugun tayyor qismini, ertaga uchgacha butun jadvalni yuborishni taklif qiling.",
+      "twist": "Ma’lumot ertaga emas, bugun keldi; natija va yangi rejangizni поэтому bilan tushuntiring.",
+      "success": "Bajarilgan qism, tugamagan qism, sabab va yangi muddat aytiladi; o‘zgarishdan keyin reja yangilanadi."
+    },
+    "teacherTip": "«Поэтому нет данных»ni sabab kerak bo‘lgan joyda потому что bilan tuzating. Tayanchga tayyor qism/sabab/muddat uchligi, ilg‘orlarga ma’lumot erta kelishi natijasida rejani almashtirish bering.",
+    "homework": [
+      "Kechikish va yangi muddat haqida 5 gapli ovozli xabar yozing.",
+      "Sherigingiz bilan qisman ishni bugun topshirishni kelishing.",
+      "Bitta kechikishni потому что va uning yechimini поэтому bilan yozing."
+    ],
+    "exit": "Tugamagan topshiriqni sabab bilan tushuntiring, tayyor qismini ayting va aniq yangi muddatni kelishing."
+  },
+  {
+    "no": 105,
+    "month": 9,
+    "week": 35,
+    "title": "Ko‘ngillilar tadbiriga tayyorgarlik",
+    "objective": "Ko‘ngillilar jamoasida ro‘yxat va taklifnoma holatini aytib, yetishmagan ma’lumot uchun yordam kelishadi.",
+    "grammar": {
+      "title": "Birlashtirish: natija va sababli reja",
+      "rule": "Проверил, написал tugagan ishlarni; проверял, писал jarayonni bildiradi. Hali tugamagan ish ещё не bilan aytiladi. Sabab потому что, keyingi natija yoki reja поэтому bilan bog‘lanadi; yangi qoida kiritilmaydi.",
+      "examples": [
+        {
+          "ru": "Я проверил список, но ещё не отправил приглашения.",
+          "uz": "Ro‘yxatni tekshirdim, lekin taklifnomalarni hali yubormadim. (erkak)"
+        },
+        {
+          "ru": "Не хватает адресов, поэтому я позвоню участникам.",
+          "uz": "Manzillar yetishmayapti, shuning uchun qatnashchilarga qo‘ng‘iroq qilaman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Natijani tanlang: Список готов. Мы его (проверяли / проверили).",
+          "answer": "Мы его проверили.",
+          "explanation": "Список готов tugallangan tekshiruv natijasini bildiradi."
+        },
+        {
+          "prompt": "Bog‘lang: Приглашения не отправлены. Нет двух адресов.",
+          "answer": "Приглашения не отправлены, потому что нет двух адресов.",
+          "explanation": "Ikkinchi qism yuborilmaganlikning sababini ochadi."
+        },
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Адресов нет, ___ я позвоню участникам.",
+          "answer": "поэтому",
+          "explanation": "Qo‘ng‘iroq qilish oldingi vaziyatdan kelib chiqqan reja."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я отвечаю за список.",
+        "uz": "Men ro‘yxat uchun mas’ulman."
+      },
+      {
+        "ru": "Список уже готов.",
+        "uz": "Ro‘yxat tayyor bo‘ldi."
+      },
+      {
+        "ru": "Приглашения ещё не отправлены.",
+        "uz": "Taklifnomalar hali yuborilmagan."
+      },
+      {
+        "ru": "Не хватает двух адресов.",
+        "uz": "Ikkita manzil yetishmayapti."
+      },
+      {
+        "ru": "Кто свяжется с участниками?",
+        "uz": "Qatnashchilar bilan kim bog‘lanadi?"
+      },
+      {
+        "ru": "Я передам тебе номера.",
+        "uz": "Men senga raqamlarni beraman."
+      },
+      {
+        "ru": "Давайте уточним, что осталось.",
+        "uz": "Keling, nima qolganini aniqlashtiraylik."
+      },
+      {
+        "ru": "К вечеру всё будет готово.",
+        "uz": "Kechga borib hammasi tayyor bo‘ladi."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Как идёт подготовка к встрече волонтёров?",
+        "uz": "Ko‘ngillilar uchrashuviga tayyorgarlik qanday ketyapti?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я проверила список. Но приглашения ещё не отправила, потому что нет двух адресов.",
+        "uz": "Men ro‘yxatni tekshirdim. Lekin ikkita manzil yo‘qligi uchun taklifnomalarni hali yubormadim."
+      },
+      {
+        "speaker": "A",
+        "ru": "У меня есть номера этих участников. Я им позвоню.",
+        "uz": "Menda o‘sha qatnashchilarning raqamlari bor. Men ularga qo‘ng‘iroq qilaman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Спасибо. Текст приглашения уже готов.",
+        "uz": "Rahmat. Taklifnoma matni tayyor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Передам адреса после обеда. Когда отправишь приглашения?",
+        "uz": "Manzillarni tushdan keyin beraman. Taklifnomalarni qachon yuborasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "К вечеру. Потом сообщу тебе, что всё отправила.",
+        "uz": "Kechgacha. Keyin senga hammasini yuborganimni aytaman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что B уже проверила?",
+        "answer": "Список."
+      },
+      {
+        "prompt": "Почему приглашения ещё не отправлены?",
+        "answer": "Нет двух адресов."
+      },
+      {
+        "prompt": "Кто позвонит участникам?",
+        "answer": "A."
+      }
+    ],
+    "roleplay": {
+      "a": "Ko‘ngillilar uchrashuvi tashkilotchisisiz. Ikki qatnashchining telefon raqami sizda. Taklifnomalar holatini aniqlab, yetishmagan manzillarni topishda yordam taklif qiling.",
+      "b": "Ro‘yxatni tekshirgansiz, taklifnoma matni yozilgan, ammo ikki manzil yo‘q. Yuborish tugamaganini va sababini aytib, yangi muddatni kelishing.",
+      "twist": "Uchrashuv joyi o‘zgardi; yozilgan matnni yangilash va yuborishni alohida rejalashtiring.",
+      "success": "2 tugallangan va 1 tugallanmagan ish aytiladi, sabab tushuntiriladi, yordamchi hamda yuborish muddati kelishiladi."
+    },
+    "teacherTip": "«Писала»ni tugallangan matn holatida aniq natija sifatida ishlatish o‘rniga написала ni tanlating. Tayanchga uch ish belgisi, ilg‘orlarga manzil o‘zgargach eski va yangi natijani farqlash vazifasini bering.",
+    "homework": [
+      "Ko‘ngillilar guruhiga tayyorgarlik holatini ovozli xabar qiling.",
+      "Juftingiz bilan yetishmagan manzillarni olish vazifasini taqsimlang.",
+      "Bajarildi, bajarilmadi va keyingi qadam bo‘yicha 3 gap yozing."
+    ],
+    "exit": "Yangi tadbir kartasi asosida ikki tayyor ish, bir to‘siq va sababli keyingi rejangizni ayting."
+  },
+  {
+    "no": 106,
+    "month": 9,
+    "week": 36,
+    "title": "Ariza qabul qilinganini tekshirish",
+    "objective": "Yuborilgan ariza yetib borganini so‘raydi, yetishmayotgan ilovani aniqlaydi va qayta yuborishni kelishadi.",
+    "grammar": {
+      "title": "Уже отправил; ещё не получил",
+      "rule": "Уже + совершенный вид tugallangan ishni bildiradi: уже отправил. Ещё не + совершенный вид kutilgan natija hali yo‘qligini bildiradi: ещё не получил. Yuborish va qabul qilish ikki alohida natija, biri ikkinchisini kafolatlamaydi.",
+      "examples": [
+        {
+          "ru": "Я уже отправил заявление. Вы его получили?",
+          "uz": "Men arizani yuborib bo‘ldim. Siz uni oldingizmi? (erkak)"
+        },
+        {
+          "ru": "Мы получили письмо, но ещё не получили приложение.",
+          "uz": "Xatni oldik, lekin ilovani hali olmadik."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Bo‘shliqni to‘ldiring: Я ___ отправила файл: он есть в отправленных. (allaqachon)",
+          "answer": "уже",
+          "explanation": "Уже tugallangan yuborishni ta’kidlaydi."
+        },
+        {
+          "prompt": "Ruscha ayting: Biz javobni hali olmadik.",
+          "answer": "Мы ещё не получили ответ.",
+          "explanation": "Ещё не получили kutilgan javob natijasi hali yo‘qligini bildiradi."
+        },
+        {
+          "prompt": "Vaziyatga mos savol tuzing: Arizani yubordingiz, qabul qilinganini bilmoqchisiz.",
+          "answer": "Вы получили моё заявление?",
+          "explanation": "Savol yuborishni emas, oluvchidagi natijani tekshiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я уже отправил заявление. / Я уже отправила заявление.",
+        "uz": "Arizani yuborib bo‘ldim. (erkak / ayol)"
+      },
+      {
+        "ru": "Вы получили моё письмо?",
+        "uz": "Xatimni oldingizmi?"
+      },
+      {
+        "ru": "Ответ ещё не пришёл.",
+        "uz": "Javob hali kelmadi."
+      },
+      {
+        "ru": "Файл был во вложении.",
+        "uz": "Fayl ilovada edi."
+      },
+      {
+        "ru": "Пришлите ещё раз, пожалуйста.",
+        "uz": "Yana bir marta yuboring, iltimos."
+      },
+      {
+        "ru": "Какой формат нужен?",
+        "uz": "Qaysi format kerak?"
+      },
+      {
+        "ru": "Подтвердите получение.",
+        "uz": "Qabul qilganingizni tasdiqlang."
+      },
+      {
+        "ru": "Теперь всё на месте.",
+        "uz": "Endi hammasi joyida."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я вчера отправила заявление. Вы получили моё письмо?",
+        "uz": "Kecha arizamni yubordim. Xatimni oldingizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Письмо получили, но во вложении нет фотографии.",
+        "uz": "Xatni oldik, lekin ilovada surat yo‘q."
+      },
+      {
+        "speaker": "A",
+        "ru": "Понятно. Какой формат фотографии нужен?",
+        "uz": "Tushunarli. Surat qaysi formatda kerak?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В нашем центре принимают обычный файл изображения. Пришлите его отдельно.",
+        "uz": "Bizning markazda odatiy rasm fayli qabul qilinadi. Uni alohida yuboring."
+      },
+      {
+        "speaker": "A",
+        "ru": "Хорошо, сейчас отправлю. Подтвердите получение, пожалуйста.",
+        "uz": "Xo‘p, hozir yuboraman. Qabul qilganingizni tasdiqlang, iltimos."
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, теперь фотография пришла. Всё на месте.",
+        "uz": "Ha, endi surat keldi. Hammasi joyida."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Когда A отправила заявление?",
+        "answer": "Вчера."
+      },
+      {
+        "prompt": "Чего не было во вложении?",
+        "answer": "Фотографии."
+      },
+      {
+        "prompt": "Получена ли фотография в конце разговора?",
+        "answer": "Да, получена."
+      }
+    ],
+    "roleplay": {
+      "a": "Arizani kecha yuborgansiz, javob kelmagan. Qabul qilinganini va ilovalar to‘liqligini tekshiring, kamchilikni qayta yuboring.",
+      "b": "Qabul xodimisiz. Xat kelgan, surat yo‘q. Suratni alohida rasm fayli qilib yuborishni so‘rang va mashq davomida olganingizni tasdiqlang.",
+      "twist": "Qayta yuborilgan fayl ochilmaydi; muammoni ayting va boshqa nusxa so‘rang.",
+      "success": "Yuborish va olish holati farqlanadi, yetishmagan ilova aniqlanadi, qayta yuborish va tasdiq kelishiladi."
+    },
+    "teacherTip": "«Я отправила» javobini «они получили» bilan tenglashtirmaslikni ikki tomon kartasi orqali ko‘rsating. Tayanchga уже/ещё не, ilg‘orlarga kelgan lekin ochilmagan fayl holatini bering.",
+    "homework": [
+      "Ariza qabulini tekshirish uchun ovozli so‘rov yozing.",
+      "Juftingiz bilan yuboruvchi va qabul qiluvchi rollarini almashtiring.",
+      "Уже va ещё не bilan yuborish/olishga oid 4 gap yozing."
+    ],
+    "exit": "Ariza yuborilganini ayting, olinganini tekshiring, bitta yetishmagan fayl bo‘yicha keyingi qadamni kelishing."
+  },
+  {
+    "no": 107,
+    "month": 9,
+    "week": 36,
+    "title": "Qisqa suhbatda ko‘nikma va imkoniyat",
+    "objective": "Suhbatda ikki ko‘nikmasini, bir cheklovini va ish boshlash imkonini aniq misol bilan aytadi.",
+    "grammar": {
+      "title": "Умею va могу",
+      "rule": "Умею + infinitiv o‘rganilgan ko‘nikmani bildiradi: умею работать с таблицами. Могу + infinitiv muayyan vaziyatdagi imkoniyatni bildiradi: могу прийти завтра. Ещё не умею ko‘nikma hali shakllanmaganini yumshoq va aniq aytadi.",
+      "examples": [
+        {
+          "ru": "Я умею заполнять таблицы.",
+          "uz": "Men jadvallarni to‘ldirishni bilaman."
+        },
+        {
+          "ru": "Завтра я могу прийти после обеда.",
+          "uz": "Ertaga tushdan keyin kela olaman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ko‘nikmani tanlang: Я (умею / могу) работать с этой программой: я прошёл курс.",
+          "answer": "Я умею работать с этой программой: я прошёл курс.",
+          "explanation": "O‘tilgan kursdan olingan ko‘nikma uchun умею aniqroq."
+        },
+        {
+          "prompt": "Vaqt imkonini tanlang: Завтра я (умею / могу) прийти в десять.",
+          "answer": "Завтра я могу прийти в десять.",
+          "explanation": "Ertangi vaqtda kelish imkoniyati могу bilan aytiladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Men hali bu dastur bilan ishlashni bilmayman.",
+          "answer": "Я ещё не умею работать с этой программой.",
+          "explanation": "Ещё не умею mavjud bo‘lmagan ko‘nikmani, с этой программой vositani bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я умею работать с таблицами.",
+        "uz": "Men jadvallar bilan ishlashni bilaman."
+      },
+      {
+        "ru": "Я могу начать в понедельник.",
+        "uz": "Dushanba kuni boshlay olaman."
+      },
+      {
+        "ru": "У меня пока мало опыта.",
+        "uz": "Hozircha tajribam kam."
+      },
+      {
+        "ru": "Я готов учиться. / Я готова учиться.",
+        "uz": "O‘rganishga tayyorman. (erkak / ayol)"
+      },
+      {
+        "ru": "Приведу пример.",
+        "uz": "Misol keltiraman."
+      },
+      {
+        "ru": "Это я уже делал. / Это я уже делала.",
+        "uz": "Buni ilgari bajarganman. (erkak / ayol)"
+      },
+      {
+        "ru": "Этого я ещё не умею.",
+        "uz": "Buni hali bilmayman."
+      },
+      {
+        "ru": "Какая будет первая задача?",
+        "uz": "Birinchi vazifa qanday bo‘ladi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Что вы умеете делать?",
+        "uz": "Nimalarni qilishni bilasiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я умею заполнять таблицы и отвечать на простые письма.",
+        "uz": "Jadvallarni to‘ldirishni va sodda xatlarga javob berishni bilaman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Приведите пример вашей работы.",
+        "uz": "Ishingizdan misol keltiring."
+      },
+      {
+        "speaker": "B",
+        "ru": "На курсах я проверил список участников и написал им сообщения.",
+        "uz": "Kursda qatnashchilar ro‘yxatini tekshirib, ularga xabarlar yozganman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вы умеете работать с нашей программой? Когда можете начать?",
+        "uz": "Bizning dastur bilan ishlashni bilasizmi? Qachon boshlay olasiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Пока не умею, но готов учиться. Могу начать в понедельник.",
+        "uz": "Hozircha bilmayman, lekin o‘rganishga tayyorman. Dushanba kuni boshlay olaman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Назовите два умения B.",
+        "answer": "Заполнять таблицы и отвечать на простые письма."
+      },
+      {
+        "prompt": "Что B сделал на курсах?",
+        "answer": "Проверил список участников и написал им сообщения."
+      },
+      {
+        "prompt": "Когда B может начать?",
+        "answer": "В понедельник."
+      }
+    ],
+    "roleplay": {
+      "a": "Suhbat olib boruvchisiz. Nomzoddan ikki ko‘nikma, bitta haqiqiy yoki shartli misol va boshlash kunini so‘rang. Yangi dastur bilan tanishligini tekshiring.",
+      "b": "Jadval va sodda xatlar bilan ishlay olasiz, lekin markaz dasturini bilmaysiz. Kursdagi bitta tugallangan ishni misol qiling, dushanbadan boshlashni ayting.",
+      "twist": "Birinchi vazifa telefon xabarlarini qabul qilish ekan; sekin gapirish yoki yozma namuna kabi kerakli yordamni so‘rang.",
+      "success": "2 ko‘nikma, 1 bajarilgan ish misoli, 1 cheklov va boshlash kuni aytiladi; yangi vazifa bo‘yicha savol beriladi."
+    },
+    "teacherTip": "«Я умею прийти завтра»ni imkoniyat ma’nosidagi могу прийти ga tuzating. Tayanchga ko‘nikma/vaqt kartalari, ilg‘orlarga yangi vazifa uchun zarur yordamni mustaqil so‘rash bering.",
+    "homework": [
+      "Ikki ko‘nikma va bir cheklov bilan ovozli tanishtiruv yozing.",
+      "Juftingiz bilan ish boshlash sanasini kelishing.",
+      "Умею va могу bilan ikkitadan, jami 4 kontekstli gap yozing."
+    ],
+    "exit": "Ikki ko‘nikmangizni ayting, bittasiga tugallangan ish misolini keltiring va qachon boshlay olishingizni bildiring."
+  },
+  {
+    "no": 108,
+    "month": 9,
+    "week": 36,
+    "title": "To‘qqizinchi oy sinovi: amaliyotga ariza",
+    "objective": "Amaliyot dasturiga telefon orqali murojaat qilib, motivatsiya, hujjat holati, ko‘nikma va uchrashuvni mustaqil kelishadi.",
+    "grammar": {
+      "title": "Oylik birlashtirish: sabab, natija va ish holati",
+      "rule": "Потому что sababni, поэтому natijani bog‘laydi. Писал/проверял jarayonni, написал/проверил tugallangan ishni bildiradi. Уже va ещё не bilan holat aniqlashtiriladi; умею ko‘nikma, могу imkoniyat uchun ishlatiladi. Barcha qoliplar avvalgi darslardan olinadi.",
+      "examples": [
+        {
+          "ru": "Я написал заявление, но ещё не отправил его, потому что нет адреса.",
+          "uz": "Arizani yozib bo‘ldim, lekin manzil yo‘qligi uchun hali yubormadim. (erkak)"
+        },
+        {
+          "ru": "Я умею работать с таблицами, поэтому хочу пройти практику в офисе.",
+          "uz": "Jadvallar bilan ishlashni bilaman, shuning uchun ofisda amaliyot o‘tamoqchiman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Заявление готово: я его (писал / написал).",
+          "answer": "Заявление готово: я его написал.",
+          "explanation": "Tayyor ariza tugallangan yozish natijasi."
+        },
+        {
+          "prompt": "Bog‘lang: Я учусь вечером. Я могу прийти утром.",
+          "answer": "Я учусь вечером, поэтому могу прийти утром.",
+          "explanation": "Ertalab kelish imkoniyati jadvaldan kelib chiqqan natija."
+        },
+        {
+          "prompt": "Ruscha ayting: Unga arizani yuborganimni ayting. (erkak so‘zlovchi, ayol oluvchi)",
+          "answer": "Передайте ей, что я отправил заявление.",
+          "explanation": "Ей ayol oluvchi, отправил erkak so‘zlovchining tugallangan harakati."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я звоню по поводу практики.",
+        "uz": "Amaliyot haqida qo‘ng‘iroq qilyapman."
+      },
+      {
+        "ru": "Хочу получить опыт работы.",
+        "uz": "Ish tajribasi orttirmoqchiman."
+      },
+      {
+        "ru": "Я уже написал заявление. / Я уже написала заявление.",
+        "uz": "Arizani yozib bo‘ldim. (erkak / ayol)"
+      },
+      {
+        "ru": "Вы получили документы?",
+        "uz": "Hujjatlarni oldingizmi?"
+      },
+      {
+        "ru": "Я умею работать с таблицами.",
+        "uz": "Jadvallar bilan ishlashni bilaman."
+      },
+      {
+        "ru": "Мне удобно утром.",
+        "uz": "Menga ertalab qulay."
+      },
+      {
+        "ru": "Передайте ей моё сообщение.",
+        "uz": "Unga xabarimni yetkazing. (ayol)"
+      },
+      {
+        "ru": "Давайте подтвердим договорённость.",
+        "uz": "Keling, kelishuvni tasdiqlaylik."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте. Я звоню по поводу практики. Я отправила заявление вчера.",
+        "uz": "Assalomu alaykum. Amaliyot haqida qo‘ng‘iroq qilyapman. Arizani kecha yubordim."
+      },
+      {
+        "speaker": "B",
+        "ru": "Назовите ваше имя. Почему вас интересует практика в офисе?",
+        "uz": "Ismingizni ayting. Nega ofisdagi amaliyot sizni qiziqtiradi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я Малика. Я умею работать с таблицами и хочу получить опыт. Вы получили документы?",
+        "uz": "Men Malikaman. Jadvallar bilan ishlashni bilaman va tajriba orttirmoqchiman. Hujjatlarni oldingizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Заявление получили, но фотографии нет. Руководитель сейчас занят.",
+        "uz": "Arizani oldik, lekin surat yo‘q. Rahbar hozir band."
+      },
+      {
+        "speaker": "A",
+        "ru": "Я отправлю фотографию сегодня. Передайте руководителю, что я могу прийти утром, потому что вечером учусь.",
+        "uz": "Suratni bugun yuboraman. Rahbarga kechqurun o‘qiganim uchun ertalab kela olishimni ayting."
+      },
+      {
+        "speaker": "B",
+        "ru": "Есть время в четверг в десять. Вам подходит?",
+        "uz": "Payshanba soat o‘nda vaqt bor. Sizga mosmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. Значит, сегодня отправлю фотографию, а в четверг в десять приду на встречу.",
+        "uz": "Ha. Demak, bugun surat yuboraman, payshanba o‘nda esa uchrashuvga kelaman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Верно. После получения фотографии пришлю подтверждение.",
+        "uz": "To‘g‘ri. Suratni olganimdan keyin tasdiq yuboraman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Зачем Малика хочет пройти практику?",
+        "answer": "Она хочет получить опыт работы."
+      },
+      {
+        "prompt": "Какого документа не хватает?",
+        "answer": "Фотографии."
+      },
+      {
+        "prompt": "Когда назначена встреча?",
+        "answer": "В четверг в десять."
+      }
+    ],
+    "roleplay": {
+      "a": "Amaliyotga nomzodsiz. Ariza yozilgan va yuborilgan, surat hali yuborilmagan. Jadval bilan ishlashni bilasiz, kechqurun o‘qiysiz. Sababingizni ayting va ertalabki uchrashuvni kelishing.",
+      "b": "Amaliyot koordinatori rolidasiz. Ariza kelgan, surat yo‘q, rahbar band. Nomzodning ko‘nikmasi va maqsadini so‘rang; payshanba o‘nga uchrashuv taklif qiling, xabarni qaytarib tekshiring.",
+      "twist": "Rahbar payshanba kuni kelolmaydi. Nomzodga yangi kun taklif qiling; u sabab bilan javob berib, xabar qoldirsin.",
+      "success": "Maqsad, ko‘nikma, tugallangan va tugallanmagan ish, 2 savol, sababli tanlov va yangi kelishuvni qamragan suhbat bajariladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. Ariza maqsadi, ko‘nikma, sabab va yakunlangan ish holatini kuzating. Я отправлял bilan natijani noaniq aytsa, yuborish tugaganmi deb so‘rang. Tayanchga bo‘sh xabar blanki, ilg‘orga ikkinchi ilova muammosi bering. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Suhbatdan keyingi kelishuvni 6 gapli ovozli xabarda qayta ayting.",
+      "Juftingiz bilan rollarni almashtirib boshqa amaliyot jadvalida suhbatni bajaring.",
+      "O‘z nutqingizdan sabab bog‘lovchisi va fe’l turiga oid 2 tuzatish yozib, yangi misollar yarating."
+    ],
+    "exit": "Yordamsiz kamida 9 mazmunli replika ayting: maqsad, ko‘nikma, 2 ish holati, 2 savol, sabab, xabar va yangi uchrashuv tasdig‘i; kamida 14/20 ball oling."
+  }
+]

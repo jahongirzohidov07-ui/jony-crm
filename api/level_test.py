@@ -377,7 +377,7 @@ def lt_answer(payload: dict, db: Session = Depends(get_db),
         raise HTTPException(400, "Savol topilmadi — testni qayta boshlang")
 
     given = str(payload.get("answer") or "").strip()
-    correct = given.lower() == cur["answer"].strip().lower()
+    correct = bool(given) and given != "-1" and given.lower() == cur["answer"].strip().lower()
 
     sec = SECTIONS[st["sec_i"]]
     ladder = LADDERS[sec]

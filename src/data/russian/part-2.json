@@ -1,0 +1,4718 @@
+[
+  {
+    "no": 37,
+    "month": 4,
+    "week": 13,
+    "title": "Do‘konda mahsulot so‘rash",
+    "objective": "To‘rtta mahsulotni so‘raydi va ikkita bor-yo‘qlik savoliga javob beradi.",
+    "grammar": {
+      "title": "Jonsiz erkak va o‘rta jinsdagi obyekt",
+      "rule": "Что? savoliga javob bo‘lgan jonsiz erkak va o‘rta jins otlari tushumda odatda o‘zgarmaydi: хлеб → хлеб, молоко → молоко. Беру va дайте bilan shu shakl ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Я беру хлеб.",
+          "uz": "Men non olyapman."
+        },
+        {
+          "ru": "Дайте молоко, пожалуйста.",
+          "uz": "Iltimos, sut bering."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я беру … (сыр).",
+          "answer": "Я беру сыр.",
+          "explanation": "Jonsiz erkak jinsdagi сыр o‘zgarmaydi."
+        },
+        {
+          "prompt": "Ruscha so‘rang: Iltimos, non bering.",
+          "answer": "Дайте, пожалуйста, хлеб.",
+          "explanation": "Хлеб obyekt bo‘lsa ham shakli saqlanadi."
+        },
+        {
+          "prompt": "Tanlang: Я беру … (молоко / молоку).",
+          "answer": "Я беру молоко.",
+          "explanation": "Молоко jonsiz o‘rta jinsdagi tushum obyektidir."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Здравствуйте!",
+        "uz": "Assalomu alaykum!"
+      },
+      {
+        "ru": "У вас есть хлеб?",
+        "uz": "Sizda non bormi?"
+      },
+      {
+        "ru": "Дайте сыр, пожалуйста.",
+        "uz": "Iltimos, pishloq bering."
+      },
+      {
+        "ru": "Я беру молоко.",
+        "uz": "Men sut olyapman."
+      },
+      {
+        "ru": "Что ещё?",
+        "uz": "Yana nima?"
+      },
+      {
+        "ru": "Больше ничего, спасибо.",
+        "uz": "Boshqa hech narsa kerak emas, rahmat."
+      },
+      {
+        "ru": "Вот, пожалуйста.",
+        "uz": "Mana, marhamat."
+      },
+      {
+        "ru": "Сколько с меня?",
+        "uz": "Qancha to‘layman?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! У вас есть хлеб?",
+        "uz": "Assalomu alaykum! Sizda non bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, есть. Вот, пожалуйста.",
+        "uz": "Ha, bor. Mana, marhamat."
+      },
+      {
+        "speaker": "A",
+        "ru": "Я беру хлеб и молоко.",
+        "uz": "Men non va sut olyapman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Что ещё? Сыр?",
+        "uz": "Yana nima? Pishloqmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет, спасибо. Сколько с меня?",
+        "uz": "Yo‘q, rahmat. Qancha to‘layman?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Двадцать тысяч сумов.",
+        "uz": "Yigirma ming so‘m."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что покупает A?",
+        "answer": "Хлеб и молоко."
+      },
+      {
+        "prompt": "Берёт ли A сыр?",
+        "answer": "Нет, не берёт."
+      },
+      {
+        "prompt": "Сколько нужно заплатить?",
+        "answer": "Двадцать тысяч сумов."
+      }
+    ],
+    "roleplay": {
+      "a": "Non, sut, pishloq va sharbat so‘rang. Mavjud mahsulotlarni oling.",
+      "b": "Sotuvchisiz: non, sut va sharbat bor, pishloq yo‘q. Yana nima kerakligini so‘rang.",
+      "twist": "Xaridor sharbatdan voz kechib, faqat ikki mahsulot oladi.",
+      "success": "To‘rtta mahsulot nomlanadi, ikki bor-yo‘qlik javobi tushuniladi va yakuniy xarid aytiladi."
+    },
+    "teacherTip": "O‘zbekchadagi -ni ta’sirida хлеб ga ortiqcha qo‘shimcha qo‘shilsa, беру хлеб ni qaytartiring. Qiynalganlarga rasmlar bering; ilg‘orlar ro‘yxatsiz buyurtma qilsin.",
+    "homework": [
+      "To‘rtta mahsulot so‘ralgan ovozli xabar yozing.",
+      "Sherik bilan sotuvchi va xaridor rollarini almashtiring.",
+      "Я беру bilan uch xarid gapini yozing."
+    ],
+    "exit": "Uchta mahsulotni so‘rang va bittasidan muloyim voz keching."
+  },
+  {
+    "no": 38,
+    "month": 4,
+    "week": 13,
+    "title": "Meva va yegulik tanlash",
+    "objective": "Uchta ayol jinsdagi mahsulotni tushum shaklida buyurtma qiladi.",
+    "grammar": {
+      "title": "Ayol jinsdagi obyekt: -а → -у, -я → -ю",
+      "rule": "Xohlayotgan yoki olayotgan narsani bildiruvchi ayol jins otida -а o‘rniga -у, -я o‘rniga -ю keladi: булочка → булочку, дыня → дыню. Yumshatish belgisi bilan tugagan морковь o‘zgarmaydi.",
+      "examples": [
+        {
+          "ru": "Я хочу булочку.",
+          "uz": "Men bulochka xohlayman."
+        },
+        {
+          "ru": "Дайте дыню, пожалуйста.",
+          "uz": "Iltimos, qovun bering."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я беру … (вода).",
+          "answer": "Я беру воду.",
+          "explanation": "Вода obyekt sifatida -а → -у o‘zgarishini oladi."
+        },
+        {
+          "prompt": "To‘ldiring: Дайте … (дыня).",
+          "answer": "Дайте дыню.",
+          "explanation": "Дыня so‘zidagi -я tushumda -ю bo‘ladi."
+        },
+        {
+          "prompt": "Tuzating: Я хочу булочка.",
+          "answer": "Я хочу булочку.",
+          "explanation": "Хочу dan keyingi obyekt булочку bo‘ladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я хочу булочку.",
+        "uz": "Men bulochka xohlayman."
+      },
+      {
+        "ru": "Дайте воду, пожалуйста.",
+        "uz": "Iltimos, suv bering."
+      },
+      {
+        "ru": "Я беру дыню.",
+        "uz": "Men qovun olyapman."
+      },
+      {
+        "ru": "Можно морковь?",
+        "uz": "Sabzi bersangiz bo‘ladimi?"
+      },
+      {
+        "ru": "Вот эта, пожалуйста.",
+        "uz": "Iltimos, mana bunisi."
+      },
+      {
+        "ru": "Она свежая?",
+        "uz": "U yangimi?"
+      },
+      {
+        "ru": "Да, свежая.",
+        "uz": "Ha, yangi."
+      },
+      {
+        "ru": "Больше ничего.",
+        "uz": "Boshqa hech narsa kerak emas."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Я хочу булочку.",
+        "uz": "Assalomu alaykum! Men bulochka xohlayman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот эта?",
+        "uz": "Mana bunisimi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. Она свежая?",
+        "uz": "Ha. U yangimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, свежая. Что ещё?",
+        "uz": "Ha, yangi. Yana nima?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Дайте воду, пожалуйста.",
+        "uz": "Iltimos, suv bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот вода и булочка.",
+        "uz": "Mana suv va bulochka."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что сначала просит A?",
+        "answer": "Булочку."
+      },
+      {
+        "prompt": "Какая булочка?",
+        "answer": "Свежая."
+      },
+      {
+        "prompt": "Какой напиток берёт A?",
+        "answer": "Воду."
+      }
+    ],
+    "roleplay": {
+      "a": "Nonushtaga bulochka va suv, uyga qovun oling. Bulochkaning yangiligini so‘rang.",
+      "b": "Sizda ikki xil bulochka, suv va qovun bor. Qaysi bulochka kerakligini aniqlang.",
+      "twist": "Qovun qolmaydi; xaridor uning o‘rniga sabzi oladi.",
+      "success": "Булочку, воду, дыню ishlatiladi va yo‘q mahsulot boshqasiga almashtiriladi."
+    },
+    "teacherTip": "Беру вода xatosida беру что? воду juftligini takrorlating. Tayanch sifatida tugashlarni belgilang; ilg‘or o‘quvchi колбаса ni mustaqil tushumga aylantirsin.",
+    "homework": [
+      "Воду, булочку, дыню bilan uch buyurtmani ovozga yozing.",
+      "Beshta mahsulot rasmidan uchtasini sherikdan so‘rang.",
+      "Ikki -а va ikki -я bilan tugagan otni tushumda yozing."
+    ],
+    "exit": "Suv, bulochka va qovunni birma-bir buyurtma qiling."
+  },
+  {
+    "no": 39,
+    "month": 4,
+    "week": 13,
+    "title": "Yo‘l oldidan vokzal kioskasida xarid",
+    "objective": "Ikki kishiga tamaddi tanlaydi va yo‘q mahsulot o‘rniga boshqasini so‘raydi.",
+    "grammar": {
+      "title": "Birlashtirish: borlik va xarid obyekti",
+      "rule": "У вас есть …? savolida mahsulot bosh shaklda, беру yoki дайте bilan tushumda keladi: есть вода, беру воду. Jonsiz хлеб va сыр ikkala qolipda ham o‘zgarmaydi.",
+      "examples": [
+        {
+          "ru": "У вас есть вода? Я беру воду.",
+          "uz": "Sizda suv bormi? Men suv olyapman."
+        },
+        {
+          "ru": "У вас есть сыр? Дайте сыр.",
+          "uz": "Sizda pishloq bormi? Pishloq bering."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: У вас есть …? Дайте … . (булочка)",
+          "answer": "У вас есть булочка? Дайте булочку.",
+          "explanation": "Есть bilan bosh shakl, дайте bilan tushum kerak."
+        },
+        {
+          "prompt": "Ruscha ayting: Men suv va pishloq olaman.",
+          "answer": "Я беру воду и сыр.",
+          "explanation": "Вода → воду, jonsiz сыр o‘zgarmaydi."
+        },
+        {
+          "prompt": "Tuzating: У вас есть воду?",
+          "answer": "У вас есть вода?",
+          "explanation": "Borlik savolida вода bosh shaklda keladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "У вас есть вода?",
+        "uz": "Sizda suv bormi?"
+      },
+      {
+        "ru": "Мы берём хлеб и сыр.",
+        "uz": "Biz non va pishloq olyapmiz."
+      },
+      {
+        "ru": "Мне булочку, пожалуйста.",
+        "uz": "Menga bulochka bering, iltimos."
+      },
+      {
+        "ru": "А сок есть?",
+        "uz": "Sharbat-chi, bormi?"
+      },
+      {
+        "ru": "Тогда воду, пожалуйста.",
+        "uz": "Unda suv bering, iltimos."
+      },
+      {
+        "ru": "Это всё.",
+        "uz": "Shu hammasi."
+      },
+      {
+        "ru": "Сколько с нас?",
+        "uz": "Biz qancha to‘laymiz?"
+      },
+      {
+        "ru": "Спасибо, до свидания!",
+        "uz": "Rahmat, xayr!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Мы берём хлеб и сыр.",
+        "uz": "Assalomu alaykum! Biz non va pishloq olyapmiz."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Что ещё?",
+        "uz": "Yaxshi. Yana nima?"
+      },
+      {
+        "speaker": "A",
+        "ru": "У вас есть сок?",
+        "uz": "Sizda sharbat bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Сока нет. Есть вода.",
+        "uz": "Sharbat yo‘q. Suv bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Тогда воду, пожалуйста. Это всё.",
+        "uz": "Unda suv bering, iltimos. Shu hammasi."
+      },
+      {
+        "speaker": "B",
+        "ru": "С вас тридцать тысяч сумов.",
+        "uz": "Sizdan o‘ttiz ming so‘m bo‘ladi."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что A берёт сначала?",
+        "answer": "Хлеб и сыр."
+      },
+      {
+        "prompt": "Есть ли сок?",
+        "answer": "Нет, сока нет."
+      },
+      {
+        "prompt": "Что A берёт вместо сока?",
+        "answer": "Воду."
+      }
+    ],
+    "roleplay": {
+      "a": "Vokzalda do‘stingiz bilan yo‘lga yegulik oling. Non, pishloq va sharbat so‘rang, ichimlik bo‘lmasa muqobil tanlang.",
+      "b": "Kioskda non, pishloq, suv va bulochka bor, sharbat yo‘q. Jami narxni 35 ming deb ayting.",
+      "twist": "Do‘sti non o‘rniga bulochka xohlaydi; xaridor buyurtmani yangilaydi.",
+      "success": "Uch mahsulotli buyurtma beriladi, bir almashtirish bajariladi va jami narx qaytariladi."
+    },
+    "teacherTip": "Есть воду va беру вода ni ikki savol orqali ajrating: nima bor, nimani olasiz? Сока нет ni tayyor ibora sifatida bering. Sustroq juft rasmlar, ilg‘or juft faqat eshitilgan zaxira ro‘yxati bilan ishlasin.",
+    "homework": [
+      "Vokzaldagi uch mahsulotli buyurtmani ovozga yozing.",
+      "Sharbat yo‘q vaziyatni rollarni almashtirib mashq qiling.",
+      "Есть va беру qatnashgan to‘rtta juft gap yozing."
+    ],
+    "exit": "Bir mahsulot tugaganda yangi mahsulot tanlab, uch qismli buyurtmani qayta ayting."
+  },
+  {
+    "no": 40,
+    "month": 4,
+    "week": 14,
+    "title": "Narxni aniqlash va solishtirish",
+    "objective": "Uch mahsulotning narxini so‘raydi, narxni tasdiqlaydi va arzonroq variantni tanlaydi.",
+    "grammar": {
+      "title": "Сколько стоит va сколько стоят",
+      "rule": "Birlikdagi narsa narxi uchun сколько стоит, ko‘plik uchun сколько стоят ishlatiladi: стоит хлеб, стоят яблоки. O‘nlik minglar bilan pul miqdori двадцать тысяч сумов kabi aytiladi.",
+      "examples": [
+        {
+          "ru": "Сколько стоит хлеб?",
+          "uz": "Non qancha turadi?"
+        },
+        {
+          "ru": "Сколько стоят яблоки?",
+          "uz": "Olmalar qancha turadi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Сколько … вода? (стоит / стоят)",
+          "answer": "Сколько стоит вода?",
+          "explanation": "Вода birlikda, shuning uchun стоит."
+        },
+        {
+          "prompt": "Tanlang: Сколько … бананы? (стоит / стоят)",
+          "answer": "Сколько стоят бананы?",
+          "explanation": "Бананы ko‘plikda, shuning uchun стоят."
+        },
+        {
+          "prompt": "Ruscha yozing: O‘ttiz ming so‘m.",
+          "answer": "Тридцать тысяч сумов.",
+          "explanation": "Тридцать тысяч сумов narx uchun tayyor sonli birikma."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Сколько стоит хлеб?",
+        "uz": "Non qancha turadi?"
+      },
+      {
+        "ru": "Сколько стоят яблоки?",
+        "uz": "Olmalar qancha turadi?"
+      },
+      {
+        "ru": "Это цена за килограмм?",
+        "uz": "Bu bir kilogramm narximi?"
+      },
+      {
+        "ru": "Повторите, пожалуйста.",
+        "uz": "Iltimos, takrorlang."
+      },
+      {
+        "ru": "Двадцать тысяч?",
+        "uz": "Yigirma mingmi?"
+      },
+      {
+        "ru": "Это дорого.",
+        "uz": "Bu qimmat."
+      },
+      {
+        "ru": "Есть дешевле?",
+        "uz": "Arzonrog‘i bormi?"
+      },
+      {
+        "ru": "Я беру вот это.",
+        "uz": "Men mana buni olaman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Сколько стоят яблоки?",
+        "uz": "Olmalar qancha turadi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Тридцать тысяч сумов за килограмм.",
+        "uz": "Bir kilogrammi o‘ttiz ming so‘m."
+      },
+      {
+        "speaker": "A",
+        "ru": "Есть дешевле?",
+        "uz": "Arzonrog‘i bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, вот эти — двадцать тысяч.",
+        "uz": "Ha, mana bular yigirma ming."
+      },
+      {
+        "speaker": "A",
+        "ru": "Двадцать тысяч за килограмм?",
+        "uz": "Bir kilogrammi yigirma mingmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, всё верно.",
+        "uz": "Ha, to‘g‘ri."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Сколько стоят первые яблоки?",
+        "answer": "Тридцать тысяч сумов за килограмм."
+      },
+      {
+        "prompt": "Что ищет A?",
+        "answer": "Яблоки дешевле."
+      },
+      {
+        "prompt": "Сколько стоят вторые яблоки?",
+        "answer": "Двадцать тысяч сумов за килограмм."
+      }
+    ],
+    "roleplay": {
+      "a": "Olma, non va suv narxini biling. Olmaga 20 mingdan ortiq sarflamang.",
+      "b": "Non va suv 10 mingdan; olma turlari 20 va 30 ming. Avval qimmatroq olmani taklif qiling.",
+      "twist": "Narxni past ovozda ayting; xaridor takrorlashni so‘rasin.",
+      "success": "Uch narx savoli, bir qayta so‘rash va narxi tasdiqlangan tanlov bo‘ladi."
+    },
+    "teacherTip": "Сколько стоит яблоки deyilsa, ko‘plikni ko‘rsatib стоят ni tuzattiring. Tayanchga birlik/ko‘plik kartalari; ilg‘orlarga narx birligini ham aniqlash vazifasini bering.",
+    "homework": [
+      "Uch mahsulot narxini so‘rab ovoz yozing.",
+      "Sherik aytgan beshta o‘nlik ming narxni qaytaring.",
+      "Стоит va стоят bilan ikkitadan savol yozing."
+    ],
+    "exit": "Bir birlik va bir ko‘plik mahsulot narxini so‘rab, bir narxni tasdiqlang."
+  },
+  {
+    "no": 41,
+    "month": 4,
+    "week": 14,
+    "title": "Mahsulotni miqdor bilan olish",
+    "objective": "Kilogramm, litr va idish birliklarida to‘rtta aniq buyurtma beradi.",
+    "grammar": {
+      "title": "Miqdor birikmalari: килограмм сыра",
+      "rule": "Miqdor yoki idishdan keyin mahsulot qaratqichda keladi: сыр → сыра, молоко → молока, вода → воды. Idish buyurtma obyekti bo‘lsa, бутылка → бутылку: дайте бутылку воды.",
+      "examples": [
+        {
+          "ru": "Дайте килограмм сыра.",
+          "uz": "Bir kilogramm pishloq bering."
+        },
+        {
+          "ru": "Я беру бутылку воды.",
+          "uz": "Men bir shisha suv olyapman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: литр … (молоко).",
+          "answer": "Литр молока.",
+          "explanation": "Литр dan keyin молока ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: килограмм … (сыр).",
+          "answer": "Килограмм сыра.",
+          "explanation": "Miqdordan keyin сыр → сыра."
+        },
+        {
+          "prompt": "Tuzating: Дайте бутылка вода.",
+          "answer": "Дайте бутылку воды.",
+          "explanation": "Бутылку buyurtma obyekti, воды uning ichidagi mahsulotdir."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Килограмм сыра, пожалуйста.",
+        "uz": "Iltimos, bir kilogramm pishloq."
+      },
+      {
+        "ru": "Литр молока, пожалуйста.",
+        "uz": "Iltimos, bir litr sut."
+      },
+      {
+        "ru": "Бутылку воды, пожалуйста.",
+        "uz": "Iltimos, bir shisha suv."
+      },
+      {
+        "ru": "Пачку чая, пожалуйста.",
+        "uz": "Iltimos, bir quti choy."
+      },
+      {
+        "ru": "Полкило риса.",
+        "uz": "Yarim kilo guruch."
+      },
+      {
+        "ru": "Сколько вам?",
+        "uz": "Sizga qancha kerak?"
+      },
+      {
+        "ru": "Этого достаточно.",
+        "uz": "Shu yetarli."
+      },
+      {
+        "ru": "Нужен пакет?",
+        "uz": "Paket kerakmi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Дайте сыр, пожалуйста.",
+        "uz": "Iltimos, pishloq bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Сколько вам?",
+        "uz": "Sizga qancha kerak?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Полкило сыра и литр молока.",
+        "uz": "Yarim kilo pishloq va bir litr sut."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Нужен пакет?",
+        "uz": "Yaxshi. Paket kerakmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, пожалуйста. И бутылку воды.",
+        "uz": "Ha, iltimos. Yana bir shisha suv."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот ваш заказ.",
+        "uz": "Mana buyurtmangiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Сколько сыра берёт A?",
+        "answer": "Полкило."
+      },
+      {
+        "prompt": "Сколько молока нужно?",
+        "answer": "Литр."
+      },
+      {
+        "prompt": "Нужен ли пакет?",
+        "answer": "Да, нужен."
+      }
+    ],
+    "roleplay": {
+      "a": "Bir litr sut, yarim kilo guruch, bir shisha suv va bir quti choy oling.",
+      "b": "Har mahsulot miqdorini aniqlang va paket kerakligini so‘rang.",
+      "twist": "Sut faqat bir litrlik; xaridor yarim litr so‘rab, keyin bir litrga rozi bo‘lsin.",
+      "success": "To‘rtta miqdor aytiladi va kamida uch mahsulot qaratqichda to‘g‘ri ishlatiladi."
+    },
+    "teacherTip": "Литр молоко xatosini литр молока ni bir butun ayttirib tuzating. Tayanchga tayyor juftlar bering; ilg‘or o‘quvchi бутылку va пачку ni o‘zi tanlasin.",
+    "homework": [
+      "To‘rtta miqdorli buyurtmani ovozga yozing.",
+      "Uy idishlariga qarab uchta mahsulot birikmasini ayting.",
+      "Miqdorli besh qator xarid ro‘yxati yozing."
+    ],
+    "exit": "Сколько вам? savoliga uch xil o‘lchov bilan javob bering."
+  },
+  {
+    "no": 42,
+    "month": 4,
+    "week": 14,
+    "title": "Sayr uchun umumiy xarid",
+    "objective": "Uch mahsulot miqdori va narxini kelishib, 60 ming so‘mga mos xarid tanlaydi.",
+    "grammar": {
+      "title": "Birlashtirish: miqdor va narx",
+      "rule": "Narx savolidagi fe’l o‘lchov nomiga mos: сколько стоит литр молока, chunki литр birlikda. Mahsulot qaratqichda qoladi; buyurtmada shu birikma дайте bilan qayta ishlatiladi.",
+      "examples": [
+        {
+          "ru": "Сколько стоит литр молока?",
+          "uz": "Bir litr sut qancha turadi?"
+        },
+        {
+          "ru": "Дайте полкило сыра и бутылку воды.",
+          "uz": "Yarim kilo pishloq va bir shisha suv bering."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Сколько … килограмм сыра? (стоит / стоят)",
+          "answer": "Сколько стоит килограмм сыра?",
+          "explanation": "Asosiy so‘z килограмм birlikda."
+        },
+        {
+          "prompt": "To‘ldiring: бутылку … (вода).",
+          "answer": "Бутылку воды.",
+          "explanation": "Idishdan keyin mahsulot qaratqichda."
+        },
+        {
+          "prompt": "Ruscha so‘rang: Yarim kilo pishloq qancha turadi?",
+          "answer": "Сколько стоит полкило сыра?",
+          "explanation": "Полкило сыра bilan narx savolida стоит ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "У нас шестьдесят тысяч сумов.",
+        "uz": "Bizda oltmish ming so‘m bor."
+      },
+      {
+        "ru": "Что берём?",
+        "uz": "Nima olamiz?"
+      },
+      {
+        "ru": "Полкило сыра хватит.",
+        "uz": "Yarim kilo pishloq yetadi."
+      },
+      {
+        "ru": "Сколько стоит бутылка воды?",
+        "uz": "Bir shisha suv qancha turadi?"
+      },
+      {
+        "ru": "Давайте возьмём хлеб.",
+        "uz": "Keling, non olaylik."
+      },
+      {
+        "ru": "Это слишком дорого.",
+        "uz": "Bu juda qimmat."
+      },
+      {
+        "ru": "Тогда без сока.",
+        "uz": "Unda sharbatsiz."
+      },
+      {
+        "ru": "Сколько всего?",
+        "uz": "Jami qancha?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Нам нужны хлеб, полкило сыра и бутылка воды.",
+        "uz": "Bizga non, yarim kilo pishloq va bir shisha suv kerak."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хлеб — десять тысяч, сыр — сорок тысяч, вода — десять тысяч.",
+        "uz": "Non o‘n ming, pishloq qirq ming, suv o‘n ming."
+      },
+      {
+        "speaker": "A",
+        "ru": "Сыр — сорок тысяч за полкило?",
+        "uz": "Pishloqning yarim kilosimi qirq ming?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Всего шестьдесят тысяч.",
+        "uz": "Ha. Jami oltmish ming."
+      },
+      {
+        "speaker": "A",
+        "ru": "Хорошо, берём. Сок не нужен.",
+        "uz": "Yaxshi, olamiz. Sharbat kerak emas."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот ваш пакет.",
+        "uz": "Mana paketingiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Сколько сыра нужно?",
+        "answer": "Полкило."
+      },
+      {
+        "prompt": "Сколько стоит вода?",
+        "answer": "Десять тысяч сумов."
+      },
+      {
+        "prompt": "Сколько стоит весь заказ?",
+        "answer": "Шестьдесят тысяч сумов."
+      }
+    ],
+    "roleplay": {
+      "a": "Sayr xaridiga 60 mingingiz bor. Non, pishloq va suvning miqdori hamda narxini biling.",
+      "b": "Non 10 ming, yarim kilo pishloq 40 ming, suv 10 ming, sharbat 20 ming. Jami narxni hisoblang.",
+      "twist": "Pishloq 50 ming bo‘ladi; o‘rniga 20 minglik bulochka taklif qiling.",
+      "success": "Uch mahsulot tanlanadi, miqdor aniqlashtiriladi va jami 60 mingdan oshmaydi."
+    },
+    "teacherTip": "Сколько стоят литр… xatosida o‘lchov so‘zini ajrating. Tayanchga narx kartalari bering; ilg‘orlar kartalarsiz jami narxni hisoblasin.",
+    "homework": [
+      "60 minglik sayr xaridini ovozda ayting.",
+      "Sherik bilan mahsulot qimmatlashgan vaziyatni bajaring.",
+      "Uch mahsulot, miqdor va narxli ro‘yxat yozing."
+    ],
+    "exit": "Narx o‘zgarganda xaridni yangilang, uch mahsulot va jami summani ayting."
+  },
+  {
+    "no": 43,
+    "month": 4,
+    "week": 15,
+    "title": "Kafeda taom buyurtma qilish",
+    "objective": "Taom va ichimlikni tanlab, ikki sifat-ot birikmasi bilan buyurtma beradi.",
+    "grammar": {
+      "title": "Tushumda sifat va ot",
+      "rule": "Ayol jinsdagi obyekt bilan -ая → -ую va -а → -у: горячая каша → горячую кашу. Jonsiz erkak jinsdagi горячий суп hamda o‘rta jinsdagi вкусное блюдо o‘zgarmaydi.",
+      "examples": [
+        {
+          "ru": "Я хочу горячую кашу.",
+          "uz": "Men issiq bo‘tqa xohlayman."
+        },
+        {
+          "ru": "Мне горячий суп, пожалуйста.",
+          "uz": "Menga issiq sho‘rva bering, iltimos."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Дайте … (холодная вода).",
+          "answer": "Дайте холодную воду.",
+          "explanation": "Sifat va ot ayol jinsdagi tushumga o‘tadi."
+        },
+        {
+          "prompt": "To‘ldiring: Я хочу … (горячий суп).",
+          "answer": "Я хочу горячий суп.",
+          "explanation": "Jonsiz erkak jinsda shakllar saqlanadi."
+        },
+        {
+          "prompt": "Tuzating: Мне свежая булочку.",
+          "answer": "Мне свежую булочку.",
+          "explanation": "Sifat ham булочку ga mos tushumda bo‘ladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Можно меню?",
+        "uz": "Menyuni bersangiz bo‘ladimi?"
+      },
+      {
+        "ru": "Что вы рекомендуете?",
+        "uz": "Nimani tavsiya qilasiz?"
+      },
+      {
+        "ru": "Мне горячий суп, пожалуйста.",
+        "uz": "Menga issiq sho‘rva bering, iltimos."
+      },
+      {
+        "ru": "Я хочу свежую булочку.",
+        "uz": "Men yangi bulochka xohlayman."
+      },
+      {
+        "ru": "А на напиток?",
+        "uz": "Ichimlikka-chi?"
+      },
+      {
+        "ru": "Холодную воду, пожалуйста.",
+        "uz": "Iltimos, sovuq suv."
+      },
+      {
+        "ru": "Это всё, спасибо.",
+        "uz": "Shu hammasi, rahmat."
+      },
+      {
+        "ru": "Приятного аппетита!",
+        "uz": "Yoqimli ishtaha!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Можно меню?",
+        "uz": "Menyuni bersangiz bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Пожалуйста. Сегодня есть суп и каша.",
+        "uz": "Marhamat. Bugun sho‘rva va bo‘tqa bor."
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне горячий суп и свежую булочку.",
+        "uz": "Menga issiq sho‘rva va yangi bulochka bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "А на напиток?",
+        "uz": "Ichimlikka-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Холодную воду, пожалуйста.",
+        "uz": "Iltimos, sovuq suv."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Приятного аппетита!",
+        "uz": "Yaxshi. Yoqimli ishtaha!"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какие блюда есть сегодня?",
+        "answer": "Суп и каша."
+      },
+      {
+        "prompt": "Что A берёт к супу?",
+        "answer": "Свежую булочку."
+      },
+      {
+        "prompt": "Какую воду заказывает A?",
+        "answer": "Холодную."
+      }
+    ],
+    "roleplay": {
+      "a": "Menyu so‘rab, issiq taom, yangi bulochka va sovuq suv buyurtma qiling.",
+      "b": "Sho‘rva va bo‘tqa bor. Taom tanlangach, ichimlik haqida alohida so‘rang.",
+      "twist": "Sovuq suv qolmaydi; oddiy suv yoki issiq choy taklif qiling.",
+      "success": "Taom, yegulik va ichimlik buyurtma qilinadi; ikki sifat-ot birikmasi to‘g‘ri aytiladi."
+    },
+    "teacherTip": "Холодная воду kabi xatoda ikkala so‘zni bir nafasda qaytartiring. Tayanchga tugashlari ajratilgan kartalar bering; ilg‘orlar menyusiz tavsiyaga javob bersin.",
+    "homework": [
+      "Uch qismli kafe buyurtmasini ovozga yozing.",
+      "Issiq va sovuq mahsulotlarni sherikdan navbat bilan so‘rang.",
+      "Uch sifat-ot birikmasini bosh va tushum shaklida yozing."
+    ],
+    "exit": "Issiq sho‘rva, yangi bulochka va sovuq suvni sifatlari bilan so‘rang."
+  },
+  {
+    "no": 44,
+    "month": 4,
+    "week": 15,
+    "title": "Taom va ichimlik tarkibi",
+    "objective": "Buyurtmada ikkita tarkib istagini bildiradi va ichimlikka nima qo‘shilishini so‘raydi.",
+    "grammar": {
+      "title": "Без va с bilan tarkib",
+      "rule": "Без dan keyin qaratqich kerak: без сахара, без молока, без соли. Qo‘shimcha borligi с сахаром, с молоком birikmalari bilan aytiladi; с dan keyin без dagi shaklni ko‘chirmang.",
+      "examples": [
+        {
+          "ru": "Чай без сахара, пожалуйста.",
+          "uz": "Iltimos, shakarsiz choy."
+        },
+        {
+          "ru": "Я хочу кофе с молоком.",
+          "uz": "Men sutli qahva xohlayman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: чай без … (сахар).",
+          "answer": "Чай без сахара.",
+          "explanation": "Без dan keyin сахар → сахара."
+        },
+        {
+          "prompt": "Tanlang: кофе с … (молока / молоком).",
+          "answer": "Кофе с молоком.",
+          "explanation": "С молоком birikmasida vosita kelishigi ishlatiladi."
+        },
+        {
+          "prompt": "Ruscha buyurtma bering: Tuzsiz sho‘rva, iltimos.",
+          "answer": "Суп без соли, пожалуйста.",
+          "explanation": "Соль ning без dan keyingi shakli соли."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Чай без сахара, пожалуйста.",
+        "uz": "Iltimos, shakarsiz choy."
+      },
+      {
+        "ru": "Кофе с молоком.",
+        "uz": "Sutli qahva."
+      },
+      {
+        "ru": "Без молока, пожалуйста.",
+        "uz": "Iltimos, sutsiz."
+      },
+      {
+        "ru": "Можно без соли?",
+        "uz": "Tuzsiz bo‘ladimi?"
+      },
+      {
+        "ru": "Что в составе?",
+        "uz": "Tarkibida nima bor?"
+      },
+      {
+        "ru": "Здесь есть молоко?",
+        "uz": "Bunda sut bormi?"
+      },
+      {
+        "ru": "Сахар отдельно, пожалуйста.",
+        "uz": "Shakarni alohida bering, iltimos."
+      },
+      {
+        "ru": "Правильно: без сахара.",
+        "uz": "To‘g‘ri: shakarsiz."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Мне кофе, пожалуйста. Здесь есть молоко?",
+        "uz": "Menga qahva bering, iltimos. Bunda sut bormi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, это кофе с молоком.",
+        "uz": "Ha, bu sutli qahva."
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне без молока и без сахара.",
+        "uz": "Menga sutsiz va shakarsiz bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. А суп вам с солью?",
+        "uz": "Yaxshi. Sho‘rvani sizga tuzli beraymi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Можно без соли?",
+        "uz": "Tuzsiz bo‘ladimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Кофе без молока и сахара, суп без соли.",
+        "uz": "Ha. Qahva sutsiz va shakarsiz, sho‘rva tuzsiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какой кофе сначала предлагает B?",
+        "answer": "Кофе с молоком."
+      },
+      {
+        "prompt": "Нужен ли A сахар?",
+        "answer": "Нет, не нужен."
+      },
+      {
+        "prompt": "Какой суп просит A?",
+        "answer": "Суп без соли."
+      }
+    ],
+    "roleplay": {
+      "a": "Qahvani sutli, lekin shakarsiz, sho‘rvani tuzsiz buyurtma qiling.",
+      "b": "Qahva odatda sut va shakar bilan beriladi. Mijoz istaklarini qayta aytib tasdiqlang.",
+      "twist": "Qahva o‘rniga choy, shakar esa alohida so‘raladi.",
+      "success": "Ikki tarkib talabi, bitta tarkib savoli va tasdiqni tekshirish bajariladi."
+    },
+    "teacherTip": "Без сахар xatosini без сахара birikmasi bilan tuzating. Tayanch guruh ikki tarkib bilan ishlasin; ilg‘orlar bir gapda с va без ni birlashtirsin.",
+    "homework": [
+      "Ichimlikni ikki tarkib sharti bilan ovozda buyurtma qiling.",
+      "Sherik noto‘g‘ri qaytargan buyurtmani uch marta tuzating.",
+      "Без сахара, без молока, с молоком bilan uch gap yozing."
+    ],
+    "exit": "Ichimlik tarkibini so‘rang, bir qo‘shimchani tanlab, boshqasini rad eting."
+  },
+  {
+    "no": 45,
+    "month": 4,
+    "week": 15,
+    "title": "Yig‘ilish uchun telefon buyurtmasi",
+    "objective": "Hamkasbi nomidan buyurtma berib, miqdor va tarkibni og‘zaki tekshiradi.",
+    "grammar": {
+      "title": "Birlashtirish: idish, tarkib va obyekt",
+      "rule": "Buyurtmadagi idish tushumda, mahsulot qaratqichda: чашку чая. Без bilan tarkib ham qaratqichda: чашку чая без сахара. Yegulik oldingi tushum qolipini saqlaydi: свежую булочку.",
+      "examples": [
+        {
+          "ru": "Мне чашку чая без сахара.",
+          "uz": "Menga bir piyola shakarsiz choy bering."
+        },
+        {
+          "ru": "Я беру бутылку воды и свежую булочку.",
+          "uz": "Men bir shisha suv va yangi bulochka olyapman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: чашку … без … (чай, сахар).",
+          "answer": "Чашку чая без сахара.",
+          "explanation": "Чашку dan keyin чая, без dan keyin сахара kerak."
+        },
+        {
+          "prompt": "Tuzating: Дайте свежая булочка.",
+          "answer": "Дайте свежую булочку.",
+          "explanation": "Sifat va ot tushumga o‘tadi."
+        },
+        {
+          "prompt": "Buyurtmani ruscha ayting: Bir shisha suv va sutli qahva.",
+          "answer": "Бутылку воды и кофе с молоком.",
+          "explanation": "Бутылку воды va с молоком oldingi tayyor birikmalardir."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я хочу сделать заказ.",
+        "uz": "Men buyurtma bermoqchiman."
+      },
+      {
+        "ru": "Чашку чая без сахара.",
+        "uz": "Bir piyola shakarsiz choy."
+      },
+      {
+        "ru": "Для коллеги — кофе с молоком.",
+        "uz": "Hamkasbim uchun sutli qahva."
+      },
+      {
+        "ru": "И свежую булочку.",
+        "uz": "Yana yangi bulochka."
+      },
+      {
+        "ru": "Повторите заказ, пожалуйста.",
+        "uz": "Iltimos, buyurtmani qaytaring."
+      },
+      {
+        "ru": "Не с сахаром, а без сахара.",
+        "uz": "Shakarli emas, shakarsiz."
+      },
+      {
+        "ru": "Можно с собой?",
+        "uz": "Olib ketish mumkinmi?"
+      },
+      {
+        "ru": "Да, всё правильно.",
+        "uz": "Ha, hammasi to‘g‘ri."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я хочу сделать заказ: чашку чая без сахара и кофе с молоком.",
+        "uz": "Buyurtma bermoqchiman: bir piyola shakarsiz choy va sutli qahva."
+      },
+      {
+        "speaker": "B",
+        "ru": "Что-нибудь ещё?",
+        "uz": "Yana biror narsa kerakmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, свежую булочку. Можно с собой?",
+        "uz": "Ha, yangi bulochka. Olib ketish mumkinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Чай с сахаром, кофе с молоком и булочка.",
+        "uz": "Ha. Shakarli choy, sutli qahva va bulochka."
+      },
+      {
+        "speaker": "A",
+        "ru": "Не с сахаром, а без сахара, пожалуйста.",
+        "uz": "Shakarli emas, shakarsiz, iltimos."
+      },
+      {
+        "speaker": "B",
+        "ru": "Извините. Чай без сахара. Всё правильно?",
+        "uz": "Kechirasiz. Shakarsiz choy. Hammasi to‘g‘rimi?"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какие напитки заказывает A?",
+        "answer": "Чай без сахара и кофе с молоком."
+      },
+      {
+        "prompt": "Что A берёт из еды?",
+        "answer": "Свежую булочку."
+      },
+      {
+        "prompt": "Какую ошибку делает B?",
+        "answer": "Говорит «чай с сахаром» вместо «чай без сахара»."
+      }
+    ],
+    "roleplay": {
+      "a": "Yig‘ilishga o‘zingiz uchun shakarsiz choy, hamkasbingiz uchun sutli qahva va bulochka telefon orqali buyurtma qiling.",
+      "b": "Buyurtmani qaytaring, lekin bir tarkibni adashtiring. Mijoz tuzatganini tasdiqlang.",
+      "twist": "Hamkasbga sut kerak emasligi ma’lum bo‘ladi; buyurtma yangilansin.",
+      "success": "Uch mahsulot buyurtma qilinadi, xato topiladi va yakuniy tarkib tasdiqlanadi."
+    },
+    "teacherTip": "С молока ni с молоком va без молока juftligi bilan tuzating. Tayanchga buyurtma blankasi bering; ilg‘or juft bir-biriga qaramay gaplashsin.",
+    "homework": [
+      "Telefon buyurtmasidagi replikalaringizni ovozga yozing.",
+      "Sherik qaytargan buyurtmadagi bitta xatoni toping.",
+      "Uch mahsulot va ikki tarkib talabidan iborat xabar yozing."
+    ],
+    "exit": "Noto‘g‘ri qaytarilgan buyurtmani tuzatib, uch mahsulotni qayta ayting."
+  },
+  {
+    "no": 46,
+    "month": 4,
+    "week": 16,
+    "title": "Kassada hisobni tekshirish",
+    "objective": "Hisobni so‘raydi, jami summani tekshiradi va to‘lov usulini bildiradi.",
+    "grammar": {
+      "title": "To‘lov usuli: картой va наличными",
+      "rule": "To‘lov usuli платить картой, платить наличными birikmalari bilan aytiladi. Можно dan keyin shaxsli fe’l emas, infinitiv ishlatiladi: можно заплатить?",
+      "examples": [
+        {
+          "ru": "Можно заплатить картой?",
+          "uz": "Karta bilan to‘lash mumkinmi?"
+        },
+        {
+          "ru": "Я плачу наличными.",
+          "uz": "Men naqd to‘layman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Я плачу … (карта / картой).",
+          "answer": "Я плачу картой.",
+          "explanation": "To‘lov vositasi картой shaklida keladi."
+        },
+        {
+          "prompt": "Tuzating: Можно плачу наличными?",
+          "answer": "Можно заплатить наличными?",
+          "explanation": "Можно dan keyin infinitiv kerak."
+        },
+        {
+          "prompt": "Ruscha so‘rang: Karta bilan to‘lash mumkinmi?",
+          "answer": "Можно заплатить картой?",
+          "explanation": "Можно + infinitiv va картой ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Счёт, пожалуйста.",
+        "uz": "Hisobni bering, iltimos."
+      },
+      {
+        "ru": "Сколько всего?",
+        "uz": "Jami qancha?"
+      },
+      {
+        "ru": "Можно заплатить картой?",
+        "uz": "Karta bilan to‘lash mumkinmi?"
+      },
+      {
+        "ru": "Я плачу наличными.",
+        "uz": "Men naqd to‘layman."
+      },
+      {
+        "ru": "Терминал работает?",
+        "uz": "Terminal ishlayaptimi?"
+      },
+      {
+        "ru": "Дайте чек, пожалуйста.",
+        "uz": "Iltimos, chek bering."
+      },
+      {
+        "ru": "Кажется, здесь ошибка.",
+        "uz": "Bu yerda xato bor shekilli."
+      },
+      {
+        "ru": "Сдача, пожалуйста.",
+        "uz": "Qaytimni bering, iltimos."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Счёт, пожалуйста.",
+        "uz": "Hisobni bering, iltimos."
+      },
+      {
+        "speaker": "B",
+        "ru": "С вас пятьдесят тысяч сумов.",
+        "uz": "Sizdan ellik ming so‘m bo‘ladi."
+      },
+      {
+        "speaker": "A",
+        "ru": "Можно заплатить картой?",
+        "uz": "Karta bilan to‘lash mumkinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Извините, терминал не работает.",
+        "uz": "Kechirasiz, terminal ishlamayapti."
+      },
+      {
+        "speaker": "A",
+        "ru": "Тогда я плачу наличными. Вот сто тысяч.",
+        "uz": "Unda naqd to‘layman. Mana yuz ming."
+      },
+      {
+        "speaker": "B",
+        "ru": "Ваша сдача — пятьдесят тысяч. Вот чек.",
+        "uz": "Qaytimingiz ellik ming. Mana chek."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Сколько нужно заплатить?",
+        "answer": "Пятьдесят тысяч сумов."
+      },
+      {
+        "prompt": "Почему A платит наличными?",
+        "answer": "Терминал не работает."
+      },
+      {
+        "prompt": "Сколько сдачи получает A?",
+        "answer": "Пятьдесят тысяч сумов."
+      }
+    ],
+    "roleplay": {
+      "a": "Hisobingiz 40 ming bo‘lishi kerak. Tekshirib, karta bilan to‘lashni so‘rang. 100 ming naqd pulingiz ham bor.",
+      "b": "Avval 50 ming hisob ayting. Mijoz so‘rasa, suv noto‘g‘ri qo‘shilganini aytib 40 mingga tuzating. Terminal ishlamaydi.",
+      "twist": "Terminal ishlay boshlaydi; xaridor usulni qayta tanlaydi.",
+      "success": "Summa tekshiriladi, xato aniqlanadi, to‘lov usuli aytiladi va chek so‘raladi."
+    },
+    "teacherTip": "Плачу карта xatosini картой ga tuzatib, -ой ni eshittiring. Tayanchga ikki usul kartasi; ilg‘orlarga qaytimni ham tekshirish vazifasini bering.",
+    "homework": [
+      "Hisob va chek so‘ralgan ovozli suhbat yozing.",
+      "Sherik bilan uch summa uchun qaytimni ruscha hisoblang.",
+      "Karta va naqd to‘lov haqida bittadan savol-javob yozing."
+    ],
+    "exit": "50 minglik hisobni tekshiring, to‘lov usulini ayting va chek so‘rang."
+  },
+  {
+    "no": 47,
+    "month": 4,
+    "week": 16,
+    "title": "Buyurtmadagi xatoni tuzatish",
+    "objective": "Noto‘g‘ri keltirilgan ikki mahsulotni ko‘rsatib, almashtirishni muloyim so‘raydi.",
+    "grammar": {
+      "title": "Не …, а … bilan tuzatish",
+      "rule": "Не …, а … noto‘g‘ri va kerakli variantni qarama-qarshi qo‘yadi. Не o‘zi bu qolipda kelishikni o‘zgartirmaydi: я хочу не воду, а сок; obyektlar tushumda qoladi.",
+      "examples": [
+        {
+          "ru": "Я хочу не воду, а сок.",
+          "uz": "Men suv emas, sharbat xohlayman."
+        },
+        {
+          "ru": "Мне не холодный суп, а горячий.",
+          "uz": "Menga sovuq emas, issiq sho‘rva kerak."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Birlashtiring: Мне нужен чай. Кофе не нужен.",
+          "answer": "Мне нужен не кофе, а чай.",
+          "explanation": "Не noto‘g‘ri, а kerakli variantni kiritadi."
+        },
+        {
+          "prompt": "To‘ldiring: Я хочу не …, а … . (вода, булочка)",
+          "answer": "Я хочу не воду, а булочку.",
+          "explanation": "Ikkala obyekt tushumda qoladi."
+        },
+        {
+          "prompt": "Ruscha tuzating: Shakarli emas, shakarsiz.",
+          "answer": "Не с сахаром, а без сахара.",
+          "explanation": "С va без o‘z kelishik shakllarini saqlaydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Извините, это не мой заказ.",
+        "uz": "Kechirasiz, bu mening buyurtmam emas."
+      },
+      {
+        "ru": "Мне нужен не кофе, а чай.",
+        "uz": "Menga qahva emas, choy kerak."
+      },
+      {
+        "ru": "Я хочу не воду, а сок.",
+        "uz": "Men suv emas, sharbat xohlayman."
+      },
+      {
+        "ru": "Можно заменить?",
+        "uz": "Almashtirish mumkinmi?"
+      },
+      {
+        "ru": "Суп холодный.",
+        "uz": "Sho‘rva sovuq."
+      },
+      {
+        "ru": "Подогрейте, пожалуйста.",
+        "uz": "Iltimos, isitib bering."
+      },
+      {
+        "ru": "Спасибо за помощь.",
+        "uz": "Yordamingiz uchun rahmat."
+      },
+      {
+        "ru": "Теперь всё правильно.",
+        "uz": "Endi hammasi to‘g‘ri."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Извините, это не мой заказ. Мне нужен не кофе, а чай.",
+        "uz": "Kechirasiz, bu mening buyurtmam emas. Menga qahva emas, choy kerak."
+      },
+      {
+        "speaker": "B",
+        "ru": "Извините. Чай с сахаром?",
+        "uz": "Kechirasiz. Shakarli choymi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Не с сахаром, а без сахара.",
+        "uz": "Shakarli emas, shakarsiz."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. А суп?",
+        "uz": "Yaxshi. Sho‘rva-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Суп холодный. Подогрейте, пожалуйста.",
+        "uz": "Sho‘rva sovuq. Iltimos, isitib bering."
+      },
+      {
+        "speaker": "B",
+        "ru": "Конечно. Сейчас подогреем.",
+        "uz": "Albatta. Hozir isitamiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какой напиток нужен A?",
+        "answer": "Чай без сахара."
+      },
+      {
+        "prompt": "Что не так с супом?",
+        "answer": "Суп холодный."
+      },
+      {
+        "prompt": "Что B сделает с супом?",
+        "answer": "Подогреет суп."
+      }
+    ],
+    "roleplay": {
+      "a": "Shakarsiz choy va issiq sho‘rva o‘rniga sutli qahva hamda sovuq sho‘rva oldingiz. Ikkala muammoni hal qiling.",
+      "b": "Qaysi ichimlik va qanday tarkib kerakligini aniqlang; sho‘rvani isitishni taklif qiling.",
+      "twist": "Choy tugaydi; xaridor suv tanlab, yangi buyurtmani tasdiqlaydi.",
+      "success": "Ikki muammo aytiladi, bir не …, а … ishlatiladi va yechim kelishiladi."
+    },
+    "teacherTip": "O‘zbekchadagi emas tartibi sabab чай не deyilsa, не кофе, а чай kartalari bilan tartibni ko‘rsating. Tayanch guruh variant almashtirsin; ilg‘orlar kutilmagan muammoga javob bersin.",
+    "homework": [
+      "Ikki xatoni tuzatadigan ovozli murojaat yozing.",
+      "Sherikning uch noto‘g‘ri buyurtmasini muloyim tuzating.",
+      "Не …, а … bilan ichimlik, taom va miqdor haqida uch gap yozing."
+    ],
+    "exit": "Qahva o‘rniga choy, sovuq sho‘rva o‘rniga issiq sho‘rva so‘rang."
+  },
+  {
+    "no": 48,
+    "month": 4,
+    "week": 16,
+    "title": "Oy yakuni: mehmonlar uchun nonushta",
+    "objective": "To‘rt mahsulotli buyurtma beradi, narx va tarkibni aniqlaydi, xatoni tuzatib to‘lovni yakunlaydi.",
+    "grammar": {
+      "title": "Oylik birlashtirish: xarid va to‘lov",
+      "rule": "Oldingi qoliplarni vazifaga qarab tanlang: есть вода — borlik, дайте воду — obyekt, бутылку воды — miqdor, без сахара — tarkib, картой — to‘lov usuli. Yangi qoida emas, oldingi shakllar bir vaziyatda qo‘llanadi.",
+      "examples": [
+        {
+          "ru": "Дайте бутылку воды и свежую булочку.",
+          "uz": "Bir shisha suv va yangi bulochka bering."
+        },
+        {
+          "ru": "Мне чай без сахара. Можно заплатить картой?",
+          "uz": "Menga shakarsiz choy bering. Karta bilan to‘lash mumkinmi?"
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Дайте … (свежая булочка).",
+          "answer": "Дайте свежую булочку.",
+          "explanation": "Sifat va ot tushumda moslashadi."
+        },
+        {
+          "prompt": "Tuzating: Чай без сахар и бутылку вода.",
+          "answer": "Чай без сахара и бутылку воды.",
+          "explanation": "Без dan keyin сахара, idishdan keyin воды kerak."
+        },
+        {
+          "prompt": "Ruscha so‘rang: Bir litr sut qancha turadi?",
+          "answer": "Сколько стоит литр молока?",
+          "explanation": "Литр birlikda, молока esa miqdordan keyingi qaratqichda."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Завтрак с собой, пожалуйста.",
+        "uz": "Nonushtani olib ketish uchun tayyorlang, iltimos."
+      },
+      {
+        "ru": "Что есть сегодня?",
+        "uz": "Bugun nima bor?"
+      },
+      {
+        "ru": "Мне свежую булочку.",
+        "uz": "Menga yangi bulochka bering."
+      },
+      {
+        "ru": "Бутылку воды, пожалуйста.",
+        "uz": "Iltimos, bir shisha suv."
+      },
+      {
+        "ru": "Чай без сахара.",
+        "uz": "Shakarsiz choy."
+      },
+      {
+        "ru": "Повторите общую сумму.",
+        "uz": "Jami summani qaytaring."
+      },
+      {
+        "ru": "Здесь ошибка: не кофе, а чай.",
+        "uz": "Bu yerda xato: qahva emas, choy."
+      },
+      {
+        "ru": "Можно заплатить картой?",
+        "uz": "Karta bilan to‘lash mumkinmi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Завтрак с собой: кашу, свежую булочку, чай без сахара и бутылку воды.",
+        "uz": "Olib ketish uchun nonushta: bo‘tqa, yangi bulochka, shakarsiz choy va bir shisha suv."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Каша, булочка, кофе и вода. Всего семьдесят тысяч.",
+        "uz": "Yaxshi. Bo‘tqa, bulochka, qahva va suv. Jami yetmish ming."
+      },
+      {
+        "speaker": "A",
+        "ru": "Не кофе, а чай без сахара. Сколько стоит чай?",
+        "uz": "Qahva emas, shakarsiz choy. Choy qancha turadi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Десять тысяч. Тогда всего шестьдесят тысяч сумов.",
+        "uz": "O‘n ming. Unda jami oltmish ming so‘m."
+      },
+      {
+        "speaker": "A",
+        "ru": "Шестьдесят тысяч, верно? Можно заплатить картой?",
+        "uz": "Oltmish ming, to‘g‘rimi? Karta bilan to‘lash mumkinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, конечно. Вот терминал и ваш чек.",
+        "uz": "Ha, albatta. Mana terminal va chekingiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Сколько разных позиций заказывает A?",
+        "answer": "Четыре: кашу, булочку, чай и воду."
+      },
+      {
+        "prompt": "Какую ошибку исправляет A?",
+        "answer": "Кофе нужно заменить на чай без сахара."
+      },
+      {
+        "prompt": "Какова правильная общая сумма?",
+        "answer": "Шестьдесят тысяч сумов."
+      }
+    ],
+    "roleplay": {
+      "a": "Mehmon uyidagi ikki kishiga nonushta oling: taom, yegulik va ikki ichimlik. Bittasi shakarsiz bo‘lsin. Mablag‘ingiz 80 ming.",
+      "b": "Bo‘tqa 25 ming, bulochka 15 ming, choy 10 ming, suv 10 ming, qahva 20 ming. Buyurtmani qaytarishda ichimlikni adashtiring.",
+      "twist": "Terminal ishlamaydi va bulochka tugaydi; 15 minglik non taklif qiling, xaridor buyurtma hamda to‘lovni o‘zgartirsin.",
+      "success": "To‘rt mahsulot, bir miqdor, bir tarkib talabi, narx savoli, xato tuzatishi va to‘lov qarori aytiladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. Buyurtma, miqdor va tarkib, narx, tuzatish hamda yakunlashni kuzating. Воду/воды xatosini yakunda tuzating. Tayanchga mahsulot rasmlari, ilg‘orga ikkinchi o‘zgarish bering. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Baholashdagi buyurtmani tuzatib ovozga yozing.",
+      "Boshqa menyu bilan rollarni almashtirib mashq qiling.",
+      "Ikki xato va ularning to‘g‘ri variantini yozing."
+    ],
+    "exit": "Matnsiz to‘rt mahsulot buyurtma qiling, ikki aniqlashtirish savoli bering, bir xatoni tuzatib to‘lovni ayting; besh mezondan to‘rttasini mustaqil bajaring."
+  },
+  {
+    "no": 49,
+    "month": 5,
+    "week": 17,
+    "title": "Shaharda qayerdaligingizni aytish",
+    "objective": "To‘rtta shahar joyini aytadi va qayerdaligi haqidagi uch savolga javob beradi.",
+    "grammar": {
+      "title": "Где? va в bilan o‘rin kelishigi",
+      "rule": "Где? harakat manzilini emas, joylashuvni so‘raydi. В dan keyin ko‘p birlik otlarda -е ishlatiladi: магазин → в магазине, аптека → в аптеке. Кафе va метро o‘zgarmaydi: в кафе, в метро.",
+      "examples": [
+        {
+          "ru": "Я в магазине.",
+          "uz": "Men do‘kondaman."
+        },
+        {
+          "ru": "Она в аптеке.",
+          "uz": "U dorixonada."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Мы в … (банк).",
+          "answer": "Мы в банке.",
+          "explanation": "Joylashuv uchun в + банке ishlatiladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Men kafedaman.",
+          "answer": "Я в кафе.",
+          "explanation": "Кафе turlanmaydi, ammo в predlogi kerak."
+        },
+        {
+          "prompt": "Tuzating: Она в аптека.",
+          "answer": "Она в аптеке.",
+          "explanation": "Аптека ning joylashuv shakli аптеке."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Где вы?",
+        "uz": "Siz qayerdasiz?"
+      },
+      {
+        "ru": "Я в магазине.",
+        "uz": "Men do‘kondaman."
+      },
+      {
+        "ru": "Она в аптеке.",
+        "uz": "U dorixonada."
+      },
+      {
+        "ru": "Мы в кафе.",
+        "uz": "Biz kafedamiz."
+      },
+      {
+        "ru": "Где банк?",
+        "uz": "Bank qayerda?"
+      },
+      {
+        "ru": "Он здесь, справа.",
+        "uz": "U shu yerda, o‘ngda."
+      },
+      {
+        "ru": "Это далеко?",
+        "uz": "Bu uzoqmi?"
+      },
+      {
+        "ru": "Нет, совсем близко.",
+        "uz": "Yo‘q, juda yaqin."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Алло, где ты?",
+        "uz": "Allo, qayerdasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я в магазине. А ты?",
+        "uz": "Men do‘kondaman. Sen-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я в кафе. Где Малика?",
+        "uz": "Men kafedaman. Malika qayerda?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Она в аптеке.",
+        "uz": "U dorixonada."
+      },
+      {
+        "speaker": "A",
+        "ru": "Аптека далеко?",
+        "uz": "Dorixona uzoqmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, совсем близко. Она справа.",
+        "uz": "Yo‘q, juda yaqin. U o‘ngda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где B?",
+        "answer": "В магазине."
+      },
+      {
+        "prompt": "Где Малика?",
+        "answer": "В аптеке."
+      },
+      {
+        "prompt": "Аптека далеко?",
+        "answer": "Нет, совсем близко."
+      }
+    ],
+    "roleplay": {
+      "a": "Siz kafedasiz, do‘stlaringiz qayerdaligini bilmaysiz. Ikki do‘stingizning joyini va dorixona uzoqligini so‘rang.",
+      "b": "Siz do‘kondasiz, Malika dorixonada. Dorixona yaqin, o‘ng tomonda. A ning joyini ham biling.",
+      "twist": "Malika endi bankda ekanini xabar qiling; A ma’lumotni qayta aytsin.",
+      "success": "Uch joylashuv savoli beriladi va kamida uchta в + joy birikmasi to‘g‘ri ishlatiladi."
+    },
+    "teacherTip": "O‘zbekcha -da ta’sirida я магазине deb в ni tushirishni tuzating. Tayanchga в + rasm + tugash kartasi bering; ilg‘orlar uchinchi shaxsning joyini ham so‘rasin.",
+    "homework": [
+      "O‘zingiz va ikki do‘stingizning taxminiy joyini ovozda ayting.",
+      "Xaritadagi to‘rtta joy bilan где savol-javobini mashq qiling.",
+      "В магазине, в банке, в аптеке bilan uch gap yozing."
+    ],
+    "exit": "Uch rasmga qarab kim qayerdaligini ayting va sherigingizning joyini so‘rang."
+  },
+  {
+    "no": 50,
+    "month": 5,
+    "week": 17,
+    "title": "Bekat va ko‘chadagi uchrashuv joyi",
+    "objective": "Bekat, bozor va ko‘chadagi joylashuvni aytib, uchrashuv nuqtasini ikki belgi bilan aniqlaydi.",
+    "grammar": {
+      "title": "Joylashuvda на va в ni tanlash",
+      "rule": "Predlog ot bilan birga o‘rganiladi: на остановке, на рынке, на улице, lekin в магазине. -е keng tarqalgan, ammo рынок → рынке o‘zgarishida о tushadi. В/на ni faqat ochiq-yopiqlik asosida tanlamang.",
+      "examples": [
+        {
+          "ru": "Я на остановке.",
+          "uz": "Men bekatdaman."
+        },
+        {
+          "ru": "Мама на рынке.",
+          "uz": "Onam bozorda."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Я … остановке. (в / на)",
+          "answer": "Я на остановке.",
+          "explanation": "Bekat joylashuvi на остановке birikmasi bilan aytiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Мы на … (рынок).",
+          "answer": "Мы на рынке.",
+          "explanation": "Рынок o‘rin shaklida рынке bo‘ladi."
+        },
+        {
+          "prompt": "Tuzating: Он на магазине.",
+          "answer": "Он в магазине.",
+          "explanation": "Do‘kon ichidagi joylashuv uchun в магазине kerak."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я на остановке.",
+        "uz": "Men bekatdaman."
+      },
+      {
+        "ru": "Мы на рынке.",
+        "uz": "Biz bozordamiz."
+      },
+      {
+        "ru": "Ты на улице?",
+        "uz": "Sen ko‘chadamisan?"
+      },
+      {
+        "ru": "Как называется остановка?",
+        "uz": "Bekatning nomi nima?"
+      },
+      {
+        "ru": "Я здесь, слева.",
+        "uz": "Men shu yerdaman, chapda."
+      },
+      {
+        "ru": "Ты видишь аптеку?",
+        "uz": "Dorixonani ko‘ryapsanmi?"
+      },
+      {
+        "ru": "Да, вижу.",
+        "uz": "Ha, ko‘ryapman."
+      },
+      {
+        "ru": "Подожди, пожалуйста.",
+        "uz": "Iltimos, kutib tur."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Ты где? Я на остановке.",
+        "uz": "Sen qayerdasan? Men bekatdaman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Я на рынке. Как называется остановка?",
+        "uz": "Men bozordaman. Bekatning nomi nima?"
+      },
+      {
+        "speaker": "A",
+        "ru": "«Центральный рынок». Ты видишь аптеку?",
+        "uz": "«Markaziy bozor». Dorixonani ko‘ryapsanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, вижу. Ты справа?",
+        "uz": "Ha, ko‘ryapman. Sen o‘ngdamisan?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет, слева. Я на улице.",
+        "uz": "Yo‘q, chapdaman. Men ko‘chadaman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо, подожди, пожалуйста.",
+        "uz": "Yaxshi, iltimos, kutib tur."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где B в начале разговора?",
+        "answer": "На рынке."
+      },
+      {
+        "prompt": "Как называется остановка?",
+        "answer": "«Центральный рынок»."
+      },
+      {
+        "prompt": "С какой стороны находится A?",
+        "answer": "Слева."
+      }
+    ],
+    "roleplay": {
+      "a": "Siz «Markaziy bozor» bekatidasiz, dorixonaning chap tomonida turibsiz. Do‘stingiz sizni topishi uchun joyni aniqlang.",
+      "b": "Siz bozordasiz; bekat nomini va do‘stingiz qaysi tomonda ekanini bilmaysiz. Ikki savol bering.",
+      "twist": "Bekatning ikkita tomoni borligi ma’lum bo‘ladi; A yonidagi dorixona yozuvini belgi qilib aytsin.",
+      "success": "Bekat nomi, chap/o‘ng belgi va ikki на + joy birikmasi ishlatiladi."
+    },
+    "teacherTip": "На магазин yoki в остановке deyilsa, predlogni ot bilan birga qaytartiring. Tayanchga uch rasmli karta, ilg‘orga o‘xshash ikki bekatli xarita bering.",
+    "homework": [
+      "Bekatdagi joyingizni ikki belgi bilan ovozda ayting.",
+      "Sherik bilan telefon orqali bir-biringizni topish suhbatini bajaring.",
+      "На остановке, на рынке, на улице bilan uch xabar yozing."
+    ],
+    "exit": "Bekat nomi va chap/o‘ng belgini aytib, uchrashuv joyini aniqlang."
+  },
+  {
+    "no": 51,
+    "month": 5,
+    "week": 17,
+    "title": "Savdo markazida ajralib qolgan do‘stni topish",
+    "objective": "Telefon orqali ikki kishining joyini aniqlaydi va belgilari mos kelishini tekshiradi.",
+    "grammar": {
+      "title": "Birlashtirish: где, в, на va obyekt",
+      "rule": "Joyni so‘rashda где va o‘rin shakli, ko‘rinayotgan narsani so‘rashda видеть bilan tushum kerak: ты в аптеке? ты видишь аптеку? Oldingi в магазине va на остановке birikmalarini vaziyatga mos tanlang.",
+      "examples": [
+        {
+          "ru": "Я в кафе. Ты видишь аптеку?",
+          "uz": "Men kafedaman. Dorixonani ko‘ryapsanmi?"
+        },
+        {
+          "ru": "Он на остановке, а она в магазине.",
+          "uz": "U bekatda, qiz esa do‘konda."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Она в …, я вижу … . (аптека)",
+          "answer": "Она в аптеке, я вижу аптеку.",
+          "explanation": "Joylashuv аптеке, ko‘rilayotgan obyekt аптеку."
+        },
+        {
+          "prompt": "Tanlang: Мы … кафе. (в / на)",
+          "answer": "Мы в кафе.",
+          "explanation": "Кафе bilan joylashuv predlogi в."
+        },
+        {
+          "prompt": "Tuzating: Ты где? — Я в остановке.",
+          "answer": "Ты где? — Я на остановке.",
+          "explanation": "Oldingi на остановке birikmasi qayta qo‘llanadi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я тебя не вижу.",
+        "uz": "Men seni ko‘rmayapman."
+      },
+      {
+        "ru": "Где ты сейчас?",
+        "uz": "Hozir qayerdasan?"
+      },
+      {
+        "ru": "Я в кафе.",
+        "uz": "Men kafedaman."
+      },
+      {
+        "ru": "Ты видишь магазин?",
+        "uz": "Do‘konni ko‘ryapsanmi?"
+      },
+      {
+        "ru": "Как называется кафе?",
+        "uz": "Kafening nomi nima?"
+      },
+      {
+        "ru": "Это другое кафе.",
+        "uz": "Bu boshqa kafe."
+      },
+      {
+        "ru": "Я на улице, справа.",
+        "uz": "Men ko‘chadaman, o‘ngda."
+      },
+      {
+        "ru": "Теперь вижу тебя!",
+        "uz": "Endi seni ko‘ryapman!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я тебя не вижу. Где ты сейчас?",
+        "uz": "Men seni ko‘rmayapman. Hozir qayerdasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я в кафе «Лимон».",
+        "uz": "Men «Limon» kafesidaman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А я в кафе «Чай». Это другое кафе. Ты видишь аптеку?",
+        "uz": "Men esa «Choy» kafesidaman. Bu boshqa kafe. Dorixonani ko‘ryapsanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, она справа. А где ты?",
+        "uz": "Ha, u o‘ngda. Sen-chi, qayerdasan?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я уже на улице, слева. На мне зелёная куртка.",
+        "uz": "Men allaqachon ko‘chadaman, chapda. Egnimda yashil kurtka."
+      },
+      {
+        "speaker": "B",
+        "ru": "Теперь вижу тебя!",
+        "uz": "Endi seni ko‘ryapman!"
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "В каком кафе находится B?",
+        "answer": "В кафе «Лимон»."
+      },
+      {
+        "prompt": "Почему друзья сначала не видят друг друга?",
+        "answer": "Они в разных кафе."
+      },
+      {
+        "prompt": "Какого цвета куртка у A?",
+        "answer": "Зелёная."
+      }
+    ],
+    "roleplay": {
+      "a": "Savdo markazidagi «Choy» kafesidasiz. Do‘stingiz boshqa kafeda. Ko‘rinadigan do‘konni so‘rab, o‘z joyingizni ayting.",
+      "b": "«Limon» kafesidasiz, dorixona o‘ngda. Kafe nomini ayting va do‘stingizning belgisini aniqlang.",
+      "twist": "Telefon ovozi uziladi; joy haqidagi oxirgi ma’lumotni qayta so‘rang.",
+      "success": "Ikki joy aniqlanadi, bitta obyekt haqida savol va bitta qayta so‘rash orqali odam topiladi."
+    },
+    "teacherTip": "В аптеку ni qayerda ma’nosida ishlatishni в аптеке ga tuzating; ko‘rish obyekti bilan farqini ko‘rsating. Tayanchga ikki surat, ilg‘orga to‘rtta o‘xshash belgi bering.",
+    "homework": [
+      "Do‘stni topish uchun uchta ovozli savol yozing.",
+      "Ikki xil kafe nomi bilan suhbatni sherik bilan takrorlang.",
+      "Где va видишь qatnashgan to‘rtta gap yozing."
+    ],
+    "exit": "Do‘stingizning joyini ikki savolda aniqlang va o‘z joyingizni ikki belgi bilan ayting."
+  },
+  {
+    "no": 52,
+    "month": 5,
+    "week": 18,
+    "title": "Joylashuv va borish manzili",
+    "objective": "Uch juft gapda hozirgi joyini va boradigan manzilini farqlab aytadi.",
+    "grammar": {
+      "title": "Где? va куда?: в аптеке — в аптеку",
+      "rule": "Где? uchun в/на + o‘rin, куда? uchun в/на + tushum ishlatiladi: в магазине — в магазин, в аптеке — в аптеку, на рынке — на рынок. Hozirgi joy bilan harakat manzilini alohida ayting.",
+      "examples": [
+        {
+          "ru": "Я в магазине. Я иду в аптеку.",
+          "uz": "Men do‘kondaman. Dorixonaga piyoda ketyapman."
+        },
+        {
+          "ru": "Она на рынке. Она идёт в банк.",
+          "uz": "U bozorda. Bankka piyoda ketyapti."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я сейчас в …, потом иду в … . (аптека, магазин)",
+          "answer": "Я сейчас в аптеке, потом иду в магазин.",
+          "explanation": "Hozirgi joy o‘rin, keyingi manzil tushumda."
+        },
+        {
+          "prompt": "Savolni tanlang: … ты идёшь? (Где / Куда)",
+          "answer": "Куда ты идёшь?",
+          "explanation": "Harakat manzili куда bilan so‘raladi."
+        },
+        {
+          "prompt": "Tuzating: Я иду на рынке.",
+          "answer": "Я иду на рынок.",
+          "explanation": "Bozorga borish manzili на рынок; на рынке bozordagi joy yoki harakatni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Куда вы идёте?",
+        "uz": "Qayerga piyoda ketyapsiz?"
+      },
+      {
+        "ru": "Я иду в аптеку.",
+        "uz": "Dorixonaga piyoda ketyapman."
+      },
+      {
+        "ru": "Сейчас я в магазине.",
+        "uz": "Hozir do‘kondaman."
+      },
+      {
+        "ru": "Потом в банк.",
+        "uz": "Keyin bankka."
+      },
+      {
+        "ru": "Мне нужно на рынок.",
+        "uz": "Men bozorga borishim kerak."
+      },
+      {
+        "ru": "Где вход?",
+        "uz": "Kirish joyi qayerda?"
+      },
+      {
+        "ru": "Вход справа.",
+        "uz": "Kirish joyi o‘ngda."
+      },
+      {
+        "ru": "Я правильно понимаю?",
+        "uz": "To‘g‘ri tushunyapmanmi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Куда вы идёте?",
+        "uz": "Qayerga piyoda ketyapsiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я иду в аптеку. А вы?",
+        "uz": "Men dorixonaga ketyapman. Siz-chi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне нужно в банк. Сейчас я в магазине.",
+        "uz": "Men bankka borishim kerak. Hozir do‘kondaman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Банк близко. Вход справа.",
+        "uz": "Bank yaqin. Kirish joyi o‘ngda."
+      },
+      {
+        "speaker": "A",
+        "ru": "Справа? Я правильно понимаю?",
+        "uz": "O‘ngdami? To‘g‘ri tushunyapmanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, справа.",
+        "uz": "Ha, o‘ngda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Куда идёт B?",
+        "answer": "В аптеку."
+      },
+      {
+        "prompt": "Где A сейчас?",
+        "answer": "В магазине."
+      },
+      {
+        "prompt": "Где вход в банк?",
+        "answer": "Справа."
+      }
+    ],
+    "roleplay": {
+      "a": "Hozir do‘kondasiz; dorixona va bozorga borishingiz kerak. Hozirgi joy va ikki manzilni ayting.",
+      "b": "Siz bankdasiz, keyin kafega borasiz. A dan qayerdaligini va qayerga borishini alohida so‘rang.",
+      "twist": "Dorixona yopiq; A birinchi manzilni bankka almashtirsin.",
+      "success": "Uchta joy/manzil farqi aytiladi va где/куда savollari chalkashtirilmaydi."
+    },
+    "teacherTip": "O‘zbekchadagi -da/-ga farqiga tayangan holda в аптеке/в аптеку juftligini eshittiring. Tayanchga ikki ustun, ilg‘orlarga yangi joy bilan gap tuzishni bering.",
+    "homework": [
+      "Hozirgi joy va keyingi ikki manzilni ovozda ayting.",
+      "Sherikning где yoki куда savoliga oltita qisqa javob bering.",
+      "Uch joyni o‘rin va yo‘nalish shaklida yozing."
+    ],
+    "exit": "Dorixona, do‘kon va bozor bilan uchta qayerda/qayerga juft gap ayting."
+  },
+  {
+    "no": 53,
+    "month": 5,
+    "week": 18,
+    "title": "Oddiy yo‘l ko‘rsatish",
+    "objective": "Uch bosqichli piyoda yo‘lni tushuntiradi va burilish tomonini aniqlashtiradi.",
+    "grammar": {
+      "title": "Muloyim yo‘l ko‘rsatish buyruqlari",
+      "rule": "Notanish kishiga yo‘l ko‘rsatishda идите, поверните, перейдите tayyor hurmat shakllari ishlatiladi. Поверните dan keyin направо/налево yo‘nalish ravishi, перейдите dan keyin obyekt tushumda: улицу.",
+      "examples": [
+        {
+          "ru": "Идите прямо и поверните направо.",
+          "uz": "To‘g‘ri boring va o‘ngga buriling."
+        },
+        {
+          "ru": "Перейдите улицу по переходу.",
+          "uz": "Ko‘chani piyodalar o‘tish joyidan kesib o‘ting."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ruscha ayting: Chapga buriling.",
+          "answer": "Поверните налево.",
+          "explanation": "Burilish yo‘nalishi налево bilan aytiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Перейдите … (улица).",
+          "answer": "Перейдите улицу.",
+          "explanation": "Улица kesib o‘tiladigan obyekt, shu sabab улицу."
+        },
+        {
+          "prompt": "Tuzating: Поверните справа.",
+          "answer": "Поверните направо.",
+          "explanation": "Справа joyni, направо esa burilish yo‘nalishini bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Как пройти в банк?",
+        "uz": "Bankka qanday piyoda borsa bo‘ladi?"
+      },
+      {
+        "ru": "Идите прямо.",
+        "uz": "To‘g‘ri boring."
+      },
+      {
+        "ru": "Поверните направо.",
+        "uz": "O‘ngga buriling."
+      },
+      {
+        "ru": "Поверните налево.",
+        "uz": "Chapga buriling."
+      },
+      {
+        "ru": "Перейдите улицу по переходу.",
+        "uz": "Ko‘chani piyodalar o‘tish joyidan kesib o‘ting."
+      },
+      {
+        "ru": "Банк будет слева.",
+        "uz": "Bank chap tomonda bo‘ladi."
+      },
+      {
+        "ru": "Направо или налево?",
+        "uz": "O‘nggami yoki chapgami?"
+      },
+      {
+        "ru": "Спасибо, теперь понятно.",
+        "uz": "Rahmat, endi tushunarli."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Извините, как пройти в банк?",
+        "uz": "Kechirasiz, bankka qanday piyoda borsa bo‘ladi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Идите прямо, потом поверните налево.",
+        "uz": "To‘g‘ri boring, keyin chapga buriling."
+      },
+      {
+        "speaker": "A",
+        "ru": "Налево? А потом?",
+        "uz": "Chapgami? Keyin-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Перейдите улицу по переходу. Банк будет справа.",
+        "uz": "Ko‘chani piyodalar o‘tish joyidan kesib o‘ting. Bank o‘ngda bo‘ladi."
+      },
+      {
+        "speaker": "A",
+        "ru": "Прямо, налево, потом через улицу. Верно?",
+        "uz": "To‘g‘ri, chapga, keyin ko‘chaning narigi tomoniga. To‘g‘rimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, всё верно.",
+        "uz": "Ha, hammasi to‘g‘ri."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Куда нужно повернуть?",
+        "answer": "Налево."
+      },
+      {
+        "prompt": "Где нужно перейти улицу?",
+        "answer": "По переходу."
+      },
+      {
+        "prompt": "С какой стороны будет банк?",
+        "answer": "Справа."
+      }
+    ],
+    "roleplay": {
+      "a": "Bankka yo‘l so‘rang. Eshitgan yo‘lni qaytarib, bir burilishni aniqlashtiring.",
+      "b": "Xaritangizda bankka yo‘l: to‘g‘ri, o‘ngga, o‘tish joyidan narigi tomonga. Bank chapda. A ga tushuntiring.",
+      "twist": "O‘ng burilish o‘rniga chap burilishli yangi xarita oling va yo‘lni yangilang.",
+      "success": "Uch qadam tartib bilan aytiladi, bir aniqlashtirish va bir to‘liq qaytarish bo‘ladi."
+    },
+    "teacherTip": "Справа va направо bir xil o‘ng deb tarjima qilinishini ko‘rsating, lekin joy va burilishni harakat bilan ajrating. Tayanchga strelkalar, ilg‘orga matnsiz xarita bering.",
+    "homework": [
+      "Uch bosqichli yo‘lni ovozga yozing.",
+      "Sherik ko‘rsatmasi bo‘yicha qog‘oz xaritada yo‘l chizing.",
+      "Прямо, направо, налево bilan uch ko‘rsatma yozing."
+    ],
+    "exit": "Xaritada uch qadamli yo‘l bering va sherikning burilish haqidagi savoliga javob bering."
+  },
+  {
+    "no": 54,
+    "month": 5,
+    "week": 18,
+    "title": "Yangi kutubxonaga kitob topshirish",
+    "objective": "Notanish joyga yo‘l so‘rab, uch bosqichni qaytaradi va kirish joyini aniqlaydi.",
+    "grammar": {
+      "title": "Birlashtirish: manzil, joy va ko‘rsatma",
+      "rule": "Куда? manzilida в библиотеку, где? joyida в библиотеке ishlatiladi. Yo‘lni avvalgi идите прямо, поверните налево bilan tushuntiring. Направо burilish, справа esa obyekt joyini bildiradi.",
+      "examples": [
+        {
+          "ru": "Мне нужно в библиотеку. Где вход?",
+          "uz": "Men kutubxonaga borishim kerak. Kirish joyi qayerda?"
+        },
+        {
+          "ru": "Поверните направо. Библиотека слева.",
+          "uz": "O‘ngga buriling. Kutubxona chapda."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я иду в … (библиотека).",
+          "answer": "Я иду в библиотеку.",
+          "explanation": "Borish manzili tushumda keladi."
+        },
+        {
+          "prompt": "Tanlang: Поверните …, банк будет … . (направо, справа)",
+          "answer": "Поверните направо, банк будет справа.",
+          "explanation": "Birinchisi harakat yo‘nalishi, ikkinchisi joylashuv."
+        },
+        {
+          "prompt": "Ruscha ayting: Men kutubxonadaman.",
+          "answer": "Я в библиотеке.",
+          "explanation": "Где? ma’nosida o‘rin shakli kerak."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Мне нужно в библиотеку.",
+        "uz": "Men kutubxonaga borishim kerak."
+      },
+      {
+        "ru": "Как туда пройти?",
+        "uz": "U yerga qanday piyoda borsa bo‘ladi?"
+      },
+      {
+        "ru": "Я сейчас на остановке.",
+        "uz": "Hozir bekatdaman."
+      },
+      {
+        "ru": "Идите прямо, потом налево.",
+        "uz": "To‘g‘ri boring, keyin chapga."
+      },
+      {
+        "ru": "Где вход?",
+        "uz": "Kirish joyi qayerda?"
+      },
+      {
+        "ru": "Вход справа.",
+        "uz": "Kirish joyi o‘ngda."
+      },
+      {
+        "ru": "Повторите последний шаг.",
+        "uz": "Oxirgi qadamni qaytaring."
+      },
+      {
+        "ru": "Теперь я в библиотеке.",
+        "uz": "Endi men kutubxonadaman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Я на остановке. Как пройти в библиотеку?",
+        "uz": "Men bekatdaman. Kutubxonaga qanday borsa bo‘ladi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Идите прямо и поверните направо.",
+        "uz": "To‘g‘ri boring va o‘ngga buriling."
+      },
+      {
+        "speaker": "A",
+        "ru": "А потом?",
+        "uz": "Keyin-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Перейдите улицу по переходу. Библиотека слева, вход справа.",
+        "uz": "Ko‘chani o‘tish joyidan kesib o‘ting. Kutubxona chapda, kirish joyi o‘ngda."
+      },
+      {
+        "speaker": "A",
+        "ru": "Прямо, направо и через улицу. Вход справа?",
+        "uz": "To‘g‘ri, o‘ngga va ko‘chaning narigi tomoniga. Kirish joyi o‘ngdami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Там большая дверь.",
+        "uz": "Ha. U yerda katta eshik bor."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где A в начале разговора?",
+        "answer": "На остановке."
+      },
+      {
+        "prompt": "Куда нужно повернуть?",
+        "answer": "Направо."
+      },
+      {
+        "prompt": "Где вход в библиотеку?",
+        "answer": "Справа."
+      }
+    ],
+    "roleplay": {
+      "a": "Kitob topshirish uchun yangi kutubxonaga boryapsiz. Bekatdasiz, yo‘l va kirish joyini bilmaysiz.",
+      "b": "Yo‘lni bilasiz: to‘g‘ri, chapga, o‘tish joyidan kesib o‘tish. Kutubxona o‘ngda, eshik chapda. Yo‘lni tushuntiring.",
+      "twist": "Asosiy eshik yopiq; yon eshik o‘ngda ekanini ayting, A oxirgi ko‘rsatmani yangilasin.",
+      "success": "Boshlang‘ich joy va manzil aytiladi, uch qadam qaytariladi, kirish joyi aniqlanadi."
+    },
+    "teacherTip": "В библиотеке ni borish uchun qo‘llashni tuzating: qayerga — библиотеку. Tayanchga eski joy/manzil jadvali bering; ilg‘or juft eshik o‘zgarishini eshitib xaritasini tuzatsin.",
+    "homework": [
+      "Bekatdan kutubxonaga yo‘lni ovozga yozing.",
+      "Sherik chizgan yo‘ldagi bitta noto‘g‘ri burilishni tuzating.",
+      "Kutubxonaga borish va kutubxonada bo‘lish haqida ikki juft gap yozing."
+    ],
+    "exit": "Yangi xaritada kutubxonaga yo‘lni so‘rang, uch qadam va kirish tomonini qaytaring."
+  },
+  {
+    "no": 55,
+    "month": 5,
+    "week": 19,
+    "title": "Piyoda va transportda harakat",
+    "objective": "Hozirgi safar haqida uch savol-javobda piyoda va transportdagi harakatni farqlaydi.",
+    "grammar": {
+      "title": "Идти va ехать: hozirgi bir yo‘nalish",
+      "rule": "Hozir piyoda bir manzilga harakat uchun идти: я иду, ты идёшь, мы идём. Transportda esa ехать: я еду, ты едешь, мы едем. Transport turi на автобусе, на метро kabi aytiladi; takroriy qatnov alohida mavzu.",
+      "examples": [
+        {
+          "ru": "Я иду в парк пешком.",
+          "uz": "Men bog‘ga piyoda ketyapman."
+        },
+        {
+          "ru": "Мы едем в центр на автобусе.",
+          "uz": "Biz markazga avtobusda ketyapmiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tanlang: Я … в банк пешком. (иду / еду)",
+          "answer": "Я иду в банк пешком.",
+          "explanation": "Piyoda harakat uchun иду."
+        },
+        {
+          "prompt": "Tanlang: Мы … на метро. (идём / едем)",
+          "answer": "Мы едем на метро.",
+          "explanation": "Transportda harakat uchun едем."
+        },
+        {
+          "prompt": "To‘ldiring: Ты … на автобусе? (ехать)",
+          "answer": "Ты едешь на автобусе?",
+          "explanation": "Ехать ning ты bilan shakli едешь."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Ты идёшь пешком?",
+        "uz": "Piyoda ketyapsanmi?"
+      },
+      {
+        "ru": "Я еду на автобусе.",
+        "uz": "Men avtobusda ketyapman."
+      },
+      {
+        "ru": "Мы едем на метро.",
+        "uz": "Biz metroda ketyapmiz."
+      },
+      {
+        "ru": "Куда ты едешь?",
+        "uz": "Transportda qayerga ketyapsan?"
+      },
+      {
+        "ru": "Я иду в парк.",
+        "uz": "Men bog‘ga piyoda ketyapman."
+      },
+      {
+        "ru": "Это далеко пешком.",
+        "uz": "Piyoda borish uchun bu uzoq."
+      },
+      {
+        "ru": "Автобус уже здесь.",
+        "uz": "Avtobus allaqachon shu yerda."
+      },
+      {
+        "ru": "Я тоже еду в центр.",
+        "uz": "Men ham markazga ketyapman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Ты идёшь в центр пешком?",
+        "uz": "Markazga piyoda ketyapsanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, я еду на автобусе.",
+        "uz": "Yo‘q, avtobusda ketyapman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А я иду в парк. Это близко?",
+        "uz": "Men esa bog‘ga piyoda ketyapman. Bu yaqinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, парк близко, а центр далеко.",
+        "uz": "Ha, bog‘ yaqin, markaz esa uzoq."
+      },
+      {
+        "speaker": "A",
+        "ru": "Какой автобус идёт в центр?",
+        "uz": "Markazga qaysi avtobus boradi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Десятый. Вот он, уже здесь.",
+        "uz": "O‘ninchisi. Ana u, allaqachon shu yerda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Как B едет в центр?",
+        "answer": "На автобусе."
+      },
+      {
+        "prompt": "Куда идёт A?",
+        "answer": "В парк."
+      },
+      {
+        "prompt": "Какой автобус идёт в центр?",
+        "answer": "Десятый."
+      }
+    ],
+    "roleplay": {
+      "a": "Siz yaqin bog‘ga piyoda ketyapsiz. Do‘stingizdan uning manzili va transportini so‘rang.",
+      "b": "Siz uzoq markazga metroda ketyapsiz. A ning piyoda yoki transportda ekanini aniqlang.",
+      "twist": "Yomg‘ir boshlanadi; A avtobusni tanlab, harakat fe’lini o‘zgartirsin.",
+      "success": "Uch savol-javobda иду/еду ajratiladi, manzil va transport aytiladi."
+    },
+    "teacherTip": "O‘zbekchada ikkalasi ham bormoq bo‘lgani uchun я иду на автобусе xatosini oyoq va avtobus rasmi bilan tuzating. Автобус идёт tayyor yo‘nalish iborasi ekanini ayting. Tayanchga fe’l jadvali, ilg‘orga мы shaklini bering.",
+    "homework": [
+      "Ikki piyoda va ikki transport safari haqida ovozli gap yozing.",
+      "Sherik ko‘rsatgan transport rasmiga mos fe’lni ayting.",
+      "Иду va еду bilan ikki savol-javob yozing."
+    ],
+    "exit": "Bir piyoda va bir transport safari haqida manzil, fe’l va usulni to‘liq ayting."
+  },
+  {
+    "no": 56,
+    "month": 5,
+    "week": 19,
+    "title": "Avtobus yo‘nalishi va tushish bekati",
+    "objective": "Kerakli avtobusni, oxirgi bekatni va tushish joyini uch savol bilan aniqlaydi.",
+    "grammar": {
+      "title": "До bilan manzil chegarasi",
+      "rule": "До dan keyin qaratqich ishlatiladi: до центра, до парка, до школы. Bu yo‘lning yetib boriladigan chegarasini bildiradi. До метро o‘zgarmaydi. В центр borish manzili, до центра esa markazgacha bo‘lgan yo‘l.",
+      "examples": [
+        {
+          "ru": "Этот автобус идёт до центра?",
+          "uz": "Bu avtobus markazgacha boradimi?"
+        },
+        {
+          "ru": "Мне нужно до школы.",
+          "uz": "Men maktabgacha borishim kerak."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: до … (парк).",
+          "answer": "До парка.",
+          "explanation": "До dan keyin парк → парка."
+        },
+        {
+          "prompt": "To‘ldiring: до … (школа).",
+          "answer": "До школы.",
+          "explanation": "Ayol jinsdagi школа qaratqichda школы bo‘ladi."
+        },
+        {
+          "prompt": "Tuzating: Этот автобус идёт до центр?",
+          "answer": "Этот автобус идёт до центра?",
+          "explanation": "До predlogi центра shaklini talab qiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Этот автобус идёт до центра?",
+        "uz": "Bu avtobus markazgacha boradimi?"
+      },
+      {
+        "ru": "Где мне выйти?",
+        "uz": "Qayerda tushishim kerak?"
+      },
+      {
+        "ru": "На следующей остановке.",
+        "uz": "Keyingi bekatda."
+      },
+      {
+        "ru": "Какая следующая остановка?",
+        "uz": "Keyingi bekat qaysi?"
+      },
+      {
+        "ru": "Сколько стоит проезд?",
+        "uz": "Yo‘l haqi qancha?"
+      },
+      {
+        "ru": "Можно оплатить картой?",
+        "uz": "Karta bilan to‘lash mumkinmi?"
+      },
+      {
+        "ru": "Скажите, когда выходить.",
+        "uz": "Qachon tushish kerakligini ayting."
+      },
+      {
+        "ru": "Мне нужно до метро.",
+        "uz": "Men metrogacha borishim kerak."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Этот автобус идёт до центра?",
+        "uz": "Bu avtobus markazgacha boradimi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Вам где нужно выйти?",
+        "uz": "Ha. Siz qayerda tushishingiz kerak?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Мне нужно до школы. Какая это остановка?",
+        "uz": "Men maktabgacha borishim kerak. Bu qaysi bekat?"
+      },
+      {
+        "speaker": "B",
+        "ru": "«Школа», следующая остановка.",
+        "uz": "«Maktab», keyingi bekat."
+      },
+      {
+        "speaker": "A",
+        "ru": "Скажите, когда выходить, пожалуйста.",
+        "uz": "Iltimos, qachon tushish kerakligini ayting."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Сейчас подъезжаем.",
+        "uz": "Yaxshi. Hozir yaqinlashyapmiz."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Идёт ли автобус до центра?",
+        "answer": "Да, идёт."
+      },
+      {
+        "prompt": "Куда нужно A?",
+        "answer": "До школы."
+      },
+      {
+        "prompt": "Когда A нужно выйти?",
+        "answer": "На следующей остановке."
+      }
+    ],
+    "roleplay": {
+      "a": "Maktabga borishingiz kerak. Avtobus yo‘nalishi, tushish bekati va yo‘l haqini so‘rang.",
+      "b": "Yo‘lovchisiz. Avtobus markazgacha boradi, maktab keyingi bekat, yo‘l haqi 2 ming so‘m. Savollarga javob bering.",
+      "twist": "A adashib boshqa avtobusga chiqmoqchi bo‘ladi; B bu avtobus maktabgacha bormasligini aytsin.",
+      "success": "Uch amaliy savol beriladi, tushish bekati qaytariladi va до bilan manzil aytiladi."
+    },
+    "teacherTip": "До школу xatosida в школу bilan до школы ni ajrating. Tayanchga tayyor manzil juftlari bering; ilg‘orlar haydovchining qisqa javobidan keyin qayta so‘rasin.",
+    "homework": [
+      "Avtobusda kerak bo‘ladigan uch savolni ovozga yozing.",
+      "Sherik aytgan bekatni eshitib qayerda tushishingizni qaytaring.",
+      "Парк, школа, центр bilan до birikmalarini yozing."
+    ],
+    "exit": "Avtobus markazgacha borishini so‘rang, kerakli bekatni ayting va tushish joyini tasdiqlang."
+  },
+  {
+    "no": 57,
+    "month": 5,
+    "week": 19,
+    "title": "Sport markaziga ikki bosqichli yo‘l",
+    "objective": "Avtobus va piyoda qismlardan iborat yo‘lni so‘rab, tushish bekati hamda burilishni qaytaradi.",
+    "grammar": {
+      "title": "Birlashtirish: еду, иду va до",
+      "rule": "Transport qismida еду на автобусе до парка, piyoda qismida иду в спортцентр deyiladi. До yo‘l chegarasini qaratqichda, в esa keyingi manzilni tushumda ko‘rsatadi. Joylashuv uchun на остановке qolipi saqlanadi.",
+      "examples": [
+        {
+          "ru": "Я еду на автобусе до парка.",
+          "uz": "Men bog‘gacha avtobusda ketyapman."
+        },
+        {
+          "ru": "Потом я иду в спортцентр пешком.",
+          "uz": "Keyin sport markaziga piyoda boraman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я … на автобусе до парка. (идти / ехать)",
+          "answer": "Я еду на автобусе до парка.",
+          "explanation": "Transport uchun еду tanlanadi."
+        },
+        {
+          "prompt": "To‘ldiring: Потом я иду в … (спортцентр).",
+          "answer": "Потом я иду в спортцентр.",
+          "explanation": "Jonsiz erkak jinsdagi manzil tushumda o‘zgarmaydi."
+        },
+        {
+          "prompt": "Tuzating: Я еду до парк, потом иду пешком.",
+          "answer": "Я еду до парка, потом иду пешком.",
+          "explanation": "До dan keyin парка shakli kerak."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Как добраться до спортцентра?",
+        "uz": "Sport markazigacha qanday yetib borsa bo‘ladi?"
+      },
+      {
+        "ru": "Сначала на автобусе.",
+        "uz": "Avval avtobusda."
+      },
+      {
+        "ru": "Потом пешком.",
+        "uz": "Keyin piyoda."
+      },
+      {
+        "ru": "Где мне выйти?",
+        "uz": "Qayerda tushishim kerak?"
+      },
+      {
+        "ru": "На остановке «Парк».",
+        "uz": "«Bog‘» bekatida."
+      },
+      {
+        "ru": "Дальше идите прямо.",
+        "uz": "Keyin to‘g‘ri boring."
+      },
+      {
+        "ru": "Это правильный автобус?",
+        "uz": "Bu kerakli avtobusmi?"
+      },
+      {
+        "ru": "Повторю маршрут.",
+        "uz": "Yo‘lni qaytarib aytaman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Как добраться до спортцентра? Я на рынке.",
+        "uz": "Sport markazigacha qanday borsa bo‘ladi? Men bozordaman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Сначала на десятом автобусе до остановки «Парк».",
+        "uz": "Avval o‘ninchi avtobusda «Bog‘» bekatigacha."
+      },
+      {
+        "speaker": "A",
+        "ru": "А дальше пешком?",
+        "uz": "Keyin piyodami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Идите прямо, потом поверните налево.",
+        "uz": "Ha. To‘g‘ri boring, keyin chapga buriling."
+      },
+      {
+        "speaker": "A",
+        "ru": "Значит, еду до парка, потом иду прямо и налево?",
+        "uz": "Demak, bog‘gacha avtobusda, keyin piyoda to‘g‘ri va chapgami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Спортцентр справа.",
+        "uz": "Ha. Sport markazi o‘ngda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где A сейчас?",
+        "answer": "На рынке."
+      },
+      {
+        "prompt": "На какой остановке нужно выйти?",
+        "answer": "На остановке «Парк»."
+      },
+      {
+        "prompt": "Куда повернуть после остановки?",
+        "answer": "Налево."
+      }
+    ],
+    "roleplay": {
+      "a": "Ilk mashg‘ulot uchun sport markaziga boryapsiz. Bozordasiz; avtobus va piyoda yo‘lni biling.",
+      "b": "O‘ninchi avtobus «Bog‘»gacha boradi. U yerdan to‘g‘ri, keyin o‘ngga; markaz chapda. Ma’lumotni bo‘lib ayting.",
+      "twist": "«Bog‘» bekati vaqtincha yopiq; oldingi «Maktab» bekatidan piyoda to‘g‘ri borish kerakligini tushuntiring.",
+      "success": "Transport, tushish bekati va ikki piyoda qadam qaytariladi; еду/иду to‘g‘ri ajratiladi."
+    },
+    "teacherTip": "Butun yo‘lga faqat иду ishlatilsa, transport va oyoq belgisi bilan ikki gapga ajrating. Tayanchga yo‘l strelkalari, ilg‘orga bekat o‘zgarishini bering.",
+    "homework": [
+      "Ikki bosqichli sport markazi yo‘lini ovozga yozing.",
+      "Sherik bilan bekat o‘zgargan variantni mashq qiling.",
+      "Сначала va потом bilan to‘rt gapli yo‘l yozing."
+    ],
+    "exit": "Yangi bekat nomini eshitib, transport va piyoda qismlarni to‘rt ma’lumot bilan qaytaring."
+  },
+  {
+    "no": 58,
+    "month": 5,
+    "week": 20,
+    "title": "Keyingi safarni rejalash",
+    "objective": "Hozirgi harakatni va keyin yo‘lga chiqish rejasini uch juft gapda farqlaydi.",
+    "grammar": {
+      "title": "Иду/еду va пойду/поеду",
+      "rule": "Hozir davom etayotgan harakat: я иду, я еду. Keyin yo‘lga chiqish qarori: я пойду, я поеду; мы пойдём, мы поедем. Пойду piyoda borish yoki tadbirga borish niyatida, поеду transport safarida ishlatiladi. Bu darsda aniq piyoda/transport vaziyatlarini tanlang.",
+      "examples": [
+        {
+          "ru": "Сейчас я иду домой, потом пойду в магазин.",
+          "uz": "Hozir uyga piyoda ketyapman, keyin do‘konga boraman."
+        },
+        {
+          "ru": "Завтра мы поедем в центр на метро.",
+          "uz": "Ertaga markazga metroda boramiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Завтра я … на автобусе. (поехать)",
+          "answer": "Завтра я поеду на автобусе.",
+          "explanation": "Я bilan kelasi safar shakli поеду."
+        },
+        {
+          "prompt": "Tanlang: Сейчас я уже … пешком. (иду / пойду)",
+          "answer": "Сейчас я уже иду пешком.",
+          "explanation": "Hozir boshlangan harakat uchun иду."
+        },
+        {
+          "prompt": "To‘ldiring: После обеда мы … в парк пешком. (пойти)",
+          "answer": "После обеда мы пойдём в парк пешком.",
+          "explanation": "Мы bilan rejalangan piyoda chiqish пойдём."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Куда ты пойдёшь потом?",
+        "uz": "Keyin qayerga borasan?"
+      },
+      {
+        "ru": "Я пойду в магазин.",
+        "uz": "Men do‘konga boraman."
+      },
+      {
+        "ru": "Завтра поеду на метро.",
+        "uz": "Ertaga metroda boraman."
+      },
+      {
+        "ru": "Мы поедем вместе.",
+        "uz": "Biz birga transportda boramiz."
+      },
+      {
+        "ru": "Сейчас я иду домой.",
+        "uz": "Hozir uyga piyoda ketyapman."
+      },
+      {
+        "ru": "После обеда.",
+        "uz": "Tushlikdan keyin."
+      },
+      {
+        "ru": "Во сколько поедем?",
+        "uz": "Soat nechada yo‘lga chiqamiz?"
+      },
+      {
+        "ru": "В девять утра.",
+        "uz": "Ertalab soat to‘qqizda."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Куда ты идёшь сейчас?",
+        "uz": "Hozir qayerga piyoda ketyapsan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Домой. Потом пойду в магазин.",
+        "uz": "Uyga. Keyin do‘konga boraman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А завтра поедешь в центр?",
+        "uz": "Ertaga markazga borasanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, на метро. Поедем вместе?",
+        "uz": "Ha, metroda. Birga boramizmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. Во сколько?",
+        "uz": "Ha. Soat nechada?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В девять утра.",
+        "uz": "Ertalab soat to‘qqizda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Куда B идёт сейчас?",
+        "answer": "Домой."
+      },
+      {
+        "prompt": "Куда B пойдёт потом?",
+        "answer": "В магазин."
+      },
+      {
+        "prompt": "Когда друзья поедут в центр?",
+        "answer": "Завтра в девять утра."
+      }
+    ],
+    "roleplay": {
+      "a": "Hozir uyga piyoda ketyapsiz. Keyin do‘konga piyoda, ertaga markazga metroda borasiz. Rejangizni ayting.",
+      "b": "Ertaga markazga borishingiz kerak, ammo faqat soat o‘nda bo‘shsiz. Birga borish vaqtini kelishing.",
+      "twist": "Metro o‘rniga avtobus tanlang va yakuniy reja hamda vaqtni tasdiqlang.",
+      "success": "Hozirgi bir harakat, keyingi ikki reja va kelishilgan vaqt to‘g‘ri fe’llar bilan aytiladi."
+    },
+    "teacherTip": "Я буду поеду kabi ikki kelasi shaklni qo‘shishni to‘xtating: reja uchun bitta поеду yetadi. Tayanchga hozir/keyin kartalari bering; ilg‘orlar мы shaklida kelishsin.",
+    "homework": [
+      "Hozir, keyin, ertaga bilan uch ovozli gap yozing.",
+      "Sherik bilan ertangi safar vaqtini ikki taklif orqali kelishing.",
+      "Иду/пойду va еду/поеду bilan ikki juft gap yozing."
+    ],
+    "exit": "Hozirgi yo‘lingiz, keyingi piyoda rejangiz va ertangi transport safarini ayting."
+  },
+  {
+    "no": 59,
+    "month": 5,
+    "week": 20,
+    "title": "Taksi uchun manzilni aniqlashtirish",
+    "objective": "Taksida manzil va bino raqamini aytadi, yaqin belgini ko‘rsatadi va noto‘g‘ri manzilni tuzatadi.",
+    "grammar": {
+      "title": "Рядом с bilan yaqin joyni ko‘rsatish",
+      "rule": "Рядом с dan keyin vosita kelishigi keladi: банк → банком, аптека → аптекой. Bu joylashuvni bildiradi. Manzilni alohida ayting: мне нужно в гостиницу; belgi: она рядом с банком.",
+      "examples": [
+        {
+          "ru": "Гостиница рядом с банком.",
+          "uz": "Mehmonxona bank yonida."
+        },
+        {
+          "ru": "Остановите рядом с аптекой.",
+          "uz": "Dorixona yonida to‘xtating."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: рядом с … (банк).",
+          "answer": "Рядом с банком.",
+          "explanation": "С dan keyin erkak jinsdagi vosita shakli банком."
+        },
+        {
+          "prompt": "To‘ldiring: рядом с … (аптека).",
+          "answer": "Рядом с аптекой.",
+          "explanation": "Аптека bu birikmada аптекой bo‘ladi."
+        },
+        {
+          "prompt": "Tuzating: Мне нужно в гостинице.",
+          "answer": "Мне нужно в гостиницу.",
+          "explanation": "Kerakli borish manzili uchun tushum kerak, o‘rin emas."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Мне нужно в гостиницу.",
+        "uz": "Men mehmonxonaga borishim kerak."
+      },
+      {
+        "ru": "Улица Навои, дом двадцать.",
+        "uz": "Navoiy ko‘chasi, yigirmanchi uy."
+      },
+      {
+        "ru": "Это рядом с банком.",
+        "uz": "Bu bank yonida."
+      },
+      {
+        "ru": "Не двадцать, а двенадцать.",
+        "uz": "Yigirma emas, o‘n ikki."
+      },
+      {
+        "ru": "Остановите здесь, пожалуйста.",
+        "uz": "Iltimos, shu yerda to‘xtating."
+      },
+      {
+        "ru": "Уточните адрес, пожалуйста.",
+        "uz": "Iltimos, manzilni aniqlashtiring."
+      },
+      {
+        "ru": "Сколько будет стоить поездка?",
+        "uz": "Safar qancha turadi?"
+      },
+      {
+        "ru": "Можно оплатить картой?",
+        "uz": "Karta bilan to‘lash mumkinmi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Мне нужно в гостиницу: улица Навои, дом двенадцать.",
+        "uz": "Men mehmonxonaga borishim kerak: Navoiy ko‘chasi, o‘n ikkinchi uy."
+      },
+      {
+        "speaker": "B",
+        "ru": "Дом двадцать?",
+        "uz": "Yigirmanchi uymi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Не двадцать, а двенадцать. Гостиница рядом с банком.",
+        "uz": "Yigirma emas, o‘n ikki. Mehmonxona bank yonida."
+      },
+      {
+        "speaker": "B",
+        "ru": "Понятно. Поездка стоит тридцать тысяч сумов.",
+        "uz": "Tushunarli. Safar o‘ttiz ming so‘m turadi."
+      },
+      {
+        "speaker": "A",
+        "ru": "Можно оплатить картой?",
+        "uz": "Karta bilan to‘lash mumkinmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, можно.",
+        "uz": "Ha, mumkin."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Куда нужно A?",
+        "answer": "В гостиницу."
+      },
+      {
+        "prompt": "Какой правильный номер дома?",
+        "answer": "Двенадцать."
+      },
+      {
+        "prompt": "Рядом с чем находится гостиница?",
+        "answer": "Рядом с банком."
+      }
+    ],
+    "roleplay": {
+      "a": "Navoiy ko‘chasi, 12-uydagi mehmonxonaga bormoqchisiz. U bank yonida. Narx va to‘lov usulini biling.",
+      "b": "Haydovchisiz, uy raqamini 20 deb eshitasiz. Aniqlashtiring; narx 30 ming, faqat naqd olasiz.",
+      "twist": "Bank yonida to‘xtash mumkin emas; dorixona yonidagi xavfsiz to‘xtash joyini taklif qiling.",
+      "success": "Manzil va raqam to‘g‘ri tasdiqlanadi, bir рядом с birikmasi va bir tuzatish ishlatiladi."
+    },
+    "teacherTip": "Рядом с банк xatosini банком bilan tuzating; o‘zbekchadagi yonida ga bitta so‘z izlamasdan birikmani o‘rgating. Tayanchga manzil kartasi, ilg‘orga o‘xshash ikki raqam bering.",
+    "homework": [
+      "O‘ylab topilgan manzil va belgi bilan taksi buyurtmasini ovozga yozing.",
+      "12 va 20 kabi raqamlarni sherik bilan eshitib farqlang.",
+      "Рядом с банком va рядом с аптекой bilan ikki gap yozing."
+    ],
+    "exit": "Manzilni ayting, adashtirilgan raqamni tuzating va to‘xtash uchun yaqin belgi ko‘rsating."
+  },
+  {
+    "no": 60,
+    "month": 5,
+    "week": 20,
+    "title": "Oy yakuni: ko‘rgazmaga mustaqil yetib borish",
+    "objective": "Notanish ko‘rgazma joyiga transport va piyoda yo‘lni aniqlaydi, manzil xatosini tuzatadi va safar rejasini aytadi.",
+    "grammar": {
+      "title": "Oylik birlashtirish: joy, yo‘l va reja",
+      "rule": "Где bilan в/на + o‘rin, куда bilan в/на + tushum, до bilan qaratqich ishlatiladi. Hozirgi piyoda/transport harakati иду/еду, keyingi yo‘lga chiqish пойду/поеду bilan aytiladi. Рядом с oldingi vosita shaklini saqlaydi.",
+      "examples": [
+        {
+          "ru": "Я на остановке. Поеду до парка.",
+          "uz": "Men bekatdaman. Bog‘gacha transportda boraman."
+        },
+        {
+          "ru": "Потом пойду в зал. Он рядом с банком.",
+          "uz": "Keyin zalga piyoda boraman. U bank yonida."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Я сейчас на … (остановка).",
+          "answer": "Я сейчас на остановке.",
+          "explanation": "Hozirgi joy uchun o‘rin shakli kerak."
+        },
+        {
+          "prompt": "To‘ldiring: Завтра я … на автобусе до … . (поехать, парк)",
+          "answer": "Завтра я поеду на автобусе до парка.",
+          "explanation": "Rejalangan transport safari поеду, до dan keyin парка."
+        },
+        {
+          "prompt": "Tuzating: Зал рядом с банк.",
+          "answer": "Зал рядом с банком.",
+          "explanation": "Рядом с bilan vosita kelishigi ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Как добраться до выставки?",
+        "uz": "Ko‘rgazmagacha qanday yetib borsa bo‘ladi?"
+      },
+      {
+        "ru": "Я сейчас на остановке.",
+        "uz": "Hozir bekatdaman."
+      },
+      {
+        "ru": "Где мне выйти?",
+        "uz": "Qayerda tushishim kerak?"
+      },
+      {
+        "ru": "Потом пойду пешком.",
+        "uz": "Keyin piyoda boraman."
+      },
+      {
+        "ru": "Зал рядом с банком?",
+        "uz": "Zal bank yonidami?"
+      },
+      {
+        "ru": "Не двенадцать, а двадцать.",
+        "uz": "O‘n ikki emas, yigirma."
+      },
+      {
+        "ru": "Правильно: прямо и направо?",
+        "uz": "To‘g‘rimi: to‘g‘ri va o‘ngga?"
+      },
+      {
+        "ru": "Завтра поеду в девять.",
+        "uz": "Ertaga soat to‘qqizda yo‘lga chiqaman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Как добраться до выставки? Я на остановке «Рынок».",
+        "uz": "Ko‘rgazmagacha qanday yetib borsa bo‘ladi? Men «Bozor» bekatidaman."
+      },
+      {
+        "speaker": "B",
+        "ru": "На десятом автобусе до парка. Потом идите прямо и направо.",
+        "uz": "O‘ninchi avtobusda bog‘gacha. Keyin piyoda to‘g‘ri va o‘ngga boring."
+      },
+      {
+        "speaker": "A",
+        "ru": "Зал рядом с банком, дом двенадцать?",
+        "uz": "Zal bank yonida, o‘n ikkinchi uydami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Рядом с банком, но дом двадцать.",
+        "uz": "Bank yonida, lekin yigirmanchi uy."
+      },
+      {
+        "speaker": "A",
+        "ru": "Понятно: до парка, потом пешком, дом двадцать. Завтра поеду в девять.",
+        "uz": "Tushunarli: bog‘gacha, keyin piyoda, yigirmanchi uy. Ertaga soat to‘qqizda boraman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, адрес правильный. Выставка открыта с десяти.",
+        "uz": "Ha, manzil to‘g‘ri. Ko‘rgazma soat o‘ndan ochiq."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "На каком автобусе нужно ехать?",
+        "answer": "На десятом."
+      },
+      {
+        "prompt": "Какой номер дома правильный?",
+        "answer": "Двадцать."
+      },
+      {
+        "prompt": "Во сколько A поедет завтра?",
+        "answer": "В девять."
+      }
+    ],
+    "roleplay": {
+      "a": "Ertaga ko‘rgazmaga borasiz. Hozir «Bozor» bekatidasiz, zalni 12-uyda deb o‘ylaysiz. Transport, bekat va piyoda yo‘lni biling.",
+      "b": "Zal 20-uyda, bank yonida. O‘ninchi avtobus «Bog‘»gacha, keyin to‘g‘ri va chapga. Ko‘rgazma o‘nda ochiladi. Manzilni tuzating.",
+      "twist": "O‘ninchi avtobus yurmaydi; metroda «Markaz»gacha, keyin o‘ngga yurish variantini bering. A yangi yo‘lni qaytarsin.",
+      "success": "Hozirgi joy, transport, tushish nuqtasi, piyoda yo‘l va manzil tasdiqlanadi; o‘zgarishga mos reja aytiladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. Yangi xaritada joy, manzil, transport, ketma-ketlik va aniqlashtirishni kuzating. Иду на автобусе va в аптеке/в аптеку xatolarini yakunda tahlil qiling. Tayanchga belgili xarita, ilg‘orga ikkinchi to‘siq bering. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Tuzatilgan yakuniy yo‘lni ovozga yozing.",
+      "Sherik bilan boshqa boshlang‘ich nuqtadan shu manzilga yo‘l toping.",
+      "Baholashdagi ikki til xatosini to‘g‘ri gaplar bilan yozing."
+    ],
+    "exit": "Matnsiz joyingizni ayting, uch yo‘l savoli bering, transport va ikki piyoda qadamni qaytaring, bitta o‘zgarishga moslashing; besh mezondan to‘rttasini mustaqil bajaring."
+  },
+  {
+    "no": 61,
+    "month": 6,
+    "week": 21,
+    "title": "Kecha nima qilganingizni aytish",
+    "objective": "Kecha qilgan uch ishini aytadi va erkak hamda ayol haqida bittadan o‘tgan zamon gapini tuzadi.",
+    "grammar": {
+      "title": "O‘tgan zamonda jins va son",
+      "rule": "Ko‘p fe’llarda -ть o‘rniga -л qo‘shiladi: работать → работал. Erkak uchun работал, ayol uchun работала, o‘rta jins uchun работало, ko‘plik uchun работали. Я bilan ham gapiruvchining jinsi hisobga olinadi; shaxsga qarab alohida tugash yo‘q.",
+      "examples": [
+        {
+          "ru": "Вчера я работал дома.",
+          "uz": "Kecha men uyda ishladim (erkak)."
+        },
+        {
+          "ru": "Вчера я работала дома.",
+          "uz": "Kecha men uyda ishladim (ayol)."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ayol nomidan to‘ldiring: Вчера я … (читать).",
+          "answer": "Вчера я читала.",
+          "explanation": "Ayol gapiruvchi uchun -ла ishlatiladi."
+        },
+        {
+          "prompt": "To‘ldiring: Мы … музыку. (слушать)",
+          "answer": "Мы слушали музыку.",
+          "explanation": "Мы ko‘plik bo‘lgani uchun -ли kerak."
+        },
+        {
+          "prompt": "Tuzating: Мой брат работала.",
+          "answer": "Мой брат работал.",
+          "explanation": "Брат erkak jinsda, shuning uchun работал."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Что ты делал вчера?",
+        "uz": "Kecha nima qilding? (erkakka)"
+      },
+      {
+        "ru": "Что ты делала вчера?",
+        "uz": "Kecha nima qilding? (ayolga)"
+      },
+      {
+        "ru": "Я работал дома.",
+        "uz": "Men uyda ishladim (erkak)."
+      },
+      {
+        "ru": "Я читала книгу.",
+        "uz": "Men kitob o‘qidim (ayol)."
+      },
+      {
+        "ru": "Мы слушали музыку.",
+        "uz": "Biz musiqa tingladik."
+      },
+      {
+        "ru": "Вчера вечером.",
+        "uz": "Kecha kechqurun."
+      },
+      {
+        "ru": "А ты?",
+        "uz": "Sen-chi?"
+      },
+      {
+        "ru": "Я отдыхал.",
+        "uz": "Men dam oldim (erkak)."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Малика, что ты делала вчера?",
+        "uz": "Malika, kecha nima qilding?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Утром я работала дома. А ты, Тимур?",
+        "uz": "Ertalab uyda ishladim. Sen-chi, Timur?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я работал в офисе. А вечером?",
+        "uz": "Men ofisda ishladim. Kechqurun-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Читала книгу и слушала музыку.",
+        "uz": "Kitob o‘qidim va musiqa tingladim."
+      },
+      {
+        "speaker": "A",
+        "ru": "А я вечером отдыхал.",
+        "uz": "Men esa kechqurun dam oldim."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо! Я тоже потом отдыхала.",
+        "uz": "Yaxshi! Men ham keyin dam oldim."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где Малика работала утром?",
+        "answer": "Дома."
+      },
+      {
+        "prompt": "Где работал Тимур?",
+        "answer": "В офисе."
+      },
+      {
+        "prompt": "Что Малика делала вечером?",
+        "answer": "Читала книгу, слушала музыку, потом отдыхала."
+      }
+    ],
+    "roleplay": {
+      "a": "Kecha ertalab ishladingiz, kechqurun kitob o‘qidingiz va dam oldingiz. O‘zingizga mos jinsda hikoya qiling.",
+      "b": "Kecha musiqa tingladingiz va o‘qidingiz. A ning ertalab va kechqurun qilgan ishlarini alohida so‘rang.",
+      "twist": "Ikkalangiz kechqurun birga dam olganingizni qo‘shib, мы shaklida gapiring.",
+      "success": "Uch o‘tgan ish aytiladi, shaxs jinsiga mos kamida uch fe’l va bir ko‘plik fe’li ishlatiladi."
+    },
+    "teacherTip": "O‘zbekchada fe’l jinsga moslashmagani uchun ayolning я работал deyishini ehtiyotkor tuzating. Ismli kartalar bilan -л/-ла ni taqqoslang. Tayanchga fe’l o‘zagi bering; ilg‘orlar sherigi haqida hikoya qilsin.",
+    "homework": [
+      "Kecha qilgan uch ishingizni jinsingizga mos shaklda ovozga yozing.",
+      "Sherikdan kechagi ikki ishini so‘rab, u haqida qayta ayting.",
+      "Работать, читать, отдыхать fe’llarini erkak, ayol va ko‘plikda yozing."
+    ],
+    "exit": "Kecha haqida uch gap, sherigingiz haqida bir gap va мы bilan bir gap ayting."
+  },
+  {
+    "no": 62,
+    "month": 6,
+    "week": 21,
+    "title": "Kecha qayerda bo‘lganingizni aytish",
+    "objective": "O‘zi va ikki tanishining kechagi joyini aytadi, ikki joy haqidagi noto‘g‘ri taxminni tuzatadi.",
+    "grammar": {
+      "title": "Был, была, было, были bilan o‘tgan joylashuv",
+      "rule": "Hozirgi я в кафе gapida fe’l aytilmaydi, lekin o‘tmishda быть shakli kerak: я был/была в кафе. Erkak — был, ayol — была, o‘rta jins — было, ko‘plik — были. Joy в/на + o‘rin shaklida qoladi; не fe’ldan oldin keladi.",
+      "examples": [
+        {
+          "ru": "Вчера я была в аптеке.",
+          "uz": "Kecha men dorixonada bo‘ldim (ayol)."
+        },
+        {
+          "ru": "Мы не были на рынке.",
+          "uz": "Biz bozorda bo‘lmadik."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Малика … в банке. (быть)",
+          "answer": "Малика была в банке.",
+          "explanation": "Ayol jinsdagi Малика bilan была."
+        },
+        {
+          "prompt": "To‘ldiring: Вчера кафе … открыто. (быть)",
+          "answer": "Вчера кафе было открыто.",
+          "explanation": "Кафе o‘rta jins, shuning uchun было."
+        },
+        {
+          "prompt": "Tuzating: Вчера мы был в парк.",
+          "answer": "Вчера мы были в парке.",
+          "explanation": "Мы bilan были, joylashuv uchun в парке kerak."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Где ты был вчера?",
+        "uz": "Kecha qayerda eding? (erkakka)"
+      },
+      {
+        "ru": "Где ты была вечером?",
+        "uz": "Kechqurun qayerda eding? (ayolga)"
+      },
+      {
+        "ru": "Я был в банке.",
+        "uz": "Men bankda edim (erkak)."
+      },
+      {
+        "ru": "Я была на рынке.",
+        "uz": "Men bozorda edim (ayol)."
+      },
+      {
+        "ru": "Мы были дома.",
+        "uz": "Biz uyda edik."
+      },
+      {
+        "ru": "Нет, я там не был.",
+        "uz": "Yo‘q, men u yerda bo‘lmaganman (erkak)."
+      },
+      {
+        "ru": "Кафе было открыто.",
+        "uz": "Kafe ochiq edi."
+      },
+      {
+        "ru": "А где была Малика?",
+        "uz": "Malika-chi, qayerda edi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Тимур, ты вчера был на рынке?",
+        "uz": "Timur, kecha bozorda edingmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, я был в банке. А ты, Малика?",
+        "uz": "Yo‘q, bankda edim. Sen-chi, Malika?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Я была на рынке, потом в кафе.",
+        "uz": "Men bozorda, keyin kafeda edim."
+      },
+      {
+        "speaker": "B",
+        "ru": "Кафе было открыто вечером?",
+        "uz": "Kafe kechqurun ochiq edimi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, было открыто. Мы с сестрой были там.",
+        "uz": "Ha, ochiq edi. Opam bilan o‘sha yerda edik."
+      },
+      {
+        "speaker": "B",
+        "ru": "А я вечером был дома.",
+        "uz": "Men esa kechqurun uyda edim."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Был ли Тимур на рынке?",
+        "answer": "Нет, он был в банке."
+      },
+      {
+        "prompt": "Где Малика была после рынка?",
+        "answer": "В кафе."
+      },
+      {
+        "prompt": "Где Тимур был вечером?",
+        "answer": "Дома."
+      }
+    ],
+    "roleplay": {
+      "a": "Kecha bozorda va kafeda bo‘lgansiz. Sherigingiz sizni bankda deb o‘ylaydi; uni tuzating.",
+      "b": "Kecha bankda, kechqurun uyda bo‘lgansiz. A sizni bozorda deb o‘ylaydi. Uning kechki joyini so‘rang.",
+      "twist": "Ikkalangizning do‘stingiz kecha bekatda bo‘lganini uchinchi shaxsda ayting.",
+      "success": "Uch kishining joyi aytiladi, ikki noto‘g‘ri taxmin tuzatiladi va был/была/были mos ishlatiladi."
+    },
+    "teacherTip": "Вчера я в банке deb был ni tushirishni hozir/kecha juftligi bilan tuzating. Tayanchga vaqt belgisi va ism kartalari; ilg‘orlarga o‘rta jinsdagi кафе было gapini bering.",
+    "homework": [
+      "Kecha uch joyda bo‘lganingiz yoki bo‘lmaganingiz haqida ovoz yozing.",
+      "Sherikning ikki noto‘g‘ri taxminini не был/не была bilan tuzating.",
+      "Был, была, было, были bilan to‘rtta gap yozing."
+    ],
+    "exit": "Ikki kishining kechagi joyini ayting va siz haqingizdagi bir noto‘g‘ri taxminni rad eting."
+  },
+  {
+    "no": 63,
+    "month": 6,
+    "week": 21,
+    "title": "Muzeyda qolgan buyumni izlash",
+    "objective": "Buyum izlashda kechagi ikki joyini va ikki faoliyatini aytib, xodimning taxminini tuzatadi.",
+    "grammar": {
+      "title": "Birlashtirish: o‘tgan joy va faoliyat",
+      "rule": "O‘tgan joy uchun был/была + в/на o‘rin shakli, faoliyat uchun jinsga mos -л/-ла/-ли ishlatiladi. Inkor не fe’ldan oldin: не был, не читала. Buyumning oldingi joyi ham jinsga mos: сумка была.",
+      "examples": [
+        {
+          "ru": "Вчера я была в музее и читала в кафе.",
+          "uz": "Kecha men muzeyda bo‘ldim va kafeda o‘qidim (ayol)."
+        },
+        {
+          "ru": "Сумка была в кафе, не в зале.",
+          "uz": "Sumka kafeda edi, zalda emas."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Моя сумка … в кафе. (быть)",
+          "answer": "Моя сумка была в кафе.",
+          "explanation": "Сумка ayol jinsda, shuning uchun была."
+        },
+        {
+          "prompt": "Erkak nomidan ayting: Kecha muzeyda edim va kafeda dam oldim.",
+          "answer": "Вчера я был в музее и отдыхал в кафе.",
+          "explanation": "Erkak uchun был va отдыхал mos keladi."
+        },
+        {
+          "prompt": "Tuzating: Мы была в зале и слушал музыку.",
+          "answer": "Мы были в зале и слушали музыку.",
+          "explanation": "Мы bilan ikkala fe’l ham ko‘plikda."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Я ищу сумку.",
+        "uz": "Men sumkamni izlayapman."
+      },
+      {
+        "ru": "Вчера я была здесь.",
+        "uz": "Kecha shu yerda edim (ayol)."
+      },
+      {
+        "ru": "Вы были в зале?",
+        "uz": "Siz zalda bo‘lganmidingiz?"
+      },
+      {
+        "ru": "Потом я отдыхала в кафе.",
+        "uz": "Keyin kafeda dam oldim (ayol)."
+      },
+      {
+        "ru": "Какого цвета сумка?",
+        "uz": "Sumkaning rangi qanday?"
+      },
+      {
+        "ru": "Она синяя.",
+        "uz": "U ko‘k."
+      },
+      {
+        "ru": "Это моя сумка!",
+        "uz": "Bu mening sumkam!"
+      },
+      {
+        "ru": "Спасибо за помощь.",
+        "uz": "Yordamingiz uchun rahmat."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Здравствуйте! Я ищу сумку. Вчера я была в музее.",
+        "uz": "Assalomu alaykum! Sumkamni izlayapman. Kecha muzeyda edim."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вы были в зале, потом на улице?",
+        "uz": "Siz zalda, keyin ko‘chada bo‘lganmidingiz?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Нет, потом я была в кафе. Там я читала и отдыхала.",
+        "uz": "Yo‘q, keyin kafeda edim. U yerda o‘qidim va dam oldim."
+      },
+      {
+        "speaker": "B",
+        "ru": "Какого цвета сумка?",
+        "uz": "Sumkaning rangi qanday?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Синяя. Она была в кафе.",
+        "uz": "Ko‘k. U kafeda edi."
+      },
+      {
+        "speaker": "B",
+        "ru": "Вот синяя сумка. Проверьте, пожалуйста.",
+        "uz": "Mana ko‘k sumka. Iltimos, tekshiring."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что ищет A?",
+        "answer": "Синюю сумку."
+      },
+      {
+        "prompt": "Где A была после зала?",
+        "answer": "В кафе."
+      },
+      {
+        "prompt": "Что A делала в кафе?",
+        "answer": "Читала и отдыхала."
+      }
+    ],
+    "roleplay": {
+      "a": "Kecha muzey zali va kafeda bo‘lgansiz. Kafeda kitob o‘qigansiz. Ko‘k sumkangizni izlab xodimga voqeani ayting.",
+      "b": "Topilgan buyumlar xodimisiz. Ko‘k va qora sumka bor. Mehmon qayerda bo‘lganini, nima qilganini va sumka rangini aniqlang.",
+      "twist": "Ko‘rsatilgan ko‘k sumka sizniki emas; A o‘z sumkasi kichik ekanini qo‘shsin.",
+      "success": "Ikki joy va ikki faoliyat aytiladi, bir taxmin tuzatiladi va buyum ikki belgi bilan ajratiladi."
+    },
+    "teacherTip": "Сумка был xatosini ot jinsi bilan tuzating; gapiruvchi jinsi buyum fe’liga ko‘chmasin. Tayanchga kechagi joylar rasmini bering; ilg‘orlar voqeani teskari savollardan tiklasin.",
+    "homework": [
+      "Yo‘qolgan buyum haqida ikki joyli ovozli murojaat yozing.",
+      "Sherik xodim sifatida uch savol bersin, siz javob bering.",
+      "O‘ylab topilgan buyumning ikki belgisi va kechagi joyini yozing."
+    ],
+    "exit": "Buyum izlayotganda ikki joy, ikki faoliyat va buyumning ikki belgisini ayting."
+  },
+  {
+    "no": 64,
+    "month": 6,
+    "week": 22,
+    "title": "Dam olish kunidagi sayohatni hikoya qilish",
+    "objective": "O‘tgan dam olish kuni haqida borilgan joy, transport va ikki faoliyatdan iborat besh gap aytadi.",
+    "grammar": {
+      "title": "O‘tgan tashriflar: ходил va ездил",
+      "rule": "Oldingi borib-kelish yoki tashrif haqida ходил/ходила/ходили va ездил/ездила/ездили ishlatiladi. Ездил transportdagi safarni bildiradi; ходил piyoda tashrif yoki tadbirga borishni aytadi. Bu darsda aniq piyoda sayr va transportli sayohatni taqqoslang; manzil tushumda qoladi.",
+      "examples": [
+        {
+          "ru": "В субботу я ходил в парк пешком.",
+          "uz": "Shanba kuni bog‘ga piyoda borib keldim (erkak)."
+        },
+        {
+          "ru": "Мы ездили в Самарканд на поезде.",
+          "uz": "Biz Samarqandga poyezdda borib keldik."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ayol nomidan to‘ldiring: Я … в Самарканд на поезде. (ездить)",
+          "answer": "Я ездила в Самарканд на поезде.",
+          "explanation": "Transport safari va ayol jins uchun ездила."
+        },
+        {
+          "prompt": "To‘ldiring: Мы … в парк пешком. (ходить)",
+          "answer": "Мы ходили в парк пешком.",
+          "explanation": "Piyoda tashrif va ko‘plik uchun ходили."
+        },
+        {
+          "prompt": "Tuzating: Он ездил в Самарканде.",
+          "answer": "Он ездил в Самарканд.",
+          "explanation": "Safar manzili в Самарканд; в Самарканде joylashuvni bildiradi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Как прошли выходные?",
+        "uz": "Dam olish kunlari qanday o‘tdi?"
+      },
+      {
+        "ru": "Я ходил в парк.",
+        "uz": "Men bog‘ga borib keldim (erkak)."
+      },
+      {
+        "ru": "Мы ездили в Самарканд.",
+        "uz": "Biz Samarqandga borib keldik."
+      },
+      {
+        "ru": "На поезде.",
+        "uz": "Poyezdda."
+      },
+      {
+        "ru": "Сначала мы гуляли.",
+        "uz": "Avval sayr qildik."
+      },
+      {
+        "ru": "Потом обедали в кафе.",
+        "uz": "Keyin kafeda tushlik qildik."
+      },
+      {
+        "ru": "Было интересно.",
+        "uz": "Qiziqarli bo‘ldi."
+      },
+      {
+        "ru": "А в воскресенье?",
+        "uz": "Yakshanba kuni-chi?"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Малика, как прошли выходные?",
+        "uz": "Malika, dam olish kunlari qanday o‘tdi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В субботу мы ездили в Самарканд на поезде.",
+        "uz": "Shanba kuni Samarqandga poyezdda borib keldik."
+      },
+      {
+        "speaker": "A",
+        "ru": "Что вы там делали?",
+        "uz": "U yerda nima qildingiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Сначала гуляли, потом обедали в кафе.",
+        "uz": "Avval sayr qildik, keyin kafeda tushlik qildik."
+      },
+      {
+        "speaker": "A",
+        "ru": "А в воскресенье?",
+        "uz": "Yakshanba kuni-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я ходила в парк пешком. Было спокойно.",
+        "uz": "Bog‘ga piyoda borib keldim. Tinch bo‘ldi."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Как друзья ездили в Самарканд?",
+        "answer": "На поезде."
+      },
+      {
+        "prompt": "Что они делали после прогулки?",
+        "answer": "Обедали в кафе."
+      },
+      {
+        "prompt": "Куда Малика ходила в воскресенье?",
+        "answer": "В парк."
+      }
+    ],
+    "roleplay": {
+      "a": "Shanba Samarqandga poyezdda borib, sayr va tushlik qilgansiz. Yakshanba bog‘ga piyoda borgansiz. Ketma-ket hikoya qiling.",
+      "b": "Siz uyda dam olgansiz. Sherikdan safar joyi, transporti va ikki faoliyatini so‘rang.",
+      "twist": "Suhbatni birinchi shaxsdan do‘st haqidagi uchinchi shaxs hikoyasiga aylantiring.",
+      "success": "Manzil, transport, ikki faoliyat va yakshanbadagi tashrif besh gapda aytiladi."
+    },
+    "teacherTip": "Я ехал в Самарканд ham grammatik bo‘lishi mumkin, ammo yo‘ldagi jarayonni bildiradi; bu vazifada tugagan tashrifni ездил bilan qayta ayttiring. Tayanchga vaqt chizig‘i, ilg‘orga uchinchi shaxs hikoyasini bering.",
+    "homework": [
+      "Haqiqiy yoki o‘ylab topilgan dam olish kunini besh gapda ovozga yozing.",
+      "Sherikdan safar transporti va faoliyatlari haqida uch savol so‘rang.",
+      "Ходил/ходила va ездил/ездила bilan ikki juft gap yozing."
+    ],
+    "exit": "Bir piyoda tashrif va bir transport safari haqida joy, usul va ikki ishni ayting."
+  },
+  {
+    "no": 65,
+    "month": 6,
+    "week": 22,
+    "title": "Ertangi ishlar rejasini aytish",
+    "objective": "Ertangi kun uchun uch faoliyatni rejalashtiradi va sherigining rejasiga ikki savol beradi.",
+    "grammar": {
+      "title": "Буду + infinitiv bilan kelasi faoliyat",
+      "rule": "Kelajakdagi faoliyat uchun быть ning kelasi shakli va tugallanmagan tur infinitivi ishlatiladi: буду работать, будешь читать, будет отдыхать, будем готовить, будете учиться, будут гулять. Infinitiv o‘zgarmaydi; kelasi shakl jinsga emas, shaxs va songa moslashadi.",
+      "examples": [
+        {
+          "ru": "Завтра я буду работать дома.",
+          "uz": "Ertaga men uyda ishlayman."
+        },
+        {
+          "ru": "Вечером мы будем готовить ужин.",
+          "uz": "Kechqurun biz kechki ovqat tayyorlaymiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Ты … читать вечером.",
+          "answer": "Ты будешь читать вечером.",
+          "explanation": "Ты bilan kelasi zamon yordamchi shakli будешь ishlatiladi."
+        },
+        {
+          "prompt": "Tuzating: Мы будем готовим ужин.",
+          "answer": "Мы будем готовить ужин.",
+          "explanation": "Будем dan keyin shaxsli готовим emas, infinitiv готовить kerak."
+        },
+        {
+          "prompt": "To‘ldiring: Малика … работать, Тимур тоже … работать.",
+          "answer": "Малика будет работать, Тимур тоже будет работать.",
+          "explanation": "Uchinchi shaxs birlikda jinsdan qat’i nazar будет."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Что ты будешь делать завтра?",
+        "uz": "Ertaga nima qilasan?"
+      },
+      {
+        "ru": "Я буду работать дома.",
+        "uz": "Men uyda ishlayman."
+      },
+      {
+        "ru": "Мы будем готовить ужин.",
+        "uz": "Biz kechki ovqat tayyorlaymiz."
+      },
+      {
+        "ru": "Утром буду учиться.",
+        "uz": "Ertalab o‘qiyman."
+      },
+      {
+        "ru": "Вечером буду отдыхать.",
+        "uz": "Kechqurun dam olaman."
+      },
+      {
+        "ru": "А после обеда?",
+        "uz": "Tushlikdan keyin-chi?"
+      },
+      {
+        "ru": "Ты будешь дома работать?",
+        "uz": "Uyda ishlaysanmi?"
+      },
+      {
+        "ru": "Хорошего дня!",
+        "uz": "Kuningiz yaxshi o‘tsin!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Что ты будешь делать завтра?",
+        "uz": "Ertaga nima qilasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Утром буду учиться, а после обеда работать дома.",
+        "uz": "Ertalab o‘qiyman, tushlikdan keyin uyda ishlayman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А вечером будешь готовить?",
+        "uz": "Kechqurun ovqat tayyorlaysanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, мы с братом будем готовить ужин.",
+        "uz": "Ha, akam bilan kechki ovqat tayyorlaymiz."
+      },
+      {
+        "speaker": "A",
+        "ru": "Я вечером буду читать.",
+        "uz": "Men kechqurun kitob o‘qiyman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Потом я тоже буду отдыхать.",
+        "uz": "Yaxshi. Keyin men ham dam olaman."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Что B будет делать утром?",
+        "answer": "Учиться."
+      },
+      {
+        "prompt": "Где B будет работать?",
+        "answer": "Дома."
+      },
+      {
+        "prompt": "С кем B будет готовить ужин?",
+        "answer": "С братом."
+      }
+    ],
+    "roleplay": {
+      "a": "Ertaga ertalab o‘qiysiz, tushdan keyin ishlaysiz, kechqurun ovqat tayyorlaysiz. Rejangizni ayting.",
+      "b": "Ertalab ishlaysiz, kechqurun kitob o‘qiysiz. A dan ikki faoliyatning joyi va vaqtini so‘rang.",
+      "twist": "Kechqurun birga ovqat tayyorlashga kelishing va мы bilan yangi gap tuzing.",
+      "success": "Uch kelasi faoliyat, ikki savol va bir будем + infinitiv gapi aytiladi."
+    },
+    "teacherTip": "Буду работаю xatosida ikkinchi fe’lni lug‘at shakliga qaytaring. O‘zbekchadagi bitta kelasi fe’lga qarshi ruscha ikki bo‘lakni belgilang. Tayanchga infinitivlar, ilg‘orga вы va они shakllarini bering.",
+    "homework": [
+      "Ertangi uch faoliyatingizni ovozga yozing.",
+      "Sherikning rejasini ikki savol bilan aniqlab, u haqida ayting.",
+      "Я, мы, они bilan uch kelasi gap yozing."
+    ],
+    "exit": "Ertangi uch ishni ayting va sherigingizdan ikkita reja savolini so‘rang."
+  },
+  {
+    "no": 66,
+    "month": 6,
+    "week": 22,
+    "title": "Mahalla tadbirida vazifalarni topshirish",
+    "objective": "Kecha bajarilgan ikki faoliyatni va ertaga bajariladigan uch ishni ajratib aytadi.",
+    "grammar": {
+      "title": "Birlashtirish: kecha va ertaga",
+      "rule": "Вчера bilan jins/sonli o‘tgan fe’l: готовила, работали. Завтра bilan shaxsga mos буду/будем + infinitiv: буду готовить, будем работать. Sayohat hisoboti uchun ездили, kelasi yo‘lga chiqish uchun поедем oldingi shakllari qo‘llanadi.",
+      "examples": [
+        {
+          "ru": "Вчера мы готовили, завтра будем убирать.",
+          "uz": "Kecha ovqat tayyorladik, ertaga tozalaymiz."
+        },
+        {
+          "ru": "Вчера я ездила на рынок, завтра поеду в магазин.",
+          "uz": "Kecha bozorga borib keldim, ertaga do‘konga boraman (ayol)."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Вчера мы …, завтра будем … . (работать)",
+          "answer": "Вчера мы работали, завтра будем работать.",
+          "explanation": "O‘tmishda -ли, kelajakda будем + infinitiv ishlatiladi."
+        },
+        {
+          "prompt": "Ayol nomidan tuzating: Вчера я готовил, завтра буду готовила.",
+          "answer": "Вчера я готовила, завтра буду готовить.",
+          "explanation": "O‘tmishda ayol shakli, kelasi yordamchidan keyin infinitiv kerak."
+        },
+        {
+          "prompt": "Ruscha ayting: Ertaga biz bozorga avtobusda boramiz.",
+          "answer": "Завтра мы поедем на рынок на автобусе.",
+          "explanation": "Rejalangan transport safari uchun oldingi поедем shakli ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Что вы делали вчера?",
+        "uz": "Kecha nima qildingiz?"
+      },
+      {
+        "ru": "Мы готовили еду.",
+        "uz": "Biz ovqat tayyorladik."
+      },
+      {
+        "ru": "Я работала в зале.",
+        "uz": "Men zalda ishladim (ayol)."
+      },
+      {
+        "ru": "Что будем делать завтра?",
+        "uz": "Ertaga nima qilamiz?"
+      },
+      {
+        "ru": "Я буду убирать.",
+        "uz": "Men tozalayman."
+      },
+      {
+        "ru": "Мы поедем на рынок.",
+        "uz": "Biz bozorga transportda boramiz."
+      },
+      {
+        "ru": "Кто будет готовить?",
+        "uz": "Kim ovqat tayyorlaydi?"
+      },
+      {
+        "ru": "Давайте проверим список.",
+        "uz": "Keling, ro‘yxatni tekshiramiz."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Малика, что вы делали вчера для праздника?",
+        "uz": "Malika, bayram uchun kecha nima qildingiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Мы готовили еду, а потом работали в зале.",
+        "uz": "Ovqat tayyorladik, keyin zalda ishladik."
+      },
+      {
+        "speaker": "A",
+        "ru": "Что будем делать завтра?",
+        "uz": "Ertaga nima qilamiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Я буду убирать зал. Ты будешь готовить?",
+        "uz": "Men zalni tozalayman. Sen ovqat tayyorlaysanmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да, а утром мы поедем на рынок.",
+        "uz": "Ha, ertalab esa bozorga boramiz."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо. Тогда завтра три дела: рынок, уборка и готовка.",
+        "uz": "Yaxshi. Unda ertaga uchta ish: bozor, tozalash va ovqat tayyorlash."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Какие два дела были вчера?",
+        "answer": "Готовили еду и работали в зале."
+      },
+      {
+        "prompt": "Что Малика будет делать завтра?",
+        "answer": "Убирать зал."
+      },
+      {
+        "prompt": "Куда друзья поедут утром?",
+        "answer": "На рынок."
+      }
+    ],
+    "roleplay": {
+      "a": "Mahalla tadbirida kecha ovqat tayyorlab, zalda ishlagansiz. Ertaga zalni tozalaysiz. B bilan qolgan ishlarni bo‘lishing.",
+      "b": "Ertaga ertalab mahsulot olishingiz, keyin ovqat tayyorlashingiz mumkin. A dan kechagi ikki ishni bilib oling.",
+      "twist": "Bozor yopiq bo‘ladi; do‘konga safarni rejalashtiring va vazifalarni yana tasdiqlang.",
+      "success": "Ikki o‘tgan ish, uch kelasi ish va mas’ul odamlar aniq aytiladi; zamonlar aralashmaydi."
+    },
+    "teacherTip": "Вчера буду… xatosida vaqt kartasini ko‘rsatib fe’lni o‘quvchining o‘zi tuzatsin. Tayanchga kecha/ertaga jadvali, ilg‘orga vazifalar almashinuvi bering.",
+    "homework": [
+      "Tadbir bo‘yicha ikki o‘tgan va uch kelasi ishni ovozga yozing.",
+      "Sherik bilan uch vazifani kim bajarishini kelishing.",
+      "Kecha va ertaga ustunlarida besh to‘liq gap yozing."
+    ],
+    "exit": "Ikki kechagi ishni hisobot qilib, ertangi uch vazifani odamlar bo‘yicha ayting."
+  },
+  {
+    "no": 67,
+    "month": 6,
+    "week": 23,
+    "title": "Birga sayrga taklif qilish",
+    "objective": "Ikki taklif beradi va sherigi bilan kun, soat hamda uchrashuv joyini kelishadi.",
+    "grammar": {
+      "title": "Birgalikdagi taklif: давай va давайте",
+      "rule": "Bir yaqin kishiga давай, hurmat yoki guruhga давайте ishlatiladi. Birgalikdagi aniq taklifda birinchi shaxs ko‘plik kelasi shakli kelishi mumkin: давай пойдём, давайте поедем. Встретимся ni uchrashamiz ma’nosidagi tayyor shakl sifatida o‘rganing.",
+      "examples": [
+        {
+          "ru": "Давай пойдём в парк.",
+          "uz": "Keling, bog‘ga boraylik (yaqin kishiga)."
+        },
+        {
+          "ru": "Давайте встретимся в шесть.",
+          "uz": "Keling, soat oltida uchrashaylik."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Do‘stga taklifni to‘ldiring: … пойдём в кафе.",
+          "answer": "Давай пойдём в кафе.",
+          "explanation": "Bitta yaqin kishiga давай ishlatiladi."
+        },
+        {
+          "prompt": "Guruhga ayting: Keling, ertaga uchrashamiz.",
+          "answer": "Давайте встретимся завтра.",
+          "explanation": "Guruh uchun давайте va birgalikdagi встретимся kerak."
+        },
+        {
+          "prompt": "Tuzating: Давай я пойдём в парк.",
+          "answer": "Давай пойдём в парк.",
+          "explanation": "Пойдём birgalikdagi мы shakli; я bilan mos kelmaydi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Давай пойдём в парк.",
+        "uz": "Keling, bog‘ga boraylik."
+      },
+      {
+        "ru": "Хочешь пойти со мной?",
+        "uz": "Men bilan borishni xohlaysanmi?"
+      },
+      {
+        "ru": "С удовольствием!",
+        "uz": "Bajonidil!"
+      },
+      {
+        "ru": "Когда встретимся?",
+        "uz": "Qachon uchrashamiz?"
+      },
+      {
+        "ru": "Давай в субботу.",
+        "uz": "Keling, shanba kuni."
+      },
+      {
+        "ru": "Во сколько?",
+        "uz": "Soat nechada?"
+      },
+      {
+        "ru": "Встретимся рядом с кафе.",
+        "uz": "Kafe yonida uchrashamiz."
+      },
+      {
+        "ru": "Договорились!",
+        "uz": "Kelishdik!"
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Давай пойдём в парк в субботу.",
+        "uz": "Keling, shanba kuni bog‘ga boraylik."
+      },
+      {
+        "speaker": "B",
+        "ru": "С удовольствием! Во сколько?",
+        "uz": "Bajonidil! Soat nechada?"
+      },
+      {
+        "speaker": "A",
+        "ru": "В пять. Встретимся рядом с кафе?",
+        "uz": "Soat beshda. Kafe yonida uchrashamizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. А потом пойдём в кафе?",
+        "uz": "Ha. Keyin kafega boramizmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Хорошо. Сначала парк, потом кафе.",
+        "uz": "Yaxshi. Avval bog‘, keyin kafe."
+      },
+      {
+        "speaker": "B",
+        "ru": "Договорились! В субботу в пять.",
+        "uz": "Kelishdik! Shanba kuni soat beshda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Куда друзья пойдут сначала?",
+        "answer": "В парк."
+      },
+      {
+        "prompt": "Когда они встретятся?",
+        "answer": "В субботу в пять."
+      },
+      {
+        "prompt": "Где они встретятся?",
+        "answer": "Рядом с кафе."
+      }
+    ],
+    "roleplay": {
+      "a": "Do‘stingizni shanba bog‘ga taklif qiling. Sizga soat besh va kafe yonidagi joy qulay.",
+      "b": "Taklifni qabul qiling, vaqt va joyni alohida so‘rang. Sayrdan keyin kafega kirishni taklif qiling.",
+      "twist": "Yomg‘ir bo‘lishi aytiladi; avval kafeda uchrashish rejasiga o‘ting.",
+      "success": "Ikki taklif, kun, soat va joy kelishiladi; suhbat yakunida uch ma’lumot qaytariladi."
+    },
+    "teacherTip": "Давай идёшь kabi ты shaklini пойдём ga tuzating. Tayanchga taklif boshlanishlari bering; ilg‘or o‘quvchi guruhga давайте bilan qayta murojaat qilsin.",
+    "homework": [
+      "Do‘stga kun, vaqt va joyli ovozli taklif yozing.",
+      "Sherik bilan sayr va kafe tartibini kelishing.",
+      "Давай va давайте bilan bittadan taklif yozing."
+    ],
+    "exit": "Taklif bering, sherikning savollariga javob berib, kun-soat-joyni tasdiqlang."
+  },
+  {
+    "no": 68,
+    "month": 6,
+    "week": 23,
+    "title": "Taklifni rad etish va boshqa vaqt taklif qilish",
+    "objective": "Taklifni sabab bilan muloyim rad etadi va ikki muqobil vaqtdan birini kelishadi.",
+    "grammar": {
+      "title": "Могу va не могу + infinitiv",
+      "rule": "Imkoniyat yoki kelish imkonini могу, можешь, может, можем, можете, могут + infinitiv bilan ayting: могу прийти. Inkor не modal fe’ldan oldin keladi: не могу прийти. Sabab alohida gapda yoki потому что bilan beriladi.",
+      "examples": [
+        {
+          "ru": "Я не могу прийти в пять, потому что работаю.",
+          "uz": "Soat beshda kela olmayman, chunki ishlayman."
+        },
+        {
+          "ru": "Мы можем встретиться в семь.",
+          "uz": "Biz soat yettida uchrasha olamiz."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Ты … прийти в семь? (мочь)",
+          "answer": "Ты можешь прийти в семь?",
+          "explanation": "Ты bilan можешь ishlatiladi."
+        },
+        {
+          "prompt": "Tuzating: Я не могу прихожу в пять.",
+          "answer": "Я не могу прийти в пять.",
+          "explanation": "Могу dan keyin shaxsli fe’l emas, infinitiv kerak."
+        },
+        {
+          "prompt": "Ruscha ayting: Biz yakshanba kuni uchrasha olamiz.",
+          "answer": "Мы можем встретиться в воскресенье.",
+          "explanation": "Мы bilan можем, undan keyin встретиться infinitivi keladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Спасибо за приглашение.",
+        "uz": "Taklif uchun rahmat."
+      },
+      {
+        "ru": "К сожалению, не могу.",
+        "uz": "Afsuski, bora olmayman."
+      },
+      {
+        "ru": "Я занят в субботу.",
+        "uz": "Shanba kuni bandman (erkak)."
+      },
+      {
+        "ru": "Я занята до шести.",
+        "uz": "Soat oltigacha bandman (ayol)."
+      },
+      {
+        "ru": "Потому что работаю.",
+        "uz": "Chunki ishlayman."
+      },
+      {
+        "ru": "Давай в воскресенье.",
+        "uz": "Keling, yakshanba kuni."
+      },
+      {
+        "ru": "Можешь прийти в семь?",
+        "uz": "Soat yettida kela olasanmi?"
+      },
+      {
+        "ru": "Да, это удобно.",
+        "uz": "Ha, bu qulay."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Малика, можешь прийти в субботу в пять?",
+        "uz": "Malika, shanba soat beshda kela olasanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Спасибо за приглашение. Не могу, потому что работаю до шести.",
+        "uz": "Taklif uchun rahmat. Kela olmayman, chunki oltigacha ishlayman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Тогда в семь?",
+        "uz": "Unda yettidami?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В субботу вечером я тоже занята. Давай в воскресенье.",
+        "uz": "Shanba kechqurun ham bandman. Keling, yakshanba kuni."
+      },
+      {
+        "speaker": "A",
+        "ru": "Хорошо, в воскресенье в пять, рядом с кафе.",
+        "uz": "Yaxshi, yakshanba soat beshda, kafe yonida."
+      },
+      {
+        "speaker": "B",
+        "ru": "Да, это удобно. Договорились.",
+        "uz": "Ha, bu qulay. Kelishdik."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Почему Малика не может прийти в субботу в пять?",
+        "answer": "Она работает до шести."
+      },
+      {
+        "prompt": "Подходит ли ей суббота в семь?",
+        "answer": "Нет, вечером она тоже занята."
+      },
+      {
+        "prompt": "На какое время друзья договорились?",
+        "answer": "На воскресенье в пять."
+      }
+    ],
+    "roleplay": {
+      "a": "Do‘stni shanba soat beshga taklif qiling. Bo‘lmasa, yettini taklif qiling. Yakshanba beshda ham bo‘shsiz.",
+      "b": "Shanba oltigacha ishlaysiz, kechqurun oilaviy ishingiz bor. Taklifga rahmat aytib, yakshanbani taklif qiling.",
+      "twist": "Yakshanba besh emas, oltida qulay bo‘lib qoladi; bir marta yana kelishing.",
+      "success": "Rad etish, sabab, ikki muqobil vaqt va yakuniy kelishuv aytiladi."
+    },
+    "teacherTip": "Могу приду xatosini infinitiv прийти bilan tuzating. Занят/занята jinsini ham tekshiring. Tayanchga sabab kartalari; ilg‘orga ikki ketma-ket vaqt mos kelmaydigan vaziyat bering.",
+    "homework": [
+      "Taklifni sabab bilan rad etib, yangi vaqtli ovozli xabar yozing.",
+      "Sherik bilan ikki mos kelmagan va bir mos kelgan vaqtni muhokama qiling.",
+      "Могу/не могу bilan uch gap yozing."
+    ],
+    "exit": "Taklifni muloyim rad eting, sabab va boshqa vaqtni ayting, kelishuvni tasdiqlang."
+  },
+  {
+    "no": 69,
+    "month": 6,
+    "week": 23,
+    "title": "Yangi uyga mehmonlikni kelishish",
+    "objective": "Yangi uyga taklifni muhokama qilib, bandlik sababini, yangi vaqtni va borish usulini kelishadi.",
+    "grammar": {
+      "title": "Birlashtirish: taklif, imkon va safar",
+      "rule": "Taklifda давай/давайте + birgalikdagi kelasi shakl, imkoniyatda могу + infinitiv ishlatiladi. Sababni буду работать bilan reja sifatida aytish mumkin. Manzilga transportda yo‘lga chiqish uchun поеду oldingi shakli qo‘llanadi.",
+      "examples": [
+        {
+          "ru": "Не могу прийти в шесть: буду работать.",
+          "uz": "Soat oltida kela olmayman: ishlayman."
+        },
+        {
+          "ru": "Давай встретимся в семь. Я поеду на метро.",
+          "uz": "Keling, soat yettida uchrashamiz. Men metroda boraman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Tuzating: Я не могу приду, буду работаю.",
+          "answer": "Я не могу прийти, буду работать.",
+          "explanation": "Могу va буду dan keyin tegishli infinitivlar kerak."
+        },
+        {
+          "prompt": "Taklifni to‘ldiring: Давай … в семь. (встретиться)",
+          "answer": "Давай встретимся в семь.",
+          "explanation": "Oldingi birgalikdagi taklif shakli встретимся ishlatiladi."
+        },
+        {
+          "prompt": "Ruscha ayting: Men ertaga metroda boraman.",
+          "answer": "Я завтра поеду на метро.",
+          "explanation": "Rejalangan transport safari поеду bilan aytiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Приходи в гости!",
+        "uz": "Mehmonga kel!"
+      },
+      {
+        "ru": "Поздравляю с новосельем!",
+        "uz": "Yangi uy muborak bo‘lsin!"
+      },
+      {
+        "ru": "Спасибо за приглашение.",
+        "uz": "Taklif uchun rahmat."
+      },
+      {
+        "ru": "В шесть не могу.",
+        "uz": "Soat oltida kela olmayman."
+      },
+      {
+        "ru": "Я буду работать.",
+        "uz": "Men ishlayman."
+      },
+      {
+        "ru": "Давай в семь.",
+        "uz": "Keling, soat yettida."
+      },
+      {
+        "ru": "Как к тебе добраться?",
+        "uz": "Sening uyingga qanday borsa bo‘ladi?"
+      },
+      {
+        "ru": "Я поеду на метро.",
+        "uz": "Men metroda boraman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "У меня новая квартира. Приходи завтра в шесть!",
+        "uz": "Yangi kvartiram bor. Ertaga soat oltida kel!"
+      },
+      {
+        "speaker": "B",
+        "ru": "Поздравляю с новосельем! Спасибо, но в шесть я буду работать.",
+        "uz": "Yangi uy muborak! Rahmat, lekin oltida ishlayman."
+      },
+      {
+        "speaker": "A",
+        "ru": "Можешь прийти в семь?",
+        "uz": "Yettida kela olasanmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Да. Как к тебе добраться?",
+        "uz": "Ha. Uyingga qanday borsa bo‘ladi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "На метро до центра, потом пешком. Дом рядом с аптекой.",
+        "uz": "Metroda markazgacha, keyin piyoda. Uy dorixona yonida."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо, поеду на метро. Завтра в семь, договорились.",
+        "uz": "Yaxshi, metroda boraman. Ertaga yettida, kelishdik."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "По какому поводу A приглашает B?",
+        "answer": "У A новая квартира."
+      },
+      {
+        "prompt": "Почему B не может прийти в шесть?",
+        "answer": "B будет работать."
+      },
+      {
+        "prompt": "Рядом с чем находится дом?",
+        "answer": "Рядом с аптекой."
+      }
+    ],
+    "roleplay": {
+      "a": "Yangi uyingizga do‘stni ertaga oltiga taklif qiling. Uy metro markaziy bekati yaqinida, bank yonida.",
+      "b": "Oltida ishlaysiz, yettida kelishingiz mumkin. Tabriklang, yangi vaqt va uyga borish yo‘lini biling.",
+      "twist": "Metro ishlamaydi; mezbon avtobusda «Bank» bekatigacha borishni taklif qilsin.",
+      "success": "Tabrik, rad etish sababi, yangi vaqt, transport va yakuniy manzil kelishiladi."
+    },
+    "teacherTip": "В семь буду приехать kabi aralash shaklni bu darajada могу прийти va поеду qoliplariga qaytaring. Tayanchga uchrashuv kartasi, ilg‘orga yo‘l almashuvini bering.",
+    "homework": [
+      "Yangi uyga taklifga javobni vaqt va transport bilan ovozga yozing.",
+      "Sherik bilan mos kelmagan dastlabki vaqtni almashtiring.",
+      "Mehmonlik uchun vaqt, belgi va transportli uch gap yozing."
+    ],
+    "exit": "Taklifga javob bering, bandlik sababini ayting, yangi vaqt va borish usulini tasdiqlang."
+  },
+  {
+    "no": 70,
+    "month": 6,
+    "week": 24,
+    "title": "Safar haqidagi ma’lumotni tekshirish",
+    "objective": "O‘tgan safar haqida to‘rtta savol beradi va ikkita noto‘g‘ri ma’lumotni to‘g‘rilaydi.",
+    "grammar": {
+      "title": "O‘tgan zamonda savol va inkor",
+      "rule": "Ruscha ha/yo‘q savolda yordamchi fe’l qo‘shilmaydi: ты ездил? Savol so‘zi bo‘lsa oldinga chiqadi: когда ты ездил? Inkor не o‘tgan fe’l oldida: не ездил. Tuzatishda не …, а … bilan to‘g‘ri vaqt, joy yoki transportni ayting.",
+      "examples": [
+        {
+          "ru": "Когда ты ездил в Самарканд?",
+          "uz": "Samarqandga qachon borib kelding? (erkakka)"
+        },
+        {
+          "ru": "Мы ездили не в субботу, а в воскресенье.",
+          "uz": "Biz shanba emas, yakshanba kuni borib keldik."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Savol tuzing: Ты ездил в Бухару. Qachonligini so‘rang.",
+          "answer": "Когда ты ездил в Бухару?",
+          "explanation": "Когда oldinga qo‘yiladi; qo‘shimcha yordamchi fe’l kerak emas."
+        },
+        {
+          "prompt": "Inkor qiling: Она была в музее.",
+          "answer": "Она не была в музее.",
+          "explanation": "Не o‘tgan fe’l была dan oldin keladi."
+        },
+        {
+          "prompt": "Tuzating: shanba emas, yakshanba borganmiz. Мы ездили …",
+          "answer": "Мы ездили не в субботу, а в воскресенье.",
+          "explanation": "Не …, а … vaqtni qarama-qarshi qo‘yadi; fe’l ko‘plikda qoladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Когда ты ездил?",
+        "uz": "Qachon borib kelding? (erkakka)"
+      },
+      {
+        "ru": "Как вы добирались?",
+        "uz": "Qanday yetib bordingiz?"
+      },
+      {
+        "ru": "Вы были в музее?",
+        "uz": "Muzeyda bo‘ldingizmi?"
+      },
+      {
+        "ru": "Нет, мы там не были.",
+        "uz": "Yo‘q, u yerda bo‘lmadik."
+      },
+      {
+        "ru": "Не в субботу, а в воскресенье.",
+        "uz": "Shanba emas, yakshanba kuni."
+      },
+      {
+        "ru": "Не на автобусе, а на поезде.",
+        "uz": "Avtobusda emas, poyezdda."
+      },
+      {
+        "ru": "Что вы делали потом?",
+        "uz": "Keyin nima qildingiz?"
+      },
+      {
+        "ru": "Теперь понятно.",
+        "uz": "Endi tushunarli."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Вы ездили в Бухару в субботу на автобусе?",
+        "uz": "Buxoroga shanba kuni avtobusda borib keldingizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, в воскресенье, на поезде.",
+        "uz": "Yo‘q, yakshanba kuni, poyezdda."
+      },
+      {
+        "speaker": "A",
+        "ru": "Вы были в музее?",
+        "uz": "Muzeyda bo‘ldingizmi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Нет, в музее не были. Гуляли в центре.",
+        "uz": "Yo‘q, muzeyda bo‘lmadik. Markazda sayr qildik."
+      },
+      {
+        "speaker": "A",
+        "ru": "А что делали потом?",
+        "uz": "Keyin nima qildingiz?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Обедали в кафе, потом отдыхали.",
+        "uz": "Kafeda tushlik qildik, keyin dam oldik."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Когда состоялась поездка?",
+        "answer": "В воскресенье."
+      },
+      {
+        "prompt": "На чём ехали путешественники?",
+        "answer": "На поезде."
+      },
+      {
+        "prompt": "Чем они занимались вместо посещения музея?",
+        "answer": "Гуляли в центре."
+      }
+    ],
+    "roleplay": {
+      "a": "Do‘stning safari haqida xato qaydingiz bor: shanba, avtobus, muzey. Vaqt, transport, joy va keyingi faoliyatni savollar bilan tekshiring.",
+      "b": "Siz yakshanba poyezdda Buxoroga borgansiz. Markazda sayr, kafeda tushlik qilgansiz; muzeyda bo‘lmagansiz. Xatolarni tuzating.",
+      "twist": "A to‘g‘ri ma’lumotlarni qayta hikoya qiladi, B qolgan bitta xatoni aniqlaydi.",
+      "success": "To‘rtta savol, ikki aniq tuzatish va bir to‘g‘ri yakuniy hisobot bo‘ladi."
+    },
+    "teacherTip": "Savolda o‘zbekchadagi -mi uchun alohida ruscha so‘z izlamasdan intonatsiyani mashq qildiring. Tayanchga savol so‘zlari bering; ilg‘orlar xato taxminlarni mustaqil tuzsin.",
+    "homework": [
+      "O‘tgan safar haqida to‘rtta ovozli savol yozing.",
+      "Sherik aytgan hikoyadagi ikki ma’lumotni ataylab xato qaytarib, tuzatishini tinglang.",
+      "Не был/не была va не …, а … bilan uch gap yozing."
+    ],
+    "exit": "Safar haqidagi ikki xato taxminni tuzating va yana ikki aniqlashtirish savolini bering."
+  },
+  {
+    "no": 71,
+    "month": 6,
+    "week": 24,
+    "title": "Kelasi hafta qayerda bo‘lishingizni aytish",
+    "objective": "Kelajakdagi ikki joylashuv va ikki faoliyatni farqlab aytadi, uchrashuv uchun bo‘sh vaqtni aniqlaydi.",
+    "grammar": {
+      "title": "Буду + joy va буду + infinitiv",
+      "rule": "Kelajakdagi joylashuvda буду/будешь/будет/будем + в/на o‘rin shakli ishlatiladi: буду в офисе. Faoliyat bo‘lsa infinitiv qo‘shiladi: буду работать в офисе. Hozirgi я дома, o‘tgan я был/была дома, kelasi я буду дома ni farqlang.",
+      "examples": [
+        {
+          "ru": "Завтра я буду в офисе.",
+          "uz": "Ertaga men ofisda bo‘laman."
+        },
+        {
+          "ru": "Завтра я буду работать в офисе.",
+          "uz": "Ertaga men ofisda ishlayman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "To‘ldiring: Завтра мы … дома. (быть)",
+          "answer": "Завтра мы будем дома.",
+          "explanation": "Kelasi joylashuv uchun будем yetarli, infinitiv shart emas."
+        },
+        {
+          "prompt": "Tuzating: Завтра она будет в аптеку.",
+          "answer": "Завтра она будет в аптеке.",
+          "explanation": "Bo‘ladigan joy qayerda savoliga javob beradi, shuning uchun аптеке."
+        },
+        {
+          "prompt": "Faoliyatni qo‘shing: Я буду в офисе. (работать)",
+          "answer": "Я буду работать в офисе.",
+          "explanation": "Буду va joy orasiga infinitiv qo‘shilib faoliyat aytiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Где ты будешь завтра?",
+        "uz": "Ertaga qayerda bo‘lasan?"
+      },
+      {
+        "ru": "Я буду в офисе.",
+        "uz": "Men ofisda bo‘laman."
+      },
+      {
+        "ru": "Мы будем дома.",
+        "uz": "Biz uyda bo‘lamiz."
+      },
+      {
+        "ru": "Я буду работать до пяти.",
+        "uz": "Men soat beshgacha ishlayman."
+      },
+      {
+        "ru": "После пяти я свободен.",
+        "uz": "Beshdan keyin bo‘shman (erkak)."
+      },
+      {
+        "ru": "После пяти я свободна.",
+        "uz": "Beshdan keyin bo‘shman (ayol)."
+      },
+      {
+        "ru": "Встретимся рядом с офисом?",
+        "uz": "Ofis yonida uchrashamizmi?"
+      },
+      {
+        "ru": "В шесть я буду там.",
+        "uz": "Soat oltida u yerda bo‘laman."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Малика, где ты будешь завтра?",
+        "uz": "Malika, ertaga qayerda bo‘lasan?"
+      },
+      {
+        "speaker": "B",
+        "ru": "В офисе. Буду работать до пяти.",
+        "uz": "Ofisda. Soat beshgacha ishlayman."
+      },
+      {
+        "speaker": "A",
+        "ru": "А после пяти?",
+        "uz": "Beshdan keyin-chi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Буду дома, буду готовить ужин. Можешь прийти в семь?",
+        "uz": "Uyda bo‘laman, kechki ovqat tayyorlayman. Yettida kela olasanmi?"
+      },
+      {
+        "speaker": "A",
+        "ru": "Да. В семь я буду у тебя.",
+        "uz": "Ha. Soat yettida senikida bo‘laman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Хорошо, договорились.",
+        "uz": "Yaxshi, kelishdik."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Где Малика будет до пяти?",
+        "answer": "В офисе."
+      },
+      {
+        "prompt": "Что она будет делать дома?",
+        "answer": "Готовить ужин."
+      },
+      {
+        "prompt": "Во сколько придёт A?",
+        "answer": "В семь."
+      }
+    ],
+    "roleplay": {
+      "a": "Ertaga beshgacha ofisda ishlaysiz, keyin uyda ovqat tayyorlaysiz. Do‘stingizni yettiga taklif qiling.",
+      "b": "Ertaga oltigacha kutubxonada bo‘lasiz, keyin bo‘shsiz. A ning joyi va ishini bilib, uchrashuvni kelishing.",
+      "twist": "Ovqat uyda emas, kafeda bo‘lishi kelishiladi; ikkala tomon kelasi joylashuvini yangilasin.",
+      "success": "Ikki kelasi joylashuv, ikki faoliyat va bitta aniq uchrashuv vaqti aytiladi."
+    },
+    "teacherTip": "Буду в офис ni bo‘laman ma’nosida ishlatishsa в офисе ga tuzating, поеду в офис bilan taqqoslang. Tayanchga joy/faoliyat kartalari; ilg‘orga uch zamonda bitta reja hikoyasini bering.",
+    "homework": [
+      "Ertangi ikki joy va ikki faoliyatingizni ovozga yozing.",
+      "Sherik jadvalidan uchrashish mumkin bo‘lgan vaqtni toping.",
+      "Я дома gapini o‘tgan va kelasi zamonda yozib, bittasiga faoliyat qo‘shing."
+    ],
+    "exit": "Ertaga qayerda bo‘lishingizni va u yerda nima qilishingizni ikki juft gapda ayting."
+  },
+  {
+    "no": 72,
+    "month": 6,
+    "week": 24,
+    "title": "Oy yakuni: safardan qaytgan do‘st bilan uchrashuv",
+    "objective": "O‘tgan safarni besh gapda hikoya qiladi, yangi uchrashuvni kelishadi va kutilmagan vaqt yoki yo‘l o‘zgarishiga javob beradi.",
+    "grammar": {
+      "title": "Oylik birlashtirish: o‘tmish, reja va kelishuv",
+      "rule": "O‘tgan hikoyada был/была/были va -л/-ла/-ли, transport tashrifida ездил ishlatiladi. Kelajak faoliyati буду + infinitiv, joylashuv буду + o‘rin, yo‘lga chiqish поеду/пойду bilan aytiladi. Taklifga могу + infinitiv orqali javob bering; bir gapda ikki kelasi shaklni qo‘shmang.",
+      "examples": [
+        {
+          "ru": "Мы ездили в Бухару и гуляли в центре.",
+          "uz": "Biz Buxoroga borib keldik va markazda sayr qildik."
+        },
+        {
+          "ru": "Завтра буду работать, но могу встретиться в семь.",
+          "uz": "Ertaga ishlayman, lekin soat yettida uchrasha olaman."
+        }
+      ],
+      "exercises": [
+        {
+          "prompt": "Ayol nomidan to‘ldiring: Вчера я … в Самарканд и … в музее. (ездить, быть)",
+          "answer": "Вчера я ездила в Самарканд и была в музее.",
+          "explanation": "O‘tgan zamondagi ikkala fe’l ayol jinsga moslashadi."
+        },
+        {
+          "prompt": "Tuzating: Завтра я буду работаю, потом буду поеду домой.",
+          "answer": "Завтра я буду работать, потом поеду домой.",
+          "explanation": "Faoliyatda буду + infinitiv, yo‘lga chiqishda bitta поеду kerak."
+        },
+        {
+          "prompt": "Ruscha ayting: Oltida kela olmayman, yettida uchrasha olaman.",
+          "answer": "Не могу прийти в шесть, могу встретиться в семь.",
+          "explanation": "Могу dan keyin прийти va встретиться infinitivlari ishlatiladi."
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "ru": "Как прошла поездка?",
+        "uz": "Safar qanday o‘tdi?"
+      },
+      {
+        "ru": "Мы ездили на поезде.",
+        "uz": "Biz poyezdda borib keldik."
+      },
+      {
+        "ru": "Сначала гуляли, потом обедали.",
+        "uz": "Avval sayr qildik, keyin tushlik qildik."
+      },
+      {
+        "ru": "Давай встретимся завтра.",
+        "uz": "Keling, ertaga uchrashamiz."
+      },
+      {
+        "ru": "До шести буду работать.",
+        "uz": "Soat oltigacha ishlayman."
+      },
+      {
+        "ru": "Могу прийти в семь.",
+        "uz": "Soat yettida kela olaman."
+      },
+      {
+        "ru": "Где ты будешь?",
+        "uz": "Qayerda bo‘lasan?"
+      },
+      {
+        "ru": "Давай уточним время и место.",
+        "uz": "Keling, vaqt va joyni aniqlashtiraylik."
+      }
+    ],
+    "dialog": [
+      {
+        "speaker": "A",
+        "ru": "Малика, как прошла поездка?",
+        "uz": "Malika, safar qanday o‘tdi?"
+      },
+      {
+        "speaker": "B",
+        "ru": "Мы ездили в Бухару на поезде. Сначала гуляли в центре, потом обедали в кафе.",
+        "uz": "Buxoroga poyezdda borib keldik. Avval markazda sayr qildik, keyin kafeda tushlik qildik."
+      },
+      {
+        "speaker": "A",
+        "ru": "Давай завтра встретимся в шесть, расскажешь подробнее.",
+        "uz": "Keling, ertaga oltida uchrashamiz, batafsil aytib berasan."
+      },
+      {
+        "speaker": "B",
+        "ru": "До шести буду работать. Могу прийти в семь. Где ты будешь?",
+        "uz": "Oltigacha ishlayman. Yettida kela olaman. Qayerda bo‘lasan?"
+      },
+      {
+        "speaker": "A",
+        "ru": "В кафе рядом с банком. Поеду туда на метро.",
+        "uz": "Bank yonidagi kafeda. U yerga metroda boraman."
+      },
+      {
+        "speaker": "B",
+        "ru": "Договорились: завтра в семь, в кафе рядом с банком.",
+        "uz": "Kelishdik: ertaga yettida, bank yonidagi kafeda."
+      }
+    ],
+    "questions": [
+      {
+        "prompt": "Куда и на чём ездила Малика?",
+        "answer": "В Бухару на поезде."
+      },
+      {
+        "prompt": "Почему она не может встретиться в шесть?",
+        "answer": "Она будет работать до шести."
+      },
+      {
+        "prompt": "Где и когда друзья встретятся?",
+        "answer": "Завтра в семь, в кафе рядом с банком."
+      }
+    ],
+    "roleplay": {
+      "a": "Safardan qaytdingiz: shanba Samarqandga poyezdda bordingiz, muzeyda bo‘ldingiz, sayr va tushlik qildingiz. Ertaga oltigacha ishlaysiz, yettida bo‘shsiz. Hikoya qilib, uchrashuvni kelishing.",
+      "b": "Do‘stning safar tafsilotlarini bilmaysiz; kun, transport va faoliyatni so‘rang. Ertaga oltida bank yonidagi kafega taklif qiling, keyin mos vaqt toping.",
+      "twist": "Kafe yopiq bo‘lib chiqadi; bog‘ yonidagi boshqa kafeni tanlang va transportni aniqlang. Keyin uyga yetgach nima qilishingizni bittadan gapda ayting.",
+      "success": "Besh gapli o‘tgan hikoya, uch savol, sababli vaqt o‘zgarishi, tasdiqlangan joy-vaqt va bitta keyingi faoliyat aytiladi."
+    },
+    "teacherTip": "Oylik og‘zaki nazorat: yangi rol kartalari bering, tayyor dialogni o‘qitmang. Vazifani bajarish, tushunarli talaffuz, savol-javob va tinglash, iboralar, grammatik aniqlik — har biri 0–4 ball. 0 — bajarmadi, 1 — ko‘p yordam bilan, 2 — qisman mustaqil, 3 — asosan mustaqil, 4 — mustaqil va vaziyatga mos. Maqsad kamida 14/20; vazifa va talaffuz kamida 2 balldan. Yordam miqdorini qayd eting; yetmagan mezonni yangi kartada qayta tekshiring. O‘tgan safar hikoyasi, kelajak reja, taklif va kelishuvni kuzating. Jins xatosi va буду работаю ni suhbatdan keyin tuzating. Tayanchga rasmlar va vaqtlar, ilg‘orga qo‘shimcha yo‘l savoli bering. Bu ichki amaliy baho, rasmiy til sertifikati emas.",
+    "homework": [
+      "Baholashdagi safar hikoyasini besh to‘g‘ri gap bilan ovozga qayta yozing.",
+      "Sherik bilan boshqa kun va manzilda yangi uchrashuv kelishing.",
+      "O‘zingizning ikki xatongiz, tuzatilgan gaplar va keyingi uch mashq maqsadini yozing."
+    ],
+    "exit": "Matnsiz besh gapli safar hikoyasi ayting, uch savolga javob bering, sabab bilan vaqtni o‘zgartirib joy-vaqtni tasdiqlang; besh mezondan kamida to‘rttasini mustaqil bajaring."
+  }
+]

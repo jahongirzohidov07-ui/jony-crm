@@ -216,12 +216,21 @@
   function optButtons(opts, onPick) {
     const box = document.createElement('div');
     box.className = 'opts';
-    opts.forEach((t, i) => {
+    [...opts, 'Bilmayman'].forEach((t, i) => {
+      const value = i === opts.length ? -1 : i;
       const b = document.createElement('button');
       b.className = 'opt';
-      b.innerHTML = '<span class="k">' + 'ABCD'[i] + '</span><span></span>';
+      b.innerHTML = '<span class="k">' + 'ABCDE'[i] + '</span><span></span>';
       b.lastChild.textContent = t;
-      b.onclick = () => onPick(i, b, box);
+      b.setAttribute('aria-pressed', 'false');
+      b.onclick = () => {
+        Array.from(box.children).forEach(x => {
+          x.classList.remove('sel'); x.setAttribute('aria-pressed', 'false');
+        });
+        b.classList.add('sel'); b.setAttribute('aria-pressed', 'true');
+        box.dataset.pick = String(value);
+        onPick(value, b, box);
+      };
       box.appendChild(b);
     });
     return box;
@@ -312,6 +321,9 @@
         o.textContent = (i + 1) + '. ' + w;
         sel.appendChild(o);
       });
+      const unknown = document.createElement('option');
+      unknown.value = '-1'; unknown.textContent = 'Bilmayman';
+      sel.appendChild(unknown);
       row.appendChild(sel);
       body.appendChild(row);
     });

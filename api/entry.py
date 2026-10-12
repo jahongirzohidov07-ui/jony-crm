@@ -10245,6 +10245,11 @@ def _pt_sec_left(sec: str, item, cur: dict) -> int:
     return max(0, full - int((_pt_now() - sent).total_seconds()))
 
 
+def _pt_choice_matches(order, choice, expected):
+    # -1 is an explicit unknown answer, never a Python negative index.
+    return type(choice) is int and 0 <= choice < len(order) and order[choice] == expected
+
+
 def _pt_sec_grade(sec: str, item, cur: dict, payload: dict):
     """(olingan ball, eng ko'p ball). Vaqt tugagan bo'lsa — 0."""
     mx = 3 if sec == "vocab" else (len(item.get("qs", [])) if sec == "reading"
@@ -10262,8 +10267,8 @@ def _pt_sec_grade(sec: str, item, cur: dict, payload: dict):
         picks = payload.get("picks") or []
         for j, dj in enumerate(cur["d"]):
             try:
-                k = int(picks[j])
-                if cur["w"][k] == item["defs"][dj][1]:
+                k = picks[j]
+                if _pt_choice_matches(cur["w"], k, item["defs"][dj][1]):
                     got += 1
             except (TypeError, ValueError, IndexError):
                 pass
@@ -10271,13 +10276,13 @@ def _pt_sec_grade(sec: str, item, cur: dict, payload: dict):
         picks = payload.get("picks") or []
         for i, q in enumerate(item["qs"]):
             try:
-                if cur["o"][i][int(picks[i])] == q["a"]:
+                if _pt_choice_matches(cur["o"][i], picks[i], q["a"]):
                     got += 1
             except (TypeError, ValueError, IndexError):
                 pass
     else:
         try:
-            if cur["o"][int(payload.get("choice"))] == item["a"]:
+            if _pt_choice_matches(cur["o"], payload.get("choice"), item["a"]):
                 got = 1
         except (TypeError, ValueError, IndexError):
             got = 0
@@ -10790,7 +10795,7 @@ def pt_answer(token: str, payload: dict = Body(...),
     ok = False
     if not timed_out:
         try:
-            ok = order[int(choice)] == q["a"]
+            ok = _pt_choice_matches(order, choice, q["a"])
         except (TypeError, ValueError, IndexError):
             ok = False
     asked, answers = _pt_load(s)
@@ -11403,3 +11408,7 @@ import exam_review  # noqa: E402,F401
 
 # Avtomuzlatishda yo'qolgan yo'qlamalar ro'yxati (2026-10-08)
 import freeze_review  # noqa: E402,F401
+
+# Russian conversation intake: public questions/save and branch-scoped results.
+import russian_placement  # noqa: E402
+app.include_router(russian_placement.router)

@@ -741,7 +741,8 @@ class PayrollContext:
                 self._lessons.setdefault(r.teacher_id, []).append(r)
             pays = (self.db.query(models.TeacherPayment.teacher_id,
                                   models.TeacherPayment.paid_on,
-                                  models.TeacherPayment.amount)
+                                  models.TeacherPayment.amount,
+                                  models.TeacherPayment.period)
                     .filter(models.TeacherPayment.teacher_id.in_(chunk))
                     .order_by(models.TeacherPayment.id).all())
             for p in pays:

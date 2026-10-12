@@ -518,7 +518,8 @@ def payroll_overview(
             except Exception:
                 pass
         e = _earned_in_branches(e, ctx.groups, branches)
-        paid_all = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx)
+        paid_all = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx,
+                                 period=period)
         if branches is not None and e["amount"] == 0:
             continue          # shu filialda bu oy darsi yo'q
         paid = _paid_share(paid_all, e["amount"], e["total_amount"])

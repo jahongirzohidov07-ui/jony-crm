@@ -424,7 +424,8 @@ def my_profile(
         ctx = billing.PayrollContext(db)      # 2 hisob, 1 marta o'qish
         ctx.prefetch([t.id])
         e = _teacher_earned(db, t.id, since=m_start, until=m_end, ctx=ctx)
-        paid_m = _teacher_paid(db, t.id, since=m_start, until=m_end, ctx=ctx)
+        paid_m = _teacher_paid(db, t.id, since=m_start, until=m_end, ctx=ctx,
+                               period=period)
         balance = round(_teacher_earned(db, t.id, ctx=ctx)["amount"]
                         - _teacher_paid(db, t.id, ctx=ctx), 2)
         total += e["amount"]

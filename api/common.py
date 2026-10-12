@@ -4043,7 +4043,30 @@ def _set_grade(db: Session, t: models.Teacher, to_key: str, *,
 
 def _teacher_paid(db: Session, teacher_id: int, *,
                   since: date = None, until: date = None,
-                  ctx: "billing.PayrollContext | None" = None) -> float:
+                  ctx: "billing.PayrollContext | None" = None,
+                  period: str | None = None) -> float:
+    # OYLIK QAYSI OYNIKI (2026-10-12, Jahongir: "men sentabr oyligi
+    # qilib bersam sentabr emas oktabr oyligida o'zgarish bo'lyabdi").
+    # To'lovda ``period`` ("2026-09") yoziladi, lekin hisobot pulni
+    # BERILGAN SANA bo'yicha yig'ardi: 12-oktabrda berilgan sentabr
+    # oyligi oktabrga tushardi. ``period`` berilsa: to'lov o'z oyi
+    # bo'yicha sanaladi; oyi yozilmagan eski yozuv — sana bo'yicha.
+    if period:
+        def _hit(p_period, p_on):
+            if p_period:
+                return p_period == period
+            return (p_on is not None
+                    and (since is None or p_on >= since)
+                    and (until is None or p_on <= until))
+        rows = ctx.payments(teacher_id) if ctx is not None else None
+        if rows is None:
+            rows = (db.query(models.TeacherPayment.period,
+                             models.TeacherPayment.paid_on,
+                             models.TeacherPayment.amount)
+                    .filter(models.TeacherPayment.teacher_id == teacher_id)
+                    .all())
+        return round(sum(p.amount or 0 for p in rows
+                         if _hit(p.period, p.paid_on)), 2)
     rows = ctx.payments(teacher_id) if ctx is not None else None
     if rows is not None:
         # prefetch() qilingan — xotiradan, so'rovsiz. Shart SQL bilan

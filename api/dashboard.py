@@ -677,7 +677,8 @@ def report_teacher_payroll(
         if e["amount"] == 0:
             continue
         paid = _paid_share(
-            _teacher_paid(db, t.id, since=start, until=end, ctx=ctx),
+            _teacher_paid(db, t.id, since=start, until=end, ctx=ctx,
+                          period=period),
             e["amount"], e["total_amount"])
         rows.append({
             "teacher_id": t.id,

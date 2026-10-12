@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import {
   Bell, ChevronDown, ChevronRight, Map as MapIcon, Check, CreditCard,
 } from "lucide-react";
-import { getLang, setLang, LANGS } from "../../lib/lang";
+import { useLearningLanguage, setLang, LANGS } from "../../lib/lang";
 import { Flag } from "../../components/Flag";
 import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { NpsCard } from "../../components/NpsCard";
@@ -46,7 +46,7 @@ export default function StudentHome() {
   const [d, setD] = useState<Home | null>(null);
   const [err, setErr] = useState("");
   const [hasNew, setHasNew] = useState(false);
-  const [lang, setLangState] = useState(getLang());
+  const lang = useLearningLanguage();
   const [langOpen, setLangOpen] = useState(false);
 
   useEffect(() => {
@@ -195,7 +195,7 @@ export default function StudentHome() {
         ))}
 
         {/* ======================================= DARAJA KARTASI */}
-        <div
+        {lang !== "ru" && <div
           className="student-hero student-pattern rounded-3xl p-5 relative overflow-hidden"
           style={{
             background:
@@ -246,10 +246,18 @@ export default function StudentHome() {
               Yo'l xaritasi
             </Link>
           </div>
-        </div>
+        </div>}
+
+        {lang === "ru" && <Link to="/student/russian"
+          className="block rounded-3xl border border-blue-400/40 bg-gradient-to-br from-blue-700 to-indigo-800 p-5 text-white">
+          <p className="text-xs font-bold uppercase tracking-wide text-blue-100">Rus tili · 1 yillik kurs</p>
+          <h2 className="text-2xl font-extrabold mt-2">Suhbatdan boshlaymiz</h2>
+          <p className="text-sm text-blue-100 mt-2">12 oy · 144 dars. Darsingizga mos iboralar, grammatika va dialoglar.</p>
+          <span className="inline-flex items-center gap-2 mt-4 font-semibold">Dars va mashqlarni ochish <ChevronRight size={18} /></span>
+        </Link>}
 
         {/* ====================================== BUGUNGI MISSIYA */}
-        {daily && (
+        {daily && lang !== "ru" && (
           <div className="student-panel student-pattern bg-white rounded-3xl p-4">
             <div className="flex items-center gap-3">
               <StudentIcon name="mission" size={48} />
@@ -409,7 +417,7 @@ export default function StudentHome() {
         {/* ===================== MAQSAD: IELTS (GoalCard) ======== */}
         {lang === "en" && <GoalCard />}
 
-        {d.streak === 0 && (
+        {d.streak === 0 && lang !== "ru" && (
           <p className="text-xs text-slate-500 -mt-1.5 px-1">
             Bugun mashq qilsangiz streak boshlanadi. 7 kun ketma-ket = 50 coin.
           </p>
@@ -486,7 +494,6 @@ export default function StudentHome() {
                   key={l.code}
                   onClick={() => {
                     setLang(l.code);
-                    setLangState(l.code);
                     setLangOpen(false);
                   }}
                   className={`w-full flex items-center gap-3 rounded-xl border p-3.5 text-left ${

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/export-intensive-api.cjs && tsc -b && vite build",
+    "build": "node scripts/export-intensive-api.cjs && node scripts/export-russian-student.cjs && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },

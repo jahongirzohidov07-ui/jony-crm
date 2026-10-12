@@ -56,6 +56,7 @@ const Drill = lazy(() => import("./pages/Drill"));
 const DiscountsPage = lazy(() => import("./pages/DiscountsPage"));
 // Dars rejalari + jonli o'yin (Kahoot uslubi), 2026-09-18
 const GermanPlacement = lazy(() => import("./pages/GermanPlacement"));
+const RussianPlacement = lazy(() => import("./pages/RussianPlacement"));
 const LessonPlans = lazy(() => import("./pages/LessonPlans"));
 const LiveHost = lazy(() => import("./pages/LiveHost"));
 const Play = lazy(() => import("./pages/Play"));
@@ -356,6 +357,8 @@ function AppRoutes() {
         {/* Ochiq ariza: jonyos.uz/ariza — tanlangan filial lidlariga */}
         <Route path="/ariza" element={<Ariza />} />
         <Route path="/nemis-test" element={<GermanPlacement />} />
+        <Route path="/russian-placement" element={<RussianPlacement />} />
+        <Route path="/rus-test" element={<RussianPlacement />} />
         <Route path="/parent/:token" element={<Parent />}>
           <Route index element={<ParentHome />} />
           <Route path="payments" element={<ParentPayments />} />

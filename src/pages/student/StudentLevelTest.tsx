@@ -47,7 +47,7 @@ export default function StudentLevelTest() {
   const [prev, setPrev] = useState<Any>(null); // oxirgi natija (intro'da)
   const [q, setQ] = useState<Any>(null);       // joriy savol bloki
   const [result, setResult] = useState<Any>(null);
-  const [picked, setPicked] = useState<string | null>(null);
+  const [picked, setPicked] = useState<string | number | null>(null);
   const [fb, setFb] = useState<Any>(null);     // {correct, expected}
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
@@ -82,7 +82,7 @@ export default function StudentLevelTest() {
       .finally(() => setBusy(false));
   }, []);
 
-  async function submit(answer: string) {
+  async function submit(answer: string | number) {
     if (busy || fb) return;
     setBusy(true);
     setPicked(answer);
@@ -297,23 +297,26 @@ export default function StudentLevelTest() {
               </p>
 
               <div className="space-y-1.5">
-                {(qq.options || []).map((o: string) => {
-                  const isPick = picked === o;
+                {[...(qq.options || []).map((o: string) => ({label: o, value: o})), {label: "Bilmayman", value: -1}].map(({label: o, value}: {label: string; value: string | number}) => {
+                  const isPick = picked === value;
                   const good = fb && fb.correct && isPick;
                   const bad = fb && !fb.correct && isPick;
                   const showRight =
-                    fb && !fb.correct && fb.expected === o;
+                    value !== -1 && fb && !fb.correct && fb.expected === value;
                   return (
                     <button
-                      key={o}
-                      onClick={() => submit(o)}
+                      key={value}
+                      aria-pressed={isPick}
+                      onClick={() => submit(value)}
                       disabled={busy || !!fb}
                       className={`w-full text-left px-3.5 py-3 rounded-xl border text-[13.5px] font-medium transition ${
                         good || showRight
                           ? "border-emerald-400 bg-emerald-50 text-emerald-700"
                           : bad
                             ? "border-red-300 bg-red-50 text-red-600"
-                            : "border-slate-200 text-slate-700 active:scale-[0.99]"
+                            : isPick
+                              ? "border-brand-600 bg-blue-50 text-slate-700"
+                              : "border-slate-200 text-slate-700 active:scale-[0.99]"
                       }`}
                     >
                       <span className="flex items-center justify-between">

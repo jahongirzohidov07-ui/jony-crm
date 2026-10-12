@@ -46,3 +46,18 @@ assert client.get('/api/german-placement/results').json()['rows']==[]
 app.dependency_overrides[auth_dependency]=lambda: SimpleNamespace(id=9999,role=admin_role,branch_id=None)
 assert client.get('/api/german-placement/results').json()['rows']==[]
 print('PASS: same-branch visibility, other-branch and unassigned staff isolation')
+
+# Unknown choices remain answered and persist as -1, with no points.
+unknown={q['id']:-1 for q in gp.BANK}
+pu={**p,'attempt_id':str(uuid.uuid4()),'answers':unknown}
+ru=client.post('/api/public/german-placement',json=pu)
+assert ru.status_code==200,ru.text
+assert ru.json()['result']['score']==0
+assert ru.json()['result']['lesson']==1
+with Session() as s:
+ row=s.query(models.GermanPlacementResult).filter_by(attempt_id=pu['attempt_id']).one()
+ assert json.loads(row.answers_json)==unknown
+for value in (None,False,'-1',4,-2):
+ invalid={**unknown,'gp-1':value}
+ assert client.post('/api/public/german-placement',json={**pu,'attempt_id':str(uuid.uuid4()),'answers':invalid}).status_code==422
+print('PASS: unknown choices persist as answered, zero score, prerequisite gate and strict invalid-answer rejection')

@@ -384,7 +384,8 @@ def global_student_search(q: str, branch_id: int | None = None,
     if own_only:
         t = _teacher_of_user(db, user)
         gids = [g.id for g in _cabinet_groups(db, user, t)] if t else []
-        sq = sq.filter(models.Student.group_id.in_(gids or [-1]))
+        # Qo'shimcha guruhdagi o'quvchi ham qidiruvda chiqsin (2026-10-12)
+        sq = sq.filter(in_any_group(gids))
     else:
         _c = _scope(models.Student.branch_id)
         if _c is not None:

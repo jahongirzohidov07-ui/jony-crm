@@ -7028,6 +7028,25 @@ def in_group(group_id):
     )
 
 
+def in_any_group(group_ids):
+    """SQL sharti: o'quvchi shu guruhlardan BIRORTASIDA (asosiy yoki
+    qo'shimcha bog'lanish orqali).
+
+    USTOZ O'Z O'QUVCHISINI KO'RMAY QOLARDI (2026-10-12, Result
+    Makers / Boymuxamatov Mirzoulug'bek): bola asosiy guruhi Telc'da,
+    Result Makers'ga qo'shimcha bog'lanish bilan qatnaydi. Ustoz
+    filtri faqat ``Student.group_id`` ga qarardi, shuning uchun
+    davomat jadvalida bor bola chapdagi ro'yxatda yo'q edi."""
+    gids = list(group_ids or []) or [-1]
+    return or_(
+        models.Student.group_id.in_(gids),
+        models.Student.id.in_(
+            select(models.StudentGroupLink.student_id).where(
+                models.StudentGroupLink.group_id.in_(gids),
+                models.StudentGroupLink.active == 1)),
+    )
+
+
 def student_group_ids(db: Session, student_id: int) -> list:
     """O'quvchining barcha FAOL guruhlari."""
     rows = (db.query(models.StudentGroupLink.group_id)
@@ -7723,6 +7742,7 @@ __all__ = [
     "_expenses_total",
     "_expire_discounts",
     "in_group",
+    "in_any_group",
     "ensure_link",
     "student_group_ids",
     "sync_primary_group",

@@ -593,7 +593,9 @@ def list_students(
     if own_only:
         t = _teacher_of_user(db, user)
         gids = [g.id for g in _cabinet_groups(db, user, t)] if t else []
-        query = query.filter(models.Student.group_id.in_(gids or [-1]))
+        # Qo'shimcha guruh orqali qatnaydigan bola ham ko'rinsin
+        # (2026-10-12) — ilgari faqat asosiy guruh tekshirilardi.
+        query = query.filter(in_any_group(gids))
 
     # TEZLIK (2026-08-15): guruh, filial va guruhning ustozi OLDINDAN
     # birga o'qiladi. Ilgari pydantic har o'quvchi uchun alohida
@@ -648,10 +650,20 @@ def get_student(
             raise HTTPException(403, "Bu ma'lumot sizga ochiq emas")
     out = schemas.StudentDetail.model_validate(s)
     if user.role in tuple(roles.OWN_GROUPS_ONLY):
-        # Ustozga: o'z o'quvchisi bo'lsagina, pulsiz
-        if s.group_id:
-            _get_group_in_scope(db, s.group_id, user)
-        else:
+        # Ustozga: o'z o'quvchisi bo'lsagina, pulsiz. Bola ustozning
+        # QO'SHIMCHA guruhida o'qisa ham ochilsin (2026-10-12) —
+        # ilgari faqat asosiy guruh tekshirilib 403 qaytardi.
+        _gids = [g for g in ([s.group_id] + student_group_ids(db, s.id))
+                 if g]
+        _ok = False
+        for _g in dict.fromkeys(_gids):
+            try:
+                _get_group_in_scope(db, _g, user)
+                _ok = True
+                break
+            except HTTPException:
+                continue
+        if not _ok:
             raise HTTPException(403, "Bu o'quvchi sizga biriktirilmagan")
         out.balance = 0.0
         out.payments = []

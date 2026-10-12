@@ -75,3 +75,10 @@ API, UI va sxema ishga tushishini tekshiradigan fayllar:
 Ingliz testi va Student Level Testga “Bilmayman” qo‘shildi. Nemis testidagi
 mavjud beshinchi variant A–E belgisi va 0 ball tushuntirishi bilan aniqlandi.
 Ingliz testining manfiy indeks orqali oxirgi javobga ball berish xatosi tuzatildi.
+
+
+## Русскоязычная версия для преподавателей
+
+Страница `/plans/russian`, карта курса, 12 методических пособий и 12 рабочих тетрадей используют русские инструкции. Перевод целей, правил, заданий, ролей, домашних работ и критериев находится в `src/data/russian/teacher-ru-1.json` … `teacher-ru-4.json`. Он накладывается на исходные уроки через `src/lib/russianTeacher.ts` и сборщик PDF. Нумерация, ответы, русские реплики и узбекские переводы для учеников остаются в исходных файлах `part-*.json`.
+
+Приложение Jony Student продолжает получать исходные двуязычные материалы: перевод для преподавателей не меняет сохранённые результаты и ответы учеников. При изменении исходного урока обновляйте соответствующий перевод, затем пересобирайте PDF. Проверка перевода: `python -X utf8 scripts/test-russian-teacher.py`; проверка готовых PDF: тот же скрипт с `--pdf` (нужен PyMuPDF).

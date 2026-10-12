@@ -46,6 +46,7 @@ import audit
 import models
 import roles
 import schemas
+import student_russian_models  # register before main schema bootstrap
 from main import (  # noqa: F401
     app, get_db, require_role, scope_to_branch, _get_group_in_scope,
     _my_teacher_or_404, get_current_user,
@@ -11430,3 +11431,7 @@ import freeze_review  # noqa: E402,F401
 # Russian conversation intake: public questions/save and branch-scoped results.
 import russian_placement  # noqa: E402
 app.include_router(russian_placement.router)
+
+# Student Russian course and private practice history.
+import student_russian  # noqa: E402
+app.include_router(student_russian.router)

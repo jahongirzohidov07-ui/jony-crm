@@ -1,0 +1,86 @@
+.ruc { max-width: 760px; margin: 0 auto; padding: 22px 16px 36px; color: #eaf0ff; line-height: 1.6; overflow-wrap: anywhere; }
+.ruc * { box-sizing: border-box; }
+.ruc h1, .ruc h2, .ruc h3, .ruc h4, .ruc p { margin: 0; }
+.ruc h1 { font-size: clamp(27px, 5vw, 38px); max-width: 490px; margin: 18px 0 12px; font-weight: 800; line-height: 1.15; }
+.ruc h2 { font-size: 24px; font-weight: 750; line-height: 1.3; margin: 8px 0; }
+.ruc h3 { font-size: 21px; font-weight: 750; margin-bottom: 14px; }
+.ruc h4 { font-size: 16px; font-weight: 700; margin: 22px 0 8px; }
+.ruc button, .ruc select, .ruc input, .ruc textarea { font: inherit; }
+.ruc button { display: inline-flex; gap: 8px; align-items: center; justify-content: center; min-height: 44px; padding: 10px 14px; border-radius: 13px; border: 1px solid #3e588e; background: #142d5c; color: #edf3ff; cursor: pointer; font-weight: 650; }
+.ruc button:hover:not(:disabled) { background: #204379; }
+.ruc button:disabled { opacity: .5; cursor: not-allowed; }
+.ruc :is(button, input, select, textarea, summary):focus-visible { outline: 3px solid #69d7ff; outline-offset: 3px; }
+.ruc-hero { padding: 26px; border: 1px solid #437dd3; border-radius: 26px; background: radial-gradient(ellipse at 100% 0, #387ef088, transparent 65%), linear-gradient(135deg, #10459c, #0d2355); box-shadow: 0 12px 40px #000b292b; }
+.ruc-eyebrow { font-size: 11px; letter-spacing: .13em; font-weight: 800; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ruc-eyebrow span { background: #ffffff15; padding: 5px 10px; border-radius: 8px; }
+.ruc-hero > p { color: #cbdcff; max-width: 410px; }
+.ruc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.ruc-chips span { border: 1px solid #8ebeff45; background: #06173755; border-radius: 99px; padding: 5px 11px; font-size: 12px; color: #e1efff; }
+.ruc-selectors { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 12px; margin: 24px 0 18px; }
+.ruc-selectors label, .ruc-field { display: grid; gap: 7px; min-width: 0; color: #c3d1ef; font-size: 13px; }
+.ruc :is(select, input:not([type=radio]), textarea) { width: 100%; min-width: 0; min-height: 46px; padding: 11px 12px; color: #f1f6ff; background: #081b3f; border: 1px solid #3a5483; border-radius: 12px; font-size: 16px; color-scheme: dark; }
+.ruc select { text-overflow: ellipsis; }
+.ruc textarea { resize: vertical; }
+.ruc :is(input, textarea)::placeholder { color: #8da4cf; }
+.ruc-sections { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 7px; margin-bottom: 26px; }
+.ruc-sections button { flex-direction: column; gap: 7px; padding: 12px 3px; font-size: 11px; border-color: #29416b; background: #0b1d40; color: #aabddd; }
+.ruc-sections button[aria-current] { background: #1658ac; border-color: #59baff; color: white; box-shadow: 0 3px 16px #007fff22; }
+.ruc-lesson-heading { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.ruc-lesson-heading > div { flex: 1; }
+.ruc-lesson-heading p { color: #adc2e6; font-size: 14px; }
+.ruc-kicker { display: block; font-size: 11px; letter-spacing: .09em; color: #7ed7ff; font-weight: 750; margin-bottom: 10px; }
+.ruc-count { display: grid; place-items: center; background: #112955; border: 1px solid #345481; border-radius: 15px; min-width: 62px; padding: 9px; font-size: 24px; font-weight: 750; }
+.ruc-count small { font-size: 11px; color: #9fb6db; font-weight: 500; }
+.ruc-progress { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.ruc-progress > div { background: #0b1e43; border: 1px solid #2a426c; padding: 14px; border-radius: 16px; display: grid; gap: 2px; }
+.ruc-progress span { color: #b1c3e2; font-size: 12px; }
+.ruc-progress strong { font-size: 17px; }
+.ruc-progress small { color: #9fb4d8; font-size: 11px; }
+.ruc-card { padding: 24px; background: linear-gradient(145deg, #102650, #091a3a); border: 1px solid #304c7b; border-radius: 22px; min-width: 0; }
+.ruc-stack { display: grid; gap: 18px; }
+.ruc-mode { display: flex; gap: 5px; padding: 4px; background: #06132e; border-radius: 14px; margin-bottom: 24px; }
+.ruc-mode button { flex: 1; border: 0; background: transparent; color: #a4b9dc; font-size: 13px; }
+.ruc-mode button[aria-pressed=true] { background: #234b86; color: #fff; }
+.ruc-phrases > div { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid #2b4165; }
+.ruc-phrases > div:last-child { border-bottom: 0; }
+.ruc-number { color: #7abfe8; font-size: 12px; padding-top: 4px; font-variant-numeric: tabular-nums; }
+.ruc-phrases strong { font-size: 17px; font-weight: 650; }
+.ruc-phrases p { color: #abbfdf; margin-top: 4px; font-size: 14px; }
+.ruc-task, .ruc-example { white-space: pre-wrap; }
+.ruc-task { margin-bottom: 18px !important; color: #d3e0f6; }
+.ruc-example { border-left: 3px solid #54b6ee; padding: 12px 15px; background: #173260; margin: 10px 0 !important; border-radius: 0 10px 10px 0; }
+.ruc-note { font-size: 13px; color: #acbfdf; margin: 12px 0 20px !important; }
+.ruc-question { min-width: 0; padding: 15px; margin: 0; border: 1px solid #36507e; border-radius: 15px; }
+.ruc-question legend { max-width: 100%; padding: 0 7px; font-size: 16px; font-weight: 650; }
+.ruc-question legend > span:first-child { color: #71caff; }
+.ruc-options { display: grid; gap: 8px; }
+.ruc-options label { display: flex; gap: 10px; align-items: center; min-height: 48px; padding: 12px; background: #0a1b39; border: 1px solid #304a74; border-radius: 11px; cursor: pointer; font-size: 14px; }
+.ruc-options label.is-selected { border-color: #5ec7ff; background: #164579; }
+.ruc-options input { accent-color: #6bd9ff; flex-shrink: 0; width: 17px; height: 17px; }
+.ruc-primary { width: 100%; background: linear-gradient(130deg, #177de6, #2355ce) !important; border-color: #5e9eec !important; margin-top: 18px; }
+.ruc-feedback { margin-top: 14px; border-radius: 11px; padding: 13px; background: #523c23; color: #ffe1b5; font-size: 13px; }
+.ruc-feedback.is-correct { color: #b6f6df; background: #123f3e; }
+.ruc-feedback p { margin-top: 5px; }
+.ruc-result { text-align: center; padding: 24px 8px 0; }
+.ruc-result > strong { display: block; font-size: 38px; color: #8ce4ff; }
+.ruc-result p { color: #afc3e4; margin: 4px 0 16px; font-size: 13px; }
+.ruc-dialog { margin-top: 18px; display: grid; gap: 14px; }
+.ruc-dialog > div { padding: 15px; background: #142f59; border: 1px solid #33537f; border-radius: 3px 17px 17px; margin-right: 22px; }
+.ruc-dialog > .ruc-dialog-other { background: #1b3153; margin-right: 0; margin-left: 22px; border-radius: 17px 3px 17px 17px; }
+.ruc-dialog > div > span { display: block; font-size: 11px; font-weight: 700; color: #80d5ff; margin-bottom: 5px; }
+.ruc details { border-top: 1px solid #36517b; margin-top: 14px; padding-top: 6px; }
+.ruc summary { color: #95d8ff; font-size: 13px; cursor: pointer; min-height: 44px; padding: 10px 0; }
+.ruc details p { color: #c8d8ef; white-space: pre-wrap; margin-bottom: 10px; }
+.ruc-selfcheck + .ruc-selfcheck { margin-top: 24px; }
+.ruc-audio { display: grid; justify-items: center; gap: 14px; text-align: center; background: #071936; border: 1px solid #304c7b; padding: 24px; border-radius: 18px; margin-bottom: 20px; color: #9edfff; }
+.ruc-audio .ruc-field { width: 100%; text-align: left; }
+.ruc-audio p { color: #c3d2ec; font-size: 14px; }
+.ruc-audio .ruc-primary { margin: 0; }
+.ruc-pagination { display: flex; justify-content: space-between; gap: 10px; margin-top: 22px; }
+.ruc-pagination button { font-size: 12px; }
+.ruc-footnote { color: #94aacf; text-align: center; font-size: 12px; padding: 24px 10px 0; }
+.ruc-error { border: 1px solid #c18466; background: #452c30; color: #ffe1cc; border-radius: 14px; padding: 16px; margin: 16px 0; }
+.ruc-error button { margin-top: 12px; }
+.ruc-loading { margin-top: 20px; color: #bfdbff; }
+.ruc-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 480px) { .ruc { padding: 16px 12px 28px; } .ruc-hero { padding: 22px 19px; } .ruc-card { padding: 18px 15px; } .ruc-sections { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .ruc-sections button { flex-direction: row; padding: 11px 3px; } .ruc-question { padding: 12px; } .ruc-audio { padding: 20px 14px; } }

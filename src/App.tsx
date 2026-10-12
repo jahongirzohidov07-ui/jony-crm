@@ -12,6 +12,7 @@ import Layout from "./components/Layout";
 import { ToastHost } from "./components/ToastHost";
 import { StudentLoading } from "./components/StudentLoading";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { StudentLanguageRoute, StudentRussianCourse } from "./components/StudentLanguageRoute";
 
 /**
  * TEZLIK: har bir sahifa alohida bo'lak (code splitting). Ilgari
@@ -380,7 +381,8 @@ function AppRoutes() {
           <Route index element={<StudentHome />} />
           {/* Offline mashqlar (2026-10-07) */}
           <Route path="offline" element={<StudentOffline />} />
-          <Route path="games" element={<StudentGames />} />
+          <Route path="russian" element={<StudentRussianCourse />} />
+          <Route path="games" element={<StudentLanguageRoute section="vocabulary"><StudentGames /></StudentLanguageRoute>} />
           <Route path="lessons" element={<StudentLessons />} />
           <Route path="lessons/:aid" element={<StudentLessons />} />
           <Route path="ielts" element={<StudentIelts />} />
@@ -414,20 +416,20 @@ function AppRoutes() {
           <Route path="ielts/reading/:kind"
                  element={<StudentIeltsReading />} />
           <Route path="leagues" element={<StudentLeagues />} />
-          <Route path="games/:game" element={<StudentGamePlay />} />
+          <Route path="games/:game" element={<StudentLanguageRoute section="vocabulary"><StudentGamePlay /></StudentLanguageRoute>} />
           <Route path="level-test" element={<StudentLevelTest />} />
-          <Route path="vocab" element={<StudentVocab />} />
-          <Route path="practice/:skill" element={<StudentPractice />} />
-          <Route path="speaking" element={<StudentSpeaking />} />
+          <Route path="vocab" element={<StudentLanguageRoute section="vocabulary"><StudentVocab /></StudentLanguageRoute>} />
+          <Route path="practice/:skill" element={<StudentLanguageRoute section="vocabulary"><StudentPractice /></StudentLanguageRoute>} />
+          <Route path="speaking" element={<StudentLanguageRoute section="speaking"><StudentSpeaking /></StudentLanguageRoute>} />
           <Route
             path="notifications"
             element={<StudentNotifications />}
           />
-          <Route path="grammar" element={<StudentGrammar />} />
+          <Route path="grammar" element={<StudentLanguageRoute section="grammar"><StudentGrammar /></StudentLanguageRoute>} />
           {/* Aralash mashq (2026-09-25) — statik yo'l dinamik :topic dan
               oldin turadi */}
-          <Route path="grammar/mix" element={<StudentGrammarPlay mix />} />
-          <Route path="grammar/:topic" element={<StudentGrammarPlay />} />
+          <Route path="grammar/mix" element={<StudentLanguageRoute section="grammar"><StudentGrammarPlay mix /></StudentLanguageRoute>} />
+          <Route path="grammar/:topic" element={<StudentLanguageRoute section="grammar"><StudentGrammarPlay /></StudentLanguageRoute>} />
           <Route path="leaderboard" element={<StudentLeaderboard />} />
           <Route path="shop" element={<StudentShop />} />
           <Route path="referral" element={<StudentReferral />} />

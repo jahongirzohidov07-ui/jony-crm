@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, BookOpen, CheckCircle2, Clock, Coins, RotateCcw, Send } from "lucide-react";
 import { api } from "../../lib/api";
+import { useLearningLanguage } from "../../lib/lang";
 import SpeakRecorder from "../../components/SpeakRecorder";
 
 /**
@@ -52,6 +53,7 @@ export default function StudentLessons() {
 }
 
 function LessonsHome() {
+  const language = useLearningLanguage();
   const [d, setD] = useState<Data | null>(null);
   const [err, setErr] = useState("");
   const [flip, setFlip] = useState<Record<number, boolean>>({});
@@ -74,7 +76,12 @@ function LessonsHome() {
     <div className="p-4 space-y-4 max-w-md mx-auto">
       <h1 className="text-lg font-semibold text-slate-900 flex items-center gap-2"><BookOpen size={18} className="text-brand-600" /> Darslarim</h1>
 
-      {t && (
+      {language === "ru" && <Link to="/student/russian" className="block rounded-2xl bg-blue-700 p-4 text-white">
+        <b>Rus tili — darslar va mashqlar</b>
+        <p className="text-sm mt-1">1 yillik kursdagi darsingizni tanlang.</p>
+      </Link>}
+
+      {t && language !== "ru" && (
         <div className="bg-gradient-to-br from-brand-600 to-indigo-600 text-white rounded-2xl p-4">
           <div className="text-xs opacity-80">Bugungi / joriy dars</div>
           <div className="font-bold">{t.lesson_no}-dars — {t.title}</div>
@@ -87,7 +94,7 @@ function LessonsHome() {
         </div>
       )}
 
-      {d.missed && (
+      {d.missed && language !== "ru" && (
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
           <div className="font-semibold text-amber-900">Qoldirilgan dars — {d.missed.lesson_no}-dars</div>
           <div className="text-xs text-amber-800 mb-2">{d.missed.date} · {d.missed.title}</div>

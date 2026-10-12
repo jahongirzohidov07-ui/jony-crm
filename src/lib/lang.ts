@@ -1,3 +1,4 @@
+import { useSyncExternalStore } from "react";
 /** O'RGANILAYOTGAN TIL (2026-08-11, Jahongir: "glavniy ekranda qaysi
  * tilni o'rganayotgani bayrog'i tursin, bayroqqa bosganda boshqa
  * tillarga o'zgaradi va shu til lug'ati chiqadi").
@@ -18,7 +19,9 @@ export function getLang(): string {
 }
 
 export function setLang(code: string) {
+  if (!LANGS.some((l) => l.code === code)) return;
   localStorage.setItem("jonyos_lang", code);
+  window.dispatchEvent(new Event("jonyos-language-change"));
 }
 
 /** UI text for the selected learning language; game IDs remain compatible. */
@@ -32,4 +35,19 @@ export function skillLabel(skill: string, fallback: string, lang: string): strin
   if (lang === "en") return fallback;
   const labels: Record<string,string> = {grammar:"Grammatika",vocabulary:"Lug‘at",reading:"O‘qish",listening:"Tinglash",writing:"Yozish",speaking:"Gapirish"};
   return labels[skill] || fallback;
+}
+
+function subscribeLanguage(onChange: () => void) {
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === "jonyos_lang" || event.key === null) onChange();
+  };
+  window.addEventListener("jonyos-language-change", onChange);
+  window.addEventListener("storage", onStorage);
+  return () => {
+    window.removeEventListener("jonyos-language-change", onChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+export function useLearningLanguage(): string {
+  return useSyncExternalStore(subscribeLanguage, getLang, () => "en");
 }

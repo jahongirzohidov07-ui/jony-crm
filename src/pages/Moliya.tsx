@@ -241,6 +241,8 @@ function CashflowTab() {
   // Xato kiritilgan kirim/chiqimni to'g'rilash (asoschi, moliyachi,
   // filial rahbari) - Jahongir so'radi
   const canPayEdit = can(user?.role, PAYMENT_EDIT);
+  // Ustoz oyligi yozuvini tuzatish — oylik huquqi borlarga (2026-10-12)
+  const canSalaryFix = can(user?.role, SALARY_FIX);
   const [editing, setEditing] = useState<PayEditTarget | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -566,14 +568,23 @@ function CashflowTab() {
                       <td>{r.branch}</td>
                       <td>{ledgerCategoryLabel(r)}</td>
                       <td className="pr-3 text-right">
-                        {canPayEdit && !bal && r.category !== "other_income" && (
+                        {/* QATOR TURI ID PREFIKSIDAN (2026-10-12): p — o'quvchi
+                            to'lovi, e — xarajat, tp — ustoz oyligi. Ilgari
+                            "tp12" ham "payment" deb, /payments/NaN ga ketib
+                            "Xatolik: 422" berardi. Xodim oyligi (ssp) va
+                            qo'shimcha daromad bu yerdan tahrirlanmaydi. */}
+                        {!bal && (() => {
+                          const m = /^(tp|p|e)(\d+)$/.exec(String(r.id));
+                          if (!m) return null;
+                          const kind = m[1] === "tp" ? "teacher_payment"
+                            : m[1] === "e" ? "expense" : "payment";
+                          if (kind === "teacher_payment" ? !canSalaryFix : !canPayEdit) return null;
+                          return (
                           <button
                             onClick={() =>
                               setEditing({
-                                kind: r.id.startsWith("e")
-                                  ? "expense"
-                                  : "payment",
-                                id: Number(r.id.slice(1)),
+                                kind,
+                                id: Number(m[2]),
                                 amount: r.amount,
                                 method: r.method,
                                 note: r.note,
@@ -585,7 +596,8 @@ function CashflowTab() {
                           >
                             <Pencil size={13} />
                           </button>
-                        )}
+                          );
+                        })()}
                       </td>
                     </tr>
                   );

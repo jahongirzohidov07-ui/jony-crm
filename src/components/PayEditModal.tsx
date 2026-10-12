@@ -14,7 +14,8 @@ import { MoneyInput } from "./MoneyInput";
  * Yozuv o'chirilmaydi - eski qiymatlar Auditda qoladi.
  */
 export interface PayEditTarget {
-  kind: "payment" | "expense";
+  /** teacher_payment — ustoz oyligi (2026-10-12): PUT /teacher-payments/{id} */
+  kind: "payment" | "expense" | "teacher_payment";
   id: number;
   amount: number;
   method?: string | null;
@@ -54,6 +55,12 @@ export function PayEditModal({
           note: note || null,
           ...(target.canMethod !== false ? { method } : {}),
         });
+      } else if (target.kind === "teacher_payment") {
+        await api.put(`/teacher-payments/${target.id}`, {
+          amount: num,
+          method,
+          note: note || null,
+        });
       } else {
         await api.put(`/expenses/${target.id}`, {
           amount: num,
@@ -75,7 +82,11 @@ export function PayEditModal({
       <div className="bg-white rounded-xl shadow-xl w-full max-w-sm p-5">
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-semibold text-slate-900 text-sm">
-            {target.kind === "payment" ? "To'lovni tahrirlash" : "Chiqimni tahrirlash"}
+            {target.kind === "payment"
+              ? "To'lovni tahrirlash"
+              : target.kind === "teacher_payment"
+              ? "Ustoz oyligini tahrirlash"
+              : "Chiqimni tahrirlash"}
           </h3>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
             <X size={17} />

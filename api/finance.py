@@ -2493,6 +2493,62 @@ def set_teacher_payment_branch(
     return {"ok": True, "branch_id": p.branch_id}
 
 
+@router.put("/api/teacher-payments/{payment_id}")
+def edit_teacher_payment(
+    payment_id: int,
+    payload: dict = Body(...),
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.SALARY_FIX)),
+):
+    """USTOZ OYLIGI YOZUVINI TAHRIRLASH (2026-10-12, Jahongir: "shu
+    rayxonani to'g'rilayman desam xato ketib qolibdi").
+
+    Kassa daftaridagi qalamcha ustoz oyligi qatori uchun ham ishlaydi:
+    summa, to'lov usuli va izoh o'zgaradi. Yozuv o'chirilmaydi — eski
+    qiymatlar Auditda qoladi."""
+    p = db.query(models.TeacherPayment).get(payment_id)
+    if not p:
+        raise HTTPException(404, "Topilmadi")
+    t = db.query(models.Teacher).get(p.teacher_id)
+    if t is not None:
+        _check_pay_scope(db, user, teacher=t)
+    label = t.full_name if t else "—"
+    changed = []
+    if "amount" in payload and payload["amount"] is not None:
+        try:
+            amt = round(float(payload["amount"]), 2)
+        except (TypeError, ValueError):
+            raise HTTPException(400, "Summa noto'g'ri")
+        if amt <= 0:
+            raise HTTPException(400, "Summani musbat son bilan kiriting")
+        if amt != round(float(p.amount or 0), 2):
+            changed.append(("Ustoz to'lovi summasi",
+                            f"{p.amount:,.0f}".replace(",", " "),
+                            f"{amt:,.0f}".replace(",", " ")))
+            p.amount = amt
+    if payload.get("method"):
+        m = str(payload["method"])
+        if m != (p.method or "") and m not in roles.PAYMENT_METHOD_LABELS:
+            raise HTTPException(400, "Noto'g'ri to'lov usuli")
+        if m != (p.method or ""):
+            changed.append(("Ustoz to'lovi usuli", p.method, m))
+            p.method = m
+    if "note" in payload:
+        n = (payload.get("note") or None)
+        if n != p.note:
+            changed.append(("Ustoz to'lovi izohi", p.note, n))
+            p.note = n
+    db.commit()
+    for field, old, new in changed:
+        audit.log(db, user, entity="teacher", action="salary_change",
+                  entity_id=p.teacher_id, entity_label=label,
+                  branch_id=p.branch_id or (t.branch_id if t else None),
+                  field=field, old_value=old, new_value=new)
+    db.commit()
+    return {"ok": True, "id": p.id, "amount": p.amount,
+            "method": p.method, "note": p.note}
+
+
 @router.delete("/api/teacher-payments/{payment_id}")
 def delete_teacher_payment(
     payment_id: int,

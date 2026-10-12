@@ -90,7 +90,7 @@ export default function LessonPlans() {
   const { course, no } = useParams();
   if (course === "intensive") return <><div className="px-6 md:px-8 max-w-5xl"><CourseNavigation active={course} /></div><IntensivePlans /></>;
   if (course === "german") return <><div className="mx-auto max-w-6xl px-6 md:px-8"><CourseNavigation active={course}/></div><Suspense fallback={<div className="p-8">Nemis kursi yuklanmoqda…</div>}><GermanPlans/></Suspense></>;
-  if (course === "russian") return <><div className="mx-auto max-w-6xl px-4 md:px-8"><CourseNavigation active={course}/></div><Suspense fallback={<div className="p-8">Rus kursi yuklanmoqda…</div>}><RussianPlans/></Suspense></>;
+  if (course === "russian") return <><div className="mx-auto max-w-6xl px-4 md:px-8"><CourseNavigation active={course}/></div><Suspense fallback={<div className="p-8">Загрузка курса русского языка…</div>}><RussianPlans/></Suspense></>;
   const language = LANGUAGE_COURSES.find((item) => item.key === course);
   if (language) return <LanguagePlans language={language} />;
   if (course && no) return <LessonView course={course} no={Number(no)} />;
@@ -106,7 +106,7 @@ const LANGUAGE_COURSES = [
 
 function CourseNavigation({ active = "standard" }: { active?: string }) {
   const courses = [{ key: "standard", title: "Standard English" }, { key: "intensive", title: "Intensive" }, ...LANGUAGE_COURSES];
-  return <nav aria-label="O‘quv yo‘nalishi" className="my-5 flex flex-wrap gap-2 rounded-xl bg-slate-100 p-1">
+  return <nav aria-label={active === "russian" ? "Учебное направление" : "O‘quv yo‘nalishi"} className="my-5 flex flex-wrap gap-2 rounded-xl bg-slate-100 p-1">
     {courses.map((item) => <Link key={item.key} to={item.key === "standard" ? "/plans" : `/plans/${item.key}`}
       aria-current={active === item.key ? "page" : undefined}
       className={`flex-1 min-w-28 rounded-lg px-4 py-3 text-center text-sm font-semibold ${active === item.key ? "bg-white text-brand-700 shadow-sm" : "text-slate-600 hover:bg-white"}`}>

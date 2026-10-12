@@ -42,6 +42,7 @@ import { QuickPayment } from "../components/QuickPayment";
 import { PayImportTab } from "../components/PayImport";
 import { CashDayCard } from "../components/CashDay";
 import { MonthCloseView, PnlBoard } from "../components/MonthClose";
+import { MoneyInput } from "../components/MoneyInput";
 
 type Tab = "overview" | "debtors" | "cashflow" | "pnl" | "expenses" | "other_income" | "billing" | "breakeven" | "budget" | "calendar" | "paid" | "lcup" | "trash" | "fixes";
 
@@ -764,6 +765,33 @@ function ExpenseForm({
       .catch(() => setStaff([]));
   }, [mode, branchId]);
 
+  // OYLIK SUMMASI AVTOMAT (2026-10-12, Jahongir: "oylik deb ustozni
+  // tanlaganda summa avtomat oyligidan kelib chiqib paydo bo'lsin,
+  // xarajat kirituvchi keyin xohlasa o'chirib boshqa yozadi").
+  // Xodim yoki oy almashsa — shu oy uchun hali BERILMAGAN qoldiq
+  // summaga yoziladi. Tahrirlashda (eski yozuv) tegilmaydi.
+  const [due, setDue] = useState<
+    { earned: number; paid: number; due: number } | null>(null);
+  useEffect(() => {
+    setDue(null);
+    if (editing || mode !== "salary" || !payee) return;
+    const qs = new URLSearchParams({ period: payPeriod });
+    if (payee.teacher_id) qs.set("teacher_id", String(payee.teacher_id));
+    else if (payee.user_id) qs.set("user_id", String(payee.user_id));
+    else return;
+    if (branchId) qs.set("branch_id", branchId);
+    let alive = true;
+    api.get<{ earned: number; paid: number; due: number }>(
+      `/expenses/salary-due?${qs.toString()}`)
+      .then((r) => {
+        if (!alive) return;
+        setDue(r);
+        setAmount(r.due > 0 ? String(Math.round(r.due)) : "");
+      })
+      .catch(() => { if (alive) setDue(null); });
+    return () => { alive = false; };
+  }, [mode, payee?.key, payPeriod, branchId]);
+
   useEffect(() => {
     if (category !== "book" || books.length) return;
     api.get<{ id: number; name: string; qty: number }[]>("/consumables/books")
@@ -942,6 +970,16 @@ function ExpenseForm({
                   Bu pul {payee.name}ning oylik kartasida ham ko'rinadi.
                 </p>
               )}
+              {payee && due && (
+                <p className="text-[11px] text-slate-500 mt-1">
+                  Hisoblangan {formatSom(due.earned)} · berilgan{" "}
+                  {formatSom(due.paid)} ·{" "}
+                  <b className={due.due > 0 ? "text-red-600" : "text-emerald-600"}>
+                    qoldiq {formatSom(due.due)}
+                  </b>
+                  {due.due > 0 ? " — summaga avtomat yozildi, xohlasangiz o'zgartiring" : ""}
+                </p>
+              )}
             </div>
           )}
 
@@ -1046,11 +1084,10 @@ function ExpenseForm({
               <label className="block text-xs font-medium text-slate-500 mb-1">
                 Summa (so'm)
               </label>
-              <input
-                type="number"
+              <MoneyInput
                 className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={setAmount}
                 autoFocus
               />
             </div>

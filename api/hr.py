@@ -517,12 +517,16 @@ def payroll_overview(
                     sealed_at = sl.sealed_at
             except Exception:
                 pass
+        _worked = {getattr(ctx.groups.get(g.get("group_id")), "branch_id",
+                           None) for g in e["by_group"]} - {None}
         e = _earned_in_branches(e, ctx.groups, branches)
-        paid_all = _teacher_paid(db, t.id, since=start, until=end, ctx=ctx,
-                                 period=period)
         if branches is not None and e["amount"] == 0:
             continue          # shu filialda bu oy darsi yo'q
-        paid = _paid_share(paid_all, e["amount"], e["total_amount"])
+        # Qaysi filialdan berilgan bo'lsa o'shanga (2026-10-12)
+        paid = _teacher_paid_scoped(
+            db, t.id, since=start, until=end, ctx=ctx, period=period,
+            branches=branches, part=e["amount"], whole=e["total_amount"],
+            worked=_worked)
         card_balance = round(_teacher_earned(db, t.id, ctx=ctx)["amount"]
                              - _teacher_paid(db, t.id, ctx=ctx), 2)
         if e["amount"] == 0 and paid == 0:

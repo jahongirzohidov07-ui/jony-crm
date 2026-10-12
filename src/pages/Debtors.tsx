@@ -11,6 +11,7 @@ import { formatPhone } from "../components/PhoneInput";
 import { StudentPayButton } from "../components/QuickPayment";
 import { BranchPicker, branchParam } from "../components/BranchPicker";
 import { monthLabel } from "../lib/examReport";
+import { MoneyInput } from "../components/MoneyInput";
 
 const TONE: Record<string, string> = {
   slate: "bg-slate-100 text-slate-600",
@@ -522,10 +523,9 @@ function ContactForm({
                 <label className="block text-xs text-slate-500 mb-1">
                   Qancha to'layman dedi?
                 </label>
-                <input
-                  type="number"
+                <MoneyInput
                   value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={setAmount}
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm"
                 />
               </div>

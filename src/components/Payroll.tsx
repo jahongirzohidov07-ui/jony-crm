@@ -22,6 +22,7 @@ import {
 import { formatSom, formatDate } from "../lib/format";
 import { MONTHS } from "../lib/expenses";
 import { exportToExcel } from "../lib/exportXlsx";
+import { MoneyInput } from "./MoneyInput";
 
 const now = new Date();
 
@@ -142,11 +143,10 @@ function PayModal({
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Summa (so'm) *
             </label>
-            <input
-              type="number"
+            <MoneyInput
               autoFocus
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={setAmount}
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
             />
           </div>

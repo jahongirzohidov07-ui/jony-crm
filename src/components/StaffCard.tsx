@@ -10,6 +10,7 @@ import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { BLACKLIST_MANAGE, can } from "../lib/roles";
 import { AddToBlacklist } from "./HrBlacklist";
+import { MoneyInput } from "./MoneyInput";
 
 const ICON: Record<string, typeof Award> = {
   training: GraduationCap,
@@ -581,10 +582,9 @@ function Events({
                   />
                 )}
                 {kind === "bonus" && (
-                  <input
-                    type="number"
+                  <MoneyInput
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={setAmount}
                     placeholder="Summa"
                     className="w-28 px-2 py-1.5 rounded-lg border border-slate-200 text-sm"
                   />

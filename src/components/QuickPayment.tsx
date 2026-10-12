@@ -5,6 +5,7 @@ import { api, newClientKey, ApiError, type Student } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { PAYMENT_METHODS } from "../lib/payments";
 import { formatPhone } from "./PhoneInput";
+import { MoneyInput } from "./MoneyInput";
 
 /**
  * Tez to'lov. Administratorning kuni shu tugmadan boshlanadi: o'quvchini
@@ -94,6 +95,16 @@ function PaymentModal({
       .catch(() => setAll([]));
     setTimeout(() => searchRef.current?.focus(), 50);
   }, [fixed]);
+
+  // QARZ SUMMASI AVTOMAT (2026-10-12, Jahongir: "to'lov kiritganda
+  // avtomat qancha qarzdorligi bo'lsa chiqsa yaxshi, osonroq tezroq").
+  // O'quvchi tanlanishi bilan summa qarzga teng qo'yiladi — xodim
+  // xohlasa o'chirib boshqasini yozadi. Qarzi yo'q bo'lsa — bo'sh.
+  useEffect(() => {
+    if (!picked) return;
+    const debt = picked.balance < 0 ? Math.round(Math.abs(picked.balance)) : 0;
+    setAmount(debt > 0 ? String(debt) : "");
+  }, [picked?.id]);
 
   const found = q.trim()
     ? all
@@ -314,11 +325,10 @@ function PaymentModal({
                   <label className="block text-xs text-slate-500 mb-1">
                     Summa
                   </label>
-                  <input
+                  <MoneyInput
                     data-guide="pay-amount"
-                    type="number"
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={setAmount}
                     placeholder="480000"
                     autoFocus
                     className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-base"

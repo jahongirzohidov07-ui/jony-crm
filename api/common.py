@@ -1976,6 +1976,57 @@ def _paid_share(paid: float, part: float, whole: float) -> float:
     return round(paid * part / whole, 2)
 
 
+def _teacher_paid_scoped(db: Session, teacher_id: int, *, since, until,
+                         ctx=None, period=None, branches=None,
+                         part: float = 0.0, whole: float = 0.0,
+                         worked=None) -> float:
+    """Tanlangan filial(lar) ro'yxatida ustozga "to'langan" summa.
+
+    QAYSI FILIALDAN BERILGAN BO'LSA O'SHANGA (2026-10-12, Jahongir:
+    "asliddinga berdim avtomat to'landi bo'lmayabdi"). Asliddinga
+    Bekobod 2 dan 1 703 300 va Bekobod 1 dan ("Bek1 filial oylik")
+    921 000 berilgan edi. Ilgari ikkalasi qo'shilib, ishlagan ulushi
+    bo'yicha bo'linardi — Bekobod 2 ga 1 702 879 tushib "to'lanmagan"
+    qolardi. Endi to'lovda filial yozilgan bo'lsa (2026-09-16 dan
+    beri yoziladi) — faqat o'sha filialga; filiali yo'q eski yozuv —
+    avvalgidek ulush bo'yicha. branches=None (barcha filiallar) —
+    hamma to'lov."""
+    if branches is None:
+        return _teacher_paid(db, teacher_id, since=since, until=until,
+                             ctx=ctx, period=period)
+    bset = set(branches)
+
+    def _hit(p):
+        if period and p.period:
+            return p.period == period
+        on = p.paid_on
+        return (on is not None and (since is None or on >= since)
+                and (until is None or on <= until))
+
+    rows = ctx.payments(teacher_id) if ctx is not None else None
+    if rows is None or (rows and not hasattr(rows[0], "branch_id")):
+        rows = (db.query(models.TeacherPayment.period,
+                         models.TeacherPayment.paid_on,
+                         models.TeacherPayment.amount,
+                         models.TeacherPayment.branch_id)
+                .filter(models.TeacherPayment.teacher_id == teacher_id)
+                .all())
+    # worked — ustoz shu oy dars o'tgan filiallar. To'lov u umuman
+    # ishlamagan filialdan kiritilgan bo'lsa (xato tanlov) — yo'qolib
+    # qolmasin, ulush bo'yicha bo'linsin.
+    wset = set(worked) if worked is not None else None
+    mine = loose = 0.0
+    for p in rows:
+        if not _hit(p):
+            continue
+        if p.branch_id is None or (wset is not None
+                                   and p.branch_id not in wset):
+            loose += p.amount or 0
+        elif p.branch_id in bset:
+            mine += p.amount or 0
+    return round(mine + _paid_share(loose, part, whole), 2)
+
+
 def _check_pay_scope(db: Session, user, teacher=None, staff_user=None) -> None:
     """Filialga bog'langan xodim (administrator, filial rahbari) faqat
     O'Z filiali ustozi yoki xodimiga pul beradi (2026-09-16, Jahongir:
@@ -7844,6 +7895,7 @@ __all__ = [
     "_payroll_teacher_ids",
     "_earned_in_branches",
     "_paid_share",
+    "_teacher_paid_scoped",
     "_payroll_branch_label",
     "_salary_breakdown",
     "_salary_breakdown_scoped",

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { api } from "../lib/api";
 import { PAYMENT_METHODS } from "../lib/payments";
+import { MoneyInput } from "./MoneyInput";
 
 /**
  * Kirim/chiqim yozuvini tahrirlash oynasi (Jahongir: "bazida xato
@@ -88,10 +89,9 @@ export function PayEditModal({
             <label className="block text-xs font-medium text-slate-500 mb-1">
               Summa (so'm)
             </label>
-            <input
-              type="number"
+            <MoneyInput
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={setAmount}
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
               autoFocus
             />

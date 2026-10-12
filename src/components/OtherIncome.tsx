@@ -17,6 +17,7 @@ import { useAuth } from "../lib/AuthContext";
 import { formatDate, formatSom } from "../lib/format";
 import { PAYMENT_METHODS } from "../lib/payments";
 import { MONTHS } from "../lib/expenses";
+import { MoneyInput } from "./MoneyInput";
 
 export interface OtherIncomeRow {
   id: number;
@@ -292,11 +293,10 @@ function OtherIncomeForm({
           </label>
           <label className="block">
             <span className="text-xs text-slate-500">Summa (so'm)</span>
-            <input
+            <MoneyInput
               className={input}
-              inputMode="numeric"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={setAmount}
               placeholder="50000"
               autoFocus
             />

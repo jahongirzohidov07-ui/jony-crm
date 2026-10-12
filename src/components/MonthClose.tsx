@@ -7,6 +7,7 @@ import { CheckCircle2, Clock, CircleDashed, Wallet, X } from "lucide-react";
 import { api } from "../lib/api";
 import { formatSom } from "../lib/format";
 import { PAYMENT_METHODS, methodLabel } from "../lib/payments";
+import { MoneyInput } from "./MoneyInput";
 
 /**
  * OY YOPILISHI VA P&L (2026-10-02, Jahongir).
@@ -320,8 +321,8 @@ function PayModal({ row, period, title, onClose }: {
         </p>
         <div className="space-y-3">
           <label className="block text-xs text-slate-500">Summa
-            <input value={amount} inputMode="numeric"
-              onChange={(e) => setAmount(e.target.value)}
+            <MoneyInput value={amount}
+              onChange={setAmount}
               className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-right" />
           </label>
           <div className="grid grid-cols-2 gap-2">

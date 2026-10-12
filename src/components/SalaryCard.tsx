@@ -7,6 +7,7 @@ import { formatSom, formatDate } from "../lib/format";
 import { useAuth } from "../lib/AuthContext";
 import { can, SALARY_FIX } from "../lib/roles";
 import { TeacherFinance } from "./TeacherFinance";
+import { MoneyInput } from "./MoneyInput";
 
 /**
  * Ustoz ish haqi kartasi.
@@ -423,10 +424,9 @@ function PayForm({
             </div>
           )}
 
-          <input
-            type="number"
+          <MoneyInput
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={setAmount}
             placeholder="500000"
             autoFocus
             className="w-full px-3 py-2.5 rounded-lg border border-slate-200 text-base"

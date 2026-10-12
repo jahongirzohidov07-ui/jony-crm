@@ -169,7 +169,9 @@ export function TeacherPayrollTab() {
                     >
                       <td className="px-4 py-3 font-medium text-slate-800">
                         {r.full_name}
-                        {r.paid_amount < r.amount && (
+                        {/* 1 000 so'mdan kam farq — yaxlitlash (1 703 333
+                            o'rniga 1 703 300 berilgan), "to'lanmagan" emas */}
+                        {r.amount - r.paid_amount >= 1000 && (
                           <span className="ml-2 text-[10px] uppercase tracking-wide bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded">
                             to'lanmagan
                           </span>

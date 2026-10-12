@@ -39,6 +39,7 @@ import { Discounts } from "../components/Discounts";
 import { formatPhone } from "../components/PhoneInput";
 import { StudentModal } from "./Students";
 import { CommentThread, type CommentList } from "../components/CommentThread";
+import { MoneyInput } from "../components/MoneyInput";
 
 const KIND_LABEL: Record<string, string> = {
   payment: "To'lov",
@@ -798,7 +799,14 @@ function PaymentsTab({
           )}
           {canEdit && (
             <button
-              onClick={() => setShowForm(!showForm)}
+              onClick={() => {
+                // Ochilganda qarz summasi avtomat (2026-10-12) — xodim
+                // xohlasa o'zgartiradi
+                if (!showForm && !amount && student.balance < 0) {
+                  setAmount(String(Math.round(Math.abs(student.balance))));
+                }
+                setShowForm(!showForm);
+              }}
               className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm font-medium"
             >
               {showForm ? <X size={16} /> : <Plus size={16} />}
@@ -944,12 +952,11 @@ function PaymentsTab({
           )}
 
           <div className="flex gap-2">
-            <input
-              type="number"
+            <MoneyInput
               className="w-40 rounded-lg border border-slate-300 px-3 py-2 text-sm"
               placeholder="Summa"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={setAmount}
               autoFocus
             />
             <input

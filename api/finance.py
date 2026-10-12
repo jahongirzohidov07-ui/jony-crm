@@ -4,6 +4,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import bisect
+import json
 import re
 from datetime import date, datetime, timedelta
 from typing import List, Optional
@@ -229,6 +230,82 @@ def expense_staff_list(
         })
     rows.sort(key=lambda r: (r["role_label"], r["name"]))
     return {"rows": rows}
+
+
+@router.get("/api/expenses/salary-due")
+def expense_salary_due(
+    period: str,
+    teacher_id: Optional[int] = None,
+    user_id: Optional[int] = None,
+    branch_id: Optional[int] = None,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
+):
+    """OYLIK SUMMASI AVTOMAT (2026-10-12, Jahongir: "oylik deb ustozni
+    tanlaganda summa avtomat oyligidan kelib chiqib paydo bo'lsin,
+    xarajat kirituvchi xohlasa o'chirib boshqa yozadi").
+
+    Shu oy uchun hali BERILMAGAN summa (tanlangan filial kesimida):
+    ustoz — yo'qlamadan hisoblangan (oy yopilgan bo'lsa muhrdan)
+    minus shu filialdan shu oy uchun berilgani; boshqa xodim — fiks
+    oylik minus shu oy uchun berilgani. Faqat taklif — hech narsa
+    yozilmaydi."""
+    period = _valid_period(period)
+    if not period:
+        raise HTTPException(400, "Oy noto'g'ri")
+    y, m = int(period[:4]), int(period[5:7])
+    start, end = billing.month_bounds(y, m)
+    if teacher_id:
+        t = db.query(models.Teacher).get(teacher_id)
+        if not t:
+            raise HTTPException(404, "Ustoz topilmadi")
+        ctx = billing.PayrollContext(db)
+        ctx.prefetch([t.id])
+        e = _teacher_earned(db, t.id, since=start, until=end, ctx=ctx)
+        sl = _seal_rows(db, period, [t.id]).get(t.id)
+        if sl is not None:
+            try:
+                e = {"amount": float(sl.amount or 0),
+                     "attendances": int(sl.attendances or 0),
+                     "lessons": int(sl.lessons or 0),
+                     "by_group": json.loads(sl.groups_json or "[]")}
+            except Exception:
+                pass
+        worked = {getattr(ctx.groups.get(g.get("group_id")), "branch_id",
+                          None) for g in e["by_group"]} - {None}
+        branches = _payroll_branches(db, user, branch_id)
+        eb = _earned_in_branches(e, ctx.groups, branches)
+        paid = _teacher_paid_scoped(
+            db, t.id, since=start, until=end, ctx=ctx, period=period,
+            branches=branches, part=eb["amount"],
+            whole=eb["total_amount"], worked=worked)
+        earned = round(eb["amount"], 2)
+    elif user_id:
+        u = db.query(models.User).get(user_id)
+        if not u:
+            raise HTTPException(404, "Xodim topilmadi")
+        earned = round(float(u.fix_salary or 0), 2)
+        ex = (db.query(func.coalesce(func.sum(models.Expense.amount), 0.0))
+              .filter(models.Expense.staff_user_id == u.id,
+                      models.Expense.period == period).scalar() or 0.0)
+        # StaffSalaryPayment jadvali entry.py da e'lon qilinadi — u
+        # yuklanmagan muhitda (test) shunchaki 0
+        _SSP = getattr(models, "StaffSalaryPayment", None)
+        ssp = 0.0
+        if _SSP is not None:
+            try:
+                ssp = (db.query(func.coalesce(func.sum(_SSP.amount), 0.0))
+                       .filter(_SSP.user_id == u.id, _SSP.period == period)
+                       .scalar() or 0.0)
+            except Exception:
+                db.rollback()
+                ssp = 0.0
+        paid = round(float(ex) + float(ssp), 2)
+    else:
+        raise HTTPException(400, "Xodim tanlanmadi")
+    due = max(0.0, round(earned - paid, 2))
+    return {"period": period, "earned": earned, "paid": paid,
+            "due": float(round(due))}
 
 
 @router.get("/api/expenses/staff-salaries")

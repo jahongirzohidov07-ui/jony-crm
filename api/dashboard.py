@@ -671,15 +671,17 @@ def report_teacher_payroll(
     ctx.prefetch([t.id for t in teachers])
     names = {b.id: b.name for b in db.query(models.Branch).all()}
     for t in teachers:
-        e = _earned_in_branches(
-            _teacher_earned(db, t.id, since=start, until=end, ctx=ctx),
-            ctx.groups, branches)
+        _full = _teacher_earned(db, t.id, since=start, until=end, ctx=ctx)
+        _worked = {getattr(ctx.groups.get(g.get("group_id")), "branch_id",
+                           None) for g in _full["by_group"]} - {None}
+        e = _earned_in_branches(_full, ctx.groups, branches)
         if e["amount"] == 0:
             continue
-        paid = _paid_share(
-            _teacher_paid(db, t.id, since=start, until=end, ctx=ctx,
-                          period=period),
-            e["amount"], e["total_amount"])
+        # Qaysi filialdan berilgan bo'lsa o'shanga (2026-10-12)
+        paid = _teacher_paid_scoped(
+            db, t.id, since=start, until=end, ctx=ctx, period=period,
+            branches=branches, part=e["amount"], whole=e["total_amount"],
+            worked=_worked)
         rows.append({
             "teacher_id": t.id,
             "full_name": t.full_name,

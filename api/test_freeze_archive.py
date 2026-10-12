@@ -98,6 +98,12 @@ for lid in LIDS:
         "marks": [{"student_id": SID, "present": False},
                   {"student_id": OID, "present": True}]})
     ck("saqlandi", r.status_code, 200)
+_d0 = SessionLocal()
+ck("saqlashda darhol muzlamaydi", _d0.query(models.Student).get(SID).status, "active")
+_d0.close()
+# 2026-10-12: muzlatish saqlashda emas — ertalabki kunlik tekshiruvda
+import groups_lessons as _GL  # noqa: E402
+_dbf = SessionLocal(); _GL.run_auto_freeze(_dbf); _dbf.close()
 db = SessionLocal()
 ck("muzlatildi", db.query(models.Student).get(SID).status, "frozen")
 ck("jadvalda yo'qlamasi yo'q (oylikka kirmaydi)",

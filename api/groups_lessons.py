@@ -867,59 +867,11 @@ def save_attendance(
     except Exception:
         db.rollback()
 
-    # AVTOMUZLATISH: ketma-ket 3 darsga kelmagan o'quvchi muzlatiladi,
-    # o'sha 3 kungi yoqlamasi bekor bo'ladi (ustoz oyligidan ham chiqadi)
-    # va adminlarga "aloqaga chiqing" vazifasi tushadi.
-    try:
-        absent_ids = [m.student_id for m in payload.marks
-                      if m.present is False and not m.remove]
-        for sid in set(absent_ids):
-            st = db.query(models.Student).get(sid)
-            if not st or st.status != "active":
-                continue
-            last3 = (db.query(models.Attendance)
-                     .join(models.Lesson,
-                           models.Lesson.id == models.Attendance.lesson_id)
-                     .filter(models.Attendance.student_id == sid,
-                             models.Lesson.group_id == lesson.group_id)
-                     .order_by(models.Lesson.date.desc(),
-                               models.Lesson.id.desc())
-                     .limit(roles.AUTO_FREEZE_ABSENCES).all())
-            if len(last3) < roles.AUTO_FREEZE_ABSENCES:
-                continue
-            if any((a.present or 0) != 0 for a in last3):
-                continue
-            lesson_ids = [a.lesson_id for a in last3]
-            _dates = sorted(str(a.lesson.date) for a in last3 if a.lesson)
-            archive_attendance(db, last3, "auto_freeze")
-            db.flush()
-            for lid_ in lesson_ids:
-                ls_ = db.query(models.Lesson).get(lid_)
-                if ls_ and not db.query(models.Attendance).filter(
-                        models.Attendance.lesson_id == lid_).count():
-                    ls_.held = 0
-            st.status = "frozen"
-            st.frozen_until = None
-            st.frozen_note = (f"{roles.AUTO_FREEZE_ABSENCES} darsga "
-                              "ketma-ket kelmadi — avtomuzlatildi")
-            _freeze_task(db, st, None, st.frozen_note)
-            # XABAR: ustozga ham, adminga ham (2026-09-03, Jahongir:
-            # "qaysidur o'quvchi avtomat muzlatilsa, o'qituvchiga
-            # xabar borsin, adminga ham xabar borsin"). Ilgari faqat
-            # administratorga jimgina vazifa tushardi va ustoz
-            # bolaning ro'yxatdan chiqib ketganini bilmasdi.
-            try:
-                auto_freeze_notify(db, st, lesson.group)
-            except Exception:
-                pass
-            db.commit()
-            audit.log(db, None, entity="student", action="auto_freeze",
-                      entity_id=st.id, entity_label=st.full_name,
-                      note=(f"{st.frozen_note}. Arxivga olingan "
-                            f"yo'qlamalar: {', '.join(_dates)}"),
-                      branch_id=st.branch_id, commit=True)
-    except Exception:
-        db.rollback()
+    # AVTOMUZLATISH SAQLASHDA EMAS (2026-10-12, Jahongir: ustoz xato
+    # "kelmadi" qo'yib, bola kelgach to'g'rilay olmay qolardi — 3-chi
+    # "kelmadi" saqlangan zahoti bola ro'yxatdan yo'qolardi). Endi
+    # tekshiruv ERTASI KUNI ertalab: run_auto_freeze() (entry._mc_ensure,
+    # kunlik). Kun davomida ustoz xohlagancha to'g'rilaydi.
 
     return {"ok": True, "saved": len(payload.marks), "activated": activated}
 
@@ -2363,3 +2315,85 @@ def holiday_delete(hid: int, db: Session = Depends(get_db),
               entity_label=f"Dam kuni olib tashlandi {h.date.isoformat()}",
               new_value=n, commit=True)
     return {"ok": True, "restored_lessons": n}
+
+
+def run_auto_freeze(db: Session, today=None, window_days: int = 14) -> list:
+    """KUNLIK AVTOMUZLATISH (2026-10-12). Har kuni bir marta (ertalab,
+    birinchi kirish yoki cron) chaqiriladi.
+
+    Qoida (avvalgidek): o'quvchining shu guruhdagi oxirgi
+    AUTO_FREEZE_ABSENCES ta yo'qlamasi ketma-ket "kelmadi" bo'lsa —
+    muzlatiladi, o'sha yo'qlamalar arxivga olinadi (oylikka kirmaydi),
+    adminga vazifa, ustozga xabar, audit.
+    Farqi: faqat BUGUNDAN OLDINGI darslar ko'riladi — bugungisini ustoz
+    hali to'g'rilashi mumkin. Bugun "keldi" bo'lsa — muzlatilmaydi.
+    Butun guruh kelmagan kun ham hisobga kiradi (Jahongir, 2026-10-08).
+    window_days: eng oxirgi "kelmadi" shu kunlar ichida bo'lsin — eski
+    tarixdagi zanjirlar birdaniga ko'plab muzlatib yubormasin."""
+    from datetime import timedelta as _td
+    today = today or roles.local_today()
+    n = roles.AUTO_FREEZE_ABSENCES
+    A, L = models.Attendance, models.Lesson
+    since = today - _td(days=window_days)
+    cand = (db.query(A.student_id, L.group_id)
+            .join(L, L.id == A.lesson_id)
+            .join(models.Student, models.Student.id == A.student_id)
+            .filter(models.Student.status == "active",
+                    (A.present.is_(None)) | (A.present == 0),
+                    L.date >= since, L.date < today)
+            .distinct().all())
+    frozen = []
+    for sid, gid in cand:
+        try:
+            st = db.query(models.Student).get(sid)
+            if not st or st.status != "active" or sid in frozen:
+                continue
+            # Bugun (yoki keyin) kelgan bo'lsa — zanjir uzilgan
+            came = (db.query(A.id).join(L, L.id == A.lesson_id)
+                    .filter(A.student_id == sid, L.group_id == gid,
+                            L.date >= today, A.present.in_([1, 2]))
+                    .first())
+            if came:
+                continue
+            lastn = (db.query(A).join(L, L.id == A.lesson_id)
+                     .filter(A.student_id == sid, L.group_id == gid,
+                             L.date < today)
+                     .order_by(L.date.desc(), L.id.desc())
+                     .limit(n).all())
+            if len(lastn) < n or any((a.present or 0) != 0 for a in lastn):
+                continue
+            if lastn[0].lesson is None or lastn[0].lesson.date < since:
+                continue
+            group = db.query(models.Group).get(gid)
+            lesson_ids = [a.lesson_id for a in lastn]
+            dates = sorted(str(a.lesson.date) for a in lastn if a.lesson)
+            last_date = lastn[0].lesson.date
+            archive_attendance(db, lastn, "auto_freeze")
+            db.flush()
+            for lid_ in lesson_ids:
+                ls_ = db.query(models.Lesson).get(lid_)
+                if ls_ and not db.query(models.Attendance).filter(
+                        models.Attendance.lesson_id == lid_).count():
+                    ls_.held = 0
+            st.status = "frozen"
+            st.frozen_until = None
+            st.frozen_note = (f"{n} darsga ketma-ket kelmadi — "
+                              "avtomuzlatildi")
+            # Oylik qayta hisobi oxirgi "kelmadi" kuni oyi bo'yicha
+            # (entry._af_recount) — avvalgi "zahoti muzlatish" bilan bir xil
+            st._af_on = last_date
+            _freeze_task(db, st, None, st.frozen_note)
+            try:
+                auto_freeze_notify(db, st, group)
+            except Exception:
+                pass
+            db.commit()
+            audit.log(db, None, entity="student", action="auto_freeze",
+                      entity_id=st.id, entity_label=st.full_name,
+                      note=(f"{st.frozen_note}. Arxivga olingan "
+                            f"yo'qlamalar: {', '.join(dates)}"),
+                      branch_id=st.branch_id, commit=True)
+            frozen.append(sid)
+        except Exception:
+            db.rollback()
+    return frozen

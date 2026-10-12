@@ -7507,6 +7507,19 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
     # BIR MARTALIK (2026-10-03, Jahongir: "sentabr oyinikini oktabrda
     # berilsa ham sentabrniki bo'lib yozilsin") — 1–15 oktabrda berilgan
     # oyliklar (avans emas) sentabrniki bo'ladi.
+    # AVTOMUZLATISH — kuniga bir marta, ertalab (2026-10-12, Jahongir):
+    # kechagi va undan oldingi darslar bo'yicha. Bugungisi kirmaydi —
+    # ustoz kun davomida to'g'rilay oladi.
+    af_key = f"autofreeze_{today.isoformat()}"
+    if not _sd(db, af_key):
+        try:
+            import groups_lessons as _GLm
+            _fz = _GLm.run_auto_freeze(db, today)
+            _sm(db, af_key)
+            if _fz:
+                print(f"[muzlatish] avtomuzlatildi: {len(_fz)} ta")
+        except Exception:
+            db.rollback()
     wf_key = "fix_washington_teacher_2026-10"
     if not _sd(db, wf_key):
         try:
@@ -8901,7 +8914,12 @@ def _af_recount(db: Session, s):
     """Avtomuzlatilgan o'quvchining shu oylik hisobini to'g'rilaydi."""
     if s is None or s.group_id is None or s.group is None:
         return None
-    today = roles.local_today()
+    # KUNLIK AVTOMUZLATISH (2026-10-12): muzlatish ertasi kuni ertalab
+    # bo'ladi, lekin hisob avvalgidek OXIRGI "kelmadi" darsi kuni
+    # bo'yicha qilinadi (run_auto_freeze _af_on ni qo'yadi). Shunda
+    # 30-sentabr darsi 1-oktabr ertalab muzlatilsa ham sentabr hisobi
+    # to'g'rilanadi — pul natijasi avvalgisi bilan AYNAN bir xil.
+    today = getattr(s, "_af_on", None) or roles.local_today()
     period = _fz_period(today)
     row = _fz_row(db, s.id, period)
     if row is None:

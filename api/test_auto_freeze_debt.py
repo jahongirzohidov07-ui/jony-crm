@@ -124,6 +124,10 @@ for i, lid in enumerate(les):
         print("   yo'qlama xatosi:", r.status_code, r.text[:140])
         break
 
+ck("saqlashda darhol muzlamaydi", status(), "active")
+# 2026-10-12: muzlatish saqlashda emas — ertalabki kunlik tekshiruvda
+import groups_lessons as _GL  # noqa: E402
+_dbf = SessionLocal(); _GL.run_auto_freeze(_dbf); _dbf.close()
 ck("avtomat muzlatildi", status(), "frozen")
 got = charge()
 ck("qarz o'tilgan darslar bo'yicha kamaydi",

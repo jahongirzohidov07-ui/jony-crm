@@ -118,6 +118,12 @@ for i, lid in enumerate(LIDS):
                   {"student_id": OID, "present": True}]})
     ck(f"{i + 1}-dars yo'qlamasi saqlandi", r.status_code, 200)
 
+_d0 = SessionLocal()
+ck("saqlashda darhol muzlamaydi", _d0.query(models.Student).get(SID).status, "active")
+_d0.close()
+# 2026-10-12: muzlatish saqlashda emas — ertalabki kunlik tekshiruvda
+import groups_lessons as _GL  # noqa: E402
+_dbf = SessionLocal(); _GL.run_auto_freeze(_dbf); _dbf.close()
 db = SessionLocal()
 ck("o'quvchi AVTOMAT muzlatildi",
    db.query(models.Student).get(SID).status, "frozen")

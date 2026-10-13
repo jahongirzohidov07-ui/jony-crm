@@ -4806,3 +4806,41 @@ class RussianPlacementResult(Base):
     result_json = Column(Text, nullable=False)
     answers_json = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class AcademyBotSession(Base):
+    """Jony Academy Telegram boti — suhbat holati (2026-10-13).
+
+    Bot Railway'da ishlardi (trial tugab 24-sentabrda o'chdi). Endi u
+    JonyOS ichida webhook bo'lib ishlaydi: Vercel har xabarni alohida
+    chaqiradi, shuning uchun "qaysi savolda turibdi" xotirada emas,
+    shu jadvalda saqlanadi. Telegram ID'lari int32 dan katta bo'lishi
+    mumkin — String."""
+    __tablename__ = "academy_bot_sessions"
+    chat_id = Column(String(32), primary_key=True)
+    state = Column(String(20), nullable=True)
+    data_json = Column(Text, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class AcademyBotReg(Base):
+    """Bot orqali kelgan murojaat (eski botdagi registrations jadvali).
+    Har biri JonyOS'da lid ham bo'ladi (lead_id). O'chirilmaydi."""
+    __tablename__ = "academy_bot_regs"
+    id = Column(Integer, primary_key=True)
+    tg_user_id = Column(String(32), nullable=True, index=True)
+    username = Column(String(64), nullable=True)
+    name = Column(String(120), nullable=True)
+    phone = Column(String(20), nullable=True, index=True)
+    grade = Column(String(80), nullable=True)
+    course = Column(String(40), nullable=True)
+    branch = Column(String(40), nullable=True)
+    # pending | called | came | not_came
+    status = Column(String(20), default="pending")
+    group_message_id = Column(String(32), nullable=True)
+    lead_id = Column(Integer, ForeignKey("leads.id"), nullable=True,
+                     index=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)

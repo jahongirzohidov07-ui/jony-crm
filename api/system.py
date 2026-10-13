@@ -95,6 +95,14 @@ def health(request: Request, db: Session = Depends(get_db), db_check: int = 0):
     try:
         db.execute(text("SELECT 1"))
         out["db"] = "ok"
+        # Jony Academy boti: 20:00 dagi kunlik hisobot (2026-10-13).
+        # Alohida cron qo'shmaymiz — shu cron soat 20:00 da ham ishlaydi.
+        try:
+            import academy_bot
+            if academy_bot.daily_report(db):
+                out["academy_daily"] = "sent"
+        except Exception:
+            db.rollback()
     except Exception as e:
         out["status"] = "db_error"
         out["db"] = type(e).__name__

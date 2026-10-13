@@ -159,6 +159,7 @@ import staff_restore as _r_staff_restore
 import ig_connect as _r_ig_connect
 import video_check as _r_video_check
 import ig_audience as _r_ig_audience
+import academy_bot as _r_academy_bot
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -221,6 +222,7 @@ app.include_router(_r_staff_restore.router)
 app.include_router(_r_ig_connect.router)
 app.include_router(_r_video_check.router)
 app.include_router(_r_ig_audience.router)
+app.include_router(_r_academy_bot.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:

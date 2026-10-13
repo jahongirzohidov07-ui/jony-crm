@@ -254,6 +254,18 @@ st = c.get("/api/tg/academy-bot-status", headers=FH).json()
 ck("holat: guruh va admin", (st["sales_group"], st["admins"] >= 2),
    (True, True))
 ck("holatda token yo'q", "AAAAAAAAAA" in str(st), False)
+U8, C8 = {"id": 8888, "first_name": "Baxriniso"}, {"id": 8888, "type": "private"}
+msg("/stat", chat=C8, user=U8)
+ck("guruhda yo'q — admin emas", "faqat adminlar" in last_text(), True)
+ab.TEST_MEMBERS.add(8888)
+msg("/stat", chat=C8, user=U8)
+ck("sotuv guruhi a'zosi — avtomat admin", "Jami:" in last_text(), True)
+msg("/broadcast", chat=C8, user=U8)
+ck("guruh a'zosiga broadcast ochiq", "Broadcast rejimi" in last_text(), True)
+msg("/cancel", chat=C8, user=U8)
+ab.TEST_MEMBERS.discard(8888)
+msg("/stat", chat=C8, user=U8)
+ck("guruhdan chiqsa — huquq yo'q", "faqat adminlar" in last_text(), True)
 old = st["group_link"]
 st2 = c.post("/api/tg/academy-bot-new-code", headers=FH).json()
 ck("yangi kod — havola o'zgardi", st2["group_link"] != old, True)

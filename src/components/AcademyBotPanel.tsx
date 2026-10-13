@@ -142,15 +142,16 @@ export function AcademyBotPanel() {
           ) : <p className="text-[13px] text-slate-400">Avval 1-qadam.</p>}
         </Step>
 
-        <Step done={(d.admins || 0) > 0} title="3. O'zingizni admin qiling">
+        <Step done={!!d.sales_group || (d.admins || 0) > 0} title="3. Adminlar">
           {d.admin_link ? (
             <>
               <p className="text-[13px] text-slate-600">
-                Bosing → botda <b>Start</b>. Shundan keyin /stat, /royxat va
-                /broadcast ishlaydi. Boshqa adminga ham shu havolani yuboring.
-                {d.admins ? ` Hozir: ${d.admins} ta admin.` : ""}
+                Sotuv guruhidagi <b>hamma a'zo avtomat admin</b> — botga
+                shaxsiy yozib /stat, /royxat, /broadcast ishlata oladi.
+                Guruhdan chiqsa huquqi o'zi yo'qoladi. Guruhda bo'lmagan
+                odamni admin qilish uchun unga shu havolani yuboring.
               </p>
-              <LinkBtn href={d.admin_link} label="Admin bo'lish" />
+              <LinkBtn href={d.admin_link} label="Qo'shimcha admin havolasi" />
             </>
           ) : <p className="text-[13px] text-slate-400">Avval 1-qadam.</p>}
         </Step>

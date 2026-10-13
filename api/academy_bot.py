@@ -137,6 +137,7 @@ def webhook_secret() -> str:
 # Testlarda Telegram'ga borilmaydi — chaqiruvlar shu ro'yxatga yoziladi
 _SENT: list = []
 TEST_MODE = False
+TEST_MEMBERS: set = set()   # testda sotuv guruhi a'zolari
 
 
 def tg(method: str, payload: dict, timeout: int = 8, token: str = None):
@@ -147,6 +148,10 @@ def tg(method: str, payload: dict, timeout: int = 8, token: str = None):
             return {"ok": True, "result": {"message_id": len(_SENT)}}
         if method == "getMe":
             return {"ok": True, "result": {"username": "test_academy_bot"}}
+        if method == "getChatMember":
+            st = ("member" if payload.get("user_id") in TEST_MEMBERS
+                  else "left")
+            return {"ok": True, "result": {"status": st}}
         return {"ok": True, "result": True}
     tok = token or _token()
     if not tok:
@@ -540,8 +545,24 @@ def _is_admin(user_id, chat_id) -> bool:
     """Admin: ACADEMY_ADMIN_IDS dagi odam yoki sotuv guruhining o'zi.
     Eski botda /stat va /royxat hammaga ochiq edi — endi yopiq
     (ro'yxatda telefon raqamlar bor)."""
-    return (str(user_id) in _admin_ids()
-            or (_sales_group() and str(chat_id) == _sales_group()))
+    if str(user_id) in _admin_ids():
+        return True
+    g = _sales_group()
+    if g and str(chat_id) == g:
+        return True
+    return _in_sales_group(user_id)
+
+
+def _in_sales_group(user_id) -> bool:
+    """Sotuv guruhi a'zosi — avtomat admin (havola bosish shart emas).
+    Chiqib ketgan yoki chiqarilgan odam darhol huquqini yo'qotadi."""
+    g = _sales_group()
+    if not (g and user_id):
+        return False
+    r = tg("getChatMember", {"chat_id": g, "user_id": int(user_id)}) or {}
+    res = r.get("result")
+    st = res.get("status") if isinstance(res, dict) else None
+    return st in ("creator", "administrator", "member")
 
 
 def _counts(rows):
@@ -744,10 +765,7 @@ def handle_update(db: Session, upd: dict) -> None:
                   parse_mode=None)
         return
     if cmd == "/broadcast":
-        if not _admin_ids():
-            _send(chat_id, "⚠️ Broadcast ishlashi uchun ACADEMY_ADMIN_IDS "
-                           "sozlanmagan.", parse_mode=None)
-        elif str(user.get("id")) not in _admin_ids():
+        if not _is_admin(user.get("id"), chat_id):
             _send(chat_id, "❌ Bu buyruq faqat adminlar uchun.",
                   parse_mode=None)
         else:
@@ -762,7 +780,7 @@ def handle_update(db: Session, upd: dict) -> None:
 
     st = s.state
     if st == "broadcast":
-        if str(user.get("id")) in _admin_ids() and text:
+        if text and _is_admin(user.get("id"), chat_id):
             _broadcast_send(db, s, chat_id, text)
         return
     if st == "name" and text:

@@ -31,6 +31,7 @@ import io
 import json
 import os
 import re
+import secrets
 import urllib.request
 from datetime import datetime, timedelta
 
@@ -71,16 +72,54 @@ YES, NO = "✅ Tasdiqlash", "❌ Bekor qilish"
 
 # ─── Sozlamalar va Telegram API ─────────────────────────────────────────
 
+# Sozlama bazada (IntegrationSetting) — asoschi tokenni JonyOS'da O'ZI
+# joylaydi, Vercel'ga kirish shart emas. Bo'lmasa muhit o'zgaruvchisi.
+K_TOKEN = "academy_bot_token"
+K_GROUP = "academy_sales_group"
+K_ADMINS = "academy_admin_ids"
+K_CODE = "academy_link_code"
+K_USERNAME = "academy_bot_username"
+_CFG: dict = {}
+
+
+def load_cfg(db: Session) -> dict:
+    """Har so'rov boshida bitta so'rov bilan sozlamalarni o'qiydi."""
+    global _CFG
+    try:
+        rows = (db.query(models.IntegrationSetting)
+                .filter(models.IntegrationSetting.key.in_(
+                    [K_TOKEN, K_GROUP, K_ADMINS, K_CODE, K_USERNAME]))
+                .all())
+        _CFG = {r.key: (r.value or "") for r in rows}
+    except Exception:
+        _CFG = {}
+    return _CFG
+
+
+def _set_cfg(db: Session, key: str, value, who=None):
+    row = db.query(models.IntegrationSetting).get(key)
+    if row is None:
+        row = models.IntegrationSetting(key=key)
+        db.add(row)
+    row.value = value
+    row.updated_by = who
+    row.updated_at = datetime.utcnow()
+    _CFG[key] = value or ""
+
+
 def _token() -> str:
-    return os.environ.get("ACADEMY_BOT_TOKEN", "").strip()
+    return (_CFG.get(K_TOKEN)
+            or os.environ.get("ACADEMY_BOT_TOKEN", "")).strip()
 
 
 def _sales_group() -> str:
-    return os.environ.get("ACADEMY_SALES_GROUP_ID", "").strip()
+    return (_CFG.get(K_GROUP)
+            or os.environ.get("ACADEMY_SALES_GROUP_ID", "")).strip()
 
 
 def _admin_ids() -> set:
-    raw = os.environ.get("ACADEMY_ADMIN_IDS", "")
+    raw = (os.environ.get("ACADEMY_ADMIN_IDS", "") + ","
+           + (_CFG.get(K_ADMINS) or ""))
     return {x.strip() for x in raw.split(",")
             if x.strip().lstrip("-").isdigit()}
 
@@ -100,14 +139,16 @@ _SENT: list = []
 TEST_MODE = False
 
 
-def tg(method: str, payload: dict, timeout: int = 8):
+def tg(method: str, payload: dict, timeout: int = 8, token: str = None):
     """Telegram Bot API. Xato bo'lsa None — hech qachon raise qilmaydi."""
     if TEST_MODE:
         _SENT.append((method, payload))
         if method == "sendMessage":
             return {"ok": True, "result": {"message_id": len(_SENT)}}
+        if method == "getMe":
+            return {"ok": True, "result": {"username": "test_academy_bot"}}
         return {"ok": True, "result": True}
-    tok = _token()
+    tok = token or _token()
     if not tok:
         return None
     try:
@@ -589,6 +630,7 @@ def daily_report(db, force: bool = False) -> bool:
     cron'i har 30 daqiqada chaqiradi; kuniga BIR marta yuboriladi
     (IntegrationSetting'da sana belgisi). Bugun murojaat bo'lmasa —
     yuborilmaydi (eski botdagidek)."""
+    load_cfg(db)
     group = _sales_group()
     if not (enabled() and group):
         return False
@@ -654,12 +696,40 @@ def handle_update(db: Session, upd: dict) -> None:
 
     # Guruhlarda faqat admin buyruqlari ishlaydi — bot sotuv guruhidagi
     # oddiy yozishmalarga javob bermaydi.
+    arg = text.split()[1] if cmd and len(text.split()) > 1 else ""
+    code = _CFG.get(K_CODE) or ""
+
     if chat.get("type") != "private":
+        # Guruh oddiy guruhdan supergroupga aylansa ID o'zgaradi
+        new_id = msg.get("migrate_to_chat_id")
+        if new_id and str(chat_id) == _sales_group():
+            _set_cfg(db, K_GROUP, str(new_id), "telegram")
+            db.commit()
+            return
+        # "Guruhga qo'shish" havolasi: /start g_<kod> — shu guruh sotuv
+        # guruhi bo'ladi (kodni faqat asoschi JonyOS'da ko'radi)
+        if cmd == "/start" and code and arg == "g_" + code:
+            _set_cfg(db, K_GROUP, str(chat_id), str(user.get("id")))
+            db.commit()
+            _send(chat_id, "✅ Bu guruh Jony Academy sotuv guruhi sifatida "
+                           "ulandi. Yangi arizalar shu yerga keladi.\n"
+                           "Buyruqlar: /stat, /royxat", parse_mode=None)
+            return
         if cmd in ("/stat", "/royxat") and _is_admin(user.get("id"), chat_id):
             (_stat if cmd == "/stat" else _royxat)(db, chat_id)
         return
 
     s, d = _get_session(db, chat_id)
+    if cmd == "/start" and code and arg == "a_" + code:
+        ids = _admin_ids() | {str(user.get("id"))}
+        own = {x for x in ids if x not in
+               os.environ.get("ACADEMY_ADMIN_IDS", "").split(",")}
+        _set_cfg(db, K_ADMINS, ",".join(sorted(own)), str(user.get("id")))
+        db.commit()
+        _send(chat_id, "✅ Siz bot admini bo'ldingiz.\n"
+                       "/stat — statistika, /royxat — ro'yxat fayli, "
+                       "/broadcast — hammaga xabar.", parse_mode=None)
+        return
     if cmd == "/start":
         _start(db, s, chat_id)
         return
@@ -721,6 +791,7 @@ async def academy_webhook(secret: str, request: Request,
     """Telegram webhook. Sir manzilda ham, sarlavhada ham tekshiriladi.
     Har doim 200 qaytaramiz — aks holda Telegram bitta xatoli xabarni
     qayta-qayta yuborib, keyingilarini to'sib qo'yadi."""
+    load_cfg(db)
     if not enabled() or secret != webhook_secret():
         raise HTTPException(404, "Not found")
     hdr = request.headers.get("x-telegram-bot-api-secret-token", "")
@@ -737,38 +808,120 @@ async def academy_webhook(secret: str, request: Request,
     return {"ok": True}
 
 
-@router.post("/api/tg/academy-bot-setup")
-def academy_setup(request: Request,
-                  user=Depends(require_role(roles.FOUNDER))):
-    """Botni webhookka ulash (asoschi, bir marta). Token Vercel'da —
-    bu yerda faqat Telegram'ga "xabarlarni shu manzilga yubor" deyiladi."""
-    if not enabled():
-        raise HTTPException(400, "ACADEMY_BOT_TOKEN Vercel'da o'rnatilmagan")
+TOKEN_RE = re.compile(r"^\d{6,12}:[A-Za-z0-9_-]{30,}$")
+
+
+def _hook(token: str = None):
+    """Telegram'ga "xabarlarni shu manzilga yubor" deyish + menyu."""
     base = os.environ.get("PUBLIC_BASE_URL", "https://jonyos.uz").rstrip("/")
     url = f"{base}/api/tg/academy-bot/{webhook_secret()}"
     r = tg("setWebhook", {"url": url, "secret_token": webhook_secret(),
                           "allowed_updates": ["message", "callback_query"],
-                          "drop_pending_updates": False})
-    me = tg("getMe", {}) or {}
+                          "drop_pending_updates": False}, token=token)
     tg("setMyCommands", {"commands": [
         {"command": "start", "description": "Ro'yxatdan o'tish"},
-        {"command": "cancel", "description": "Bekor qilish"}]})
-    return {"ok": bool(r and r.get("ok")),
-            "telegram": (r or {}).get("description"),
-            "bot": ((me.get("result") or {}).get("username")),
-            "sales_group": bool(_sales_group()),
-            "admins": len(_admin_ids())}
+        {"command": "cancel", "description": "Bekor qilish"}]}, token=token)
+    return r
+
+
+def _links() -> dict:
+    u, code = _CFG.get(K_USERNAME) or "", _CFG.get(K_CODE) or ""
+    if not (u and code):
+        return {}
+    return {"group_link": f"https://t.me/{u}?startgroup=g_{code}",
+            "admin_link": f"https://t.me/{u}?start=a_{code}"}
+
+
+def _state(db: Session, check_hook: bool = False) -> dict:
+    """Asoschiga holat. Token HECH QACHON qaytarilmaydi."""
+    out = {"enabled": enabled(),
+           "bot": _CFG.get(K_USERNAME) or None,
+           "from_db": bool(_CFG.get(K_TOKEN)),
+           "sales_group": bool(_sales_group()),
+           "admins": len(_admin_ids()),
+           "regs_total": db.query(models.AcademyBotReg).count()}
+    out.update(_links())
+    if check_hook and enabled():
+        info = (tg("getWebhookInfo", {}) or {}).get("result")
+        if not isinstance(info, dict):
+            info = {"url": "/" + webhook_secret()} if TEST_MODE else {}
+        out["webhook_ok"] = (info.get("url") or "").endswith(webhook_secret())
+        out["pending"] = info.get("pending_update_count")
+        out["last_error"] = info.get("last_error_message")
+    return out
+
+
+def _who(user) -> str:
+    return str(getattr(user, "username", None) or getattr(user, "id", ""))
+
+
+@router.post("/api/tg/academy-bot-connect")
+def academy_connect(payload: dict, db: Session = Depends(get_db),
+                    user=Depends(require_role(roles.FOUNDER))):
+    """Asoschi BotFather tokenini O'ZI joylaydi: tekshiriladi, bazaga
+    yoziladi, webhook o'rnatiladi. Vercel'ga kirish shart emas."""
+    token = str((payload or {}).get("token") or "").strip()
+    if not TOKEN_RE.match(token):
+        raise HTTPException(400, "Token noto'g'ri ko'rinishda. BotFather "
+                                 "bergan 123456789:ABC... shaklidagi matn kerak.")
+    me = tg("getMe", {}, token=token) or {}
+    if not me.get("ok"):
+        raise HTTPException(400, "Telegram bu tokenni qabul qilmadi. "
+                                 "BotFather'dan qaytadan nusxalang.")
+    load_cfg(db)
+    who = _who(user)
+    _set_cfg(db, K_TOKEN, token, who)
+    _set_cfg(db, K_USERNAME, (me.get("result") or {}).get("username") or "", who)
+    if not _CFG.get(K_CODE):
+        _set_cfg(db, K_CODE, secrets.token_urlsafe(9).replace("-", "x")
+                 .replace("_", "y"), who)
+    db.commit()
+    r = _hook(token) or {}
+    if not r.get("ok"):
+        raise HTTPException(502, "Token saqlandi, lekin webhook o'rnatilmadi: "
+                                 + str(r.get("description") or "tarmoq xatosi")
+                                 + ". «Qayta ulash» ni bosing.")
+    return _state(db, check_hook=True)
+
+
+@router.post("/api/tg/academy-bot-setup")
+def academy_setup(db: Session = Depends(get_db),
+                  user=Depends(require_role(roles.FOUNDER))):
+    """Qayta ulash (token allaqachon bor: bazada yoki Vercel'da)."""
+    load_cfg(db)
+    if not enabled():
+        raise HTTPException(400, "Avval bot tokenini joylang")
+    if not _CFG.get(K_USERNAME) or not _CFG.get(K_CODE):
+        me = tg("getMe", {}) or {}
+        who = _who(user)
+        if me.get("ok"):
+            _set_cfg(db, K_USERNAME,
+                     (me.get("result") or {}).get("username") or "", who)
+        if not _CFG.get(K_CODE):
+            _set_cfg(db, K_CODE, secrets.token_urlsafe(9).replace("-", "x")
+                     .replace("_", "y"), who)
+        db.commit()
+    r = _hook() or {}
+    out = _state(db, check_hook=True)
+    out["ok"] = bool(r.get("ok"))
+    out["telegram"] = r.get("description")
+    return out
 
 
 @router.get("/api/tg/academy-bot-status")
-def academy_status(user=Depends(require_role(roles.FOUNDER))):
-    if not enabled():
-        return {"enabled": False}
-    info = tg("getWebhookInfo", {}) or {}
-    res = info.get("result") or {}
-    return {"enabled": True,
-            "webhook_ok": (res.get("url") or "").endswith(webhook_secret()),
-            "pending": res.get("pending_update_count"),
-            "last_error": res.get("last_error_message"),
-            "sales_group": bool(_sales_group()),
-            "admins": len(_admin_ids())}
+def academy_status(db: Session = Depends(get_db),
+                   user=Depends(require_role(roles.FOUNDER))):
+    load_cfg(db)
+    return _state(db, check_hook=True)
+
+
+@router.post("/api/tg/academy-bot-new-code")
+def academy_new_code(db: Session = Depends(get_db),
+                     user=Depends(require_role(roles.FOUNDER))):
+    """Havolalar begona qo'lga tushsa — yangi kod; eski havolalar o'ladi.
+    Allaqachon admin bo'lganlar o'chmaydi."""
+    load_cfg(db)
+    _set_cfg(db, K_CODE, secrets.token_urlsafe(9).replace("-", "x")
+             .replace("_", "y"), _who(user))
+    db.commit()
+    return _state(db)

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Settings as SettingsIcon, Building2, ShieldCheck, Database, Stethoscope, BookOpen, CalendarOff } from "lucide-react";
+import { Settings as SettingsIcon, Building2, ShieldCheck, Database, Stethoscope, BookOpen, CalendarOff, Bot } from "lucide-react";
 import Branches from "./Branches";
 import Permissions from "./Permissions";
 import BackupCard from "../components/BackupCard";
@@ -7,6 +7,7 @@ import Courses from "./Courses";
 import SelfTestCard from "../components/SelfTestCard";
 import DemoSeedCard from "../components/DemoSeedCard";
 import { HolidaysCard } from "../components/HolidaysCard";
+import { AcademyBotPanel } from "../components/AcademyBotPanel";
 import { useAuth } from "../lib/AuthContext";
 import { FOUNDER } from "../lib/roles";
 
@@ -16,7 +17,7 @@ import { FOUNDER } from "../lib/roles";
  * joyda turadi. Kelajakda boshqa sozlamalar ham shu yerga qo'shiladi
  * (Telegram, integratsiyalar va h.k. Ruxsatlar ichida turibdi).
  */
-type Tab = "branches" | "courses" | "permissions" | "backup" | "selftest" | "holidays";
+type Tab = "branches" | "courses" | "permissions" | "backup" | "selftest" | "holidays" | "bot";
 
 export default function Settings() {
   const [tab, setTab] = useState<Tab>("branches");
@@ -33,6 +34,8 @@ export default function Settings() {
       ? [
           // DAM KUNLARI (2026-08-19, Jahongir) — faqat asoschi
           { key: "holidays" as Tab, label: "Dam kunlari", icon: CalendarOff },
+          // ACADEMY BOT (2026-10-13): Railway o'rniga JonyOS ichida
+          { key: "bot" as Tab, label: "Telegram bot", icon: Bot },
           { key: "backup" as Tab, label: "Zaxira", icon: Database },
           {
             key: "selftest" as Tab,
@@ -76,6 +79,11 @@ export default function Settings() {
         {tab === "holidays" && isFounder && (
           <div className="p-8">
             <HolidaysCard />
+          </div>
+        )}
+        {tab === "bot" && isFounder && (
+          <div className="p-8">
+            <AcademyBotPanel />
           </div>
         )}
         {tab === "backup" && isFounder && (

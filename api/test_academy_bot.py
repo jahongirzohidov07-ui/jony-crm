@@ -172,6 +172,92 @@ ck("force bilan yuboriladi", ab.daily_report(db, force=True), True)
 ck("guruhga KUNLIK HISOBOT", "KUNLIK HISOBOT" in last_text(), True)
 db.close()
 
+print("=== Asoschi tokenni JonyOS'da o'zi ulaydi ===")
+from auth import hash_password                     # noqa: E402
+db = SessionLocal()
+db.add_all([
+    models.User(username="asos", full_name="Asoschi", role=roles.FOUNDER,
+                password_hash=hash_password("x"), is_active=1),
+    models.User(username="adm", full_name="Admin",
+                role=roles.ADMINISTRATOR, password_hash=hash_password("x"),
+                is_active=1),
+])
+db.commit()
+db.close()
+
+
+def hdr(u):
+    return {"Authorization": "Bearer " + c.post(
+        "/api/auth/login", json={"username": u, "password": "x"}
+    ).json()["access_token"]}
+
+
+FH, AH = hdr("asos"), hdr("adm")
+NEWTOK = "123456789:" + "A" * 35
+ck("admin ulay olmaydi", c.post("/api/tg/academy-bot-connect",
+   json={"token": NEWTOK}, headers=AH).status_code, 403)
+ck("noto'g'ri token rad", c.post("/api/tg/academy-bot-connect",
+   json={"token": "salom"}, headers=FH).status_code, 400)
+r = c.post("/api/tg/academy-bot-connect", json={"token": NEWTOK}, headers=FH)
+ck("ulash 200", r.status_code, 200)
+j = r.json()
+ck("javobda token YO'Q", NEWTOK in r.text or "AAAAAAAAAA" in r.text, False)
+ck("bot nomi", j.get("bot"), "test_academy_bot")
+ck("guruh havolasi", (j.get("group_link") or "").startswith(
+    "https://t.me/test_academy_bot?startgroup=g_"), True)
+db = SessionLocal()
+ck("token bazada", db.query(models.IntegrationSetting).get(
+    ab.K_TOKEN).value, NEWTOK)
+db.close()
+ck("webhook o'rnatildi", any(m == "setWebhook" for m, _ in ab._SENT), True)
+
+# Yangi token bilan sir o'zgaradi — eski manzil endi 404
+SEC2 = ab.webhook_secret()
+ck("sir yangilandi", SEC2 != SEC, True)
+ck("eski sir 404", c.post(URL, json={}, headers=H).status_code, 404)
+URL, H = f"/api/tg/academy-bot/{SEC2}", {"X-Telegram-Bot-Api-Secret-Token": SEC2}
+CODE = j["group_link"].split("g_", 1)[1]
+
+ab._SENT.clear()
+msg("/start@test_academy_bot g_noto'g'ri",
+    chat={"id": -100999, "type": "group"}, user={"id": 1, "first_name": "X"})
+db = SessionLocal()
+ck("noto'g'ri kod guruhni ulamaydi",
+   (db.query(models.IntegrationSetting).get(ab.K_GROUP) or
+    models.IntegrationSetting(value=None)).value, None)
+db.close()
+msg(f"/start@test_academy_bot g_{CODE}",
+    chat={"id": -100999, "type": "group"}, user={"id": 1, "first_name": "X"})
+ck("guruh ulandi xabari", "sotuv guruhi sifatida" in last_text(), True)
+db = SessionLocal()
+ck("guruh bazada", db.query(models.IntegrationSetting).get(
+    ab.K_GROUP).value, "-100999")
+db.close()
+msg(None, chat={"id": -100999, "type": "group"},
+    user={"id": 1, "first_name": "X"})
+c.post(URL, headers=H, json={"update_id": 99999, "message": {
+    "message_id": 1, "chat": {"id": -100999, "type": "group"},
+    "from": {"id": 1}, "migrate_to_chat_id": -1001234}})
+db = SessionLocal()
+ck("supergroupga o'tsa ID yangilanadi", db.query(
+    models.IntegrationSetting).get(ab.K_GROUP).value, "-1001234")
+db.close()
+
+U9, C9 = {"id": 4242, "first_name": "Jahongir"}, {"id": 4242, "type": "private"}
+msg("/stat", chat=C9, user=U9)
+ck("kodsiz admin emas", "faqat adminlar" in last_text(), True)
+msg(f"/start a_{CODE}", chat=C9, user=U9)
+ck("admin bo'ldi", "admini bo'ldingiz" in last_text(), True)
+msg("/stat", chat=C9, user=U9)
+ck("endi /stat ishlaydi", "Jami:" in last_text(), True)
+st = c.get("/api/tg/academy-bot-status", headers=FH).json()
+ck("holat: guruh va admin", (st["sales_group"], st["admins"] >= 2),
+   (True, True))
+ck("holatda token yo'q", "AAAAAAAAAA" in str(st), False)
+old = st["group_link"]
+st2 = c.post("/api/tg/academy-bot-new-code", headers=FH).json()
+ck("yangi kod — havola o'zgardi", st2["group_link"] != old, True)
+
 print()
 print("XATOLAR:", fails if fails else "yo'q")
 sys.exit(1 if fails else 0)

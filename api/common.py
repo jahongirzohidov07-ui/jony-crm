@@ -3270,6 +3270,20 @@ def _expire_discounts(db: Session) -> int:
         db.commit()
     return n
 
+MULTI_SUBJECT_PERCENT = 10.0
+
+
+def _multi_subject_percent(db: Session, s: models.Student) -> float:
+    """2 va undan ko'p FAOL guruhga qatnasa — 10% (har bir fanga)."""
+    try:
+        n = (db.query(models.StudentGroupLink)
+             .filter(models.StudentGroupLink.student_id == s.id,
+                     models.StudentGroupLink.active == 1).count())
+    except Exception:
+        return 0.0
+    return MULTI_SUBJECT_PERCENT if n >= 2 else 0.0
+
+
 def _student_discount_percent(db: Session, s: models.Student,
                               skip_kinds=()) -> float:
     """O'quvchining jami chegirma foizi: oilaviy (avtomat) + tasdiqlangan
@@ -3294,6 +3308,11 @@ def _student_discount_percent(db: Session, s: models.Student,
             total += d.percent
         elif d.amount and fee:
             total += d.amount / fee * 100
+    # IKKI FAN (2026-10-14, Jahongir: "bitta o'quvchi 2ta fanga guruhga
+    # kelsa skidka 10% avtomat bo'lishi kerak") — 2+ faol guruh bo'lsa
+    # har bir fanga 10%. Hisob-kitob: multi_subject.py.
+    if "multi" not in skip_kinds:
+        total += _multi_subject_percent(db, s)
     # Asoschi 100% gacha qo'ya olgani uchun hisobda ham mutlaq
     # chegara 100% (oddiy chegirmalar yaratishda baribir 50% da
     # to'xtatiladi - finance.create_discount).

@@ -330,9 +330,11 @@ export function StudentGroupsCard({
       )}
 
       {active.length > 1 && (
-        <p className="mt-3 max-w-2xl text-[12px] text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 leading-snug">
-          Oylik hisob hozircha faqat asosiy guruh (⭐) bo'yicha chiqadi.
-          Ikki fan uchun hisob va chegirma keyingi bosqichda ulanadi.
+        <p className="mt-3 max-w-2xl text-[12px] text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 leading-snug">
+          {active.length} ta fan — har bir fanning oyligi alohida yechiladi va
+          har biriga <b>10% chegirma</b> avtomat qo'llanadi. Oy o'rtasida
+          qo'shilgan fan qo'shilgan kunidan, chiqarilgan fan chiqqan kunigacha
+          hisoblanadi.
         </p>
       )}
     </div>

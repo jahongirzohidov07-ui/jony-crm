@@ -3441,7 +3441,9 @@ def _fin_month(db: Session, user, y: int, m: int) -> dict:
     charges = abs(_pay_scoped(db.query(func.coalesce(
                       func.sum(models.Payment.amount), 0)), own)
                   .filter(models.Payment.kind == "charge",
-                          models.Payment.period == period).scalar() or 0)
+                          or_(models.Payment.period == period,
+                              models.Payment.period.like(period + "#g%")))
+                  .scalar() or 0)
     net_income = round(collected - refunds, 0)
     total_exp = round(exp_total + payroll, 0)
     return {

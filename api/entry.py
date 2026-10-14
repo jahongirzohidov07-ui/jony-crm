@@ -7585,6 +7585,21 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
                 print(f"[coin] 1 so'mlik to'lov coini qaytarildi: {len(_fx)}")
         except Exception:
             db.rollback()
+    # IKKI FAN (2026-10-14, Jahongir: "2ta fanga kelsa skidka 10%
+    # avtomat bo'lishi kerak") — qo'shimcha guruh oyligi + 10%.
+    # Kuniga bir marta; idempotent (multi_subject.daily).
+    ms_key = f"ms2_{today.isoformat()}"
+    if not _sd(db, ms_key):
+        try:
+            import multi_subject as _ms
+            _r = _ms.daily(db, today)
+            db.commit()
+            _sm(db, ms_key)
+            if any(_r.values()):
+                print(f"[2-fan] {_r}")
+        except Exception as _e:
+            db.rollback()
+            print(f"[2-fan] xato: {_e}")
     todo = [g for g in _mc_active_groups(db)
             if not _sd(db, f"mcf_{period}_g{g.id}")]
     if not todo and _sd(db, refund_key) and _sd(db, missed_key) \

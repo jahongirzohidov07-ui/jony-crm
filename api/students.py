@@ -2008,9 +2008,9 @@ def student_add_group(
 ):
     """O'quvchini YANA BIR guruhga qo'shish (2026-08-17).
 
-    PUL MANTIG'IGA TEGILMAYDI — oylik hisob hozircha asosiy guruh
-    bo'yicha chiqadi. Ikki fan uchun hisob va 10% chegirma keyingi
-    bosqichda, Jahongir qoidani aytgach qo'shiladi."""
+    PUL (2026-10-14): qo'shimcha guruh uchun alohida oylik qator
+    (period "YYYY-MM#g<id>") va har ikkala fanga 10% chegirma —
+    multi_subject.py."""
     s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
@@ -2063,6 +2063,15 @@ def student_add_group(
             charge = _main._charge_from_activation(db, s, joined, user)
         except Exception:
             charge = None
+    # IKKINCHI FAN (2026-10-14, Jahongir: "2ta fanga kelsa skidka 10%
+    # avtomat bo'lishi kerak"): qo'shimcha guruh qo'shilgan kundan oy
+    # oxirigacha alohida hisob + har ikkala fanga 10% (multi_subject).
+    elif s.status == "active" and s.group_id and s.group_id != g.id:
+        try:
+            import multi_subject as _ms
+            charge = _ms.on_group_added(db, s, g, joined, user)
+        except Exception:
+            charge = None
     db.commit()
     audit.log(db, user, entity="student", action="update",
               entity_id=s.id, entity_label=s.full_name,
@@ -2095,8 +2104,17 @@ def student_remove_group(
                  "\"Guruhdan chiqarish\" tugmasidan foydalaning — "
                  "u hisobni ham to'g'rilaydi.")
     g = db.query(models.Group).get(group_id)
+    was_primary = (s.group_id == group_id)
     if not detach_group(db, s, group_id):
         raise HTTPException(404, "Bu guruhda emas")
+    # 2-fan hisobi chiqqan kungacha tushiriladi (multi_subject)
+    try:
+        import multi_subject as _ms
+        db.flush()
+        _ms.on_group_removed(db, s, group_id, was_primary,
+                             roles.local_today())
+    except Exception:
+        pass
     db.commit()
     audit.log(db, user, entity="student", action="update",
               entity_id=s.id, entity_label=s.full_name,

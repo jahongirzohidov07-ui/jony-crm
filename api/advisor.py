@@ -96,8 +96,9 @@ def bi_snapshot(db: Session) -> dict:
                     method.get(p.method or "boshqa", 0) + p.amount)
                 b = branches.get(sid_branch.get(p.student_id), "—")
                 branch_rev[b] = branch_rev.get(b, 0) + p.amount
-        elif p.kind == "charge" and p.period in mset:
-            charges[p.period] += abs(p.amount or 0)
+        elif p.kind == "charge" and (p.period or "")[:7] in mset:
+            # "2026-10#g45" — 2-fan qatori ham o'sha oyga (multi_subject)
+            charges[p.period[:7]] += abs(p.amount or 0)
 
     # ---------------- xarajat + ustoz oyligi ----------------
     exp = {m: 0.0 for m in months}

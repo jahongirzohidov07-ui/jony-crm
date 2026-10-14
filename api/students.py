@@ -954,6 +954,8 @@ def update_student(
             if _prev_gid and _prev_gid != _target:
                 detach_group(db, s, _prev_gid)
             s.group_id = _target
+            # asosiy bo'lgan sinovdagi guruh "Faol" (2026-10-14)
+            promote_primary_link(db, s)
         except Exception:
             db.rollback()
     db.commit()
@@ -1903,6 +1905,9 @@ def move_student_group(
             other.is_primary = 0
         link.is_primary = 1
     s.group_id = g.id
+    # Sinovdagi guruhga ko'chirilsa u endi asosiy — oylik bo'yicha
+    # hisoblanadi, "Sinov" yorlig'i olinadi (2026-10-14).
+    promote_primary_link(db, s)
     db.commit()
 
     # MOLIYA: oy o'rtasida ko'chsa, shu oyning hisobi ikkiga bo'linib
@@ -1986,6 +1991,12 @@ def student_groups(
             "lesson_price": lk.lesson_price or g.lesson_price,
             "is_primary": bool(lk.is_primary),
             "active": bool(lk.active),
+            # Bog'lanishning o'z holati (2026-10-14): "trial" — shu
+            # guruh sinovda (pul yechilmaydi), "active" — faol.
+            "link_status": (getattr(lk, "status", None) or "active"),
+            "activated_on": (lk.activated_on.isoformat()
+                             if getattr(lk, "activated_on", None)
+                             else None),
             "joined_date": (lk.joined_date.isoformat()
                             if lk.joined_date else None),
             "left_date": (lk.left_date.isoformat()
@@ -2010,7 +2021,15 @@ def student_add_group(
 
     PUL (2026-10-14): qo'shimcha guruh uchun alohida oylik qator
     (period "YYYY-MM#g<id>") va har ikkala fanga 10% chegirma —
-    multi_subject.py."""
+    multi_subject.py.
+
+    SINOV (2026-10-14, Jahongir: "O'quvchiga kirib yangi guruh
+    qo'shilsa pul yechmay faol bo'lib qolyabdi. Avval qo'shilganda
+    sinovda bo'lishi kerak keyin faollashtirilsa pul yechsin"): guruhi
+    bor o'quvchiga qo'shilgan guruh "Sinov" — pul yechilmaydi, 10%
+    ga kirmaydi. Faollashtirish: .../groups/{gid}/activate yoki shu
+    guruhda 3 ta darsga kelgach avtomat. Guruhsiz o'quvchining
+    birinchi guruhi avvalgidek."""
     s = _get_student_in_scope(db, student_id, user)  # filial chegarasi (2026-09-06)
     if not s:
         raise HTTPException(404, "O'quvchi topilmadi")
@@ -2040,8 +2059,10 @@ def student_add_group(
     if joined > today:
         raise HTTPException(400, "Kelajakdagi sanani tanlab bo'lmaydi")
     was_groupless = not s.group_id
+    # Guruhi bor o'quvchiga qo'shilgan guruh — SINOVDA (2026-10-14)
+    link_status = "active" if was_groupless else "trial"
     attach_group(db, s, g.id, user, joined=joined,
-                 note=(payload or {}).get("note"))
+                 note=(payload or {}).get("note"), status=link_status)
     db.flush()
     # GURUHSIZ FAOL O'QUVCHIGA GURUH QO'SHILSA — OYLIK (2026-10-05,
     # Jahongir: "shu guruhga keyin qo'shilganda pul yechilmay qolgan
@@ -2063,25 +2084,96 @@ def student_add_group(
             charge = _main._charge_from_activation(db, s, joined, user)
         except Exception:
             charge = None
-    # IKKINCHI FAN (2026-10-14, Jahongir: "2ta fanga kelsa skidka 10%
-    # avtomat bo'lishi kerak"): qo'shimcha guruh qo'shilgan kundan oy
-    # oxirigacha alohida hisob + har ikkala fanga 10% (multi_subject).
-    elif s.status == "active" and s.group_id and s.group_id != g.id:
-        try:
-            import multi_subject as _ms
-            charge = _ms.on_group_added(db, s, g, joined, user)
-        except Exception:
-            charge = None
+    # IKKINCHI FAN (2026-10-14): qo'shimcha guruh endi SINOVDA — bu
+    # yerda pul yechilmaydi va 10% qo'llanmaydi. Pul faollashtirilganda
+    # (student_activate_group yoki 3 ta darsdan keyin avtomat) shu
+    # kundan oy oxirigacha darslar soni bo'yicha — multi_subject.
     db.commit()
     audit.log(db, user, entity="student", action="update",
               entity_id=s.id, entity_label=s.full_name,
               field="Guruh qo'shildi", new_value=g.name,
               note=(f"{joined.isoformat()} dan {charge['lessons']} dars "
                     f"uchun {int(charge['amount'])} so'm hisoblandi"
-                    if charge else None),
+                    if charge else
+                    ("Sinov sifatida — faollashtirilganda pul yechiladi"
+                     if link_status == "trial" else None)),
               branch_id=s.branch_id, commit=True)
     return {"ok": True, "group": g.name, "charge": charge,
+            "link_status": link_status,
             "active_count": len(student_group_ids(db, s.id))}
+
+
+def _trial_link_or_404(db, s, group_id: int):
+    import multi_subject as _ms
+    ln = _ms.link_of(db, s.id, group_id)
+    if ln is None:
+        raise HTTPException(404, "O'quvchi bu guruhda emas")
+    return ln
+
+
+def _parse_on(raw, today: date) -> date:
+    if not raw:
+        return today
+    try:
+        return date.fromisoformat(str(raw)[:10])
+    except ValueError:
+        raise HTTPException(400, "Sana noto'g'ri")
+
+
+@router.get("/api/students/{student_id}/groups/{group_id}/activate-preview")
+def student_activate_group_preview(
+    student_id: int,
+    group_id: int,
+    on: str = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
+):
+    """"Faollashtirish" oynasi: tanlangan sanadan oy oxirigacha shu
+    guruh darslari x narx x (1 - chegirma) — hech narsa yozilmaydi
+    (2026-10-14)."""
+    import multi_subject as _ms
+    s = _get_student_in_scope(db, student_id, user)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    ln = _trial_link_or_404(db, s, group_id)
+    today = roles.local_today()
+    d = _parse_on(on, today)
+    out = _ms.preview_activation(db, s, ln, d, today)
+    out["link_status"] = ln.status or "active"
+    return out
+
+
+@router.post("/api/students/{student_id}/groups/{group_id}/activate")
+def student_activate_group(
+    student_id: int,
+    group_id: int,
+    payload: dict = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.FREEZE_ROLES)),
+):
+    """Sinovdagi guruhni FAOL qilish (2026-10-14, Jahongir: "keyin
+    faollashtirilsa pul yechsin" + "Sinovdan faolga o'tganda pul
+    yechilishi dars sonidan kelib chiqsin"). Pul — tanlangan sanadan
+    oy oxirigacha shu guruh darslari soni bo'yicha, asosiy guruhga 10%
+    mavjud dvigatel orqali (multi_subject.activate_link)."""
+    import multi_subject as _ms
+    s = _get_student_in_scope(db, student_id, user)
+    if not s:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    ln = _trial_link_or_404(db, s, group_id)
+    if not _ms.is_trial(ln):
+        raise HTTPException(400, "Bu guruh allaqachon faol")
+    today = roles.local_today()
+    p = payload or {}
+    d = _parse_on(p.get("on") or p.get("date"), today)
+    # O'quvchi faol bo'lmasa (sinov/muzlatilgan) — 400 (2026-10-14)
+    err = _ms.check_on(ln, d, today, s)
+    if err:
+        raise HTTPException(400, err)
+    res = _ms.activate_link(db, s, ln, d, reason="Qo'lda faollashtirildi",
+                            user=user)
+    db.commit()
+    return {"ok": True, **res}
 
 
 @router.delete("/api/students/{student_id}/groups/{group_id}")
@@ -2105,6 +2197,18 @@ def student_remove_group(
                  "u hisobni ham to'g'rilaydi.")
     g = db.query(models.Group).get(group_id)
     was_primary = (s.group_id == group_id)
+    # Asosiy guruhdan chiqarilsa va qolganlari faqat SINOVDA bo'lsa —
+    # sinovdagi guruh pulsiz asosiyga aylanib qolardi (2026-10-14).
+    if was_primary:
+        rest = (db.query(models.StudentGroupLink)
+                .filter(models.StudentGroupLink.student_id == s.id,
+                        models.StudentGroupLink.group_id != group_id,
+                        models.StudentGroupLink.active == 1).all())
+        if rest and all((lk.status or "active") == "trial" for lk in rest):
+            raise HTTPException(
+                400, "Qolgan guruh sinovda. Avval uni «Faollashtirish» "
+                     "qiling (pul tanlangan kundan yechiladi), keyin "
+                     "asosiy guruhdan chiqaring.")
     if not detach_group(db, s, group_id):
         raise HTTPException(404, "Bu guruhda emas")
     # 2-fan hisobi chiqqan kungacha tushiriladi (multi_subject)

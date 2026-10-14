@@ -812,6 +812,30 @@ def save_attendance(
     if touched:
         db.commit()
 
+    # SINOVDAGI QO'SHIMCHA GURUH (2026-10-14, Jahongir: "Avval
+    # qo'shilganda sinovda bo'lishi kerak keyin faollashtirilsa pul
+    # yechsin"). FAOL o'quvchi shu guruhda 3 ta darsga kelsa — shu guruh
+    # bog'lanishi avtomat faollashadi va pul darslar soni bo'yicha
+    # yechiladi (multi_subject). Kelish faqat SHU guruhda sanaladi.
+    try:
+        import multi_subject as _ms
+        _act = False
+        for m in payload.marks:
+            if not m.present:
+                continue
+            st = db.query(models.Student).get(m.student_id)
+            if not st or st.status != "active":
+                continue
+            res = _ms.maybe_auto_activate_link(db, st, lesson.group_id)
+            if res:
+                _act = True
+                activated.append({"student_id": st.id,
+                                  "full_name": st.full_name, **res})
+        if _act:
+            db.commit()
+    except Exception:
+        db.rollback()
+
     # SINOVDAGI O'QUVCHI 2 TA "KELMADI" OLSA (Jahongir, 2026-08-11):
     # yo'qlamalari o'chiriladi, o'quvchi avtomat LIDLARGA qaytadi,
     # tarixi va lid eslatmasida "guruhga qo'yildi lekin darsga
@@ -823,6 +847,9 @@ def save_attendance(
                       if m.present is False and not m.remove]
         for sid in set(_tr_absent):
             st = db.query(models.Student).get(sid)
+            # Faqat o'quvchining O'ZI sinovda bo'lsa. FAOL o'quvchining
+            # sinovdagi guruhi (student_groups.status='trial') bu yerga
+            # tushmaydi — uning hech narsasi arxivlanmaydi (2026-10-14).
             if not st or st.status != "trial":
                 continue
             rows_ = (db.query(models.Attendance)
@@ -2347,6 +2374,18 @@ def run_auto_freeze(db: Session, today=None, window_days: int = 14) -> list:
         try:
             st = db.query(models.Student).get(sid)
             if not st or st.status != "active" or sid in frozen:
+                continue
+            # SINOVDAGI GURUH (2026-10-14): faol o'quvchi sinovdagi
+            # qo'shimcha guruhiga kelmasa — butun o'quvchi muzlatilmaydi
+            # va yo'qlamalari arxivga olinmaydi (u guruh hali pul
+            # yechmaydi; administrator kartadan chiqaradi yoki
+            # faollashtiradi).
+            _lk = (db.query(models.StudentGroupLink)
+                   .filter(models.StudentGroupLink.student_id == sid,
+                           models.StudentGroupLink.group_id == gid,
+                           models.StudentGroupLink.active == 1).first())
+            if _lk is not None and (_lk.status or "active") == "trial" \
+                    and st.group_id != gid:
                 continue
             # Bugun (yoki keyin) kelgan bo'lsa — zanjir uzilgan
             came = (db.query(A.id).join(L, L.id == A.lesson_id)

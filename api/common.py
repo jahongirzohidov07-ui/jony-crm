@@ -11,7 +11,7 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-from sqlalchemy import func, or_, select, text
+from sqlalchemy import and_, func, or_, select, text
 from sqlalchemy.orm import Session
 
 import audit
@@ -2841,6 +2841,27 @@ def _recharge_after_move(db: Session, s: models.Student,
     """
     on = on_date or roles.local_today()
     period = f"{on.year:04d}-{on.month:02d}"
+    # 2-FAN (2026-10-14): yangi guruh allaqachon FAOL qo'shimcha guruh
+    # edi — uning shu oy "#g" qatori bor. Asosiy qatorni "eski + yangi"
+    # deb bo'lsak yangi guruh darslari ikki marta yechilardi. Asosiy
+    # guruhdan chiqishdagi kabi buklanadi (multi_subject.fold_on_move).
+    # students.move_student_group va entry._xb_move ikkalasi ham shu
+    # yerdan o'tadi.
+    try:
+        import multi_subject as _ms
+        folded = _ms.fold_on_move(db, s, old_group, new_group, on)
+    except Exception:
+        folded = None
+    if folded:
+        audit.log(db, user, entity="payment", action="lessons_recount",
+                  entity_label=s.full_name, field="amount",
+                  old_value=f"{folded['old']:,.0f}".replace(",", " "),
+                  new_value=f"{folded['new']:,.0f}".replace(",", " "),
+                  note=(f"Guruh almashdi: {getattr(old_group, 'name', '—')}"
+                        f" → {getattr(new_group, 'name', '—')} (2-fan "
+                        f"qatori asosiyga o'tdi, ikki marta yechilmaydi)"),
+                  branch_id=s.branch_id)
+        return folded
     row = (db.query(models.Payment)
            .filter(models.Payment.student_id == s.id,
                    models.Payment.kind == "charge",
@@ -3455,15 +3476,38 @@ def _expire_discounts(db: Session) -> int:
 MULTI_SUBJECT_PERCENT = 10.0
 
 
-def _multi_subject_percent(db: Session, s: models.Student) -> float:
-    """2 va undan ko'p FAOL guruhga qatnasa — 10% (har bir fanga)."""
+def _paid_link_filter():
+    """Pul yechiladigan (sinovda EMAS) ochiq bog'lanish sharti.
+    Bo'sh status eski yozuv — "active" deb o'qiladi (2026-10-14)."""
+    L = models.StudentGroupLink
+    return and_(L.active == 1,
+                or_(L.status.is_(None), L.status != "trial"))
+
+
+def _multi_subject_percent(db: Session, s: models.Student,
+                           plus: int = 0, fam: float = None) -> float:
+    """2 va undan ko'p FAOL guruhga qatnasa — 10% (har bir fanga).
+
+    2026-10-14, Jahongir (ikki qoida):
+      * "O'quvchi oilaviy 10% chegirma bo'lsa 2 fan chegirmasi
+        ishlamaydi" — oilaviy chegirma bo'lsa 0 (ustma-ust tushmaydi;
+        qo'lda berilgan chegirmalar avvalgidek ishlaydi).
+      * Sinovdagi guruh ("trial") sanalmaydi — faollashtirilgach
+        sanaladi.
+    plus — oldindan ko'rish uchun: sinovdagi guruh faollashsa
+    (plus=1) foiz qancha bo'ladi. fam — oilaviy foiz allaqachon
+    hisoblangan bo'lsa (qayta so'rov bo'lmasin)."""
     try:
+        if fam is None:
+            fam = _family_discount_percent(db, s)
+        if fam > 0:
+            return 0.0
         n = (db.query(models.StudentGroupLink)
              .filter(models.StudentGroupLink.student_id == s.id,
-                     models.StudentGroupLink.active == 1).count())
+                     _paid_link_filter()).count())
     except Exception:
         return 0.0
-    return MULTI_SUBJECT_PERCENT if n >= 2 else 0.0
+    return MULTI_SUBJECT_PERCENT if n + int(plus or 0) >= 2 else 0.0
 
 
 def _student_discount_percent(db: Session, s: models.Student,
@@ -3477,7 +3521,8 @@ def _student_discount_percent(db: Session, s: models.Student,
     "boshqa chegirmalardan keyingi" summadan olinadi, shuning uchun
     dvigatel o'z chegirmasini chiqarib tashlab hisoblashi kerak. Aks
     holda o'z-o'ziga bog'liq halqa hosil bo'lardi."""
-    total = 0.0 if "family" in skip_kinds else _family_discount_percent(db, s)
+    fam = _family_discount_percent(db, s)
+    total = 0.0 if "family" in skip_kinds else fam
     rows = (db.query(models.Discount)
             .filter(models.Discount.student_id == s.id,
                     models.Discount.status == "active").all())
@@ -3494,7 +3539,7 @@ def _student_discount_percent(db: Session, s: models.Student,
     # kelsa skidka 10% avtomat bo'lishi kerak") — 2+ faol guruh bo'lsa
     # har bir fanga 10%. Hisob-kitob: multi_subject.py.
     if "multi" not in skip_kinds:
-        total += _multi_subject_percent(db, s)
+        total += _multi_subject_percent(db, s, fam=fam)
     # Asoschi 100% gacha qo'ya olgani uchun hisobda ham mutlaq
     # chegara 100% (oddiy chegirmalar yaratishda baribir 50% da
     # to'xtatiladi - finance.create_discount).
@@ -7347,6 +7392,15 @@ def sync_primary_group(db: Session, s) -> bool:
         # bo'lgan o'quvchi guruhsiz bo'lib qolardi. Buni
         # birlashtirish testi tutdi.
         return False
+    # SINOVDAGI GURUH ASOSIY BO'LMAYDI (2026-10-14): asosiy guruh oylik
+    # dvigateli bo'yicha to'liq hisoblanadi, sinovdagi esa pul
+    # yechmasligi kerak. Asosiy belgisi bo'lmasa — avval pul
+    # yechiladigan (faol) bog'lanish tanlanadi.
+    if not links[0].is_primary:
+        paid = [l for l in links
+                if (getattr(l, "status", None) or "active") != "trial"]
+        if paid:
+            links = paid + [l for l in links if l not in paid]
     want = links[0].group_id
     if s.group_id != want:
         s.group_id = want
@@ -7355,15 +7409,23 @@ def sync_primary_group(db: Session, s) -> bool:
 
 
 def attach_group(db: Session, s, group_id: int, user=None,
-                 joined=None, note: str = None):
+                 joined=None, note: str = None, status: str = None):
     """O'quvchini guruhga qo'shish (bog'lanish yozuvi).
 
     Ikki marta qo'shilmaydi — bor bo'lsa qaytadan FAOLLASHTIRILADI,
-    yangi qator ochilmaydi (tarix chalkashmasin)."""
+    yangi qator ochilmaydi (tarix chalkashmasin).
+
+    status (2026-10-14): "trial" — guruhi bor o'quvchiga qo'shilgan
+    yangi guruh sinovda (pul yechilmaydi, students.student_add_group).
+    Berilmasa: yangi yoki qayta ochilgan bog'lanish "active", ochiq
+    turgan bog'lanishning holatiga tegilmaydi."""
     link = (db.query(models.StudentGroupLink)
             .filter(models.StudentGroupLink.student_id == s.id,
                     models.StudentGroupLink.group_id == group_id).first())
     if link:
+        if not link.active or status:
+            link.status = status or "active"
+            link.activated_on = None
         link.active = 1
         link.left_date = None
         if joined:
@@ -7376,12 +7438,28 @@ def attach_group(db: Session, s, group_id: int, user=None,
             student_id=s.id, group_id=group_id,
             is_primary=1 if has == 0 else 0,
             joined_date=joined or roles.local_today(),
-            active=1, note=note,
+            active=1, note=note, status=status or "active",
             created_by=getattr(user, "full_name", None))
         db.add(link)
     db.flush()
     sync_primary_group(db, s)
     return link
+
+
+def promote_primary_link(db: Session, s) -> None:
+    """Asosiy guruhga aylangan sinovdagi bog'lanishni "active" qiladi
+    (2026-10-14). Guruh ko'chirishda asosiy guruh oylik bo'yicha
+    hisoblanadi — "Sinov" yorlig'i yolg'on bo'lib qolmasin."""
+    if not s or not s.group_id:
+        return
+    lk = (db.query(models.StudentGroupLink)
+          .filter(models.StudentGroupLink.student_id == s.id,
+                  models.StudentGroupLink.group_id == s.group_id,
+                  models.StudentGroupLink.active == 1).first())
+    if lk is not None and (lk.status or "active") == "trial":
+        lk.status = "active"
+        lk.activated_on = roles.local_today()
+        db.flush()
 
 
 def detach_group(db: Session, s, group_id: int, on=None) -> bool:
@@ -8023,6 +8101,7 @@ __all__ = [
     "sync_primary_group",
     "attach_group",
     "detach_group",
+    "promote_primary_link",
     "backfill_student_groups",
     "_apply_shop_discounts",
     "_shop_discount_sum",

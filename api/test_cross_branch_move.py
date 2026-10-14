@@ -171,7 +171,11 @@ ck("hisob qayta hisoblandi", bool(rc), True)
 ck("eski guruh darslari", rc.get("old_lessons"), len(old_days))
 ck("yangi guruh darslari", rc.get("new_lessons"), len(new_days))
 ck("yangi summa", rc.get("new"), KUTILGAN)
-ck("eski summa saqlandi", rc.get("old"), 480000)
+# 2026-10-14: o'quvchi ko'chishdan oldin 2 ta FAOL guruhda (G1 + G1B) —
+# ikki fan qoidasi (91069473) kirishdagi kunlik qadamda asosiy hisobga
+# 10% qo'llagan: 480 000 -> 432 000. G1B ning "#g" qatori ko'chganda
+# chiqqan kungacha tushiriladi, shuning uchun balans pastda o'zgarmaydi.
+ck("eski summa saqlandi", rc.get("old"), 432000)
 ck("vazifa qabul qiluvchi adminga", d.get("task_for"), "Admin Ikki")
 
 print("\n=== 5. Bazada: guruh, filial, bog'lanish, hisob ===")

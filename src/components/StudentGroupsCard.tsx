@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Plus, Star, X } from "lucide-react";
 import { api } from "../lib/api";
@@ -39,6 +39,29 @@ type Row = {
   left_date?: string | null;
   /** Shu guruhda necha oy bo'lgani. */
   months?: number | null;
+  /** Bog'lanishning o'z holati (2026-10-14): "trial" — shu guruh
+   *  sinovda, pul yechilmaydi; "active" — faol. */
+  link_status?: "trial" | "active" | string | null;
+  activated_on?: string | null;
+};
+
+/** "Faollashtirish" oynasi uchun server hisobi (hech narsa yozmaydi). */
+type Preview = {
+  on: string;
+  min: string;
+  max: string;
+  lessons: number;
+  price: number;
+  discount: number;
+  amount: number;
+  /** Shu oy shu guruh qatori allaqachon bor (guruhdan chiqib qayta
+   *  qo'shilgan) — yuqoridagi summa unga QO'SHILADI (2026-10-14). */
+  existing?: { lessons: number; amount: number } | null;
+  family: boolean;
+  multi_applies: boolean;
+  primary_discount_now: number;
+  primary_discount_after: number;
+  error?: string | null;
 };
 
 const WD: Record<string, string> = {
@@ -97,6 +120,67 @@ export function StudentGroupsCard({
   const active = rows.filter((r) => r.active);
   const closed = rows.filter((r) => !r.active);
   const taken = new Set(active.map((r) => r.group_id));
+  // Pul yechiladigan (sinovda bo'lmagan) guruhlar — 10% faqat shular
+  // 2 tadan ko'p bo'lsa (2026-10-14).
+  const paid = active.filter((r) => r.link_status !== "trial");
+  const trials = active.filter((r) => r.link_status === "trial");
+
+  // ---- "Faollashtirish": sana tanlanadi, server hisobni ko'rsatadi ----
+  const [actRow, setActRow] = useState<Row | null>(null);
+  const [actDate, setActDate] = useState("");
+  const [preview, setPreview] = useState<Preview | null>(null);
+  const [actBusy, setActBusy] = useState(false);
+  // Eng oxirgi so'ralgan sana — kechikib kelgan eski javob yangisini
+  // bosib ketmasin.
+  const lastAsk = useRef("");
+
+  function loadPreview(r: Row, on?: string) {
+    const q = on ? `?on=${encodeURIComponent(on)}` : "";
+    const ask = `${r.group_id}|${on || ""}`;
+    lastAsk.current = ask;
+    setPreview(null);
+    api
+      .fresh<Preview>(
+        `/students/${studentId}/groups/${r.group_id}/activate-preview${q}`
+      )
+      .then((p) => {
+        if (lastAsk.current !== ask) return;
+        setPreview(p);
+        if (!on) setActDate(p.on);
+      })
+      .catch((e) => {
+        setPreview(null);
+        setErr(e instanceof Error ? e.message : "Hisobni olib bo'lmadi");
+      });
+  }
+
+  function openActivate(r: Row) {
+    setErr("");
+    setActRow(r);
+    setPreview(null);
+    setActDate("");
+    loadPreview(r);
+  }
+
+  async function activate() {
+    if (!actRow || !actDate) return;
+    setActBusy(true);
+    setErr("");
+    try {
+      await api.post(
+        `/students/${studentId}/groups/${actRow.group_id}/activate`,
+        { on: actDate }
+      );
+      setActRow(null);
+      setPreview(null);
+      load();
+      onChanged?.();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Faollashtirib bo'lmadi");
+    } finally {
+      setActBusy(false);
+    }
+  }
 
   async function add() {
     if (!pick) return;
@@ -173,6 +257,17 @@ export function StudentGroupsCard({
                 </option>
               ))}
           </select>
+          {/* 2026-10-14, Jahongir: "Avval qo'shilganda sinovda bo'lishi
+              kerak keyin faollashtirilsa pul yechsin". Guruhsiz
+              o'quvchining birinchi guruhi avvalgidek. */}
+          {active.length > 0 && (
+            <p className="mt-2 text-[12px] leading-snug text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5">
+              Guruh <b>«Sinov»</b> sifatida qo'shiladi — pul yechilmaydi va
+              10% chegirmaga kirmaydi. <b>«Faollashtirish»</b> bosilganda
+              (yoki shu guruhda 3 ta darsga kelgach avtomat) tanlangan
+              kundan oy oxirigacha darslar soniga qarab yechiladi.
+            </p>
+          )}
           <div className="flex gap-2 mt-2">
             <button
               onClick={() => {
@@ -211,6 +306,17 @@ export function StudentGroupsCard({
               {r.is_primary && (
                 <span title="Asosiy guruh — oylik hisob shu bo'yicha chiqadi">
                   <Star size={13} className="text-amber-500" fill="currentColor" />
+                </span>
+              )}
+              {/* Bog'lanish holati (2026-10-14): sinovdagi guruh
+                  sarlavhada ham ajralib tursin; "Faol"/"Sinov" yozuvi
+                  pastdagi "Holati" qatorida. */}
+              {r.link_status === "trial" && (
+                <span
+                  title="Shu guruh sinovda — pul yechilmaydi"
+                  className="shrink-0 rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-[11px] font-semibold"
+                >
+                  Sinov
                 </span>
               )}
               {canEdit && active.length > 1 && (
@@ -257,13 +363,26 @@ export function StudentGroupsCard({
                         ? "bg-sky-50 text-sky-700"
                         : r.status === "archived"
                         ? "bg-slate-100 text-slate-600"
+                        : r.status === "trial" || r.link_status === "trial"
+                        ? "bg-amber-50 text-amber-800"
                         : "bg-green-50 text-green-700"
                     }`}
                   >
-                    {r.status_label || (r.active ? "Faol" : "Guruhdan chiqarilgan")}
+                    {r.status_label ||
+                      (!r.active
+                        ? "Guruhdan chiqarilgan"
+                        : r.link_status === "trial"
+                        ? "Sinov"
+                        : "Faol")}
                   </span>
                 }
               />
+              {r.activated_on && r.link_status !== "trial" && (
+                <Row2
+                  label="Faollashgan sana"
+                  value={formatDate(r.activated_on)}
+                />
+              )}
               <Row2
                 label="Guruhga qo'shilgan sana"
                 value={r.joined_date ? formatDate(r.joined_date) : "—"}
@@ -278,6 +397,100 @@ export function StudentGroupsCard({
                 value={formatSom(r.monthly_fee || 0)}
               />
             </div>
+
+            {/* SINOVDAGI GURUHNI FAOLLASHTIRISH (2026-10-14, Jahongir:
+                "Sinovdan faolga o'tganda pul yechilishi dars sonidan
+                kelib chiqsin"). Sana tanlanadi — server shu kundan oy
+                oxirigacha darslar x narx x chegirmani ko'rsatadi. */}
+            {canEdit && r.link_status === "trial" && actRow?.id !== r.id && (
+              <div className="px-4 pb-3">
+                <button
+                  onClick={() => openActivate(r)}
+                  className="w-full py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium"
+                >
+                  Faollashtirish
+                </button>
+              </div>
+            )}
+            {actRow?.id === r.id && (
+              <div className="mx-4 mb-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm">
+                <label className="block text-[12px] text-slate-600 mb-1">
+                  Qaysi kundan faol (pul shu kundan yechiladi)
+                </label>
+                <input
+                  type="date"
+                  value={actDate}
+                  min={preview?.min}
+                  max={preview?.max}
+                  onChange={(e) => {
+                    setActDate(e.target.value);
+                    if (e.target.value) loadPreview(r, e.target.value);
+                  }}
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm"
+                />
+                {preview ? (
+                  <div className="mt-2 space-y-1 text-[13px] text-slate-700">
+                    <p>
+                      {preview.lessons} dars × {formatSom(preview.price)}
+                      {preview.discount > 0 && (
+                        <> × (1 − {preview.discount}%)</>
+                      )}{" "}
+                      = <b>{formatSom(preview.amount)}</b>
+                    </p>
+                    {preview.multi_applies &&
+                      preview.primary_discount_after >
+                        preview.primary_discount_now && (
+                        <p className="text-[12px] text-emerald-800">
+                          Asosiy guruh hisobiga ham 10% (2 fan) qo'llanadi.
+                        </p>
+                      )}
+                    {preview.family && (
+                      <p className="text-[12px] text-slate-600">
+                        Oilaviy chegirma bor — 2 fan chegirmasi
+                        qo'llanmaydi.
+                      </p>
+                    )}
+                    {preview.existing && (
+                      <p className="text-[12px] text-slate-600">
+                        Bu oy shu guruh uchun avval{" "}
+                        {preview.existing.lessons} dars hisoblangan (
+                        {formatSom(preview.existing.amount)}) — yuqoridagi
+                        summa shunga qo'shiladi (oyda standartdan oshmaydi).
+                      </p>
+                    )}
+                    {preview.error && (
+                      <p className="text-[12px] text-red-600">
+                        {preview.error}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <p className="mt-2 text-[12px] text-slate-500">
+                    Hisoblanmoqda...
+                  </p>
+                )}
+                <div className="flex gap-2 mt-3">
+                  <button
+                    onClick={() => {
+                      setActRow(null);
+                      setPreview(null);
+                    }}
+                    className="flex-1 py-2 rounded-lg border border-slate-200 bg-white text-slate-600 text-sm"
+                  >
+                    Bekor
+                  </button>
+                  <button
+                    onClick={activate}
+                    disabled={
+                      actBusy || !actDate || !preview || !!preview.error
+                    }
+                    className="flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium disabled:opacity-50"
+                  >
+                    {actBusy ? "..." : "Faollashtirish"}
+                  </button>
+                </div>
+              </div>
+            )}
 
             <Link
               to={`/groups/${r.group_id}`}
@@ -329,12 +542,20 @@ export function StudentGroupsCard({
         </div>
       )}
 
-      {active.length > 1 && (
+      {paid.length > 1 && (
         <p className="mt-3 max-w-2xl text-[12px] text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 leading-snug">
-          {active.length} ta fan — har bir fanning oyligi alohida yechiladi va
-          har biriga <b>10% chegirma</b> avtomat qo'llanadi. Oy o'rtasida
-          qo'shilgan fan qo'shilgan kunidan, chiqarilgan fan chiqqan kunigacha
-          hisoblanadi.
+          {paid.length} ta fan — har bir fanning oyligi alohida yechiladi va
+          har biriga <b>10% chegirma</b> avtomat qo'llanadi (oilaviy chegirma
+          bo'lsa 2 fan chegirmasi qo'llanmaydi). Oy o'rtasida faollashgan fan
+          faollashgan kunidan, chiqarilgan fan chiqqan kunigacha hisoblanadi.
+        </p>
+      )}
+      {trials.length > 0 && (
+        <p className="mt-3 max-w-2xl text-[12px] text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 leading-snug">
+          «Sinov»dagi guruh pul yechmaydi va 10% chegirmaga kirmaydi.
+          «Faollashtirish» bosilganda yoki shu guruhda 3 ta darsga kelgach
+          avtomat faol bo'ladi — pul faollashgan kundan oy oxirigacha darslar
+          soniga qarab yechiladi.
         </p>
       )}
     </div>

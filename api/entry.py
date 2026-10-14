@@ -7734,9 +7734,28 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
                 print(f"[coin] 1 so'mlik to'lov coini qaytarildi: {len(_fx)}")
         except Exception:
             db.rollback()
+    # OILAVIY + 2-FAN USTMA-UST (2026-10-14, Jahongir: "O'quvchi oilaviy
+    # 10% chegirma bo'lsa 2 fan chegirmasi ishlamaydi"). Qoida
+    # tuzatilgunicha oilaviy chegirmali ikki fanlilarga 10% + 10%
+    # yozilgan joriy oy qatorlari BIR MARTA to'g'ri summaga qaytariladi
+    # (audit: ms2_family_fix — o'quvchi / eski / yangi ro'yxati).
+    ff_key = "ms2_family_fix_v1"
+    if not _sd(db, ff_key):
+        try:
+            import multi_subject as _ms
+            _fx = _ms.fix_family_stack(db, today)
+            db.commit()
+            _sm(db, ff_key)
+            if _fx:
+                print(f"[2-fan] oilaviy tuzatish: {len(_fx)} ta qator")
+        except Exception as _e:
+            db.rollback()
+            print(f"[2-fan] oilaviy tuzatish xato: {_e}")
     # IKKI FAN (2026-10-14, Jahongir: "2ta fanga kelsa skidka 10%
     # avtomat bo'lishi kerak") — qo'shimcha guruh oyligi + 10%.
-    # Kuniga bir marta; idempotent (multi_subject.daily).
+    # Kuniga bir marta; idempotent (multi_subject.daily). Sinovdagi
+    # guruh pul yechmaydi; 3 ta darsga kelganini ham shu qadam
+    # faollashtiradi (2026-10-14).
     ms_key = f"ms2_{today.isoformat()}"
     if not _sd(db, ms_key):
         try:
@@ -9587,6 +9606,12 @@ if _mgx_groups_v1 is not None:
                 # Bog'lanish yopilgan — bola shu guruhda o'qimaydi
                 r["status"] = "left"
                 r["status_label"] = "Guruhdan chiqarilgan"
+            elif r.get("link_status") == "trial" and st == "active":
+                # SHU GURUH SINOVDA (2026-10-14, Jahongir: "Avval
+                # qo'shilganda sinovda bo'lishi kerak") — o'quvchi faol,
+                # lekin bu guruh hali pul yechmaydi.
+                r["status"] = "trial"
+                r["status_label"] = "Sinov"
             else:
                 r["status"] = st
                 r["status_label"] = _MGX_LABEL.get(st, st)
@@ -11294,7 +11319,10 @@ def _xb_move(db: Session, s, g, user, note: str = None,
     # BOG'LANISH: avval yangisi qo'shiladi, keyin eskisi yopiladi —
     # teskarisi qilinsa sync_primary_group() group_id ni eski guruhga
     # qaytarib yuborishi mumkin (2026-09-03).
-    link = _C_CM.attach_group(db, s, g.id, user)
+    # 2026-10-14: "_C_CM" (2026-10-05 dagi tasodifiy almashtirish) bunday
+    # nom yo'q edi — filialdan filialga o'tkazish NameError bilan
+    # yiqilardi. Asl _CM ga qaytarildi.
+    link = _CM.attach_group(db, s, g.id, user)
     if old_group is not None and old_group.id != g.id:
         _CM.detach_group(db, s, old_group.id)
     # FILIAL ALMASHSA — ESKI FILIALDAGI HAMMA GURUHDAN chiqadi
@@ -11309,6 +11337,16 @@ def _xb_move(db: Session, s, g, user, note: str = None,
             og = db.query(models.Group).get(lk.group_id)
             if og is None or og.branch_id != g.branch_id:
                 _CM.detach_group(db, s, lk.group_id)
+                # 2-fan qatori chiqqan kungacha (2026-10-14) — guruh
+                # kartasidan chiqarishdagi bilan bir xil (multi_subject),
+                # ertangi kunlik jarayonni kutmaydi. Faqat kamaytiradi.
+                try:
+                    import multi_subject as _ms
+                    db.flush()
+                    _ms.cut_extra(db, s, lk.group_id, roles.local_today(),
+                                  "boshqa filialga o'tdi")
+                except Exception:
+                    pass
     if link is not None:
         for other in (db.query(models.StudentGroupLink)
                       .filter(models.StudentGroupLink.student_id == s.id,
@@ -11317,6 +11355,9 @@ def _xb_move(db: Session, s, g, user, note: str = None,
             other.is_primary = 0
         link.is_primary = 1
     s.group_id = g.id
+    # Sinovdagi guruhga ko'chirilsa u endi asosiy — oylik bo'yicha
+    # hisoblanadi, "Sinov" yorlig'i olinadi (2026-10-14).
+    _CM.promote_primary_link(db, s)
     db.commit()
 
     # MOLIYA: oy o'rtasida ko'chsa shu oyning yagona hisob qatori

@@ -104,6 +104,13 @@ JOIN = max(M0, TODAY - timedelta(days=7))
 r = c.post(f"/api/students/{SID}/groups", headers=H,
            json={"group_id": G2, "joined_date": JOIN.isoformat()})
 ck("qo'shish 200", r.status_code, 200)
+# 2026-10-14 (R4): guruhi bor o'quvchiga qo'shilgan guruh avval SINOVDA —
+# pul yo'q; "Faollashtirish" (qo'shilgan kundan) bosilgach yechiladi.
+ck("qo'shilganda sinov", r.json().get("link_status"), "trial")
+ck("sinovda pul yechilmadi", MS.key(PER, G2) in rows(), False)
+r = c.post(f"/api/students/{SID}/groups/{G2}/activate", headers=H,
+           json={"on": JOIN.isoformat()})
+ck("faollashtirish 200", r.status_code, 200)
 n2 = min(lessons(G2, JOIN, M0.replace(day=28) + timedelta(days=4)), 12)
 R = rows()
 ck("2-fan qatori yozildi (10% bilan)", round(R.get(MS.key(PER, G2), 0)),

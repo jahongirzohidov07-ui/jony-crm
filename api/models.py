@@ -2955,6 +2955,15 @@ class StudentGroupLink(Base):
     joined_date = Column(Date, nullable=True)
     left_date = Column(Date, nullable=True)
     active = Column(Integer, default=1, index=True)
+    # SINOVDAGI QO'SHIMCHA GURUH (2026-10-14, Jahongir: "O'quvchiga kirib
+    # yangi guruh qo'shilsa pul yechmay faol bo'lib qolyabdi. Avval
+    # qo'shilganda sinovda bo'lishi kerak keyin faollashtirilsa pul
+    # yechsin"). "trial" — guruhi bor o'quvchiga qo'shilgan yangi guruh:
+    # pul yechilmaydi, 2-fan 10% ga kirmaydi. "active" — oddiy (bo'sh
+    # qiymat ham "active" deb o'qiladi). activated_on — sinovdan faolga
+    # o'tgan sana (pul shu kundan darslar soniga qarab).
+    status = Column(String, default="active", nullable=True)
+    activated_on = Column(Date, nullable=True)
     # Shu guruh uchun alohida narx (bo'sh = guruh narxi)
     lesson_price = Column(Float, nullable=True)
     note = Column(String, nullable=True)

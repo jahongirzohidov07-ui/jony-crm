@@ -233,6 +233,16 @@ MIGRATIONS = [
     ("0028_teacher_payment_group", [
         "ALTER TABLE teacher_payments ADD COLUMN group_id INTEGER",
     ]),
+    # 2026-10-14: o'quvchiga qo'shilgan YANGI guruh avval sinovda
+    # (student_groups.status = 'trial'), faollashtirilganda pul yechiladi.
+    # Jahongir: "Avval qo'shilganda sinovda bo'lishi kerak keyin
+    # faollashtirilsa pul yechsin". Mavjud bog'lanishlarning hammasi
+    # 'active' — ular allaqachon hisoblanib kelgan, hech narsa o'zgarmaydi.
+    ("0029_student_group_trial", [
+        "ALTER TABLE student_groups ADD COLUMN status VARCHAR DEFAULT 'active'",
+        "ALTER TABLE student_groups ADD COLUMN activated_on DATE",
+        "UPDATE student_groups SET status = 'active' WHERE status IS NULL",
+    ]),
 
 ]
 

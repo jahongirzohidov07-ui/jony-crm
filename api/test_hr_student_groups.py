@@ -94,6 +94,11 @@ client.get(f"/api/students/{SID}/groups", headers=H)     # bog'lanish yaratiladi
 r = client.post(f"/api/students/{SID}/groups", headers=H,
                 json={"group_id": GID2})
 ck("ikkinchi guruhga qo'shildi", r.status_code, 200)
+# 2026-10-14: yangi guruh avval "Sinov" — asosiy guruhni olishdan oldin
+# faollashtiriladi (aks holda sinovdagi guruh pulsiz asosiyga aylanardi).
+r = client.post(f"/api/students/{SID}/groups/{GID2}/activate", headers=H,
+                json={"on": TODAY.isoformat()})
+ck("yangi guruh faollashtirildi", r.status_code, 200)
 r = client.delete(f"/api/students/{SID}/groups/{GID1}", headers=H)
 ck("eski guruhdan chiqarildi", r.status_code, 200)
 

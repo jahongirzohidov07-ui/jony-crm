@@ -636,7 +636,12 @@ def report_teacher_payroll(
     har safar darslardan qayta hisoblanadi. Yoqlama tuzatilsa oylik
     ham o'zi to'g'rilanadi.
 
-    "paid" - ustozga haqiqatda berilgan pul (avans + oylik)."""
+    "paid" - ustozga haqiqatda berilgan pul (avans + oylik) — SHU OY
+    UCHUN (period), qayerdan kiritilganidan qat'i nazar: Xarajatlar ->
+    Oylik, ustoz kartasi, Pul oqimi yoki shu hisobotdagi guruh
+    "To'landi"si (2026-10-12, common._teacher_pay_alloc izohi). Hammasi
+    bitta jadvalda (TeacherPayment); foyda-zarar esa ustoz oyligini
+    yo'qlamadan oladi — berilgan pul unga qayta tushmaydi."""
     period = _period_key(year, month)
     start, end = billing.month_bounds(year, month)
 
@@ -682,6 +687,14 @@ def report_teacher_payroll(
             db, t.id, since=start, until=end, ctx=ctx, period=period,
             branches=branches, part=e["amount"], whole=e["total_amount"],
             worked=_worked)
+        # Guruh kesimi (2026-10-12) — o'sha pul guruhlarga taqsimlanadi;
+        # filial jamlari yuqoridagi "paid" bilan bir xil. Barcha
+        # filiallarda qator jami — hamma pul, shuning uchun bir filialda
+        # ortgani boshqa filial guruhlariga ham o'tadi (spill).
+        _alloc = _teacher_pay_alloc(
+            _full, ctx.groups, _teacher_pays_for(db, t.id, period, ctx=ctx),
+            spill=branches is None)
+        _gp = _alloc["by_group"]
         rows.append({
             "teacher_id": t.id,
             "full_name": t.full_name,
@@ -700,6 +713,17 @@ def report_teacher_payroll(
                 "rate_per_student_month": g["rate_per_student_month"],
                 "standard_lessons": g["standard_lessons"],
                 "amount": round(g["amount"], 2),
+                # Guruh kesimidagi "To'landi" (2026-10-12) — ilgari bu
+                # maydonlar yo'q edi va har guruh doim "To'lanmagan"
+                # ko'rinardi, tugmasi esa hech narsa qilmasdi.
+                "paid_amount": _gp.get(g["group_id"], 0.0),
+                "paid": _pay_status(_gp.get(g["group_id"], 0.0),
+                                    g["amount"]) == "paid",
+                "status": _pay_status(_gp.get(g["group_id"], 0.0),
+                                      g["amount"]),
+                "left": round(max(g["amount"]
+                                  - _gp.get(g["group_id"], 0.0), 0.0), 2),
+                "payout_id": None,
             } for g in e["by_group"]],
             "students": sum(round(g["attendances"] / g["lessons"])
                             for g in e["by_group"] if g["lessons"]),
@@ -708,11 +732,15 @@ def report_teacher_payroll(
             "amount": e["amount"],
             "paid_amount": paid,
             "left": round(e["amount"] - paid, 2),
+            "status": _pay_status(paid, e["amount"]),
         })
 
     rows.sort(key=lambda r: -r["amount"])
     total = round(sum(r["amount"] for r in rows), 2)
-    paid = round(sum(r["paid_amount"] for r in rows), 2)
+    # Tepadagi jamlar: ortiqcha berilgan ustoz boshqasining qarzini
+    # "yopib" qo'ymasin — har qator o'z summasigacha sanaladi
+    # (month_close bilan bir xil). To'langan + To'lanmagan = Jami.
+    paid = round(sum(min(r["paid_amount"], r["amount"]) for r in rows), 2)
     return {
         "period": period,
         "rows": rows,
@@ -721,6 +749,8 @@ def report_teacher_payroll(
         "unpaid": round(total - paid, 2),
         "own_only": own_only,
         "teacher_count": len(rows),
+        # Guruh qatoridagi "To'landi" — faqat oylik bera oladiganlarga
+        "can_pay": user.role in tuple(roles.SALARY_PAY),
     }
 
 @router.get("/api/reports/funnel")

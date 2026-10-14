@@ -201,7 +201,7 @@ function PayModal({
             <div className="space-y-1.5 max-h-40 overflow-y-auto">
               {hist.rows.map((h) => (
                 <div
-                  key={h.id}
+                  key={`${h.source ?? "staff"}${h.id}`}
                   className="flex items-center justify-between text-xs text-slate-600"
                 >
                   <span>
@@ -210,7 +210,11 @@ function PayModal({
                   </span>
                   <span className="flex items-center gap-2">
                     <b className="text-slate-800">{formatSom(h.amount)}</b>
-                    {hist.can_pay && (
+                    {/* Xarajatlar -> Oylik orqali berilgani (2026-10-12)
+                        shu yerda faqat ko'rinadi — o'chirish Xarajatlar
+                        ro'yxatidan, aks holda boshqa jadvaldagi yozuv
+                        o'rniga shu id dagi oylik o'chib ketardi. */}
+                    {hist.can_pay && (!h.source || h.source === "staff") && (
                       <button
                         onClick={() => remove(h.id)}
                         className="text-slate-400 hover:text-red-600"

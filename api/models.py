@@ -1695,6 +1695,12 @@ class TeacherPayment(Base):
     # filiali hisoblanadi.
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
                        index=True)
+    # QAYSI GURUH UCHUN (2026-10-12): Hisobotlar -> Oyliklar -> Ustozlar
+    # oyligida guruh qatoriga "To'landi" bosilganda yoziladi — o'sha
+    # guruh "to'landi" bo'lib turadi. Xarajatlar -> Oylik orqali
+    # berilganda bo'sh: pul ustozning shu oydagi guruhlariga ulush
+    # bo'yicha tarqaladi (common._teacher_pay_alloc).
+    group_id = Column(Integer, nullable=True)
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 

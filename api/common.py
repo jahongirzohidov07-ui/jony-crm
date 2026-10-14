@@ -236,6 +236,8 @@ def _ensure_new_columns(cols=None):
         "ALTER TABLE expenses ADD COLUMN consumable_id INTEGER",
         # Ustozga berilgan pul qaysi filialdan (2026-09-16)
         "ALTER TABLE teacher_payments ADD COLUMN branch_id INTEGER",
+        # Ustozlar oyligi hisobotida guruh qatoriga "To'landi" (2026-10-12)
+        "ALTER TABLE teacher_payments ADD COLUMN group_id INTEGER",
         # LTV hisoboti uchun - o'quvchi qachon ketgani.
         "ALTER TABLE students ADD COLUMN left_date DATE",
         # Arxivdagi eski o'quvchilarda ketgan sana yo'q edi; ularni
@@ -2025,6 +2027,186 @@ def _teacher_paid_scoped(db: Session, teacher_id: int, *, since, until,
         elif p.branch_id in bset:
             mine += p.amount or 0
     return round(mine + _paid_share(loose, part, whole), 2)
+
+
+# ---------------------------------------------------------------------
+#  USTOZ OYLIGI GURUH KESIMIDA: "TO'LANDI" (2026-10-12)
+#
+#  Jahongir: "men oylikni to'lagan bo'lsa ham xarajatlar bo'limida
+#  oylikni tanlab shu joyda to'lanmagan bo'lib turibdi".
+#
+#  Pul har doim BITTA joyda turadi — TeacherPayment (Xarajatlar ->
+#  Oylik, ustoz kartasi, Pul oqimi, Ustozlar oyligidagi "To'landi").
+#  Ustozlar oyligida ustoz ochilganda har guruh qatori ilgari doim
+#  "To'lanmagan" edi: tugma eski TeacherPayout belgisini bosardi,
+#  hisobot uni o'qimasdi ham. Endi guruh qatori ham shu puldan:
+#  _teacher_pay_alloc() berilgan pulni guruhlarga taqsimlaydi. Filial
+#  jamlari _teacher_paid_scoped bilan AYNAN bir xil (filialdan
+#  berilgani + filialsiz pulning ishlagan ulushi), ya'ni qator jami va
+#  guruhlar bir-biriga mos. Foyda-zarar ustoz oyligini yo'qlamadan
+#  (hisoblangan summa) oladi — berilgan pul unga ikkinchi marta
+#  tushmaydi.
+# ---------------------------------------------------------------------
+# "To'langan" deyish uchun 1 000 so'mgacha farq — yaxlitlash (Ustozlar
+# oyligi sahifasidagi "to'lanmagan" belgisi bilan bir xil)
+_PAY_TOLERANCE = 1000.0
+
+
+def _pay_period(p) -> str:
+    """To'lov (TeacherPayment / StaffSalaryPayment / Xarajat) QAYSI OY
+    UCHUN: period yozilgan bo'lsa — o'sha, aks holda to'lov sanasi oyi.
+    _teacher_paid(period=...) va oy yopilishi bilan bir xil qoida."""
+    per = getattr(p, "period", None)
+    if per:
+        return str(per)
+    d = getattr(p, "paid_on", None) or getattr(p, "date", None)
+    return d.isoformat()[:7] if d else ""
+
+
+def _teacher_pays_for(db: Session, teacher_id: int, period: str, *,
+                      ctx: "billing.PayrollContext | None" = None) -> list:
+    """Ustozga SHU OY UCHUN berilgan pullar (avans, oylik, tuzatish) —
+    qayerdan kiritilganidan qat'i nazar."""
+    rows = ctx.payments(teacher_id) if ctx is not None else None
+    if rows is None or (rows and not hasattr(rows[0], "group_id")):
+        rows = (db.query(models.TeacherPayment)
+                .filter(models.TeacherPayment.teacher_id == teacher_id)
+                .order_by(models.TeacherPayment.id).all())
+    return [p for p in rows if _pay_period(p) == period]
+
+
+def _teacher_pay_alloc(e_full: dict, groups: dict, pays: list, *,
+                       spill: bool = False) -> dict:
+    """Shu oy uchun berilgan pulni ustozning GURUHLARIGA taqsimlaydi.
+
+    e_full — _teacher_earned() natijasi (BARCHA filiallar), groups —
+    {group_id: Group} (ctx.groups), pays — _teacher_pays_for().
+
+    1) Filial "hovuzi" = o'sha filialdan berilgan pul + filialsiz (yoki
+       ustoz shu oy ishlamagan filialdan kiritilgan) pulning filial
+       ulushi — _teacher_paid_scoped dagi qoida;
+    2) hovuzdan avval "To'landi" bosilgan guruhga (TeacherPayment.
+       group_id) — o'z summasigacha;
+    3) qolgani filial guruhlariga ish haqi ULUSHI bo'yicha (og'irlik —
+       guruhning o'z summasi: "To'landi" bosilgandan keyin boshqa
+       guruhlar ulushi o'zgarmaydi); to'lgan guruh ortganini
+       qolganlarga beradi;
+    4) guruhlarga sig'magani — filial ortiqchasi ("over");
+    5) spill=True (BARCHA filiallar ko'rinishi va "To'landi" tugmasi,
+       2026-10-12): bir filialning ortiqchasi boshqa filiallardagi
+       ochiq guruhlarga o'tadi — ustozga oyligi bitta filialdan to'liq
+       berilgan bo'lsa, ikkinchi filial guruhi "to'lanmagan" bo'lib,
+       tugma ikkinchi marta pul yozmasin. Filial ko'rinishida (spill=
+       False) har filial faqat o'z pulini ko'radi (_teacher_paid_scoped).
+
+    "To'landi" bilan berilgan pul (group_id) o'sha guruhga tushadi —
+    to'lov qaysi filialga yozilganidan qat'i nazar (filiali yo'q guruh
+    ham "to'landi" bo'ladi, 2026-10-12).
+
+    Qaytaradi {"by_group": {gid: summa}, "pool": {bid: summa},
+    "over": {bid: summa}}; spill=False da har filial uchun pool =
+    guruhlari + over; spill=True da jami pool = guruhlar + jami over."""
+    need: dict = {}
+    gbr: dict = {}
+    for g in e_full.get("by_group") or []:
+        gid = g.get("group_id")
+        need[gid] = need.get(gid, 0.0) + float(g.get("amount") or 0)
+        gbr[gid] = getattr(groups.get(gid), "branch_id", None)
+    whole = sum(need.values())
+    if not whole:
+        # Shu oy ish haqi yo'q — hech qaysi guruhga tushmaydi
+        return {"by_group": {}, "pool": {}, "over": {}}
+    worked = {b for b in gbr.values() if b is not None}
+    part: dict = {}
+    for gid, b in gbr.items():
+        part[b] = part.get(b, 0.0) + need[gid]
+
+    loose = 0.0
+    tagged: dict = {}            # filial -> guruhga bog'lanmagan pul
+    gtag: dict = {}              # guruh -> "To'landi" bilan berilgan
+    for p in pays:
+        a = float(p.amount or 0)
+        gid = getattr(p, "group_id", None)
+        if gid is not None and gid in need:
+            # Guruh bo'yicha (filiali bilan emas): filiali yo'q guruhga
+            # yozilgan to'lov ham o'sha guruhniki — aks holda guruh hech
+            # qachon "to'landi" bo'lmay, har bosishda yangi pul
+            # yozilardi (2026-10-12)
+            gtag[gid] = gtag.get(gid, 0.0) + a
+            continue
+        b = getattr(p, "branch_id", None)
+        if b is None or b not in worked:
+            loose += a
+            continue
+        tagged[b] = tagged.get(b, 0.0) + a
+
+    alloc = {gid: 0.0 for gid in need}
+    pool_out: dict = {}
+    over_out: dict = {}
+    for b, pb in part.items():
+        gids = [gid for gid in need if gbr[gid] == b]
+        rest = tagged.get(b, 0.0) + loose * pb / whole
+        pool_out[b] = rest + sum(gtag.get(gid, 0.0) for gid in gids)
+        for gid in gids:                       # 2) "To'landi" bosilgani
+            t = gtag.get(gid, 0.0)
+            if t > 0:
+                take = min(t, need[gid])
+                alloc[gid] += take
+                rest += t - take
+            else:
+                rest += t
+        for _ in range(len(gids) + 1):         # 3) ulush bo'yicha
+            open_ = [gid for gid in gids if need[gid] - alloc[gid] > 0.005]
+            if rest <= 0.005 or not open_:
+                break
+            base = sum(need[gid] for gid in open_)
+            given = 0.0
+            for gid in open_:
+                take = min(rest * need[gid] / base if base else 0.0,
+                           need[gid] - alloc[gid])
+                alloc[gid] += take
+                given += take
+            rest -= given
+            if given <= 0.005:
+                break
+        over_out[b] = round(rest, 2)           # 4) ortiqcha (yoki minus)
+    extra = sum(v for v in over_out.values() if v > 0.005)
+    if spill and extra > 0.005:                # 5) boshqa filial guruhlari
+        left = extra
+        for _ in range(len(need) + 1):
+            open_ = [gid for gid in need if need[gid] - alloc[gid] > 0.005]
+            if left <= 0.005 or not open_:
+                break
+            base = sum(need[gid] for gid in open_)
+            given = 0.0
+            for gid in open_:
+                take = min(left * need[gid] / base if base else 0.0,
+                           need[gid] - alloc[gid])
+                alloc[gid] += take
+                given += take
+            left -= given
+            if given <= 0.005:
+                break
+        moved = extra - left
+        if moved > 0.005:
+            for b, v in list(over_out.items()):
+                if v > 0.005:
+                    over_out[b] = round(v - moved * v / extra, 2)
+    return {"by_group": {gid: round(v, 2) for gid, v in alloc.items()},
+            "pool": {b: round(v, 2) for b, v in pool_out.items()},
+            "over": over_out}
+
+
+def _pay_status(paid: float, amount: float) -> str:
+    """"paid" | "partial" | "unpaid" — _PAY_TOLERANCE gacha farq
+    (yaxlitlash) to'langan hisoblanadi."""
+    amount = float(amount or 0)
+    paid = float(paid or 0)
+    if amount <= 0 or amount - paid < _PAY_TOLERANCE:
+        return "paid"
+    if paid > 0.005:
+        return "partial"
+    return "unpaid"
 
 
 def _check_pay_scope(db: Session, user, teacher=None, staff_user=None) -> None:
@@ -7915,6 +8097,12 @@ __all__ = [
     "_earned_in_branches",
     "_paid_share",
     "_teacher_paid_scoped",
+    # Ustoz oyligi guruh kesimida "To'landi" (2026-10-12)
+    "_pay_period",
+    "_teacher_pays_for",
+    "_teacher_pay_alloc",
+    "_pay_status",
+    "_PAY_TOLERANCE",
     "_payroll_branch_label",
     "_salary_breakdown",
     "_salary_breakdown_scoped",

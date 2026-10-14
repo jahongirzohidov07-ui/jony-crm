@@ -117,20 +117,68 @@ def _valid_period(p):
     return p if p and _re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", str(p)) else None
 
 
-def _linked_teacher(db: Session, user_id) -> models.Teacher | None:
+def _name_teacher(db: Session, u: models.User | None) -> models.Teacher | None:
+    """Akkaunti ustoz kartasiga BOG'LANMAGAN ustoz (2026-10-12).
+
+    Ustoz lavozimidagi xodimning kartasi user_id siz qolgan bo'lsa,
+    Xarajatlar -> Oylik ro'yxatida u ikki marta chiqardi: "O'qituvchi ·
+    oylik kartasiga tushadi" va oddiy "O'qituvchi". Ikkinchisi tanlansa
+    pul "Ma'muriy xodim oyligi" xarajatiga tushib, Ustozlar oyligida
+    "to'lanmagan" qolardi, foyda-zararda esa ikki marta (xarajat +
+    hisoblangan ish haqi) ketardi. Ism AYNAN mos va bunday karta
+    BITTA bo'lsagina topiladi (_teacher_of_user dagi qoida).
+
+    Faqat ASOSIY lavozimi ustoz bo'lsa va karta FAOL bo'lsa (2026-10-12):
+    ustozlik qo'shimcha lavozimi bo'lgan filial rahbari / administrator
+    oyligi avvalgidek ma'muriy xarajat (foyda-zararda) bo'lib qoladi;
+    nofaol karta ro'yxatda ham chiqmaydi — pul unga jim ketmasin."""
+    if u is None or not (u.full_name or "").strip():
+        return None
+    if _primary_role_of(u) != roles.TEACHER:
+        return None
+    cands = (db.query(models.Teacher)
+             .filter(models.Teacher.full_name == u.full_name,
+                     models.Teacher.user_id.is_(None),
+                     models.Teacher.is_active == 1).all())
+    return cands[0] if len(cands) == 1 else None
+
+
+def _primary_role_of(u: models.User | None) -> str | None:
+    """Xodimning ASOSIY lavozimi (2026-10-12) — so'rov davomida lavozim
+    almashtirilgan bo'lsa ham (auth._primary_role) bazadagisi."""
+    if u is None:
+        return None
+    return getattr(u, "_primary_role", None) or u.role
+
+
+def _linked_teacher(db: Session, user_id, link: bool = False
+                    ) -> models.Teacher | None:
     """Xodim akkaunti ustozga bog'langanmi — bog'langan bo'lsa unga
-    beriladigan pul USTOZ oyligi (TeacherPayment), ma'muriy xarajat emas."""
+    beriladigan pul USTOZ oyligi (TeacherPayment), ma'muriy xarajat emas.
+
+    link=True (pul yozilayotganda): ism bo'yicha topilgan kartaga
+    akkaunt bog'lab qo'yiladi — _teacher_of_user ham xuddi shunday
+    qiladi, keyin ro'yxatda ustoz bir marta chiqadi."""
     if not user_id:
         return None
-    return (db.query(models.Teacher)
-            .filter(models.Teacher.user_id == user_id).first())
+    t = (db.query(models.Teacher)
+         .filter(models.Teacher.user_id == user_id).first())
+    if t is not None:
+        return t
+    t = _name_teacher(db, db.query(models.User).get(user_id))
+    if t is not None and link:
+        t.user_id = int(user_id)
+        db.flush()
+    return t
 
 
 def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
                  on: date, method: str | None, note: str | None,
-                 period: str | None, via: str, branch_id=None):
+                 period: str | None, via: str, branch_id=None,
+                 group_id: int | None = None):
     """Ustozga berilgan pulni oylik kartasiga yozadi — tanlangan
-    filialga (common._pay_branch)."""
+    filialga (common._pay_branch). group_id — Ustozlar oyligidagi
+    guruh qatori "To'landi" bosilganda (2026-10-12)."""
     if user.role not in tuple(roles.SALARY_PAY):
         raise HTTPException(403, "Oylik berish huquqi yo'q")
     t = db.query(models.Teacher).get(teacher_id)
@@ -139,9 +187,12 @@ def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
     _check_pay_scope(db, user, teacher=t)
     tp = models.TeacherPayment(
         teacher_id=t.id, amount=abs(amount), kind="salary",
-        period=period or roles.default_pay_period(on),
+        # Noto'g'ri yozilgan oy (masalan "9-2026") e'tiborsiz — standart
+        # oy olinadi, aks holda to'lov hech qaysi oyga tushmay qolardi.
+        period=_valid_period(period) or roles.default_pay_period(on),
         paid_on=on, method=method or "cash",
         branch_id=_pay_branch(db, user, t, branch_id),
+        group_id=group_id,
         note=note, created_by=user.full_name)
     db.add(tp); db.commit(); db.refresh(tp)
     audit.log(db, user, entity="teacher", action="salary_change",
@@ -156,7 +207,7 @@ def _pay_teacher(db: Session, user, teacher_id: int, *, amount: float,
         branch_id=tp.branch_id, branch=None, channel=None,
         method=tp.method, created_by=tp.created_by,
         created_at=tp.created_at or datetime.utcnow(),
-        teacher_id=t.id)
+        period=tp.period, teacher_id=t.id)
 
 @router.get("/api/expenses/staff")
 def expense_staff_list(
@@ -198,16 +249,30 @@ def expense_staff_list(
         tmap.setdefault(t.id, t)
     teachers = list(tmap.values())
 
+    # Akkaunti kartaga bog'lanmagan ustoz (2026-10-12): ism bo'yicha
+    # topilsa — kartaning o'zi bilan BITTA qator (_name_teacher izohi).
+    by_card = {}
+    for u in users:
+        if u.role in (roles.STUDENT, roles.PARENT):
+            continue
+        if any(t.user_id == u.id for t in teachers):
+            continue
+        nt = _name_teacher(db, u)
+        if nt is not None and nt.id in tmap:
+            by_card.setdefault(nt.id, u)
+
     rows = []
     linked = set()
     for t in teachers:
         u = db.query(models.User).get(t.user_id) if t.user_id else None
+        if u is None and t.id in by_card:
+            u = by_card[t.id]
         if u:
             linked.add(u.id)
         rows.append({
             "key": f"t{t.id}",
             "teacher_id": t.id,
-            "user_id": t.user_id,
+            "user_id": t.user_id or (u.id if u else None),
             "name": t.full_name,
             "role": u.role if u else roles.TEACHER,
             "role_label": roles.UZ_LABELS.get(
@@ -373,7 +438,7 @@ def create_expense(
     # Ustozning AKKAUNTI tanlangan bo'lsa ham — bu ustoz oyligi
     # (2026-09-16).
     if payload.staff_user_id and not payload.teacher_id:
-        linked = _linked_teacher(db, payload.staff_user_id)
+        linked = _linked_teacher(db, payload.staff_user_id, link=True)
         if linked:
             payload.teacher_id = linked.id
             payload.staff_user_id = None
@@ -474,7 +539,7 @@ def update_expense(
     sid = data.pop("staff_user_id", None)
     period = data.pop("period", None)
     if sid and not tid:
-        linked = _linked_teacher(db, sid)
+        linked = _linked_teacher(db, sid, link=True)
         if linked:
             tid, sid = linked.id, None
 
@@ -1302,6 +1367,211 @@ def update_payout(
             note=f"{payout.amount:,.0f} so'm".replace(",", " "),
             commit=True)
     return payout
+
+
+@router.post("/api/reports/teacher-payroll/pay")
+def teacher_payroll_pay(
+    payload: dict = Body(...),
+    db: Session = Depends(get_db),
+    user: models.User = Depends(require_role(*roles.SALARY_PAY)),
+):
+    """Ustozlar oyligida GURUH qatoriga "To'landi" (2026-10-12).
+
+    Jahongir: "men oylikni to'lagan bo'lsa ham xarajatlar bo'limida
+    oylikni tanlab shu joyda to'lanmagan bo'lib turibdi". Ilgari bu
+    tugma eski TeacherPayout jadvalidagi belgini o'zgartirardi (hisobot
+    uni o'qimasdi ham) — endi pul ham, belgi ham BITTA joyda:
+    TeacherPayment.
+
+    Guruhning SHU OY UCHUN QOLGAN summasi yoziladi (common.
+    _teacher_pay_alloc — hisobotdagi guruh qatori bilan bir xil hisob).
+    Allaqachon berilgan bo'lsa (Xarajatlar -> Oylik, ustoz kartasi, Pul
+    oqimi) — hech narsa yozilmaydi, ikki marta to'lanmaydi.
+    Foyda-zararga ta'sir qilmaydi: u ustoz oyligini yo'qlamadan
+    (hisoblangan) oladi; kassada esa shu bitta to'lov ko'rinadi."""
+    try:
+        tid = int(payload.get("teacher_id"))
+        gid = int(payload.get("group_id"))
+        y, m = int(payload.get("year")), int(payload.get("month"))
+    except (TypeError, ValueError):
+        raise HTTPException(400, "Ustoz, guruh va oyni to'g'ri yuboring")
+    if not 1 <= m <= 12:
+        raise HTTPException(400, "Oy noto'g'ri")
+    t = db.query(models.Teacher).get(tid)
+    g = db.query(models.Group).get(gid)
+    if not t or not g:
+        raise HTTPException(404, "Ustoz yoki guruh topilmadi")
+    _check_pay_scope(db, user, teacher=t)
+    if not _in_user_branches(db, user, g.branch_id):
+        raise HTTPException(403, "Bu guruh boshqa filialga tegishli")
+    method = payload.get("method") or "cash"
+    if method not in roles.PAYMENT_METHODS:
+        method = "cash"
+    period = f"{y:04d}-{m:02d}"
+    start, end = billing.month_bounds(y, m)
+    ctx = billing.PayrollContext(db)
+    e = _teacher_earned(db, t.id, since=start, until=end, ctx=ctx)
+    row = next((x for x in e["by_group"] if x["group_id"] == gid), None)
+    if row is None or row["amount"] <= 0:
+        raise HTTPException(400, "Bu oyda shu guruhdan ish haqi hisoblanmagan")
+    pays = _teacher_pays_for(db, t.id, period)
+    # spill=True — boshqa filialdan ortiqcha berilgani ham shu guruhga
+    # o'tadi (Barcha filiallar ko'rinishi bilan bir xil, 2026-10-12)
+    alloc = _teacher_pay_alloc(e, ctx.groups, pays, spill=True)
+    have = alloc["by_group"].get(gid, 0.0)
+    left = round(row["amount"] - have, 2)
+    # CHEGARA (2026-10-12): ustozga shu oy uchun BARCHA filiallardan
+    # berilgan jami pul hisoblangan oyligidan oshmasin — qaysi guruh,
+    # qaysi filial bo'lishidan qat'i nazar ikkinchi marta to'lanmaydi.
+    total_left = round(float(e["amount"] or 0)
+                       - sum(float(p.amount or 0) for p in pays), 2)
+    if (_pay_status(have, row["amount"]) == "paid"
+            or total_left < _PAY_TOLERANCE):
+        return {"ok": True, "created": False, "already_paid": True,
+                "paid_amount": have, "left": max(min(left, total_left), 0.0)}
+    left = min(left, total_left)
+    out = _pay_teacher(
+        db, user, t.id, amount=left, on=roles.local_today(), method=method,
+        note=f"{g.name} — Oyliklar hisobotida \"To'landi\"",
+        period=period, branch_id=g.branch_id, group_id=g.id,
+        via="Hisobotlar > Oyliklar > Ustozlar oyligi (To'landi)")
+    return {"ok": True, "created": True, "already_paid": False,
+            "amount": left, "payment_id": -out.id}
+
+
+def _teacher_salary_expense_sync(db: Session,
+                                 since_period: str = "2026-09") -> dict:
+    """BIR MARTALIK TUZATISH (2026-10-12) — Xarajat bo'lib yozilgan
+    USTOZ OYLIKLARI ustozning oylik kartasiga (TeacherPayment) ko'chadi.
+
+    Akkaunti kartaga bog'lanmagan ustoz Xarajatlar -> Oylikda oddiy
+    xodim bo'lib tanlansa (yoki 2026-09-16 dan oldin), pul "Ma'muriy
+    xodim oyligi" xarajati bo'lib qolgan: Ustozlar oyligida
+    "to'lanmagan", foyda-zararda esa IKKI MARTA (xarajat + yo'qlamadan
+    hisoblangan ish haqi). update_expense dagi "ustoz oyligiga
+    ko'chirish" bilan bir xil: to'lov kartaga yoziladi (sana, summa,
+    usul o'zgarmaydi; filial — xarajatniki, u bo'sh bo'lsa ustozning
+    asosiy filiali: kassa ham bunday to'lovni o'sha filialda
+    ko'rsatadi; oy — yozilgani, bo'lmasa _pay_teacher qoidasi: 1–15
+    kunlari o'tgan oyniki), xarajat qatori o'chadi, eski qiymatlari
+    auditda qoladi. Kassa (pul oqimi) jami o'zgarmaydi.
+
+    Ehtiyot shartlari (pul yo'qolmasin, ikki marta ham ketmasin):
+      * faqat since_period dan boshlab (sentabr 2026 — kassa shu oydan
+        yuritiladi; eski yopilgan oylarga tegilmaydi);
+      * o'sha oy uchun ustozga yo'qlamadan ish haqi HISOBLANGAN bo'lishi
+        kerak — aks holda bu pul foyda-zararda umuman ko'rinmay qolardi;
+      * xodimning ASOSIY lavozimi ustoz bo'lishi kerak — ustozlik
+        qo'shimcha lavozimi bo'lgan rahbar/administrator xarajati uning
+        ma'muriy oyligi bo'lishi mumkin: tegilmaydi, "skipped"da qoladi;
+      * ko'chgandan keyin shu oy uchun berilgan pul ish haqidan
+        oshmasligi kerak (1 000 so'mgacha yaxlitlash) — oshsa, bu pul
+        boshqa ish uchun (masalan examinerlik) bo'lishi mumkin: tegilmaydi,
+        "skipped" ro'yxatida qo'lda ko'rish uchun qoladi. JORIY oy ham
+        shunday (2026-10-12): hozircha ishlaganidan oshgan avans ham
+        qo'lda ko'riladi (Xarajatlar -> tahrirlash -> ustoz kartasi) —
+        noaniq yozuv jim ko'chib, foyda-zarardan yo'qolmasin;
+      * filial — xarajatniki, bo'lmasa ustozning asosiy filiali, u ham
+        bo'lmasa shu oy dars o'tgan YAGONA filial; aniqlanmasa —
+        tegilmaydi (filialsiz to'lov kassada ko'rinmay qolardi);
+      * biror qatorda xato chiqsa — u "skipped"ga sababi bilan tushadi
+        (auditda ko'rinadi), qolganlari davom etadi.
+    Idempotent: ko'chgan xarajat qolmaydi, ikkinchi yurishda hech narsa
+    qilmaydi. Qaytaradi {"moved": [...], "skipped": [...]}."""
+    ctx = billing.PayrollContext(db)
+    earned: dict = {}
+    paid: dict = {}
+    moved, skipped = [], []
+    rows = (db.query(models.Expense)
+            .filter(models.Expense.staff_user_id.isnot(None))
+            .order_by(models.Expense.date, models.Expense.id).all())
+    teacher_of: dict = {}          # user_id -> Teacher | None (bir marta)
+    prim_of: dict = {}             # user_id -> asosiy lavozim
+    wbr: dict = {}                 # (ustoz, oy) -> dars o'tgan filiallar
+    for e in rows:
+        eid = e.id
+        try:
+            if e.staff_user_id not in teacher_of:
+                teacher_of[e.staff_user_id] = _linked_teacher(
+                    db, e.staff_user_id)
+                prim_of[e.staff_user_id] = _primary_role_of(
+                    db.query(models.User).get(e.staff_user_id))
+            t = teacher_of[e.staff_user_id]
+            if t is None or not e.amount or e.date is None:
+                continue
+            per = (_valid_period(e.period)
+                   or roles.default_pay_period(e.date))
+            if per < since_period:
+                continue
+            key = (t.id, per)
+            if key not in earned:
+                s, en = billing.month_bounds(int(per[:4]), int(per[5:7]))
+                _ee = _teacher_earned(db, t.id, since=s, until=en, ctx=ctx)
+                earned[key] = float(_ee["amount"] or 0)
+                wbr[key] = {getattr(ctx.groups.get(g.get("group_id")),
+                                    "branch_id", None)
+                            for g in _ee["by_group"]} - {None}
+                paid[key] = float(sum(
+                    float(p.amount or 0)
+                    for p in _teacher_pays_for(db, t.id, per)))
+            amt = abs(float(e.amount))
+            info = {"expense_id": e.id, "teacher_id": t.id,
+                    "teacher": t.full_name, "amount": amt, "period": per,
+                    "date": e.date.isoformat(), "branch_id": e.branch_id,
+                    "earned": round(earned[key], 2),
+                    "paid_before": round(paid[key], 2)}
+            if earned[key] <= 0:
+                # Guruh darsi yo'q — bu support/examiner ishi uchun
+                # berilgan pul (ular ro'yxatida Xarajat sifatida
+                # sanaladi, entry._staff_paid); tegilmaydi.
+                continue
+            if prim_of.get(e.staff_user_id) != roles.TEACHER:
+                skipped.append(dict(info,
+                                    reason="asosiy lavozimi ustoz emas"))
+                continue
+            # Chegara har oyga (joriy oy ham — izohga qarang)
+            if paid[key] + amt > earned[key] + _PAY_TOLERANCE:
+                skipped.append(dict(info, reason=(
+                    "ish haqidan oshadi" if _period_closed(per) else
+                    "joriy oy: hozircha ishlaganidan oshadi")))
+                continue
+            br = e.branch_id or t.branch_id or (
+                next(iter(wbr[key])) if len(wbr[key]) == 1 else None)
+            if br is None:
+                skipped.append(dict(info, reason="filiali aniqlanmadi"))
+                continue
+            note = ((e.note or "").strip() + f" · Xarajat #{e.id} dan"
+                    ).lstrip(" ·")
+            tp = models.TeacherPayment(
+                teacher_id=t.id, amount=amt, kind="salary",
+                period=per, paid_on=e.date, method=e.method or "cash",
+                branch_id=br, note=note,
+                created_by=e.created_by,
+                created_at=e.created_at or datetime.utcnow())
+            db.add(tp)
+            db.flush()
+            audit.log(db, None, entity="expense", action="delete",
+                      entity_id=e.id, entity_label=e.note or e.category,
+                      field=e.category, old_value=e.amount,
+                      branch_id=e.branch_id,
+                      note=(f"Ustoz oyligiga ko'chirildi (bir martalik, "
+                            f"2026-10-12): {t.full_name}, {per} uchun, "
+                            f"sana {e.date}, usul {e.method or 'cash'}, "
+                            f"kiritgan {e.created_by or '—'} -> "
+                            f"ustoz to'lovi #{tp.id}"))
+            db.delete(e)
+            db.commit()
+            paid[key] += amt
+            moved.append(dict(info, payment_id=tp.id,
+                              branch_id=tp.branch_id))
+        except Exception as exc:
+            db.rollback()
+            # Jim yutilmasin — auditdagi "TEGILMADI" ro'yxatiga tushadi
+            skipped.append({"expense_id": eid, "teacher": "?", "amount": 0,
+                            "period": "?",
+                            "reason": f"xato: {type(exc).__name__}"})
+    return {"moved": moved, "skipped": skipped}
+
 
 def _refund_out(db, r: "models.RefundRequest") -> dict:
     s = db.query(models.Student).get(r.student_id)

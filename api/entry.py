@@ -2561,12 +2561,93 @@ _PAYROLL_VIEW = list(dict.fromkeys(
 _PAYROLL_PAY = list(_SALARY_PAY_ORG)
 
 
+# Xarajatlar -> Oylik puli examiner/support oyligiga faqat ASOSIY
+# lavozimi shu bo'lgan xodimda sanaladi (2026-10-12; month_close.
+# _SSP_ROLES bilan bir xil): "Administrator + Examiner"ning fiks
+# oyligi examinerlik puli bo'lib ko'rinmasin.
+_SSP_PRIMARY = (roles.EXAMINER, roles.HEAD_EXAMINER, roles.SUPPORT_TEACHER,
+                roles.HEAD_SUPPORT)
+
+
+def _staff_primary(db: Session, user_id) -> str | None:
+    """Xodimning asosiy lavozimi (so'rovda almashtirilgan bo'lsa ham)."""
+    u = db.query(models.User).get(user_id) if user_id else None
+    if u is None:
+        return None
+    return getattr(u, "_primary_role", None) or u.role
+
+
+def _staff_card_pays(db: Session, user_id: int, period: str) -> tuple:
+    """Xodimning USTOZ KARTASIDAGI shu oy uchun to'lovlari va ulardan
+    examiner/support ishiga tushadigani (2026-10-12).
+
+    Xarajatlar -> Oylik pulni kartasi bo'yicha yozadi: ustoz kartasi
+    bor (support teacher, ustoz+examiner) — TeacherPayment. Bu pul avval
+    o'sha oydagi GURUH darslari ish haqini yopadi (Ustozlar oyligi) —
+    examiner/support ro'yxatiga faqat ORTGANI tushadi, bitta pul ikki
+    ro'yxatda ikki marta "berildi" bo'lib chiqmaydi.
+    Qaytaradi (to'lovlar, ortgani). Asosiy lavozimi ustoz, examiner
+    yoki support bo'lmagan (rahbar, administrator) xodimda — hech narsa:
+    kartasidagi ortgan pul uning ma'muriy oyligi bo'lishi mumkin."""
+    if _staff_primary(db, user_id) not in _SSP_PRIMARY + (roles.TEACHER,):
+        return [], 0.0
+    t = (db.query(models.Teacher)
+         .filter(models.Teacher.user_id == user_id).first())
+    if t is None:
+        return [], 0.0
+    try:
+        s, en = _billing.month_bounds(int(period[:4]), int(period[5:7]))
+    except (TypeError, ValueError, IndexError):
+        return [], 0.0
+    pays = _C._teacher_pays_for(db, t.id, period)
+    tp = sum(float(p.amount or 0) for p in pays)
+    if tp <= 0:
+        return pays, 0.0
+    try:
+        earned = float(_C._teacher_earned(db, t.id, since=s,
+                                          until=en)["amount"] or 0)
+    except Exception:
+        earned = 0.0
+    return pays, round(max(0.0, tp - earned), 2)
+
+
+def _staff_expense_pays(db: Session, user_id: int, period: str) -> list:
+    """Xarajatlar -> Oylik orqali shu xodimga SHU OY UCHUN berilgani
+    (ustoz kartasi yo'q — Xarajat, staff_user_id). Oy — period, u
+    bo'lmasa sana oyi (oy yopilishi bilan bir xil). Faqat asosiy
+    lavozimi examiner/support bo'lsa (_SSP_PRIMARY izohi)."""
+    if _staff_primary(db, user_id) not in _SSP_PRIMARY:
+        return []
+    return [e for e in (db.query(models.Expense)
+                        .filter(models.Expense.staff_user_id == user_id)
+                        .all())
+            if _C._pay_period(e) == period]
+
+
+def _staff_paid_elsewhere(db: Session, user_id: int, period: str) -> float:
+    """Examiner/support oyligi Xarajatlar -> Oylik orqali berilgan bo'lsa
+    (2026-10-12, Jahongir: "men oylikni to'lagan bo'lsa ham xarajatlar
+    bo'limida oylikni tanlab shu joyda to'lanmagan bo'lib turibdi").
+
+    Bu ro'yxatlar faqat StaffSalaryPayment ni sanardi — Xarajatlar ->
+    Oylik orqali berilgan pul (Xarajat yoki ustoz kartasi) ko'rinmay,
+    "qoldiq" turardi. Endi ikkalasi ham SHU OY UCHUN (period) qo'shiladi
+    (_staff_expense_pays, _staff_card_pays)."""
+    tot = sum(float(e.amount or 0)
+              for e in _staff_expense_pays(db, user_id, period))
+    tot += _staff_card_pays(db, user_id, period)[1]
+    return round(tot, 2)
+
+
 def _staff_paid(db: Session, user_id: int, period: str | None = None):
     q = db.query(func.coalesce(func.sum(_SSP.amount), 0.0)).filter(
         _SSP.user_id == user_id)
     if period:
         q = q.filter(_SSP.period == period)
-    return round(float(q.scalar() or 0.0), 2)
+    paid = float(q.scalar() or 0.0)
+    if period:
+        paid += _staff_paid_elsewhere(db, user_id, period)
+    return round(paid, 2)
 
 
 def _attach_paid(db: Session, data: dict, key: str, period: str) -> dict:
@@ -2703,14 +2784,48 @@ def staff_salary_list(user_id: int, period: str | None = None,
     if period:
         q = q.filter(_SSP.period == period)
     rows = q.order_by(_SSP.paid_on.desc(), _SSP.id.desc()).all()
+    out = [{"id": r.id, "amount": r.amount, "kind": r.kind,
+            "kind_label": _SALARY_KIND_LABELS.get(r.kind, r.kind),
+            "period": r.period,
+            "date": r.paid_on.isoformat() if r.paid_on else None,
+            "method": r.method, "note": r.note,
+            "created_by": r.created_by, "source": "staff"} for r in rows]
+    # Xarajatlar -> Oylik orqali berilganlari ham (2026-10-12,
+    # _staff_paid_elsewhere izohi) — faqat ko'rish uchun: ular
+    # Xarajatlar ro'yxatidan o'chiriladi/tahrirlanadi. id MANFIY —
+    # DELETE /api/staff-salary/{id} ularni adashib ham topmaydi.
+    # Faqat moliya / hamma oyligini ko'radiganlarga: examiner/support
+    # boshlig'i, o'quv bo'limi rahbari Xarajatlardagi yozuvni
+    # (summasi, izohi bilan) ko'rmaydi — ularga faqat shu oynadagilar.
+    see_all = user.role in tuple(roles.FINANCE_ACCESS
+                                 + roles.SALARY_VIEW_ALL)
+    if period and see_all:
+        for e in _staff_expense_pays(db, user_id, period):
+            out.append({"id": -e.id, "amount": e.amount, "kind": "salary",
+                        "kind_label": "Oylik (Xarajatlar orqali)",
+                        "period": period,
+                        "date": e.date.isoformat() if e.date else None,
+                        "method": e.method, "note": e.note,
+                        "created_by": e.created_by, "source": "expense"})
+        # Ustoz kartasidagi pul — faqat guruh darslari ish haqidan
+        # ORTGAN bo'lsa (shu ro'yxatga o'sha ortgani tushadi)
+        pays, over = _staff_card_pays(db, user_id, period)
+        if over > 0:
+            for p in pays:
+                out.append({
+                    "id": -p.id, "amount": p.amount, "kind": p.kind,
+                    "kind_label": "Ustoz kartasi orqali (guruh oyligidan "
+                                  "ortgani hisoblanadi)",
+                    "period": period,
+                    "date": p.paid_on.isoformat() if p.paid_on else None,
+                    "method": p.method, "note": p.note,
+                    "created_by": p.created_by, "source": "teacher"})
+    out.sort(key=lambda r: r["date"] or "", reverse=True)
     return {
-        "rows": [{"id": r.id, "amount": r.amount, "kind": r.kind,
-                  "kind_label": _SALARY_KIND_LABELS.get(r.kind, r.kind),
-                  "period": r.period,
-                  "date": r.paid_on.isoformat() if r.paid_on else None,
-                  "method": r.method, "note": r.note,
-                  "created_by": r.created_by} for r in rows],
-        "total": round(sum(r.amount for r in rows), 2),
+        "rows": out,
+        # Jami — shu oy uchun "berilgan" bilan bir xil (_staff_paid)
+        "total": (_staff_paid(db, user_id, period) if period and see_all
+                  else round(sum(r.amount for r in rows), 2)),
         "can_pay": user.role in tuple(_PAYROLL_PAY),
     }
 
@@ -7542,6 +7657,40 @@ def _mc_ensure(db: Session, _orig=None, budget_s: float = 8.0):
                                        "sentabrniki qilindi",
                           new_value=_n, commit=True)
                 print(f"[oylik] sentabrga o'tkazilgan to'lovlar: {_n}")
+        except Exception:
+            db.rollback()
+    # BIR MARTALIK (2026-10-12, Jahongir: "men oylikni to'lagan bo'lsa
+    # ham xarajatlar bo'limida oylikni tanlab shu joyda to'lanmagan
+    # bo'lib turibdi") — ustozga XARAJAT bo'lib yozilgan oyliklar uning
+    # oylik kartasiga (TeacherPayment) ko'chadi: Ustozlar oyligida
+    # "to'landi" bo'ladi, foyda-zararda ikki marta ketmaydi.
+    # finance._teacher_salary_expense_sync izohiga qarang. Idempotent.
+    tse_key = "teacher_salary_expense_sync_2026-10"
+    if not _sd(db, tse_key):
+        try:
+            import finance as _FinT
+            _res = _FinT._teacher_salary_expense_sync(db)
+            _mv, _sk = _res["moved"], _res["skipped"]
+            _sm(db, tse_key)
+            # Auditda: nima ko'chdi va nima QO'LDA ko'rish uchun qoldi
+            audit.log(db, None, entity="salary",
+                      action="expense_to_teacher_payment",
+                      entity_label="Xarajat bo'lib yozilgan ustoz "
+                                   "oyliklari oylik kartasiga ko'chirildi",
+                      new_value=len(_mv),
+                      note=("; ".join(
+                          f"xarajat #{x['expense_id']} -> to'lov "
+                          f"#{x['payment_id']}: {x['teacher']} "
+                          f"{int(x['amount'])} ({x['period']}, {x['date']})"
+                          for x in _mv) or "ko'chadigan yozuv yo'q")
+                      + ("" if not _sk else " | TEGILMADI: " + "; ".join(
+                          f"xarajat #{x['expense_id']}: {x['teacher']} "
+                          f"{int(x['amount'])} ({x['period']}) — "
+                          f"{x['reason']}" for x in _sk)),
+                      commit=True)
+            if _mv or _sk:
+                print(f"[oylik] xarajatdan ustoz kartasiga: {len(_mv)}, "
+                      f"tegilmadi: {len(_sk)}")
         except Exception:
             db.rollback()
     lr_key = "lrfix_cancel_2026-10"

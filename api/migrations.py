@@ -226,6 +226,13 @@ MIGRATIONS = [
     ("0027_interview_guide_config", [
         "SELECT 1",
     ]),
+    # 2026-10-12: Ustozlar oyligida guruh qatoriga "To'landi" — ustoz
+    # to'lovi qaysi guruh uchun (common._teacher_pay_alloc). Jahongir:
+    # "men oylikni to'lagan bo'lsa ham xarajatlar bo'limida oylikni
+    # tanlab shu joyda to'lanmagan bo'lib turibdi".
+    ("0028_teacher_payment_group", [
+        "ALTER TABLE teacher_payments ADD COLUMN group_id INTEGER",
+    ]),
 
 ]
 

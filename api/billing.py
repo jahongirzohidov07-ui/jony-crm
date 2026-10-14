@@ -739,11 +739,14 @@ class PayrollContext:
                     .order_by(models.Lesson.date, models.Lesson.id).all())
             for r in rows:
                 self._lessons.setdefault(r.teacher_id, []).append(r)
+            # group_id ham (2026-10-12): Ustozlar oyligida guruh qatori
+            # "To'landi" (common._teacher_pay_alloc).
             pays = (self.db.query(models.TeacherPayment.teacher_id,
                                   models.TeacherPayment.paid_on,
                                   models.TeacherPayment.amount,
                                   models.TeacherPayment.period,
-                                  models.TeacherPayment.branch_id)
+                                  models.TeacherPayment.branch_id,
+                                  models.TeacherPayment.group_id)
                     .filter(models.TeacherPayment.teacher_id.in_(chunk))
                     .order_by(models.TeacherPayment.id).all())
             for p in pays:

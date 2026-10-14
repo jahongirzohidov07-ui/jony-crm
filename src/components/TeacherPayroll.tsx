@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Download, GraduationCap } from "lucide-react";
-import { api, type TeacherPayrollReport } from "../lib/api";
+import {
+  api, type PayrollGroupRow, type TeacherPayrollReport,
+} from "../lib/api";
 import { MONTHS } from "../lib/expenses";
 import { formatSom } from "../lib/format";
 import { exportToExcel } from "../lib/exportXlsx";
@@ -63,15 +65,41 @@ export function TeacherPayrollTab() {
   }
   useEffect(load, [year, month]);
 
-  /** To'landi belgisini shu yerdan ham qo'yish mumkin - har guruhga
-   *  alohida kirib yurish shart emas. */
-  async function togglePaid(payoutId: number | null, paid: boolean) {
-    if (!payoutId) return;
+  const [paying, setPaying] = useState<string | null>(null);
+
+  /** GURUH QATORIDAGI "TO'LANDI" (2026-10-12, Jahongir: "men oylikni
+   *  to'lagan bo'lsa ham xarajatlar bo'limida oylikni tanlab shu joyda
+   *  to'lanmagan bo'lib turibdi"). Ilgari bu tugma eski TeacherPayout
+   *  belgisini bosardi — hisobot uni o'qimasdi, guruh doim
+   *  "To'lanmagan" edi. Endi holat ustozga BERILGAN puldan (Xarajatlar
+   *  -> Oylik, ustoz kartasi — qayerdan bo'lsa ham) chiqadi; bosilsa
+   *  guruhning shu oy uchun QOLGAN summasi ustoz kartasiga yoziladi.
+   *  Allaqachon berilgan bo'lsa server hech narsa yozmaydi. */
+  async function payGroup(teacherId: number, g: PayrollGroupRow) {
+    const left = g.left ?? g.amount;
+    if (!confirm(
+      `${g.group}: ${formatSom(left)} ustoz oylik kartasiga "berildi" ` +
+      `bo'lib yoziladi (kassadan chiqim). Davom etilsinmi?`)) return;
+    setPaying(`${teacherId}-${g.group_id}`);
+    setError(null);
     try {
-      await api.put(`/payouts/${payoutId}`, { paid: !paid });
+      const res = await api.post<{ created: boolean; already_paid?: boolean }>(
+        "/reports/teacher-payroll/pay",
+        { teacher_id: teacherId, group_id: g.group_id, year, month },
+      );
+      // Boshqa filialdan yoki Xarajatlar orqali to'liq berilgan bo'lsa
+      // server ikkinchi marta yozmaydi (2026-10-12) — jim qolmasin
+      if (res?.already_paid) {
+        alert(
+          "Ustozga shu oy uchun oyligi to'liq berilgan (boshqa filialdan " +
+          "yoki Xarajatlar orqali) — yangi to'lov yozilmadi.",
+        );
+      }
       load();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Xatolik");
+    } finally {
+      setPaying(null);
     }
   }
 
@@ -173,7 +201,10 @@ export function TeacherPayrollTab() {
                             o'rniga 1 703 300 berilgan), "to'lanmagan" emas */}
                         {r.amount - r.paid_amount >= 1000 && (
                           <span className="ml-2 text-[10px] uppercase tracking-wide bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded">
-                            to'lanmagan
+                            {/* Qisman berilgani ham ko'rinsin (2026-10-12) */}
+                            {r.paid_amount > 0
+                              ? `qisman · ${formatSom(r.paid_amount)}`
+                              : "to'lanmagan"}
                           </span>
                         )}
                       </td>
@@ -205,19 +236,34 @@ export function TeacherPayrollTab() {
                             <span className="text-slate-600 mr-2">
                               {formatSom(g.amount)}
                             </span>
-                            <button
-                              onClick={(ev) => {
-                                ev.stopPropagation();
-                                togglePaid(g.payout_id, g.paid);
-                              }}
-                              className={`rounded-md px-2 py-0.5 font-medium ${
-                                g.paid
-                                  ? "bg-green-50 text-green-700 hover:bg-green-100"
-                                  : "bg-slate-200 text-slate-600 hover:bg-slate-300"
-                              }`}
-                            >
-                              {g.paid ? "To'landi" : "To'lanmagan"}
-                            </button>
+                            {g.status === "partial" && !!g.paid_amount && (
+                              <span className="text-amber-700 mr-2">
+                                berildi {formatSom(g.paid_amount)}
+                              </span>
+                            )}
+                            {/* To'langan guruh — faqat belgi: pul Xarajatlar
+                                yoki ustoz kartasida, o'chirish o'sha yerdan */}
+                            {g.paid ? (
+                              <span className="rounded-md px-2 py-0.5 font-medium bg-green-50 text-green-700">
+                                To'landi
+                              </span>
+                            ) : data.can_pay ? (
+                              <button
+                                disabled={paying === `${r.teacher_id}-${g.group_id}`}
+                                onClick={(ev) => {
+                                  ev.stopPropagation();
+                                  payGroup(r.teacher_id, g);
+                                }}
+                                title="Bosilsa qolgan summa ustozga berildi deb yoziladi"
+                                className="rounded-md px-2 py-0.5 font-medium bg-slate-200 text-slate-600 hover:bg-slate-300 disabled:opacity-50"
+                              >
+                                {g.status === "partial" ? "Qisman" : "To'lanmagan"}
+                              </button>
+                            ) : (
+                              <span className="rounded-md px-2 py-0.5 font-medium bg-slate-200 text-slate-600">
+                                {g.status === "partial" ? "Qisman" : "To'lanmagan"}
+                              </span>
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -234,9 +280,12 @@ export function TeacherPayrollTab() {
           </div>
 
           <Note>
-            Ustoz nomini bossangiz guruhlar bo'yicha taqsimoti ochiladi va o'sha
-            yerdan "To'landi" belgisini qo'yish mumkin. Bu summa foyda-zarar
-            hisobotiga avtomatik chiqim bo'lib tushadi.
+            Ustoz nomini bossangiz guruhlar bo'yicha taqsimoti ochiladi.
+            "To'landi" — ustozga shu oy uchun berilgan puldan (Xarajatlar →
+            Oylik, ustoz kartasi — qayerdan berilgan bo'lsa ham). Berilmagan
+            guruhni shu yerdan "To'landi" qilsangiz, qolgan summa ustoz
+            kartasiga yoziladi. Foyda-zararga ustoz oyligi yo'qlamadan
+            hisoblangan summa bo'lib bir marta tushadi.
           </Note>
         </>
       )}

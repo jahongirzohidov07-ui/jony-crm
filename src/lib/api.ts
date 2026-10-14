@@ -993,7 +993,14 @@ export interface PayrollGroupRow {
   amount: number;
   paid: boolean;
   payout_id: number | null;
+  /** Shu oy UCHUN shu guruhga tushgan pul (2026-10-12) — Xarajatlar ->
+   *  Oylik, ustoz kartasi yoki shu yerdagi "To'landi" farqi yo'q. */
+  paid_amount?: number;
+  status?: PayStatus;
+  left?: number;
 }
+
+export type PayStatus = "paid" | "partial" | "unpaid";
 
 export interface TeacherPayrollRow {
   teacher_id: number;
@@ -1004,6 +1011,8 @@ export interface TeacherPayrollRow {
   lessons: number;
   amount: number;
   paid_amount: number;
+  left?: number;
+  status?: PayStatus;
 }
 
 export interface TeacherPayrollReport {
@@ -1013,6 +1022,8 @@ export interface TeacherPayrollReport {
   paid: number;
   unpaid: number;
   teacher_count: number;
+  /** Guruh qatoridagi "To'landi" — oylik bera oladiganlarga */
+  can_pay?: boolean;
 }
 
 // ---------- Sotuv voronkasi ----------
@@ -5176,6 +5187,10 @@ export interface StaffSalaryRow {
   method?: string | null;
   note?: string | null;
   created_by?: string | null;
+  /** Qayerdan berilgan (2026-10-12): "staff" — shu oynadan (o'chirsa
+   *  bo'ladi); "expense" / "teacher" — Xarajatlar -> Oylik orqali,
+   *  faqat ko'rish uchun. */
+  source?: "staff" | "expense" | "teacher";
 }
 
 export interface StaffSalaryHistory {

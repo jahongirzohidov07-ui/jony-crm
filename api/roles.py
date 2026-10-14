@@ -1914,10 +1914,10 @@ CONSUMABLE_TYPE_LABELS = {k: lbl for k, lbl, _ in CONSUMABLE_TYPES}
 CONSUMABLE_UNITS = {k: u for k, _, u in CONSUMABLE_TYPES}
 
 STOCK_MOVE_REASONS = [
-    ("in", "Kirim"),
-    ("out", "Chiqim"),
-    ("write_off", "Hisobdan chiqarish"),
-    ("correction", "Tuzatish"),
+    ("in", "Kirim — keldi"),
+    ("out", "Chiqim — berildi / ishlatildi"),
+    ("write_off", "Hisobdan chiqarish — yo'qoldi / yaroqsiz"),
+    ("correction", "Sanoq tuzatishi"),
 ]
 STOCK_MOVE_LABELS = dict(STOCK_MOVE_REASONS)
 

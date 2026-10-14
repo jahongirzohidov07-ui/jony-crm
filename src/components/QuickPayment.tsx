@@ -80,12 +80,19 @@ function PaymentModal({
   // saqlangandan keyingina yangilanadi (2026-08-14).
   const payKey = useRef<string>(newClientKey());
 
+  // Kitob — o'quvchi filialining omboridan (2026-10-14): boshqa
+  // filial kitobi tanlansa, qoldiq noto'g'ri ombordan kamayardi.
+  const pickedBranch = picked?.branch?.id ?? null;
   useEffect(() => {
+    const qs = pickedBranch ? `?branch_id=${pickedBranch}` : "";
     api
-      .get<{ id: number; name: string; qty: number }[]>("/consumables/books")
-      .then(setBooks)
+      .get<{ id: number; name: string; qty: number }[]>(`/consumables/books${qs}`, true)
+      .then((rows) => {
+        setBooks(rows);
+        setBookId((cur) => (rows.some((b) => String(b.id) === cur) ? cur : ""));
+      })
       .catch(() => setBooks([]));
-  }, []);
+  }, [pickedBranch]);
 
   useEffect(() => {
     if (fixed) return;

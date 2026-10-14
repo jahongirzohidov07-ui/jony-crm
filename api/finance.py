@@ -397,10 +397,15 @@ def create_expense(
         if not cons:
             raise HTTPException(404, "Mahsulot topilmadi")
     elif (payload.new_item_name or "").strip() and payload.category == "book":
-        cons = models.Consumable(
-            name=payload.new_item_name.strip(), kind="book",
-            branch_id=branch_id, qty=0, min_qty=0, unit="dona")
-        db.add(cons); db.commit(); db.refresh(cons)
+        # Shu filialda shu nomli kitob bo'lsa — o'sha ishlatiladi, yangisi
+        # ochilmaydi (2026-10-14: ombordagi takrorlarning bir manbai shu edi)
+        import inventory as _inv
+        cons = _inv._same_name(db, payload.new_item_name, branch_id)
+        if not cons:
+            cons = models.Consumable(
+                name=payload.new_item_name.strip(), kind="book",
+                branch_id=branch_id, qty=0, min_qty=0, unit="dona")
+            db.add(cons); db.commit(); db.refresh(cons)
 
     staff_name = None
     if payload.staff_user_id:

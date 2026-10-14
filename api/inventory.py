@@ -4,6 +4,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import bisect
+import re
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 
@@ -216,11 +217,42 @@ def finish_repair(
     db.commit()
     return _asset_out(db, a) if a else {"ok": True}
 
+def _norm_name(name: str | None) -> str:
+    """Takrorni aniqlash uchun kalit: faqat harf va raqamlar, kichik
+    harfda. "Step-1", "step 1 ", "STEP1" va "Round-up 1" / "Roundup 1"
+    bir xil bo'ladi; "Step 1" va "Step 11" esa har xil qoladi."""
+    return re.sub(r"[\W_]+", "", (name or "").lower())
+
+
+def _is_low(c: models.Consumable) -> bool:
+    """KAM QOLGAN — faqat minimal qoldiq BELGILANGAN mahsulotda.
+
+    2026-10-14 tuzatish: ilgari minimal 0 bo'lgan va qoldig'i 0 bo'lgan
+    har bir mahsulot "kam qolgan" hisoblanib, unga xarid so'rovi o'zi
+    ochilardi. Standart kitoblar har filialda 0 qoldiq bilan yaratilgani
+    uchun ro'yxat "1 dona kerak" degan keraksiz so'rovlarga to'lib
+    ketgan edi. Minimal 0 = "kuzatilmaydi"."""
+    return bool(c.min_qty and c.min_qty > 0
+                and (c.qty or 0) <= c.min_qty)
+
+
+def _same_name(db: Session, name: str, branch_id, exclude_id=None):
+    """Shu filialda shu nomli (normallashtirilgan) mahsulot."""
+    key = _norm_name(name)
+    q = db.query(models.Consumable)
+    q = (q.filter(models.Consumable.branch_id == branch_id)
+         if branch_id else q.filter(models.Consumable.branch_id.is_(None)))
+    for c in q.all():
+        if c.id != exclude_id and _norm_name(c.name) == key:
+            return c
+    return None
+
+
 def _check_stock(db: Session, c: models.Consumable) -> models.PurchaseRequest | None:
     """AVTOMAT: qoldiq minimaldan pastga tushsa xarid so'rovi yaratiladi.
     Ochiq so'rov allaqachon bo'lsa takror yaratilmaydi - shunda ro'yxat
     bir xil so'rovlar bilan to'lib ketmaydi."""
-    if c.min_qty is None or c.qty > c.min_qty:
+    if not _is_low(c):
         return None
     exists = (db.query(models.PurchaseRequest)
               .filter(models.PurchaseRequest.consumable_id == c.id,
@@ -236,7 +268,7 @@ def _check_stock(db: Session, c: models.Consumable) -> models.PurchaseRequest | 
     return pr
 
 def _consumable_out(db: Session, c: models.Consumable) -> dict:
-    low = c.min_qty is not None and c.qty <= c.min_qty
+    low = _is_low(c)
     open_pr = (db.query(models.PurchaseRequest)
                .filter(models.PurchaseRequest.consumable_id == c.id,
                        models.PurchaseRequest.status == "open").first())
@@ -270,6 +302,18 @@ def list_consumables(
     # Har safar ko'rilganda qoldiq tekshiriladi - so'rov o'zi paydo bo'ladi.
     for c in items:
         _check_stock(db, c)
+    # Keraksiz bo'lib qolgan AVTOMAT so'rovlar o'zi yopiladi: qoldiq
+    # to'ldirilgan yoki minimal olib tashlangan (2026-10-14).
+    by_id = {c.id: c for c in items}
+    for pr in (db.query(models.PurchaseRequest)
+               .filter(models.PurchaseRequest.status == "open",
+                       models.PurchaseRequest.auto == 1).all()):
+        c = by_id.get(pr.consumable_id)
+        if c is not None and not _is_low(c):
+            pr.status = "cancelled"
+            pr.closed_at = datetime.utcnow()
+            pr.note = ((pr.note or "") + " · avtomat yopildi: endi kerak "
+                       "emas").strip(" ·")
     db.commit()
 
     rows = [_consumable_out(db, c) for c in items]
@@ -286,6 +330,7 @@ def list_consumables(
                   for k, lbl, u in roles.CONSUMABLE_TYPES],
         "reasons": [{"key": k, "label": lbl}
                     for k, lbl in roles.STOCK_MOVE_REASONS],
+        "duplicates": _dup_count(db, items),
         "requests": [{
             "id": r.id,
             "consumable_id": r.consumable_id,
@@ -310,6 +355,18 @@ def create_consumable(
     if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
         data["branch_id"] = user.branch_id
     data["unit"] = data.get("unit") or roles.CONSUMABLE_UNITS.get(data["kind"], "dona")
+    data["name"] = (data.get("name") or "").strip()
+    if not data["name"]:
+        raise HTTPException(400, "Nomini yozing")
+    # TAKRORGA QARSHI (2026-10-14): shu filialda shu nomli mahsulot bor
+    # bo'lsa yangisi ochilmaydi — aynan shu yo'l bilan ro'yxat "Step 1",
+    # "step 1", "Step-1" ga to'lib ketgan edi.
+    dup = _same_name(db, data["name"], data.get("branch_id"))
+    if dup:
+        raise HTTPException(
+            409, f"\"{dup.name}\" bu filialda allaqachon bor (qoldiq "
+                 f"{dup.qty:g} {dup.unit or 'dona'}). Yangisini ochmang — "
+                 "ro'yxatdan topib \"Kirim\" qiling.")
     c = models.Consumable(**data)
     db.add(c); db.commit(); db.refresh(c)
     _check_stock(db, c); db.commit()
@@ -328,6 +385,16 @@ def update_consumable(
     fields = payload.model_dump(exclude_unset=True)
     # Qoldiq qo'lda o'zgartirilmaydi - faqat harakat orqali.
     fields.pop("qty", None)
+    if "name" in fields or "branch_id" in fields:
+        new_name = (fields.get("name") or c.name or "").strip()
+        new_branch = fields.get("branch_id", c.branch_id)
+        dup = _same_name(db, new_name, new_branch, exclude_id=c.id)
+        if dup:
+            raise HTTPException(
+                409, f"\"{dup.name}\" bu filialda allaqachon bor. Ikkalasini "
+                     "\"Takrorlarni birlashtirish\" orqali bitta qiling.")
+        if "name" in fields:
+            fields["name"] = new_name
     for k, v in fields.items():
         setattr(c, k, v)
     db.commit(); db.refresh(c)
@@ -362,22 +429,36 @@ def move_stock(
     c = db.query(models.Consumable).get(cid)
     if not c:
         raise HTTPException(404, "Mahsulot topilmadi")
-    if payload.reason not in roles.STOCK_MOVE_LABELS:
-        raise HTTPException(400, "Noto'g'ri sabab")
-    if not payload.qty:
-        raise HTTPException(400, "Miqdorni kiriting")
-
-    delta = abs(payload.qty) if payload.reason == "in" else -abs(payload.qty)
-    if payload.reason == "correction":
-        delta = payload.qty
+    # SANOQ (2026-10-14): "tuzatish +/-" o'rniga odam POLKADA NECHTA
+    # BORLIGINI yozadi, farqni tizim o'zi hisoblaydi. Ombordagi eng ko'p
+    # chalkashlik "minus bilan yozish kerakmi?" degan savoldan edi.
+    note = payload.note
+    if payload.reason == "count":
+        if payload.qty is None or payload.qty < 0:
+            raise HTTPException(400, "Sanoqda nechta borligini yozing")
+        delta = payload.qty - (c.qty or 0)
+        if delta == 0:
+            return _consumable_out(db, c)
+        note = (f"Sanoq: tizimda {c.qty or 0:g} edi, aslida "
+                f"{payload.qty:g}" + (f" · {note}" if note else ""))
+        reason = "correction"
+    else:
+        if payload.reason not in roles.STOCK_MOVE_LABELS:
+            raise HTTPException(400, "Noto'g'ri sabab")
+        if not payload.qty:
+            raise HTTPException(400, "Miqdorni kiriting")
+        reason = payload.reason
+        delta = abs(payload.qty) if reason == "in" else -abs(payload.qty)
+        if reason == "correction":
+            delta = payload.qty
     if c.qty + delta < 0:
         raise HTTPException(
             400, f"Omborda {c.qty} {c.unit or 'dona'} bor — "
                  f"{abs(delta)} chiqarib bo'lmaydi")
 
     db.add(models.StockMove(
-        consumable_id=cid, delta=delta, reason=payload.reason,
-        note=payload.note, created_by=user.full_name))
+        consumable_id=cid, delta=delta, reason=reason,
+        note=note, created_by=user.full_name))
     c.qty = (c.qty or 0) + delta
     db.commit(); db.refresh(c)
     _check_stock(db, c); db.commit(); db.refresh(c)
@@ -398,6 +479,135 @@ def list_moves(
         "note": m.note, "by": m.created_by,
         "created_at": m.created_at.isoformat() if m.created_at else None,
     } for m in rows]
+
+# ------------------------------------------------ takrorlarni birlashtirish
+def _dup_groups(db: Session, items: list) -> list:
+    """Bir filialda bir xil nomli (normallashtirilgan) mahsulotlar.
+    Turli filialdagi bir xil kitob TAKROR EMAS — har filial o'z polkasi."""
+    groups: dict = {}
+    for c in items:
+        groups.setdefault((c.branch_id, _norm_name(c.name)), []).append(c)
+    return [g for g in groups.values() if len(g) > 1]
+
+
+def _dup_count(db: Session, items: list) -> int:
+    return sum(len(g) - 1 for g in _dup_groups(db, items))
+
+
+@router.get("/api/consumables/duplicates")
+def consumable_duplicates(
+    branch_id: Optional[int] = None,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.INVENTORY_ACCESS)),
+):
+    q = scope_to_branch(db.query(models.Consumable), models.Consumable,
+                        user, branch_id)
+    out = []
+    for g in _dup_groups(db, q.all()):
+        rows = []
+        for c in g:
+            moves = db.query(models.StockMove).filter(
+                models.StockMove.consumable_id == c.id).count()
+            rows.append({
+                "id": c.id, "name": c.name,
+                "kind_label": roles.CONSUMABLE_TYPE_LABELS.get(c.kind, c.kind),
+                "qty": c.qty or 0, "unit": c.unit or "dona",
+                "min_qty": c.min_qty or 0, "unit_price": c.unit_price,
+                "moves": moves,
+                "created_at": c.created_at.isoformat() if c.created_at else None,
+            })
+        # Tavsiya: tarixi ko'p (eng ko'p ishlatilgan) yozuv qoladi; teng
+        # bo'lsa — ENG ESKISI (odatda to'g'ri nomlangan asl yozuv, keyingilari
+        # shoshilib qo'lda yozilgan "step-1" kabi takrorlar)
+        rows.sort(key=lambda r: (-r["moves"], r["id"]))
+        out.append({
+            "branch_id": g[0].branch_id,
+            "branch": g[0].branch.name if g[0].branch else "Filialsiz",
+            "name": rows[0]["name"],
+            "keep_id": rows[0]["id"],
+            "total_qty": sum(r["qty"] for r in rows),
+            "rows": rows,
+        })
+    out.sort(key=lambda x: (x["branch"], x["name"].lower()))
+    return {"groups": out, "count": sum(len(g["rows"]) - 1 for g in out)}
+
+
+class _MergeIn(schemas.BaseModel):
+    keep_id: int
+    merge_ids: List[int]
+    name: Optional[str] = None
+
+
+@router.post("/api/consumables/merge")
+def consumable_merge(
+    payload: _MergeIn,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.INVENTORY_ACCESS)),
+):
+    """Takrorlarni BITTA mahsulotga birlashtiradi. Hech narsa yo'qolmaydi:
+    qoldiqlar qo'shiladi, harakatlar tarixi, xarid so'rovlari, xarajat
+    va kitob buyurtmasi bog'lanishlari qoladigan yozuvga o'tadi."""
+    keep = db.query(models.Consumable).get(payload.keep_id)
+    if not keep:
+        raise HTTPException(404, "Mahsulot topilmadi")
+    ids = [i for i in dict.fromkeys(payload.merge_ids) if i != keep.id]
+    if not ids:
+        raise HTTPException(400, "Birlashtiriladigan mahsulotni tanlang")
+    others = db.query(models.Consumable).filter(
+        models.Consumable.id.in_(ids)).all()
+    if len(others) != len(ids):
+        raise HTTPException(404, "Ba'zi mahsulotlar topilmadi")
+    if any(o.branch_id != keep.branch_id for o in others):
+        raise HTTPException(
+            400, "Turli filial mahsulotlarini birlashtirib bo'lmaydi — "
+                 "har filialning o'z ombori bor.")
+    if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id \
+            and keep.branch_id and keep.branch_id != user.branch_id:
+        raise HTTPException(403, "Bu boshqa filialning ombori")
+
+    before = f"{keep.name}: {keep.qty or 0:g}"
+    for o in others:
+        db.query(models.StockMove).filter(
+            models.StockMove.consumable_id == o.id).update(
+            {"consumable_id": keep.id}, synchronize_session=False)
+        db.query(models.PurchaseRequest).filter(
+            models.PurchaseRequest.consumable_id == o.id).update(
+            {"consumable_id": keep.id}, synchronize_session=False)
+        db.query(models.Expense).filter(
+            models.Expense.consumable_id == o.id).update(
+            {"consumable_id": keep.id}, synchronize_session=False)
+        db.query(models.BookOrderItem).filter(
+            models.BookOrderItem.consumable_id == o.id).update(
+            {"consumable_id": keep.id}, synchronize_session=False)
+        keep.qty = (keep.qty or 0) + (o.qty or 0)
+        keep.min_qty = max(keep.min_qty or 0, o.min_qty or 0)
+        if not keep.unit_price and o.unit_price:
+            keep.unit_price = o.unit_price
+        if o.note and o.note not in (keep.note or ""):
+            keep.note = ((keep.note or "") + " · " + o.note).strip(" ·")
+    db.flush()
+    for o in others:
+        db.delete(o)
+    if (payload.name or "").strip():
+        keep.name = payload.name.strip()
+    # Bir mahsulotga bitta ochiq so'rov qolsin
+    opens = (db.query(models.PurchaseRequest)
+             .filter(models.PurchaseRequest.consumable_id == keep.id,
+                     models.PurchaseRequest.status == "open")
+             .order_by(models.PurchaseRequest.id).all())
+    for pr in opens[1:]:
+        pr.status = "cancelled"
+        pr.closed_at = datetime.utcnow()
+    db.commit(); db.refresh(keep)
+    _check_stock(db, keep); db.commit()
+    audit.log(db, user, entity="consumable", action="merge",
+              entity_id=keep.id, entity_label=keep.name,
+              branch_id=keep.branch_id, old_value=before,
+              new_value=f"{keep.name}: {keep.qty or 0:g} "
+                        f"({len(others)} ta takror qo'shildi)",
+              commit=True)
+    return _consumable_out(db, keep)
+
 
 @router.post("/api/purchase-requests/{rid}/close")
 def close_request(

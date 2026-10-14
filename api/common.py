@@ -4830,7 +4830,7 @@ def _my_facility_cards(db: Session, user: models.User,
     broken = [a for a in assets if a.condition in ("repair", "broken")]
     low = [c for c in scope_to_branch(
         db.query(models.Consumable), models.Consumable, user, branch_id).all()
-        if c.min_qty is not None and c.qty <= c.min_qty]
+        if c.min_qty and c.min_qty > 0 and (c.qty or 0) <= c.min_qty]
     reqs = db.query(models.PurchaseRequest).filter(
         models.PurchaseRequest.status == "open").count()
     return [

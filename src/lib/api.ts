@@ -2607,6 +2607,8 @@ export interface ConsumableList {
   total_value: number;
   kinds: { key: string; label: string; unit: string }[];
   reasons: { key: string; label: string }[];
+  /** Bir filialda bir xil nomli ortiqcha mahsulotlar soni */
+  duplicates?: number;
   requests: {
     id: number;
     consumable_id: number;

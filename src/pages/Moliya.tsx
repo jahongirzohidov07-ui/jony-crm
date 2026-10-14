@@ -804,12 +804,19 @@ function ExpenseForm({
     return () => { alive = false; };
   }, [mode, payee?.key, payPeriod, branchId]);
 
+  // Kitob ro'yxati XARAJAT FILIALINING ombori bo'yicha (2026-10-14):
+  // ilgari hamma filial kitoblari aralash chiqib, "Step 1" bir necha
+  // marta ko'rinardi va kirim boshqa filial omboriga tushib qolardi.
   useEffect(() => {
-    if (category !== "book" || books.length) return;
-    api.get<{ id: number; name: string; qty: number }[]>("/consumables/books")
-      .then(setBooks)
+    if (category !== "book") return;
+    const qs = branchId ? `?branch_id=${branchId}` : "";
+    api.get<{ id: number; name: string; qty: number }[]>(`/consumables/books${qs}`, true)
+      .then((rows) => {
+        setBooks(rows);
+        setBookId((cur) => (rows.some((b) => String(b.id) === cur) ? cur : ""));
+      })
       .catch(() => setBooks([]));
-  }, [category]);
+  }, [category, branchId]);
 
   async function save() {
     const value = Number(amount);

@@ -3480,8 +3480,20 @@ def _paid_link_filter():
     """Pul yechiladigan (sinovda EMAS) ochiq bog'lanish sharti.
     Bo'sh status eski yozuv — "active" deb o'qiladi (2026-10-14)."""
     L = models.StudentGroupLink
+    # Muzlagan guruh ham pul yechmaydi va 2-fan 10% ga kirmaydi
+    # (2026-10-16, link_freeze.py).
     return and_(L.active == 1,
-                or_(L.status.is_(None), L.status != "trial"))
+                or_(L.status.is_(None),
+                    L.status.notin_(("trial", "frozen"))))
+
+
+def _link_open():
+    """Bog'lanish ochiq VA shu guruhda muzlamagan (2026-10-16): guruh
+    bo'yicha muzlatilgan o'quvchi o'sha guruhning ro'yxati, davomati
+    va hisoblarida ko'rinmaydi — boshqa guruhida ishlayveradi."""
+    L = models.StudentGroupLink
+    return and_(L.active == 1,
+                or_(L.status.is_(None), L.status != "frozen"))
 
 
 def _multi_subject_percent(db: Session, s: models.Student,
@@ -7344,7 +7356,7 @@ def in_group(group_id):
         models.Student.id.in_(
             select(models.StudentGroupLink.student_id).where(
                 models.StudentGroupLink.group_id == group_id,
-                models.StudentGroupLink.active == 1)),
+                _link_open())),
     )
 
 
@@ -7363,7 +7375,7 @@ def in_any_group(group_ids):
         models.Student.id.in_(
             select(models.StudentGroupLink.student_id).where(
                 models.StudentGroupLink.group_id.in_(gids),
-                models.StudentGroupLink.active == 1)),
+                _link_open())),
     )
 
 
@@ -7396,9 +7408,16 @@ def sync_primary_group(db: Session, s) -> bool:
     # dvigateli bo'yicha to'liq hisoblanadi, sinovdagi esa pul
     # yechmasligi kerak. Asosiy belgisi bo'lmasa — avval pul
     # yechiladigan (faol) bog'lanish tanlanadi.
+    # MUZLAGAN GURUH ASOSIY BO'LMAYDI (2026-10-16, link_freeze.py):
+    # ochiq guruh bo'lsa — o'sha oldinga.
+    openl = [l for l in links
+             if (getattr(l, "status", None) or "active") != "frozen"]
+    if openl and len(openl) < len(links):
+        links = openl + [l for l in links if l not in openl]
     if not links[0].is_primary:
         paid = [l for l in links
-                if (getattr(l, "status", None) or "active") != "trial"]
+                if (getattr(l, "status", None) or "active")
+                not in ("trial", "frozen")]
         if paid:
             links = paid + [l for l in links if l not in paid]
     want = links[0].group_id

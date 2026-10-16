@@ -58,6 +58,15 @@ def is_trial(ln) -> bool:
                                or "active") == TRIAL
 
 
+FROZEN = "frozen"
+
+
+def is_frozen(ln) -> bool:
+    """Faqat SHU guruhda muzlaganmi (2026-10-16, link_freeze.py)."""
+    return ln is not None and (getattr(ln, "status", None)
+                               or "active") == FROZEN
+
+
 def _since(ln, month0: date) -> date:
     """Shu oy hisobi qaysi kundan: oy boshi, qo'shilgan yoki
     faollashgan kun — qaysi biri keyin bo'lsa (sinov kunlari
@@ -153,7 +162,8 @@ def charge_extra(db, s, g, since: date, user=None):
     Sinovdagi bog'lanish uchun pul yechilmaydi (2026-10-14)."""
     if s.status != "active" or g is None or g.id == s.group_id:
         return None
-    if is_trial(link_of(db, s.id, g.id)):
+    _ln = link_of(db, s.id, g.id)
+    if is_trial(_ln) or is_frozen(_ln):
         return None
     period = _period(since)
     if period < FROM_PERIOD:
@@ -579,8 +589,9 @@ def daily(db, today: date) -> dict:
     for ln, s in rows:
         by_student.setdefault(s.id, (s, []))[1].append(ln)
     for sid, (s, lns) in by_student.items():
-        # Sinovdagi guruh pul yechmaydi va 10% ga kirmaydi
-        lns = [ln for ln in lns if not is_trial(ln)]
+        # Sinovdagi va shu guruhda muzlagan guruh pul yechmaydi va 10%
+        # ga kirmaydi
+        lns = [ln for ln in lns if not is_trial(ln) and not is_frozen(ln)]
         if len(lns) < 2 or not s.group_id:
             continue
         for ln in lns:
@@ -607,6 +618,16 @@ def daily(db, today: date) -> dict:
               .filter(models.StudentGroupLink.student_id == s.id,
                       models.StudentGroupLink.group_id == gid).first())
         until, why = None, None
+        if ln is not None and ln.active and is_frozen(ln):
+            # Faqat shu guruhda muzlagan (2026-10-16): muzlagan kundan
+            # oldingi darslar qoladi (idempotent — faqat kamaytiradi)
+            try:
+                import link_freeze as LF
+                if LF.cut_before(db, s, ln, p, today):
+                    out["cut"] += 1
+            except Exception:
+                pass
+            continue
         if ln is not None and not ln.active:
             until, why = (ln.left_date or today), "guruhdan chiqdi"
         elif s.status not in ("active", "trial"):

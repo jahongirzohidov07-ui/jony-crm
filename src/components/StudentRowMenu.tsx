@@ -62,10 +62,16 @@ export function StudentRowMenu({
   student,
   groups,
   onChanged,
+  groupId,
+  groupName,
 }: {
   student: Student;
   groups: Group[];
   onChanged: () => void;
+  /** Guruh sahifasidan ochilganda (2026-10-16): ikki guruhli o'quvchi
+   *  faqat SHU guruhda muzlatiladi, ikkinchisida davom etadi. */
+  groupId?: number;
+  groupName?: string;
 }) {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -206,6 +212,27 @@ export function StudentRowMenu({
     // shuning uchun majburiy.
     if (!fReason) { setErr("Muzlatish sababini tanlang"); return; }
     run(async () => {
+      // GURUH BO'YICHA (2026-10-16, Jahongir: "bir guruhini muzlatsa
+      // ikkinchisi ham muzlayabdi, ikkalasi alohida alohida"). Guruh
+      // sahifasidan bosilsa — avval faqat shu guruh muzlatiladi; bu
+      // o'quvchining yagona faol guruhi bo'lsa — butun o'quvchi.
+      if (groupId) {
+        const label = freezeList.find(([k]) => k === fReason)?.[1] || fReason;
+        try {
+          const lr = await api.post<{ charge?: { old: number; new: number }
+            | null }>(`/students/${student.id}/groups/${groupId}/freeze`,
+            { from_date: fFrom || null, until: fUntil,
+              note: [label, fNote].filter(Boolean).join(" — ") });
+          const c = lr && lr.charge;
+          alert(`Faqat «${groupName || "shu guruh"}» muzlatildi — boshqa ` +
+            `guruhida o'qishda davom etadi.` +
+            (c ? ` Shu oy hisobi: ${som(c.old)} → ${som(c.new)} so'm` : ""));
+          return;
+        } catch (e) {
+          const m = e instanceof Error ? e.message : "";
+          if (!m.includes("yagona faol guruhi")) throw e;
+        }
+      }
       const r = await api.post<{ adjust?: { lessons: number;
         old: number; new: number } | null }>(
         `/students/${student.id}/freeze`,

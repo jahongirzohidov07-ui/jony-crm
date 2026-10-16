@@ -357,7 +357,8 @@ export function GroupSidebar({
                       {shortPhone(s.phone)}
                     </span>
                   )}
-                  <StudentRowMenu student={s} groups={groups} onChanged={load} />
+                  <StudentRowMenu student={s} groups={groups} onChanged={load}
+                    groupId={group.id} groupName={group.name} />
                 </div>
               );
             })}

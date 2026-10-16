@@ -244,6 +244,16 @@ MIGRATIONS = [
         "UPDATE student_groups SET status = 'active' WHERE status IS NULL",
     ]),
 
+    # GURUH BO'YICHA MUZLATISH (2026-10-16, Jahongir: "2ta guruhi bor
+    # o'quvchini bir guruhini muzlatsa ikkinchisi ham muzlayabdi,
+    # ikkalasi alohida alohida muzlatish kerak"). status='frozen' —
+    # shu guruh muzlagan, qolgan guruhlar ishlayveradi (link_freeze.py).
+    ("0030_student_group_freeze", [
+        "ALTER TABLE student_groups ADD COLUMN frozen_from DATE",
+        "ALTER TABLE student_groups ADD COLUMN frozen_until DATE",
+        "ALTER TABLE student_groups ADD COLUMN frozen_note VARCHAR",
+    ]),
+
 ]
 
 

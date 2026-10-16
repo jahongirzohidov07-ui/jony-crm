@@ -2964,6 +2964,12 @@ class StudentGroupLink(Base):
     # o'tgan sana (pul shu kundan darslar soniga qarab).
     status = Column(String, default="active", nullable=True)
     activated_on = Column(Date, nullable=True)
+    # GURUH BO'YICHA MUZLATISH (2026-10-16): status="frozen" bo'lsa —
+    # o'quvchi faqat SHU guruhda muzlagan, qolganlari ishlaydi
+    # (link_freeze.py).
+    frozen_from = Column(Date, nullable=True)
+    frozen_until = Column(Date, nullable=True)
+    frozen_note = Column(String, nullable=True)
     # Shu guruh uchun alohida narx (bo'sh = guruh narxi)
     lesson_price = Column(Float, nullable=True)
     note = Column(String, nullable=True)

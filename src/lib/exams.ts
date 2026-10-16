@@ -39,6 +39,8 @@ export const COIN_SOURCE_LABELS: Record<string, string> = {
   reward: "Sovg'a",
   teacher_deduct: "Ustoz ayirdi (intizom)",
   pay_ontime: "O'z vaqtida to'lov",
+  // 2026-10-16: "So'z bilish" daraja coini (api/roles.py bilan bir xil)
+  vocab_band: "So'z bilish: daraja tugatildi",
 };
 
 export function coinSourceLabel(key?: string | null): string {

@@ -163,6 +163,9 @@ import academy_bot as _r_academy_bot
 import link_freeze as _r_link_freeze
 # 2026-10-16: Terminal ↔ naqd o'tkazmasi (bank komissiyasi 1%)
 import bank_transfer as _r_bank_transfer
+# 2026-10-16: "So'z bilish" lug'at banki (yashirin: faqat wordbank_branches
+# sozlamasidagi filiallarda ochiq, aks holda 404)
+import wordbank as _r_wordbank
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -228,6 +231,7 @@ app.include_router(_r_ig_audience.router)
 app.include_router(_r_academy_bot.router)
 app.include_router(_r_link_freeze.router)
 app.include_router(_r_bank_transfer.router)
+app.include_router(_r_wordbank.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:

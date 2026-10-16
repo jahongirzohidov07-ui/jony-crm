@@ -4910,3 +4910,142 @@ class AcademyBotReg(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow,
                         onupdate=datetime.utcnow)
+
+
+# =====================================================================
+#  LUG'AT BANKI — "So'z bilish" (2026-10-16, 2-qadam, yashirin ishga
+#  tushirish: faqat wordbank_branches sozlamasidagi filiallarda).
+#
+#  Sabab (Jahongir, OWNER_DECISIONS D1–D5): o'quvchi nechta inglizcha
+#  so'zni HAQIQATAN bilishi turli kunlarda tekshirilib, tasdiqlangan
+#  holda sanalsin; har 1000 talik daraja to'liq tugasa N coin (bir
+#  marta). Qoidalar wordbank_core.py da (sof mantiq), API wordbank.py.
+#
+#  Jadvallar SHU FAYLDA: sxema bootstrap (common._schema_bootstrap)
+#  routerlardan oldin faqat models.py ni ko'radi — boshqa faylda
+#  e'lon qilingan jadval jonli bazada yaratilmay qolishi mumkin.
+#
+#  O'chirish (D4): arxiv / chiqib ketish / muzlatish bu jadvallarga
+#  TEGMAYDI. Asoschining butunlay o'chirishi esa umumiy
+#  students._purge_student_children qoidasi bo'yicha "student_id"
+#  ustunli qatorlarni tozalaydi; shuning uchun sessiya savollarida
+#  ham student_id bor (aks holda sessiyani o'chirishda FK yiqilardi).
+# =====================================================================
+class WordbankWord(Base):
+    """Chastota ro'yxatidagi bitta so'z (rank 1..20 000, daraja 1..20).
+    uz_primary bo'sh so'z mashqqa chiqmaydi (kontent hali tayyor emas)."""
+    __tablename__ = "wordbank_words"
+
+    id = Column(Integer, primary_key=True, index=True)
+    rank = Column(Integer, nullable=False, unique=True, index=True)
+    band = Column(Integer, nullable=False, index=True)       # 1..20
+    lemma = Column(String, nullable=False, unique=True)
+    pos = Column(String, nullable=True)
+    uz_primary = Column(String, nullable=True)
+    uz_alt = Column(Text, nullable=True)                      # JSON ro'yxat
+    example_en = Column(Text, nullable=True)
+    example_uz = Column(Text, nullable=True)
+    status = Column(String, nullable=False, default="active")  # active | disabled
+
+
+class WordbankStudentWord(Base):
+    """O'quvchining bitta so'z bo'yicha holati (wordbank_core.WordState).
+    Faqat tegilgan so'zlar uchun qator bor."""
+    __tablename__ = "wordbank_student_words"
+    __table_args__ = (
+        UniqueConstraint("student_id", "word_id",
+                         name="uq_wordbank_student_word"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    word_id = Column(Integer, ForeignKey("wordbank_words.id"),
+                     nullable=False, index=True)
+    stage = Column(Integer, nullable=False, default=0)
+    due = Column(Date, nullable=True)
+    has_prod = Column(Integer, nullable=False, default=0)
+    known = Column(Integer, nullable=False, default=0)
+    lapses = Column(Integer, nullable=False, default=0)
+    last_move = Column(Date, nullable=True)
+    known_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow)
+
+
+class WordbankSession(Base):
+    """Server bergan mashq yoki hajm testi. Javob faqat shu yerda
+    berilgan savolga, bir marta, egasi tomonidan qabul qilinadi."""
+    __tablename__ = "wordbank_sessions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    kind = Column(String, nullable=False, default="practice")  # practice | size_test
+    band = Column(Integer, nullable=True)       # hajm testi: joriy blok darajasi
+    created_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime, nullable=True)
+    closed_at = Column(DateTime, nullable=True)
+
+
+class WordbankSessionItem(Base):
+    """Sessiyadagi bitta savol. To'g'ri javob (expected) va variantlar
+    tartibi FAQAT serverda — mijozga hech qachon yuborilmaydi."""
+    __tablename__ = "wordbank_session_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(Integer, ForeignKey("wordbank_sessions.id"),
+                        nullable=False, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    word_id = Column(Integer, ForeignKey("wordbank_words.id"),
+                     nullable=False)
+    seq = Column(Integer, nullable=False, default=0)
+    band = Column(Integer, nullable=True)
+    mode = Column(String, nullable=False)          # R (tanlash) | P (yozish)
+    options = Column(Text, nullable=True)          # JSON: R uchun variantlar
+    expected = Column(String, nullable=False)      # R: indeks, P: lemma
+    given = Column(String, nullable=True)
+    correct = Column(Integer, nullable=True)
+    suspect = Column(Integer, nullable=False, default=0)
+    asked_at = Column(DateTime, default=datetime.utcnow)
+    answered_at = Column(DateTime, nullable=True)
+    ms = Column(Integer, nullable=True)
+
+
+class WordbankBandAward(Base):
+    """Daraja tugagani uchun coin — har o'quvchiga har daraja BIR marta
+    (UNIQUE(student_id, band) bir vaqtdagi ikki so'rovda ham ikkinchi
+    to'lovni to'xtatadi). coin_entry_id va student_id da FK YO'Q:
+    keyingi bosqichda (D4 tarix) bu qatorlar o'quvchi o'chirilganda
+    ham saqlanishi mumkin — FK bo'lsa o'chirish yiqilardi."""
+    __tablename__ = "wordbank_band_awards"
+    __table_args__ = (
+        UniqueConstraint("student_id", "band",
+                         name="uq_wordbank_band_award"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, nullable=False, index=True)
+    band = Column(Integer, nullable=False)
+    coins = Column(Integer, nullable=False)
+    coin_entry_id = Column(Integer, nullable=True)
+    awarded_at = Column(DateTime, default=datetime.utcnow)
+
+
+class WordbankSizeTest(Base):
+    """Lug'at hajmi testi natijasi — "taxminiy" (tasdiqlangan son bilan
+    hech qachon qo'shilmaydi, coin va reytingga ta'sir qilmaydi)."""
+    __tablename__ = "wordbank_size_tests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"),
+                        nullable=False, index=True)
+    session_id = Column(Integer, ForeignKey("wordbank_sessions.id"),
+                        nullable=True, unique=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    results = Column(Text, nullable=True)       # JSON {daraja: [R, W, n]}
+    estimate = Column(Integer, nullable=True)
+    low = Column(Integer, nullable=True)
+    high = Column(Integer, nullable=True)

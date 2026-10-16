@@ -267,6 +267,35 @@ MIGRATIONS = [
     ("0031_discount_group", [
         "ALTER TABLE discounts ADD COLUMN group_id INTEGER",
     ]),
+
+    # 2026-10-16: LUG'AT BANKI ("So'z bilish", 2-qadam, yashirin ishga
+    # tushirish). Jahongir: har 1000 talik so'z darajasini tugatgan
+    # o'quvchiga N coin, so'z bilish jadvali (OWNER_DECISIONS D1–D5).
+    # Faqat QO'SHADI, hech narsani o'zgartirmaydi va o'chirmaydi.
+    #
+    # Olti jadvalni (wordbank_words, wordbank_student_words,
+    # wordbank_sessions, wordbank_session_items, wordbank_band_awards,
+    # wordbank_size_tests) models.py dagi modellardan create_all
+    # yaratadi — bu qator shtampni ko'taradi (0013 izohiga qarang),
+    # shuning uchun jonli bazada create_all albatta ishlaydi. Xom
+    # CREATE TABLE yozilmadi: SQLite va Postgres'da avto-raqam
+    # sintaksisi har xil, model esa ikkalasida ham to'g'ri yaratadi.
+    #
+    # UNIQUE ux_wordbank_band_awards — pul himoyasi: model cheklovi
+    # bo'lmay qolgan holatda ham (masalan jadval oldinroq qisman
+    # yaratilgan bo'lsa) bitta daraja uchun ikki marta coin yozilmaydi.
+    ("0032_wordbank", [
+        "CREATE UNIQUE INDEX IF NOT EXISTS ux_wordbank_band_awards "
+        "ON wordbank_band_awards (student_id, band)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_words_band_rank "
+        "ON wordbank_words (band, rank)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_sw_student_due "
+        "ON wordbank_student_words (student_id, due)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_sessions_student "
+        "ON wordbank_sessions (student_id, created_at)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_size_tests_student "
+        "ON wordbank_size_tests (student_id, created_at)",
+    ]),
 ]
 
 

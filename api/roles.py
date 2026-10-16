@@ -868,6 +868,9 @@ COIN_SOURCE_LABELS = {
     "reward": "Sovg'a",
     "teacher_deduct": "Ustoz ayirdi (intizom)",
     "pay_ontime": "O'z vaqtida to'lov",
+    # 2026-10-16: "So'z bilish" — N-daraja (Common N000) to'liq
+    # tasdiqlansa N coin, bir marta (Jahongir, OWNER_DECISIONS D1).
+    "vocab_band": "So'z bilish: daraja tugatildi",
 }
 
 # Kunlik baho shkalasi: ustoz har dars uchun 1-5 qo'yadi va o'sha ball

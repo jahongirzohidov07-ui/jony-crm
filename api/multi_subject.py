@@ -58,6 +58,15 @@ def is_trial(ln) -> bool:
                                or "active") == TRIAL
 
 
+FROZEN = "frozen"
+
+
+def is_frozen(ln) -> bool:
+    """Faqat SHU guruhda muzlaganmi (2026-10-16, link_freeze.py)."""
+    return ln is not None and (getattr(ln, "status", None)
+                               or "active") == FROZEN
+
+
 def _since(ln, month0: date) -> date:
     """Shu oy hisobi qaysi kundan: oy boshi, qo'shilgan yoki
     faollashgan kun — qaysi biri keyin bo'lsa (sinov kunlari
@@ -138,7 +147,8 @@ def quote(db, s, g, since: date, disc: float = None) -> dict:
     n = E._billable_lessons(db, g, max(since, start), start, end)
     if disc is None:
         import common as C
-        disc = C._student_discount_percent(db, s)
+        # Fan bo'yicha chegirma (2026-10-16): shu fanniki + barcha fanga
+        disc = C._student_discount_percent(db, s, group_id=g.id)
     disc = float(disc or 0)
     price = _price(g)
     amount = roles.money(n * price * (100 - disc) / 100) if n > 0 else 0.0
@@ -153,7 +163,8 @@ def charge_extra(db, s, g, since: date, user=None):
     Sinovdagi bog'lanish uchun pul yechilmaydi (2026-10-14)."""
     if s.status != "active" or g is None or g.id == s.group_id:
         return None
-    if is_trial(link_of(db, s.id, g.id)):
+    _ln = link_of(db, s.id, g.id)
+    if is_trial(_ln) or is_frozen(_ln):
         return None
     period = _period(since)
     if period < FROM_PERIOD:
@@ -212,7 +223,8 @@ def _unit_of(db, s, g, row, primary: bool = False) -> float:
     if m and int(m.group(1)) > 0:
         return abs(row.amount) / int(m.group(1))
     import common as C
-    disc = C._student_discount_percent(db, s)
+    disc = C._student_discount_percent(
+        db, s, group_id=None if primary else g.id)
     if primary:
         import billing
         base = billing.student_lesson_price(s, g)
@@ -238,6 +250,48 @@ def cut_extra(db, s, gid: int, until: date, why: str) -> bool:
     m = re.search(r"\[oldin:(\d+)\]", row.note or "")
     return _cut(db, s, row, g, since, until, _unit_of(db, s, g, row), why,
                 prior=int(m.group(1)) if m else 0)
+
+
+def reprice_extras(db, s, only=None) -> int:
+    """Chegirma o'zgardi (2026-10-16, fan bo'yicha chegirma) — shu oy
+    qo'shimcha fan "#g" qatorlari yangi foiz bilan. Faqat KAMAYTIRADI va
+    har safar asl narxdan hisoblaydi (chegirma ustiga chegirma yo'q).
+    only — bitta fan; bo'sh — barcha qo'shimcha fanlar."""
+    import audit
+    import common as C
+    period = _period(roles.local_today())
+    if period < FROM_PERIOD:
+        return 0
+    n_done = 0
+    for ln in links(db, s.id):
+        if ln.group_id == s.group_id or is_trial(ln) or is_frozen(ln):
+            continue
+        if only and ln.group_id != only:
+            continue
+        g = db.query(models.Group).get(ln.group_id)
+        row = _row(db, s.id, key(period, ln.group_id))
+        if row is None or g is None:
+            continue
+        n = _row_lessons(db, s, g, row)
+        disc = float(C._student_discount_percent(db, s, group_id=g.id) or 0)
+        target = roles.money(n * _price(g) * (100 - disc) / 100)
+        if n <= 0 or target >= abs(row.amount or 0) - 0.5:
+            continue
+        old = row.amount
+        row.amount = -target
+        base = re.sub(r"\s*\[dars:\d+\]", "", row.note or "")
+        row.note = (base + f" · chegirma {disc:g}%: "
+                    f"{int(abs(old)):,} -> {int(target):,}").replace(",", " ") \
+            + f" [dars:{n}]"
+        row.updated_at = datetime.utcnow()
+        audit.log(db, None, entity="payment", action="update",
+                  entity_id=row.id, entity_label=s.full_name, field="amount",
+                  old_value=old, new_value=-target,
+                  note=f"2-fan: chegirma {disc:g}% ({g.name})",
+                  branch_id=s.branch_id)
+        n_done += 1
+    db.flush()
+    return n_done
 
 
 def reprice_primary(db, s) -> bool:
@@ -332,11 +386,13 @@ def fold_on_move(db, s, old_group, new_group, on: date) -> dict | None:
 #  SINOVDAGI QO'SHIMCHA GURUH -> FAOL (2026-10-14)
 # ---------------------------------------------------------------------
 
-def percent_if_active(db, s) -> float:
+def percent_if_active(db, s, group_id=None) -> float:
     """Sinovdagi guruh faollashsa o'quvchining jami chegirmasi (2-fan
-    10% shu guruh bilan sanaladi; oilaviy bo'lsa baribir 0)."""
+    10% shu guruh bilan sanaladi; oilaviy bo'lsa baribir 0).
+    group_id — shu fan uchun (fan bo'yicha chegirma, 2026-10-16)."""
     import common as C
-    base = float(C._student_discount_percent(db, s, skip_kinds=("multi",))
+    base = float(C._student_discount_percent(db, s, skip_kinds=("multi",),
+                                             group_id=group_id)
                  or 0)
     total = base + C._multi_subject_percent(db, s, plus=1)
     return min(roles.DISCOUNT_ABSOLUTE_CAP, round(total, 2))
@@ -457,7 +513,7 @@ def preview_activation(db, s, ln, on: date, today: date = None) -> dict:
     import common as C
     today = today or roles.local_today()
     g = db.query(models.Group).get(ln.group_id)
-    disc = percent_if_active(db, s)
+    disc = percent_if_active(db, s, group_id=ln.group_id)
     q = activation_quote(db, s, g, on, disc=disc)
     lo, hi = activation_bounds(ln, today)
     now_pct = float(C._student_discount_percent(db, s) or 0)
@@ -579,8 +635,9 @@ def daily(db, today: date) -> dict:
     for ln, s in rows:
         by_student.setdefault(s.id, (s, []))[1].append(ln)
     for sid, (s, lns) in by_student.items():
-        # Sinovdagi guruh pul yechmaydi va 10% ga kirmaydi
-        lns = [ln for ln in lns if not is_trial(ln)]
+        # Sinovdagi va shu guruhda muzlagan guruh pul yechmaydi va 10%
+        # ga kirmaydi
+        lns = [ln for ln in lns if not is_trial(ln) and not is_frozen(ln)]
         if len(lns) < 2 or not s.group_id:
             continue
         for ln in lns:
@@ -607,6 +664,16 @@ def daily(db, today: date) -> dict:
               .filter(models.StudentGroupLink.student_id == s.id,
                       models.StudentGroupLink.group_id == gid).first())
         until, why = None, None
+        if ln is not None and ln.active and is_frozen(ln):
+            # Faqat shu guruhda muzlagan (2026-10-16): muzlagan kundan
+            # oldingi darslar qoladi (idempotent — faqat kamaytiradi)
+            try:
+                import link_freeze as LF
+                if LF.cut_before(db, s, ln, p, today):
+                    out["cut"] += 1
+            except Exception:
+                pass
+            continue
         if ln is not None and not ln.active:
             until, why = (ln.left_date or today), "guruhdan chiqdi"
         elif s.status not in ("active", "trial"):

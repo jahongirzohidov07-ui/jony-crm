@@ -3480,8 +3480,20 @@ def _paid_link_filter():
     """Pul yechiladigan (sinovda EMAS) ochiq bog'lanish sharti.
     Bo'sh status eski yozuv — "active" deb o'qiladi (2026-10-14)."""
     L = models.StudentGroupLink
+    # Muzlagan guruh ham pul yechmaydi va 2-fan 10% ga kirmaydi
+    # (2026-10-16, link_freeze.py).
     return and_(L.active == 1,
-                or_(L.status.is_(None), L.status != "trial"))
+                or_(L.status.is_(None),
+                    L.status.notin_(("trial", "frozen"))))
+
+
+def _link_open():
+    """Bog'lanish ochiq VA shu guruhda muzlamagan (2026-10-16): guruh
+    bo'yicha muzlatilgan o'quvchi o'sha guruhning ro'yxati, davomati
+    va hisoblarida ko'rinmaydi — boshqa guruhida ishlayveradi."""
+    L = models.StudentGroupLink
+    return and_(L.active == 1,
+                or_(L.status.is_(None), L.status != "frozen"))
 
 
 def _multi_subject_percent(db: Session, s: models.Student,
@@ -3511,7 +3523,7 @@ def _multi_subject_percent(db: Session, s: models.Student,
 
 
 def _student_discount_percent(db: Session, s: models.Student,
-                              skip_kinds=()) -> float:
+                              skip_kinds=(), group_id=None) -> float:
     """O'quvchining jami chegirma foizi: oilaviy (avtomat) + tasdiqlangan
     chegirmalar. Chegara MAX_TOTAL_DISCOUNT_PERCENT.
 
@@ -3526,10 +3538,23 @@ def _student_discount_percent(db: Session, s: models.Student,
     rows = (db.query(models.Discount)
             .filter(models.Discount.student_id == s.id,
                     models.Discount.status == "active").all())
-    fee = s.group.monthly_fee if s.group else 0.0
+    # FAN BO'YICHA CHEGIRMA (2026-10-16, Jahongir: "xar bir fan alohida
+    # chegirma"). group_id — qaysi fan uchun hisoblanyapti (bo'sh =
+    # asosiy). Chegirmaning o'z group_id si bo'sh — barcha fanlarga
+    # (avvalgidek); to'ldirilgan — faqat o'sha fanga. Oilaviy va 2-fan
+    # 10% — avvalgidek hamma fanga.
+    target = group_id or s.group_id
+    if target and target != s.group_id:
+        _tg = db.query(models.Group).get(target)
+        fee = (_tg.monthly_fee if _tg else 0.0) or 0.0
+    else:
+        fee = s.group.monthly_fee if s.group else 0.0
     for d in rows:
         if d.kind == "family" or d.kind in skip_kinds \
                 or not _discount_alive(d):
+            continue
+        _dg = getattr(d, "group_id", None)
+        if _dg and _dg != target:
             continue
         if d.percent:
             total += d.percent
@@ -3574,8 +3599,13 @@ def _visible_discounts(db: Session, student_id: int) -> list:
 def _discount_out(db: Session, d: models.Discount) -> dict:
     ref = db.query(models.Student).get(d.referrer_student_id) if d.referrer_student_id else None
     emp = db.query(models.User).get(d.staff_user_id) if d.staff_user_id else None
+    # Qaysi fanga (2026-10-16): bo'sh — barcha fanlarga
+    _dg = getattr(d, "group_id", None)
+    _g = db.query(models.Group).get(_dg) if _dg else None
     return {
         "id": d.id,
+        "group_id": _dg,
+        "group_name": _g.name if _g else None,
         "hidden": bool(getattr(d, "hidden", 0)),
         "student_id": d.student_id,
         "kind": d.kind,
@@ -7344,7 +7374,7 @@ def in_group(group_id):
         models.Student.id.in_(
             select(models.StudentGroupLink.student_id).where(
                 models.StudentGroupLink.group_id == group_id,
-                models.StudentGroupLink.active == 1)),
+                _link_open())),
     )
 
 
@@ -7363,7 +7393,7 @@ def in_any_group(group_ids):
         models.Student.id.in_(
             select(models.StudentGroupLink.student_id).where(
                 models.StudentGroupLink.group_id.in_(gids),
-                models.StudentGroupLink.active == 1)),
+                _link_open())),
     )
 
 
@@ -7396,9 +7426,16 @@ def sync_primary_group(db: Session, s) -> bool:
     # dvigateli bo'yicha to'liq hisoblanadi, sinovdagi esa pul
     # yechmasligi kerak. Asosiy belgisi bo'lmasa — avval pul
     # yechiladigan (faol) bog'lanish tanlanadi.
+    # MUZLAGAN GURUH ASOSIY BO'LMAYDI (2026-10-16, link_freeze.py):
+    # ochiq guruh bo'lsa — o'sha oldinga.
+    openl = [l for l in links
+             if (getattr(l, "status", None) or "active") != "frozen"]
+    if openl and len(openl) < len(links):
+        links = openl + [l for l in links if l not in openl]
     if not links[0].is_primary:
         paid = [l for l in links
-                if (getattr(l, "status", None) or "active") != "trial"]
+                if (getattr(l, "status", None) or "active")
+                not in ("trial", "frozen")]
         if paid:
             links = paid + [l for l in links if l not in paid]
     want = links[0].group_id

@@ -716,6 +716,46 @@ class OtherIncome(Base):
     branch = relationship("Branch")
 
 
+class BankCashTransfer(Base):
+    """TERMINAL ↔ NAQD O'TKAZMASI (2026-10-16, Jahongir: terminaldagi
+    pulni bankdan naqd yechish 1% komissiya bilan, naqd kassaga sof summa
+    o'zi tushsin; naqdni terminalga topshirish — to'liq avtomat).
+
+    Bu daromad ham, xarajat ham EMAS — pul bir usuldan ikkinchisiga
+    o'tadi, filial kassasining jami o'zgarmaydi:
+      withdraw — terminal −net, naqd +net (net = amount − fee);
+      deposit  — naqd −amount, terminal +amount (komissiyasiz).
+    Komissiya (fee) — haqiqiy xarajat: alohida BITTA Expense qatori
+    (category="bank_fee", method="terminal"), fee_expense_id orqali
+    bog'langan. Shunda terminal jami −amount bo'ladi, P&L esa faqat
+    komissiyani bir marta ko'radi. Foiz (fee_rate) yozuvning o'zida
+    saqlanadi — sozlamadagi foiz keyin o'zgarsa, eski o'tkazmalar
+    o'zgarmaydi."""
+    __tablename__ = "bank_cash_transfers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    kind = Column(String, nullable=False, default="withdraw")
+    date = Column(Date, nullable=False, default=date.today, index=True)
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=True,
+                       index=True)
+    amount = Column(Float, nullable=False)          # yalpi (withdraw) / summa
+    fee_rate = Column(Float, nullable=False, default=0.0)   # foiz, 1.0 = 1%
+    fee = Column(Float, nullable=False, default=0.0)
+    net = Column(Float, nullable=False)             # usullar orasida o'tgan pul
+    from_method = Column(String, nullable=False)
+    to_method = Column(String, nullable=False)
+    note = Column(String, nullable=True)
+    fee_expense_id = Column(Integer, ForeignKey("expenses.id"),
+                            nullable=True, index=True)
+    forced = Column(Integer, nullable=True)         # qoldiqdan oshiq — tasdiq bilan
+    created_by = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_by = Column(String, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
+
+    branch = relationship("Branch")
+
+
 class TeacherPayout(Base):
     """Bir ustozning bir guruhdagi bir oy ("period" = YYYY-MM) uchun
     hisoblangan ish haqi - billing.py'dagi payroll formulasi natijasi.
@@ -1484,6 +1524,11 @@ class Discount(Base):
 
     # Referral: qaysi do'sti olib keldi
     referrer_student_id = Column(Integer, ForeignKey("students.id"), nullable=True)
+    # QAYSI FANGA (2026-10-16, Jahongir: "xar bir fan alohida
+    # chegirma"). Bo'sh — barcha fanlarga (avvalgidek); to'ldirilgan —
+    # faqat shu guruh (fan) oyligiga.
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True,
+                      index=True)
     # Xodim farzandi: qaysi xodim. Xodim ketsa chegirma avtomat bekor.
     staff_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
 
@@ -2964,6 +3009,12 @@ class StudentGroupLink(Base):
     # o'tgan sana (pul shu kundan darslar soniga qarab).
     status = Column(String, default="active", nullable=True)
     activated_on = Column(Date, nullable=True)
+    # GURUH BO'YICHA MUZLATISH (2026-10-16): status="frozen" bo'lsa —
+    # o'quvchi faqat SHU guruhda muzlagan, qolganlari ishlaydi
+    # (link_freeze.py).
+    frozen_from = Column(Date, nullable=True)
+    frozen_until = Column(Date, nullable=True)
+    frozen_note = Column(String, nullable=True)
     # Shu guruh uchun alohida narx (bo'sh = guruh narxi)
     lesson_price = Column(Float, nullable=True)
     note = Column(String, nullable=True)

@@ -2387,6 +2387,9 @@ def run_auto_freeze(db: Session, today=None, window_days: int = 14) -> list:
             if _lk is not None and (_lk.status or "active") == "trial" \
                     and st.group_id != gid:
                 continue
+            # Shu guruhda allaqachon muzlagan (2026-10-16)
+            if _lk is not None and (_lk.status or "active") == "frozen":
+                continue
             # Bugun (yoki keyin) kelgan bo'lsa — zanjir uzilgan
             came = (db.query(A.id).join(L, L.id == A.lesson_id)
                     .filter(A.student_id == sid, L.group_id == gid,
@@ -2407,6 +2410,17 @@ def run_auto_freeze(db: Session, today=None, window_days: int = 14) -> list:
             lesson_ids = [a.lesson_id for a in lastn]
             dates = sorted(str(a.lesson.date) for a in lastn if a.lesson)
             last_date = lastn[0].lesson.date
+            # GURUH BO'YICHA (2026-10-16, Jahongir: "ikkalasi alohida
+            # alohida muzlatish kerak"): boshqa faol guruhi bo'lsa —
+            # faqat SHU guruh muzlatiladi, ikkinchisida o'qishda davom
+            # etadi.
+            _only_link = False
+            try:
+                import link_freeze as _LF
+                _only_link = (_lk is not None and _lk.active
+                              and bool(_LF.paid_others(db, st, gid)))
+            except Exception:
+                _only_link = False
             archive_attendance(db, lastn, "auto_freeze")
             db.flush()
             for lid_ in lesson_ids:
@@ -2414,6 +2428,22 @@ def run_auto_freeze(db: Session, today=None, window_days: int = 14) -> list:
                 if ls_ and not db.query(models.Attendance).filter(
                         models.Attendance.lesson_id == lid_).count():
                     ls_.held = 0
+            if _only_link:
+                first = min(a.lesson.date for a in lastn if a.lesson)
+                frm = min(max(first, today.replace(day=1)), today)
+                if _lk.joined_date and frm < _lk.joined_date:
+                    frm = _lk.joined_date
+                _note = (f"{n} darsga ketma-ket kelmadi — shu guruh "
+                         "avtomuzlatildi")
+                _LF.freeze_link(db, st, _lk, frm, None, _note, None,
+                                auto=True)
+                try:
+                    auto_freeze_notify(db, st, group)
+                except Exception:
+                    pass
+                db.commit()
+                frozen.append(sid)
+                continue
             st.status = "frozen"
             st.frozen_until = None
             st.frozen_note = (f"{n} darsga ketma-ket kelmadi — "

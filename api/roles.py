@@ -160,6 +160,28 @@ CASHFLOW_LIMITED_ROLES = [ADMINISTRATOR, SALES_MANAGER]
 EXPENSE_ACCESS = FINANCE_ACCESS + [ADMINISTRATOR, SALES_MANAGER]
 EXPENSE_DELETE = FINANCE_ACCESS
 
+# TERMINAL ↔ NAQD O'TKAZMASI (2026-10-16, Jahongir: terminaldagi pulni
+# bankdan naqd yechish — bank 1% oladi, naqdga sof summa tushadi; naqdni
+# terminalga topshirish — komissiyasiz). Pul oqimi bilan bir xil:
+# administrator o'z filialida kiritadi va ko'radi. Tahrirlash, o'chirish
+# va qoldiqdan oshiq summani "baribir saqlash" — faqat rahbariyat/moliya
+# (xarajat o'chirishdagi kabi). Komissiya foizi butun markaz uchun bitta —
+# uni faqat asoschi va moliya xodimlari o'zgartiradi.
+# Faqat shu ikki tur bor: egasiga foyda yechish turi ataylab YO'Q
+# (Jahongir, 2026-10-16: o'quv markazda bunday yechim bo'lmaydi).
+BANK_TRANSFER_ACCESS = list(CASHFLOW_ACCESS)
+BANK_TRANSFER_MANAGE = list(FINANCE_ACCESS)
+BANK_FEE_RATE_EDIT = [FOUNDER, FINANCE_DIRECTOR, ACCOUNTANT]
+BANK_TRANSFER_KINDS = [
+    ("withdraw", "Terminaldan naqdga"),
+    ("deposit", "Naqd → terminalga"),
+]
+BANK_TRANSFER_KIND_LABELS = dict(BANK_TRANSFER_KINDS)
+# Standart komissiya foizi; haqiqiy qiymat Sozlamada
+# (integration_settings: bank_withdraw_fee_percent).
+BANK_WITHDRAW_FEE_DEFAULT = 1.0
+BANK_WITHDRAW_FEE_MAX = 10.0
+
 # QO'SHIMCHA DAROMAD (2026-10-06): administrator kiritadi va tuzatadi,
 # arxivlash (o'chirish o'rniga) — faqat moliya, xarajatdagi kabi.
 OTHER_INCOME_ACCESS = FINANCE_ACCESS + [ADMINISTRATOR, SALES_MANAGER]
@@ -283,10 +305,20 @@ EXPENSE_CATEGORY_DEFS = [
     ("ads", "Reklama", "marketing"),
     ("tax", "Soliq", "tax"),
     ("repair", "Ta'mir", "other"),
+    # 2026-10-16, Jahongir: terminaldagi pulni naqdga yechganda bank 1%
+    # oladi — bu haqiqiy xarajat. Qo'lda KIRITILMAYDI: "Terminaldan naqd
+    # yechish" o'tkazmasi o'zi bitta xarajat qatorini yozadi (pastdagi
+    # EXPENSE_AUTO_CATEGORIES), P&L da bir marta ko'rinadi.
+    ("bank_fee", "Bank komissiyasi (1%)", "other"),
     ("other", "Boshqa", "other"),
 ]
 
 EXPENSE_CATEGORIES = [c for c, _, _ in EXPENSE_CATEGORY_DEFS]
+# Faqat avtomat yoziladigan xarajat turlari (2026-10-16): Xarajatlar
+# formasidan kiritib/tahrirlab/o'chirib bo'lmaydi — manbasi orqali
+# (bank_fee — Terminal ↔ naqd o'tkazmasi) o'zgaradi, aks holda komissiya
+# ikki marta yoki o'tkazmasiz qolib ketardi.
+EXPENSE_AUTO_CATEGORIES = ["bank_fee"]
 
 # SONI so'raladigan xarajatlar. "3 ta vlajniy 45 000 so'm" deb yozilsa,
 # keyin "oyiga nechta marker ketyapti" degan savolga javob bor

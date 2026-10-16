@@ -1361,6 +1361,8 @@ class DiscountCreate(BaseModel):
     staff_user_id: Optional[int] = None
     # Individual (yashirin) - o'quvchi/ota-onaga ko'rinmaydi
     hidden: Optional[bool] = False
+    # QAYSI FANGA (2026-10-16). Bo'sh — barcha fanlarga.
+    group_id: Optional[int] = None
 
 
 class DiscountDecision(BaseModel):

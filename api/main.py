@@ -160,6 +160,9 @@ import ig_connect as _r_ig_connect
 import video_check as _r_video_check
 import ig_audience as _r_ig_audience
 import academy_bot as _r_academy_bot
+import link_freeze as _r_link_freeze
+# 2026-10-16: Terminal ↔ naqd o'tkazmasi (bank komissiyasi 1%)
+import bank_transfer as _r_bank_transfer
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -223,6 +226,8 @@ app.include_router(_r_ig_connect.router)
 app.include_router(_r_video_check.router)
 app.include_router(_r_ig_audience.router)
 app.include_router(_r_academy_bot.router)
+app.include_router(_r_link_freeze.router)
+app.include_router(_r_bank_transfer.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:

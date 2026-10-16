@@ -1652,10 +1652,45 @@ def cash_day(
         })
     other_total = round(sum(r["amount"] for r in other_rows), 2)
 
+    # Terminal ↔ naqd o'tkazmalari (2026-10-16) — tushum EMAS (tushum
+    # raqamlari o'zgarmaydi), kunning kassa harakati sifatida alohida:
+    # usullar bo'yicha to'liq ta'sir, komissiya bilan (withdraw:
+    # terminal −yalpi, naqd +sof; deposit: naqd −, terminal +).
+    tr_rows = []
+    tr_effect = {m: 0.0 for m in roles.PAYMENT_METHODS}
+    tr_fee = 0.0
+    for t in sorted(_bank_moves(db, user, branch_id, d, d),
+                    key=lambda x: -(x.id or 0)):
+        eff = _bt_effect(t)
+        for k, v in eff.items():
+            tr_effect[k] += v
+        tr_fee += float(t.fee or 0)
+        tr_rows.append({
+            "id": t.id,
+            "kind": t.kind,
+            "kind_label": roles.BANK_TRANSFER_KIND_LABELS.get(t.kind, t.kind),
+            "title": _bt_title(t),
+            "amount": t.amount,
+            "fee_rate": t.fee_rate,
+            "fee": t.fee,
+            "net": t.net,
+            "from_method": t.from_method,
+            "to_method": t.to_method,
+            "note": t.note,
+            "created_by": t.created_by,
+            "branch": branches.get(t.branch_id) or "—",
+        })
+
     return {
         "date": d.isoformat(),
         "other_rows": other_rows,
         "other_total": other_total,
+        "transfer_rows": tr_rows,
+        "transfer_fee_total": round(tr_fee, 2),
+        "transfer_effect": [{
+            "method": m, "label": roles.PAYMENT_METHOD_LABELS.get(m, m),
+            "amount": round(v, 2),
+        } for m, v in tr_effect.items() if abs(v) >= 0.005],
         "grand_total": round(total + other_total, 2),
         "total": round(total, 2),
         "count": len(rows),
@@ -1691,6 +1726,76 @@ def _other_incomes(db: Session, user, branch_id, lo: date, hi: date):
 def _oi_method(o) -> str:
     m = getattr(o, "method", None) or "cash"
     return m if m in roles.PAYMENT_METHODS else "cash"
+
+
+# ---------------------------------------------------------------
+#  TERMINAL ↔ NAQD O'TKAZMALARI (2026-10-16)
+#  Jahongir: terminaldagi pulni bankdan naqd yechish (bank 1% oladi,
+#  naqdga sof summa tushadi) va naqdni terminalga topshirish. Bu
+#  harakat kirim ham, chiqim ham emas — usullar orasida, filial jami
+#  o'zgarmaydi. Usullar bo'yicha qoldiq ko'rsatadigan HAMMA joy (oy
+#  boshidagi qoldiq, kassa daftari, kun kassasi) shu yordamchilardan
+#  o'qiydi. Komissiya — alohida Expense (bank_fee) qatori: P&L, xarajat
+#  hisobotlari va oy yopilishi uni o'zi ko'radi, faqat bir marta.
+# ---------------------------------------------------------------
+def _fmt_som(v) -> str:
+    return f"{float(v or 0):,.0f}".replace(",", " ")
+
+
+def _bank_moves(db: Session, user, branch_id, lo: date, hi: date):
+    """[lo, hi] (ikkalasi ham kiradi) oralig'idagi o'tkazmalar. Filial
+    chegarasi xarajat va qo'shimcha daromad bilan bir xil — o'tkazma
+    va uning komissiya xarajati birga ko'rinadi.
+
+    Istisno (2026-10-16 ko'rik): butun tashkilotni ko'radigan rol
+    filialni ANIQ tanlasa — to'lovlardagi kabi scope_to_branch(...,
+    branch_id). Avval "barcha filiallar" yig'indisidan chiqarilgan
+    hamkor (Stech) yoki test filiali tanlanganda ham o'tkazma
+    yashirinardi: asoschi u yerda kiritgan o'tkazma qoldiqni
+    o'zgartirar, lekin ro'yxatda ko'rinmas — tahrirlab ham, o'chirib
+    ham bo'lmasdi. Hamkor markaz yopiq rollarga (moliya direktori,
+    buxgalter) baribir yopiq qoladi (blocked_branch_ids)."""
+    BT = getattr(models, "BankCashTransfer", None)
+    if BT is None:
+        return []
+    org_wide = user.role in tuple(roles.ORG_WIDE_ROLES)
+    q = scope_to_branch(db.query(BT), BT, user,
+                        branch_id if org_wide else None)
+    return q.filter(BT.date >= lo, BT.date <= hi).all()
+
+
+def _bt_moves(t) -> dict:
+    """O'tkazmaning o'zi (komissiyasiz): from −net, to +net. Yig'indisi
+    doim 0. Komissiya bank_fee xarajati bo'lib terminaldan alohida
+    ayiriladi, shuning uchun terminal jami −amount bo'ladi."""
+    out = {m: 0.0 for m in roles.PAYMENT_METHODS}
+    net = float(t.net or 0)
+    fm = t.from_method if t.from_method in out else "cash"
+    tm = t.to_method if t.to_method in out else "cash"
+    out[fm] -= net
+    out[tm] += net
+    return out
+
+
+def _bt_effect(t) -> dict:
+    """To'liq ta'sir (komissiya bilan) — kun kassasida ko'rsatish uchun:
+    withdraw: terminal −amount, naqd +net; deposit: naqd −amount,
+    terminal +amount."""
+    out = _bt_moves(t)
+    fm = t.from_method if t.from_method in out else "cash"
+    out[fm] -= float(t.fee or 0)
+    return out
+
+
+def _bt_title(t) -> str:
+    """Ro'yxatlardagi aniq yozuv (2026-10-16):
+    "Terminaldan naqdga: 1 000 000 (komissiya 1% — 10 000) → naqd +990 000"
+    "Naqd → terminalga: 500 000"."""
+    if t.kind == "withdraw":
+        return (f"Terminaldan naqdga: {_fmt_som(t.amount)} "
+                f"(komissiya {float(t.fee_rate or 0):g}% — "
+                f"{_fmt_som(t.fee)}) → naqd +{_fmt_som(t.net)}")
+    return f"Naqd → terminalga: {_fmt_som(t.amount)}"
 
 
 # Kassa qoldig'i shu kundan boshlab yuritiladi (2026-10-02, Jahongir:
@@ -1761,6 +1866,13 @@ def _cf_opening(db: Session, user, branch_id, start: date) -> dict:
                             start - timedelta(days=1)):
         bal[_oi_method(o)] += float(o.amount or 0)
 
+    # Terminal ↔ naqd o'tkazmalari (2026-10-16) — usuldan usulga, jami 0.
+    # Komissiyasi yuqoridagi xarajatlar ichida (bank_fee) ayirilgan.
+    for t in _bank_moves(db, user, branch_id, CF_OPENING_FROM,
+                         start - timedelta(days=1)):
+        for k, v in _bt_moves(t).items():
+            bal[k] += v
+
     _tp_branch = func.coalesce(models.TeacherPayment.branch_id,
                                models.Teacher.branch_id)
     tq = (db.query(models.TeacherPayment.method,
@@ -1776,6 +1888,78 @@ def _cf_opening(db: Session, user, branch_id, start: date) -> dict:
                                    start):
         bal[_bk(p.method)] -= float(p.amount or 0)
     return {k: round(v, 2) for k, v in bal.items()}
+
+
+def _cf_day_moves(db: Session, user, branch_id, lo: date, hi: date) -> dict:
+    """KUNLAR KESIMIDAGI KASSA HARAKATI (2026-10-16): [lo, hi] (ikkalasi
+    ham kiradi) oralig'ida har kun usullar bo'yicha sof o'zgarish —
+    {kun: {usul: summa}}; harakatsiz kun qaytmaydi.
+
+    Nega kerak (ko'rik): Terminal ↔ naqd o'tkazmasida faqat tanlangan
+    kun oxiridagi qoldiq tekshirilardi — administrator o'tgan sanani
+    tanlab ogohlantirishni aylanib o'tar, keyingi kunlar va oylar
+    qoldig'i esa minusga tushardi. Endi bank_transfer._low_point shu
+    harakatlar bo'yicha `on` kunidan bugungacha eng kam qoldiqni topadi.
+
+    Manbalar va filial chegarasi _cf_opening bilan AYNAN bir xil (faqat
+    yig'indi o'rniga kunlar bo'yicha). _cf_opening ga yangi manba
+    qo'shilsa — shu yerga ham qo'shing: test_bank_cash_transfer ikkalasini
+    har kun bo'yicha solishtiradi."""
+    out: dict = {}
+
+    def add(d, method, amt):
+        row = out.setdefault(d, {m: 0.0 for m in roles.PAYMENT_METHODS})
+        row[method if method in row else "cash"] += float(amt or 0)
+
+    lo = max(lo, CF_OPENING_FROM)
+    if hi < lo:
+        return out
+
+    # To'lovlar — created_at UTC, kun esa Toshkent vaqti bo'yicha
+    off = timedelta(hours=roles.TIMEZONE_OFFSET_HOURS)
+    w0, w1 = _utc_window(lo, hi)
+    pq = (db.query(models.Payment.method, models.Payment.amount,
+                   models.Payment.created_at)
+          .join(models.Student, models.Payment.student_id == models.Student.id)
+          .filter(models.Payment.kind == "payment",
+                  models.Payment.created_at >= w0,
+                  models.Payment.created_at <= w1))
+    pq = scope_to_branch(pq, models.Student, user, branch_id)
+    for method, amt, at in pq.all():
+        add((at + off).date(), method, amt)
+
+    eq = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+        models.Expense.date >= lo, models.Expense.date <= hi)
+    if branch_id and user.role in tuple(roles.ORG_WIDE_ROLES):
+        eq = eq.filter(models.Expense.branch_id == branch_id)
+    for method, amt, d in eq.with_entities(models.Expense.method,
+                                           models.Expense.amount,
+                                           models.Expense.date).all():
+        add(d, method, -(amt or 0))
+
+    for o in _other_incomes(db, user, branch_id, lo, hi):
+        add(o.date, _oi_method(o), o.amount)
+
+    for t in _bank_moves(db, user, branch_id, lo, hi):
+        for k, v in _bt_moves(t).items():
+            add(t.date, k, v)
+
+    _tp_branch = func.coalesce(models.TeacherPayment.branch_id,
+                               models.Teacher.branch_id)
+    tq = (db.query(models.TeacherPayment.method,
+                   models.TeacherPayment.amount,
+                   models.TeacherPayment.paid_on)
+          .join(models.Teacher,
+                models.TeacherPayment.teacher_id == models.Teacher.id)
+          .filter(models.TeacherPayment.paid_on >= lo,
+                  models.TeacherPayment.paid_on <= hi,
+                  _tp_branch.in_(_branch_scope_ids(db, user, branch_id))))
+    for method, amt, d in tq.all():
+        add(d, method, -(amt or 0))
+    for p, _u, _b in _ssp_in_scope(db, user, branch_id, lo,
+                                   hi + timedelta(days=1)):
+        add(p.paid_on, p.method, -(p.amount or 0))
+    return out
 
 
 @router.get("/api/reports/cashflow-ledger")
@@ -1953,6 +2137,32 @@ def cashflow_ledger(
             "note": getattr(sp, "note", None),
         })
 
+    # --- Terminal ↔ naqd o'tkazmalari (2026-10-16) ---
+    # Kirim ham, chiqim ham emas: pul usuldan usulga o'tadi (jami 0),
+    # shuning uchun kirim/chiqim jamlariga qo'shilmaydi — alohida
+    # "O'tkazma" bloki. Komissiya bank_fee xarajati bo'lib chiqimda.
+    otkazma = {m: 0.0 for m in roles.PAYMENT_METHODS}
+    for t in _bank_moves(db, user, branch_id, start, end):
+        mv = _bt_moves(t)
+        for k, v in mv.items():
+            otkazma[k] += v
+        rows.append({
+            "id": f"bt{t.id}",
+            "date": t.date.isoformat(),
+            "amount": t.amount,
+            "title": _bt_title(t),
+            "student_id": None,
+            "method": t.from_method,
+            "direction": "transfer",
+            "branch": branches.get(t.branch_id) or "—",
+            "category": "bank_" + (t.kind or "withdraw"),
+            "note": t.note,
+            "moves": {k: round(v, 2) for k, v in mv.items()
+                      if abs(v) >= 0.005},
+            "fee": t.fee, "fee_rate": t.fee_rate, "net": t.net,
+            "kind": t.kind, "transfer_id": t.id,
+        })
+
     def block(d):
         return {**{k: round(v, 2) for k, v in d.items()},
                 "total": round(sum(d.values()), 2)}
@@ -1965,11 +2175,19 @@ def cashflow_ledger(
         per_month[key] = {"period": key, "title": _month_title(key),
                           "kirim": 0.0, "chiqim": 0.0, "count": 0,
                           "_in": {k: 0.0 for k in roles.PAYMENT_METHODS},
-                          "_out": {k: 0.0 for k in roles.PAYMENT_METHODS}}
+                          "_out": {k: 0.0 for k in roles.PAYMENT_METHODS},
+                          # Terminal ↔ naqd o'tkazmasi (2026-10-16)
+                          "_tr": {k: 0.0 for k in roles.PAYMENT_METHODS}}
         y, m = (y + 1, 1) if m == 12 else (y, m + 1)
     for r in rows:
         pm = per_month.get(r["date"][:7])
         if pm is None:
+            continue
+        if r["direction"] == "transfer":
+            # Kirim/chiqimga qo'shilmaydi — faqat usullar qoldig'iga
+            for k, v in (r.get("moves") or {}).items():
+                pm["_tr"][k] += v
+            pm["count"] += 1
             continue
         side = "in" if r["direction"] == "in" else "out"
         pm["kirim" if side == "in" else "chiqim"] += r["amount"]
@@ -1989,10 +2207,10 @@ def cashflow_ledger(
             run = {k: 0.0 for k in roles.PAYMENT_METHODS}
         o_ = dict(run)
         for k in roles.PAYMENT_METHODS:
-            run[k] = run[k] + v["_in"][k] - v["_out"][k]
+            run[k] = run[k] + v["_in"][k] - v["_out"][k] + v["_tr"][k]
         if v["period"] < from_key:
             run = {k: 0.0 for k in roles.PAYMENT_METHODS}
-            closing = {k: v["_in"][k] - v["_out"][k]
+            closing = {k: v["_in"][k] - v["_out"][k] + v["_tr"][k]
                        for k in roles.PAYMENT_METHODS}
         else:
             closing = dict(run)
@@ -2024,7 +2242,8 @@ def cashflow_ledger(
     # Kassa — oyna oxirida qolgan pul. Oyna butunlay CF_OPENING_FROM dan
     # oldin bo'lsa qoldiq yuritilmagan — avvalgidek kirim − chiqim.
     if end < CF_OPENING_FROM:
-        kassa = {k: kirim[k] - chiqim[k] for k in roles.PAYMENT_METHODS}
+        kassa = {k: kirim[k] - chiqim[k] + otkazma[k]
+                 for k in roles.PAYMENT_METHODS}
     else:
         kassa = closing
 
@@ -2036,6 +2255,9 @@ def cashflow_ledger(
         "opening": block(opening),
         "kirim": block(kirim),
         "chiqim": block(chiqim),
+        # Terminal ↔ naqd o'tkazmasi (2026-10-16): usullar bo'yicha sof
+        # harakat, jami 0. Kassa = qoldiq + kirim − chiqim ± o'tkazma.
+        "otkazma": block(otkazma),
         "kassa": block(kassa),
         "new_payments": {"count": new_cnt, "amount": new_sum},
         "old_payments": {"count": old_cnt, "amount": old_sum},

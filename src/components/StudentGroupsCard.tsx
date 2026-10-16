@@ -41,8 +41,18 @@ type Row = {
   months?: number | null;
   /** Bog'lanishning o'z holati (2026-10-14): "trial" — shu guruh
    *  sinovda, pul yechilmaydi; "active" — faol. */
-  link_status?: "trial" | "active" | string | null;
+  link_status?: "trial" | "active" | "frozen" | string | null;
   activated_on?: string | null;
+  /** Faqat shu guruhda muzlatilgan (2026-10-16). */
+  frozen_from?: string | null;
+  frozen_until?: string | null;
+  frozen_note?: string | null;
+};
+
+const todayIso = () => {
+  const d = new Date();
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 };
 
 /** "Faollashtirish" oynasi uchun server hisobi (hech narsa yozmaydi). */
@@ -122,8 +132,54 @@ export function StudentGroupsCard({
   const taken = new Set(active.map((r) => r.group_id));
   // Pul yechiladigan (sinovda bo'lmagan) guruhlar — 10% faqat shular
   // 2 tadan ko'p bo'lsa (2026-10-14).
-  const paid = active.filter((r) => r.link_status !== "trial");
+  const paid = active.filter(
+    (r) => r.link_status !== "trial" && r.link_status !== "frozen"
+  );
   const trials = active.filter((r) => r.link_status === "trial");
+
+  // ---- GURUH BO'YICHA MUZLATISH (2026-10-16, Jahongir: "ikkalasi
+  // alohida alohida muzlatish kerak") ----
+  const [fzRow, setFzRow] = useState<Row | null>(null);
+  const [fzMode, setFzMode] = useState<"freeze" | "unfreeze">("freeze");
+  const [fzFrom, setFzFrom] = useState(todayIso());
+  const [fzUntil, setFzUntil] = useState("");
+  const [fzNote, setFzNote] = useState("");
+  const [fzBusy, setFzBusy] = useState(false);
+
+  function openFz(r: Row, mode: "freeze" | "unfreeze") {
+    setErr("");
+    setFzRow(r);
+    setFzMode(mode);
+    setFzFrom(todayIso());
+    setFzUntil("");
+    setFzNote("");
+  }
+
+  async function submitFz() {
+    if (!fzRow) return;
+    setFzBusy(true);
+    setErr("");
+    try {
+      if (fzMode === "freeze") {
+        await api.post(
+          `/students/${studentId}/groups/${fzRow.group_id}/freeze`,
+          { from_date: fzFrom, until: fzUntil || null, note: fzNote || null }
+        );
+      } else {
+        await api.post(
+          `/students/${studentId}/groups/${fzRow.group_id}/unfreeze`,
+          { on: fzFrom }
+        );
+      }
+      setFzRow(null);
+      load();
+      onChanged?.();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Bajarib bo'lmadi");
+    } finally {
+      setFzBusy(false);
+    }
+  }
 
   // ---- "Faollashtirish": sana tanlanadi, server hisobni ko'rsatadi ----
   const [actRow, setActRow] = useState<Row | null>(null);
@@ -319,6 +375,14 @@ export function StudentGroupsCard({
                   Sinov
                 </span>
               )}
+              {r.link_status === "frozen" && (
+                <span
+                  title="Faqat shu guruhda muzlatilgan — boshqa guruhida o'qiydi"
+                  className="shrink-0 rounded-full bg-sky-100 text-sky-800 px-2 py-0.5 text-[11px] font-semibold"
+                >
+                  Muzlatilgan
+                </span>
+              )}
               {canEdit && active.length > 1 && (
                 <button
                   onClick={() => drop(r)}
@@ -487,6 +551,96 @@ export function StudentGroupsCard({
                     className="flex-1 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium disabled:opacity-50"
                   >
                     {actBusy ? "..." : "Faollashtirish"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* GURUH BO'YICHA MUZLATISH (2026-10-16): faqat shu guruh
+                to'xtaydi, ikkinchi guruh ishlayveradi. Yagona faol guruh
+                bo'lsa — butun o'quvchi (⋮ menyu → Muzlatish). */}
+            {r.link_status === "frozen" && r.frozen_from && (
+              <p className="mx-4 mb-2 text-[12px] text-sky-800 bg-sky-50 border border-sky-200 rounded-lg px-2.5 py-1.5">
+                {formatDate(r.frozen_from)} dan faqat shu guruhda muzlatilgan
+                {r.frozen_until ? ` · qaytish: ${formatDate(r.frozen_until)}` : ""}
+                {r.frozen_note ? ` · ${r.frozen_note}` : ""}
+              </p>
+            )}
+            {canEdit && fzRow?.id !== r.id && (
+              (r.link_status === "frozen" ||
+                (r.link_status !== "trial" && paid.length > 1)) && (
+                <div className="px-4 pb-3">
+                  <button
+                    onClick={() =>
+                      openFz(r, r.link_status === "frozen" ? "unfreeze" : "freeze")
+                    }
+                    className={`w-full py-2 rounded-lg text-sm font-medium border ${
+                      r.link_status === "frozen"
+                        ? "bg-sky-600 hover:bg-sky-700 text-white border-sky-600"
+                        : "bg-white hover:bg-sky-50 text-sky-700 border-sky-200"
+                    }`}
+                  >
+                    {r.link_status === "frozen"
+                      ? "Shu guruhda faollashtirish"
+                      : "Faqat shu guruhni muzlatish"}
+                  </button>
+                </div>
+              )
+            )}
+            {fzRow?.id === r.id && (
+              <div className="mx-4 mb-3 rounded-xl border border-sky-200 bg-sky-50 p-3 text-sm space-y-2">
+                <label className="block text-[12px] text-slate-600">
+                  {fzMode === "freeze"
+                    ? "Qaysi kundan muzlatiladi (shu kundan pul yechilmaydi)"
+                    : "Qaysi kundan qaytadi (shu kundan oy oxirigacha pul yechiladi)"}
+                </label>
+                <input
+                  type="date"
+                  value={fzFrom}
+                  max={todayIso()}
+                  onChange={(e) => setFzFrom(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm"
+                />
+                {fzMode === "freeze" && (
+                  <>
+                    <label className="block text-[12px] text-slate-600">
+                      Qaytish sanasi (ixtiyoriy)
+                    </label>
+                    <input
+                      type="date"
+                      value={fzUntil}
+                      onChange={(e) => setFzUntil(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm"
+                    />
+                    <input
+                      value={fzNote}
+                      onChange={(e) => setFzNote(e.target.value)}
+                      placeholder="Sabab (ixtiyoriy)"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm"
+                    />
+                    <p className="text-[12px] text-slate-600">
+                      Boshqa guruhida o'qishda davom etadi. Shu oy hisobi
+                      muzlatilgan kungacha bo'lgan darslarga tushiriladi.
+                    </p>
+                  </>
+                )}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setFzRow(null)}
+                    className="flex-1 py-2 rounded-lg border border-slate-200 bg-white text-slate-600 text-sm"
+                  >
+                    Bekor
+                  </button>
+                  <button
+                    onClick={submitFz}
+                    disabled={fzBusy || !fzFrom}
+                    className="flex-1 py-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium disabled:opacity-50"
+                  >
+                    {fzBusy
+                      ? "..."
+                      : fzMode === "freeze"
+                      ? "Muzlatish"
+                      : "Faollashtirish"}
                   </button>
                 </div>
               </div>

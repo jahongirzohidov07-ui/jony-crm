@@ -49,6 +49,22 @@ def _get_expense_in_scope(db: Session, expense_id: int, user: models.User) -> mo
         raise HTTPException(403, "Bu xarajat boshqa filialga tegishli")
     return exp
 
+
+# 2026-10-16: bank komissiyasi xarajati "Terminaldan naqd yechish"
+# o'tkazmasiga bog'langan — uni faqat o'tkazma orqali o'zgartirish yoki
+# o'chirish mumkin, aks holda o'tkazma va komissiya bir-biridan ajralib
+# (naqd/terminal qoldig'i yoki P&L) noto'g'ri chiqardi.
+_BANK_FEE_LOCKED = ("Bu bank komissiyasi «Terminaldan naqd yechish» "
+                    "o'tkazmasiga bog'langan — uni Pul oqimidagi "
+                    "o'tkazmalar ro'yxatidan tahrirlang yoki o'chiring")
+
+
+def _expense_transfer(db: Session, exp) -> "models.BankCashTransfer | None":
+    BT = getattr(models, "BankCashTransfer", None)
+    if BT is None or exp is None or not exp.id:
+        return None
+    return db.query(BT).filter(BT.fee_expense_id == exp.id).first()
+
 @router.get("/api/expenses", response_model=List[schemas.ExpenseOut])
 def list_expenses(
     year: Optional[int] = None,
@@ -429,6 +445,11 @@ def create_expense(
 ):
     if payload.category not in roles.EXPENSE_CATEGORIES:
         raise HTTPException(400, "Noto'g'ri xarajat turi")
+    # Bank komissiyasi qo'lda kiritilmaydi (2026-10-16) — o'tkazma o'zi yozadi
+    if payload.category in tuple(roles.EXPENSE_AUTO_CATEGORIES):
+        raise HTTPException(400, "Bank komissiyasi avtomat yoziladi — "
+                                 "Pul oqimida «Terminaldan naqd yechish» "
+                                 "orqali kiriting")
     if payload.amount <= 0:
         raise HTTPException(400, "Summa noldan katta bo'lishi kerak")
 
@@ -534,7 +555,14 @@ def update_expense(
     user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
 ):
     exp = _get_expense_in_scope(db, expense_id, user)
+    if _expense_transfer(db, exp) is not None:
+        raise HTTPException(400, _BANK_FEE_LOCKED)
     data = payload.model_dump(exclude_unset=True)
+    if data.get("category") in tuple(roles.EXPENSE_AUTO_CATEGORIES) \
+            and data.get("category") != exp.category:
+        raise HTTPException(400, "Bank komissiyasi avtomat yoziladi — "
+                                 "boshqa xarajatni shu turga o'tkazib "
+                                 "bo'lmaydi")
     tid = data.pop("teacher_id", None)
     sid = data.pop("staff_user_id", None)
     period = data.pop("period", None)
@@ -597,6 +625,8 @@ def delete_expense(
     user: models.User = Depends(require_role(*roles.EXPENSE_DELETE)),
 ):
     exp = _get_expense_in_scope(db, expense_id, user)
+    if _expense_transfer(db, exp) is not None:
+        raise HTTPException(400, _BANK_FEE_LOCKED)
     audit.log(db, user, entity="expense", action="delete", entity_id=exp.id,
               entity_label=exp.note or exp.category, field=exp.category,
               old_value=exp.amount, branch_id=exp.branch_id)
@@ -1865,10 +1895,21 @@ def create_discount(
                or (is_partner_head(user)
                    and _in_user_branches(db, user, st.branch_id))
                else roles.MAX_TOTAL_DISCOUNT_PERCENT)
-    now = _student_discount_percent(db, st)
+    # QAYSI FANGA (2026-10-16). Bo'sh — barcha fanlarga (avvalgidek).
+    # Chegara ham shu fan bo'yicha hisoblanadi.
+    gid = payload.group_id or None
+    if gid:
+        link = (db.query(models.StudentGroupLink)
+                .filter(models.StudentGroupLink.student_id == st.id,
+                        models.StudentGroupLink.group_id == gid,
+                        models.StudentGroupLink.active == 1).first())
+        if link is None and gid != st.group_id:
+            raise HTTPException(400, "O'quvchi bu fanda (guruhda) o'qimaydi")
+    tgt_group = (db.query(models.Group).get(gid) if gid else st.group)
+    now = _student_discount_percent(db, st, group_id=gid)
     add = payload.percent or 0
-    if not add and payload.amount and st.group and st.group.monthly_fee:
-        add = payload.amount / st.group.monthly_fee * 100
+    if not add and payload.amount and tgt_group and tgt_group.monthly_fee:
+        add = payload.amount / tgt_group.monthly_fee * 100
     if now + add > cap:
         raise HTTPException(
             400,
@@ -1888,6 +1929,7 @@ def create_discount(
         hidden=1 if payload.hidden else 0,
         requested_by=user.full_name,
         status="pending",
+        group_id=gid,
     )
     # Tasdiqlash huquqi bor odam o'zi so'rasa - darrov amalda.
     if user.role in roles.DISCOUNT_APPROVE:
@@ -1912,7 +1954,7 @@ def create_discount(
     # yo'lda ham bir xil.
     if d.status == "active":
         try:
-            _recharge_current_month(db, st)
+            _recharge_for(db, st, d)
         except Exception:
             db.rollback()
     audit.log(db, user, entity="discount", action="create", entity_id=d.id,
@@ -1921,6 +1963,19 @@ def create_discount(
                         f"{d.percent or d.amount}")
     db.commit()
     return _discount_out(db, d)
+
+def _recharge_for(db: Session, st: models.Student, d) -> None:
+    """Chegirma amalga kirdi — shu oy hisobi O'SHA FAN(LAR) bo'yicha
+    (2026-10-16). Bo'sh group_id — barcha fanlar: asosiy qator va
+    qo'shimcha fanlarning "#g" qatorlari; aks holda faqat o'sha fan."""
+    import multi_subject as _ms
+    gid = getattr(d, "group_id", None)
+    if not gid or gid == st.group_id:
+        _recharge_current_month(db, st)
+    if not gid or gid != st.group_id:
+        _ms.reprice_extras(db, st, only=gid)
+        db.commit()
+
 
 def _recharge_current_month(db: Session, st: models.Student, *, commit: bool = True) -> bool:
     """Shu oyning AVTOMAT hisob qatorini chegirma bilan qayta yozadi.
@@ -2366,7 +2421,7 @@ def approve_discount(
     # chegirmaga ega bo'lsa ham qarzdor bo'lib turaverardi.
     if payload.approve and st:
         try:
-            _recharge_current_month(db, st)
+            _recharge_for(db, st, d)
         except Exception:
             db.rollback()
     audit.log(db, user, entity="discount",

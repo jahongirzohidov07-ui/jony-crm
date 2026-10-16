@@ -1997,6 +1997,12 @@ def student_groups(
             "activated_on": (lk.activated_on.isoformat()
                              if getattr(lk, "activated_on", None)
                              else None),
+            # Guruh bo'yicha muzlatish (2026-10-16, link_freeze.py)
+            "frozen_from": (lk.frozen_from.isoformat()
+                            if getattr(lk, "frozen_from", None) else None),
+            "frozen_until": (lk.frozen_until.isoformat()
+                             if getattr(lk, "frozen_until", None) else None),
+            "frozen_note": getattr(lk, "frozen_note", None),
             "joined_date": (lk.joined_date.isoformat()
                             if lk.joined_date else None),
             "left_date": (lk.left_date.isoformat()

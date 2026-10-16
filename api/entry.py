@@ -9536,9 +9536,14 @@ def _mgx_group_students(db: Session, group_id: int):
     ids = set()
     if _MGX_LINK is not None:
         try:
+            # Shu guruhda muzlatilganlar (2026-10-16, link_freeze.py)
+            # ro'yxat va davomatga chiqmaydi — boshqa guruhida bor.
             for (sid,) in (db.query(_MGX_LINK.student_id)
                            .filter(_MGX_LINK.group_id == group_id,
-                                   _MGX_LINK.active == 1).all()):
+                                   _MGX_LINK.active == 1,
+                                   (_MGX_LINK.status.is_(None))
+                                   | (_MGX_LINK.status != "frozen"))
+                           .all()):
                 ids.add(int(sid))
         except Exception:
             ids = set()
@@ -9606,6 +9611,10 @@ if _mgx_groups_v1 is not None:
                 # Bog'lanish yopilgan — bola shu guruhda o'qimaydi
                 r["status"] = "left"
                 r["status_label"] = "Guruhdan chiqarilgan"
+            elif r.get("link_status") == "frozen" and st == "active":
+                # FAQAT SHU GURUHDA MUZLAGAN (2026-10-16)
+                r["status"] = "frozen"
+                r["status_label"] = "Muzlatilgan (shu guruh)"
             elif r.get("link_status") == "trial" and st == "active":
                 # SHU GURUH SINOVDA (2026-10-14, Jahongir: "Avval
                 # qo'shilganda sinovda bo'lishi kerak") — o'quvchi faol,

@@ -1254,11 +1254,21 @@ export interface LedgerRow {
   title: string;
   student_id: number | null;
   method: string;
-  /** "balance" — oy boshidagi "Oldingi oydan qoldiq" qatori (2026-10-02) */
-  direction: "in" | "out" | "balance";
+  /** "balance" — oy boshidagi "Oldingi oydan qoldiq" qatori (2026-10-02);
+   *  "transfer" — Terminal ↔ naqd o'tkazmasi (2026-10-16), kirim ham
+   *  chiqim ham emas. */
+  direction: "in" | "out" | "balance" | "transfer";
   branch: string;
   category: string;
   note?: string | null;
+  /** O'tkazma: usullar bo'yicha harakat (jami 0), masalan
+   *  {cash: 990000, terminal: -990000} (2026-10-16) */
+  moves?: Record<string, number>;
+  fee?: number;
+  fee_rate?: number;
+  net?: number;
+  kind?: BankTransferKind;
+  transfer_id?: number;
 }
 
 export interface CashflowMonth {
@@ -1281,11 +1291,73 @@ export interface CashflowLedger {
   opening?: CashMethodBlock;
   kirim: CashMethodBlock;
   chiqim: CashMethodBlock;
+  /** Terminal ↔ naqd o'tkazmasi: usullar bo'yicha sof harakat, jami 0
+   *  (2026-10-16). Kassa = qoldiq + kirim − chiqim ± o'tkazma. */
+  otkazma?: CashMethodBlock;
   kassa: CashMethodBlock;
   new_payments: { count: number; amount: number };
   old_payments: { count: number; amount: number };
   months?: CashflowMonth[];
   rows: LedgerRow[];
+}
+
+// --------------------------------------- Terminal ↔ naqd o'tkazmasi ----
+/** 2026-10-16, Jahongir: terminaldan naqd yechish (bank komissiyasi 1%,
+ *  naqdga sof summa) va naqdni terminalga topshirish. Faqat shu ikki tur. */
+export type BankTransferKind = "withdraw" | "deposit";
+
+export interface BankTransfer {
+  id: number;
+  kind: BankTransferKind;
+  kind_label: string;
+  date: string;
+  branch_id: number | null;
+  branch: string | null;
+  /** Yalpi summa (withdraw) yoki topshirilgan summa (deposit) */
+  amount: number;
+  /** Foiz, 1 = 1% — yozuvning o'zida saqlanadi */
+  fee_rate: number;
+  fee: number;
+  /** Naqdga (withdraw) yoki terminalga (deposit) o'tgan summa */
+  net: number;
+  from_method: string;
+  to_method: string;
+  note: string | null;
+  /** "Terminaldan naqdga: 1 000 000 (komissiya 1% — 10 000) → naqd +990 000" */
+  title: string;
+  forced: boolean;
+  fee_expense_id: number | null;
+  created_by: string | null;
+  created_at: string | null;
+  updated_by: string | null;
+  updated_at: string | null;
+}
+
+export interface BankTransferFlags {
+  can_manage: boolean;
+  can_force: boolean;
+  can_edit_rate: boolean;
+}
+
+export interface BankTransferList extends BankTransferFlags {
+  period: string;
+  rows: BankTransfer[];
+  totals: {
+    withdraw: number;
+    withdraw_fee: number;
+    withdraw_net: number;
+    deposit: number;
+  };
+  fee_percent: number;
+  kinds: { key: BankTransferKind; label: string }[];
+}
+
+export interface BankTransferBalance {
+  tracked: boolean;
+  date?: string;
+  branch_id?: number;
+  cash: number | null;
+  terminal: number | null;
 }
 
 // ------------------------------------------------- Xarajatlar hisoboti ----
@@ -2284,6 +2356,9 @@ export interface CheckResult {
 export interface DiscountRow {
   id: number;
   hidden?: boolean;
+  /** Qaysi fanga (2026-10-16) — bo'sh bo'lsa barcha fanlarga */
+  group_id?: number | null;
+  group_name?: string | null;
   student_id: number;
   student_name?: string;
   kind: string;

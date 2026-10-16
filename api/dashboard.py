@@ -1744,16 +1744,24 @@ def _fmt_som(v) -> str:
 
 def _bank_moves(db: Session, user, branch_id, lo: date, hi: date):
     """[lo, hi] (ikkalasi ham kiradi) oralig'idagi o'tkazmalar. Filial
-    chegarasi xarajat va qo'shimcha daromad bilan AYNAN bir xil —
-    o'tkazma va uning komissiya xarajati doim birga ko'rinadi."""
+    chegarasi xarajat va qo'shimcha daromad bilan bir xil — o'tkazma
+    va uning komissiya xarajati birga ko'rinadi.
+
+    Istisno (2026-10-16 ko'rik): butun tashkilotni ko'radigan rol
+    filialni ANIQ tanlasa — to'lovlardagi kabi scope_to_branch(...,
+    branch_id). Avval "barcha filiallar" yig'indisidan chiqarilgan
+    hamkor (Stech) yoki test filiali tanlanganda ham o'tkazma
+    yashirinardi: asoschi u yerda kiritgan o'tkazma qoldiqni
+    o'zgartirar, lekin ro'yxatda ko'rinmas — tahrirlab ham, o'chirib
+    ham bo'lmasdi. Hamkor markaz yopiq rollarga (moliya direktori,
+    buxgalter) baribir yopiq qoladi (blocked_branch_ids)."""
     BT = getattr(models, "BankCashTransfer", None)
     if BT is None:
         return []
-    q = scope_to_branch(db.query(BT), BT, user).filter(
-        BT.date >= lo, BT.date <= hi)
-    if branch_id and user.role in tuple(roles.ORG_WIDE_ROLES):
-        q = q.filter(BT.branch_id == branch_id)
-    return q.all()
+    org_wide = user.role in tuple(roles.ORG_WIDE_ROLES)
+    q = scope_to_branch(db.query(BT), BT, user,
+                        branch_id if org_wide else None)
+    return q.filter(BT.date >= lo, BT.date <= hi).all()
 
 
 def _bt_moves(t) -> dict:
@@ -1880,6 +1888,78 @@ def _cf_opening(db: Session, user, branch_id, start: date) -> dict:
                                    start):
         bal[_bk(p.method)] -= float(p.amount or 0)
     return {k: round(v, 2) for k, v in bal.items()}
+
+
+def _cf_day_moves(db: Session, user, branch_id, lo: date, hi: date) -> dict:
+    """KUNLAR KESIMIDAGI KASSA HARAKATI (2026-10-16): [lo, hi] (ikkalasi
+    ham kiradi) oralig'ida har kun usullar bo'yicha sof o'zgarish —
+    {kun: {usul: summa}}; harakatsiz kun qaytmaydi.
+
+    Nega kerak (ko'rik): Terminal ↔ naqd o'tkazmasida faqat tanlangan
+    kun oxiridagi qoldiq tekshirilardi — administrator o'tgan sanani
+    tanlab ogohlantirishni aylanib o'tar, keyingi kunlar va oylar
+    qoldig'i esa minusga tushardi. Endi bank_transfer._low_point shu
+    harakatlar bo'yicha `on` kunidan bugungacha eng kam qoldiqni topadi.
+
+    Manbalar va filial chegarasi _cf_opening bilan AYNAN bir xil (faqat
+    yig'indi o'rniga kunlar bo'yicha). _cf_opening ga yangi manba
+    qo'shilsa — shu yerga ham qo'shing: test_bank_cash_transfer ikkalasini
+    har kun bo'yicha solishtiradi."""
+    out: dict = {}
+
+    def add(d, method, amt):
+        row = out.setdefault(d, {m: 0.0 for m in roles.PAYMENT_METHODS})
+        row[method if method in row else "cash"] += float(amt or 0)
+
+    lo = max(lo, CF_OPENING_FROM)
+    if hi < lo:
+        return out
+
+    # To'lovlar — created_at UTC, kun esa Toshkent vaqti bo'yicha
+    off = timedelta(hours=roles.TIMEZONE_OFFSET_HOURS)
+    w0, w1 = _utc_window(lo, hi)
+    pq = (db.query(models.Payment.method, models.Payment.amount,
+                   models.Payment.created_at)
+          .join(models.Student, models.Payment.student_id == models.Student.id)
+          .filter(models.Payment.kind == "payment",
+                  models.Payment.created_at >= w0,
+                  models.Payment.created_at <= w1))
+    pq = scope_to_branch(pq, models.Student, user, branch_id)
+    for method, amt, at in pq.all():
+        add((at + off).date(), method, amt)
+
+    eq = scope_to_branch(db.query(models.Expense), models.Expense, user).filter(
+        models.Expense.date >= lo, models.Expense.date <= hi)
+    if branch_id and user.role in tuple(roles.ORG_WIDE_ROLES):
+        eq = eq.filter(models.Expense.branch_id == branch_id)
+    for method, amt, d in eq.with_entities(models.Expense.method,
+                                           models.Expense.amount,
+                                           models.Expense.date).all():
+        add(d, method, -(amt or 0))
+
+    for o in _other_incomes(db, user, branch_id, lo, hi):
+        add(o.date, _oi_method(o), o.amount)
+
+    for t in _bank_moves(db, user, branch_id, lo, hi):
+        for k, v in _bt_moves(t).items():
+            add(t.date, k, v)
+
+    _tp_branch = func.coalesce(models.TeacherPayment.branch_id,
+                               models.Teacher.branch_id)
+    tq = (db.query(models.TeacherPayment.method,
+                   models.TeacherPayment.amount,
+                   models.TeacherPayment.paid_on)
+          .join(models.Teacher,
+                models.TeacherPayment.teacher_id == models.Teacher.id)
+          .filter(models.TeacherPayment.paid_on >= lo,
+                  models.TeacherPayment.paid_on <= hi,
+                  _tp_branch.in_(_branch_scope_ids(db, user, branch_id))))
+    for method, amt, d in tq.all():
+        add(d, method, -(amt or 0))
+    for p, _u, _b in _ssp_in_scope(db, user, branch_id, lo,
+                                   hi + timedelta(days=1)):
+        add(p.paid_on, p.method, -(p.amount or 0))
+    return out
 
 
 @router.get("/api/reports/cashflow-ledger")

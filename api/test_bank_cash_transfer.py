@@ -529,5 +529,206 @@ if PREV_FIRST >= date(2026, 9, 2) or PREV_FIRST.month == 9 and \
 else:
     print("(o'tgan oy qoldiq yuritilmagan davrda — o'tkazildi)")
 
+print("=== 10. Orqa sana: keyingi kunlar qoldig'i ham tekshiriladi ===")
+# 2026-10-16 ko'rik: o'tgan sanani tanlab ogohlantirishni aylanib o'tib
+# bo'lmasin — summa `on` kunidan BUGUNgacha har kun oxiridagi eng kam
+# qoldiq bilan solishtiriladi (keyin kiritilgan chiqimlar ham).
+A0 = T - timedelta(days=6)
+if A0 >= date(2026, 9, 1):
+    s = SessionLocal()
+    b4 = models.Branch(name="Bekobod 4"); s.add(b4); s.commit(); B4 = b4.id
+    Y1 = T - timedelta(days=1)
+    s.add_all([
+        models.OtherIncome(date=A0, category="other", amount=1_000_000,
+                           method="terminal", branch_id=B4, created_by="t"),
+        models.OtherIncome(date=A0, category="other", amount=500_000,
+                           method="cash", branch_id=B4, created_by="t"),
+        models.Expense(date=Y1, category="rent", amount=800_000,
+                       method="terminal", branch_id=B4, created_by="t"),
+        models.Expense(date=Y1, category="rent", amount=400_000,
+                       method="cash", branch_id=B4, created_by="t"),
+    ])
+    s.commit(); s.close()
+    mk("adm4", roles.ADMINISTRATOR, B4)
+    h4 = H("adm4")
+    D4 = (T - timedelta(days=4)).isoformat()
+    LOW = Y1.strftime("%d.%m.%Y")
+    # 4 kun oldin terminalda 1 000 000 bor, lekin kecha 800 000 ijara
+    r = c.post("/api/bank-transfers", headers=h4, json={
+        "kind": "withdraw", "amount": 1_000_000, "date": D4})
+    ck("orqa sana: keyingi kun minusga tushadi — 400", r.status_code, 400)
+    det = r.json().get("detail") or {}
+    ck("xabarda eng kam qoldiq kuni va summasi",
+       LOW in str(det.get("message")) and "200 000" in str(
+           det.get("message")), True)
+    ck("orqa sana: administratorga force yo'q", det.get("can_force"), False)
+    r = c.post("/api/bank-transfers", headers=h4, json={
+        "kind": "deposit", "amount": 300_000, "date": D4})
+    ck("orqa sana: naqd ham — 400", r.status_code, 400)
+    ck("naqd xabari — eng kam qoldiq",
+       "Naqd kassada" in str((r.json().get("detail") or {}).get("message"))
+       and "100 000" in str((r.json().get("detail") or {}).get("message")),
+       True)
+    r = c.post("/api/bank-transfers", headers=h4, json={
+        "kind": "deposit", "amount": 50_000, "date": D4})
+    ck("orqa sana: yetarli bo'lsa o'tadi", r.status_code, 200)
+    ck("orqa sana: forced emas", r.json().get("forced"), False)
+    c.delete(f"/api/bank-transfers/{r.json().get('id')}", headers=ha)
+    r = c.post("/api/bank-transfers", headers=h4, json={
+        "kind": "withdraw", "amount": 150_000, "date": D4})
+    ck("orqa sana: 150 000 o'tadi", r.status_code, 200)
+    WB = r.json().get("id")
+    # Tahrir: eski summa o'z sanasidan boshlab qaytariladi
+    r = c.put(f"/api/bank-transfers/{WB}", headers=ha,
+              json={"amount": 200_000})
+    ck("tahrir: kechagi eng kam qoldiqqacha — 200", r.status_code, 200)
+    r = c.put(f"/api/bank-transfers/{WB}", headers=ha,
+              json={"amount": 250_000})
+    ck("tahrir: keyingi kun minus — 400", r.status_code, 400)
+    msg = str((r.json().get("detail") or {}).get("message"))
+    ck("tahrir xabari", LOW in msg and "200 000" in msg, True)
+    r = c.put(f"/api/bank-transfers/{WB}", headers=ha,
+              json={"date": (T - timedelta(days=2)).isoformat()})
+    ck("tahrir: sanani keyinga surish — 200", r.status_code, 200)
+    # Bugun terminal 0 — o'tgan sanaga yechish ham bo'lmaydi
+    bal4 = c.get(f"/api/bank-transfers/balance?branch_id={B4}",
+                 headers=h4).json()
+    ck("bugun terminal 0", bal4.get("terminal"), 0)
+    r = c.post("/api/bank-transfers", headers=h4, json={
+        "kind": "withdraw", "amount": 10_000,
+        "date": (T - timedelta(days=3)).isoformat()})
+    ck("bugun 0 — o'tgan sanaga ham 400", r.status_code, 400)
+    r = c.post("/api/bank-transfers", headers=ha, json={
+        "kind": "withdraw", "amount": 10_000, "branch_id": B4,
+        "date": (T - timedelta(days=3)).isoformat(), "force": True})
+    ck("asoschi force bilan — forced", (r.status_code,
+                                         r.json().get("forced")), (200, True))
+    c.delete(f"/api/bank-transfers/{r.json().get('id')}", headers=ha)
+
+    # Kunlik harakat (_cf_day_moves) — oy boshidagi qoldiq (_cf_opening)
+    # bilan bir xil manbalar: har kun oxiridagi qoldiq mos tushadi.
+    # Tunda (Toshkent 01:00) qilingan to'lov o'z kuniga tushadi.
+    import dashboard as DSH
+    from bank_transfer import _BranchViewer
+    from datetime import datetime as _dtm
+    s = SessionLocal()
+    st4 = models.Student(full_name="Tun To'lovchi", branch_id=B4)
+    te4 = models.Teacher(full_name="Ustoz To'rt", branch_id=B4)
+    s.add_all([st4, te4]); s.commit()
+    off = timedelta(hours=roles.TIMEZONE_OFFSET_HOURS)
+    s.add_all([
+        models.Payment(student_id=st4.id, amount=70_000, kind="payment",
+                       method="cash", created_at=_dtm.combine(
+                           T - timedelta(days=3), _dtm.min.time())
+                       + timedelta(hours=1) - off),
+        models.TeacherPayment(teacher_id=te4.id, amount=30_000,
+                              paid_on=T - timedelta(days=2),
+                              method="terminal"),
+    ])
+    u4 = s.query(models.User).filter(models.User.username == "adm4").first()
+    SSP = getattr(models, "StaffSalaryPayment", None)
+    if SSP is not None:
+        s.add(SSP(user_id=u4.id, amount=20_000, paid_on=T - timedelta(days=5),
+                  method="cash"))
+    s.commit()
+    for bid in (B1, B3, B4):
+        v = _BranchViewer(bid)
+        mv = DSH._cf_day_moves(s, v, bid, DSH.CF_OPENING_FROM, T)
+        run = {m: 0.0 for m in roles.PAYMENT_METHODS}
+        bad = []
+        dd = DSH.CF_OPENING_FROM
+        while dd <= T:
+            for k, val in mv.get(dd, {}).items():
+                run[k] += val
+            want = DSH._cf_opening(s, v, bid, dd + timedelta(days=1))
+            if any(abs(run[k] - want[k]) > 0.01 for k in run):
+                bad.append(dd.isoformat())
+            dd += timedelta(days=1)
+        ck(f"kunlik harakat = qoldiq hisobi (filial {bid})", bad, [])
+    ck("tungi to'lov o'z kunida",
+       DSH._cf_day_moves(s, _BranchViewer(B4), B4, T - timedelta(days=3),
+                         T - timedelta(days=3))
+       .get(T - timedelta(days=3), {}).get("cash"), 70_000)
+    s.close()
+    c.delete(f"/api/bank-transfers/{WB}", headers=ha)
+else:
+    print("(qoldiq yuritilmagan davr — o'tkazildi)")
+
+print("=== 11. Hamkor (Stech) va test filiali chegarasi ===")
+# 2026-10-16 ko'rik: hamkor markaz qoldig'i moliya direktori/buxgalterga
+# yopiq (scope_to_branch bilan bir xil); asoschi esa hamkor yoki test
+# filialini TANLASA o'z kiritgan o'tkazmasini ro'yxat, daftar va kun
+# kassasida ko'radi (tahrirlab/o'chira oladi).
+s = SessionLocal()
+stc = models.Branch(name="Stech", is_partner=1)
+tst = models.Branch(name="Test filial", is_test=1)
+s.add_all([stc, tst]); s.commit()
+ST, TS = stc.id, tst.id
+s.add_all([
+    models.OtherIncome(date=T, category="other", amount=5_000_000,
+                       method="terminal", branch_id=ST, created_by="t"),
+    models.OtherIncome(date=T, category="other", amount=700_000,
+                       method="cash", branch_id=ST, created_by="t"),
+    models.OtherIncome(date=T, category="other", amount=400_000,
+                       method="cash", branch_id=TS, created_by="t"),
+])
+s.commit(); s.close()
+common.reset_partner_cache()
+mk("sadm", roles.ADMINISTRATOR, ST)
+hs = H("sadm")
+ck("moliya direktori: hamkor qoldig'i yopiq", c.get(
+    f"/api/bank-transfers/balance?branch_id={ST}", headers=hf).status_code,
+   403)
+r = c.post("/api/bank-transfers", headers=hf, json={
+    "kind": "withdraw", "amount": 99_000_000, "branch_id": ST})
+ck("moliya direktori: katta summa — 403 (qoldiq oshkor emas)",
+   r.status_code, 403)
+ck("xabarda qoldiq yo'q", "5 000 000" in r.text, False)
+ck("moliya direktori: hamkorga kirita olmaydi", c.post(
+    "/api/bank-transfers", headers=hf, json={
+        "kind": "withdraw", "amount": 100_000, "branch_id": ST}
+).status_code, 403)
+bal_s = c.get(f"/api/bank-transfers/balance?branch_id={ST}",
+              headers=ha).json()
+ck("asoschi hamkor qoldig'ini ko'radi",
+   (bal_s.get("terminal"), bal_s.get("cash")), (5_000_000, 700_000))
+r = c.post("/api/bank-transfers", headers=ha, json={
+    "kind": "deposit", "amount": 50_000, "branch_id": ST})
+ck("asoschi hamkorga kiritadi", r.status_code, 200)
+SD = r.json().get("id")
+ck("asoschi Stech tanlasa ro'yxatda", [x["id"] for x in c.get(
+    f"/api/bank-transfers?{YM}&branch_id={ST}", headers=ha).json()["rows"]],
+   [SD])
+LS = led(ha, f"/api/reports/cashflow-ledger?{YM}&branch_id={ST}")
+ck("asoschi Stech daftarida o'tkazma",
+   [x["transfer_id"] for x in LS["rows"] if x["direction"] == "transfer"],
+   [SD])
+ck("asoschi Stech kun kassasida", [x["id"] for x in c.get(
+    f"/api/reports/cash-day?branch_id={ST}", headers=ha).json()
+    ["transfer_rows"]], [SD])
+ck("barcha filiallar yig'indisida Stech yo'q", SD in [x["id"] for x in c.get(
+    f"/api/bank-transfers?{YM}", headers=ha).json()["rows"]], False)
+ck("Stech administratori o'zinikini ko'radi", [x["id"] for x in c.get(
+    f"/api/bank-transfers?{YM}", headers=hs).json()["rows"]], [SD])
+ck("moliya direktori Stech ro'yxatini ko'rmaydi", c.get(
+    f"/api/bank-transfers?{YM}&branch_id={ST}", headers=hf).json()["rows"],
+   [])
+ck("moliya direktori tahrirlay olmaydi", c.put(
+    f"/api/bank-transfers/{SD}", headers=hf,
+    json={"amount": 60_000}).status_code, 403)
+ck("moliya direktori o'chira olmaydi", c.delete(
+    f"/api/bank-transfers/{SD}", headers=hf).status_code, 403)
+ck("asoschi o'chiradi", c.delete(f"/api/bank-transfers/{SD}",
+                                 headers=ha).status_code, 200)
+r = c.post("/api/bank-transfers", headers=ha, json={
+    "kind": "deposit", "amount": 40_000, "branch_id": TS})
+ck("asoschi test filialiga kiritadi", r.status_code, 200)
+TD = r.json().get("id")
+ck("asoschi test filialini tanlasa ko'radi", [x["id"] for x in c.get(
+    f"/api/bank-transfers?{YM}&branch_id={TS}", headers=ha).json()["rows"]],
+   [TD])
+ck("asoschi test o'tkazmasini o'chiradi", c.delete(
+    f"/api/bank-transfers/{TD}", headers=ha).status_code, 200)
+
 print("\n" + ("HAMMASI OK" if not fails else f"{len(fails)} XATO: {fails}"))
 sys.exit(1 if fails else 0)

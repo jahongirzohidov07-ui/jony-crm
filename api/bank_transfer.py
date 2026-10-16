@@ -41,7 +41,7 @@ import models
 import roles
 from auth import has_role, require_role
 from database import get_db
-from common import _in_user_branches
+from common import _in_user_branches, aggregate_skip_ids, blocked_branch_ids
 import dashboard as D
 
 router = APIRouter()
@@ -80,7 +80,7 @@ class _BranchViewer:
     """Bitta filial qoldig'ini ANIQ hisoblash uchun ichki ko'ruvchi.
 
     Kiruvchi xodimning filial huquqi alohida tekshiriladi
-    (_in_user_branches); bu yerda esa ko'p filialli administrator
+    (_branch_open); bu yerda esa ko'p filialli administrator
     yoki "barcha filiallar" rejimi tufayli boshqa filial raqami
     aralashib ketmasin — Pul oqimidagi qoldiq bilan aynan bir xil
     so'rovlar, faqat shu filial uchun."""
@@ -101,18 +101,78 @@ def branch_balance(db: Session, branch_id: int, on: date) -> dict:
                          on + timedelta(days=1))
 
 
-def _check_balance(db: Session, user, *, kind: str, branch_id: int,
-                   on: date, amount: float, force: bool,
-                   give_back: float = 0.0) -> bool:
-    """Qoldiqdan oshiq summa — aniq o'zbekcha 400 (ogohlantirish).
-    Rahbariyat/moliya force bilan tasdiqlasa o'tadi (True qaytadi —
-    "majburan saqlandi" belgisi). give_back — tahrirlanayotgan yozuvning
-    o'z eski ta'siri (u qoldiqda allaqachon ayirilgan)."""
+def _branch_open(db: Session, user, bid) -> bool:
+    """Bu xodim shu filialda o'tkazma kiritib, qoldig'ini ko'rib, keyin
+    uni ro'yxatda topa oladimi (2026-10-16 ko'rik).
+
+    _BranchViewer qoldiqni asoschi nomidan hisoblaydi, shuning uchun
+    huquq shu yerda — scope_to_branch qoidasi bilan bir xil:
+      - hamkor markaz (Stech) o'z filiali bo'lmasa asoschidan boshqa
+        hammaga yopiq (blocked_branch_ids) — moliya direktori va
+        buxgalter uning naqd/terminal qoldig'ini ko'rmasin, unga
+        kiritmasin;
+      - filialga bog'langan xodimga ro'yxat "barcha filiallar"
+        yig'indisidan chiqarilgan begona filialni (test/hamkor)
+        ko'rsatmaydi — u yerga kiritilgan o'tkazmani keyin topib
+        tuzatib bo'lmasdi, shuning uchun kiritish ham yopiq.
+    Butun tashkilotni ko'radigan rol filialni tanlasa, ro'yxat uni
+    ko'rsatadi (dashboard._bank_moves)."""
+    if not _in_user_branches(db, user, bid):
+        return False
+    if bid in blocked_branch_ids(db, user):
+        return False
+    if (user.role not in tuple(roles.ORG_WIDE_ROLES)
+            and bid in aggregate_skip_ids(db, user)):
+        return False
+    return True
+
+
+def _low_point(db: Session, branch_id: int, on: date, src: str,
+               give_back: float = 0.0, give_back_from: date | None = None):
+    """`src` usulining `on` kunidan BUGUNgacha har kun oxiridagi ENG KAM
+    qoldig'i: (summa, kun). `on` CF_OPENING_FROM dan oldin — None
+    (qoldiq yuritilmagan).
+
+    2026-10-16 ko'rik: avval faqat `on` kuni oxiri tekshirilardi — o'tgan
+    sana tanlansa keyin kiritilgan chiqimlar hisobga olinmay, keyingi
+    kunlar va oylar qoldig'i minusga tushardi. Yangi o'tkazma `on` dan
+    boshlab har kunni kamaytiradi, shuning uchun eng kam nuqta muhim.
+    give_back — tahrirlanayotgan yozuvning o'z eski ta'siri: u
+    give_back_from kunidan boshlab qoldiqda allaqachon ayirilgan."""
     bal = branch_balance(db, branch_id, on)
     if bal is None:
-        return False
+        return None
+
+    def back(d):
+        return (give_back if give_back_from is not None
+                and d >= give_back_from else 0.0)
+
+    run = float(bal.get(src, 0.0))
+    low, low_day = run + back(on), on
+    today = roles.local_today()
+    if today > on:
+        moves = D._cf_day_moves(db, _BranchViewer(branch_id), branch_id,
+                                on + timedelta(days=1), today)
+        for d in sorted(moves):
+            run += moves[d].get(src, 0.0)
+            if run + back(d) < low - 0.005:
+                low, low_day = run + back(d), d
+    return round(low, 2), low_day
+
+
+def _check_balance(db: Session, user, *, kind: str, branch_id: int,
+                   on: date, amount: float, force: bool,
+                   give_back: float = 0.0,
+                   give_back_from: date | None = None) -> bool:
+    """Qoldiqdan oshiq summa — aniq o'zbekcha 400 (ogohlantirish).
+    Qoldiq — `on` kunidan bugungacha eng kam qoldiq (_low_point).
+    Rahbariyat/moliya force bilan tasdiqlasa o'tadi (True qaytadi —
+    "majburan saqlandi" belgisi)."""
     src = _methods(kind)[0]
-    avail = round(float(bal.get(src, 0.0)) + give_back, 2)
+    lp = _low_point(db, branch_id, on, src, give_back, give_back_from)
+    if lp is None:
+        return False
+    avail, low_day = lp
     if amount <= avail + 0.005:
         return False
     can_force = has_role(user, roles.BANK_TRANSFER_MANAGE)
@@ -123,15 +183,26 @@ def _check_balance(db: Session, user, *, kind: str, branch_id: int,
                                  "(asoschi yoki moliya) tasdiqlay oladi")
     src_lbl = "Terminalda" if src == "terminal" else "Naqd kassada"
     act = ("yechib" if kind == "withdraw" else "terminalga topshirib")
-    if D._cashflow_limited(db, user):
+    limited = D._cashflow_limited(db, user)
+    if limited:
         # Cheklangan filial administratoriga kassa qoldig'i ko'rsatilmaydi
         msg = (f"{src_lbl} {on.strftime('%d.%m.%Y')} holatiga yetarli pul "
                f"yo'q — {D._fmt_som(amount)} so'm {act} bo'lmaydi. "
                "Rahbariyatga murojaat qiling.")
     else:
-        msg = (f"{src_lbl} {on.strftime('%d.%m.%Y')} holatiga "
-               f"{D._fmt_som(avail)} so'm bor — {D._fmt_som(amount)} so'm "
-               f"{act} bo'lmaydi.")
+        if low_day == on:
+            msg = (f"{src_lbl} {on.strftime('%d.%m.%Y')} holatiga "
+                   f"{D._fmt_som(avail)} so'm bor — {D._fmt_som(amount)} "
+                   f"so'm {act} bo'lmaydi.")
+        else:
+            # Orqa sana: eng kam qoldiq keyingi kunda — keyin kiritilgan
+            # chiqimlar tufayli (2026-10-16 ko'rik)
+            low_s = low_day.strftime('%d.%m.%Y')
+            msg = (f"{src_lbl} {low_s} holatiga (keyingi chiqimlardan "
+                   f"so'ng) {D._fmt_som(avail)} so'm qoladi — "
+                   f"{on.strftime('%d.%m.%Y')} sanasi bilan "
+                   f"{D._fmt_som(amount)} so'm {act} bo'lmaydi, aks holda "
+                   f"{low_s} holatiga qoldiq minusga tushadi.")
         msg += (" Baribir saqlash kerak bo'lsa — «Baribir saqlash»ni bosing."
                 if can_force else
                 " Baribir saqlash kerak bo'lsa — rahbariyat (asoschi yoki "
@@ -139,8 +210,8 @@ def _check_balance(db: Session, user, *, kind: str, branch_id: int,
     raise HTTPException(400, {
         "message": msg, "code": "balance_low", "can_force": can_force,
         "problems": [],
-        "method": src, "available": None if D._cashflow_limited(db, user)
-        else avail,
+        "method": src, "available": None if limited else avail,
+        "low_date": None if limited else low_day.isoformat(),
     })
 
 
@@ -254,7 +325,7 @@ def _in_scope(db: Session, tid: int, user) -> models.BankCashTransfer:
     t = db.query(models.BankCashTransfer).get(tid)
     if not t:
         raise HTTPException(404, "O'tkazma topilmadi")
-    if not _in_user_branches(db, user, t.branch_id):
+    if not _branch_open(db, user, t.branch_id):
         raise HTTPException(403, "Bu o'tkazma boshqa filialga tegishli")
     return t
 
@@ -363,7 +434,7 @@ def bank_transfer_balance(
     bid = branch_id or user.branch_id
     if not bid:
         return {"tracked": False, "cash": None, "terminal": None}
-    if not _in_user_branches(db, user, bid):
+    if not _branch_open(db, user, bid):
         raise HTTPException(403, "Bu filial qoldig'ini ko'rish huquqi yo'q")
     try:
         on = date.fromisoformat(day) if day else roles.local_today()
@@ -402,7 +473,7 @@ def create_bank_transfer(
         raise HTTPException(400, "Filial noto'g'ri")
     if not db.query(models.Branch).get(bid):
         raise HTTPException(404, "Filial topilmadi")
-    if not _in_user_branches(db, user, bid):
+    if not _branch_open(db, user, bid):
         raise HTTPException(403, "Bu filialga kiritish huquqi yo'q")
 
     forced = _check_balance(db, user, kind=kind, branch_id=bid, on=on,
@@ -456,13 +527,14 @@ def update_bank_transfer(
     forced = bool(t.forced)
     if new_amount != t.amount or new_date != t.date:
         # Eski yozuvning o'z ta'siri (terminal/naqddan −summa) qoldiqda
-        # allaqachon ayirilgan — yangi sanagacha kirgan bo'lsa qaytaramiz.
-        give_back = (float(t.amount or 0)
-                     if D.CF_OPENING_FROM <= t.date <= new_date else 0.0)
+        # o'z sanasidan boshlab allaqachon ayirilgan — o'sha kundan
+        # qaytaramiz (2026-10-16 ko'rik: endi bugungacha har kun).
         forced = _check_balance(
             db, user, kind=t.kind, branch_id=t.branch_id, on=new_date,
             amount=new_amount, force=bool(payload.get("force")),
-            give_back=give_back)
+            give_back=float(t.amount or 0),
+            give_back_from=(t.date if t.date and t.date >= D.CF_OPENING_FROM
+                            else None))
     fee, net = _calc(t.kind, new_amount, float(t.fee_rate or 0))
     changes = {"amount": new_amount, "date": new_date, "note": new_note,
                "fee": fee, "net": net}

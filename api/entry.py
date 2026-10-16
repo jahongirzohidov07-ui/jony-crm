@@ -11649,3 +11649,7 @@ app.include_router(russian_placement.router)
 # Student Russian course and private practice history.
 import student_russian  # noqa: E402
 app.include_router(student_russian.router)
+
+# Private English/German lesson practice.
+import student_course_practice  # noqa: E402
+app.include_router(student_course_practice.router)

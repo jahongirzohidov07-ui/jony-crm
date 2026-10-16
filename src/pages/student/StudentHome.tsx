@@ -1,3 +1,4 @@
+import { StudentCourseLink } from "../../components/StudentCourseLink";
 import { hasUnreadNotifications, type NotificationFeed } from "../../lib/studentNotifications";
 import { StudentLevelBadge } from "../../components/StudentLevelBadge";
 import { StudentLoading, StudentLoadError } from "../../components/StudentLoading";
@@ -248,6 +249,7 @@ export default function StudentHome() {
           </div>
         </div>}
 
+        <StudentCourseLink language={lang}/>
         {lang === "ru" && <Link to="/student/russian"
           className="block rounded-3xl border border-blue-400/40 bg-gradient-to-br from-blue-700 to-indigo-800 p-5 text-white">
           <p className="text-xs font-bold uppercase tracking-wide text-blue-100">Rus tili · 1 yillik kurs</p>

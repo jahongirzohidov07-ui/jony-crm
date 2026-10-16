@@ -71,6 +71,9 @@ export const EXPENSE_CATEGORIES: CategoryDef[] = [
   { key: "ads", label: "Reklama", group: "marketing" },
   { key: "tax", label: "Soliq", group: "tax" },
   { key: "repair", label: "Ta'mir", group: "other" },
+  // 2026-10-16: terminaldan naqd yechishdagi bank komissiyasi — o'tkazma
+  // o'zi yozadi, formada tanlanmaydi (backend EXPENSE_AUTO_CATEGORIES).
+  { key: "bank_fee", label: "Bank komissiyasi (1%)", group: "other", legacy: true },
   { key: "other", label: "Boshqa", group: "other" },
 ];
 

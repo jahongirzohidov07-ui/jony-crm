@@ -57,9 +57,32 @@ export interface CashDayOther {
   branch: string;
 }
 
+/** Terminal ↔ naqd o'tkazmasi (2026-10-16) — tushum emas, kunning
+ *  kassa harakati. */
+export interface CashDayTransfer {
+  id: number;
+  kind: "withdraw" | "deposit";
+  kind_label: string;
+  /** "Terminaldan naqdga: 1 000 000 (komissiya 1% — 10 000) → naqd +990 000" */
+  title: string;
+  amount: number;
+  fee_rate: number;
+  fee: number;
+  net: number;
+  from_method: string;
+  to_method: string;
+  note: string | null;
+  created_by: string | null;
+  branch: string;
+}
+
 export interface CashDayData {
   /** Cheklangan filial administratori: faqat bugun (2026-10-06). */
   today_only?: boolean;
+  transfer_rows?: CashDayTransfer[];
+  /** Usullar bo'yicha to'liq ta'sir (komissiya bilan): terminal −, naqd + */
+  transfer_effect?: { method: string; label: string; amount: number }[];
+  transfer_fee_total?: number;
   other_rows?: CashDayOther[];
   other_total?: number;
   grand_total?: number;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, CalendarDays, Wallet } from "lucide-react";
+import { ArrowLeftRight, ChevronLeft, ChevronRight, CalendarDays, Wallet } from "lucide-react";
 import { api } from "../lib/api";
 import { formatSom } from "../lib/format";
 import {
@@ -227,6 +227,42 @@ export function CashDayCard({ reloadKey = 0 }: { reloadKey?: number }) {
                     <span className="ml-auto font-semibold text-emerald-700 tabular-nums">
                       +{formatSom(o.amount)}
                     </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Terminal ↔ naqd o'tkazmasi (2026-10-16) — tushum emas,
+              yuqoridagi raqamlarga qo'shilmaydi; kassadagi pul usuldan
+              usulga o'tgani (komissiya bilan) alohida ko'rsatiladi. */}
+          {!who && (data.transfer_rows?.length ?? 0) > 0 && (
+            <div className="mx-4 mb-3 rounded-lg border border-sky-200 bg-sky-50/60">
+              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 px-3 py-2">
+                <p className="text-xs font-medium text-sky-800">
+                  <ArrowLeftRight size={12} className="inline -mt-0.5 mr-1" />
+                  Terminal ↔ naqd
+                </p>
+                {(data.transfer_effect || []).map((e) => (
+                  <span key={e.method} className="text-xs text-slate-600">
+                    {e.label}:{" "}
+                    <b className={e.amount < 0 ? "text-red-700" : "text-emerald-700"}>
+                      {e.amount > 0 ? "+" : "−"}{formatSom(Math.abs(e.amount))}
+                    </b>
+                  </span>
+                ))}
+                {(data.transfer_fee_total || 0) > 0 && (
+                  <span className="text-xs text-slate-500">
+                    bank komissiyasi: {formatSom(data.transfer_fee_total || 0)}
+                  </span>
+                )}
+              </div>
+              <ul className="divide-y divide-sky-100 text-sm">
+                {data.transfer_rows!.map((t) => (
+                  <li key={t.id} className="flex flex-wrap items-center gap-x-3 px-3 py-1.5">
+                    <span className="text-slate-800">{t.title}</span>
+                    {t.note && <span className="text-slate-500 text-xs">{t.note}</span>}
+                    <span className="ml-auto text-xs text-slate-400">{t.created_by || "—"}</span>
                   </li>
                 ))}
               </ul>

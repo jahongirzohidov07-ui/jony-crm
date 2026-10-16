@@ -63,6 +63,8 @@ ENTITIES = {
     "contract": "Shartnoma",
     "expense": "Xarajat",
     "other_income": "Qo'shimcha daromad",
+    # 2026-10-16: terminaldan naqd yechish / naqdni terminalga topshirish
+    "bank_transfer": "Terminal ↔ naqd o'tkazmasi",
     "branch": "Filial",
     "complaint": "Shikoyat",
     "reward": "Sovg'a",

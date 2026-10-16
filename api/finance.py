@@ -49,6 +49,22 @@ def _get_expense_in_scope(db: Session, expense_id: int, user: models.User) -> mo
         raise HTTPException(403, "Bu xarajat boshqa filialga tegishli")
     return exp
 
+
+# 2026-10-16: bank komissiyasi xarajati "Terminaldan naqd yechish"
+# o'tkazmasiga bog'langan — uni faqat o'tkazma orqali o'zgartirish yoki
+# o'chirish mumkin, aks holda o'tkazma va komissiya bir-biridan ajralib
+# (naqd/terminal qoldig'i yoki P&L) noto'g'ri chiqardi.
+_BANK_FEE_LOCKED = ("Bu bank komissiyasi «Terminaldan naqd yechish» "
+                    "o'tkazmasiga bog'langan — uni Pul oqimidagi "
+                    "o'tkazmalar ro'yxatidan tahrirlang yoki o'chiring")
+
+
+def _expense_transfer(db: Session, exp) -> "models.BankCashTransfer | None":
+    BT = getattr(models, "BankCashTransfer", None)
+    if BT is None or exp is None or not exp.id:
+        return None
+    return db.query(BT).filter(BT.fee_expense_id == exp.id).first()
+
 @router.get("/api/expenses", response_model=List[schemas.ExpenseOut])
 def list_expenses(
     year: Optional[int] = None,
@@ -429,6 +445,11 @@ def create_expense(
 ):
     if payload.category not in roles.EXPENSE_CATEGORIES:
         raise HTTPException(400, "Noto'g'ri xarajat turi")
+    # Bank komissiyasi qo'lda kiritilmaydi (2026-10-16) — o'tkazma o'zi yozadi
+    if payload.category in tuple(roles.EXPENSE_AUTO_CATEGORIES):
+        raise HTTPException(400, "Bank komissiyasi avtomat yoziladi — "
+                                 "Pul oqimida «Terminaldan naqd yechish» "
+                                 "orqali kiriting")
     if payload.amount <= 0:
         raise HTTPException(400, "Summa noldan katta bo'lishi kerak")
 
@@ -534,7 +555,14 @@ def update_expense(
     user: models.User = Depends(require_role(*roles.EXPENSE_ACCESS)),
 ):
     exp = _get_expense_in_scope(db, expense_id, user)
+    if _expense_transfer(db, exp) is not None:
+        raise HTTPException(400, _BANK_FEE_LOCKED)
     data = payload.model_dump(exclude_unset=True)
+    if data.get("category") in tuple(roles.EXPENSE_AUTO_CATEGORIES) \
+            and data.get("category") != exp.category:
+        raise HTTPException(400, "Bank komissiyasi avtomat yoziladi — "
+                                 "boshqa xarajatni shu turga o'tkazib "
+                                 "bo'lmaydi")
     tid = data.pop("teacher_id", None)
     sid = data.pop("staff_user_id", None)
     period = data.pop("period", None)
@@ -597,6 +625,8 @@ def delete_expense(
     user: models.User = Depends(require_role(*roles.EXPENSE_DELETE)),
 ):
     exp = _get_expense_in_scope(db, expense_id, user)
+    if _expense_transfer(db, exp) is not None:
+        raise HTTPException(400, _BANK_FEE_LOCKED)
     audit.log(db, user, entity="expense", action="delete", entity_id=exp.id,
               entity_label=exp.note or exp.category, field=exp.category,
               old_value=exp.amount, branch_id=exp.branch_id)

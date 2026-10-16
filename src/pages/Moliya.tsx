@@ -21,7 +21,7 @@ import {
 import { useAuth } from "../lib/AuthContext";
 import {
   FINANCE_ACCESS, CASH_ACCESS, PAYMENT_LIST_VIEW, can, PAYMENT_EDIT, founderLike,
-  SALARY_FIX, OTHER_INCOME_ACCESS } from "../lib/roles";
+  SALARY_FIX, OTHER_INCOME_ACCESS, BANK_TRANSFER_ACCESS } from "../lib/roles";
 import { OtherIncomeTab } from "../components/OtherIncome";
 import Debtors from "./Debtors";
 import LessonRefundsReview from "../components/LessonRefundsReview";
@@ -41,6 +41,7 @@ import { MonthPaymentsTab } from "../components/Payroll";
 import { QuickPayment } from "../components/QuickPayment";
 import { PayImportTab } from "../components/PayImport";
 import { CashDayCard } from "../components/CashDay";
+import { BankTransferPanel } from "../components/BankTransfers";
 import { MonthCloseView, PnlBoard } from "../components/MonthClose";
 import { MoneyInput } from "../components/MoneyInput";
 
@@ -138,6 +139,11 @@ function SummaryTable({ data }: { data: CashflowLedger }) {
       : []),
     { label: "Kirim", block: data.kirim, cls: "bg-emerald-100 text-emerald-900" },
     { label: "Chiqim", block: data.chiqim, cls: "bg-red-100 text-red-900" },
+    // Terminal ↔ naqd o'tkazmasi (2026-10-16): usuldan usulga, jami 0
+    ...(data.otkazma && METHOD_COLS.some((c) => c.key !== "total"
+      && Math.abs(data.otkazma![c.key]) >= 0.5)
+      ? [{ label: "O'tkazma", block: data.otkazma, cls: "bg-sky-100 text-sky-900" }]
+      : []),
     { label: "Kassa", block: data.kassa, cls: "bg-amber-100 text-amber-900" },
   ];
   return (
@@ -220,6 +226,9 @@ function PaymentKindTable({ data }: { data: CashflowLedger }) {
 
 function ledgerCategoryLabel(r: LedgerRow): string {
   if (r.direction === "balance") return "Oldingi oydan qoldiq";
+  // Terminal ↔ naqd o'tkazmasi va uning bank komissiyasi (2026-10-16)
+  if (r.direction === "transfer") return "Terminal ↔ naqd";
+  if (r.category === "bank_fee") return "Bank komissiyasi";
   if (r.direction === "in") {
     if (r.category === "other_income") return "Qo'shimcha daromad";
     return r.category === "new_payment" ? "Yangi to'lov" : "Eski to'lov";
@@ -234,7 +243,7 @@ function CashflowTab() {
   const { user } = useAuth();
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth() + 1);
-  const [filter, setFilter] = useState<"all" | "in" | "out">("all");
+  const [filter, setFilter] = useState<"all" | "in" | "out" | "transfer">("all");
   const [data, setData] = useState<CashflowLedger | null>(null);
   const [trend, setTrend] = useState<CashflowReport | null>(null);
   const [loading, setLoading] = useState(true);
@@ -243,6 +252,8 @@ function CashflowTab() {
   const canPayEdit = can(user?.role, PAYMENT_EDIT);
   // Ustoz oyligi yozuvini tuzatish — oylik huquqi borlarga (2026-10-12)
   const canSalaryFix = can(user?.role, SALARY_FIX);
+  // Terminal ↔ naqd o'tkazmasi (2026-10-16) — Pul oqimi huquqi bilan
+  const canTransfer = can(user?.role, BANK_TRANSFER_ACCESS);
   const [editing, setEditing] = useState<PayEditTarget | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -298,6 +309,15 @@ function CashflowTab() {
   if (limited) {
     return (
       <div>
+        {canTransfer && (
+          <BankTransferPanel
+            year={now.getFullYear()}
+            month={now.getMonth() + 1}
+            limited
+            reloadKey={reloadKey}
+            onChanged={() => setReloadKey((k) => k + 1)}
+          />
+        )}
         <CashDayCard reloadKey={reloadKey} />
         <p className="text-xs text-slate-400">
           Bu filialda administratorga Pul oqimidan faqat bugungi tushum
@@ -325,8 +345,11 @@ function CashflowTab() {
         Sana: r.date,
         Summa: r.amount,
         Izoh: r.title,
-        Usul: methodLabel(r.method),
+        Usul: r.direction === "transfer"
+          ? (r.kind === "deposit" ? "Naqd → Terminal" : "Terminal → Naqd")
+          : methodLabel(r.method),
         Turi: r.direction === "balance" ? "Qoldiq"
+          : r.direction === "transfer" ? "O'tkazma"
           : r.direction === "in" ? "Kirim" : "Chiqim",
         Filial: r.branch,
         Kategoriya: ledgerCategoryLabel(r),
@@ -430,10 +453,22 @@ function CashflowTab() {
         </div>
         <Note>
           Qoldiq — oldingi oydan qolgan pul (1-sentabr 2026 dan yuritiladi).
-          Kassa = qoldiq + kirim − chiqim, har bir usul bo'yicha alohida.
-          Chiqimga xarajatlar va haqiqatda berilgan ustoz oyliklari kiradi.
+          Kassa = qoldiq + kirim − chiqim ± o'tkazma, har bir usul bo'yicha
+          alohida. Chiqimga xarajatlar (bank komissiyasi ham) va haqiqatda
+          berilgan ustoz oyliklari kiradi. O'tkazma — terminal ↔ naqd, jami 0.
         </Note>
       </div>
+
+      {/* TERMINAL ↔ NAQD (2026-10-16): terminaldan naqd yechish (1%
+          komissiya) va naqdni terminalga topshirish + shu oy tarixi. */}
+      {canTransfer && (
+        <BankTransferPanel
+          year={range ? range.ty : year}
+          month={range ? range.tm : month}
+          reloadKey={reloadKey}
+          onChanged={() => setReloadKey((k) => k + 1)}
+        />
+      )}
 
       {/* --- Oylar kesimi (oraliq tanlanganda) --- */}
       {data.months && data.months.length > 1 && (
@@ -490,6 +525,7 @@ function CashflowTab() {
               { k: "all", l: "Hammasi" },
               { k: "in", l: "Kirim" },
               { k: "out", l: "Chiqim" },
+              { k: "transfer", l: "O'tkazma" },
             ] as const).map((f) => (
               <button
                 key={f.k}
@@ -530,12 +566,17 @@ function CashflowTab() {
                 {rows.map((r) => {
                   const bal = r.direction === "balance";
                   const inRow = r.direction === "in";
+                  // Terminal ↔ naqd o'tkazmasi (2026-10-16) — havorang
+                  const trRow = r.direction === "transfer";
                   const bg = bal
                     ? "bg-slate-50 hover:bg-slate-100"
+                    : trRow
+                    ? "bg-sky-50 hover:bg-sky-100"
                     : inRow
                     ? "bg-emerald-50 hover:bg-emerald-100"
                     : "bg-red-50 hover:bg-red-100";
-                  const fg = bal ? "text-slate-800" : inRow ? "text-emerald-900" : "text-red-900";
+                  const fg = bal ? "text-slate-800" : trRow ? "text-sky-900"
+                    : inRow ? "text-emerald-900" : "text-red-900";
                   return (
                     <tr
                       key={r.id}
@@ -546,7 +587,7 @@ function CashflowTab() {
                       </td>
                       <td className="px-4 py-2">{formatDate(r.date)}</td>
                       <td className="text-right font-medium tabular-nums pr-6">
-                        {bal ? "" : inRow ? "+" : "−"}
+                        {bal ? "" : trRow ? "↔ " : inRow ? "+" : "−"}
                         {formatSom(r.amount)}
                       </td>
                       <td className="py-2 pl-2">
@@ -561,9 +602,13 @@ function CashflowTab() {
                           r.title
                         )}
                       </td>
-                      <td>{methodLabel(r.method)}</td>
+                      <td>
+                        {trRow
+                          ? (r.kind === "deposit" ? "Naqd → Terminal" : "Terminal → Naqd")
+                          : methodLabel(r.method)}
+                      </td>
                       <td className="font-medium">
-                        {bal ? "Qoldiq" : inRow ? "Kirim" : "Chiqim"}
+                        {bal ? "Qoldiq" : trRow ? "O'tkazma" : inRow ? "Kirim" : "Chiqim"}
                       </td>
                       <td>{r.branch}</td>
                       <td>{ledgerCategoryLabel(r)}</td>
@@ -573,9 +618,11 @@ function CashflowTab() {
                             "tp12" ham "payment" deb, /payments/NaN ga ketib
                             "Xatolik: 422" berardi. Xodim oyligi (ssp) va
                             qo'shimcha daromad bu yerdan tahrirlanmaydi. */}
-                        {!bal && (() => {
+                        {!bal && !trRow && (() => {
                           const m = /^(tp|p|e)(\d+)$/.exec(String(r.id));
                           if (!m) return null;
+                          // Bank komissiyasi — o'tkazma orqali (2026-10-16)
+                          if (r.category === "bank_fee") return null;
                           const kind = m[1] === "tp" ? "teacher_payment"
                             : m[1] === "e" ? "expense" : "payment";
                           if (kind === "teacher_payment" ? !canSalaryFix : !canPayEdit) return null;
@@ -1253,8 +1300,11 @@ function ExpensesTab() {
   // (2026-10-02, Jahongir: "faqat bera olsin"). Oddiy xarajatni ham
   // faqat moliya o'chiradi (backend: EXPENSE_DELETE = FINANCE_ACCESS).
   const canPay = can(user?.role, SALARY_FIX);
+  // Bank komissiyasi (2026-10-16) — Terminal ↔ naqd o'tkazmasiga
+  // bog'langan, faqat Pul oqimidagi o'tkazmalar ro'yxatidan o'zgaradi.
+  const isAuto = (e: Expense) => e.category === "bank_fee";
   const canDelete = (e: Expense) =>
-    can(user?.role, e.id < 0 ? SALARY_FIX : FINANCE_ACCESS);
+    !isAuto(e) && can(user?.role, e.id < 0 ? SALARY_FIX : FINANCE_ACCESS);
   async function moveBranch(e: Expense, branchId: number) {
     try {
       await api.put(`/teacher-payments/${-e.id}/branch`, { branch_id: branchId });
@@ -1385,10 +1435,12 @@ function ExpensesTab() {
                     {formatSom(e.amount)}
                   </td>
                   <td className="px-4 py-3 text-right whitespace-nowrap">
-                    {e.id < 0 ? (
+                    {e.id < 0 || isAuto(e) ? (
                       <span
                         className="inline-block w-[15px] mr-2"
-                        title="Ustoz oyligi — ustozning oylik kartasidan tahrirlanadi"
+                        title={isAuto(e)
+                          ? "Bank komissiyasi — Pul oqimidagi «Terminal ↔ naqd» o'tkazmasidan tahrirlanadi"
+                          : "Ustoz oyligi — ustozning oylik kartasidan tahrirlanadi"}
                       />
                     ) : (
                       <button

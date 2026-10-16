@@ -243,6 +243,14 @@ MIGRATIONS = [
         "ALTER TABLE student_groups ADD COLUMN activated_on DATE",
         "UPDATE student_groups SET status = 'active' WHERE status IS NULL",
     ]),
+    # 2026-10-16: Terminal ↔ naqd o'tkazmasi (bank_cash_transfers) —
+    # jadvalni create_all yaratadi; bu yerda filial+sana indeksi (kassa
+    # qoldig'i shu ikki ustun bo'yicha so'raladi). Jahongir: terminaldan
+    # naqd yechish 1% komissiya bilan, naqdni terminalga topshirish.
+    ("0030_bank_cash_transfers", [
+        "CREATE INDEX IF NOT EXISTS ix_bank_cash_transfers_branch_date "
+        "ON bank_cash_transfers (branch_id, date)",
+    ]),
 
     # GURUH BO'YICHA MUZLATISH (2026-10-16, Jahongir: "2ta guruhi bor
     # o'quvchini bir guruhini muzlatsa ikkinchisi ham muzlayabdi,

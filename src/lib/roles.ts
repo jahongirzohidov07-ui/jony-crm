@@ -197,6 +197,13 @@ export const OTHER_INCOME_ACCESS = [
   ...FINANCE_ACCESS, ADMINISTRATOR, SALES_MANAGER,
 ];
 
+/** Terminal ↔ naqd o'tkazmasi (2026-10-16) — Pul oqimi bilan bir xil
+ *  (backend roles.BANK_TRANSFER_ACCESS). Tahrirlash/o'chirish va foiz —
+ *  server javobidagi can_manage / can_edit_rate belgilari bo'yicha. */
+export const BANK_TRANSFER_ACCESS = [
+  ...FINANCE_ACCESS, ADMINISTRATOR, SALES_MANAGER,
+];
+
 /** Lidlar bilan ishlaydiganlar. */
 export const LEAD_ACCESS = [
   ...FULL_ACCESS,

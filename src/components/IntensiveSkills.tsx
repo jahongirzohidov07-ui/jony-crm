@@ -1,69 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
-import { Headphones, Square, Volume2 } from 'lucide-react';
+import { useState } from 'react';
+import { Headphones } from 'lucide-react';
 import Practice from './IntensivePractice';
+import CourseLessonAudio from './CourseLessonAudio';
+import IntensiveSkillsExtension, { IntensiveWeeklyHomework } from './intensiveSkillsExtension';
+import authenticListening from '../data/intensive-authentic-listening.json';
 import { productionRubric, skillQuestions } from '../lib/intensive-skills';
 import type { SkillPack } from '../lib/intensive-skills';
 
 const button = 'rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-40';
 const panel = 'rounded-2xl border border-slate-200 bg-white p-4 md:p-6';
 
-function ListeningPlayer({ text }: { text: string }) {
-  const [playing, setPlaying] = useState(false);
-  const [rate, setRate] = useState(0.9);
-  const [message, setMessage] = useState('');
-  const active = useRef<SpeechSynthesisUtterance | null>(null);
-  useEffect(() => () => {
-    if (active.current) {
-      active.current.onend = null;
-      active.current.onerror = null;
-      window.speechSynthesis?.cancel();
-    }
-  }, []);
-  function stop() {
-    if (active.current) {
-      active.current.onend = null;
-      active.current.onerror = null;
-      window.speechSynthesis.cancel();
-      active.current = null;
-    }
-    setPlaying(false);
-  }
-  function play() {
-    if (!('speechSynthesis' in window)) {
-      setMessage('Qurilmangiz ovozli o‘qishni qo‘llamaydi. Ustoz quyidagi transkriptni ikki marta o‘qib beradi.');
-      return;
-    }
-    stop();
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voices = window.speechSynthesis.getVoices();
-    const english = voices.find(v => /^en[-_]GB/i.test(v.lang)) ?? voices.find(v => /^en/i.test(v.lang));
-    if (voices.length && !english) {
-      setMessage('Inglizcha ovoz topilmadi. Ustoz transkriptni o‘qib bersin yoki qurilmaga inglizcha ovoz qo‘shing.');
-      return;
-    }
-    if (english) utterance.voice = english;
-    utterance.lang = 'en-GB';
-    utterance.rate = rate;
-    utterance.onend = () => { setPlaying(false); active.current = null; };
-    utterance.onerror = () => { setPlaying(false); active.current = null; setMessage('Ovoz ishga tushmadi. Transkript orqali ustoz bilan tinglash mashqini bajaring.'); };
-    active.current = utterance;
-    setMessage(''); setPlaying(true);
-    window.speechSynthesis.speak(utterance);
-  }
-  return <div className="rounded-xl bg-blue-50 p-4">
-    <p className="text-sm leading-6 text-blue-950">1-tinglash: asosiy fikr. 2-tinglash: savollarga javob. Transkriptni tekshiruvdan keyin oching.</p>
-    <div className="mt-3 flex flex-wrap items-center gap-3">
-      <button type="button" onClick={play} disabled={playing} className={`${button} inline-flex items-center gap-2`}><Volume2 size={16} />Tinglash</button>
-      <button type="button" onClick={stop} disabled={!playing} className={`${button} inline-flex items-center gap-2`}><Square size={14} />To‘xtatish</button>
-      <label className="text-sm">Tezlik <select value={rate} disabled={playing} onChange={e => setRate(Number(e.target.value))} className="ml-2 rounded-lg border border-blue-200 bg-white p-2"><option value={0.75}>Sekin</option><option value={0.9}>O‘rtacha</option><option value={1}>Tabiiy</option></select></label>
-    </div>
-    <p className="mt-2 text-xs leading-5 text-slate-600">Qurilmaning sun’iy ovozi. Talaffuz va ovoz mavjudligi qurilmaga bog‘liq; ustoz transkriptni tabiiy ovozda ham o‘qib beradi.</p>
-    {message && <p role="status" className="mt-2 text-sm text-amber-900">{message}</p>}
-  </div>;
-}
-
 export default function IntensiveSkills({ pack }: { pack: SkillPack }) {
   const [mode, setMode] = useState<'reading' | 'listening' | 'production'>('reading');
+  const authentic = authenticListening.find(item => item.lesson === pack.lesson);
   return <section className="space-y-4" aria-label="To‘rt ko‘nikma mashqlari">
     <div className={panel}>
       <p className="text-xs font-bold uppercase tracking-wide text-blue-600">{pack.level} · {pack.lesson}-dars</p>
@@ -76,11 +25,19 @@ export default function IntensiveSkills({ pack }: { pack: SkillPack }) {
     {mode === 'reading' && <>
       <article className={panel}><h4 className="text-lg font-bold">{pack.reading.title}</h4><p className="mt-3 whitespace-pre-line text-base leading-8 text-slate-700">{pack.reading.text}</p></article>
       <Practice key={`reading-${pack.lesson}`} title="Matnni tushunish" questions={skillQuestions(pack, 'reading')} />
+      <IntensiveSkillsExtension key={pack.lesson} pack={pack} mode="reading" />
     </>}
     {mode === 'listening' && <>
-      <div className={panel}><h4 className="font-bold">Haqiqiy ovoz bilan qo‘shimcha tinglash</h4><p className="mt-2 text-sm leading-6 text-slate-600">Ustoz bugungi darajaga mos yozuvni tanlaydi: avval tayyorgarlik, keyin ikki tinglash va topshiriqlar, oxirida transkript. Boshlang‘ich haftada faqat tanish so‘zlarni topishdan boshlang. Bu tashqi mashq natijasi Jony kabinetiga avtomatik yozilmaydi.</p><div className="mt-3 flex flex-wrap gap-3">{['a1','a2','b1'].map(level=><a key={level} className="text-sm font-semibold text-blue-700 underline" href={`https://learnenglish.britishcouncil.org/free-resources/listening/${level}`} target="_blank" rel="noreferrer">British Council · {level.toUpperCase()}</a>)}<a className="text-sm font-semibold text-blue-700 underline" href="https://learnenglish.britishcouncil.org/free-resources/listening/b2/business-interview" target="_blank" rel="noreferrer">B2 · A business interview</a></div></div>
-      <div className={panel}><h4 className="mb-3 flex items-center gap-2 text-lg font-bold"><Headphones size={20} />{pack.listening.title}</h4><ListeningPlayer key={pack.lesson} text={pack.listening.text} /></div>
+      {authentic && <aside className={panel} aria-label="Authentic listening">
+        <h4 className="font-bold">{authentic.title} · {authentic.level}</h4>
+        <p className="mt-2 text-sm leading-6 text-slate-700">{authentic.focus}</p>
+        <p className="mt-2 text-sm leading-6 text-slate-600">{authentic.minutes} daqiqa: 120 daqiqalik uy vazifasining odatdagi reading/listening bloki o‘rniga; qo‘shimcha vaqt emas.</p>
+        <a className="mt-3 inline-block text-sm font-semibold text-blue-700 underline" href={authentic.url} target="_blank" rel="noreferrer">{authentic.provider} · {authentic.title}</a>
+        <p className="mt-2 text-sm leading-6 text-slate-600">Asl saytda: Preparation → audio → Task 1 → Task 2 → javoblarni tekshirish. Ustoz tashqi saytdagi worksheet va uning kalitidan foydalanadi. Natija Jony kabinetiga avtomatik ko‘chirilmaydi.</p>
+      </aside>}
+      <div className={panel}><h4 className="mb-3 flex items-center gap-2 text-lg font-bold"><Headphones size={20} />{pack.listening.title}</h4><CourseLessonAudio key={pack.lesson} course="intensive" lesson={pack.lesson} title={pack.listening.title} /></div>
       <Practice key={`listening-${pack.lesson}`} title="Tinglab tushunish" questions={skillQuestions(pack, 'listening')} />
+      <IntensiveSkillsExtension key={pack.lesson} pack={pack} mode="listening" />
       <details className={panel}><summary className="cursor-pointer font-semibold">Transkript — tekshirgandan keyin oching</summary><p className="mt-3 whitespace-pre-line text-base leading-8 text-slate-700">{pack.listening.text}</p></details>
     </>}
     {mode === 'production' && <>
@@ -92,5 +49,6 @@ export default function IntensiveSkills({ pack }: { pack: SkillPack }) {
       </div>)}
       <div className={panel}><h4 className="font-bold">Ustozning tekshiruv mezoni</h4><p className="mt-2 text-sm leading-6 text-slate-500">Har mezon: 0 — hali bajarmadi, 1 — yordam bilan, 2 — mustaqil bajardi. Jami 8 ball. Bu ichki mashq mezoni; milliy sertifikat bali emas.</p><dl className="mt-3 space-y-3">{productionRubric.map(([title, description]) => <div key={title}><dt className="text-sm font-semibold">{title}</dt><dd className="mt-1 text-sm leading-6 text-slate-600">{description}</dd></div>)}</dl><p className="mt-4 text-sm leading-6 text-blue-800">6/8 dan past yoki bir mezon 0 bo‘lsa: aynan shu bandni qayta mashq qildiring. Bitta yaxshi jihat, bitta tuzatish va qayta topshirish vazifasini ayting.</p></div>
     </>}
+    <IntensiveWeeklyHomework key={pack.lesson} lesson={pack.lesson} />
   </section>;
 }

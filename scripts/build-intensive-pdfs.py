@@ -3,7 +3,7 @@ Run node scripts/test-intensive.cjs --export first. Requires reportlab.
 """
 from pathlib import Path
 from xml.sax.saxutils import escape
-import json, re, random, argparse
+import json, re, random, argparse, subprocess
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib import colors
@@ -16,7 +16,7 @@ OUT=ROOT/'public/intensive'
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--sections',nargs='+',choices=['teacher','vocabulary','grammar'],default=['teacher','vocabulary','grammar'])
 SECTIONS=parser.parse_args().sections
-D=json.loads((OUT/'course-export.json').read_text(encoding='utf-8'))
+D=({'words':json.loads((ROOT/'src/data/intensive-vocabulary.json').read_text(encoding='utf-8'))} if SECTIONS==['teacher'] else json.loads((OUT/'course-export.json').read_text(encoding='utf-8')))
 GUIDANCE=json.loads((ROOT/'src/data/intensive-lesson-guidance.json').read_text(encoding='utf-8'))
 NOTES=json.loads((ROOT/'src/data/intensive-teacher-notes.json').read_text(encoding='utf-8'))
 for name,file in [('Jony','arial.ttf'),('JonyBold','arialbd.ttf')]:pdfmetrics.registerFont(TTFont(name,'C:/Windows/Fonts/'+file))
@@ -40,29 +40,64 @@ def table(rows,widths):
     t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#E5EDFF')),('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,PALE]),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7),('LINEBELOW',(0,0),(-1,-1),.35,LINE)]));return t
 
 if 'teacher' in SECTIONS:
-    # Teacher playbook: daily instructions and exact assigned topic IDs, not an empty calendar.
-    story=cover('Ustoz qo‘llanmasi','8 oy · 32 hafta · 192 dars','Har yangi ustoz bir xil tartibda ishlashi uchun: dars oldi tayyorgarlik, 120 daqiqalik ssenariy, mavzu va so‘z oralig‘i, 120 daqiqalik uy vazifasi, tekshiruv mezonlari.')
-    story += [p('Kursdan foydalanish','title'),p('1. Oy → hafta → darsni oching. Bugungi grammar kartalari va so‘zlarni ko‘rib chiqing.\n2. Har shakl: namuna → birga mashq → mustaqil ishlatish.\n3. Har 10 so‘zdan keyin mashq; har 20 so‘zdan keyin aralash qaytarish.\n4. Javoblarni oldindan ko‘rsatmang. Tekshirgach xatolarni qayta ishlang.\n5. Har haftaning 6-kuni yangi material emas, aralash mashq va tekshiruv.\n6. 32 hafta — o‘quv bloki. Bayram va qayta o‘tishlar kalendardagi zaxira kunlariga joylanadi.'),p('Birinchi dars: orientatsiya','h'),p('0–15: kurs maqsadi. 15–30: xarita, daftar va uy vazifasi tartibi. 30–45: noun va adjective. 45–60: birinchi 10 so‘z. 60–65: tanaffus. 65–80: keyingi so‘zlar. 80–95: mashqni birga bajarish. 95–110: tinglash va gapirish. 110–120: uy ishini namoyish qilish.'),p('Natijani qanday tekshiramiz?','h'),p('Chiqish bileti: 3 so‘z + 2 grammar savoli. 4/5 dan past bo‘lsa, keyingi dars boshida aynan xato mavzu qaytariladi. Erkin gaplarda shakl, ma’no va yangi lug‘atni mustaqil ishlatish tekshiriladi. Sinf mashqlari vaqtinchalik. Dars sahifasidan guruhga yuborilgan topshiriq natijalari o‘quvchi kabinetida saqlanadi. Birinchi urinishdagi xatolar 1, 3, 7 kundan keyin shaxsiy qaytarish bo‘lib ochiladi.'),p('Material tayyorligi','h'),p('Har dars uchun grammar, 25 yangi so‘z (har 6-kun takrorlash), reading, listening, speaking va writing topshiriqlari bor. To‘rt ko‘nikma matnlari, kalitlari va namunalari oyma-oy alohida PDFda ham berilgan. O‘qituvchi o‘quvchining mustaqil ishlashini baholaydi; B2 tayyorligini rasmiy mezonlar bilan alohida tekshiradi.'),PageBreak()]
-    for key,title in [('timeline','Oddiy dars · 120 daqiqa'),('reviewTimeline','Takrorlash darsi · 120 daqiqa'),('homework','Uy vazifasi · 120 daqiqa')]:
-        story.append(p(title,'title'));minute=0
-        for duration,label,instruction in D[key]:
-            story.append(KeepTogether([p(f'{minute}–{minute+duration} daqiqa · {label}','sub'),p(instruction)]));minute+=duration
-        assert minute==120;story.append(PageBreak())
-    for week in range(1,33):
-        lessons=D['lessons'][(week-1)*6:week*6]
-        story += [p(f'{(week-1)//4+1}-oy / {week}-hafta','title'),p(' · '.join(D['grammar'][i]['title'] for i in lessons[0]['moduleIds']),'h'),p(f'Lug‘at: {(week-1)*125+1}–{week*125}. Har yangi darsda 25 so‘z: avval 10 + 10, so‘ng 5 qo‘shimcha. Har 6-kun — takrorlash.','small')]
-        for lesson in lessons:
-            ids=', '.join(t['id'] for t in lesson['topics'])
-            titles='; '.join(t['title'] for t in lesson['topics'])
-            if lesson['review']:titles='Hafta grammatikasi, 20 aralash so‘z, tinglash va erkin gaplar; xatolarni tuzatish.'
-            status='Lug‘at tayyor' if lesson['wordsReady'] else f"Lug‘at to‘liq emas: {len(lesson['words'])}/{lesson['end']-lesson['start']+1}"
-            story.append(KeepTogether([p(f"{lesson['no']}-dars · {lesson['day']}-kun",'sub'),p(titles,'small'),p(f"Grammar kartalari: {ids}\nSo‘zlar {lesson['start']}–{lesson['end']} · {status}",'small')]))
-            guide=GUIDANCE[lesson['no']-1]
-            for label,value in [('Maqsad',guide['objective']),('Doska', '\n'.join(guide['board'])),('Tushuntirish',guide['explain']),('Tekshiruv','\n'.join(guide['checkQuestions'])),('Kutiladigan xato',guide['commonMistake']),('Yordam va qo‘shimcha',guide['differentiation']),('Chiqish bileti','\n'.join(guide['exitTicket'])),('Aniq uy vazifasi','\n'.join(guide['homework']))]:
-                story.extend([p(label,'sub'),p(value,'small')])
-            story.append(Spacer(1,12))
-        story += [p('Uyga vazifa: yuqoridagi 120 daqiqalik uy ishi tartibi, faqat bugun o‘tilgan mavzu va so‘zlar. Keyingi darsda 5 so‘z va 2 yangi gap bilan tekshiring.','small'),PageBreak()]
-    save('jony-intensive-teacher-guide.pdf',story[:-1])
+    # Regenerate from the exact pure UI module, never from a stale copied timeline.
+    subprocess.run(['node', str(ROOT/'scripts/export-intensive-teaching.cjs')], cwd=ROOT, check=True)
+    kits=json.loads((ROOT/'_inbox/intensive-teacher-kits.json').read_text(encoding='utf-8'))
+    assert len(kits)==192
+    def teacher_book(selected, name, subtitle):
+        story=cover('Ustoz to‘plami',subtitle,'Saytdagi dars rejasiga mos: darsga mos vaqt, aniq mashq raqamlari, javob, uy vazifasi va keyingi ustozga topshirish. 16 o‘quvchilik guruh uchun; Sayt orqali guruh hajmini moslang. Kalitlar faqat ustoz uchun.')
+        for k in selected:
+            assert k['totalMinutes']==120
+            story += [p(f"{k['lesson']}-dars / {k['week']}-hafta / {k['month']}-oy",'title'),p(k['profileLabel'],'sub'),p(k['objective']),p(k['boundary'])]
+            m=k['materials']
+            for label,value in [('Doska', '\n'.join(m['board'])),('Tushuntirish',m['explain']),('Xato',m['commonMistake']),('Yordam',m['differentiation'])]:
+                story += [p(label,'sub'),p(value,'small')]
+            for stage in k['stages']:
+                story += [p(f"{stage['start']}–{stage['end']} · {stage['title']}",'sub'),p(stage['instruction'],'small'),p('ID: '+', '.join(stage['exerciseIds']),'small')]
+            if k['exam']: story += [p(k['exam']['notice'],'small')]
+            story += [p('Asosiy mashqlar — qisqa havolalar','sub'),p(', '.join(k['mandatoryExerciseIds']),'small'),p('Savollar va javoblar — ustoz uchun','h')]
+            required=set(k['mandatoryExerciseIds'])|{x for h in k['homework'] for x in h['exerciseIds']}
+            for q in k['questions']:
+                if q['id'] in required:
+                    story += [p(q['id']+' · '+q['prompt'],'small'),p('Javob: '+' / '.join(q['answers'])+'. '+q['explanation'],'small')]
+            story += [p('Bugungi lug‘at','h')]
+            for w in m['vocabulary']:
+                story += [p(f"{w['id']} · {w['word']} {w['ipa']} — {w['meaning']}",'small'),p(w['example']+' · '+w['translation'],'small')]
+            audio_url='https://jonyos.uz'+m['audioUrl']
+            story += [Paragraph(f'<link href="{audio_url}" color="#2162E8">Dars audiosi: {audio_url}</link>',styles['small'])]
+            skills=m['skills']
+            if skills:
+                for mode in ['reading','listening']:
+                    story += [p(mode.title()+' · '+skills[mode]['title'],'sub'),p(skills[mode]['text'],'small')]
+                for mode in ['speaking','writing']:
+                    story += [p(mode.title(),'sub'),p(skills[mode]['prompt'],'small'),p('Mezon: '+' · '.join(skills[mode]['success']),'small')]
+                story += [p('Writing namuna — urinishdan keyin','sub'),p(skills['writing']['model'],'small')]
+            if m.get('previousSkills'):
+                prev=m['previousSkills']
+                story += [p('Uy vazifasi uchun oldingi dars materiallari','h')]
+                for mode in ['reading','listening']:
+                    story += [p(prev[mode]['title'],'sub'),p(prev[mode]['text'],'small')]
+                story += [p('Oldingi writing namuna', 'sub'),p(prev['writing']['model'],'small'),p(' · '.join(prev['writing']['success']),'small'),p(' · '.join(prev['speaking']['success']),'small')]
+            story += [p('Qo‘shimcha bank','sub'),p(k['extensionInstruction'],'small')]
+            for q in k['questions']:
+                if q['id'] in k['extensionExerciseIds'] and q['id'] not in required:
+                    story += [p(q['id']+' · '+q['prompt'],'small'),p('Javob: '+' / '.join(q['answers'])+'. '+q['explanation'],'small')]
+            story += [p('Chiqish bileti — ustoz kaliti','sub')]+[p(x,'small') for x in k['exitTicket']]
+            if k.get('unseenHomework'):
+                weekly=k['unseenHomework']
+                story += [p(f"{weekly['week']}-hafta yangi mustaqil matni",'h'),p(weekly['title'],'sub'),p(weekly['instructions'],'small'),p(weekly['text'],'small')]
+                for task in weekly['tasks']:
+                    story += [p(task['id']+' · '+task['prompt'],'small')]+[p(option,'small') for option in task['options']]
+                    story += [p('Ustoz kaliti: '+task['teacher']['answer'],'small'),p('Dalil: '+' / '.join(task['teacher']['evidence']),'small')]
+            story += [p(f"Uy vazifasi · {k['homeworkMinutes']} daqiqa asosiy",'h')]
+            for h in k['homework']: story += [p(f"{h['minutes']} daqiqa · {h['task']}",'small')]
+            story += [p('Keyingi ustozga topshirish','h'),p(k['handoff']['nextObjective'],'small'),p(k['handoff']['instruction'],'small')]
+            story += [p(x+': ____________________','small') for x in k['handoff']['fields']]
+            story.append(PageBreak())
+        save(name,story[:-1])
+    teacher_book(kits,'jony-intensive-teacher-guide.pdf','8 oy · 32 hafta · 192 dars')
+    for month in range(1,9):
+        teacher_book([k for k in kits if k['month']==month],f'jony-intensive-month-{month}-teacher.pdf',f'{month}-oy · 24 dars')
 
 
 if 'vocabulary' in SECTIONS:

@@ -1,0 +1,187 @@
+[
+  {
+    "no": 12,
+    "reading": "Ich heiße Sara. Ich wohne in Berlin und lerne Deutsch. Am Montag arbeite ich nicht. Ich kaufe einen Tisch und eine Lampe. Mein Bruder braucht keinen Tisch.",
+    "readingQuestions": [
+      [
+        "Wo wohnt Sara?",
+        "In Berlin."
+      ],
+      [
+        "Was kauft Sara?",
+        "Einen Tisch und eine Lampe."
+      ],
+      [
+        "Braucht ihr Bruder einen Tisch?",
+        "Nein."
+      ]
+    ],
+    "listening": "Hallo, ich bin Tom. Ich wohne in Bonn. Ich habe heute Zeit. Meine Schwester ist müde. Sie lernt heute nicht. Wir haben ein Buch und zwei Stifte.",
+    "listeningQuestions": [
+      [
+        "Wo wohnt Tom?",
+        "In Bonn."
+      ],
+      [
+        "Wie ist seine Schwester?",
+        "Müde."
+      ],
+      [
+        "Wie viele Stifte haben sie?",
+        "Zwei."
+      ]
+    ],
+    "speaking": "Yangi kursdosh bilan tanishing: ism va yashash joyini ayting, sherikdan ikki ma’lumot so‘rang, javobiga munosabat bildiring. Har kishi 60–90 soniya gapirsin.",
+    "writing": "Yangi kursdoshga 4–6 sodda gap yozing: kimligingiz, yashash joyingiz va bugun vaqtingiz bor/yo‘qligi. Unga bir savol bering.",
+    "speakingModel": "Ich heiße Sara. Ich wohne in Berlin. Wo wohnst du? Lernst du Deutsch? — Ja. — Ich auch!",
+    "writingModel": "Hallo Tom! Ich heiße Sara. Ich wohne in Berlin. Ich lerne Deutsch. Heute habe ich Zeit. Hast du auch Zeit? Viele Grüße, Sara"
+  },
+  {
+    "no": 24,
+    "reading": "Mina arbeitet von acht bis vier. Heute muss sie früh nach Hause gehen. Ihr Kind ist krank. Sie fährt mit dem Bus. Am Abend ruft sie ihre Mutter an. Morgen muss Mina nicht arbeiten.",
+    "readingQuestions": [
+      [
+        "Bis wann arbeitet Mina normalerweise?",
+        "Bis vier."
+      ],
+      [
+        "Warum geht sie heute früh?",
+        "Ihr Kind ist krank."
+      ],
+      [
+        "Muss sie morgen arbeiten?",
+        "Nein."
+      ]
+    ],
+    "listening": "Guten Tag! Der Kurs beginnt am Dienstag um neun Uhr. Bitte kommen Sie zehn Minuten früher. Bringen Sie einen Stift mit. Sie dürfen hier Wasser trinken. Im Kursraum dürfen Sie nicht telefonieren.",
+    "listeningQuestions": [
+      [
+        "Wann beginnt der Kurs?",
+        "Am Dienstag um neun Uhr."
+      ],
+      [
+        "Was sollen die Teilnehmer mitbringen?",
+        "Einen Stift."
+      ],
+      [
+        "Darf man im Kursraum telefonieren?",
+        "Nein."
+      ]
+    ],
+    "speaking": "Do‘st bilan kutubxonaga borishni rejalang: kun, vaqt, transportni kelishing. Bitta taklifga javob bering va ruxsat haqida savol bering. Har kishi 90 soniya gapirsin.",
+    "writing": "Kutubxonaga keladigan do‘stga 5–7 gapli xabar: uchrashuv vaqti, joyi, olib kelishi kerak bo‘lgan buyum va bitta qoida.",
+    "speakingModel": "Können wir am Dienstag gehen? — Ja, um zehn Uhr. — Ich fahre mit dem Bus. Darf ich dort telefonieren? — Nein, im Leseraum nicht.",
+    "writingModel": "Hallo Ali! Wir treffen uns am Dienstag um zehn Uhr vor der Bibliothek. Ich fahre mit dem Bus. Bring bitte einen Stift mit. Im Leseraum dürfen wir nicht telefonieren. Kannst du pünktlich kommen? Viele Grüße, Mina"
+  },
+  {
+    "no": 36,
+    "reading": "Am Samstag hat Paul seine Schwester besucht. Er ist mit dem Zug gefahren. Die Fahrt hat zwei Stunden gedauert. Früher hatte er kein Auto. Jetzt hat er ein Auto, aber am Samstag war er müde. Er ist nicht selbst gefahren.",
+    "readingQuestions": [
+      [
+        "Wen hat Paul besucht?",
+        "Seine Schwester."
+      ],
+      [
+        "Wie lange hat die Fahrt gedauert?",
+        "Zwei Stunden."
+      ],
+      [
+        "Warum ist er nicht selbst gefahren?",
+        "Er war müde."
+      ]
+    ],
+    "listening": "Hallo Lea! Gestern konnte ich nicht anrufen. Ich musste bis sieben arbeiten. Danach habe ich gekocht. Heute habe ich frei. Ich werde dich am Nachmittag anrufen. Bitte warte nicht am Vormittag auf meinen Anruf.",
+    "listeningQuestions": [
+      [
+        "Bis wann musste die Person arbeiten?",
+        "Bis sieben."
+      ],
+      [
+        "Was hat sie danach gemacht?",
+        "Gekocht."
+      ],
+      [
+        "Wann wird sie anrufen?",
+        "Am Nachmittag."
+      ]
+    ],
+    "speaking": "Sherikka o‘tgan dam olish kuningizni ayting: qayerga bordingiz, nima qildingiz, nima qila olmadingiz. Uning hikoyasiga ikki savol bering. Har kishi 2 daqiqa gapirsin.",
+    "writing": "Do‘stga 50–70 so‘zli xabar: kechagi rejangiz, nima sodir bo‘lgani va bajara olmagan ishingiz. Yangi uchrashuv vaqtini taklif qiling.",
+    "speakingModel": "Ich bin nach Samarkand gefahren. Dort habe ich meine Tante besucht. Ich konnte nicht lange bleiben. Was hast du gemacht? Wie war das Wetter?",
+    "writingModel": "Hallo Lea, gestern musste ich lange arbeiten. Danach habe ich zu Hause gekocht. Ich konnte dich leider nicht anrufen. Am Samstag bin ich zu meiner Schwester gefahren und habe dort gegessen. Heute habe ich frei. Ich werde dich am Nachmittag anrufen. Hast du dann Zeit? Wir können auch am Sonntag zusammen kochen. Viele Grüße, Paul"
+  },
+  {
+    "no": 48,
+    "reading": "Nora sucht eine Wohnung. Das kleine Zimmer im Zentrum ist teurer als das Zimmer am Bahnhof. Nora nimmt das Zimmer am Bahnhof, weil sie wenig Geld hat. Wenn sie früh arbeitet, nimmt sie den Bus. Sie fragt den Vermieter, ob Fahrräder im Hof stehen dürfen.",
+    "readingQuestions": [
+      [
+        "Welches Zimmer ist teurer?",
+        "Das Zimmer im Zentrum."
+      ],
+      [
+        "Warum nimmt Nora das Zimmer am Bahnhof?",
+        "Sie hat wenig Geld."
+      ],
+      [
+        "Was möchte sie vom Vermieter wissen?",
+        "Ob Fahrräder im Hof stehen dürfen."
+      ]
+    ],
+    "listening": "Wir treffen uns am Freitag im neuen Café am Markt. Der Bus ist billiger als das Taxi. Ich weiß noch nicht, ob Tim kommt. Er hat gesagt, dass er bis fünf arbeitet. Wenn er später kommt, bestellen wir zuerst nur Getränke.",
+    "listeningQuestions": [
+      [
+        "Wo ist das Treffen?",
+        "Im neuen Café am Markt."
+      ],
+      [
+        "Was ist billiger als das Taxi?",
+        "Der Bus."
+      ],
+      [
+        "Was bestellen sie, wenn Tim später kommt?",
+        "Zuerst nur Getränke."
+      ]
+    ],
+    "speaking": "Ikki xonani solishtiring: markazdagi xona 500 yevro, bekatdagi xona 350 yevro. Bittasini tanlab sabab ayting; sherikning taklifiga javob bering. Har kishi 2 daqiqa gapirsin.",
+    "writing": "60–80 so‘zli xatda xona haqida so‘rang: o‘zingizni tanishtiring, tanlovingiz sababini yozing, narx va ko‘rish vaqtini bilvosita savol bilan aniqlang.",
+    "speakingModel": "Das Zimmer am Bahnhof ist billiger. Ich nehme es, weil ich Geld sparen möchte. Was meinst du? — Das Zentrum ist näher. — Ja, aber ich kann den Bus nehmen.",
+    "writingModel": "Guten Tag, ich heiße Nora und suche ein Zimmer. Ich interessiere mich für das Zimmer am Bahnhof, weil ich oft mit dem Zug fahre. Es ist auch billiger als das Zimmer im Zentrum. Können Sie mir sagen, wie viel es im Monat kostet? Ich möchte wissen, ob ich das Zimmer am Freitag sehen kann. Wenn Sie Zeit haben, komme ich am Nachmittag. Mit freundlichen Grüßen, Nora"
+  },
+  {
+    "no": 60,
+    "reading": "Unsere Gruppe wollte am Samstag den Park reinigen. Obwohl es regnete, kamen zwölf Personen. Bevor wir anfingen, verteilte die Leiterin Handschuhe. Wir sammelten Müll, damit die Kinder dort sicher spielen können. Nach zwei Stunden waren wir fertig. Nächstes Mal möchten wir mehr Nachbarn einladen.",
+    "readingQuestions": [
+      [
+        "Wie viele Personen kamen trotz des Regens?",
+        "Zwölf."
+      ],
+      [
+        "Was verteilte die Leiterin vor dem Beginn?",
+        "Handschuhe."
+      ],
+      [
+        "Warum sammelte die Gruppe Müll?",
+        "Damit die Kinder dort sicher spielen können."
+      ]
+    ],
+    "listening": "Ich wollte gestern eine Präsentation vorbereiten. Nachdem ich meine Notizen gelesen hatte, rief meine Kollegin an. Wir sprachen über den neuen Plan. Danach schrieb ich drei Beispiele auf, um meine Meinung zu erklären. Ich ging erst nach Hause, als alles fertig war.",
+    "listeningQuestions": [
+      [
+        "Was hatte die Person vor dem Anruf gemacht?",
+        "Ihre Notizen gelesen."
+      ],
+      [
+        "Worüber sprachen die Kollegen?",
+        "Über den neuen Plan."
+      ],
+      [
+        "Warum schrieb die Person Beispiele auf?",
+        "Um ihre Meinung zu erklären."
+      ]
+    ],
+    "speaking": "Mahallada tozalash tadbirini rejalang: vazifalar, vaqt, yomg‘ir bo‘lsa muqobil reja. Keyin foydasi haqida 90 soniya fikr bildiring. Sherik bir savol bersin; rollarni almashtiring.",
+    "writing": "80–100 so‘zli fikr matni yozing: mahallada ko‘ngilli ishning foydasi, bitta qiyinchilik, shaxsiy misol va keyingi tadbirga taklif. Bu ichki mashq hajmi, rasmiy modul talabi emas.",
+    "speakingModel": "Wir können am Samstag anfangen. Obwohl es regnen kann, möchte ich kommen. Wir brauchen Handschuhe, damit alle sicher arbeiten können. Was übernehmen wir? — Ich bringe die Säcke. — Gut, ich lade die Nachbarn ein.",
+    "writingModel": "Ich finde freiwillige Arbeit im Stadtteil sinnvoll, weil wir unsere Nachbarn besser kennenlernen. Letzten Samstag haben wir den Park gereinigt. Bevor wir anfingen, verteilte unsere Leiterin Handschuhe. Obwohl es regnete, haben zwölf Personen mitgeholfen. Eine Schwierigkeit ist die Zeit: Viele Menschen arbeiten am Wochenende. Deshalb wählen wir den nächsten Termin gemeinsam. Ich schlage einen kurzen Einsatz am Sonntag vor. Wir können auch Familien einladen, damit Kinder sehen, wie man die Umwelt schützt. Wenn jede Person eine kleine Aufgabe übernimmt, können wir zusammen viel erreichen."
+  }
+]

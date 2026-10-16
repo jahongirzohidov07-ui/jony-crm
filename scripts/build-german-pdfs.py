@@ -1,5 +1,8 @@
 """Build Jony German course books from the same JSON used by the app."""
 import json
+import argparse
+import os
+import subprocess
 from pathlib import Path
 from xml.sax.saxutils import escape
 from reportlab.pdfbase import pdfmetrics
@@ -13,6 +16,15 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / 'src/data/german'
 OUT = ROOT / 'public/german'
 OUT.mkdir(parents=True, exist_ok=True)
+parser = argparse.ArgumentParser()
+parser.add_argument('--skip-vocabulary', action='store_true', help='Retain unchanged vocabulary PDFs')
+parser.add_argument('--site-url', default=os.environ.get('COURSE_PUBLIC_URL', ''), help='Public app origin for absolute MP3 links; otherwise links are relative to this PDF in /german/')
+args = parser.parse_args()
+teaching = json.loads(subprocess.check_output(['node', str(ROOT/'scripts/export-german-teaching.cjs')], cwd=ROOT, encoding='utf-8'))
+kits = {k['no']: k for k in teaching['lessons']}
+extra = {t['topicId']: [] for t in teaching['exercises']}
+for exercise in teaching['exercises']: extra[exercise['topicId']].append(exercise)
+
 read = lambda name: json.loads((DATA / name).read_text(encoding='utf-8'))
 words = sum([read(f'vocabulary-{n}.json') for n in range(1,4)], [])
 grammar, lessons, skills = read('grammar.json'), read('lessons.json'), read('skills.json')
@@ -52,8 +64,51 @@ def vocabulary(pool, name, title):
         table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#dbeafe')),('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,colors.HexColor('#f3f6fc')]),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),4),('BOTTOMPADDING',(0,0),(-1,-1),4),('LINEBELOW',(0,0),(-1,0),1,BLUE),('LINEBELOW',(0,1),(-1,-1),0.3,colors.HexColor('#dfe6f0'))]))
         story += [table,Spacer(1,10),p('O‘zimni tekshirish: □ Ma’nosini bilaman   □ Talaffuz qilaman   □ Gapda ishlataman','small')]
     save(name,story,landscape(A4))
-vocabulary(words,'jony-deutsch-vocabulary','0 → B1 · 2 400 so‘z va ibora')
-for month in range(1,7): vocabulary(words[(month-1)*400:month*400],f'jony-deutsch-month-{month}-vocabulary',f'{month}-oy · 400 so‘z')
+if not args.skip_vocabulary:
+    vocabulary(words,'jony-deutsch-vocabulary','0 → B1 · 2 400 so‘z va ibora')
+    for month in range(1,7): vocabulary(words[(month-1)*400:month*400],f'jony-deutsch-month-{month}-vocabulary',f'{month}-oy · 400 so‘z')
+
+def timeline(rows):
+    result=[]
+    end=0
+    for minutes,title,text in rows:
+        start=end; end+=minutes
+        result += [p(f'{start}–{end} daqiqa · {title}','sub'),p(text)]
+    return result
+
+def audio_link(no):
+    path=kits[no]['audioPath']
+    url=args.site_url.rstrip('/')+path if args.site_url else 'audio/'+path.rsplit('/',1)[-1]
+    return Paragraph('Sun’iy ovozli dars yozuvi · <link href="'+escape(url, {'"':'&quot;'})+'" color="#2162e8">MP3: '+escape(path)+'</link>',STYLES['small'])
+
+def exercise_flow(e, answers=False):
+    result=[p(e['id']+' · '+e['kind'],'sub'),p(e['prompt'])]
+    if answers:
+        result += [p('Namuna: '+e['model'],'sub'),p(e['guidance'])]+[p('• '+c,'small') for c in e['criteria']]
+    else:
+        result += [p('Javob / yangi vaziyat: __________________________________________'),Spacer(1,12)]
+    return result
+
+def checkpoint_flow(c, answers=False):
+    result=[p(str(c['no']//12)+'-oy · ichki nazorat'+(' / USTOZ KALITI' if answers else ''),'title'),p(c['administration'])]
+    for kind,label in [('reading','Lesen'),('listening','Hören')]:
+        result += [p(label,'h')]
+        if kind=='reading' or answers: result += [p(c[kind])]
+        else: result += [p('Ustoz skriptni ikki marta o‘qiydi. Bu nazorat skripti dars MP3sidan alohida.')]
+        for i,(q,a) in enumerate(c[kind+'Questions'],1):
+            result += [p(f'{i}. {q}'+(' — '+a if answers else '')),p('Javob: ____________________','small') if not answers else Spacer(1,4)]
+    result += [p('Grammatika · avval o‘tilgan mavzular','h')]
+    for e in c['grammar']: result += exercise_flow(e, answers)
+    result += [p('Avvalgi faol lug‘at','h')]
+    for v in c['vocabulary']: result += [p(v['prompt']+(' — #'+str(v['id'])+' '+v['answer'] if answers else '')),Spacer(1,8)]
+    for kind,label in [('speaking','Sprechen'),('writing','Schreiben')]:
+        result += [p(label,'h'),p(c[kind])]
+        if answers: result += [p('Namuna: '+c[kind+'Model'])]
+        result += [p('0 / 1 / 2: '+criterion,'small') for criterion in c['rubric'][kind]]
+    result += [p(c['rubric']['objective']),p(c['rubric']['anchors']),p(c['rubric']['decision'])]
+    if answers: result += [p(c['retest'])]
+    result += [p('O‘quvchi ___ · Lesen __/3 · Hören __/3 · grammatika __/4 · lug‘at __/4 · nutq __/6 · yozuv __/6 · keyingi qadam ___')]
+    return result
 
 story=cover('Grammar Map','A1 → A2 → B1','Har mavzuni qoida, namuna va mustaqil mashq bilan o‘rganing. Javoblar alohida kitobda. Katta harf, umlaut, artikl va fe’l o‘rnini tekshiring.')
 keys=cover('Grammar · javoblar','Ustoz uchun','O‘quvchi mustaqil bajargach oching. To‘g‘ri javob bilan birga sababni tushuntiring.')
@@ -63,27 +118,36 @@ for topic in grammar:
     for i,q in enumerate(topic['questions'],1):
         story += [p(f"{i}. {q['prompt']}"),p('Javob: ____________________________________________________','small'),Spacer(1,8)]
         keys += [p(f"{i}. {' / '.join(q['answers'])}",'sub'),p(q['explanation'])]
+    for e in extra[topic['id']]:
+        story += exercise_flow(e)
+        keys += exercise_flow(e, True)
     story.append(PageBreak());keys.append(Spacer(1,15))
 save('jony-deutsch-grammar',story[:-1]);save('jony-deutsch-answer-key',keys)
 
-story=cover('Kurs xaritasi va darslar','Goethe-Zertifikat B1 ga tayyorgarlik · 6 oy','24 hafta. Har hafta 3 × 120 daqiqa asosiy dars, 3 × 60 daqiqa support. Har kuni 75 daqiqa mustaqil ish (haftada 6 kun). Dastur natijasi oyma-oy tekshiriladi; sertifikat kafolati emas.')
-story += [p('Ustozlar uchun yagona tartib','title'),p('Asosiy dars · 120 daqiqa','h'),p('0–10 eslash va uy vazifasi; 10–30 yangi grammatika; 30–45 boshqariladigan mashq; 45–60 birinchi 20 so‘z; 60–65 tanaffus; 65–80 qolgan lug‘at va Lesen; 80–95 Hören; 95–110 Sprechen va Schreiben; 110–120 chiqish bileti va uy vazifasi.'),p('1-dars · maxsus kirish tartibi','h'),p('0–10 xarita va tartib; 10–30 alifbo va talaffuz; 30–50 birinchi grammatika; 50–65 birinchi 10 so‘z; 65–70 tanaffus; 70–90 qolgan lug‘at; 90–105 o‘qish va tinglash; 105–115 o‘zi haqida gapirish va yozish; 115–120 uy vazifasini ko‘rsatish.'),p('Support · 60 daqiqa','h'),p('0–10 xatolar va uy vazifasi; 10–20 talaffuz va artikl; 20–35 20 so‘zli aralash mashq; 35–50 darsga mos amaliy juftlik; 50–55 tinglash ortidan takrorlash; 55–60 qayta tekshiruv.'),p('Mustaqil ish · 75 daqiqa','h'),p('20 daqiqa so‘zlar; 20 daqiqa grammatika; 15 daqiqa o‘qish yoki tinglash; 15 daqiqa yozish yoki gapirish; 5 daqiqa xato daftari. Har asosiy darsning so‘zlarini keyingi support kuni ham qaytaring.'),p('24-hafta · yakuniy sinov tartibi','h'),p('70-dars: 10 daqiqa ko‘rsatma, 65 Lesen, 20 lug‘at, 25 tahlil. 71-dars: 10 ko‘rsatma, 40 Hören rasmiy audio, 20 lug‘at, 30 juftlikda Sprechen, 20 tahlil. 72-dars: 10 ko‘rsatma, 60 Schreiben, 20 lug‘at, 15 tekshirish va 15 shaxsiy keyingi reja. Rasmiy namunalar havolasidan foydalaning. Gapirishni individual baholash uchun navbat belgilang.'),p('Nazorat','h'),p('Har oy grammatika/lug‘at mashqlarida ichki 80% mezon, erkin nutq va yozuvni ustoz tekshiradi. Past natijada xato mavzuga support ajrating va qayta tekshiring. B1 yakunida rasmiy Goethe namunasini to‘liq vaqt va ko‘rsatmalar bilan bajaring.'),p('Rasmiy format: https://www.goethe.de/ins/de/de/m/prf/prf/gzb1/inf.html','small'),p('Rasmiy sinovlar: https://www.goethe.de/ins/dk/de/spr/prf/ueb/pb1.html','small'),PageBreak()]
-by_id={t['id']:t for t in grammar}
-for l in lessons:
-    pool=[w for w in words if w['week']==l['week']]; day=(l['no']-1)%3
-    pool=pool[day*100//3:(day+1)*100//3]
-    story += [p(f"{l['no']}-dars · {l['title']}",'title'),p(f"{l['month']}-oy / {l['week']}-hafta / {l['level']}",'sub'),p(l['objective']),p('Grammatika','h'),p('; '.join(f"{i}: {by_id[i]['title']}" for i in l['topicIds'])),p(f"Lug‘at: #{pool[0]['id']}–{pool[-1]['id']} ({len(pool)} ta)",'h'),p(l['teacherTip']),p('Support topshirig‘i','h'),p(l['supportTask']),p('Uyga vazifa','h')]
-    story += [p(f'{i+1}. {h}') for i,h in enumerate(l['homework'])]
-    story += [p(f"Lesen, Hören, Sprechen va Schreiben: {l['month']}-oy ko‘nikma daftarining {l['no']}-darsi.",'small'),PageBreak()]
+story=cover('Kurs xaritasi va darslar','Ustoz kiti · yangilangan darslar','24 hafta. Har hafta 3 × 120 daqiqa asosiy dars, 3 × 60 daqiqa support. Har kuni 75 daqiqa mustaqil ish, haftada 6 kun; asosiy va support kunlari vazifalari farqlanadi. 10–15 faol so‘z; qolgan lug‘at retseptiv. Sertifikat kafolati emas.')
+story += [p('Darsni boshqarish','h'),p('Har darsning aniq jadvali quyida. 12/24/36/48/60-darslarda yangi ichki nazorat, 49-darsdan qisqa format mashqlari. 61/64/67-darslarda to‘liq rasmiy Lesen/Hören/Schreiben; yangi grammatika o‘sha kunning supportida. 70–72-darslar rasmiy namunalar bilan saqlangan; yangi grammatika kiritilmaydi.'),p('Grammatika kitobida har mavzuga 3 qisqa tekshiruv va 3 yangi production/correction/transfer topshirig‘i bor. Bir kunda hammasini bajartirmang: asosiy dars, support va ehtiyojga qarab tanlang.'),p(teaching['examSource']['note']),p('Manba: '+teaching['examSource']['url']+' · '+teaching['examSource']['checked'],'small'),p('MP3 havolalari saytdagi PDF joylashuviga nisbatan. Yuklab olingan nusxa uchun saytning /german/audio/ manzilidan foydalaning.' if not args.site_url else 'MP3 havolalari: '+args.site_url,'small'),PageBreak()]
+for lesson in lessons:
+    kit=kits[lesson['no']]; v=kit['vocabulary']
+    story += [p(f"{lesson['no']}-dars · {lesson['title']}",'title'),p(lesson['objective']),p(lesson['teacherTip']),audio_link(lesson['no']),p('Faol lug‘at · asosiy darsda tanishtirish, supportda qaytarish','h'),p('; '.join('#'+str(w['id'])+' '+w['word'] for w in v['active'])),p('Retseptiv / supportda ma’noni tanish · majburiy faol yodlash emas','h'),p('; '.join('#'+str(w['id'])+' '+w['word'] for w in v['receptive'])),p('Oldingi faol IDlar: '+', '.join('#'+str(i) for i in v['reviewIds'])),p('Asosiy dars · 120 daqiqa','h')]
+    if kit['officialPractice']:
+        official=kit['officialPractice']
+        story += [p('Rasmiy modul: '+official['module'],'h'),p(official['material']),p(official['url'],'small'),p(official['validity']),p(official['remediation'])]
+    story += timeline(kit['timeline'])
+    story += [p(kit['speaking']),p('Support · 60 daqiqa','h')]+timeline(kit['support'])
+    story += [p('Ustozlar o‘rtasidagi qayd','h'),p(kit['handoff']),p('Uy vazifasi · vaqt chegarasi','h'),p(kit['workload'])]+timeline(kit['homework'])
+    story += [p('Support kuni · 75 daqiqa','h')]+timeline(kit['supportDayHomework'])
+    story += [p('Grammatika kitobi: '+', '.join(kit['topicIds'])+'. Yangi mavzular bo‘lsa darsda bir production, supportda correction/transfer. Yakuniy haftada faqat xatoga mos takror.','small'),PageBreak()]
+    if kit['checkpoint']:
+        story += checkpoint_flow(kit['checkpoint'], True)+[PageBreak()]
 save('jony-deutsch-course-map',story[:-1])
 
 for month in range(1,7):
-    story=cover(f'{month}-oy · ko‘nikma daftari','Lesen · Hören · Sprechen · Schreiben','Mualliflik mashqlari. Tinglashni ustoz transkriptdan ikki marta o‘qib beradi yoki saytdagi nemischa sintetik ovozdan foydalaning. O‘quvchi transkriptni savollardan keyin ochsin.')
+    story=cover(f'{month}-oy · ko‘nikma daftari','Lesen · Hören · Sprechen · Schreiben','Mualliflik mashqlari. Saqlangan sun’iy ovozli MP3 yozuvini ikki marta tinglang; havola har darsda. Transkript faqat tekshiruvdan keyin ochiladi. MP3 mavjud bo‘lmasa ustoz o‘qiydi. Ichki oylik nazoratning alohida skriptini ustoz o‘qiydi.')
     answers=[]
     for s in skills[(month-1)*12:month*12]:
         story += [p(f"{s['no']}-dars",'title'),p('Lesen · '+s['reading']['title'],'h'),p(s['reading']['text'])]
         for section in ['reading','listening']:
-            if section=='listening': story += [p('Hören · '+s[section]['title'],'h'),p('Transkript ustoz bo‘limida. Avval tinglang va savollarga javob bering.')]
+            if section=='listening': story += [p('Hören · '+s[section]['title'].split(' — ')[0],'h'),audio_link(s['no']),p('Transkript ustoz bo‘limida. Avval tinglang va savollarga javob bering.')]
             for i,q in enumerate(s[section]['questions'],1): story += [p(f"{i}. {q['prompt']}"),p('Javob: ____________________________________________________','small')]
         for kind,label in [('speaking','Sprechen'),('writing','Schreiben')]:
             story += [p(label,'h'),p(s[kind]['task'])]+[p('• '+c,'small') for c in s[kind]['criteria']]
@@ -93,5 +157,9 @@ for month in range(1,7):
             answers += [p(kind,'h')]+[p(f"{i+1}. {' / '.join(q['answers'])} — {q['explanation']}") for i,q in enumerate(s[kind]['questions'])]
         for kind in ['speaking','writing']: answers += [p(kind+' · namuna','h'),p(s[kind]['model'])]
         answers.append(PageBreak())
+    checkpoint=kits[month*12]['checkpoint']
+    if checkpoint:
+        story += checkpoint_flow(checkpoint)+[PageBreak()]
+        answers += checkpoint_flow(checkpoint, True)+[PageBreak()]
     story += [p('Ustoz bo‘limi','title'),p('Quyida transkriptlar, javoblar va namunalar. O‘quvchi nusxasini tarqatishda bu bo‘limni ajrating.'),PageBreak()] + answers
     save(f'jony-deutsch-month-{month}-skills',story[:-1])

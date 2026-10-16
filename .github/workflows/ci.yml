@@ -63,6 +63,8 @@ jobs:
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks
         run: node --test scripts/test-intensive.cjs
+      - name: English and German teacher kits and lesson audio
+        run: node --test scripts/test-intensive-teaching.cjs scripts/test-german.cjs scripts/test-german-teaching.cjs scripts/test-course-audio.cjs scripts/test-intensive-skills-extension.cjs
       - name: Type check (Vercel bilan bir xil)
         run: npx tsc -b
       - name: Build

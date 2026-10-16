@@ -1,0 +1,82 @@
+[
+  {
+    "lesson": 22,
+    "level": "A1",
+    "title": "Meeting a new team member",
+    "url": "https://learnenglish.britishcouncil.org/free-resources/listening/a1/meeting-new-team-member",
+    "focus": "Ism, kasb va mamlakat nomlarini taning. Hali o‘tilmagan grammatikani mustaqil yasash talab qilinmaydi.",
+    "minutes": 25,
+    "provider": "British Council LearnEnglish",
+    "checked": "2026-10-16"
+  },
+  {
+    "lesson": 46,
+    "level": "A1",
+    "title": "Booking a table",
+    "url": "https://learnenglish.britishcouncil.org/free-resources/listening/a1/booking-table",
+    "focus": "Birinchi va o‘zgargan buyurtmadagi son/vaqtni ajrating; oxirgi kelishuvni qayd eting.",
+    "minutes": 25,
+    "provider": "British Council LearnEnglish",
+    "checked": "2026-10-16"
+  },
+  {
+    "lesson": 70,
+    "level": "A2",
+    "title": "Transport announcements",
+    "url": "https://learnenglish.britishcouncil.org/free-resources/listening/a2/transport-announcements",
+    "focus": "Har e’londan joy, vaqt va yo‘lovchi qilishi kerak bo‘lgan ishni ajrating.",
+    "minutes": 25,
+    "provider": "British Council LearnEnglish",
+    "checked": "2026-10-16"
+  },
+  {
+    "lesson": 94,
+    "level": "A2",
+    "title": "Changing plans",
+    "url": "https://learnenglish.britishcouncil.org/free-resources/listening/a2/changing-plans",
+    "focus": "Dastlabki reja, o‘zgarish sababi va kelishilgan yangi rejani alohida qayd eting.",
+    "minutes": 25,
+    "provider": "British Council LearnEnglish",
+    "checked": "2026-10-16"
+  },
+  {
+    "lesson": 118,
+    "level": "B1",
+    "title": "An interview about listening skills",
+    "url": "https://learnenglish.britishcouncil.org/free-resources/listening/b1/interview-about-listening-skills",
+    "focus": "Asosiy maslahat va unga keltirilgan sababni ajrating; o‘zingiz uchun bitta amaliy qadam tanlang.",
+    "minutes": 25,
+    "provider": "British Council LearnEnglish",
+    "checked": "2026-10-16"
+  },
+  {
+    "lesson": 142,
+    "level": "B1",
+    "title": "A team meeting about diversity",
+    "url": "https://learnenglish.britishcouncil.org/free-resources/listening/b1/team-meeting-about-diversity",
+    "focus": "So‘zlovchilar takliflarini aralashtirmang: kim, nima taklif qildi, qanday asos keltirdi?",
+    "minutes": 25,
+    "provider": "British Council LearnEnglish",
+    "checked": "2026-10-16"
+  },
+  {
+    "lesson": 166,
+    "level": "B2",
+    "title": "A digital detox podcast",
+    "url": "https://learnenglish.britishcouncil.org/free-resources/listening/b2/digital-detox-podcast",
+    "focus": "Asosiy fikr, dalil va misolni ajrating; fikrga qo‘shilish yoki qarshi dalilni tayyorlang.",
+    "minutes": 25,
+    "provider": "British Council LearnEnglish",
+    "checked": "2026-10-16"
+  },
+  {
+    "lesson": 178,
+    "level": "B2",
+    "title": "A business interview",
+    "url": "https://learnenglish.britishcouncil.org/free-resources/listening/b2/business-interview",
+    "focus": "Intervyudagi da’vo, sabab va cheklovni ajrating; ikki dalilga tayangan qisqa xulosa yozing.",
+    "minutes": 25,
+    "provider": "British Council LearnEnglish",
+    "checked": "2026-10-16"
+  }
+]

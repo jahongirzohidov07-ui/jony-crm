@@ -96,6 +96,7 @@ const StudentLayout = lazy(() => import("./pages/student/StudentLayout"));
 const StudentHome = lazy(() => import("./pages/student/StudentHome"));
 const StudentOffline = lazy(() => import("./pages/student/StudentOffline"));
 // Darslar / topshiriqlar (2026-09-18)
+const StudentCoursePractice = lazy(() => import("./pages/student/StudentCoursePractice"));
 const StudentLessons = lazy(() => import("./pages/student/StudentLessons"));
 const TeacherCheck = lazy(() => import("./pages/teacher/TeacherCheck"));
 const LearningReport = lazy(() => import("./pages/LearningReport"));
@@ -383,6 +384,7 @@ function AppRoutes() {
           <Route path="offline" element={<StudentOffline />} />
           <Route path="russian" element={<StudentRussianCourse />} />
           <Route path="games" element={<StudentLanguageRoute section="vocabulary"><StudentGames /></StudentLanguageRoute>} />
+          <Route path="course-practice" element={<StudentCoursePractice />} />
           <Route path="lessons" element={<StudentLessons />} />
           <Route path="lessons/:aid" element={<StudentLessons />} />
           <Route path="ielts" element={<StudentIelts />} />

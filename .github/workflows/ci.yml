@@ -38,6 +38,9 @@ jobs:
           DATABASE_URL: "sqlite:////tmp/ci_stamp.db"
         run: |
           if [ -f test_schema_stamp.py ]; then python test_schema_stamp.py; fi
+      - name: Student course practice isolation and grading
+        working-directory: api
+        run: python test_student_course_practice.py
       - name: Guard tests
         working-directory: api
         env:
@@ -59,6 +62,8 @@ jobs:
         with:
           node-version: 20
       - run: npm ci || npm install
+      - name: Export student course practice bank
+        run: node scripts/export-student-course-practice.cjs
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks

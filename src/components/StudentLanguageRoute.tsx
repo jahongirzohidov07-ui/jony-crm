@@ -1,3 +1,4 @@
+import { StudentCourseLink } from "./StudentCourseLink";
 import { Fragment, lazy, type ReactNode } from "react";
 import { useParams } from "react-router-dom";
 import { useLearningLanguage } from "../lib/lang";
@@ -13,6 +14,6 @@ export function StudentLanguageRoute({children, section = "vocabulary"}: {
   if (language === "ru") {
     return <StudentRussianCourse key={skill || section} initialSection={skill || section} />;
   }
-  return <Fragment key={language}>{children}</Fragment>;
+  return <Fragment key={language}><div className="mx-auto max-w-2xl px-4"><StudentCourseLink language={language} skill={skill || section}/></div>{children}</Fragment>;
 }
 export { StudentRussianCourse };

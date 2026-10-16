@@ -1,3 +1,4 @@
+import { StudentCourseLink } from "../../components/StudentCourseLink";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, BookOpen, CheckCircle2, Clock, Coins, RotateCcw, Send } from "lucide-react";
@@ -76,6 +77,7 @@ function LessonsHome() {
     <div className="p-4 space-y-4 max-w-md mx-auto">
       <h1 className="text-lg font-semibold text-slate-900 flex items-center gap-2"><BookOpen size={18} className="text-brand-600" /> Darslarim</h1>
 
+      <StudentCourseLink language={language}/>
       {language === "ru" && <Link to="/student/russian" className="block rounded-2xl bg-blue-700 p-4 text-white">
         <b>Rus tili — darslar va mashqlar</b>
         <p className="text-sm mt-1">1 yillik kursdagi darsingizni tanlang.</p>

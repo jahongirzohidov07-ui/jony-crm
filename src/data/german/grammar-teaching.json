@@ -1,0 +1,1010 @@
+[
+  {
+    "topicId": "g001",
+    "context": "Telefon orqali Müller familiyasini harflang va kartaga bosh harf bilan yozing. Gap tuzish shart emas.",
+    "model": "Müller: M–Ü–L–L–E–R.",
+    "error": "müller: M–U–L–L–E–R.",
+    "transfer": "Sherik aytgan boshqa ismni harflab yozing; bosh harf va umlautni tekshiring. Bitta ism kartasi yetarli."
+  },
+  {
+    "topicId": "g002",
+    "context": "Rasmda siz va Ali bor. Ikkalangizni bildiradigan bitta nominativ olmosh kartasini tanlang: wir / sie.",
+    "model": "wir",
+    "error": "sie",
+    "transfer": "Uch kartaga faqat olmosh yozing: o‘zingiz; siz va do‘stingiz; hurmat bilan bir notanish kishiga murojaat. Fe’l yoki to‘liq gap talab qilinmaydi."
+  },
+  {
+    "topicId": "g003",
+    "context": "Qabulxonada talaba ekaningizni ayting.",
+    "model": "Ich bin Student.",
+    "error": "Ich ist Student.",
+    "transfer": "Kasb kartalari: Lehrer (erkak), Ärztin (ayol). Faqat ikki tasdiq gap ayting: Er ist Lehrer. Sie ist Ärztin. Savol tuzish talab qilinmaydi."
+  },
+  {
+    "topicId": "g004",
+    "context": "Do‘stingiz sizni kasal deb o‘ylaydi. Buni rad eting.",
+    "model": "Ich bin nicht krank.",
+    "error": "Ich nicht bin krank.",
+    "transfer": "Ikki holat kartasidan bittasini rad eting: müde / traurig."
+  },
+  {
+    "topicId": "g005",
+    "context": "Sherigingizning bo‘shligini sein bilan so‘rang.",
+    "model": "Bist du frei?",
+    "error": "Du bist frei?",
+    "transfer": "Guruhdagi ikki kishidan ihr bilan tayyorligini so‘rang."
+  },
+  {
+    "topicId": "g006",
+    "context": "Bekatning qayerdaligini sein bilan so‘rang.",
+    "model": "Wo ist die Haltestelle?",
+    "error": "Wo die Haltestelle ist?",
+    "transfer": "Yangi joyda Bahnhof va Apotheke qayerdaligini so‘rang."
+  },
+  {
+    "topicId": "g007",
+    "context": "Eshik ochiq ekanini der/die/das bilan ayting.",
+    "model": "Die Tür ist offen.",
+    "error": "Der Tür ist offen.",
+    "transfer": "der Stuhl va das Fenster kartalari bilan xonani tasvirlang."
+  },
+  {
+    "topicId": "g008",
+    "context": "Sumkadan bir kitob chiqardingiz. Uni ein/eine bilan tanishtiring.",
+    "model": "Das ist ein Buch.",
+    "error": "Das ist eine Buch.",
+    "transfer": "Bir Lampe va bir Stiftni noaniq artikl bilan ko‘rsating."
+  },
+  {
+    "topicId": "g009",
+    "context": "Suratda ikki bola bor. Kind so‘zini ko‘plikda ishlating.",
+    "model": "Die Kinder sind hier.",
+    "error": "Die Kinds sind hier.",
+    "transfer": "Buch → Bücher va Tasche → Taschen yordamida ko‘plikdagi ikki narsani ayting."
+  },
+  {
+    "topicId": "g010",
+    "context": "Suratda stullar emas, qutilar. Stuhlni ko‘plikda inkor qiling.",
+    "model": "Das sind keine Stühle.",
+    "error": "Das sind kein Stühle.",
+    "transfer": "Ikki noto‘g‘ri rasm nomini kein/keine bilan tuzating."
+  },
+  {
+    "topicId": "g011",
+    "context": "Bugun vaqtingiz borligini ayting.",
+    "model": "Ich habe heute Zeit.",
+    "error": "Ich hat heute Zeit.",
+    "transfer": "Sherigingiz va sizda bir narsa borligini wir bilan ayting."
+  },
+  {
+    "topicId": "g012",
+    "context": "Kassada pulingiz yo‘qligini ayting.",
+    "model": "Ich habe kein Geld.",
+    "error": "Ich habe nicht Geld.",
+    "transfer": "Auto va Zeit bilan haben inkorini alohida tuzing."
+  },
+  {
+    "topicId": "g013",
+    "context": "Sherigingizda xarita borligini so‘rang.",
+    "model": "Hast du einen Stadtplan?",
+    "error": "Du hast einen Stadtplan?",
+    "transfer": "Ruchka kerak: ikki kursdoshga du va ihr bilan savol bering."
+  },
+  {
+    "topicId": "g014",
+    "context": "Yangi qo‘shnidan nechta farzandi borligini so‘rang.",
+    "model": "Wie viele Kinder haben Sie?",
+    "error": "Wie viele Kinder Sie haben?",
+    "transfer": "Sherigingizdan qancha vaqt borligini W-savol bilan so‘rang."
+  },
+  {
+    "topicId": "g015",
+    "context": "Yangi manzilingiz Berlin. wohnen bilan ayting.",
+    "model": "Ich wohne in Berlin.",
+    "error": "Ich wohnen in Berlin.",
+    "transfer": "Siz va kursdoshingizning yashash joyini turli ega bilan ayting."
+  },
+  {
+    "topicId": "g016",
+    "context": "Yakshanba kuni ishlamasligingizni ayting. Ich bilan boshlang.",
+    "model": "Ich arbeite am Sonntag nicht.",
+    "error": "Ich arbeite am Sonntag kein.",
+    "transfer": "Bugun nima qilmasligingizni ikki muntazam fe’l bilan ayting."
+  },
+  {
+    "topicId": "g017",
+    "context": "Yangi kursdosh nemischa o‘rganadimi, so‘rang.",
+    "model": "Lernst du Deutsch?",
+    "error": "Du lernst Deutsch?",
+    "transfer": "Do‘stingizdan Berlin shahrida yashashini so‘rang; qisqa javob bering."
+  },
+  {
+    "topicId": "g018",
+    "context": "Yangi tanishingizning yashash joyini so‘rang.",
+    "model": "Wo wohnen Sie?",
+    "error": "Wo Sie wohnen?",
+    "transfer": "Woher va was bilan ikki tanishuv savoli tuzing."
+  },
+  {
+    "topicId": "g019",
+    "context": "Sherigingiz har kuni ishlaydi. du bilan ayting.",
+    "model": "Du arbeitest jeden Tag.",
+    "error": "Du arbeitst jeden Tag.",
+    "transfer": "warten va heißen bilan sherikka ikki savol tuzing."
+  },
+  {
+    "topicId": "g020",
+    "context": "Anna gazeta o‘qiyapti. lesen bilan ayting.",
+    "model": "Anna liest eine Zeitung.",
+    "error": "Anna lest eine Zeitung.",
+    "transfer": "fahren va essen kartalaridan er/sie uchun ikki gap yasang."
+  },
+  {
+    "topicId": "g021",
+    "context": "Bugun maktabga borishingizni Heute bilan boshlang.",
+    "model": "Heute gehe ich zur Schule.",
+    "error": "Heute ich gehe zur Schule.",
+    "transfer": "Avval ich, keyin am Freitag bilan bir xil xabarni ayting."
+  },
+  {
+    "topicId": "g022",
+    "context": "Siz choy, do‘stingiz qahva ichadi. aber bilan bog‘lang.",
+    "model": "Ich trinke Tee, aber er trinkt Kaffee.",
+    "error": "Ich trinke Tee, aber trinkt er Kaffee.",
+    "transfer": "Do‘st bilan ichimlik tanlang: und bilan qo‘shing, oder bilan tanlov bering."
+  },
+  {
+    "topicId": "g023",
+    "context": "Do‘konda shu stulni olayotganingizni ayting.",
+    "model": "Ich nehme den Stuhl.",
+    "error": "Ich nehme der Stuhl.",
+    "transfer": "der Tisch va das Regal bilan ikkita xarid gapini tuzing."
+  },
+  {
+    "topicId": "g024",
+    "context": "Sizga stul kerak, stol kerak emas.",
+    "model": "Ich brauche einen Stuhl, aber keinen Tisch.",
+    "error": "Ich brauche ein Stuhl, aber kein Tisch.",
+    "transfer": "Boshqa ikkita buyumga ehtiyojni ein/kein bilan ayting."
+  },
+  {
+    "topicId": "g025",
+    "context": "Onangiz o‘qituvchi. Egalik artikli bilan tanishtiring.",
+    "model": "Meine Mutter ist Lehrerin.",
+    "error": "Mein Mutter ist Lehrerin.",
+    "transfer": "Do‘stning Bruder va Schwesterini dein/deine bilan ayting."
+  },
+  {
+    "topicId": "g026",
+    "context": "Siz akangizni ko‘rishga boryapsiz.",
+    "model": "Ich besuche meinen Bruder.",
+    "error": "Ich besuche mein Bruder.",
+    "transfer": "Do‘stingizning Vater va Mutterini besuchen bilan gapda ishlating."
+  },
+  {
+    "topicId": "g027",
+    "context": "Ali keladi. Siz uni taniysiz. Ali o‘rniga olmosh yozing.",
+    "model": "Ich kenne ihn.",
+    "error": "Ich kenne er.",
+    "transfer": "Anna va ikki qo‘shni haqida kennen bilan olmoshli gap ayting."
+  },
+  {
+    "topicId": "g028",
+    "context": "Mahallada dorixona mavjudligini ayting.",
+    "model": "Hier gibt es eine Apotheke.",
+    "error": "Hier gibt es ein Apotheke.",
+    "transfer": "Xaritada Park va Bahnhof borligini es gibt bilan bildiring."
+  },
+  {
+    "topicId": "g029",
+    "context": "Har kuni soat oltida turishingizni ayting.",
+    "model": "Ich stehe um sechs Uhr auf.",
+    "error": "Ich aufstehe um sechs Uhr.",
+    "transfer": "einkaufen bilan hafta oxiri odatingizni tasvirlang."
+  },
+  {
+    "topicId": "g030",
+    "context": "Do‘stingiz bugun qo‘ng‘iroq qiladimi, so‘rang.",
+    "model": "Rufst du heute an?",
+    "error": "Anrufst du heute?",
+    "transfer": "Do‘st qo‘ng‘iroq qilmaydi: inkor javob bering va boshqa kunni so‘rang."
+  },
+  {
+    "topicId": "g031",
+    "context": "Dars dushanba kuni soat sakkizda boshlanadi.",
+    "model": "Der Kurs beginnt am Montag um acht Uhr.",
+    "error": "Der Kurs beginnt im Montag am acht Uhr.",
+    "transfer": "im Mai va um zehn Uhr bilan ikkita uchrashuv vaqtini ayting."
+  },
+  {
+    "topicId": "g032",
+    "context": "Ishingiz to‘qqizdan oltigacha davom etadi.",
+    "model": "Ich arbeite von neun bis sechs.",
+    "error": "Ich arbeite um neun bis sechs.",
+    "transfer": "O‘z dars vaqtingiz va haftadagi takrorlanishini ayting."
+  },
+  {
+    "topicId": "g033",
+    "context": "Siz velosiped hayday olasiz. können bilan ayting.",
+    "model": "Ich kann Rad fahren.",
+    "error": "Ich kann fahre Rad.",
+    "transfer": "Sherikning ikki qobiliyatini er/sie kann bilan ayting."
+  },
+  {
+    "topicId": "g034",
+    "context": "Bugun kela olmasligingizni ayting.",
+    "model": "Ich kann heute nicht kommen.",
+    "error": "Ich kann heute nicht komme.",
+    "transfer": "Ikki vaqt taklifiga qobiliyat yoki imkoniyat inkori bilan javob bering."
+  },
+  {
+    "topicId": "g035",
+    "context": "Do‘stdan oynani ochib berishni so‘rang.",
+    "model": "Kannst du das Fenster öffnen?",
+    "error": "Kannst du öffnest das Fenster?",
+    "transfer": "Sherikdan boshqa ikkita kichik yordamni können bilan so‘rang."
+  },
+  {
+    "topicId": "g036",
+    "context": "Ertaga erta turish majburiyatingizni ayting.",
+    "model": "Ich muss morgen früh aufstehen.",
+    "error": "Ich muss morgen früh aufstehe.",
+    "transfer": "Oila a’zolaringizning ikki majburiyatini ayting."
+  },
+  {
+    "topicId": "g037",
+    "context": "Bugun ishlash shart emasligini ayting, taqiq emas.",
+    "model": "Du musst heute nicht arbeiten.",
+    "error": "Du darfst heute nicht arbeiten.",
+    "transfer": "Chekish taqiqi va forma to‘ldirish shart emasligini farqlab ayting."
+  },
+  {
+    "topicId": "g038",
+    "context": "Anketani to‘ldirish shartmi, so‘rang.",
+    "model": "Muss ich das Formular ausfüllen?",
+    "error": "Muss ich fülle das Formular aus?",
+    "transfer": "Qabulxonada yana bitta majburiyatni so‘rab, qisqa javob bering."
+  },
+  {
+    "topicId": "g039",
+    "context": "Kafeda muloyim tarzda bir stakan suv so‘rang.",
+    "model": "Ich möchte ein Glas Wasser.",
+    "error": "Ich möchten ein Glas Wasser.",
+    "transfer": "wollen bilan qat’iy reja va möchten bilan muloyim istak bildiring."
+  },
+  {
+    "topicId": "g040",
+    "context": "Kutubxonada surat olishga ruxsat so‘rang.",
+    "model": "Darf ich hier fotografieren?",
+    "error": "Darf ich fotografiere hier?",
+    "transfer": "Sherigingizga ikkita joy qoidasi bo‘yicha ruxsat bering yoki rad eting."
+  },
+  {
+    "topicId": "g041",
+    "context": "Ikki do‘stdan eshikni yopishni so‘rang, ihr buyrug‘i.",
+    "model": "Macht bitte die Tür zu!",
+    "error": "Machen bitte die Tür zu!",
+    "transfer": "Bir do‘stga du, keyin guruhga ihr bilan kelishni ayting."
+  },
+  {
+    "topicId": "g042",
+    "context": "Mijozdan shu yerda kutishni muloyim so‘rang.",
+    "model": "Warten Sie bitte hier!",
+    "error": "Wartet Sie bitte hier!",
+    "transfer": "Sie shaklida ismni yozish va sekin gapirishni so‘rang."
+  },
+  {
+    "topicId": "g043",
+    "context": "Siz bir bolaga yordam beryapsiz. helfen bilan ayting.",
+    "model": "Ich helfe dem Kind.",
+    "error": "Ich helfe das Kind.",
+    "transfer": "der Mann va die Frau kartalari bilan hozir kimga yordam berayotganingizni Präsensda ayting: Ich helfe …"
+  },
+  {
+    "topicId": "g044",
+    "context": "Kitob sizga tegishli. Olmosh ishlating.",
+    "model": "Das Buch gehört mir.",
+    "error": "Das Buch gehört mich.",
+    "transfer": "Ikki buyum kimga tegishli ekanini dir va ihr bilan ayting."
+  },
+  {
+    "topicId": "g045",
+    "context": "Ishga avtobusda borishingizni ayting.",
+    "model": "Ich fahre mit dem Bus.",
+    "error": "Ich fahre mit den Bus.",
+    "transfer": "zu va bei bilan boradigan va turadigan joyingizni ayting."
+  },
+  {
+    "topicId": "g046",
+    "context": "Kitob stol ustida turibdi. wo savoliga javob bering.",
+    "model": "Das Buch liegt auf dem Tisch.",
+    "error": "Das Buch liegt auf den Tisch.",
+    "transfer": "Sumka stul ostida, chiroq stol ustida ekanini ayting."
+  },
+  {
+    "topicId": "g047",
+    "context": "Kitobni stol ustiga qo‘ying. wohin ma’nosini yozing.",
+    "model": "Ich lege das Buch auf den Tisch.",
+    "error": "Ich lege das Buch auf dem Tisch.",
+    "transfer": "Ikki buyumni joyiga qo‘yish yo‘nalishini ayting."
+  },
+  {
+    "topicId": "g048",
+    "context": "Kecha nemischa mashq qildingiz. Perfekt ishlating.",
+    "model": "Ich habe gestern Deutsch geübt.",
+    "error": "Ich habe gestern Deutsch üben.",
+    "transfer": "O‘tgan kechadagi ikkita muntazam harakatni Perfektda ayting."
+  },
+  {
+    "topicId": "g049",
+    "context": "Kecha ovqat pishirmadingiz. Perfekt bilan ayting.",
+    "model": "Ich habe gestern nicht gekocht.",
+    "error": "Ich habe gestern nicht kochen.",
+    "transfer": "Ikki bajarilmagan uy ishini Perfektda ayting."
+  },
+  {
+    "topicId": "g050",
+    "context": "Do‘stingiz hisobni to‘ladimi, so‘rang.",
+    "model": "Hast du die Rechnung bezahlt?",
+    "error": "Hast du die Rechnung bezahlen?",
+    "transfer": "lernen va machen bilan kechagi ishlar haqida ikki savol bering."
+  },
+  {
+    "topicId": "g051",
+    "context": "Kecha non yedingiz. essen fe’lini Perfektda ishlating.",
+    "model": "Ich habe Brot gegessen.",
+    "error": "Ich habe Brot geesst.",
+    "transfer": "lesen → gelesen va trinken → getrunken bilan kechani tasvirlang."
+  },
+  {
+    "topicId": "g052",
+    "context": "Kecha uyga piyoda bordingiz. Perfekt ishlating.",
+    "model": "Ich bin nach Hause gegangen.",
+    "error": "Ich habe nach Hause gegangen.",
+    "transfer": "Sayohatdagi kelish va ketishni sein bilan ayting."
+  },
+  {
+    "topicId": "g053",
+    "context": "Anna kecha kelmadi. Perfektda ayting.",
+    "model": "Anna ist gestern nicht gekommen.",
+    "error": "Anna hat gestern nicht gekommen.",
+    "transfer": "fahren va gehen bilan amalga oshmagan safarni tasvirlang."
+  },
+  {
+    "topicId": "g054",
+    "context": "Poyezddan tushgan do‘stdan qachon yetib kelganini so‘rang.",
+    "model": "Wann bist du angekommen?",
+    "error": "Wann hast du angekommen?",
+    "transfer": "gehen va fahren bilan ikkita o‘tgan safar savoli tuzing."
+  },
+  {
+    "topicId": "g055",
+    "context": "Kecha xarid qildingiz. einkaufen fe’lini Perfektda yozing.",
+    "model": "Ich habe gestern eingekauft.",
+    "error": "Ich habe gestern geeinkauft.",
+    "transfer": "aufräumen va anrufen uchun berilgan lug‘at shakllari bilan hisobot ayting."
+  },
+  {
+    "topicId": "g056",
+    "context": "Siz savolni tushundingiz. verstehen bilan Perfekt tuzing.",
+    "model": "Ich habe die Frage verstanden.",
+    "error": "Ich habe die Frage geverstanden.",
+    "transfer": "besuchen va bezahlen bilan o‘tgan ikkita ishni ayting."
+  },
+  {
+    "topicId": "g057",
+    "context": "Anna Berlinda o‘qigan. studieren bilan ayting.",
+    "model": "Anna hat in Berlin studiert.",
+    "error": "Anna hat in Berlin gestudiert.",
+    "transfer": "telefonieren va reparieren bilan ikkita tugallangan ishni ayting."
+  },
+  {
+    "topicId": "g058",
+    "context": "Kecha kasal edingiz. sein fe’lini Präteritumda ayting.",
+    "model": "Gestern war ich krank.",
+    "error": "Gestern bin ich krank.",
+    "transfer": "Kecha siz va do‘stingiz qayerda bo‘lganingizni ayting."
+  },
+  {
+    "topicId": "g059",
+    "context": "Kecha charchamagan edingiz. Präteritum ishlating.",
+    "model": "Ich war gestern nicht müde.",
+    "error": "Ich war gestern kein müde.",
+    "transfer": "Ikki kechagi holat haqidagi noto‘g‘ri xabarni rad eting."
+  },
+  {
+    "topicId": "g060",
+    "context": "Do‘stdan kecha qayerda bo‘lganini so‘rang.",
+    "model": "Wo warst du gestern?",
+    "error": "Wo wart du gestern?",
+    "transfer": "Sie va ihr bilan o‘tgan holat haqida savollar bering."
+  },
+  {
+    "topicId": "g061",
+    "context": "Kecha mehmonlaringiz bor edi. haben Präteritum.",
+    "model": "Wir hatten gestern Besuch.",
+    "error": "Wir haben gestern Besuch.",
+    "transfer": "Ich va sie bilan oldin mavjud bo‘lgan ikki narsani ayting."
+  },
+  {
+    "topicId": "g062",
+    "context": "Kecha vaqtingiz yo‘q edi. Präteritumda ayting.",
+    "model": "Ich hatte gestern keine Zeit.",
+    "error": "Ich hatte gestern nicht Zeit.",
+    "transfer": "Geld va Auto bilan o‘tgan davrdagi yo‘qlikni ayting."
+  },
+  {
+    "topicId": "g063",
+    "context": "Do‘stdan kecha bo‘sh vaqti borligini so‘rang.",
+    "model": "Hattest du gestern Zeit?",
+    "error": "Hatte du gestern Zeit?",
+    "transfer": "Ihr va Sie bilan o‘tgan imkoniyat haqida savol bering."
+  },
+  {
+    "topicId": "g064",
+    "context": "Kecha uzoq kutishingizga to‘g‘ri keldi. musste ishlating.",
+    "model": "Ich musste lange warten.",
+    "error": "Ich musste lange wartete.",
+    "transfer": "konnte bilan oldingi qobiliyat, musste bilan majburiyat ayting."
+  },
+  {
+    "topicId": "g065",
+    "context": "Yaqinda boshlanadigan kursni intiqlik bilan kutyapsiz. sich freuen auf bilan ayting.",
+    "model": "Ich freue mich auf den Kurs.",
+    "error": "Ich freue mir auf den Kurs.",
+    "transfer": "du va wir uchun freuen olmoshini moslab suhbat qiling."
+  },
+  {
+    "topicId": "g066",
+    "context": "Ertalab tishingizni tozalaysiz. sich die Zähne putzen.",
+    "model": "Ich putze mir die Zähne.",
+    "error": "Ich putze mich die Zähne.",
+    "transfer": "Sherikka du, guruhga wir bilan shu odatni ayting."
+  },
+  {
+    "topicId": "g067",
+    "context": "Do‘st dam oldimi? sich erholen Perfekt savoli.",
+    "model": "Hast du dich gut erholt?",
+    "error": "Hast du dir gut erholt?",
+    "transfer": "O‘zingizning dam olganingizni Perfektda aytib, Sie bilan savol bering."
+  },
+  {
+    "topicId": "g068",
+    "context": "Shifokor ko‘proq uxlashni aytdi. sollen bilan xabar bering.",
+    "model": "Ich soll mehr schlafen.",
+    "error": "Ich soll mehr schlafe.",
+    "transfer": "O‘qituvchining ikki topshirig‘ini sollen bilan yetkazing."
+  },
+  {
+    "topicId": "g069",
+    "context": "Siz qahvani yoqtirmaysiz. mögen bilan ayting.",
+    "model": "Ich mag keinen Kaffee.",
+    "error": "Ich mag nicht Kaffee.",
+    "transfer": "Ichimlik va taomni yoqtirish/yoqtirmaslik haqida sherik bilan gaplashing."
+  },
+  {
+    "topicId": "g070",
+    "context": "Ertaga qo‘ng‘iroq qilishga va’da bering. Futur I.",
+    "model": "Ich werde morgen anrufen.",
+    "error": "Ich werde morgen anrufe.",
+    "transfer": "Do‘stga kelasi hafta uchun ikki va’da bering."
+  },
+  {
+    "topicId": "g071",
+    "context": "Bugun kechqurun chiqmasligingizni Futur Ida ayting.",
+    "model": "Ich werde heute nicht ausgehen.",
+    "error": "Ich werde heute nicht ausgehe.",
+    "transfer": "Kelajakdagi ikkita rejani inkor qiling."
+  },
+  {
+    "topicId": "g072",
+    "context": "Do‘st kelasi hafta sizni ko‘rishga keladimi? Futur I.",
+    "model": "Wirst du uns nächste Woche besuchen?",
+    "error": "Wirst du uns nächste Woche besuchst?",
+    "transfer": "Sie bilan kelajak rejasi haqida savol bering va javob ayting."
+  },
+  {
+    "topicId": "g073",
+    "context": "Singlingizga yordam beryapsiz. Egalik artikli dativ.",
+    "model": "Ich helfe meiner Schwester.",
+    "error": "Ich helfe meine Schwester.",
+    "transfer": "Bruder va Freundin bilan yordam oluvchilarni ayting."
+  },
+  {
+    "topicId": "g074",
+    "context": "Bolalar bilan o‘ynayapsiz. Dativ ko‘plik.",
+    "model": "Ich spiele mit den Kindern.",
+    "error": "Ich spiele mit den Kinder.",
+    "transfer": "Freunde va Kollegen bilan birga bajariladigan ishlarni ayting."
+  },
+  {
+    "topicId": "g075",
+    "context": "Sovg‘a otangiz uchun. für ishlating.",
+    "model": "Das Geschenk ist für meinen Vater.",
+    "error": "Das Geschenk ist für meinem Vater.",
+    "transfer": "ohne va gegen bilan ikki kundalik vaziyatni tasvirlang."
+  },
+  {
+    "topicId": "g076",
+    "context": "Bir yildan beri nemischa o‘rganyapsiz. seit ishlating.",
+    "model": "Ich lerne seit einem Jahr Deutsch.",
+    "error": "Ich lerne seit einen Jahr Deutsch.",
+    "transfer": "aus bilan kelib chiqish, nach bilan safar, seit bilan muddat ayting."
+  },
+  {
+    "topicId": "g077",
+    "context": "Mushuk stul ostida uxlayapti. Joyni ayting.",
+    "model": "Die Katze schläft unter dem Stuhl.",
+    "error": "Die Katze schläft unter den Stuhl.",
+    "transfer": "Bir buyumning turgan joyi va qo‘yiladigan joyini qiyoslang."
+  },
+  {
+    "topicId": "g078",
+    "context": "Shishani stol ustiga tik qo‘yyapsiz. stellen ishlating.",
+    "model": "Ich stelle die Flasche auf den Tisch.",
+    "error": "Ich stehe die Flasche auf den Tisch.",
+    "transfer": "Kitobni legen bilan qo‘ying, keyin liegen bilan joyini ayting."
+  },
+  {
+    "topicId": "g079",
+    "context": "Xona yorug‘ligini sifat-kesim bilan ayting.",
+    "model": "Das Zimmer ist hell.",
+    "error": "Das Zimmer ist helles.",
+    "transfer": "Bir buyumni avval kesim, so‘ng artiklli aniqlovchi bilan tasvirlang."
+  },
+  {
+    "topicId": "g080",
+    "context": "Kichik xona bo‘sh. Aniq artikldan keyingi sifat.",
+    "model": "Das kleine Zimmer ist frei.",
+    "error": "Das kleines Zimmer ist frei.",
+    "transfer": "der alte Tisch va die neue Lampe yordamida xonani tanishtiring."
+  },
+  {
+    "topicId": "g081",
+    "context": "Do‘konda ko‘k paltoni olayotganingizni ayting.",
+    "model": "Ich nehme den blauen Mantel.",
+    "error": "Ich nehme den blaue Mantel.",
+    "transfer": "Aniq artikl va rang sifati bilan ikkita boshqa buyumni tanlang."
+  },
+  {
+    "topicId": "g082",
+    "context": "Eski uyda yashaysiz. Aniq artiklli dativ sifat.",
+    "model": "Ich wohne in dem alten Haus.",
+    "error": "Ich wohne in dem alte Haus.",
+    "transfer": "der neue Kollege bilan mit orqali suhbat vaziyatini tuzing."
+  },
+  {
+    "topicId": "g083",
+    "context": "Issiq choy foydali. ein bilan sifat ishlating.",
+    "model": "Ein warmer Tee hilft.",
+    "error": "Ein warme Tee hilft.",
+    "transfer": "eine Suppe va ein Brotga sifat qo‘shib nonushtani tavsiya qiling."
+  },
+  {
+    "topicId": "g084",
+    "context": "Sizga yangi daftar kerak. ein + sifat + Akkusativ.",
+    "model": "Ich brauche ein neues Heft.",
+    "error": "Ich brauche ein neue Heft.",
+    "transfer": "einen Stift va eine Taschega sifat qo‘shib xarid ro‘yxatini ayting."
+  },
+  {
+    "topicId": "g085",
+    "context": "Yangi hamkasb bilan gaplashyapsiz. mit + ein + sifat.",
+    "model": "Ich spreche mit einem neuen Kollegen.",
+    "error": "Ich spreche mit einem neuer Kollegen.",
+    "transfer": "einer neuen Kollegin bilan uchrashuvni ham tasvirlang."
+  },
+  {
+    "topicId": "g086",
+    "context": "Poyezd avtobusdan tezroq. Qiyosiy daraja.",
+    "model": "Der Zug ist schneller als der Bus.",
+    "error": "Der Zug ist schneller wie der Bus.",
+    "transfer": "Ikki transportni narxi va qulayligi bo‘yicha qiyoslang."
+  },
+  {
+    "topicId": "g087",
+    "context": "Uch yo‘ldan shu yo‘l eng qisqa. am bilan ayting.",
+    "model": "Dieser Weg ist am kürzesten.",
+    "error": "Dieser Weg ist am kürzester.",
+    "transfer": "Uchta ichimlik yoki transportdan eng yaxshi variantni tanlang."
+  },
+  {
+    "topicId": "g088",
+    "context": "Ikki sumkaning og‘irligi bir xil. so … wie.",
+    "model": "Meine Tasche ist so schwer wie deine.",
+    "error": "Meine Tasche ist so schwer als deine.",
+    "transfer": "Bitta tenglikni wie, bitta farqni als bilan ayting."
+  },
+  {
+    "topicId": "g089",
+    "context": "Uyda qolasiz, chunki kasalsiz. weil bilan bog‘lang.",
+    "model": "Ich bleibe zu Hause, weil ich krank bin.",
+    "error": "Ich bleibe zu Hause, weil ich bin krank.",
+    "transfer": "Kechikishingiz uchun boshqa sababni weil bilan tushuntiring."
+  },
+  {
+    "topicId": "g090",
+    "context": "Do‘stingiz bugun keladi deb o‘ylaysiz. dass ishlating.",
+    "model": "Ich glaube, dass er heute kommt.",
+    "error": "Ich glaube, dass er kommt heute.",
+    "transfer": "Kurs haqida ich denke, dass bilan o‘z fikringizni ayting."
+  },
+  {
+    "topicId": "g091",
+    "context": "Vaqtingiz bo‘lsa ovqat pishirasiz. wenn bilan boshlang.",
+    "model": "Wenn ich Zeit habe, koche ich.",
+    "error": "Wenn ich Zeit habe, ich koche.",
+    "transfer": "Yomg‘ir bo‘lsa rejangiz qanday o‘zgarishini ayting."
+  },
+  {
+    "topicId": "g092",
+    "context": "Anna keladimi, bilmaysiz. ob bilan bilvosita savol.",
+    "model": "Ich weiß nicht, ob Anna kommt.",
+    "error": "Ich weiß nicht, ob kommt Anna.",
+    "transfer": "Do‘konda xizmat mavjudligini ob bilan muloyim so‘rang."
+  },
+  {
+    "topicId": "g093",
+    "context": "Poyezd qachon ketishini muloyim bilvosita so‘rang.",
+    "model": "Können Sie sagen, wann der Zug fährt?",
+    "error": "Können Sie sagen, wann fährt der Zug?",
+    "transfer": "Qabulxonada xona qayerda va dars qachonligini bilvosita so‘rang."
+  },
+  {
+    "topicId": "g094",
+    "context": "Charchagansiz, shu sabab erta ketyapsiz. denn ishlating.",
+    "model": "Ich gehe früh, denn ich bin müde.",
+    "error": "Ich gehe früh, denn ich müde bin.",
+    "transfer": "Bir sababni avval denn, keyin weil bilan ifodalang."
+  },
+  {
+    "topicId": "g095",
+    "context": "Yomg‘ir yog‘moqda; shuning uchun avtobusga chiqasiz.",
+    "model": "Es regnet. Deshalb nehme ich den Bus.",
+    "error": "Es regnet. Deshalb ich nehme den Bus.",
+    "transfer": "Kech qolish va transport tanlash uchun deshalb bilan natija ayting."
+  },
+  {
+    "topicId": "g096",
+    "context": "Avval ovqat pishirdingiz, keyin yedingiz. Ketma-ket hikoya.",
+    "model": "Zuerst habe ich gekocht. Danach habe ich gegessen.",
+    "error": "Zuerst ich habe gekocht. Danach ich habe gegessen.",
+    "transfer": "O‘z kechagi uch ishingizni zuerst, dann, danach bilan ayting."
+  },
+  {
+    "topicId": "g097",
+    "context": "Uy tomini ko‘rsating. des bilan genitiv.",
+    "model": "Das ist das Dach des Hauses.",
+    "error": "Das ist das Dach des Haus.",
+    "transfer": "das Auto des Lehrers yordamida yana bir egalikni tasvirlang."
+  },
+  {
+    "topicId": "g098",
+    "context": "Velosiped akangizniki. Egalik artikli genitiv.",
+    "model": "Das ist das Fahrrad meines Bruders.",
+    "error": "Das ist das Fahrrad meines Bruder.",
+    "transfer": "Schwester va Vater bilan ikki buyumning egasini ayting."
+  },
+  {
+    "topicId": "g099",
+    "context": "Yomg‘ir tufayli uyda qolasiz. wegen + Genitiv.",
+    "model": "Wegen des Regens bleiben wir zu Hause.",
+    "error": "Wegen des Regen bleiben wir zu Hause.",
+    "transfer": "Reja yomg‘irga qaramay davom etadi: trotz bilan qayta ayting."
+  },
+  {
+    "topicId": "g100",
+    "context": "Bir talabaga yordam beryapsiz. der Student dativ.",
+    "model": "Ich helfe dem Studenten.",
+    "error": "Ich helfe dem Student.",
+    "transfer": "den Kollegen va dem Jungen bilan ikki muloqot vaziyatini tuzing."
+  },
+  {
+    "topicId": "g101",
+    "context": "Bu yerda velosiped ijaraga olish mumkin. man ishlating.",
+    "model": "Hier kann man Fahrräder mieten.",
+    "error": "Hier können man Fahrräder mieten.",
+    "transfer": "Mehmonxonada jemand va niemand bilan kim borligini ayting."
+  },
+  {
+    "topicId": "g102",
+    "context": "Yangi mevalar foydali. Artiklsiz sifat nominativ.",
+    "model": "Frisches Obst ist gesund.",
+    "error": "Frische Obst ist gesund.",
+    "transfer": "Kaltes Wasser va warmer Tee bilan ikkita maslahat ayting."
+  },
+  {
+    "topicId": "g103",
+    "context": "Sovuq suv ichasiz. Artiklsiz sifat akkuzativ.",
+    "model": "Ich trinke kaltes Wasser.",
+    "error": "Ich trinke kalter Wasser.",
+    "transfer": "frischen Kaffee va warme Milch bilan buyurtma bering."
+  },
+  {
+    "topicId": "g104",
+    "context": "Choyni sovuq sut bilan ichasiz. Artiklsiz sifat dativ.",
+    "model": "Ich trinke Tee mit kalter Milch.",
+    "error": "Ich trinke Tee mit kalte Milch.",
+    "transfer": "mit frischem Brot va mit heißem Wasser bilan ikki odatni ayting."
+  },
+  {
+    "topicId": "g105",
+    "context": "Ilgari Xivada yashagansiz. wohnen Präteritum.",
+    "model": "Früher wohnte ich in Chiwa.",
+    "error": "Früher wohntete ich in Chiwa.",
+    "transfer": "lernen va arbeiten bilan oldingi hayotingizdan ikki gap yozing."
+  },
+  {
+    "topicId": "g106",
+    "context": "Hikoyada Ali bekatga bordi. gehen Präteritum.",
+    "model": "Ali ging zum Bahnhof.",
+    "error": "Ali gehte zum Bahnhof.",
+    "transfer": "kam va sah yordamida hikoyani ikki gap bilan davom ettiring."
+  },
+  {
+    "topicId": "g107",
+    "context": "Siz kelganda avtobus allaqachon ketgan edi.",
+    "model": "Als ich ankam, war der Bus schon abgefahren.",
+    "error": "Als ich ankam, ist der Bus schon abgefahren.",
+    "transfer": "Avval ovqat yedingiz, keyin do‘st keldi: oldingi ishni Plusquamperfektda ayting."
+  },
+  {
+    "topicId": "g108",
+    "context": "O‘n yoshligingizda Nukusda yashardingiz. Bir davr uchun als.",
+    "model": "Als ich zehn war, wohnte ich in Nukus.",
+    "error": "Wenn ich zehn war, wohnte ich in Nukus.",
+    "transfer": "Bir martalik voqeani als, takrorlangan holatni wenn bilan ayting."
+  },
+  {
+    "topicId": "g109",
+    "context": "Siz pishirayotgan paytda u musiqa tinglaydi. während.",
+    "model": "Während ich koche, hört er Musik.",
+    "error": "Während ich koche, er hört Musik.",
+    "transfer": "Uyda ikki kishining bir vaqtdagi ishini tasvirlang."
+  },
+  {
+    "topicId": "g110",
+    "context": "Uxlashdan oldin kitob o‘qiysiz. bevor ishlating.",
+    "model": "Bevor ich schlafe, lese ich.",
+    "error": "Bevor ich schlafe, ich lese.",
+    "transfer": "Ishga chiqishdan oldingi ikki odatingizni ayting."
+  },
+  {
+    "topicId": "g111",
+    "context": "Avval ovqat yedingiz, keyin sayrga chiqdingiz. nachdem.",
+    "model": "Nachdem ich gegessen hatte, ging ich spazieren.",
+    "error": "Nachdem ich gegessen hatte, ich ging spazieren.",
+    "transfer": "Avval ishni tugatish, keyin qo‘ng‘iroq qilish ketma-ketligini yozing."
+  },
+  {
+    "topicId": "g112",
+    "context": "Bu yerga ko‘chgandan beri velosiped minasiz. seitdem.",
+    "model": "Seitdem ich hier wohne, fahre ich Rad.",
+    "error": "Seitdem ich hier wohne, ich fahre Rad.",
+    "transfer": "Kurs boshlanganidan beri o‘zgargan bir odatingizni tushuntiring."
+  },
+  {
+    "topicId": "g113",
+    "context": "Do‘st tayyor bo‘lguncha kutasiz. bis bilan ayting.",
+    "model": "Ich warte, bis du fertig bist.",
+    "error": "Ich warte, bis du bist fertig.",
+    "transfer": "Do‘kon ochilguncha nima qilishingizni ayting."
+  },
+  {
+    "topicId": "g114",
+    "context": "Yomg‘irga qaramay sayrga chiqasiz. obwohl bilan.",
+    "model": "Obwohl es regnet, gehen wir spazieren.",
+    "error": "Obwohl es regnet, wir gehen spazieren.",
+    "transfer": "Charchagan bo‘lsangiz ham bajaradigan ishingizni ayting."
+  },
+  {
+    "topicId": "g115",
+    "context": "Sovuq, shunga qaramay tashqariga chiqasiz. trotzdem.",
+    "model": "Es ist kalt. Trotzdem gehe ich raus.",
+    "error": "Es ist kalt. Trotzdem ich gehe raus.",
+    "transfer": "Bir qiyinchilik va kutilmagan natijani trotzdem bilan bog‘lang."
+  },
+  {
+    "topicId": "g116",
+    "context": "Do‘st tushunsin deb sekin gapirasiz. damit ishlating.",
+    "model": "Ich spreche langsam, damit du mich verstehst.",
+    "error": "Ich spreche langsam, damit du verstehst mich.",
+    "transfer": "Boshqa odamga yordam berish uchun qiladigan ishingizni damit bilan ayting."
+  },
+  {
+    "topicId": "g117",
+    "context": "Berlinda o‘qish uchun nemischa o‘rganyapsiz. um … zu.",
+    "model": "Ich lerne Deutsch, um in Berlin zu studieren.",
+    "error": "Ich lerne Deutsch, um in Berlin studieren.",
+    "transfer": "Bir xil ega bilan ikki shaxsiy maqsadni ayting."
+  },
+  {
+    "topicId": "g118",
+    "context": "Har kuni o‘qishga harakat qilasiz. versuchen + zu.",
+    "model": "Ich versuche, jeden Tag zu lesen.",
+    "error": "Ich versuche, jeden Tag lesen.",
+    "transfer": "planen va anfangen bilan ikki niyatni ayting; ajraladigan fe’l bo‘lsa zu o‘rnini tekshiring."
+  },
+  {
+    "topicId": "g119",
+    "context": "U xayrlashmasdan ketdi. ohne … zu.",
+    "model": "Er ging, ohne sich zu verabschieden.",
+    "error": "Er ging, ohne sich verabschieden.",
+    "transfer": "Shoshilgan odam nima qilmasdan chiqib ketganini ayting."
+  },
+  {
+    "topicId": "g120",
+    "context": "U o‘qish o‘rniga o‘ynaydi. statt … zu.",
+    "model": "Er spielt, statt zu lernen.",
+    "error": "Er spielt, statt lernen.",
+    "transfer": "Bir foydali ish o‘rniga qiladigan odatni tasvirlang."
+  },
+  {
+    "topicId": "g121",
+    "context": "Yonimizda yashaydigan erkakni nisbiy gap bilan tanishtiring.",
+    "model": "Das ist der Mann, der neben uns wohnt.",
+    "error": "Das ist der Mann, den neben uns wohnt.",
+    "transfer": "die Frau va das Kindni ega vazifasidagi nisbiy gap bilan aniqlang."
+  },
+  {
+    "topicId": "g122",
+    "context": "Tavsiya qiladigan filmingizni nisbiy gap bilan ayting.",
+    "model": "Das ist der Film, den ich empfehlen kann.",
+    "error": "Das ist der Film, der ich empfehlen kann.",
+    "transfer": "O‘qigan kitobingiz va ko‘rgan odamingizni nisbiy gap bilan aniqlang."
+  },
+  {
+    "topicId": "g123",
+    "context": "Siz yordam bergan ayolni tanishtiring. helfen + dativ.",
+    "model": "Das ist die Frau, der ich geholfen habe.",
+    "error": "Das ist die Frau, die ich geholfen habe.",
+    "transfer": "Yordam bergan erkakni va bolani nisbiy gap bilan tanishtiring."
+  },
+  {
+    "topicId": "g124",
+    "context": "Birga safar qiladigan do‘stingizni mit bilan aniqlang.",
+    "model": "Das ist der Freund, mit dem ich reise.",
+    "error": "Das ist der Freund, mit den ich reise.",
+    "transfer": "Kutayotgan avtobusni auf, gaplashayotgan ayolni mit bilan aniqlang."
+  },
+  {
+    "topicId": "g125",
+    "context": "Qizi shu yerda o‘qiydigan erkakni aniqlang.",
+    "model": "Das ist der Mann, dessen Tochter hier lernt.",
+    "error": "Das ist der Mann, deren Tochter hier lernt.",
+    "transfer": "O‘g‘li sizga tanish bo‘lgan ayolni deren bilan tasvirlang."
+  },
+  {
+    "topicId": "g126",
+    "context": "Ma’lum kurslardan qaysi biriga qatnashishini so‘rang.",
+    "model": "Welchen Kurs besuchen Sie?",
+    "error": "Welcher Kurs besuchen Sie?",
+    "transfer": "Avval was für ein bilan kurs turini, keyin welcher bilan aniq kursni so‘rang."
+  },
+  {
+    "topicId": "g127",
+    "context": "Dengiz bo‘yida yashash istagini würde bilan ayting.",
+    "model": "Ich würde gern am Meer wohnen.",
+    "error": "Ich würde gern am Meer wohne.",
+    "transfer": "Ikki orzuingizni würde + Infinitiv bilan ayting va sherikdan so‘rang."
+  },
+  {
+    "topicId": "g128",
+    "context": "Hozir uyda bo‘lishni xohlaysiz. wäre.",
+    "model": "Ich wäre jetzt gern zu Hause.",
+    "error": "Ich würde jetzt gern zu Hause.",
+    "transfer": "Boshqa joyda bo‘lish istagini wir wären bilan ayting."
+  },
+  {
+    "topicId": "g129",
+    "context": "Ko‘proq vaqtingiz bo‘lishini xohlaysiz. hätte.",
+    "model": "Ich hätte gern mehr Zeit.",
+    "error": "Ich wäre gern mehr Zeit.",
+    "transfer": "Geld va Urlaub uchun ikki istakni hätte bilan ayting."
+  },
+  {
+    "topicId": "g130",
+    "context": "Notanish kishidan yo‘l ko‘rsatishni muloyim so‘rang.",
+    "model": "Könnten Sie mir den Weg zeigen?",
+    "error": "Könnten Sie mir den Weg zeigen Sie?",
+    "transfer": "Telefon qilish va oynani yopish uchun ikki muloyim iltimos bering."
+  },
+  {
+    "topicId": "g131",
+    "context": "Charchagan do‘stga tanaffusni maslahat bering. sollte.",
+    "model": "Du solltest eine Pause machen.",
+    "error": "Du solltest eine Pause machst.",
+    "transfer": "Ikki muammoga sollte bilan maslahat bering, majburiyatdan farqini ayting."
+  },
+  {
+    "topicId": "g132",
+    "context": "Vaqtingiz ko‘proq bo‘lsa, ko‘proq o‘qirdingiz. Noreal shart.",
+    "model": "Wenn ich mehr Zeit hätte, würde ich mehr lesen.",
+    "error": "Wenn ich mehr Zeit habe, würde ich mehr lesen.",
+    "transfer": "Mablag‘ va ta’til haqida haqiqiy bo‘lmagan rejangizni ayting."
+  },
+  {
+    "topicId": "g133",
+    "context": "Ustaxonada velosiped ta’mirlanmoqda. Passiv Präsens.",
+    "model": "Das Fahrrad wird repariert.",
+    "error": "Das Fahrrad wird reparieren.",
+    "transfer": "Uyda yoki ishda bajarilayotgan ikki jarayonni passivda ayting."
+  },
+  {
+    "topicId": "g134",
+    "context": "Bugun ofis tozalanmaydi. Passiv Präsens inkori.",
+    "model": "Das Büro wird heute nicht gereinigt.",
+    "error": "Das Büro ist heute nicht reinigen.",
+    "transfer": "Ikki bajarilmayotgan xizmat haqida mijozga xabar bering."
+  },
+  {
+    "topicId": "g135",
+    "context": "Ko‘cha qachon qurilishini passiv savolda so‘rang.",
+    "model": "Wann wird die Straße gebaut?",
+    "error": "Wann die Straße wird gebaut?",
+    "transfer": "Ta’mir va yetkazish haqida ikkita passiv savol bering."
+  },
+  {
+    "topicId": "g136",
+    "context": "Ko‘prik o‘tgan yili qurilgan. Passiv Präteritum.",
+    "model": "Die Brücke wurde letztes Jahr gebaut.",
+    "error": "Die Brücke wurde letztes Jahr bauen.",
+    "transfer": "Shu xabarni ist gebaut worden bilan qayta ayting, so‘ng boshqa inshootni tasvirlang."
+  },
+  {
+    "topicId": "g137",
+    "context": "Anketani to‘ldirish kerak. Modal passiv.",
+    "model": "Das Formular muss ausgefüllt werden.",
+    "error": "Das Formular muss ausgefüllt wird.",
+    "transfer": "Ish joyidagi ikki majburiy jarayonni modal passiv bilan ayting."
+  },
+  {
+    "topicId": "g138",
+    "context": "Deraza allaqachon ochiq holatda. Zustandspassiv.",
+    "model": "Das Fenster ist geöffnet.",
+    "error": "Das Fenster ist öffnen.",
+    "transfer": "Eshikning ochilish jarayoni va ochiq holatini alohida ayting."
+  },
+  {
+    "topicId": "g139",
+    "context": "Avtobusni kutyapsiz. warten auf bilan ayting.",
+    "model": "Ich warte auf den Bus.",
+    "error": "Ich warte auf dem Bus.",
+    "transfer": "sich freuen auf va denken an bilan ikki shaxsiy gap tuzing."
+  },
+  {
+    "topicId": "g140",
+    "context": "Kursda qatnashyapsiz. teilnehmen an bilan ayting.",
+    "model": "Ich nehme an einem Kurs teil.",
+    "error": "Ich nehme an einen Kurs teil.",
+    "transfer": "sprechen mit va träumen von bilan ikki shaxsiy gap ayting."
+  },
+  {
+    "topicId": "g141",
+    "context": "Do‘st nimani kutayotganini worauf bilan so‘rang.",
+    "model": "Worauf wartest du? — Auf den Zug.",
+    "error": "Woran wartest du? — Auf den Zug.",
+    "transfer": "auf den Zugni darauf bilan almashtiring; kimni kutishni auf wen bilan so‘rang."
+  },
+  {
+    "topicId": "g142",
+    "context": "Anna nemischa ham inglizcha ham gapiradi. sowohl … als auch.",
+    "model": "Anna spricht sowohl Deutsch als auch Englisch.",
+    "error": "Anna spricht sowohl Deutsch oder Englisch.",
+    "transfer": "Ikki afzallikni nicht nur … sondern auch bilan bog‘lang."
+  },
+  {
+    "topicId": "g143",
+    "context": "Siz qahva ham kola ham ichmaysiz. weder … noch.",
+    "model": "Ich trinke weder Kaffee noch Cola.",
+    "error": "Ich trinke weder Kaffee oder Cola.",
+    "transfer": "Ikki tanlovni entweder … oder bilan taklif qiling va weder … noch bilan rad eting."
+  },
+  {
+    "topicId": "g144",
+    "context": "Ko‘p mashq qilgan sari ishonchliroq gapirasiz. je … desto.",
+    "model": "Je mehr ich übe, desto sicherer spreche ich.",
+    "error": "Je mehr ich übe, desto sicherer ich spreche.",
+    "transfer": "Narx va sifat yoki vaqt va natija o‘rtasidagi bog‘liqlikni je … desto bilan ayting."
+  }
+]

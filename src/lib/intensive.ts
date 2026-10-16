@@ -53,7 +53,7 @@ export function grammarReview(moduleIds: number[]): Question[] {
   return shuffled([...grammarChecks(moduleIds), ...topics.filter(t=>moduleIds.includes(t.module)).flatMap(t=>topicPractice(t.id))], moduleIds[0]+17).slice(0,20);
 }
 export function lessonPlan(no: number) {
-  const safe = Math.min(192, Math.max(1, Math.trunc(no)||1));
+  const safe = Math.min(192, Math.max(1, Number.isFinite(no) ? Math.trunc(no)||1 : 1));
   const week=Math.ceil(safe/6), day=(safe-1)%6+1, month=Math.ceil(week/4);
   const moduleIds=weekModules[week-1];
   const allTopics=topics.filter(t=>moduleIds.includes(t.module));

@@ -2284,6 +2284,9 @@ export interface CheckResult {
 export interface DiscountRow {
   id: number;
   hidden?: boolean;
+  /** Qaysi fanga (2026-10-16) — bo'sh bo'lsa barcha fanlarga */
+  group_id?: number | null;
+  group_name?: string | null;
   student_id: number;
   student_name?: string;
   kind: string;

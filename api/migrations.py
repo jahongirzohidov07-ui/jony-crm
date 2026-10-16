@@ -254,6 +254,11 @@ MIGRATIONS = [
         "ALTER TABLE student_groups ADD COLUMN frozen_note VARCHAR",
     ]),
 
+    # 2026-10-16: fan bo'yicha chegirma (discounts.group_id; bo'sh —
+    # barcha fanlarga)
+    ("0031_discount_group", [
+        "ALTER TABLE discounts ADD COLUMN group_id INTEGER",
+    ]),
 ]
 
 

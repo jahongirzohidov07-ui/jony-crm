@@ -106,6 +106,14 @@ export function Discounts({ studentId }: { studentId: number }) {
                     <span className="text-sm font-medium text-slate-800">
                       {d.kind_label}
                     </span>
+                    {d.group_name && (
+                      <span
+                        title="Faqat shu fan oyligiga qo'llanadi"
+                        className="text-[11px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600"
+                      >
+                        {d.group_name}
+                      </span>
+                    )}
                     <span className="text-sm font-semibold text-brand-700">
                       {d.percent
                         ? `${d.percent}%`
@@ -380,6 +388,17 @@ function DiscountForm({
   const [okMsg, setOkMsg] = useState("");
   const [saving, setSaving] = useState(false);
   const isFamily = kind === "family_link";
+  // QAYSI FANGA (2026-10-16, Jahongir: "xar bir fan alohida chegirma").
+  // Bir nechta fani bo'lsa tanlanadi; bo'sh — barcha fanlarga.
+  const [subjects, setSubjects] = useState<
+    { group_id: number; group: string; is_primary: boolean }[]>([]);
+  const [groupId, setGroupId] = useState<string>("");
+  useEffect(() => {
+    api.fresh<{ rows: { group_id: number; group: string; is_primary: boolean;
+                        active: boolean }[] }>(`/students/${studentId}/groups`)
+      .then((d) => setSubjects((d.rows || []).filter((r) => r.active)))
+      .catch(() => setSubjects([]));
+  }, [studentId]);
 
   useEffect(() => {
     if (kind === "staff_child" && staff.length === 0)
@@ -455,6 +474,7 @@ function DiscountForm({
         referrer_student_id: pickStudent ? pickStudent.id : null,
         staff_user_id: pickStaff ? pickStaff.id : null,
         hidden,
+        group_id: subjects.length > 1 && groupId ? Number(groupId) : null,
       });
       onSaved();
     } catch (e) {
@@ -645,6 +665,26 @@ function DiscountForm({
               </span>
             </span>
           </label>
+
+          {subjects.length > 1 && (
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">
+                Qaysi fanga?
+              </label>
+              <select
+                value={groupId}
+                onChange={(e) => setGroupId(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm bg-white"
+              >
+                <option value="">Barcha fanlarga</option>
+                {subjects.map((g) => (
+                  <option key={g.group_id} value={g.group_id}>
+                    Faqat: {g.group}{g.is_primary ? " (asosiy)" : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-3">
             <div>

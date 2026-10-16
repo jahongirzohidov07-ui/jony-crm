@@ -1484,6 +1484,11 @@ class Discount(Base):
 
     # Referral: qaysi do'sti olib keldi
     referrer_student_id = Column(Integer, ForeignKey("students.id"), nullable=True)
+    # QAYSI FANGA (2026-10-16, Jahongir: "xar bir fan alohida
+    # chegirma"). Bo'sh — barcha fanlarga (avvalgidek); to'ldirilgan —
+    # faqat shu guruh (fan) oyligiga.
+    group_id = Column(Integer, ForeignKey("groups.id"), nullable=True,
+                      index=True)
     # Xodim farzandi: qaysi xodim. Xodim ketsa chegirma avtomat bekor.
     staff_user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
 

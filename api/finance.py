@@ -1865,10 +1865,21 @@ def create_discount(
                or (is_partner_head(user)
                    and _in_user_branches(db, user, st.branch_id))
                else roles.MAX_TOTAL_DISCOUNT_PERCENT)
-    now = _student_discount_percent(db, st)
+    # QAYSI FANGA (2026-10-16). Bo'sh — barcha fanlarga (avvalgidek).
+    # Chegara ham shu fan bo'yicha hisoblanadi.
+    gid = payload.group_id or None
+    if gid:
+        link = (db.query(models.StudentGroupLink)
+                .filter(models.StudentGroupLink.student_id == st.id,
+                        models.StudentGroupLink.group_id == gid,
+                        models.StudentGroupLink.active == 1).first())
+        if link is None and gid != st.group_id:
+            raise HTTPException(400, "O'quvchi bu fanda (guruhda) o'qimaydi")
+    tgt_group = (db.query(models.Group).get(gid) if gid else st.group)
+    now = _student_discount_percent(db, st, group_id=gid)
     add = payload.percent or 0
-    if not add and payload.amount and st.group and st.group.monthly_fee:
-        add = payload.amount / st.group.monthly_fee * 100
+    if not add and payload.amount and tgt_group and tgt_group.monthly_fee:
+        add = payload.amount / tgt_group.monthly_fee * 100
     if now + add > cap:
         raise HTTPException(
             400,
@@ -1888,6 +1899,7 @@ def create_discount(
         hidden=1 if payload.hidden else 0,
         requested_by=user.full_name,
         status="pending",
+        group_id=gid,
     )
     # Tasdiqlash huquqi bor odam o'zi so'rasa - darrov amalda.
     if user.role in roles.DISCOUNT_APPROVE:
@@ -1912,7 +1924,7 @@ def create_discount(
     # yo'lda ham bir xil.
     if d.status == "active":
         try:
-            _recharge_current_month(db, st)
+            _recharge_for(db, st, d)
         except Exception:
             db.rollback()
     audit.log(db, user, entity="discount", action="create", entity_id=d.id,
@@ -1921,6 +1933,19 @@ def create_discount(
                         f"{d.percent or d.amount}")
     db.commit()
     return _discount_out(db, d)
+
+def _recharge_for(db: Session, st: models.Student, d) -> None:
+    """Chegirma amalga kirdi — shu oy hisobi O'SHA FAN(LAR) bo'yicha
+    (2026-10-16). Bo'sh group_id — barcha fanlar: asosiy qator va
+    qo'shimcha fanlarning "#g" qatorlari; aks holda faqat o'sha fan."""
+    import multi_subject as _ms
+    gid = getattr(d, "group_id", None)
+    if not gid or gid == st.group_id:
+        _recharge_current_month(db, st)
+    if not gid or gid != st.group_id:
+        _ms.reprice_extras(db, st, only=gid)
+        db.commit()
+
 
 def _recharge_current_month(db: Session, st: models.Student, *, commit: bool = True) -> bool:
     """Shu oyning AVTOMAT hisob qatorini chegirma bilan qayta yozadi.
@@ -2366,7 +2391,7 @@ def approve_discount(
     # chegirmaga ega bo'lsa ham qarzdor bo'lib turaverardi.
     if payload.approve and st:
         try:
-            _recharge_current_month(db, st)
+            _recharge_for(db, st, d)
         except Exception:
             db.rollback()
     audit.log(db, user, entity="discount",

@@ -53,7 +53,8 @@ for base,student in zip(source,export):
  for key in ('title','objective','grammar','phrases','dialog','questions','homework','exit','roleplay'):
   assert student[key]==base[key],(base['no'],'student regression',key)
 ui=(ROOT/'src/pages/RussianPlans.tsx').read_text('utf-8')
-assert "../lib/russianTeacher" in ui and 'locale="ru"' in ui
+assert "../lib/russianTeacher" in ui
+assert 'locale="ru"' in (ROOT/'src/components/RussianTeachingKit.tsx').read_text('utf-8')
 for label in ('Ustoz rejasi','Uyga vazifa','Darsni qanday','Oldingi dars','Keyingi dars','Namunaviy javob'):
  assert label not in ui,label
 if args.pdf:

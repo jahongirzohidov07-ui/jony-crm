@@ -37,7 +37,8 @@ for m in range(1,13):
         assert f.is_file() and f.stat().st_size>20000, f
 assert (root/'public/russian/jony-russian-course-map.pdf').is_file()
 ui=(root/'src/pages/RussianPlans.tsx').read_text(encoding='utf-8')
-assert 'russian-placement' in ui and 'синтезированным голосом' in ui.lower()
-assert 'getVoices()' in ui and "startsWith('ru')" in ui
+assert 'russian-placement' in ui and 'RussianListening' in ui
+kit=(root/'src/components/RussianTeachingKit.tsx').read_text(encoding='utf-8')
+assert '<audio ' in kit and '/russian/audio/' in kit
 assert 'RussianPlans' in (root/'src/pages/LessonPlans.tsx').read_text(encoding='utf-8')
 print('PASS: 144 lessons, 12 months, 432 grammar checks, 432 comprehension prompts, 1152 phrase slots, 25 PDF files and course routing')

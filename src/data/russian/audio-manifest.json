@@ -1,0 +1,1713 @@
+[
+  {
+    "id": "lesson-1",
+    "path": "/russian/audio/lesson-1.mp3",
+    "duration": 21.758,
+    "sha256": "b7d9a87de8455a5433f8133f8b3a558088a286b16724751b8c75233006caa7e1",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-2",
+    "path": "/russian/audio/lesson-2.mp3",
+    "duration": 21.134,
+    "sha256": "069ba5ddd40e1774fbfe6e545ca068c9ecdfb7f0cf8dff5e61fdb361e0839a19",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-3",
+    "path": "/russian/audio/lesson-3.mp3",
+    "duration": 29.382,
+    "sha256": "5845b0c68d1e1d57673a57181c480b2292fcba1e83308556012e0800bad9f12f",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-4",
+    "path": "/russian/audio/lesson-4.mp3",
+    "duration": 31.31,
+    "sha256": "42e9bd5ef196950466c8e75030a7c6ef07d4ee44d032573516e4ba2d719c94f1",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-5",
+    "path": "/russian/audio/lesson-5.mp3",
+    "duration": 16.646,
+    "sha256": "d748c043b630f7ad2628a33b8a2be085e2bc432aa6ef221d545ddea3a20ecd30",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-6",
+    "path": "/russian/audio/lesson-6.mp3",
+    "duration": 23.966,
+    "sha256": "24fa9a69b03eaddbb48035b6e0f35fdf4768b103ae05b6be0714dd60ae85b7a6",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-7",
+    "path": "/russian/audio/lesson-7.mp3",
+    "duration": 20.558,
+    "sha256": "b14185aa25fbd99876744ce5ba8c7f34a458f508aa3b11ca6e10847e63d6d225",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-8",
+    "path": "/russian/audio/lesson-8.mp3",
+    "duration": 25.238,
+    "sha256": "fbf326e82d4b5bec145de42b55a1e94c36972153ea603beb4554c0598e86b901",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-9",
+    "path": "/russian/audio/lesson-9.mp3",
+    "duration": 30.798,
+    "sha256": "370a65c63fa2f82e2a779d1445564647340c6cc7258902b5484ee39b1286065e",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-10",
+    "path": "/russian/audio/lesson-10.mp3",
+    "duration": 27.494,
+    "sha256": "978ebb1898b9731b887d15a18d4f5fcccf5c101013effb578aa1d0e981c6a501",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-11",
+    "path": "/russian/audio/lesson-11.mp3",
+    "duration": 24.71,
+    "sha256": "7ed0ece83b2f984749c05d02067723d4214785a44ed5eaa01626129a81b16291",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-12",
+    "path": "/russian/audio/lesson-12.mp3",
+    "duration": 36.774,
+    "sha256": "935e6366a36c3eb32b6d5bc9981d40d0a7661317bcf0ea425d4b247d3f2f5815",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-13",
+    "path": "/russian/audio/lesson-13.mp3",
+    "duration": 23.75,
+    "sha256": "c8704f0c8535b21190510f11db831ce445ee8a6fdf5c6238008d5fc461249404",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-14",
+    "path": "/russian/audio/lesson-14.mp3",
+    "duration": 23.63,
+    "sha256": "c99a2f98e20d9273318a82fc7df206146f6c6c102b68fbb21d2387f2426bd2c4",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-15",
+    "path": "/russian/audio/lesson-15.mp3",
+    "duration": 37.614,
+    "sha256": "dcce8135889a6dd7f727f0ea346151c6d97aac88f069d95abed84f5ac1cafde8",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-16",
+    "path": "/russian/audio/lesson-16.mp3",
+    "duration": 20.558,
+    "sha256": "ed0f344608d234ff4cae5fbd25318494335444e38c7bfded9f15eceb0df2ba04",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-17",
+    "path": "/russian/audio/lesson-17.mp3",
+    "duration": 19.622,
+    "sha256": "27e223d6f00dd590cfbce4d7a7c96339ffea3c15efdebc1ddfadaad80bfea7f1",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-18",
+    "path": "/russian/audio/lesson-18.mp3",
+    "duration": 31.158,
+    "sha256": "da8e9587a9c63f84c607a687b36ad2f7652b982389a775158e3acbca465f937c",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-19",
+    "path": "/russian/audio/lesson-19.mp3",
+    "duration": 18.782,
+    "sha256": "19d61a7e8f2948c08546c45b3af5e919fb1eb0de67da16c0183f112e5883608a",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-20",
+    "path": "/russian/audio/lesson-20.mp3",
+    "duration": 22.07,
+    "sha256": "08e1f04879ab049c3ad6ef69e38e3e53ba84e0af4e0b4b4983d9653090a4bca9",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-21",
+    "path": "/russian/audio/lesson-21.mp3",
+    "duration": 24.918,
+    "sha256": "f1ed8d9c70e11f68c1cdc1a4b2fb1dac45d3f0495bfd42c493e01bfbe599e7f4",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-22",
+    "path": "/russian/audio/lesson-22.mp3",
+    "duration": 18.758,
+    "sha256": "26065bce2696b5c53f9b29912db4787506c1b469cf4bdc9144c06a200ed3a36e",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-23",
+    "path": "/russian/audio/lesson-23.mp3",
+    "duration": 21.878,
+    "sha256": "81bf00fa6bc691d432580cf241256c0ef1a5913b20d5c496af8532a1283c3597",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-24",
+    "path": "/russian/audio/lesson-24.mp3",
+    "duration": 33.846,
+    "sha256": "e194b28c24abdc9436b2bd57c718375708160df7b23478fc5b91753f641f9716",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-25",
+    "path": "/russian/audio/lesson-25.mp3",
+    "duration": 23.342,
+    "sha256": "7d22fb4a10425ecc347201085d1e5358c877d3efcd5bd9c777873ab52492df14",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-26",
+    "path": "/russian/audio/lesson-26.mp3",
+    "duration": 23.078,
+    "sha256": "96e53fab0f1bd7699a4b8dd90417e5fb9aaf2fbd1a1329a84afa31ab6857c682",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-27",
+    "path": "/russian/audio/lesson-27.mp3",
+    "duration": 29.838,
+    "sha256": "1df33adbc7a41d23f9ea30af4ad598facd16560f04dd7c33961342f2887b2a3d",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-28",
+    "path": "/russian/audio/lesson-28.mp3",
+    "duration": 22.022,
+    "sha256": "d0ce9e55674339ad59ba579140ee325562abf738a42bb356e1a6eddf7a0786d6",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-29",
+    "path": "/russian/audio/lesson-29.mp3",
+    "duration": 22.43,
+    "sha256": "366c5301cd9d9582691c2eb6063562ec05991410a63219549132201bdcaccc4e",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-30",
+    "path": "/russian/audio/lesson-30.mp3",
+    "duration": 25.838,
+    "sha256": "4801fa5d1aec73fb2df914e4f244d2959ab16b34d3b916e1c3537a001c314b43",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-31",
+    "path": "/russian/audio/lesson-31.mp3",
+    "duration": 24.686,
+    "sha256": "4264fc0bb8ad633bc31800efd09e41e998882da3d14af553fcffd94fcab81b08",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-32",
+    "path": "/russian/audio/lesson-32.mp3",
+    "duration": 32.43,
+    "sha256": "c2ba4615a07a66ab66cefd8e28242e096ef1be98190b1e9b8cb5772e08911b3f",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-33",
+    "path": "/russian/audio/lesson-33.mp3",
+    "duration": 34.47,
+    "sha256": "023cf740d5454617710a413e7a91541e22b9a4755b6e6758b6aca6a3c1b2dcbb",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-34",
+    "path": "/russian/audio/lesson-34.mp3",
+    "duration": 20.798,
+    "sha256": "14ccc162cebfafb007cf716edb1ff63bf34bd7f84d9adc6b41804177031f1896",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-35",
+    "path": "/russian/audio/lesson-35.mp3",
+    "duration": 22.982,
+    "sha256": "295c1e9887df23fe528432e8daf6e11e05a1b282db1ac5e1e60ad56631053456",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-36",
+    "path": "/russian/audio/lesson-36.mp3",
+    "duration": 46.71,
+    "sha256": "ad2f6a07fe2145738b13418d92091edcdfa5ee20480b647731195ba3181a3407",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-37",
+    "path": "/russian/audio/lesson-37.mp3",
+    "duration": 27.058,
+    "sha256": "a8f8f6427bb7ce79f08c671cea8e7897139241ea41ac8c55c06a531acb2e7a9c",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-38",
+    "path": "/russian/audio/lesson-38.mp3",
+    "duration": 24.442,
+    "sha256": "a8bc3d2fb3cfe0e9b2c636605b0e52f533077505a0bdbc5434f558740a15f18e",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-39",
+    "path": "/russian/audio/lesson-39.mp3",
+    "duration": 26.434,
+    "sha256": "876d430e3850fd6bbd924f770ea8c4f6045420c171ad912a10fd43af0d7d9e1e",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-40",
+    "path": "/russian/audio/lesson-40.mp3",
+    "duration": 20.674,
+    "sha256": "84fbe1e35829cc89ece7ba2aeffd1b7051564b6b4bfcddf803c825e6ef8c3ef2",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-41",
+    "path": "/russian/audio/lesson-41.mp3",
+    "duration": 22.69,
+    "sha256": "aca89637a1446558ddef2478a46de33aaccf7ce744842a384b9dd97d084b1760",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-42",
+    "path": "/russian/audio/lesson-42.mp3",
+    "duration": 29.554,
+    "sha256": "1523df654829ec49e930c497dd3f5b3c281dcc6ef97af0c97520b20d65374203",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-43",
+    "path": "/russian/audio/lesson-43.mp3",
+    "duration": 23.602,
+    "sha256": "b45fdda9a741f4ed5623f73baa979f980cc65ba35822849912d617a8fcec18f0",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-44",
+    "path": "/russian/audio/lesson-44.mp3",
+    "duration": 28.114,
+    "sha256": "f72eacd368b24da91142a602ee6b1c26ed6d278fc43132ea15c319e2288af37e",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-45",
+    "path": "/russian/audio/lesson-45.mp3",
+    "duration": 32.122,
+    "sha256": "6a88ee6ba8bc113a05697b3ed83ef0ddc832618edab05e76a6484746e80e272d",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-46",
+    "path": "/russian/audio/lesson-46.mp3",
+    "duration": 26.05,
+    "sha256": "724ce0622388274ce17282e02820da7f93dce1a1ff26a991e36ca5811a2b0d93",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-47",
+    "path": "/russian/audio/lesson-47.mp3",
+    "duration": 29.818,
+    "sha256": "fac78e7292b6562b9d9c8844c2879447e3b0b6733d641c369726445a376afd15",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-48",
+    "path": "/russian/audio/lesson-48.mp3",
+    "duration": 41.77,
+    "sha256": "767aaa5dc69c352d91572620976f4a398604d0f1bad3d70b2697f0bd41951f7a",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-49",
+    "path": "/russian/audio/lesson-49.mp3",
+    "duration": 23.122,
+    "sha256": "0fc28ad4cc0ed70de4520beaeded2df01041471871a35df641834da733c8b681",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-50",
+    "path": "/russian/audio/lesson-50.mp3",
+    "duration": 29.866,
+    "sha256": "1ac3897a14a30984a88166eced4ffb1028759e5c19a74c72d380c03e82501978",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-51",
+    "path": "/russian/audio/lesson-51.mp3",
+    "duration": 31.642,
+    "sha256": "ae9076a835d360eb58602fe4415ab4eaad44ec40aa86af97c8a19320c507c1c3",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-52",
+    "path": "/russian/audio/lesson-52.mp3",
+    "duration": 25.93,
+    "sha256": "7a62a0757aa61e9b6ed2f82de30afcf876eba07304e1486b50f7eed47f611d85",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-53",
+    "path": "/russian/audio/lesson-53.mp3",
+    "duration": 27.682,
+    "sha256": "40a2157762fab20fababfdc0037bfb6005f903a6b09cf033e2915c65fff38833",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-54",
+    "path": "/russian/audio/lesson-54.mp3",
+    "duration": 29.362,
+    "sha256": "18fd885074802cf026e3064a2b72046ec7c5211eb0b3db20a8c30037d9b60ba5",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-55",
+    "path": "/russian/audio/lesson-55.mp3",
+    "duration": 25.426,
+    "sha256": "bcd6bcfb411ad2ee75dbcc08ca49d2226df6c3d1f49df075374e634db48390b1",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-56",
+    "path": "/russian/audio/lesson-56.mp3",
+    "duration": 27.754,
+    "sha256": "07d059968314a5e72fc247cc4b4d3006e052b6a7e2cf1135e28428b69855ab2b",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-57",
+    "path": "/russian/audio/lesson-57.mp3",
+    "duration": 29.074,
+    "sha256": "4c6c52aa26bdb5007a1b9ddd451e2cd3b6f4c7c708b8c43a0186ea343e651b25",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-58",
+    "path": "/russian/audio/lesson-58.mp3",
+    "duration": 23.266,
+    "sha256": "af90fcb3244dfa8d300f969c9b50f08889910379814d48a4c7c308a8fcd3c780",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-59",
+    "path": "/russian/audio/lesson-59.mp3",
+    "duration": 26.458,
+    "sha256": "603aa0d3677d77eb7298a9a35dd4f05e7025fdb1e9d082a9164e2db745811b72",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-60",
+    "path": "/russian/audio/lesson-60.mp3",
+    "duration": 36.418,
+    "sha256": "73aa48b0b1c6120201967ff232a622356e51c404fde3606756202988609a2140",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-61",
+    "path": "/russian/audio/lesson-61.mp3",
+    "duration": 26.194,
+    "sha256": "c1c54cd04e4f8d0de9c5aa191dfa235b3522364d9d317b0d9f753af6a4ba3489",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-62",
+    "path": "/russian/audio/lesson-62.mp3",
+    "duration": 26.17,
+    "sha256": "c551c623dd7f1f8f4d16b3b821fdb87a546b2c7a5472c9753fd5711584189e34",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-63",
+    "path": "/russian/audio/lesson-63.mp3",
+    "duration": 32.098,
+    "sha256": "7f0f2bc7bc329f84067f6c928bdc2ceb8dcea7029e9984819a70409c9e5afafc",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-64",
+    "path": "/russian/audio/lesson-64.mp3",
+    "duration": 23.77,
+    "sha256": "50195054c120bd4c604d9c010ccd4089b63d944426b0060c1ad21e0cb4fe69c4",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-65",
+    "path": "/russian/audio/lesson-65.mp3",
+    "duration": 24.13,
+    "sha256": "708106b747e9e6d30e1ef03d27d611be3565fb97e9bc39520ef59de4be3621ed",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-66",
+    "path": "/russian/audio/lesson-66.mp3",
+    "duration": 28.546,
+    "sha256": "cccdeb2be8fcf6652de94e3b918ae97c5157bcd5b03cbe590f72081f80fd9973",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-67",
+    "path": "/russian/audio/lesson-67.mp3",
+    "duration": 28.138,
+    "sha256": "fe208035c1c142fa0c562cd7eed9dc6cad14edd96b6a9d75f114e66eb7c4525c",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-68",
+    "path": "/russian/audio/lesson-68.mp3",
+    "duration": 30.298,
+    "sha256": "a4b1c93d5fd68192f980fda077ee4dee8ea2b3399ee89ce4ef33671b4c78be9f",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-69",
+    "path": "/russian/audio/lesson-69.mp3",
+    "duration": 33.034,
+    "sha256": "729af09de50fb0489f150ebe7f4da8ba3f44b742f893e9b83c8a86e63c6aa745",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-70",
+    "path": "/russian/audio/lesson-70.mp3",
+    "duration": 24.058,
+    "sha256": "92334ae9f601b0a4985cb9077b86de6426f1a0d9b13d5172ae9883b3ddb1c450",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-71",
+    "path": "/russian/audio/lesson-71.mp3",
+    "duration": 25.642,
+    "sha256": "f01abb3f2d8a236edaf438957950bc20c89470a0df5f030bff2e80bc3ada2fc2",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-72",
+    "path": "/russian/audio/lesson-72.mp3",
+    "duration": 34.882,
+    "sha256": "503b1bd2db2e9a6c81685470fcf0f877132172e51501aa70f63bc83ee6042019",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-73",
+    "path": "/russian/audio/lesson-73.mp3",
+    "duration": 31.93,
+    "sha256": "c094f58ddea0292c556f40e0615a0153952e22142166a359c88a2a6f73b416f1",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-74",
+    "path": "/russian/audio/lesson-74.mp3",
+    "duration": 29.266,
+    "sha256": "effa3f5f24887b4a2f8f0923b743b6666375ab1c338236c8fab69cbc97f06567",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-75",
+    "path": "/russian/audio/lesson-75.mp3",
+    "duration": 31.618,
+    "sha256": "512dcd2f772bac025682ef3076b1e4b5701d35df00d60030847d7c9dce59ebfa",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-76",
+    "path": "/russian/audio/lesson-76.mp3",
+    "duration": 29.17,
+    "sha256": "1ff3737ff6395fdfedb611c85fad9fd6a35617488b256949a400b8155ecbe5c3",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-77",
+    "path": "/russian/audio/lesson-77.mp3",
+    "duration": 26.17,
+    "sha256": "f28a27bcb9a1d54b00df04717f59db8d9b0df58e6020160a5433e18afa1450b9",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-78",
+    "path": "/russian/audio/lesson-78.mp3",
+    "duration": 32.914,
+    "sha256": "f22f9ddbe522b3cb85c6b2ab2327334ab720d2ba433e1da1e8349028ecd6bb08",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-79",
+    "path": "/russian/audio/lesson-79.mp3",
+    "duration": 28.354,
+    "sha256": "604a2f0d0a9355efae22b7b7bbad9f8ac5f771855ec282b40f88d3fe0acdda14",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-80",
+    "path": "/russian/audio/lesson-80.mp3",
+    "duration": 30.226,
+    "sha256": "bd0f3df16a7c24088467c601df128e2de2b32c689aa1d6cfe58118c138444162",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-81",
+    "path": "/russian/audio/lesson-81.mp3",
+    "duration": 32.122,
+    "sha256": "b3f0773fcb1cb7d183a9b36919a577a64a3ceddf0139f65ee8697b2ec90cb83a",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-82",
+    "path": "/russian/audio/lesson-82.mp3",
+    "duration": 29.602,
+    "sha256": "ab294e4a45cabb3911058207c98e372315ce14a6b266bd8fb06a639d4a09ed83",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-83",
+    "path": "/russian/audio/lesson-83.mp3",
+    "duration": 30.826,
+    "sha256": "ccc997a61e9427795b9489e6e02d249fc4ab2146fadbed5c535a50ae49f53d06",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-84",
+    "path": "/russian/audio/lesson-84.mp3",
+    "duration": 48.466,
+    "sha256": "cf63122fd40dbd47e7b1f90bceba72c82328c3549740096869e10676158e3b0c",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-85",
+    "path": "/russian/audio/lesson-85.mp3",
+    "duration": 27.778,
+    "sha256": "9a736ed7b3366bcc06d731aa3728acfacd8a99cd3a0ad1a5eb8c26ad52e4045b",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-86",
+    "path": "/russian/audio/lesson-86.mp3",
+    "duration": 32.914,
+    "sha256": "9e9898881a81ae6b101687fbf71a92cb74ba034f7ba8737314350c5b9900411f",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-87",
+    "path": "/russian/audio/lesson-87.mp3",
+    "duration": 33.73,
+    "sha256": "d6081eb86435a06749fdcf463b983cc992f4f4ce847241c4a324d1d52a17a0a2",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-88",
+    "path": "/russian/audio/lesson-88.mp3",
+    "duration": 27.61,
+    "sha256": "c743948b78d5793f8ccf98b84548939e4f14a4eac61dfab9c17692d9f027707a",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-89",
+    "path": "/russian/audio/lesson-89.mp3",
+    "duration": 32.794,
+    "sha256": "f06813d7230722d78d5eb1dc389f1b2cdbe8cd095bbabba253d4f88ac0b773e1",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-90",
+    "path": "/russian/audio/lesson-90.mp3",
+    "duration": 30.25,
+    "sha256": "e429ba8f7432557549cff3867474a9729b20121d9d6fca580600890e4e2df4aa",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-91",
+    "path": "/russian/audio/lesson-91.mp3",
+    "duration": 30.562,
+    "sha256": "90ac1ff8f607f0c7c69337b5bd34660b81ee2c2d3984d774a191b2f7ec1bf9fd",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-92",
+    "path": "/russian/audio/lesson-92.mp3",
+    "duration": 32.362,
+    "sha256": "be6b754b7d3a36a8c2ada328d9c3f4143a83ae1c974d3c4143657a3b348ebbfd",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-93",
+    "path": "/russian/audio/lesson-93.mp3",
+    "duration": 36.802,
+    "sha256": "22a31a5cca29f1b09e161d4f421cf87a308d2263e9fcb258bbb676ce0897f97f",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-94",
+    "path": "/russian/audio/lesson-94.mp3",
+    "duration": 33.442,
+    "sha256": "bd51181d3b9dc0761cd3ce4dea3347d7e3f6487aaa0aa92e088251745e01e6cc",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-95",
+    "path": "/russian/audio/lesson-95.mp3",
+    "duration": 38.386,
+    "sha256": "fb5f89c04825947d959b88e4ffeae83f259cc7ec038dcfe6051bdd4a3a380401",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-96",
+    "path": "/russian/audio/lesson-96.mp3",
+    "duration": 52.282,
+    "sha256": "37535412034ab31ef2552e261b652118dcfc6fb467783a573f8e9b6085340160",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-97",
+    "path": "/russian/audio/lesson-97.mp3",
+    "duration": 30.034,
+    "sha256": "8061695b84793f8c8e18130453da82bd7f896eb40c8ba7b764d9807e1715e5f0",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-98",
+    "path": "/russian/audio/lesson-98.mp3",
+    "duration": 36.586,
+    "sha256": "c6f57401e6c160e730008cd3428cf9024c9102f2fa099518632d13e9308c3bc4",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-99",
+    "path": "/russian/audio/lesson-99.mp3",
+    "duration": 31.858,
+    "sha256": "6198e38c58f1debf212c8f8cf02021f4ec8c772c86b5a5e459fda51d7e17305d",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-100",
+    "path": "/russian/audio/lesson-100.mp3",
+    "duration": 44.05,
+    "sha256": "025020f2eda14c38b5a816648ded6b3239dbec428a69d3762c548a1fa11f07f6",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-101",
+    "path": "/russian/audio/lesson-101.mp3",
+    "duration": 33.514,
+    "sha256": "74dc967a9574ab828ef8d4ab41fb8950bd38c9156dffabd5725b1153445f84bb",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-102",
+    "path": "/russian/audio/lesson-102.mp3",
+    "duration": 39.37,
+    "sha256": "53f2703380e6979d93ab0a587383ed846bc0b82bb4b181d66ce4f329b7f6c67a",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-103",
+    "path": "/russian/audio/lesson-103.mp3",
+    "duration": 31.906,
+    "sha256": "76f2c692fc6a1a18fda8e49a541549bc1394792ec29f4c68fcb4a5c178f54f5a",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-104",
+    "path": "/russian/audio/lesson-104.mp3",
+    "duration": 33.802,
+    "sha256": "20ff4b17fe0db5c02a837874a5c19873eadaf839d7c9ebe603d47eb52aada14e",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-105",
+    "path": "/russian/audio/lesson-105.mp3",
+    "duration": 35.698,
+    "sha256": "4695d556bf927310b9e58be7e37694f64d51fad25d24cc9a648b24b64b2b7d17",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-106",
+    "path": "/russian/audio/lesson-106.mp3",
+    "duration": 36.058,
+    "sha256": "b731d84f4d521e8178827844c13accc28907cd627016370ea15771257a022352",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-107",
+    "path": "/russian/audio/lesson-107.mp3",
+    "duration": 29.722,
+    "sha256": "339a3428c90afaaeafe1a085524ae5abe0a53754007f74cd0737cfd00bbe7cf8",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-108",
+    "path": "/russian/audio/lesson-108.mp3",
+    "duration": 59.674,
+    "sha256": "712a76c8be1283930227fbea478d47ae25267761fc6fe2bbd863d33bec2ef973",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-109",
+    "path": "/russian/audio/lesson-109.mp3",
+    "duration": 29.722,
+    "sha256": "b534cbbeae8a7a4220ee237a6f29936324cf4c5231f320a9afa8b4ef0c186ff3",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-110",
+    "path": "/russian/audio/lesson-110.mp3",
+    "duration": 37.402,
+    "sha256": "dcaea68f64e95c7ea99f797d0a564c92f39088f6166e7fbb2da5a9ec2803a165",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-111",
+    "path": "/russian/audio/lesson-111.mp3",
+    "duration": 31.69,
+    "sha256": "2c163a2ea291985db20198212e5df84365cfb0880e1922f005baea771108ba31",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-112",
+    "path": "/russian/audio/lesson-112.mp3",
+    "duration": 30.874,
+    "sha256": "ba3700296f3d39be100addcccb27548c7fea7fa1b80bbb666a7ad9e451466f33",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-113",
+    "path": "/russian/audio/lesson-113.mp3",
+    "duration": 33.85,
+    "sha256": "d646496e31630ad3f42f2df9c5e87522967f96732b8b0f0623f59813c84cb511",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-114",
+    "path": "/russian/audio/lesson-114.mp3",
+    "duration": 34.042,
+    "sha256": "ea4f2d0bfb6880bfa4289b5cafe9a8f6511344b23cd5854080e28b43c7ab6711",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-115",
+    "path": "/russian/audio/lesson-115.mp3",
+    "duration": 29.218,
+    "sha256": "d8d080aa19f586bfd7d3473a87c754b5ef592c69a36e5fb0828642202198c903",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-116",
+    "path": "/russian/audio/lesson-116.mp3",
+    "duration": 38.05,
+    "sha256": "d2e7494653aaf21dcee263cec2a0ada5c8f136f85b9b2c8bce11c7c01c175158",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-117",
+    "path": "/russian/audio/lesson-117.mp3",
+    "duration": 35.146,
+    "sha256": "d7b9b1640c14b3807f071fc58da7c3d0661de8732419aeacc3e24ec0c30583c5",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-118",
+    "path": "/russian/audio/lesson-118.mp3",
+    "duration": 34.954,
+    "sha256": "9a5c9ea59293d1cfad6ff479f463b5ceecfb52c955b7f34aa91c2b18e8544673",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-119",
+    "path": "/russian/audio/lesson-119.mp3",
+    "duration": 29.53,
+    "sha256": "ae79eae490f59c98f8b1026e4f68aa6c1e98d91b51edae14eda544c347706e9e",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-120",
+    "path": "/russian/audio/lesson-120.mp3",
+    "duration": 47.698,
+    "sha256": "58576a5cb3d7533eebb3c65f52a219979da2261045588e83f2a93e73eef2339d",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-121",
+    "path": "/russian/audio/lesson-121.mp3",
+    "duration": 29.146,
+    "sha256": "55869372f2ddc1df5b38e196b16253ca389364ddffe31c75308a52917f889d3f",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-122",
+    "path": "/russian/audio/lesson-122.mp3",
+    "duration": 31.378,
+    "sha256": "b6f5e30989aca394e260c87caaff442d90fceafdbe47da5446c797b07f8b668a",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-123",
+    "path": "/russian/audio/lesson-123.mp3",
+    "duration": 35.842,
+    "sha256": "3ab3842b396236a15101cc5041a2b64e245dc1a95659d0a372dbd941f5fb516c",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-124",
+    "path": "/russian/audio/lesson-124.mp3",
+    "duration": 34.258,
+    "sha256": "6ffaa1b02650f06350cf5c941ba000c1b8e8fbfaea51417292239c3e5f46e04a",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-125",
+    "path": "/russian/audio/lesson-125.mp3",
+    "duration": 31.138,
+    "sha256": "922dc8d8faca219c7be1b0551094041ed876158b3e5eaaa79f82f373399d5fdf",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-126",
+    "path": "/russian/audio/lesson-126.mp3",
+    "duration": 34.138,
+    "sha256": "17611e2d6b0bdf8c56926bec57b770104d25efbcc8e4e0e51ff3580edcd7ec8b",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-127",
+    "path": "/russian/audio/lesson-127.mp3",
+    "duration": 31.09,
+    "sha256": "30447ed63c01e12fa8feb71baa6e4f252bcda0e7fdc3502a747a0c619ca051bf",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-128",
+    "path": "/russian/audio/lesson-128.mp3",
+    "duration": 41.146,
+    "sha256": "e21f5eda791dc669a954ebd02614de8339bb6b5e5abf1971f7ce33e9e7437e44",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-129",
+    "path": "/russian/audio/lesson-129.mp3",
+    "duration": 31.57,
+    "sha256": "2bcca872740d6e7679b582c2869f2bd680cbf4abe6d543ac516f948303e8e924",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-130",
+    "path": "/russian/audio/lesson-130.mp3",
+    "duration": 31.114,
+    "sha256": "d5aac6b626d4f17feb264a004626e870e7d21bb1547cd5cefd643d47f84e6ceb",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-131",
+    "path": "/russian/audio/lesson-131.mp3",
+    "duration": 33.13,
+    "sha256": "345d9bcfc1936b588cd02736eba96fecaa1ade3e534178238304c3be22805257",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-132",
+    "path": "/russian/audio/lesson-132.mp3",
+    "duration": 44.29,
+    "sha256": "42267c62ff25ef967b1054ea9c6b8135f60c06d520b3cd7b849d67d5dabf188c",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-133",
+    "path": "/russian/audio/lesson-133.mp3",
+    "duration": 33.418,
+    "sha256": "823f05647e8b663fa3c7821a2b7fad8f0c00b5a67eaa8a8324e90c2502e8612d",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-134",
+    "path": "/russian/audio/lesson-134.mp3",
+    "duration": 37.282,
+    "sha256": "c9c7740b6664651c4a267b34d384fead491125f48de7be29479f35d63c78bf62",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-135",
+    "path": "/russian/audio/lesson-135.mp3",
+    "duration": 35.29,
+    "sha256": "2a206772bd4332103ba2a57824b0eef47a3efe99016c2ffdf608664766f0cdbc",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-136",
+    "path": "/russian/audio/lesson-136.mp3",
+    "duration": 35.386,
+    "sha256": "b08a3176c4738eff5fb0f5d43c05938ee9289276826875d1a98094f5925a8814",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-137",
+    "path": "/russian/audio/lesson-137.mp3",
+    "duration": 33.226,
+    "sha256": "a59aca2f7d35070d67adfd13927b366a92b4879764e146c30b596847394f262f",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-138",
+    "path": "/russian/audio/lesson-138.mp3",
+    "duration": 37.594,
+    "sha256": "8e428248571e57ef4d987af3e85703151ec5b85740f93c0f61e8b3a6a5a2f153",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-139",
+    "path": "/russian/audio/lesson-139.mp3",
+    "duration": 37.522,
+    "sha256": "50daa7d871daac7698730c195d9fedc4fb6f65d1b76102b8aea8ae84f6143500",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-140",
+    "path": "/russian/audio/lesson-140.mp3",
+    "duration": 33.994,
+    "sha256": "ec6d913de155a4b51daa0f8d03f426a7a0fc5ac630e852c194361163120e5d86",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-141",
+    "path": "/russian/audio/lesson-141.mp3",
+    "duration": 34.786,
+    "sha256": "428f2a138a29e59162abdb9ea70c8ff773eaf2ebff71f570b288f4457704298a",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-142",
+    "path": "/russian/audio/lesson-142.mp3",
+    "duration": 28.306,
+    "sha256": "bb2b0307f10959af194826a1fa5529eb43ecc7070bc3eb4151b85054b0ab4909",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-143",
+    "path": "/russian/audio/lesson-143.mp3",
+    "duration": 40.042,
+    "sha256": "a59e9cfe6457aa5d201757ab639fd429be9f29a19b56a2ebfd6b1908309f4942",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "lesson-144",
+    "path": "/russian/audio/lesson-144.mp3",
+    "duration": 50.914,
+    "sha256": "90230d2702226bb30e3b72bff76fe5d393f638fb78142f6349eb0cb50c458d1a",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "lesson"
+  },
+  {
+    "id": "extended-1",
+    "path": "/russian/audio/extended-1.mp3",
+    "duration": 60.166,
+    "sha256": "1337d6bb7b4d14c175552470acab448cc6ad851a7466b91ff091b2e15cc523e7",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-2",
+    "path": "/russian/audio/extended-2.mp3",
+    "duration": 52.126,
+    "sha256": "a2f0da091785d4e34f6492559d20fd74e622ddb5eb337d240fded35dcf71a734",
+    "voices": [
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-3",
+    "path": "/russian/audio/extended-3.mp3",
+    "duration": 66.658,
+    "sha256": "be151c3a131a8d688bfb5eac368714bf137a95330f5e87bcecc534b3364b95d3",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-4",
+    "path": "/russian/audio/extended-4.mp3",
+    "duration": 81.706,
+    "sha256": "d62b14ef90631585ff29cc52b123fb8bf3f16ad1bcc7cb6a915dd2f118ff95cb",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-5",
+    "path": "/russian/audio/extended-5.mp3",
+    "duration": 72.454,
+    "sha256": "d4f1b569e94341a11d2508c5585fe4ae021821396e2d57164313e5f23d0a669c",
+    "voices": [
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-6",
+    "path": "/russian/audio/extended-6.mp3",
+    "duration": 77.086,
+    "sha256": "305e184835f3a18094460d4ecc5dfc793d1be1b48e77a888c02d9297b675c97a",
+    "voices": [
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-7",
+    "path": "/russian/audio/extended-7.mp3",
+    "duration": 104.086,
+    "sha256": "cec286591edd0b8e48dd3eedc1986dcf6b5a535ca4ea458420d1e7c52f817f56",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-8",
+    "path": "/russian/audio/extended-8.mp3",
+    "duration": 109.51,
+    "sha256": "6361af234e96816f1bcc27100232ff39edd76b15ed1921a99e65f0ad63e543b6",
+    "voices": [
+      "ru-RU-SvetlanaNeural",
+      "ru-RU-DmitryNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-9",
+    "path": "/russian/audio/extended-9.mp3",
+    "duration": 89.758,
+    "sha256": "4450922cb0fd080fb50c3dffea91894ce5dae4fca5a8ef26ac50efeca34f5468",
+    "voices": [
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-10",
+    "path": "/russian/audio/extended-10.mp3",
+    "duration": 109.786,
+    "sha256": "6d4872c5d0e140e9d10e70f26d5c117947586e049529b9793cc311bb3ebce926",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-11",
+    "path": "/russian/audio/extended-11.mp3",
+    "duration": 115.642,
+    "sha256": "4490aeeefb371da79bc231d1eddb59a061eeb2d413257d179ef351354a14e9d7",
+    "voices": [
+      "ru-RU-DmitryNeural",
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "extended"
+  },
+  {
+    "id": "extended-12",
+    "path": "/russian/audio/extended-12.mp3",
+    "duration": 102.934,
+    "sha256": "d1222cf81c2f52fcf15e0fe8656aa5114d3a1ebc1bb1b62b04717603faa8f252",
+    "voices": [
+      "ru-RU-SvetlanaNeural"
+    ],
+    "kind": "extended"
+  }
+]

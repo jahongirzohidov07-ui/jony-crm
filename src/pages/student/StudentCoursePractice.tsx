@@ -1,3 +1,4 @@
+import { CourseSpeaking } from "../../components/CourseSpeaking";
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, BookOpen, CheckCircle2 } from "lucide-react";
@@ -77,7 +78,9 @@ function SectionPractice({ section: s, language, lesson, onSaved, drafts }: { se
     <h3 className="font-bold">{s.title}</h3>
     {s.text && <p className="whitespace-pre-line break-words text-sm leading-7" lang={language}>{s.text}</p>}
     <p className="text-xs text-slate-500">{s.questions.length} ta mashq{pages > 1 ? ` · ${page + 1} / ${pages} sahifa` : ""}</p>
-    {s.questions.slice(page * 10, page * 10 + 10).map((q, i) => <Answer key={q.id} question={q} number={page * 10 + i + 1} language={language} lesson={lesson} onSaved={onSaved} drafts={drafts}/>)}
+    {s.questions.slice(page * 10, page * 10 + 10).map((q, i) => s.skill === "speaking" && language === "en"
+      ? <CourseSpeaking key={q.id} lesson={lesson} questionId={q.id} previous={drafts.get(`${language}:${lesson}:${q.id}`)?.answer} onSaved={(answer, reply) => { drafts.set(`${language}:${lesson}:${q.id}`, {answer, result: {correct: null, expected: [], explanation: reply, saved: true}}); onSaved(); }}/>
+      : <Answer key={q.id} question={q} number={page * 10 + i + 1} language={language} lesson={lesson} onSaved={onSaved} drafts={drafts}/>)}
     {pages > 1 && <div className="flex justify-between gap-2 pt-3"><button disabled={page === 0} onClick={() => setPage(p => p - 1)} className="rounded-lg border p-2 text-sm disabled:opacity-40">← Oldingi 10 ta</button><button disabled={page + 1 >= pages} onClick={() => setPage(p => p + 1)} className="rounded-lg border p-2 text-sm disabled:opacity-40">Keyingi 10 ta →</button></div>}
   </section>;
 }

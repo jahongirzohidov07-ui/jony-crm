@@ -98,7 +98,7 @@ class MotivationTests(unittest.TestCase):
         self.assertEqual(self.db.query(models.StudentGamification).one().lifetime_xp, 4)
         result = self.get_motivation()
         self.assertEqual(result["rewards"], {"xp": 4, "coins": 0})
-        self.assertEqual(result["daily"], {"target": 5, "done": 3})  # Open practice counts effort, never XP/mastery.
+        self.assertEqual(result["daily"], {"target": 5, "done": 4})  # Includes the saved speaking effort at the server clock.
         self.assertEqual(result["review"], [])
         self.assertFalse(result["weekly"]["opted_in"])
         self.assertEqual(result["weekly"]["leaders"], [])
@@ -248,14 +248,15 @@ class MotivationTests(unittest.TestCase):
         entry = motivation.get(self.db, key)
         entry["level"] = "B2"
         motivation.put(self.db, key, entry)
+        started = motivation.now()
         for day in range(7):
             for n in range(8):
-                self.db.add(models.XpTransaction(student_id=1, amount=1, is_reversal=0,
-                    idempotency_key=f"{motivation.PREFIX}1:en:test:{day}:{n}",
-                    created_at=motivation.now() + timedelta(seconds=1),
-                    meta=json.dumps({"language": "en", "week": motivation.calendar_week(), "day": f"day{day}",
-                                     "question_id": f"q{day}:{n}"})))
+                q = self.q(lesson=n + 1)
+                self.db.add(models.SkillAttempt(student_id=1, skill="course-practice:en:reading",
+                    ref=practice._ref(q["id"]), answer="attempted but wrong", correct=0,
+                    created_at=started + timedelta(days=day, seconds=1)))
         self.db.commit()
+        self.time.return_value = started + timedelta(days=6, seconds=2)
         weekly = self.get_motivation()["weekly"]
         self.assertEqual(weekly["participants"], 3)
         self.assertEqual(weekly["leaders"][0]["points"], 20)

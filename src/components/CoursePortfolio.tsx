@@ -3,10 +3,12 @@ import { getToken } from '../lib/api';
 
 type Audio = { mime: string; base64: string };
 type Kind = 'dialogue' | 'story' | 'speaking';
-type Version = { number: number; title: string; type: Kind; text: string; audio: Audio | null; created_at: string };
-type Entry = { id: string; language: string; lesson: number; versions: Version[] };
+type Mission = { id: string; title: string; prompt: string; suggested_type: Kind; targets: string[]; lesson_title: string };
+type Coaching = { observed_positive: string; next_improvement: string; retry: string; disclaimer: string };
+type Version = { number: number; title: string; type: Kind; text: string; audio: Audio | null; created_at: string; coaching?: Coaching };
+type Entry = { id: string; language: string; lesson: number; versions: Version[]; mission?: Mission | null; mission_evidence?: {status: string; version: number} | null };
 type Summary = { id: string; title: string; type: Kind; version_count: number; updated_at: string; has_audio: boolean };
-type Listing = { entries: Summary[]; total_entries: number; lesson_entries: number; total_text_bytes: number; total_audio_bytes: number; lesson_title: string; prompt: string };
+type Listing = { entries: Summary[]; total_entries: number; lesson_entries: number; total_text_bytes: number; total_audio_bytes: number; lesson_title: string; prompt: string; missions?: Mission[] };
 type Props = { language: string; lesson: number; onSaved?: () => void };
 const MAX_AUDIO = 1024 * 1024;
 const labels: Record<Kind, string> = { dialogue: 'Dialog', story: 'Hikoya', speaking: 'Og‘zaki ijod' };
@@ -46,6 +48,8 @@ function PortfolioEditor({ language, lesson, onSaved, token }: Props & { token: 
   const [kind, setKind] = useState<Kind>('dialogue');
   const [text, setText] = useState('');
   const [audio, setAudio] = useState<Audio | null>(null);
+  const [missionId, setMissionId] = useState('');
+  const textInput = useRef<HTMLTextAreaElement>(null);
   const [busy, setBusy] = useState(false);
   const [recording, setRecording] = useState(false);
   const [preparing, setPreparing] = useState(false);
@@ -106,6 +110,7 @@ function PortfolioEditor({ language, lesson, onSaved, token }: Props & { token: 
   function edit(value: Entry | null) {
     cleanupRecording(); setRecording(false); setPreparing(false);
     setEntry(value); setEarlier(1); setMessage('');
+    setMissionId(value?.mission?.id ?? '');
     const last = value?.versions.at(-1);
     setTitle(last?.title ?? ''); setKind(last?.type ?? 'dialogue'); setText(last?.text ?? ''); setAudio(last?.audio ?? null);
   }
@@ -119,7 +124,8 @@ function PortfolioEditor({ language, lesson, onSaved, token }: Props & { token: 
     setBusy(true); setMessage('');
     try {
       const value = await request<Entry>(entry ? `/${entry.id}` : '', entry ? 'PUT' : 'POST', {
-        title, type: kind, text, audio, ...(entry ? { expected_version: entry.versions.length } : {}),
+        title, type: kind, text, audio, ...(missionId ? { mission_id: missionId } : {}),
+        ...(entry ? { expected_version: entry.versions.length } : {}),
       });
       if (current()) { edit(value); setMessage('Sizning ijodiy ishingiz saqlandi.'); onSaved?.(); }
       await refresh();
@@ -196,6 +202,15 @@ function PortfolioEditor({ language, lesson, onSaved, token }: Props & { token: 
   const previous = entry?.versions.find(version => version.number === earlier);
   const full = !!entry && entry.versions.length >= 3;
   const locked = busy || recording || preparing;
+  const mission = entry?.mission ?? listing?.missions?.find(item => item.id === missionId);
+  function retry() {
+    if (full) {
+      // Keep the learner's draft and chosen task; never overwrite saved versions.
+      setEntry(null); setEarlier(1);
+      setMessage('Davomi alohida yangi ish sifatida saqlanadi. Oldingi versiyalar o‘zgarishsiz qoladi.');
+    }
+    requestAnimationFrame(() => { textInput.current?.focus(); textInput.current?.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
+  }
   const inputClass = 'w-full rounded-xl border border-slate-300 bg-white p-3 text-slate-900';
   const buttonClass = 'rounded-xl border border-slate-300 px-4 py-2 text-sm disabled:opacity-50';
 
@@ -217,13 +232,36 @@ function PortfolioEditor({ language, lesson, onSaved, token }: Props & { token: 
           {item.title} · {labels[item.type]} · {item.version_count}/3 {item.has_audio ? '· Audio' : ''}
         </button>)}</div>
       {!listing.entries.length && <p className="text-sm">Bu darsda hali ijodiy ish yo‘q.</p>}
+      <div className="space-y-2 rounded-xl border border-indigo-100 bg-indigo-50 p-3">
+        {!entry ? <label className="block font-medium">Hayotda nimani aytmoqchisiz?
+          <select aria-label="Hayotiy vazifa" className={inputClass} value={missionId} disabled={locked} onChange={event => {
+            setMissionId(event.target.value);
+            const chosen = listing.missions?.find(item => item.id === event.target.value);
+            if (chosen) setKind(chosen.suggested_type);
+          }}><option value="">O‘z mavzum — erkin ijod</option>
+            {listing.missions?.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}
+          </select></label> : <p className="font-medium">{mission ? `Vazifam: ${mission.title}` : 'Mening erkin ijodiy ishim'}</p>}
+        {mission && <><p className="text-sm">{mission.prompt}</p>
+          {!!mission.targets.length && <p className="text-sm">Darsdan tayanch so‘zlar: {mission.targets.join(', ')}. Vaziyatingizga mosini tanlang.</p>}</>}
+        {entry?.mission_evidence && <p className="text-sm">Vazifaga bog‘langan {entry.mission_evidence.version}-versiya saqlandi. Bu ish namunasi; vazifaning to‘g‘ri bajarilgani hali tekshirilmagan.</p>}
+      </div>
+      {latest?.coaching && <aside aria-label="Keyingi ijodiy qadam" className="space-y-2 rounded-xl bg-emerald-50 p-4">
+        <h3 className="font-semibold">Ishingizni bir qadam yaxshilang</h3>
+        <p className="text-xs text-slate-600">Saqlangan {latest.number}-versiya bo‘yicha</p>
+        <p className="text-sm"><strong>Kuzatilgan jihat: </strong>{latest.coaching.observed_positive}</p>
+        <p className="text-sm"><strong>Bitta keyingi qadam: </strong>{latest.coaching.next_improvement}</p>
+        <p className="text-sm">{latest.coaching.retry}</p>
+        <button className={buttonClass} disabled={locked || (full && listing.entries.length >= 8)} onClick={retry}>{full ? 'Alohida ishda qayta urinish' : 'Maslahat bilan qayta urinish'}</button>
+        {full && listing.entries.length >= 8 && <p className="text-sm">Yangi ish uchun bu darsdagi keraksiz ishni tanlab o‘chiring. Saqlangan versiyalar ustiga yozilmaydi.</p>}
+        <details className="text-xs text-slate-600"><summary>Maslahat nimaga asoslangan?</summary><p className="mt-2">{latest.coaching.disclaimer}</p></details>
+      </aside>}
       <fieldset disabled={locked || full} className="space-y-3">
         <legend className="font-medium">{entry ? 'Yangi versiya tayyorlash' : 'O‘z ishimni yaratish'}</legend>
         <label className="block">Sarlavha<input className={inputClass} maxLength={100} value={title} onChange={event => setTitle(event.target.value)} /></label>
         <label className="block">Ish turi<select className={inputClass} value={kind} onChange={event => setKind(event.target.value as Kind)}>
           {Object.entries(labels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
         </select></label>
-        <label className="block">Mening matnim<textarea className={inputClass} rows={6} maxLength={6000} value={text} onChange={event => setText(event.target.value)} /></label>
+        <label className="block">Mening matnim<textarea ref={textInput} className={inputClass} rows={6} maxLength={6000} value={text} onChange={event => setText(event.target.value)} /></label>
         <p className="text-xs text-slate-600">{text.length}/6000 belgi — faqat matn uzunligi, bilim yoki mahorat bahosi emas.</p>
       </fieldset>
       {!supported && <p>Bu brauzerda mikrofon yozuvi mavjud emas. Matn bilan davom eting.</p>}
@@ -244,6 +282,7 @@ function PortfolioEditor({ language, lesson, onSaved, token }: Props & { token: 
         </select></label><div className="grid gap-3 md:grid-cols-2">{[previous!, latest].map(version => <article key={version.number} className="min-w-0 rounded-xl bg-slate-50 p-3">
           <h4 className="font-medium">{version.number}-versiya · {version.title}</h4><p className="text-xs">{labels[version.type]} · {new Date(version.created_at).toLocaleString('uz-UZ')}</p>
           <p className="my-3 whitespace-pre-wrap break-words">{version.text || 'Faqat ovozli ish'}</p><Playback audio={version.audio} label={`${version.number}-versiya ovozi`} />
+          {version.coaching && <details className="mt-3 text-sm"><summary>Shu versiyaga maslahat</summary><p className="mt-2">{version.coaching.observed_positive}</p><p className="mt-2">Bitta qadam: {version.coaching.next_improvement}</p></details>}
         </article>)}</div></> : <p>Taqqoslash uchun ikkinchi versiyani saqlang. Birinchi versiya o‘zgarishsiz qoladi.</p>}
       </div>}
     </>}

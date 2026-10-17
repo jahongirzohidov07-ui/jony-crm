@@ -7,6 +7,7 @@ commit in the same transaction. No AI decides correctness or mastery.
 import json
 import re
 import secrets
+from contextvars import ContextVar
 from datetime import datetime, timedelta
 from pathlib import Path
 from functools import lru_cache
@@ -19,6 +20,7 @@ PREFIX = "course-reward:v1:"
 DAILY_TARGET = 5
 REVIEW_INTERVALS = (1, 3, 7, 14)
 ZERO = {"xp": 0, "coins": 0, "reason": "none"}
+_ATTEMPT_SNAPSHOT = ContextVar("course_attempt_snapshot", default=None)
 
 
 def now():
@@ -177,11 +179,18 @@ def practice_reward(db, student, language, question, correct):
 
 
 def question_attempts(db, student_id, language):
-    return db.query(models.SkillAttempt).filter(
+    cache = _ATTEMPT_SNAPSHOT.get()
+    key = (id(db), student_id, language)
+    if cache is not None and key in cache:
+        return cache[key]
+    rows = db.query(models.SkillAttempt).filter(
         models.SkillAttempt.student_id == student_id,
         (models.SkillAttempt.ref.startswith("course-practice:v1:" + language + ":") |
          models.SkillAttempt.ref.startswith("course-review:v1:" + language + ":")),
     ).order_by(models.SkillAttempt.id).all()
+    if cache is not None:
+        cache[key] = rows
+    return rows
 
 
 def attempt_qid(attempt):
@@ -321,18 +330,107 @@ def daily_effort(db, student_id, language):
     return done
 
 
-def daily_plan(db, student_id, language, reviews):
-    # motivation() already holds the learner lock: competing reads cannot replace a plan.
+def plan_preference_key(student_id, language):
+    return f"course-plan-preference:v1:{student_id}:{language}"
+
+
+def choose_plan(db, student_id, language, minutes):
+    if type(minutes) is not int or minutes not in (5, 15, 25):
+        raise HTTPException(422, "Choose 5, 15 or 25 minutes")
+    lock(db, student_id)
+    put(db, plan_preference_key(student_id, language), minutes)
     key = f"course-plan:v1:{student_id}:{language}:current"
     saved = get(db, key)
-    if saved and saved.get("day") != local_day().isoformat():
-        saved = None
+    # A passive GET must not lock the default 15-minute denominator before the
+    # learner's first explicit choice. Once today's effort begins, freeze it.
+    if (saved and saved["day"] == local_day().isoformat()
+            and not daily_effort(db, student_id, language)):
+        saved["initial_minutes"] = minutes
+        put(db, key, saved)
+        history_key = f"course-plan-history:v1:{student_id}:{language}"
+        history = get(db, history_key, [])
+        put(db, history_key, [d for d in history if d["day"] != saved["day"]])
+
+
+def attempt_day(attempt):
+    return (attempt.created_at + timedelta(hours=5)).date().isoformat()
+
+
+def substantive(attempt, known):
+    """Conservative effort filter, not a semantic or proficiency assessment."""
+    if not meaningful(attempt):
+        return False
+    item = known.get(attempt_qid(attempt))
+    if item is None:
+        return False
+    if item[2]["mode"] == "exact":
+        return True
+    words = re.findall(r"[^\W\d_]+", attempt.answer.casefold(), re.UNICODE)
+    row, section, question = item
+    if (row.get("language") == "en" and row["lesson"] <= 6
+            and section["skill"] == "speaking"):
+        # Foundation tasks explicitly ask for single labels or supplied chunks.
+        # Use canonical prompts and the trusted theme opener's examples/choices,
+        # never learner-supplied teacher-role chat as a vocabulary authority.
+        examples = [question["prompt"]]
+        for theme in ("daily-life", "football", "robots"):
+            opener = practice().course_themes.foundation_opener(row["lesson"], theme)
+            examples.append(opener.rsplit(":", 1)[-1] if opener else "")
+        allowed = set(re.findall(r"[^\W\d_]+", " ".join(examples).casefold(), re.UNICODE))
+        allowed -= {"or", "and", "yes", "no", "done", "ok", "okay", "easy", "hard"}
+        if (1 <= len(words) <= 8 and len(words) == len(set(words))
+                and set(words) <= allowed):
+            return True
+    # Free-text self checks need a short original response; repeating one token
+    # or clicking a self rating does not qualify for cooperation/measurement.
+    return len(set(words)) >= 3 and sum(map(len, words)) >= 10
+
+
+def plan_done(snapshot, attempts):
+    start = datetime.fromisoformat(snapshot["created_at"])
+    end = datetime.fromisoformat(snapshot["day"]) + timedelta(days=1, hours=-5)
+    return {attempt_qid(a) for a in attempts if start <= a.created_at < end
+            and a.id > snapshot["after_id"]}
+
+
+def sync_plan_history(db, student_id, language, saved, attempts):
+    key = f"course-plan-history:v1:{student_id}:{language}"
+    history = get(db, key, [])
+    cutoff = (local_day() - timedelta(days=27)).isoformat()
+    history = [day for day in history if cutoff <= day["day"] <= local_day().isoformat()]
+    if saved and saved["day"] >= cutoff and not any(d["day"] == saved["day"] for d in history):
+        # Freeze the first requested budget's denominator, not subsequent choices.
+        initial = saved.get("initial_minutes", 15)
+        history.append({"day": saved["day"], "created_at": saved["created_at"],
+                        "after_id": saved["after_id"], "minutes": initial,
+                        "targets": [step["question_id"] for step in saved["steps"][:initial // 5]]})
+    for day in history:
+        done = plan_done(day, attempts)
+        day["done"] = len(set(day["targets"]) & done)
+        day["total"] = len(day["targets"])
+        day["completed"] = bool(day["total"]) and day["done"] == day["total"]
+    history.sort(key=lambda d: d["day"])
+    put(db, key, history)
+    return history
+
+
+def daily_plan(db, student_id, language, reviews):
+    # The learner lock protects preferences, frozen targets and the 28-day log.
+    key = f"course-plan:v1:{student_id}:{language}:current"
+    saved = get(db, key)
+    minutes = get(db, plan_preference_key(student_id, language), 15)
+    known = canonical_questions(language)
     attempts = learning_attempts(db, student_id, language)
+    history = exact_history(db, student_id, language)
+    latest = {qid: rows[-1] for qid, rows in history.items()}
+    if saved and saved.get("day") != local_day().isoformat():
+        sync_plan_history(db, student_id, language, saved, attempts)
+        saved = None
     if saved is None:
-        known = canonical_questions(language)
-        latest = latest_attempts(db, student_id, language)
         current = practice()._resume(db, student_id, language)
-        wrong = sorted((a for a in latest.values() if a.correct == 0),
+        # Never use a wrong answer in an arbitrarily later lesson to jump ahead.
+        wrong = sorted((a for qid, a in latest.items() if a.correct == 0
+                        and known[qid][0]["lesson"] <= current),
                        key=lambda a: (a.created_at, a.id), reverse=True)
         weak = known[attempt_qid(wrong[0])][0]["lesson"] if wrong else current
         selected = []
@@ -345,50 +443,142 @@ def daily_plan(db, student_id, language, reviews):
                              "kind": kind, "lesson": row["lesson"], "question_id": qid,
                              "title": section["title"], "reason": reason, "minutes": 5})
 
-        if reviews:
-            add(reviews[0]["id"], "review", "Vaqti kelgan savolni yoddan takrorlang.")
-        candidates = sorted(exact_questions(language), key=lambda qid: (
+        due = [r for r in reviews if r["lesson"] <= current]
+        if due:
+            add(due[0]["id"], "review", "Yoddan javob bering, keyin izohni tekshiring. Vaqt taxminiy.")
+        candidates = sorted((qid for qid in exact_questions(language)
+                             if known[qid][0]["lesson"] <= current), key=lambda qid: (
             known[qid][0]["lesson"] != weak,
             not (qid in latest and latest[qid].correct == 0),
-            qid in latest, known[qid][0]["lesson"], qid))
+            qid in latest, -known[qid][0]["lesson"], qid))
+        repeated = next((a for a in wrong if len(history[attempt_qid(a)]) >= 2
+                         and all(x.correct == 0 for x in history[attempt_qid(a)][-2:])), None)
+        if repeated is not None:
+            failed_id = attempt_qid(repeated)
+            failed_row, failed_section, failed_question = known[failed_id]
+            section_ids = [q["id"] for q in failed_section["questions"] if q["id"] in exact_questions(language)]
+            earlier = section_ids[:section_ids.index(failed_id)]
+            support = next((qid for qid in earlier if qid not in latest or latest[qid].correct == 1), None)
+            if support is None:
+                previous = [qid for qid, (r, sec, q) in known.items()
+                            if qid in exact_questions(language) and r["lesson"] < failed_row["lesson"]
+                            and sec["id"] == failed_section["id"]]
+                support = max(previous, key=lambda qid: known[qid][0]["lesson"], default=None)
+            if support is None:
+                # At the first lesson, a different canonical item with answer
+                # choices provides concrete support without exposing an answer key.
+                alternatives = [qid for qid in section_ids if qid != failed_id]
+                support = min(alternatives, key=lambda qid: (
+                    not bool(known[qid][2].get("options")),
+                    min(len(answer.split()) for answer in known[qid][2]["expected"])), default=None)
+            if support:
+                add(support, "practice", "Tayyorlov mashqi: " + failed_question["prompt"][:160]
+                    + " — avval shu bo‘limdagi tayanch savolni bajaring.")
         for qid in candidates:
             if len(selected) >= 2:
                 break
-            add(qid, "practice", "Xatoni tuzating yoki yangi savolni bajaring.")
+            add(qid, "practice", "Javob bering, sababini tushuntiring va izoh bilan tekshiring. Vaqt taxminiy.")
         self_items = [qid for qid, (row, section, q) in known.items()
                       if row["lesson"] == current and q["mode"] == "self"]
         self_items.sort(key=lambda qid: known[qid][1]["skill"] != "speaking")
         if self_items:
             qid = self_items[0]
             kind = "speaking" if language == "en" and known[qid][1]["skill"] == "speaking" else "practice"
-            add(qid, kind, "Mustaqil javob bering; bu harakat, bilim bahosi emas.")
-        else:
-            for qid in candidates:
-                if len(selected) >= 3:
-                    break
-                add(qid, "practice", "Darsdagi keyingi savolni bajaring.")
-        if selected:
-            selected[-1]["minutes"] += 15 - sum(step["minutes"] for step in selected)
-        saved = {"day": local_day().isoformat(), "created_at": now().isoformat(), "after_id": max((a.id for a in attempts), default=0), "steps": selected}
-        put(db, key, saved)
+            add(qid, kind, "Javobni tayyorlang va mustaqil tushuntiring. Bu mashq vaqti taxmini, bilim bahosi emas.")
+        for qid in candidates:
+            if len(selected) >= 5:
+                break
+            add(qid, "practice", "Shu darajadagi keyingi savolni bajaring va izohini tekshiring. Vaqt taxminiy.")
+        saved = {"day": local_day().isoformat(), "created_at": now().isoformat(),
+                 "after_id": max((a.id for a in attempts), default=0),
+                 "initial_minutes": minutes, "steps": selected}
+    elif minutes == 25 and len(saved["steps"]) < 5:
+        # Production v1 plans contain only three frozen targets. Extend rather
+        # than rebuild: timestamps, attempt watermark, original IDs and the
+        # initial 15-minute measurement denominator must survive the upgrade.
+        saved.setdefault("initial_minutes", 15)
+        current = practice()._resume(db, student_id, language)
+        existing = {step["question_id"] for step in saved["steps"]}
+        candidates = sorted((qid for qid in exact_questions(language)
+                             if known[qid][0]["lesson"] == current and qid not in existing),
+                            key=lambda qid: (qid in latest, qid))
+        for qid in candidates:
+            if len(saved["steps"]) >= 5:
+                break
+            row, section, question = known[qid]
+            saved["steps"].append({
+                "id": f"{saved['day']}:{language}:{len(saved['steps']) + 1}:{qid}",
+                "kind": "practice", "lesson": row["lesson"], "question_id": qid,
+                "title": section["title"], "minutes": 5,
+                "reason": "Joriy darsdagi qo‘shimcha savolni bajaring va izohini tekshiring. Vaqt taxminiy.",
+            })
     visible = {item["id"] for item in reviews}
-    changed = False
     for step in saved["steps"]:
         if step["kind"] == "review" and step["question_id"] not in visible:
-            # Feedback exposure can defer a frozen review target. Keep its identity
-            # and action reachable; exposure alone never completes the task.
             step["kind"] = "practice"
             step["reason"] = "Takrorlash hozir yopiq. Shu savolni mashq qiling; bu recall bahosi emas."
-            changed = True
-    if changed:
-        put(db, key, saved)
-    start = max(datetime.fromisoformat(saved["created_at"]),
-                datetime.combine(local_day(), datetime.min.time()) - timedelta(hours=5))
-    end = datetime.combine(local_day() + timedelta(days=1), datetime.min.time()) - timedelta(hours=5)
-    completed = {attempt_qid(a) for a in attempts
-                 if start <= a.created_at < end and a.id > saved["after_id"]}
-    steps = [step | {"done": step["question_id"] in completed} for step in saved["steps"]]
-    return {"minutes": 15, "steps": steps, "completed": bool(steps) and all(step["done"] for step in steps)}
+        rows = history.get(step["question_id"], [])
+        if len(rows) >= 2 and all(a.correct == 0 for a in rows[-2:]):
+            step["reason"] = "Ikki urinishda xato: dars misolini qayta ko‘ring, savolni qismlarga ajrating, keyin o‘z javobingizni yozing."
+            step["scaffolded"] = True
+    put(db, key, saved)
+    sync_plan_history(db, student_id, language, saved, attempts)
+    completed = plan_done(saved, attempts)
+    steps = [step | {"done": step["question_id"] in completed} for step in saved["steps"][:minutes // 5]]
+    return {"minutes": minutes, "estimated_minutes": sum(step["minutes"] for step in steps),
+            "duration_basis": "estimate", "steps": steps,
+            "completed": bool(steps) and all(step["done"] for step in steps)}
+
+
+def measurement(db, student_id, language):
+    """Personal observations, not causal outcomes. No visit/XP enrollment proxy."""
+    known = canonical_questions(language)
+    all_attempts = learning_attempts(db, student_id, language)
+    activity = [a for a in all_attempts if substantive(a, known)]
+    today = local_day()
+    cutoff = (today - timedelta(days=27)).isoformat()
+    first = min((a.created_at for a in activity), default=None)
+    first_day = (first + timedelta(hours=5)).date() if first else None
+    days = {attempt_day(a) for a in activity}
+    mature = first_day is not None and today > first_day + timedelta(days=7)
+    log = get(db, f"course-plan-history:v1:{student_id}:{language}", [])
+    plan_days = [{"date": d["day"], "minutes": d["minutes"], "total": d["total"],
+                  "done": d["done"], "completed": d["completed"]}
+                 for d in log if cutoff <= d["day"] <= today.isoformat()]
+    matched = {"total": 0, "before_correct": 0, "after_correct": 0}
+    for rows in exact_history(db, student_id, language).values():
+        baseline = next((a for a in rows if a.ref.startswith("course-practice:v1:")), None)
+        first_correct = next((a.created_at for a in rows if a.correct == 1), None)
+        if baseline is None or first_correct is None:
+            continue
+        reviews = [a for a in rows if a.ref.startswith("course-review:v1:")
+                   and a.created_at >= first_correct + timedelta(days=7)
+                   and cutoff <= attempt_day(a) <= today.isoformat()
+                   and (a.created_at, a.id) > (baseline.created_at, baseline.id)]
+        if reviews:
+            matched["total"] += 1
+            matched["before_correct"] += int(baseline.correct == 1)
+            matched["after_correct"] += int(reviews[-1].correct == 1)
+    speaking = {(attempt_day(a), attempt_qid(a)) for a in activity
+                if cutoff <= attempt_day(a) <= today.isoformat()
+                and known[attempt_qid(a)][1]["skill"] == "speaking"}
+    returned = (first_day + timedelta(days=7)).isoformat() in days if mature else None
+    return {"window_days": 28, "started_on": first_day.isoformat() if first_day else None,
+            "plan_days": len(plan_days), "completed_plan_days": sum(d["completed"] for d in plan_days),
+            "return_day7": {"eligible": mature, "returned": returned},
+            "retention7": matched, "speaking_days": len({d for d, _ in speaking}),
+            "speaking_attempts": len(speaking),
+            "window": {"days": 28, "from": cutoff, "to": today.isoformat()},
+            "enrolled_at": first.isoformat() + "Z" if first else None,
+            "return_dates": sorted(d for d in days if cutoff <= d <= today.isoformat()
+                                   and first_day is not None and d > first_day.isoformat()),
+            "active_days": sum(cutoff <= d <= today.isoformat() for d in days),
+            "d7": {"mature": mature, "total": int(mature),
+                   "returned": int((first_day + timedelta(days=7)).isoformat() in days) if mature else None},
+            "plans": {"total": len(plan_days), "completed": sum(d["completed"] for d in plan_days), "days": plan_days},
+            "recall_7d": matched,
+            "speaking": {"attempts": len(speaking), "days": len({d for d, _ in speaking})},
+            "note": "28 kunlik shaxsiy kuzatuv. Reja: birinchi harakatgacha tanlov yangilanadi, harakatdan keyin denominator saqlanadi; D7: yettinchi kun tugagach. Speaking: savol/kun urinishlari, mahorat bahosi emas. Sababiy o‘sish xulosasi chiqarilmaydi."}
 
 
 def get_many(db, keys):
@@ -622,6 +812,7 @@ def opt_in(db, student, language, opted_in):
         level = cohort_level(db, student.id, language)
         record = {"student_id": student.id, "level": level,
                   "alias": "Learner-" + secrets.token_hex(4), "joined_at": now().isoformat(),
+                  "joined_after_id": db.query(func.max(models.SkillAttempt.id)).filter_by(student_id=student.id).scalar() or 0,
                   "cohort": assign_cohort(db, student.id, language, level)}
     elif "cohort" not in record:
         record["cohort"] = assign_cohort(db, student.id, language, record["level"])
@@ -633,7 +824,9 @@ def weekly(db, student, language):
     mine = get(db, cohort_key(student.id, language))
     result = {"week": calendar_week(), "level": mine["level"] if mine else cohort_level(db, student.id, language),
               "opted_in": bool(mine and mine["opted_in"] and "cohort" in mine and eligible(db, student)),
-              "participants": 0, "leaders": [], "team_done": 0, "team_target": 0, "my_points": 0}
+              "participants": 0, "leaders": [], "team_done": 0, "team_target": 0, "my_points": 0,
+              "mission": {"title": "Birga mashq qilamiz",
+                          "instruction": "Har kuni turli savollarga mustaqil javob bering. Imkon bo‘lsa, o‘qituvchi ishtirokida bitta yechimning sababini navbat bilan tushuntiring. Shaxsiy ma’lumot yoki tayyor javob almashish shart emas."}}
     if not result["opted_in"]:
         return result
     prefix = cohort_members_prefix(language, mine["level"], mine["cohort"])
@@ -656,18 +849,30 @@ def weekly(db, student, language):
                and records[cohort_key(sid, language)].get("cohort") == mine["cohort"]}
     week_start = datetime.combine(local_day() - timedelta(days=local_day().weekday()),
                                   datetime.min.time()) - timedelta(hours=5)
-    transactions = db.query(models.XpTransaction).filter(
-        models.XpTransaction.student_id.in_(list(members)),
-        models.XpTransaction.idempotency_key.startswith(PREFIX),
-        models.XpTransaction.created_at >= week_start,
-        models.XpTransaction.is_reversal == 0).all()
+    known = canonical_questions(language)
+    checkpoint_ids = {q["id"] for row in checkpoint_bank(language).values() for q in row["questions"]}
+    attempts = db.query(models.SkillAttempt).filter(
+        models.SkillAttempt.student_id.in_(list(members)),
+        models.SkillAttempt.created_at >= week_start,
+        models.SkillAttempt.created_at <= now(),
+        (models.SkillAttempt.ref.startswith("course-practice:v1:" + language + ":") |
+         models.SkillAttempt.ref.startswith("course-review:v1:" + language + ":") |
+         models.SkillAttempt.ref.startswith("course-challenge:v1:" + language + ":")),
+    ).order_by(models.SkillAttempt.created_at, models.SkillAttempt.id).all()
     activity = {sid: {} for sid in members}
-    for tx in transactions:
-        entry = members[tx.student_id]
-        meta = json.loads(tx.meta or "{}")
-        if (meta.get("language") == language and meta.get("week") == calendar_week()
-                and tx.created_at >= datetime.fromisoformat(entry["joined_at"])):
-            activity[tx.student_id].setdefault(meta["day"], set()).add(meta.get("question_id") or tx.idempotency_key)
+    for attempt in attempts:
+        entry = members[attempt.student_id]
+        if (attempt.created_at < datetime.fromisoformat(entry["joined_at"])
+                or attempt.id <= entry.get("joined_after_id", 0)):
+            continue
+        qid = attempt_qid(attempt)
+        item = known.get(qid)
+        if not (substantive(attempt, known) or (qid in checkpoint_ids and meaningful(attempt))):
+            continue
+        day = activity[attempt.student_id].setdefault(attempt_day(attempt), set())
+        # At most one free-text self-check contribution per day: arbitrary new
+        # self-question IDs cannot crowd out verified/correctable practice.
+        day.add("self-effort" if item and item[2]["mode"] == "self" else qid)
     participants = []
     for sid, entry in members.items():
         points = min(20, sum(min(DAILY_TARGET, len(ids)) for ids in activity[sid].values()))
@@ -685,6 +890,17 @@ def weekly(db, student, language):
 
 def motivation(db, student, language):
     lock(db, student.id)
+    db.flush()
+    # Only this read/setting-write projection shares a snapshot. Answer/review
+    # writers and subsequent HTTP requests always read fresh persisted attempts.
+    token = _ATTEMPT_SNAPSHOT.set({})
+    try:
+        return _motivation(db, student, language)
+    finally:
+        _ATTEMPT_SNAPSHOT.reset(token)
+
+
+def _motivation(db, student, language):
     questions = exact_questions(language)
     reviews = [public_item(questions[qid][2], questions[qid][0], questions[qid][1])
                for qid in visible_review_ids(db, student.id, language, queue(db, student.id, language))
@@ -708,6 +924,7 @@ def motivation(db, student, language):
                 "recalls": sum(tx.event_code == "course_delayed_recall" for tx in transactions)},
             "plan": daily_plan(db, student.id, language, reviews),
             "evidence": evidence(db, student.id, language),
+            "measurement": measurement(db, student.id, language),
             "review": reviews, "weekly": weekly(db, student, language), "checkpoints": checkpoints}
 
 

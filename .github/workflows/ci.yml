@@ -45,6 +45,7 @@ jobs:
           python test_student_course_practice.py
           python test_course_motivation.py
           python test_course_learning_evidence.py
+          python test_course_plan_measurement.py
           python test_course_portfolio.py
           python test_course_checkpoint_data.py
           python test_course_themes.py

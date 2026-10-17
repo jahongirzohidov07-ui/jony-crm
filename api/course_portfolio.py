@@ -13,6 +13,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 import models
+import course_missions
 from database import get_db
 
 MAX_AUDIO = 1024 * 1024
@@ -54,6 +55,7 @@ class WorkIn(BaseModel):
     type: Literal["dialogue", "story", "speaking"]
     text: str = Field(max_length=6000)
     audio: AudioIn | None = None
+    mission_id: str | None = Field(default=None, min_length=1, max_length=80)
 
     @field_validator("title")
     @classmethod
@@ -107,9 +109,23 @@ def _entry(state, entry_id, language, lesson):
     raise HTTPException(404, "Ijodiy ish topilmadi")
 
 
-def _version(body, number):
-    return {**body.model_dump(exclude={"expected_version"}), "number": number,
-            "created_at": datetime.now(timezone.utc).isoformat()}
+def _version(body, number, row, mission):
+    version = {**body.model_dump(exclude={"expected_version", "mission_id"}), "number": number,
+               "mission_id": mission["id"] if mission else None,
+               "created_at": datetime.now(timezone.utc).isoformat()}
+    version["coaching"] = course_missions.coaching(row, version, mission)
+    return version
+
+
+def _present(entry, row):
+    # Legacy records are projected without rewriting any saved version/history.
+    result = {**entry, "mission": entry.get("mission"), "versions": []}
+    for version in entry["versions"]:
+        result["versions"].append({**version, "coaching": version.get("coaching") or
+                                  course_missions.coaching(row, version)})
+    result["mission_evidence"] = ({"status": "artifact_saved", "version": len(entry["versions"]),
+                                   "verified_mastery": False, "xp": 0} if entry.get("mission") else None)
+    return result
 
 
 def _audio_bytes(state):
@@ -156,39 +172,49 @@ def make_router(student_dependency, lesson_lookup):
                 "limits": LIMITS, "total_entries": len(state["entries"]),
                 "lesson_entries": len(entries), "total_text_bytes": _text_bytes(state),
                 "total_audio_bytes": _audio_bytes(state), "lesson_title": row["title"],
-                "prompt": task, "verified_mastery": False, "xp": 0}
+                "prompt": task, "missions": course_missions.choices(language, row),
+                "verified_mastery": False, "xp": 0}
 
     @router.get("/{entry_id}")
     def detail(entry_id: str, context=Depends(scope), db: Session = Depends(get_db)):
-        student, language, lesson, _ = context
-        return _entry(_load(db, student.id)[2], entry_id, language, lesson)
+        student, language, lesson, row = context
+        return _present(_entry(_load(db, student.id)[2], entry_id, language, lesson), row)
 
     @router.post("", status_code=201)
     def create(body: WorkIn, context=Depends(scope), db: Session = Depends(get_db)):
-        student, language, lesson, _ = context
+        student, language, lesson, row = context
+        mission = next((m for m in course_missions.choices(language, row) if m["id"] == body.mission_id), None)
+        if body.mission_id is not None and mission is None:
+            raise HTTPException(422, "Vazifa shu til va darsga tegishli bo‘lishi kerak.")
         key, old, state = _load(db, student.id)
         if sum(e["language"] == language and e["lesson"] == lesson for e in state["entries"]) >= MAX_ENTRIES:
             raise HTTPException(409, "Bu darsda 8 ish chegarasi. Yangi ish uchun eskisini tanlab o‘chiring.")
-        entry = {"id": uuid4().hex, "language": language, "lesson": lesson, "versions": [_version(body, 1)]}
+        entry = {"id": uuid4().hex, "language": language, "lesson": lesson, "mission": mission,
+                 "versions": [_version(body, 1, row, mission)]}
         state["entries"].append(entry)
         _check_quota(state)
         _persist(db, key, old, state)
-        return entry
+        return _present(entry, row)
 
     @router.put("/{entry_id}")
     def revise(entry_id: str, body: RevisionIn, context=Depends(scope), db: Session = Depends(get_db)):
-        student, language, lesson, _ = context
+        student, language, lesson, row = context
         key, old, state = _load(db, student.id)
         entry = _entry(state, entry_id, language, lesson)
+        mission = entry.get("mission")
+        # Omission preserves legacy clients. A chosen task stays attached to the
+        # entry, so revisions compare work on the same meaningful goal.
+        if body.mission_id is not None and body.mission_id != (mission or {}).get("id"):
+            raise HTTPException(409, "Bu ishning vazifasi o‘zgarmaydi. Boshqa vazifa uchun yangi ish yarating.")
         count = len(entry["versions"])
         if body.expected_version != count:
             raise HTTPException(409, "Yangi versiya mavjud. Ishni qayta oching.")
         if count >= MAX_VERSIONS:
             raise HTTPException(409, "3 versiya chegarasiga yetdi. Eski versiyalar saqlanadi.")
-        entry["versions"].append(_version(body, count + 1))
+        entry["versions"].append(_version(body, count + 1, row, mission))
         _check_quota(state)
         _persist(db, key, old, state)
-        return entry
+        return _present(entry, row)
 
     @router.delete("/{entry_id}")
     def delete(entry_id: str, context=Depends(scope), db: Session = Depends(get_db)):

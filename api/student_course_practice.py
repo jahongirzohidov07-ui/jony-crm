@@ -75,6 +75,19 @@ class ReviewIn(BaseModel):
         return value
 
 
+class PlanIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    language: Language
+    minutes: int
+
+    @field_validator("minutes")
+    @classmethod
+    def supported_budget(cls, value):
+        if value not in (5, 15, 25):
+            raise ValueError("Choose 5, 15 or 25 minutes")
+        return value
+
+
 class LeagueIn(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     language: Language
@@ -260,6 +273,14 @@ def motivation_get(language: Language, db: Session = Depends(get_db), student=De
     return result
 
 
+@router.post("/motivation/plan")
+def motivation_plan(body: PlanIn, db: Session = Depends(get_db), student=Depends(_student)):
+    motivation.choose_plan(db, student.id, body.language, body.minutes)
+    result = motivation.motivation(db, student, body.language)
+    db.commit()
+    return result
+
+
 @router.post("/motivation/league")
 def motivation_league(body: LeagueIn, db: Session = Depends(get_db), student=Depends(_student)):
     motivation.opt_in(db, student, body.language, body.enabled)
@@ -394,10 +415,11 @@ def speaking(body: SpeakingIn, db: Session = Depends(get_db), student=Depends(_s
         latest = db.query(models.SkillAttempt).filter_by(
             student_id=student.id, ref=_ref(question["id"])
         ).order_by(models.SkillAttempt.id.desc()).first()
-        if latest is None or latest.answer != transcript:
+        if (latest is None or latest.answer != transcript
+                or motivation.attempt_day(latest) != motivation.local_day().isoformat()):
             db.add(models.SkillAttempt(
                 student_id=student.id, skill="course-practice:en:speaking",
-                ref=_ref(question["id"]), answer=transcript, correct=0,
+                ref=_ref(question["id"]), answer=transcript, correct=0, created_at=motivation.now(),
             ))
             db.commit()  # Self check only: no rewards or position writes.
     return {"reply": reply.strip(), "saved": transcript is not None}

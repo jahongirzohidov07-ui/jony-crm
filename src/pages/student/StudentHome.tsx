@@ -6,7 +6,7 @@ import { StudentIcon } from "../../components/StudentIcon";
 import { StudentImage } from "../../components/StudentIcon";
 import { StudentXpHelp } from "../../components/StudentXpHelp";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Bell, ChevronDown, ChevronRight, Map as MapIcon, Check, CreditCard,
 } from "lucide-react";
@@ -29,6 +29,69 @@ import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
  * o'zgarmadi: /student/home, kunlik missiya, coin/XP/streak,
  * IELTS maqsad, davom etish - hammasi avvalgi joyidan olinadi.
  */
+
+/** Examiner bergan havola (jonyos.uz/t/<kod>, /student/exam/<kod>) yoki
+ *  yalang'och kod ichidan imtihon kodini ajratadi. */
+function examTokenFrom(raw: string): string | null {
+  const t = raw.trim();
+  if (!t) return null;
+  const m = t.match(/\/(?:t|student\/exam)\/([A-Za-z0-9_-]{4,64})/);
+  if (m) return m[1];
+  return /^[A-Za-z0-9_-]{4,64}$/.test(t) ? t : null;
+}
+
+/** Imtihon havolasini qo'lda kiritish (Jahongir, 2026-10-17): havola
+ *  Telegramdan kelmasa yoki brauzerda ochilib qolsa, shu yerga qo'yiladi
+ *  va imtihon ilovaning o'zida ochiladi. */
+function ExamLinkCard() {
+  const nav = useNavigate();
+  const [val, setVal] = useState("");
+  const [err, setErr] = useState("");
+  const go = () => {
+    const tok = examTokenFrom(val);
+    if (!tok) {
+      setErr("Havola noto'g'ri. Examiner bergan havolani to'liq qo'ying.");
+      return;
+    }
+    setErr("");
+    nav(`/student/exam/${encodeURIComponent(tok)}`);
+  };
+  const paste = async () => {
+    try {
+      const t = await navigator.clipboard.readText();
+      if (t) setVal(t);
+    } catch { /* ruxsat yo'q — qo'lda qo'yadi */ }
+  };
+  return (
+    <div className="rounded-3xl p-4 border border-white/10 bg-white/5">
+      <p className="text-[13px] font-bold text-white">📝 Imtihon havolasi</p>
+      <p className="text-[11px] text-slate-400 mt-0.5">
+        Examiner bergan havolani shu yerga qo'ying — imtihon ilovada ochiladi.
+      </p>
+      <div className="flex gap-2 mt-3">
+        <input
+          value={val}
+          onChange={(e) => { setVal(e.target.value); setErr(""); }}
+          onKeyDown={(e) => { if (e.key === "Enter") go(); }}
+          placeholder="https://jonyos.uz/t/..."
+          inputMode="url"
+          autoCapitalize="off"
+          autoCorrect="off"
+          className="flex-1 min-w-0 rounded-xl bg-black/30 border border-white/15 px-3 py-2.5 text-[14px] text-white placeholder:text-slate-500 outline-none focus:border-indigo-400"
+        />
+        <button type="button" onClick={paste}
+          className="px-3 rounded-xl bg-white/10 text-[13px] text-white active:scale-95">
+          Qo'yish
+        </button>
+      </div>
+      {err && <p className="text-[12px] text-red-400 mt-2">{err}</p>}
+      <button type="button" onClick={go} disabled={!val.trim()}
+        className="w-full mt-3 rounded-xl py-2.5 text-[14px] font-bold text-white bg-indigo-600 disabled:opacity-40 active:scale-[0.99]">
+        Imtihonni ochish
+      </button>
+    </div>
+  );
+}
 
 const MISSION_ICONS = ["vocabulary", "grammar", "listening"] as const;
 
@@ -194,6 +257,8 @@ export default function StudentHome() {
             </div>
           </Link>
         ))}
+
+        <ExamLinkCard />
 
         {/* ======================================= DARAJA KARTASI */}
         {lang !== "ru" && <div

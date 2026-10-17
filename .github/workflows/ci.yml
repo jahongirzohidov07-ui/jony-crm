@@ -40,7 +40,9 @@ jobs:
           if [ -f test_schema_stamp.py ]; then python test_schema_stamp.py; fi
       - name: Student course practice isolation and grading
         working-directory: api
-        run: python test_student_course_practice.py
+        run: |
+          python test_student_identity.py
+          python test_student_course_practice.py
       - name: Guard tests
         working-directory: api
         env:

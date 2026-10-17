@@ -5675,21 +5675,25 @@ def _skill_available(db: Session) -> dict:
     return out
 
 def _student_of_user(db: Session, user: models.User) -> models.Student | None:
-    """Foydalanuvchi hisobiga bog'langan o'quvchi.
+    """Resolve only an explicit, unambiguous account link; never infer identity.
 
-    Avval to'g'ridan-to'g'ri bog'lanish, keyin ism bo'yicha — eski
-    hisoblarda bog'lanish yo'q bo'lishi mumkin."""
-    s = (db.query(models.Student)
-         .filter(models.Student.user_id == user.id).first())
-    if s:
-        return s
-    s = (db.query(models.Student)
-         .filter(models.Student.full_name == user.full_name).first())
-    if s and not s.user_id:
-        # Topilgan bo'lsa bog'lab qo'yamiz - keyingi safar tez topiladi
-        s.user_id = user.id
-        db.commit()
-    return s
+    Names, phone numbers and branches are not identity credentials. Reading
+    a student's data must not create links or commit unrelated pending work.
+    Duplicate legacy links fail closed instead of choosing the first card.
+    """
+    with db.no_autoflush:
+        user_id = getattr(user, "id", None)
+        if user_id is None:
+            return None
+        matches = (db.query(models.Student)
+                   .filter(models.Student.user_id == user_id)
+                   .limit(2).all())
+    if len(matches) > 1:
+        raise HTTPException(
+            403, "Hisobingiz bir nechta o‘quvchi kartasiga bog‘langan. "
+                 "Administrator bog‘lanishni tekshirishi kerak.")
+    return matches[0] if matches else None
+
 
 def _active_season(db: Session) -> models.XpSeason | None:
     today = date.today()

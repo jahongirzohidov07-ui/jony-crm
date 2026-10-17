@@ -69,6 +69,8 @@ jobs:
       - run: npm ci || npm install
       - name: Export student course practice bank
         run: node scripts/export-student-course-practice.cjs
+      - name: Android speech bridge regression tests
+        run: node scripts/test-native-bridge.cjs
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks

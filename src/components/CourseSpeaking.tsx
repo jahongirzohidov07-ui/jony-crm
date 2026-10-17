@@ -47,9 +47,14 @@ function SpeakingSession({lesson, questionId, previous, onSaved}: SpeakingProps)
   }; }, []);
   function speak(text: string) {
     if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) {setError("Ovozli o‘qish bu qurilmada mavjud emas. Ustoz javobini ekranda o‘qing."); return;}
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text); utterance.lang = "en-US"; utterance.rate = 0.9;
-    window.speechSynthesis.speak(utterance);
+    setError("");
+    const failed = () => {if (active.current) setError("Ovozli o‘qish ishlamadi. Qayta urinib ko‘ring yoki ustoz javobini ekranda o‘qing.");};
+    try {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text); utterance.lang = "en-US"; utterance.rate = 0.9;
+      utterance.onerror = event => {if (event.error !== "canceled" && event.error !== "interrupted") failed();};
+      window.speechSynthesis.speak(utterance);
+    } catch { failed(); }
   }
   async function turn(history: Message[]) {
     if (locked.current) return;

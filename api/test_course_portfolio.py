@@ -1,5 +1,6 @@
 """Run: python api/test_course_portfolio.py (isolated SQLite, no AI/network)."""
 import base64
+import json
 import os
 import sys
 import unittest
@@ -16,6 +17,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 import models
 import course_portfolio as portfolio
+import course_missions as missions
 import student_course_practice as practice
 from auth import get_current_user
 from database import get_db
@@ -164,6 +166,126 @@ class PortfolioTests(unittest.TestCase):
         with self.assertRaises(HTTPException):
             portfolio._persist(self.db, key, None, {"entries": []})
         self.assertEqual(len(self.client.get(self.url()).json()["entries"]), 2)
+
+    def test_mission_curriculum_namespaces_and_rejection(self):
+        for language, lesson, key in [("en", 1, "identity-card"), ("en", 51, "past-event"),
+                                      ("en", 86, "request-help"), ("de", 18, "request-help"),
+                                      ("de", 30, "past-event")]:
+            listing = self.client.get(self.url(language=language, lesson=lesson)).json()
+            ids = [m["id"] for m in listing["missions"]]
+            self.assertIn(f"{language}:{lesson}:{key}", ids)
+            self.assertTrue(all(m["language"] == language and m["lesson"] == lesson for m in listing["missions"]))
+        for language in ("en", "de"):
+            choices = self.client.get(self.url(language=language)).json()["missions"]
+            self.assertTrue(all(m["foundation"] for m in choices))
+            self.assertFalse(any("past-event" in m["id"] or "request-help" in m["id"] for m in choices))
+        for bad in ("de:1:identity-card", "en:2:identity-card", "en:1:past-event", "invented", "x" * 81, 12):
+            response = self.client.post(self.url(), json=self.body(mission_id=bad))
+            self.assertEqual(response.status_code, 422, response.text)
+        self.assertEqual(self.db.query(models.IntegrationSetting).count(), 0)
+
+    def test_mission_and_coaching_survive_reload_without_rewriting_history(self):
+        first = self.create(mission_id="en:1:identity-card", text="pencil")
+        self.assertEqual(first["mission"]["id"], "en:1:identity-card")
+        self.assertEqual(first["mission_evidence"], {"status": "artifact_saved", "version": 1,
+                                                    "verified_mastery": False, "xp": 0})
+        first_version = first["versions"][0]
+        self.assertIn("pencil", first_version["coaching"]["observed_positive"])
+        url = self.url(first["id"])
+        # Legacy clients omit mission_id on PUT: the persisted personal choice survives.
+        revised = self.client.put(url, json=self.body(text="pencil, teacher", expected_version=1))
+        self.assertEqual(revised.status_code, 200, revised.text)
+        self.assertEqual(revised.json()["versions"][0], first_version)
+        self.assertEqual(revised.json()["versions"][1]["mission_id"], first["mission"]["id"])
+        self.db.close()
+        self.db = self.sessions()
+        reloaded = self.client.get(url).json()
+        self.assertEqual(reloaded, revised.json())
+        self.assertEqual(reloaded["mission_evidence"]["version"], 2)
+        self.assertEqual(self.client.put(url, json=self.body(mission_id="en:1:object-label", expected_version=2)).status_code, 409)
+        self.assertEqual(self.client.put(url, json=self.body(expected_version=1)).status_code, 409)
+        self.assertEqual(self.db.query(models.SkillAttempt).count(), 0)
+        self.assertEqual(self.db.query(models.XpTransaction).count(), 0)
+
+    def test_feedback_is_observation_not_audio_or_language_score(self):
+        row = practice.LESSONS["en"][7]
+        matched = missions.coaching(row, {"text": "I am ready", "type": "dialogue"})
+        self.assertIn("«am»", matched["observed_positive"])
+        self.assertIn("yangi satr", matched["next_improvement"])
+        substring = missions.coaching(row, {"text": "Sammy", "type": "story"})
+        self.assertNotIn("«am»", substring["observed_positive"])
+        self.assertIn("«am»", substring["next_improvement"])
+        audio_only = self.create(text="", type="speaking", audio=self.audio(), mission_id="en:1:identity-card")
+        feedback = audio_only["versions"][0]["coaching"]
+        self.assertEqual(feedback["basis"], "audio_unassessed")
+        self.assertIn("tekshirilmagan", feedback["disclaimer"])
+        for value in [matched, substring, feedback]:
+            self.assertIsInstance(value["next_improvement"], str)
+            self.assertTrue(value["retry"])
+            self.assertFalse(value["verified_mastery"])
+            self.assertFalse(value["assessed_audio"])
+            self.assertFalse({"score", "cefr", "pronunciation", "accuracy"} & value.keys())
+        de = missions.coaching(practice.LESSONS["de"][30], {"text": "Ich war dort.", "type": "story"})
+        self.assertIn("«war»", de["observed_positive"])
+
+    def test_legacy_projection_does_not_mutate_saved_data(self):
+        entry = self.create()
+        key, raw, state = portfolio._load(self.db, 1)
+        old = state["entries"][0]
+        old.pop("mission", None)
+        old["versions"][0].pop("coaching", None)
+        old["versions"][0].pop("mission_id", None)
+        portfolio._persist(self.db, key, raw, state)
+        stored = portfolio._load(self.db, 1)[1]
+        response = self.client.get(self.url(entry["id"])).json()
+        self.assertIsNone(response["mission"])
+        self.assertIsNone(response["mission_evidence"])
+        self.assertTrue(response["versions"][0]["coaching"]["next_improvement"])
+        self.assertEqual(portfolio._load(self.db, 1)[1], stored)
+        revised = self.client.put(self.url(entry["id"]), json=self.body(expected_version=1))
+        self.assertEqual(revised.status_code, 200, revised.text)
+        self.assertEqual(revised.json()["versions"][0], response["versions"][0])
+        persisted = json.loads(portfolio._load(self.db, 1)[1])
+        self.assertNotIn("coaching", persisted["entries"][0]["versions"][0])
+
+    def test_all_course_lessons_offer_bounded_choices_and_reject_forged_feedback(self):
+        for language, rows in practice.BANK.items():
+            for row in rows:
+                self.assertEqual(row["language"], language)
+                offered = missions.choices(language, row)
+                self.assertGreaterEqual(len(offered), 2)
+                self.assertLessEqual(len(offered), 4)
+                self.assertEqual(len({m["id"] for m in offered}), len(offered))
+                for mission in offered:
+                    self.assertEqual(mission["lesson_title"], row["title"])
+                    self.assertLessEqual(len(mission["targets"]), 6)
+        for forged in [{"coaching": {"score": 100}}, {"mission": {"id": "en:1:fake"}},
+                       {"mission_evidence": {"verified_mastery": True}}]:
+            self.assertEqual(self.client.post(self.url(), json=self.body(**forged)).status_code, 422)
+
+    def test_retry_hint_changes_when_observable_suggestion_is_addressed(self):
+        url = self.url(lesson=7)
+        created = self.client.post(url, json=self.body(type="story", text="Sammy", mission_id="en:7:introduce"))
+        self.assertEqual(created.status_code, 201, created.text)
+        entry = created.json()
+        first = entry["versions"][0]
+        self.assertIn("«am»", first["coaching"]["next_improvement"])
+        url = self.url(entry["id"], lesson=7)
+        revised = self.client.put(url, json=self.body(type="story", text="I am ready.", expected_version=1)).json()
+        second = revised["versions"][1]
+        self.assertEqual(revised["versions"][0], first)
+        self.assertIn("«am»", second["coaching"]["observed_positive"])
+        self.assertNotEqual(first["coaching"]["next_improvement"], second["coaching"]["next_improvement"])
+        third = self.client.put(url, json=self.body(type="story", text="I am ready at school.", expected_version=2)).json()
+        self.assertIn("alohida yangi ish", third["versions"][2]["coaching"]["retry"])
+        self.assertEqual(third["versions"][:2], revised["versions"])
+        for language in ("en", "de"):
+            row = practice.LESSONS[language][1]
+            mission = missions.choices(language, row)[0]
+            feedback = missions.coaching(row, {"text": mission["targets"][0], "type": "story"}, mission)
+            self.assertIn("to‘liq gap shart emas", feedback["next_improvement"])
+        audio = missions.coaching(practice.LESSONS["en"][1], {"number": 3, "text": "", "type": "speaking"})
+        self.assertIn("alohida yangi ish", audio["retry"])
 
 
 if __name__ == "__main__":

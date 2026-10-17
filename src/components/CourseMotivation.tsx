@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { CheckCircle2, Flag, Sparkles, Users } from "lucide-react";
 import { api } from "../lib/api";
+import CourseMeasurement, { type LearningMeasurement } from "./CourseMeasurement";
 
 export type LearningReward = {xp: number; coins: number; reason: string};
 type Review = {id: string; lesson: number; prompt: string; options?: string[]; audio_url?: string};
 type Feedback = {correct: boolean; expected: string[]; explanation: string; reward?: LearningReward};
 export type PlanStep = {id: string; kind: "review" | "practice" | "speaking"; lesson: number; question_id?: string; title: string; reason: string; minutes: number; done: boolean};
 type Evidence = {comparison?: {total:number; before_correct:number; after_correct:number}; lessons: {ready: number; total: number; retained: number}; first_attempt: {correct: number; total: number}; delayed_recall: {correct: number; total: number}; skills: {skill: string; correct: number; total: number}[]; since: string | null};
-type Motivation = {plan?: {minutes: number; steps: PlanStep[]; completed: boolean}; evidence?: Evidence;learning?: {independent: number; practice?: number; corrections: number; recalls: number}; daily: {done: number; target: number}; rewards: {xp: number; coins: number}; review: Review[]; weekly: {week: string; level: string; opted_in: boolean; participants: number; leaders: {alias: string; points: number}[]; team_done: number; team_target: number; my_points?: number}; checkpoints: {week: number; passed: boolean; available: boolean}[]};
+type Motivation = {measurement?: LearningMeasurement; plan?: {minutes: number; steps: PlanStep[]; completed: boolean}; evidence?: Evidence;learning?: {independent: number; practice?: number; corrections: number; recalls: number}; daily: {done: number; target: number}; rewards: {xp: number; coins: number}; review: Review[]; weekly: {week: string; level: string; opted_in: boolean; participants: number; leaders: {alias: string; points: number}[]; team_done: number; team_target: number; my_points?: number; mission?: {title:string; instruction:string}}; checkpoints: {week: number; passed: boolean; available: boolean}[]};
 const rewardLabels: Record<string,string> = {first_correct: "Birinchi to‘g‘ri javob", practice_correct: "Mashq to‘g‘ri bajarildi", correction: "Xatoni tuzatdingiz", delayed_recall: "Vaqt o‘tib ham esladingiz", challenge: "Haftalik bilim sinovi", none: "Bu urinish qayd etildi", daily_limit: "Bugungi mukofot chegarasi bajarildi"};
 export function RewardFeedback({reward}: {reward?: LearningReward}) {
   if (!reward) return null;
@@ -21,15 +22,43 @@ export function CourseMotivation({language, refresh = 0, compact = false, onChec
   const [revision, setRevision] = useState(0);
   const [tab, setTab] = useState(initialReview ? "review" : "today");
   const [busy, setBusy] = useState(false);
+  const requestGeneration = useRef(0);
+  useEffect(() => { requestGeneration.current += 1; setData(null); setBusy(false); setTab(initialReview ? "review" : "today"); return () => { requestGeneration.current += 1; }; }, [language, initialReview]);
   useEffect(() => {
     let live = true; setError("");
     api.fresh<Motivation>(`/student/course-practice/motivation?language=${language}`).then(r => {if(live) {setData(r); onCheckpoints?.(r.checkpoints);}}).catch(e => {if(live) setError(e.message);});
     return () => {live = false;};
-  }, [language, refresh, revision, onCheckpoints]);
+  }, [language, refresh, revision, onCheckpoints, initialReview]);
+  useEffect(() => {
+    const localDay = () => new Intl.DateTimeFormat("en-CA", {timeZone: "Asia/Tashkent"}).format(new Date());
+    let day = localDay();
+    let lastResume = 0;
+    const resume = () => {
+      if (document.visibilityState === "hidden" || Date.now() - lastResume < 1000) return;
+      lastResume = Date.now(); day = localDay(); setRevision(n => n + 1);
+    };
+    const timer = window.setInterval(() => {
+      if (document.visibilityState !== "hidden" && day !== localDay()) resume();
+    }, 30000);
+    document.addEventListener("visibilitychange", resume);
+    window.addEventListener("focus", resume);
+    return () => {window.clearInterval(timer); document.removeEventListener("visibilitychange", resume); window.removeEventListener("focus", resume);};
+  }, [language]);
+  async function chooseMinutes(minutes: number) {
+    if (busy || minutes === data?.plan?.minutes) return;
+    const generation = requestGeneration.current;
+    setBusy(true); setError("");
+    try {
+      const updated = await api.post<Motivation>("/student/course-practice/motivation/plan", {language, minutes});
+      if (generation === requestGeneration.current) {setData(updated); onCheckpoints?.(updated.checkpoints); setRevision(n => n + 1);}
+    } catch (e) {
+      if (generation === requestGeneration.current) setError(e instanceof Error ? e.message : "Reja saqlanmadi");
+    } finally { if (generation === requestGeneration.current) setBusy(false); }
+  }
   async function league(enabled: boolean) {
-    if (busy) return; setBusy(true); setError("");
-    try {await api.post("/student/course-practice/motivation/league", {language, enabled}); setRevision(n => n+1);}
-    catch(e) {setError(e instanceof Error ? e.message : "Saqlanmadi");} finally {setBusy(false);}
+    if (busy) return; const generation = requestGeneration.current; setBusy(true); setError("");
+    try {await api.post("/student/course-practice/motivation/league", {language, enabled}); if(generation === requestGeneration.current) setRevision(n => n+1);}
+    catch(e) {if(generation === requestGeneration.current) setError(e instanceof Error ? e.message : "Saqlanmadi");} finally {if(generation === requestGeneration.current) setBusy(false);}
   }
   if (error && !data) return <section className="rounded-2xl border bg-white p-4" role="alert">O‘sish natijalari yuklanmadi. <button onClick={() => setRevision(n=>n+1)} className="underline">Qayta urinish</button></section>;
   if (!data) return <p className="p-4 text-sm text-slate-500" role="status">O‘sish rejangiz yuklanmoqda…</p>;
@@ -38,8 +67,9 @@ export function CourseMotivation({language, refresh = 0, compact = false, onChec
   const stepLink = (step: PlanStep) => `/student/course-practice?lesson=${step.lesson}&question=${encodeURIComponent(step.question_id || "")}${step.kind === "review" ? "&action=review" : step.kind === "speaking" ? "&section=speaking" : ""}`;
   const launch = (step: PlanStep) => {if (step.kind === "review") {setTab("review"); requestAnimationFrame(() => document.getElementById("course-recall-list")?.scrollIntoView({behavior: "smooth", block: "start"}));} else onAction?.(step);};
   return <section aria-label="Bilim va o‘sish" className="overflow-hidden rounded-3xl border border-indigo-200 bg-white text-slate-900">
-    <div className="bg-indigo-950 p-5 text-white"><div className="flex items-start justify-between gap-3"><div><p className="text-xs uppercase tracking-wider text-indigo-200">Kichik g‘alabalar</p><h2 className="mt-1 text-lg font-bold">{data.plan?.completed ? "Bugungi rejangiz bajarildi!" : "Bugungi 15 daqiqalik rejam"}</h2></div>{complete ? <CheckCircle2 className="shrink-0 text-emerald-300"/> : <Sparkles className="shrink-0 text-amber-300"/>}</div>
+    <div className="bg-indigo-950 p-5 text-white"><div className="flex items-start justify-between gap-3"><div><p className="text-xs uppercase tracking-wider text-indigo-200">Kichik g‘alabalar</p><h2 className="mt-1 text-lg font-bold">{data.plan?.completed ? "Bugungi rejangiz bajarildi!" : `Bugungi ${data.plan?.minutes ?? 15} daqiqalik rejam`}</h2></div>{complete ? <CheckCircle2 className="shrink-0 text-emerald-300"/> : <Sparkles className="shrink-0 text-amber-300"/>}</div>
       <p className="mt-2 text-sm text-indigo-100">{data.plan?.completed ? "Shaxsiy rejangiz tugadi. Qo‘shimcha mashq ixtiyoriy." : complete ? "Bugunga yetarli. Dam oling — keyingi safar eslab qolganingizni tekshiramiz." : `${Math.min(data.daily.done,data.daily.target)} / ${data.daily.target} foydali qadam. Mashq, tuzatish yoki takror; XP berilmasa ham hisoblanadi.`}</p>
+      <fieldset disabled={busy} className="mt-4"><legend className="text-sm font-semibold">Bugun qancha vaqt ajratasiz?</legend><div className="mt-2 flex flex-wrap gap-2">{[5,15,25].map(minutes => <button key={minutes} type="button" aria-pressed={data.plan?.minutes === minutes} onClick={() => void chooseMinutes(minutes)} className={`min-h-11 rounded-xl border px-4 py-2 text-sm font-semibold disabled:opacity-50 ${data.plan?.minutes === minutes ? "border-white bg-white text-indigo-950" : "border-indigo-400 text-white"}`}>{minutes} daqiqa</button>)}</div><p className="mt-2 text-xs text-indigo-200">Vaqt taxminiy. Bugun bajargan ishlaringiz saqlanadi.</p></fieldset>
       <progress aria-label="Bugungi maqsad" value={Math.min(data.daily.done,data.daily.target)} max={Math.max(1,data.daily.target)} className="mt-3 h-2 w-full accent-emerald-400"/>
       {nextStep && (onAction ? <button onClick={() => launch(nextStep)} className="mt-4 w-full rounded-xl bg-white px-4 py-3 text-left font-bold text-indigo-950">{data.plan?.steps.some(s => s.done) ? "Rejani davom ettirish" : "Boshlash"} →<span className="mt-1 block text-xs font-normal">{nextStep.title} · taxminan {nextStep.minutes} daqiqa</span></button> : <Link to={stepLink(nextStep)} className="mt-4 block rounded-xl bg-white px-4 py-3 font-bold text-indigo-950">Bugungi rejani boshlash →</Link>)}
       <p className="mt-2 text-xs text-indigo-200">Shu kursdagi mukofot: {data.rewards.xp} XP · {data.rewards.coins} tanga</p>
@@ -49,10 +79,11 @@ export function CourseMotivation({language, refresh = 0, compact = false, onChec
       {compact ? <><p className="text-sm">{data.review.length ? `${data.review.length} ta savolni hozir eslab ko‘rish vaqti keldi.` : "Hozir takrorlash navbati yo‘q. Darsingizni davom ettirishingiz mumkin."}</p><Link to="/student/course-practice?view=journey" className="block rounded-xl bg-indigo-50 p-3 text-center text-sm font-semibold text-indigo-900">Xarita, takrorlash va jamoa →</Link></> : <>
         {data.plan && <ol aria-label="Bugungi shaxsiy reja" className="space-y-2">{data.plan.steps.map((step, i) => <li key={step.id} className={`rounded-xl border p-3 ${step.done ? "border-emerald-200 bg-emerald-50" : "border-slate-200"}`}><div className="flex items-start justify-between gap-2"><p className="text-sm font-semibold">{step.done ? "✓" : `${i+1}.`} {step.title}</p><span className="shrink-0 text-xs text-slate-500">~{step.minutes} daq.</span></div><p className="mt-1 text-xs text-slate-600">{step.reason}</p>{!step.done && <button onClick={() => launch(step)} className="mt-2 text-sm font-semibold text-indigo-800 underline">{step.kind === "review" ? "Eslab ko‘rish" : "Mashqni ochish"} →</button>}</li>)}</ol>}
         <details className="rounded-xl border p-3"><summary className="cursor-pointer text-sm font-semibold">Bilimimdagi o‘sish · dalillar</summary>{data.evidence ? <EvidenceView evidence={data.evidence}/> : <p className="mt-2 text-sm">Dalillar hali tayyor emas.</p>}</details>
+        {data.measurement && <CourseMeasurement data={data.measurement}/>}
         <nav aria-label="O‘sish bo‘limlari" className="flex flex-wrap gap-2">{[["today","Bugungi qadam"],["review","Eslab ko‘rish"],["team","Haftalik jamoa"]].map(([key,label])=><button key={key} aria-pressed={tab===key} onClick={()=>setTab(key)} className={`rounded-full border px-3 py-2 text-sm ${tab===key ? "bg-indigo-100 font-semibold text-indigo-900" : "bg-white"}`}>{label}</button>)}</nav>
         {tab==="today" && <div className="space-y-3 text-sm"><div className="flex items-center gap-2 rounded-xl bg-emerald-50 p-3 text-emerald-900"><Flag size={18}/>{data.checkpoints.filter(c=>c.passed).length} ta haftalik bilim sinovi o‘tilgan</div><details className="rounded-xl border p-3"><summary className="cursor-pointer font-semibold">XP va tanga qoidalari</summary><p className="mt-2">Oddiy mashq — 2 XP; xatoni tuzatish — 2 XP; vaqti kelgan takror — 8 XP + 1 tanga. Mustaqil haftalik sinov — 15 XP + 2 tanga. Bir javobni takror yuborish qo‘shimcha ball bermaydi. Kuniga ikki til bo‘yicha jami ko‘pi bilan 20 mukofot. Kunlik mashq hisobi esa mukofotdan alohida.</p></details><p className="text-xs text-slate-500">Bir kun o‘tkazib yuborsangiz, to‘plagan bilimingiz va mukofotlaringiz yo‘qolmaydi.</p></div>}
         {tab==="review" && <div id="course-recall-list" className="scroll-mt-4 space-y-3"><p className="text-sm text-slate-600">Avval javobga qaramasdan eslab ko‘ring. Bitta navbat qisqa — ko‘pi bilan 5 savol.</p>{!data.review.length ? <p className="rounded-xl bg-emerald-50 p-4 text-sm">Hozir navbat yo‘q. Yaxshi dam oling yoki darsingizga qayting.</p> : data.review.map(q=><Recall key={q.id} question={q} language={language} onDone={()=>setRevision(n=>n+1)}/>)}</div>}
-        {tab==="team" && <div className="space-y-3 text-sm"><h3 className="flex items-center gap-2 font-semibold"><Users size={18}/>{data.weekly.level} · haftalik jamoa</h3><p className="text-xs text-slate-500">Hafta: {data.weekly.week}. Bir til va bosqichdagi o‘quvchilar. Ismlar yashiriladi, faqat eng yaxshi 3 natija ko‘rinadi.</p>{!data.weekly.opted_in ? <><p>Musobaqaga qo‘shilish ixtiyoriy. Natijangiz taxallus ostida jamoaga ko‘rinadi; istagan payt chiqishingiz mumkin.</p><button disabled={busy} onClick={()=>league(true)} className="rounded-xl bg-indigo-800 px-4 py-3 font-semibold text-white disabled:opacity-40">Jamoaga qo‘shilish</button></> : <><div className="rounded-xl bg-indigo-50 p-3"><p>{data.weekly.participants} ishtirokchi · umumiy maqsad</p><p className="mt-1 text-xs">Sizning haftalik hissangiz: {data.weekly.my_points || 0} qadam</p><p className="mt-1 font-semibold">{data.weekly.team_done} / {data.weekly.team_target} foydali qadam</p><progress aria-label="Jamoa maqsadi" max={Math.max(1,data.weekly.team_target)} value={Math.min(data.weekly.team_done,data.weekly.team_target)} className="mt-2 w-full accent-indigo-600"/></div>{data.weekly.leaders.length ? <ol className="space-y-2">{data.weekly.leaders.map((p,i)=><li key={p.alias} className="flex justify-between rounded-xl border p-3"><span>{i+1}. {p.alias}</span><span className="font-semibold">{p.points} qadam</span></li>)}</ol> : <p>Hafta endi boshlanmoqda. Birinchi foydali qadamingizdan boshlang.</p>}<button disabled={busy} onClick={()=>league(false)} className="py-2 text-xs text-slate-600 underline">Bu haftalik jamoani tark etish</button></>}<p className="text-xs text-slate-500">Bu maktab bahosi emas. Ochiq speaking javoblari mustaqil tekshirilgan bilim sifatida hisoblanmaydi.</p></div>}
+        {tab==="team" && <div className="space-y-3 text-sm"><h3 className="flex items-center gap-2 font-semibold"><Users size={18}/>{data.weekly.level} · haftalik jamoa</h3><p className="text-xs text-slate-500">Hafta: {data.weekly.week}. Bir til va bosqichdagi o‘quvchilar. Ismlar yashiriladi, faqat eng yaxshi 3 natija ko‘rinadi.</p>{!data.weekly.opted_in ? <><p>Musobaqaga qo‘shilish ixtiyoriy. Natijangiz taxallus ostida jamoaga ko‘rinadi; istagan payt chiqishingiz mumkin.</p><button disabled={busy} onClick={()=>league(true)} className="rounded-xl bg-indigo-800 px-4 py-3 font-semibold text-white disabled:opacity-40">Jamoaga qo‘shilish</button></> : <><div className="rounded-xl bg-indigo-50 p-3"><p>{data.weekly.participants} ishtirokchi · umumiy maqsad</p><p className="mt-1 text-xs">Sizning haftalik hissangiz: {data.weekly.my_points || 0} qadam</p><p className="mt-1 font-semibold">{data.weekly.team_done} / {data.weekly.team_target} foydali qadam</p><progress aria-label="Jamoa maqsadi" max={Math.max(1,data.weekly.team_target)} value={Math.min(data.weekly.team_done,data.weekly.team_target)} className="mt-2 w-full accent-indigo-600"/></div>{data.weekly.mission && <div className="rounded-xl border border-indigo-200 p-3"><h4 className="font-semibold">{data.weekly.mission.title}</h4><p className="mt-2">{data.weekly.mission.instruction}</p></div>}{data.weekly.leaders.length ? <ol className="space-y-2">{data.weekly.leaders.map((p,i)=><li key={p.alias} className="flex justify-between rounded-xl border p-3"><span>{i+1}. {p.alias}</span><span className="font-semibold">{p.points} qadam</span></li>)}</ol> : <p>Hafta endi boshlanmoqda. Birinchi foydali qadamingizdan boshlang.</p>}<button disabled={busy} onClick={()=>league(false)} className="py-2 text-xs text-slate-600 underline">Bu haftalik jamoani tark etish</button></>}<p className="text-xs text-slate-500">Xato javob bilan qilingan mazmunli urinish ham hissa. Bir savolni bir kunda takror yuborish hissani oshirmaydi. Bu maktab bahosi emas.</p></div>}
       </>}
     </div>
   </section>;

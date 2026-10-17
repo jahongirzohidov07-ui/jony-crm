@@ -118,8 +118,10 @@ def login(payload: schemas.LoginRequest, request: Request,
     # ketsa bu appga kirmay qolishi kerak"). Hisob O'CHIRILMAYDI —
     # holat qaytsa kirish o'zi tiklanadi.
     if user.role == roles.STUDENT:
-        _st = (db.query(models.Student)
-               .filter(models.Student.user_id == user.id).first())
+        _st = _student_of_user(db, user)
+        if _st is None:
+            raise HTTPException(403, "Hisobingiz o‘quvchi kartasiga bog‘lanmagan. "
+                                     "Administratorga murojaat qiling.")
         if _st:
             _why = roles.student_app_block_reason(_st.status)
             if _why:

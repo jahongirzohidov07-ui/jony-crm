@@ -188,20 +188,207 @@ def attempt_qid(attempt):
     return attempt.ref.split(":v1:", 1)[1]
 
 
+def canonical_questions(language):
+    return {q["id"]: (row, section, q)
+            for row in practice().BANK[language] for section in row["sections"]
+            for q in section["questions"]}
+
+
+def meaningful(attempt):
+    return bool(attempt.answer and any(c.isalnum() for c in attempt.answer))
+
+
+def learning_attempts(db, student_id, language):
+    known = canonical_questions(language)
+    return [a for a in question_attempts(db, student_id, language)
+            if attempt_qid(a) in known and meaningful(a) and a.created_at <= now()]
+
+
+def exact_history(db, student_id, language):
+    history = {}
+    for a in learning_attempts(db, student_id, language):
+        if attempt_qid(a) in exact_questions(language):
+            history.setdefault(attempt_qid(a), []).append(a)
+    for rows in history.values():
+        rows.sort(key=lambda a: (a.created_at, a.id))
+    return history
+
+
+def delayed_attempts(rows):
+    first = next((a.created_at for a in rows if a.correct == 1), None)
+    return [a for a in rows if first is not None
+            and a.ref.startswith("course-review:v1:")
+            and a.created_at >= first + timedelta(hours=24)]
+
+
 def mastery(db, student_id, language):
-    questions = exact_questions(language)
-    mastered = {}
-    for row in question_attempts(db, student_id, language):
-        qid = attempt_qid(row)
-        if qid in questions and row.correct == 1:
-            mastered.setdefault(qid, row.created_at)
-    return mastered
+    """Durable evidence requires delayed recall and a currently correct answer."""
+    return {qid: next(a.created_at for a in rows if a.correct == 1)
+            for qid, rows in exact_history(db, student_id, language).items()
+            if rows[-1].correct == 1 and any(
+                a.correct == 1 and (a.created_at, a.id) > max(
+                    ((failure.created_at, failure.id) for failure in rows if failure.correct != 1),
+                    default=(datetime.min, 0)) for a in delayed_attempts(rows))}
 
 
 def latest_attempts(db, student_id, language):
-    questions = exact_questions(language)
-    return {attempt_qid(row): row for row in question_attempts(db, student_id, language)
-            if attempt_qid(row) in questions}
+    return {qid: rows[-1] for qid, rows in exact_history(db, student_id, language).items()}
+
+
+def lesson_coverage(language, question_ids):
+    result = set()
+    question_ids = set(question_ids)
+    for row in practice().BANK[language]:
+        available, covered = {}, {}
+        for section in row["sections"]:
+            ids = {q["id"] for q in section["questions"]
+                   if q["mode"] == "exact" and q.get("expected")}
+            if ids:
+                available[section["id"]] = ids
+                covered[section["id"]] = ids & question_ids
+        count = sum(map(len, available.values()))
+        if (count and sum(map(len, covered.values())) >= min(3, count)
+                and sum(bool(ids) for ids in covered.values()) >= min(2, len(available))):
+            result.add(row["lesson"])
+    return result
+
+
+def ready_lessons(db, student_id, language):
+    return lesson_coverage(language, {qid for qid, a in latest_attempts(db, student_id, language).items()
+                                     if a.correct == 1})
+
+
+def evidence(db, student_id, language):
+    """Distinct questions: first exact result and latest eligible delayed review result.
+
+    Comparison pairs the earliest normal exact attempt with the latest eligible
+    delayed review of the same question; questions without both are excluded.
+    Historical first-attempt results stay fixed; delayed recall can regress.
+    Neither self assessment nor XP is evidence of verified language proficiency.
+    """
+    known = canonical_questions(language)
+    attempts = learning_attempts(db, student_id, language)
+    history = exact_history(db, student_id, language)
+    delayed = {qid: delayed_attempts(rows) for qid, rows in history.items()}
+    comparison = {"total": 0, "before_correct": 0, "after_correct": 0}
+    for qid, reviews in delayed.items():
+        if not reviews:
+            continue
+        baseline = next((a for a in history[qid]
+                         if a.ref.startswith("course-practice:v1:")), None)
+        latest = reviews[-1]
+        if baseline is None or (baseline.created_at, baseline.id) >= (latest.created_at, latest.id):
+            continue
+        comparison["total"] += 1
+        comparison["before_correct"] += int(baseline.correct == 1)
+        comparison["after_correct"] += int(latest.correct == 1)
+    skills = []
+    for skill in sorted({section["skill"] for _, section, _ in known.values()}):
+        items = {qid: rows for qid, rows in history.items() if known[qid][1]["skill"] == skill}
+        activity = [a for a in attempts if known[attempt_qid(a)][1]["skill"] == skill]
+        dates = [a.created_at for a in activity]
+        skills.append({"skill": skill, "correct": sum(rows[-1].correct == 1 for rows in items.values()),
+                       "total": len(items),
+                       "self_assessed": len({attempt_qid(a) for a in activity
+                                             if known[attempt_qid(a)][2]["mode"] == "self"}),
+                       "first_attempt_at": min(dates).isoformat() + "Z" if dates else None,
+                       "last_attempt_at": max(dates).isoformat() + "Z" if dates else None})
+    return {"lessons": {"ready": len(ready_lessons(db, student_id, language)),
+                        "total": len(practice().BANK[language]),
+                        "retained": len(mastered_lessons(db, student_id, language))},
+            "first_attempt": {"correct": sum(rows[0].correct == 1 for rows in history.values()), "total": len(history)},
+            "delayed_recall": {"correct": sum(bool(rows) and rows[-1].correct == 1 for rows in delayed.values()),
+                               "total": sum(bool(rows) for rows in delayed.values())},
+            "comparison": comparison,
+            "skills": skills,
+            "since": min(a.created_at for a in attempts).isoformat() + "Z" if attempts else None}
+
+
+def daily_effort(db, student_id, language):
+    start = datetime.combine(local_day(), datetime.min.time()) - timedelta(hours=5)
+    end = start + timedelta(days=1)
+    done = {attempt_qid(a) for a in learning_attempts(db, student_id, language)
+            if start <= a.created_at < end}
+    checkpoint_ids = {q["id"] for row in checkpoint_bank(language).values() for q in row["questions"]}
+    for a in db.query(models.SkillAttempt).filter(
+            models.SkillAttempt.student_id == student_id,
+            models.SkillAttempt.ref.startswith("course-challenge:v1:" + language + ":"),
+            models.SkillAttempt.created_at >= start,
+            models.SkillAttempt.created_at < end,
+            models.SkillAttempt.created_at <= now()).all():
+        if attempt_qid(a) in checkpoint_ids and meaningful(a):
+            done.add(attempt_qid(a))
+    return done
+
+
+def daily_plan(db, student_id, language, reviews):
+    # motivation() already holds the learner lock: competing reads cannot replace a plan.
+    key = f"course-plan:v1:{student_id}:{language}:current"
+    saved = get(db, key)
+    if saved and saved.get("day") != local_day().isoformat():
+        saved = None
+    attempts = learning_attempts(db, student_id, language)
+    if saved is None:
+        known = canonical_questions(language)
+        latest = latest_attempts(db, student_id, language)
+        current = practice()._resume(db, student_id, language)
+        wrong = sorted((a for a in latest.values() if a.correct == 0),
+                       key=lambda a: (a.created_at, a.id), reverse=True)
+        weak = known[attempt_qid(wrong[0])][0]["lesson"] if wrong else current
+        selected = []
+
+        def add(qid, kind, reason):
+            if qid in {step["question_id"] for step in selected}:
+                return
+            row, section, question = known[qid]
+            selected.append({"id": f"{local_day()}:{language}:{len(selected) + 1}:{qid}",
+                             "kind": kind, "lesson": row["lesson"], "question_id": qid,
+                             "title": section["title"], "reason": reason, "minutes": 5})
+
+        if reviews:
+            add(reviews[0]["id"], "review", "Vaqti kelgan savolni yoddan takrorlang.")
+        candidates = sorted(exact_questions(language), key=lambda qid: (
+            known[qid][0]["lesson"] != weak,
+            not (qid in latest and latest[qid].correct == 0),
+            qid in latest, known[qid][0]["lesson"], qid))
+        for qid in candidates:
+            if len(selected) >= 2:
+                break
+            add(qid, "practice", "Xatoni tuzating yoki yangi savolni bajaring.")
+        self_items = [qid for qid, (row, section, q) in known.items()
+                      if row["lesson"] == current and q["mode"] == "self"]
+        self_items.sort(key=lambda qid: known[qid][1]["skill"] != "speaking")
+        if self_items:
+            qid = self_items[0]
+            kind = "speaking" if language == "en" and known[qid][1]["skill"] == "speaking" else "practice"
+            add(qid, kind, "Mustaqil javob bering; bu harakat, bilim bahosi emas.")
+        else:
+            for qid in candidates:
+                if len(selected) >= 3:
+                    break
+                add(qid, "practice", "Darsdagi keyingi savolni bajaring.")
+        if selected:
+            selected[-1]["minutes"] += 15 - sum(step["minutes"] for step in selected)
+        saved = {"day": local_day().isoformat(), "created_at": now().isoformat(), "after_id": max((a.id for a in attempts), default=0), "steps": selected}
+        put(db, key, saved)
+    visible = {item["id"] for item in reviews}
+    changed = False
+    for step in saved["steps"]:
+        if step["kind"] == "review" and step["question_id"] not in visible:
+            # Feedback exposure can defer a frozen review target. Keep its identity
+            # and action reachable; exposure alone never completes the task.
+            step["kind"] = "practice"
+            step["reason"] = "Takrorlash hozir yopiq. Shu savolni mashq qiling; bu recall bahosi emas."
+            changed = True
+    if changed:
+        put(db, key, saved)
+    start = max(datetime.fromisoformat(saved["created_at"]),
+                datetime.combine(local_day(), datetime.min.time()) - timedelta(hours=5))
+    end = datetime.combine(local_day() + timedelta(days=1), datetime.min.time()) - timedelta(hours=5)
+    completed = {attempt_qid(a) for a in attempts
+                 if start <= a.created_at < end and a.id > saved["after_id"]}
+    steps = [step | {"done": step["question_id"] in completed} for step in saved["steps"]]
+    return {"minutes": 15, "steps": steps, "completed": bool(steps) and all(step["done"] for step in steps)}
 
 
 def get_many(db, keys):
@@ -366,14 +553,13 @@ def boss_key(student_id, language, week):
 
 
 def mastered_lessons(db, student_id, language):
-    questions = exact_questions(language)
-    return {questions[qid][0]["lesson"] for qid in mastery(db, student_id, language)}
+    return lesson_coverage(language, mastery(db, student_id, language))
 
 
 def checkpoint_status(db, student_id, language, row, lessons=None, states=None):
     size = 6 if language == "en" else 3
     week = row["week"]
-    lessons = mastered_lessons(db, student_id, language) if lessons is None else lessons
+    lessons = ready_lessons(db, student_id, language) if lessons is None else lessons
     ready = all(n in lessons for n in range((week - 1) * size + 1, week * size + 1))
     key = boss_key(student_id, language, week)
     state = states.get(key) if states is not None else get(db, key)
@@ -504,14 +690,10 @@ def motivation(db, student, language):
                for qid in visible_review_ids(db, student.id, language, queue(db, student.id, language))
                if qid in questions]
     transactions = txs(db, student.id, language).all()
-    done = set()
-    for tx in transactions:
-        meta = json.loads(tx.meta or "{}")
-        if meta.get("day") == local_day().isoformat():
-            done.add(meta.get("question_id") or tx.idempotency_key)
+    done = daily_effort(db, student.id, language)
     coins = db.query(func.coalesce(func.sum(models.CoinEntry.amount), 0)).filter_by(
         student_id=student.id, source="course_motivation:" + language).scalar()
-    lessons = mastered_lessons(db, student.id, language)
+    lessons = ready_lessons(db, student.id, language)
     bank = checkpoint_bank(language)
     boss_states = get_many(db, [boss_key(student.id, language, w) for w in bank])
     checkpoints = [checkpoint_status(db, student.id, language, bank[w], lessons, boss_states) if w in bank
@@ -524,6 +706,8 @@ def motivation(db, student, language):
                 "practice": sum(tx.event_code in ("course_practice_correct", "course_first_correct") for tx in transactions),
                 "corrections": sum(tx.event_code == "course_correction" for tx in transactions),
                 "recalls": sum(tx.event_code == "course_delayed_recall" for tx in transactions)},
+            "plan": daily_plan(db, student.id, language, reviews),
+            "evidence": evidence(db, student.id, language),
             "review": reviews, "weekly": weekly(db, student, language), "checkpoints": checkpoints}
 
 
@@ -544,7 +728,7 @@ def challenge_view(db, student_id, language, week):
         reason = "Javoblar avval ko‘rsatilgan: bu tuzatish mashqi." if status["available"] else (
             f"Tuzatish uchun qayta urinish: {retry:%Y-%m-%d %H:%M} (Toshkent).")
     else:
-        reason = "" if status["available"] else "Haftaning har bir darsida kamida bitta tekshiriladigan savolni to‘g‘ri bajaring."
+        reason = "" if status["available"] else "Haftaning har bir darsida kamida 3 ta mavjud aniq savolni, kamida 2 ta mavjud bo‘limdan to‘g‘ri bajaring."
     return {"week": week, "title": row.get("title", "Haftalik sinov"),
             "available": status["available"], "reason": reason,
             "questions": [public_item(q) for q in row["questions"]] if status["available"] else [],

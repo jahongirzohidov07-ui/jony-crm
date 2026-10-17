@@ -66,9 +66,10 @@ class MotivationTests(unittest.TestCase):
     def unlock(self, language="en", student_id=1, db=None):
         db = db or self.db
         for n in range(1, (6 if language == "en" else 3) + 1):
-            q = self.q(language, n)
-            db.add(models.SkillAttempt(student_id=student_id, skill="course-practice:" + language + ":reading",
-                   ref=practice._ref(q["id"]), answer=q["expected"][0], correct=1, created_at=motivation.now()))
+            for row, section, q in motivation.exact_questions(language).values():
+                if row["lesson"] == n:
+                    db.add(models.SkillAttempt(student_id=student_id, skill="course-practice:" + language + ":" + section["skill"],
+                           ref=practice._ref(q["id"]), answer=q["expected"][0], correct=1, created_at=motivation.now()))
         db.commit()
 
     def boss(self, language="en", **changes):
@@ -97,7 +98,7 @@ class MotivationTests(unittest.TestCase):
         self.assertEqual(self.db.query(models.StudentGamification).one().lifetime_xp, 4)
         result = self.get_motivation()
         self.assertEqual(result["rewards"], {"xp": 4, "coins": 0})
-        self.assertEqual(result["daily"], {"target": 5, "done": 2})
+        self.assertEqual(result["daily"], {"target": 5, "done": 3})  # Open practice counts effort, never XP/mastery.
         self.assertEqual(result["review"], [])
         self.assertFalse(result["weekly"]["opted_in"])
         self.assertEqual(result["weekly"]["leaders"], [])

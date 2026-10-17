@@ -274,11 +274,22 @@ class CoursePracticeTests(unittest.TestCase):
                           {"role": "teacher", "text": "What is your name?"}]]:
             response = self.speak(messages)
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.json(), {"reply": "What is your name?", "saved": False})
+            self.assertEqual(response.json(), {"reply": "What is your name?" if messages else practice.FOUNDATION_OPENERS[1], "saved": False})
         self.assertEqual(self.db.query(models.SkillAttempt).count(), 0)
         self.assertEqual(self.db.query(models.IntegrationSetting).count(), 0)
         self.assertEqual(self.listing()["lessons"][0]["submitted_count"], 0)
         self.assertEqual(self.detail()["answers"], {})
+
+    def test_foundation_openers_do_not_introduce_unlearned_tenses(self):
+        for lesson, opener in practice.FOUNDATION_OPENERS.items():
+            row = practice.BANK["en"][lesson - 1]
+            q = next(q for s in row["sections"] if s["skill"] == "speaking" for q in s["questions"])
+            result = self.speak([], lesson=lesson, question_id=q["id"])
+            self.assertEqual(result.json(), {"reply": opener, "saved": False})
+            self.assertNotIn("walking", opener)
+            self.assertIn("Never ask for tense formation", practice._speaking_system(row, q))
+        self.ai.assert_not_called()
+        self.assertEqual(self.db.query(models.SkillAttempt).count(), 0)
 
     def test_speaking_canonical_context_and_untrusted_history(self):
         row = practice.BANK["en"][15]

@@ -56,12 +56,23 @@ class SpeakingIn(BaseModel):
     messages: list[SpeakingMessage] = Field(max_length=20)
 
 
+FOUNDATION_OPENERS = {
+    1: "Say one noun and one adjective. For example: teacher, kind.",
+    2: "Say one action word: read or walk.",
+    3: "Say one subject pronoun: I, you, he, or she.",
+    4: "Listen: I read books. Say the subject: I or books.",
+    5: "Put these words in order and say them: I / read / books.",
+    6: "Say one noun, one adjective, and one action word.",
+}
+
+
 def _speaking_system(row, question):
     canonical = {"title": row["title"], "level": row["level"],
                  "lesson": row["lesson"], "prompt": question["prompt"],
                  "expected": question["expected"], "criteria": question.get("criteria", [])}
     return (
-        "You are the English Intensive speaking partner for this canonical lesson. "
+        ("FOUNDATION LESSON: require only individual words, labels or the exact taught chunks. Never ask for tense formation, sentence translation, or new inflections such as -ing/-s. Do not ask to translate an English sentence into English. " if row["lesson"] <= 6 else "")
+        + "You are the English Intensive speaking partner for this canonical lesson. "
         "Use English at the lesson's level and practise its specific vocabulary and objectives. "
         "Adapt the classroom task to a one-to-one spoken chat: you are the partner/teacher. "
         "Never require physical cards, a classroom, objects, or another person; provide any "
@@ -269,6 +280,8 @@ def speaking(body: SpeakingIn, db: Session = Depends(get_db), student=Depends(_s
                      and q["mode"] == "self"), None)
     if question is None:
         raise HTTPException(404, "Bu darsda speaking savoli topilmadi")
+    if not body.messages and body.lesson in FOUNDATION_OPENERS:
+        return {"reply": FOUNDATION_OPENERS[body.lesson], "saved": False}
     try:
         reply = speaking_ai.speaking_reply(
             _speaking_system(row, question), [m.model_dump() for m in body.messages])
@@ -294,4 +307,3 @@ def speaking(body: SpeakingIn, db: Session = Depends(get_db), student=Depends(_s
             ))
             db.commit()  # Self check only: no rewards or position writes.
     return {"reply": reply.strip(), "saved": transcript is not None}
-

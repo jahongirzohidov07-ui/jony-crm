@@ -1453,3 +1453,48 @@ def seed_startup(db: Session, path=None) -> dict:
         db.rollback()
         out["enable_all"] = f"error: {str(e)[:200]}"
     return out
+
+
+# ---------------------------------------------------------------- holat ---
+# 2026-10-17, Jahongir: "o'zing tekshir va yuklanmagan bo'lsa tugat".
+# So'zlar faqat sovuq startda (WORDS_BUDGET tadan) yuklanardi, Vercel
+# instansiyalari esa soatlab yashaydi — yuklash to'xtab qolishi mumkin,
+# start loglari ham yo'qolishi mumkin (mock-strict-mode saboqi). Shu
+# sababli ochiq holat yo'li:
+#   * faqat sonlar — so'zlar, tayyor darajalar, bayroq turi; shaxsiy
+#     ma'lumot ham, so'zlarning o'zi ham yo'q;
+#   * so'zlar hali to'liq bo'lmasa, chaqiruv seed_startup bilan AYNAN bir
+#     qadamni bajaradi (budjet, pg qulfi, idempotent upsert — jami yozuv
+#     fayldagi qatorlar bilan cheklangan, qator o'chirilmaydi), keyin bir
+#     martalik "hammaga ochish"ni tekshiradi (asoschi qarori bosilmaydi);
+#   * ikkalasi tugagach jarayon xotirasida eslanadi — faylni qayta
+#     o'qimaydi, faqat ikki COUNT so'rovi qoladi.
+_STATUS_DONE = False
+
+
+def _status_flag(db: Session) -> str:
+    v = parse_flag(_flag_raw(db))
+    if v == ALL:
+        return ALL
+    return f"{len(v)} filial" if v else "off"
+
+
+@router.get("/api/wordbank/status")
+def wordbank_status(db: Session = Depends(get_db)):
+    global _STATUS_DONE
+    from common import _seed_done
+    step = None
+    if not _STATUS_DONE:
+        step = seed_startup(db)
+        if (not words_pending(db)
+                and _seed_done(db, SEED_ENABLE_ALL)):
+            _STATUS_DONE = True
+    words = db.query(func.count(W.id)).filter(*_HAS_UZ).scalar() or 0
+    return {
+        "words": int(words),
+        "bands_ready": len(_ready_bands(db)),
+        "words_pending": not _STATUS_DONE and words_pending(db),
+        "enabled": _status_flag(db),
+        "done": _STATUS_DONE,
+        "step": step,
+    }

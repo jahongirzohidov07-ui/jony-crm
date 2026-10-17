@@ -97,16 +97,13 @@ function installTts(app: NativeApp) {
     },
     cancel() {
       queue.length = 0;
-      const was = current;
+      const was = current ? live.get(current) : null;
+      live.clear(); // Invalidate queued and active callbacks before calling native code.
       current = null;
       synth.speaking = false;
       synth.pending = false;
       try { app.stopSpeaking?.(); } catch { /* */ }
-      if (was) {
-        const u = live.get(was);
-        live.delete(was);
-        u?._emit("end");
-      }
+      was?._emit("end");
     },
   };
 
@@ -128,7 +125,7 @@ function installTts(app: NativeApp) {
     } catch {
       live.delete(item.id);
       u._emit("error");
-      playNext();
+      if (current === item.id) playNext();
     }
   }
 
@@ -177,16 +174,22 @@ function installRecognition(app: NativeApp) {
       try {
         app.startListening!(this.id, String(this.lang || "en-US"), !!this.interimResults);
       } catch {
-        this._error("not-allowed");
+        this._end("not-allowed");
       }
     }
     stop() {
       if (this.id) {
-        try { app.stopListening?.(this.id); } catch { /* */ }
+        try { app.stopListening?.(this.id); } catch { this._end("network"); }
       }
     }
     abort() {
-      this.stop();
+      const id = this.id;
+      if (!id) return;
+      // Unlike stop(), abort must discard final results, even synchronous callbacks.
+      live.delete(id);
+      this.id = null;
+      try { app.stopListening?.(id); } catch { /* session already detached */ }
+      this._call("end", {});
     }
     addEventListener() { /* sahifalar on... ishlatadi */ }
     removeEventListener() { /* */ }
@@ -219,9 +222,11 @@ function installRecognition(app: NativeApp) {
     _error(code: string) {
       this._call("error", { error: code, message: code });
     }
-    _end() {
-      if (this.id) live.delete(this.id);
+    _end(error?: string) {
+      if (!this.id) return;
+      live.delete(this.id);
       this.id = null;
+      if (error) this._error(error);
       this._call("end", {});
     }
   }

@@ -13,6 +13,7 @@ import models
 import speaking_ai
 import course_motivation as motivation
 import course_themes
+import course_portfolio
 from auth import require_role
 from database import get_db
 from student_app import _me
@@ -291,6 +292,10 @@ def motivation_claim(body: ClaimIn, db: Session = Depends(get_db), student=Depen
     result = motivation.claim_boss(db, student, body.language, body.week)
     db.commit()
     return result
+
+
+# Static portfolio routes must precede the numeric lesson catch-all.
+router.include_router(course_portfolio.make_router(_student, _lesson))
 
 
 @router.get("/{lesson}")

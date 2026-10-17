@@ -1,4 +1,5 @@
-import { CourseMotivation, CourseCheckpoint, RewardFeedback, type LearningReward, type CheckpointStatus } from "../../components/CourseMotivation";
+import { CourseMotivation, CourseCheckpoint, RewardFeedback, type LearningReward, type CheckpointStatus, type PlanStep } from "../../components/CourseMotivation";
+import CoursePortfolio from "../../components/CoursePortfolio";
 import { CourseJourney } from "../../components/CourseJourney";
 import { CourseSpeaking } from "../../components/CourseSpeaking";
 import { useEffect, useRef, useState } from "react";
@@ -39,7 +40,8 @@ function Course({ language }: { language: string }) {
   const [reload, setReload] = useState(0);
   const [motivationVersion, setMotivationVersion] = useState(0);
   const [section, setSection] = useState(params.get("section") || "all");
-  const [view, setView] = useState(params.get("view") === "journey" ? "journey" : "lesson");
+  const [view, setView] = useState(params.get("view") === "journey" ? "journey" : params.get("view") === "portfolio" ? "portfolio" : params.get("action") === "review" ? "today" : (params.has("lesson") || params.has("section")) ? "lesson" : "today");
+  const [targetQuestion, setTargetQuestion] = useState<string | null>(params.get("question"));
   const [checkpoint, setCheckpoint] = useState<number | null>(null);
   const [checkpointStates, setCheckpointStates] = useState<CheckpointStatus[]>([]);
   useEffect(() => {
@@ -49,16 +51,32 @@ function Course({ language }: { language: string }) {
   }, [language, reload]);
   useEffect(() => {
     let active = true;
-    if (selected === null) return;
+    if (selected === null || view !== "lesson") return;
     setDetail(null); setError("");
     api.fresh<Detail>(`/student/course-practice/${selected}?language=${language}`).then(r => { if (active) { for (const [id, saved] of Object.entries(r.answers || {})) { const key = `${language}:${selected}:${id}`; if (!drafts.current.has(key)) drafts.current.set(key, saved); } setDetail(r); } }).catch(e => { if (active) setError(e.message); });
     return () => { active = false; };
-  }, [language, selected, reload]);
+  }, [language, selected, reload, view]);
   useEffect(() => {
     if (selected === null) return;
     positionQueue.current = positionQueue.current.catch(() => {}).then(() => api.post("/student/course-practice/position", {language, lesson: selected})).catch(() => { setError("Dars joyini saqlab bo‘lmadi. Qayta urinib ko‘ring."); });
   }, [language, selected, reload]);
   useEffect(() => {if (detail?.lesson === selected && lessonHeading.current && focusLesson.current && view === "lesson") {lessonHeading.current?.focus(); focusLesson.current = false;}}, [detail, selected, view]);
+  function openPlanStep(step: PlanStep) {
+    setSelected(step.lesson); setView("lesson"); setSection(step.kind === "speaking" ? "speaking" : "all");
+    setTargetQuestion(step.question_id || null); focusLesson.current = true;
+    requestAnimationFrame(() => {
+      const el = step.question_id ? document.getElementById(`course-question-${step.question_id}`) : lessonHeading.current;
+      if (el) {el.scrollIntoView({behavior:"smooth",block:"start"}); el.focus({preventScroll:true});}
+    });
+  }
+  useEffect(() => {
+    if (!targetQuestion || !detail || detail.lesson !== selected || view !== "lesson") return;
+    const frame = requestAnimationFrame(() => {
+      const el = document.getElementById(`course-question-${targetQuestion}`);
+      if (el) { el.scrollIntoView({behavior: "smooth", block: "start"}); el.focus({preventScroll: true}); }
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [targetQuestion, detail, selected, view]);
   function refreshProgress() {
     setMotivationVersion(n => n + 1);
     const request = ++listingRequest.current;
@@ -70,38 +88,41 @@ function Course({ language }: { language: string }) {
   const shown = skills.includes(section) ? section : "all";
   return <main className="mx-auto max-w-2xl space-y-4 p-4 pb-24 text-slate-900">
     <Link to="/student" className="inline-flex items-center gap-2 text-sm text-sky-700"><ArrowLeft size={16}/>Bosh sahifa</Link>
-    <header className="rounded-2xl bg-sky-900 p-5 text-white"><BookOpen className="mb-2"/><h1 className="text-xl font-bold">{language === "de" ? "Deutsch B1" : "English Intensive"}</h1><p className="mt-2 text-sm">Darsni tanlang, audioni tinglang va yangi mashqlarni bajaring. Javoblaringiz akkauntingizda saqlanadi.</p></header>
-    <nav aria-label="Kurs ko‘rinishi" className="flex gap-2"><button aria-pressed={view === "lesson"} onClick={() => setView("lesson")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "lesson" ? "bg-sky-800 text-white" : "bg-white"}`}>Dars va mashqlar</button><button aria-pressed={view === "journey"} onClick={() => setView("journey")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "journey" ? "bg-indigo-800 text-white" : "bg-white"}`}>Mening xaritam</button></nav>
-    <CourseMotivation key={language} language={language} refresh={motivationVersion} onCheckpoints={setCheckpointStates}/>
+    <header className="rounded-2xl bg-sky-900 p-5 text-white"><BookOpen className="mb-2"/><h1 className="text-xl font-bold">{language === "de" ? "Deutsch B1" : "English Intensive"}</h1><p className="mt-1 text-sm">Bugungi rejangizdan boshlang yoki ustoz belgilagan darsni tanlang.</p></header>
+    <nav aria-label="Kurs ko‘rinishi" className="flex flex-wrap gap-2"><button aria-pressed={view === "lesson"} onClick={() => setView("lesson")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "lesson" ? "bg-sky-800 text-white" : "bg-white"}`}>Dars va mashqlar</button><button aria-pressed={view === "journey"} onClick={() => setView("journey")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "journey" ? "bg-indigo-800 text-white" : "bg-white"}`}>Mening xaritam</button><button aria-pressed={view === "portfolio"} onClick={() => setView("portfolio")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "portfolio" ? "bg-indigo-800 text-white" : "bg-white"}`}>Ijodiy ishlarim</button></nav>
+    <CourseMotivation key={language} language={language} refresh={motivationVersion} onCheckpoints={setCheckpointStates} onAction={openPlanStep} initialReview={params.get("action") === "review"}/>
     {checkpoint !== null && <CourseCheckpoint key={`${language}:${checkpoint}`} language={language} week={checkpoint} onClose={() => {setCheckpoint(null); requestAnimationFrame(() => checkpointLauncher.current?.focus());}} onSaved={refreshProgress}/>}
     {view === "journey" && listLoading && <p role="status">Xarita yuklanmoqda…</p>}
     {view === "journey" && !listLoading && !lessons.length && !error && <p>Kurs darslari hozircha topilmadi.</p>}
     {view === "journey" && lessons.length > 0 && <CourseJourney checkpoints={checkpointStates} language={language} lessons={lessons} selected={selected} onSelect={n => {focusLesson.current = true; setSelected(n); setView("lesson");}} onCheckpoint={week => {checkpointLauncher.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setCheckpoint(week);}}/>}
-    {view === "lesson" && <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected ?? 1} onChange={e => setSelected(Number(e.target.value))}>
+    {(view === "lesson" || view === "portfolio") && <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected ?? 1} onChange={e => setSelected(Number(e.target.value))}>
       {lessons.length ? lessons.map(l => <option key={l.lesson} value={l.lesson}>{l.lesson}. {l.title}{l.level ? ` · ${l.level}` : ""}</option>) : <option value={1}>Yuklanmoqda…</option>}
     </select></label>}
+    {view === "portfolio" && selected !== null && <CoursePortfolio key={`${language}:${selected}`} language={language} lesson={selected} onSaved={refreshProgress}/>}
     {error && <div role="alert" className="rounded-xl bg-red-50 p-4 text-red-800">{error}<button className="ml-3 underline" onClick={() => setReload(n => n + 1)}>Qayta urinish</button></div>}
-    {!detail && !error && <p role="status">Dars yuklanmoqda…</p>}
+    {view === "lesson" && !detail && !error && <p role="status">Dars yuklanmoqda…</p>}
     {view === "lesson" && detail && detail.lesson === selected && selected !== null && <div key={`${language}-${selected}`} className="space-y-4">
       <h2 ref={lessonHeading} tabIndex={-1} className="text-lg font-bold">{detail.title}</h2>
       {progress && <p className="text-sm text-slate-600" aria-label="Darsdagi natija">Yuborilgan: {progress.submitted_count || 0} / {progress.question_count} · Avtomatik tekshiruvda to‘g‘ri: {progress.correct_count || 0}</p>}
       <CourseLessonAudio key={`${language}-${selected}`} course={language === "de" ? "german" : "intensive"} lesson={selected} title={detail.title}/>
       <p className="text-sm text-slate-600">Dars va uyga vazifa: quyidagi bo‘limlarni ketma-ket bajaring. Yuborilgan javoblar qayta kirganda ham ko‘rinadi. Ochiq javoblar namuna bilan o‘zini tekshirish uchun.</p>
       <div aria-label="Mashq bo‘limlari" className="flex flex-wrap gap-2">{["all", ...skills].map(s => <button key={s} aria-pressed={shown === s} onClick={() => setSection(s)} className={`rounded-full border px-4 py-2 text-sm ${shown === s ? "bg-sky-800 text-white" : "bg-white"}`}>{s === "all" ? "Hammasi" : labels[s] || s}</button>)}</div>
-      {sections.filter(s => shown === "all" || s.skill === shown).map(s => <SectionPractice key={s.id} section={s} language={language} lesson={selected} onSaved={refreshProgress} drafts={drafts.current}/>)}
+      {sections.filter(s => shown === "all" || s.skill === shown).map(s => <SectionPractice key={s.id} section={s} language={language} lesson={selected} onSaved={refreshProgress} drafts={drafts.current} targetQuestion={targetQuestion}/>)}
       <div className="flex justify-between gap-3"><button disabled={selected === 1} onClick={() => setSelected(n => Math.max(1, (n || 1) - 1))} className="rounded-xl border p-3 disabled:opacity-40">← Oldingi dars</button><button disabled={selected >= lessons.length} onClick={() => setSelected(n => (n || 1) + 1)} className="rounded-xl bg-sky-800 p-3 text-white disabled:opacity-40">Keyingi dars →</button></div>
     </div>}
   </main>;
 }
-function SectionPractice({ section: s, language, lesson, onSaved, drafts }: { section: Section; language: string; lesson: number; onSaved: () => void; drafts: Drafts }) {
+function SectionPractice({ section: s, language, lesson, onSaved, drafts, targetQuestion }: { section: Section; language: string; lesson: number; onSaved: () => void; drafts: Drafts; targetQuestion: string | null }) {
   const [page, setPage] = useState(0);
   const pages = Math.ceil(s.questions.length / 10);
+  useEffect(() => {if (!targetQuestion) return; const frame = requestAnimationFrame(() => {const el = document.getElementById(`course-question-${targetQuestion}`); if (el) {el.scrollIntoView({block:"start",behavior:"smooth"}); el.focus({preventScroll:true});}}); return () => cancelAnimationFrame(frame);}, [page, targetQuestion]);
+  useEffect(() => { const index = s.questions.findIndex(q => q.id === targetQuestion); if (index >= 0) setPage(Math.floor(index / 10)); }, [s.questions, targetQuestion]);
   return <section className="space-y-3 rounded-2xl border bg-white p-4">
     <h3 className="font-bold">{s.title}</h3>
     {s.text && <p className="whitespace-pre-line break-words text-sm leading-7" lang={language}>{s.text}</p>}
     <p className="text-xs text-slate-500">{s.questions.length} ta mashq{pages > 1 ? ` · ${page + 1} / ${pages} sahifa` : ""}</p>
     {s.questions.slice(page * 10, page * 10 + 10).map((q, i) => s.skill === "speaking" && language === "en"
-      ? <CourseSpeaking key={q.id} lesson={lesson} questionId={q.id} previous={drafts.get(`${language}:${lesson}:${q.id}`)?.answer} onSaved={(answer, reply) => { drafts.set(`${language}:${lesson}:${q.id}`, {answer, result: {correct: null, expected: [], explanation: reply, saved: true}}); onSaved(); }}/>
+      ? <div key={q.id} id={`course-question-${q.id}`} tabIndex={-1}><CourseSpeaking lesson={lesson} questionId={q.id} previous={drafts.get(`${language}:${lesson}:${q.id}`)?.answer} onSaved={(answer, reply) => { drafts.set(`${language}:${lesson}:${q.id}`, {answer, result: {correct: null, expected: [], explanation: reply, saved: true}}); onSaved(); }}/></div>
       : <Answer key={q.id} question={q} number={page * 10 + i + 1} language={language} lesson={lesson} onSaved={onSaved} drafts={drafts}/>)}
     {pages > 1 && <div className="flex justify-between gap-2 pt-3"><button disabled={page === 0} onClick={() => setPage(p => p - 1)} className="rounded-lg border p-2 text-sm disabled:opacity-40">← Oldingi 10 ta</button><button disabled={page + 1 >= pages} onClick={() => setPage(p => p + 1)} className="rounded-lg border p-2 text-sm disabled:opacity-40">Keyingi 10 ta →</button></div>}
   </section>;
@@ -133,7 +154,7 @@ function Answer({ question: q, number, language, lesson, onSaved, drafts }: { qu
     catch (e) { if (mounted.current) setError(e instanceof Error ? e.message : "Saqlashda xato. Qayta urinib ko‘ring."); }
     finally { if (mounted.current) setBusy(false); }
   }
-  return <div className="space-y-3 border-t pt-4">
+  return <div id={`course-question-${q.id}`} tabIndex={-1} className="scroll-mt-4 space-y-3 border-t pt-4">
     <p className="whitespace-pre-line break-words text-sm font-medium" lang={language}>{number}. {q.prompt}</p>
     {q.mode === "self" && <p className="text-xs text-slate-500">Ochiq javob: yozib yuboring, so‘ng namuna va mezonlar bilan solishtiring. Avtomatik baho qo‘yilmaydi.</p>}
     {q.mode === "self" && !!q.options?.length && <ul className="space-y-1 rounded-xl bg-slate-50 p-3 text-sm">{q.options.map((o, i) => <li key={i}>{o}</li>)}</ul>}

@@ -119,5 +119,37 @@ ck("misol: aniqlik oralig'i tor (sinov aniq)",
    W.size_estimate(ex)["high"] - W.size_estimate(ex)["low"] < 200, True)
 ck("bo'sh natija -> None", W.size_estimate({}), None)
 
+print("\n=== 10. MISOLDAGI BO'SHLIQ (2026-10-16, review) ===")
+# Avval lemma bilan BOSHLANGAN har so'z bo'shliq bo'lardi: ikki bo'shliq
+# yoki javobni ochib qo'yadigan uzun so'z. Endi faqat muntazam shakl.
+for lem, ex, want in (
+        ("volt", "The volt is the unit used to measure voltage.", ["volt"]),
+        ("deco", "decorated in art deco style", ["deco"]),
+        ("so", "The soup was hot, so I blew on it.", ["so"]),
+        ("sun", "The sun wears sunglasses.", ["sun"]),
+        ("erase", "He erased it with a big eraser.", ["erased"]),
+        ("an", "I have an apple and a pear.", ["an"]),
+        ("be", "I want to be in bed.", ["be"]),
+        ("car", "Pay by card at the car park.", ["car"]),
+        ("go", "She goes to school.", ["goes"]),
+        ("work", "He works and worked.", ["works", "worked"]),
+        ("stop", "The bus stopped.", ["stopped"]),
+        ("big", "Her bag is bigger.", ["bigger"]),
+        ("make", "She is making tea.", ["making"]),
+        ("bake", "He baked bread.", ["baked"]),
+        ("worry", "My mother worried.", ["worried"]),
+        ("berry", "Birds love berries.", ["berries"]),
+        ("play", "They played well.", ["played"]),
+        ("box", "Two boxes.", ["boxes"]),
+        ("antarctic", "Penguins live in cold Antarctic waters.",
+         ["antarctic"]),
+        ("feel", "I felt tired.", []),
+        ("programme", "This program is good.", [])):
+    ck(f"gap_forms({lem})", W.gap_forms(lem, ex), want)
+ck("bo'shliq: sub ikkinchi so'zga tegmaydi",
+   W.gap_regex("volt").sub("____", "The volt measures voltage."),
+   "The ____ measures voltage.")
+ck("bo'sh misol -> []", W.gap_forms("time", ""), [])
+
 print("\n" + ("BARCHASI OK" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

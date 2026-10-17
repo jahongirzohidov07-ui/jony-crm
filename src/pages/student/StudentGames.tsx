@@ -7,6 +7,7 @@ import { JsaLogo, JSA } from "../../components/Jsa";
 import { getLang, skillLabel } from "../../lib/lang";
 import { api } from "../../lib/api";
 import { fmtNum, type DailyGoal, type ContinueCard } from "../../lib/studentApi";
+import { WordbankEntryCard } from "../../components/wordbank/WordbankCards";
 
 /**
  * JONY STUDENT — O'RGANISH.
@@ -175,6 +176,10 @@ export default function StudentGames() {
           </Link>
         ))}
       </div>
+
+      {/* ---- So'z bilish (2026-10-16): bo'lim server bayrog'i bilan
+           ochiq bo'lsagina ko'rinadi (aks holda karta umuman chiqmaydi) */}
+      <WordbankEntryCard />
 
       {/* ------------------------------------------- Daraja testi */}
       {lang === "en" && <Link to="/student/level-test"

@@ -14,6 +14,7 @@ Qoidalar:
 from __future__ import annotations
 
 import math
+import re
 from dataclasses import dataclass, replace
 from datetime import date, timedelta
 from typing import Dict, Iterable, List, Optional, Set, Tuple
@@ -129,6 +130,62 @@ def new_band_awards(completed: Iterable[int], already_awarded: Set[int]) -> List
     out = []
     for band in sorted(set(completed) - set(already_awarded)):
         out.append((band, coins_for_band(band)))
+    return out
+
+
+# ---------------- Misoldagi bo'shliq (yozib topish) ----------------
+#
+# 2026-10-16 (review): avval misolda lemma bilan BOSHLANGAN har qanday so'z
+# bo'shliqqa aylanardi ((?<![A-Za-z])lemma[A-Za-z]*): "The volt ... measure
+# voltage" -> ikki bo'shliq, "so" -> "soup", "an" -> "and". Endi faqat
+# lemmaning o'zi va muntazam qo'shimchali shakli (DESIGN §2: "the exact form
+# in the gapped example" ham qabul qilinadi). Shu funksiya serverda ham
+# (wordbank._gap), so'zlar faylini yig'ishda ham (scripts/wordbank_merge.py
+# lint) ishlatiladi — ikkalasi bir xil qoidani tekshiradi.
+
+def gap_regex(lemma: str):
+    """Misolda lemma shakllarini topadigan regex (katta-kichik harf farqsiz).
+
+    Qabul qilinadigan qo'shimchalar: s, ing; es (s/x/z/ch/sh/o dan keyin);
+    e bilan tugasa — d va e tushib + ing (make -> making); aks holda ed,
+    er, est va qo'shaloq undosh (stop -> stopped, big -> bigger); undosh + y
+    bilan tugasa — y -> i (worry -> worried, berry -> berries). 1–2 harfli
+    lemma faqat o'zi (be -> "bed" emas, an -> "and" emas; go/do -> goes)."""
+    low = lemma.lower()
+    last = low[-1:]
+    esc = re.escape(lemma)
+    alts = []
+    if len(low) <= 2:
+        suf = ["es", "ing"] if last == "o" else []
+    else:
+        suf = ["s", "ing"]
+        if low.endswith(("s", "x", "z", "ch", "sh", "o")):
+            suf.append("es")
+        if last == "e":
+            suf.append("d")
+            alts.append(re.escape(lemma[:-1]) + "ing")
+        else:
+            suf += ["ed", "er", "est"]
+            if last.isalpha() and last not in "aeiouwxy":
+                suf.append(re.escape(lemma[-1]) + "(?:ed|ing|er|est)")
+            if last == "y" and low[-2] not in "aeiou":
+                alts.append(re.escape(lemma[:-1]) + "i(?:ed|es|er|est)")
+    alts.insert(0, esc + ("(?:" + "|".join(suf) + ")?" if suf else ""))
+    return re.compile(r"(?<![A-Za-z])(?:" + "|".join(alts) + r")(?![A-Za-z])",
+                      re.I)
+
+
+def gap_forms(lemma: str, example: str) -> List[str]:
+    """Misolda topilgan lemma shakllari (yozilishi bo'yicha, takrorsiz,
+    kichik harfda). Bo'sh ro'yxat — misolni yozib topishda ko'rsatib
+    bo'lmaydi; bittadan ko'p — misolda turli shakllar (lint ogohlantiradi)."""
+    if not lemma or not example:
+        return []
+    out: List[str] = []
+    for m in gap_regex(lemma).finditer(example):
+        f = m.group(0).lower()
+        if f not in out:
+            out.append(f)
     return out
 
 

@@ -162,6 +162,13 @@ const StudentCertificates = lazy(
 const StudentResults = lazy(() => import("./pages/student/StudentResults"));
 const StudentGrammar = lazy(() => import("./pages/student/StudentGrammar"));
 const StudentVocab = lazy(() => import("./pages/student/StudentVocab"));
+// So'z bilish — lug'at banki (2026-10-16; server bayrog'i yopiq bo'lsa
+// sahifalar "tez orada" deydi)
+const StudentWords = lazy(() => import("./pages/student/StudentWords"));
+const StudentWordPractice = lazy(
+  () => import("./pages/student/StudentWordPractice"),
+);
+const StudentWordTest = lazy(() => import("./pages/student/StudentWordTest"));
 const StudentPractice = lazy(
   () => import("./pages/student/StudentPractice"),
 );
@@ -421,6 +428,11 @@ function AppRoutes() {
           <Route path="games/:game" element={<StudentLanguageRoute section="vocabulary"><StudentGamePlay /></StudentLanguageRoute>} />
           <Route path="level-test" element={<StudentLevelTest />} />
           <Route path="vocab" element={<StudentLanguageRoute section="vocabulary"><StudentVocab /></StudentLanguageRoute>} />
+          {/* So'z bilish (2026-10-16): hozircha faqat ingliz tili — til
+              tekshiruvi sahifaning o'zida */}
+          <Route path="words" element={<StudentWords />} />
+          <Route path="words/practice" element={<StudentWordPractice />} />
+          <Route path="words/test" element={<StudentWordTest />} />
           <Route path="practice/:skill" element={<StudentLanguageRoute section="vocabulary"><StudentPractice /></StudentLanguageRoute>} />
           <Route path="speaking" element={<StudentLanguageRoute section="speaking"><StudentSpeaking /></StudentLanguageRoute>} />
           <Route

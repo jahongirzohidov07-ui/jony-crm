@@ -15,6 +15,24 @@ Tekshiriladi (vocab/DESIGN.md §2–§5, OWNER_DECISIONS D1, D4):
 So'zlar — testning o'zida yaratilgan kichik to'plam (3 daraja x 3 so'z),
 haqiqiy 20 000 ro'yxat emas.
 
+2026-10-16 (3-qadam) qo'shimcha:
+  * /api/wordbank/admin — faqat asoschi (boshqalarga 403); "all" hamma
+    filialni ochadi, ro'yxat/[] bilan qaytariladi, har o'zgarish auditda;
+  * words.json yuklovchisi: lemma bo'yicha upsert, ikki marta — bir xil
+    son, skip=true va tarjimasiz qator yuklanmaydi, fayl yo'q — jim;
+  * bir martalik "hammaga ochish" seedi: faqat bayroq qo'yilmagan bo'lsa,
+    so'zlar to'liq yuklangach; /me va /session yuklangan so'zlar bilan.
+
+2026-10-16 (review, 2-davra) qo'shimcha (12–17-bo'limlar):
+  * qisman yuklangan daraja mashqqa chiqmaydi va coin to'lamaydi;
+  * vaqt tugashi so'z holatiga tegmaydi, javobni ochmaydi; vaqtidan oldin
+    kelgan "timeout" — oddiy "Bilmayman";
+  * hajm testini erta tugatish ko'rilmagan blokni natijaga qo'shmaydi;
+  * asoschining PUT [] i "hammaga ochish"dan ustun; 1-daraja to'liq
+    bo'lmasa "hammaga ochish" kutadi;
+  * rank surilgan 20 000 qatorli fayl chiziqli rejalanadi, qotgan so'z
+    tarjimasi yangilanadi; yozib topishda misoldagi shakl ham to'g'ri.
+
 Ishga tushirish: PYTHONIOENCODING=utf-8 python test_wordbank_api.py
 """
 import json
@@ -26,6 +44,10 @@ os.environ["DATABASE_URL"] = "sqlite:////tmp/verify_wordbank_api/db.sqlite"
 os.makedirs("/tmp/verify_wordbank_api", exist_ok=True)
 if os.path.exists("/tmp/verify_wordbank_api/db.sqlite"):
     os.remove("/tmp/verify_wordbank_api/db.sqlite")
+# 2026-10-16: startdagi so'z seedi (main.py) haqiqiy words.json ni
+# yuklamasin — test o'z kichik to'plami bilan ishlaydi (10–11-bo'limda
+# seed alohida, sintetik fayl bilan tekshiriladi).
+os.environ["WORDBANK_WORDS_FILE"] = "/tmp/verify_wordbank_api/yoq.json"
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from fastapi.testclient import TestClient  # noqa: E402
@@ -62,10 +84,20 @@ def _fake_now():
     return CLOCK["t"]
 
 
+def set_band_size(n):
+    """2026-10-16 (review): to'liq daraja chegarasi (wordbank.BAND_SIZE).
+    Test to'plamida darajada 3–4 ta so'z — chegara 3 qilib qo'yiladi."""
+    for _m in list(sys.modules.values()):
+        if (getattr(_m, "__file__", "") or "").endswith("wordbank.py") \
+                and hasattr(_m, "BAND_SIZE"):
+            _m.BAND_SIZE = n
+
+
 for _m in list(sys.modules.values()):
     if (getattr(_m, "__file__", "") or "").endswith("wordbank.py") \
             and hasattr(_m, "_now"):
         _m._now = _fake_now
+set_band_size(3)
 
 
 def tick(ms):
@@ -215,6 +247,12 @@ ckt("pul himoyasi: UNIQUE ux_wordbank_band_awards", "ux_wordbank_band_awards"
 ck("0032_wordbank qo'llangan",
    db.execute(text("SELECT COUNT(*) FROM schema_migrations "
                    "WHERE version = '0032_wordbank'")).scalar(), 1)
+# 2026-10-16: startda words.json yo'q edi — "hammaga ochish" seedi
+# bo'sh bo'limni ochmadi va belgisini ham qo'ymadi (keyin qayta urinadi).
+ck("startda bayroq qo'yilmadi (so'zlar yo'q)",
+   db.query(models.IntegrationSetting).get("wordbank_branches"), None)
+ck("startda 'hammaga ochish' belgisi qo'yilmadi",
+   db.query(models.SeedMark).get(WB.SEED_ENABLE_ALL), None)
 
 print("\n=== 1. BAYROQ O'CHIQ — HAMMAGA 404 ===")
 for path, meth in (("/api/wordbank/me", "get"),
@@ -651,6 +689,569 @@ ck("s2 savollari qolmadi",
 ck("s1 ma'lumoti tegilmagan",
    dd.query(models.WordbankStudentWord).filter_by(student_id=S1).count(), 9)
 dd.close()
+
+print("\n=== 10. ADMIN: FAQAT ASOSCHI; \"all\" — BARCHA FILIALLAR ===")
+
+
+def flag_raw():
+    d = SessionLocal()
+    row = d.query(models.IntegrationSetting).get("wordbank_branches")
+    v = row.value if row is not None else None
+    d.close()
+    return v
+
+
+def flag_audits():
+    d = SessionLocal()
+    rows = [(a.old_value, a.new_value, a.user_role)
+            for a in d.query(models.AuditLog)
+            .filter_by(entity="settings", field="wordbank_branches")
+            .order_by(models.AuditLog.id)]
+    d.close()
+    return rows
+
+
+ADM = "/api/wordbank/admin"
+PILOT = json.dumps([bA.id])
+ck("ustoz GET: 403", client.get(ADM, headers=HT).status_code, 403)
+ck("o'quvchi GET: 403", client.get(ADM, headers=H1).status_code, 403)
+ckt("tokensiz GET: 401/403",
+    client.get(ADM).status_code in (401, 403))
+r = client.put(ADM, json={"enabled": "all"}, headers=HT)
+ck("ustoz PUT: 403", r.status_code, 403)
+r = client.put(ADM, json={"enabled": "all"}, headers=H1)
+ck("o'quvchi PUT: 403", r.status_code, 403)
+ck("rad etilgan PUT bayroqni o'zgartirmadi", flag_raw(), PILOT)
+g = client.get(ADM, headers=HF)
+ck("asoschi GET: 200", g.status_code, 200)
+ck("joriy holat: faqat pilot", g.json()["enabled"], [bA.id])
+_br = {b["id"]: b["enabled"] for b in g.json()["branches"]}
+ck("filiallar: pilot yoqilgan, boshqasi yo'q",
+   (_br.get(bA.id), _br.get(bB.id)), (True, False))
+ck("mashqqa tayyor so'zlar soni (o'chirilgan va tarjimasiz sanalmaydi)",
+   g.json()["words"], 9)
+for bad in ({"enabled": "hammasi"}, {"enabled": [999999]},
+            {"enabled": [True]}, {"enabled": [1.5]}, {"enabled": None},
+            {}, [bA.id]):
+    ck(f"noto'g'ri so'rov 400: {bad}",
+       client.put(ADM, json=bad, headers=HF).status_code, 400)
+ck("noto'g'ri so'rovlar bayroqni o'zgartirmadi", flag_raw(), PILOT)
+ck("hali audit yozuvi yo'q", flag_audits(), [])
+
+r = client.put(ADM, json={"enabled": "all"}, headers=HF)
+ck("PUT all: 200", r.status_code, 200)
+ck("javob: enabled = all", r.json()["enabled"], "all")
+ck("javob: o'zgardi", r.json()["changed"], True)
+ckt("javob: barcha filiallar yoqilgan",
+    r.json()["branches"] and all(b["enabled"] for b in r.json()["branches"]))
+ck("bazada 'all'", flag_raw(), "all")
+ck("auditda: eski -> yangi, asoschi", flag_audits(),
+   [(PILOT, "all", roles.FOUNDER)])
+ck("pilot o'quvchi: /me 200",
+   client.get("/api/wordbank/me", headers=H1).status_code, 200)
+ck("boshqa filial o'quvchisi ham ochildi: /me 200",
+   client.get("/api/wordbank/me", headers=H3).status_code, 200)
+ck("boshqa filial o'quvchisi sessiya ocha oladi",
+   client.post("/api/wordbank/session", json={"size": 3},
+               headers=H3).status_code, 200)
+ck("xodim baribir 404 (bo'lim faqat o'quvchiga)",
+   client.get("/api/wordbank/me", headers=HT).status_code, 404)
+dd = SessionLocal()
+bC = models.Branch(name="Yangi filial (keyin ochilgan)")
+dd.add(bC)
+dd.commit()
+ck("'all': keyin ochilgan filial ham avtomat yoqilgan",
+   WB.branch_enabled(dd, bC.id), True)
+ck("'all': enabled_branches — bazadagi barcha filiallar",
+   WB.enabled_branches(dd),
+   {b.id for b in dd.query(models.Branch)})
+ck("parse_flag: '\"all\"' (JSON) ham all", WB.parse_flag('"all"'), "all")
+ck("parse_flag: '[]' — hamma joyda yopiq", WB.parse_flag("[]"), set())
+dd.close()
+r = client.put(ADM, json={"enabled": "ALL"}, headers=HF)
+ck("qayta 'all' — o'zgarmadi, audit qo'shilmadi",
+   (r.json()["changed"], len(flag_audits())), (False, 1))
+
+r = client.put(ADM, json={"enabled": [bB.id]}, headers=HF)
+ck("qaytarish: faqat boshqa filial", (r.status_code, r.json()["enabled"]),
+   (200, [bB.id]))
+ck("pilot o'quvchiga endi 404",
+   client.get("/api/wordbank/me", headers=H1).status_code, 404)
+ck("boshqa filial o'quvchisi: 200",
+   client.get("/api/wordbank/me", headers=H3).status_code, 200)
+r = client.put(ADM, json={"enabled": []}, headers=HF)
+ck("[] — hamma joyda yopiq", (r.json()["enabled"], flag_raw()), ([], "[]"))
+ck("[] dan keyin hammaga 404",
+   [client.get("/api/wordbank/me", headers=h).status_code
+    for h in (H1, H3)], [404, 404])
+ck("[] dan keyin ham asoschi admin sahifasini ko'radi",
+   client.get(ADM, headers=HF).status_code, 200)
+r = client.put(ADM, json={"enabled": [str(bA.id)]}, headers=HF)
+ck("id matn ko'rinishida ham qabul qilinadi", r.json()["enabled"], [bA.id])
+ck("har o'zgarish auditda (4 ta)", [x[1] for x in flag_audits()],
+   ["all", json.dumps([bB.id]), "[]", PILOT])
+
+print("\n=== 11. SO'ZLAR FAYLI: UPSERT (O'CHIRMASDAN), IKKI MARTA — BIR XIL ===")
+import common  # noqa: E402
+
+SEED_DIR = "/tmp/verify_wordbank_api/seed"
+os.makedirs(SEED_DIR, exist_ok=True)
+
+
+def write_words(name, data):
+    p = os.path.join(SEED_DIR, name)
+    with open(p, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False)
+    return p
+
+
+def words_count():
+    d = SessionLocal()
+    n = d.query(models.WordbankWord).count()
+    d.close()
+    return n
+
+
+def word(lemma):
+    d = SessionLocal()
+    w = d.query(models.WordbankWord).filter_by(lemma=lemma).first()
+    if w is not None:
+        d.expunge(w)
+    d.close()
+    return w
+
+
+def drop_mark(key):
+    """Belgini olib tashlaydi (seedni "qayta yurgizish" uchun)."""
+    d = SessionLocal()
+    d.query(models.SeedMark).filter_by(key=key).delete()
+    d.commit()
+    d.close()
+    common._SEED_KEYS = None
+
+
+P1 = write_words("words.json", {"version": "test", "words": [
+    {"rank": 5001, "band": 6, "lemma": "glacier", "pos": ["NOUN", "VERB"],
+     "uz_primary": "muzlik", "uz_alt": ["muz qatlami"],
+     "example_en": "The glacier is melting.",
+     "example_uz": "Muzlik erimoqda."},
+    {"rank": 5002, "band": 6, "lemma": "orchard", "pos": "NOUN",
+     "uz_primary": "meva bog'i", "uz_alt": [],
+     "example_en": "We walked in the orchard.",
+     "example_uz": "Biz meva bog'ida sayr qildik."},
+    {"rank": 5003, "band": 6, "lemma": "pebble", "pos": "NOUN",
+     "uz_primary": "shag'al", "uz_alt": "mayda tosh",
+     "example_en": "He threw a pebble.", "example_uz": "U shag'al otdi."},
+    {"rank": 5004, "band": 6, "lemma": "zzskip", "uz_primary": "o'tkaz",
+     "skip": True},
+    {"rank": 5005, "band": 6, "lemma": "zzempty", "uz_primary": "  "},
+    # bor so'z — yangilanadi (id o'zgarmaydi, dublikat yo'q)
+    {"rank": 1001, "band": 2, "lemma": "river", "pos": "NOUN",
+     "uz_primary": "daryo", "uz_alt": ["soy"],
+     "example_en": "The river is long.", "example_uz": "Daryo uzun."},
+    # rank 1002 bazada "market"da (faylda yo'q) — u O'CHIRILMAYDI,
+    # bu qator o'tkazib yuboriladi
+    {"rank": 1002, "band": 2, "lemma": "brook", "uz_primary": "jilg'a"},
+]})
+n0 = words_count()
+ck("fayl yo'q — jim o'tadi",
+   WB.load_words(SessionLocal(), os.path.join(SEED_DIR, "yoq.json")),
+   {"missing": True})
+ck("fayl yo'q — so'zlar soni o'zgarmadi", words_count(), n0)
+dd = SessionLocal()
+r1 = WB.load_words(dd, P1)
+dd.close()
+ck("1-yurish: 3 yangi, 1 yangilangan, 2 tashlangan, 1 to'qnashuv",
+   {k: r1[k] for k in ("inserted", "updated", "skipped", "conflicts",
+                       "finished")},
+   {"inserted": 3, "updated": 1, "skipped": 2, "conflicts": 1,
+    "finished": True})
+ck("so'zlar soni +3", words_count(), n0 + 3)
+ckt("belgi kaliti wordbank_words_v1 bilan boshlanadi",
+    r1["key"].startswith("wordbank_words_v1:"))
+dd = SessionLocal()
+ckt("belgi qo'yildi", dd.query(models.SeedMark).get(r1["key"]) is not None)
+dd.close()
+ck("skip=true qator yuklanmadi", word("zzskip"), None)
+ck("tarjimasiz qator yuklanmadi", word("zzempty"), None)
+ck("band rank'i band bo'lgan qator yuklanmadi", word("brook"), None)
+ck("eski so'z (market) o'chirilmadi va joyida",
+   (word("market").rank, word("market").status), (1002, "active"))
+g_ = word("glacier")
+ck("yangi so'z maydonlari",
+   (g_.rank, g_.band, g_.pos, g_.uz_primary, json.loads(g_.uz_alt),
+    g_.status),
+   (5001, 6, "NOUN", "muzlik", ["muz qatlami"], "active"))
+ck("uz_alt matn bo'lsa ro'yxatga aylanadi",
+   json.loads(word("pebble").uz_alt), ["mayda tosh"])
+rv = word("river")
+ck("bor so'z yangilandi, id o'sha (o'quvchi holati saqlanadi)",
+   (rv.id, json.loads(rv.uz_alt), rv.example_uz),
+   (WID["river"], ["soy"], "Daryo uzun."))
+ck("2-yurish: belgi bor — hech narsa qilinmaydi",
+   WB.load_words(SessionLocal(), P1), None)
+ck("2-yurishdan keyin soni o'sha", words_count(), n0 + 3)
+drop_mark(r1["key"])
+dd = SessionLocal()
+r3 = WB.load_words(dd, P1)
+dd.close()
+ck("belgisiz qayta yurish ham idempotent (0 yangi, 0 yangilangan)",
+   (r3["inserted"], r3["updated"], r3["finished"]), (0, 0, True))
+ck("qayta yurishdan keyin ham soni o'sha", words_count(), n0 + 3)
+# Ikki so'z rank'ini almashtirgan yangi fayl: UNIQUE(rank) yiqilmasin
+# (avval vaqtincha manfiy rank'ga o'tkaziladi); faylda yo'q eski so'zlar
+# (river va boshqalar) tegilmaydi.
+_p1 = json.load(open(P1, encoding="utf-8"))["words"]
+_sw = {"orchard": 5003, "pebble": 5002}
+P3 = write_words("words3.json", [dict(e, rank=_sw.get(e["lemma"], e["rank"]))
+                                 for e in _p1[:3]])
+dd = SessionLocal()
+r = WB.load_words(dd, P3)
+dd.close()
+ck("rank almashuvi: 2 yangilandi, to'qnashuvsiz",
+   (r["inserted"], r["updated"], r["conflicts"], r["finished"]),
+   (0, 2, 0, True))
+ck("rank'lar almashdi", (word("orchard").rank, word("pebble").rank),
+   (5003, 5002))
+ck("faylda yo'q so'zlar o'chirilmadi", words_count(), n0 + 3)
+ck("lug'at ko'rinishi ({lemma: {...}}) ham o'qiladi",
+   [r["lemma"] for r in WB.parse_words(
+       {"cliff": {"rank": 5006, "band": 6, "uz_primary": "qoya"}})[0]],
+   ["cliff"])
+
+print("\n=== 11b. BUDJET: QOLGANI KEYINGI STARTDA; 'HAMMAGA OCHISH' KUTADI ===")
+P2 = write_words("words2.json", [
+    {"rank": 6001 + i, "band": 7, "lemma": lem, "uz_primary": uz,
+     "example_en": ex, "example_uz": "(misol)"}
+    for i, (lem, uz, ex) in enumerate((
+        ("canyon", "kanyon", "The canyon is deep."),
+        ("dune", "qum tepa", "A dune of sand."),
+        ("fjord", "fyord", "The fjord is cold.")))])
+dd = SessionLocal()
+r = WB.load_words(dd, P2, budget=2)
+ck("budjet 2: 2 ta yozildi, 1 qoldi, tugamadi",
+   (r["inserted"], r["left"], r["finished"]), (2, 1, False))
+ckt("tugamagan — belgi yo'q, fayl 'kutilmoqda'",
+    WB.words_pending(dd, P2))
+ck("so'zlar to'liq emas — 'hammaga ochish' kutadi",
+   WB.seed_enable_all(dd, P2), "pending")
+ck("kutganda belgi qo'yilmadi",
+   dd.query(models.SeedMark).get(WB.SEED_ENABLE_ALL), None)
+r = WB.load_words(dd, P2, budget=2)
+ck("keyingi start: qolgan 1 ta, tugadi", (r["inserted"], r["finished"]),
+   (1, True))
+ckt("endi kutilmayapti", not WB.words_pending(dd, P2))
+dd.close()
+
+print("\n=== 11c. BIR MARTALIK 'HAMMAGA OCHISH' (faqat bayroq qo'yilmagan bo'lsa) ===")
+dd = SessionLocal()
+dd.query(models.IntegrationSetting).filter_by(
+    key="wordbank_branches").delete()
+dd.commit()
+n_aud = len(flag_audits())
+ck("bayroq yo'q -> 'all'", WB.seed_enable_all(dd, P2), "enabled")
+ck("bazada 'all'", flag_raw(), "all")
+ck("tizim nomidan audit yozuvi", flag_audits()[n_aud:],
+   [("(bo'sh)", "all", None)])
+ckt("belgi qo'yildi",
+    dd.query(models.SeedMark).get(WB.SEED_ENABLE_ALL) is not None)
+dd.close()
+r = client.put(ADM, json={"enabled": [bB.id]}, headers=HF)
+dd = SessionLocal()
+ck("asoschi qaytardi, seed qayta ochmaydi (bir marta)",
+   (WB.seed_enable_all(dd, P2), flag_raw()), (None, json.dumps([bB.id])))
+dd.close()
+drop_mark(WB.SEED_ENABLE_ALL)
+dd = SessionLocal()
+ck("bayroq allaqachon qo'yilgan — tegilmaydi",
+   (WB.seed_enable_all(dd, P2), flag_raw()),
+   ("kept", json.dumps([bB.id])))
+ckt("'kept' da ham belgi qo'yiladi",
+    dd.query(models.SeedMark).get(WB.SEED_ENABLE_ALL) is not None)
+dd.close()
+
+print("\n=== 11d. YUKLANGAN SO'ZLAR: /me DARAJALAR, /session ISHLAYDI ===")
+client.put(ADM, json={"enabled": "all"}, headers=HF)
+dd = SessionLocal()
+for w_ in dd.query(models.WordbankWord):
+    LEMMA[w_.id] = w_.lemma
+    WID[w_.lemma] = w_.id
+dd.close()
+d = client.get("/api/wordbank/me", headers=H1).json()
+ck("/me: 6-daraja jami 3 (yuklangan), bilinganlar 0",
+   (d["bands"][5]["total"], d["bands"][5]["known"], d["bands"][5]["ready"]),
+   (3, 0, True))
+ck("/me: 7-daraja jami 3", d["bands"][6]["total"], 3)
+ck("/me: 2-daraja jami o'sha 3 (dublikat yo'q, brook qo'shilmadi)",
+   d["bands"][1]["total"], 3)
+ck("/me: so'z yo'q daraja — tayyor emas",
+   (d["bands"][7]["total"], d["bands"][7]["ready"]), (0, False))
+r = client.post("/api/wordbank/session", json={"size": 20}, headers=H1)
+ck("/session: 200", r.status_code, 200)
+SIDW = r.json()["session_id"]
+byw = {lemma_of(it): it for it in r.json()["items"]}
+ckt("yuklangan yangi so'zlar mashqqa chiqdi",
+    {"glacier", "orchard", "pebble", "canyon", "dune", "fjord"}
+    <= set(byw))
+ck("yangi so'z — tanlash, 4 variant, to'g'risi ichida",
+   (byw["glacier"]["mode"], len(byw["glacier"]["options"]),
+    "muzlik" in byw["glacier"]["options"]), ("R", 4, True))
+ckt("javob kaliti yuborilmaydi",
+    all("expected" not in it for it in byw.values()))
+r = answer(H1, SIDW, byw["glacier"], ok=True)
+ck("glacier: fast track (2-pog'ona)", (r.status_code, r.json()["stage"]),
+   (200, 2))
+next_day(3)
+r = client.post("/api/wordbank/session", json={"size": 20}, headers=H1)
+SIDW2 = r.json()["session_id"]
+byw = {lemma_of(it): it for it in r.json()["items"]}
+ck("3 kundan keyin glacier — yozib topish", byw["glacier"]["mode"], "P")
+ck("P savolida misol bo'shliq bilan", byw["glacier"]["example"],
+   "The ____ is melting.")
+r = answer(H1, SIDW2, byw["glacier"], ok=True, gap=4000)
+ck("glacier tasdiqlandi", r.json()["known"], True)
+d = client.get("/api/wordbank/me", headers=H1).json()
+ck("/me: 6-daraja 1/3 bilinadi",
+   (d["bands"][5]["known"], d["bands"][5]["total"]), (1, 3))
+ck("asoschi sahifasi: tayyor so'zlar 9 + 6", client.get(
+    ADM, headers=HF).json()["words"], 15)
+
+print("\n=== 12. QISMAN YUKLANGAN DARAJA COIN TO'LAMAYDI (review) ===")
+# 2026-10-16 (review): 9-darajada hozircha 2 ta so'z (chegara 3). O'quvchi
+# ikkalasini bilsa ham daraja "tugamaydi", mashqqa ham chiqmaydi.
+dd = SessionLocal()
+for rank, lem, uz in ((8001, "zebra", "zebra"), (8002, "yacht", "yaxta")):
+    dd.add(models.WordbankWord(rank=rank, band=9, lemma=lem, uz_primary=uz,
+                               uz_alt="[]", example_en=f"A {lem}.",
+                               example_uz="(misol)", status="active"))
+dd.commit()
+for w_ in dd.query(models.WordbankWord):
+    LEMMA[w_.id] = w_.lemma
+    WID[w_.lemma] = w_.id
+dd.close()
+d = client.get("/api/wordbank/me", headers=H1).json()
+ck("9-daraja: 2 so'z, tayyor emas",
+   (d["bands"][8]["total"], d["bands"][8]["ready"]), (2, False))
+r = client.post("/api/wordbank/session", json={"size": 20}, headers=H3)
+ck("qisman daraja so'zlari mashqqa chiqmaydi",
+   [lemma_of(it) for it in r.json()["items"]
+    if lemma_of(it) in ("zebra", "yacht")], [])
+ckt("tayyor darajalar so'zlari esa chiqadi",
+    {"time", "glacier", "canyon"} <= {lemma_of(it)
+                                     for it in r.json()["items"]})
+dd = SessionLocal()
+for lem in ("zebra", "yacht"):
+    dd.add(models.WordbankStudentWord(
+        student_id=S1, word_id=WID[lem], stage=3, known=1, has_prod=1,
+        lapses=0, due=DAY0 + timedelta(days=60), last_move=DAY0))
+dd.commit()
+stu = dd.query(models.Student).get(S1)
+ck("ikkala so'z bilinsa ham _award_bands -> bo'sh",
+   WB._award_bands(dd, stu, {9}), [])
+dd.commit()
+dd.close()
+d = client.get("/api/wordbank/me", headers=H1).json()
+ck("/me o'z-o'zini tiklash ham to'lamaydi",
+   [c for c in coin_rows(S1) if c[1] == 9], [])
+ck("/me: 9-daraja tugamagan", d["bands"][8]["done"], False)
+dd = SessionLocal()
+dd.add(models.WordbankWord(rank=8003, band=9, lemma="quill",
+                           uz_primary="pat qalam", uz_alt="[]",
+                           example_en="He wrote with a quill.",
+                           example_uz="(misol)", status="active"))
+dd.commit()
+WID["quill"] = dd.query(models.WordbankWord).filter_by(
+    lemma="quill").first().id
+LEMMA[WID["quill"]] = "quill"
+dd.close()
+d = client.get("/api/wordbank/me", headers=H1).json()
+ck("3-so'z yuklandi: daraja tayyor, 2/3 — hali coin yo'q",
+   (d["bands"][8]["ready"], d["bands"][8]["known"], d["bands"][8]["total"],
+    [c for c in coin_rows(S1) if c[1] == 9]), (True, 2, 3, []))
+dd = SessionLocal()
+dd.add(models.WordbankStudentWord(
+    student_id=S1, word_id=WID["quill"], stage=3, known=1, has_prod=1,
+    lapses=0, due=DAY0 + timedelta(days=60), last_move=DAY0))
+dd.commit()
+dd.close()
+d = client.get("/api/wordbank/me", headers=H1).json()
+ck("to'liq daraja tugadi -> 9 coin, bir marta",
+   [c for c in coin_rows(S1) if c[1] == 9], [(9, 9)])
+ck("/me: 9-daraja tugagan", d["bands"][8]["done"], True)
+
+print("\n=== 13. VAQT TUGASHI — HOLATGA TEGMAYDI (review) ===")
+# 2026-10-16 (review): avval vaqt tugashi oddiy xato edi — tasdiqlangan
+# so'z unutilardi. Endi: o'tkazib yuborildi, holat o'zgarmaydi, javob
+# ochilmaydi; vaqtidan oldin kelgan "timeout" — oddiy "Bilmayman".
+next_day(30)
+r = client.post("/api/wordbank/session", json={"size": 20}, headers=H1)
+SIDT = r.json()["session_id"]
+itsT = r.json()["items"]
+known_its = [it for it in itsT if it["mode"] == "R"
+             and state(S1, lemma_of(it)) is not None
+             and state(S1, lemma_of(it)).known == 1]
+ckt("sessiyada tasdiqlangan so'z (R) bor", known_its)
+itK = known_its[0]
+lemK = lemma_of(itK)
+b4 = state(S1, lemK)
+tick(16000)
+r = client.post("/api/wordbank/answer", headers=H1,
+                json={"session_id": SIDT, "item_id": itK["item_id"],
+                      "given": None, "timeout": True, "ms": 15000})
+ck("timeout: 200", r.status_code, 200)
+ck("timeout: belgisi, baho va javob yo'q",
+   (r.json()["timeout"], r.json()["correct"], r.json()["expected"]),
+   (True, None, None))
+ckt("timeout javobida lemma yo'q",
+    lemK not in json.dumps(list(r.json().values())).lower())
+a4 = state(S1, lemK)
+ck("timeout: so'z holati O'ZGARMADI (tasdiqlangan qoldi)",
+   (a4.stage, a4.known, a4.lapses, a4.due, a4.last_move, a4.has_prod),
+   (b4.stage, b4.known, b4.lapses, b4.due, b4.last_move, b4.has_prod))
+ck("timeout: savol yopildi (o'tkazib yuborildi)",
+   (item_row(itK["item_id"]).answered_at is not None,
+    item_row(itK["item_id"]).given, item_row(itK["item_id"]).correct),
+   (True, None, 0))
+r = client.post("/api/wordbank/answer", headers=H1,
+                json={"session_id": SIDT, "item_id": itK["item_id"],
+                      "given": 0})
+ck("timeoutdan keyin qayta javob: 409", r.status_code, 409)
+itF = [it for it in itsT if it is not itK][0]
+tick(2000)
+r = client.post("/api/wordbank/answer", headers=H1,
+                json={"session_id": SIDT, "item_id": itF["item_id"],
+                      "given": None, "timeout": True, "ms": 15000})
+ck("2 s da kelgan 'timeout' — oddiy 'Bilmayman' (xato)",
+   (bool(r.json().get("timeout")), r.json()["correct"]), (False, False))
+
+print("\n=== 14. HAJM TESTI: ERTA TUGATISH — KO'RILMAGAN BLOK YO'Q (review) ===")
+r = client.post("/api/wordbank/size-test/start", headers=H1)
+TS = r.json()
+ck("yangi test 1-darajadan", TS["band"], 1)
+it0 = TS["items"][0]
+tick(4000)
+r = client.post("/api/wordbank/size-test/finish", headers=H1,
+                json={"session_id": TS["session_id"], "band": 1,
+                      "answers": [{"item_id": it0["item_id"],
+                                   "given": int(item_row(
+                                       it0["item_id"]).expected),
+                                   "ms": 3000}]})
+ck("finish (javoblar bilan): 200", r.status_code, 200)
+resF = r.json()["result"]
+ck("natijada faqat ko'rilgan blok (2-daraja yo'q)", sorted(resF["bands"]),
+   ["1"])
+ck("1-blok: 1 to'g'ri, qolganlari 'Bilmayman'", resF["bands"]["1"],
+   [1, 0, len(TS["items"])])
+dd = SessionLocal()
+ck("sessiyada yangi blok ochilmadi",
+   sorted({i.band for i in dd.query(models.WordbankSessionItem)
+           .filter_by(session_id=TS["session_id"])}), [1])
+dd.close()
+r = client.post("/api/wordbank/size-test/finish", headers=H1,
+                json={"session_id": TS["session_id"], "band": 1,
+                      "answers": [{"item_id": it0["item_id"], "given": 0}]})
+ck("finish qayta (ikki bosish) — o'sha natija",
+   (r.status_code, r.json()["result"]["test_id"]), (200, resF["test_id"]))
+
+print("\n=== 15. ASOSCHI PUT [] — BAYROQ QO'YILMAGAN PAYTDA (review) ===")
+# 2026-10-16 (review): "" va "[]" bir xil (yopiq) edi — PUT [] hech narsa
+# yozmasdi va keyingi startda seed_enable_all bayroqni "all" qilardi.
+dd = SessionLocal()
+dd.query(models.IntegrationSetting).filter_by(
+    key="wordbank_branches").delete()
+dd.commit()
+dd.close()
+drop_mark(WB.SEED_ENABLE_ALL)
+r = client.put(ADM, json={"enabled": []}, headers=HF)
+ck("PUT [] (bayroq yo'q edi): o'zgardi va yozildi",
+   (r.json()["changed"], flag_raw()), (True, "[]"))
+dd = SessionLocal()
+ck("seed_enable_all asoschi qarorini bosib ketmaydi",
+   (WB.seed_enable_all(dd, P2), flag_raw()), ("kept", "[]"))
+dd.close()
+# 1-daraja to'liq bo'lmasa — "hammaga ochish" kutadi
+dd = SessionLocal()
+dd.query(models.IntegrationSetting).filter_by(
+    key="wordbank_branches").delete()
+dd.commit()
+dd.close()
+drop_mark(WB.SEED_ENABLE_ALL)
+set_band_size(1000)
+dd = SessionLocal()
+ck("1-daraja to'liq emas -> 'not-ready', bayroq qo'yilmadi",
+   (WB.seed_enable_all(dd, P2), flag_raw()), ("not-ready", None))
+ck("'not-ready' da belgi qo'yilmadi",
+   dd.query(models.SeedMark).get(WB.SEED_ENABLE_ALL), None)
+dd.close()
+set_band_size(3)
+
+print("\n=== 16. RANK SURILISHI: CHIZIQLI, TARJIMA TUZATISHI TUSHADI (review) ===")
+import time as _time  # noqa: E402
+
+N = 20000
+_have = {f"w{i}": {"id": i, "rank": i} for i in range(1, N + 1)}
+_rows = [{"lemma": f"w{i}", "rank": i - 1} for i in range(2, N + 1)]
+_t0 = _time.perf_counter()
+_acc, _conf = WB._plan(_have, _rows)
+_dt = _time.perf_counter() - _t0
+ck("20 000 qator, rank bittaga surilgan: hammasi qotdi",
+   (len(_acc), len(_conf)), (0, N - 1))
+ckt(f"chiziqli: {_dt:.3f} s < 2 s", _dt < 2)
+_acc, _conf = WB._plan(_have, [{"lemma": f"w{i}", "rank": i}
+                               for i in range(1, N + 1)])
+ck("surilmagan fayl: hammasi qabul", (len(_acc), len(_conf)), (N, 0))
+_acc, _conf = WB._plan({"a": {"rank": 1}, "b": {"rank": 2}},
+                       [{"lemma": "a", "rank": 2}, {"lemma": "b", "rank": 1}])
+ck("almashuv to'qnashuv emas", (len(_acc), _conf), (2, []))
+# Bazada canyon 6001, dune 6002, fjord 6003. Faylda canyon yo'q, dune va
+# fjord bittaga yuqoriga surilgan va tarjimasi tuzatilgan.
+P4 = write_words("words4.json", [
+    {"rank": 6001, "band": 7, "lemma": "dune", "uz_primary": "qum tepaligi",
+     "example_en": "A dune of sand.", "example_uz": "(misol)"},
+    {"rank": 6002, "band": 7, "lemma": "fjord", "uz_primary": "fyord",
+     "uz_alt": ["tor ko'rfaz"], "example_en": "The fjord is cold.",
+     "example_uz": "(misol)"}])
+dd = SessionLocal()
+r = WB.load_words(dd, P4)
+dd.close()
+ck("surilgan fayl: yangi yo'q, 2 to'qnashuv, 2 tarjima yangilandi",
+   (r["inserted"], r["conflicts"], r["updated"], r["finished"]),
+   (0, 2, 2, True))
+ck("rank'lar bazadagidek (hech narsa o'chirilmadi/ko'chmadi)",
+   (word("canyon").rank, word("dune").rank, word("fjord").rank),
+   (6001, 6002, 6003))
+ck("qotgan so'zning tarjimasi fayldan tushdi",
+   (word("dune").uz_primary, json.loads(word("fjord").uz_alt)),
+   ("qum tepaligi", ["tor ko'rfaz"]))
+
+print("\n=== 17. YOZIB TOPISH: MISOLDAGI SHAKL HAM TO'G'RI (review) ===")
+# 2026-10-16 (review): DESIGN §2 — lemma va misoldagi bo'shliq shakli
+# qabul qilinadi ("She ____ in the park." -> "wandered" ham to'g'ri).
+set_flag("all")
+_today = roles.to_local(CLOCK["t"]).date()
+dd = SessionLocal()
+dd.add(models.WordbankWord(rank=8004, band=9, lemma="wander",
+                           uz_primary="kezmoq", uz_alt="[]",
+                           example_en="She wandered in the park.",
+                           example_uz="(misol)", status="active"))
+dd.commit()
+WID["wander"] = dd.query(models.WordbankWord).filter_by(
+    lemma="wander").first().id
+LEMMA[WID["wander"]] = "wander"
+dd.add(models.WordbankStudentWord(
+    student_id=S1, word_id=WID["wander"], stage=2, known=0, has_prod=0,
+    lapses=0, due=_today, last_move=_today - timedelta(days=3)))
+dd.commit()
+dd.close()
+r = client.post("/api/wordbank/session", json={"size": 20}, headers=H1)
+itW = [it for it in r.json()["items"] if lemma_of(it) == "wander"]
+ckt("wander mashqda", itW)
+itW = itW[0]
+ck("P savoli, misoldagi shakl bo'shliq", (itW["mode"], itW["example"]),
+   ("P", "She ____ in the park."))
+r = answer(H1, r.json()["session_id"], itW, gap=5000, text_=" Wandered ")
+ck("misoldagi shakl (wandered) — to'g'ri, tasdiqlandi",
+   (r.json()["correct"], r.json()["known"]), (True, True))
 
 print("\n" + ("BARCHASI OK" if not fails else f"XATOLAR: {fails}"))
 sys.exit(1 if fails else 0)

@@ -34,6 +34,27 @@ Xavfsizlik:
 Coin (D1): UNIQUE(student_id, band) bir vaqtdagi ikki so'rovda ham
 ikkinchi to'lovni to'xtatadi.
 Hajm testi: natija faqat "taxminiy", so'z holatiga UMUMAN tegmaydi.
+
+2026-10-16 (3-qadam):
+  * bayroq qiymati "all" ham bo'lishi mumkin — BARCHA filiallar (keyin
+    ochilgan filial ham avtomat kiradi). Jahongir: "barcha filiallar".
+  * GET/PUT /api/wordbank/admin — faqat ASOSCHI; filiallarni yoqish /
+    o'chirish, har o'zgarish auditda. Bir martalik "hammaga ochish"
+    seedi shu yerdan qaytariladi (masalan [] — hamma joyda yopiq).
+  * so'zlar api/wordbank_data/words.json dan yuklanadi (load_words):
+    lemma bo'yicha upsert, HECH NARSA O'CHIRILMAYDI; fayl yo'q bo'lsa
+    jim o'tadi. Startda seed_startup chaqiriladi (main.py).
+
+2026-10-16 (review, 2-davra):
+  * daraja faqat TO'LIQ yuklangan bo'lsa (kamida BAND_SIZE so'z o'rni)
+    "tayyor": yangi so'z beradi, tugasa coin to'laydi, "hammaga ochish"
+    1-daraja to'liq bo'lmaguncha kutadi (D1: "1000 tasining hammasi");
+  * vaqt tugashi (timeout) — "o'tkazib yuborildi" deb yoziladi, so'z
+    holatiga TEGMAYDI va javob ochilmaydi (DESIGN §2);
+  * hajm testini erta tugatish joriy blok javoblarini /finish ga beradi —
+    ko'rilmagan yangi blok natijaga qo'shilmaydi;
+  * asoschining birinchi PUT [] i ham saqlanadi ("hammaga ochish" uni
+    bosib ketmaydi); rank to'qnashuvlari chiziqli hal qilinadi.
 """
 import hashlib
 import json
@@ -47,7 +68,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from datetime import date, datetime, timedelta
 
 from fastapi import APIRouter, Body, Depends, HTTPException
-from sqlalchemy import and_, case, func, select, update as sa_update
+from sqlalchemy import and_, case, func, insert as sa_insert, select, \
+    text as sa_text, update as sa_update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -56,19 +78,28 @@ import auth
 import models
 import roles
 import wordbank_core as WC
-from auth import get_current_user
+from auth import get_current_user, require_role
 from database import get_db
 from common import _student_of_user
 
 router = APIRouter()
 
 FLAG_KEY = "wordbank_branches"
+ALL = "all"                           # bayroq: barcha filiallar (2026-10-16)
 SESSION_MAX = 20                      # bitta mashqda eng ko'p savol
 SUSPECT_MS = 1200                     # yozib topish: bundan tez — shubhali
 PRACTICE_TTL = timedelta(minutes=45)  # mashq sessiyasi muddati
 TEST_TTL = timedelta(minutes=90)      # hajm testi (13 blok x 10 savol)
 COIN_SOURCE = "vocab_band"
 _NOT_FOUND = "Not Found"              # FastAPI'ning "yo'l yo'q" javobi bilan bir xil
+# 2026-10-16 (review): daraja shuncha so'z o'rniga ega bo'lgandagina to'liq
+# (mashq, coin, "ready"). Testlar kichik to'plam uchun kamaytiradi.
+BAND_SIZE = WC.WORDS_PER_BAND
+# 2026-10-16 (review): savol vaqti (DESIGN §2) — "vaqt tugadi" da'vosi
+# server oralig'i bilan tekshiriladi (tez yuborilgan "timeout" — oddiy
+# "Bilmayman"); SLACK — tarmoq/soat farqi uchun.
+LIMIT_MS = {"R": 15000, "P": 30000}
+TIMEOUT_SLACK_MS = 1000
 
 _rng = random.SystemRandom()
 
@@ -83,6 +114,25 @@ ST = models.WordbankSizeTest
 _HAS_UZ = (W.status == "active", W.uz_primary.isnot(None), W.uz_primary != "")
 
 
+def _ready_bands(db: Session) -> set:
+    """2026-10-16 (review): kontenti TO'LIQ yuklangan darajalar.
+
+    Sabab: words.json dan skip=true / tarjimasiz qatorlar tushmaydi, budjet
+    bilan esa daraja bir necha startda to'ladi. Avval "daraja tugadi" faqat
+    bazadagi faol so'zlar bo'yicha hisoblanardi — 2 ta so'zi yuklangan
+    1-daraja ham tugab, coin to'lardi va keyin qolgan so'zlar kelsa ham coin
+    qaytmasdi (D1: "1000 tasining hammasi tasdiqlangan").
+
+    Endi daraja kamida BAND_SIZE so'z o'rniga ega bo'lsagina "tayyor": unda
+    yangi so'z beriladi, tugasa coin to'lanadi. O'rin = har qanday holatdagi
+    qator: keyin o'chirilgan (disabled) so'z ham o'rin bo'lib qoladi — DESIGN
+    §9: o'chirilgan so'z darajani yopmaydi, faqat band_total ni kamaytiradi.
+    Yuklovchi qator o'chirmaydi, ya'ni tayyor daraja tayyorligicha qoladi."""
+    return {int(b) for b, n in
+            db.query(W.band, func.count(W.id)).group_by(W.band)
+            if b is not None and int(n) >= BAND_SIZE}
+
+
 # ------------------------------------------------------------- vaqt ---
 # Testlar soatni shu ikki funksiya orqali suradi (kunlar, ms oralig'i).
 def _now() -> datetime:
@@ -95,23 +145,38 @@ def _today() -> date:
 
 
 # --------------------------------------------------------- bayroq/kirish ---
-def enabled_branches(db: Session) -> set:
-    """Yoqilgan filiallar. Qiymat: JSON ro'yxat ("[3, 5]") yoki "3,5".
-    Bo'sh yoki yo'q — hech qayerda yoqilmagan."""
+def _flag_raw(db: Session) -> str:
     try:
         row = db.query(models.IntegrationSetting).get(FLAG_KEY)
     except Exception:
-        return set()
-    raw = ((row.value if row is not None else "") or "").strip()
+        return ""
+    return ((row.value if row is not None else "") or "").strip()
+
+
+def _is_all(x) -> bool:
+    return isinstance(x, str) and x.strip().lower() == ALL
+
+
+def parse_flag(raw):
+    """Bayroq qiymati -> ALL yoki filial id'lari to'plami.
+    Qiymat: "all" (2026-10-16 — barcha filiallar, keyin ochilgani ham),
+    JSON ro'yxat ("[3, 5]") yoki "3,5". Bo'sh / "[]" — hech qayerda."""
+    raw = (raw or "").strip()
     if not raw:
         return set()
+    if _is_all(raw):
+        return ALL
     try:
         v = json.loads(raw)
         items = v if isinstance(v, list) else [v]
     except ValueError:
         items = re.split(r"[,;\s]+", raw)
+    if any(_is_all(x) for x in items):
+        return ALL
     out = set()
     for x in items:
+        if isinstance(x, bool):
+            continue
         try:
             out.add(int(str(x).strip()))
         except (TypeError, ValueError):
@@ -119,16 +184,38 @@ def enabled_branches(db: Session) -> set:
     return out
 
 
+def flag_value(db: Session):
+    """ALL yoki yoqilgan filial id'lari (bo'sh to'plam — hamma joyda yopiq)."""
+    return parse_flag(_flag_raw(db))
+
+
+def enabled_branches(db: Session) -> set:
+    """Yoqilgan filiallar to'plami. "all" bo'lsa — bazadagi BARCHA
+    filiallar (eski chaqiruvchilar uchun bir xil ko'rinish)."""
+    v = flag_value(db)
+    if v == ALL:
+        try:
+            return {bid for (bid,) in db.query(models.Branch.id)}
+        except Exception:
+            return set()
+    return v
+
+
+def branch_enabled(db: Session, branch_id) -> bool:
+    v = flag_value(db)
+    return v == ALL or (branch_id is not None and branch_id in v)
+
+
 def _student(db: Session, user) -> models.Student:
     """Kirgan o'quvchi. Bayroq o'chiq, o'quvchi emas yoki filiali
-    yoqilmagan bo'lsa — 404 (bo'lim yo'qdek)."""
-    on = enabled_branches(db)
+    yoqilmagan bo'lsa — 404 (bo'lim yo'qdek). "all" — hamma filial."""
+    on = flag_value(db)
     if not on:
         raise HTTPException(404, _NOT_FOUND)
     if getattr(user, "role", None) != roles.STUDENT:
         raise HTTPException(404, _NOT_FOUND)
     s = _student_of_user(db, user)
-    if s is None or s.branch_id not in on:
+    if s is None or (on != ALL and s.branch_id not in on):
         raise HTTPException(404, _NOT_FOUND)
     why = roles.student_app_block_reason(s.status)
     if why:
@@ -248,15 +335,25 @@ def _build_options(db: Session, word, cache: dict, rng: random.Random):
 
 def _gap(word):
     """Misoldagi so'z o'rniga "____" (yozib topish uchun). Topilmasa —
-    misol ko'rsatilmaydi (javobni oshkor qilmaslik uchun)."""
+    misol ko'rsatilmaydi (javobni oshkor qilmaslik uchun).
+    2026-10-16 (review): faqat lemma va uning muntazam shakli bo'shliqqa
+    aylanadi (wordbank_core.gap_regex) — avval lemma bilan BOSHLANGAN har
+    so'z ham ("volt" -> "voltage") ikkinchi bo'shliq bo'lib qolardi."""
     ex = (word.example_en or "").strip()
     lemma = (word.lemma or "").strip()
     if not ex or not lemma:
         return None
-    rx = re.compile(r"(?<![A-Za-z])" + re.escape(lemma) + r"[A-Za-z]*", re.I)
+    rx = WC.gap_regex(lemma)
     if not rx.search(ex):
         return None
     return rx.sub("____", ex)
+
+
+def _gap_forms(word) -> set:
+    """Bo'shliqqa aylangan shakllar — yozib topishda ular ham to'g'ri
+    (DESIGN §2: "the exact form in the gapped example"). 2026-10-16."""
+    return {_norm(f) for f in WC.gap_forms((word.lemma or "").strip(),
+                                           (word.example_en or "").strip())}
 
 
 def _mode_for(sw, word_id: int, day: date) -> str:
@@ -341,10 +438,11 @@ def _check_open(sess, now: datetime) -> None:
         raise HTTPException(410, "Sessiya muddati tugagan — yangisini boshlang")
 
 
-def _grade(item, given):
+def _grade(item, given, forms=None):
     """(to'g'rimi, saqlanadigan javob). R: variant indeksi; P: yozilgan
     so'z (katta-kichik harf va chetdagi bo'shliq/tinish farq qilmaydi,
-    lemma qabul qilinadi). Bo'sh / "Bilmayman" — (False, None)."""
+    lemma va — 2026-10-16 — misoldagi bo'shliq shakli `forms` qabul
+    qilinadi). Bo'sh / "Bilmayman" — (False, None)."""
     if item.mode == "R":
         if given is None or isinstance(given, bool):
             return False, None
@@ -362,7 +460,8 @@ def _grade(item, given):
     text = _norm(given) if isinstance(given, str) else ""
     if not text:
         return False, None
-    return text == _norm(item.expected), given.strip()[:64]
+    ok = text == _norm(item.expected) or text in (forms or ())
+    return ok, given.strip()[:64]
 
 
 def _reveal(item) -> str:
@@ -466,8 +565,12 @@ def _pay_band(db: Session, s, band: int, coins: int):
 
 def _award_bands(db: Session, s, bands) -> list:
     """Berilgan darajalardan qaysilari to'liq tasdiqlangan bo'lsa
-    (wordbank_core.bands_completed) — yangilari uchun coin."""
+    (wordbank_core.bands_completed) — yangilari uchun coin.
+    2026-10-16 (review): faqat kontenti to'liq darajalar (_ready_bands) —
+    qisman yuklangan daraja coin to'lamaydi (coin keyin qaytarilmaydi)."""
     bands = {int(b) for b in bands if b}
+    if bands:
+        bands &= _ready_bands(db)
     if not bands:
         return []
     band_ids = {b: set() for b in bands}
@@ -514,10 +617,12 @@ def wordbank_me(db: Session = Depends(get_db),
               .filter(W.status == "active").group_by(W.band)}
     awards = {a.band: a for a in
               db.query(BA).filter(BA.student_id == s.id)}
+    ready = _ready_bands(db)
     # O'z-o'zini tiklash: daraja to'liq, lekin coin yozilmagan (masalan
     # so'z o'chirilib daraja kichraydi) — shu yerda bir marta to'lanadi.
+    # 2026-10-16 (review): faqat kontenti to'liq daraja (ready).
     heal = [b for b, n in totals.items()
-            if n and b not in awards
+            if n and b in ready and b not in awards
             and WC.known_count(by_band.get(b, [])) >= n]
     if heal and _award_bands(db, s, heal):
         db.commit()
@@ -532,7 +637,8 @@ def wordbank_me(db: Session = Depends(get_db),
         bands.append({
             "band": b, "label": f"Common {b}000",
             "total": totals.get(b, 0), "known": k,
-            "learning": len(sts) - k, "ready": totals.get(b, 0) > 0,
+            "learning": len(sts) - k,
+            "ready": b in ready and totals.get(b, 0) > 0,
             "coins": WC.coins_for_band(b), "done": a is not None,
             "awarded_at": (a.awarded_at.isoformat()
                            if a is not None and a.awarded_at else None),
@@ -572,11 +678,15 @@ def wordbank_session(payload=Body(default=None),
            .order_by(prio, SW.due, W.rank).limit(size).all())
     picks = [(w, _mode_for(sw, w.id, day)) for sw, w in due]
     left = size - len(picks)
-    if left > 0:
+    # 2026-10-16 (review): yangi so'z faqat kontenti to'liq darajadan
+    # (_ready_bands) — qisman yuklangan daraja mashqqa ochilmaydi.
+    ready = _ready_bands(db) if left > 0 else set()
+    if left > 0 and ready:
         tracked = (db.query(SW.id)
                    .filter(SW.student_id == s.id, SW.word_id == W.id)
                    .exists())
-        for w in (db.query(W).filter(*_HAS_UZ).filter(~tracked)
+        for w in (db.query(W).filter(*_HAS_UZ)
+                  .filter(W.band.in_(sorted(ready)), ~tracked)
                   .order_by(W.rank).limit(left)):
             picks.append((w, "R"))      # birinchi ko'rish — tanlash
     if not picks:
@@ -590,6 +700,40 @@ def wordbank_session(payload=Body(default=None),
     db.commit()
     return {"session_id": sess.id, "kind": "practice",
             "expires_at": sess.expires_at.isoformat(), "items": items}
+
+
+def _timeout(db: Session, s, sess, item, now: datetime, client_ms):
+    """2026-10-16 (review): "vaqt tugadi" (DESIGN §2: o'tkazib yuborilgan
+    deb yoziladi, pog'ona o'zgarmaydi, so'z vaqti kelganicha qoladi).
+
+    Avval mijoz vaqt tugaganda given=null yuborardi va server uni oddiy
+    xato deb hisoblardi: tasdiqlangan so'z unutilgan bo'lib qolardi, ochiq
+    qoldirilgan mashq esa 20 ta savolni ketma-ket "xato" qilardi.
+
+    Da'vo server oralig'i bilan tekshiriladi: savol vaqtidan (LIMIT_MS)
+    tezroq kelgan "timeout" — None qaytadi va oddiy "Bilmayman" sifatida
+    baholanadi (xatodan qochish uchun ishlatib bo'lmaydi). To'g'ri javob
+    QAYTARILMAYDI: aks holda vaqtni o'tkazib javobni ko'rib, keyingi
+    sessiyada (so'z hali vaqti kelgan) yozib, unutish o'rniga pog'ona olish
+    mumkin edi."""
+    gap = _elapsed_ms(db, sess, item, now, None)
+    if gap < LIMIT_MS.get(item.mode, LIMIT_MS["R"]) - TIMEOUT_SLACK_MS:
+        return None
+    ms = _elapsed_ms(db, sess, item, now, client_ms)
+    _mark(db, item, None, False, False, ms, now)
+    sw = (db.query(SW).filter(SW.student_id == s.id,
+                              SW.word_id == item.word_id).first())
+    st = _state(sw) if sw is not None else None
+    db.commit()
+    return {"correct": None, "expected": None, "suspect": False,
+            "timeout": True,
+            "stage": st.stage if st is not None else 0,
+            "known": bool(st is not None and st.known),
+            "due": (st.due.isoformat()
+                    if st is not None and st.due else None),
+            "awards": [],
+            "message": "Vaqt tugadi — so'z holati o'zgarmadi, "
+                       "u keyinroq yana beriladi."}
 
 
 @router.post("/api/wordbank/answer")
@@ -606,8 +750,16 @@ def wordbank_answer(payload=Body(default=None),
         raise HTTPException(409, "Bu savolga allaqachon javob berilgan")
     now = _now()
     _check_open(sess, now)
-    correct, given_s = _grade(item, payload.get("given"))
     mode = item.mode
+    if payload.get("timeout") is True:
+        out = _timeout(db, s, sess, item, now, payload.get("ms"))
+        if out is not None:
+            return out
+    forms = None
+    if mode == "P":
+        word = db.query(W).get(item.word_id)
+        forms = _gap_forms(word) if word is not None else None
+    correct, given_s = _grade(item, payload.get("given"), forms)
     ms = _elapsed_ms(db, sess, item, now, payload.get("ms"))
     suspect = mode == "P" and ms < SUSPECT_MS
     _mark(db, item, given_s, correct, suspect, ms, now)
@@ -796,18 +948,10 @@ def size_test_start(db: Session = Depends(get_db),
             "expires_at": sess.expires_at.isoformat()}
 
 
-@router.post("/api/wordbank/size-test/next")
-def size_test_next(payload=Body(default=None),
-                   db: Session = Depends(get_db),
-                   user=Depends(get_current_user)):
-    """Joriy blok javoblari: {session_id, band, answers: [{item_id,
-    given}]} (given — variant indeksi yoki null = "Bilmayman"). Javobsiz
-    qolganlar "Bilmayman". Keyingi blok yoki tugagan bo'lsa natija."""
-    s = _student(db, user)
-    payload = _body(payload)
-    sess = _load_session(db, s, payload, "size_test")
-    now = _now()
-    _check_open(sess, now)
+def _apply_block(db: Session, sess, payload: dict, now: datetime) -> int:
+    """Joriy blok javoblarini yozadi ({band?, answers: [{item_id, given,
+    ms}]}), javobsiz qolganlari — "Bilmayman". Joriy daraja qaytadi.
+    2026-10-16 (review): /next va /finish uchun umumiy."""
     cur = sess.band
     if payload.get("band") is not None:
         try:
@@ -832,6 +976,22 @@ def size_test_next(payload=Body(default=None),
                          since_prev=False)
         _mark(db, item, given_s, correct, False, ms, now)
     _close_unanswered(db, sess, now, band=cur)
+    return cur
+
+
+@router.post("/api/wordbank/size-test/next")
+def size_test_next(payload=Body(default=None),
+                   db: Session = Depends(get_db),
+                   user=Depends(get_current_user)):
+    """Joriy blok javoblari: {session_id, band, answers: [{item_id,
+    given}]} (given — variant indeksi yoki null = "Bilmayman"). Javobsiz
+    qolganlar "Bilmayman". Keyingi blok yoki tugagan bo'lsa natija."""
+    s = _student(db, user)
+    payload = _body(payload)
+    sess = _load_session(db, s, payload, "size_test")
+    now = _now()
+    _check_open(sess, now)
+    cur = _apply_block(db, sess, payload, now)
 
     band, ids = _pick_band(db, _for_core(_results(db, sess)))
     if band is None:
@@ -855,9 +1015,417 @@ def size_test_finish(payload=Body(default=None),
                      db: Session = Depends(get_db),
                      user=Depends(get_current_user)):
     """Testni tugatish (javobsizlar — "Bilmayman"). Natija "taxminiy",
-    tasdiqlangan son, coin va so'z holatiga ta'sir qilmaydi."""
+    tasdiqlangan son, coin va so'z holatiga ta'sir qilmaydi.
+
+    2026-10-16 (review): joriy blokning berilgan javoblari shu yerga
+    {session_id, band, answers} bilan keladi va YANGI blok ochilmaydi.
+    Avval mijoz erta tugatishda avval /next ga yuborardi — u keyingi
+    darajaning 10 ta savolini ochib qo'yar, /finish esa o'quvchi ko'rmagan
+    o'sha blokni "Bilmayman" (0%) deb natijaga qo'shardi."""
     s = _student(db, user)
-    sess = _load_session(db, s, _body(payload), "size_test")
-    result = _finish(db, s, sess, _now())
+    payload = _body(payload)
+    sess = _load_session(db, s, payload, "size_test")
+    now = _now()
+    old = db.query(ST).filter(ST.session_id == sess.id).first()
+    if old is not None:
+        return {"done": True, "result": _test_out(old)}
+    if payload.get("answers"):
+        _check_open(sess, now)
+        _apply_block(db, sess, payload, now)
+    result = _finish(db, s, sess, now)
     db.commit()
     return {"done": True, "result": result}
+
+
+# ============================================================ ADMIN ===
+# 2026-10-16: asoschi "So'z bilish" bo'limini qaysi filiallarda ochiq
+# bo'lishini o'zi boshqaradi ("all" — hammasi, [id...] — tanlanganlar,
+# [] — hamma joyda yopiq). Boshqa rollarga 403. Bayroq o'chiq bo'lsa
+# ham bu yo'l ishlaydi — aks holda asoschi uni yoqa olmasdi.
+def _admin_out(db: Session) -> dict:
+    v = flag_value(db)
+    words = db.query(func.count(W.id)).filter(*_HAS_UZ).scalar() or 0
+    rows = (db.query(models.Branch.id, models.Branch.name)
+            .order_by(models.Branch.id).all())
+    return {
+        "enabled": ALL if v == ALL else sorted(v),
+        "branches": [{"id": bid, "name": name,
+                      "enabled": v == ALL or bid in v}
+                     for bid, name in rows],
+        "words": int(words),        # mashqqa tayyor (faol, tarjimali) so'zlar
+    }
+
+
+def _want_flag(db: Session, payload) -> str:
+    """So'rovdagi {enabled: "all" | [id...]} -> saqlanadigan qiymat.
+    Noma'lum filial, son bo'lmagan qiymat — 400 (jim yutib yuborilmaydi)."""
+    hint = "enabled kerak: \"all\" yoki filial id'lari ro'yxati"
+    if not isinstance(payload, dict) or "enabled" not in payload:
+        raise HTTPException(400, hint)
+    want = payload.get("enabled")
+    if _is_all(want):
+        return ALL
+    if not isinstance(want, list):
+        raise HTTPException(400, hint)
+    ids = set()
+    for x in want:
+        if isinstance(x, bool):
+            raise HTTPException(400, f"Filial id noto'g'ri: {x}")
+        if isinstance(x, int):
+            ids.add(x)
+        elif isinstance(x, str) and x.strip().isdigit():
+            ids.add(int(x.strip()))
+        else:
+            raise HTTPException(400, f"Filial id noto'g'ri: {x}")
+    known = {bid for (bid,) in db.query(models.Branch.id)
+             .filter(models.Branch.id.in_(ids))} if ids else set()
+    bad = sorted(ids - known)
+    if bad:
+        raise HTTPException(400, f"Filial topilmadi: {bad}")
+    return json.dumps(sorted(ids))
+
+
+def _set_flag(db: Session, value: str, who) -> None:
+    row = db.query(models.IntegrationSetting).get(FLAG_KEY)
+    if row is None:
+        row = models.IntegrationSetting(key=FLAG_KEY)
+        db.add(row)
+    row.value = value
+    row.updated_by = who
+    row.updated_at = _now()
+
+
+@router.get("/api/wordbank/admin")
+def wordbank_admin_get(db: Session = Depends(get_db),
+                       user=Depends(require_role(roles.FOUNDER))):
+    """Qaysi filiallarda ochiq + mashqqa tayyor so'zlar soni."""
+    return _admin_out(db)
+
+
+@router.put("/api/wordbank/admin")
+def wordbank_admin_put(payload=Body(default=None),
+                       db: Session = Depends(get_db),
+                       user=Depends(require_role(roles.FOUNDER))):
+    """{enabled: "all" | [filial id]} — bayroqni o'zgartiradi. Har
+    o'zgarish auditda (kim, eski va yangi qiymat)."""
+    new = _want_flag(db, payload)
+    old = _flag_raw(db)
+    # 2026-10-16 (review): bayroq hali qo'yilmagan bo'lsa ("" va "[]" bir
+    # xil — hamma joyda yopiq) asoschining PUT [] i ham YOZILADI: aks holda
+    # qator yo'qligicha qolib, keyingi startda seed_enable_all uni "all" ga
+    # aylantirib, asoschining "hamma joyda yopiq" qarorini bosib ketardi.
+    changed = not old or parse_flag(old) != parse_flag(new)
+    if changed:
+        _set_flag(db, new, getattr(user, "full_name", None)
+                  or getattr(user, "username", None))
+        audit.log(db, user, entity="settings", action="update",
+                  entity_id=0, field=FLAG_KEY,
+                  old_value=old or "(bo'sh)", new_value=new,
+                  note="So'z bilish: yoqilgan filiallar")
+        db.commit()
+    out = _admin_out(db)
+    out["changed"] = changed
+    return out
+
+
+# ================================================= SO'ZLAR FAYLI (SEED) ===
+# 2026-10-16: 20 000 so'z (Common 1000 … 20000) api/wordbank_data/
+# words.json da — uni scripts/wordbank_merge.py yozadi (tarjima
+# partiyalari + mavjud lug'at birlashtiriladi). Qoidalar:
+#   * lemma bo'yicha UPSERT; bazadagi so'z HECH QACHON o'chirilmaydi
+#     (o'quvchi holati unga bog'langan) va holati (active/disabled)
+#     o'zgartirilmaydi — yangi so'z "active" bo'lib kiradi;
+#   * skip=true yoki o'zbekcha tarjimasi bo'sh qator yuklanmaydi;
+#   * fayl yo'q bo'lsa — jim o'tadi (belgi qo'yilmaydi);
+#   * belgi kaliti FAYL MAZMUNIDAN (sha256): fayl yangilansa seed o'zi
+#     qayta ishlaydi (vocab_extra_seed saboqi), o'zgarmasa — bir marta;
+#   * bir sovuq startda WORDS_BUDGET tagacha yangi qator, qolgani
+#     keyingi startda (Vercel 30 s chegarasi); belgi faqat oxirida.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+WORDS_FILE = os.path.join(_HERE, "wordbank_data", "words.json")
+SEED_WORDS = "wordbank_words_v1"
+SEED_ENABLE_ALL = "wordbank_enable_all_v1"
+WORDS_BUDGET = 5000
+_SEED_LOCK_ID = 20261016       # pg_advisory qulf kaliti (parallel startlar)
+_WORD_FIELDS = ("rank", "band", "pos", "uz_primary", "uz_alt",
+                "example_en", "example_uz")
+
+
+def words_file() -> str:
+    """words.json yo'li; WORDBANK_WORDS_FILE (testlar uchun) ustun."""
+    return os.environ.get("WORDBANK_WORDS_FILE") or WORDS_FILE
+
+
+def _read_file(path):
+    try:
+        with open(path, "rb") as f:
+            return f.read()
+    except OSError:
+        return None
+
+
+def _words_key(raw: bytes) -> str:
+    return f"{SEED_WORDS}:{hashlib.sha256(raw).hexdigest()[:12]}"
+
+
+def _try_lock(db: Session) -> bool:
+    """Bir vaqtda uyg'ongan bir nechta instansiyadan faqat bittasi
+    yozsin (vocab_extra_seed._try_lock bilan bir xil). Qulf tranzaksiya
+    bilan o'zi bo'shaydi. SQLite'da shart emas."""
+    try:
+        if db.bind.dialect.name != "postgresql":
+            return True
+        return bool(db.execute(
+            sa_text("SELECT pg_try_advisory_xact_lock(:k)"),
+            {"k": _SEED_LOCK_ID}).scalar())
+    except Exception:
+        return True
+
+
+def _txt(v):
+    if isinstance(v, (list, tuple)):          # pos: ["NOUN", "VERB"] -> NOUN
+        v = next((x for x in v if isinstance(x, str) and x.strip()), None)
+    if v is None or isinstance(v, (dict, bool)):
+        return None
+    s = str(v).strip()
+    return s or None
+
+
+def _entries(data) -> list:
+    """Fayl ko'rinishlari: {"words": [...]}, [...] yoki {lemma: {...}}."""
+    if isinstance(data, dict) and isinstance(data.get("words"), list):
+        return data["words"]
+    if isinstance(data, list):
+        return data
+    if isinstance(data, dict):
+        out = []
+        for lemma, e in data.items():
+            if isinstance(e, dict):
+                e = dict(e)
+                e.setdefault("lemma", lemma)
+                out.append(e)
+        return out
+    return []
+
+
+def parse_words(data) -> tuple:
+    """(qatorlar rank tartibida, tashlab ketilganlar soni). Yuklanmaydi:
+    skip=true, o'zbekcha tarjimasiz, rank/daraja/lemma noto'g'ri. Bir
+    lemma ikki marta kelsa — oxirgisi."""
+    rows: dict = {}
+    skipped = 0
+    for e in _entries(data):
+        if not isinstance(e, dict) or e.get("skip"):
+            skipped += 1
+            continue
+        lemma, uz = _txt(e.get("lemma")), _txt(e.get("uz_primary"))
+        rk, bd = e.get("rank"), e.get("band")
+        if isinstance(rk, bool) or isinstance(bd, bool):
+            skipped += 1
+            continue
+        try:
+            rank, band = int(rk), int(bd)
+        except (TypeError, ValueError):
+            skipped += 1
+            continue
+        if not lemma or not uz or rank <= 0 or not 1 <= band <= WC.BANDS:
+            skipped += 1
+            continue
+        alt = e.get("uz_alt")
+        if isinstance(alt, str):
+            alt = [alt]
+        alt = ([a.strip() for a in alt if isinstance(a, str) and a.strip()]
+               if isinstance(alt, list) else [])
+        rows[lemma] = {
+            "lemma": lemma, "rank": rank, "band": band,
+            "pos": _txt(e.get("pos")), "uz_primary": uz,
+            "uz_alt": json.dumps(alt, ensure_ascii=False),
+            "example_en": _txt(e.get("example_en")),
+            "example_uz": _txt(e.get("example_uz")),
+        }
+    return sorted(rows.values(), key=lambda r: r["rank"]), skipped
+
+
+def _plan(have: dict, rows: list) -> tuple:
+    """Qaysi qatorlarni yozish mumkin (rank UNIQUE). Fayldan tashqari
+    eski so'z egallagan rank'ga yangi so'z QO'YILMAYDI (eski so'z
+    o'chirilmaydi) — fayldagi qator o'tkazib yuboriladi; agar u bazada
+    bo'lsa, o'z eski joyida qoladi ("qotgan"). Fayl ichida bir rank ikki
+    marta kelsa — birinchisi.
+
+    2026-10-16 (review): CHIZIQLI ishchi navbat. Avval har yangi "qotgan"
+    so'zda butun ro'yxat qaytadan aylanardi — rank'lar bittaga surilgan
+    20 000 qatorli faylda bu ~1 daqiqa (O(n²)): Vercel 30 s chegarasidan
+    oshib, belgi qo'yilmagani uchun har sovuq startda takrorlanardi. Endi
+    qotgan so'z faqat o'zining bazadagi rank'ini xohlagan BITTA qatorni
+    tekshiradi. Qoida o'sha; navbat tartibi natijaga ta'sir qilmaydi."""
+    want = {}                      # rank -> fayl qatori
+    lost = []                      # fayl ichida rank takrori (ikkinchisi)
+    for r in rows:
+        if r["rank"] in want:
+            lost.append(r["lemma"])
+        else:
+            want[r["rank"]] = r
+    file_rank = {r["lemma"]: r["rank"] for r in rows}
+    queue = [lem for lem in have if lem not in file_rank]
+    queue += [lem for lem in lost if lem in have]
+    fixed = set()
+    while queue:
+        lem = queue.pop()
+        if lem in fixed:
+            continue
+        fixed.add(lem)
+        fr = file_rank.get(lem)
+        if fr is not None and want.get(fr, {}).get("lemma") == lem:
+            del want[fr]               # o'zi qotdi — fayldagi joyini olmaydi
+        k = have[lem]["rank"]
+        r = want.get(k)
+        if r is not None and r["lemma"] != lem:
+            del want[k]                # bazadagi egasi turibdi
+            if r["lemma"] in have:
+                queue.append(r["lemma"])
+    accepted = [r for r in rows if want.get(r["rank"]) is r]
+    ok = {r["lemma"] for r in accepted}
+    return accepted, [r["lemma"] for r in rows if r["lemma"] not in ok]
+
+
+def _upsert(db: Session, rows: list, budget) -> dict:
+    cols = (W.id, W.lemma) + tuple(getattr(W, k) for k in _WORD_FIELDS)
+    have = {}
+    for t in db.query(*cols):
+        have[t[1]] = dict(zip(("id",) + _WORD_FIELDS,
+                              (t[0],) + tuple(t[2:])))
+    accepted, conflicts = _plan(have, rows)
+    inserts, updates = [], []
+    for r in accepted:
+        old = have.get(r["lemma"])
+        if old is None:
+            inserts.append(r)
+        elif any(old[k] != r[k] for k in _WORD_FIELDS):
+            updates.append(dict(r, id=old["id"]))
+    # 2026-10-16 (review): rank'i qotib qolgan, lekin faylda bor so'z —
+    # rank va daraja bazadagidek qoladi, tarjima va misollar esa fayldan
+    # yangilanadi (avval bunday so'zning tuzatishlari umuman tushmasdi).
+    ok = {r["lemma"] for r in accepted}
+    for r in rows:
+        old = have.get(r["lemma"])
+        if old is None or r["lemma"] in ok:
+            continue
+        fr = dict(r, rank=old["rank"], band=old["band"])
+        if any(old[k] != fr[k] for k in _WORD_FIELDS):
+            updates.append(dict(fr, id=old["id"]))
+    # rank almashadigan so'zlar avval vaqtincha manfiy rank'ga (-id)
+    # o'tkaziladi — aks holda almashuvda UNIQUE(rank) yiqiladi.
+    moving = [u for u in updates if have[u["lemma"]]["rank"] != u["rank"]]
+    if moving:
+        db.execute(sa_update(W), [{"id": u["id"], "rank": -u["id"]}
+                                  for u in moving])
+    if updates:
+        db.execute(sa_update(W), [{k: u[k] for k in ("id",) + _WORD_FIELDS}
+                                  for u in updates])
+    batch = inserts if budget is None else inserts[:max(0, int(budget))]
+    if batch:
+        db.execute(sa_insert(W), [dict(r, status="active") for r in batch])
+    return {"inserted": len(batch), "updated": len(updates),
+            "left": len(inserts) - len(batch), "conflicts": len(conflicts),
+            "conflict_sample": conflicts[:10],
+            "finished": len(batch) == len(inserts)}
+
+
+def load_words(db: Session, path=None, budget=WORDS_BUDGET):
+    """words.json -> wordbank_words (idempotent). Qaytaradi:
+    None — bu fayl allaqachon to'liq yuklangan; {"missing": True} —
+    fayl yo'q (hech narsa qilinmadi); aks holda hisobot."""
+    from common import _seed_done, _seed_mark
+    path = path or words_file()
+    raw = _read_file(path)
+    if raw is None:
+        return {"missing": True}
+    key = _words_key(raw)
+    if _seed_done(db, key):
+        return None
+    if not _try_lock(db):
+        return {"locked": True, "finished": False}
+    try:
+        data = json.loads(raw.decode("utf-8-sig"))
+    except ValueError as e:
+        db.rollback()               # qulfni bo'shatamiz
+        print(f"[wordbank] words.json o'qilmadi: {e}", flush=True)
+        return {"error": "json", "finished": False}
+    rows, skipped = parse_words(data)
+    try:
+        res = _upsert(db, rows, budget)
+        db.commit()
+    except IntegrityError as e:
+        # parallel start boshqa instansiyada yozdi — keyingi startda davom
+        db.rollback()
+        print(f"[wordbank] so'zlar yozilmadi (to'qnashuv): {e}", flush=True)
+        return {"error": "conflict", "finished": False}
+    res["skipped"] = skipped
+    res["key"] = key
+    if res["finished"]:
+        _seed_mark(db, key)
+    print(f"[wordbank] so'zlar yuklandi: {res}", flush=True)
+    return res
+
+
+def words_pending(db: Session, path=None) -> bool:
+    """words.json bor, lekin hali to'liq yuklanmagan."""
+    from common import _seed_done
+    raw = _read_file(path or words_file())
+    return raw is not None and not _seed_done(db, _words_key(raw))
+
+
+def seed_enable_all(db: Session, path=None):
+    """BIR MARTALIK (Jahongir, 2026-10-16: "barcha filiallar"): bayroq
+    hali qo'yilmagan bo'lsa (yo'q yoki bo'sh) — "all". Asoschi pilot
+    ro'yxatini allaqachon qo'ygan bo'lsa — tegilmaydi. So'zlar to'liq
+    yuklanmaguncha (yoki mashqqa tayyor so'z yo'q bo'lsa, yoki — 2026-10-16
+    review — 1-daraja to'liq bo'lmasa) kutadi — bo'sh bo'limni hammaga
+    ochib qo'ymaslik uchun; belgi qo'yilmaydi, keyingi startda qayta
+    tekshiriladi. Asoschi PUT qilgan bo'lsa (hatto [] ham) bayroq qatori
+    bor — tegilmaydi. Qaytarish: PUT /api/wordbank/admin."""
+    from common import _seed_done, _seed_mark
+    if _seed_done(db, SEED_ENABLE_ALL):
+        return None
+    if words_pending(db, path):
+        return "pending"
+    if db.query(W.id).filter(*_HAS_UZ).first() is None:
+        return "no-words"
+    # 2026-10-16 (review): 1-daraja to'liq bo'lmaguncha ochilmaydi — bitta
+    # tarjimali so'z bilan ham "all" bo'lib, chala bo'lim hammaga ochilardi.
+    if 1 not in _ready_bands(db):
+        return "not-ready"
+    old = _flag_raw(db)
+    out = "kept"
+    if not old:
+        _set_flag(db, ALL, "Tizim")
+        audit.log(db, None, entity="settings", action="update", entity_id=0,
+                  field=FLAG_KEY, old_value="(bo'sh)", new_value=ALL,
+                  note="So'z bilish: barcha filiallar uchun ochildi "
+                       "(asoschi so'rovi, 2026-10-16)")
+        try:
+            db.commit()
+        except IntegrityError:
+            db.rollback()           # parallel start qo'ydi — keyingi startda
+            return "conflict"
+        out = "enabled"
+    _seed_mark(db, SEED_ENABLE_ALL)
+    return out
+
+
+def seed_startup(db: Session, path=None) -> dict:
+    """main.py startda chaqiradi: avval so'zlar, keyin bir martalik
+    "hammaga ochish". Xato boshqa seedlarni to'xtatmaydi."""
+    out = {}
+    try:
+        out["words"] = load_words(db, path)
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        out["words"] = {"error": str(e)[:200]}
+    try:
+        out["enable_all"] = seed_enable_all(db, path)
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        out["enable_all"] = f"error: {str(e)[:200]}"
+    return out

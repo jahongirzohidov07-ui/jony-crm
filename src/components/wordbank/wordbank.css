@@ -1,0 +1,30 @@
+/* SO'Z BILISH (2026-10-16): daraja chizig'i, taymer va daraja tugaganda
+   bayram (faqat CSS konfetti — kutubxona qo'shilmadi). */
+
+.wb-bar { position: relative; display: flex; height: 8px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+.wb-bar > .wb-known { background: #10b981; }
+.wb-bar > .wb-learning { background: #38bdf8; }
+.wb-bar-wrap { position: relative; }
+/* Test bo'yicha taxmin — nuqtali chiziq (tasdiqlangan songa qo'shilmaydi) */
+.wb-est-mark { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px dotted #64748b; pointer-events: none; }
+
+.wb-timer { height: 6px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+.wb-timer > div { height: 100%; border-radius: 999px; transition: width .2s linear, background-color .3s; }
+
+.wb-celebrate { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 16px; background: #020d38e6; overflow: hidden; }
+.wb-celebrate-card { position: relative; z-index: 1; width: 100%; max-width: 380px; text-align: center; animation: wb-pop .45s cubic-bezier(.2, 1.4, .4, 1) both; }
+.wb-confetti { position: absolute; inset: 0; pointer-events: none; }
+.wb-confetti i { position: absolute; top: -12px; width: 9px; height: 14px; border-radius: 2px; opacity: .95; animation: wb-fall 2.6s linear infinite; }
+@keyframes wb-fall {
+  0% { transform: translate3d(0, -20px, 0) rotate(0deg); }
+  100% { transform: translate3d(var(--wb-dx, 0px), 105vh, 0) rotate(560deg); }
+}
+@keyframes wb-pop {
+  0% { transform: scale(.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wb-confetti { display: none; }
+  .wb-celebrate-card { animation: none; }
+  .wb-timer > div { transition: none; }
+}

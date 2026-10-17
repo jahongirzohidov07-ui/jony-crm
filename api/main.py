@@ -1374,3 +1374,24 @@ try:
         _sm35(_db35)
 except Exception as _e35:
     print(f"[seed] mock bazasi xato: {_e35}")
+
+
+# ---------------------------------------------------------------------------
+# "SO'Z BILISH" LUG'AT BANKI (2026-10-16)
+#
+# Jahongir: "barcha filiallar" uchun ochilsin.
+#   1) api/wordbank_data/words.json -> wordbank_words: lemma bo'yicha
+#      upsert, hech narsa o'chirilmaydi; fayl yo'q bo'lsa jim o'tadi;
+#      bir startda WORDS_BUDGET tagacha, qolgani keyingi startda.
+#   2) so'zlar to'liq yuklangach BIR MARTA bayroq "all" (agar oldin
+#      qo'yilmagan bo'lsa). Asoschi /api/wordbank/admin dan qaytaradi.
+# Tafsilot — wordbank.seed_startup.
+# ---------------------------------------------------------------------------
+try:
+    from sqlalchemy.orm import Session as _VSWB
+    with _VSWB(engine) as _dbwb:
+        _rwb = _r_wordbank.seed_startup(_dbwb)
+        if _rwb.get("enable_all") not in (None, "no-words"):
+            print(f"[seed] so'z bilish: {_rwb}")
+except Exception as _ewb:
+    print(f"[seed] so'z bilish xato: {_ewb}")

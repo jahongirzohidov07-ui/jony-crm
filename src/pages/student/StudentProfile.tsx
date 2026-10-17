@@ -11,6 +11,7 @@ import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { useAuth } from "../../lib/AuthContext";
 import { api } from "../../lib/api";
 import { fmtNum, type LevelProgress } from "../../lib/studentApi";
+import { WordbankProfileSection } from "../../components/wordbank/WordbankCards";
 
 /**
  * JONY STUDENT — PROFIL (2026-08-16 da dizayn bo'yicha qayta yozildi).
@@ -384,6 +385,11 @@ export default function StudentProfile() {
           </p>
         </div>
       )}
+
+      {/* ---- So'z bilish (2026-10-16, OWNER D3): tasdiqlangan so'zlar,
+           tugatilgan darajalar va "Sertifikatlarim" joyi. Bo'lim yopiq
+           bo'lsa — hech narsa chiqmaydi. */}
+      <WordbankProfileSection />
 
       {/* ------------------------------------------------ liga */}
       {!!d.writing_progress?.submitted && (

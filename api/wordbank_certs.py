@@ -47,7 +47,9 @@ bermaydi (audit_admin._PRIVATE_ENTITIES). Jadval qatorlari va fayllar
 hech qachon o'chirilmaydi (D4) — students._PURGE_KEEP_TABLES ga qarang.
 """
 import base64
+import functools
 import hashlib
+import itertools
 import json
 import math
 import os
@@ -57,9 +59,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from datetime import date, datetime, timedelta
+from types import SimpleNamespace
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, Response
 from sqlalchemy import case, func, or_, select, update as sa_update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, aliased
 
 import audit
@@ -86,6 +90,7 @@ WITHDRAWN = "withdrawn"
 REVOKED = "revoked"
 
 _IN_CHUNK = 500                      # IN (...) ro'yxatini bo'lib so'rash
+_ID_MAX = 2 ** 31 - 1                # id INTEGER ustuni chegarasi
 LIST_LIMIT = 500                     # xodim navbatida bir so'rovda eng ko'p
 NOTE_MAX = 500                       # izohlar uzunligi
 TEACHER_URL = "/vocab-certs"         # ustoz bildirishnomasi ochadigan sahifa
@@ -572,11 +577,16 @@ def _limits(db: Session, sid: int, now: datetime) -> dict:
 
 def _cid(raw) -> int:
     """Yo'ldagi id. Son bo'lmasa — 404 (422 emas: o'chiq bo'lim yoki
-    begona yozuv haqida hech narsa bilinmasin)."""
+    begona yozuv haqida hech narsa bilinmasin). 2026-10-17 (review):
+    INTEGER chegarasidan tashqari son ham 404 (bazada OverflowError /
+    DataError — 500 bo'lardi)."""
     try:
-        return int(str(raw))
+        v = int(str(raw))
     except (TypeError, ValueError):
         raise HTTPException(404, "Sertifikat topilmadi")
+    if not 0 < v <= _ID_MAX:
+        raise HTTPException(404, "Sertifikat topilmadi")
+    return v
 
 
 def _own(db: Session, s, raw_id):
@@ -1310,15 +1320,68 @@ def revoke_cert(cid: str, payload=Body(default=None),
 #   * Certificate qatori (CRM sertifikati) yaratiladi — u yuqoridagi
 #     CRM_KINDS qoidasi bilan darhol "tasdiqlangan" belgi bo'ladi. SMM
 #     vazifasi YARATILMAYDI (natija allaqachon kanalda e'lon qilingan).
-#   * Takror yo'q: shu post havolasi yoki shu tur/daraja/ball bilan
-#     sertifikati bor o'quvchiga qayta yozilmaydi. Belgi kaliti fayl
-#     mazmunidan — fayl yangilansa qayta ishlaydi (idempotent).
-TG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+#   * Takror yo'q: shu tur va darajadagi sertifikati bor o'quvchiga qayta
+#     yozilmaydi. Belgi kaliti fayl mazmunidan — fayl yangilansa qayta
+#     ishlaydi (idempotent).
+#
+# 2026-10-17 (v2): production'da v1 natijasi — yaratildi 0, bor 31, bir
+# nechta mos 3, topilmadi ~140; 2026-10-03/05 dagi hozirgi o'quvchilar ham
+# topilmadi ("Azamova Sevinch", "Pulatova Sarvinoz", "Otayeva Kamola"):
+# CRM'da ism boshqacha yozilgan (-xon/-oy qo'shimchasi, o'/u, a/o, dj/j,
+# iy/i, ruscha yozilish). Shuning uchun:
+#   * EHTIYOTKOR o'xshashlik (_match): aniq moslik topilmasa, so'zlar
+#     "qat'iy o'xshash" bo'lsa ham mos (_tok_eq: bosh qismi — qisqasi
+#     >= 4 harf, uzuni ko'pi bilan 3 harf qo'shadi; yoki bitta harf farqi —
+#     ikkalasi >= 5 harf). Postdagi har so'z o'quvchi ismining ALOHIDA
+#     so'ziga mos kelishi shart; baribir faqat BITTA o'quvchi bo'lsa.
+#   * TAKROR XATOSI tuzatildi: "bor" tekshiruvi OR(post havolasi, tur +
+#     daraja) edi — bitta postda bir odamning ikki natijasi (4691: IELTS
+#     7.0 va 7.5) bo'lsa, ikkinchisi "bor" bo'lib qolardi. Endi qoida
+#     bitta: o'quvchida SHU TUR va SHU DARAJA sertifikati bor bo'lsa —
+#     bor (havola ahamiyatsiz).
+#   * TG_SEED v2 — production bir marta qayta yuradi; bor sertifikatlar
+#     yuqoridagi qoida bilan o'tkaziladi, takror bo'lmaydi.
+#   * Qolganini xodim o'zi bog'laydi / "bizniki emas" deb yashiradi
+#     (/api/wordbank/telegram-results, faqat VOCAB_CERT_REVOKE). Holat
+#     JONLI hisoblanadi (fayl + baza); ism faqat xodim yo'lida — ochiq
+#     /api/wordbank/status da faqat sonlar va post raqamlari.
+#
+# 2026-10-17 (v2, review): yuqoridagi "qat'iy o'xshash" (bosh qismi +
+# 3 harf, har qanday bitta harf farqi) aka-uka / opa-singil va adash
+# ismlarni bitta odam qilib qo'yardi (Olimova Nozima -> Olimov Nozim,
+# Otayeva Kamola -> Otayeva Kamila, Aliyev -> Valiyev, Xasan -> Husan) —
+# boshqa odamga DARHOL tasdiqlangan sertifikat. Endi avtomat bog'lash
+# (_tok_eq) faqat TOR ro'yxat bilan: aynan; ism oxiriga -xon/-oy/-bek/
+# -jon/-oyim qo'shilishi; bitta o/u, a/o, p/b, k/q, d/t almashishi
+# (oxirgi harf emas); bitta y yoki d qo'shilishi (iy/i, ye/e, dj/j;
+# boshida va oxirida emas). Oxirgi harfi farq qiladigan juftlik (-ov/-ova,
+# Diyor/Diyora) hech qachon teng emas. Otasining ismi (-ovna/-evna/
+# -ovich/-evich, "... o'g'li/qizi") solishtirishga kirmaydi. Bo'sh
+# o'xshashlik (_tok_cost) — faqat xodimga nomzod.
+#   * Holat qoidasi BITTA (_TgCtx.state): seed ham, xodim ro'yxati ham
+#     shuni ishlatadi — xodim qo'lda bog'lagan natijani keyingi seed
+#     boshqa o'quvchiga qayta bermaydi. "Bog'langan" taxmini (havolasiz)
+#     faqat AYNAN ism bilan.
+#   * Seed Postgres'da tranzaksiya qulfi bilan (parallel nusxalar
+#     takror sertifikat yaratmasin); sertifikatlar, hisobot va belgi —
+#     bitta commit.
+#   * Xodim qarorlari "wordbank_tg_links" da ({"post:ism:tur:daraja":
+#     o'quvchi id}): qo'lda bog'lash va "natija unda allaqachon bor" deb
+#     tasdiqlash shu yerga yoziladi.
+TG_FILE =os.path.join(os.path.dirname(os.path.abspath(__file__)),
                        "wordbank_data", "telegram_results.json")
-TG_SEED = "wordbank_tg_certs_v1"
+TG_SEED = "wordbank_tg_certs_v2"
 TG_REPORT_KEY = "wordbank_tg_import"   # IntegrationSetting: sonlar + post raqamlari
+TG_DISMISSED_KEY = "wordbank_tg_dismissed"   # IntegrationSetting: ["post:ism", ...]
+TG_LINKS_KEY = "wordbank_tg_links"   # IntegrationSetting: {"post:ism:tur:daraja": sid}
+TG_SEED_LOCK = 20261017              # pg_advisory qulf kaliti (seed_telegram)
 TG_CHANNEL = "https://t.me/JonyAcademy/"
 TG_BY = "Telegram (avtomat)"
+TG_STATUSES = ("unmatched", "ambiguous", "linked", "dismissed")
+TG_MAX_CANDIDATES = 5
+TG_DUP = "Bu o'quvchida bu natija allaqachon bor"
+TG_TAKEN = "Bu natija allaqachon boshqa o'quvchiga bog'langan"
+_TG_POST_RE = re.compile(r"t\.me/JonyAcademy/(\d+)")
 
 _CYR = {"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e",
         "ё": "yo", "ж": "j", "з": "z", "и": "i", "й": "y", "к": "k",
@@ -1329,20 +1392,357 @@ _CYR = {"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e",
         "ҳ": "h"}
 
 
-def _name_tokens(s) -> frozenset:
-    """Ismni solishtirish uchun so'zlar to'plami: kichik harf, kirill ->
-    lotin, tutuq belgisi tashlanadi, x/kh -> h, faqat harflar."""
+def _name_words(s) -> list:
+    """Ism so'zlari TARTIB bilan: kichik harf, kirill -> lotin, tutuq
+    belgisi tashlanadi, x/kh -> h, faqat harflar (2+ harf)."""
     s = (s or "").lower()
     s = "".join(_CYR.get(ch, ch) for ch in s)
     s = re.sub(r"[ʻʼ‘’`'´]", "", s)
     s = s.replace("kh", "h").replace("x", "h")
-    return frozenset(t for t in re.findall(r"[a-z]+", s) if len(t) > 1)
+    return [t for t in re.findall(r"[a-z]+", s) if len(t) > 1]
 
 
-def _tg_rows(raw: bytes) -> list:
+def _name_tokens(s) -> frozenset:
+    """Ismni solishtirish uchun so'zlar to'plami (_name_words)."""
+    return frozenset(_name_words(s))
+
+
+_PATRO_MARK = frozenset({"ogli", "ugli", "qizi", "kizi"})
+_PATRO_END = ("ovna", "evna", "ovich", "evich")
+
+
+def _own_tokens(s) -> frozenset:
+    """CRM ismidan OTASINING ISMISIZ so'zlar (2026-10-17, review):
+    "Akmal o'g'li" / "Anvar qizi" (belgi va undan oldingi so'z) va
+    -ovna/-evna/-ovich/-evich so'zlari tashlanadi. Aks holda postdagi
+    "Akmal Sobirov" (ota) "Sobirov Abdurahmon Akmal o'g'li" (bola) ga,
+    "Anvarova Ziyoda" — "Karimova Ziyoda Anvarovna" ga bog'lanardi."""
+    w = _name_words(s)
+    drop = set()
+    for i, t in enumerate(w):
+        if t in _PATRO_MARK:
+            drop.update((i, i - 1))
+        elif t.endswith(_PATRO_END):
+            drop.add(i)
+    return frozenset(t for i, t in enumerate(w) if i not in drop)
+
+
+# --------------------------------------------------- ism o'xshashligi ---
+def _lev1(a: str, b: str) -> bool:
+    """Levenshtein masofasi <= 1: bitta harf almashgan, qo'shilgan yoki
+    tushib qolgan (sobirov/sabirov, adildjonova/adiljonova)."""
+    if a == b:
+        return True
+    if len(a) > len(b):
+        a, b = b, a
+    if len(b) - len(a) > 1:
+        return False
+    i = 0
+    while i < len(a) and a[i] == b[i]:
+        i += 1
+    if len(a) == len(b):
+        return a[i + 1:] == b[i + 1:]
+    return a[i:] == b[i + 1:]
+
+
+def _lev_le(a: str, b: str, k: int) -> bool:
+    """Levenshtein masofasi <= k (k kichik; satr bo'yi farqi k dan katta
+    bo'lsa yoki qator minimumi k dan oshsa — darhol yo'q)."""
+    if abs(len(a) - len(b)) > k:
+        return False
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a, 1):
+        cur = [i] + [0] * len(b)
+        low = i
+        for j, cb in enumerate(b, 1):
+            v = min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (ca != cb))
+            cur[j] = v
+            if v < low:
+                low = v
+        if low > k:
+            return False
+        prev = cur
+    return prev[-1] <= k
+
+
+@functools.lru_cache(maxsize=1 << 16)
+def _tok_cost(a: str, b: str):
+    """Ikki so'z o'xshashligi "narxi" — FAQAT xodimga nomzod tanlash va
+    tartiblash uchun (2026-10-17, review: avtomat bog'lash — _tok_eq):
+      0 — aynan bir xil;
+      1 — yaqin: _tok_eq, yoki bosh qismi (qisqasi >= 4 harf, uzuni
+          ko'pi bilan 3 harf qo'shadi), yoki Levenshtein <= 1, ikkalasi
+          >= 5 harf;
+      2 — bo'sh o'xshash: Levenshtein <= 2, ikkalasi >= 4 harf;
+      3 — bo'sh o'xshash: umumiy boshi >= 6 harf va qisqasining 70% i
+          (abdumannabxonov/abdumannabov);
+      None — o'xshamaydi.
+    1–3 HECH QACHON avtomat bog'lamaydi (aka-uka, adash ismlar ham shu
+    yerga tushadi) — xodim ko'rib tanlaydi."""
+    if a == b:
+        return 0
+    if _tok_eq(a, b):
+        return 1
+    s, lng = (a, b) if len(a) <= len(b) else (b, a)
+    d = len(lng) - len(s)
+    if len(s) >= 4 and d <= 3 and lng.startswith(s):
+        return 1
+    if len(s) >= 5 and d <= 1 and _lev1(s, lng):
+        return 1
+    if len(s) >= 4 and d <= 2 and _lev_le(s, lng, 2):
+        return 2
+    if len(s) >= 6:
+        n = 0
+        while n < len(s) and s[n] == lng[n]:
+            n += 1
+        if n >= max(6, math.ceil(0.7 * len(s))):
+            return 3
+    return None
+
+
+# Avtomat bog'lashga yaraydigan yozilish farqlari (2026-10-17, review).
+# x -> h normallashtirilgan, shuning uchun -xon = "hon".
+_TG_SUFFIX = ("hon", "oy", "bek", "jon", "oyim")
+_TG_SWAP = frozenset(frozenset(p) for p in ("ou", "ao", "pb", "kq", "dt"))
+_TG_INS = frozenset("yd")
+_TG_SUFFIX_MAX = max(len(x) for x in _TG_SUFFIX)
+
+
+@functools.lru_cache(maxsize=1 << 16)
+def _tok_eq(a: str, b: str) -> bool:
+    """AVTOMAT bog'lash qoidasi — tor ro'yxat, umumiy tahrir masofasi
+    EMAS (aka-uka va adash ismlar teng bo'lib qolmasin):
+      * aynan bir xil;
+      * ism oxiriga qo'shimcha: qisqasi >= 4 harf, uzuni = qisqasi +
+        -xon/-oy/-bek/-jon/-oyim (sevinch/sevinchxon);
+      * ikkalasi >= 5 harf, OXIRGI harfi bir xil va: bitta o/u, a/o,
+        p/b, k/q, d/t almashgan (yoldashev/yuldashev, gaibova/gaipova)
+        yoki bitta y / d qo'shilgan, boshida va oxirida emas (otaeva/
+        otayeva, adiljonova/adildjonova).
+    Shuning uchun -ov/-ova, Diyor/Diyora, Kamola/Kamila, Xasan/Husan,
+    Aliyev/Valiyev, Nazarova/Nazirova — teng EMAS."""
+    if a == b:
+        return True
+    s, lng = (a, b) if len(a) <= len(b) else (b, a)
+    if len(s) >= 4 and lng.startswith(s) and lng[len(s):] in _TG_SUFFIX:
+        return True
+    if len(s) < 5 or s[-1] != lng[-1]:
+        return False
+    if len(s) == len(lng):
+        diff = [(x, y) for x, y in zip(s, lng) if x != y]
+        return len(diff) == 1 and frozenset(diff[0]) in _TG_SWAP
+    if len(lng) == len(s) + 1:
+        for i in range(1, len(lng) - 1):
+            if lng[:i] + lng[i + 1:] == s:
+                return lng[i] in _TG_INS
+    return False
+
+
+def _dels(w: str) -> set:
+    """So'zning o'zi va bitta harfi tashlangan hamma ko'rinishlari."""
+    return {w} | {w[:i] + w[i + 1:] for i in range(len(w))}
+
+
+class _TgIndex:
+    """Bir chaqiruv uchun o'quvchilar ismi indeksi (2026-10-17): HAMMA
+    o'quvchi (istalgan holat), faqat id, full_name, branch_id — photo
+    o'qilmaydi. So'z -> o'quvchilar; yaqin so'zlarni tez topish uchun
+    ikki yordamchi jadval (bitta harf tashlangan ko'rinishlar va 1–4 harf
+    qisqargan boshlar) — har post uchun hamma o'quvchi aylanib
+    chiqilmaydi. toks / by_tok — otasining ismisiz (_own_tokens, moslik
+    shu bilan); full — hamma so'zlar (faqat nomzod bahosi uchun)."""
+
+    def __init__(self, rows):
+        self.name, self.branch, self.toks, self.by_tok = {}, {}, {}, {}
+        self.full = {}
+        for sid, full_name, branch_id in rows:
+            sid = int(sid)
+            words = _own_tokens(full_name)
+            self.name[sid] = full_name
+            self.branch[sid] = branch_id
+            self.toks[sid] = tuple(sorted(words))
+            self.full[sid] = tuple(sorted(_name_tokens(full_name)))
+            for w in words:
+                self.by_tok.setdefault(w, set()).add(sid)
+        self._del, self._pre, self._near = {}, {}, {}
+        for w in self.by_tok:
+            if len(w) >= 5:
+                for v in _dels(w):
+                    self._del.setdefault(v, set()).add(w)
+            for k in range(max(4, len(w) - _TG_SUFFIX_MAX), len(w)):
+                self._pre.setdefault(w[:k], set()).add(w)
+
+    def near(self, q: str) -> set:
+        """Indeksdagi q ga yaqin so'zlar — _tok_eq (avtomat) va _tok_cost
+        <= 1 (nomzod) bo'ladigan hamma so'zlar shu to'plam ichida; q ning
+        o'zi ham. Aniq qoidani chaqiruvchi tekshiradi."""
+        got = self._near.get(q)
+        if got is not None:
+            return got
+        out = {q} if q in self.by_tok else set()
+        if len(q) >= 4:
+            out |= self._pre.get(q, set())          # q — qisqasi
+            for k in range(max(4, len(q) - _TG_SUFFIX_MAX), len(q)):
+                if q[:k] in self.by_tok:            # q — uzuni
+                    out.add(q[:k])
+        if len(q) >= 5:
+            for v in _dels(q):
+                for w in self._del.get(v, ()):
+                    if _lev1(q, w):
+                        out.add(w)
+        self._near[q] = out
+        return out
+
+    def sids(self, words) -> set:
+        out = set()
+        for w in words:
+            out |= self.by_tok.get(w, set())
+        return out
+
+
+def _tg_index(db: Session) -> _TgIndex:
+    S = models.Student
+    return _TgIndex(db.query(S.id, S.full_name, S.branch_id).all())
+
+
+def _assign(ptoks, stoks, eq) -> bool:
+    """Postdagi har so'z o'quvchi ismining ALOHIDA (boshqa-boshqa) so'ziga
+    mos keladimi — kichik ikki tomonlama moslik (so'zlar 2–5 ta)."""
+    def go(i, used):
+        if i == len(ptoks):
+            return True
+        return any(j not in used and eq(ptoks[i], t) and go(i + 1, used | {j})
+                   for j, t in enumerate(stoks))
+    return len(ptoks) <= len(stoks) and go(0, frozenset())
+
+
+def _match_how(ix: _TgIndex, name) -> tuple:
+    """(holat, [o'quvchi id], usul). Holat: "match" (aynan bitta),
+    "ambiguous" (bir nechta), "unmatched". Usul: "exact" | "fuzzy" | None.
+    Tartib: aynan moslik (postdagi so'zlar o'quvchi ismida, otasining
+    ismisiz) bitta bo'lsa — o'sha; bir nechta bo'lsa — ambiguous
+    (o'xshashlikka o'tilmaydi); hech kim bo'lmasa — _tok_eq (tor ro'yxat):
+    bitta — match, bir nechta — ambiguous, hech kim — unmatched. Ismda
+    kamida 2 so'z bo'lishi shart."""
+    toks = _name_tokens(name)
+    if len(toks) < 2:
+        return "unmatched", [], None
+    exact = None
+    for w in toks:
+        s = ix.by_tok.get(w, set())
+        exact = set(s) if exact is None else exact & s
+        if not exact:
+            break
+    if exact:
+        return ("match" if len(exact) == 1 else "ambiguous"), sorted(exact), \
+            "exact"
+    pool = None
+    for w in toks:
+        s = ix.sids(ix.near(w))
+        pool = s if pool is None else pool & s
+        if not pool:
+            break
+    ptoks = sorted(toks)
+    fz = sorted(sid for sid in (pool or ())
+                if _assign(ptoks, ix.toks[sid], _tok_eq))
+    if fz:
+        return ("match" if len(fz) == 1 else "ambiguous"), fz, "fuzzy"
+    return "unmatched", [], None
+
+
+def _match(ix: _TgIndex, name) -> tuple:
+    """(holat, [o'quvchi id]) — _match_how ning qisqasi."""
+    st, ids, _how = _match_how(ix, name)
+    return st, ids
+
+
+def _best_cost(ptoks, stoks):
+    """Yaqin nomzod bahosi: postdagi har so'z o'quvchining ALOHIDA so'ziga
+    bo'sh o'xshash (_tok_cost <= 3), kamida bittasi qat'iy (<= 1); eng
+    kichik yig'indi yoki None."""
+    k, m = len(ptoks), len(stoks)
+    if k > m:
+        return None
+    cost = [[_tok_cost(p, s) for s in stoks] for p in ptoks]
+    if any(all(c is None for c in row) for row in cost):
+        return None
+    best = None
+    for perm in itertools.permutations(range(m), k):
+        cs = [cost[i][j] for i, j in enumerate(perm)]
+        if None in cs or min(cs) > 1:
+            continue
+        t = sum(cs)
+        if best is None or t < best:
+            best = t
+    return best
+
+
+def _suggest(ix: _TgIndex, toks, exclude=(), ok=None,
+             limit: int = TG_MAX_CANDIDATES) -> list:
+    """Xodimga taklif (yaqin nomzodlar, avtomat bog'lanmaydi): kamida bitta
+    so'zi yaqin o'quvchilar ichidan _best_cost bo'yicha eng yaqinlari
+    (baho — ismning hamma so'zlari bilan, otasining ismi ham). ok —
+    chegara (filial rahbari faqat o'z filiali)."""
+    if len(toks) < 2 or limit <= 0:
+        return []
+    ptoks = sorted(toks)
+    pool = set()
+    for w in ptoks:
+        pool |= ix.sids(ix.near(w))
+    scored = []
+    for sid in pool:
+        if sid in exclude or (ok is not None and not ok(sid)):
+            continue
+        c = _best_cost(ptoks, ix.full[sid])
+        if c is not None:
+            scored.append((c, (ix.name.get(sid) or "").lower(), sid))
+    scored.sort()
+    return [sid for _c, _n, sid in scored[:limit]]
+
+
+# ------------------------------------------------------- fayl va natija ---
+def _tg_path() -> str:
+    return os.environ.get("WORDBANK_TG_FILE") or TG_FILE
+
+
+def _tg_read(path=None):
+    """(xom baytlar, [(tartib raqami, qator), ...]) yoki None (fayl yo'q).
+    Tartib raqami — "results" ro'yxatidagi o'rni (xodim yo'llari qatorni
+    shu bilan topadi); lug'at bo'lmagan yozuv tashlanadi, raqamlar
+    siljimaydi."""
+    try:
+        with open(path or _tg_path(), "rb") as f:
+            raw = f.read()
+    except OSError:
+        return None
     data = json.loads(raw.decode("utf-8-sig"))
-    rows = data.get("results", data) if isinstance(data, dict) else data
-    return [r for r in rows if isinstance(r, dict)]
+    rows = data.get("results", []) if isinstance(data, dict) else data
+    if not isinstance(rows, list):
+        rows = []
+    return raw, [(i, r) for i, r in enumerate(rows) if isinstance(r, dict)]
+
+
+def _tg_post(r: dict) -> int:
+    try:
+        return int(r.get("post") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def _tg_day(r: dict):
+    try:
+        return date.fromisoformat(str(r.get("date"))[:10])
+    except ValueError:
+        return None
+
+
+def _tg_link(r: dict) -> str:
+    return f"{TG_CHANNEL}{_tg_post(r)}"
+
+
+def _tg_key(r: dict) -> str:
+    """"Bizniki emas" ro'yxati kaliti: "post:ism"."""
+    return f"{_tg_post(r)}:{str(r.get('name') or '').strip()}"
 
 
 def _tg_cert(r: dict):
@@ -1365,68 +1765,226 @@ def _tg_cert(r: dict):
     return None
 
 
+_NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
+_CEFR_RE = re.compile(r"\b([ABC][12])\b")
+
+
+def _lvl_key(kind, level, score) -> str:
+    """"Bir xil natija" kaliti (tur ichida). Xodim CRM'da darajani erkin
+    yozadi ("7", "7.0", "IELTS 7", "b2", "B2 (61)") — solishtirish shu
+    ko'rinishlarni bitta kalitga keltirib qilinadi (IELTS — "7.0",
+    CEFR — "B2")."""
+    lv = str(level or "").strip()
+    if kind == "ielts":
+        m = _NUM_RE.search(lv)
+        x = None
+        try:
+            if m:
+                x = float(m.group(0).replace(",", "."))
+            elif score is not None:
+                x = float(score)
+        except (TypeError, ValueError):
+            x = None
+        return f"{x:.1f}" if x is not None else lv.upper()
+    m = _CEFR_RE.search(lv.upper())
+    return m.group(1) if m else lv.upper()
+
+
+def _has_same(db: Session, sid: int, kind: str, level, score) -> int:
+    """O'quvchida shu tur va shu darajadagi sertifikatlar SONI (takror
+    qoidasi — post havolasi ahamiyatsiz)."""
+    C = models.Certificate
+    want = _lvl_key(kind, level, score)
+    return sum(1 for lv, sc in db.query(C.level, C.score)
+               .filter(C.student_id == sid, C.kind == kind)
+               if _lvl_key(kind, lv, sc) == want)
+
+
+def _tg_create(db: Session, sid: int, r: dict, cert, by: str, user,
+               how: str, name=None, branch_id=None):
+    """Telegram natijasidan Certificate. Avtomat import ham, xodimning
+    qo'lda bog'lashi ham SHU funksiya orqali — tur, daraja, ball, sana va
+    izoh ko'rinishi bir xil bo'lsin. Audit yoziladi; commit QILMAYDI."""
+    kind, level, score, suffix = cert
+    link = _tg_link(r)
+    c = models.Certificate(student_id=sid, kind=kind, level=level,
+                           score=score, date=_tg_day(r) or date.today(),
+                           note=f"Telegram: {link}{suffix}", created_by=by)
+    db.add(c)
+    db.flush()
+    audit.log(db, user, entity="student", action="update",
+              entity_id=sid, entity_label=name, field="certificate",
+              new_value=crm_badge_out(c)["label"], note=f"{how}: {link}",
+              branch_id=branch_id)
+    return c
+
+
+def _tg_dismissed(db: Session) -> set:
+    row = db.query(models.IntegrationSetting).get(TG_DISMISSED_KEY)
+    try:
+        v = json.loads(row.value) if row is not None and row.value else []
+    except ValueError:
+        v = []
+    return {str(x) for x in v} if isinstance(v, list) else set()
+
+
+def _tg_lk(cert) -> tuple:
+    """(tur, daraja kaliti) — "bir xil natija"."""
+    return cert[0], _lvl_key(cert[0], cert[1], cert[2])
+
+
+def _tg_rkey(r: dict, cert) -> str:
+    """Xodim qarori kaliti: "post:ism:tur:daraja" — bitta postda bir
+    odamning ikki natijasi (4691: IELTS 7.0 va 7.5) alohida."""
+    return "%s:%s:%s" % ((_tg_key(r),) + _tg_lk(cert))
+
+
+def _tg_links(db: Session) -> dict:
+    """{"post:ism:tur:daraja": sid} — xodim bog'lagan natijalar."""
+    row = db.query(models.IntegrationSetting).get(TG_LINKS_KEY)
+    try:
+        v = json.loads(row.value) if row is not None and row.value else {}
+    except ValueError:
+        v = {}
+    out = {}
+    for k, sid in (v.items() if isinstance(v, dict) else ()):
+        if isinstance(sid, int) and not isinstance(sid, bool):
+            out[str(k)] = sid
+    return out
+
+
+def _tg_items(items) -> list:
+    """[(tartib raqami, qator, natija)] — natijasi tanilganlari."""
+    out = [(i, r, _tg_cert(r)) for i, r in items]
+    return [x for x in out if x[2] is not None]
+
+
+class _TgCtx:
+    """Bir chaqiruv (seed yoki xodim ro'yxati) uchun umumiy ma'lumot va
+    BITTA holat qoidasi (2026-10-17, review) — seed xodim ko'rgan holatdan
+    boshqacha qaror qilmasin."""
+
+    def __init__(self, db: Session, valid):
+        self.ix = _tg_index(db)
+        self.have, self.by_link = _tg_cert_maps(db)
+        self.dismissed = _tg_dismissed(db)
+        self.links = _tg_links(db)
+        # Bitta postda bir xil natijali bir nechta ODAM bo'lsa, havola
+        # kimniki ekanini xodim qarori yoki ism hal qiladi
+        self.names = {}
+        for _i, r, cert in valid:
+            self.names.setdefault((_tg_post(r),) + _tg_lk(cert), set()).add(
+                _name_tokens(r.get("name")))
+
+    def state(self, r: dict, cert) -> tuple:
+        """(holat, bog'langan sid, moslik holati, ids, usul).
+        Tartib: 1) haqiqiy bog'lanish — xodim qarori (o'quvchida shu
+        natija hali bor) yoki shu post havolali Certificate; 2) "bizniki
+        emas"; 3) taxmin — AYNAN ism bitta o'quvchini topadi va unda shu
+        tur/daraja bor (havolasiz; o'xshashlik bilan taxmin qilinmaydi);
+        4) ambiguous / unmatched."""
+        post, lk = _tg_post(r), _tg_lk(cert)
+        st, ids, how = _match_how(self.ix, r.get("name"))
+        linked = self.links.get(_tg_rkey(r, cert))
+        if linked is not None and lk not in self.have.get(linked, ()):
+            linked = None              # sertifikat o'chirilgan / o'quvchi yo'q
+        if linked is None:
+            sids = self.by_link.get((post,) + lk) or []
+            if len(self.names.get((post,) + lk, ())) <= 1:
+                linked = sids[0] if sids else None
+            else:
+                hit = [s for s in sids if s in ids]
+                linked = hit[0] if hit else None
+        if linked is not None:
+            return "linked", linked, st, ids, how
+        if _tg_key(r) in self.dismissed:
+            return "dismissed", None, st, ids, how
+        if st == "match" and how == "exact" and lk in self.have.get(ids[0], ()):
+            return "linked", ids[0], st, ids, how
+        return ("ambiguous" if st == "ambiguous" else "unmatched",
+                None, st, ids, how)
+
+    def add(self, sid: int, r: dict, cert) -> None:
+        """Shu chaqiruvda yaratilgan Certificate xaritalarga."""
+        lk = _tg_lk(cert)
+        self.have.setdefault(sid, set()).add(lk)
+        self.by_link.setdefault((_tg_post(r),) + lk, []).append(sid)
+
+
+def _tg_seed_lock(db: Session) -> bool:
+    """Postgres: tranzaksiya qulfi (commit/rollback bilan o'zi bo'shaydi,
+    wordbank._try_lock bilan bir xil). Boshqa nusxa seed qilayotgan
+    bo'lsa — False, kutilmaydi. SQLite'da shart emas."""
+    try:
+        if db.bind.dialect.name != "postgresql":
+            return True
+        from sqlalchemy import text as sa_text
+        return bool(db.execute(
+            sa_text("SELECT pg_try_advisory_xact_lock(:k)"),
+            {"k": TG_SEED_LOCK}).scalar())
+    except Exception:  # noqa: BLE001 - qulf olinmasa ham belgi tekshiriladi
+        return True
+
+
 def seed_telegram(db: Session, path=None):
     """Bir martalik (fayl mazmuni bo'yicha) import. Qaytaradi: None — bu
-    fayl allaqachon import qilingan yoki fayl yo'q; aks holda hisobot."""
+    fayl allaqachon import qilingan, boshqa nusxa hozir import qilyapti
+    yoki fayl yo'q; aks holda hisobot (faqat sonlar va post raqamlari;
+    fuzzy — o'xshashlik bilan yaratilganlar soni, dismissed — xodim
+    "bizniki emas" deganlari). Holat — _TgCtx.state (xodim ro'yxati bilan
+    bir xil): bog'langan natija (xodim bog'lagani ham) "bor" sanaladi."""
     from common import _seed_done, _seed_mark
-    path = path or os.environ.get("WORDBANK_TG_FILE") or TG_FILE
-    try:
-        with open(path, "rb") as f:
-            raw = f.read()
-    except OSError:
+    got = _tg_read(path)
+    if got is None:
         return None
+    raw, items = got
     key = f"{TG_SEED}:{hashlib.sha256(raw).hexdigest()[:12]}"
     if _seed_done(db, key):
         return None
-    C = models.Certificate
-    students = [(int(sid), _name_tokens(fn)) for sid, fn in
-                db.query(models.Student.id, models.Student.full_name)]
-    rep = {"created": 0, "existing": 0, "unmatched": [], "ambiguous": [],
-           "skipped": []}
+    if not _tg_seed_lock(db):
+        return None                    # boshqa nusxa ishlayapti
+    # Belgilar keshi eskirgan bo'lishi mumkin — qulf ichida bazadan
+    if db.query(models.SeedMark).get(key) is not None:
+        db.rollback()
+        _seed_mark(db, key)
+        return None
+    ctx = _TgCtx(db, _tg_items(items))
+    rep = {"created": 0, "existing": 0, "fuzzy": 0, "unmatched": [],
+           "ambiguous": [], "skipped": [], "dismissed": []}
     touched = set()
-    for r in _tg_rows(raw):
-        post = int(r.get("post") or 0)
+    S = models.Student
+    for _i, r in items:
+        post = _tg_post(r)
         cert = _tg_cert(r)
-        toks = _name_tokens(r.get("name"))
-        if cert is None or len(toks) < 2:
+        if cert is None or len(_name_tokens(r.get("name"))) < 2:
             rep["skipped"].append(post)
             continue
-        cands = [sid for sid, st in students if toks <= st]
-        if len(cands) != 1:
-            rep["ambiguous" if cands else "unmatched"].append(post)
-            continue
-        sid = cands[0]
-        kind, level, score, suffix = cert
-        link = f"{TG_CHANNEL}{post}"
-        same = (db.query(C.id).filter(C.student_id == sid)
-                .filter(or_(C.note.like(f"%{link}%"),
-                            (C.kind == kind) & (C.level == level)))
-                .first())
-        if same is not None:
+        status, _sid, st, ids, how = ctx.state(r, cert)
+        if status == "linked":
             rep["existing"] += 1
             continue
-        try:
-            day = date.fromisoformat(str(r.get("date"))[:10])
-        except ValueError:
-            day = None
-        c = C(student_id=sid, kind=kind, level=level, score=score,
-              date=day or date.today(), note=f"Telegram: {link}{suffix}",
-              created_by=TG_BY)
-        db.add(c)
-        db.flush()
-        audit.log(db, None, entity="student", action="update",
-                  entity_id=sid, field="certificate",
-                  new_value=crm_badge_out(c)["label"],
-                  note=f"Telegram kanalidan avtomat: {link}")
+        if status == "dismissed":
+            rep["dismissed"].append(post)
+            continue
+        if st != "match":
+            rep[st].append(post)
+            continue
+        sid = ids[0]
+        kind, level, score, _sfx = cert
+        # Xodim shu o'quvchiga bir vaqtda bog'layotgan bo'lsa (tg_link
+        # ham shu qatorni qulflaydi) — takror yaratilmasin
+        db.query(S.id).filter(S.id == sid).with_for_update().first()
+        if _has_same(db, sid, kind, level, score):
+            rep["existing"] += 1
+            continue
+        _tg_create(db, sid, r, cert, TG_BY, None,
+                   "Telegram kanalidan avtomat", ctx.ix.name.get(sid),
+                   ctx.ix.branch.get(sid))
+        ctx.add(sid, r, cert)
         rep["created"] += 1
+        if how == "fuzzy":
+            rep["fuzzy"] += 1
         touched.add(sid)
-    db.commit()
-    for sid in sorted(touched):
-        try:
-            with db.begin_nested():
-                _hall(db, sid)
-        except Exception as e:  # noqa: BLE001 - tarix keyin ham yangilanadi
-            print(f"[tg-certs] tarix {sid}: {e!r}", flush=True)
     rep["at"] = datetime.utcnow().isoformat(timespec="seconds")
     row = db.query(models.IntegrationSetting).get(TG_REPORT_KEY)
     if row is None:
@@ -1434,7 +1992,24 @@ def seed_telegram(db: Session, path=None):
                                          value=json.dumps(rep)))
     else:
         row.value = json.dumps(rep)
-    _seed_mark(db, key)
+    # Sertifikatlar, hisobot va belgi — BITTA commit (qulf shu bilan
+    # bo'shaydi; keyingi nusxa belgini ko'radi). Qulfsiz (SQLite) yoki
+    # qulf olinmagan holatda boshqa nusxa belgini oldinroq qo'ygan bo'lsa —
+    # bu nusxaning hamma yozuvi bekor qilinadi (takror sertifikat yo'q).
+    db.add(models.SeedMark(key=key))
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        _seed_mark(db, key)
+        return None
+    _seed_mark(db, key)                # faqat kesh (qator bor)
+    for sid in sorted(touched):
+        try:
+            with db.begin_nested():
+                _hall(db, sid)
+        except Exception as e:  # noqa: BLE001 - tarix keyin ham yangilanadi
+            print(f"[tg-certs] tarix {sid}: {e!r}", flush=True)
     db.commit()
     _board_cache_clear()
     return rep
@@ -1447,3 +2022,343 @@ def tg_report(db: Session):
         return json.loads(row.value) if row is not None and row.value else None
     except ValueError:
         return None
+
+
+# ===================================================== XODIM: TELEGRAM ===
+# 2026-10-17: avtomat import bog'lay olmagan natijalarni xodim o'zi
+# bog'laydi yoki "bizniki emas" deb yashiradi. Faqat VOCAB_CERT_REVOKE
+# (asoschi, filial rahbari, o'quv bo'limi rahbari); "So'z bilish" filial
+# bayrog'iga BOG'LIQ EMAS. Filial rahbari faqat o'z filiali o'quvchisini
+# ko'radi (nomzodlar) va bog'laydi — chegara tasdiqdagi bilan bir xil
+# (_scope / _in_scope; filialsiz o'quvchi ham). Qaror: bog'langan natija
+# DARHOL tasdiqlangan sertifikat (seed_telegram bilan bir xil Certificate).
+# Holat JONLI: linked — shu post havolasi bilan shu tur/daraja Certificate
+# bor yoki o'xshashlik aniq bitta o'quvchini topib, unda shu tur/daraja
+# bor; dismissed — "wordbank_tg_dismissed" ro'yxatida; qolgani
+# ambiguous / unmatched. O'xshashlik bitta o'quvchini topsa-yu, unda
+# sertifikat bo'lmasa (masalan o'quvchi importdan keyin qo'shilgan) —
+# unmatched, o'sha o'quvchi nomzodlar boshida (bitta bosish bilan).
+#
+# 2026-10-17 (review): holat — _TgCtx.state (seed bilan bir xil):
+# xodim qarori ("wordbank_tg_links") va shu post havolali Certificate —
+# bog'lanish; havolasiz taxmin faqat AYNAN ism bilan (o'xshash adashning
+# sertifikati qatorni "bog'langan" qilib qo'ymasin). Bog'langan natijani
+# boshqa o'quvchiga bog'lab bo'lmaydi (409, ikki xodim / eski ro'yxat;
+# javobda egasining ismi — faqat xodim chegarasida bo'lsa). O'quvchida
+# shu natija allaqachon bo'lsa (masalan ikki postda bir natija, yoki xodim
+# CRM'ga o'zi kiritgan) — 409; {"existing": true} bilan qayta yuborilsa
+# yangi sertifikat YARATILMAYDI, faqat "bog'langan" deb yoziladi. Filial
+# rahbari boshqa filial o'quvchisining ismini ko'rmaydi (student_id /
+# student_name — null).
+def _tg_staff(user) -> None:
+    if not has_role(user, roles.VOCAB_CERT_REVOKE):
+        raise HTTPException(403, "Bu amal uchun ruxsatingiz yo'q")
+
+
+def _tg_read_staff():
+    """Xodim yo'llari uchun _tg_read: buzilgan fayl — tushunarli 500."""
+    try:
+        return _tg_read()
+    except (ValueError, UnicodeDecodeError):
+        raise HTTPException(500, "Telegram natijalari fayli buzilgan")
+
+
+def _sid_ok(sc, branch_id) -> bool:
+    """_in_scope bilan bir xil filial qoidasi (o'quvchi filiali bo'yicha;
+    filialsiz o'quvchi ham)."""
+    kind, ids = sc
+    if kind == "all":
+        return True
+    if kind == "branches":
+        return branch_id is None or branch_id in ids
+    return False
+
+
+def _tg_cert_maps(db: Session) -> tuple:
+    """have: {sid: {(tur, daraja kaliti)}};
+    by_link: {(post, tur, daraja kaliti): [sid, ...]} — izohdagi post
+    raqami ANIQ solishtiriladi (".../101" ".../1012" ga mos kelmasin)."""
+    C = models.Certificate
+    have, by_link = {}, {}
+    for sid, kind, level, score, note in (
+            db.query(C.student_id, C.kind, C.level, C.score, C.note)
+            .filter(C.kind.in_(CRM_KINDS)).order_by(C.id)):
+        lk = (kind, _lvl_key(kind, level, score))
+        have.setdefault(int(sid), set()).add(lk)
+        m = _TG_POST_RE.search(note or "")
+        if m:
+            by_link.setdefault((int(m.group(1)),) + lk, []).append(int(sid))
+    return have, by_link
+
+
+def _tg_ctx(db: Session) -> tuple:
+    """(natijasi tanilgan qatorlar, _TgCtx) yoki (None, None) — fayl yo'q."""
+    got = _tg_read_staff()
+    if got is None:
+        return None, None
+    valid = _tg_items(got[1])
+    return valid, _TgCtx(db, valid)
+
+
+def _tg_state_at(db: Session, idx: int) -> tuple:
+    """Bitta qatorning jonli holati: (holat, bog'langan sid | None)."""
+    valid, ctx = _tg_ctx(db)
+    for i, r, cert in valid or ():
+        if i == idx:
+            return ctx.state(r, cert)[:2]
+    raise HTTPException(404, "Natija topilmadi")
+
+
+def _tg_view(db: Session, user, want: str = "all", only=None) -> tuple:
+    """(qatorlar, sonlar). want — holat yoki "all"; only — faqat shu
+    tartib raqamlari (sonlar baribir hamma qatordan)."""
+    counts = {s: 0 for s in TG_STATUSES}
+    valid, ctx = _tg_ctx(db)
+    if valid is None:
+        return [], counts
+    ix = ctx.ix
+    sc = _scope(db, user)
+    bname = {bid: nm for bid, nm in db.query(models.Branch.id,
+                                             models.Branch.name)}
+
+    def ok(sid):
+        return _sid_ok(sc, ix.branch.get(sid))
+
+    out = []
+    for i, r, cert in valid:
+        post = _tg_post(r)
+        status, linked, st, ids, _how = ctx.state(r, cert)
+        counts[status] += 1
+        if only is not None and i not in only:
+            continue
+        if want != "all" and status != want:
+            continue
+        pick = []
+        if status != "linked":
+            if st == "ambiguous":
+                pick = sorted((s for s in ids if ok(s)),
+                              key=lambda s: ((ix.name.get(s) or "").lower(), s))
+            else:
+                first = [ids[0]] if st == "match" and ok(ids[0]) else []
+                pick = first + _suggest(
+                    ix, _name_tokens(r.get("name")), exclude=set(first), ok=ok,
+                    limit=TG_MAX_CANDIDATES - len(first))
+        kind, level, score, suffix = cert
+        link = _tg_link(r)
+        day = _tg_day(r)
+        # Boshqa filial o'quvchisi — holat "linked", ismi va id'si yo'q
+        if linked is not None and not ok(linked):
+            linked = None
+        out.append({
+            "row": i,
+            "post": post,
+            "date": day.isoformat() if day else str(r.get("date") or "")[:10],
+            "name": str(r.get("name") or "").strip(),
+            "exam": str(r.get("exam") or "").lower(),
+            "label": crm_badge_out(SimpleNamespace(
+                id=0, kind=kind, level=level, score=score, date=None,
+                note=f"Telegram: {link}{suffix}"))["label"],
+            "link": link,
+            "status": status,
+            "student_id": linked,
+            "student_name": ix.name.get(linked) if linked is not None
+            else None,
+            "candidates": [{"id": s, "name": ix.name.get(s),
+                            "branch": bname.get(ix.branch.get(s))}
+                           for s in pick[:TG_MAX_CANDIDATES]],
+        })
+    out.sort(key=lambda x: (x["date"], x["post"], -x["row"]), reverse=True)
+    return out, counts
+
+
+def _tg_pick(raw_row) -> tuple:
+    """(tartib raqami, qator, natija) yoki 404."""
+    try:
+        idx = int(str(raw_row))
+    except (TypeError, ValueError):
+        raise HTTPException(404, "Natija topilmadi")
+    got = _tg_read_staff()
+    for i, r in (got[1] if got else []):
+        if i == idx:
+            cert = _tg_cert(r)
+            if cert is not None:
+                return i, r, cert
+            break
+    raise HTTPException(404, "Natija topilmadi")
+
+
+def _tg_one(db: Session, user, idx: int) -> dict:
+    rows, _counts = _tg_view(db, user, "all", only={idx})
+    return rows[0]
+
+
+@router.get("/api/wordbank/telegram-results")
+def tg_results(status: str = None, db: Session = Depends(get_db),
+               user=Depends(get_current_user)):
+    """Kanal natijalari ro'yxati (standart — unmatched; eng yangi post
+    birinchi) va hamma holatlar soni."""
+    _tg_staff(user)
+    want = (status or "unmatched").strip().lower()
+    if want not in TG_STATUSES + ("all",):
+        raise HTTPException(400, "status: " + ", ".join(TG_STATUSES)
+                            + " yoki all")
+    rows, counts = _tg_view(db, user, want)
+    return {"rows": rows, "counts": counts}
+
+
+def _tg_links_put(db: Session, rkey: str, sid: int) -> None:
+    """Xodim qarorini "wordbank_tg_links" ga yozadi (commit QILMAYDI).
+    Qator FOR UPDATE bilan o'qiladi (ikki xodim bir vaqtda — biri
+    yo'qolmasin); birinchi yaratishdagi to'qnashuv savepoint ichida."""
+    IS = models.IntegrationSetting
+    q = db.query(IS).filter(IS.key == TG_LINKS_KEY).with_for_update()
+    srow = q.first()
+    if srow is None:
+        try:
+            with db.begin_nested():
+                db.add(IS(key=TG_LINKS_KEY, value="{}"))
+        except IntegrityError:
+            pass                       # boshqa xodim hozirgina yaratdi
+        srow = q.first()
+    try:
+        cur = json.loads(srow.value) if srow.value else {}
+    except ValueError:
+        cur = {}
+    if not isinstance(cur, dict):
+        cur = {}
+    cur[rkey] = int(sid)
+    srow.value = json.dumps(cur, ensure_ascii=False)
+
+
+@router.post("/api/wordbank/telegram-results/{row}/link")
+def tg_link(row: str, payload=Body(default=None),
+            db: Session = Depends(get_db), user=Depends(get_current_user)):
+    """Natijani o'quvchiga bog'lash: seed_telegram bilan AYNAN bir xil
+    Certificate (created_by — xodim), audit, tarix va reyting keshi;
+    qaror "wordbank_tg_links" ga ham yoziladi. Natija boshqa o'quvchiga
+    bog'langan bo'lsa — 409 (TG_TAKEN); o'quvchida shu tur/daraja bo'lsa —
+    409 (TG_DUP), {"existing": true} bilan — sertifikat yaratilmaydi, qator
+    shu o'quvchiga bog'langan deb yoziladi; begona filial — 404."""
+    _tg_staff(user)
+    idx, r, cert = _tg_pick(row)
+    body = WB._body(payload)
+    raw_sid = body.get("student_id")
+    try:
+        if isinstance(raw_sid, bool):
+            raise ValueError
+        sid = int(str(raw_sid).strip())
+    except (TypeError, ValueError):
+        _bad("O'quvchini tanlang")
+    existing = body.get("existing", False)
+    if not isinstance(existing, bool):
+        _bad("existing: true yoki false")
+    if not 0 < sid <= _ID_MAX:
+        raise HTTPException(404, "O'quvchi topilmadi")
+    S = models.Student
+    sc = _scope(db, user)
+    st = db.query(S.id, S.full_name, S.branch_id).filter(S.id == sid).first()
+    if st is None or not _in_scope(db, sc, SimpleNamespace(
+            student_id=sid, branch_id_snap=None)):
+        raise HTTPException(404, "O'quvchi topilmadi")
+    kind, level, score, _sfx = cert
+    # Ikki xodim bir vaqtda bossa: Postgres'da o'quvchi qatori qulflanadi;
+    # SQLite'da (no-op) yozilgandan keyingi qayta sanash ushlaydi.
+    db.query(S.id).filter(S.id == sid).with_for_update().first()
+    status, owner = _tg_state_at(db, idx)
+    if status == "linked" and owner != sid:
+        # Ikkinchi xodim / eski ro'yxat: boshqa o'quvchiga ham berilmasin.
+        # Ism faqat xodim chegarasidagi o'quvchi bo'lsa aytiladi.
+        o = db.query(S.full_name, S.branch_id).filter(S.id == owner).first()
+        msg = TG_TAKEN
+        if o is not None and _sid_ok(sc, o.branch_id) and o.full_name:
+            msg = f"{TG_TAKEN}: {o.full_name}"
+        raise HTTPException(409, msg)
+    rkey = _tg_rkey(r, cert)
+    link = _tg_link(r)
+    if _has_same(db, sid, kind, level, score):
+        if not existing:
+            raise HTTPException(409, TG_DUP)
+        # Natija o'quvchida allaqachon bor — yangi sertifikat yo'q, faqat
+        # "bog'langan" qarori (qator ro'yxatda abadiy osilib qolmasin)
+        _tg_links_put(db, rkey, sid)
+        label = crm_badge_out(SimpleNamespace(
+            id=0, kind=kind, level=level, score=score, date=None,
+            note=f"Telegram: {link}{_sfx}"))["label"]
+        audit.log(db, user, entity="settings", action="update",
+                  entity_label=f"Telegram natijasi #{_tg_post(r)}",
+                  field=TG_LINKS_KEY, new_value=st.full_name,
+                  note=f"{str(r.get('name') or '').strip()} — {label} "
+                       f"({link}): o'quvchida allaqachon bor",
+                  branch_id=st.branch_id)
+        db.commit()
+        return _tg_one(db, user, idx)
+    who = getattr(user, "full_name", None) or getattr(user, "username", None)
+    _tg_create(db, sid, r, cert, who, user,
+               "Telegram kanalidan qo'lda bog'landi", st.full_name,
+               st.branch_id)
+    if _has_same(db, sid, kind, level, score) > 1:
+        db.rollback()
+        raise HTTPException(409, TG_DUP)
+    _tg_links_put(db, rkey, sid)
+    try:
+        with db.begin_nested():
+            _hall(db, sid)
+    except Exception as e:  # noqa: BLE001 - tarix keyin ham yangilanadi
+        print(f"[tg-certs] tarix {sid}: {e!r}", flush=True)
+    db.commit()
+    _board_cache_clear()
+    return _tg_one(db, user, idx)
+
+
+@router.post("/api/wordbank/telegram-results/{row}/dismiss")
+def tg_dismiss(row: str, payload=Body(default=None),
+               db: Session = Depends(get_db), user=Depends(get_current_user)):
+    """"Bizniki emas" — ro'yxatdan yashirish; {"undo": true} — qaytarish.
+    O'quvchiga bog'langan natijani yashirib bo'lmaydi (409). Kalit
+    "post:ism": shu postdagi shu odamning hamma natijasi birga yashiriladi
+    ("bizniki emas" — natija emas, odam haqida)."""
+    _tg_staff(user)
+    idx, r, cert = _tg_pick(row)
+    body = WB._body(payload)
+    undo = body.get("undo", False)
+    if not isinstance(undo, bool):
+        _bad("undo: true yoki false")
+    if not undo and _tg_state_at(db, idx)[0] == "linked":
+        raise HTTPException(409, "Bu natija o'quvchiga bog'langan")
+    key, post, link = _tg_key(r), _tg_post(r), _tg_link(r)
+    label = crm_badge_out(SimpleNamespace(
+        id=0, kind=cert[0], level=cert[1], score=cert[2], date=None,
+        note=f"Telegram: {link}{cert[3]}"))["label"]
+    IS = models.IntegrationSetting
+    for attempt in range(2):
+        srow = (db.query(IS).filter(IS.key == TG_DISMISSED_KEY)
+                .with_for_update().first())
+        try:
+            cur = json.loads(srow.value) if srow is not None and srow.value \
+                else []
+        except ValueError:
+            cur = []
+        cur = [str(x) for x in cur] if isinstance(cur, list) else []
+        if (key in cur) != undo:
+            break                      # o'zgarish yo'q
+        cur = [x for x in cur if x != key] if undo else cur + [key]
+        if srow is None:
+            db.add(IS(key=TG_DISMISSED_KEY, value=json.dumps(cur)))
+        else:
+            srow.value = json.dumps(cur)
+        audit.log(db, user, entity="settings", action="update",
+                  entity_label=f"Telegram natijasi #{post}",
+                  field=TG_DISMISSED_KEY,
+                  new_value="qaytarildi" if undo else "bizniki emas",
+                  note=f"{str(r.get('name') or '').strip()} — {label} "
+                       f"({link})")
+        try:
+            db.commit()
+            break
+        except IntegrityError:
+            # Birinchi yozuvni ikki xodim bir vaqtda yaratdi — qayta o'qib,
+            # bir marta takrorlanadi.
+            db.rollback()
+            if attempt:
+                raise HTTPException(409, "Qayta urinib ko'ring")
+    return _tg_one(db, user, idx)

@@ -656,6 +656,100 @@ export function revokeCert(id: number, body: { note: string }) {
   return api.post<StaffCert>(`/wordbank/certs/${id}/revoke`, body);
 }
 
+// --------------------------- xodim: Telegram kanalidagi natijalar ---
+// 2026-10-17: avtomat import (wordbank_certs.seed_telegram) hamma postni
+// bog'lay olmadi — CRM dagi ism yozilishi kanaldagidan farq qiladi
+// (-xon/-oy, o'/u, dj/j, ruscha yozilish). Qolganini xodim shu yerda
+// qo'lda bog'laydi. Holat serverda JONLI hisoblanadi (fayl + baza).
+// Faqat VOCAB_CERT_REVOKE (asoschi, filial rahbari, o'quv bo'limi
+// rahbari); "So'z bilish" filial bayrog'iga bog'liq emas.
+// Qaror: bog'langan natija DARHOL tasdiqlangan sertifikat bo'ladi.
+
+export type TgStatus = "unmatched" | "ambiguous" | "linked" | "dismissed";
+
+/** Mos kelishi mumkin bo'lgan o'quvchi (ko'pi bilan 5 ta). */
+export type TgCandidate = { id: number; name: string; branch: string | null };
+
+export type TgRow = {
+  /** telegram_results.json dagi tartib raqami — link/dismiss shu bilan */
+  row: number;
+  post: number;
+  /** Post sanasi, YYYY-MM-DD */
+  date: string;
+  /** Postdagi ism (faqat xodimga) */
+  name: string;
+  exam: "ielts" | "multilevel" | "cefr";
+  /** "IELTS 7.0", "Multilevel B2 (61)", "CEFR B2" — server yasaydi */
+  label: string;
+  /** https://t.me/JonyAcademy/<post> */
+  link: string;
+  status: TgStatus;
+  /** linked bo'lsa — kimga bog'langan (boshqa filial o'quvchisi — null) */
+  student_id: number | null;
+  student_name: string | null;
+  candidates: TgCandidate[];
+};
+
+export type TgList = {
+  rows: TgRow[];
+  counts: Record<TgStatus, number>;
+};
+
+/**
+ * GET /api/wordbank/telegram-results?status=... — jim (toast yo'q).
+ * 404 = server hali bu yo'lni bilmaydi ("off").
+ */
+export function getTgResults(
+  status: TgStatus | "all" = "unmatched",
+): Promise<WbQuiet<TgList>> {
+  return wbQuietGet<TgList>(
+    `/wordbank/telegram-results?status=${encodeURIComponent(status)}`,
+  );
+}
+
+/** Server matni (409): o'quvchida shu tur va darajadagi natija bor. */
+export const TG_DUP = "Bu o'quvchida bu natija allaqachon bor";
+
+/** O'quvchiga bog'lash: darhol tasdiqlangan CRM sertifikati yaratiladi.
+ *  409 — bu o'quvchida shu natija allaqachon bor (TG_DUP) yoki natija
+ *  boshqa o'quvchiga bog'langan. 2026-10-17 (review): existing=true —
+ *  TG_DUP bo'lsa yangi sertifikat yaratilmaydi, natija shu o'quvchiga
+ *  bog'langan deb yoziladi (ro'yxatda osilib qolmasin). */
+export function linkTgResult(row: number, studentId: number, existing = false) {
+  return api.post<TgRow>(`/wordbank/telegram-results/${row}/link`, {
+    student_id: studentId,
+    ...(existing ? { existing: true } : {}),
+  });
+}
+
+/** "Bizniki emas" — yashirish; undo=true — qaytarish. */
+export function dismissTgResult(row: number, undo = false) {
+  return api.post<TgRow>(`/wordbank/telegram-results/${row}/dismiss`, { undo });
+}
+
+/** Tepadagi umumiy qidiruv (/api/search/students) javobidagi o'quvchi. */
+export type StaffStudentHit = {
+  id: number;
+  name: string;
+  group: string | null;
+  status_label: string;
+  archived?: boolean;
+};
+
+/**
+ * Xodim o'quvchi qidiruvi — panel tepasidagi global qidiruv bilan AYNAN
+ * bir yo'l (3 harfdan; filial doirasi serverda, tepadagi filial tanlagichi
+ * o'zi qo'shiladi). Lidlar/guruhlar bu yerda kerak emas.
+ */
+export async function searchStaffStudents(q: string): Promise<StaffStudentHit[]> {
+  const t = q.trim();
+  if (t.length < 3) return [];
+  const r = await api.get<{ students?: StaffStudentHit[] }>(
+    `/search/students?q=${encodeURIComponent(t)}`,
+  );
+  return r?.students ?? [];
+}
+
 // ------------------------------------------ ustoz: guruh so'z bilishi ---
 export type TeacherWordRow = {
   id: number;

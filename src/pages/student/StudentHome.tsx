@@ -14,7 +14,7 @@ import { useLearningLanguage, setLang, LANGS } from "../../lib/lang";
 import { Flag } from "../../components/Flag";
 import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { NpsCard } from "../../components/NpsCard";
-import { GoalCard } from "../../components/GoalCard";
+import { StudentStudyPlan } from "../../components/StudentStudyPlan";
 import { JsaLogo, XpHex, JSA } from "../../components/Jsa";
 import { api } from "../../lib/api";
 import { PushBanner } from "../../components/PushBanner";
@@ -140,7 +140,8 @@ export default function StudentHome() {
 
   const ov = d.overall;
   const daily = d.daily;
-  const cont = lang === "en" ? d.continue : null;
+  const coursePlan = lang === "en" || lang === "de";
+  const cont = coursePlan ? null : d.continue;
   const firstName = (d.name || "").split(" ").slice(-1)[0] || d.name;
   const pct = ov?.next ? Math.round(ov.next.progress_percent) : 100;
   // 2026-08-25: daraja oralig'i endi har darajada har xil — 500 deb
@@ -314,7 +315,7 @@ export default function StudentHome() {
           </div>
         </div>}
 
-        <StudentCourseLink language={lang}/>
+        {coursePlan ? <StudentStudyPlan key={lang} language={lang}/> : <StudentCourseLink language={lang}/>}
         {lang === "ru" && <Link to="/student/russian"
           className="block rounded-3xl border border-blue-400/40 bg-gradient-to-br from-blue-700 to-indigo-800 p-5 text-white">
           <p className="text-xs font-bold uppercase tracking-wide text-blue-100">Rus tili · 1 yillik kurs</p>
@@ -324,7 +325,7 @@ export default function StudentHome() {
         </Link>}
 
         {/* ====================================== BUGUNGI MISSIYA */}
-        {daily && lang !== "ru" && (
+        {daily && !coursePlan && lang !== "ru" && (
           <div className="student-panel student-pattern bg-white rounded-3xl p-4">
             <div className="flex items-center gap-3">
               <StudentIcon name="mission" size={48} />
@@ -482,9 +483,9 @@ export default function StudentHome() {
         )}
 
         {/* ===================== MAQSAD: IELTS (GoalCard) ======== */}
-        {lang === "en" && <GoalCard />}
+        
 
-        {d.streak === 0 && lang !== "ru" && (
+        {d.streak === 0 && !coursePlan && lang !== "ru" && (
           <p className="text-xs text-slate-500 -mt-1.5 px-1">
             Bugun mashq qilsangiz streak boshlanadi. 7 kun ketma-ket = 50 coin.
           </p>

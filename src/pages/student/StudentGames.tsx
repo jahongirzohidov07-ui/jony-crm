@@ -1,3 +1,4 @@
+import { StudentStudyPlan } from "../../components/StudentStudyPlan";
 import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage, StudentIcon } from "../../components/StudentIcon";
 import { useEffect, useState } from "react";
@@ -68,7 +69,8 @@ export default function StudentGames() {
   if (!d)
     return <StudentLoading />;
 
-  const cont = lang === "en" ? d.continue : null;
+  const coursePlan = lang === "en" || lang === "de";
+  const cont = coursePlan ? null : d.continue;
   const daily = d.daily;
   // 2026-08-21, Jahongir: "daraja uchun XP soni juda kam bolib qolgan
   // 2x ga oshir" — endi har daraja 200 XP (backend roles.XP_PER_LEVEL).
@@ -118,7 +120,8 @@ export default function StudentGames() {
       </div>
 
       {/* -------------------------------------- Bugungi missiya */}
-      {daily && (
+      {coursePlan && <StudentStudyPlan key={lang} language={lang}/>}
+      {daily && !coursePlan && (
         <div className="student-panel student-pattern bg-white rounded-3xl p-4 mt-4">
           <div className="flex items-center gap-2 mb-3">
             <StudentIcon name="mission" size={44} />
@@ -150,7 +153,7 @@ export default function StudentGames() {
       )}
 
       {/* --------------------------------------------- bo'limlar */}
-      <h2 className="text-lg font-bold text-white mt-5">Til ko'nikmalari</h2>
+      <h2 className="text-lg font-bold text-white mt-5">Qo‘shimcha mustaqil mashqlar</h2>
       <div className="grid grid-cols-2 gap-2 mt-3">
         {d.sections.map((s) => (
           <Link key={s.key} to={lang !== "en" && s.key === "speaking" ? "/student/practice/speaking" : s.href}

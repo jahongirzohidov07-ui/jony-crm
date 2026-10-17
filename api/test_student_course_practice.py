@@ -9,7 +9,7 @@ os.environ["DATABASE_URL"] = "sqlite://"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 from types import SimpleNamespace
@@ -26,6 +26,9 @@ class CoursePracticeTests(unittest.TestCase):
         # Only these tables are required; SQLite foreign keys are off by default.
         models.Student.__table__.create(self.engine)
         models.SkillAttempt.__table__.create(self.engine)
+        models.IntegrationSetting.__table__.create(self.engine)
+        models.VocabAttempt.__table__.create(self.engine)
+        models.GrammarAttempt.__table__.create(self.engine)
         self.db = sessionmaker(bind=self.engine)()
         self.db.add_all([models.Student(id=1, full_name="One", user_id=11, status="active"),
                          models.Student(id=2, full_name="Two", user_id=22, status="active"),
@@ -52,7 +55,7 @@ class CoursePracticeTests(unittest.TestCase):
             listing = self.client.get("/api/student/course-practice", params={"language":language}).json()
             self.assertEqual(len(listing["lessons"]), count)
             for row in practice.BANK[language]:
-                public = practice.lesson_detail(row["lesson"], language, self.db.get(models.Student,1))
+                public = practice.lesson_detail(row["lesson"], language, self.db.get(models.Student,1), self.db)
                 for section in public["sections"]:
                     self.assertNotIn("transcript",section)
                     if section["skill"] == "listening":
@@ -124,6 +127,125 @@ class CoursePracticeTests(unittest.TestCase):
         self.assertEqual(self.client.get("/api/student/course-practice/1?language=en").status_code,403)
         self.app.dependency_overrides.pop(get_current_user)
         self.assertIn(self.client.get("/api/student/course-practice?language=en").status_code,[401,403])
+
+    def position(self, language="en", lesson=1, **extra):
+        return self.client.post("/api/student/course-practice/position", json={
+            "language": language, "lesson": lesson, **extra})
+
+    def listing(self, language="en"):
+        return self.client.get("/api/student/course-practice", params={"language": language}).json()
+
+    def detail(self, language="en", lesson=1):
+        return self.client.get(f"/api/student/course-practice/{lesson}", params={"language": language}).json()
+
+    def test_visit_resume_persistence_and_isolation(self):
+        self.assertEqual(self.listing()["resume_lesson"], 1)
+        self.assertEqual(self.position(lesson=12).status_code, 200)
+        self.assertEqual(self.position("de", 7).status_code, 200)
+        self.assertEqual(self.position(lesson=3).status_code, 200)
+        # New session simulates a new request/process reading committed storage.
+        self.db.close()
+        self.db = sessionmaker(bind=self.engine)()
+        listing = self.listing()
+        self.assertEqual(listing["resume_lesson"], 3)
+        self.assertEqual(listing["plan"]["lesson"], 3)
+        self.assertEqual(listing["plan"]["submitted_count"], 0)
+        self.assertEqual(sum(s["question_count"] for s in listing["plan"]["sections"]),
+                         listing["plan"]["question_count"])
+        self.assertTrue(all(s["submitted_count"] == 0 for s in listing["plan"]["sections"]))
+        self.assertEqual(self.listing("de")["resume_lesson"], 7)
+        self.assertEqual(self.detail(lesson=3)["answers"], {})
+        self.user = SimpleNamespace(id=22, role="student", full_name="Two", is_active=1)
+        self.assertEqual(self.listing()["resume_lesson"], 1)
+        self.assertEqual(self.listing("de")["resume_lesson"], 1)
+        self.position(lesson=8)
+        self.user = SimpleNamespace(id=11, role="student", full_name="One", is_active=1)
+        self.assertEqual(self.listing()["resume_lesson"], 3)
+
+    def test_position_validation_and_auth(self):
+        for payload in [{"lesson": 0}, {"lesson": True}, {"lesson": "2"},
+                        {"lesson": 193}, {"language": "fr"}, {"student_id": 2}]:
+            self.assertEqual(self.position(**payload).status_code, 422)
+        self.assertEqual(self.position("de", 73).status_code, 404)
+        self.assertEqual(self.client.post("/api/student/course-practice/position?student_id=2",
+                         json={"language": "en", "lesson": 2}).status_code, 422)
+        self.user = SimpleNamespace(id=33, role="student", full_name="Unlinked", is_active=1)
+        self.assertEqual(self.position().status_code, 403)
+        self.user = SimpleNamespace(id=44, role="teacher", full_name="One", is_active=1)
+        self.assertEqual(self.position().status_code, 403)
+        self.assertEqual(self.db.query(models.SkillAttempt).count(), 0)
+
+    def test_latest_answers_and_feedback_projection(self):
+        row = practice.BANK["en"][0]
+        q = row["sections"][0]["questions"][0]
+        self.post(q["id"], q["expected"][0])
+        latest = self.post(q["id"], "wrong").json()
+        selfq = next(q for s in row["sections"] for q in s["questions"] if q["mode"] == "self")
+        selfresult = self.post(selfq["id"], "My response").json()
+        self.db.close()
+        self.db = sessionmaker(bind=self.engine)()
+        detail = self.detail()
+        self.assertEqual(set(detail["answers"]), {q["id"], selfq["id"]})
+        self.assertEqual(detail["answers"][q["id"]], {"answer": "wrong", "result": latest})
+        self.assertFalse(detail["answers"][q["id"]]["result"]["correct"])
+        self.assertEqual(detail["answers"][selfq["id"]]["result"], selfresult)
+        self.assertIsNone(selfresult["correct"])
+        for section in detail["sections"]:
+            self.assertNotIn("transcript", section)
+            for question in section["questions"]:
+                self.assertLessEqual(set(question), {"id", "prompt", "mode", "options"})
+        plan = self.listing()["plan"]
+        self.assertEqual(plan["submitted_count"], 2)
+        self.assertEqual(sum(s["submitted_count"] for s in plan["sections"]), 2)
+        self.assertEqual(self.detail(lesson=2)["answers"], {})
+        self.assertEqual(self.detail("de")["answers"], {})
+        self.user = SimpleNamespace(id=22, role="student", full_name="Two", is_active=1)
+        self.assertEqual(self.detail()["answers"], {})
+
+    def test_restored_listening_feedback_and_legacy_resume(self):
+        row = practice.BANK["en"][4]
+        section = next(s for s in row["sections"] if s["skill"] == "listening")
+        q = section["questions"][0]
+        self.db.add(models.SkillAttempt(student_id=1, skill="course-practice:en:listening",
+                    ref=practice._ref(q["id"]), answer="legacy", correct=0))
+        self.db.commit()
+        self.assertEqual(self.listing()["resume_lesson"], 5)
+        result = self.detail(lesson=5)["answers"][q["id"]]["result"]
+        self.assertEqual(result["transcript"], section["transcript"])
+        self.position(lesson=2)
+        self.assertEqual(self.listing()["resume_lesson"], 2)
+        self.post(q["id"], "latest", lesson=5)
+        self.assertEqual(self.listing()["resume_lesson"], 2)
+
+    def test_visits_are_not_activity_or_daily_streak_progress(self):
+        from datetime import datetime, timedelta
+        from student_app import _daily_progress, _streak_days
+        before = _daily_progress(self.db, 1)
+        self.position(lesson=9)
+        self.position("de", 3)
+        self.position(lesson=12)
+        self.assertEqual(_daily_progress(self.db, 1), before)
+        self.assertEqual(_streak_days(self.db, 1), 0)
+        self.assertEqual(self.db.query(models.SkillAttempt).count(), 0)
+        # The dashboard's activity query has no skill/correct filter.
+        for table in (models.VocabAttempt, models.GrammarAttempt, models.SkillAttempt):
+            days = self.db.query(table.student_id, func.date(table.created_at)).filter(
+                table.student_id.in_([1]),
+                table.created_at >= datetime.utcnow() - timedelta(days=30)).distinct().all()
+            self.assertEqual(days, [])
+        self.assertEqual(self.db.query(models.IntegrationSetting).count(), 2)
+        self.assertEqual(self.listing()["resume_lesson"], 12)
+
+    def test_delayed_answer_does_not_overwrite_newer_visit(self):
+        self.position(lesson=1)
+        self.position(lesson=12)
+        q = practice.BANK["en"][0]["sections"][0]["questions"][0]
+        self.assertEqual(self.post(q["id"], "delayed answer").status_code, 200)
+        self.db.close()
+        self.db = sessionmaker(bind=self.engine)()
+        self.assertEqual(self.listing()["resume_lesson"], 12)
+        self.assertEqual(self.detail()["answers"][q["id"]]["answer"], "delayed answer")
+        self.assertEqual(self.db.query(models.IntegrationSetting).count(), 1)
 
     def test_german_case_sensitive_and_self_production(self):
         q=next(q for s in practice.BANK["de"][0]["sections"] for q in s["questions"] if q["id"].endswith("g001-q1"))

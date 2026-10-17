@@ -1452,6 +1452,14 @@ def seed_startup(db: Session, path=None) -> dict:
     except Exception as e:  # noqa: BLE001
         db.rollback()
         out["enable_all"] = f"error: {str(e)[:200]}"
+    # 2026-10-17: Telegram kanalidagi natijalar -> CRM sertifikatlari
+    # (wordbank_certs.seed_telegram; bir martalik, fayl mazmuni bo'yicha)
+    try:
+        import wordbank_certs as WCERT
+        out["tg_certs"] = WCERT.seed_telegram(db)
+    except Exception as e:  # noqa: BLE001
+        db.rollback()
+        out["tg_certs"] = {"error": str(e)[:200]}
     return out
 
 
@@ -1490,6 +1498,11 @@ def wordbank_status(db: Session = Depends(get_db)):
                 and _seed_done(db, SEED_ENABLE_ALL)):
             _STATUS_DONE = True
     words = db.query(func.count(W.id)).filter(*_HAS_UZ).scalar() or 0
+    try:
+        import wordbank_certs as WCERT
+        tg = WCERT.tg_report(db)      # faqat sonlar va post raqamlari
+    except Exception:  # noqa: BLE001
+        tg = None
     return {
         "words": int(words),
         "bands_ready": len(_ready_bands(db)),
@@ -1497,4 +1510,5 @@ def wordbank_status(db: Session = Depends(get_db)):
         "enabled": _status_flag(db),
         "done": _STATUS_DONE,
         "step": step,
+        "tg_certs": tg,
     }

@@ -132,22 +132,69 @@ def badge_out(u) -> dict:
     }
 
 
+# CRM SERTIFIKATLARI (2026-10-17, Jahongir: "Ha, chiqsin"): xodim o'quvchi
+# kartasiga qo'shgan IELTS / CEFR sertifikati xodim kiritgani uchun
+# tasdiqlangan hisoblanadi va So'z bilish'da ham chiqadi (profil, reyting,
+# ota-ona). Ichki / kurs / olimpiada / boshqa turlari chiqmaydi. Yuklamani
+# tasdiqlash ham Certificate yaratadi (certificate_id) — u yuklama orqali
+# ko'rinadi, shuning uchun bu yerda ikkinchi marta olinmaydi.
+CRM_KINDS = ("ielts", "cefr")
+
+
+def crm_badge_out(c) -> dict:
+    """CRM Certificate qatori -> badge_out bilan bir xil ko'rinish. id
+    manfiy: yuklama id'lari bilan to'qnashmasin."""
+    lvl = (c.level or "").strip()
+    sc = c.score
+    if c.kind == "ielts":
+        val = lvl or (f"{sc:.1f}" if sc is not None else "")
+        et, name, label = "ielts", "IELTS", f"IELTS {val}".strip()
+    else:
+        multi = "multilevel" in (c.note or "").lower()
+        et = "multilevel" if multi else "cefr_other"
+        name = "Multilevel" if multi else "CEFR"
+        sc_s = f"{sc:g}" if sc is not None else ""
+        label = f"{name} {lvl or sc_s}".strip()
+        if lvl and sc_s and sc_s != lvl:
+            label += f" ({sc_s})"
+    return {"id": -int(c.id), "exam_type": et, "exam_label": name,
+            "label": label,
+            "test_date": c.date.isoformat() if c.date else None}
+
+
+def _crm_rows(db: Session, ids) -> list:
+    C = models.Certificate
+    linked = select(CU.certificate_id).where(CU.certificate_id.isnot(None))
+    q = db.query(C).filter(C.kind.in_(CRM_KINDS), ~C.id.in_(linked))
+    if ids is None:
+        return q.all()
+    out = []
+    for i in range(0, len(ids), _IN_CHUNK):
+        out += q.filter(C.student_id.in_(ids[i:i + _IN_CHUNK])).all()
+    return out
+
+
 def confirmed_badges(db: Session, student_ids=None) -> dict:
     """{student_id: [badge_out, ...]} — eng oxirgisi birinchi. FAQAT
     tasdiqlanganlar: pending / rejected / withdrawn / revoked natijasi
-    bu yerdan HECH QACHON chiqmaydi. student_ids=None — hammasi."""
+    bu yerdan HECH QACHON chiqmaydi. student_ids=None — hammasi.
+    2026-10-17: xodim kiritgan CRM IELTS/CEFR sertifikatlari ham (yuqorida)."""
     rows = []
-    if student_ids is None:
+    ids = None if student_ids is None else _ids(student_ids)
+    if ids is None:
         rows = db.query(CU).filter(CU.status == CONFIRMED).all()
     else:
-        ids = _ids(student_ids)
         for i in range(0, len(ids), _IN_CHUNK):
             rows += (db.query(CU)
                      .filter(CU.student_id.in_(ids[i:i + _IN_CHUNK]),
                              CU.status == CONFIRMED).all())
+    items = [(_sort_key(u), int(u.student_id), badge_out(u)) for u in rows]
+    for c in _crm_rows(db, ids):
+        items.append(((c.date or date.min, c.created_at or datetime.min, 0),
+                      int(c.student_id), crm_badge_out(c)))
     out: dict = {}
-    for u in sorted(rows, key=_sort_key, reverse=True):
-        out.setdefault(int(u.student_id), []).append(badge_out(u))
+    for _k, sid, b in sorted(items, key=lambda x: x[0], reverse=True):
+        out.setdefault(sid, []).append(b)
     return out
 
 
@@ -1246,3 +1293,157 @@ def revoke_cert(cid: str, payload=Body(default=None),
           "Sertifikatingiz natijasi bekor qilindi. Savol bo'lsa, ustozingizga "
           "murojaat qiling.", url=STUDENT_URL, tag="vocab-cert")
     return _one_out(db, u)
+
+
+# ======================================================= TELEGRAM IMPORT ===
+# 2026-10-17, Jahongir: "JonyAcademy telegram sahifamizda natija qilgan
+# o'quvchilar bor shularnikini olib avtomat sertifikatlarni yuklab qo'y",
+# qarorlar: "Darhol tasdiqlangan", kanal https://t.me/JonyAcademy.
+#   * Manba — kanaldagi natija postlaridan ajratilgan ro'yxat
+#     (wordbank_data/telegram_results.json: post, sana, ism, imtihon,
+#     daraja, ball). Faqat ingliz tili: IELTS va Multilevel/CEFR.
+#   * Ism CRM o'quvchisiga FAQAT bitta aniq moslik bo'lsa bog'lanadi
+#     (postdagi ism so'zlari o'quvchi to'liq ismida bo'lishi kerak; lotin/
+#     kirill, x/h, tutuq belgisi farqi hisobga olinmaydi). Bir nechta
+#     o'quvchi mos kelsa yoki hech kim — o'tkazib yuboriladi (hisobotda
+#     faqat post raqami: ism hech qayerga yozilmaydi).
+#   * Certificate qatori (CRM sertifikati) yaratiladi — u yuqoridagi
+#     CRM_KINDS qoidasi bilan darhol "tasdiqlangan" belgi bo'ladi. SMM
+#     vazifasi YARATILMAYDI (natija allaqachon kanalda e'lon qilingan).
+#   * Takror yo'q: shu post havolasi yoki shu tur/daraja/ball bilan
+#     sertifikati bor o'quvchiga qayta yozilmaydi. Belgi kaliti fayl
+#     mazmunidan — fayl yangilansa qayta ishlaydi (idempotent).
+TG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                       "wordbank_data", "telegram_results.json")
+TG_SEED = "wordbank_tg_certs_v1"
+TG_REPORT_KEY = "wordbank_tg_import"   # IntegrationSetting: sonlar + post raqamlari
+TG_CHANNEL = "https://t.me/JonyAcademy/"
+TG_BY = "Telegram (avtomat)"
+
+_CYR = {"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e",
+        "ё": "yo", "ж": "j", "з": "z", "и": "i", "й": "y", "к": "k",
+        "л": "l", "м": "m", "н": "n", "о": "o", "п": "p", "р": "r",
+        "с": "s", "т": "t", "у": "u", "ф": "f", "х": "x", "ц": "ts",
+        "ч": "ch", "ш": "sh", "щ": "sh", "ъ": "", "ы": "i", "ь": "",
+        "э": "e", "ю": "yu", "я": "ya", "ў": "o", "қ": "q", "ғ": "g",
+        "ҳ": "h"}
+
+
+def _name_tokens(s) -> frozenset:
+    """Ismni solishtirish uchun so'zlar to'plami: kichik harf, kirill ->
+    lotin, tutuq belgisi tashlanadi, x/kh -> h, faqat harflar."""
+    s = (s or "").lower()
+    s = "".join(_CYR.get(ch, ch) for ch in s)
+    s = re.sub(r"[ʻʼ‘’`'´]", "", s)
+    s = s.replace("kh", "h").replace("x", "h")
+    return frozenset(t for t in re.findall(r"[a-z]+", s) if len(t) > 1)
+
+
+def _tg_rows(raw: bytes) -> list:
+    data = json.loads(raw.decode("utf-8-sig"))
+    rows = data.get("results", data) if isinstance(data, dict) else data
+    return [r for r in rows if isinstance(r, dict)]
+
+
+def _tg_cert(r: dict):
+    """(kind, level, score, note_suffix) yoki None (noma'lum imtihon)."""
+    ex = str(r.get("exam") or "").lower()
+    score = r.get("score")
+    try:
+        score = float(score) if score not in (None, "") else None
+    except (TypeError, ValueError):
+        score = None
+    if ex == "ielts":
+        if score is None or not (1.0 <= score <= 9.0):
+            return None
+        return "ielts", f"{score:.1f}", score, ""
+    if ex in ("multilevel", "cefr"):
+        lvl = str(r.get("level") or "").strip().upper()
+        if lvl not in _CEFR:
+            return None
+        return "cefr", lvl, score, " · Multilevel" if ex == "multilevel" else ""
+    return None
+
+
+def seed_telegram(db: Session, path=None):
+    """Bir martalik (fayl mazmuni bo'yicha) import. Qaytaradi: None — bu
+    fayl allaqachon import qilingan yoki fayl yo'q; aks holda hisobot."""
+    from common import _seed_done, _seed_mark
+    path = path or os.environ.get("WORDBANK_TG_FILE") or TG_FILE
+    try:
+        with open(path, "rb") as f:
+            raw = f.read()
+    except OSError:
+        return None
+    key = f"{TG_SEED}:{hashlib.sha256(raw).hexdigest()[:12]}"
+    if _seed_done(db, key):
+        return None
+    C = models.Certificate
+    students = [(int(sid), _name_tokens(fn)) for sid, fn in
+                db.query(models.Student.id, models.Student.full_name)]
+    rep = {"created": 0, "existing": 0, "unmatched": [], "ambiguous": [],
+           "skipped": []}
+    touched = set()
+    for r in _tg_rows(raw):
+        post = int(r.get("post") or 0)
+        cert = _tg_cert(r)
+        toks = _name_tokens(r.get("name"))
+        if cert is None or len(toks) < 2:
+            rep["skipped"].append(post)
+            continue
+        cands = [sid for sid, st in students if toks <= st]
+        if len(cands) != 1:
+            rep["ambiguous" if cands else "unmatched"].append(post)
+            continue
+        sid = cands[0]
+        kind, level, score, suffix = cert
+        link = f"{TG_CHANNEL}{post}"
+        same = (db.query(C.id).filter(C.student_id == sid)
+                .filter(or_(C.note.like(f"%{link}%"),
+                            (C.kind == kind) & (C.level == level)))
+                .first())
+        if same is not None:
+            rep["existing"] += 1
+            continue
+        try:
+            day = date.fromisoformat(str(r.get("date"))[:10])
+        except ValueError:
+            day = None
+        c = C(student_id=sid, kind=kind, level=level, score=score,
+              date=day or date.today(), note=f"Telegram: {link}{suffix}",
+              created_by=TG_BY)
+        db.add(c)
+        db.flush()
+        audit.log(db, None, entity="student", action="update",
+                  entity_id=sid, field="certificate",
+                  new_value=crm_badge_out(c)["label"],
+                  note=f"Telegram kanalidan avtomat: {link}")
+        rep["created"] += 1
+        touched.add(sid)
+    db.commit()
+    for sid in sorted(touched):
+        try:
+            with db.begin_nested():
+                _hall(db, sid)
+        except Exception as e:  # noqa: BLE001 - tarix keyin ham yangilanadi
+            print(f"[tg-certs] tarix {sid}: {e!r}", flush=True)
+    rep["at"] = datetime.utcnow().isoformat(timespec="seconds")
+    row = db.query(models.IntegrationSetting).get(TG_REPORT_KEY)
+    if row is None:
+        db.add(models.IntegrationSetting(key=TG_REPORT_KEY,
+                                         value=json.dumps(rep)))
+    else:
+        row.value = json.dumps(rep)
+    _seed_mark(db, key)
+    db.commit()
+    _board_cache_clear()
+    return rep
+
+
+def tg_report(db: Session):
+    """Oxirgi import hisoboti (faqat sonlar va post raqamlari) yoki None."""
+    row = db.query(models.IntegrationSetting).get(TG_REPORT_KEY)
+    try:
+        return json.loads(row.value) if row is not None and row.value else None
+    except ValueError:
+        return None

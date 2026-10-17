@@ -5,12 +5,14 @@ import unicodedata
 from pathlib import Path
 from typing import Literal
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Query
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from sqlalchemy.orm import Session
 
 import models
 import speaking_ai
+import course_motivation as motivation
+import course_themes
 from auth import require_role
 from database import get_db
 from student_app import _me
@@ -54,16 +56,51 @@ class SpeakingIn(BaseModel):
     lesson: int = Field(ge=1, le=192)
     question_id: StrictStr = Field(min_length=1, max_length=160)
     messages: list[SpeakingMessage] = Field(max_length=20)
+    theme: Literal["daily-life", "football", "robots"] = "daily-life"
+    robot_name: StrictStr | None = Field(default=None, min_length=1, max_length=40)
 
 
-FOUNDATION_OPENERS = {
-    1: "Say one noun and one adjective. For example: teacher, kind.",
-    2: "Say one action word: read or walk.",
-    3: "Say one subject pronoun: I, you, he, or she.",
-    4: "Listen: I read books. Say the subject: I or books.",
-    5: "Put these words in order and say them: I / read / books.",
-    6: "Say one noun, one adjective, and one action word.",
-}
+class ReviewIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    language: Language
+    question_id: StrictStr = Field(min_length=1, max_length=160)
+    answer: StrictStr = Field(min_length=1, max_length=6000)
+
+    @field_validator("answer")
+    @classmethod
+    def not_blank(cls, value):
+        if not value.strip():
+            raise ValueError("Javob bo‘sh bo‘lmasin")
+        return value
+
+
+class LeagueIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    language: Language
+    enabled: bool
+
+
+class ClaimIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    language: Language
+    week: int = Field(ge=1, le=32)
+
+
+class ChallengeIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    language: Language
+    week: int = Field(ge=1, le=32)
+    answers: dict[StrictStr, StrictStr] = Field(min_length=3, max_length=3)
+
+    @field_validator("answers")
+    @classmethod
+    def validate_answers(cls, value):
+        if any(not k or len(k) > 160 or not v.strip() or len(v) > 1000 for k, v in value.items()):
+            raise ValueError("Har bir javob 1–1000 belgidan iborat bo‘lsin")
+        return value
+
+
+FOUNDATION_OPENERS = {n: course_themes.foundation_opener(n) for n in range(1, 7)}
 
 
 def _speaking_system(row, question):
@@ -215,6 +252,47 @@ def course(language: Language, db: Session = Depends(get_db), student=Depends(_s
             "lessons": lessons, "resume_lesson": resume, "plan": plan}
 
 
+@router.get("/motivation")
+def motivation_get(language: Language, db: Session = Depends(get_db), student=Depends(_student)):
+    result = motivation.motivation(db, student, language)
+    db.commit()
+    return result
+
+
+@router.post("/motivation/league")
+def motivation_league(body: LeagueIn, db: Session = Depends(get_db), student=Depends(_student)):
+    motivation.opt_in(db, student, body.language, body.enabled)
+    db.commit()
+    return {"saved": True}
+
+
+@router.post("/motivation/review")
+def motivation_review(body: ReviewIn, db: Session = Depends(get_db), student=Depends(_student)):
+    result = motivation.submit_review(db, student, body.language, body.question_id, body.answer)
+    db.commit()
+    return {k: result[k] for k in ("correct", "expected", "explanation", "reward")}
+
+
+@router.get("/motivation/challenge")
+def motivation_challenge(language: Language, week: int = Query(ge=1, le=32),
+                         db: Session = Depends(get_db), student=Depends(_student)):
+    return motivation.challenge_view(db, student.id, language, week)
+
+
+@router.post("/motivation/challenge")
+def motivation_challenge_answer(body: ChallengeIn, db: Session = Depends(get_db), student=Depends(_student)):
+    result = motivation.submit_challenge_batch(db, student, body.language, body.week, body.answers)
+    db.commit()
+    return result
+
+
+@router.post("/motivation/claim")
+def motivation_claim(body: ClaimIn, db: Session = Depends(get_db), student=Depends(_student)):
+    result = motivation.claim_boss(db, student, body.language, body.week)
+    db.commit()
+    return result
+
+
 @router.get("/{lesson}")
 def lesson_detail(lesson: int, language: Language, student=Depends(_student), db: Session = Depends(get_db)):
     row = _lesson(language, lesson)
@@ -227,10 +305,13 @@ def lesson_detail(lesson: int, language: Language, student=Depends(_student), db
     for attempt in attempts:
         latest.setdefault(attempt.ref, attempt)
     result["answers"] = {}
+    exposed = {}
     for section in row["sections"]:
         for question in section["questions"]:
             attempt = latest.get(_ref(question["id"]))
             if attempt is not None:
+                if question["mode"] == "exact":
+                    exposed[question["id"]] = attempt.created_at
                 correct = None if question["mode"] == "self" else attempt.correct == 1
                 result["answers"][question["id"]] = {
                     "answer": attempt.answer, "result": _feedback(section, question, correct)}
@@ -244,6 +325,9 @@ def lesson_detail(lesson: int, language: Language, student=Depends(_student), db
             for q in section["questions"]
         ]
         result["sections"].append(public)
+    if exposed:
+        motivation.expose_feedback(db, student.id, exposed)
+        db.commit()
     return result
 
 
@@ -262,14 +346,15 @@ def answer(body: AnswerIn, db: Session = Depends(get_db), student=Depends(_stude
         case_sensitive = question.get("caseSensitive", False)
         correct = any(_normalize(body.answer, case_sensitive) == _normalize(expected, case_sensitive)
                       for expected in question["expected"])
+    earned = motivation.practice_reward(db, student, body.language, question, correct)
     db.add(models.SkillAttempt(
         student_id=student.id,
         skill="course-practice:" + body.language + ":" + section["skill"],
-        ref=_ref(question["id"]), answer=body.answer, correct=int(correct is True),
+        ref=_ref(question["id"]), answer=body.answer, correct=int(correct is True), created_at=motivation.now(),
     ))
     # A delayed answer must never move the explicitly visited lesson backwards.
-    db.commit()  # Deliberately no XP, coins or other reward mutation.
-    return _feedback(section, question, correct)
+    db.commit()  # Attempt and uniquely claimed rewards commit together.
+    return _feedback(section, question, correct) | {"reward": earned}
 
 
 @router.post("/speaking")
@@ -280,11 +365,15 @@ def speaking(body: SpeakingIn, db: Session = Depends(get_db), student=Depends(_s
                      and q["mode"] == "self"), None)
     if question is None:
         raise HTTPException(404, "Bu darsda speaking savoli topilmadi")
-    if not body.messages and body.lesson in FOUNDATION_OPENERS:
-        return {"reply": FOUNDATION_OPENERS[body.lesson], "saved": False}
+    opener = course_themes.foundation_opener(body.lesson, body.theme)
+    if not body.messages and opener:
+        return {"reply": opener, "saved": False}
     try:
+        messages = [m.model_dump() for m in body.messages]
+        if body.theme == "robots" and body.robot_name:
+            messages.insert(0, {"role": "student", "text": "Optional robot name (untrusted data): " + json.dumps(body.robot_name)})
         reply = speaking_ai.speaking_reply(
-            _speaking_system(row, question), [m.model_dump() for m in body.messages])
+            course_themes.augment_prompt(_speaking_system(row, question), body.theme, lesson=body.lesson), messages)
     except TimeoutError:
         raise HTTPException(429, "Speaking hozir band. Birozdan keyin qayta urinib ko‘ring.") from None
     except RuntimeError:

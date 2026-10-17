@@ -1,0 +1,1862 @@
+{
+  "en": [
+    {
+      "week": 1,
+      "title": "So‘zlar va gap tartibi",
+      "questions": [
+        {
+          "id": "en:boss:1:1",
+          "prompt": "So‘zlarni sifat + ot tartibida yozing, artikl qo‘shmang: cup / green. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "green cup"
+          ],
+          "explanation": "Sifat otdan oldin keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:1:2",
+          "prompt": "So‘zlarni ega + fe’l + to‘ldiruvchi tartibida yozing: bread / eat / we. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "we eat bread"
+          ],
+          "explanation": "Ega we, harakat eat, to‘ldiruvchi bread.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:1:3",
+          "prompt": "So‘zlarni ega + fe’l + to‘ldiruvchi tartibida yozing: pears / like / I. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "I like pears"
+          ],
+          "explanation": "Oddiy darak gapda ega fe’ldan oldin keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "title": "Be bilan tavsif",
+      "questions": [
+        {
+          "id": "en:boss:2:1",
+          "prompt": "Bo‘sh qismni yozing: Our cups ___ (be + clean, tasdiq). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "are clean"
+          ],
+          "explanation": "Ko‘plikdagi cups bilan are ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:2:2",
+          "prompt": "Bo‘sh qismni yozing: I ___ (be + cold, tasdiq). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "am cold"
+          ],
+          "explanation": "I bilan be fe’lining am shakli keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:2:3",
+          "prompt": "So‘zlardan savol tuzing: empty / is / the box. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "is the box empty"
+          ],
+          "explanation": "Savolda is egadan oldinga o‘tadi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "title": "Ot va egalik",
+      "questions": [
+        {
+          "id": "en:boss:3:1",
+          "prompt": "Bo‘sh qismni yozing: two ___ (small + box, ko‘plik). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "small boxes"
+          ],
+          "explanation": "Box ko‘plikda boxes; sifat o‘zgarmaydi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:3:2",
+          "prompt": "Egalik birikmasini yozing: Nodira ga tegishli hat. Ism + egalik belgisi + ot. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "Nodira's hat",
+            "Nodira’s hat"
+          ],
+          "explanation": "Birlikdagi egaga apostrof va s qo‘shiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:3:3",
+          "prompt": "Bo‘sh qismni yozing: three ___ (red + tomato, ko‘plik). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "red tomatoes"
+          ],
+          "explanation": "Tomato ko‘plikda tomatoes bo‘ladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "title": "Olmoshlar va ishora",
+      "questions": [
+        {
+          "id": "en:boss:4:1",
+          "prompt": "So‘zlarni ishora + sifat + ot tartibida yozing: socks / those / blue. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "those blue socks"
+          ],
+          "explanation": "Ko‘plikdagi uzoq narsalar uchun those keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:4:2",
+          "prompt": "Bo‘sh qismni yozing: This is ___ (we ga tegishli + room). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "our room"
+          ],
+          "explanation": "Ot oldida we uchun our egalik sifati keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:4:3",
+          "prompt": "Bo‘sh qismni yozing: That is ___ (they ga tegishli + cat). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "their cat"
+          ],
+          "explanation": "Ot oldida they uchun their ishlatiladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "title": "Borlik va buyruq",
+      "questions": [
+        {
+          "id": "en:boss:5:1",
+          "prompt": "Bo‘sh qismni yozing: There ___ (be + three eggs, tasdiq). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "are three eggs"
+          ],
+          "explanation": "Ko‘plikdagi eggs bilan there are ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:5:2",
+          "prompt": "Bo‘sh qismni yozing: There ___ (be + a spoon, tasdiq). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "is a spoon"
+          ],
+          "explanation": "Bir dona buyum uchun there is keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:5:3",
+          "prompt": "So‘zlardan inkor buyruq tuzing, qisqartirmang: touch / do / the cup / not. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "do not touch the cup"
+          ],
+          "explanation": "Inkor buyruq do not va asosiy fe’l bilan tuziladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "title": "Kundalik odatlar",
+      "questions": [
+        {
+          "id": "en:boss:6:1",
+          "prompt": "Bo‘sh qismni yozing: My aunt ___ (wash + cups; odat). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "washes cups"
+          ],
+          "explanation": "Uchinchi shaxs birlikda wash ga es qo‘shiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:6:2",
+          "prompt": "Bo‘sh qismni yozing, qisqartirmang: The baby ___ (not like + rice; odat). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "does not like rice"
+          ],
+          "explanation": "Does not dan keyin fe’l asosiy shaklda qoladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:6:3",
+          "prompt": "So‘zlardan savol tuzing: your cousins / do / cook rice. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "do your cousins cook rice"
+          ],
+          "explanation": "Ko‘plikdagi ega bilan Present Simple savoli do orqali tuziladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "title": "Hozirgi harakat",
+      "questions": [
+        {
+          "id": "en:boss:7:1",
+          "prompt": "Bo‘sh qismni Present Continuous bilan yozing: My uncle ___ (cut + bread). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "is cutting bread"
+          ],
+          "explanation": "Birlikdagi ega uchun is; cut shakli cutting bo‘ladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:7:2",
+          "prompt": "Bo‘sh qismni Present Continuous bilan yozing: The boys ___ (carry + a box). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "are carrying a box"
+          ],
+          "explanation": "Ko‘plikdagi ega uchun are va ing shakli kerak.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:7:3",
+          "prompt": "Bo‘sh qismni Present Continuous bilan yozing: I ___ (make + soup). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "am making soup"
+          ],
+          "explanation": "I bilan am; make oxiridagi e tushadi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "title": "Savol, joy va usul",
+      "questions": [
+        {
+          "id": "en:boss:8:1",
+          "prompt": "Bo‘sh qismni yozing: The keys are ___ (ostida + the bed). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "under the bed",
+            "beneath the bed"
+          ],
+          "explanation": "Under buyumning ostidagi joyni bildiradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:8:2",
+          "prompt": "Bo‘sh qismni yozing: Our lesson starts ___ (soat + seven fifteen). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "at seven fifteen"
+          ],
+          "explanation": "Aniq soat oldidan at keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:8:3",
+          "prompt": "Bo‘sh qismni yozing: She ___ (speak, odat + quiet dan ravish). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "speaks quietly"
+          ],
+          "explanation": "Uchinchi shaxsda speaks; harakat usuli quietly bilan ifodalanadi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 9,
+      "title": "O‘tgan voqealar",
+      "questions": [
+        {
+          "id": "en:boss:9:1",
+          "prompt": "Bo‘sh qismni Past Simple bilan yozing: Yesterday my uncle ___ (buy + apples). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "bought apples"
+          ],
+          "explanation": "Buy ning o‘tgan zamoni bought.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:9:2",
+          "prompt": "Bo‘sh qismni Past Simple bilan yozing, qisqartirmang: We ___ (not open + the gate). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "did not open the gate"
+          ],
+          "explanation": "Did not dan keyin open asosiy shaklda qoladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:9:3",
+          "prompt": "Bo‘sh qismni o‘tgan zamonda yozing: The plates ___ (be + wet). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "were wet"
+          ],
+          "explanation": "Ko‘plikdagi ega bilan o‘tgan zamonda were keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 10,
+      "title": "O‘tgan jarayon va odat",
+      "questions": [
+        {
+          "id": "en:boss:10:1",
+          "prompt": "Bo‘sh qismni Past Continuous bilan yozing: At nine, Rano ___ (paint + a chair). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "was painting a chair"
+          ],
+          "explanation": "Birlikdagi ega bilan was va ing shakli ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:10:2",
+          "prompt": "Bo‘sh qismni Past Continuous bilan yozing: At noon, we ___ (feed + the ducks). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "were feeding the ducks"
+          ],
+          "explanation": "Ko‘plikdagi ega bilan were va ing shakli keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:10:3",
+          "prompt": "Avvalgi odatni used to tuzilmasida yozing: My grandfather ___ (grow + carrots). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "used to grow carrots"
+          ],
+          "explanation": "Used to dan keyin fe’lning asosiy shakli keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 11,
+      "title": "Kelajak rejalari",
+      "questions": [
+        {
+          "id": "en:boss:11:1",
+          "prompt": "Oldindan belgilangan niyatni going to bilan yozing: I ___ (repair + the shelf). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "am going to repair the shelf"
+          ],
+          "explanation": "I bilan am going to va asosiy fe’l keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:11:2",
+          "prompt": "Hozir qabul qilingan qarorni will bilan yozing, qisqartirmang: We ___ (carry + your bags). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "will carry your bags"
+          ],
+          "explanation": "Will dan keyin asosiy fe’l ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:11:3",
+          "prompt": "Kelajak vaqt ergash gapini to‘ldiring: I will call when the train ___ (reach + Leeds). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "reaches Leeds"
+          ],
+          "explanation": "Kelajakdagi when gapida Present Simple ishlatiladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 12,
+      "title": "Natija va tajriba",
+      "questions": [
+        {
+          "id": "en:boss:12:1",
+          "prompt": "Bo‘sh qismni Present Perfect bilan yozing: My niece ___ (lose + her gloves). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "has lost her gloves"
+          ],
+          "explanation": "Birlikdagi ega bilan has va lose ning lost shakli keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:12:2",
+          "prompt": "Bo‘sh qismni Present Perfect bilan yozing: We ___ (choose + a hotel). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "have chosen a hotel"
+          ],
+          "explanation": "We bilan have; choose ning uchinchi shakli chosen.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:12:3",
+          "prompt": "Bo‘sh qismni Present Perfect inkori bilan yozing, qisqartirmang: I ___ (not finish + the soup). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "have not finished the soup"
+          ],
+          "explanation": "Have not dan keyin fe’lning uchinchi shakli keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 13,
+      "title": "Murakkab o‘tgan zamonlar",
+      "questions": [
+        {
+          "id": "en:boss:13:1",
+          "prompt": "Bo‘sh qismni Present Perfect Continuous bilan yozing: She ___ (repair + the radio) for an hour. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "has been repairing the radio"
+          ],
+          "explanation": "Davom etgan jarayon has been va ing shakli bilan ifodalanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:13:2",
+          "prompt": "Bo‘sh qismni Past Perfect bilan yozing: Before we arrived, the guests ___ (eat + the cake). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had eaten the cake"
+          ],
+          "explanation": "Avval tugagan ish had va uchinchi shakl bilan beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:13:3",
+          "prompt": "Bo‘sh qismni Past Perfect Continuous bilan yozing: Before lunch, we ___ (dig + the garden) for two hours. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had been digging the garden"
+          ],
+          "explanation": "O‘tgan nuqtagacha davom etgan jarayon had been va ing shaklida keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 14,
+      "title": "Taqqoslash va miqdor",
+      "questions": [
+        {
+          "id": "en:boss:14:1",
+          "prompt": "Bo‘sh qismni yozing: This path is ___ (short ning qiyosiy shakli + than the road). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "shorter than the road"
+          ],
+          "explanation": "Qisqa sifatga er qo‘shiladi, taqqoslash than bilan keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:14:2",
+          "prompt": "Bo‘sh qismni yozing: This is ___ (expensive ning orttirma shakli + bicycle). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "the most expensive bicycle"
+          ],
+          "explanation": "Uzun sifat orttirma darajada the most bilan keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:14:3",
+          "prompt": "So‘zlarni tabiiy tartiblang: enough / warm / for us. The water is ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "warm enough for us"
+          ],
+          "explanation": "Enough sifatdan keyin keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 15,
+      "title": "Qobiliyat va ruxsat",
+      "questions": [
+        {
+          "id": "en:boss:15:1",
+          "prompt": "Kelajak qobiliyatini be able to bilan yozing, qisqartirmang: After the course, I ___ (read + maps). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "will be able to read maps"
+          ],
+          "explanation": "Kelajakdagi qobiliyat will be able to bilan ifodalanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:15:2",
+          "prompt": "Bo‘sh qismni yozing: We are ___ (ruxsat berilgan + to use this room). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "allowed to use this room"
+          ],
+          "explanation": "Ruxsat holati be allowed to bilan beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:15:3",
+          "prompt": "So‘zlardan muloyim iltimos tuzing: you / could / move this chair. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "could you move this chair"
+          ],
+          "explanation": "Could you va asosiy fe’l muloyim iltimos hosil qiladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 16,
+      "title": "Majburiyat va maslahat",
+      "questions": [
+        {
+          "id": "en:boss:16:1",
+          "prompt": "Bajarilgan, lekin keraksiz ishni needn’t have bilan yozing: I ___ (buy + extra bread). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "needn't have bought extra bread",
+            "needn’t have bought extra bread"
+          ],
+          "explanation": "Needn’t have va V3 keraksiz bajarilgan ishni bildiradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:16:2",
+          "prompt": "O‘tgan majburiyatni have to orqali yozing: We ___ (replace + the lock). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had to replace the lock"
+          ],
+          "explanation": "O‘tgan zarurat had to orqali ifodalanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:16:3",
+          "prompt": "So‘zlarni maslahat tartibida yozing: better / had / you / leave now. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "you had better leave now"
+          ],
+          "explanation": "Had better dan keyin to siz asosiy fe’l ishlatiladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 17,
+      "title": "Taxmin va afsus",
+      "questions": [
+        {
+          "id": "en:boss:17:1",
+          "prompt": "O‘tgan voqea haqida kuchli taxminni must bilan yozing: The driver ___ (take + the wrong road). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "must have taken the wrong road"
+          ],
+          "explanation": "O‘tgan kuchli taxmin must have va V3 orqali beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:17:2",
+          "prompt": "Bajarilmagan yaxshi ish uchun should bilan afsus bildiring: I ___ (save + the receipt). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "should have saved the receipt"
+          ],
+          "explanation": "Should have va V3 bajarilishi kerak bo‘lgan ishni bildiradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:17:3",
+          "prompt": "Hozir davom etayotgan ehtimolni might bilan yozing: Our neighbours ___ (move + their furniture). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "might be moving their furniture"
+          ],
+          "explanation": "Davom etayotgan ehtimol might be va ing shaklida beriladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 18,
+      "title": "Haqiqiy va faraziy shart",
+      "questions": [
+        {
+          "id": "en:boss:18:1",
+          "prompt": "Ikkinchi shart gapining natijasini would bilan yozing: If I had a boat, I ___ (visit + that island). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "would visit that island"
+          ],
+          "explanation": "Faraziy natija would va asosiy fe’l bilan ifodalanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:18:2",
+          "prompt": "Birinchi shart gapini to‘ldiring: If the shop ___ (close + early), we will return tomorrow. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "closes early"
+          ],
+          "explanation": "Kelajak shartida if qismida Present Simple ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:18:3",
+          "prompt": "So‘zlarni shart ergash gapi tartibida yozing: you / unless / call me. I will wait ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "unless you call me"
+          ],
+          "explanation": "Unless if not ma’nosini beradi; ortiqcha inkor kerak emas.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 19,
+      "title": "O‘tgan shart va istak",
+      "questions": [
+        {
+          "id": "en:boss:19:1",
+          "prompt": "Uchinchi shart gapining natijasini would bilan yozing: If we had left earlier, we ___ (catch + the ferry). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "would have caught the ferry"
+          ],
+          "explanation": "O‘tgan amalga oshmagan natija would have va V3 orqali beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:19:2",
+          "prompt": "O‘tgan ishga afsusni yozing: I wish I ___ (keep + that letter). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had kept that letter"
+          ],
+          "explanation": "O‘tgan afsus wish dan keyin Past Perfect orqali beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:19:3",
+          "prompt": "Aralash shartning hozirgi natijasini would bilan yozing: If she had accepted the job, she ___ (live + in Rome) now. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "would live in Rome",
+            "would be living in Rome"
+          ],
+          "explanation": "O‘tgan qarorning hozirgi faraziy natijasi would va asosiy fe’l bilan keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 20,
+      "title": "Passivga kirish",
+      "questions": [
+        {
+          "id": "en:boss:20:1",
+          "prompt": "Bo‘sh qismni Present Continuous Passive bilan yozing: The bridge ___ (strengthen) now. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "is being strengthened"
+          ],
+          "explanation": "Hozirgi passiv jarayon is being va V3 bilan tuziladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:20:2",
+          "prompt": "Bo‘sh qismni Present Perfect Passive bilan yozing: The windows ___ (clean) already. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "have been cleaned"
+          ],
+          "explanation": "Ko‘plikdagi ega bilan have been va V3 keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:20:3",
+          "prompt": "Bo‘sh qismni Past Simple Passive bilan yozing: The bicycle ___ (steal) yesterday. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "was stolen"
+          ],
+          "explanation": "Birlikdagi ega uchun was; steal ning V3 shakli stolen.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 21,
+      "title": "Murakkab passiv",
+      "questions": [
+        {
+          "id": "en:boss:21:1",
+          "prompt": "Bo‘sh qismni Past Perfect Passive bilan yozing: The tickets ___ (check) before we entered. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had been checked"
+          ],
+          "explanation": "Avval yakunlangan passiv ish had been va V3 bilan beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:21:2",
+          "prompt": "Bo‘sh qismni Future Passive bilan yozing, qisqartirmang: The roof ___ (reinforce) next month. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "will be reinforced"
+          ],
+          "explanation": "Kelajak passivi will be va V3 bilan tuziladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:21:3",
+          "prompt": "Must modal fe’li bilan passiv yozing: These bottles ___ (recycle). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "must be recycled"
+          ],
+          "explanation": "Modal passivda modal fe’ldan keyin be va V3 keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 22,
+      "title": "Ko‘chirma gapdan o‘zlashtirma gapga",
+      "questions": [
+        {
+          "id": "en:boss:22:1",
+          "prompt": "Backshift qiling: Nargiza said, 'I am packing my suitcase.' Nargiza said that she ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "was packing her suitcase"
+          ],
+          "explanation": "Am packing o‘tgan davomiy zamonga, my esa her ga o‘zgaradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:22:2",
+          "prompt": "Buyruqni o‘zlashtiring: 'Hide the key,' Dad told me. Dad told me ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "to hide the key"
+          ],
+          "explanation": "O‘zlashtirma buyruqda to va asosiy fe’l keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:22:3",
+          "prompt": "Bilvosita savolning bo‘sh qismini yozing: 'Where is my parcel?' he asked. He asked where ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "his parcel was"
+          ],
+          "explanation": "Bilvosita savolda ega fe’ldan oldin keladi; my olmoshi his ga o‘zgaradi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 23,
+      "title": "Nisbiy va qisqartirilgan gap",
+      "questions": [
+        {
+          "id": "en:boss:23:1",
+          "prompt": "Nisbiy gapning qisqa faol bo‘lagini yozing: the woman ___ (carry + a violin; -ing shakli). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "carrying a violin"
+          ],
+          "explanation": "Faol nisbiy gap ing shakli bilan qisqaradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:23:2",
+          "prompt": "Nisbiy gapning qisqa passiv bo‘lagini yozing: the bowls ___ (make + in Spain; V3 shakli). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "made in Spain"
+          ],
+          "explanation": "Passiv nisbiy gap uchinchi shakl orqali qisqaradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:23:3",
+          "prompt": "So‘zlarni rasmiy nisbiy bo‘lakka tartiblang: whom / with / I travelled. The guide ___ was kind. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "with whom I travelled"
+          ],
+          "explanation": "Shaxsga tegishli rasmiy predlogli nisbiy bo‘lakda whom ishlatiladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 24,
+      "title": "Fe’l birikmalari va xizmat",
+      "questions": [
+        {
+          "id": "en:boss:24:1",
+          "prompt": "Bo‘sh qismni yozing: She avoids ___ (drive + at night). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "driving at night"
+          ],
+          "explanation": "Avoid dan keyin gerund keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:24:2",
+          "prompt": "Xizmatni boshqa odam bajargan: have something done tuzilmasida Past Simple yozing. We ___ (our oven / repair). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had our oven repaired"
+          ],
+          "explanation": "Had va obyekt va V3 xizmatni boshqa kishi bajarganini bildiradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:24:3",
+          "prompt": "Bo‘sh qismni yozing: I look forward to ___ (meet + your parents). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "meeting your parents"
+          ],
+          "explanation": "Bu birikmadagi to predlog, undan keyin gerund keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 25,
+      "title": "Mantiqiy bog‘lanish",
+      "questions": [
+        {
+          "id": "en:boss:25:1",
+          "prompt": "Bo‘sh qismni gerund bilan yozing: Despite ___ (feel + nervous), she spoke clearly. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "feeling nervous"
+          ],
+          "explanation": "Despite dan keyin gerund yoki ot birikmasi keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:25:2",
+          "prompt": "So‘zlarni natija birikmasiga tartiblang: a / such / narrow path. It was ___ that we walked in a line. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "such a narrow path"
+          ],
+          "explanation": "Such sifat va ot birikmasi oldida ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:25:3",
+          "prompt": "So‘zlarni juft bog‘lovchi bilan tartiblang: nor / neither / tea / coffee. He drinks ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "neither tea nor coffee",
+            "neither coffee nor tea"
+          ],
+          "explanation": "Neither va nor ikki narsani birgalikda inkor qiladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 26,
+      "title": "Bilvosita savol va moslashuv",
+      "questions": [
+        {
+          "id": "en:boss:26:1",
+          "prompt": "Bilvosita savol qiling: Where does the painter live? Do you know where ___? Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "the painter lives"
+          ],
+          "explanation": "Bilvosita savolda does yo‘qoladi va darak gap tartibi ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:26:2",
+          "prompt": "Novvoy erkak. Savol dumini yozing, qisqartma ishlating: The baker was laughing, ___? Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "wasn't he",
+            "wasn’t he"
+          ],
+          "explanation": "Tasdiq Past Continuous gapiga inkor was va birlikdagi shaxs olmoshi mos keladi. Bu vaziyatda novvoy erkak.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:26:3",
+          "prompt": "Bo‘sh qismni yozing: Each of these boxes ___ (contain + a toy). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "contains a toy"
+          ],
+          "explanation": "Each grammatik jihatdan birlik, shuning uchun contains keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 27,
+      "title": "Kelajakdagi jarayon va yakun",
+      "questions": [
+        {
+          "id": "en:boss:27:1",
+          "prompt": "Future Perfect bilan yozing, qisqartirmang: By Friday, we ___ (install + the lights). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "will have installed the lights"
+          ],
+          "explanation": "Belgilangan kelajak vaqtigacha tugash will have va V3 bilan beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:27:2",
+          "prompt": "Future Continuous bilan yozing, qisqartirmang: At ten tomorrow, I ___ (interview + the chef). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "will be interviewing the chef"
+          ],
+          "explanation": "Kelajakdagi muayyan paytdagi jarayon will be va ing shaklida keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:27:3",
+          "prompt": "O‘tmishda mavjud bo‘lgan rejani going to orqali yozing: She ___ (sell + her scooter), but changed her mind. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "was going to sell her scooter"
+          ],
+          "explanation": "O‘tgan reja was going to va asosiy fe’l bilan ifodalanadi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 28,
+      "title": "Takrorlash: odat va murakkab birikmalar",
+      "questions": [
+        {
+          "id": "en:boss:28:1",
+          "prompt": "Bo‘sh qismni Present Simple bilan yozing: The museum guide ___ (explain + the rules; har kungi odat). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "explains the rules"
+          ],
+          "explanation": "The museum guide uchinchi shaxs birlik; odatni bildirgan fe’lga s qo‘shiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:28:2",
+          "prompt": "Bo‘sh qismni gerund bilan yozing: Despite ___ (have + little time), we finished. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "having little time"
+          ],
+          "explanation": "Despite dan keyin have fe’li gerund shaklini oladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:28:3",
+          "prompt": "So‘zlarni sifatlar tartibida yozing: wooden / beautiful / a / small / boat. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "a beautiful small wooden boat"
+          ],
+          "explanation": "Baho, o‘lcham va material sifatlari shu tartibda keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 29,
+      "title": "Aralash qo‘llash: vaqt",
+      "questions": [
+        {
+          "id": "en:boss:29:1",
+          "prompt": "Past Perfect Continuous bilan yozing: By sunset, the workers ___ (lay + bricks) for six hours. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had been laying bricks"
+          ],
+          "explanation": "O‘tgan vaqtgacha davom etgan jarayon had been va ing shaklida keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:29:2",
+          "prompt": "Present Perfect Passive bilan yozing: The missing documents ___ (find). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "have been found"
+          ],
+          "explanation": "Ko‘plikdagi passiv natija have been va found bilan ifodalanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:29:3",
+          "prompt": "Future Perfect bilan yozing, qisqartirmang: By noon, the team ___ (test + every alarm). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "will have tested every alarm"
+          ],
+          "explanation": "Kelajak muddatigacha tugagan ish will have va V3 orqali ifodalanadi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 30,
+      "title": "Aralash qo‘llash: shart va xulosa",
+      "questions": [
+        {
+          "id": "en:boss:30:1",
+          "prompt": "Uchinchi shart natijasini would bilan yozing: If the map had been accurate, we ___ (find + the village). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "would have found the village"
+          ],
+          "explanation": "Amalga oshmagan o‘tgan natija would have va V3 bilan keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:30:2",
+          "prompt": "O‘tgan imkonsizlikni cannot bilan yozing, qisqartirmang: She was abroad; she ___ (attend + the local meeting). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "cannot have attended the local meeting"
+          ],
+          "explanation": "O‘tgan voqeani imkonsiz deb baholash cannot have va V3 bilan beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:30:3",
+          "prompt": "O‘tgan ishga afsus bildiring: I wish we ___ (book + a quieter room). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had booked a quieter room"
+          ],
+          "explanation": "O‘tgan afsus uchun wish dan keyin Past Perfect keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 31,
+      "title": "Aralash qo‘llash: xabar va tuzilma",
+      "questions": [
+        {
+          "id": "en:boss:31:1",
+          "prompt": "Backshift qiling: 'I have misplaced the invoice,' he said. He said that he ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had misplaced the invoice"
+          ],
+          "explanation": "Present Perfect o‘zlashtirma gapda Past Perfect ga siljiydi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:31:2",
+          "prompt": "Passiv nisbiy gapning qisqartirilgan bo‘lagini yozing: the equipment ___ (deliver + on Tuesday; V3 shakli). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "delivered on Tuesday"
+          ],
+          "explanation": "Passiv qisqartirilgan nisbiy bo‘lak V3 bilan boshlanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:31:3",
+          "prompt": "Boshqa ustaga qildirilgan xizmatni Past Simple da yozing: She ___ (her camera / fix), have something done tuzilmasida. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "had her camera fixed"
+          ],
+          "explanation": "Had va obyekt va V3 xizmat natijasini bildiradi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 32,
+      "title": "Yakuniy transfer",
+      "questions": [
+        {
+          "id": "en:boss:32:1",
+          "prompt": "Future Perfect bilan yozing, qisqartirmang: By July, the inspectors ___ (examine + every room). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "will have examined every room"
+          ],
+          "explanation": "Kelajak muddatigacha tugagan ish will have va V3 bilan ifodalanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:32:2",
+          "prompt": "Bilvosita savol bo‘lagini yozing: Could you tell me how much ___? So‘zlar: cost / the repairs. O‘tgan xarajatni so‘rang; ega fe’ldan oldin kelsin. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "the repairs cost"
+          ],
+          "explanation": "Bilvosita savolda darak tartibi keladi; cost ning o‘tgan shakli ham cost.",
+          "caseSensitive": false
+        },
+        {
+          "id": "en:boss:32:3",
+          "prompt": "So‘zlardan natija bo‘lagini tuzing: that / so / fragile / it broke. The glass was ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "so fragile that it broke"
+          ],
+          "explanation": "So sifat bilan, that esa uning natijasi bilan bog‘lanadi.",
+          "caseSensitive": false
+        }
+      ]
+    }
+  ],
+  "de": [
+    {
+      "week": 1,
+      "title": "Tanishuv va sein",
+      "questions": [
+        {
+          "id": "de:boss:1:1",
+          "prompt": "Bo‘sh qismni yozing: Ich ___ (sein, Präsens + müde). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "bin müde"
+          ],
+          "explanation": "Ich bilan sein fe’li bin shaklida keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:1:2",
+          "prompt": "Bo‘sh qismni yozing: Ihr ___ (sein, Präsens + leise). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "seid leise"
+          ],
+          "explanation": "Ihr bilan seid ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:1:3",
+          "prompt": "So‘zlardan savol tuzing: du / bist / krank. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "bist du krank"
+          ],
+          "explanation": "Ha-yo‘q savolida tuslangan fe’l birinchi o‘rinda keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "title": "Buyumlar va haben",
+      "questions": [
+        {
+          "id": "de:boss:2:1",
+          "prompt": "Bo‘sh qismni yozing: Wir ___ (haben, Präsens + Brot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "haben Brot"
+          ],
+          "explanation": "Wir bilan haben shakli keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:2:2",
+          "prompt": "Bo‘sh qismni yozing: Du ___ (haben, Präsens + Glück). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "hast Glück"
+          ],
+          "explanation": "Du bilan haben fe’li hast shakliga o‘zgaradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:2:3",
+          "prompt": "Ko‘plik birikmasini yozing: zwei + die Tasse. Artiklsiz son va ko‘plikdagi ot kerak. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "zwei Tassen"
+          ],
+          "explanation": "Tasse ko‘plikda Tassen bo‘ladi; sondan keyin artikl kerak emas.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "title": "Kundalik harakatlar",
+      "questions": [
+        {
+          "id": "de:boss:3:1",
+          "prompt": "Bo‘sh qismni yozing: Meine Oma ___ (wohnen, Präsens + in Ulm). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "wohnt in Ulm"
+          ],
+          "explanation": "Uchinchi shaxs birlikda wohnen fe’li t qo‘shimchasini oladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:3:2",
+          "prompt": "Bo‘sh qismni yozing: Du ___ (lernen, Präsens + Italienisch). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "lernst Italienisch"
+          ],
+          "explanation": "Du bilan muntazam fe’l st bilan tuslanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:3:3",
+          "prompt": "So‘zlardan savol tuzing: ihr / malt / gern. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "malt ihr gern"
+          ],
+          "explanation": "Ha-yo‘q savolida tuslangan fe’l egadan oldin keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "title": "So‘z tartibi va tushum",
+      "questions": [
+        {
+          "id": "de:boss:4:1",
+          "prompt": "Heute dan keyingi bo‘lakni tartiblang: wir / backen / Brot. Heute ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "backen wir Brot"
+          ],
+          "explanation": "Vaqt birinchi o‘rinda bo‘lsa, tuslangan fe’l ikkinchi o‘rinda qoladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:4:2",
+          "prompt": "Bo‘sh qismni yozing: Ich kaufe ___ (der Ball, Akkusativ; artikl va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "den Ball"
+          ],
+          "explanation": "Erkak jinsidagi der tushum kelishigida den bo‘ladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:4:3",
+          "prompt": "Bo‘sh qismni yozing: Du ___ (arbeiten, Präsens + hier). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "arbeitest hier"
+          ],
+          "explanation": "Arbeiten fe’lida du uchun talaffuzni yengillashtiruvchi e keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "title": "Egalik va ajraladigan fe’llar",
+      "questions": [
+        {
+          "id": "de:boss:5:1",
+          "prompt": "Bo‘sh qismni yozing: Das ist ___ (wir ga tegishli + das Haus; artiklsiz egalik birikmasi). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "unser Haus"
+          ],
+          "explanation": "Das Haus bilan wir egalik shakli unser bo‘ladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:5:2",
+          "prompt": "Bo‘sh qismni yozing: Ich ___ (aufmachen, Präsens + die Tür; fe’lni ajrating). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "mache die Tür auf"
+          ],
+          "explanation": "Ajraladigan old qo‘shimcha gap oxiriga o‘tadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:5:3",
+          "prompt": "Bo‘sh qismni yozing: Wir ___ (einkaufen, Präsens + heute; vaqtni fe’ldan keyin qo‘ying). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "kaufen heute ein"
+          ],
+          "explanation": "Einkaufen da ein gap oxiriga ajraladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "title": "Vaqt va imkoniyat",
+      "questions": [
+        {
+          "id": "de:boss:6:1",
+          "prompt": "Bo‘sh qismni yozing: Das Konzert beginnt ___ (soat + halb neun). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "um halb neun"
+          ],
+          "explanation": "Aniq soat uchun um predlogi ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:6:2",
+          "prompt": "Bo‘sh qismni yozing: Ich ___ (können, Präsens + schwimmen). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "kann schwimmen"
+          ],
+          "explanation": "Modal fe’l tuslanadi, asosiy fe’l infinitivda oxirga keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:6:3",
+          "prompt": "Bo‘sh qismni yozing: Ihr ___ (müssen, Präsens + warten). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "müsst warten"
+          ],
+          "explanation": "Ihr bilan müssen fe’li müsst bo‘ladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "title": "Istak va buyruq",
+      "questions": [
+        {
+          "id": "de:boss:7:1",
+          "prompt": "Bo‘sh qismni yozing: Ich ___ (möchten + Suppe; faqat modal fe’l va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "möchte Suppe"
+          ],
+          "explanation": "Ich bilan möchten fe’lining möchte shakli keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:7:2",
+          "prompt": "Du ga buyruq bering: nehmen + den Löffel. Faqat buyruq gapini yozing. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "nimm den Löffel"
+          ],
+          "explanation": "Nehmen ning du buyruq shakli nimm.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:7:3",
+          "prompt": "Bo‘sh qismni yozing: Ihr ___ (dürfen, Präsens, inkor + schwimmen; taqiq). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "dürft nicht schwimmen"
+          ],
+          "explanation": "Dürfen inkori ruxsat yo‘qligi, ya’ni taqiqni bildiradi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "title": "Dativ va yo‘nalish",
+      "questions": [
+        {
+          "id": "de:boss:8:1",
+          "prompt": "Bo‘sh qismni yozing: Wir helfen ___ (das Mädchen, Dativ; artikl va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "dem Mädchen"
+          ],
+          "explanation": "Helfen dativ talab qiladi; das o‘rniga dem keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:8:2",
+          "prompt": "Bo‘sh qismni yozing: Ich fahre mit ___ (der Bus, Dativ; artikl va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "dem Bus"
+          ],
+          "explanation": "Mit dan keyin dativ ishlatiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:8:3",
+          "prompt": "Bo‘sh qismni yozing: Sie stellt die Tasse auf ___ (der Stuhl; yo‘nalish, artikl va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "den Stuhl"
+          ],
+          "explanation": "Joyga qo‘yish yo‘nalish bo‘lgani uchun auf bilan Akkusativ keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 9,
+      "title": "Perfekt: natija va safar",
+      "questions": [
+        {
+          "id": "de:boss:9:1",
+          "prompt": "Bo‘sh qismni Perfekt bilan yozing: Ich ___ (essen + eine Birne). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "habe eine Birne gegessen"
+          ],
+          "explanation": "Essen ning Partizip II shakli gegessen, yordamchisi haben.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:9:2",
+          "prompt": "Bo‘sh qismni Perfekt bilan yozing: Wir ___ (fahren + nach Jena). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "sind nach Jena gefahren"
+          ],
+          "explanation": "Joy o‘zgarishida fahren Perfekt zamonida sein bilan keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:9:3",
+          "prompt": "Bo‘sh qismni Perfekt bilan yozing: Sie ___ (trinken + Milch; sie = ayol). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "hat Milch getrunken"
+          ],
+          "explanation": "Trinken ning Partizip II shakli getrunken.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 10,
+      "title": "Partizip va o‘tgan holat",
+      "questions": [
+        {
+          "id": "de:boss:10:1",
+          "prompt": "Bo‘sh qismni Perfekt bilan yozing: Er ___ (einkaufen + im Dorf). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "hat im Dorf eingekauft"
+          ],
+          "explanation": "Ajraladigan einkaufen da ge ikki qism orasiga kiradi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:10:2",
+          "prompt": "Bo‘sh qismni Perfekt bilan yozing: Wir ___ (studieren + in Kiel). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "haben in Kiel studiert"
+          ],
+          "explanation": "Ieren bilan tugagan fe’llarda ge qo‘shilmaydi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:10:3",
+          "prompt": "Bo‘sh qismni Präteritum bilan yozing: Ihr ___ (sein + im Garten). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "wart im Garten"
+          ],
+          "explanation": "Ihr uchun sein ning o‘tgan shakli wart.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 11,
+      "title": "O‘tgan egalik va o‘zlik",
+      "questions": [
+        {
+          "id": "de:boss:11:1",
+          "prompt": "Bo‘sh qismni Präteritum bilan yozing: Wir ___ (haben + wenig Geld). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "hatten wenig Geld"
+          ],
+          "explanation": "Wir bilan haben ning o‘tgan shakli hatten.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:11:2",
+          "prompt": "Bo‘sh qismni yozing: Ich ___ (sich freuen, Präsens + auf den Sonntag). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "freue mich auf den Sonntag"
+          ],
+          "explanation": "Ich uchun refleksiv olmosh mich keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:11:3",
+          "prompt": "Bo‘sh qismni yozing: Ihr ___ (sich waschen, Präsens; boshqa so‘z qo‘shmang). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "wascht euch"
+          ],
+          "explanation": "Ihr uchun refleksiv olmosh euch keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 12,
+      "title": "O‘zlik va kelajak",
+      "questions": [
+        {
+          "id": "de:boss:12:1",
+          "prompt": "Bo‘sh qismni Futur I bilan yozing: Du ___ (besuchen + deine Oma). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "wirst deine Oma besuchen"
+          ],
+          "explanation": "Du bilan werden fe’li wirst; infinitiv oxirga keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:12:2",
+          "prompt": "Bo‘sh qismni Futur I bilan yozing: Ich ___ (bleiben + in Mainz). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "werde in Mainz bleiben"
+          ],
+          "explanation": "Futur I werden va oxirgi infinitivdan tuziladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:12:3",
+          "prompt": "Bo‘sh qismni Perfekt bilan yozing: Wir ___ (sich anmelden; boshqa so‘z qo‘shmang). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "haben uns angemeldet"
+          ],
+          "explanation": "Refleksiv uns yordamchi fe’ldan keyin, Partizip II oxirida keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 13,
+      "title": "Predlog va kelishik",
+      "questions": [
+        {
+          "id": "de:boss:13:1",
+          "prompt": "Bo‘sh qismni yozing: Das Kind sitzt zwischen ___ (die Eltern, Dativ; artikl va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "den Eltern"
+          ],
+          "explanation": "O‘rin bildirgan zwischen dativ talab qiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:13:2",
+          "prompt": "Bo‘sh qismni yozing: Sie geht ohne ___ (ihr + der Mantel, Akkusativ). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "ihren Mantel"
+          ],
+          "explanation": "Ohne Akkusativ talab qiladi; erkak jinsida ihren keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:13:3",
+          "prompt": "Bo‘sh qismni yozing: Er legt das Kissen hinter ___ (der Schrank; artikl va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "den Schrank"
+          ],
+          "explanation": "Yo‘nalishni bildirgan hinter Akkusativ bilan keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 14,
+      "title": "Sifat qo‘shimchalari",
+      "questions": [
+        {
+          "id": "de:boss:14:1",
+          "prompt": "Bo‘sh qismni yozing: Ich sehe den ___ (alt + Baum; sifat va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "alten Baum"
+          ],
+          "explanation": "Aniq artikldan keyin erkak Akkusativ sifati en oladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:14:2",
+          "prompt": "Bo‘sh qismni yozing: Ein ___ (weiß + Pferd; Nominativ sifat va ot) steht dort. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "weißes Pferd"
+          ],
+          "explanation": "Ein bilan o‘rta jins Nominativ sifatida es keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:14:3",
+          "prompt": "Bo‘sh qismni yozing: Sie kauft eine ___ (gelb + Jacke; sifat va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "gelbe Jacke"
+          ],
+          "explanation": "Eine dan keyin ayol Akkusativ sifati e oladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 15,
+      "title": "Taqqoslash va sabab",
+      "questions": [
+        {
+          "id": "de:boss:15:1",
+          "prompt": "Bo‘sh qismni yozing: Der Turm ist ___ (hoch ning qiyosiy shakli + als das Haus). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "höher als das Haus"
+          ],
+          "explanation": "Hoch ning qiyosiy shakli höher.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:15:2",
+          "prompt": "So‘zlarni weil dan keyin tartiblang: kommt / spät / der Bus. Ich warte, weil ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "der Bus spät kommt"
+          ],
+          "explanation": "Weil ergash gapida tuslangan fe’l oxirga keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:15:3",
+          "prompt": "Bo‘sh qismni yozing: Wir fahren mit einem ___ (neu + Wagen; sifat va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "neuen Wagen"
+          ],
+          "explanation": "Dativdagi einem dan keyin sifat en oladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 16,
+      "title": "Bilvosita savol va natija",
+      "questions": [
+        {
+          "id": "de:boss:16:1",
+          "prompt": "So‘zlarni ob dan keyin tartiblang: öffnet / das Museum / heute. Ich frage, ob ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "das Museum heute öffnet"
+          ],
+          "explanation": "Ob bilan bilvosita savolda tuslangan fe’l oxirga keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:16:2",
+          "prompt": "So‘zlarni deshalb dan keyin tartiblang: ich / nehme / ein Taxi. Es regnet; deshalb ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "nehme ich ein Taxi"
+          ],
+          "explanation": "Deshalb birinchi bo‘lak bo‘lsa, tuslangan fe’l undan keyin keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:16:3",
+          "prompt": "So‘zlarni wenn dan keyin tartiblang: habt / Zeit / ihr. Kommt vorbei, wenn ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "ihr Zeit habt"
+          ],
+          "explanation": "Wenn ergash gapida tuslangan fe’l oxirida keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 17,
+      "title": "Genitiv va kuchsiz otlar",
+      "questions": [
+        {
+          "id": "de:boss:17:1",
+          "prompt": "Bo‘sh qismni yozing: Das ist die Farbe ___ (das Fahrrad, Genitiv; artikl va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "des Fahrrads",
+            "des Fahrrades"
+          ],
+          "explanation": "O‘rta jins Genitivda des va ot oxirida s keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:17:2",
+          "prompt": "Bo‘sh qismni yozing: Ich spreche mit ___ (der Junge, Dativ; artikl va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "dem Jungen"
+          ],
+          "explanation": "Junge kuchsiz ot bo‘lib, dativda n oladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:17:3",
+          "prompt": "Bo‘sh qismni yozing: Sie trinkt ___ (kalt + Wasser; artiklsiz Akkusativ). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "kaltes Wasser"
+          ],
+          "explanation": "Artiklsiz o‘rta jins Akkusativ sifati es bilan tugaydi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 18,
+      "title": "Vaqtlar orasidagi bog‘lanish",
+      "questions": [
+        {
+          "id": "de:boss:18:1",
+          "prompt": "Bo‘sh qismni Plusquamperfekt bilan yozing: Als wir ankamen, ___ (er / verlassen / das Büro; allaqachon ketgan). Tuslangan yordamchi bilan boshlang; qo‘shimcha ravish yozmang. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "hatte er das Büro verlassen"
+          ],
+          "explanation": "Oldin sodir bo‘lgan ish hatte va Partizip II bilan beriladi; oldingi ergash gapdan keyin yordamchi ega oldiga o‘tadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:18:2",
+          "prompt": "So‘zlarni während dan keyin tartiblang: deckt / den Tisch / meine Schwester. Ich koche, während ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "meine Schwester den Tisch deckt"
+          ],
+          "explanation": "Während ergash gapida tuslangan fe’l oxirida keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:18:3",
+          "prompt": "Bo‘sh qismni Präteritum bilan yozing: Der Gast ___ (nehmen + den letzten Apfel). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "nahm den letzten Apfel"
+          ],
+          "explanation": "Nehmen ning Präteritum shakli nahm.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 19,
+      "title": "Maqsad va qarama-qarshilik",
+      "questions": [
+        {
+          "id": "de:boss:19:1",
+          "prompt": "So‘zlarni um dan keyin tartiblang: zu / sparen / Geld. Er arbeitet mehr, um ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "Geld zu sparen"
+          ],
+          "explanation": "Um bilan maqsad gapida zu va infinitiv oxirida keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:19:2",
+          "prompt": "Bo‘sh qismni yozing: Sie ging, ohne ___ (sich verabschieden; zu bilan). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "sich zu verabschieden"
+          ],
+          "explanation": "Ohne dan keyin zu-infinitiv, refleksiv olmosh esa undan oldin keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:19:3",
+          "prompt": "So‘zlarni trotzdem dan keyin tartiblang: wir / setzen / die Reise / fort. Es schneit; trotzdem ___. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "setzen wir die Reise fort"
+          ],
+          "explanation": "Trotzdem dan keyin tuslangan fe’l keladi; ajraladigan fort oxirda qoladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 20,
+      "title": "Nisbiy gaplar",
+      "questions": [
+        {
+          "id": "de:boss:20:1",
+          "prompt": "So‘zlarni nisbiy bo‘lakka tartiblang: ich / dem / vertraue. Der Arzt, ___, wohnt hier. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "dem ich vertraue"
+          ],
+          "explanation": "Vertrauen dativ talab qiladi; fe’l nisbiy gap oxirida keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:20:2",
+          "prompt": "So‘zlarni nisbiy bo‘lakka tartiblang: dessen / bellt / Hund. Der Mann, ___, ist mein Nachbar. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "dessen Hund bellt"
+          ],
+          "explanation": "Erkak jinsdagi egaga tegishlilik dessen orqali ifodalanadi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:20:3",
+          "prompt": "So‘zlarni nisbiy bo‘lakka tartiblang: wir / die / eingeladen haben. Die Frauen, ___, kommen morgen. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "die wir eingeladen haben"
+          ],
+          "explanation": "Ko‘plikdagi Akkusativ nisbiy olmoshi die; yordamchi fe’l oxirida keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 21,
+      "title": "Faraz va maslahat",
+      "questions": [
+        {
+          "id": "de:boss:21:1",
+          "prompt": "Bo‘sh qismni Konjunktiv II bilan yozing: Mit mehr Zeit ___ (ich / reisen / nach Peru; würde bilan). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "würde ich nach Peru reisen"
+          ],
+          "explanation": "Boshlang‘ich bo‘lakdan keyin würde, keyin ega va oxirida infinitiv keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:21:2",
+          "prompt": "Bo‘sh qismni Konjunktiv II bilan yozing: Ohne den Lärm ___ (wir / sein / entspannter). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "wären wir entspannter",
+            "würden wir entspannter sein"
+          ],
+          "explanation": "Sein ning Konjunktiv II ko‘plik shakli wären.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:21:3",
+          "prompt": "Bo‘sh qismni maslahat shaklida yozing: Du ___ (sollen, Konjunktiv II + öfter pausieren). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "solltest öfter pausieren"
+          ],
+          "explanation": "Du bilan maslahat modal shakli solltest bo‘ladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 22,
+      "title": "Jarayon passivi: hozirgi, o‘tgan va modal shakl",
+      "questions": [
+        {
+          "id": "de:boss:22:1",
+          "prompt": "Bo‘sh qismni Präsens jarayon passivi bilan yozing: Die Suppe ___ (kochen). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "wird gekocht"
+          ],
+          "explanation": "Jarayon passivi werden va Partizip II bilan tuziladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:22:2",
+          "prompt": "Bo‘sh qismni Präteritum jarayon passivi bilan yozing: Die Fahrräder ___ (reparieren). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "wurden repariert"
+          ],
+          "explanation": "Ko‘plikdagi o‘tgan passivda wurden va Partizip II keladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:22:3",
+          "prompt": "Bo‘sh qismni modal passiv bilan yozing: Das Formular ___ (müssen + unterschreiben, Präsens). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "muss unterschrieben werden"
+          ],
+          "explanation": "Modal passivda tuslangan modal, Partizip II va werden ishlatiladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 23,
+      "title": "Predlogli fe’l va juft bog‘lovchilar",
+      "questions": [
+        {
+          "id": "de:boss:23:1",
+          "prompt": "Bo‘sh qismni yozing: Sie denkt ___ (an + ihr Bruder; predlog, egalik va ot). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "an ihren Bruder"
+          ],
+          "explanation": "Denken an Akkusativ talab qiladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:23:2",
+          "prompt": "Narsani so‘rash uchun wo-birikma bilan savol tuzing: du / warten auf / die Antwort. Javobda die Antwort o‘rniga so‘roq so‘zi kelsin; Präsens ishlating. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "worauf wartest du"
+          ],
+          "explanation": "Warten auf bilan narsa haqida savol worauf orqali beriladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:23:3",
+          "prompt": "So‘zlarni je dan keyin tartiblang: du / mehr / liest. Je ___, desto leichter lernst du. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "mehr du liest"
+          ],
+          "explanation": "Je qismida qiyosiy so‘z oldin, tuslangan fe’l oxirida keladi.",
+          "caseSensitive": false
+        }
+      ]
+    },
+    {
+      "week": 24,
+      "title": "Yakuniy B1 transfer",
+      "questions": [
+        {
+          "id": "de:boss:24:1",
+          "prompt": "Bo‘sh qismni modal passiv bilan yozing: Die Fehler ___ (sollen + korrigieren, Präsens). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "sollen korrigiert werden"
+          ],
+          "explanation": "Ko‘plikdagi modal passiv sollen, Partizip II va werden dan tuziladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:24:2",
+          "prompt": "So‘zlarni nisbiy bo‘lakka tartiblang: ich / mit / arbeite / denen. Die Kollegen, ___, sind freundlich. Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "mit denen ich arbeite"
+          ],
+          "explanation": "Mit dativ talab qiladi; ko‘plikdagi nisbiy olmosh denen bo‘ladi.",
+          "caseSensitive": false
+        },
+        {
+          "id": "de:boss:24:3",
+          "prompt": "Bo‘sh qismni Konjunktiv II bilan yozing: Wenn ich mehr Platz hätte, ___ (ich / kaufen / ein Klavier; würde bilan). Faqat javobni yozing; oxiriga nuqta yoki savol belgisi qo‘ymang.",
+          "expected": [
+            "würde ich ein Klavier kaufen"
+          ],
+          "explanation": "Faraziy natijada würde ikkinchi o‘rinda, infinitiv oxirida keladi.",
+          "caseSensitive": false
+        }
+      ]
+    }
+  ]
+}

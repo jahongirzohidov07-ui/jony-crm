@@ -1,3 +1,4 @@
+import { CourseMotivation } from "./CourseMotivation";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../lib/api";
@@ -25,6 +26,7 @@ export function StudentStudyPlan({language}: {language: string}) {
   }, [language, retry]);
   const title = language === "de" ? "Deutsch · 6 oylik B1 reja" : "English Intensive · 8 oylik B2 reja";
   return <section className="my-4 space-y-3 rounded-3xl border border-sky-200 bg-sky-50 p-5 text-slate-900" aria-label="Bugungi darsim va uyga vazifam">
+    <CourseMotivation key={language} language={language} compact/>
     <h2 className="text-lg font-bold">Bugungi darsim va uyga vazifam</h2>
     <p className="text-sm text-sky-800">{title}</p>
     <p className="text-xs text-slate-600">Kurs maqsadi; sertifikat natijasi imtihonda aniqlanadi. Ustozingiz belgilagan darsni ochishingiz ham mumkin.</p>
@@ -33,6 +35,7 @@ export function StudentStudyPlan({language}: {language: string}) {
       <h3 className="font-semibold">{data.current.lesson}-dars · {data.current.title}</h3>
       <p className="text-sm">Yuborilgan: {data.current.submitted_count} / {data.current.question_count} mashq</p>
       <Link className="block rounded-xl bg-sky-800 px-4 py-3 text-center font-semibold text-white" to={`/student/course-practice?lesson=${data.current.lesson}`}>Darsni davom ettirish →</Link>
+      <Link className="block rounded-xl border border-indigo-200 bg-white px-4 py-3 text-center text-sm font-semibold text-indigo-800" to="/student/course-practice?view=journey">Mening xaritam · haftalik bilim sinovlari →</Link>
       <div className="divide-y divide-sky-100">{data.detail.sections.map(s => {
         const done = s.questions.filter(q => Object.prototype.hasOwnProperty.call(data.detail.answers || {}, q.id)).length;
         return <Link key={s.id} to={`/student/course-practice?lesson=${data.current.lesson}&section=${s.skill}`} className="flex items-center justify-between gap-3 py-3 text-sm"><span>{labels[s.skill] || s.skill}</span><span>{done} / {s.questions.length} {done === s.questions.length ? "✓" : "→"}</span></Link>;

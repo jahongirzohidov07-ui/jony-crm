@@ -54,6 +54,8 @@ export const ROUTE_GEM: Record<string, string> = {
   "/my-results": "pie",
   "/my-sessions": "clock",
   "/tasks": "task",
+  // Sertifikatlar tekshiruvi (2026-10-17, "So'z bilish")
+  "/vocab-certs": "medal",
 };
 
 export function gemFor(to: string): string {

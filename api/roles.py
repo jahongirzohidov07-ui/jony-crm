@@ -873,6 +873,44 @@ COIN_SOURCE_LABELS = {
     "vocab_band": "So'z bilish: daraja tugatildi",
 }
 
+# ---- "So'z bilish": sertifikatni tasdiqlash (2026-10-17) -------------
+# Jahongir (OWNER D3, "tasdiqlangandan keyin chiqsin"): o'quvchi yuklagan
+# sertifikat natijasi faqat xodim tasdiqlagach ko'rinadi.
+# Kim tasdiqlaydi / rad etadi: ustoz (FAQAT o'z guruhlari o'quvchisi),
+# filial rahbari va administrator (o'z filiali), o'quv bo'limi rahbari va
+# asoschi (butun markaz) — chegara api/wordbank_certs.py da.
+# SALES_MANAGER ham shu yerda: markazda "Administrator" deganda aynan shu
+# rol tushuniladi (2026-09-03 da hamma administratorlar shunga
+# birlashtirilgan — SALARY_PAY izohiga qarang); faqat ADMINISTRATOR
+# yozilsa, haqiqiy administratorlar tasdiqlay olmasdi.
+# Bekor qilish (tasdiqlangan natijani qaytarib olish) — tor ro'yxat.
+# Mukofot yo'q: sertifikat reytingdagi o'ringa ta'sir qilmaydi.
+VOCAB_CERT_CONFIRM = FULL_ACCESS + [ACADEMIC_HEAD, ADMINISTRATOR,
+                                    SALES_MANAGER, TEACHER]
+VOCAB_CERT_REVOKE = FULL_ACCESS + [ACADEMIC_HEAD]
+# Imtihon turlari (kalit, yorliq) — src/lib/wordbankApi.ts dagi
+# CERT_EXAM_TYPES bilan bir xil.
+VOCAB_CERT_EXAM_TYPES = [
+    ("ielts", "IELTS"),
+    ("multilevel", "CEFR / Multilevel"),
+    ("cefr_other", "CEFR (boshqa)"),
+    ("sat", "SAT"),
+    ("duolingo", "Duolingo"),
+    ("toefl", "TOEFL"),
+    ("cambridge", "Cambridge"),
+    ("topik", "TOPIK"),
+    ("goethe", "Goethe"),
+    ("torfl", "TORFL"),
+    ("other", "Boshqa"),
+]
+VOCAB_CERT_EXAM_LABELS = dict(VOCAB_CERT_EXAM_TYPES)
+VOCAB_CERT_STATUSES = ["pending", "confirmed", "rejected", "withdrawn",
+                       "revoked"]
+VOCAB_CERT_VERIFY_METHODS = ["asl nusxa ko'rildi", "onlayn tekshirildi",
+                             "fayl bo'yicha"]
+VOCAB_CERT_REJECT_REASONS = ["fayl o'qilmaydi", "ma'lumot mos emas",
+                             "boshqa odamniki", "sertifikat emas", "boshqa"]
+
 # Kunlik baho shkalasi: ustoz har dars uchun 1-5 qo'yadi va o'sha ball
 # aynan shuncha coinga teng (foydalanuvchi qoidasi).
 DAILY_GRADE_MIN = 1

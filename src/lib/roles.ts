@@ -446,7 +446,26 @@ export const TEACHER_MENU = [
   "/gamification",
   "/complaints",
   "/tasks",
+  // SERTIFIKATLAR TEKSHIRUVI (2026-10-17, "So'z bilish", OWNER D3):
+  // ustoz o'z guruhi o'quvchilari yuklagan sertifikatni tasdiqlaydi.
+  // Ro'yxatda bo'lmasa, VOCAB_CERT_CONFIRM ruxsatiga qaramay band ustoz
+  // menyusidan kesilib ketadi (2026-09-26 dagi "/plans" saboqi).
+  "/vocab-certs",
 ];
+
+/**
+ * "SO'Z BILISH" SERTIFIKATLARI (2026-10-17) — api/roles.py dagi
+ * VOCAB_CERT_CONFIRM / VOCAB_CERT_REVOKE bilan AYNAN bir xil. Ro'yxatlar
+ * ataylab yoyib yozilgan (...spread emas) — test ikki tomonni oddiy regex
+ * bilan solishtira olsin. SALES_MANAGER — hozirgi "Administrator".
+ * Chegara serverda: ustoz — faqat o'z guruhlari, filial rahbari va
+ * administrator — o'z filiali, o'quv bo'limi rahbari va asoschi — hammasi.
+ */
+export const VOCAB_CERT_CONFIRM = [
+  FOUNDER, BRANCH_MANAGER, ACADEMIC_HEAD, ADMINISTRATOR, SALES_MANAGER,
+  TEACHER,
+];
+export const VOCAB_CERT_REVOKE = [FOUNDER, BRANCH_MANAGER, ACADEMIC_HEAD];
 
 /**
  * Xodim kartasi: ko'rish, tahrirlash va rol berish — uch xil huquq.

@@ -166,6 +166,10 @@ import bank_transfer as _r_bank_transfer
 # 2026-10-16: "So'z bilish" lug'at banki (yashirin: faqat wordbank_branches
 # sozlamasidagi filiallarda ochiq, aks holda 404)
 import wordbank as _r_wordbank
+# 2026-10-17: "So'z bilish" reytingi, tarix (hall of fame) va
+# sertifikatlar (OWNER D2–D4). Darvoza wordbank bilan bir xil.
+import wordbank_social as _r_wordbank_social
+import wordbank_certs as _r_wordbank_certs
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -232,6 +236,8 @@ app.include_router(_r_academy_bot.router)
 app.include_router(_r_link_freeze.router)
 app.include_router(_r_bank_transfer.router)
 app.include_router(_r_wordbank.router)
+app.include_router(_r_wordbank_social.router)
+app.include_router(_r_wordbank_certs.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:

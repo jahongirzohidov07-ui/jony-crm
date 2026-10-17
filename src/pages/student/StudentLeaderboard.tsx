@@ -1,12 +1,16 @@
 import { StudentLoading } from "../../components/StudentLoading";
 import { StudentImage } from "../../components/StudentIcon";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowDown, ArrowUp, Clock, Crown, Gift, Info } from "lucide-react";
 import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { JsaLogo, JSA } from "../../components/Jsa";
 import { api } from "../../lib/api";
 import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
+import { WordBoard } from "../../components/wordbank/WordBoard";
+import { useLearningLanguage } from "../../lib/lang";
+import { loadWordbank } from "../../lib/wordbankApi";
+import { readPref, writePref } from "../../lib/wordbankUi";
 
 /**
  * JONY STUDENT — REYTING.
@@ -14,7 +18,17 @@ import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
  * 2026-08-20: "Reyting.png" dizayni bo'yicha to'q temada qayta
  * terildi (Jahongir: "1ga 1 qilib ber"). Hisoblash o'zgarmadi:
  * XP jurnalidan, guruh/filial/umumiy va hafta/hamma vaqt kesimida.
+ *
+ * 2026-10-17 (OWNER D2): tepada "XP reyting | So'z bilish" almashtirgichi.
+ * XP reytingi O'ZGARMADI. "So'z bilish" — tasdiqlangan so'zlar bo'yicha
+ * alohida jadval (components/wordbank/WordBoard.tsx); tanlov
+ * localStorage["jony_lb_board"] da eslab qolinadi, ?board=words bilan
+ * ham ochiladi. Bo'lim filialda yopiq bo'lsa (404) yoki o'quvchi ingliz
+ * tilini o'rganmasa — almashtirgich umuman chiqmaydi.
  */
+
+type BoardKind = "xp" | "words";
+const K_BOARD = "jony_lb_board";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Row = {
@@ -64,6 +78,14 @@ function Avatar({ row, size, ring }: { row: Row; size: number; ring: string }) {
 }
 
 export default function StudentLeaderboard() {
+  const lang = useLearningLanguage();
+  const [params, setParams] = useSearchParams();
+  const [board, setBoard] = useState<BoardKind>(() => {
+    const q = params.get("board");
+    if (q === "words" || q === "xp") return q;
+    return readPref(K_BOARD) === "words" ? "words" : "xp";
+  });
+  const [wb, setWb] = useState<"wait" | "ok" | "off">("wait");
   const [scope, setScope] = useState<string>("group");
   const [period, setPeriod] = useState<string>("week");
   const [d, setD] = useState<Board | null>(null);
@@ -76,13 +98,47 @@ export default function StudentLeaderboard() {
       .catch(() => {});
   }, []);
 
+  // So'z bilish bo'limi shu o'quvchiga ochiqmi (jim o'qiladi, 404 — yo'q).
+  // Ingliz tilini o'rganmayotganga umuman so'ralmaydi — /me og'ir
+  // (2026-10-17, review), jadval baribir ko'rinmaydi.
   useEffect(() => {
+    if (lang !== "en") {
+      setWb("off");
+      return;
+    }
+    let alive = true;
+    loadWordbank().then((v) => {
+      if (alive) setWb(v.status === "ok" ? "ok" : "off");
+    });
+    return () => {
+      alive = false;
+    };
+  }, [lang]);
+  const wordsOk = wb === "ok" && lang === "en";
+  const view: BoardKind | "wait" =
+    board !== "words" ? "xp"
+      : wordsOk ? "words"
+        : wb === "wait" && lang === "en" ? "wait" : "xp";
+  const onWordsOff = useCallback(() => setWb("off"), []);
+
+  const chooseBoard = (b: BoardKind) => {
+    setBoard(b);
+    writePref(K_BOARD, b);
+    if (params.has("board")) {
+      const p = new URLSearchParams(params);
+      p.delete("board");
+      setParams(p, { replace: true });
+    }
+  };
+
+  useEffect(() => {
+    if (view !== "xp") return;
     setD(null);
     api
       .get<Board>(`/student/leaderboard?scope=${scope}&period=${period}`)
       .then((r) => { setD(r); setErr(""); })
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
-  }, [scope, period]);
+  }, [scope, period, view]);
 
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
   const podium = d?.podium || [];
@@ -121,6 +177,29 @@ export default function StudentLeaderboard() {
         )}
       </div>
 
+      {/* -------------------------- XP reyting | So'z bilish (D2) */}
+      {wordsOk && (
+        <div className="grid grid-cols-2 gap-1.5 rounded-2xl border p-1.5 mt-3"
+             style={card} role="tablist" aria-label="Reyting turi">
+          {([["xp", "XP reyting"], ["words", "So'z bilish"]] as const).map(([k, l]) => (
+            <button key={k} type="button" role="tab" aria-selected={view === k}
+              onClick={() => chooseBoard(k)}
+              className={`min-h-[44px] rounded-xl text-[15px] font-extrabold transition ${
+                view === k ? "bg-white text-slate-900" : "text-slate-300"}`}>
+              {l}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {view !== "xp" ? (
+        <>
+          <h1 className="text-[36px] font-extrabold text-white leading-none mt-4">
+            Reyting
+          </h1>
+          {view === "words" ? <WordBoard onOff={onWordsOff} /> : <StudentLoading />}
+        </>
+      ) : (<>
       <div className="student-leaderboard-heading flex items-start gap-3 mt-3">
         <div className="flex-1 min-w-0">
           <h1 className="text-[36px] font-extrabold text-white leading-none">
@@ -376,6 +455,7 @@ export default function StudentLeaderboard() {
           Reyting barcha mashqlardan yig'ilgan XP asosida hisoblanadi.
         </p>
       )}
+      </>)}
     </div>
   );
 }

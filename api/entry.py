@@ -565,6 +565,21 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "absent": bool(er.absent),
     } for er, ex in exam_rows]
 
+    # "SO'Z BILISH" (2026-10-17, OWNER D2–D3): tasdiqlangan so'zlar soni,
+    # eng yaxshi natija, darajalar, guruh/filialdagi o'rin va FAQAT
+    # tasdiqlangan sertifikatlar (kutilayotgan natija hech qachon
+    # chiqmaydi). Filialda bo'lim yoqilmagan bo'lsa — None. Xato ota-ona
+    # sahifasini yiqitmasin — savepoint ichida: Postgres'da yiqilgan
+    # so'rov tranzaksiyani to'xtatadi va pastdagi _student_ranks ham
+    # yiqilardi (2026-10-17, review).
+    try:
+        import wordbank_social as _WSOC
+        with db.begin_nested():
+            wordbank = _WSOC.parent_payload(db, s)
+    except Exception as e:                      # noqa: BLE001
+        print(f"[wordbank-parent] {s.id}: {e!r}")
+        wordbank = None
+
     return {
         "name": s.full_name,
         "group": g.name if g else None,
@@ -581,6 +596,7 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "daily_grades": daily_grades,
         "exam_results": exam_results,
         "ranks": _student_ranks(db, s.id),
+        "wordbank": wordbank,
     }
 
 # =====================================================================

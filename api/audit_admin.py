@@ -103,6 +103,16 @@ def audit_meta(user=Depends(require_role(*roles.AUDIT_VIEW))):
         "entities": [{"key": k, "label": v} for k, v in audit.ENTITIES.items()],
     }
 
+# YOPIQ FAYLLAR (2026-10-17, "So'z bilish" sertifikatlari, OWNER D3–D4):
+# o'quvchi yuklagan sertifikat fayli (Attachment.entity="vocab_cert")
+# FAQAT /api/wordbank/certs/... orqali beriladi — u yerda ustoz faqat o'z
+# guruhini, filial xodimi o'z filialini ko'radi va tasdiqlanmagan natija
+# begonaga chiqmaydi. Umumiy /api/attachments yo'li esa har qanday
+# xodimga istalgan id bo'yicha faylni berib, o'chirishga ham ruxsat
+# berardi (tarix yo'qolardi). Shu sababli bu yerda ular "yo'q".
+_PRIVATE_ENTITIES = {"vocab_cert"}
+
+
 @router.get("/api/attachments")
 def list_attachments(
     entity: str,
@@ -112,6 +122,8 @@ def list_attachments(
 ):
     """Fayl ro'yxati. Ma'lumot og'ir bo'lgani uchun ro'yxatda faqat
     metama'lumot qaytadi - faylning o'zi alohida so'raladi."""
+    if entity in _PRIVATE_ENTITIES:
+        return []
     rows = (db.query(models.Attachment)
             .filter(models.Attachment.entity == entity,
                     models.Attachment.entity_id == entity_id)
@@ -133,7 +145,7 @@ def get_attachment(
 ):
     """Faylning o'zi - base64 ko'rinishida."""
     a = db.query(models.Attachment).get(aid)
-    if not a:
+    if not a or a.entity in _PRIVATE_ENTITIES:
         raise HTTPException(404, "Fayl topilmadi")
     return {"id": a.id, "filename": a.filename, "mime": a.mime,
             "size": a.size, "kind": a.kind, "data": a.data}
@@ -158,6 +170,9 @@ def upload_attachment(
         raise HTTPException(400, f"Fayl juda katta — {mb} MB dan oshmasin")
     if payload.kind not in roles.ATTACHMENT_KIND_LABELS:
         raise HTTPException(400, "Noma'lum fayl turi")
+    if payload.entity in _PRIVATE_ENTITIES:
+        # sertifikat fayli faqat o'quvchining o'zi yuklaydi (2026-10-17)
+        raise HTTPException(400, "Bu turdagi fayl bu yerdan yuklanmaydi")
 
     a = models.Attachment(
         entity=payload.entity, entity_id=payload.entity_id,
@@ -176,7 +191,8 @@ def delete_attachment(
     user=Depends(require_role(*roles.TEACHING_STAFF, *roles.HR_ACCESS)),
 ):
     a = db.query(models.Attachment).get(aid)
-    if not a:
+    if not a or a.entity in _PRIVATE_ENTITIES:
+        # 2026-10-17: sertifikat fayli o'chirilmaydi (D4 — tarix qoladi)
         raise HTTPException(404, "Fayl topilmadi")
     audit.log(db, user, entity=a.entity, action="update", entity_id=a.entity_id,
               field="attachment", old_value=a.filename,

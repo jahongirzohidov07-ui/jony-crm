@@ -100,6 +100,8 @@ const StudentCoursePractice = lazy(() => import("./pages/student/StudentCoursePr
 const StudentLessons = lazy(() => import("./pages/student/StudentLessons"));
 const TeacherCheck = lazy(() => import("./pages/teacher/TeacherCheck"));
 const LearningReport = lazy(() => import("./pages/LearningReport"));
+// "So'z bilish" sertifikatlari tekshiruvi (2026-10-17)
+const VocabCerts = lazy(() => import("./pages/VocabCerts"));
 const StudentGames = lazy(() => import("./pages/student/StudentGames"));
 const StudentIelts = lazy(() => import("./pages/student/StudentIelts"));
 const StudentExamSkills = lazy(
@@ -322,6 +324,9 @@ const staffRoutes = (
     <Route path="my-coins" element={<MyCoins />} />
     <Route path="my-career" element={<MyCareer />} />
     <Route path="smm" element={<Smm />} />
+    {/* SERTIFIKATLAR TEKSHIRUVI (2026-10-17, "So'z bilish", OWNER D3):
+        panelda /vocab-certs, JonyOS ilovasida /app/p/vocab-certs */}
+    <Route path="vocab-certs" element={<VocabCerts />} />
   </>
 );
 

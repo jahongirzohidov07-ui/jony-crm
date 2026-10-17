@@ -2811,6 +2811,18 @@ def my_alerts(db: Session = Depends(get_db),
     except Exception:
         db.rollback()
 
+    # 6) "SO'Z BILISH" SERTIFIKATLARI (2026-10-17): o'quvchi yuklagan va
+    #    tekshiruvni kutayotganlar SONI — tasdiqlay oladigan xodimga, o'z
+    #    chegarasida (ustoz — o'z guruhlari). Ism va ball yo'q.
+    try:
+        import wordbank_certs as _WCERT
+        with db.begin_nested():
+            it = _WCERT.pending_alert(db, user)
+        if it:
+            items.append(it)
+    except Exception:
+        pass
+
     return {"items": items, "count": len(items)}
 
 

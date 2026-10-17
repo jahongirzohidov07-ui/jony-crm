@@ -55,6 +55,12 @@ Hajm testi: natija faqat "taxminiy", so'z holatiga UMUMAN tegmaydi.
     ko'rilmagan yangi blok natijaga qo'shilmaydi;
   * asoschining birinchi PUT [] i ham saqlanadi ("hammaga ochish" uni
     bosib ketmaydi); rank to'qnashuvlari chiziqli hal qilinadi.
+
+2026-10-17 (2–3-bosqich, D2–D4): reyting, tarix va sertifikatlar
+alohida modullarda (wordbank_social.py, wordbank_certs.py). Bu yerda
+faqat ikki ulanish: /me javobiga ranks / best_known / certs /
+certs_pending (wordbank_social.me_extras) va daraja to'langanda tarix
+qatori (wordbank_social.refresh_hall).
 """
 import hashlib
 import json
@@ -592,6 +598,17 @@ def _award_bands(db: Session, s, bands) -> list:
         r = _pay_band(db, s, band, coins)
         if r:
             out.append(r)
+    if out:
+        # 2026-10-17 (D4, tarix): tugatilgan daraja darhol "Tarix" ga
+        # yoziladi (wordbank_social.refresh_hall, commit — chaqiruvchida).
+        # Savepoint ichida: tarix yozuvidagi xato coin to'lovini
+        # bekor qilmasin — qator keyingi /me da baribir yangilanadi.
+        try:
+            import wordbank_social as WSOC
+            with db.begin_nested():
+                WSOC.refresh_hall(db, s.id)
+        except Exception as e:                  # noqa: BLE001
+            print(f"[wordbank-hall] award {s.id}: {e!r}")
     return out
 
 
@@ -645,7 +662,7 @@ def wordbank_me(db: Session = Depends(get_db),
         })
     last = (db.query(ST).filter(ST.student_id == s.id)
             .order_by(ST.created_at.desc(), ST.id.desc()).first())
-    return {
+    out = {
         "known": known,
         "known_label": "Tasdiqlangan so'zlar",
         "due_today": due_today,
@@ -653,6 +670,13 @@ def wordbank_me(db: Session = Depends(get_db),
         "coins_earned": sum(int(a.coins or 0) for a in awards.values()),
         "size_test": _test_out(last) if last is not None else None,
     }
+    # 2026-10-17 (D2–D4): reytingdagi o'rin (guruh / filial / markaz),
+    # eng yaxshi natija (tarix), FAQAT tasdiqlangan sertifikatlar va
+    # tekshirilayotganlar SONI (ball yo'q). Arzon tarix yangilanishi ham
+    # shu yerda (wordbank_social.me_extras).
+    import wordbank_social as WSOC
+    out.update(WSOC.me_extras(db, s, known))
+    return out
 
 
 @router.post("/api/wordbank/session")

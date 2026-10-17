@@ -444,6 +444,16 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "absent": bool(er.absent),
     } for er, ex in exam_rows]
 
+    # "SO'Z BILISH" (2026-10-17) — HUJJAT NUSXASI: jonli kod
+    # entry.py:parent_view() da (u yerda ham aynan shunday). Faqat
+    # tasdiqlangan sertifikatlar; filialda bo'lim yopiq bo'lsa — None.
+    try:
+        import wordbank_social as _WSOC
+        with db.begin_nested():                 # savepoint (entry.py kabi)
+            wordbank = _WSOC.parent_payload(db, s)
+    except Exception:                           # noqa: BLE001
+        wordbank = None
+
     return {
         "name": s.full_name,
         "group": g.name if g else None,
@@ -460,5 +470,6 @@ def parent_view(token: str, db: Session = Depends(get_db)):
         "daily_grades": daily_grades,
         "exam_results": exam_results,
         "ranks": _student_ranks(db, s.id),
+        "wordbank": wordbank,
     }
 

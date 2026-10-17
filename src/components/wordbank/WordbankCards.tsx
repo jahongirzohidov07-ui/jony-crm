@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { Check, ChevronRight, FileUp, Lock } from "lucide-react";
+import { BadgeCheck, Check, ChevronRight, Trophy } from "lucide-react";
 import { StudentIcon } from "../StudentIcon";
 import { formatDate } from "../../lib/format";
 import { fmtNum } from "../../lib/studentApi";
 import { useLearningLanguage } from "../../lib/lang";
 import { focusBand, roundEst } from "../../lib/wordbankApi";
+import { CertUploadCard } from "./CertUploadCard";
 import { useWordbank } from "./useWordbank";
 
 /**
@@ -12,6 +13,8 @@ import { useWordbank } from "./useWordbank";
  *
  * Bo'lim bayroq bilan yopiq bo'lsa (server 404) yoki o'quvchi ingliz
  * tilini o'rganmayotgan bo'lsa — kartalar UMUMAN chiqmaydi.
+ * 2026-10-17: istisno — profildagi "Sertifikatlarim" boshqa til
+ * o'quvchisiga ham chiqadi (TOPIK, Goethe, TORFL natijalari uchun).
  */
 
 /** O'rganish sahifasidagi kirish kartasi. */
@@ -61,20 +64,43 @@ export function WordbankEntryCard() {
 
 /**
  * Profil bo'limi: tasdiqlangan son, tugatilgan darajalar va
- * "Sertifikatlarim" joyi (OWNER D3).
+ * "Sertifikatlarim" (OWNER D3).
  *
- * Sertifikat yuklash endpointi bu bosqichda YO'Q — tugma o'chiq va
- * "tez orada" deb turadi; hech qanday "yuklandi" holati soxta
- * ko'rsatilmaydi. Yuklangach o'quvchi faqat "yuklandi — tekshirilmoqda"
- * holatini ko'radi (ball yo'q), natija xodim tasdiqlagach chiqadi.
+ * 2026-10-17: "tez orada" o'rnida haqiqiy karta (CertUploadCard).
+ * "So'z bilish: N" yonida FAQAT tasdiqlangan sertifikatlar (me.certs)
+ * ✓ bilan turadi; tekshirilayotganlar faqat SON sifatida
+ * (me.certs_pending) — ball hech qachon ko'rinmaydi.
  */
 export function WordbankProfileSection() {
   const lang = useLearningLanguage();
-  const { state } = useWordbank(true);
-  if (lang !== "en" || state?.status !== "ok") return null;
+  const { state, reload } = useWordbank(true);
+  if (state?.status !== "ok") return null;
   const d = state.data;
+  // Boshqa til o'quvchisi (TOPIK, Goethe, TORFL...) ham sertifikatini
+  // yuklay olsin — so'zlar soni yo'q, faqat "Sertifikatlarim"
+  if (lang !== "en") {
+    return (
+      <section className="student-panel bg-white rounded-3xl p-4">
+        {(d.certs || []).length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-1">
+            {(d.certs || []).map((c) => (
+              <span key={c.id}
+                    className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 px-2.5 py-1 text-[12px] font-extrabold">
+                <BadgeCheck size={14} className="text-emerald-600" /> {c.label}
+                <span className="font-semibold text-emerald-600">· tasdiqlangan</span>
+              </span>
+            ))}
+          </div>
+        )}
+        <CertUploadCard onChange={reload} bare />
+      </section>
+    );
+  }
   const done = d.bands.filter((b) => b.done);
   const t = d.size_test;
+  const certs = d.certs || [];
+  const pending = d.certs_pending || 0;
+  const best = d.best_known || 0;
 
   return (
     <section className="student-panel bg-white rounded-3xl p-4"
@@ -104,6 +130,43 @@ export function WordbankProfileSection() {
         </div>
       </div>
 
+      {/* Tasdiqlangan natijalar — "So'z bilish: N" yonida (D3) */}
+      {(certs.length > 0 || pending > 0 || best > d.known) && (
+        <div className="flex flex-wrap gap-1.5 mt-2.5">
+          {certs.map((c) => (
+            <span key={c.id}
+                  className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 px-2.5 py-1 text-[12px] font-extrabold">
+              <BadgeCheck size={14} className="text-emerald-600" /> {c.label}
+              <span className="font-semibold text-emerald-600">· tasdiqlangan</span>
+            </span>
+          ))}
+          {pending > 0 && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 px-2.5 py-1 text-[11.5px] font-bold">
+              {pending} ta sertifikat tekshirilmoqda
+            </span>
+          )}
+          {best > d.known && (
+            <span className="inline-flex items-center rounded-full bg-slate-100 text-slate-600 px-2.5 py-1 text-[11.5px] font-bold">
+              Eng yaxshi natija: {fmtNum(best)}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Reytingdagi o'rin (Jami) — reytingga havola */}
+      {d.ranks && (d.ranks.group || d.ranks.branch) && (
+        <Link to="/student/leaderboard?board=words"
+              className="mt-2.5 flex items-center gap-2 rounded-xl bg-brand-50 px-3 min-h-[44px] text-[12.5px] text-brand-700">
+          <Trophy size={15} className="text-brand-600 shrink-0" />
+          <span className="flex-1 min-w-0">
+            {d.ranks.group ? <>Guruhda <b>{d.ranks.group}-o'rin</b></> : null}
+            {d.ranks.group && d.ranks.branch ? " · " : null}
+            {d.ranks.branch ? <>Filialda <b>{d.ranks.branch}-o'rin</b></> : null}
+          </span>
+          <ChevronRight size={15} className="text-brand-400 shrink-0" />
+        </Link>
+      )}
+
       {done.length > 0 ? (
         <div className="flex flex-wrap gap-1.5 mt-3">
           {done.map((b) => (
@@ -128,26 +191,7 @@ export function WordbankProfileSection() {
       )}
 
       {/* ------------------------------------ Sertifikatlarim (D3) */}
-      <div className="mt-4 pt-4 border-t border-slate-100">
-        <p className="text-[15px] font-extrabold text-slate-900">Sertifikatlarim</p>
-        <p className="text-[12px] text-slate-600 mt-1 leading-relaxed">
-          IELTS, CEFR/Multilevel, SAT, Duolingo va boshqa natijangiz
-          sertifikatini shu yerga yuklaysiz. Yuklangach bu yerda faqat
-          «yuklandi — tekshirilmoqda» holati turadi; natija ustoz yoki
-          rahbariyat tasdiqlagandan keyin so'zlaringiz soni yonida
-          ✓ belgi bilan chiqadi.
-        </p>
-        <button
-          type="button"
-          disabled
-          className="mt-3 w-full min-h-[48px] rounded-2xl border-2 border-dashed border-slate-300 text-slate-400 text-[14px] font-bold inline-flex items-center justify-center gap-2"
-        >
-          <FileUp size={17} /> Sertifikat yuklash
-          <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px]">
-            <Lock size={11} /> tez orada
-          </span>
-        </button>
-      </div>
+      <CertUploadCard onChange={reload} />
     </section>
   );
 }

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, BookA, Check } from "lucide-react";
+import { TeacherWordStats } from "../../components/wordbank/TeacherWordStats";
 import { api } from "../../lib/api";
 import { pushToast } from "../../lib/toast";
+import { pickPref, writePref } from "../../lib/wordbankUi";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -13,8 +15,17 @@ type Any = any;
  * Jahongir: "ustoz 1-unitni topshirdi degan tick qo'ysa unit avtomat
  * 100% bo'lishi kerak." O'quvchi practice bilan 99% gacha yig'adi -
  * yakuniy 100% faqat shu yerdan.
+ *
+ * 2026-10-17 (OWNER D2/D3): ikkinchi ko'rinish — "So'z bilish": guruh
+ * o'quvchilarining tasdiqlangan so'zlari, haftalik o'sishi, darajalari,
+ * taxminiy hajmi va FAQAT tasdiqlangan sertifikatlari. Tanlov
+ * localStorage["jony_tv_view"] da eslab qolinadi.
  */
+type View = "units" | "words";
+const K_VIEW = "jony_tv_view";
+
 export default function TeacherVocab() {
+  const [view, setView] = useState<View>(() => pickPref<View>(K_VIEW, ["units", "words"], "units"));
   const [groups, setGroups] = useState<Any[]>([]);
   const [gid, setGid] = useState<number | null>(null);
   const [students, setStudents] = useState<Any[]>([]);
@@ -88,16 +99,28 @@ export default function TeacherVocab() {
           </Link>
           <h1 className="text-lg font-semibold flex items-center gap-2">
             <BookA size={20} />
-            Lug'at unitlari
+            {view === "words" ? "So'z bilish" : "Lug'at unitlari"}
           </h1>
           <p className="text-sm opacity-90 mt-0.5">
-            O'quvchi unitni topshirsa — tick qo'ying, 100% bo'ladi
+            {view === "words"
+              ? "Guruh o'quvchilarining tasdiqlangan so'zlari va natijalari"
+              : "O'quvchi unitni topshirsa — tick qo'ying, 100% bo'ladi"}
           </p>
         </div>
       </div>
 
       <div className="max-w-md mx-auto px-4 -mt-5 space-y-3 pb-8">
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3">
+          <div className="grid grid-cols-2 gap-1 rounded-lg bg-slate-100 p-1" role="tablist">
+            {([["units", "Lug'at unitlari"], ["words", "So'z bilish"]] as const).map(([k, l]) => (
+              <button key={k} type="button" role="tab" aria-selected={view === k}
+                onClick={() => { setView(k); writePref(K_VIEW, k); }}
+                className={`min-h-[40px] rounded-md text-sm font-semibold ${
+                  view === k ? "bg-white text-slate-900 shadow-sm" : "text-slate-600"}`}>
+                {l}
+              </button>
+            ))}
+          </div>
           <div>
             <label className="block text-[11px] text-slate-500 mb-1">
               Guruh
@@ -115,7 +138,7 @@ export default function TeacherVocab() {
               ))}
             </select>
           </div>
-          {students.length > 0 && (
+          {view === "units" && students.length > 0 && (
             <div>
               <label className="block text-[11px] text-slate-500 mb-1">
                 O'quvchi
@@ -136,7 +159,12 @@ export default function TeacherVocab() {
           )}
         </div>
 
-        {prog && (
+        {view === "words" && gid && <TeacherWordStats groupId={gid} />}
+        {view === "words" && !gid && groups.length > 0 && (
+          <p className="text-sm text-slate-500 px-1">Guruhni tanlang.</p>
+        )}
+
+        {view === "units" && prog && (
           <div className="space-y-2">
             {(prog.units || []).map((u: Any) => (
               <div

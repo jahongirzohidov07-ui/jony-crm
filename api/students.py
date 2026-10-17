@@ -1133,6 +1133,15 @@ def merge_students(
     if n_dup:
         moved["Davomat (takror, olib tashlandi)"] = n_dup
 
+    # 2b) "SO'Z BILISH" (2026-10-17, OWNER D4): so'z holatlari so'z
+    #     bo'yicha birlashadi (kuchlisi qoladi), daraja coini ikki marta
+    #     to'langan bo'lsa -N tuzatish yoziladi, FK'siz jadvallar
+    #     (daraja coinlari, sertifikat yuklamalari, tarix) ko'chadi —
+    #     umumiy qadam (3) ularni ko'rmaydi. wordbank_social.on_merge.
+    import wordbank_social as WSOC
+    moved.update(WSOC.on_merge(db, keep.id, drop.id) or {})
+    db.flush()
+
     # 3) QOLGAN HAMMA JADVAL — metadata'dan avtomat
     for M, colname in _student_fk_columns():
         name = M.__name__
@@ -1232,7 +1241,12 @@ def merge_students(
 # O'quvchi o'chirilganda TEGILMAYDIGAN jadvallar. payments_deleted —
 # o'chirilgan to'lovlar arxivi: pul tarixi hech qachon yo'qolmasligi
 # kerak (ichida o'quvchining ismi ham saqlanadi, ya'ni yetim qolmaydi).
-_PURGE_KEEP_TABLES = {"payments_deleted", "audit_logs"}
+# 2026-10-17 ("So'z bilish", OWNER D4: "ro'yxatidan chiqib ketsa ham
+# natijasi tarixda qolaversin"): tugatilgan darajalar (coin izi) va
+# yuklangan sertifikatlar ham o'chirilmaydi. Ikkalasida student_id FK'siz
+# oddiy INT; ism va filial wordbank_hall / name_snap da saqlanadi.
+_PURGE_KEEP_TABLES = {"payments_deleted", "audit_logs",
+                      "wordbank_band_awards", "wordbank_cert_uploads"}
 
 
 def _purge_student_children(db: Session, sid: int) -> dict:
@@ -1285,6 +1299,11 @@ def delete_student(
     if not s:
         raise HTTPException(404, "Talaba topilmadi")
     name, bid = s.full_name, s.branch_id
+    # 2026-10-17 ("So'z bilish", OWNER D4): o'chirishdan OLDIN eng yaxshi
+    # natija tarixga (wordbank_hall) yoziladi — o'quvchi ketsa ham
+    # "Tarix" da qoladi. Hech qachon xato tashlamaydi.
+    import wordbank_social as WSOC
+    WSOC.before_purge(db, s.id, hidden=0)
     removed = _purge_student_children(db, s.id)
     db.delete(s)
     # Auditga NIMA o'chirilgani ham yoziladi: keyin "bu odamning
@@ -3748,6 +3767,13 @@ _ACTIVITY_TABLES = [
     ("exam_results", "imtihon"),
     ("vocab_attempts", "ilovada mashq"),
     ("discounts", "chegirma"),
+    # 2026-10-17 ("So'z bilish", OWNER D4): so'z mashqi, sertifikat va
+    # tugatilgan daraja — haqiqiy o'quvchining izi. Bularsiz coini /
+    # yo'qlamasi hali yo'q yangi o'quvchi "xato import" deb o'chirilib,
+    # tarix qatori ham butunlay yashirilib (hidden=1) ketardi.
+    ("wordbank_student_words", "so'z mashqi"),
+    ("wordbank_cert_uploads", "sertifikat"),
+    ("wordbank_band_awards", "so'z bilish darajasi"),
 ]
 
 
@@ -3951,6 +3977,11 @@ def import_undo(payload: dict = Body(...),
         if s is None:
             continue
         if mode == "delete":
+            # 2026-10-17 ("So'z bilish", D4): tarix qatori saqlanadi,
+            # lekin hidden=1 — bular xato kiritilgan yozuvlar, "Tarix"
+            # da hech qachon ko'rinmaydi.
+            import wordbank_social as WSOC
+            WSOC.before_purge(db, s.id, hidden=1)
             rem = _purge_student_children(db, s.id)
             for k, v in rem.items():
                 removed_all[k] = removed_all.get(k, 0) + v

@@ -296,6 +296,46 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_wordbank_size_tests_student "
         "ON wordbank_size_tests (student_id, created_at)",
     ]),
+
+    # 2026-10-17: "SO'Z BILISH" — reyting, tarix (hall of fame) va
+    # sertifikatlar (2–3-bosqich; Jahongir, OWNER_DECISIONS D2–D4).
+    # Ikki yangi jadvalni (wordbank_hall, wordbank_cert_uploads)
+    # models.py dagi modellardan create_all yaratadi — bu qator shtampni
+    # ko'taradi (0013 izohiga qarang). Faqat QO'SHADI.
+    #
+    # Bitta o'quvchiga bitta tarix qatori — modeldagi UniqueConstraint
+    # (uq_wordbank_hall_student_ref); alohida UNIQUE INDEX takror edi
+    # (2026-10-17, review — olib tashlandi, hali deploy qilinmagan).
+    # ix_wordbank_sw_student_known — reyting: o'quvchi bo'yicha
+    # tasdiqlangan so'zlar soni (COUNT ... WHERE known = 1 GROUP BY
+    # student_id) va shu haftada tasdiqlanganlar (known_at).
+    # Sertifikatlar: tekshiruv navbati (status, created_at), o'quvchining
+    # o'z ro'yxati (student_id, status) va bir xil fayl tekshiruvi (sha256).
+    ("0033_wordbank_hall_certs", [
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_hall_best "
+        "ON wordbank_hall (best_known)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_sw_student_known "
+        "ON wordbank_student_words (student_id, known, known_at)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_cert_status_created "
+        "ON wordbank_cert_uploads (status, created_at)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_cert_student "
+        "ON wordbank_cert_uploads (student_id, status)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_cert_sha256 "
+        "ON wordbank_cert_uploads (sha256)",
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_band_awards_band_at "
+        "ON wordbank_band_awards (band, awarded_at)",
+    ]),
+
+    # 2026-10-17 (review): "tekshirilmoqda" belgisi — ko'rinadigan
+    # o'quvchilarning (TOP 50 + o'zi) SHU HAFTADAGI P javoblari
+    # (wordbank_social._p_answers: student_id IN (...) AND answered_at >=
+    # dushanba). Indekssiz har so'rov butun javob tarixini aylanib
+    # chiqardi — bu jadval eng tez o'sadigani. Alohida versiya: 0033
+    # qayerdadir allaqachon qo'llangan bo'lsa ham indeks qo'shilsin.
+    ("0034_wordbank_items_answered", [
+        "CREATE INDEX IF NOT EXISTS ix_wordbank_items_student_answered "
+        "ON wordbank_session_items (student_id, answered_at)",
+    ]),
 ]
 
 

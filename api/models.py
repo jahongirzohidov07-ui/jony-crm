@@ -5049,3 +5049,96 @@ class WordbankSizeTest(Base):
     estimate = Column(Integer, nullable=True)
     low = Column(Integer, nullable=True)
     high = Column(Integer, nullable=True)
+
+
+# =====================================================================
+#  "SO'Z BILISH" — TARIX (hall of fame) VA SERTIFIKATLAR (2026-10-17,
+#  2–3-bosqich; Jahongir, OWNER_DECISIONS D2–D4).
+#
+#  D4: "agar o'quvchilar ro'yxatidan chiqib ketsa ham natijasi tarixda
+#  qolaversin". Shu sababli ikkala jadvalda ham students.id ga FK YO'Q:
+#    * wordbank_hall — o'quvchi ustuni ATAYLAB "student_ref" deb
+#      nomlangan (student_id emas): asoschining butunlay o'chirishi
+#      (students._purge_student_children) "student_id" nomli har
+#      ustunni tozalaydi, bu jadvalga esa umuman tegmaydi;
+#    * wordbank_cert_uploads — oddiy student_id INT (FK yo'q) va
+#      students._PURGE_KEEP_TABLES ro'yxatida; certificate_id va
+#      attachment_id da ham FK yo'q (purge certificates jadvalini
+#      tozalaydi — FK bo'lsa o'chirish yiqilardi). Fayl —
+#      Attachment(entity="vocab_cert", entity_id=upload.id).
+#  Birlashtirishda (merge_students) FK'siz ustunlarni umumiy qoida
+#  ko'rmaydi — wordbank_social.on_merge alohida ko'chiradi.
+#  Mantiq: api/wordbank_social.py (tarix, reyting) va
+#  api/wordbank_certs.py (sertifikatlar).
+# =====================================================================
+class WordbankHall(Base):
+    """O'quvchining eng yaxshi natijasi — o'quvchi ketsa, arxivlansa
+    yoki butunlay o'chirilsa ham qoladi ("Tarix" ko'rinishi). Qiymatlar
+    hech qachon PASAYTIRILMAYDI (best_known, bands_mask); cert_badge esa
+    joriy oxirgi tasdiqlangan sertifikat (bekor qilinsa o'zgaradi).
+    hidden=1 — xato import bekor qilinganda (ko'rsatilmaydi)."""
+    __tablename__ = "wordbank_hall"
+    __table_args__ = (
+        UniqueConstraint("student_ref", name="uq_wordbank_hall_student_ref"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_ref = Column(Integer, nullable=False)    # students.id, FK YO'Q
+    name_snap = Column(String, nullable=True)        # to'liq ism (ko'rsatishda _mask)
+    branch_id = Column(Integer, nullable=True)       # FK yo'q
+    branch_name = Column(String, nullable=True)
+    group_id = Column(Integer, nullable=True)        # FK yo'q (guruh kesimi uchun)
+    group_name = Column(String, nullable=True)
+    best_known = Column(Integer, nullable=False, default=0)
+    best_at = Column(DateTime, nullable=True)
+    bands_done = Column(Integer, nullable=False, default=0)   # tugatilgan darajalar soni
+    bands_mask = Column(Integer, nullable=False, default=0)   # bit (n-1) = Common n000
+    cert_badge = Column(String, nullable=True)       # "IELTS 7.0" — faqat tasdiqlangan
+    status_snap = Column(String, nullable=True)      # active|trial|frozen|archived|finished
+    hidden = Column(Integer, nullable=False, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow)
+
+
+class WordbankCertUpload(Base):
+    """O'quvchi yuklagan sertifikat (IELTS, Multilevel, SAT ...). Natija
+    FAQAT status="confirmed" bo'lganda ko'rinadi (D3: "tasdiqlangandan
+    keyin chiqsin"); undan oldin o'quvchi faqat "Yuklandi — tekshirilmoqda"
+    ni ko'radi, boshqalar hech narsani. Holatlar: pending | confirmed |
+    rejected | withdrawn | revoked. Qator hech qachon o'chirilmaydi."""
+    __tablename__ = "wordbank_cert_uploads"
+
+    id = Column(Integer, primary_key=True, index=True)
+    # FK YO'Q (D4). Alohida index=True yo'q — 0033 dagi
+    # ix_wordbank_cert_student (student_id, status) yetadi (2026-10-17).
+    student_id = Column(Integer, nullable=False)
+    exam_type = Column(String, nullable=False)       # ielts|multilevel|...|other
+    exam_name = Column(String, nullable=True)        # cambridge/other: imtihon nomi
+    result_label = Column(String, nullable=True)     # server yasaydi: "IELTS 7.0"
+    score = Column(Float, nullable=True)
+    level = Column(String, nullable=True)
+    sub_scores = Column(Text, nullable=True)         # JSON {"L": 7.5, ...}
+    test_date = Column(Date, nullable=True)
+    cert_no = Column(String, nullable=True)
+    store = Column(String, nullable=False, default="db")      # db | r2
+    attachment_id = Column(Integer, nullable=True)   # attachments.id, FK yo'q
+    r2_key = Column(String, nullable=True)
+    mime = Column(String, nullable=True)
+    size = Column(Integer, nullable=True)
+    sha256 = Column(String(64), nullable=True)
+    status = Column(String, nullable=False, default="pending")
+    verify_method = Column(String, nullable=True)
+    review_note = Column(Text, nullable=True)        # tasdiqlashdagi izoh
+    reviewed_by = Column(Integer, nullable=True)     # users.id, FK yo'q
+    reviewed_by_name = Column(String, nullable=True)
+    reviewed_at = Column(DateTime, nullable=True)
+    reject_reason = Column(String, nullable=True)
+    reject_note = Column(Text, nullable=True)
+    revoked_by_name = Column(String, nullable=True)
+    revoked_at = Column(DateTime, nullable=True)
+    revoke_note = Column(Text, nullable=True)
+    certificate_id = Column(Integer, nullable=True)  # certificates.id, FK yo'q
+    name_snap = Column(String, nullable=True)
+    branch_id_snap = Column(Integer, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow)

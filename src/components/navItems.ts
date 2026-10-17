@@ -14,7 +14,7 @@ import {
   INVENTORY_VIEW, CASH_ACCESS, STUDENT, PARENT, TEACHER, SUPPORT_TEACHER,
   TEACHER_MENU, SMM_MANAGER, EVENTS_ACCESS, EVENT_MANAGER, EXAM_VIEW,
   EXAMINER, HEAD_EXAMINER,
-  MOCK_PRACTICE,
+  MOCK_PRACTICE, VOCAB_CERT_CONFIRM,
 } from "../lib/roles";
 
 /**
@@ -170,6 +170,15 @@ export function buildNav(
   // 2026-09-18: fan bo'yicha cheklov olib tashlandi — barcha ustozlarga.
   if (can(user?.role, PLANS_ACCESS)) {
     items = [...items, { to: "/plans", label: "Dars rejalari", icon: BookOpen }];
+  }
+  // SERTIFIKATLAR TEKSHIRUVI (2026-10-17, "So'z bilish", OWNER D3):
+  // o'quvchi profilda yuklagan sertifikatni ustoz (o'z guruhlari),
+  // administrator va filial rahbari (o'z filiali), o'quv bo'limi
+  // rahbari va asoschi (hammasi) tasdiqlaydi. Chegara serverda; ustoz
+  // menyusida ham chiqishi uchun "/vocab-certs" TEACHER_MENU da bor.
+  if (can(user?.role, VOCAB_CERT_CONFIRM)) {
+    items = [...items,
+             { to: "/vocab-certs", label: "Sertifikatlar tekshiruvi", icon: Award }];
   }
   // IMTIHONLAR (2026-09-26, Jahongir: "audit bolimidagi umumiy
   // imthonlar exam bo'limi qilib bosh sahifaga qosh"). Audit ichida

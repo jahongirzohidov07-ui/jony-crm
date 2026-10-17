@@ -211,19 +211,31 @@ def main():
         pending = left
         print(f"--- {attempt}-aylanish tugadi, qolgani qayta uriniladi ---")
 
-    # Postgres'da id ketma-ketligini oxirgi qiymatga surish
-    try:
-        with eng.begin() as cx:
-            for tbl in man["tables"]:
-                n = tbl["name"]
-                try:
-                    cx.execute(text(
-                        f"SELECT setval(pg_get_serial_sequence('\"{n}\"','id'),"
-                        f" COALESCE((SELECT MAX(id) FROM \"{n}\"), 1), true)"))
-                except Exception:
-                    pass
-    except Exception:
-        pass
+    # Postgres'da id ketma-ketligini oxirgi qiymatga surish.
+    # 2026-10-17 ("So'z bilish", D4): butunlay o'chirilgan o'quvchining
+    # raqami FK'siz jadvallarda qoladi (tarix, daraja coinlari,
+    # sertifikat yuklamalari). students ketma-ketligi faqat MAX(id) ga
+    # surilsa, eng oxirgi o'chirilganning raqami yangi o'quvchiga berilib,
+    # u boshqaning tarixi va fayllarini "meros" olardi - shuning uchun
+    # ular ham hisobga olinadi. Har jadval alohida tranzaksiyada: bittasi
+    # yiqilsa qolganlari ham bekor bo'lib ketmasin.
+    keep_refs = {"students": [("wordbank_hall", "student_ref"),
+                              ("wordbank_band_awards", "student_id"),
+                              ("wordbank_cert_uploads", "student_id")]}
+    for tbl in man["tables"]:
+        n = tbl["name"]
+        parts = [f"COALESCE((SELECT MAX(id) FROM \"{n}\"), 1)"]
+        for rt, rc in keep_refs.get(n, []):
+            if rt in live:
+                parts.append(f"COALESCE((SELECT MAX(\"{rc}\") FROM \"{rt}\"), 1)")
+        top = parts[0] if len(parts) == 1 else "GREATEST(" + ", ".join(parts) + ")"
+        try:
+            with eng.begin() as cx:
+                cx.execute(text(
+                    f"SELECT setval(pg_get_serial_sequence('\"{n}\"','id'),"
+                    f" {top}, true)"))
+        except Exception:
+            pass
 
     print(f"\nTAYYOR: {done}/{total} qator tiklandi.")
 

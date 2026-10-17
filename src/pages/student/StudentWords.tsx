@@ -1,8 +1,9 @@
 import { StudentLoadError, StudentLoading } from "../../components/StudentLoading";
 import { StudentCoinIcon, StudentIcon } from "../../components/StudentIcon";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Gauge, Target } from "lucide-react";
+import { ArrowLeft, ArrowRight, BadgeCheck, ChevronRight, Gauge, Target, Trophy } from "lucide-react";
 import { BandLegend, BandList } from "../../components/wordbank/BandList";
+import { WordAttribution } from "../../components/wordbank/WordAttribution";
 import { WordbankUnavailable } from "../../components/wordbank/WordbankCards";
 import { useWordbank } from "../../components/wordbank/useWordbank";
 import { JSA } from "../../components/Jsa";
@@ -21,6 +22,10 @@ import { focusBand, roundEst } from "../../lib/wordbankApi";
  *     bilan; hech narsaga ta'sir qilmaydi.
  * 20 daraja: "Common 1000: 870/1000", har darajada "+N coin" (N-daraja
  * tugasa N coin, bir marta). Ma'lumot: GET /api/wordbank/me.
+ *
+ * 2026-10-17 (D2/D3): "So'z bilish" reytingidagi o'rin (guruhda /
+ * filialda) — reyting sahifasiga havola; FAQAT tasdiqlangan
+ * sertifikatlar ✓ bilan; pastda wordfreq manbasi (CC BY-SA 4.0).
  */
 export default function StudentWords() {
   const lang = useLearningLanguage();
@@ -39,6 +44,8 @@ export default function StudentWords() {
   const nextHundred = (Math.floor(d.known / 100) + 1) * 100;
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
   const streak = d.streak ?? 0;
+  const ranks = d.ranks;
+  const certs = d.certs || [];
 
   return (
     <div className="max-w-md mx-auto px-4 pt-5 pb-8 space-y-3">
@@ -93,8 +100,46 @@ export default function StudentWords() {
               Bugun takrorlash: {fmtNum(d.due_today)} so'z
             </span>
           )}
+          {/* FAQAT tasdiqlangan sertifikatlar (server boshqasini bermaydi) */}
+          {certs.map((c) => (
+            <span key={c.id}
+                  className="inline-flex items-center gap-1 rounded-full bg-emerald-400/25 px-2.5 py-1 text-[12px] font-bold">
+              <BadgeCheck size={13} /> {c.label}
+            </span>
+          ))}
         </div>
       </div>
+
+      {/* ------------------------------ "So'z bilish" reytingi (D2) */}
+      <Link to="/student/leaderboard?board=words"
+        className="w-full rounded-2xl border p-3.5 flex items-center gap-3 active:scale-[0.99] transition"
+        style={card}>
+        <span className="w-11 h-11 rounded-2xl bg-amber-400/15 flex items-center justify-center shrink-0">
+          <Trophy size={21} className="text-amber-300" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[15px] font-extrabold text-white">So'z bilish reytingi</span>
+          {ranks && (ranks.group || ranks.branch) ? (
+            <span className="flex flex-wrap gap-1.5 mt-1">
+              {ranks.group ? (
+                <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[12px] font-bold text-white">
+                  Guruhda {ranks.group}-o'rin
+                </span>
+              ) : null}
+              {ranks.branch ? (
+                <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[12px] font-bold text-white">
+                  Filialda {ranks.branch}-o'rin
+                </span>
+              ) : null}
+            </span>
+          ) : (
+            <span className="block text-[12px] text-slate-400 mt-0.5">
+              Birinchi tasdiqlangan so'zingiz bilan reytingga kirasiz
+            </span>
+          )}
+        </span>
+        <ChevronRight size={18} className="text-slate-400 shrink-0" />
+      </Link>
 
       {/* ------------------------------ TAXMINIY (kulrang, alohida) */}
       <div className="rounded-2xl border border-dashed px-4 py-3"
@@ -231,6 +276,8 @@ export default function StudentWords() {
           </li>
         </ul>
       </details>
+
+      <WordAttribution className="px-1 text-slate-400" />
     </div>
   );
 }

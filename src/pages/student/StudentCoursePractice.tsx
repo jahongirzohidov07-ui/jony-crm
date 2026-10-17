@@ -8,7 +8,7 @@ import CourseLessonAudio from "../../components/CourseLessonAudio";
 type Question = { id: string; prompt: string; mode: "exact" | "self"; options?: string[] };
 type Section = { id: string; title: string; skill: string; text?: string; questions: Question[] };
 type Lesson = { lesson: number; title: string; level?: string; question_count: number; completed?: boolean; submitted_count?: number; correct_count?: number };
-type Detail = { language: string; lesson: number; title: string; audio_url: string; sections: Section[] };
+type Detail = { language: string; lesson: number; title: string; audio_url: string; sections: Section[]; answers?: Record<string, {answer: string; result: Result}> };
 type Result = { correct: boolean | null; expected: string[]; explanation: string; criteria?: string[]; saved: boolean; transcript?: string };
 type Drafts = Map<string, { answer: string; result: Result | null }>;
 const labels: Record<string, string> = { reading: "O‘qish", listening: "Tinglash", grammar: "Grammatika", homework: "Haftalik mashq", writing: "Yozish", speaking: "Gapirish" };
@@ -22,24 +22,30 @@ function Course({ language }: { language: string }) {
   const [params] = useSearchParams();
   const drafts = useRef<Drafts>(new Map());
   const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState<number | null>(null);
+  const positionQueue = useRef<Promise<unknown>>(Promise.resolve());
   const [detail, setDetail] = useState<Detail | null>(null);
   const [error, setError] = useState("");
   const [reload, setReload] = useState(0);
   const [section, setSection] = useState(params.get("section") || "all");
   useEffect(() => {
     let active = true;
-    api.fresh<{ lessons: Lesson[] }>(`/student/course-practice?language=${language}`).then(r => { if (active) setLessons(r.lessons); }).catch(e => { if (active) setError(e.message); });
+    api.fresh<{ lessons: Lesson[]; resume_lesson?: number }>(`/student/course-practice?language=${language}`).then(r => { if (active) { setLessons(r.lessons); setSelected(current => current ?? (r.lessons.some(l => l.lesson === Number(params.get("lesson"))) ? Number(params.get("lesson")) : r.resume_lesson || 1)); } }).catch(e => { if (active) setError(e.message); });
     return () => { active = false; };
   }, [language, reload]);
   useEffect(() => {
     let active = true;
+    if (selected === null) return;
     setDetail(null); setError("");
-    api.fresh<Detail>(`/student/course-practice/${selected}?language=${language}`).then(r => { if (active) setDetail(r); }).catch(e => { if (active) setError(e.message); });
+    api.fresh<Detail>(`/student/course-practice/${selected}?language=${language}`).then(r => { if (active) { for (const [id, saved] of Object.entries(r.answers || {})) { const key = `${language}:${selected}:${id}`; if (!drafts.current.has(key)) drafts.current.set(key, saved); } setDetail(r); } }).catch(e => { if (active) setError(e.message); });
     return () => { active = false; };
   }, [language, selected, reload]);
+  useEffect(() => {
+    if (selected === null) return;
+    positionQueue.current = positionQueue.current.catch(() => {}).then(() => api.post("/student/course-practice/position", {language, lesson: selected})).catch(() => { setError("Dars joyini saqlab bo‘lmadi. Qayta urinib ko‘ring."); });
+  }, [language, selected, reload]);
   function refreshProgress() {
-    api.fresh<{ lessons: Lesson[] }>(`/student/course-practice?language=${language}`).then(r => setLessons(r.lessons)).catch(() => {});
+    api.fresh<{ lessons: Lesson[]; resume_lesson?: number }>(`/student/course-practice?language=${language}`).then(r => setLessons(r.lessons)).catch(() => {});
   }
   const progress = lessons.find(l => l.lesson === selected);
   const sections = detail?.sections || [];
@@ -48,18 +54,19 @@ function Course({ language }: { language: string }) {
   return <main className="mx-auto max-w-2xl space-y-4 p-4 pb-24 text-slate-900">
     <Link to="/student" className="inline-flex items-center gap-2 text-sm text-sky-700"><ArrowLeft size={16}/>Bosh sahifa</Link>
     <header className="rounded-2xl bg-sky-900 p-5 text-white"><BookOpen className="mb-2"/><h1 className="text-xl font-bold">{language === "de" ? "Deutsch B1" : "English Intensive"}</h1><p className="mt-2 text-sm">Darsni tanlang, audioni tinglang va yangi mashqlarni bajaring. Javoblaringiz akkauntingizda saqlanadi.</p></header>
-    <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected} onChange={e => setSelected(Number(e.target.value))}>
+    <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected ?? 1} onChange={e => setSelected(Number(e.target.value))}>
       {lessons.length ? lessons.map(l => <option key={l.lesson} value={l.lesson}>{l.lesson}. {l.title}{l.level ? ` · ${l.level}` : ""}</option>) : <option value={1}>Yuklanmoqda…</option>}
     </select></label>
     {error && <div role="alert" className="rounded-xl bg-red-50 p-4 text-red-800">{error}<button className="ml-3 underline" onClick={() => setReload(n => n + 1)}>Qayta urinish</button></div>}
     {!detail && !error && <p role="status">Dars yuklanmoqda…</p>}
-    {detail && <div key={`${language}-${selected}`} className="space-y-4">
+    {detail && selected !== null && <div key={`${language}-${selected}`} className="space-y-4">
       <h2 className="text-lg font-bold">{detail.title}</h2>
       {progress && <p className="text-sm text-slate-600" aria-label="Darsdagi natija">Yuborilgan: {progress.submitted_count || 0} / {progress.question_count} · Avtomatik tekshiruvda to‘g‘ri: {progress.correct_count || 0}</p>}
       <CourseLessonAudio key={`${language}-${selected}`} course={language === "de" ? "german" : "intensive"} lesson={selected} title={detail.title}/>
+      <p className="text-sm text-slate-600">Dars va uyga vazifa: quyidagi bo‘limlarni ketma-ket bajaring. Yuborilgan javoblar qayta kirganda ham ko‘rinadi. Ochiq javoblar namuna bilan o‘zini tekshirish uchun.</p>
       <div aria-label="Mashq bo‘limlari" className="flex flex-wrap gap-2">{["all", ...skills].map(s => <button key={s} aria-pressed={shown === s} onClick={() => setSection(s)} className={`rounded-full border px-4 py-2 text-sm ${shown === s ? "bg-sky-800 text-white" : "bg-white"}`}>{s === "all" ? "Hammasi" : labels[s] || s}</button>)}</div>
       {sections.filter(s => shown === "all" || s.skill === shown).map(s => <SectionPractice key={s.id} section={s} language={language} lesson={selected} onSaved={refreshProgress} drafts={drafts.current}/>)}
-      <div className="flex justify-between gap-3"><button disabled={selected === 1} onClick={() => setSelected(n => n - 1)} className="rounded-xl border p-3 disabled:opacity-40">← Oldingi dars</button><button disabled={selected >= lessons.length} onClick={() => setSelected(n => n + 1)} className="rounded-xl bg-sky-800 p-3 text-white disabled:opacity-40">Keyingi dars →</button></div>
+      <div className="flex justify-between gap-3"><button disabled={selected === 1} onClick={() => setSelected(n => Math.max(1, (n || 1) - 1))} className="rounded-xl border p-3 disabled:opacity-40">← Oldingi dars</button><button disabled={selected >= lessons.length} onClick={() => setSelected(n => (n || 1) + 1)} className="rounded-xl bg-sky-800 p-3 text-white disabled:opacity-40">Keyingi dars →</button></div>
     </div>}
   </main>;
 }

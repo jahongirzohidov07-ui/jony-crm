@@ -1,4 +1,4 @@
-"""Private lesson practice; answer keys are projected out of every GET."""
+"""Private practice: feedback is visible only for the student's saved attempts."""
 import json
 import re
 import unicodedata
@@ -18,6 +18,12 @@ router = APIRouter(prefix="/api/student/course-practice", tags=["student-course-
 BANK = json.loads(Path(__file__).with_name("student_course_practice_data.json").read_text(encoding="utf-8"))
 LESSONS = {lang: {row["lesson"]: row for row in rows} for lang, rows in BANK.items()}
 Language = Literal["en", "de"]
+
+
+class PositionIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    language: Language
+    lesson: int = Field(ge=1, le=192)
 
 
 class AnswerIn(BaseModel):
@@ -60,6 +66,68 @@ def _normalize(value, case_sensitive=False):
     return value if case_sensitive else value.casefold()
 
 
+def _position_key(student_id, language):
+    return f"course-position:v1:{student_id}:{language}"
+
+
+def _save_position(db, student_id, language, lesson):
+    # Position is state, not an attempt: analytics counts even incorrect attempts.
+    # Atomic upsert prevents duplicate-key races on a student's first visit.
+    if db.get_bind().dialect.name == "sqlite":
+        from sqlalchemy.dialects.sqlite import insert
+    else:
+        from sqlalchemy.dialects.postgresql import insert
+    table = models.IntegrationSetting.__table__
+    statement = insert(table).values(
+        key=_position_key(student_id, language), value=str(lesson))
+    db.execute(statement.on_conflict_do_update(
+        index_elements=[table.c.key],
+        set_={"value": statement.excluded.value, "updated_at": statement.excluded.updated_at}))
+
+
+def _resume(db, student_id, language):
+    value = db.query(models.IntegrationSetting.value).filter_by(
+        key=_position_key(student_id, language)).scalar()
+    if value and value.isdigit():
+        lesson = int(value)
+        if lesson in LESSONS[language]:
+            return lesson
+    # Existing students can resume their latest answer before their first visit save.
+    attempt = db.query(models.SkillAttempt).filter(
+        models.SkillAttempt.student_id == student_id,
+        models.SkillAttempt.ref.startswith("course-practice:v1:" + language + ":"),
+    ).order_by(models.SkillAttempt.id.desc()).first()
+    if attempt:
+        parts = attempt.ref.split(":")
+        if len(parts) > 3 and parts[3].isdigit() and int(parts[3]) in LESSONS[language]:
+            return int(parts[3])
+    return BANK[language][0]["lesson"]
+
+
+def _progress(questions, refs, correct_refs):
+    ids = {_ref(q["id"]) for q in questions}
+    return {"question_count": len(ids), "submitted_count": len(ids & refs),
+            "correct_count": len(ids & correct_refs), "completed": bool(ids) and ids <= refs}
+
+
+def _feedback(section, question, correct):
+    result = {"correct": correct, "expected": question["expected"],
+              "explanation": question["explanation"], "saved": True}
+    if "criteria" in question:
+        result["criteria"] = question["criteria"]
+    if section["skill"] == "listening":
+        result["transcript"] = section["transcript"]
+    return result
+
+
+@router.post("/position")
+def position(body: PositionIn, db: Session = Depends(get_db), student=Depends(_student)):
+    _lesson(body.language, body.lesson)
+    _save_position(db, student.id, body.language, body.lesson)
+    db.commit()
+    return {"saved": True, "language": body.language, "resume_lesson": body.lesson}
+
+
 @router.get("")
 def course(language: Language, db: Session = Depends(get_db), student=Depends(_student)):
     attempts = db.query(models.SkillAttempt.ref, models.SkillAttempt.correct).filter(
@@ -78,13 +146,37 @@ def course(language: Language, db: Session = Depends(get_db), student=Depends(_s
             # Completion means submitted, including self checks, not proficiency.
             "completed": bool(ids) and all(_ref(qid) in refs for qid in ids),
         })
-    return {"language": language, "title": "English" if language == "en" else "Deutsch", "lessons": lessons}
+    resume = _resume(db, student.id, language)
+    row = _lesson(language, resume)
+    plan = {key: row[key] for key in ("language", "lesson", "title", "level", "audio_url")}
+    plan.update(_progress([q for section in row["sections"] for q in section["questions"]], refs, correct_refs))
+    plan["sections"] = [
+        {key: section[key] for key in ("id", "title", "skill")} |
+        _progress(section["questions"], refs, correct_refs) for section in row["sections"]
+    ]
+    return {"language": language, "title": "English" if language == "en" else "Deutsch",
+            "lessons": lessons, "resume_lesson": resume, "plan": plan}
 
 
 @router.get("/{lesson}")
-def lesson_detail(lesson: int, language: Language, student=Depends(_student)):
+def lesson_detail(lesson: int, language: Language, student=Depends(_student), db: Session = Depends(get_db)):
     row = _lesson(language, lesson)
     result = {key: row[key] for key in ("language", "lesson", "title", "audio_url")}
+    attempts = db.query(models.SkillAttempt).filter(
+        models.SkillAttempt.student_id == student.id,
+        models.SkillAttempt.ref.startswith(f"course-practice:v1:{language}:{lesson}:"),
+    ).order_by(models.SkillAttempt.id.desc()).all()
+    latest = {}
+    for attempt in attempts:
+        latest.setdefault(attempt.ref, attempt)
+    result["answers"] = {}
+    for section in row["sections"]:
+        for question in section["questions"]:
+            attempt = latest.get(_ref(question["id"]))
+            if attempt is not None:
+                correct = None if question["mode"] == "self" else attempt.correct == 1
+                result["answers"][question["id"]] = {
+                    "answer": attempt.answer, "result": _feedback(section, question, correct)}
     result["sections"] = []
     for section in row["sections"]:
         public = {key: section[key] for key in ("id", "title", "skill")}
@@ -118,11 +210,6 @@ def answer(body: AnswerIn, db: Session = Depends(get_db), student=Depends(_stude
         skill="course-practice:" + body.language + ":" + section["skill"],
         ref=_ref(question["id"]), answer=body.answer, correct=int(correct is True),
     ))
+    # A delayed answer must never move the explicitly visited lesson backwards.
     db.commit()  # Deliberately no XP, coins or other reward mutation.
-    result = {"correct": correct, "expected": question["expected"],
-              "explanation": question["explanation"], "saved": True}
-    if "criteria" in question:
-        result["criteria"] = question["criteria"]
-    if section["skill"] == "listening":
-        result["transcript"] = section["transcript"]
-    return result
+    return _feedback(section, question, correct)

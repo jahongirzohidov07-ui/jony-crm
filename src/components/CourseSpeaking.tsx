@@ -1,11 +1,32 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Mic, Volume2 } from "lucide-react";
 import { api } from "../lib/api";
+
+type Theme = "daily-life" | "football" | "robots";
+const themes: {id: Theme; icon: string; title: string; hint: string}[] = [
+  {id: "daily-life", icon: "☀", title: "Kundalik hayot", hint: "Uy, kitob va do‘stlar"},
+  {id: "football", icon: "⚽", title: "Futbol", hint: "To‘p va jamoadosh bilan suhbat"},
+  {id: "robots", icon: "🤖", title: "Robotlar", hint: "O‘zingiz o‘ylagan yordamchi robot"},
+];
+type SpeakingProps = {lesson: number; questionId: string; previous?: string; onSaved: (answer: string, reply: string) => void};
 
 type Message = {role: "teacher" | "student"; text: string};
 type Recognition = {lang: string; interimResults: boolean; maxAlternatives: number; onresult: ((event: {results: {isFinal?: boolean; 0: {transcript: string}}[]; resultIndex?: number}) => void) | null; onerror: ((event: {error: string}) => void) | null; onend: (() => void) | null; start(): void; stop(): void; abort(): void};
 type SpeechWindow = Window & {SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition};
-export function CourseSpeaking({lesson, questionId, previous, onSaved}: {lesson: number; questionId: string; previous?: string; onSaved: (answer: string, reply: string) => void}) {
+export function CourseSpeaking(props: SpeakingProps) {
+  // New question gets fresh conversation state; stale responses cannot cross lessons.
+  return <SpeakingSession key={`${props.lesson}:${props.questionId}`} {...props}/>;
+}
+function SpeakingSession({lesson, questionId, previous, onSaved}: SpeakingProps) {
+  // Deliberately session-only: no preference leaks between accounts on shared devices.
+  const [theme, setTheme] = useState<Theme>("daily-life");
+  const [robotDraft, setRobotDraft] = useState("");
+  const choiceId = useId();
+  const robotHint = lesson === 1 ? "Robotingiz uchun bir ot va bir sifat yozing. Masalan: robot, kind."
+    : lesson === 2 ? "Robotingizga bir harakat tanlang. Masalan: help yoki walk."
+    : lesson === 6 ? "Robotingiz uchun bir ot, bir sifat va bir harakat yozing. Masalan: robot, kind, help."
+    : "Shu darsda o‘rgangan so‘z yoki qolip bilan robotingiz haqida qisqa javob yozing.";
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [heard, setHeard] = useState("");
   const [saved, setSaved] = useState(previous || "");
@@ -34,12 +55,12 @@ export function CourseSpeaking({lesson, questionId, previous, onSaved}: {lesson:
     if (locked.current) return;
     locked.current = true; setBusy(true); setError(""); setRetry(null);
     try {
-      const result = await api.post<{reply: string; saved: boolean}>("/student/course-practice/speaking", {language: "en", lesson, question_id: questionId, messages: history.slice(-20)});
+      const result = await api.post<{reply: string; saved: boolean}>("/student/course-practice/speaking", {language: "en", theme, lesson, question_id: questionId, messages: history.slice(-20)});
       if (!active.current) return;
       if (!result.reply?.trim()) throw new Error("Ustoz javobi kelmadi. Qayta urinib ko‘ring.");
       setMessages([...history, {role: "teacher", text: result.reply}]);
       const last = history.at(-1);
-      if (result.saved && last?.role === "student") {setSaved(last.text); setHeard(""); onSaved(last.text, result.reply);}
+      if (result.saved && last?.role === "student") {setSaved(last.text); setHeard(""); setRobotDraft(""); onSaved(last.text, result.reply);}
     } catch (e) {if (active.current) {setError(e instanceof Error ? e.message : "Suhbat ulanmayapti. Qayta urinib ko‘ring."); setRetry(history);}}
     finally {locked.current = false; if (active.current) setBusy(false);}
   }
@@ -63,16 +84,34 @@ export function CourseSpeaking({lesson, questionId, previous, onSaved}: {lesson:
   return <div className="space-y-3 rounded-xl bg-sky-50 p-4">
     <h4 className="font-bold">Jony Teacher bilan shu dars bo‘yicha gaplashing</h4>
     <p className="text-sm">Ustoz suhbatdoshingiz bo‘ladi. Savolni tinglang, mikrofonga inglizcha javob bering, aniqlangan matnni ko‘rib yuboring.</p>
-    {saved && <details><summary className="cursor-pointer text-sm font-semibold">Oxirgi saqlangan og‘zaki javob</summary><p lang="en" className="mt-2 break-words text-sm">{saved}</p></details>}
+    <fieldset disabled={busy || listening || messages.length > 0 || !!retry} className="space-y-2">
+      <legend className="text-sm font-semibold">Suhbat muhiti — tanlash ixtiyoriy</legend>
+      <p id={`${choiceId}-hint`} className="text-xs text-slate-600">Dars maqsadi bir xil qoladi. Faqat misollar va suhbat muhiti o‘zgaradi.</p>
+      <div className="grid gap-2 sm:grid-cols-3">{themes.map(option => <label key={option.id} className={`relative flex cursor-pointer items-start gap-3 rounded-xl border-2 p-3 focus-within:ring-2 focus-within:ring-sky-700 focus-within:ring-offset-2 ${theme === option.id ? "border-sky-700 bg-white" : "border-transparent bg-white/70"}`}>
+        <input type="radio" name={`${choiceId}-theme`} value={option.id} checked={theme === option.id} aria-describedby={`${choiceId}-hint`} onChange={() => {setTheme(option.id); setRobotDraft("");}} className="mt-1 accent-sky-800"/>
+        <span><span aria-hidden="true" className="mr-2">{option.icon}</span><span className="font-semibold">{option.title}</span><span className="mt-1 block text-xs text-slate-600">{option.hint}</span></span>
+      </label>)}</div>
+    </fieldset>
+    {(messages.length > 0 || retry) && <button type="button" disabled={busy || listening} onClick={() => {setMessages([]); setRetry(null); setHeard(""); setRobotDraft(""); setError(""); window.speechSynthesis?.cancel();}} className="rounded-lg px-2 py-2 text-sm font-semibold text-sky-900 underline focus-visible:ring-2 focus-visible:ring-sky-700 disabled:opacity-40">Boshqa muhit tanlash — yangi suhbat</button>}
+    {saved && <details><summary className="cursor-pointer text-sm font-semibold">Oxirgi saqlangan suhbat javobi</summary><p lang="en" className="mt-2 break-words text-sm">{saved}</p></details>}
     {!messages.length && !retry && <button disabled={busy} onClick={() => turn([])} className="rounded-xl bg-sky-800 px-4 py-3 font-semibold text-white disabled:opacity-40">{busy ? "Ustoz tayyorlanmoqda…" : "Ovozli suhbatni boshlash"}</button>}
     <div className="space-y-3" aria-live="polite">{messages.map((message,index) => <div key={index} className={`rounded-xl p-3 text-sm ${message.role === "teacher" ? "bg-white" : "bg-sky-100"}`}><p className="mb-1 font-semibold">{message.role === "teacher" ? "Jony Teacher" : "Siz"}</p><p lang="en" className="whitespace-pre-wrap break-words">{message.text}</p>{message.role === "teacher" && <button aria-label="Ustoz javobini tinglash" onClick={() => speak(message.text)} className="mt-2 inline-flex items-center gap-2 text-sky-800"><Volume2 size={18}/>Tinglash</button>}</div>)}</div>
     {!!messages.length && <>
       <button disabled={busy || !!retry} onClick={startMic} aria-label={listening ? "Mikrofonni to‘xtatish" : "Mikrofonni yoqish"} className={`inline-flex items-center gap-2 rounded-xl px-4 py-3 font-semibold text-white disabled:opacity-40 ${listening ? "bg-red-600" : "bg-sky-800"}`}><Mic size={20}/>{listening ? "Tugatish" : "Gapirish"}</button>
       {heard && <div className="rounded-xl border p-3"><p className="text-xs text-slate-600">Ovozdan aniqlangan matn — xato bo‘lsa qayta gapiring:</p><p lang="en" className="my-2 break-words">{heard}</p><button disabled={busy || listening || !!retry} onClick={() => turn([...messages, {role:"student",text:heard}])} className="rounded-lg bg-sky-800 px-4 py-2 text-white disabled:opacity-40">Javobni yuborish</button></div>}
     </>}
+    {theme === "robots" && messages.length > 0 && (lesson <= 2 || lesson >= 6) && <details className="rounded-xl border border-sky-200 bg-white p-3">
+      <summary className="cursor-pointer font-semibold text-sky-900">Ixtiyoriy: o‘z robotingizni tasvirlang</summary>
+      <p id={`${choiceId}-robot-hint`} className="mt-2 text-sm text-slate-700">{robotHint} Ustoz javobingizdagi tafsilot bilan shu dars mashqini davom ettiradi.</p>
+      <label htmlFor={`${choiceId}-robot`} className="mt-3 block text-sm font-semibold">Sizning robotingiz (inglizcha)</label>
+      <textarea id={`${choiceId}-robot`} lang="en" aria-describedby={`${choiceId}-robot-hint`} maxLength={1000} rows={2} value={robotDraft} disabled={busy || listening || !!retry} onChange={event => setRobotDraft(event.target.value)} className="mt-1 w-full rounded-lg border border-slate-400 p-3 focus-visible:outline-sky-700"/>
+      <button type="button" disabled={!robotDraft.trim() || busy || listening || !!retry} onClick={() => turn([...messages, {role: "student", text: robotDraft.trim()}])} className="mt-2 rounded-lg bg-sky-800 px-4 py-2 font-semibold text-white disabled:opacity-40">Ta’rifni suhbatga yuborish</button>
+      <p className="mt-2 text-xs text-slate-600">Yozma ta’rif suhbat javobi sifatida saqlanadi. Bu talaffuz sinovi emas va qo‘shimcha ball bermaydi.</p>
+    </details>}
+    <p className="text-xs text-slate-600">Istalgan payt to‘xtashingiz mumkin. Mavzu tanlovi ushbu suhbat uchun; qurilmada saqlanmaydi.</p>
     {busy && <p role="status" className="text-sm">Ustoz javob tayyorlayapti…</p>}
     {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
     {retry && <button disabled={busy} className="underline" onClick={() => turn(retry)}>Qayta urinish</button>}
-    <p className="text-xs text-slate-600">AI fikri ovozdan aniqlangan matnga asoslanadi; talaffuz bahosi emas. Javobingiz yuborilgach va ustoz javobi kelgach dars hisobiga saqlanadi.</p>
+    <p className="text-xs text-slate-600">AI fikri yuborilgan matnga asoslanadi; talaffuz bahosi emas. Javobingiz yuborilgach va ustoz javobi kelgach dars hisobiga saqlanadi.</p>
   </div>;
 }

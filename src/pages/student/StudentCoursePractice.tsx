@@ -1,3 +1,5 @@
+import { CourseMotivation, CourseCheckpoint, RewardFeedback, type LearningReward, type CheckpointStatus } from "../../components/CourseMotivation";
+import { CourseJourney } from "../../components/CourseJourney";
 import { CourseSpeaking } from "../../components/CourseSpeaking";
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -10,7 +12,7 @@ type Question = { id: string; prompt: string; mode: "exact" | "self"; options?: 
 type Section = { id: string; title: string; skill: string; text?: string; questions: Question[] };
 type Lesson = { lesson: number; title: string; level?: string; question_count: number; completed?: boolean; submitted_count?: number; correct_count?: number };
 type Detail = { language: string; lesson: number; title: string; audio_url: string; sections: Section[]; answers?: Record<string, {answer: string; result: Result}> };
-type Result = { correct: boolean | null; expected: string[]; explanation: string; criteria?: string[]; saved: boolean; transcript?: string };
+type Result = { correct: boolean | null; expected: string[]; explanation: string; criteria?: string[]; saved: boolean; reward?: LearningReward; transcript?: string };
 type Drafts = Map<string, { answer: string; result: Result | null }>;
 const labels: Record<string, string> = { reading: "O‘qish", listening: "Tinglash", grammar: "Grammatika", homework: "Haftalik mashq", writing: "Yozish", speaking: "Gapirish" };
 
@@ -23,15 +25,26 @@ function Course({ language }: { language: string }) {
   const [params] = useSearchParams();
   const drafts = useRef<Drafts>(new Map());
   const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [listLoading, setListLoading] = useState(true);
+  const listingRequest = useRef(0);
+  const alive = useRef(true);
+  const checkpointLauncher = useRef<HTMLElement | null>(null);
+  const lessonHeading = useRef<HTMLHeadingElement | null>(null);
+  const focusLesson = useRef(false);
+  useEffect(() => {alive.current = true; return () => {alive.current = false;};}, []);
   const [selected, setSelected] = useState<number | null>(null);
   const positionQueue = useRef<Promise<unknown>>(Promise.resolve());
   const [detail, setDetail] = useState<Detail | null>(null);
   const [error, setError] = useState("");
   const [reload, setReload] = useState(0);
+  const [motivationVersion, setMotivationVersion] = useState(0);
   const [section, setSection] = useState(params.get("section") || "all");
+  const [view, setView] = useState(params.get("view") === "journey" ? "journey" : "lesson");
+  const [checkpoint, setCheckpoint] = useState<number | null>(null);
+  const [checkpointStates, setCheckpointStates] = useState<CheckpointStatus[]>([]);
   useEffect(() => {
-    let active = true;
-    api.fresh<{ lessons: Lesson[]; resume_lesson?: number }>(`/student/course-practice?language=${language}`).then(r => { if (active) { setLessons(r.lessons); setSelected(current => current ?? (r.lessons.some(l => l.lesson === Number(params.get("lesson"))) ? Number(params.get("lesson")) : r.resume_lesson || 1)); } }).catch(e => { if (active) setError(e.message); });
+    let active = true; const request = ++listingRequest.current; setListLoading(true);
+    api.fresh<{ lessons: Lesson[]; resume_lesson?: number }>(`/student/course-practice?language=${language}`).then(r => { if (active && request === listingRequest.current) { setListLoading(false); setLessons(r.lessons); setSelected(current => current ?? (r.lessons.some(l => l.lesson === Number(params.get("lesson"))) ? Number(params.get("lesson")) : r.resume_lesson || 1)); } }).catch(e => { if (active && request === listingRequest.current) {setListLoading(false); setError(e.message);} });
     return () => { active = false; };
   }, [language, reload]);
   useEffect(() => {
@@ -45,8 +58,11 @@ function Course({ language }: { language: string }) {
     if (selected === null) return;
     positionQueue.current = positionQueue.current.catch(() => {}).then(() => api.post("/student/course-practice/position", {language, lesson: selected})).catch(() => { setError("Dars joyini saqlab bo‘lmadi. Qayta urinib ko‘ring."); });
   }, [language, selected, reload]);
+  useEffect(() => {if (detail?.lesson === selected && lessonHeading.current && focusLesson.current && view === "lesson") {lessonHeading.current?.focus(); focusLesson.current = false;}}, [detail, selected, view]);
   function refreshProgress() {
-    api.fresh<{ lessons: Lesson[]; resume_lesson?: number }>(`/student/course-practice?language=${language}`).then(r => setLessons(r.lessons)).catch(() => {});
+    setMotivationVersion(n => n + 1);
+    const request = ++listingRequest.current;
+    api.fresh<{ lessons: Lesson[]; resume_lesson?: number }>(`/student/course-practice?language=${language}`).then(r => {if (alive.current && request === listingRequest.current) {setLessons(r.lessons); setListLoading(false);}}).catch(() => {});
   }
   const progress = lessons.find(l => l.lesson === selected);
   const sections = detail?.sections || [];
@@ -55,13 +71,19 @@ function Course({ language }: { language: string }) {
   return <main className="mx-auto max-w-2xl space-y-4 p-4 pb-24 text-slate-900">
     <Link to="/student" className="inline-flex items-center gap-2 text-sm text-sky-700"><ArrowLeft size={16}/>Bosh sahifa</Link>
     <header className="rounded-2xl bg-sky-900 p-5 text-white"><BookOpen className="mb-2"/><h1 className="text-xl font-bold">{language === "de" ? "Deutsch B1" : "English Intensive"}</h1><p className="mt-2 text-sm">Darsni tanlang, audioni tinglang va yangi mashqlarni bajaring. Javoblaringiz akkauntingizda saqlanadi.</p></header>
-    <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected ?? 1} onChange={e => setSelected(Number(e.target.value))}>
+    <nav aria-label="Kurs ko‘rinishi" className="flex gap-2"><button aria-pressed={view === "lesson"} onClick={() => setView("lesson")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "lesson" ? "bg-sky-800 text-white" : "bg-white"}`}>Dars va mashqlar</button><button aria-pressed={view === "journey"} onClick={() => setView("journey")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "journey" ? "bg-indigo-800 text-white" : "bg-white"}`}>Mening xaritam</button></nav>
+    <CourseMotivation key={language} language={language} refresh={motivationVersion} onCheckpoints={setCheckpointStates}/>
+    {checkpoint !== null && <CourseCheckpoint key={`${language}:${checkpoint}`} language={language} week={checkpoint} onClose={() => {setCheckpoint(null); requestAnimationFrame(() => checkpointLauncher.current?.focus());}} onSaved={refreshProgress}/>}
+    {view === "journey" && listLoading && <p role="status">Xarita yuklanmoqda…</p>}
+    {view === "journey" && !listLoading && !lessons.length && !error && <p>Kurs darslari hozircha topilmadi.</p>}
+    {view === "journey" && lessons.length > 0 && <CourseJourney checkpoints={checkpointStates} language={language} lessons={lessons} selected={selected} onSelect={n => {focusLesson.current = true; setSelected(n); setView("lesson");}} onCheckpoint={week => {checkpointLauncher.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setCheckpoint(week);}}/>}
+    {view === "lesson" && <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected ?? 1} onChange={e => setSelected(Number(e.target.value))}>
       {lessons.length ? lessons.map(l => <option key={l.lesson} value={l.lesson}>{l.lesson}. {l.title}{l.level ? ` · ${l.level}` : ""}</option>) : <option value={1}>Yuklanmoqda…</option>}
-    </select></label>
+    </select></label>}
     {error && <div role="alert" className="rounded-xl bg-red-50 p-4 text-red-800">{error}<button className="ml-3 underline" onClick={() => setReload(n => n + 1)}>Qayta urinish</button></div>}
     {!detail && !error && <p role="status">Dars yuklanmoqda…</p>}
-    {detail && selected !== null && <div key={`${language}-${selected}`} className="space-y-4">
-      <h2 className="text-lg font-bold">{detail.title}</h2>
+    {view === "lesson" && detail && detail.lesson === selected && selected !== null && <div key={`${language}-${selected}`} className="space-y-4">
+      <h2 ref={lessonHeading} tabIndex={-1} className="text-lg font-bold">{detail.title}</h2>
       {progress && <p className="text-sm text-slate-600" aria-label="Darsdagi natija">Yuborilgan: {progress.submitted_count || 0} / {progress.question_count} · Avtomatik tekshiruvda to‘g‘ri: {progress.correct_count || 0}</p>}
       <CourseLessonAudio key={`${language}-${selected}`} course={language === "de" ? "german" : "intensive"} lesson={selected} title={detail.title}/>
       <p className="text-sm text-slate-600">Dars va uyga vazifa: quyidagi bo‘limlarni ketma-ket bajaring. Yuborilgan javoblar qayta kirganda ham ko‘rinadi. Ochiq javoblar namuna bilan o‘zini tekshirish uchun.</p>
@@ -85,6 +107,8 @@ function SectionPractice({ section: s, language, lesson, onSaved, drafts }: { se
   </section>;
 }
 function Answer({ question: q, number, language, lesson, onSaved, drafts }: { question: Question; number: number; language: string; lesson: number; onSaved: () => void; drafts: Drafts }) {
+  const mounted = useRef(true);
+  useEffect(() => {mounted.current = true; return () => {mounted.current = false;};}, []);
   const draftKey = `${language}:${lesson}:${q.id}`;
   const [answer, updateAnswer] = useState(drafts.get(draftKey)?.answer || "");
   const [result, updateResult] = useState<Result | null>(drafts.get(draftKey)?.result || null);
@@ -95,9 +119,19 @@ function Answer({ question: q, number, language, lesson, onSaved, drafts }: { qu
   async function submit() {
     if (!answer.trim() || busy) return;
     setBusy(true); setError("");
-    try { setResult(await api.post<Result>("/student/course-practice/answer", { language, lesson, question_id: q.id, answer })); onSaved(); }
-    catch (e) { setError(e instanceof Error ? e.message : "Saqlashda xato. Qayta urinib ko‘ring."); }
-    finally { setBusy(false); }
+    const submittedAnswer = answer;
+    const snapshot = drafts.get(draftKey) || {answer: submittedAnswer, result: null};
+    drafts.set(draftKey, snapshot);
+    try {
+      const saved = await api.post<Result>("/student/course-practice/answer", { language, lesson, question_id: q.id, answer: submittedAnswer });
+      if (drafts.get(draftKey) === snapshot) {
+        drafts.set(draftKey, {answer: submittedAnswer, result: saved});
+        if (mounted.current) updateResult(saved);
+      }
+      onSaved();
+    }
+    catch (e) { if (mounted.current) setError(e instanceof Error ? e.message : "Saqlashda xato. Qayta urinib ko‘ring."); }
+    finally { if (mounted.current) setBusy(false); }
   }
   return <div className="space-y-3 border-t pt-4">
     <p className="whitespace-pre-line break-words text-sm font-medium" lang={language}>{number}. {q.prompt}</p>
@@ -108,6 +142,7 @@ function Answer({ question: q, number, language, lesson, onSaved, drafts }: { qu
     {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
     {result && <div role="status" className={`space-y-2 rounded-xl p-3 text-sm ${result.correct === false ? "bg-amber-50" : "bg-emerald-50"}`}>
       <p className="flex items-center gap-2 font-semibold"><CheckCircle2 size={17}/>{result.correct === null ? "Javob saqlandi · namuna bilan solishtiring" : result.correct ? "To‘g‘ri · javob saqlandi" : "Javob saqlandi · tuzatishni ko‘ring"}</p>
+      <RewardFeedback reward={result.reward}/>
       <p className="whitespace-pre-line break-words">{result.expected.join(" / ")}</p>
       <p className="whitespace-pre-line break-words">{result.explanation}</p>
       {!!result.criteria?.length && <ul className="list-disc pl-5">{result.criteria.map((c, i) => <li key={i}>{c}</li>)}</ul>}

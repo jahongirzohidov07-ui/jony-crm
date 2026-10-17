@@ -43,6 +43,9 @@ jobs:
         run: |
           python test_student_identity.py
           python test_student_course_practice.py
+          python test_course_motivation.py
+          python test_course_checkpoint_data.py
+          python test_course_themes.py
       - name: Guard tests
         working-directory: api
         env:

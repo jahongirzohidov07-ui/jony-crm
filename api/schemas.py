@@ -79,6 +79,8 @@ class Token(BaseModel):
     # Standart parol ("jonyjony") bilan kirgan XODIM — ilova darrov
     # parol almashtirishni so'raydi (2026-09-06 xavfsizlik auditi).
     must_change_password: bool = False
+    # Kuzatuvchi (faqat ko'rish) hisobi — roles.OBSERVER
+    read_only: bool = False
 
 
 class UserOut(BaseModel):

@@ -268,6 +268,8 @@ def my_identity(db: Session = Depends(get_db),
         "partner_head": _is_partner_head(user),
         # Dars rejalari / jonli o'yin faqat ingliz tili ustozlariga
         "english_teacher": is_english_teacher(db, user),
+        # Kuzatuvchi (2026-10-19): asoschi ekranlari, lekin faqat ko'rish
+        "read_only": bool(getattr(user, "_observer", False)),
     }
 
 @router.get("/api/me/permissions")

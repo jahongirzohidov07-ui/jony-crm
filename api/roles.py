@@ -47,6 +47,23 @@ EVENT_MANAGER = "event_manager"         # Tadbirlar menejeri (event manager)   #
 PARENT = "parent"                       # Ota-ona
 STUDENT = "student"                     # O'quvchi
 
+# ---- Kuzatuvchi (2026-10-19) -------------------------------------------
+# Jahongir: "kuzatuvchi rolidan barcha agentlar kirib o'ziga kerakli
+# ma'lumotlarni olishi mumkin bo'lsin". Maslahat kengashi (AI agentlar)
+# shu hisob bilan kiradi.
+#
+# Qanday ishlaydi (auth.get_current_user):
+#   - KO'RISH so'rovlari (GET/HEAD) asoschi ko'zi bilan ishlaydi —
+#     barcha filial, barcha bo'lim, barcha hisobot;
+#   - har qanday O'ZGARTIRISH (POST/PUT/PATCH/DELETE) 403 bilan
+#     to'xtatiladi — bitta umumiy joyda, endpointlarning o'zida emas;
+#   - butun bazani yoki shaxsiy hujjatlarni chiqaradigan bir nechta
+#     yo'l (OBSERVER_DENY_PREFIXES) ko'rishda ham yopiq.
+# Xodim emas: ish haqi yo'q, xodimlar ro'yxatlarida chiqmaydi
+# (EXTERNAL_ROLES). Rolni faqat asoschi beradi. Qo'shimcha lavozim
+# sifatida ishlamaydi — faqat ASOSIY lavozim bo'lsa kuchga kiradi.
+OBSERVER = "observer"
+
 ALL_ROLES = [
     FOUNDER,
     FINANCE_DIRECTOR,
@@ -67,6 +84,7 @@ ALL_ROLES = [
     EVENT_MANAGER,
     PARENT,
     STUDENT,
+    OBSERVER,
 ]
 
 UZ_LABELS = {
@@ -90,6 +108,7 @@ UZ_LABELS = {
     EVENT_MANAGER: "Event menejer (tadbirlar)",
     PARENT: "Ota-ona",
     STUDENT: "O'quvchi",
+    OBSERVER: "Kuzatuvchi (faqat ko'rish)",
 }
 
 # Rollarni guruhlab ko'rsatish - 18 ta rolni bir ro'yxatda ko'rsatish
@@ -103,12 +122,28 @@ ROLE_GROUPS = [
      [ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
       EXAMINER, HEAD_EXAMINER]),
     ("support", "Qo'llab-quvvatlash", [HR_MANAGER, FACILITY_MANAGER, EVENT_MANAGER]),
-    ("external", "Tashqi", [PARENT, STUDENT]),
+    ("external", "Tashqi", [PARENT, STUDENT, OBSERVER]),
 ]
 
 # Tashqi foydalanuvchilar - ular xodim emas, ish haqi ham yo'q,
 # xodimlar ro'yxatida ham chiqmaydi.
-EXTERNAL_ROLES = [PARENT, STUDENT]
+EXTERNAL_ROLES = [PARENT, STUDENT, OBSERVER]
+
+# Kuzatuvchi ko'rish so'rovlarini shu rol ko'zi bilan bajaradi.
+OBSERVER_VIEW_AS = FOUNDER
+# Kuzatuvchiga ruxsat etilgan yagona yozish amallari — o'z hisobi.
+# Standart parol ("jonyjony") birinchi kirishda almashtirilishi shart.
+OBSERVER_WRITE_ALLOW = ("/api/auth/me/password",)
+# Ko'rishda ham yopiq: butun baza zaxirasi, eksport, fayllar (pasport,
+# shartnoma nusxalari), xodim hujjatlari, qora ro'yxat, xato loglari.
+OBSERVER_DENY_PREFIXES = (
+    "/api/backup",
+    "/api/placement/export",
+    "/api/attachments",
+    "/api/hr/documents",
+    "/api/hr/blacklist",
+    "/api/errors",
+)
 STAFF_ROLES = [r for r in ALL_ROLES if r not in EXTERNAL_ROLES]
 
 # ---- Ruxsat guruhlari -------------------------------------------------

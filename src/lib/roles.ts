@@ -43,6 +43,10 @@ export const EVENT_MANAGER = "event_manager";
 // ---- Tashqi ----
 export const PARENT = "parent";
 export const STUDENT = "student";
+// Kuzatuvchi (2026-10-19): maslahat kengashi agentlari uchun — asoschi
+// ekranlarini ko'radi, lekin hech narsani o'zgartira olmaydi (server
+// har qanday yozishni 403 bilan to'xtatadi). Xodim emas.
+export const OBSERVER = "observer";
 
 export const UZ_LABELS: Record<string, string> = {
   [FOUNDER]: "Asoschi",
@@ -65,6 +69,7 @@ export const UZ_LABELS: Record<string, string> = {
   [EVENT_MANAGER]: "Event menejer (tadbirlar)",
   [PARENT]: "Ota-ona",
   [STUDENT]: "O'quvchi",
+  [OBSERVER]: "Kuzatuvchi (faqat ko'rish)",
 };
 
 // Tanlanadigan rollar. "Administrator (qabul)" bu yerda yo'q — u
@@ -74,7 +79,7 @@ export const ALL_ROLES = [
   SALES_HEAD, SALES_MANAGER, SMM_MANAGER,
   ACADEMIC_HEAD, TEACHER, SUPPORT_TEACHER, HEAD_SUPPORT,
   EXAMINER, HEAD_EXAMINER, HR_MANAGER, FACILITY_MANAGER, EVENT_MANAGER,
-  PARENT, STUDENT,
+  PARENT, STUDENT, OBSERVER,
 ];
 
 export const ROLE_GROUPS: { key: string; label: string; roles: string[] }[] = [
@@ -87,10 +92,10 @@ export const ROLE_GROUPS: { key: string; label: string; roles: string[] }[] = [
             EXAMINER, HEAD_EXAMINER] },
   { key: "support", label: "Qo'llab-quvvatlash",
     roles: [HR_MANAGER, FACILITY_MANAGER, EVENT_MANAGER] },
-  { key: "external", label: "Tashqi", roles: [PARENT, STUDENT] },
+  { key: "external", label: "Tashqi", roles: [PARENT, STUDENT, OBSERVER] },
 ];
 
-export const EXTERNAL_ROLES = [PARENT, STUDENT];
+export const EXTERNAL_ROLES = [PARENT, STUDENT, OBSERVER];
 // Eski "administrator" hisoblari ham xodim — ro'yxatdan tushib
 // qolmasin, aks holda vazifa va oylik ularga ko'rinmay qoladi.
 export const STAFF_ROLES = [

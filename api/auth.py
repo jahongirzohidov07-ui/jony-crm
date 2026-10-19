@@ -11,6 +11,7 @@ from sqlalchemy.orm.attributes import set_committed_value
 
 from database import get_db
 import models
+import roles
 
 # In production this should come from an environment variable.
 _DEFAULT_SECRET = "dev-secret-change-me-before-deploy"
@@ -80,6 +81,33 @@ def create_access_token(data: dict, minutes: int | None = None) -> str:
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
+_READ_METHODS = ("GET", "HEAD", "OPTIONS")
+
+
+def observer_gate(request) -> None:
+    """Kuzatuvchi so'rovini tekshiradi: yozish va yopiq yo'llar — 403."""
+    method = (getattr(request, "method", "") or "").upper()
+    try:
+        path = request.url.path
+    except Exception:
+        path = ""
+    if method not in _READ_METHODS:
+        if path in roles.OBSERVER_WRITE_ALLOW:
+            return
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Kuzatuvchi faqat ko'ra oladi — o'zgartirish mumkin emas")
+    if any(path == p or path.startswith(p + "/")
+           for p in roles.OBSERVER_DENY_PREFIXES):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Bu bo'lim kuzatuvchi uchun yopiq")
+
+
+def is_observer(user) -> bool:
+    return bool(getattr(user, "_observer", False))
+
+
 def get_current_user(
     request: Request,
     token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
@@ -103,6 +131,19 @@ def get_current_user(
     if user is None or not user.is_active:
         raise credentials_exception
 
+    # KUZATUVCHI (2026-10-19): faqat ko'radi, hech narsani o'zgartirmaydi.
+    # Tekshiruv shu YAGONA joyda — har bir endpointni alohida
+    # tahrirlash shart emas va yangi endpoint qo'shilsa ham himoya
+    # o'z-o'zidan ishlaydi. Batafsil: roles.OBSERVER izohi.
+    if user.role == roles.OBSERVER:
+        observer_gate(request)
+        user._observer = True
+        user._all_roles = [roles.OBSERVER_VIEW_AS]
+        user._primary_role = roles.OBSERVER_VIEW_AS
+        # Bazaga yozilmaydi (pastdagi lavozim almashtirish izohiga q.)
+        set_committed_value(user, "role", roles.OBSERVER_VIEW_AS)
+        return user
+
     # KO'P LAVOZIMLI XODIM (2026-08-10): agar xodimda qo'shimcha
     # lavozim bo'lsa va u tepadagi tanlagichdan boshqasini tanlagan
     # bo'lsa, so'rov sarlavhasida X-Active-Role keladi. Shu so'rov
@@ -119,7 +160,9 @@ def get_current_user(
         want = (request.headers.get("x-active-role") or "").strip()
     except Exception:
         want = ""
-    if want and want != user.role:
+    # Kuzatuvchi qo'shimcha lavozim sifatida ishlamaydi: boshqa xodim
+    # unga o'tib asoschi ko'zi bilan ko'rib qolmasin.
+    if want and want != user.role and want != roles.OBSERVER:
         allowed = {r.role for r in db.query(models.UserRole)
                    .filter(models.UserRole.user_id == user.id).all()}
         if want in allowed:

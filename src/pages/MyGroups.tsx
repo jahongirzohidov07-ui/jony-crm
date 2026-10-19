@@ -1,3 +1,4 @@
+import CourseCollaborationReview from "../components/CourseCollaborationReview";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -44,6 +45,10 @@ export default function MyGroups() {
         {d.total_groups} guruh · {d.total_students} o'quvchi
       </p>
 
+      <details className="mb-5 rounded-xl border border-indigo-100 bg-white p-4">
+        <summary className="cursor-pointer font-semibold text-indigo-900">Juftlik vazifalari — tekshirish va fikr bildirish</summary>
+        <CourseCollaborationReview />
+      </details>
       {d.rows.length === 0 ? (
         <p className="text-sm text-slate-400 py-10 text-center">
           Sizga hali guruh biriktirilmagan.

@@ -1,0 +1,20 @@
+# Student learning depth — 2026-10-19
+
+## Shipped behavior
+
+- Explicit text feedback on a saved English/German portfolio version evaluates meaning, grammar and vocabulary with exact evidence quotations, one actionable next step, and previous-version comparison. Uses the existing dedicated speaking provider without fallback. Ready feedback is immutable; interrupted/unavailable requests have bounded explicit retry (3/version, 6 per Tashkent day). No calls on GET, automatic audio assessment or reward claims.
+- Recent five works across lessons are private and language scoped, with direct reopening. Lesson/portfolio/map/pair content is no longer pushed below the full daily plan. The home lesson link opens the lesson view.
+- Pair artifacts require current same-group membership, invitation acceptance, separate consent from both participants for each immutable version, and review by the group's own active teacher. Teacher queue exposes only jointly submitted work. Review rubric includes strengths and actionable next steps. If a teacher explicitly confirms hearing the dialogue live, separate fluency and pronunciation ratings are required and tied to that revision, teacher and timestamp; otherwise oral ratings are rejected. Test branches are excluded; no XP, open chat or public sharing.
+- Focused answer time is optional, foreground/focus/idle bounded and attached to a real saved attempt. It never changes correctness or rewards. Last 60 samples in 28 days inform median estimates after at least five observations, by skill when at least three exist. Current-day plans and initial reporting denominators remain frozen; fast learners can receive more than five questions without jumping to future lessons.
+- First-attempt exact-answer accuracy is separated from retries and self assessment. Last seven days and previous seven days are compared only with enough samples; different question difficulty prevents treating this as causal learning gain.
+
+## Octalysis decisions
+
+Meaning: real-life course missions and a visible course journey. Accomplishment: evidence, checkpoints and corrective progress. Creativity: private versioned works and thematic choices. Ownership: recent work reopening, immutable history, learner-selected time budget. Social: opt-in cooperation plus actual paired artifacts and teacher feedback. Discovery: course tasks and next steps. Scarcity and loss avoidance are not maximized: no artificial urgency, punishment for rest, randomized paid rewards or endless forced sessions. Plan completion preserves an optional stopping point.
+
+Feature correctness is not a 10/10 engagement or learning-effectiveness claim. A 2–4 week real learner pilot and teacher rubric comparison remain necessary. No production learners are enrolled or contacted automatically.
+
+## Validation
+
+Backend runs passed: course practice 19; motivation 27; learning evidence 19; plan/measurement 16; feedback 24 (includes 13 portfolio regressions); pace 7; pair collaboration 14. Frontend: active-time checks, 11 student regressions, 8 native bridge regressions, TypeScript and Vite build passed. Android API 35/WebView 124 debug app: adaptive 4/4 and learning-evidence 7/7 passed; focused timing and explicit semantic feedback passed individually; final two-person consent and teacher approval passed 1/1 (34.301s). These 14 scenarios passed across separate final runs, not one uninterrupted suite. Real headless MediaRecorder save/reload/playback passed with silent audio. Semantic AI responses used deterministic fixtures; no physical microphone or real provider assessment quality is claimed. Pair approval covered all five criteria at 3/4; below-threshold rejection is covered by backend tests. Evidence: local JonyAndroidQA/depth-evidence/REPORT.md and pair-approved.log. QA processes stopped. Provider responses in regression tests are mocked; this does not prove real semantic scoring quality. Existing bundle-size warnings remain. Graphify update was attempted; launcher references a missing executable.
+

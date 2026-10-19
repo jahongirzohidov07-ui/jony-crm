@@ -238,6 +238,8 @@ app.include_router(_r_bank_transfer.router)
 app.include_router(_r_wordbank.router)
 app.include_router(_r_wordbank_social.router)
 app.include_router(_r_wordbank_certs.router)
+import course_collaboration
+app.include_router(course_collaboration.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:

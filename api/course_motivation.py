@@ -403,7 +403,7 @@ def sync_plan_history(db, student_id, language, saved, attempts):
         initial = saved.get("initial_minutes", 15)
         history.append({"day": saved["day"], "created_at": saved["created_at"],
                         "after_id": saved["after_id"], "minutes": initial,
-                        "targets": [step["question_id"] for step in saved["steps"][:initial // 5]]})
+                        "targets": [step["question_id"] for step in plan_steps_for_budget(saved["steps"], initial)]})
     for day in history:
         done = plan_done(day, attempts)
         day["done"] = len(set(day["targets"]) & done)
@@ -412,6 +412,17 @@ def sync_plan_history(db, student_id, language, saved, attempts):
     history.sort(key=lambda d: d["day"])
     put(db, key, history)
     return history
+
+
+def plan_steps_for_budget(steps, minutes):
+    # Keep the default five-minute behavior and use frozen observed estimates.
+    selected, elapsed = [], 0
+    for step in steps:
+        if selected and elapsed + step["minutes"] > minutes:
+            break
+        selected.append(step)
+        elapsed += step["minutes"]
+    return selected
 
 
 def daily_plan(db, student_id, language, reviews):
@@ -427,6 +438,8 @@ def daily_plan(db, student_id, language, reviews):
         sync_plan_history(db, student_id, language, saved, attempts)
         saved = None
     if saved is None:
+        from course_pace import estimates, estimate
+        pace_samples = estimates(db, student_id, language)
         current = practice()._resume(db, student_id, language)
         # Never use a wrong answer in an arbitrarily later lesson to jump ahead.
         wrong = sorted((a for qid, a in latest.items() if a.correct == 0
@@ -441,7 +454,8 @@ def daily_plan(db, student_id, language, reviews):
             row, section, question = known[qid]
             selected.append({"id": f"{local_day()}:{language}:{len(selected) + 1}:{qid}",
                              "kind": kind, "lesson": row["lesson"], "question_id": qid,
-                             "title": section["title"], "reason": reason, "minutes": 5})
+                             "title": section["title"], "reason": reason,
+                             **estimate(pace_samples, section["skill"])})
 
         due = [r for r in reviews if r["lesson"] <= current]
         if due:
@@ -486,7 +500,7 @@ def daily_plan(db, student_id, language, reviews):
             kind = "speaking" if language == "en" and known[qid][1]["skill"] == "speaking" else "practice"
             add(qid, kind, "Javobni tayyorlang va mustaqil tushuntiring. Bu mashq vaqti taxmini, bilim bahosi emas.")
         for qid in candidates:
-            if len(selected) >= 5:
+            if len(selected) >= (50 if len(pace_samples) >= 5 else 5):
                 break
             add(qid, "practice", "Shu darajadagi keyingi savolni bajaring va izohini tekshiring. Vaqt taxminiy.")
         saved = {"day": local_day().isoformat(), "created_at": now().isoformat(),
@@ -524,10 +538,39 @@ def daily_plan(db, student_id, language, reviews):
     put(db, key, saved)
     sync_plan_history(db, student_id, language, saved, attempts)
     completed = plan_done(saved, attempts)
-    steps = [step | {"done": step["question_id"] in completed} for step in saved["steps"][:minutes // 5]]
+    steps = [step | {"done": step["question_id"] in completed} for step in plan_steps_for_budget(saved["steps"], minutes)]
     return {"minutes": minutes, "estimated_minutes": sum(step["minutes"] for step in steps),
-            "duration_basis": "estimate", "steps": steps,
+            "duration_basis": "client_reported_focused_time" if any(step.get("sample_count", 0) > 0 for step in steps) else "estimate", "steps": steps,
             "completed": bool(steps) and all(step["done"] for step in steps)}
+
+
+def difficulty_evidence(db, student_id, language):
+    """First normal exact answer per question; retries/self ratings never enter."""
+    known = exact_questions(language)
+    first = []
+    for qid, rows in exact_history(db, student_id, language).items():
+        attempt = next((a for a in rows if a.ref.startswith("course-practice:v1:")), None)
+        if attempt is not None:
+            first.append((known[qid][1]["skill"], attempt))
+    end = now()
+
+    def summary(rows):
+        total = len(rows)
+        correct = sum(a.correct == 1 for a in rows)
+        return {"total": total, "correct": correct, "eligible": total >= 5,
+                "accuracy_percent": round(100 * correct / total, 1) if total >= 5 else None}
+
+    def result(rows):
+        current = summary([a for a in rows if end - timedelta(days=7) <= a.created_at <= end])
+        prior = summary([a for a in rows if end - timedelta(days=14) <= a.created_at < end - timedelta(days=7)])
+        return {"first_attempt": summary(rows), "last7": current, "prior7": prior,
+                "change_percentage_points": round(current["accuracy_percent"] - prior["accuracy_percent"], 1)
+                if current["eligible"] and prior["eligible"] else None}
+
+    return {"minimum_samples": 5, "basis": "first_attempt_exact_only",
+            "window_end": end.isoformat() + "Z", "overall": result([a for _, a in first]),
+            "skills": [{"skill": skill, **result([a for s, a in first if s == skill])}
+                       for skill in sorted({section["skill"] for _, section, _ in known.values()})]}
 
 
 def measurement(db, student_id, language):
@@ -563,7 +606,7 @@ def measurement(db, student_id, language):
                 if cutoff <= attempt_day(a) <= today.isoformat()
                 and known[attempt_qid(a)][1]["skill"] == "speaking"}
     returned = (first_day + timedelta(days=7)).isoformat() in days if mature else None
-    return {"window_days": 28, "started_on": first_day.isoformat() if first_day else None,
+    return {"difficulty": difficulty_evidence(db, student_id, language), "window_days": 28, "started_on": first_day.isoformat() if first_day else None,
             "plan_days": len(plan_days), "completed_plan_days": sum(d["completed"] for d in plan_days),
             "return_day7": {"eligible": mature, "returned": returned},
             "retention7": matched, "speaking_days": len({d for d, _ in speaking}),

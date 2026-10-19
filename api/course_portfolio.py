@@ -2,7 +2,7 @@
 import base64
 import binascii
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Literal
 from uuid import uuid4
 
@@ -123,6 +123,17 @@ def _present(entry, row):
     for version in entry["versions"]:
         result["versions"].append({**version, "coaching": version.get("coaching") or
                                   course_missions.coaching(row, version)})
+    # Feedback is separate; original artifacts and coaching never change.
+    for version in result["versions"]:
+        saved = entry.get("feedbacks", {}).get(str(version["number"]))
+        if saved:
+            visible = {k: v for k, v in saved.items() if k != "claim"}
+            if saved["status"] == "pending":
+                age = (datetime.now(timezone.utc) - datetime.fromisoformat(saved["requested_at"])).total_seconds()
+                if age >= 120:
+                    visible = {"status": "unavailable", "reason": "interrupted", "version": version["number"], "attempts": saved.get("attempts", 1)}
+            version["feedback"] = visible
+    result.pop("feedbacks", None)
     result["mission_evidence"] = ({"status": "artifact_saved", "version": len(entry["versions"]),
                                    "verified_mastery": False, "xp": 0} if entry.get("mission") else None)
     return result
@@ -166,10 +177,16 @@ def make_router(student_dependency, lesson_lookup):
         student, language, lesson, row = context
         _, _, state = _load(db, student.id)
         entries = [_summary(e) for e in state["entries"] if e["language"] == language and e["lesson"] == lesson]
+        # Cross-lesson discovery remains account/language scoped and metadata-only.
+        recent = [{"id": e["id"], "lesson": e["lesson"],
+                   "title": e["versions"][-1]["title"],
+                   "updated_at": e["versions"][-1]["created_at"]}
+                  for e in state["entries"] if e["language"] == language]
+        recent = sorted(recent, key=lambda e: (e["updated_at"], e["id"]), reverse=True)[:5]
         # Canonical task, not an AI-generated assessment or a skill score.
         task = next((q["prompt"] for s in row["sections"] for q in s["questions"] if q["mode"] == "self"), "")
         return {"entries": sorted(entries, key=lambda e: e["updated_at"], reverse=True),
-                "limits": LIMITS, "total_entries": len(state["entries"]),
+                "recent_works": recent, "limits": LIMITS, "total_entries": len(state["entries"]),
                 "lesson_entries": len(entries), "total_text_bytes": _text_bytes(state),
                 "total_audio_bytes": _audio_bytes(state), "lesson_title": row["title"],
                 "prompt": task, "missions": course_missions.choices(language, row),
@@ -223,5 +240,59 @@ def make_router(student_dependency, lesson_lookup):
         state["entries"].remove(_entry(state, entry_id, language, lesson))
         _persist(db, key, old, state)
         return {"deleted": True}
+
+    @router.post("/{entry_id}/feedback/{number}")
+    def feedback(entry_id: str, number: int, context=Depends(scope), db: Session = Depends(get_db)):
+        student, language, lesson, row = context
+        key, old, state = _load(db, student.id)
+        entry = _entry(state, entry_id, language, lesson)
+        version = next((v for v in entry["versions"] if v["number"] == number), None)
+        if version is None:
+            raise HTTPException(404, "Versiya topilmadi")
+        slot = str(number)
+        feedbacks = entry.setdefault("feedbacks", {})
+        existing = feedbacks.get(slot)
+        attempts = existing.get("attempts", 1) if existing else 0
+        if existing:
+            if existing["status"] == "ready":
+                return _present(entry, row)
+            if existing["status"] == "pending":
+                age = (datetime.now(timezone.utc) - datetime.fromisoformat(existing["requested_at"])).total_seconds()
+                if age < 120:
+                    return _present(entry, row)
+            if attempts >= 3:
+                raise HTTPException(429, "Bu versiya uchun 3 ta urinish chegarasiga yetdingiz.")
+        if not version["text"].strip():
+            raise HTTPException(422, "AI maslahat uchun saqlangan matn kerak. Audio baholanmaydi.")
+        today = datetime.now(timezone(timedelta(hours=5))).date().isoformat()
+        budget = state.get("feedback_budget", {})
+        count = budget.get("count", 0) if budget.get("day") == today else 0
+        if count >= 6:
+            raise HTTPException(429, "Bugungi 6 ta AI maslahat chegarasiga yetdingiz. Ertaga urinib ko‘ring.")
+        state["feedback_budget"] = {"day": today, "count": count + 1}
+        claim = uuid4().hex
+        feedbacks[slot] = {"status": "pending", "version": number, "claim": claim, "attempts": attempts + 1,
+                           "requested_at": datetime.now(timezone.utc).isoformat()}
+        # Claim before the provider call: concurrent workers cannot double-charge.
+        # Budget survives deletion; retries require an explicit request and new claim.
+        _persist(db, key, old, state)
+        previous = next((v for v in entry["versions"] if v["number"] == number - 1), None)
+        result = course_missions.semantic_feedback(language, row, version, entry.get("mission"), previous)
+        result["attempts"] = attempts + 1
+        result["created_at"] = datetime.now(timezone.utc).isoformat()
+        # Merge onto fresh state so concurrent revisions/reviews are never overwritten.
+        for _ in range(3):
+            key, old, state = _load(db, student.id)
+            entry = _entry(state, entry_id, language, lesson)
+            if entry.get("feedbacks", {}).get(slot, {}).get("claim") != claim:
+                return _present(entry, row)
+            entry["feedbacks"][slot] = result
+            try:
+                _persist(db, key, old, state)
+                return _present(entry, row)
+            except HTTPException as exc:
+                if exc.status_code != 409:
+                    raise
+        raise HTTPException(409, "Maslahatni ko‘rish uchun ishni qayta oching.")
 
     return router

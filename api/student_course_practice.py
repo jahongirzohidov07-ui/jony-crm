@@ -14,6 +14,7 @@ import speaking_ai
 import course_motivation as motivation
 import course_themes
 import course_portfolio
+import course_pace
 from auth import require_role
 from database import get_db
 from student_app import _me
@@ -317,6 +318,7 @@ def motivation_claim(body: ClaimIn, db: Session = Depends(get_db), student=Depen
 
 # Static portfolio routes must precede the numeric lesson catch-all.
 router.include_router(course_portfolio.make_router(_student, _lesson))
+router.include_router(course_pace.make_router(_student, _lesson))
 
 
 @router.get("/{lesson}")
@@ -340,7 +342,7 @@ def lesson_detail(lesson: int, language: Language, student=Depends(_student), db
                     exposed[question["id"]] = attempt.created_at
                 correct = None if question["mode"] == "self" else attempt.correct == 1
                 result["answers"][question["id"]] = {
-                    "answer": attempt.answer, "result": _feedback(section, question, correct)}
+                    "answer": attempt.answer, "result": _feedback(section, question, correct) | {"attempt_id": attempt.id}}
     result["sections"] = []
     for section in row["sections"]:
         public = {key: section[key] for key in ("id", "title", "skill")}
@@ -373,14 +375,17 @@ def answer(body: AnswerIn, db: Session = Depends(get_db), student=Depends(_stude
         correct = any(_normalize(body.answer, case_sensitive) == _normalize(expected, case_sensitive)
                       for expected in question["expected"])
     earned = motivation.practice_reward(db, student, body.language, question, correct)
-    db.add(models.SkillAttempt(
+    attempt = models.SkillAttempt(
         student_id=student.id,
         skill="course-practice:" + body.language + ":" + section["skill"],
         ref=_ref(question["id"]), answer=body.answer, correct=int(correct is True), created_at=motivation.now(),
-    ))
+    )
+    db.add(attempt)
+    db.flush()
+    attempt_id = attempt.id
     # A delayed answer must never move the explicitly visited lesson backwards.
     db.commit()  # Attempt and uniquely claimed rewards commit together.
-    return _feedback(section, question, correct) | {"reward": earned}
+    return _feedback(section, question, correct) | {"reward": earned, "attempt_id": attempt_id}
 
 
 @router.post("/speaking")

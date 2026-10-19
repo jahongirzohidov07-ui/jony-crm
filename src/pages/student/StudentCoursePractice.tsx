@@ -1,3 +1,5 @@
+import CourseCollaboration from "../../components/CourseCollaboration";
+import { CourseActiveTime } from "../../lib/courseActiveTime";
 import { CourseMotivation, CourseCheckpoint, RewardFeedback, type LearningReward, type CheckpointStatus, type PlanStep } from "../../components/CourseMotivation";
 import CoursePortfolio from "../../components/CoursePortfolio";
 import { CourseJourney } from "../../components/CourseJourney";
@@ -13,7 +15,7 @@ type Question = { id: string; prompt: string; mode: "exact" | "self"; options?: 
 type Section = { id: string; title: string; skill: string; text?: string; questions: Question[] };
 type Lesson = { lesson: number; title: string; level?: string; question_count: number; completed?: boolean; submitted_count?: number; correct_count?: number };
 type Detail = { language: string; lesson: number; title: string; audio_url: string; sections: Section[]; answers?: Record<string, {answer: string; result: Result}> };
-type Result = { correct: boolean | null; expected: string[]; explanation: string; criteria?: string[]; saved: boolean; reward?: LearningReward; transcript?: string };
+type Result = { attempt_id?: number; correct: boolean | null; expected: string[]; explanation: string; criteria?: string[]; saved: boolean; reward?: LearningReward; transcript?: string };
 type Drafts = Map<string, { answer: string; result: Result | null }>;
 const labels: Record<string, string> = { reading: "O‘qish", listening: "Tinglash", grammar: "Grammatika", homework: "Haftalik mashq", writing: "Yozish", speaking: "Gapirish" };
 
@@ -40,7 +42,11 @@ function Course({ language }: { language: string }) {
   const [reload, setReload] = useState(0);
   const [motivationVersion, setMotivationVersion] = useState(0);
   const [section, setSection] = useState(params.get("section") || "all");
-  const [view, setView] = useState(params.get("view") === "journey" ? "journey" : params.get("view") === "portfolio" ? "portfolio" : params.get("action") === "review" ? "today" : (params.has("lesson") || params.has("section")) ? "lesson" : "today");
+  const initialView = params.get("view");
+  const [view, setView] = useState(params.get("action") === "review" ? "today" : initialView && ["today", "lesson", "journey", "portfolio", "pair"].includes(initialView) ? initialView : (params.has("lesson") || params.has("section")) ? "lesson" : "today");
+  const [portfolioEntry, setPortfolioEntry] = useState<string | undefined>();
+  const viewHeading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => { viewHeading.current?.focus({preventScroll: true}); }, [view]);
   const [targetQuestion, setTargetQuestion] = useState<string | null>(params.get("question"));
   const [checkpoint, setCheckpoint] = useState<number | null>(null);
   const [checkpointStates, setCheckpointStates] = useState<CheckpointStatus[]>([]);
@@ -89,16 +95,18 @@ function Course({ language }: { language: string }) {
   return <main className="mx-auto max-w-2xl space-y-4 p-4 pb-24 text-slate-900">
     <Link to="/student" className="inline-flex items-center gap-2 text-sm text-sky-700"><ArrowLeft size={16}/>Bosh sahifa</Link>
     <header className="rounded-2xl bg-sky-900 p-5 text-white"><BookOpen className="mb-2"/><h1 className="text-xl font-bold">{language === "de" ? "Deutsch B1" : "English Intensive"}</h1><p className="mt-1 text-sm">Bugungi rejangizdan boshlang yoki ustoz belgilagan darsni tanlang.</p></header>
-    <nav aria-label="Kurs ko‘rinishi" className="flex flex-wrap gap-2"><button aria-pressed={view === "lesson"} onClick={() => setView("lesson")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "lesson" ? "bg-sky-800 text-white" : "bg-white"}`}>Dars va mashqlar</button><button aria-pressed={view === "journey"} onClick={() => setView("journey")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "journey" ? "bg-indigo-800 text-white" : "bg-white"}`}>Mening xaritam</button><button aria-pressed={view === "portfolio"} onClick={() => setView("portfolio")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "portfolio" ? "bg-indigo-800 text-white" : "bg-white"}`}>Ijodiy ishlarim</button></nav>
-    <CourseMotivation key={language} language={language} refresh={motivationVersion} onCheckpoints={setCheckpointStates} onAction={openPlanStep} initialReview={params.get("action") === "review"}/>
+    <nav aria-label="Kurs ko‘rinishi" className="grid grid-cols-2 gap-2 sm:grid-cols-3"><button aria-pressed={view === "today"} onClick={() => setView("today")} className={`rounded-xl border p-3 text-sm font-semibold ${view === "today" ? "bg-sky-800 text-white" : "bg-white"}`}>Bugungi rejam</button><button aria-pressed={view === "lesson"} onClick={() => setView("lesson")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "lesson" ? "bg-sky-800 text-white" : "bg-white"}`}>Dars va mashqlar</button><button aria-pressed={view === "journey"} onClick={() => setView("journey")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "journey" ? "bg-indigo-800 text-white" : "bg-white"}`}>Mening xaritam</button><button aria-pressed={view === "portfolio"} onClick={() => setView("portfolio")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "portfolio" ? "bg-indigo-800 text-white" : "bg-white"}`}>Ijodiy ishlarim</button><button aria-pressed={view === "pair"} onClick={() => setView("pair")} className={`flex-1 rounded-xl border p-3 text-sm font-semibold ${view === "pair" ? "bg-indigo-800 text-white" : "bg-white"}`}>Juftlik vazifasi</button></nav>
+    <h2 ref={viewHeading} tabIndex={-1} className="text-lg font-bold">{{today:"Bugungi rejam",lesson:"Dars va mashqlar",journey:"Mening xaritam",portfolio:"Ijodiy ishlarim",pair:"Juftlik vazifasi"}[view]}</h2>
+    <div hidden={view !== "today"}><CourseMotivation key={language} language={language} refresh={motivationVersion} onCheckpoints={setCheckpointStates} onAction={openPlanStep} onPair={() => setView("pair")} initialReview={params.get("action") === "review"}/></div>
     {checkpoint !== null && <CourseCheckpoint key={`${language}:${checkpoint}`} language={language} week={checkpoint} onClose={() => {setCheckpoint(null); requestAnimationFrame(() => checkpointLauncher.current?.focus());}} onSaved={refreshProgress}/>}
     {view === "journey" && listLoading && <p role="status">Xarita yuklanmoqda…</p>}
     {view === "journey" && !listLoading && !lessons.length && !error && <p>Kurs darslari hozircha topilmadi.</p>}
     {view === "journey" && lessons.length > 0 && <CourseJourney checkpoints={checkpointStates} language={language} lessons={lessons} selected={selected} onSelect={n => {focusLesson.current = true; setSelected(n); setView("lesson");}} onCheckpoint={week => {checkpointLauncher.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setCheckpoint(week);}}/>}
-    {(view === "lesson" || view === "portfolio") && <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected ?? 1} onChange={e => setSelected(Number(e.target.value))}>
+    {(view === "lesson" || view === "portfolio" || view === "pair") && <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected ?? 1} onChange={e => {setPortfolioEntry(undefined); setSelected(Number(e.target.value));}}>
       {lessons.length ? lessons.map(l => <option key={l.lesson} value={l.lesson}>{l.lesson}. {l.title}{l.level ? ` · ${l.level}` : ""}</option>) : <option value={1}>Yuklanmoqda…</option>}
     </select></label>}
-    {view === "portfolio" && selected !== null && <CoursePortfolio key={`${language}:${selected}`} language={language} lesson={selected} onSaved={refreshProgress}/>}
+    {view === "pair" && selected !== null && <CourseCollaboration key={`${language}:${selected}`} language={language} lesson={selected}/>}
+    {view === "portfolio" && selected !== null && <CoursePortfolio key={`${language}:${selected}`} language={language} lesson={selected} initialEntryId={portfolioEntry} onOpenWork={(lesson, id) => {setPortfolioEntry(id); setSelected(lesson);}} onSaved={refreshProgress}/>}
     {error && <div role="alert" className="rounded-xl bg-red-50 p-4 text-red-800">{error}<button className="ml-3 underline" onClick={() => setReload(n => n + 1)}>Qayta urinish</button></div>}
     {view === "lesson" && !detail && !error && <p role="status">Dars yuklanmoqda…</p>}
     {view === "lesson" && detail && detail.lesson === selected && selected !== null && <div key={`${language}-${selected}`} className="space-y-4">
@@ -130,6 +138,34 @@ function SectionPractice({ section: s, language, lesson, onSaved, drafts, target
 function Answer({ question: q, number, language, lesson, onSaved, drafts }: { question: Question; number: number; language: string; lesson: number; onSaved: () => void; drafts: Drafts }) {
   const mounted = useRef(true);
   useEffect(() => {mounted.current = true; return () => {mounted.current = false;};}, []);
+  const card = useRef<HTMLDivElement>(null);
+  const clock = useRef(new CourseActiveTime());
+  useEffect(() => {
+    const active = () => {
+      const rect = card.current?.getBoundingClientRect();
+      return document.visibilityState === "visible" && document.hasFocus() && !!card.current?.contains(document.activeElement)
+        && !!rect && rect.bottom > 0 && rect.top < window.innerHeight;
+    };
+    const sample = () => clock.current.tick(performance.now(), active());
+    const engage = () => { if (active()) clock.current.engage(performance.now()); };
+    const root = card.current;
+    root?.addEventListener("focusin", engage);
+    root?.addEventListener("input", engage);
+    root?.addEventListener("pointerdown", engage);
+    root?.addEventListener("keydown", engage);
+    const pause = () => clock.current.tick(performance.now(), false);
+    root?.addEventListener("focusout", pause);
+    document.addEventListener("visibilitychange", pause);
+    window.addEventListener("blur", pause);
+    const interval = window.setInterval(sample, 1000);
+    return () => {
+      clearInterval(interval);
+      root?.removeEventListener("focusin", engage); root?.removeEventListener("input", engage);
+      root?.removeEventListener("pointerdown", engage); root?.removeEventListener("keydown", engage);
+      root?.removeEventListener("focusout", pause); document.removeEventListener("visibilitychange", pause);
+      window.removeEventListener("blur", pause);
+    };
+  }, []);
   const draftKey = `${language}:${lesson}:${q.id}`;
   const [answer, updateAnswer] = useState(drafts.get(draftKey)?.answer || "");
   const [result, updateResult] = useState<Result | null>(drafts.get(draftKey)?.result || null);
@@ -140,11 +176,18 @@ function Answer({ question: q, number, language, lesson, onSaved, drafts }: { qu
   async function submit() {
     if (!answer.trim() || busy) return;
     setBusy(true); setError("");
+    clock.current.tick(performance.now(), document.visibilityState === "visible" && document.hasFocus() && !!card.current?.contains(document.activeElement));
+    const activeSeconds = clock.current.seconds();
     const submittedAnswer = answer;
     const snapshot = drafts.get(draftKey) || {answer: submittedAnswer, result: null};
     drafts.set(draftKey, snapshot);
     try {
       const saved = await api.post<Result>("/student/course-practice/answer", { language, lesson, question_id: q.id, answer: submittedAnswer });
+      if (saved.attempt_id && activeSeconds >= 3) {
+        // Optional timing never makes a successfully saved answer appear failed.
+        void api.post("/student/course-practice/pace", {language, lesson, question_id: q.id, attempt_id: saved.attempt_id, active_seconds: activeSeconds}).then(onSaved).catch(() => {});
+      }
+      clock.current.reset();
       if (drafts.get(draftKey) === snapshot) {
         drafts.set(draftKey, {answer: submittedAnswer, result: saved});
         if (mounted.current) updateResult(saved);
@@ -154,7 +197,7 @@ function Answer({ question: q, number, language, lesson, onSaved, drafts }: { qu
     catch (e) { if (mounted.current) setError(e instanceof Error ? e.message : "Saqlashda xato. Qayta urinib ko‘ring."); }
     finally { if (mounted.current) setBusy(false); }
   }
-  return <div id={`course-question-${q.id}`} tabIndex={-1} className="scroll-mt-4 space-y-3 border-t pt-4">
+  return <div ref={card} id={`course-question-${q.id}`} tabIndex={-1} className="scroll-mt-4 space-y-3 border-t pt-4">
     <p className="whitespace-pre-line break-words text-sm font-medium" lang={language}>{number}. {q.prompt}</p>
     {q.mode === "self" && <p className="text-xs text-slate-500">Ochiq javob: yozib yuboring, so‘ng namuna va mezonlar bilan solishtiring. Avtomatik baho qo‘yilmaydi.</p>}
     {q.mode === "self" && !!q.options?.length && <ul className="space-y-1 rounded-xl bg-slate-50 p-3 text-sm">{q.options.map((o, i) => <li key={i}>{o}</li>)}</ul>}
@@ -168,7 +211,7 @@ function Answer({ question: q, number, language, lesson, onSaved, drafts }: { qu
       <p className="whitespace-pre-line break-words">{result.explanation}</p>
       {!!result.criteria?.length && <ul className="list-disc pl-5">{result.criteria.map((c, i) => <li key={i}>{c}</li>)}</ul>}
       {result.transcript && <details><summary className="cursor-pointer font-semibold">Transkriptni ko‘rish</summary><p lang={language} className="mt-2 whitespace-pre-line break-words">{result.transcript}</p></details>}
-      <button onClick={() => { setResult(null); setAnswer(""); }} className="underline">Qayta mashq qilish</button>
+      <button onClick={() => { clock.current.reset(); setResult(null); setAnswer(""); }} className="underline">Qayta mashq qilish</button>
     </div>}
   </div>;
 }

@@ -1,0 +1,13 @@
+const {readFileSync}=require('node:fs');
+const ts=require('typescript');
+const assert=require('node:assert/strict');
+const source=ts.transpileModule(readFileSync('src/lib/courseActiveTime.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
+const out={}; new Function('exports',source)(out);
+const C=out.CourseActiveTime;
+const a=new C(); a.tick(5000,true); assert.equal(a.seconds(),0);
+a.engage(5000); a.tick(15000,true); assert.equal(a.seconds(),10);
+a.tick(16000,false); a.tick(50000,false); a.tick(51000,true); assert.equal(a.seconds(),10);
+a.engage(52000); a.tick(200000,true); assert.equal(a.seconds(),71);
+a.reset(); assert.equal(a.seconds(),0);
+for(let n=0;n<100;n++){ a.engage(n*10000); a.tick(n*10000+10000,true); } assert.equal(a.seconds(),600);
+console.log('Active time: no auto-start, pauses, idle cap, reset, total cap PASS');

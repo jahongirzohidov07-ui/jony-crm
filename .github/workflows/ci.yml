@@ -47,6 +47,9 @@ jobs:
           python test_course_learning_evidence.py
           python test_course_plan_measurement.py
           python test_course_portfolio.py
+          python test_course_feedback.py
+          python test_course_pace.py
+          python test_course_collaboration.py
           python test_course_checkpoint_data.py
           python test_course_themes.py
       - name: Guard tests
@@ -74,6 +77,8 @@ jobs:
         run: node scripts/export-student-course-practice.cjs
       - name: Android speech bridge regression tests
         run: node scripts/test-native-bridge.cjs
+      - name: Focused study time regressions
+        run: node scripts/test-course-active-time.cjs
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks

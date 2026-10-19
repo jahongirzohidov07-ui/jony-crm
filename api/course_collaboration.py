@@ -363,8 +363,11 @@ def review(entry_id: str, body: Review, context=Depends(_scope), db: Session = D
     version = entry['versions'][-1]
     if not version['submitted_at'] or version['review'] or set(version['consents']) != {str(s) for s in entry['members']}:
         raise HTTPException(409, 'Ikkala rozilik bilan topshirilgan, tekshirilmagan versiya kerak.')
-    if body.decision == 'approved' and min(body.task, body.language, body.collaboration) < 3:
-        raise HTTPException(422, 'Tasdiqlash uchun har bir mezon kamida 3 bo‘lsin.')
+    scores = [body.task, body.language, body.collaboration]
+    if body.speaking_observed:
+        scores.extend([body.fluency, body.pronunciation])
+    if body.decision == 'approved' and min(scores) < 3:
+        raise HTTPException(422, 'Tasdiqlash uchun har bir baholangan mezon kamida 3 bo‘lsin.')
     version['review'] = {**body.model_dump(exclude={'expected_version'}), 'version': version['number'],
                          'teacher_id': context[0][1].id, 'created_at': _now(),
                          'observed_at': _now() if body.speaking_observed else None,

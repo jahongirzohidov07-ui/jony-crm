@@ -320,11 +320,12 @@ class CollaborationTests(unittest.TestCase):
         eid = self.accepted()
         self.version(eid)
         self.submit(eid)
-        body = self.review_body(speaking_observed=True, fluency=0, pronunciation=4)
+        body = self.review_body(speaking_observed=True, fluency=0, pronunciation=4, decision="changes_requested")
         self.post(f'/{eid}/review', body, 403)
         self.as_user(102)
         self.post(f'/{eid}/review', body, 404)
         self.as_user(101)
+        self.post(f'/{eid}/review', {**body, 'decision': 'approved'}, 422)
         original = self.post(f'/{eid}/review', body)['versions'][0]['review']
         self.assertTrue(original['speaking_observed'])
         self.assertEqual((original['fluency'], original['pronunciation']), (0, 4))

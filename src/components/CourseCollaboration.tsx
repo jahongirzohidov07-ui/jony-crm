@@ -168,7 +168,7 @@ function ReviewForm({ version, rubric, scale, busy, submit }: { version: number;
   const [pronunciation, setPronunciation] = useState('');
   return <form className="space-y-2 border-t pt-3" onSubmit={e => { e.preventDefault(); void submit({ expected_version: version, decision, ...scores, strength, next_step: next, speaking_observed: observed, fluency: observed ? Number(fluency) : null, pronunciation: observed ? Number(pronunciation) : null }); }}>
     <h5 className="font-semibold">v{version} uchun o‘qituvchi tekshiruvi</h5>
-    <p>Matn va har ikki ishtirokchining hissasini tekshiring. Matnni tasdiqlash uchun quyidagi uch mezon kamida 3/4 bo‘lishi kerak. Jonli og‘zaki kuzatuv alohida qayd etiladi.</p>
+    <p>Matn va har ikki ishtirokchining hissasini tekshiring. Tasdiqlash uchun barcha baholangan mezonlar kamida 3/4 bo‘lishi kerak. Jonli eshitilgan bo‘lsa, og‘zaki mezonlar ham hisobga olinadi.</p>
     {Object.entries(rubric).map(([k, label]) => <label className="block" key={k}>{label}<select className={input} value={scores[k]} onChange={e => setScores({ ...scores, [k]: Number(e.target.value) })}>{Object.entries(scale).map(([n, description]) => <option key={n} value={n}>{n} — {description}</option>)}</select></label>)}
     <fieldset className="rounded-lg border p-3 space-y-2">
       <legend>Jonli og‘zaki ijro — ixtiyoriy</legend>
@@ -180,8 +180,8 @@ function ReviewForm({ version, rubric, scale, busy, submit }: { version: number;
     </fieldset>
     <label className="block">Aniq yaxshi jihat<textarea className={input} required minLength={10} maxLength={1000} value={strength} onChange={e => setStrength(e.target.value)} /></label>
     <label className="block">Keyingi bajariladigan qadam (aniq misol bilan)<textarea className={input} required minLength={10} maxLength={1000} value={next} onChange={e => setNext(e.target.value)} /></label>
-    <label className="block">Matn bo‘yicha qaror<select className={input} value={decision} onChange={e => setDecision(e.target.value)}><option value="changes_requested">Qayta ishlash kerak</option><option value="approved">Tasdiqlash</option></select></label>
+    <label className="block">Ish bo‘yicha qaror<select className={input} value={decision} onChange={e => setDecision(e.target.value)}><option value="changes_requested">Qayta ishlash kerak</option><option value="approved">Tasdiqlash</option></select></label>
     <p>Yuborilgan xulosa o‘zgarmaydi. Keyingi tahrir alohida tekshiriladi.</p>
-    <button className={button} disabled={busy || (decision === 'approved' && Object.values(scores).some(n => n < 3))}>Baholashni yuborish</button>
+    <button className={button} disabled={busy || (decision === 'approved' && (Object.values(scores).some(n => n < 3) || (observed && (Number(fluency) < 3 || Number(pronunciation) < 3))))}>Baholashni yuborish</button>
   </form>;
 }

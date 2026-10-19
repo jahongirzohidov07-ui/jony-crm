@@ -151,9 +151,15 @@ def login(payload: schemas.LoginRequest, request: Request,
     # hisobi avtomat ochiladi va ichida pul/boshqaruv yo'q.
     _must = (user.role not in (roles.STUDENT, roles.PARENT)
              and verify_password(roles.DEFAULT_PASSWORD, user.password_hash))
+    # Kuzatuvchi ilovada asoschi ekranlarini ko'radi (o'zgartirish
+    # tugmalari bosilsa, server 403 qaytaradi) — auth.get_current_user.
+    _observer = user.role == roles.OBSERVER
     return schemas.Token(
-        access_token=token, role=user.role, full_name=user.full_name,
+        access_token=token,
+        role=roles.OBSERVER_VIEW_AS if _observer else user.role,
+        full_name=user.full_name,
         branch_id=user.branch_id, must_change_password=bool(_must),
+        read_only=_observer,
     )
 
 @router.put("/api/auth/recovery-code")

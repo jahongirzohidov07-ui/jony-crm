@@ -55,6 +55,8 @@ jobs:
           DATABASE_URL: "sqlite:////tmp/ci_guard.db"
         run: |
           if [ -f test_account.py ]; then python test_account.py; fi
+          # Kuzatuvchi hech qanday yozish so'rovini o'tkaza olmasligi
+          python test_observer.py
       - name: Rolling suite
         working-directory: api
         env:

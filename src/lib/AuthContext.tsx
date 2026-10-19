@@ -30,6 +30,8 @@ interface AuthUser {
   partner_head?: boolean;
   /** Dars rejalari / jonli o'yin — faqat ingliz tili ustozlariga (2026-09-18). */
   english_teacher?: boolean;
+  /** Kuzatuvchi (2026-10-19) — faqat ko'rish, server yozishni yopadi. */
+  read_only?: boolean;
 }
 
 interface AuthContextValue {
@@ -85,6 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         salary_hidden?: boolean;
         partner_head?: boolean;
         english_teacher?: boolean;
+        read_only?: boolean;
       }>("/me")
       .then((r) => {
         const u = {
@@ -96,6 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           salary_hidden: r.salary_hidden ?? false,
           partner_head: r.partner_head ?? false,
           english_teacher: r.english_teacher ?? true,
+          read_only: r.read_only ?? false,
         };
         // Qaysi omborda saqlangan bo'lsa, o'shani yangilaymiz
         (localStorage.getItem("jony_crm_user")
@@ -111,7 +115,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           (prev.roles?.length ?? 0) === u.roles.length &&
           (prev.salary_hidden ?? false) === u.salary_hidden &&
           (prev.partner_head ?? false) === u.partner_head &&
-          (prev.english_teacher ?? true) === u.english_teacher
+          (prev.english_teacher ?? true) === u.english_teacher &&
+          (prev.read_only ?? false) === u.read_only
             ? prev
             : u,
         );

@@ -408,6 +408,11 @@ export default function Layout() {
           absolute — ular joyida qoladi, faqat sahifa tarkibi pastga
           suriladi. */}
       <main className="flex-1 min-w-0 relative pt-8">
+        {user?.read_only && (
+          <div className="absolute top-0 inset-x-0 z-30 text-center text-[11px] leading-5 bg-amber-100 text-amber-800 border-b border-amber-200">
+            Kuzatuvchi rejimi — faqat ko'rish, hech narsa o'zgartirilmaydi
+          </div>
+        )}
         {/* Yuqori panel: mobil menyu, qidiruv, qo'ng'iroqcha, profil */}
         <div className="absolute top-4 left-3 z-40 md:hidden">
           <button

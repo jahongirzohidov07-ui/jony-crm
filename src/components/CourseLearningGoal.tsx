@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../lib/api";
+import { getCourseMission } from "../lib/courseMissions";
 
 type Progress = { question_count: number; submitted_count: number };
 type CoursePlan = Progress & {
@@ -30,6 +31,7 @@ function LearningGoal({ language }: { language: string }) {
   }, [language, revision]);
 
   const plan = data?.plan;
+  const mission = plan ? getCourseMission(language, plan.lesson) : null;
   const next = plan?.sections.find(section => section.submitted_count < section.question_count);
   const goals:Record<string,string> = {reading:"Matndan kerakli ma’lumotni topishni mashq qilamiz",listening:"Eshitganimizni tushunishni mashq qilamiz",grammar:"So‘zlardan to‘g‘ri foydalanishni mashq qilamiz",speaking:"O‘z fikrimizni aytishni mashq qilamiz",writing:"O‘z fikrimizni yozishni mashq qilamiz",homework:"O‘rganganimizni mustahkamlaymiz"};
   const href = plan
@@ -42,6 +44,7 @@ function LearningGoal({ language }: { language: string }) {
       Dars maqsadini yuklab bo‘lmadi.
       <button type="button" onClick={() => setRevision(value => value + 1)} className="ml-2 min-h-11 font-semibold text-sky-800 underline">Qayta urinish</button>
     </div> : !data ? <p role="status" className="mt-3 text-sm">Dars maqsadi yuklanmoqda…</p> : plan ? <>
+      {mission && <div className="mt-3 rounded-xl bg-white p-3"><p className="text-xs font-semibold text-sky-800">{mission.week}-hafta · hayotiy maqsad</p><p className="mt-1 font-bold">{mission.title}</p><p className="mt-1 text-sm">{mission.output}</p><Link to={`/student/course-practice?view=journey&lesson=${plan.lesson}`} className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold underline">Missiya va mezonlarni ko‘rish →</Link></div>}
       <h2 className="mt-2 text-lg font-bold">{next ? goals[next.skill] || "Darsdagi keyingi vazifani bajaramiz" : "Darsdagi ishlaringiz yuborildi"}</h2>
       {next ? <>
         <p className="mt-2 text-xs font-semibold text-sky-800">{plan.lesson}-dars · keyingi mashq</p>

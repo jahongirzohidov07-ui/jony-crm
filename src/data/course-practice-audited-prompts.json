@@ -1,0 +1,243 @@
+[
+  {
+    "language": "en",
+    "topic": "6.1",
+    "family": "en-present-base",
+    "prompts": {
+      "0": "Present Simple: They ___ the floor every Friday. (clean)",
+      "1": "Xatoni tuzatib yozing: We eats breakfast at seven.",
+      "2": "To‘g‘ri shaklni tanlang: We ___ near the river. (live / lives)",
+      "3": "Present Simple: I ___ vegetables in my garden. (grow)",
+      "4": "Faqat fe’lni tuzating: You speaks clearly.",
+      "5": "She works in a bank. She o‘rniga they qo‘yib yozing."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "6.2",
+    "family": "en-present-third",
+    "prompts": {
+      "0": "Present Simple: My uncle ___ bread every morning. (buy)",
+      "1": "Present Simple: The lift ___ on every floor. (stop)",
+      "2": "To‘g‘ri shaklni tanlang: My dog ___ a lot. (sleep / sleeps)",
+      "3": "Present Simple: Sara ___ the piano on Fridays. (play)",
+      "4": "Faqat fe’lni tuzating: The train leave at noon.",
+      "5": "We cook dinner. We o‘rniga he qo‘yib yozing."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "6.3",
+    "family": "en-present-third",
+    "prompts": {
+      "0": "He bilan ishlatish uchun wash fe’lining shaklini yozing.",
+      "1": "She bilan ishlatish uchun carry fe’lining shaklini yozing.",
+      "2": "To‘g‘ri shaklni tanlang: He ___ hard. (trys / tries)",
+      "3": "Present Simple: She ___ the ball. (catch)",
+      "4": "Faqat fe’lni tuzating: He plaies chess.",
+      "5": "Fix fe’lini it egasiga mos Present Simple shaklida yozing."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "7.1",
+    "family": "en-present-continuous",
+    "prompts": {
+      "0": "Present Continuous: The children ___ a snowman. (build)",
+      "1": "Present Continuous: I ___ dinner now. (prepare)",
+      "2": "To‘g‘ri davomli shaklni tanlang: She ___ a scarf now. (is knitting / knits)",
+      "3": "Present Continuous: We ___ for the bus. (wait)",
+      "5": "They play cards. Hozirgi davomli zamonga aylantiring; qisqartirmang."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "9.9",
+    "family": "en-past-regular",
+    "prompts": {
+      "0": "Past Simple: We ___ the fence yesterday. (paint)",
+      "1": "Past Simple: Nora ___ her room last weekend. (clean)",
+      "2": "O‘tgan zamonni tanlang: Yesterday, they ___ the match. (enjoy / enjoyed)",
+      "3": "Past Simple: I ___ my aunt last night. (call)",
+      "4": "Faqat fe’lni tuzating: She visit us yesterday.",
+      "5": "We watch a film every Friday. Every Friday o‘rniga last Friday qo‘yib o‘tgan zamonga aylantiring."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "9.10",
+    "family": "en-past-irregular",
+    "prompts": {
+      "0": "Past Simple: He ___ his keys under the sofa. (find)",
+      "1": "Past Simple: I ___ a long letter last night. (write)",
+      "2": "O‘tgan zamonni tanlang: He ___ the last apple. (ate / eaten)",
+      "3": "Past Simple: We ___ the early train. (take)",
+      "4": "Faqat fe’lni tuzating: She buyed a coat.",
+      "5": "I see him every day. Every day o‘rniga yesterday qo‘yib o‘tgan zamonga aylantiring."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "15.1",
+    "family": "en-modal-bare",
+    "prompts": {
+      "1": "Xatoni tuzatib yozing: He can speaks French.",
+      "2": "Faqat bo‘shliqni to‘ldiring: My grandfather can ___ maps without glasses. (read)",
+      "3": "Ko‘rsatilgan xatoni tuzatib, butun gapni yozing: Can dan keyingi fe’l: The baby can claps her hands.",
+      "4": "Can bilan qayta yozing: Our neighbour is able to fix radios."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "24.5",
+    "family": "en-modal-bare",
+    "prompts": {
+      "0": "Faqat fe’l shaklini yozing: You must not ___ this switch with wet hands. (touch)",
+      "1": "Faqat xato fe’l shaklini tuzatib, butun savolni yozing: Could you to weigh this suitcase?",
+      "2": "Faqat bo‘shliqni to‘ldiring: Modaldan keyin: She might ___ us later. (join)",
+      "3": "Ko‘rsatilgan xatoni tuzatib, butun gapni yozing: Modal qolipi: He should to read the small print.",
+      "4": "Must bilan qayta yozing: It is essential that she checks every label. She bilan boshlang."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "16.11",
+    "family": "en-should",
+    "prompts": {
+      "0": "Should yordamida maslahatni to‘ldiring: Your bag is heavy. You ___ (use) a trolley.",
+      "1": "Faqat xato fe’lni tuzating: Omar should asks the receptionist.",
+      "2": "Faqat bo‘shliqni to‘ldiring: Should bilan maslahat: You ___ (back up) your photos regularly.",
+      "3": "Ko‘rsatilgan xatoni tuzatib, butun gapni yozing: Maslahatdagi fe’l: She should to ask for a second opinion.",
+      "4": "Should bilan yozing: It is a good idea for us to compare prices. We bilan boshlang."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "18.1",
+    "family": "en-zero",
+    "prompts": {
+      "0": "Umumiy qonuniyat, Zero Conditional: If this sensor detects smoke, the alarm ___ (ring).",
+      "1": "Doimiy qoida: If customers ___ (pay) online, the system sends a receipt.",
+      "2": "Faqat bo‘shliqni to‘ldiring: Umumiy qoida, Zero Conditional: If metal gets hot, it ___ (expand).",
+      "3": "Ko‘rsatilgan xatoni tuzatib, butun gapni yozing: Umumiy qonuniyat uchun will ni olib tashlang: If you mix red and white, you will get pink.",
+      "4": "If bilan boshlanadigan qoida qiling: Press this button and the screen lights up. You egasini ishlating."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "18.4",
+    "family": "en-first",
+    "prompts": {
+      "0": "First Conditional, will bilan: If the rain stops, we ___ (eat) outside.",
+      "1": "First Conditional: If Leila ___ (arrive) early, she will unlock the hall.",
+      "2": "Faqat bo‘shliqni to‘ldiring: First Conditional: If the parcel ___ (arrive) today, I will bring it over.",
+      "3": "Ko‘rsatilgan xatoni tuzatib, butun gapni yozing: If qismidagi zamon: If we will find a table, we will stay for dinner.",
+      "4": "If bilan birlashtiring, will ishlating: You lend me the tools. I repair the fence."
+    }
+  },
+  {
+    "language": "en",
+    "topic": "18.10",
+    "family": "en-second",
+    "prompts": {
+      "0": "Second Conditional: If I owned a boat, I ___ (visit) the island. Would dan foydalaning.",
+      "1": "Second Conditional: If we ___ (have) a bigger kitchen, we would host dinner.",
+      "2": "Faqat bo‘shliqni to‘ldiring: Second Conditional: If I ___ (know) her number, I would call her.",
+      "3": "Ko‘rsatilgan xatoni tuzatib, butun gapni yozing: Faraz sharti: If he would have a boat, he would sail every weekend.",
+      "4": "Second Conditional qiling: I do not own a camera, so I do not take wildlife photos. If I owned bilan boshlang, would ishlating."
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g015",
+    "family": "de-present",
+    "prompts": {
+      "q1": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Du ___ in Berlin. (wohnen, Präsens)",
+      "q2": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Mina ___ Deutsch. (lernen, Präsens)",
+      "q3": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Wir ___ im Park. (spielen, Präsens)"
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g021",
+    "family": "de-v2",
+    "prompts": {
+      "q1": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Tartiblang; Heute dan boshlang: ich / lerne / Deutsch. Heute ___.",
+      "q2": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Tartiblang; Am Abend dan boshlang: wir / kochen. Am Abend ___.",
+      "q3": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Tartiblang; In Bonn dan boshlang: meine Tante / wohnt. In Bonn ___."
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g033",
+    "family": "de-can",
+    "prompts": {
+      "q1": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Du ___ gut kochen. (können, Präsens)",
+      "q3": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Ihr ___ hier warten. (können, Präsens)"
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g036",
+    "family": "de-must",
+    "prompts": {
+      "q1": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Du ___ die Rechnung bezahlen. (müssen, Präsens)",
+      "q2": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Wir ___ jetzt gehen. (müssen, Präsens)"
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g058",
+    "family": "de-past-sein",
+    "prompts": {
+      "q1": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Du ___ letzte Woche in Wien. (sein, Präteritum)",
+      "q2": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Wir ___ sehr müde. (sein, Präteritum)",
+      "q3": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Ihr ___ pünktlich. (sein, Präteritum)"
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g105",
+    "family": "de-past-regular",
+    "prompts": {
+      "q1": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Du ___ lange in der Fabrik. (arbeiten, Präteritum)",
+      "q2": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Wir ___ jeden Abend. (lernen, Präteritum)",
+      "q3": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Sie ___ das Fenster. (öffnen, Präteritum; sie = ayol)"
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g127",
+    "family": "de-wuerde",
+    "prompts": {
+      "q1": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Du ___ gern länger bleiben. (würde ni tuslang)",
+      "q3": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. ___ Sie bitte langsamer sprechen? (würde; hurmat savoli)"
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g132",
+    "family": "de-conditional",
+    "prompts": {
+      "q1": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Wenn ich reich ___, würde ich reisen. (sein, Konjunktiv II)",
+      "q2": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Wenn du hier wärst, ___ wir zusammen kochen. (würde ni tuslang)",
+      "q3": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Wenn sie ein Auto ___, käme sie schneller. (haben, Konjunktiv II; sie = ayol)"
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g089",
+    "family": "de-verb-final",
+    "prompts": {
+      "q2": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Tartiblang: weil / sie / müde / ist → weil ___."
+    }
+  },
+  {
+    "language": "de",
+    "topic": "g090",
+    "family": "de-verb-final",
+    "prompts": {
+      "q3": "Bo‘shliqni ko‘rsatmaga muvofiq to‘ldiring. Faqat yetishmayotgan qismni yozing; gapni to‘liq ko‘chirmang. Tartiblang: dass / wir / morgen / kommen → dass ___."
+    }
+  }
+]

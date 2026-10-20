@@ -46,6 +46,8 @@ jobs:
           python test_course_motivation.py
           python test_course_learning_evidence.py
           python test_course_plan_measurement.py
+          python test_course_session_summary.py
+          python test_course_weekly_missions.py
           python test_course_portfolio.py
           python test_course_feedback.py
           python test_course_pace.py
@@ -83,6 +85,10 @@ jobs:
         run: node scripts/test-course-active-time.cjs
       - name: Course question interaction tests
         run: node --test scripts/test-course-question-interaction.cjs
+      - name: Weekly life mission tests
+        run: node --test scripts/test-course-missions.cjs
+      - name: Contextual practice choice tests
+        run: node --test scripts/test-course-practice-choice.cjs
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks

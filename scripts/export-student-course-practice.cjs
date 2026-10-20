@@ -88,3 +88,6 @@ for (const [language, lessons, count] of [['en',en,192],['de',de,72]]) {
 const output = {en,de};
 fs.writeFileSync(path.join(root,'api/student_course_practice_data.json'),JSON.stringify(output));
 for (const [language,lessons] of Object.entries(output)) console.log(language+': '+lessons.length+' lessons, '+lessons.flatMap(l=>l.sections.flatMap(s=>s.questions)).length+' questions');
+
+// Keep the canonical weekly tasks available in the serverless API bundle (src is excluded).
+fs.copyFileSync(path.join(root, 'src/data/course-weekly-missions.json'), path.join(root, 'api/course_weekly_missions.json'));

@@ -1,0 +1,1499 @@
+{
+  "en": [
+    {
+      "id": "en:6:weekly-1",
+      "language": "en",
+      "week": 1,
+      "lesson": 6,
+      "title": "Tanishuv kartam",
+      "prompt": "Yangi guruh uchun tanlagan ismingiz va 4 ta tanish so‘z bilan karta tuzing. To‘liq gap shart emas.",
+      "output": "Ism va 4 so‘zli karta",
+      "criteria": [
+        "Ot, sifat va fe’lga bittadan misol bor.",
+        "Namunadagi bitta sodda gapda ega va fe’lni ko‘rsating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          0
+        ],
+        "titles": [
+          "Sentence foundations"
+        ]
+      }
+    },
+    {
+      "id": "en:12:weekly-2",
+      "language": "en",
+      "week": 2,
+      "lesson": 12,
+      "title": "Yangi do‘stim bilan tanishaman",
+      "prompt": "Yangi sinfdosh bilan kimligingiz, holatingiz va qayerdaligingiz haqida suhbat yozing.",
+      "output": "6 replikali tanishuv",
+      "criteria": [
+        "Am/is/are bilan kim, qanday va qayerda ekanini ayting.",
+        "Bitta savol, qisqa javob va inkor gap kiriting."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "moduleIds": [
+          1
+        ],
+        "titles": [
+          "TO BE · present"
+        ]
+      }
+    },
+    {
+      "id": "en:18:weekly-3",
+      "language": "en",
+      "week": 3,
+      "lesson": 18,
+      "title": "Sayr uchun sumkam",
+      "prompt": "Do‘stingizga sayr sumkangizdagi narsalarni tanishtiring.",
+      "output": "6 buyumli ro‘yxat va 3 izoh",
+      "criteria": [
+        "Birlik, ko‘plik va suv kabi sanalmaydigan otni ajrating.",
+        "Yangi buyum uchun a/an, qayta tilga olganda the ishlating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          2
+        ],
+        "titles": [
+          "Nouns & articles"
+        ]
+      }
+    },
+    {
+      "id": "en:24:weekly-4",
+      "language": "en",
+      "week": 4,
+      "lesson": 24,
+      "title": "Yo‘qolgan buyum egasini topaman",
+      "prompt": "Sinfda qolgan buyumlar kimniki ekanini aniqlash uchun dialog yozing.",
+      "output": "6 replikali buyum qidirish dialogi",
+      "criteria": [
+        "Whose bilan so‘rang va my/mine yoki your/yours bilan javob bering.",
+        "This/that yoki these/those orqali buyumni aniq ko‘rsating."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "moduleIds": [
+          3
+        ],
+        "titles": [
+          "Pronouns & determiners"
+        ]
+      }
+    },
+    {
+      "id": "en:30:weekly-5",
+      "language": "en",
+      "week": 5,
+      "lesson": 30,
+      "title": "O‘yin burchagimizni tayyorlayman",
+      "prompt": "Do‘stingizga o‘yin burchagida nimalar borligini va uni qanday tayyorlashni yozing.",
+      "output": "4 tavsif va 2 ko‘rsatma",
+      "criteria": [
+        "There is/are bilan mavjud va yo‘q narsani ayting.",
+        "Have/has bilan kerakli buyumni, buyruq shaklida 2 qadamni yozing."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          4
+        ],
+        "titles": [
+          "Existence & possession"
+        ]
+      }
+    },
+    {
+      "id": "en:36:weekly-6",
+      "language": "en",
+      "week": 6,
+      "lesson": 36,
+      "title": "Mening oddiy kunim",
+      "prompt": "Do‘stingizga odatiy kuningizni va bir sinfdoshingizning odatini ayting.",
+      "output": "6 gapli kun tartibi va 2 savol",
+      "criteria": [
+        "I va he/she bilan fe’l shaklini moslang; takrorlanish vaqtini ayting.",
+        "Do/does savoli va don’t/doesn’t inkorini ishlating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          5
+        ],
+        "titles": [
+          "Present Simple"
+        ]
+      }
+    },
+    {
+      "id": "en:42:weekly-7",
+      "language": "en",
+      "week": 7,
+      "lesson": 42,
+      "title": "Bugun boshqacha kun",
+      "prompt": "Tasavvurdagi sinf rasmini tasvirlang: odatda nima qilasiz va hozir nima bo‘lyapti?",
+      "output": "6 gapli rasm izohi",
+      "criteria": [
+        "Kamida 3 hozirgi harakatni am/is/are + -ing bilan ayting.",
+        "2 odatiy ishni Present Simple bilan ajrating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          6
+        ],
+        "titles": [
+          "Present Continuous"
+        ]
+      }
+    },
+    {
+      "id": "en:48:weekly-8",
+      "language": "en",
+      "week": 8,
+      "lesson": 48,
+      "title": "Uchrashuv joyini kelishaman",
+      "prompt": "Do‘stingiz bilan kutubxonada uchrashish joyi va vaqtini aniqlashtiring.",
+      "output": "8 replikali kelishuv",
+      "criteria": [
+        "Qayerda va qachonligini savol-javobda aniq ayting.",
+        "Joy uchun in/on/at va vaqt uchun mos predlog ishlating."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "moduleIds": [
+          7
+        ],
+        "titles": [
+          "Questions, place & time"
+        ]
+      }
+    },
+    {
+      "id": "en:54:weekly-9",
+      "language": "en",
+      "week": 9,
+      "lesson": 54,
+      "title": "Kechagi qiziq voqeam",
+      "prompt": "Do‘stingizga kecha bo‘lgan yoki o‘ylab topilgan kichik voqeani yozing.",
+      "output": "6 gapli voqea va 2 savol",
+      "criteria": [
+        "Was/were bilan holatni, Past Simple bilan tugagan ishni ayting.",
+        "Did savoli, didn’t inkori va o‘tgan vaqt belgisini kiriting."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          8
+        ],
+        "titles": [
+          "Past Simple & past BE"
+        ]
+      }
+    },
+    {
+      "id": "en:60:weekly-10",
+      "language": "en",
+      "week": 10,
+      "lesson": 60,
+      "title": "O‘yin paytida nima bo‘ldi?",
+      "prompt": "O‘yin davom etayotganda yuz bergan kutilmagan hodisani ayting, avvalgi odatingiz bilan solishtiring.",
+      "output": "8 gapli kichik hikoya",
+      "criteria": [
+        "While/when bilan davom etayotgan ish va sodir bo‘lgan hodisani bog‘lang.",
+        "Used to bilan avvalgi bitta odatni ayting."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          9
+        ],
+        "titles": [
+          "Past Continuous & habits"
+        ]
+      }
+    },
+    {
+      "id": "en:66:weekly-11",
+      "language": "en",
+      "week": 11,
+      "lesson": 66,
+      "title": "Dam olish kunini rejalayman",
+      "prompt": "Do‘stingiz bilan dam olish rejasini tuzing va yordam taklif qiling.",
+      "output": "6 replikali reja",
+      "criteria": [
+        "Going to bilan niyatni, Present Continuous bilan kelishilgan vaqtni ayting.",
+        "Will bilan suhbat paytidagi qaror yoki yordamni bildiring."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "moduleIds": [
+          10
+        ],
+        "titles": [
+          "Future plans & decisions"
+        ]
+      }
+    },
+    {
+      "id": "en:72:weekly-12",
+      "language": "en",
+      "week": 12,
+      "lesson": 72,
+      "title": "Shu hafta nimalar qildim?",
+      "prompt": "Do‘stingizga hafta ichida tugagan va hali tugamagan ishlaringiz haqida xabar yozing.",
+      "output": "6 gapli hafta xabari",
+      "criteria": [
+        "Already/just va yet bilan natija hamda kutilayotgan ishni ajrating.",
+        "Aniq kechagi voqeani Past Simple bilan yozing."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          11
+        ],
+        "titles": [
+          "Present Perfect Simple"
+        ]
+      }
+    },
+    {
+      "id": "en:78:weekly-13",
+      "language": "en",
+      "week": 13,
+      "lesson": 78,
+      "title": "Loyiham qanday ketmoqda?",
+      "prompt": "Sinf loyihasi ustida qancha ishlaganingiz, natija va oldingi tayyorgarlik haqida yozing.",
+      "output": "8 gapli loyiha kundaligi",
+      "criteria": [
+        "Have done bilan natijani, have been doing bilan jarayonni ajrating.",
+        "Had done bilan boshqa o‘tgan voqeadan oldingi ishni ko‘rsating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          12
+        ],
+        "titles": [
+          "Perfect & continuous"
+        ]
+      }
+    },
+    {
+      "id": "en:84:weekly-14",
+      "language": "en",
+      "week": 14,
+      "lesson": 84,
+      "title": "Qaysi sumkani tanlaymiz?",
+      "prompt": "Ikki xayoliy sumkani hajm, qulaylik va sig‘imi bo‘yicha solishtiring.",
+      "output": "6 gapli tanlov tavsiyasi",
+      "criteria": [
+        "Kamida 2 qiyos va 1 eng yuqori daraja shaklini ishlating.",
+        "Too/enough hamda much/many bilan miqdorni tushuntiring."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          13
+        ],
+        "titles": [
+          "Comparison & quantity"
+        ]
+      }
+    },
+    {
+      "id": "en:90:weekly-15",
+      "language": "en",
+      "week": 15,
+      "lesson": 90,
+      "title": "Yordamni muloyim so‘rayman",
+      "prompt": "Sinf loyihasida nima qila olishingizni ayting va kerakli yordamni so‘rang.",
+      "output": "6 replikali yordam dialogi",
+      "criteria": [
+        "Can/can’t bilan qobiliyatingizni ayting.",
+        "Could/would bilan iltimos, may/can bilan ruxsat so‘rang."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "moduleIds": [
+          14
+        ],
+        "titles": [
+          "Ability & permission"
+        ]
+      }
+    },
+    {
+      "id": "en:96:weekly-16",
+      "language": "en",
+      "week": 16,
+      "lesson": 96,
+      "title": "Klubimizning qulay qoidalari",
+      "prompt": "Yangi a’zoga klubdagi majburiy, taqiqlangan va ixtiyoriy ishlarni tushuntiring.",
+      "output": "5 qoidali eslatma va 1 maslahat",
+      "criteria": [
+        "Must/have to, mustn’t va don’t have to ma’nolarini ajrating.",
+        "Should bilan bitta foydali maslahat bering."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          15
+        ],
+        "titles": [
+          "Obligation & advice"
+        ]
+      }
+    },
+    {
+      "id": "en:102:weekly-17",
+      "language": "en",
+      "week": 17,
+      "lesson": 102,
+      "title": "Yo‘qolgan daftarni izlayman",
+      "prompt": "Daftar qayerda bo‘lishi mumkinligi haqida 3 kuzatuvdan taxmin qiling.",
+      "output": "3 kuzatuv va ularga mos 3 taxmin",
+      "criteria": [
+        "Might bilan ehtimolni, must/can’t bilan kuchli xulosani ajrating.",
+        "O‘tgan holat uchun might have yoki must have ishlating; taxminni fakt demang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          16
+        ],
+        "titles": [
+          "Possibility & deduction"
+        ]
+      }
+    },
+    {
+      "id": "en:108:weekly-18",
+      "language": "en",
+      "week": 18,
+      "lesson": 108,
+      "title": "Yomg‘ir yog‘sa nima qilamiz?",
+      "prompt": "Sayr uchun yaxshi ob-havo, yomg‘ir va xayoliy imkoniyat rejasini tuzing.",
+      "output": "3 shartli reja va 1 maslahat",
+      "criteria": [
+        "First conditional bilan real reja, second conditional bilan faraz yozing.",
+        "If I were you bilan bir maslahatni shartga mos bog‘lang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          17
+        ],
+        "titles": [
+          "Conditionals · 0 / 1 / 2"
+        ]
+      }
+    },
+    {
+      "id": "en:114:weekly-19",
+      "language": "en",
+      "week": 19,
+      "lesson": 114,
+      "title": "Keyingi safar boshqacha qilaman",
+      "prompt": "O‘ylab topilgan o‘yin yoki loyiha xatosini tahlil qiling va o‘zgartirish istagingizni ayting.",
+      "output": "6 gapli mulohaza",
+      "criteria": [
+        "If + had done bilan o‘tmishdagi boshqa natijani tasavvur qiling.",
+        "Wish + Past Perfect bilan afsusni, wish + Past Simple bilan hozirgi istakni ajrating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          18
+        ],
+        "titles": [
+          "Past conditions & wishes"
+        ]
+      }
+    },
+    {
+      "id": "en:120:weekly-20",
+      "language": "en",
+      "week": 20,
+      "lesson": 120,
+      "title": "Kitob qanday tayyorlanadi?",
+      "prompt": "Sinf uchun kichik kitob tayyorlash jarayoni va hozirgi holatini tasvirlang.",
+      "output": "6 gapli jarayon izohi",
+      "criteria": [
+        "Is/are + V3 bilan jarayonni va was/were + V3 bilan o‘tgan ishni ayting.",
+        "Is being yoki has been + V3 bilan davom etayotgan yoki tugagan ishni ajrating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          19
+        ],
+        "titles": [
+          "Passive voice"
+        ]
+      }
+    },
+    {
+      "id": "en:126:weekly-21",
+      "language": "en",
+      "week": 21,
+      "lesson": 126,
+      "title": "Ko‘rgazmamiz qanday tashkil etiladi?",
+      "prompt": "Sinf ko‘rgazmasida bajariladigan, bajarilishi shart va oldin tayyorlangan ishlarni yozing.",
+      "output": "6 bandli ko‘rgazma rejasi",
+      "criteria": [
+        "Will be + V3 bilan kelajak ishni va must be + V3 bilan talabni yozing.",
+        "Had been + V3 bilan oldin tugagan ishni, kerak bo‘lsa by bilan bajaruvchini ayting."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          20
+        ],
+        "titles": [
+          "Passive · extended"
+        ]
+      }
+    },
+    {
+      "id": "en:132:weekly-22",
+      "language": "en",
+      "week": 22,
+      "lesson": 132,
+      "title": "Do‘stimning xabarini yetkazaman",
+      "prompt": "Uchrashuv haqidagi suhbatdan boshqa do‘stga qisqa xabar tayyorlang.",
+      "output": "3 asl replika va 3 ko‘chirma xabar",
+      "criteria": [
+        "Bitta fikr, savol va iltimosni reported speech shakliga o‘tkazing.",
+        "Olmosh va vaqt so‘zlarini yangi suhbat vaziyatiga moslang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          21
+        ],
+        "titles": [
+          "Reported speech"
+        ]
+      }
+    },
+    {
+      "id": "en:138:weekly-23",
+      "language": "en",
+      "week": 23,
+      "lesson": 138,
+      "title": "Kerakli kitobni topishga yordam beraman",
+      "prompt": "Kutubxonachi uchun kitob, muallif va joyni aniqroq tasvirlang.",
+      "output": "6 gapli qidiruv tavsifi",
+      "criteria": [
+        "Who/which/where orqali odam, buyum va joyni aniqlang.",
+        "Zarur tavsif bilan qo‘shimcha ma’lumotning vergulini farqlang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          22
+        ],
+        "titles": [
+          "Relative clauses"
+        ]
+      }
+    },
+    {
+      "id": "en:144:weekly-24",
+      "language": "en",
+      "week": 24,
+      "lesson": 144,
+      "title": "Yangi odatimni boshlayman",
+      "prompt": "Sevimli mashg‘ulotingiz uchun kichik reja va eslatmalar yozing.",
+      "output": "6 gapli odat rejasi",
+      "criteria": [
+        "Enjoy + -ing, decide + to va maqsad uchun to ishlating.",
+        "Remember to do bilan eslatma va stop doing/stop to do farqiga bir misol yozing."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          23
+        ],
+        "titles": [
+          "Verb patterns"
+        ]
+      }
+    },
+    {
+      "id": "en:150:weekly-25",
+      "language": "en",
+      "week": 25,
+      "lesson": 150,
+      "title": "Klubga taklifimni asoslayman",
+      "prompt": "Sinf klubida qaysi mashg‘ulotni o‘tkazishni taklif qiling.",
+      "output": "8 gapli taklif xati",
+      "criteria": [
+        "Sabab, natija va maqsadni alohida bog‘lang.",
+        "Although yoki however bilan qarshi fikrni tan olib, tanlovingizga misol keltiring."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          24
+        ],
+        "titles": [
+          "Clauses & connections"
+        ]
+      }
+    },
+    {
+      "id": "en:156:weekly-26",
+      "language": "en",
+      "week": 26,
+      "lesson": 156,
+      "title": "Kutubxonadan aniq ma’lumot olaman",
+      "prompt": "Kitob va ochilish vaqti haqida odobli savollar hamda aniq tavsif yozing.",
+      "output": "6 replikali ma’lumot so‘rash",
+      "criteria": [
+        "Could you tell me if/where bilan savol tuzing, ichki gap tartibini saqlang.",
+        "Bitta tasdiqlovchi question tag va ma’noga mos -ed/-ing sifat ishlating."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "moduleIds": [
+          25
+        ],
+        "titles": [
+          "Precision & complex forms"
+        ]
+      }
+    },
+    {
+      "id": "en:162:weekly-27",
+      "language": "en",
+      "week": 27,
+      "lesson": 162,
+      "title": "Loyihani muddatida topshiraman",
+      "prompt": "Kelasi haftadagi loyiha jarayoni va tugash muddatini belgilang.",
+      "output": "3 vaqt nuqtali reja va 3 savol-javob",
+      "criteria": [
+        "At bilan kelajakdagi jarayonni will be doing orqali ayting.",
+        "By bilan tugash natijasini will have done orqali ajrating."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "moduleIds": [
+          26
+        ],
+        "titles": [
+          "Future · extended"
+        ]
+      }
+    },
+    {
+      "id": "en:168:weekly-28",
+      "language": "en",
+      "week": 28,
+      "lesson": 168,
+      "title": "Yangi sinfdoshga bir kunlik yo‘lboshchi",
+      "prompt": "Yangi o‘quvchiga sinf, buyumlar, kun tartibi va uchrashuvni tanishtiring.",
+      "output": "8 gapli yo‘lboshchi va 4 savol-javob",
+      "criteria": [
+        "Borlik, egalik va kundalik odatni mos shakllarda ko‘rsating.",
+        "Hozirgi harakat, joy va vaqtni ajrating; savollarga mazmunli javob bering."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "moduleIds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "titles": [
+          "Sentence foundations",
+          "TO BE · present",
+          "Nouns & articles",
+          "Pronouns & determiners",
+          "Existence & possession",
+          "Present Simple",
+          "Present Continuous",
+          "Questions, place & time"
+        ]
+      }
+    },
+    {
+      "id": "en:174:weekly-29",
+      "language": "en",
+      "week": 29,
+      "lesson": 174,
+      "title": "Kecha, bugun, ertaga — loyiha xabari",
+      "prompt": "Do‘stingizga loyihaning o‘tgan voqeasi, hozirgi natijasi va keyingi rejasini ayting.",
+      "output": "9 gapli loyiha xabari",
+      "criteria": [
+        "Past Simple/Continuous bilan voqeani, Perfect bilan hozirgi natijani ajrating.",
+        "Going to yoki will bilan keyingi qadamni, davomiy ish uchun Perfect Continuousni ishlating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "titles": [
+          "Past Simple & past BE",
+          "Past Continuous & habits",
+          "Future plans & decisions",
+          "Present Perfect Simple",
+          "Perfect & continuous"
+        ]
+      }
+    },
+    {
+      "id": "en:180:weekly-30",
+      "language": "en",
+      "week": 30,
+      "lesson": 180,
+      "title": "Sayr uchun eng qulay reja",
+      "prompt": "Ikki sayr variantini solishtiring, qoidalarni ayting va ob-havoga mos zaxira reja yozing.",
+      "output": "8 gapli tanlov va 2 shartli reja",
+      "criteria": [
+        "Taqqoslash, miqdor, ruxsat va majburiyatni mos shaklda bering.",
+        "Taxminni dalildan ajrating; real va faraziy shartning natijasini mos yozing."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "titles": [
+          "Comparison & quantity",
+          "Ability & permission",
+          "Obligation & advice",
+          "Possibility & deduction",
+          "Conditionals · 0 / 1 / 2",
+          "Past conditions & wishes"
+        ]
+      }
+    },
+    {
+      "id": "en:186:weekly-31",
+      "language": "en",
+      "week": 31,
+      "lesson": 186,
+      "title": "Klub tadbiridan kichik reportaj",
+      "prompt": "Tadbirda bajarilgan ishlar, ishtirokchi gapi va qiziq mashg‘ulot haqida xabar yozing.",
+      "output": "10 gapli reportaj",
+      "criteria": [
+        "Passive bilan ishni, reported speech bilan boshqa odamning gapini yetkazing.",
+        "Relative clause bilan odamni aniqlang va verb patternni to‘g‘ri tanlang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "titles": [
+          "Passive voice",
+          "Passive · extended",
+          "Reported speech",
+          "Relative clauses",
+          "Verb patterns"
+        ]
+      }
+    },
+    {
+      "id": "en:192:weekly-32",
+      "language": "en",
+      "week": 32,
+      "lesson": 192,
+      "title": "Keyingi loyihamni taqdim etaman",
+      "prompt": "Keyingi sinf loyihangizni taklif qiling, sabab va muddatlarni tushuntiring.",
+      "output": "10 gapli taqdimot va 2 odobli savol",
+      "criteria": [
+        "Sabab, qarshi fikr va maqsadni bog‘lang; ega-fe’l mosligini tekshiring.",
+        "Future Continuous bilan jarayon va Future Perfect bilan muddatdagi natijani ajrating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "moduleIds": [
+          24,
+          25,
+          26
+        ],
+        "titles": [
+          "Clauses & connections",
+          "Precision & complex forms",
+          "Future · extended"
+        ]
+      }
+    }
+  ],
+  "de": [
+    {
+      "id": "de:3:weekly-1",
+      "language": "de",
+      "week": 1,
+      "lesson": 3,
+      "title": "Nemischa tanishuvim",
+      "prompt": "Yangi sinfdosh bilan tanishuvni yozing va tanlagan ismingizni harflab ayting.",
+      "output": "6 replikali tanishuv",
+      "criteria": [
+        "Sein bilan kimligingiz va holatingizni ayting.",
+        "W-savol, ha/yo‘q savoli va bitta inkor kiriting."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g001",
+          "g002",
+          "g003",
+          "g004",
+          "g005",
+          "g006"
+        ],
+        "titles": [
+          "Kursga kirish: alifbo va tanishuv",
+          "Kimman va qandayman?",
+          "Savol berib tanishish"
+        ]
+      }
+    },
+    {
+      "id": "de:6:weekly-2",
+      "language": "de",
+      "week": 2,
+      "lesson": 6,
+      "title": "Sinf sumkamda nima bor?",
+      "prompt": "Do‘stingizga sumkangizdagi va unda yo‘q buyumlarni tanishtiring.",
+      "output": "6 gapli sumka tavsifi",
+      "criteria": [
+        "Otni artikli va kerak bo‘lsa ko‘pligi bilan yozing.",
+        "Haben va kein/keinen bilan egalik hamda yo‘qlikni ajrating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g007",
+          "g008",
+          "g009",
+          "g010",
+          "g011",
+          "g012"
+        ],
+        "titles": [
+          "Sinfdagi narsalar",
+          "Birlik, ko‘plik va yo‘qlik",
+          "Menda nima bor?"
+        ]
+      }
+    },
+    {
+      "id": "de:9:weekly-3",
+      "language": "de",
+      "week": 3,
+      "lesson": 9,
+      "title": "Do‘stimning kunini bilib olaman",
+      "prompt": "Sinfdoshingizning kundalik ishlari, bo‘sh vaqti va boradigan joyini so‘rang.",
+      "output": "8 replikali suhbat",
+      "criteria": [
+        "Haben va Präsens bilan savol-javob tuzing.",
+        "Wo/woher/wohin/wann savolini javob mazmuniga mos tanlang."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g013",
+          "g014",
+          "g015",
+          "g016",
+          "g017",
+          "g018"
+        ],
+        "titles": [
+          "Vaqt va buyumlarni so‘rash",
+          "Kundalik mashg‘ulotlar",
+          "Qayerdan va qayerga?"
+        ]
+      }
+    },
+    {
+      "id": "de:12:weekly-4",
+      "language": "de",
+      "week": 4,
+      "lesson": 12,
+      "title": "O‘quv buyumlarini xarid qilaman",
+      "prompt": "Xayoliy do‘konda darsga kerakli buyumlarni so‘rang va tanlang.",
+      "output": "8 replikali xarid dialogi",
+      "criteria": [
+        "Kaufen/suchen/brauchen bilan den/einen/keinen ni mos ishlating.",
+        "Vaqtni gap boshiga olib fe’lni ikkinchi o‘rinda saqlang; und/aber bilan ulang."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g019",
+          "g020",
+          "g021",
+          "g022",
+          "g023",
+          "g024"
+        ],
+        "titles": [
+          "Fe’l shaklidagi o‘zgarishlar",
+          "Gaplarni tartiblash va ulash",
+          "Do‘konda: akkuzativ va ichki A1 nazorati"
+        ]
+      }
+    },
+    {
+      "id": "de:15:weekly-5",
+      "language": "de",
+      "week": 5,
+      "lesson": 15,
+      "title": "Do‘stimni mahallam bilan tanishtiraman",
+      "prompt": "Do‘stingizga buyumingiz, yaqin joylar va odatiy kuningiz haqida yozing.",
+      "output": "6 gapli tanishtirish xabari",
+      "criteria": [
+        "Mein/dein va es gibt bilan egalik hamda joyni ayting.",
+        "Ajraladigan fe’l old qo‘shimchasini oxirga qo‘ying; takror ot o‘rnida olmosh ishlating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g025",
+          "g026",
+          "g027",
+          "g028",
+          "g029",
+          "g030"
+        ],
+        "titles": [
+          "Oila va shaxsiy buyumlar",
+          "Shahardagi joylar va olmoshlar",
+          "Kun tartibi va ajraladigan fe’llar"
+        ]
+      }
+    },
+    {
+      "id": "de:18:weekly-6",
+      "language": "de",
+      "week": 6,
+      "lesson": 18,
+      "title": "Birga o‘qish vaqtini topamiz",
+      "prompt": "Sherigingiz bilan o‘qish vaqti, imkoniyati va kerakli yordamni kelishing.",
+      "output": "8 replikali o‘qish vaqtini kelishish dialogi",
+      "criteria": [
+        "Um/am va von … bis bilan vaqtni aniqlang.",
+        "Können bilan imkon/yordamni, müssen bilan zarur ishni ayting."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g031",
+          "g032",
+          "g033",
+          "g034",
+          "g035",
+          "g036"
+        ],
+        "titles": [
+          "Soat va haftalik reja",
+          "Nima qila olaman?",
+          "Yordam va zarurat"
+        ]
+      }
+    },
+    {
+      "id": "de:21:weekly-7",
+      "language": "de",
+      "week": 7,
+      "lesson": 21,
+      "title": "O‘yin qoidalarini kelishamiz",
+      "prompt": "Klubdagi o‘yin uchun istak, ruxsat va ko‘rsatmalarni kelishing.",
+      "output": "8 replikali o‘yin dialogi",
+      "criteria": [
+        "Nicht müssen bilan ixtiyoriylikni, nicht dürfen bilan taqiqni ajrating.",
+        "Möchten bilan istak va mos du/ihr/Sie shaklida ko‘rsatma bering."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g037",
+          "g038",
+          "g039",
+          "g040",
+          "g041",
+          "g042"
+        ],
+        "titles": [
+          "Shart emasmi yoki taqiqlanganmi?",
+          "Istak, buyurtma va ruxsat",
+          "Yo‘l-yo‘riq va iltimos"
+        ]
+      }
+    },
+    {
+      "id": "de:24:weekly-8",
+      "language": "de",
+      "week": 8,
+      "lesson": 24,
+      "title": "Do‘stimnikiga qanday bordim?",
+      "prompt": "Do‘stga transport, manzil va kechagi bitta ish haqida xabar yozing.",
+      "output": "6 gapli yo‘l xabari",
+      "criteria": [
+        "Mit/zu va wo/wohin ma’nolariga mos kelishikni tanlang.",
+        "Haben + Partizip II bilan bitta tugagan ishni ayting; dativ olmosh bilan yordamni bildiring."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g043",
+          "g044",
+          "g045",
+          "g046",
+          "g047",
+          "g048"
+        ],
+        "titles": [
+          "Kimga yordam beramiz?",
+          "Transport va joylashuv",
+          "Yo‘nalish va kechagi ishlar: A1 yakuni"
+        ]
+      }
+    },
+    {
+      "id": "de:27:weekly-9",
+      "language": "de",
+      "week": 9,
+      "lesson": 27,
+      "title": "Kechagi sayrim haqida so‘rashadi",
+      "prompt": "Kechagi sayr yoki tasavvurdagi safar haqida do‘st bilan gaplashing.",
+      "output": "8 replikali sayr suhbati",
+      "criteria": [
+        "Perfektda haben va sein yordamchilarini fe’lga moslang.",
+        "Kelish yoki ketish haqida bitta savol, inkor va kuchli Partizip II kiriting."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g049",
+          "g050",
+          "g051",
+          "g052",
+          "g053",
+          "g054"
+        ],
+        "titles": [
+          "Kecha nima bo‘ldi va bo‘lmadi?",
+          "Safar va kuchli Partizip II",
+          "Yetib kelish va kechikish"
+        ]
+      }
+    },
+    {
+      "id": "de:30:weekly-10",
+      "language": "de",
+      "week": 10,
+      "lesson": 30,
+      "title": "Dam olish kunidan xabar",
+      "prompt": "Do‘stga qayerda bo‘lganingiz va nimalar qilganingizni yozing.",
+      "output": "8 gapli dam olish xabari",
+      "criteria": [
+        "Ajraladigan, ajralmaydigan yoki -ieren fe’li bilan Perfektni qo‘llang.",
+        "War/waren bilan joy yoki holatni, bitta savol va inkorni yozing."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g055",
+          "g056",
+          "g057",
+          "g058",
+          "g059",
+          "g060"
+        ],
+        "titles": [
+          "Partizip II: old qo‘shimchalar",
+          "O‘qish, ish va avvalgi holat",
+          "Qayerda edingiz?"
+        ]
+      }
+    },
+    {
+      "id": "de:33:weekly-11",
+      "language": "de",
+      "week": 11,
+      "lesson": 33,
+      "title": "Avvalgi kun tartibim",
+      "prompt": "Avvalgi kuningizdagi buyum, imkon, zarurat va o‘zingizga qarash odatini ayting.",
+      "output": "8 gapli kundalik",
+      "criteria": [
+        "Hatte, konnte va musste bilan oldingi holatni ajrating.",
+        "Sich waschen kabi refleksiv shaklda olmoshni egaga moslang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g061",
+          "g062",
+          "g063",
+          "g064",
+          "g065",
+          "g066"
+        ],
+        "titles": [
+          "Oldin menda nima bor edi?",
+          "O‘tgan imkon va zarurat",
+          "O‘ziga qarash va odatlar"
+        ]
+      }
+    },
+    {
+      "id": "de:36:weekly-12",
+      "language": "de",
+      "week": 12,
+      "lesson": 36,
+      "title": "To‘garakka yozilaman",
+      "prompt": "Xayoliy to‘garakka ro‘yxatdan o‘tib, yoqtirgan mashg‘ulot va kelgusi rejangizni ayting.",
+      "output": "10 replikali ro‘yxatdan o‘tish",
+      "criteria": [
+        "Sich anmelden va sollen bilan ro‘yxat hamda ko‘rsatmani ifodalang.",
+        "Mögen va werden + infinitiv bilan yoqtirish hamda kelajakni ajrating; savol kiriting."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g067",
+          "g068",
+          "g069",
+          "g070",
+          "g071",
+          "g072"
+        ],
+        "titles": [
+          "Ro‘yxatdan o‘tish va ko‘rsatma",
+          "Yoqtirish va kelajak rejalari",
+          "Kelajak savollari: ichki A2 nazorati"
+        ]
+      }
+    },
+    {
+      "id": "de:39:weekly-13",
+      "language": "de",
+      "week": 13,
+      "lesson": 39,
+      "title": "Do‘stlar uchun xonani tayyorlayman",
+      "prompt": "Mehmon kelishidan oldin buyumlar qayerda turishi va qayerga qo‘yilishini yozing.",
+      "output": "4 juft joylashtirish gapi",
+      "criteria": [
+        "Wo/wohin va liegen/legen yoki stehen/stellen ni farqlang.",
+        "Dativ egalik shakli va für/ohne yoki mit predlogiga mos kelishik ishlating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g073",
+          "g074",
+          "g075",
+          "g076",
+          "g077",
+          "g078"
+        ],
+        "titles": [
+          "Mehmonlar va dativ",
+          "Sabab, yo‘l va davomiylik predloglari",
+          "Xonani joylashtirish"
+        ]
+      }
+    },
+    {
+      "id": "de:42:weekly-14",
+      "language": "de",
+      "week": 14,
+      "lesson": 42,
+      "title": "Yo‘qolgan kiyimimni tasvirlayman",
+      "prompt": "Yo‘qolgan kurtka yoki sumkani topish uchun aniq tavsif yozing.",
+      "output": "6 gapli buyum qidirish xabari",
+      "criteria": [
+        "Aniq va noaniq artikldan keyin sifat qo‘shimchasini moslang.",
+        "Nominativdagi buyum, akkuzativdagi qidirish va dativli birikmani ajrating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g079",
+          "g080",
+          "g081",
+          "g082",
+          "g083",
+          "g084"
+        ],
+        "titles": [
+          "Buyumning belgilari",
+          "Qaysi buyumni, qaysi buyum bilan?",
+          "Noaniq buyumlarni tasvirlash"
+        ]
+      }
+    },
+    {
+      "id": "de:45:weekly-15",
+      "language": "de",
+      "week": 15,
+      "lesson": 45,
+      "title": "Qaysi klubni tanlaymiz?",
+      "prompt": "Uchta xayoliy klubni solishtirib, do‘stingizga tanlovingizni tushuntiring.",
+      "output": "8 gapli tavsiya",
+      "criteria": [
+        "Komparativ, am …-sten va als/so … wie bilan solishtiring.",
+        "Weil/dass gapida tuslangan fe’lni oxirga qo‘ying."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g085",
+          "g086",
+          "g087",
+          "g088",
+          "g089",
+          "g090"
+        ],
+        "titles": [
+          "Hamrohlar va taqqoslash",
+          "Eng yaxshi tanlov",
+          "Sabab va fikrni tushuntirish"
+        ]
+      }
+    },
+    {
+      "id": "de:48:weekly-16",
+      "language": "de",
+      "week": 16,
+      "lesson": 48,
+      "title": "Uchrashuv nega o‘zgardi?",
+      "prompt": "Do‘stingizga uchrashuvdagi o‘zgarishni, sababini va yangi shartni tushuntiring.",
+      "output": "8 gapli xabar va 2 odobli savol",
+      "criteria": [
+        "Wenn bilan shart, ob bilan bilvosita ha/yo‘q savolini ajrating.",
+        "Denn/deshalb va ketma-ketlik so‘zlari bilan voqeani bog‘lang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g091",
+          "g092",
+          "g093",
+          "g094",
+          "g095",
+          "g096"
+        ],
+        "titles": [
+          "Shartmi yoki bilvosita savolmi?",
+          "Odobli savol va sabab",
+          "Voqealar va natija: A2 yakuni"
+        ]
+      }
+    },
+    {
+      "id": "de:51:weekly-17",
+      "language": "de",
+      "week": 17,
+      "lesson": 51,
+      "title": "Sinf yarmarkasidan kichik xabar",
+      "prompt": "Xayoliy yarmarkada kimning buyumlari bo‘lgani, to‘sqinlik va bo‘lgan ishni yozing.",
+      "output": "9 gapli yarmarka xabari",
+      "criteria": [
+        "Genitiv va wegen/trotz bilan tegishlilik hamda sharoitni ayting.",
+        "Artiklsiz sifat birikmasi va muntazam Präteritum bilan mahsulot hamda voqeani tasvirlang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g097",
+          "g098",
+          "g099",
+          "g100",
+          "g101",
+          "g102",
+          "g103",
+          "g104",
+          "g105"
+        ],
+        "titles": [
+          "Tegishlilik va to‘sqinlik",
+          "Odamlar va umumiy tavsif",
+          "Mahsulot va avvalgi ishlar"
+        ]
+      }
+    },
+    {
+      "id": "de:54:weekly-18",
+      "language": "de",
+      "week": 18,
+      "lesson": 54,
+      "title": "Kutilmagan kunni hikoya qilaman",
+      "prompt": "Tayyorgarlik, bir vaqtdagi ishlar va kutilmagan hodisadan iborat hikoya tuzing.",
+      "output": "9 gapli voqealar zanjiri",
+      "criteria": [
+        "Plusquamperfekt bilan oldingi ishni va als bilan bir martalik voqeani ajrating.",
+        "Bevor/nachdem/während hamda obwohl orqali vaqt va zidlikni ko‘rsating."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g106",
+          "g107",
+          "g108",
+          "g109",
+          "g110",
+          "g111",
+          "g112",
+          "g113",
+          "g114"
+        ],
+        "titles": [
+          "Oldin va undan ham oldin",
+          "Bir vaqtda, oldin va keyin",
+          "Davr va kutilmagan vaziyat"
+        ]
+      }
+    },
+    {
+      "id": "de:57:weekly-19",
+      "language": "de",
+      "week": 19,
+      "lesson": 57,
+      "title": "Ekransiz kechamni rejalayman",
+      "prompt": "Bir kechani foydali o‘tkazish rejasini va undan ko‘zlangan maqsadni yozing.",
+      "output": "8 gapli shaxsiy reja",
+      "criteria": [
+        "Um … zu uchun bir xil, damit uchun boshqa egani aniq ko‘rsating.",
+        "Ohne … zu yoki statt … zu bilan qilinmaydigan ish yoki muqobilni ayting."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g115",
+          "g116",
+          "g117",
+          "g118",
+          "g119",
+          "g120"
+        ],
+        "titles": [
+          "Qarama-qarshilik va maqsad",
+          "Maqsad va shaxsiy reja",
+          "Qilmasdan va o‘rniga"
+        ]
+      }
+    },
+    {
+      "id": "de:60:weekly-20",
+      "language": "de",
+      "week": 20,
+      "lesson": 60,
+      "title": "Klubimizga mos kitobni izlayman",
+      "prompt": "Do‘st bilan kitob, muallif va kimga mosligini aniqlashtiring.",
+      "output": "8 replikali kitob tanlash",
+      "criteria": [
+        "Nisbiy olmoshni ergash gapdagi nominativ/akkuzativ/dativ roliga moslang.",
+        "Dessen/deren bilan egalikni, welcher/was für ein bilan tanlov yoki turni so‘rang."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g121",
+          "g122",
+          "g123",
+          "g124",
+          "g125",
+          "g126"
+        ],
+        "titles": [
+          "Odam va narsani aniq tasvirlash",
+          "Kimga va kim bilan?",
+          "Egalik va aniqlashtiruvchi savollar"
+        ]
+      }
+    },
+    {
+      "id": "de:63:weekly-21",
+      "language": "de",
+      "week": 21,
+      "lesson": 63,
+      "title": "Orzudagi klubim",
+      "prompt": "Xayoliy klub taklifini yozing, sherikdan muloyim yordam so‘rang va maslahat bering.",
+      "output": "8 replikali taklif suhbati",
+      "criteria": [
+        "Würde/wäre/hätte bilan farazni real o‘tmishdan ajrating.",
+        "Könnte bilan iltimos va sollte bilan maslahatni wenn shartiga bog‘lang."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g127",
+          "g128",
+          "g129",
+          "g130",
+          "g131",
+          "g132"
+        ],
+        "titles": [
+          "Faraziy hayot va istak",
+          "Muloyim istak va iltimos",
+          "Maslahat va faraziy shart"
+        ]
+      }
+    },
+    {
+      "id": "de:66:weekly-22",
+      "language": "de",
+      "week": 22,
+      "lesson": 66,
+      "title": "Kitob almashish qanday ishlaydi?",
+      "prompt": "Sinfdagi kitob almashish jarayoni, kechagi ish va tayyor holatni tushuntiring.",
+      "output": "8 gapli jarayon yo‘riqnomasi",
+      "criteria": [
+        "Werden + Partizip II bilan jarayon, sein + Partizip II bilan holatni ajrating.",
+        "O‘tgan passiv, bitta passiv savol va modal passiv talab kiriting."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g133",
+          "g134",
+          "g135",
+          "g136",
+          "g137",
+          "g138"
+        ],
+        "titles": [
+          "Jarayonni tasvirlash: passiv",
+          "Jarayon haqida savol va o‘tgan xabar",
+          "Jarayon talabi va tayyor holat"
+        ]
+      }
+    },
+    {
+      "id": "de:69:weekly-23",
+      "language": "de",
+      "week": 23,
+      "lesson": 69,
+      "title": "Birga o‘rganish usulini tanlaymiz",
+      "prompt": "Sherigingiz bilan ikki o‘rganish usulini taqqoslab kelishing.",
+      "output": "8 replikali o‘rganish usulini tanlash dialogi",
+      "criteria": [
+        "Fe’l-predlog kelishigi va wo/da birikmasi bilan mavzuga ishora qiling.",
+        "Entweder … oder yoki weder … noch bilan tanlovni, je … desto bilan bog‘liq o‘zgarishni ayting."
+      ],
+      "suggested_type": "dialogue",
+      "curriculum": {
+        "topicIds": [
+          "g139",
+          "g140",
+          "g141",
+          "g142",
+          "g143",
+          "g144"
+        ],
+        "titles": [
+          "Fe’l va predlog birligi",
+          "Mavzuga ishora va fikr qo‘shish",
+          "Tanlov va o‘sish: yangi grammatika yakuni"
+        ]
+      }
+    },
+    {
+      "id": "de:72:weekly-24",
+      "language": "de",
+      "week": 24,
+      "lesson": 72,
+      "title": "Model sinovdan keyingi rejam",
+      "prompt": "Darsdagi Lesen, Hören, Sprechen va Schreiben mashqlaridan dalil yig‘ib, keyingi qadamni yozing.",
+      "output": "4 bo‘limli sinov tahlili va 2 keyingi qadam",
+      "criteria": [
+        "O‘qish/tinglashdagi 4 xato yoki noaniq javobni matn va kalit bilan izohlang; gapirish/yozish ishidan misol qo‘shing.",
+        "Ikki aniq mashq maqsadini belgilang. Model sinov natijasini B1 sertifikati deb belgilamang."
+      ],
+      "suggested_type": "story",
+      "curriculum": {
+        "topicIds": [
+          "g023",
+          "g031",
+          "g032",
+          "g049",
+          "g054",
+          "g089",
+          "g092",
+          "g093",
+          "g099",
+          "g108",
+          "g109",
+          "g110",
+          "g111",
+          "g112",
+          "g113",
+          "g114",
+          "g121",
+          "g124",
+          "g135",
+          "g021",
+          "g022",
+          "g086",
+          "g090",
+          "g091",
+          "g094",
+          "g095",
+          "g096",
+          "g115",
+          "g116",
+          "g117",
+          "g118",
+          "g128",
+          "g129",
+          "g130",
+          "g142",
+          "g033",
+          "g035",
+          "g039",
+          "g040",
+          "g087",
+          "g088",
+          "g127",
+          "g131",
+          "g132",
+          "g139",
+          "g140",
+          "g141",
+          "g143",
+          "g144"
+        ],
+        "titles": [
+          "Goethe B1 model sinovi: Lesen va xatolar tahlili",
+          "Goethe B1 model sinovi: Hören va Sprechen juftlik mashqi",
+          "Goethe B1 model sinovi: Schreiben va tayyorgarlik tahlili"
+        ]
+      }
+    }
+  ]
+}

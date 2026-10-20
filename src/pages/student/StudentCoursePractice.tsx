@@ -45,7 +45,7 @@ function Course({ language }: { language: string }) {
   const [portfolioEntry, setPortfolioEntry] = useState<string | undefined>();
   const viewHeading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { viewHeading.current?.focus({preventScroll: true}); }, [view]);
-  const [targetQuestion] = useState<string | null>(params.get("question"));
+  const [targetQuestion,setTargetQuestion] = useState<string | null>(params.get("question"));
   const [checkpoint, setCheckpoint] = useState<number | null>(null);
   const [checkpointStates, setCheckpointStates] = useState<CheckpointStatus[]>([]);
   useEffect(() => {
@@ -61,9 +61,10 @@ function Course({ language }: { language: string }) {
     return () => { active = false; };
   }, [language, selected, reload, view]);
   useEffect(() => {
-    if (selected === null) return;
+    // Portfolio/map navigation must not advance the learner's course position.
+    if (selected === null || view !== "lesson") return;
     positionQueue.current = positionQueue.current.catch(() => {}).then(() => api.post("/student/course-practice/position", {language, lesson: selected})).catch(() => { setError("Dars joyini saqlab bo‘lmadi. Qayta urinib ko‘ring."); });
-  }, [language, selected, reload]);
+  }, [language, selected, reload, view]);
   useEffect(() => {if (detail?.lesson === selected && lessonHeading.current && focusLesson.current && view === "lesson") {lessonHeading.current?.focus(); focusLesson.current = false;}}, [detail, selected, view]);
   function openPlanStep(_step: PlanStep) { setParams({view:"session"}, {replace:true}); setView("session"); }
   useEffect(() => {
@@ -83,7 +84,7 @@ function Course({ language }: { language: string }) {
   const sections = detail?.sections || [];
   const skills = [...new Set(sections.map(s => s.skill))];
   const shown = skills.includes(section) ? section : "all";
-  if (view === "session") return <CourseDailySession key={language} language={language} onAnswerSaved={(lesson,id) => {drafts.current.delete(`${language}:${lesson}:${id}`); if(alive.current) setReload(n=>n+1);}} onExit={() => {setParams({view:"today"}, {replace:true}); setView("today"); refreshProgress();}} onLesson={n => {setParams({view:"lesson",lesson:String(n)}, {replace:true}); setSelected(n); setView("lesson"); refreshProgress();}}/>;
+  if (view === "session") return <CourseDailySession key={language} language={language} onAnswerSaved={(lesson,id) => {drafts.current.delete(`${language}:${lesson}:${id}`); if(alive.current) setReload(n=>n+1);}} onExit={() => {setParams({view:"today"}, {replace:true}); setView("today"); refreshProgress();}} onLesson={(n,questionId) => {setParams({view:"lesson",lesson:String(n),...(questionId?{question:questionId}:{})}, {replace:true}); setTargetQuestion(questionId||null); setSection("all"); setSelected(n); setView("lesson"); refreshProgress();}}/>;
   return <main className="mx-auto max-w-2xl space-y-4 p-4 pb-24 text-slate-900">
     <Link to="/student" className="inline-flex items-center gap-2 text-sm text-sky-700"><ArrowLeft size={16}/>Bosh sahifa</Link>
     <header className="rounded-2xl bg-sky-900 p-5 text-white"><BookOpen className="mb-2"/><h1 className="text-xl font-bold">{language === "de" ? "Deutsch B1" : "English Intensive"}</h1><p className="mt-1 text-sm">Bugungi rejangizdan boshlang yoki ustoz belgilagan darsni tanlang.</p></header>
@@ -93,7 +94,7 @@ function Course({ language }: { language: string }) {
     {checkpoint !== null && <CourseCheckpoint key={`${language}:${checkpoint}`} language={language} week={checkpoint} onClose={() => {setCheckpoint(null); requestAnimationFrame(() => checkpointLauncher.current?.focus());}} onSaved={refreshProgress}/>}
     {view === "journey" && listLoading && <p role="status">Xarita yuklanmoqda…</p>}
     {view === "journey" && !listLoading && !lessons.length && !error && <p>Kurs darslari hozircha topilmadi.</p>}
-    {view === "journey" && lessons.length > 0 && <CourseJourney checkpoints={checkpointStates} language={language} lessons={lessons} selected={selected} onSelect={n => {focusLesson.current = true; setSelected(n); setView("lesson");}} onCheckpoint={week => {checkpointLauncher.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setCheckpoint(week);}}/>}
+    {view === "journey" && lessons.length > 0 && <CourseJourney onMission={n => {setPortfolioEntry(undefined); setSelected(n); setView("portfolio"); setParams({view:"portfolio",lesson:String(n)},{replace:true});}} checkpoints={checkpointStates} language={language} lessons={lessons} selected={selected} onSelect={n => {focusLesson.current = true; setSelected(n); setView("lesson");}} onCheckpoint={week => {checkpointLauncher.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setCheckpoint(week);}}/>}
     {(view === "lesson" || view === "portfolio" || view === "pair") && <label className="block font-semibold">Dars<select aria-label="Dars" className="mt-2 block w-full min-w-0 rounded-xl border bg-white p-3 text-sm" value={selected ?? 1} onChange={e => {setPortfolioEntry(undefined); setSelected(Number(e.target.value));}}>
       {lessons.length ? lessons.map(l => <option key={l.lesson} value={l.lesson}>{l.lesson}. {l.title}{l.level ? ` · ${l.level}` : ""}</option>) : <option value={1}>Yuklanmoqda…</option>}
     </select></label>}

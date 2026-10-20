@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { getToken } from '../lib/api';
+import { getCourseMission } from '../lib/courseMissions';
 
 type Audio = { mime: string; base64: string };
 type Kind = 'dialogue' | 'story' | 'speaking';
-type Mission = { id: string; title: string; prompt: string; suggested_type: Kind; targets: string[]; lesson_title: string };
+type Mission = { id: string; title: string; prompt: string; suggested_type: Kind; targets: string[]; lesson_title: string; output?: string; criteria?: string[] };
 type Coaching = { observed_positive: string; next_improvement: string; retry: string; disclaimer: string };
 type Feedback = { status: 'pending' | 'ready' | 'unavailable'; version: number; attempts?: number; criteria?: { id: string; label: string; evidence: string; comment: string }[]; next_step?: string; comparison?: { previous_version: number; before: string; after: string; comment: string } | null };
 type Version = { number: number; title: string; type: Kind; text: string; audio: Audio | null; created_at: string; coaching?: Coaching; feedback?: Feedback };
@@ -76,6 +77,7 @@ function PortfolioEditor({ language, lesson, onSaved, onOpenWork, initialEntryId
   const [text, setText] = useState('');
   const [audio, setAudio] = useState<Audio | null>(null);
   const [missionId, setMissionId] = useState('');
+  const initializedMission = useRef(false);
   const textInput = useRef<HTMLTextAreaElement>(null);
   const [busy, setBusy] = useState(false);
   const [recording, setRecording] = useState(false);
@@ -133,13 +135,27 @@ function PortfolioEditor({ language, lesson, onSaved, onOpenWork, initialEntryId
   const report = (error: unknown) => { if (current()) setMessage(error instanceof Error ? error.message : 'Amal bajarilmadi. Qayta urinib ko‘ring.'); };
   async function refresh() { const result = await request<Listing>(''); if (current()) setListing(result); }
   useEffect(() => { void refresh().catch(report); }, []);
+  function defaultMission() {
+    const weekly = getCourseMission(language, lesson);
+    return weekly?.lesson === lesson ? listing?.missions?.find(m => m.id === weekly.id) : undefined;
+  }
+  useEffect(() => {
+    if (!listing || initializedMission.current) return;
+    initializedMission.current = true;
+    // Existing work owns its saved mission; new week-end work uses only a server-approved ID.
+    if (initialEntryId) return;
+    const weekly = defaultMission();
+    if (weekly) { setMissionId(weekly.id); setKind(weekly.suggested_type); setTitle(weekly.title); }
+  }, [listing]);
+
 
   function edit(value: Entry | null) {
     cleanupRecording(); setRecording(false); setPreparing(false);
     setEntry(value); setEarlier(1); setMessage('');
-    setMissionId(value?.mission?.id ?? '');
+    const weekly = value ? undefined : defaultMission();
+    setMissionId(value?.mission?.id ?? weekly?.id ?? '');
     const last = value?.versions.at(-1);
-    setTitle(last?.title ?? ''); setKind(last?.type ?? 'dialogue'); setText(last?.text ?? ''); setAudio(last?.audio ?? null);
+    setTitle(last?.title ?? weekly?.title ?? ''); setKind(last?.type ?? weekly?.suggested_type ?? 'dialogue'); setText(last?.text ?? ''); setAudio(last?.audio ?? null);
   }
   async function open(id: string) {
     setBusy(true);
@@ -315,6 +331,8 @@ function PortfolioEditor({ language, lesson, onSaved, onOpenWork, initialEntryId
             {listing.missions?.map(item => <option key={item.id} value={item.id}>{item.title}</option>)}
           </select></label> : <p className="font-medium">{mission ? `Vazifam: ${mission.title}` : 'Mening erkin ijodiy ishim'}</p>}
         {mission && <><p className="text-sm">{mission.prompt}</p>
+          {mission.output && <p className="text-sm"><strong>Hafta oxirida: </strong>{mission.output}.</p>}
+          {!!mission.criteria?.length && <div className="text-sm"><p className="font-semibold">Saqlashdan oldin tekshiring:</p><ul className="list-disc space-y-1 pl-5">{mission.criteria.map(item => <li key={item}>{item}</li>)}</ul></div>}
           {!!mission.targets.length && <p className="text-sm">Darsdan tayanch so‘zlar: {mission.targets.join(', ')}. Vaziyatingizga mosini tanlang.</p>}</>}
         {entry?.mission_evidence && <p className="text-sm">Vazifaga bog‘langan {entry.mission_evidence.version}-versiya saqlandi. Bu ish namunasi; vazifaning to‘g‘ri bajarilgani hali tekshirilmagan.</p>}
       </div>

@@ -62,15 +62,17 @@ export function CourseMotivation({language, refresh = 0, compact = false, onChec
   }
   if (error && !data) return <section className="rounded-2xl border bg-white p-4" role="alert">O‘sish natijalari yuklanmadi. <button onClick={() => setRevision(n=>n+1)} className="underline">Qayta urinish</button></section>;
   if (!data) return <p className="p-4 text-sm text-slate-500" role="status">O‘sish rejangiz yuklanmoqda…</p>;
-  const complete = data.daily.done >= data.daily.target;
+  const target = data.plan ? data.plan.steps.length : data.daily.target;
+  const done = data.plan ? data.plan.steps.filter(step => step.done).length : data.daily.done;
+  const complete = data.plan ? data.plan.completed : done >= target;
   const nextStep = data.plan?.steps.find(step => !step.done);
   const stepLink = (_step: PlanStep) => "/student/course-practice?view=session";
   const launch = (step: PlanStep) => { if (onAction) onAction(step); else { setTab("review"); } };
   return <section aria-label="Bilim va o‘sish" className="overflow-hidden rounded-3xl border border-indigo-200 bg-white text-slate-900">
     <div className="bg-indigo-950 p-5 text-white"><div className="flex items-start justify-between gap-3"><div><p className="text-xs uppercase tracking-wider text-indigo-200">Kichik g‘alabalar</p><h2 className="mt-1 text-lg font-bold">{data.plan?.completed ? "Bugungi rejangiz bajarildi!" : `Bugungi ${data.plan?.minutes ?? 15} daqiqalik rejam`}</h2></div>{complete ? <CheckCircle2 className="shrink-0 text-emerald-300"/> : <Sparkles className="shrink-0 text-amber-300"/>}</div>
-      <p className="mt-2 text-sm text-indigo-100">{data.plan?.completed ? "Shaxsiy rejangiz tugadi. Qo‘shimcha mashq ixtiyoriy." : complete ? "Bugunga yetarli. Dam oling — keyingi safar eslab qolganingizni tekshiramiz." : `${Math.min(data.daily.done,data.daily.target)} / ${data.daily.target} foydali qadam. Mashq, tuzatish yoki takror; XP berilmasa ham hisoblanadi.`}</p>
+      <p className="mt-2 text-sm text-indigo-100">{data.plan?.completed ? "Shaxsiy rejangiz tugadi. Qo‘shimcha mashq ixtiyoriy." : complete ? "Bugunga yetarli. Dam oling — keyingi safar eslab qolganingizni tekshiramiz." : `${Math.min(done,target)} / ${target} foydali qadam. Mashq, tuzatish yoki takror; XP berilmasa ham hisoblanadi.`}</p>
       <fieldset disabled={busy} className="mt-4"><legend className="text-sm font-semibold">Bugun qancha vaqt ajratasiz?</legend><div className="mt-2 flex flex-wrap gap-2">{[5,15,25].map(minutes => <button key={minutes} type="button" aria-pressed={data.plan?.minutes === minutes} onClick={() => void chooseMinutes(minutes)} className={`min-h-11 rounded-xl border px-4 py-2 text-sm font-semibold disabled:opacity-50 ${data.plan?.minutes === minutes ? "border-white bg-white text-indigo-950" : "border-indigo-400 text-white"}`}>{minutes} daqiqa</button>)}</div><p className="mt-2 text-xs text-indigo-200">Mashq vaqti taxminiy. Keyingi kunlarda javob yozish tezligingizga moslashadi; bugungi rejangiz saqlanadi.</p></fieldset>
-      <progress aria-label="Bugungi maqsad" value={Math.min(data.daily.done,data.daily.target)} max={Math.max(1,data.daily.target)} className="mt-3 h-2 w-full accent-emerald-400"/>
+      <progress aria-label="Bugungi maqsad" value={Math.min(done,target)} max={Math.max(1,target)} className="mt-3 h-2 w-full accent-emerald-400"/>
       {nextStep && (onAction ? <button onClick={() => launch(nextStep)} className="mt-4 w-full rounded-xl bg-white px-4 py-3 text-left font-bold text-indigo-950">{data.plan?.steps.some(s => s.done) ? "Rejani davom ettirish" : "Boshlash"} →<span className="mt-1 block text-xs font-normal">{nextStep.title} · taxminan {nextStep.minutes} daqiqa</span></button> : <Link to={stepLink(nextStep)} className="mt-4 block rounded-xl bg-white px-4 py-3 font-bold text-indigo-950">Bugungi rejani boshlash →</Link>)}
       <details className="mt-3 text-xs text-indigo-200"><summary className="cursor-pointer">Kursdagi XP va tangalar</summary><p className="mt-2">{data.rewards.xp} XP · {data.rewards.coins} tanga</p></details>
     </div>

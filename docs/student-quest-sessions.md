@@ -15,3 +15,7 @@ Home and Learn foreground the course goal and daily plan. XP, coins, activity le
 Core regression checks: personal plan/measurement 16 passed; student regressions 11 passed; native speech bridge 8 passed; focused-time assertions passed. Question-control tests: 16 passed. Audit of 14,880 canonical questions found 2,324 compatible choice inputs and 20 compatible word-order inputs, with zero incompatible conversions. TypeScript project build, targeted lint and production Vite build passed. Final Android results are recorded below. Real user engagement and learning outcomes are not established by these tests.
 
 Graphify update was attempted in the worktree and failed with process exit -1073741819 and no diagnostics.
+
+Android final integrated-source suite: 5/5 passed on API35 actual MainActivity/WebView with isolated local fixtures. Covered English/German plan completion, reload, failed saves, reward deduplication, speaking, native keyboard choices, collapsed home metrics and word-order/text fallback. Additional reading/audio 2/2 and native recorder/home 2/2 passed. AI replies mocked; no real microphone acoustics or live-midnight claim. Earlier process termination was an intentional QA stop, not a reproduced app crash. Report: JonyAndroidQA/quest-evidence/REPORT.md.
+
+Production smoke check caught daily-target 5 competing with personalized plan 3. Home now derives count and progress from the same personalized steps as the session, with legacy daily counters only when no plan exists.

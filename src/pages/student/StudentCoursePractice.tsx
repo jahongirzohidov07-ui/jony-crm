@@ -61,9 +61,10 @@ function Course({ language }: { language: string }) {
     return () => { active = false; };
   }, [language, selected, reload, view]);
   useEffect(() => {
-    if (selected === null) return;
+    // Portfolio/map navigation must not advance the learner's course position.
+    if (selected === null || view !== "lesson") return;
     positionQueue.current = positionQueue.current.catch(() => {}).then(() => api.post("/student/course-practice/position", {language, lesson: selected})).catch(() => { setError("Dars joyini saqlab bo‘lmadi. Qayta urinib ko‘ring."); });
-  }, [language, selected, reload]);
+  }, [language, selected, reload, view]);
   useEffect(() => {if (detail?.lesson === selected && lessonHeading.current && focusLesson.current && view === "lesson") {lessonHeading.current?.focus(); focusLesson.current = false;}}, [detail, selected, view]);
   function openPlanStep(_step: PlanStep) { setParams({view:"session"}, {replace:true}); setView("session"); }
   useEffect(() => {

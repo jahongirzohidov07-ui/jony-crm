@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, CloudOff } from "lucide-react";
 import { JsaLogo, JSA } from "../../components/Jsa";
-import { getLang, skillLabel } from "../../lib/lang";
+import { useLearningLanguage, skillLabel } from "../../lib/lang";
 import { api } from "../../lib/api";
 import { fmtNum, type DailyGoal, type ContinueCard } from "../../lib/studentApi";
 import { WordbankEntryCard } from "../../components/wordbank/WordbankCards";
@@ -53,7 +53,7 @@ const LABEL: Record<string, string> = {
 };
 
 export default function StudentGames() {
-  const lang = getLang();
+  const lang = useLearningLanguage();
   const [d, setD] = useState<Learn | null>(null);
   const [err, setErr] = useState("");
 
@@ -83,41 +83,14 @@ export default function StudentGames() {
       {/* ------------------------------------------------ sarlavha */}
       <div className="flex items-center gap-2">
         <div className="flex-1 min-w-0"><JsaLogo /></div>
-        <StudentImage src="/jsicons/game-xp.png" alt="XP" className="w-12 h-12" />
       </div>
 
       <h1 className="text-[38px] font-extrabold text-white leading-none mt-3">
         O'rganish
       </h1>
       <p className="text-[15px] text-slate-400 mt-2">
-        Bugungi maqsadingizni bajaring va XP to'plang.
+        Bugungi rejangiz va darsingizga mos mashqni tanlang.
       </p>
-
-      {/* ------------------------------------------- stat pilllari */}
-      <div className="student-learn-stats grid grid-cols-2 min-[380px]:grid-cols-4 gap-2 mt-4">
-        <span className={pill} style={card}>
-          <StudentImage src="/jsicons/game-level.png" alt="" className="w-6 h-6" />
-          <b className="text-white text-sm whitespace-nowrap">{level}-daraja</b>
-        </span>
-        <span className={pill} style={card}>
-          <StudentImage src="/jsicons/game-xp.png" alt="" className="w-6 h-6" />
-          <b className="text-white text-sm whitespace-nowrap">
-            {fmtNum(d.lifetime_xp)} <span className="text-brand-300">XP</span>
-          </b>
-        </span>
-        <span className={pill} style={card}>
-          <StudentImage src="/jsicons/game-coin.png" alt="" className="w-6 h-6" />
-          <b className="text-white text-sm whitespace-nowrap">
-            {fmtNum(d.coins)} <span className="text-slate-400">Coin</span>
-          </b>
-        </span>
-        <span className={pill} style={card}>
-          <StudentImage src="/jsicons/game-streak.png" alt="" className="w-6 h-6" />
-          <b className="text-white text-sm whitespace-nowrap">
-            {d.streak} kun
-          </b>
-        </span>
-      </div>
 
       {/* -------------------------------------- Bugungi missiya */}
       {coursePlan && <StudentStudyPlan key={lang} language={lang}/>}
@@ -151,6 +124,37 @@ export default function StudentGames() {
           <ChevronRight size={22} />
         </Link>
       )}
+
+      <details className="mt-4 rounded-2xl border border-white/15 bg-white/5 p-4">
+        <summary className="cursor-pointer text-sm font-semibold text-white">Mukofotlar va faollik</summary>
+        <p className="mt-2 text-xs text-slate-400">XP, coin va faollik darajasi til bilish bahosi emas.</p>
+        {/* ------------------------------------------- stat pilllari */}
+        <div className="student-learn-stats grid grid-cols-2 gap-2 mt-4">
+          <span className={pill} style={card}>
+            <StudentImage src="/jsicons/game-level.png" alt="" className="w-6 h-6" />
+            <b className="text-white text-sm">{level}-faollik darajasi</b>
+          </span>
+          <span className={pill} style={card}>
+            <StudentImage src="/jsicons/game-xp.png" alt="" className="w-6 h-6" />
+            <b className="text-white text-sm whitespace-nowrap">
+              {fmtNum(d.lifetime_xp)} <span className="text-brand-300">XP</span>
+            </b>
+          </span>
+          <span className={pill} style={card}>
+            <StudentImage src="/jsicons/game-coin.png" alt="" className="w-6 h-6" />
+            <b className="text-white text-sm whitespace-nowrap">
+              {fmtNum(d.coins)} <span className="text-slate-400">Coin</span>
+            </b>
+          </span>
+          <span className={pill} style={card}>
+            <StudentImage src="/jsicons/game-streak.png" alt="" className="w-6 h-6" />
+            <b className="text-white text-sm whitespace-nowrap">
+              {d.streak} kun
+            </b>
+          </span>
+        </div>
+
+      </details>
 
       {/* --------------------------------------------- bo'limlar */}
       <h2 className="text-lg font-bold text-white mt-5">Qo‘shimcha mustaqil mashqlar</h2>

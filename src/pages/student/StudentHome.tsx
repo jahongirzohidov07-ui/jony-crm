@@ -200,120 +200,18 @@ export default function StudentHome() {
 
         <PushBanner />
 
-        {/* ====================================== SALOM + UMUMIY XP */}
+        {/* ====================================== SALOM */}
         <div className="flex items-start gap-3">
           <div className="flex-1 min-w-0">
             <h1 className="text-[26px] font-extrabold text-white leading-tight">
               Salom, {firstName}! 👋
             </h1>
             <p className="text-sm text-slate-400 mt-1">
-              Bugun maqsadingizga bir qadam yaqinlashing.
+              Bugungi dars va keyingi mashqingizdan boshlang.
             </p>
           </div>
-          <div className="rounded-2xl border px-3.5 py-2.5 text-center shrink-0"
-               style={card}>
-            <p className="text-[11px] text-slate-400">Umumiy XP</p>
-            <p className="flex items-center gap-1.5 mt-1">
-              <XpHex size={18} />
-              <b className="text-white text-[17px]">{fmtNum(xp)}</b>
-            </p>
-          </div>
+
         </div>
-
-        {/* ============ OCHIQ IMTIHON (2026-09-25, Jahongir: "cherer
-            Student app qiladigan qilish kerak link ham shu Student appga
-            keladigan qilaylik") — examiner guruh uchun test ochgan bo'lsa
-            shu yerda banner: link shart emas, bir bosishda kiradi. */}
-        {((d as unknown as { exam_live?: ExamLive[] }).exam_live || []).map((ex) => (
-          <Link
-            key={ex.token}
-            to={`/student/exam/${encodeURIComponent(ex.token)}`}
-            className="block rounded-3xl p-4 border-2 active:scale-[0.99] transition"
-            style={{
-              background: ex.state === "running"
-                ? "linear-gradient(120deg,#B91C1C 0%,#DC2626 100%)"
-                : "linear-gradient(120deg,#B45309 0%,#D97706 100%)",
-              borderColor: "rgba(255,255,255,0.35)",
-            }}
-          >
-            <div className="flex items-center gap-3">
-              <span className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-[24px] shrink-0">
-                📝
-              </span>
-              <div className="flex-1 min-w-0">
-                <p className="text-[11px] font-bold text-white/80 uppercase tracking-wide">
-                  {ex.state === "running" ? "Imtihon ketyapti" : "Imtihon ochildi"}
-                </p>
-                <p className="text-[17px] font-extrabold text-white truncate">{ex.title}</p>
-                <p className="text-[12px] text-white/85 mt-0.5">
-                  {ex.state === "running"
-                    ? "Hoziroq kiring — vaqt ketyapti"
-                    : ex.my_status === "in_progress"
-                      ? "Siz kirgansiz — examiner Start bosishini kuting"
-                      : "Rasmingizni olib, examiner Start bosishini kuting"}
-                  {ex.duration_min ? ` · ${ex.duration_min} daqiqa` : ""}
-                </p>
-              </div>
-              <ChevronRight size={22} className="text-white shrink-0" />
-            </div>
-          </Link>
-        ))}
-
-        <ExamLinkCard />
-
-        {/* ======================================= DARAJA KARTASI */}
-        {lang !== "ru" && <div
-          className="student-hero student-pattern rounded-3xl p-5 relative overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(120deg,#2B50E0 0%,#4A56EC 55%,#7B5CF0 100%)",
-          }}
-        >
-          <div className="flex items-center gap-4">
-            {/* Qalqon */}
-            <StudentLevelBadge level={ov?.level?.cefr} size={86} />
-
-            <div className="min-w-0 flex-1">
-              <p className="text-[27px] font-extrabold text-white leading-tight truncate">
-                {ov?.level?.label || "—"}
-              </p>
-              <p className="text-[15px] text-white/85 mt-1">
-                Daraja balli <b className="text-white">{fmtNum(inLevel)}</b>
-                <span className="text-white/70"> / {perLevel}</span>
-              </p>
-              <StudentXpHelp />
-              <div className="flex items-center gap-2.5 mt-2.5">
-                <div className="h-2.5 flex-1 rounded-full bg-white/25 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-white"
-                    style={{ width: `${Math.max(pct, 4)}%` }}
-                  />
-                </div>
-                <b className="text-white text-sm shrink-0">{pct}%</b>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 mt-3.5">
-            <p className="text-[13px] text-white/85 flex-1 min-w-0">
-              {ov?.next ? (
-                <>
-                  {ov.next.label}'gacha{" "}
-                  <b className="text-sky-200">{ov.next.points_left} ball</b> qoldi
-                </>
-              ) : (
-                "Eng yuqori darajadasiz 🏆"
-              )}
-            </p>
-            <Link
-              to="/student/roadmap"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/50 px-3.5 py-2 text-sm font-semibold text-white shrink-0"
-            >
-              <MapIcon size={15} />
-              Yo'l xaritasi
-            </Link>
-          </div>
-        </div>}
 
         {coursePlan ? <StudentStudyPlan key={lang} language={lang}/> : <StudentCourseLink language={lang}/>}
         {lang === "ru" && <Link to="/student/russian"
@@ -396,101 +294,6 @@ export default function StudentHome() {
           </div>
         )}
 
-        {/* ============================== COIN / XP / STREAK ===== */}
-        <div className="student-home-stats grid grid-cols-3 gap-2.5">
-          <Link
-            to="/student/shop"
-            className="rounded-2xl border p-3.5 active:scale-[0.98] transition"
-            style={card}
-          >
-            <CoinIcon size={30} />
-            <p className="text-[21px] font-extrabold text-white mt-2 leading-none">
-              {fmtNum(d.gamification?.coins)}
-            </p>
-            <p className="text-xs text-slate-400 mt-1">Coin</p>
-          </Link>
-
-          <Link
-            to="/student/roadmap"
-            className="rounded-2xl bg-brand-600 p-3.5 active:scale-[0.98] transition"
-          >
-            <XpHex size={30} />
-            <p className="text-[21px] font-extrabold text-white mt-2 leading-none">
-              {fmtNum(xp)}
-            </p>
-            <p className="text-xs text-white/75 mt-1">XP</p>
-          </Link>
-
-          <Link
-            to="/student/games"
-            className="rounded-2xl border p-3.5 active:scale-[0.98] transition"
-            style={card}
-          >
-            <StudentIcon name="streak" size={32} />
-            <p className="text-[21px] font-extrabold text-white mt-2 leading-none">
-              {d.streak}{" "}
-              <span className="text-sm font-semibold text-slate-400">kun</span>
-            </p>
-            <p className="text-xs text-slate-400 mt-1">Streak</p>
-          </Link>
-        </div>
-
-        {/* ================================ LIGA (2026-08-25) ==== */}
-        {/* Jahongir: "ligasini ham bosh sahifani qayerigadur qo'shish
-            kerak" — coin ligaga ko'tarilganda beriladi, shuning
-            uchun liga bosh sahifada, XP kartasining yonida turadi. */}
-        {lg && (
-          <Link
-            to="/student/leagues"
-            className="flex items-center gap-3 rounded-2xl border p-4 active:scale-[0.99] transition"
-            style={card}
-          >
-            <span className="text-[30px] leading-none shrink-0">
-              {lg.icon}
-            </span>
-            <div className="flex-1 min-w-0">
-              <p className="text-[11px] text-slate-400">Ligangiz</p>
-              <p className="text-white font-extrabold text-[17px] truncate">
-                {lg.name}
-              </p>
-              {d.gamification?.next_league && (
-                <>
-                  <div className="h-1.5 rounded-full bg-slate-700/60 overflow-hidden mt-1.5">
-                    <div
-                      className="h-full rounded-full bg-amber-400"
-                      style={{
-                        width: `${Math.max(
-                          d.gamification.league_percent || 0, 3)}%`,
-                      }}
-                    />
-                  </div>
-                  <p className="text-[11px] text-slate-400 mt-1">
-                    {d.gamification.next_league.name} ligasigacha{" "}
-                    <b className="text-amber-300">
-                      {fmtNum(d.gamification.league_to_next || 0)} XP
-                    </b>
-                  </p>
-                </>
-              )}
-              {d.gamification?.max_league && (
-                <p className="text-[11px] text-amber-300 mt-1">
-                  Eng yuqori liga 🏆
-                </p>
-              )}
-            </div>
-            <ChevronRight size={18} className="text-slate-500 shrink-0" />
-          </Link>
-        )}
-
-        {/* ===================== MAQSAD: IELTS (GoalCard) ======== */}
-        
-
-        {d.streak === 0 && !coursePlan && lang !== "ru" && (
-          <p className="text-xs text-slate-500 -mt-1.5 px-1">
-            Bugun mashq qilsangiz streak boshlanadi. 7 kun ketma-ket = 50 coin.
-          </p>
-        )}
-
         {/* ===================================== DAVOM ETTIRISH */}
         {cont && (
           <Link
@@ -524,6 +327,206 @@ export default function StudentHome() {
             </div>
           </Link>
         )}
+
+        <details className="rounded-3xl border border-white/15 bg-white/5 p-4">
+          <summary className="cursor-pointer py-1 text-sm font-semibold text-white">Mukofotlar va faollik · XP, coin, daraja</summary>
+          <p className="mt-2 text-xs text-slate-400">Bu ko‘rsatkichlar ilovadagi faollik va mukofotlarni bildiradi. Til bilish darajasi alohida baholanadi.</p>
+          <div className="mt-4 space-y-4">
+            {/* ======================================= DARAJA KARTASI */}
+            {lang !== "ru" && <div
+              className="rounded-3xl p-5 relative overflow-hidden"
+              style={{
+                background:
+                  "linear-gradient(120deg,#2B50E0 0%,#4A56EC 55%,#7B5CF0 100%)",
+              }}
+            >
+              <div className="flex items-center gap-4">
+                {/* Qalqon */}
+                <StudentLevelBadge level={ov?.level?.cefr} size={86} />
+
+                <div className="min-w-0 flex-1">
+                  <p className="text-[27px] font-extrabold text-white leading-tight truncate">
+                    {ov?.level?.label || "—"}
+                  </p>
+                  <p className="text-[15px] text-white/85 mt-1">
+                    Daraja balli <b className="text-white">{fmtNum(inLevel)}</b>
+                    <span className="text-white/70"> / {perLevel}</span>
+                  </p>
+                  <StudentXpHelp />
+                  <div className="flex items-center gap-2.5 mt-2.5">
+                    <div className="h-2.5 flex-1 rounded-full bg-white/25 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-white"
+                        style={{ width: `${Math.max(pct, 4)}%` }}
+                      />
+                    </div>
+                    <b className="text-white text-sm shrink-0">{pct}%</b>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 mt-3.5">
+                <p className="text-[13px] text-white/85 flex-1 min-w-0">
+                  {ov?.next ? (
+                    <>
+                      {ov.next.label}'gacha{" "}
+                      <b className="text-sky-200">{ov.next.points_left} ball</b> qoldi
+                    </>
+                  ) : (
+                    "Eng yuqori darajadasiz 🏆"
+                  )}
+                </p>
+                <Link
+                  to="/student/roadmap"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/50 px-3.5 py-2 text-sm font-semibold text-white shrink-0"
+                >
+                  <MapIcon size={15} />
+                  Yo'l xaritasi
+                </Link>
+              </div>
+            </div>}
+
+            {/* ============================== COIN / XP / STREAK ===== */}
+            <div className="student-home-stats grid grid-cols-3 gap-2.5">
+              <Link
+                to="/student/shop"
+                className="rounded-2xl border p-3.5 active:scale-[0.98] transition"
+                style={card}
+              >
+                <CoinIcon size={30} />
+                <p className="text-[21px] font-extrabold text-white mt-2 leading-none">
+                  {fmtNum(d.gamification?.coins)}
+                </p>
+                <p className="text-xs text-slate-400 mt-1">Coin</p>
+              </Link>
+
+              <Link
+                to="/student/roadmap"
+                className="rounded-2xl bg-brand-600 p-3.5 active:scale-[0.98] transition"
+              >
+                <XpHex size={30} />
+                <p className="text-[21px] font-extrabold text-white mt-2 leading-none">
+                  {fmtNum(xp)}
+                </p>
+                <p className="text-xs text-white/75 mt-1">XP</p>
+              </Link>
+
+              <Link
+                to="/student/games"
+                className="rounded-2xl border p-3.5 active:scale-[0.98] transition"
+                style={card}
+              >
+                <StudentIcon name="streak" size={32} />
+                <p className="text-[21px] font-extrabold text-white mt-2 leading-none">
+                  {d.streak}{" "}
+                  <span className="text-sm font-semibold text-slate-400">kun</span>
+                </p>
+                <p className="text-xs text-slate-400 mt-1">Streak</p>
+              </Link>
+            </div>
+
+            {/* ================================ LIGA (2026-08-25) ==== */}
+            {/* Jahongir: "ligasini ham bosh sahifani qayerigadur qo'shish
+                kerak" — coin ligaga ko'tarilganda beriladi, shuning
+                uchun liga bosh sahifada, XP kartasining yonida turadi. */}
+            {lg && (
+              <Link
+                to="/student/leagues"
+                className="flex items-center gap-3 rounded-2xl border p-4 active:scale-[0.99] transition"
+                style={card}
+              >
+                <span className="text-[30px] leading-none shrink-0">
+                  {lg.icon}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[11px] text-slate-400">Ligangiz</p>
+                  <p className="text-white font-extrabold text-[17px] truncate">
+                    {lg.name}
+                  </p>
+                  {d.gamification?.next_league && (
+                    <>
+                      <div className="h-1.5 rounded-full bg-slate-700/60 overflow-hidden mt-1.5">
+                        <div
+                          className="h-full rounded-full bg-amber-400"
+                          style={{
+                            width: `${Math.max(
+                              d.gamification.league_percent || 0, 3)}%`,
+                          }}
+                        />
+                      </div>
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        {d.gamification.next_league.name} ligasigacha{" "}
+                        <b className="text-amber-300">
+                          {fmtNum(d.gamification.league_to_next || 0)} XP
+                        </b>
+                      </p>
+                    </>
+                  )}
+                  {d.gamification?.max_league && (
+                    <p className="text-[11px] text-amber-300 mt-1">
+                      Eng yuqori liga 🏆
+                    </p>
+                  )}
+                </div>
+                <ChevronRight size={18} className="text-slate-500 shrink-0" />
+              </Link>
+            )}
+
+
+
+            {d.streak === 0 && !coursePlan && lang !== "ru" && (
+              <p className="text-xs text-slate-500 -mt-1.5 px-1">
+                Bugun mashq qilsangiz streak boshlanadi. 7 kun ketma-ket = 50 coin.
+              </p>
+            )}
+
+          </div>
+        </details>
+
+        {/* ============ OCHIQ IMTIHON (2026-09-25, Jahongir: "cherer
+            Student app qiladigan qilish kerak link ham shu Student appga
+            keladigan qilaylik") — examiner guruh uchun test ochgan bo'lsa
+            shu yerda banner: link shart emas, bir bosishda kiradi. */}
+        {((d as unknown as { exam_live?: ExamLive[] }).exam_live || []).map((ex) => (
+          <Link
+            key={ex.token}
+            to={`/student/exam/${encodeURIComponent(ex.token)}`}
+            className="block rounded-3xl p-4 border-2 active:scale-[0.99] transition"
+            style={{
+              background: ex.state === "running"
+                ? "linear-gradient(120deg,#B91C1C 0%,#DC2626 100%)"
+                : "linear-gradient(120deg,#B45309 0%,#D97706 100%)",
+              borderColor: "rgba(255,255,255,0.35)",
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-[24px] shrink-0">
+                📝
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-bold text-white/80 uppercase tracking-wide">
+                  {ex.state === "running" ? "Imtihon ketyapti" : "Imtihon ochildi"}
+                </p>
+                <p className="text-[17px] font-extrabold text-white truncate">{ex.title}</p>
+                <p className="text-[12px] text-white/85 mt-0.5">
+                  {ex.state === "running"
+                    ? "Hoziroq kiring — vaqt ketyapti"
+                    : ex.my_status === "in_progress"
+                      ? "Siz kirgansiz — examiner Start bosishini kuting"
+                      : "Rasmingizni olib, examiner Start bosishini kuting"}
+                  {ex.duration_min ? ` · ${ex.duration_min} daqiqa` : ""}
+                </p>
+              </div>
+              <ChevronRight size={22} className="text-white shrink-0" />
+            </div>
+          </Link>
+        ))}
+
+        <ExamLinkCard />
+
+        <Link to="/student/payments" className="flex items-center gap-3 rounded-2xl border p-4 text-sm font-semibold text-white" style={card}>
+          <CreditCard size={18} /> To‘lovlar <ChevronRight size={18} className="ml-auto" />
+        </Link>
 
         <NpsCard />
 

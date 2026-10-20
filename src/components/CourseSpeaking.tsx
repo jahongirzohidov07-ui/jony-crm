@@ -8,7 +8,7 @@ const themes: {id: Theme; icon: string; title: string; hint: string}[] = [
   {id: "football", icon: "⚽", title: "Futbol", hint: "To‘p va jamoadosh bilan suhbat"},
   {id: "robots", icon: "🤖", title: "Robotlar", hint: "O‘zingiz o‘ylagan yordamchi robot"},
 ];
-type SpeakingProps = {lesson: number; questionId: string; previous?: string; onSaved: (answer: string, reply: string) => void};
+type SpeakingProps = {lesson: number; questionId: string; previous?: string; beforeSubmit?: () => boolean; onCommitted?: () => void; onSaved: (answer: string, reply: string) => void};
 
 type Message = {role: "teacher" | "student"; text: string};
 type Recognition = {lang: string; interimResults: boolean; maxAlternatives: number; onresult: ((event: {results: {isFinal?: boolean; 0: {transcript: string}}[]; resultIndex?: number}) => void) | null; onerror: ((event: {error: string}) => void) | null; onend: (() => void) | null; start(): void; stop(): void; abort(): void};
@@ -17,7 +17,7 @@ export function CourseSpeaking(props: SpeakingProps) {
   // New question gets fresh conversation state; stale responses cannot cross lessons.
   return <SpeakingSession key={`${props.lesson}:${props.questionId}`} {...props}/>;
 }
-function SpeakingSession({lesson, questionId, previous, onSaved}: SpeakingProps) {
+function SpeakingSession({lesson, questionId, previous, onSaved, beforeSubmit, onCommitted}: SpeakingProps) {
   // Deliberately session-only: no preference leaks between accounts on shared devices.
   const [theme, setTheme] = useState<Theme>("daily-life");
   const [robotDraft, setRobotDraft] = useState("");
@@ -57,10 +57,11 @@ function SpeakingSession({lesson, questionId, previous, onSaved}: SpeakingProps)
     } catch { failed(); }
   }
   async function turn(history: Message[]) {
-    if (locked.current) return;
+    if (locked.current || beforeSubmit?.() === false) return;
     locked.current = true; setBusy(true); setError(""); setRetry(null);
     try {
       const result = await api.post<{reply: string; saved: boolean}>("/student/course-practice/speaking", {language: "en", theme, lesson, question_id: questionId, messages: history.slice(-20)});
+      if (result.saved) onCommitted?.();
       if (!active.current) return;
       if (!result.reply?.trim()) throw new Error("Ustoz javobi kelmadi. Qayta urinib ko‘ring.");
       setMessages([...history, {role: "teacher", text: result.reply}]);

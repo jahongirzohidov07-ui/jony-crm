@@ -81,6 +81,8 @@ jobs:
         run: node scripts/test-native-bridge.cjs
       - name: Focused study time regressions
         run: node scripts/test-course-active-time.cjs
+      - name: Course question interaction tests
+        run: node --test scripts/test-course-question-interaction.cjs
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks

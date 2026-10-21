@@ -328,6 +328,19 @@ def public_parts(parts: list) -> list:
 _NO_SHUFFLE_OPTS = {"true", "false", "not given", "yes", "no"}
 
 
+def _is_listening(p: dict, o: dict) -> bool:
+    """Tinglash bo'limimi (2026-10-21, Jahongir: "listening savol ketma
+    ketligi bir xil bo'lsin variantlari xar xil bo'lsin hammada").
+    Bazadagi listening bo'limlarining ko'pida audio ham, skript ham yo'q
+    — audioni examiner sinfda qo'yadi. Shuning uchun bo'lim nomi /
+    ko'nikma / ko'rsatmasidan ham aniqlanadi."""
+    if p.get("audio_url") or o.get("script") or o.get("audio_url"):
+        return True
+    t = " ".join(str(x.get(k) or "") for x in (p, o)
+                 for k in ("skill", "title", "instructions")).lower()
+    return "listening" in t or "tinglash" in t or "tinglang" in t
+
+
 def shuffle_for(pub: list, orig: list, seed: str | None) -> list:
     """HAR O'QUVCHIGA ARALASH (2026-10-03, Jahongir: "guruhda hammaga
     bir xil test chiqadi ... aralashtirib ber").
@@ -349,8 +362,10 @@ def shuffle_for(pub: list, orig: list, seed: str | None) -> list:
     for i, p in enumerate(pub):
         o = orig[i] if i < len(orig) else {}
         qs = [dict(q) for q in p.get("questions") or []]
-        tied = bool(p.get("passage") or p.get("audio_url") or p.get("image")
-                    or o.get("script"))
+        # Tinglashda savollar audio ketma-ketligida — hammada bir xil
+        # tartib; faqat javob variantlari har o'quvchida boshqacha
+        tied = bool(p.get("passage") or p.get("image")
+                    or _is_listening(p, o))
         if not tied and len(qs) > 1:
             nums = [q.get("n") for q in qs]
             rnd.shuffle(qs)

@@ -119,6 +119,31 @@ def delete_exam(
     db.query(models.ExamOnline).filter(
         models.ExamOnline.exam_id == exam.id).delete(
             synchronize_session=False)
+    # BUYURTMA, XP VA JONLI O'YIN ham imtihonga bog'langan (2026-10-21,
+    # Achievers New — bir kunda ikkita imtihon, bo'shini bosh examiner
+    # o'chirolmadi: Postgres bog'langan yozuv sabab 500 qaytarardi).
+    # Buyurtma shu guruhning o'sha kundagi boshqa imtihoniga (natijasi
+    # bor bo'lsa — o'shanga) o'tkaziladi, bo'lmasa bog'lanish uziladi.
+    # XP va o'yin tarixi saqlanadi — faqat havola bo'shatiladi.
+    orders = db.query(models.ExamOrder).filter(
+        models.ExamOrder.exam_id == exam.id).all()
+    if orders:
+        alts = (db.query(models.Exam)
+                .filter(models.Exam.id != exam.id,
+                        models.Exam.group_id == exam.group_id,
+                        models.Exam.date == exam.date,
+                        models.Exam.status != "cancelled").all())
+        alts.sort(key=lambda e: (-len(e.results),
+                                 e.kind != exam.kind, e.id))
+        for o in orders:
+            o.exam_id = alts[0].id if alts else None
+    db.query(models.XpTransaction).filter(
+        models.XpTransaction.exam_id == exam.id).update(
+            {models.XpTransaction.exam_id: None}, synchronize_session=False)
+    db.query(models.LiveGame).filter(
+        models.LiveGame.exam_id == exam.id).update(
+            {models.LiveGame.exam_id: None}, synchronize_session=False)
+    db.flush()
     db.delete(exam)
     db.commit()
     audit.log(db, user, entity="exam", action="delete", entity_id=exam_id,
@@ -1038,6 +1063,31 @@ def _order_accept_by(db: Session, o, user) -> None:
         _r = (db.query(models.ExamPassRule)
               .filter(models.ExamPassRule.kind == o.kind).first())
         _pass = _r.percent if _r else roles.DEFAULT_EXAM_PASS.get(o.kind)
+
+    # TAKROR IMTIHON YARATILMAYDI (2026-10-21, Achievers New — bir kunda
+    # ikkita bir xil imtihon paydo bo'ldi). Buyurtma allaqachon imtihonga
+    # bog'langan bo'lsa yoki shu guruhda o'sha kuni xuddi shu turdagi
+    # imtihon bor bo'lsa — yangisi ochilmaydi, o'shanga bog'lanadi.
+    same = None
+    if o.exam_id:
+        same = db.query(models.Exam).get(o.exam_id)
+    if not same:
+        same = (db.query(models.Exam)
+                .filter(models.Exam.group_id == o.group_id,
+                        models.Exam.date == o.date,
+                        models.Exam.kind == o.kind,
+                        models.Exam.unit_no == o.unit_no,
+                        models.Exam.status != "cancelled")
+                .order_by(models.Exam.id).first())
+    if same:
+        same.date = o.date
+        if not same.examiner_id:
+            same.examiner_id = user.id
+        o.exam_id = same.id
+        _close_order_tasks(db, o, f"buyurtmani {user.full_name} qabul qildi",
+                           heads=EXAM_ORDER_INVITE_HEADS,
+                           keep_user_id=user.id)
+        return
 
     import exam_online as _eo
     _bank = _eo.bank_max(db, db.query(models.Group).get(o.group_id),

@@ -1745,6 +1745,8 @@ class ContentCreate(BaseModel):
     kpi_target: Optional[str] = None
     series: Optional[str] = None
     script: Optional[str] = None
+    # 2026-10-17: SMM brendi (smm_brands). Bo'sh — Jony Academy.
+    brand_id: Optional[int] = None
 
 
 class ContentUpdate(BaseModel):
@@ -1802,6 +1804,8 @@ class ContentUpdate(BaseModel):
     # Havola: SMM post joylagach shu yerga qo'yadi va natija
     # avtomat olinadi.
     post_url: Optional[str] = None
+    # 2026-10-17: SMM brendi (smm_brands). null — Jony Academy.
+    brand_id: Optional[int] = None
 
 
 class ContentStatus(BaseModel):

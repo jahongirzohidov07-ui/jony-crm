@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   Megaphone, AlertTriangle, Plus, X, Info, Calendar,
   Lightbulb, Inbox, ExternalLink, MessageSquare, TrendingUp,
-  Palette, Image, BookOpen, BarChart3, Table2,
+  Palette, Image, BookOpen, BarChart3, Table2, Layers,
 } from "lucide-react";
 import {
   api, type ContentMeta, type ContentList, type ContentRow,
@@ -11,8 +11,14 @@ import {
   type AttributionReport, type Attribution, type CampaignRow,
   type FunnelStep, type BrandBook, type BrandRow, type MediaList,
   type KbList, type KbRow, type SmmAnalytics, type SmmKpi,
-  type SmmReport,
+  type SmmReport, type User,
 } from "../lib/api";
+import {
+  getSmmBrands, createSmmBrand, updateSmmBrand, setSmmBrandMembers,
+  defaultBrandFor, BRAND_KIND_LABEL, type SmmBrand, type SmmBrandKind,
+  type SmmBrandsResponse, type ContentBrandFields,
+} from "../lib/smmBrands";
+import { BrandChips, useBrandFilter } from "../components/BrandChips";
 import { useAuth } from "../lib/AuthContext";
 import { Time24Input } from "../components/Time24Input";
 import { ContentPlan, ContentAnalytics } from "../components/ContentPlan";
@@ -21,6 +27,7 @@ import { InstagramAudience } from "../components/InstagramAudience";
 import { VideoCheck } from "../components/VideoCheck";
 import {
   SMM_ACCESS, IDEA_SUBMIT, CONTENT_REQUESTER, INBOX_ACCESS, can,
+  FULL_ACCESS, SMM_MANAGER,
 } from "../lib/roles";
 import { formatDate } from "../lib/format";
 
@@ -194,6 +201,7 @@ export default function Smm() {
 
 // ============================================================ Bugun
 function DashboardTab() {
+  const { user } = useAuth();
   const [d, setD] = useState<SmmDashboard | null>(null);
   const [open, setOpen] = useState<number | null>(null);
 
@@ -323,6 +331,9 @@ function DashboardTab() {
         {d.hint}
       </p>
 
+      {/* Brendlar (2026-10-17) — faqat asoschi va filial rahbariga */}
+      {can(user?.role, FULL_ACCESS) && <BrandsCard />}
+
       {open !== null && (
         <ContentCard
           id={open}
@@ -336,13 +347,295 @@ function DashboardTab() {
   );
 }
 
+// ============================================================ Brendlar
+/* BRENDLAR (2026-10-17). Jahongir: Marhabo bitta emas, uchta brendni
+   yuritadi — Jony Academy, Jony School va Jahongir Zoxidov shaxsiy
+   brendi. Kontent brendga tegishli; bu yerda brendlarni boshqarish:
+   yangi brend qo'shish, faol/nofaol qilish va SMM menejerlarni
+   biriktirish. Faqat FULL_ACCESS (asoschi, filial rahbari) ko'radi —
+   server ham shuni tekshiradi. Hech narsa o'chirilmaydi: nofaol brend
+   kontentlari joyida qoladi, faqat yangi kontentga tanlanmaydi.
+   Brend filtri (useBrandFilter, BrandChips) — components/BrandChips.tsx:
+   Kontent-plan ham ishlatadi. */
+
+function BrandsCard() {
+  const [d, setD] = useState<SmmBrandsResponse | null>(null);
+  const [staff, setStaff] = useState<User[]>([]);
+  const [edit, setEdit] = useState<number | null>(null);
+  const [pick, setPick] = useState<number[]>([]);
+  const [name, setName] = useState("");
+  const [kind, setKind] = useState<SmmBrandKind>("brand");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [ok, setOk] = useState("");
+
+  const load = () =>
+    getSmmBrands()
+      .then(setD)
+      .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
+  useEffect(() => {
+    load();
+  }, []);
+  // Server SMM menejerlar ro'yxatini ("managers") bermasa — xodimlar
+  // ro'yxatidan olinadi (u filial filtriga bog'liq)
+  const noManagers = d !== null && d.managers === undefined;
+  useEffect(() => {
+    if (!noManagers) return;
+    api.get<User[]>("/users").then(setStaff).catch(() => setStaff([]));
+  }, [noManagers]);
+
+  async function run(fn: () => Promise<unknown>, done: string) {
+    setBusy(true);
+    setErr("");
+    setOk("");
+    try {
+      await fn();
+      setOk(done);
+      await load();
+      return true;
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Xatolik");
+      return false;
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  // Belgilash ro'yxati: faol SMM menejerlar + hozirgi a'zolar (filial
+  // filtri tufayli ro'yxatda ko'rinmagan a'zo saqlashda tushib qolmasin)
+  const smmSet = (): Set<number> | null =>
+    d?.managers
+      ? new Set(d.managers.map((u) => u.id))
+      : null; // server bermadi (eski javob) — tekshirib bo'lmaydi
+  // 2026-10-17: a'zo endi SMM menejer bo'lmasa (masalan ustozga
+  // o'tgan) — "(SMM emas)" belgisi bilan, standart holatda belgilanmagan:
+  // aks holda shu brendning har qanday saqlashi 400 berardi.
+  const candidates = (b: SmmBrand) => {
+    const m = new Map<number, string>();
+    if (d?.managers) d.managers.forEach((u) => m.set(u.id, u.name));
+    else
+      staff
+        .filter((u) => u.role === SMM_MANAGER && u.is_active)
+        .forEach((u) => m.set(u.id, u.full_name));
+    const smm = smmSet();
+    b.members.forEach((x) => {
+      if (!m.has(x.id)) m.set(x.id, x.name);
+    });
+    return [...m.entries()].map(([id, n]) => ({
+      id, name: n, notSmm: smm !== null && !smm.has(id),
+    }));
+  };
+  const memberLabel = (x: { id: number; name: string }) => {
+    const smm = smmSet();
+    return smm !== null && !smm.has(x.id) ? `${x.name} (SMM emas)` : x.name;
+  };
+
+  async function add() {
+    const n = name.trim();
+    if (n.length < 2 || n.length > 80) {
+      setErr("Brend nomi 2 dan 80 belgigacha bo'lsin");
+      return;
+    }
+    if (await run(() => createSmmBrand({ name: n, kind }), "Brend qo'shildi")) {
+      setName("");
+      setKind("brand");
+    }
+  }
+
+  const btn = "px-2.5 py-1 rounded-lg border text-xs disabled:opacity-50";
+
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5 mt-5">
+      <div className="flex items-center gap-2 mb-1">
+        <Layers size={15} className="text-brand-500" />
+        <p className="text-sm font-medium text-slate-700">Brendlar</p>
+        {d && <span className="text-xs text-slate-400">{d.brands.length} ta</span>}
+      </div>
+      <p className="text-xs text-slate-400 mb-3">
+        Kontent qaysi brendga tegishli. SMM menejer profilida o'z
+        brendlarini ko'radi. Brend bo'yicha ko'rish: Kontent-plan
+        (tepadagi brend tugmalari).
+      </p>
+
+      {!d ? (
+        <p className="text-sm text-slate-400">Yuklanmoqda...</p>
+      ) : (
+        <div className="space-y-2">
+          {d.brands.map((b) => (
+            <div key={b.id} className="rounded-lg border border-slate-200 px-3 py-2.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="min-w-0 break-words text-sm font-medium text-slate-800">
+                  {b.name}
+                </span>
+                <span
+                  className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                    b.is_active
+                      ? "bg-emerald-100 text-emerald-700"
+                      : "bg-slate-100 text-slate-500"
+                  }`}
+                >
+                  {b.is_active ? "Faol" : "Nofaol"}
+                </span>
+                <span className="text-xs text-slate-400">
+                  {BRAND_KIND_LABEL[b.kind] || b.kind} · {b.content_count} ta kontent
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 mt-1 break-words">
+                {b.members.length
+                  ? `Mas'ul: ${b.members.map(memberLabel).join(", ")}`
+                  : "Mas'ul biriktirilmagan"}
+              </p>
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                <button
+                  disabled={busy}
+                  onClick={() => {
+                    if (edit === b.id) {
+                      setEdit(null);
+                      return;
+                    }
+                    setEdit(b.id);
+                    // SMM bo'lmay qolgan a'zo oldindan belgilanmaydi
+                    setPick(
+                      candidates(b)
+                        .filter((u) => !u.notSmm
+                          && b.members.some((x) => x.id === u.id))
+                        .map((u) => u.id),
+                    );
+                    setErr("");
+                    setOk("");
+                  }}
+                  className={`${btn} border-slate-200 text-slate-600 hover:bg-slate-50`}
+                >
+                  A'zolar
+                </button>
+                {/* Jony Academy — asosiy brend (brendsiz kontent shunga
+                    tegishli), uni nofaol qilib bo'lmaydi */}
+                {!(b.code === "academy" && b.is_active) && (
+                  <button
+                    disabled={busy}
+                    onClick={() =>
+                      run(
+                        () => updateSmmBrand(b.id, { is_active: !b.is_active }),
+                        b.is_active ? "Brend nofaol qilindi" : "Brend faollashtirildi",
+                      )
+                    }
+                    className={`${btn} border-slate-200 text-slate-600 hover:bg-slate-50`}
+                  >
+                    {b.is_active ? "Nofaol qilish" : "Faollashtirish"}
+                  </button>
+                )}
+              </div>
+
+              {edit === b.id && (
+                <div className="mt-2 pt-2 border-t border-slate-100">
+                  {candidates(b).length === 0 ? (
+                    <p className="text-xs text-slate-400">
+                      SMM menejer topilmadi.
+                    </p>
+                  ) : (
+                    <div className="space-y-1">
+                      {candidates(b).map((u) => (
+                        <label
+                          key={u.id}
+                          className="flex items-center gap-2 text-sm text-slate-700"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={pick.includes(u.id)}
+                            onChange={(e) =>
+                              setPick((p) =>
+                                e.target.checked
+                                  ? [...p, u.id]
+                                  : p.filter((x) => x !== u.id),
+                              )
+                            }
+                          />
+                          <span className="min-w-0 break-words">{u.name}</span>
+                          {u.notSmm && (
+                            <span className="text-[11px] text-amber-600">
+                              (SMM emas)
+                            </span>
+                          )}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                  {/* Xato tugma yonida — telefonda karta pastida
+                      ko'rinmay qolmasin (2026-10-17) */}
+                  {err && <p className="text-xs text-red-600 mt-2">{err}</p>}
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    <button
+                      disabled={busy}
+                      onClick={async () => {
+                        if (await run(() => setSmmBrandMembers(b.id, pick),
+                                      "A'zolar saqlandi"))
+                          setEdit(null);
+                      }}
+                      className={`${btn} border-brand-600 bg-brand-600 text-white hover:bg-brand-700`}
+                    >
+                      {busy ? "Saqlanmoqda..." : "Saqlash"}
+                    </button>
+                    <button
+                      disabled={busy}
+                      onClick={() => setEdit(null)}
+                      className={`${btn} border-slate-200 text-slate-600 hover:bg-slate-50`}
+                    >
+                      Bekor
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-2 mt-3">
+        <input
+          className="w-full sm:w-auto sm:flex-1 min-w-0 rounded-lg border border-slate-300 px-3 py-1.5 text-sm"
+          placeholder="Yangi brend nomi"
+          maxLength={80}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <select
+          className="min-w-0 rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm bg-white"
+          value={kind}
+          onChange={(e) => setKind(e.target.value as SmmBrandKind)}
+        >
+          {(["brand", "school", "personal", "academy"] as const).map((k) => (
+            <option key={k} value={k}>{BRAND_KIND_LABEL[k]}</option>
+          ))}
+        </select>
+        <button
+          onClick={add}
+          disabled={busy}
+          className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-brand-600 text-white text-sm font-medium hover:bg-brand-700 disabled:opacity-50"
+        >
+          <Plus size={14} /> Qo'shish
+        </button>
+      </div>
+      {err && edit === null && (
+        <p className="text-sm text-red-600 mt-2">{err}</p>
+      )}
+      {ok && <p className="text-sm text-emerald-600 mt-2">{ok}</p>}
+    </div>
+  );
+}
+
 function ContentRowCard({
   c,
   onOpen,
+  showBrand = false,
 }: {
   c: ContentRow;
   onOpen: () => void;
+  /** "Hammasi" filtrida qator qaysi brendniki ekani ham yoziladi. */
+  showBrand?: boolean;
 }) {
+  const brandName = showBrand
+    ? (c as ContentRow & ContentBrandFields).brand_name
+    : null;
   return (
     <button
       onClick={onOpen}
@@ -357,6 +650,7 @@ function ContentRowCard({
         <p className="text-sm font-medium text-slate-800">{c.title}</p>
         <p className="text-xs text-slate-400">
           {c.platform_label} · {c.pillar_label}
+          {brandName ? ` · ${brandName}` : ""}
           {c.branch ? ` · ${c.branch}` : ""}
           {c.owner ? ` · ${c.owner}` : ""}
         </p>
@@ -739,24 +1033,28 @@ function CalendarTab() {
   const [platform, setPlatform] = useState("");
   const [open, setOpen] = useState<number | null>(null);
   const [adding, setAdding] = useState(false);
+  // Brend filtri (2026-10-17): "Hammasi" yoki bitta brend
+  const bf = useBrandFilter();
 
   const [y, m] = month.split("-").map(Number);
   const from = `${month}-01`;
   const to = new Date(y, m, 0).toISOString().slice(0, 10);
 
   function load() {
+    if (bf.sel === null) return; // brendlar hali yuklanmadi
     api
       .get<ContentList>(
         `/content?date_from=${from}&date_to=${to}` +
           (pillar ? `&pillar=${pillar}` : "") +
-          (platform ? `&platform=${platform}` : "")
+          (platform ? `&platform=${platform}` : "") +
+          (bf.sel !== "all" ? `&brand_id=${bf.sel}` : "")
       )
       .then(setD);
   }
   useEffect(() => {
     api.get<ContentMeta>("/content-meta").then(setMeta);
   }, []);
-  useEffect(load, [month, pillar, platform]);
+  useEffect(load, [month, pillar, platform, bf.sel]);
 
   if (!meta || !d)
     return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
@@ -771,6 +1069,7 @@ function CalendarTab() {
 
   return (
     <div>
+      <BrandChips data={bf.data} sel={bf.sel} onPick={bf.choose} />
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <input
           type="month"
@@ -857,6 +1156,7 @@ function CalendarTab() {
                       key={c.id}
                       c={c}
                       onOpen={() => setOpen(c.id)}
+                      showBrand={bf.sel === "all"}
                     />
                   ))}
               </div>
@@ -877,6 +1177,8 @@ function CalendarTab() {
       {adding && (
         <NewContent
           meta={meta}
+          brands={bf.data?.brands || []}
+          brandFilter={bf.sel}
           onClose={() => setAdding(false)}
           onSaved={() => {
             setAdding(false);
@@ -890,13 +1192,25 @@ function CalendarTab() {
 
 function NewContent({
   meta,
+  brands,
+  brandFilter,
   onClose,
   onSaved,
 }: {
   meta: ContentMeta;
+  /** Brendlar (2026-10-17). Bo'sh bo'lsa tanlash ko'rinmaydi — server
+   *  o'zi Jony Academy'ga yozadi. */
+  brands: SmmBrand[];
+  /** Taqvimda tanlangan brend filtri ("all" | id). */
+  brandFilter: string | null;
   onClose: () => void;
   onSaved: () => void;
 }) {
+  // Standart: taqvimda brend tanlangan bo'lsa — o'sha (aks holda yangi
+  // post filtrdan "yo'qolib" qolardi), bo'lmasa Jony Academy.
+  const activeBrands = brands.filter((b) => b.is_active);
+  const [brandId, setBrandId] = useState(() =>
+    defaultBrandFor(brands, brandFilter));
   const [f, setF] = useState({
     title: "",
     platform: meta.platforms[0]?.key || "",
@@ -933,6 +1247,8 @@ function NewContent({
         ...f,
         branch_id: branchId ? Number(branchId) : null,
         needs_consent: consent,
+        // bo'sh = server Jony Academy'ga yozadi
+        brand_id: brandId ? Number(brandId) : null,
       });
       onSaved();
     } catch (e) {
@@ -967,6 +1283,25 @@ function NewContent({
               autoFocus
             />
           </div>
+
+          {activeBrands.length > 0 && (
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">
+                Brend
+              </label>
+              <select
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white"
+                value={brandId}
+                onChange={(e) => setBrandId(e.target.value)}
+              >
+                {activeBrands.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-3">
             <Sel
@@ -1140,6 +1475,13 @@ function ContentCard({ id, onClose }: { id: number; onClose: () => void }) {
     load();
     api.get<ContentMeta>("/content-meta").then(setMeta);
   }, [id]);
+  // Brend tanlash (2026-10-17) — brendlar ro'yxati faqat SMM_ACCESS'ga
+  // ochiq; boshqa xodim 403 olib toast ko'rmasin
+  const [brands, setBrands] = useState<SmmBrand[]>([]);
+  useEffect(() => {
+    if (!can(user?.role, SMM_ACCESS)) return;
+    getSmmBrands().then((r) => setBrands(r.brands)).catch(() => setBrands([]));
+  }, [user?.role]);
 
   if (!d || !meta)
     return (
@@ -1152,6 +1494,11 @@ function ContentCard({ id, onClose }: { id: number; onClose: () => void }) {
 
   const canEdit = meta.can_edit;
   const isApprover = user?.role === d.approver_role;
+  const brandOf = d as ContentFull & ContentBrandFields;
+  // Faol brendlar + hozirgi brend (nofaol bo'lsa ham ko'rinib tursin)
+  const brandOptions = brands.filter(
+    (b) => b.is_active || b.id === brandOf.brand_id,
+  );
 
   async function save(patch: Record<string, unknown>) {
     setBusy(true);
@@ -1268,6 +1615,33 @@ function ContentCard({ id, onClose }: { id: number; onClose: () => void }) {
                 Maqsad: <b>{d.goal_label}</b> — natija{" "}
                 {d.goal_metric.toLowerCase()} bilan o'lchanadi
               </p>
+              {canEdit && brandOptions.length > 0 ? (
+                <label className="flex flex-wrap items-center gap-2 mt-1.5 text-xs text-slate-500">
+                  Brend:
+                  <select
+                    className="min-w-0 max-w-full rounded-lg border border-slate-300 px-2 py-1 text-xs bg-white"
+                    value={brandOf.brand_id ?? ""}
+                    disabled={busy}
+                    onChange={(e) => {
+                      if (e.target.value)
+                        save({ brand_id: Number(e.target.value) });
+                    }}
+                  >
+                    {brandOf.brand_id == null && (
+                      <option value="">— tanlanmagan —</option>
+                    )}
+                    {brandOptions.map((b) => (
+                      <option key={b.id} value={b.id} disabled={!b.is_active}>
+                        {b.name}{b.is_active ? "" : " (nofaol)"}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ) : brandOf.brand_name ? (
+                <p className="text-xs text-slate-500 mt-1">
+                  Brend: <b>{brandOf.brand_name}</b>
+                </p>
+              ) : null}
             </div>
             <button onClick={onClose} className="text-slate-400">
               <X size={18} />

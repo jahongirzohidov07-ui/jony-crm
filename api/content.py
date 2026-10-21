@@ -31,6 +31,8 @@ from auth import (
 )
 from database import Base, engine, get_db, SessionLocal
 from common import *  # noqa: F401,F403 - shared helpers/state
+# 2026-10-17: SMM brendlari (Jony Academy / Jony School / shaxsiy brend)
+import smm_brands as _sb
 
 router = APIRouter()
 
@@ -79,9 +81,13 @@ def _content_warnings(db: Session, c: models.Content,
     return out
 
 def _content_out(db: Session, c: models.Content, *, full: bool = False,
-                 users: dict | None = None) -> dict:
+                 users: dict | None = None,
+                 brands: tuple | None = None) -> dict:
     users = users if users is not None else {
         u.id: u.full_name for u in db.query(models.User).all()}
+    # 2026-10-17: brend (NULL — Jony Academy). Ro'yxatda xarita bir
+    # marta olinib uzatiladi — har qatorga alohida so'rov ketmasin.
+    brands = brands if brands is not None else _sb.brand_map(db)
     warn = _content_warnings(db, c)
     row = {
         "id": c.id,
@@ -103,6 +109,7 @@ def _content_out(db: Session, c: models.Content, *, full: bool = False,
         "funnel_label": roles.FUNNEL_LABELS.get(c.funnel or "", "—"),
         "branch": c.branch.name if c.branch else None,
         "branch_id": c.branch_id,
+        **_sb.brand_fields(c, brands),
         "course": c.course,
         "campaign_id": c.campaign_id,
         "status": c.status,
@@ -226,11 +233,15 @@ def list_content(
     campaign_id: int | None = None,
     owner_id: int | None = None,
     branch_id: int | None = None,
+    brand_id: int | None = None,
     db: Session = Depends(get_db),
     user=Depends(require_role(*roles.CONTENT_REQUESTER)),
 ):
-    """Kontent taqvimi. Sana oralig'i berilsa — o'sha oyning ro'yxati."""
+    """Kontent taqvimi. Sana oralig'i berilsa — o'sha oyning ro'yxati.
+    brand_id (2026-10-17) — faqat shu brend kontentlari (Jony Academy
+    tanlansa brendsiz eski kontentlar ham)."""
     q = _content_scope(db, user, branch_id)
+    q = _sb.filter_by_brand(db, q, brand_id)
     if date_from:
         q = q.filter(models.Content.planned_date >= date.fromisoformat(date_from))
     if date_to:
@@ -249,7 +260,8 @@ def list_content(
     rows = q.order_by(models.Content.planned_date,
                       models.Content.planned_time).limit(500).all()
     users = {u.id: u.full_name for u in db.query(models.User).all()}
-    out = [_content_out(db, c, users=users) for c in rows]
+    bmap = _sb.brand_map(db)
+    out = [_content_out(db, c, users=users, brands=bmap) for c in rows]
 
     # Reja bajarilishi: rejalashtirilganidan nechtasi chiqdi
     planned = [r for r in out if r["planned_date"]]
@@ -281,6 +293,15 @@ def create_content(
 ):
     data = payload.model_dump()
     data["needs_consent"] = 1 if data.pop("needs_consent", None) else 0
+    # 2026-10-17: brend tanlanmasa — Jony Academy; yo'q/nofaol — 400.
+    # Variant (parent_id) brend umuman yuborilmasa — asosiy postning
+    # brendida (u nofaol bo'lsa Jony Academy).
+    parent = (db.get(models.Content, data["parent_id"])
+              if data.get("parent_id") else None)
+    if parent is not None and "brand_id" not in payload.model_fields_set:
+        data["brand_id"] = _sb.inherit_brand_id(db, parent.brand_id)
+    else:
+        data["brand_id"] = _sb.content_brand_id(db, data.get("brand_id"))
     c = models.Content(**data, status="idea", created_by=user.full_name)
     c.owner_id = c.owner_id or user.id
     db.add(c)
@@ -322,6 +343,20 @@ def update_content(
     given = payload.model_dump(exclude_unset=True)
     if "title" in given and not (given["title"] or "").strip():
         raise HTTPException(400, "Mavzu bo'sh bo'lmasin")
+    if "brand_id" in given:
+        # 2026-10-17: SMM menejer ham brendni almashtira oladi. null —
+        # Jony Academy; yo'q/nofaol brend — 400 (hozirgisi qayta
+        # yuborilsa tekshirilmaydi). O'zgarish tarixga NOMI bilan.
+        new_b = _sb.content_brand_id(db, given.pop("brand_id"),
+                                     current=c.brand_id)
+        bnames, acad = _sb.brand_map(db)
+        if (c.brand_id or acad) != (new_b or acad):
+            db.add(models.ContentVersion(
+                content_id=c.id, field="brand",
+                old_value=bnames.get(c.brand_id or acad),
+                new_value=bnames.get(new_b or acad),
+                changed_by=user.full_name))
+        c.brand_id = new_b
 
     for k, v in given.items():
         if k in ("needs_consent", "consent_ok"):
@@ -749,6 +784,7 @@ def smm_dashboard(
     today = date.today()
     m_start, m_end = billing.month_bounds(today.year, today.month)
     users = {u.id: u.full_name for u in db.query(models.User).all()}
+    bmap = _sb.brand_map(db)
 
     all_rows = db.query(models.Content).all()
     open_rows = [c for c in all_rows if c.status in roles.CONTENT_OPEN]
@@ -827,10 +863,12 @@ def smm_dashboard(
              else "bad"},
         ],
         "today": sorted(
-            [_content_out(db, c, users=users) for c in todays],
+            [_content_out(db, c, users=users, brands=bmap) for c in todays],
             key=lambda r: (r["planned_time"] or "99:99")),
-        "late": [_content_out(db, c, users=users) for c in late][:20],
-        "waiting": [_content_out(db, c, users=users) for c in waiting],
+        "late": [_content_out(db, c, users=users, brands=bmap)
+                 for c in late][:20],
+        "waiting": [_content_out(db, c, users=users, brands=bmap)
+                    for c in waiting],
         "alerts": sorted(alerts,
                          key=lambda a: 0 if a["severity"] == "block" else 1),
         "plan_percent": plan_pct,
@@ -1882,8 +1920,10 @@ import content_fetch as _cf
 
 
 def _plan_row(db: Session, c: models.Content, m=None,
-              users: dict | None = None) -> dict:
+              users: dict | None = None,
+              brands: tuple | None = None) -> dict:
     """Bitta qator — Jahongir jadvalidagi ustunlar tartibida."""
+    brands = brands if brands is not None else _sb.brand_map(db)
     if users is None:
         users = {}
         if c.owner_id:
@@ -1914,6 +1954,8 @@ def _plan_row(db: Session, c: models.Content, m=None,
         "goal": c.goal,
         "goal_label": roles.GOAL_LABELS.get(c.goal, c.goal),
         "title": c.title,
+        # 2026-10-17: brend (NULL — Jony Academy)
+        **_sb.brand_fields(c, brands),
         "hook": c.hook,
         "message": c.message,
         "proof": c.proof,
@@ -1954,6 +1996,7 @@ def _plan_row(db: Session, c: models.Content, m=None,
 @router.get("/api/smm/plan")
 def smm_plan(year: int | None = None, month: int | None = None,
              branch_id: int | None = None, scope: str = "all",
+             brand_id: int | None = None,
              db: Session = Depends(get_db),
              user=Depends(require_role(*roles.SMM_ACCESS))):
     """Kontent-plan — Excel jadvalining aynan o'zi.
@@ -1979,6 +2022,8 @@ def smm_plan(year: int | None = None, month: int | None = None,
     # qolardi (2026-08-28).
     q = scope_to_branch(db.query(models.Content), models.Content,
                         user, branch_id, keep_unset=True)
+    # 2026-10-17: brend bo'yicha (SMM ekranidagi brend tanlagichi)
+    q = _sb.filter_by_brand(db, q, brand_id)
     if scope == "month":
         start, end = billing.month_bounds(y, m)
         rows = (q.filter(models.Content.planned_date >= start,
@@ -2002,7 +2047,8 @@ def smm_plan(year: int | None = None, month: int | None = None,
     uids = {c.owner_id for c in rows if c.owner_id}
     unames = {u.id: u.full_name for u in db.query(models.User)
               .filter(models.User.id.in_(uids or [-1])).all()}
-    out = [_plan_row(db, c, mets.get(c.id), unames) for c in rows]
+    bmap = _sb.brand_map(db)
+    out = [_plan_row(db, c, mets.get(c.id), unames, bmap) for c in rows]
     # Qaysi oylarda post bor — tanlagich uchun (bo'sh oy ko'rsatilmasin)
     oylar = sorted({(c.planned_date.year, c.planned_date.month)
                     for c in rows if c.planned_date}, reverse=True)
@@ -2065,6 +2111,9 @@ def copy_content(cid: int, payload: dict | None = None,
         goal=src.goal, funnel=src.funnel, audience=src.audience,
         branch_id=src.branch_id, course=src.course,
         campaign_id=src.campaign_id, series=src.series,
+        # 2026-10-17: o'sha brend; u endi nofaol bo'lsa — Jony Academy
+        # (nusxa nofaol brendga yangi post ochmasin)
+        brand_id=_sb.inherit_brand_id(db, src.brand_id),
         status="idea",
         planned_date=(date.fromisoformat(new_date) if new_date
                       else src.planned_date),
@@ -2363,7 +2412,9 @@ def content_analytics(months: int = 3, branch_id: int | None = None,
 def import_plan(payload: dict = Body(...),
                 db: Session = Depends(get_db),
                 user=Depends(require_role(*roles.SMM_ACCESS))):
-    """{year, month, rows: [...], dry_run: bool, branch_id}
+    """{year, month, rows: [...], dry_run: bool, branch_id, brand_id}
+
+    brand_id (2026-10-17) — qaysi SMM brendiga; bo'sh — Jony Academy.
 
     rows — Excel sarlavhalari bilan: "Sana", "Vaqt", "Platforma",
     "Auditoriya segmenti", "Kontent ustuni", "Voronka bosqichi",
@@ -2380,14 +2431,24 @@ def import_plan(payload: dict = Body(...),
         raise HTTPException(400, "rows ro'yxat bo'lishi kerak")
     if len(rows) > 200:
         raise HTTPException(400, "Bir martada 200 qatordan ko'p bo'lmasin")
+    # 2026-10-17: reja QAYSI BRENDGA yoziladi (SMM ekranidagi brend).
+    # Berilmasa — Jony Academy; yo'q/nofaol brend — 400. Avval hamma
+    # qator brendsiz (= Academy) tushardi: Jony School rejasi yuklansa
+    # ham Academy'da ko'rinardi.
+    brand_id = _sb.content_brand_id(db, payload.get("brand_id"))
 
     # DUBL TEKSHIRUVI endi bitta oy bilan chegaralanmaydi: faylda
     # to'liq sana bo'lsa qatorlar boshqa oyga tushishi mumkin.
     # Chegara 13 oy — butun bazani tortmaslik uchun.
+    # 2026-10-17: dubl faqat SHU BREND ichida (Academy'da brendsiz
+    # eskilari ham) — boshqa brenddagi bir xil sana+mavzuli post
+    # bu rejani "allaqachon bor" qilib o'tkazib yubormasin.
     ufq = date(y, m, 1) - timedelta(days=400)
+    hq = _sb.filter_by_brand(
+        db, db.query(models.Content)
+        .filter(models.Content.planned_date >= ufq), brand_id)
     have = {(c.planned_date, (c.title or "").strip().lower())
-            for c in db.query(models.Content)
-            .filter(models.Content.planned_date >= ufq).all()}
+            for c in hq.all()}
 
     def _g(r, *names):
         for n in names:
@@ -2523,6 +2584,7 @@ def import_plan(payload: dict = Body(...),
     if dry:
         return {
             "dry_run": True, "year": y, "month": m,
+            "brand_id": brand_id,           # 2026-10-17
             "will_add": len(plan), "skipped": len(skipped),
             "bad": bad,
             "preview": [{
@@ -2558,6 +2620,7 @@ def import_plan(payload: dict = Body(...),
             shoot_date=x["shoot_date"], kpi_target=x["kpi_target"],
             branch_id=branch_id, status="idea", note=note,
             created_by=user.full_name,
+            brand_id=brand_id,          # 2026-10-17: tanlangan brend
         )
         db.add(c)
         made.append(c)
@@ -2567,7 +2630,7 @@ def import_plan(payload: dict = Body(...),
             c.content_id = _content_code(c)
     db.commit()
     return {"added": len(made), "skipped": len(skipped), "bad": bad,
-            "year": y, "month": m}
+            "year": y, "month": m, "brand_id": brand_id}
 
 
 # =====================================================================

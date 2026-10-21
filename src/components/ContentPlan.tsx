@@ -4,6 +4,8 @@ import {
   TrendingUp, AlertTriangle, ChevronDown, Upload,
 } from "lucide-react";
 import { api, getGlobalBranch } from "../lib/api";
+import { BrandChips, useBrandFilter } from "./BrandChips";
+import { defaultBrandFor, type SmmBrand } from "../lib/smmBrands";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -50,13 +52,34 @@ export function ContentPlan() {
   const [msg, setMsg] = useState("");
   const [tick, setTick] = useState(0);
   const [preview, setPreview] = useState<Any>(null);
+  // BREND FILTRI (2026-10-17): Marhabo uchta brendni yuritadi (Jony
+  // Academy, Jony School, shaxsiy brend). Avval tugmalar faqat "Boshqa
+  // -> Kontent taqvimi"da edi — kundalik ekran esa shu Kontent-plan.
+  const bf = useBrandFilter();
+  const brands: SmmBrand[] = bf.data?.brands || [];
+  const activeBrands = brands.filter((b) => b.is_active);
+  /** Yangi post / import qaysi brendga: filtrdagi brend, aks holda
+   *  Jony Academy (null — server o'zi Academy'ga yozadi). */
+  const defaultBrand = () => {
+    const v = defaultBrandFor(brands, bf.sel);
+    return v ? Number(v) : null;
+  };
+  /** Yangi qatorlar boshqa brendga tushgan bo'lsa — filtr o'shanga
+   *  o'tadi, aks holda ular ro'yxatdan "yo'qolib" qolardi. */
+  const followBrand = (bid: number | null) => {
+    if (bid && bf.sel !== null && bf.sel !== "all" && String(bid) !== bf.sel)
+      bf.choose(String(bid));
+  };
 
   const load = useCallback(() => {
+    if (bf.sel === null) return; // brendlar hali yuklanmadi
+    const brandQ = bf.sel !== "all" ? `brand_id=${bf.sel}` : "";
     const q = pick === "all"
-      ? "/smm/plan"
-      : `/smm/plan?scope=month&year=${year}&month=${month}`;
+      ? `/smm/plan${brandQ ? `?${brandQ}` : ""}`
+      : `/smm/plan?scope=month&year=${year}&month=${month}`
+        + (brandQ ? `&${brandQ}` : "");
     api.get<Any>(q).then(setD).catch(() => setD(null));
-  }, [pick, year, month]);
+  }, [pick, year, month, bf.sel]);
   useEffect(load, [load, tick]);
 
   const save = async (id: number, patch: Any, status?: string) => {
@@ -199,25 +222,30 @@ export function ContentPlan() {
         const g = guessMonth(bestSheet) || guessMonth(file.name);
         if (g) { [ty, tm] = g; qayerdan = "fayl nomidan"; }
       }
+      const brand = defaultBrand();
       const r = await api.post<Any>("/smm/plan/import",
         { year: ty, month: tm, rows: best, dry_run: true,
-          branch_id: branchNow() });
-      setPreview({ ...r, rows: best, ty, tm, qayerdan, file: file.name });
+          branch_id: branchNow(), brand_id: brand });
+      setPreview({ ...r, rows: best, ty, tm, qayerdan, file: file.name,
+                   brand });
       setMsg("");
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "Fayl o'qilmadi");
     }
   };
 
-  /** Nishon oy o'zgartirilganda oldindan ko'rishni qayta hisoblash. */
-  const repreview = async (ty: number, tm: number) => {
+  /** Nishon oy (yoki brend, 2026-10-17) o'zgartirilganda oldindan
+   *  ko'rishni qayta hisoblash — dubl tekshiruvi brend ichida. */
+  const repreview = async (ty: number, tm: number,
+                           brand: number | null = preview?.brand ?? null) => {
     if (!preview) return;
     try {
       const r = await api.post<Any>("/smm/plan/import",
         { year: ty, month: tm, rows: preview.rows, dry_run: true,
-          branch_id: branchNow() });
-      setPreview({ ...preview, ...r, rows: preview.rows, ty, tm,
-                   qayerdan: "qo'lda tanlandi" });
+          branch_id: branchNow(), brand_id: brand });
+      const sameMonth = ty === preview.ty && tm === preview.tm;
+      setPreview({ ...preview, ...r, rows: preview.rows, ty, tm, brand,
+                   qayerdan: sameMonth ? preview.qayerdan : "qo'lda tanlandi" });
     } catch (e) {
       setMsg(e instanceof Error ? e.message : "Xatolik");
     }
@@ -230,10 +258,11 @@ export function ContentPlan() {
       const r = await api.post<Any>("/smm/plan/import",
         { year: preview.ty, month: preview.tm,
           rows: preview.rows, dry_run: false,
-          branch_id: branchNow() });
+          branch_id: branchNow(), brand_id: preview.brand ?? null });
       setMsg(`${r.added} ta post qo'shildi`
         + (r.skipped ? `, ${r.skipped} tasi allaqachon bor edi` : ""));
       setPreview(null);
+      followBrand(r.brand_id ?? preview.brand ?? null);
       setPick("all");        // yangi qatorlar darrov ko\'rinsin
       setTick((k) => k + 1);
     } catch (e) {
@@ -242,6 +271,8 @@ export function ContentPlan() {
   };
 
   if (!d) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda…</p>;
+  // "Hammasi"da qator qaysi brendniki ekani mavzu ostida yoziladi
+  const showBrand = bf.sel === "all" && activeBrands.length > 1;
 
   const rows: Any[] = d.rows || [];
   // Ro'yxatda o'tgan kunlar qayerdan boshlanadi (chegara chizig'i uchun)
@@ -253,6 +284,8 @@ export function ContentPlan() {
 
   return (
     <div>
+      {/* --- brend (2026-10-17) --- */}
+      <BrandChips data={bf.data} sel={bf.sel} onPick={bf.choose} />
       {/* --- boshqaruv --- */}
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <select value={pick} onChange={(e) => setPick(e.target.value)}
@@ -304,11 +337,14 @@ export function ContentPlan() {
         <NewPostForm
           meta={d.meta}
           branchId={branchNow()}
+          brands={brands}
+          brandId={defaultBrand()}
           onClose={() => setAdding(false)}
-          onDone={(t: string) => {
+          onDone={(t: string, bid: number | null) => {
             setAdding(false);
             setMsg(`«${t}» rejaga qo'shildi`);
             setPick("all");
+            followBrand(bid);
             setTick((k) => k + 1);
           }}
         />
@@ -348,6 +384,22 @@ export function ContentPlan() {
             <span className="text-[11px] text-slate-500">
               ({preview.qayerdan})
             </span>
+            {/* QAYSI BRENDGA (2026-10-17) — standart: filtrdagi brend,
+                aks holda Jony Academy */}
+            {activeBrands.length > 0 && (
+              <select
+                value={preview.brand ?? ""}
+                onChange={(e) => repreview(preview.ty, preview.tm,
+                  e.target.value ? Number(e.target.value) : null)}
+                className="max-w-full min-w-0 px-2 py-1 rounded-lg border border-slate-300 text-[12px]"
+                title="Reja qaysi brendga yoziladi"
+              >
+                {preview.brand == null && <option value="">Brend: —</option>}
+                {activeBrands.map((b) => (
+                  <option key={b.id} value={b.id}>Brend: {b.name}</option>
+                ))}
+              </select>
+            )}
             <span className="text-[12px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
               {preview.will_add} ta qo'shiladi
             </span>
@@ -475,6 +527,11 @@ export function ContentPlan() {
                         className={`mt-1 shrink-0 transition ${open === r.id ? "rotate-180" : ""}`} />
                       <span className="line-clamp-2">{r.title}</span>
                     </button>
+                    {showBrand && r.brand_name && (
+                      <span className="block pl-[17px] text-[11px] font-normal text-slate-400">
+                        {r.brand_name}
+                      </span>
+                    )}
                   </td>
                   <td className="px-2.5 py-2 text-slate-600 whitespace-nowrap">
                     {r.fmt_label}
@@ -517,7 +574,7 @@ export function ContentPlan() {
                 {open === r.id && (
                   <tr key={`${r.id}-x`}>
                     <td colSpan={16} className="px-4 py-4 bg-slate-50 border-t border-slate-200">
-                      <RowEditor row={r} meta={d.meta}
+                      <RowEditor row={r} meta={d.meta} brands={brands}
                                  onSave={save}
                                  onFetch={fetchOne} busy={busy === r.id} />
                     </td>
@@ -528,7 +585,10 @@ export function ContentPlan() {
             {rows.length === 0 && (
               <tr>
                 <td colSpan={16} className="px-4 py-10 text-center text-slate-400 text-sm">
-                  {pick === "all"
+                  {bf.sel !== null && bf.sel !== "all"
+                    ? "Bu brendda post yo'q. Tepadagi «Hammasi» ni tanlab "
+                      + "ko'ring yoki shu brendga yangi post qo'shing."
+                    : pick === "all"
                     ? "Hali birorta post yo'q. «Excel'dan yuklash» tugmasi "
                       + "orqali kontent-planni yuklang yoki «Kontent taqvimi» "
                       + "bo'limidan qo'ling bilan qo'shing."
@@ -547,8 +607,10 @@ export function ContentPlan() {
 
 /** Qator ichi: brief, ssenariy, havola va natija. */
 /** Jadval ustunlari uchun maydonlar (yangi qo'shish va tahrirlashda bir xil). */
-function MainFields({ v, set, meta }: {
+function MainFields({ v, set, meta, brands = [] }: {
   v: Any; set: (k: string, val: string) => void; meta: Any;
+  /** SMM brendlari (2026-10-17). Bo'sh bo'lsa tanlash ko'rinmaydi. */
+  brands?: SmmBrand[];
 }) {
   const inp = "w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-[13px] bg-white";
   const L = ({ t }: { t: string }) => (
@@ -569,6 +631,9 @@ function MainFields({ v, set, meta }: {
   const platforms = (meta?.platforms || []).map((p: Any) =>
     Array.isArray(p) ? { key: p[0], label: p[1] } : p);
   const owners = (meta?.owners || []).map((u: Any) => ({ key: String(u.id), label: u.name }));
+  // Faol brendlar + hozirgisi (nofaol bo'lsa ham ko'rinib tursin)
+  const brandOpts = brands.filter(
+    (b) => b.is_active || String(b.id) === String(v.brand_id ?? ""));
   return (
     <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
       <div className="col-span-2 md:col-span-3">
@@ -579,6 +644,18 @@ function MainFields({ v, set, meta }: {
         <input type="date" value={v.date ?? ""} onChange={(e) => set("date", e.target.value)} className={inp} /></div>
       <div><L t="Vaqt" />
         <input value={v.time ?? ""} placeholder="18:00" onChange={(e) => set("time", e.target.value)} className={inp} /></div>
+      {brandOpts.length > 0 && (
+        <div><L t="Brend" />
+          <select value={v.brand_id ?? ""} onChange={(e) => set("brand_id", e.target.value)} className={inp}>
+            {!v.brand_id && <option value="">— tanlanmagan —</option>}
+            {brandOpts.map((b) => (
+              <option key={b.id} value={String(b.id)} disabled={!b.is_active}>
+                {b.name}{b.is_active ? "" : " (nofaol)"}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       <div><L t="Platforma" /><Sel k="platform" opts={platforms} /></div>
       <div><L t="Kontent ustuni" /><Sel k="pillar" opts={meta?.pillars || []} /></div>
       <div><L t="Voronka" /><Sel k="funnel" opts={meta?.funnels || []} /></div>
@@ -610,18 +687,23 @@ function toPatch(v: Any): Any {
     owner_id: v.owner_id ? Number(v.owner_id) : null,
     shoot_date: v.shoot_date || null,
     audience: v.audience || null,
+    // 2026-10-17: SMM brendi (bo'sh — server Jony Academy'ga yozadi)
+    brand_id: v.brand_id ? Number(v.brand_id) : null,
   };
 }
 
 /** Kontent-planga qo'lda yangi post qo'shish. */
-function NewPostForm({ meta, branchId, onClose, onDone }: {
+function NewPostForm({ meta, branchId, brands, brandId, onClose, onDone }: {
   meta: Any; branchId: number | null;
-  onClose: () => void; onDone: (title: string) => void;
+  /** 2026-10-17: brendlar va standart brend (filtrdagisi yoki Academy). */
+  brands: SmmBrand[]; brandId: number | null;
+  onClose: () => void; onDone: (title: string, brandId: number | null) => void;
 }) {
   const [v, setV] = useState<Any>({
     title: "", date: new Date().toISOString().slice(0, 10), time: "",
     platform: "instagram", pillar: "", funnel: "", goal: "", fmt: "",
     owner_id: "", shoot_date: "", audience: "",
+    brand_id: brandId ? String(brandId) : "",
   });
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
@@ -630,8 +712,9 @@ function NewPostForm({ meta, branchId, onClose, onDone }: {
     if (!v.title.trim()) { setErr("Mavzuni yozing"); return; }
     setBusy(true); setErr("");
     try {
-      await api.post("/content", { ...toPatch(v), branch_id: branchId });
-      onDone(v.title.trim());
+      const body = { ...toPatch(v), branch_id: branchId };
+      await api.post("/content", body);
+      onDone(v.title.trim(), body.brand_id);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Xatolik");
     } finally { setBusy(false); }
@@ -642,7 +725,7 @@ function NewPostForm({ meta, branchId, onClose, onDone }: {
         <p className="text-sm font-semibold text-slate-800 flex-1">Rejaga yangi post</p>
         <button onClick={onClose}><X size={16} /></button>
       </div>
-      <MainFields v={v} set={set} meta={meta} />
+      <MainFields v={v} set={set} meta={meta} brands={brands} />
       {err && <p className="text-sm text-red-600 mt-2">{err}</p>}
       <div className="flex gap-2 mt-3">
         <button onClick={submit} disabled={busy}
@@ -657,8 +740,10 @@ function NewPostForm({ meta, branchId, onClose, onDone }: {
   );
 }
 
-function RowEditor({ row, meta, onSave, onFetch, busy }: {
+function RowEditor({ row, meta, brands, onSave, onFetch, busy }: {
   row: Any; meta: Any;
+  /** 2026-10-17: SMM brendlari — qator brendini shu yerda almashtirish. */
+  brands: SmmBrand[];
   onSave: (id: number, patch: Any, status?: string) => void;
   onFetch: (id: number) => void;
   busy: boolean;
@@ -672,6 +757,7 @@ function RowEditor({ row, meta, onSave, onFetch, busy }: {
     owner_id: row.owner_id ? String(row.owner_id) : "",
     shoot_date: row.shoot_date || "", audience: row.audience || "",
     status: row.status || "",
+    brand_id: row.brand_id ? String(row.brand_id) : "",
   });
   const setM = (k: string, val: string) => setMv((o: Any) => ({ ...o, [k]: val }));
   const [f, setF] = useState<Any>({
@@ -737,6 +823,7 @@ function RowEditor({ row, meta, onSave, onFetch, busy }: {
       platform: row.platform, pillar: row.pillar, funnel: row.funnel,
       goal: row.goal, fmt: row.fmt, owner_id: row.owner_id,
       shoot_date: row.shoot_date, audience: row.audience,
+      brand_id: row.brand_id,
     });
     const next = toPatch(mv);
     const diff: Any = {};
@@ -753,7 +840,7 @@ function RowEditor({ row, meta, onSave, onFetch, busy }: {
         <p className="text-[11px] font-semibold text-slate-500 uppercase mb-2">
           Asosiy ma'lumotlar (jadval ustunlari)
         </p>
-        <MainFields v={mv} set={setM} meta={meta} />
+        <MainFields v={mv} set={setM} meta={meta} brands={brands} />
         <p className="text-[11px] text-slate-400 mt-2">
           Sana o'zgartirilsa eski sana tarixda qoladi. Postni o'chirish shart
           emas — holatini «Bekor qilindi» qiling.

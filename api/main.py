@@ -170,6 +170,9 @@ import wordbank as _r_wordbank
 # sertifikatlar (OWNER D2–D4). Darvoza wordbank bilan bir xil.
 import wordbank_social as _r_wordbank_social
 import wordbank_certs as _r_wordbank_certs
+# 2026-10-17: SMM brendlari — Marhabo uchta loyihani yuritadi (Jony
+# Academy, Jony School, Jahongir Zoxidovning shaxsiy brendi)
+import smm_brands as _r_smm_brands
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -240,6 +243,7 @@ app.include_router(_r_wordbank_social.router)
 app.include_router(_r_wordbank_certs.router)
 import course_collaboration
 app.include_router(course_collaboration.router)
+app.include_router(_r_smm_brands.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:
@@ -1403,3 +1407,24 @@ try:
             print(f"[seed] so'z bilish: {_rwb}")
 except Exception as _ewb:
     print(f"[seed] so'z bilish xato: {_ewb}")
+
+
+# ---------------------------------------------------------------------------
+# SMM BRENDLARI (2026-10-17) — bir martalik (smm_brands_v1)
+#
+# Jahongir: Marhabo bitta emas, uchta loyihani yuritadi — Jony Academy,
+# Jony School va Jahongir Zoxidovning shaxsiy brendi.
+#   1) uchta brend (kodi yo'q bo'lsa);
+#   2) brendsiz kontentlar -> Jony Academy;
+#   3) Marhabo (SMM menejer) uchala brendga a'zo; topilmasa log.
+# Hech narsa o'chirilmaydi; logda faqat sonlar. Xato startni to'xtatmaydi.
+# Tafsilot — smm_brands.seed_smm_brands.
+# ---------------------------------------------------------------------------
+try:
+    from sqlalchemy.orm import Session as _VSSB
+    with _VSSB(engine) as _dbsb:
+        _rsb = _r_smm_brands.seed_startup(_dbsb)
+        if _rsb is not None:
+            print(f"[seed] smm brendlari: {_rsb}")
+except Exception as _esb:
+    print(f"[seed] smm brendlari xato: {_esb}")

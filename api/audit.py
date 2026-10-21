@@ -65,6 +65,8 @@ ENTITIES = {
     "other_income": "Qo'shimcha daromad",
     # 2026-10-16: terminaldan naqd yechish / naqdni terminalga topshirish
     "bank_transfer": "Terminal ↔ naqd o'tkazmasi",
+    # 2026-10-21: SMM brendlari (Jony Academy, Jony School, shaxsiy brend)
+    "smm_brand": "SMM brend",
     "branch": "Filial",
     "complaint": "Shikoyat",
     "reward": "Sovg'a",

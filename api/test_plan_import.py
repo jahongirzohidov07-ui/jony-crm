@@ -136,7 +136,11 @@ print("\n=== HAQIQIY IMPORT ===")
 r = c.post("/api/smm/plan/import", headers=H, json={
     "year": 2026, "month": 9, "rows": ROWS, "dry_run": False}).json()
 ck("qo'shildi", r["added"], 5)
-plan = c.get("/api/smm/plan?year=2026&month=9", headers=H).json()
+# 2026-10-17: scope=month — sentabr oyi sana tartibida. Standart "all"
+# ko'rinishida o'tgan kunlar TESKARI tartibda turadi: bugun sentabrdan
+# keyin bo'lsa rows[0] 12-sentabr bo'lib chiqardi (test sanaga bog'liq edi).
+plan = c.get("/api/smm/plan?scope=month&year=2026&month=9",
+             headers=H).json()
 ck("jadvalda ko'rinadi", len(plan["rows"]), 5)
 row = plan["rows"][0]
 ck("  sana to'g'ri", row["date"], "2026-09-01")

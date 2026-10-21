@@ -341,6 +341,23 @@ MIGRATIONS = [
         "ALTER TABLE tasks ADD COLUMN group_key VARCHAR",
         "CREATE INDEX IF NOT EXISTS ix_tasks_group_key ON tasks (group_key)",
     ]),
+
+    # 2026-10-17: SMM BRENDLARI. Jahongir: Marhabo bitta emas, uchta
+    # loyihani yuritadi — Jony Academy, Jony School va Jahongir
+    # Zoxidovning shaxsiy brendi (smm_brands.py). Ikki yangi jadvalni
+    # (smm_brands, smm_brand_members) models.py dagi modellardan
+    # create_all yaratadi — bu versiya shtampni ko'taradi (0013 izohiga
+    # qarang). contents.brand_id — 0028/0029 dagi kabi oddiy ustun
+    # (ustun bo'lsa "duplicate column" bilan o'tib ketadi, ya'ni qayta
+    # ishlasa ham zarari yo'q). NULL — Jony Academy; mavjud kontentlarni
+    # smm_brands_v1 seed academy brendiga bog'laydi. Faqat QO'SHADI.
+    # 2026-10-21: raqam 0036 — 0035 ni boshqa o'zgarish (task_group_key)
+    # band qildi.
+    ("0036_smm_brands", [
+        "ALTER TABLE contents ADD COLUMN brand_id INTEGER",
+        "CREATE INDEX IF NOT EXISTS ix_contents_brand_id "
+        "ON contents (brand_id)",
+    ]),
 ]
 
 

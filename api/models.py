@@ -2268,6 +2268,11 @@ class Content(Base):
                          nullable=True, index=True)
     # Bitta asosiy kontentdan boshqa platformalar uchun variant
     parent_id = Column(Integer, ForeignKey("contents.id"), nullable=True)
+    # BREND (2026-10-17, Jahongir: Marhabo bitta emas, uchta loyihani
+    # yuritadi — Jony Academy, Jony School va shaxsiy brend). NULL —
+    # Jony Academy (eski kontentlar; smm_brands_v1 seed to'ldiradi).
+    brand_id = Column(Integer, ForeignKey("smm_brands.id"),
+                      nullable=True, index=True)
 
     status = Column(String, nullable=False, default="idea", index=True)
     planned_date = Column(Date, nullable=True, index=True)
@@ -2671,6 +2676,47 @@ class SmmReport(Base):
     summary = Column(Text, nullable=True)
     kpi_score = Column(Float, nullable=True)
     created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class SmmBrand(Base):
+    """SMM BRENDLARI (2026-10-17).
+
+    Jahongir: "SMM bo'limida aynan Marhaboni profilida faqat bitta
+    proyekt emas u Jony School va Jahongir Zoxidovning shaxsiy brend
+    profilini ham yurgizadi". Asoschi tanlovi: "Brendlar ro'yxati,
+    kontent bo'yicha" — kontent bitta brendga tegishli, SMM menejer
+    profilida o'z brendlari ko'rinadi, SMM ekrani brend bo'yicha
+    filtrlanadi. Instagram ulanishi hozircha bitta (umumiy).
+
+    code: academy | school | personal (seed) yoki yangi brend uchun
+    nomdan yasalgan slug. Brend o'chirilmaydi — is_active = 0."""
+    __tablename__ = "smm_brands"
+
+    id = Column(Integer, primary_key=True, index=True)
+    code = Column(String, unique=True, nullable=False)
+    name = Column(String, nullable=False)
+    kind = Column(String, nullable=False, default="brand")
+    note = Column(Text, nullable=True)
+    is_active = Column(Integer, nullable=False, default=1)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class SmmBrandMember(Base):
+    """Brendni kim yuritadi (faqat SMM menejerlar). A'zolik faqat
+    profil kartasi va standart filtr uchun — kontent ko'rinishi
+    o'zgarmaydi (2026-10-17)."""
+    __tablename__ = "smm_brand_members"
+    __table_args__ = (
+        UniqueConstraint("brand_id", "user_id",
+                         name="uq_smm_brand_member"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    brand_id = Column(Integer, ForeignKey("smm_brands.id"),
+                      nullable=False, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"),
+                     nullable=False, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 

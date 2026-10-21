@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import {
   UserCircle, Wallet, Clock, TrendingUp,
-  BookOpen, PlayCircle, ExternalLink, KeyRound,
+  BookOpen, PlayCircle, ExternalLink, KeyRound, Megaphone,
 } from "lucide-react";
 import {
   api, type MyProfile as Profile, type LibraryList,
 } from "../lib/api";
+import { useAuth } from "../lib/AuthContext";
+import { SMM_MANAGER } from "../lib/roles";
+import {
+  getSmmBrands, BRAND_KIND_LABEL, type SmmBrandsResponse,
+} from "../lib/smmBrands";
 import { formatSom, formatDate } from "../lib/format";
 import { formatPhone } from "../components/PhoneInput";
 import TelegramLink from "../components/TelegramLink";
@@ -26,6 +31,7 @@ const PART_TONE: Record<string, string> = {
  * fiks, yo'qlamadan hisoblangan qism, KPI bonusi va jami.
  */
 export default function MyProfile() {
+  const { user } = useAuth();
   const [p, setP] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -119,6 +125,9 @@ export default function MyProfile() {
 
       {/* --- Telegram (2026-08-15): zaxira va xato ogohlantirishi --- */}
       <TelegramLink />
+
+      {/* --- Mening brendlarim (2026-10-17): faqat SMM menejerga --- */}
+      {user?.role === SMM_MANAGER && <MyBrands />}
 
       {/* --- Ish haqi --- */}
       <div className="bg-white rounded-xl border border-slate-200 p-5 mb-4">
@@ -286,6 +295,62 @@ export default function MyProfile() {
       )}
 
       <MyLibrary />
+    </div>
+  );
+}
+
+/** MENING BRENDLARIM (2026-10-17). Jahongir: Marhabo bitta proyekt
+ *  emas — Jony Academy, Jony School va Jahongir Zoxidov shaxsiy
+ *  brendini yuritadi. SMM menejer qaysi brendlarga biriktirilganini
+ *  shu yerda ko'radi; biriktirishni asoschi SMM bo'limidagi
+ *  "Brendlar" kartasida qiladi. */
+function MyBrands() {
+  const [d, setD] = useState<SmmBrandsResponse | null>(null);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    getSmmBrands().then(setD).catch(() => setFailed(true));
+  }, []);
+
+  const mine = d
+    ? d.brands.filter((b) => b.mine || d.mine.includes(b.id))
+    : [];
+
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 p-5 mb-4">
+      <div className="flex items-center gap-2 mb-2">
+        <Megaphone size={15} className="text-slate-400" />
+        <p className="text-sm font-medium text-slate-700">Mening brendlarim</p>
+      </div>
+      {failed ? (
+        <p className="text-sm text-red-600">Brendlarni yuklab bo'lmadi.</p>
+      ) : !d ? (
+        <p className="text-sm text-slate-400">Yuklanmoqda...</p>
+      ) : mine.length === 0 ? (
+        <p className="text-sm text-slate-500">
+          Brend biriktirilmagan — asoschiga ayting
+        </p>
+      ) : (
+        <div className="space-y-1.5">
+          {mine.map((b) => (
+            <div
+              key={b.id}
+              className="flex flex-wrap items-center gap-x-2 gap-y-0.5 rounded-lg bg-slate-50 px-3 py-2"
+            >
+              <span className="min-w-0 break-words text-sm font-medium text-slate-800">
+                {b.name}
+              </span>
+              <span className="text-xs text-slate-400">
+                {BRAND_KIND_LABEL[b.kind] || b.kind} · {b.content_count} ta kontent
+              </span>
+              {!b.is_active && (
+                <span className="text-[11px] px-1.5 py-0.5 rounded bg-slate-200 text-slate-600">
+                  nofaol
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -6324,11 +6324,17 @@ def _link_teacher_accounts(db: Session) -> None:
 
 def _hr_task(db: Session, *, title: str, body: str,
              to_roles: list, branch_id=None, days: int = 2,
-             priority: str = "normal") -> None:
+             priority: str = "normal", group_key: str = None) -> None:
     """HR jarayonidagi qarorlar jimgina o'tib ketmasin — tizimda
     vazifa bo'lib ko'rinadi. Bir xil sarlavhali vazifa ikki marta
-    yaratilmaydi."""
-    if db.query(models.Task).filter(models.Task.title == title).first():
+    yaratilmaydi. group_key berilsa (2026-10-21) — takror shu kalit
+    bo'yicha tekshiriladi: masalan o'quvchi IKKINCHI marta muzlatilsa,
+    eski sarlavha sabab yangi "aloqaga chiqing" vazifasi yo'qolmaydi."""
+    if group_key:
+        if db.query(models.Task).filter(
+                models.Task.group_key == group_key).first():
+            return
+    elif db.query(models.Task).filter(models.Task.title == title).first():
         return
     q = db.query(models.User).filter(models.User.role.in_(to_roles),
                                      models.User.is_active == 1)
@@ -6341,10 +6347,63 @@ def _hr_task(db: Session, *, title: str, body: str,
         assignee_id=who.id if who else None,
         branch_id=branch_id,
         deadline=date.today() + timedelta(days=days),
-        priority=priority, source="manual", created_by="Tizim")
+        priority=priority, source="manual", created_by="Tizim",
+        group_key=group_key)
     db.add(task)
     db.flush()
     _ensure_public_id(db, "task", task)
+
+
+def freeze_task_key(student_id: int, until) -> str:
+    """Muzlatilgan o'quvchi bilan aloqa vazifasining kaliti. Muzlatish
+    muddati (until) kalitda — har muzlatish o'z vazifasi."""
+    return f"freeze:{student_id}:{until.isoformat() if until else 'auto'}"
+
+
+# Bir necha xodimga NUSXA bo'lib beriladigan tizim vazifalari (kalitsiz
+# eski yozuvlar uchun): bular bir ish — bittasi bajarsa yetadi.
+_SHARED_TASK_SOURCES = ("risk",)
+
+
+def close_task_siblings(db: Session, t, user) -> int:
+    """UMUMIY VAZIFA YOPILDI (2026-10-21, Jahongir: "adminga task berilsa
+    qildim desa o'sha filial adminlaridan ham olib tashlasin
+    bildirishnomalardan").
+
+    Bir ish uchun bir necha adminga nusxa berilgan bo'lsa (masalan
+    "KETISH XAVFI" — filialning har bir adminiga), bittasi "bajarildi"
+    desa qolgan nusxalar ham yopiladi: ularning vazifalari va
+    bildirishnomalaridan yo'qoladi. Kim bajargani natijada yoziladi.
+
+    Nusxa = bir xil group_key; kalitsiz eski yozuvlarda — bir xil
+    sarlavha, izoh, filial va manba (faqat _SHARED_TASK_SOURCES),
+    10 daqiqa ichida yaratilgan."""
+    T = models.Task
+    q = db.query(T).filter(T.id != t.id,
+                           T.status.notin_(("done", "cancelled")))
+    if getattr(t, "group_key", None):
+        sibs = q.filter(T.group_key == t.group_key).all()
+    elif t.source in _SHARED_TASK_SOURCES and t.created_at:
+        win = timedelta(minutes=10)
+        sibs = q.filter(T.source == t.source, T.title == t.title,
+                        T.branch_id == t.branch_id,
+                        T.description == t.description,
+                        T.created_at >= t.created_at - win,
+                        T.created_at <= t.created_at + win).all()
+    else:
+        return 0
+    who = getattr(user, "full_name", None) or "Hamkasb"
+    now = datetime.utcnow()
+    for o in sibs:
+        o.status = "done"
+        o.done_at = now
+        o.result = (f"{who} bajardi" + (f": {t.result}" if t.result else ""))
+        audit.log(db, user, entity="task", action="update", entity_id=o.id,
+                  entity_label=o.title, field="status",
+                  old_value="open", new_value="done",
+                  note=f"Umumiy vazifa: {who} bajardi (#{t.id})",
+                  branch_id=o.branch_id)
+    return len(sibs)
 
 def _hr_task_for(db: Session, user_id: int, *, title: str, body: str,
                  branch_id=None, days: int = 2) -> None:
@@ -7744,7 +7803,9 @@ def _freeze_task(db, st: models.Student, until, note):
             + " Shu kuni o'quvchi bilan aloqaga chiqing.")
     _hr_task(db, title=f"Muzlatilgan o'quvchi: {st.full_name}",
              body=body, to_roles=[roles.ADMINISTRATOR, roles.SALES_MANAGER],
-             branch_id=st.branch_id, days=days, priority="high")
+             branch_id=st.branch_id, days=days, priority="high",
+             group_key=freeze_task_key(st.id, until)
+             + ("" if until else f":{roles.local_today().isoformat()}"))
 
 
 
@@ -8076,6 +8137,7 @@ def _cleanup_stale_support_assignments(db: Session) -> int:
 
 
 __all__ = [
+    "close_task_siblings", "freeze_task_key",
     "same_business_branches",
     "_plan_fakt_revenue_plan",
     "_visible_discounts",
@@ -8575,7 +8637,9 @@ def _risk_scan(db: Session) -> int:
                     deadline=today + timedelta(days=2),
                     priority="urgent",
                     source="risk",
-                    created_by="Tizim (avtomat)"))
+                    created_by="Tizim (avtomat)",
+                    # Bitta ish — bittasi bajarsa hammasi yopiladi
+                    group_key=f"risk:{s.id}:{sig}:{today.isoformat()}"))
             made += 1
     if made:
         db.commit()

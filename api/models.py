@@ -1607,6 +1607,12 @@ class Task(Base):
     created_by = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    # UMUMIY VAZIFA (2026-10-21, Jahongir: "adminga task berilsa qildim
+    # desa o'sha filial adminlaridan ham olib tashlasin"). Bir ish
+    # uchun bir nechta odamga berilgan nusxalar bir xil kalitga ega —
+    # bittasi "bajarildi" desa, qolganlari ham o'zi yopiladi.
+    # "freeze:<o'quvchi>:<sana>" — muzlatish muddati tugaganda aloqa.
+    group_key = Column(String, nullable=True, index=True)
 
     assignee = relationship("User", foreign_keys=[assignee_id])
     watcher = relationship("User", foreign_keys=[watcher_id])

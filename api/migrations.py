@@ -336,6 +336,11 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_wordbank_items_student_answered "
         "ON wordbank_session_items (student_id, answered_at)",
     ]),
+    # 2026-10-21: umumiy vazifa kaliti (bittasi bajarsa — hammasi yopiladi)
+    ("0035_task_group_key", [
+        "ALTER TABLE tasks ADD COLUMN group_key VARCHAR",
+        "CREATE INDEX IF NOT EXISTS ix_tasks_group_key ON tasks (group_key)",
+    ]),
 ]
 
 

@@ -2713,6 +2713,23 @@ def my_junior_path(db: Session = Depends(get_db),
                  "o'tkazish masalasini hal qiladi."),
     }
 
+def _freeze_contacted(db: Session, s) -> bool:
+    """Shu muzlatish bo'yicha "aloqaga chiqing" vazifasi bajarilganmi.
+    Kalitli yangi vazifa, yoki kalitsiz eski vazifa — sarlavha bir xil va
+    muddati muzlatish tugash sanasi (±1 kun)."""
+    import common as _cm
+    T = models.Task
+    if db.query(T.id).filter(
+            T.group_key.like(_cm.freeze_task_key(s.id, s.frozen_until) + "%"),
+            T.status == "done").first():
+        return True
+    old = (db.query(T).filter(T.group_key.is_(None),
+                              T.title == f"Muzlatilgan o'quvchi: {s.full_name}",
+                              T.status == "done").all())
+    return any(t.deadline and s.frozen_until
+               and abs((t.deadline - s.frozen_until).days) <= 1 for t in old)
+
+
 @router.get("/api/my/alerts")
 def my_alerts(db: Session = Depends(get_db),
                      user=Depends(get_current_user)):
@@ -2748,6 +2765,10 @@ def my_alerts(db: Session = Depends(get_db),
         if user.role not in tuple(roles.ORG_WIDE_ROLES) and user.branch_id:
             fq = fq.filter(_branch_in(db, user, models.Student.branch_id))
         back = fq.all()
+        # Aloqa vazifasini biror admin "bajarildi" degan bo'lsa — filialdagi
+        # HAMMA admindan yo'qoladi (2026-10-21, Jahongir: "qildim desa
+        # o'sha filial adminlaridan ham olib tashlasin")
+        back = [s for s in back if not _freeze_contacted(db, s)]
         for s in back[:5]:
             items.append({
                 "icon": "freeze",

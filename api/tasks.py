@@ -200,8 +200,14 @@ def update_task(
                       changes={k: v for k, v in fields.items()
                                if k in ("status", "assignee_id", "deadline",
                                         "priority")})
+    was_done = t.status == "done"
     for k, v in fields.items():
         setattr(t, k, v)
+    # Umumiy vazifa (2026-10-21): bittasi bajarsa — boshqa adminlardagi
+    # nusxalar ham yopiladi
+    if t.status == "done" and not was_done:
+        import common as _cm
+        _cm.close_task_siblings(db, t, user)
     db.commit(); db.refresh(t)
     return _task_out(db, t)
 

@@ -496,7 +496,7 @@ ck("vaqtsiz eski savol: darrov to'g'ri — to'g'ri qoladi",
    (ro["answers"][-1]["ok"], ro["answers"][-1]["fast"]), (True, False))
 ck("eski javob o'zgarmadi", ro["answers"][0], _old_ans[0])
 guard = 0
-while d.get("status") == "running" and guard < 40:
+while d.get("status") == "running" and guard < E._PT_N + 10:
     guard += 1
     tick(8000)
     d = answer("old_running", {"qid": d["question"]["qid"], "choice": 0})
@@ -575,15 +575,19 @@ pub2 = client.get(P(T7)).json()["result"]
 ck("ochiq holatda ham yo'q", keys_deep(pub2) & set(PG.PRIVATE_KEYS), set())
 rows = client.get("/api/placement/sessions", headers=HDR).json()["rows"]
 sr = next(x for x in rows if x["token"] == T7)["result"]
-units = 30 + 10 * 3 + 5 * 2 + 6
+# 2026-10-22: savollar soni dvijok konstantalaridan (test 100 savolga
+# o'tdi — grammatika 50, tinglash 10; qattiq yozilgan son eskirardi).
+_SN = E._PT_SEC_N
+sec_units = [("grammar", E._PT_N), ("vocab", _SN["vocab"] * 3),
+             ("reading", _SN["reading"] * 2), ("listening", _SN["listening"])]
+units = sum(n for _k, n in sec_units)
 ck("xodim natijasi: hammasi juda tez", (sr["fast"], sr["idk"]), (units, 0))
 ck("guess_warning", sr["guess_warning"], True)
 ck("ogohlantirish matni", sr["guess_label"], roles.PLACEMENT_GUESS_LABEL)
 ck("bo'limlar kesimida fast",
-   [(x["key"], x["fast"]) for x in sr["skills"]],
-   [("grammar", 30), ("vocab", 30), ("reading", 10), ("listening", 6)])
+   [(x["key"], x["fast"]) for x in sr["skills"]], sec_units)
 ck("hammasi juda tez — ball 0", sr["score"], 0)
-ck("guard_text", sr["guard_text"].startswith("Bilmayman: 0 · Juda tez: 76"), True)
+ck("guard_text", sr["guard_text"].startswith(f"Bilmayman: 0 · Juda tez: {units}"), True)
 sid = next(x for x in rows if x["token"] == T7)["id"]
 det = client.get(f"/api/placement/sessions/{sid}", headers=HDR).json()
 ck("javoblar tafsilotida fast", all(a["fast"] for a in det["answers"]), True)
@@ -597,7 +601,7 @@ s = SessionLocal()
 _note = s.query(models.Lead).get(LEAD_ID).note or ""
 s.close()
 ck("lid izohida 'Juda tez' va ogohlantirish",
-   ("Juda tez: 76" in _note, roles.PLACEMENT_GUESS_LABEL in _note), (True, True))
+   (f"Juda tez: {units}" in _note, roles.PLACEMENT_GUESS_LABEL in _note), (True, True))
 ld = client.get("/api/leads", headers=HDR).json()
 _lp = next(x for x in ld if x["id"] == LEAD_ID)["placement"]
 ck("lidlar ro'yxatida guess_warning", _lp["guess_warning"], True)
@@ -620,9 +624,10 @@ s.commit()
 s.close()
 rows = client.get("/api/placement/sessions", headers=HDR).json()["rows"]
 hr = next(x for x in rows if x["token"] == T8)["result"]
-ck("halol lid: idk 10, fast 0, ogohlantirish yo'q",
-   (hr["idk"], hr["fast"], hr["guess_warning"]), (10, 0, False))
-ck("guard_text halol", hr["guard_text"], "Bilmayman: 10 · Juda tez: 0")
+_idk = E._PT_N // 3                     # har 3-savolga "Bilmayman"
+ck("halol lid: har 3-savolga Bilmayman, fast 0, ogohlantirish yo'q",
+   (hr["idk"], hr["fast"], hr["guess_warning"]), (_idk, 0, False))
+ck("guard_text halol", hr["guard_text"], f"Bilmayman: {_idk} · Juda tez: 0")
 
 print("\n=== 9. NEMIS VA RUS TESTI ===")
 

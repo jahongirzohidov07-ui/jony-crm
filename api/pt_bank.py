@@ -436,3 +436,20 @@ _a("C1", 12, "Rarely ___ such a talented musician.", ["have I heard", "I have he
 
 PT_BANK = [{"id": i + 1, "level": lv, "unit": u, "q": t, "opts": o, "a": a}
            for i, (lv, u, t, o, a) in enumerate(Q)]
+
+# 2026-10-22 — 5 ta variant (taxminan bosishga qarshi). Yuqoridagi 4 ta
+# variant asl manba; placement_options_v2.json bor bo'lsa, har savolning
+# variantlari va to'g'ri indeksi shu fayldan olinadi ("grammar", kalit —
+# str(id)). To'g'ri javob matni o'zgarmagan, faqat 88 bitta bo'shliqqa
+# moslangan. PLACEMENT_V2_OFF=1 — asl 4 variant (merge_v2.py shuni o'qiydi).
+import json as _json  # noqa: E402
+import os as _os  # noqa: E402
+_V2 = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                    "placement_options_v2.json")
+if _os.path.exists(_V2) and not _os.environ.get("PLACEMENT_V2_OFF"):
+    with open(_V2, encoding="utf-8") as _f:
+        _ov = _json.load(_f).get("grammar") or {}
+    for _q in PT_BANK:
+        _o = _ov.get(str(_q["id"]))
+        if _o:
+            _q["opts"], _q["a"] = list(_o["opts"]), int(_o["a"])

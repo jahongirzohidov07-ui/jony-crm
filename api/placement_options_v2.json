@@ -1,0 +1,4269 @@
+{
+ "version": "2026-10-22",
+ "grammar": {
+  "1": {
+   "opts": [
+    "am",
+    "is",
+    "are",
+    "be",
+    "been"
+   ],
+   "a": 0
+  },
+  "2": {
+   "opts": [
+    "This",
+    "These",
+    "Those",
+    "They",
+    "Them"
+   ],
+   "a": 0
+  },
+  "3": {
+   "opts": [
+    "are",
+    "is",
+    "am",
+    "be",
+    "does"
+   ],
+   "a": 0
+  },
+  "4": {
+   "opts": [
+    "is",
+    "are",
+    "am",
+    "do",
+    "does"
+   ],
+   "a": 0
+  },
+  "5": {
+   "opts": [
+    "a",
+    "an",
+    "the",
+    "—",
+    "any"
+   ],
+   "a": 0
+  },
+  "6": {
+   "opts": [
+    "is",
+    "are",
+    "am",
+    "have",
+    "were"
+   ],
+   "a": 0
+  },
+  "7": {
+   "opts": [
+    "are",
+    "is",
+    "am",
+    "be",
+    "has"
+   ],
+   "a": 0
+  },
+  "8": {
+   "opts": [
+    "His",
+    "He",
+    "Her",
+    "Him",
+    "He's"
+   ],
+   "a": 0
+  },
+  "9": {
+   "opts": [
+    "are",
+    "is",
+    "am",
+    "do",
+    "does"
+   ],
+   "a": 0
+  },
+  "10": {
+   "opts": [
+    "Our",
+    "We",
+    "Us",
+    "Ours",
+    "We're"
+   ],
+   "a": 0
+  },
+  "11": {
+   "opts": [
+    "drink",
+    "drinks",
+    "drinking",
+    "am drink",
+    "to drink"
+   ],
+   "a": 0
+  },
+  "12": {
+   "opts": [
+    "Do",
+    "Does",
+    "Are",
+    "Is",
+    "Am"
+   ],
+   "a": 0
+  },
+  "13": {
+   "opts": [
+    "don't",
+    "doesn't",
+    "aren't",
+    "not",
+    "no"
+   ],
+   "a": 0
+  },
+  "14": {
+   "opts": [
+    "study",
+    "studies",
+    "studying",
+    "are study",
+    "to study"
+   ],
+   "a": 0
+  },
+  "15": {
+   "opts": [
+    "do",
+    "does",
+    "are",
+    "is",
+    "am"
+   ],
+   "a": 0
+  },
+  "16": {
+   "opts": [
+    "works",
+    "work",
+    "working",
+    "is work",
+    "to work"
+   ],
+   "a": 0
+  },
+  "17": {
+   "opts": [
+    "Does",
+    "Do",
+    "Is",
+    "Are",
+    "Has"
+   ],
+   "a": 0
+  },
+  "18": {
+   "opts": [
+    "doesn't",
+    "don't",
+    "isn't",
+    "not",
+    "no"
+   ],
+   "a": 0
+  },
+  "19": {
+   "opts": [
+    "watches",
+    "watch",
+    "watching",
+    "is watch",
+    "to watch"
+   ],
+   "a": 0
+  },
+  "20": {
+   "opts": [
+    "does",
+    "do",
+    "is",
+    "are",
+    "has"
+   ],
+   "a": 0
+  },
+  "21": {
+   "opts": [
+    "There is",
+    "There are",
+    "It is",
+    "Is there",
+    "There has"
+   ],
+   "a": 0
+  },
+  "22": {
+   "opts": [
+    "There are",
+    "There is",
+    "They are",
+    "It is",
+    "There have"
+   ],
+   "a": 0
+  },
+  "23": {
+   "opts": [
+    "Sara's",
+    "Sara",
+    "of Sara",
+    "Saras",
+    "the Sara's"
+   ],
+   "a": 0
+  },
+  "24": {
+   "opts": [
+    "a",
+    "an",
+    "some",
+    "any",
+    "many"
+   ],
+   "a": 0
+  },
+  "25": {
+   "opts": [
+    "aren't",
+    "isn't",
+    "not",
+    "no",
+    "don't"
+   ],
+   "a": 0
+  },
+  "26": {
+   "opts": [
+    "have got",
+    "has got",
+    "am got",
+    "got",
+    "have get"
+   ],
+   "a": 0
+  },
+  "27": {
+   "opts": [
+    "can",
+    "cans",
+    "can to",
+    "is can",
+    "can be"
+   ],
+   "a": 0
+  },
+  "28": {
+   "opts": [
+    "Can",
+    "Do can",
+    "Are",
+    "Have",
+    "Does"
+   ],
+   "a": 0
+  },
+  "29": {
+   "opts": [
+    "hasn't",
+    "haven't",
+    "isn't",
+    "don't",
+    "doesn't"
+   ],
+   "a": 0
+  },
+  "30": {
+   "opts": [
+    "speak",
+    "to speak",
+    "speaking",
+    "speaks",
+    "spoke"
+   ],
+   "a": 0
+  },
+  "31": {
+   "opts": [
+    "was",
+    "were",
+    "am",
+    "be",
+    "is"
+   ],
+   "a": 0
+  },
+  "32": {
+   "opts": [
+    "were",
+    "was",
+    "are",
+    "be",
+    "been"
+   ],
+   "a": 0
+  },
+  "33": {
+   "opts": [
+    "played",
+    "were play",
+    "playing",
+    "plays",
+    "did played"
+   ],
+   "a": 0
+  },
+  "34": {
+   "opts": [
+    "Were",
+    "Was",
+    "Did",
+    "Are",
+    "Do"
+   ],
+   "a": 0
+  },
+  "35": {
+   "opts": [
+    "lived",
+    "lives",
+    "living",
+    "live",
+    "has lived"
+   ],
+   "a": 0
+  },
+  "36": {
+   "opts": [
+    "went",
+    "go",
+    "goed",
+    "gone",
+    "goes"
+   ],
+   "a": 0
+  },
+  "37": {
+   "opts": [
+    "Did",
+    "Does",
+    "Were",
+    "Was",
+    "Have"
+   ],
+   "a": 0
+  },
+  "38": {
+   "opts": [
+    "bought",
+    "buyed",
+    "buy",
+    "buys",
+    "has bought"
+   ],
+   "a": 0
+  },
+  "39": {
+   "opts": [
+    "didn't",
+    "don't",
+    "weren't",
+    "not",
+    "haven't"
+   ],
+   "a": 0
+  },
+  "40": {
+   "opts": [
+    "did",
+    "does",
+    "were",
+    "was",
+    "are"
+   ],
+   "a": 0
+  },
+  "41": {
+   "opts": [
+    "is raining",
+    "rains",
+    "rain",
+    "raining",
+    "is rain"
+   ],
+   "a": 0
+  },
+  "42": {
+   "opts": [
+    "are",
+    "do",
+    "is",
+    "did",
+    "am"
+   ],
+   "a": 0
+  },
+  "43": {
+   "opts": [
+    "am wearing",
+    "wear",
+    "wearing",
+    "wears",
+    "am wear"
+   ],
+   "a": 0
+  },
+  "44": {
+   "opts": [
+    "are watching",
+    "watch",
+    "watching",
+    "watches",
+    "is watching"
+   ],
+   "a": 0
+  },
+  "45": {
+   "opts": [
+    "isn't",
+    "doesn't",
+    "not",
+    "aren't",
+    "don't"
+   ],
+   "a": 0
+  },
+  "46": {
+   "opts": [
+    "her",
+    "she",
+    "hers",
+    "him",
+    "herself"
+   ],
+   "a": 0
+  },
+  "47": {
+   "opts": [
+    "me",
+    "I",
+    "my",
+    "mine",
+    "myself"
+   ],
+   "a": 0
+  },
+  "48": {
+   "opts": [
+    "listening",
+    "listen",
+    "to listening",
+    "listens",
+    "listened"
+   ],
+   "a": 0
+  },
+  "49": {
+   "opts": [
+    "us",
+    "we",
+    "our",
+    "ours",
+    "ourselves"
+   ],
+   "a": 0
+  },
+  "50": {
+   "opts": [
+    "getting up",
+    "get up",
+    "to getting up",
+    "gets up",
+    "got up"
+   ],
+   "a": 0
+  },
+  "51": {
+   "opts": [
+    "am going to",
+    "go to",
+    "going to",
+    "will to",
+    "is going to"
+   ],
+   "a": 0
+  },
+  "52": {
+   "opts": [
+    "like",
+    "likes",
+    "liking",
+    "to like",
+    "like to"
+   ],
+   "a": 0
+  },
+  "53": {
+   "opts": [
+    "are",
+    "do",
+    "is",
+    "will",
+    "am"
+   ],
+   "a": 0
+  },
+  "54": {
+   "opts": [
+    "isn't",
+    "doesn't",
+    "not",
+    "aren't",
+    "don't"
+   ],
+   "a": 0
+  },
+  "55": {
+   "opts": [
+    "Would",
+    "Do",
+    "Are",
+    "Will",
+    "Does"
+   ],
+   "a": 0
+  },
+  "56": {
+   "opts": [
+    "faster",
+    "more fast",
+    "fast",
+    "fastest",
+    "more faster"
+   ],
+   "a": 0
+  },
+  "57": {
+   "opts": [
+    "best",
+    "better",
+    "good",
+    "most good",
+    "goodest"
+   ],
+   "a": 0
+  },
+  "58": {
+   "opts": [
+    "bigger",
+    "more big",
+    "biggest",
+    "big",
+    "more bigger"
+   ],
+   "a": 0
+  },
+  "59": {
+   "opts": [
+    "hottest",
+    "hotter",
+    "most hot",
+    "hot",
+    "most hottest"
+   ],
+   "a": 0
+  },
+  "60": {
+   "opts": [
+    "more difficult",
+    "difficulter",
+    "most difficult",
+    "difficult",
+    "more difficulter"
+   ],
+   "a": 0
+  },
+  "61": {
+   "opts": [
+    "Where",
+    "What",
+    "Who",
+    "Which",
+    "Whose"
+   ],
+   "a": 0
+  },
+  "62": {
+   "opts": [
+    "many",
+    "much",
+    "long",
+    "often",
+    "lot"
+   ],
+   "a": 0
+  },
+  "63": {
+   "opts": [
+    "do",
+    "does",
+    "are",
+    "is",
+    "have"
+   ],
+   "a": 0
+  },
+  "64": {
+   "opts": [
+    "How",
+    "What",
+    "When",
+    "Why",
+    "Which"
+   ],
+   "a": 0
+  },
+  "65": {
+   "opts": [
+    "does",
+    "do",
+    "is",
+    "has",
+    "are"
+   ],
+   "a": 0
+  },
+  "66": {
+   "opts": [
+    "lost",
+    "losed",
+    "lose",
+    "have lost",
+    "did lost"
+   ],
+   "a": 0
+  },
+  "67": {
+   "opts": [
+    "did",
+    "do",
+    "were",
+    "have",
+    "are"
+   ],
+   "a": 0
+  },
+  "68": {
+   "opts": [
+    "didn't",
+    "don't",
+    "weren't",
+    "haven't",
+    "doesn't"
+   ],
+   "a": 0
+  },
+  "69": {
+   "opts": [
+    "took",
+    "taked",
+    "takes",
+    "has taken",
+    "taking"
+   ],
+   "a": 0
+  },
+  "70": {
+   "opts": [
+    "got",
+    "get",
+    "gets",
+    "getting",
+    "gotten"
+   ],
+   "a": 0
+  },
+  "71": {
+   "opts": [
+    "usually go / am taking",
+    "am usually going / take",
+    "usually go / take",
+    "am going / am taking",
+    "usually going / taking"
+   ],
+   "a": 0
+  },
+  "72": {
+   "opts": [
+    "is never",
+    "never is",
+    "is not never",
+    "never",
+    "never been"
+   ],
+   "a": 0
+  },
+  "73": {
+   "opts": [
+    "is sleeping",
+    "sleeps",
+    "sleep",
+    "slept",
+    "is sleep"
+   ],
+   "a": 0
+  },
+  "74": {
+   "opts": [
+    "often eat",
+    "are often eating",
+    "eat often",
+    "often eating",
+    "often eats"
+   ],
+   "a": 0
+  },
+  "75": {
+   "opts": [
+    "Are you working",
+    "Do you work",
+    "Work you",
+    "You are working",
+    "Are you work"
+   ],
+   "a": 0
+  },
+  "76": {
+   "opts": [
+    "much",
+    "many",
+    "lot",
+    "a few",
+    "a little"
+   ],
+   "a": 0
+  },
+  "77": {
+   "opts": [
+    "a few",
+    "a little",
+    "much",
+    "any",
+    "a lot"
+   ],
+   "a": 0
+  },
+  "78": {
+   "opts": [
+    "any",
+    "some",
+    "a",
+    "many",
+    "a few"
+   ],
+   "a": 0
+  },
+  "79": {
+   "opts": [
+    "some",
+    "any",
+    "a",
+    "many",
+    "several"
+   ],
+   "a": 0
+  },
+  "80": {
+   "opts": [
+    "much",
+    "many",
+    "a few",
+    "few",
+    "a lot"
+   ],
+   "a": 0
+  },
+  "81": {
+   "opts": [
+    "easier",
+    "more easy",
+    "easiest",
+    "easy",
+    "more easier"
+   ],
+   "a": 0
+  },
+  "82": {
+   "opts": [
+    "most intelligent",
+    "more intelligent",
+    "intelligentest",
+    "intelligent",
+    "much intelligent"
+   ],
+   "a": 0
+  },
+  "83": {
+   "opts": [
+    "as / as",
+    "so / as",
+    "as / than",
+    "more / as",
+    "most / than"
+   ],
+   "a": 0
+  },
+  "84": {
+   "opts": [
+    "worse",
+    "badder",
+    "more bad",
+    "worst",
+    "more worse"
+   ],
+   "a": 0
+  },
+  "85": {
+   "opts": [
+    "cheapest",
+    "cheaper",
+    "most cheap",
+    "cheap",
+    "most cheapest"
+   ],
+   "a": 0
+  },
+  "86": {
+   "opts": [
+    "have to",
+    "must to",
+    "has to",
+    "have",
+    "having to"
+   ],
+   "a": 0
+  },
+  "87": {
+   "opts": [
+    "don't have to",
+    "mustn't",
+    "haven't to",
+    "don't must",
+    "doesn't have to"
+   ],
+   "a": 0
+  },
+  "88": {
+   "opts": [
+    "Does",
+    "Has",
+    "Have",
+    "Do",
+    "Is"
+   ],
+   "a": 0
+  },
+  "89": {
+   "opts": [
+    "has to",
+    "have to",
+    "has",
+    "must to",
+    "should to"
+   ],
+   "a": 0
+  },
+  "90": {
+   "opts": [
+    "don't have to",
+    "mustn't",
+    "haven't",
+    "don't need",
+    "doesn't have to"
+   ],
+   "a": 0
+  },
+  "91": {
+   "opts": [
+    "was watching",
+    "watched",
+    "am watching",
+    "watch",
+    "were watching"
+   ],
+   "a": 0
+  },
+  "92": {
+   "opts": [
+    "were",
+    "was",
+    "did",
+    "are",
+    "do"
+   ],
+   "a": 0
+  },
+  "93": {
+   "opts": [
+    "were playing",
+    "played",
+    "play",
+    "are playing",
+    "was playing"
+   ],
+   "a": 0
+  },
+  "94": {
+   "opts": [
+    "was reading",
+    "read",
+    "reads",
+    "is reading",
+    "were reading"
+   ],
+   "a": 0
+  },
+  "95": {
+   "opts": [
+    "wasn't raining",
+    "didn't rain",
+    "isn't raining",
+    "not rained",
+    "weren't raining"
+   ],
+   "a": 0
+  },
+  "96": {
+   "opts": [
+    "should",
+    "should to",
+    "ought",
+    "must to",
+    "have"
+   ],
+   "a": 0
+  },
+  "97": {
+   "opts": [
+    "too",
+    "enough",
+    "very much",
+    "so much",
+    "too much"
+   ],
+   "a": 0
+  },
+  "98": {
+   "opts": [
+    "enough",
+    "too",
+    "very",
+    "so",
+    "much"
+   ],
+   "a": 0
+  },
+  "99": {
+   "opts": [
+    "Don't",
+    "Not",
+    "No",
+    "Doesn't",
+    "Didn't"
+   ],
+   "a": 0
+  },
+  "100": {
+   "opts": [
+    "shouldn't",
+    "don't should",
+    "should not to",
+    "not should",
+    "don't must"
+   ],
+   "a": 0
+  },
+  "101": {
+   "opts": [
+    "have / been",
+    "has / been",
+    "did / go",
+    "have / went",
+    "have / go"
+   ],
+   "a": 0
+  },
+  "102": {
+   "opts": [
+    "Have",
+    "Did",
+    "Do",
+    "Are",
+    "Has"
+   ],
+   "a": 0
+  },
+  "103": {
+   "opts": [
+    "has / finished",
+    "have / finished",
+    "has / finish",
+    "is / finished",
+    "did / finished"
+   ],
+   "a": 0
+  },
+  "104": {
+   "opts": [
+    "haven't",
+    "didn't",
+    "hasn't",
+    "don't",
+    "aren't"
+   ],
+   "a": 0
+  },
+  "105": {
+   "opts": [
+    "lost",
+    "losed",
+    "lose",
+    "losing",
+    "loses"
+   ],
+   "a": 0
+  },
+  "106": {
+   "opts": [
+    "is going to",
+    "are going to",
+    "is",
+    "going to",
+    "is going"
+   ],
+   "a": 0
+  },
+  "107": {
+   "opts": [
+    "will",
+    "am going to",
+    "going to",
+    "would",
+    "will to"
+   ],
+   "a": 0
+  },
+  "108": {
+   "opts": [
+    "are going to buy",
+    "will buy",
+    "buy",
+    "buying",
+    "are going buy"
+   ],
+   "a": 0
+  },
+  "109": {
+   "opts": [
+    "'ll",
+    "'ll to",
+    "going to",
+    "'m going",
+    "'m"
+   ],
+   "a": 0
+  },
+  "110": {
+   "opts": [
+    "are",
+    "will",
+    "do",
+    "is",
+    "am"
+   ],
+   "a": 0
+  },
+  "111": {
+   "opts": [
+    "will",
+    "is",
+    "going to",
+    "would",
+    "is going"
+   ],
+   "a": 0
+  },
+  "112": {
+   "opts": [
+    "might",
+    "will",
+    "is",
+    "must",
+    "might to"
+   ],
+   "a": 0
+  },
+  "113": {
+   "opts": [
+    "Will",
+    "Might",
+    "Are",
+    "May be",
+    "Does"
+   ],
+   "a": 0
+  },
+  "114": {
+   "opts": [
+    "may",
+    "will may",
+    "is",
+    "would",
+    "may to"
+   ],
+   "a": 0
+  },
+  "115": {
+   "opts": [
+    "might",
+    "are",
+    "may be",
+    "will be",
+    "will to"
+   ],
+   "a": 0
+  },
+  "116": {
+   "opts": [
+    "rains",
+    "will rain",
+    "rain",
+    "rained",
+    "would rain"
+   ],
+   "a": 0
+  },
+  "117": {
+   "opts": [
+    "will pass",
+    "pass",
+    "passed",
+    "would pass",
+    "will passed"
+   ],
+   "a": 0
+  },
+  "118": {
+   "opts": [
+    "have",
+    "will have",
+    "had",
+    "would have",
+    "having"
+   ],
+   "a": 0
+  },
+  "119": {
+   "opts": [
+    "doesn't",
+    "won't",
+    "didn't",
+    "not",
+    "don't"
+   ],
+   "a": 0
+  },
+  "120": {
+   "opts": [
+    "will",
+    "do",
+    "did",
+    "would",
+    "are"
+   ],
+   "a": 0
+  },
+  "121": {
+   "opts": [
+    "What",
+    "How",
+    "Which",
+    "Who",
+    "Whose"
+   ],
+   "a": 0
+  },
+  "122": {
+   "opts": [
+    "made",
+    "did make",
+    "does make",
+    "making",
+    "was made"
+   ],
+   "a": 0
+  },
+  "123": {
+   "opts": [
+    "'m enjoying",
+    "are enjoying",
+    "enjoying",
+    "am enjoy",
+    "enjoys"
+   ],
+   "a": 0
+  },
+  "124": {
+   "opts": [
+    "speaks",
+    "is speaking",
+    "speak",
+    "speaking",
+    "is speak"
+   ],
+   "a": 0
+  },
+  "125": {
+   "opts": [
+    "are / talking",
+    "do / talk",
+    "are / talk",
+    "is / talking",
+    "do / talking"
+   ],
+   "a": 0
+  },
+  "126": {
+   "opts": [
+    "broke / was playing",
+    "was breaking / played",
+    "broke / played",
+    "was breaking / was playing",
+    "broken / was playing"
+   ],
+   "a": 0
+  },
+  "127": {
+   "opts": [
+    "have visited",
+    "have visiting",
+    "have visit",
+    "was visiting",
+    "has visited"
+   ],
+   "a": 0
+  },
+  "128": {
+   "opts": [
+    "went",
+    "has gone",
+    "has been",
+    "was going",
+    "has went"
+   ],
+   "a": 0
+  },
+  "129": {
+   "opts": [
+    "Have / met",
+    "Did / meet",
+    "Have / meet",
+    "Did / met",
+    "Has / met"
+   ],
+   "a": 0
+  },
+  "130": {
+   "opts": [
+    "were having",
+    "had",
+    "have had",
+    "are having",
+    "was having"
+   ],
+   "a": 0
+  },
+  "131": {
+   "opts": [
+    "since",
+    "for",
+    "from",
+    "during",
+    "in"
+   ],
+   "a": 0
+  },
+  "132": {
+   "opts": [
+    "for",
+    "since",
+    "during",
+    "ago",
+    "from"
+   ],
+   "a": 0
+  },
+  "133": {
+   "opts": [
+    "have",
+    "did",
+    "do",
+    "are",
+    "has"
+   ],
+   "a": 0
+  },
+  "134": {
+   "opts": [
+    "had started",
+    "started",
+    "has started",
+    "was starting",
+    "have started"
+   ],
+   "a": 0
+  },
+  "135": {
+   "opts": [
+    "had lost",
+    "lost",
+    "has lost",
+    "was losing",
+    "had lose"
+   ],
+   "a": 0
+  },
+  "136": {
+   "opts": [
+    "'m seeing",
+    "see",
+    "will seeing",
+    "am see",
+    "saw"
+   ],
+   "a": 0
+  },
+  "137": {
+   "opts": [
+    "'ll",
+    "'m going to",
+    "going to",
+    "am",
+    "will to"
+   ],
+   "a": 0
+  },
+  "138": {
+   "opts": [
+    "'re going",
+    "'ll go",
+    "go",
+    "would go",
+    "'re go"
+   ],
+   "a": 0
+  },
+  "139": {
+   "opts": [
+    "does",
+    "will",
+    "is",
+    "are",
+    "do"
+   ],
+   "a": 0
+  },
+  "140": {
+   "opts": [
+    "won't",
+    "'m not going to",
+    "don't",
+    "not",
+    "doesn't"
+   ],
+   "a": 0
+  },
+  "141": {
+   "opts": [
+    "must",
+    "have",
+    "should to",
+    "can",
+    "must to"
+   ],
+   "a": 0
+  },
+  "142": {
+   "opts": [
+    "can't",
+    "don't have to",
+    "mustn't to",
+    "haven't to",
+    "can't to"
+   ],
+   "a": 0
+  },
+  "143": {
+   "opts": [
+    "don't have to",
+    "mustn't",
+    "can't",
+    "haven't",
+    "doesn't have to"
+   ],
+   "a": 0
+  },
+  "144": {
+   "opts": [
+    "'re going to",
+    "will going to",
+    "must to",
+    "has to",
+    "'re going"
+   ],
+   "a": 0
+  },
+  "145": {
+   "opts": [
+    "mustn't",
+    "don't have to",
+    "haven't to",
+    "not must",
+    "mustn't to"
+   ],
+   "a": 0
+  },
+  "146": {
+   "opts": [
+    "too",
+    "enough",
+    "very",
+    "so",
+    "much"
+   ],
+   "a": 0
+  },
+  "147": {
+   "opts": [
+    "enough",
+    "too",
+    "too many",
+    "very",
+    "much"
+   ],
+   "a": 0
+  },
+  "148": {
+   "opts": [
+    "should",
+    "should to",
+    "ought",
+    "had",
+    "have"
+   ],
+   "a": 0
+  },
+  "149": {
+   "opts": [
+    "Don't",
+    "Not",
+    "No",
+    "Didn't",
+    "Doesn't"
+   ],
+   "a": 0
+  },
+  "150": {
+   "opts": [
+    "enough",
+    "too",
+    "so",
+    "very",
+    "much"
+   ],
+   "a": 0
+  },
+  "151": {
+   "opts": [
+    "used to",
+    "use to",
+    "was used to",
+    "am used to",
+    "used"
+   ],
+   "a": 0
+  },
+  "152": {
+   "opts": [
+    "much easier",
+    "more easier",
+    "much more easy",
+    "easyer",
+    "very easier"
+   ],
+   "a": 0
+  },
+  "153": {
+   "opts": [
+    "more",
+    "most",
+    "much",
+    "many",
+    "much more"
+   ],
+   "a": 0
+  },
+  "154": {
+   "opts": [
+    "use to",
+    "used to",
+    "using to",
+    "be used to",
+    "use"
+   ],
+   "a": 0
+  },
+  "155": {
+   "opts": [
+    "not",
+    "no",
+    "less",
+    "much",
+    "more"
+   ],
+   "a": 0
+  },
+  "156": {
+   "opts": [
+    "was painted",
+    "painted",
+    "is painting",
+    "has painted",
+    "was paint"
+   ],
+   "a": 0
+  },
+  "157": {
+   "opts": [
+    "is grown",
+    "grow",
+    "are grown",
+    "grown",
+    "is grow"
+   ],
+   "a": 0
+  },
+  "158": {
+   "opts": [
+    "bored",
+    "boring",
+    "bore",
+    "boredom",
+    "boringly"
+   ],
+   "a": 0
+  },
+  "159": {
+   "opts": [
+    "interesting",
+    "interested",
+    "interest",
+    "interestingly",
+    "interests"
+   ],
+   "a": 0
+  },
+  "160": {
+   "opts": [
+    "are made",
+    "make",
+    "are making",
+    "made",
+    "is made"
+   ],
+   "a": 0
+  },
+  "161": {
+   "opts": [
+    "'ve been running",
+    "'m running",
+    "run",
+    "was running",
+    "'ve been run"
+   ],
+   "a": 0
+  },
+  "162": {
+   "opts": [
+    "who",
+    "which",
+    "whose",
+    "what",
+    "whom"
+   ],
+   "a": 0
+  },
+  "163": {
+   "opts": [
+    "which",
+    "who",
+    "whose",
+    "where",
+    "what"
+   ],
+   "a": 0
+  },
+  "164": {
+   "opts": [
+    "have",
+    "are",
+    "do",
+    "did",
+    "has"
+   ],
+   "a": 0
+  },
+  "165": {
+   "opts": [
+    "whose",
+    "who",
+    "which",
+    "that",
+    "who's"
+   ],
+   "a": 0
+  },
+  "166": {
+   "opts": [
+    "were",
+    "am",
+    "will be",
+    "would be",
+    "have been"
+   ],
+   "a": 0
+  },
+  "167": {
+   "opts": [
+    "'ll stay",
+    "'d stay",
+    "stay",
+    "stayed",
+    "'ll staying"
+   ],
+   "a": 0
+  },
+  "168": {
+   "opts": [
+    "found",
+    "find",
+    "will find",
+    "would find",
+    "have found"
+   ],
+   "a": 0
+  },
+  "169": {
+   "opts": [
+    "would call",
+    "will call",
+    "call",
+    "called",
+    "would called"
+   ],
+   "a": 0
+  },
+  "170": {
+   "opts": [
+    "leave",
+    "left",
+    "would leave",
+    "will leave",
+    "leaves"
+   ],
+   "a": 0
+  },
+  "171": {
+   "opts": [
+    "was invented",
+    "invented",
+    "is invented",
+    "has invented",
+    "were invented"
+   ],
+   "a": 0
+  },
+  "172": {
+   "opts": [
+    "that",
+    "who",
+    "what",
+    "whose",
+    "where"
+   ],
+   "a": 0
+  },
+  "173": {
+   "opts": [
+    "was built",
+    "built",
+    "has built",
+    "is built",
+    "were built"
+   ],
+   "a": 0
+  },
+  "174": {
+   "opts": [
+    "where",
+    "which",
+    "that",
+    "who",
+    "what"
+   ],
+   "a": 0
+  },
+  "175": {
+   "opts": [
+    "were sent",
+    "sent",
+    "are sent",
+    "have sent",
+    "was sent"
+   ],
+   "a": 0
+  },
+  "176": {
+   "opts": [
+    "was",
+    "is",
+    "were",
+    "be",
+    "has"
+   ],
+   "a": 0
+  },
+  "177": {
+   "opts": [
+    "would",
+    "will",
+    "can",
+    "is",
+    "would to"
+   ],
+   "a": 0
+  },
+  "178": {
+   "opts": [
+    "had seen",
+    "have seen",
+    "saw",
+    "see",
+    "had saw"
+   ],
+   "a": 0
+  },
+  "179": {
+   "opts": [
+    "told",
+    "said",
+    "say",
+    "tell",
+    "explained"
+   ],
+   "a": 0
+  },
+  "180": {
+   "opts": [
+    "lived",
+    "lives",
+    "living",
+    "is living",
+    "were living"
+   ],
+   "a": 0
+  },
+  "181": {
+   "opts": [
+    "Are / waiting",
+    "Do / wait",
+    "Are / wait",
+    "Do / waiting",
+    "Have / waiting"
+   ],
+   "a": 0
+  },
+  "182": {
+   "opts": [
+    "did",
+    "were",
+    "have",
+    "do you",
+    "does"
+   ],
+   "a": 0
+  },
+  "183": {
+   "opts": [
+    "don't understand",
+    "'m not understanding",
+    "not understand",
+    "don't understanding",
+    "doesn't understand"
+   ],
+   "a": 0
+  },
+  "184": {
+   "opts": [
+    "What",
+    "How",
+    "Which",
+    "Who",
+    "Where"
+   ],
+   "a": 0
+  },
+  "185": {
+   "opts": [
+    "has been",
+    "was",
+    "has gone",
+    "went",
+    "have been"
+   ],
+   "a": 0
+  },
+  "186": {
+   "opts": [
+    "'ve been writing",
+    "'ve written",
+    "wrote",
+    "'m writing",
+    "'d been writing"
+   ],
+   "a": 0
+  },
+  "187": {
+   "opts": [
+    "has written",
+    "has been writing",
+    "wrote",
+    "is writing",
+    "have written"
+   ],
+   "a": 0
+  },
+  "188": {
+   "opts": [
+    "Have you been crying",
+    "Have you cried",
+    "Did you cry",
+    "Do you cry",
+    "Has you been crying"
+   ],
+   "a": 0
+  },
+  "189": {
+   "opts": [
+    "have / called",
+    "have / been calling",
+    "did / calling",
+    "are / calling",
+    "has / called"
+   ],
+   "a": 0
+  },
+  "190": {
+   "opts": [
+    "'ve known",
+    "'ve been knowing",
+    "know",
+    "knew",
+    "'re knowing"
+   ],
+   "a": 0
+  },
+  "191": {
+   "opts": [
+    "had broken",
+    "broke",
+    "has broken",
+    "was breaking",
+    "had broke"
+   ],
+   "a": 0
+  },
+  "192": {
+   "opts": [
+    "used to",
+    "would",
+    "use to",
+    "was used to",
+    "am used to"
+   ],
+   "a": 0
+  },
+  "193": {
+   "opts": [
+    "was walking",
+    "walked",
+    "had walked",
+    "has walked",
+    "were walking"
+   ],
+   "a": 0
+  },
+  "194": {
+   "opts": [
+    "would",
+    "used",
+    "were",
+    "had",
+    "was"
+   ],
+   "a": 0
+  },
+  "195": {
+   "opts": [
+    "had escaped",
+    "escaped",
+    "has escaped",
+    "was escaping",
+    "had escape"
+   ],
+   "a": 0
+  },
+  "196": {
+   "opts": [
+    "have",
+    "must",
+    "should",
+    "can",
+    "has"
+   ],
+   "a": 0
+  },
+  "197": {
+   "opts": [
+    "needn't",
+    "mustn't",
+    "can't",
+    "shouldn't",
+    "haven't"
+   ],
+   "a": 0
+  },
+  "198": {
+   "opts": [
+    "far",
+    "very",
+    "too",
+    "much more",
+    "so"
+   ],
+   "a": 0
+  },
+  "199": {
+   "opts": [
+    "by far",
+    "far",
+    "much",
+    "very",
+    "too"
+   ],
+   "a": 0
+  },
+  "200": {
+   "opts": [
+    "had to",
+    "must",
+    "should",
+    "have to",
+    "must to"
+   ],
+   "a": 0
+  },
+  "201": {
+   "opts": [
+    "arrive",
+    "will arrive",
+    "arrived",
+    "would arrive",
+    "arrives"
+   ],
+   "a": 0
+  },
+  "202": {
+   "opts": [
+    "melts",
+    "will melt",
+    "would melt",
+    "melted",
+    "has melted"
+   ],
+   "a": 0
+  },
+  "203": {
+   "opts": [
+    "'ll be lying",
+    "'ll lie",
+    "'m lying",
+    "lie",
+    "'ve been lying"
+   ],
+   "a": 0
+  },
+  "204": {
+   "opts": [
+    "rains",
+    "will rain",
+    "doesn't rain",
+    "rained",
+    "would rain"
+   ],
+   "a": 0
+  },
+  "205": {
+   "opts": [
+    "leaves",
+    "will leaving",
+    "is leave",
+    "would leave",
+    "has left"
+   ],
+   "a": 0
+  },
+  "206": {
+   "opts": [
+    "can't",
+    "haven't",
+    "shouldn't",
+    "needn't",
+    "aren't"
+   ],
+   "a": 0
+  },
+  "207": {
+   "opts": [
+    "must",
+    "can",
+    "might not",
+    "should",
+    "can't"
+   ],
+   "a": 0
+  },
+  "208": {
+   "opts": [
+    "Most",
+    "Most of",
+    "The most",
+    "Almost",
+    "Much"
+   ],
+   "a": 0
+  },
+  "209": {
+   "opts": [
+    "less",
+    "fewer",
+    "few",
+    "little",
+    "lesser"
+   ],
+   "a": 0
+  },
+  "210": {
+   "opts": [
+    "might not",
+    "can't to",
+    "isn't",
+    "not might",
+    "doesn't"
+   ],
+   "a": 0
+  },
+  "211": {
+   "opts": [
+    "repaired",
+    "repair",
+    "to repair",
+    "repairing",
+    "been repaired"
+   ],
+   "a": 0
+  },
+  "212": {
+   "opts": [
+    "enough",
+    "too",
+    "so",
+    "very",
+    "much"
+   ],
+   "a": 0
+  },
+  "213": {
+   "opts": [
+    "painted",
+    "paint",
+    "painting",
+    "to paint",
+    "be painted"
+   ],
+   "a": 0
+  },
+  "214": {
+   "opts": [
+    "too",
+    "enough",
+    "so",
+    "very",
+    "such"
+   ],
+   "a": 0
+  },
+  "215": {
+   "opts": [
+    "cut",
+    "cutting",
+    "to cut",
+    "cuts",
+    "cutted"
+   ],
+   "a": 0
+  },
+  "216": {
+   "opts": [
+    "where",
+    "that where",
+    "where was",
+    "from where that",
+    "where did"
+   ],
+   "a": 0
+  },
+  "217": {
+   "opts": [
+    "to help",
+    "helping",
+    "help",
+    "that help",
+    "to helping"
+   ],
+   "a": 0
+  },
+  "218": {
+   "opts": [
+    "taking",
+    "to take",
+    "take",
+    "that take",
+    "us to take"
+   ],
+   "a": 0
+  },
+  "219": {
+   "opts": [
+    "to lock",
+    "lock",
+    "locking",
+    "that lock",
+    "for locking"
+   ],
+   "a": 0
+  },
+  "220": {
+   "opts": [
+    "waiting",
+    "to waiting",
+    "wait",
+    "for waiting",
+    "waited"
+   ],
+   "a": 0
+  },
+  "221": {
+   "opts": [
+    "will be opened",
+    "will open by",
+    "is opening by",
+    "opens by",
+    "has been opened"
+   ],
+   "a": 0
+  },
+  "222": {
+   "opts": [
+    "who",
+    "that",
+    "which",
+    "whom he",
+    "whose"
+   ],
+   "a": 0
+  },
+  "223": {
+   "opts": [
+    "is being written",
+    "is writing",
+    "is written",
+    "writes",
+    "is been written"
+   ],
+   "a": 0
+  },
+  "224": {
+   "opts": [
+    "which",
+    "that",
+    "what",
+    "whose",
+    "who"
+   ],
+   "a": 0
+  },
+  "225": {
+   "opts": [
+    "was taken",
+    "took",
+    "has taken",
+    "taken",
+    "was took"
+   ],
+   "a": 0
+  },
+  "226": {
+   "opts": [
+    "had studied",
+    "studied",
+    "have studied",
+    "would study",
+    "would have studied"
+   ],
+   "a": 0
+  },
+  "227": {
+   "opts": [
+    "'d take",
+    "'ll take",
+    "take",
+    "took",
+    "'d taken"
+   ],
+   "a": 0
+  },
+  "228": {
+   "opts": [
+    "wouldn't have missed",
+    "wouldn't miss",
+    "didn't miss",
+    "hadn't missed",
+    "won't have missed"
+   ],
+   "a": 0
+  },
+  "229": {
+   "opts": [
+    "had",
+    "have",
+    "would have",
+    "will have",
+    "has"
+   ],
+   "a": 0
+  },
+  "230": {
+   "opts": [
+    "could",
+    "can",
+    "will",
+    "would can",
+    "should"
+   ],
+   "a": 0
+  },
+  "231": {
+   "opts": [
+    "if",
+    "that",
+    "what",
+    "do",
+    "did"
+   ],
+   "a": 0
+  },
+  "232": {
+   "opts": [
+    "closed",
+    "does close",
+    "closes it",
+    "did it close",
+    "closing"
+   ],
+   "a": 0
+  },
+  "233": {
+   "opts": [
+    "shocked",
+    "shocking",
+    "shock",
+    "shockingly",
+    "shocks"
+   ],
+   "a": 0
+  },
+  "234": {
+   "opts": [
+    "tiring",
+    "tired",
+    "tire",
+    "tiredness",
+    "tiredly"
+   ],
+   "a": 0
+  },
+  "235": {
+   "opts": [
+    "had been",
+    "have been",
+    "were been",
+    "are",
+    "has been"
+   ],
+   "a": 0
+  },
+  "236": {
+   "opts": [
+    "hadn't spent",
+    "didn't spend",
+    "haven't spent",
+    "wouldn't spend",
+    "don't spend"
+   ],
+   "a": 0
+  },
+  "237": {
+   "opts": [
+    "—",
+    "The",
+    "A",
+    "An",
+    "These"
+   ],
+   "a": 0
+  },
+  "238": {
+   "opts": [
+    "the",
+    "a",
+    "—",
+    "an",
+    "these"
+   ],
+   "a": 0
+  },
+  "239": {
+   "opts": [
+    "were",
+    "am",
+    "would be",
+    "will be",
+    "have been"
+   ],
+   "a": 0
+  },
+  "240": {
+   "opts": [
+    "an",
+    "a",
+    "the",
+    "—",
+    "very"
+   ],
+   "a": 0
+  },
+  "241": {
+   "opts": [
+    "knew",
+    "knows",
+    "known",
+    "has known",
+    "didn't know"
+   ],
+   "a": 0
+  },
+  "242": {
+   "opts": [
+    "How",
+    "Whether",
+    "How come",
+    "Whereas",
+    "Who"
+   ],
+   "a": 0
+  },
+  "243": {
+   "opts": [
+    "'ve tried",
+    "try",
+    "tried",
+    "'m trying",
+    "'d tried"
+   ],
+   "a": 0
+  },
+  "244": {
+   "opts": [
+    "Who",
+    "Who's",
+    "Which",
+    "What",
+    "Whose"
+   ],
+   "a": 0
+  },
+  "245": {
+   "opts": [
+    "is / complaining",
+    "does / complaining",
+    "has / complain",
+    "was / complain",
+    "is / complain"
+   ],
+   "a": 0
+  },
+  "246": {
+   "opts": [
+    "have",
+    "will have",
+    "had",
+    "would have",
+    "are having"
+   ],
+   "a": 0
+  },
+  "247": {
+   "opts": [
+    "had been walking",
+    "walked",
+    "was walking",
+    "has walked",
+    "has been walking"
+   ],
+   "a": 0
+  },
+  "248": {
+   "opts": [
+    "has landed",
+    "will land",
+    "landed",
+    "would land",
+    "had landed"
+   ],
+   "a": 0
+  },
+  "249": {
+   "opts": [
+    "had run",
+    "ran",
+    "have run",
+    "were running",
+    "had ran"
+   ],
+   "a": 0
+  },
+  "250": {
+   "opts": [
+    "is",
+    "will be",
+    "was",
+    "would be",
+    "are"
+   ],
+   "a": 0
+  },
+  "251": {
+   "opts": [
+    "come down with",
+    "come up with",
+    "put up with",
+    "got over",
+    "come down to"
+   ],
+   "a": 0
+  },
+  "252": {
+   "opts": [
+    "has been playing",
+    "has played since",
+    "plays",
+    "played",
+    "is playing"
+   ],
+   "a": 0
+  },
+  "253": {
+   "opts": [
+    "pick / up",
+    "take / off",
+    "put / up",
+    "get / on",
+    "pick / on"
+   ],
+   "a": 0
+  },
+  "254": {
+   "opts": [
+    "have you read",
+    "have you been reading",
+    "did you read",
+    "do you read",
+    "you have read"
+   ],
+   "a": 0
+  },
+  "255": {
+   "opts": [
+    "turn down",
+    "turn up",
+    "put off",
+    "take off",
+    "turn over"
+   ],
+   "a": 0
+  },
+  "256": {
+   "opts": [
+    "would",
+    "used",
+    "were used to",
+    "use to",
+    "would to"
+   ],
+   "a": 0
+  },
+  "257": {
+   "opts": [
+    "didn't use to",
+    "wouldn't",
+    "didn't used to",
+    "usedn't",
+    "wasn't used to"
+   ],
+   "a": 0
+  },
+  "258": {
+   "opts": [
+    "are required",
+    "are allowed",
+    "are let",
+    "are made",
+    "are requiring"
+   ],
+   "a": 0
+  },
+  "259": {
+   "opts": [
+    "weren't allowed to",
+    "didn't allow",
+    "weren't let",
+    "couldn't to",
+    "mustn't to"
+   ],
+   "a": 0
+  },
+  "260": {
+   "opts": [
+    "let",
+    "allowed",
+    "made to",
+    "permitted",
+    "agreed"
+   ],
+   "a": 0
+  },
+  "261": {
+   "opts": [
+    "will have found",
+    "will find",
+    "find",
+    "are finding",
+    "had found"
+   ],
+   "a": 0
+  },
+  "262": {
+   "opts": [
+    "'ll be flying",
+    "fly",
+    "'ll fly",
+    "flew",
+    "'ve been flying"
+   ],
+   "a": 0
+  },
+  "263": {
+   "opts": [
+    "likely",
+    "probably",
+    "definitely",
+    "surely",
+    "possibly"
+   ],
+   "a": 0
+  },
+  "264": {
+   "opts": [
+    "chance",
+    "likely",
+    "sure",
+    "possible",
+    "probably"
+   ],
+   "a": 0
+  },
+  "265": {
+   "opts": [
+    "is bound",
+    "bounds",
+    "is likely that",
+    "must",
+    "is probably"
+   ],
+   "a": 0
+  },
+  "266": {
+   "opts": [
+    "not telling",
+    "not to tell",
+    "to not tell",
+    "don't tell",
+    "not told"
+   ],
+   "a": 0
+  },
+  "267": {
+   "opts": [
+    "to switch off",
+    "switching off",
+    "switch off",
+    "to switching off",
+    "switched off"
+   ],
+   "a": 0
+  },
+  "268": {
+   "opts": [
+    "to have fled",
+    "that fled",
+    "fleeing",
+    "to flee has",
+    "having fled"
+   ],
+   "a": 0
+  },
+  "269": {
+   "opts": [
+    "worrying",
+    "to worry",
+    "worry",
+    "worried",
+    "for worrying"
+   ],
+   "a": 0
+  },
+  "270": {
+   "opts": [
+    "have been delivered",
+    "deliver",
+    "be delivering",
+    "have delivered",
+    "been delivered"
+   ],
+   "a": 0
+  },
+  "271": {
+   "opts": [
+    "nearly enough",
+    "too enough",
+    "enough of",
+    "so many enough",
+    "much enough"
+   ],
+   "a": 0
+  },
+  "272": {
+   "opts": [
+    "had",
+    "made",
+    "got to",
+    "did",
+    "let"
+   ],
+   "a": 0
+  },
+  "273": {
+   "opts": [
+    "far too",
+    "much enough",
+    "too much",
+    "very too",
+    "so much"
+   ],
+   "a": 0
+  },
+  "274": {
+   "opts": [
+    "get",
+    "make",
+    "do",
+    "let",
+    "take"
+   ],
+   "a": 0
+  },
+  "275": {
+   "opts": [
+    "had",
+    "got to",
+    "made",
+    "was",
+    "did"
+   ],
+   "a": 0
+  },
+  "276": {
+   "opts": [
+    "should have",
+    "must have",
+    "would have",
+    "ought have",
+    "shall have"
+   ],
+   "a": 0
+  },
+  "277": {
+   "opts": [
+    "wouldn't have been",
+    "wouldn't be",
+    "wasn't",
+    "hadn't been",
+    "won't have been"
+   ],
+   "a": 0
+  },
+  "278": {
+   "opts": [
+    "shouldn't have eaten",
+    "mustn't have eaten",
+    "couldn't eat",
+    "shouldn't eat",
+    "shouldn't have ate"
+   ],
+   "a": 0
+  },
+  "279": {
+   "opts": [
+    "had called",
+    "called",
+    "would call",
+    "have called",
+    "would have called"
+   ],
+   "a": 0
+  },
+  "280": {
+   "opts": [
+    "Had",
+    "If",
+    "Would",
+    "Should",
+    "Have"
+   ],
+   "a": 0
+  },
+  "281": {
+   "opts": [
+    "where",
+    "which",
+    "that",
+    "what",
+    "who"
+   ],
+   "a": 0
+  },
+  "282": {
+   "opts": [
+    "taking",
+    "to take",
+    "that take",
+    "take",
+    "of taking"
+   ],
+   "a": 0
+  },
+  "283": {
+   "opts": [
+    "for being",
+    "to be",
+    "being",
+    "for be",
+    "of being"
+   ],
+   "a": 0
+  },
+  "284": {
+   "opts": [
+    "with whom",
+    "who with",
+    "which",
+    "whose",
+    "with which"
+   ],
+   "a": 0
+  },
+  "285": {
+   "opts": [
+    "of",
+    "for",
+    "about",
+    "to",
+    "with"
+   ],
+   "a": 0
+  },
+  "286": {
+   "opts": [
+    "must have left",
+    "must leave",
+    "should leave",
+    "can't have left",
+    "must had left"
+   ],
+   "a": 0
+  },
+  "287": {
+   "opts": [
+    "can't have attended",
+    "mustn't attended",
+    "shouldn't attend",
+    "couldn't had attended",
+    "must have attended"
+   ],
+   "a": 0
+  },
+  "288": {
+   "opts": [
+    "hadn't been",
+    "wasn't",
+    "weren't",
+    "haven't been",
+    "wouldn't be"
+   ],
+   "a": 0
+  },
+  "289": {
+   "opts": [
+    "would",
+    "will",
+    "had",
+    "does",
+    "were"
+   ],
+   "a": 0
+  },
+  "290": {
+   "opts": [
+    "might have",
+    "must to have",
+    "should have",
+    "can have",
+    "can't have"
+   ],
+   "a": 0
+  },
+  "291": {
+   "opts": [
+    "is believed",
+    "believes",
+    "is believing",
+    "believed",
+    "has believed"
+   ],
+   "a": 0
+  },
+  "292": {
+   "opts": [
+    "is said",
+    "says",
+    "is saying",
+    "said",
+    "has said"
+   ],
+   "a": 0
+  },
+  "293": {
+   "opts": [
+    "—",
+    "The",
+    "An",
+    "A",
+    "Many"
+   ],
+   "a": 0
+  },
+  "294": {
+   "opts": [
+    "an / a",
+    "a / an",
+    "the / the",
+    "— / a",
+    "a / a"
+   ],
+   "a": 0
+  },
+  "295": {
+   "opts": [
+    "to have been",
+    "to be",
+    "that it was",
+    "being",
+    "having been"
+   ],
+   "a": 0
+  },
+  "296": {
+   "opts": [
+    "Shocked",
+    "Shocking",
+    "Having shock",
+    "To shock",
+    "Shock"
+   ],
+   "a": 0
+  },
+  "297": {
+   "opts": [
+    "who",
+    "which",
+    "whom",
+    "what",
+    "whose"
+   ],
+   "a": 0
+  },
+  "298": {
+   "opts": [
+    "Having",
+    "Being",
+    "Had",
+    "To have",
+    "Has"
+   ],
+   "a": 0
+  },
+  "299": {
+   "opts": [
+    "is",
+    "are",
+    "it is",
+    "be",
+    "being"
+   ],
+   "a": 0
+  },
+  "300": {
+   "opts": [
+    "do",
+    "am",
+    "very",
+    "such",
+    "does"
+   ],
+   "a": 0
+  },
+  "301": {
+   "opts": [
+    "rarely",
+    "rare",
+    "rarity",
+    "rarest",
+    "rarer"
+   ],
+   "a": 0
+  },
+  "302": {
+   "opts": [
+    "'ve",
+    "'m",
+    "having",
+    "was",
+    "has"
+   ],
+   "a": 0
+  },
+  "303": {
+   "opts": [
+    "frequently",
+    "frequent",
+    "frequency",
+    "most frequent",
+    "frequented"
+   ],
+   "a": 0
+  },
+  "304": {
+   "opts": [
+    "forever",
+    "ever",
+    "always be",
+    "forever be",
+    "always being"
+   ],
+   "a": 0
+  },
+  "305": {
+   "opts": [
+    "Broadly",
+    "Broad",
+    "Broadness",
+    "Broaden",
+    "Broader"
+   ],
+   "a": 0
+  },
+  "306": {
+   "opts": [
+    "was",
+    "am",
+    "had",
+    "have been",
+    "were"
+   ],
+   "a": 0
+  },
+  "307": {
+   "opts": [
+    "will have been living",
+    "will live",
+    "are living",
+    "live",
+    "have been living"
+   ],
+   "a": 0
+  },
+  "308": {
+   "opts": [
+    "was due",
+    "is due",
+    "dues",
+    "had due",
+    "were due"
+   ],
+   "a": 0
+  },
+  "309": {
+   "opts": [
+    "is about to",
+    "is due",
+    "about to",
+    "will about",
+    "is close to"
+   ],
+   "a": 0
+  },
+  "310": {
+   "opts": [
+    "had",
+    "have",
+    "were",
+    "are",
+    "has"
+   ],
+   "a": 0
+  },
+  "311": {
+   "opts": [
+    "No sooner",
+    "Hardly",
+    "Scarcely",
+    "Not until",
+    "Rather"
+   ],
+   "a": 0
+  },
+  "312": {
+   "opts": [
+    "Only later",
+    "Later only",
+    "Only she later",
+    "Later did",
+    "Later on"
+   ],
+   "a": 0
+  },
+  "313": {
+   "opts": [
+    "would be leaving",
+    "will be leave",
+    "would leaves",
+    "was leave",
+    "would leaving"
+   ],
+   "a": 0
+  },
+  "314": {
+   "opts": [
+    "did she pass",
+    "she passed",
+    "she did pass",
+    "passed she",
+    "did she passed"
+   ],
+   "a": 0
+  },
+  "315": {
+   "opts": [
+    "should you",
+    "you should",
+    "you shouldn't",
+    "should not you",
+    "shouldn't you"
+   ],
+   "a": 0
+  },
+  "316": {
+   "opts": [
+    "complexity",
+    "complex",
+    "complexly",
+    "complicate",
+    "complicated"
+   ],
+   "a": 0
+  },
+  "317": {
+   "opts": [
+    "had",
+    "got to",
+    "were",
+    "made",
+    "did"
+   ],
+   "a": 0
+  },
+  "318": {
+   "opts": [
+    "surge",
+    "surging",
+    "surged",
+    "surgeon",
+    "surges"
+   ],
+   "a": 0
+  },
+  "319": {
+   "opts": [
+    "got",
+    "made",
+    "did",
+    "was",
+    "let"
+   ],
+   "a": 0
+  },
+  "320": {
+   "opts": [
+    "rapid",
+    "rapidly",
+    "rapidity",
+    "rapids",
+    "rapidness"
+   ],
+   "a": 0
+  },
+  "321": {
+   "opts": [
+    "to which",
+    "which",
+    "that",
+    "of whom",
+    "for which"
+   ],
+   "a": 0
+  },
+  "322": {
+   "opts": [
+    "are obliged",
+    "oblige",
+    "are oblige",
+    "obliging",
+    "are obliging"
+   ],
+   "a": 0
+  },
+  "323": {
+   "opts": [
+    "to give in",
+    "giving in",
+    "give in",
+    "that give in",
+    "to giving in"
+   ],
+   "a": 0
+  },
+  "324": {
+   "opts": [
+    "most",
+    "the most",
+    "mostly",
+    "almost",
+    "much"
+   ],
+   "a": 0
+  },
+  "325": {
+   "opts": [
+    "perfectly",
+    "perfect",
+    "perfection",
+    "perfectly to",
+    "perfected"
+   ],
+   "a": 0
+  },
+  "326": {
+   "opts": [
+    "suppose",
+    "am supposing",
+    "supposed",
+    "have supposing",
+    "supposes"
+   ],
+   "a": 0
+  },
+  "327": {
+   "opts": [
+    "Seen",
+    "Seeing",
+    "To see",
+    "Saw",
+    "Having seen"
+   ],
+   "a": 0
+  },
+  "328": {
+   "opts": [
+    "belongs",
+    "is belonging",
+    "belong",
+    "has belonging",
+    "is belonged"
+   ],
+   "a": 0
+  },
+  "329": {
+   "opts": [
+    "There being",
+    "There was",
+    "Being there",
+    "As being",
+    "It being"
+   ],
+   "a": 0
+  },
+  "330": {
+   "opts": [
+    "is / losing",
+    "does / lose",
+    "has / lose",
+    "was / lose",
+    "is / lose"
+   ],
+   "a": 0
+  },
+  "331": {
+   "opts": [
+    "can't",
+    "mustn't",
+    "shouldn't",
+    "needn't",
+    "must"
+   ],
+   "a": 0
+  },
+  "332": {
+   "opts": [
+    "What",
+    "That",
+    "Which",
+    "Why",
+    "It"
+   ],
+   "a": 0
+  },
+  "333": {
+   "opts": [
+    "that",
+    "when",
+    "which",
+    "so",
+    "what"
+   ],
+   "a": 0
+  },
+  "334": {
+   "opts": [
+    "may",
+    "can",
+    "will",
+    "shall",
+    "must"
+   ],
+   "a": 0
+  },
+  "335": {
+   "opts": [
+    "why",
+    "which",
+    "for",
+    "what",
+    "because"
+   ],
+   "a": 0
+  },
+  "336": {
+   "opts": [
+    "didn't",
+    "don't",
+    "wouldn't",
+    "not",
+    "won't"
+   ],
+   "a": 0
+  },
+  "337": {
+   "opts": [
+    "would have",
+    "will have",
+    "had",
+    "have",
+    "would had"
+   ],
+   "a": 0
+  },
+  "338": {
+   "opts": [
+    "laughing",
+    "to laugh",
+    "laugh",
+    "but laughing",
+    "laughed"
+   ],
+   "a": 0
+  },
+  "339": {
+   "opts": [
+    "Should",
+    "If should",
+    "Would",
+    "Had",
+    "Were"
+   ],
+   "a": 0
+  },
+  "340": {
+   "opts": [
+    "left",
+    "leave",
+    "have left",
+    "will leave",
+    "had left"
+   ],
+   "a": 0
+  },
+  "341": {
+   "opts": [
+    "herself",
+    "her own",
+    "by herself",
+    "herselves",
+    "hers"
+   ],
+   "a": 0
+  },
+  "342": {
+   "opts": [
+    "each other",
+    "theirselves",
+    "each others",
+    "one other",
+    "each another"
+   ],
+   "a": 0
+  },
+  "343": {
+   "opts": [
+    "will",
+    "coming",
+    "do",
+    "'m",
+    "did"
+   ],
+   "a": 0
+  },
+  "344": {
+   "opts": [
+    "did",
+    "liked",
+    "was",
+    "does",
+    "do"
+   ],
+   "a": 0
+  },
+  "345": {
+   "opts": [
+    "yourself",
+    "you",
+    "yourselves you",
+    "your own",
+    "your"
+   ],
+   "a": 0
+  },
+  "346": {
+   "opts": [
+    "might",
+    "can",
+    "may",
+    "would",
+    "ought"
+   ],
+   "a": 0
+  },
+  "347": {
+   "opts": [
+    "not having taken",
+    "not to take",
+    "to not have taken",
+    "not take",
+    "not have taken"
+   ],
+   "a": 0
+  },
+  "348": {
+   "opts": [
+    "must have been",
+    "must had been",
+    "should being",
+    "has to been",
+    "must have being"
+   ],
+   "a": 0
+  },
+  "349": {
+   "opts": [
+    "could",
+    "could to",
+    "was could",
+    "can to",
+    "would to"
+   ],
+   "a": 0
+  },
+  "350": {
+   "opts": [
+    "had",
+    "have",
+    "would",
+    "did",
+    "has"
+   ],
+   "a": 0
+  },
+  "351": {
+   "opts": [
+    "insisted",
+    "insisted me",
+    "said me",
+    "told",
+    "explained me"
+   ],
+   "a": 0
+  },
+  "352": {
+   "opts": [
+    "had been",
+    "was",
+    "were",
+    "have been",
+    "would be"
+   ],
+   "a": 0
+  },
+  "353": {
+   "opts": [
+    "would have finished",
+    "will finish",
+    "finish",
+    "am finishing",
+    "have finished"
+   ],
+   "a": 0
+  },
+  "354": {
+   "opts": [
+    "would have got",
+    "would get",
+    "got",
+    "will get",
+    "had got"
+   ],
+   "a": 0
+  },
+  "355": {
+   "opts": [
+    "urged",
+    "said",
+    "insisted",
+    "suggested",
+    "proposed"
+   ],
+   "a": 0
+  },
+  "356": {
+   "opts": [
+    "Such",
+    "So",
+    "Very",
+    "Much",
+    "So much"
+   ],
+   "a": 0
+  },
+  "357": {
+   "opts": [
+    "did he know",
+    "he knew",
+    "knew he",
+    "he did know",
+    "did he knew"
+   ],
+   "a": 0
+  },
+  "358": {
+   "opts": [
+    "The",
+    "—",
+    "A",
+    "An",
+    "That"
+   ],
+   "a": 0
+  },
+  "359": {
+   "opts": [
+    "precisely",
+    "precise",
+    "precision",
+    "precisely that",
+    "preciseness"
+   ],
+   "a": 0
+  },
+  "360": {
+   "opts": [
+    "have I heard",
+    "I have heard",
+    "I heard",
+    "heard I",
+    "I did hear"
+   ],
+   "a": 0
+  }
+ },
+ "reading": {
+  "2001:0": {
+   "opts": [
+    "By bus",
+    "On foot",
+    "By car",
+    "By bike",
+    "By train"
+   ],
+   "a": 0
+  },
+  "2001:1": {
+   "opts": [
+    "Maths",
+    "English",
+    "Football",
+    "Science",
+    "History"
+   ],
+   "a": 1
+  },
+  "2002:0": {
+   "opts": [
+    "Monday",
+    "Saturday",
+    "Sunday",
+    "Friday",
+    "Tuesday"
+   ],
+   "a": 2
+  },
+  "2002:1": {
+   "opts": [
+    "A school",
+    "A hospital",
+    "The post office",
+    "A bank",
+    "A park"
+   ],
+   "a": 2
+  },
+  "2003:0": {
+   "opts": [
+    "Black",
+    "White",
+    "Grey",
+    "Brown",
+    "Orange"
+   ],
+   "a": 1
+  },
+  "2003:1": {
+   "opts": [
+    "In the kitchen",
+    "On Anna's bed",
+    "In the garden",
+    "Under the table",
+    "On the sofa"
+   ],
+   "a": 1
+  },
+  "2101:0": {
+   "opts": [
+    "Because they lost their tent",
+    "Because the first night was cold",
+    "Because it rained",
+    "Because the village was cheap",
+    "Because the river was very cold"
+   ],
+   "a": 1
+  },
+  "2101:1": {
+   "opts": [
+    "Disappointed",
+    "Worried",
+    "Happy, and wants to return",
+    "Bored",
+    "Tired, and does not want to return"
+   ],
+   "a": 2
+  },
+  "2102:0": {
+   "opts": [
+    "The jacket is damaged",
+    "The jacket is the wrong size",
+    "The jacket never arrived",
+    "The jacket is too expensive",
+    "The jacket is the wrong colour"
+   ],
+   "a": 1
+  },
+  "2102:1": {
+   "opts": [
+    "Her money back",
+    "An exchange for the right size",
+    "A discount",
+    "An apology",
+    "A new receipt"
+   ],
+   "a": 1
+  },
+  "2103:0": {
+   "opts": [
+    "It opens earlier",
+    "It closes earlier on weekdays",
+    "It opens on Sundays",
+    "It has moved",
+    "It opens on Saturdays"
+   ],
+   "a": 0
+  },
+  "2103:1": {
+   "opts": [
+    "The books are old",
+    "It is closed on Saturdays",
+    "It is too far away",
+    "It costs money",
+    "It opens too early"
+   ],
+   "a": 1
+  },
+  "2201:0": {
+   "opts": [
+    "Bread is cheaper then",
+    "Parents collect children from the school opposite",
+    "The bakery opens late",
+    "Tourists visit in the afternoon",
+    "Workers buy bread on their way home"
+   ],
+   "a": 1
+  },
+  "2201:1": {
+   "opts": [
+    "Planning is a waste of time",
+    "Customers should be told what to buy",
+    "Real customers may differ from what you planned",
+    "The street outside is too noisy",
+    "Shops should only open in the afternoon"
+   ],
+   "a": 2
+  },
+  "2202:0": {
+   "opts": [
+    "Their brains work faster",
+    "There are fewer interruptions",
+    "They have more energy",
+    "They need less sleep",
+    "Their accuracy improves"
+   ],
+   "a": 1
+  },
+  "2202:1": {
+   "opts": [
+    "Everyone should work at night",
+    "Night work is impossible",
+    "Quiet can be found at other times too",
+    "Sixteen hours of work is ideal",
+    "Interruptions help people concentrate"
+   ],
+   "a": 2
+  },
+  "2203:0": {
+   "opts": [
+    "Buses will become too expensive",
+    "Customers will shop outside town",
+    "The council will raise taxes",
+    "Walking in the centre is dangerous",
+    "Parking will become more expensive"
+   ],
+   "a": 1
+  },
+  "2203:1": {
+   "opts": [
+    "The car park should stay",
+    "The car park should close",
+    "Bus services need improving first",
+    "Other towns are not comparable",
+    "Buses should not run after seven"
+   ],
+   "a": 2
+  },
+  "2301:0": {
+   "opts": [
+    "Workers value free food most of all",
+    "Workers want predictable hours and clear management",
+    "Workers want higher pay above everything",
+    "Workers dislike their colleagues",
+    "Workers want better office facilities"
+   ],
+   "a": 1
+  },
+  "2301:1": {
+   "opts": [
+    "They are cheaper than management training",
+    "They are visible and easy to advertise",
+    "Employees demand them in writing",
+    "They are proven to increase productivity",
+    "Most workers asked for them in the survey"
+   ],
+   "a": 1
+  },
+  "2302:0": {
+   "opts": [
+    "Repairers are badly trained",
+    "Products are hard to open and parts are costly",
+    "People simply prefer newer designs",
+    "Repairing is against the law",
+    "Repair manuals are too difficult to read"
+   ],
+   "a": 1
+  },
+  "2302:1": {
+   "opts": [
+    "Prices have not risen at all",
+    "The rules will soon be removed",
+    "The extra cost was previously paid by the environment",
+    "Consumers do not notice small rises",
+    "Manufacturers will pay the extra cost"
+   ],
+   "a": 2
+  },
+  "2303:0": {
+   "opts": [
+    "Visitors ignored the screens completely",
+    "Visitors spent less time looking at objects near screens",
+    "Visitors stayed longer in the museum overall",
+    "Visitors preferred the older exhibits",
+    "Visitors looked longer at objects near screens"
+   ],
+   "a": 1
+  },
+  "2303:1": {
+   "opts": [
+    "Removing all technology from galleries",
+    "Placing screens away from the exhibits",
+    "Increasing the number of screens",
+    "Closing the interactive rooms",
+    "Putting a screen beside every exhibit"
+   ],
+   "a": 1
+  },
+  "2401:0": {
+   "opts": [
+    "It is the most effective method available",
+    "It is completely useless",
+    "It preserves material but cannot reverse decline",
+    "It should be made legally compulsory",
+    "It is the main reason languages survive"
+   ],
+   "a": 2
+  },
+  "2401:1": {
+   "opts": [
+    "Very large government funding",
+    "Contexts in which the language is necessary",
+    "A focus on elderly speakers",
+    "Detailed written grammar books",
+    "Strong public affection for the language"
+   ],
+   "a": 1
+  },
+  "2402:0": {
+   "opts": [
+    "Drivers campaigning for more roads",
+    "New road space generating additional traffic",
+    "Congestion falling permanently after construction",
+    "Public transport losing its funding",
+    "New roads making driving more expensive"
+   ],
+   "a": 1
+  },
+  "2402:1": {
+   "opts": [
+    "No new roads should ever be built",
+    "Roads may be worthwhile, but not as a cure for congestion",
+    "Congestion is not a real problem",
+    "Political manifestos are usually accurate",
+    "Building roads is the best cure for congestion"
+   ],
+   "a": 1
+  },
+  "2403:0": {
+   "opts": [
+    "Whether the writing is clear",
+    "Whether the argument follows from the data",
+    "Whether the data are genuine",
+    "Whether the topic is original",
+    "Whether the work is coherent"
+   ],
+   "a": 2
+  },
+  "2403:1": {
+   "opts": [
+    "Peer review should be abolished",
+    "Peer review is given too much authority in public debate",
+    "Reviewers should be paid much more",
+    "Fabrication of data is extremely rare",
+    "Peer review guarantees reliable science"
+   ],
+   "a": 1
+  },
+  "2501:0": {
+   "opts": [
+    "Both overestimated how fast it would improve",
+    "Both judged it in the terms of what it replaced",
+    "Both ignored the question of colour",
+    "Both were commercially motivated",
+    "Both focused too much on its social effects"
+   ],
+   "a": 1
+  },
+  "2501:1": {
+   "opts": [
+    "They are usually accurate in the long run",
+    "They reveal the prior beliefs of those who make them",
+    "They should not be published",
+    "They improve with technical expertise",
+    "They are more reliable when optimistic"
+   ],
+   "a": 1
+  },
+  "2502:0": {
+   "opts": [
+    "It constrains outcomes but not reasoning",
+    "It constrains reasoning but not outcomes",
+    "It constrains neither in practice",
+    "It constrains both equally",
+    "It constrains the facts but not the reasoning"
+   ],
+   "a": 1
+  },
+  "2502:1": {
+   "opts": [
+    "Judges should be prevented from making law",
+    "Judges in fact rarely make law",
+    "Lawmaking that leaves no trace would be worse",
+    "The complaint is entirely accurate",
+    "Precedent stops judges from changing the law"
+   ],
+   "a": 2
+  },
+  "2503:0": {
+   "opts": [
+    "It is unnecessarily pessimistic",
+    "It treats hours as interchangeable quantities",
+    "It is used only by employers",
+    "It ignores the question of pay",
+    "It ignores the total number of hours"
+   ],
+   "a": 1
+  },
+  "2503:1": {
+   "opts": [
+    "Policies address quantity rather than timing and control",
+    "Workers end up working fewer hours",
+    "Metaphors are now avoided in policy documents",
+    "Employers have rejected the whole idea",
+    "Policies focus mainly on when people work"
+   ],
+   "a": 0
+  }
+ },
+ "listening": {
+  "3001": {
+   "opts": [
+    "A teacher",
+    "A doctor",
+    "A driver",
+    "A student",
+    "A nurse"
+   ],
+   "a": 0
+  },
+  "3002": {
+   "opts": [
+    "At half past six",
+    "At seven o'clock",
+    "At half past seven",
+    "At eight o'clock",
+    "At six o'clock"
+   ],
+   "a": 1
+  },
+  "3003": {
+   "opts": [
+    "Two",
+    "Ten",
+    "One",
+    "Twelve",
+    "Three"
+   ],
+   "a": 1
+  },
+  "3004": {
+   "opts": [
+    "It is raining",
+    "It is very hot",
+    "They are tired",
+    "The film is long",
+    "It is snowing"
+   ],
+   "a": 0
+  },
+  "3005": {
+   "opts": [
+    "Three dollars",
+    "Five dollars",
+    "Eight dollars",
+    "Two dollars",
+    "Fifteen dollars"
+   ],
+   "a": 1
+  },
+  "3101": {
+   "opts": [
+    "The day of the appointment",
+    "The doctor",
+    "The address of the clinic",
+    "The price",
+    "The clinic's phone number"
+   ],
+   "a": 0
+  },
+  "3102": {
+   "opts": [
+    "A technical problem",
+    "Bad weather",
+    "Late passengers",
+    "A strike",
+    "A busy airport"
+   ],
+   "a": 1
+  },
+  "3103": {
+   "opts": [
+    "By bike",
+    "On foot",
+    "By bus",
+    "By car",
+    "By train"
+   ],
+   "a": 2
+  },
+  "3104": {
+   "opts": [
+    "Every Sunday",
+    "The first Sunday of the month",
+    "Every day",
+    "Never",
+    "The first Saturday of the month"
+   ],
+   "a": 1
+  },
+  "3105": {
+   "opts": [
+    "Wait for him",
+    "Cancel the meeting",
+    "Begin without him",
+    "Call him back",
+    "Move the meeting to later"
+   ],
+   "a": 2
+  },
+  "3201": {
+   "opts": [
+    "Running longer distances",
+    "Running more slowly",
+    "Running with a group",
+    "Buying better shoes",
+    "Resting for three days between runs"
+   ],
+   "a": 1
+  },
+  "3202": {
+   "opts": [
+    "Use the stairs",
+    "Come back tomorrow",
+    "Use the lift by the main entrance",
+    "Ask a member of staff for help",
+    "Use the lift in the east wing"
+   ],
+   "a": 2
+  },
+  "3203": {
+   "opts": [
+    "Completely satisfied",
+    "Angry and unwilling to return",
+    "Critical, but fair about the response",
+    "Completely indifferent",
+    "Upset about being charged extra"
+   ],
+   "a": 2
+  },
+  "3204": {
+   "opts": [
+    "Take an exam",
+    "Complete a project",
+    "Attend every single class",
+    "Give a presentation",
+    "Write a weekly essay"
+   ],
+   "a": 1
+  },
+  "3205": {
+   "opts": [
+    "It was the cheapest",
+    "It was the fastest",
+    "It balanced price and reliability",
+    "It was recommended to them",
+    "It was the only one available"
+   ],
+   "a": 2
+  },
+  "3301": {
+   "opts": [
+    "Too many distractions",
+    "No clear end to the working day",
+    "A poor internet connection",
+    "Feeling lonely",
+    "Too many video calls"
+   ],
+   "a": 1
+  },
+  "3302": {
+   "opts": [
+    "Blaming the supplier",
+    "Accepting responsibility",
+    "Requesting a discount",
+    "Cancelling the order",
+    "Changing the specification again"
+   ],
+   "a": 1
+  },
+  "3303": {
+   "opts": [
+    "The food quality varies from day to day",
+    "Staff are rude to certain customers",
+    "The restaurant cannot handle unplanned demand",
+    "The prices changed recently",
+    "The online booking system is broken"
+   ],
+   "a": 2
+  },
+  "3304": {
+   "opts": [
+    "Output fell noticeably",
+    "Staff became unhappy",
+    "Decisions became much slower",
+    "Costs increased",
+    "Staff had to work longer hours"
+   ],
+   "a": 2
+  },
+  "3305": {
+   "opts": [
+    "They learn more slowly than children",
+    "They waste time deciding whether to practise",
+    "They should not start learning instruments",
+    "They practise far too much",
+    "They forget what they learn more quickly"
+   ],
+   "a": 1
+  },
+  "3401": {
+   "opts": [
+    "Remote work clearly reduces productivity",
+    "The question treats productivity as one single thing",
+    "There is too much evidence to interpret",
+    "Colleagues cannot be relied upon",
+    "Routine tasks are done worse at home"
+   ],
+   "a": 1
+  },
+  "3402": {
+   "opts": [
+    "The methodology was weak",
+    "Presentation may matter more than substance",
+    "The field is too small to matter",
+    "The grant was far too large",
+    "The proposal will certainly be refused again"
+   ],
+   "a": 1
+  },
+  "3403": {
+   "opts": [
+    "It was obvious to people at the time",
+    "It is imposed later, looking back",
+    "It applies only to wars",
+    "All historians now agree about it",
+    "It was caused by a single decision"
+   ],
+   "a": 1
+  },
+  "3404": {
+   "opts": [
+    "It always slows innovation down",
+    "In this sector it is what makes investment possible",
+    "It should be removed as soon as possible",
+    "It is currently far too weak",
+    "It makes new drugs cheaper to develop"
+   ],
+   "a": 1
+  },
+  "3405": {
+   "opts": [
+    "Staff lack knowledge of the policy",
+    "Staff lack the authority to use judgement",
+    "Customers are being unreasonable",
+    "The policy has never been written down",
+    "Staff need another training course"
+   ],
+   "a": 1
+  },
+  "3501": {
+   "opts": [
+    "The forecasters were simply incompetent",
+    "A shared, unexamined assumption",
+    "The underlying data were falsified",
+    "Ordinary random variation",
+    "Deliberate copying between forecasters"
+   ],
+   "a": 1
+  },
+  "3502": {
+   "opts": [
+    "It did achieve its stated aim",
+    "It served purposes other than its stated aim",
+    "The evidence is still incomplete",
+    "It was never actually implemented",
+    "It was replaced by a more radical proposal"
+   ],
+   "a": 1
+  },
+  "3503": {
+   "opts": [
+    "Students dislike the classic experiments",
+    "Foundational studies fail the standards they teach",
+    "The subject has become too difficult",
+    "Replication is no longer considered necessary",
+    "The experiments are taught too late in the course"
+   ],
+   "a": 1
+  },
+  "3504": {
+   "opts": [
+    "The measure is too crude to be used at all",
+    "A nearly-good measure distorts behaviour while appearing to work",
+    "Teaching quality cannot be assessed in any way",
+    "Students are unreliable judges of teaching",
+    "The measure contains too much random noise"
+   ],
+   "a": 1
+  },
+  "3505": {
+   "opts": [
+    "Individual words have been mistranslated",
+    "The style and register of the original have been lost",
+    "The book is far too long",
+    "The dictionary used was out of date",
+    "The translator added sentences of their own"
+   ],
+   "a": 1
+  }
+ }
+}

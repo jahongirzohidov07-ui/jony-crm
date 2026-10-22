@@ -1,16 +1,21 @@
+// 2026-10-22: German placement scoring is server-only (api/german_placement.py,
+// covered by scripts/test-german-placement-api.py). The client keeps the 48
+// question texts WITHOUT the answer key, only so attempts started before the
+// deploy (no server "state") can be finished; they must match the server bank.
 const fs=require('node:fs'),vm=require('node:vm'),ts=require('typescript'),assert=require('node:assert/strict');
 const out={};vm.runInNewContext(ts.transpileModule(fs.readFileSync('src/lib/germanPlacement.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2023}}).outputText,{exports:out});
-const {germanPlacementQuestions:qs,assessGerman:score}=out;
-assert.equal(qs.length,48);assert.equal(new Set(qs.map(q=>q.id)).size,48);
-const all=Object.fromEntries(qs.map(q=>[q.id,q.answer]));
-assert.equal(score(all).lesson,70);assert.equal(score(all).score,48);assert.equal(score({}).lesson,1);
-for(let m=1;m<=6;m++){
- const block=qs.filter(q=>q.month===m);assert.equal(block.length,8);assert.equal(block.filter(q=>q.skill==='grammar').length,4);
- block.forEach(q=>{assert.equal(new Set(q.options).size,4);assert.ok(q.answer>=0&&q.answer<4);});
- const a={...all};block.slice(0,3).forEach(q=>a[q.id]=-1);assert.equal(score(a).lesson,(m-1)*12+1,'earliest gap must control placement');
- const b={...all};block.filter(q=>q.skill==='reading').forEach(q=>b[q.id]=-1);assert.equal(score(b).month,m,'reading floor');
- const c={...all};block.slice(0,2).forEach(q=>c[q.id]=-1);assert.equal(score(c).month,m,'grammar floor');
- const d={...all};block.filter(q=>q.skill==='vocabulary').forEach(q=>d[q.id]=-1);assert.equal(score(d).lesson,70,'6/8 plus section floors passes');
-}
-assert.equal(score(Object.fromEntries(qs.map(q=>[q.id,-1]))).score,0);
-console.log('PASS: 48 items, all six entry points, prerequisite gating, section floors, pass boundary, unknown and blank answers.');
+const {germanPlacementQuestions:qs,placementMonths}=out;
+const server=JSON.parse(fs.readFileSync('api/german_placement_bank.json','utf8'));
+assert.equal(qs.length,48);assert.equal(new Set(qs.map(q=>q.id)).size,48);assert.equal(placementMonths.length,6);
+assert.equal(out.assessGerman,undefined,'no client-side scorer');
+assert.ok(qs.every(q=>!('answer' in q)),'no answer key in the client bundle');
+assert.doesNotMatch(fs.readFileSync('src/lib/germanPlacement.ts','utf8'),/answer\s*:/);
+qs.forEach((q,i)=>{
+ const s=server[i];
+ assert.equal(q.id,s.id);assert.equal(q.month,s.month);assert.equal(q.skill,s.skill);assert.equal(q.prompt,s.prompt);
+ assert.equal(q.text||undefined,s.text||undefined);
+ // The server may append a 5th option; existing indexes must not move.
+ assert.equal(JSON.stringify(q.options),JSON.stringify(s.options.slice(0,q.options.length)),q.id);
+});
+for(let m=1;m<=6;m++){const block=qs.filter(q=>q.month===m);assert.equal(block.length,8);assert.equal(block.filter(q=>q.skill==='grammar').length,4);}
+console.log('PASS: 48 legacy items aligned with the server bank (ids, prompts, texts, option order), no answer key or scorer on the client.');

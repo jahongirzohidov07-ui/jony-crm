@@ -18,6 +18,11 @@ from database import Base, get_db
 import models, roles
 import russian_placement as rp
 
+# 2026-10-22: state'siz "answers" yo'li faqat PLACEMENT_LEGACY_SUBMIT_UNTIL
+# gacha ochiq. Bu test baho va saqlashni tekshiradi — sanadan qat'i nazar
+# ishlasin.
+roles.PLACEMENT_LEGACY_SUBMIT_UNTIL = '2099-12-31'
+
 assert len(rp.BANK) == 48
 assert len({q['id'] for q in rp.BANK}) == 48
 all_right = {q['id']: q['answer'] for q in rp.BANK}
@@ -34,8 +39,9 @@ for stage in range(1, 7):
     assert [q['skill'] for q in qs].count('vocabulary') == 2
     assert [q['skill'] for q in qs].count('reading') == 2
     for q in qs:
-        assert len(q['options']) == len(set(q['options'])) == 4
-        assert q['answer'] in range(4)
+        # 2026-10-22: 5 ta haqiqiy variant ("Bilmayman" sahifada alohida)
+        assert len(q['options']) == len(set(q['options'])) == 5
+        assert q['answer'] in range(4)  # kalit indeksi o'zgarmagan (5-variant oxirida)
         assert q['prompt'] and q['topic']
         if q['skill'] == 'reading':
             assert q['text']
@@ -103,7 +109,8 @@ r = post({**payload(), 'answers': {**all_right, **{q['id']: -1 for q in rp.BANK 
 assert r.status_code == 200, r.text
 assert r.json()['result']['lesson'] == 25
 assert r.json()['result']['recommendation']['stage'] == 2
-for bad in ({}, {**all_right, 'rp-1': -2}, {**all_right, 'rp-1': 4},
+# 2026-10-22: 5 ta variant (0..4) — 5 chegaradan tashqari
+for bad in ({}, {**all_right, 'rp-1': -2}, {**all_right, 'rp-1': 5},
             {**all_right, 'rp-1': True}, {**all_right, 'rp-1': '0'},
             {**all_right, 'rp-1': 0.0}, {**all_right, 'alien': 0}):
     assert post({**payload(), 'answers': bad}).status_code == 422

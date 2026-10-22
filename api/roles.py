@@ -6393,3 +6393,70 @@ def default_pay_period(d, kind: str = "salary") -> str:
         y, m = (d.year - 1, 12) if d.month == 1 else (d.year, d.month - 1)
         return f"{y:04d}-{m:02d}"
     return f"{d.year:04d}-{d.month:02d}"
+
+
+# =====================================================================
+#  DIAGNOSTIKA: "BILMAYMAN" VA "JUDA TEZ" HIMOYASI (2026-10-22)
+#
+#  Jahongir: "diagnostik testda hech narsani bilmay taxminan bosib
+#  tashlaydiganlarning darajasi baland chiqyapti ... savolni o'qimay
+#  bosib tashlaydiganlarni to'g'ri bossa ham noto'g'ri ko'rsatishi
+#  kerak".
+#
+#  Savolni SERVER bergan paytdan javob kelgan paytgacha vaqtni server
+#  o'zi o'lchaydi. Shu minimumdan tez kelgan javob kalitga mos bo'lsa
+#  ham XATO hisoblanadi va "juda tez" deb yoziladi. Minimum odam
+#  o'qishi kerak bo'lgan matn hajmidan chiqadi (placement_guard.py).
+#  Uchala test — ingliz (entry.py _PT_*), nemis va rus — shu sonlarni
+#  ishlatadi.
+# =====================================================================
+#
+# 2026-10-22 (ko'rib chiqishdan keyin) — SONLAR YUMSHATILDI. Avval
+# 1200 + 15/belgi, kamida 2 s edi: 360 grammatika savolining 130 tasi
+# aynan 2 s polida turardi. Server vaqti tarmoq va sahifa chizilishini
+# ham o'z ichiga oladi, shuning uchun bilimdon o'quvchi oson savolni
+# 1.5–2 s da bossa ham "juda tez" bo'lib, adaptiv zina uni A1 gacha
+# tushirib yuborardi (simulyatsiyada C1 o'quvchi 8 dan 6 marta past
+# chiqdi). Endi minimum faqat "o'qishning IMKONI yo'q" tezlikni ushlaydi:
+#   * bitta savol: 700 + 7 ms/belgi (~140 belgi/s — ravon o'qishdan
+#     ~5 baravar tez), 1.5..5 s. Grammatika savoli 5 ta variant bilan
+#     31–149 belgi (mediana 65): 60–120 belgi -> 1.5 s, eng uzuni ~1.75 s.
+#     Tasodifiy bosuvchi (0.3–1.2 s) baribir ushlanadi;
+#   * matnli ekran (reading 1-javobi): yana 12 ms/matn belgisi (~1000
+#     so'z/daqiqa — ko'z yugurtirib o'qishdan ham tez), 3..20 s:
+#     A1 matnlari (~180–350 belgi) -> 3.2–3.9 s, C1 (~980) -> 12.6–14.4 s;
+#   * listening: yozuvning kamida yarmi (javob yozuv o'rtasida ham
+#     eshitilishi mumkin), 5.5–31 s yozuv -> 2.75–15.4 s;
+#   * lug'at ekrani (3 ta ta'rif): yig'indi, bugun 4.5 s, 10 s gacha;
+#   * nemis/rus: bitta savol qoidasi, 1.5–3.9 s (mediana 1.5 s).
+# Murosa (egasi hal qiladi): pol qancha past bo'lsa, bilimdon o'quvchi
+# shuncha kam jazolanadi, lekin 1.5 s dan sekin "taxmin" qiluvchi ham
+# ushlanmaydi. Adaptiv zinada tez-to'g'ri javob baribir pastga
+# tushirmaydi (entry.py, "held").
+PLACEMENT_MIN_BASE_MS = 700              # har savolga bazaviy vaqt
+PLACEMENT_MIN_PER_CHAR_MS = 7            # savol + variantlar: 1 belgi uchun
+PLACEMENT_MIN_SINGLE_FLOOR_MS = 1500     # bitta savol: eng kami
+PLACEMENT_MIN_SINGLE_CEIL_MS = 5000      # bitta savol: eng ko'pi
+PLACEMENT_MIN_PASSAGE_PER_CHAR_MS = 12   # matnli ekran: matnning 1 belgisi
+PLACEMENT_MIN_PASSAGE_FLOOR_MS = 3000    # matnli ekrandagi 1-javob: eng kami
+PLACEMENT_MIN_PASSAGE_CEIL_MS = 20000    # matnli ekrandagi 1-javob: eng ko'pi
+PLACEMENT_MIN_CLIP_SHARE = 0.5           # listening: yozuvning kamida yarmi
+PLACEMENT_MIN_SPEECH_WPS = 2.5           # yozuv uzunligi noma'lum: so'z/soniya
+PLACEMENT_MIN_SCREEN_CEIL_MS = 10000     # lug'at ekrani birdan yuborilsa
+# Minimum savol vaqtining 60 foizidan oshmaydi — aks holda uzun matnda
+# odam ulgurmay qolishi mumkin edi (bugungi banklarda hech qayerda
+# bunga yetmaydi, faqat ehtiyot chorasi).
+PLACEMENT_MIN_LIMIT_SHARE = 0.6
+PLACEMENT_GUESS_WARN_PCT = 30            # javoblarning >=30% juda tez bo'lsa
+PLACEMENT_IDK_LABEL = "Bilmayman"
+PLACEMENT_GUESS_LABEL = "Taxminan bosilgan bo'lishi mumkin"
+# Nemis/rus testi: deploydan oldin ochilgan sahifa javoblarni eskicha
+# (state'siz "answers") yuboradi — vaqt o'lchanmagan, "juda tez" qoidasi
+# ishlamaydi. Bu yo'l faqat shu sanagacha (shu kun ham, UTC) ochiq:
+# undan keyin 409 "Sahifani yangilang" — aks holda qo'lda yasalgan
+# so'rov yoki yangilanmagan ofis/kiosk oynasi himoyani doim chetlab
+# o'tardi. Deploy shu sanadan keyin bo'lsa — sanani surish kerak.
+# Muddat ichida qabul qilingan bunday natija "o'lchanmagan" deb
+# saqlanadi: timed=false, "juda tez" = None ("—", 0 emas) — xodim uni
+# hech qachon "toza" natija deb o'qimaydi (placement_guard.untimed).
+PLACEMENT_LEGACY_SUBMIT_UNTIL = "2026-10-29"

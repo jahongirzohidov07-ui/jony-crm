@@ -332,6 +332,22 @@ LISTEN_ITEMS = [
               "The dictionary used was out of date"], "a": 1},
 ]
 
+# 2026-10-22 — 5 ta variant (taxminan bosishga qarshi): yuqoridagi 4 ta
+# variant asl manba; placement_options_v2.json bor bo'lsa variantlar va
+# to'g'ri indeks shu fayldan ("listening", kalit — str(id)). To'g'ri
+# javob o'zgarmagan. PLACEMENT_V2_OFF=1 — asl holat (merge_v2.py uchun).
+import json as _json  # noqa: E402
+import os as _os  # noqa: E402
+_V2 = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                    "placement_options_v2.json")
+if _os.path.exists(_V2) and not _os.environ.get("PLACEMENT_V2_OFF"):
+    with open(_V2, encoding="utf-8") as _f:
+        _ov = _json.load(_f).get("listening") or {}
+    for _l in LISTEN_ITEMS:
+        _o = _ov.get(str(_l["id"]))
+        if _o:
+            _l["opts"], _l["a"] = list(_o["opts"]), int(_o["a"])
+
 LISTEN_BY_LEVEL = {}
 for _l in LISTEN_ITEMS:
     LISTEN_BY_LEVEL.setdefault(_l["level"], []).append(_l)

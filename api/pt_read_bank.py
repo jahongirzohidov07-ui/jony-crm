@@ -411,6 +411,23 @@ READ_ITEMS = [
                       "Employers have rejected the whole idea"], "a": 0}]},
 ]
 
+# 2026-10-22 — 5 ta variant (taxminan bosishga qarshi): yuqoridagi 4 ta
+# variant asl manba; placement_options_v2.json bor bo'lsa variantlar va
+# to'g'ri indeks shu fayldan ("reading", kalit — "<matn id>:<savol
+# indeksi>"). To'g'ri javob o'zgarmagan. PLACEMENT_V2_OFF=1 — asl holat.
+import json as _json  # noqa: E402
+import os as _os  # noqa: E402
+_V2 = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                    "placement_options_v2.json")
+if _os.path.exists(_V2) and not _os.environ.get("PLACEMENT_V2_OFF"):
+    with open(_V2, encoding="utf-8") as _f:
+        _ov = _json.load(_f).get("reading") or {}
+    for _r in READ_ITEMS:
+        for _i, _q in enumerate(_r["qs"]):
+            _o = _ov.get(f"{_r['id']}:{_i}")
+            if _o:
+                _q["opts"], _q["a"] = list(_o["opts"]), int(_o["a"])
+
 READ_BY_LEVEL = {}
 for _r in READ_ITEMS:
     READ_BY_LEVEL.setdefault(_r["level"], []).append(_r)

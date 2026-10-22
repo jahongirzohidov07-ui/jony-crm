@@ -18,10 +18,18 @@ Tekshiriladi:
   7. Grammatika tugashi bilanoq natija LIDGA yozilishi (lid qolgan
      bo'limlarni tashlab ketsa ham joylashtirish mumkin bo'lsin).
   8. Eski, yarim qolgan sessiya buzilmasligi.
+
+2026-10-22: "juda tez" qoidasi qo'shildi — savolni o'qishga yetmaydigan
+tezlikda kelgan javob to'g'ri bo'lsa ham xato. Shuning uchun bu test
+endi server soatini (_pt_now) soxta soat bilan almashtiradi va har
+javobdan oldin "o'ylash" vaqtini o'tkazadi (savol vaqtining 60%i + 1 s:
+minimumdan doim ko'p, vaqt chegarasidan doim kam). Banklar 4 YOKI 5
+variantli bo'lishi mumkin (5-variant keyin qo'shiladi).
 """
 import os
 import sys
 import tempfile
+from datetime import timedelta
 
 _DB = os.path.join(tempfile.gettempdir(), "pt_sections_test.db")
 os.environ["DATABASE_URL"] = "sqlite:///" + _DB.replace("\\", "/")
@@ -40,6 +48,40 @@ from pt_listen_bank import LISTEN_ITEMS             # noqa: E402
 
 client = TestClient(E.app)
 fails = []
+
+# ---- Soxta server soati (2026-10-22) ---------------------------------
+# entry.py boshqa nom bilan ham yuklangan bo'lishi mumkin — hamma
+# nusxadagi _pt_now almashtiriladi (entry-monkeypatch tuzog'i).
+_CLOCK = {"t": E._pt_now()}
+
+
+def _fake_now():
+    return _CLOCK["t"]
+
+
+for _m in list(sys.modules.values()):
+    try:
+        if getattr(_m, "_PTS", None) is not None and callable(
+                getattr(_m, "_pt_now", None)):
+            _m._pt_now = _fake_now
+    except Exception:
+        pass
+
+_LASTQ = {}
+
+
+def _remember(d):
+    if isinstance(d, dict) and d.get("question"):
+        _LASTQ["q"] = d["question"]
+    return d
+
+
+def _think():
+    """Javobdan oldin o'ylash: savol vaqtining 60%i + 1 soniya."""
+    q = _LASTQ.get("q") or {}
+    full = q.get("full_secs") or q.get("secs") or 30
+    _CLOCK["t"] += timedelta(
+        seconds=full * roles.PLACEMENT_MIN_LIMIT_SHARE + 1)
 
 
 def ck(n, got, want):
@@ -78,7 +120,7 @@ for it in READ_ITEMS:
     if len(it["qs"]) != 2:
         r_short.append(it["id"])
     for q in it["qs"]:
-        if len(q["opts"]) != 4 or not (0 <= q["a"] < 4):
+        if len(q["opts"]) not in (4, 5) or not (0 <= q["a"] < len(q["opts"])):
             r_bad.append(it["id"])
         if len(set(q["opts"])) != len(q["opts"]):
             r_bad.append(it["id"])       # bir xil variant ikki marta
@@ -89,12 +131,15 @@ ck("reading har darajada bor",
    sorted({x["level"] for x in READ_ITEMS}), sorted(E.PT_LEVELS))
 
 l_bad = [x["id"] for x in LISTEN_ITEMS
-         if len(x["opts"]) != 4 or not (0 <= x["a"] < 4)
-         or len(set(x["opts"])) != 4 or not x["script"].strip()]
+         if len(x["opts"]) not in (4, 5) or not (0 <= x["a"] < len(x["opts"]))
+         or len(set(x["opts"])) != len(x["opts"]) or not x["script"].strip()]
 ck("listening yozuvlari soni", len(LISTEN_ITEMS), 30)
 ck("listening variantlari xato", l_bad, [])
 ck("listening har darajada bor",
    sorted({x["level"] for x in LISTEN_ITEMS}), sorted(E.PT_LEVELS))
+g_bad = [q["id"] for q in E.PT_BANK
+         if len(q["opts"]) not in (4, 5) or not (0 <= q["a"] < len(q["opts"]))]
+ck("grammatika variantlari 4 yoki 5", g_bad, [])
 
 print("\n=== 2. SESSIYA OCHISH ===")
 db = SessionLocal()
@@ -123,11 +168,12 @@ def state():
 
 
 def start():
-    return client.post(P + "/start", json={}).json()
+    return _remember(client.post(P + "/start", json={}).json())
 
 
 def answer(body):
-    return client.post(P + "/answer", json=body).json()
+    _think()
+    return _remember(client.post(P + "/answer", json=body).json())
 
 
 print("\n=== 3. GRAMMATIKA 30 TA, KEYIN TANAFFUS ===")
@@ -136,6 +182,7 @@ ck("birinchi savol grammatika", d["question"]["kind"], "grammar")
 ck("jami grammatika", d["question"]["total"], E._PT_N)
 ck("to'g'ri javob yuborilmaydi",
    any(k in d["question"] for k in ("a", "answer", "correct")), False)
+ck("'Bilmayman' belgisi (idk)", d["question"].get("idk"), True)
 
 n = 0
 while d.get("status") == "running" and d.get("question", {}).get(
@@ -245,15 +292,20 @@ P2 = "/api/public/placement/" + T2
 
 
 def a2(body):
-    return client.post(P2 + "/answer", json=body).json()
+    _think()
+    return _remember(client.post(P2 + "/answer", json=body).json())
 
 
-d = client.post(P2 + "/start", json={}).json()
+def s2():
+    return _remember(client.post(P2 + "/start", json={}).json())
+
+
+d = s2()
 guard = 0
 while d.get("status") in ("running", "break") and guard < 200:
     guard += 1
     if d.get("status") == "break":
-        d = client.post(P2 + "/start", json={}).json()
+        d = s2()
         continue
     q = d["question"]
     if q["kind"] == "vocab":

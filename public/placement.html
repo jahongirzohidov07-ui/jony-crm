@@ -39,6 +39,12 @@
   .opt .k { width:26px; height:26px; border-radius:50%; background:#eef2ff; color:var(--brand); font-weight:700; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex:none; }
   .opt:active, .opt.sel { border-color:var(--brand); background:#eef2ff; }
   .opt[disabled] { opacity:.6; }
+  .opt .t { min-width:0; overflow-wrap:anywhere; }
+  /* "Bilmayman" (2026-10-22): har doim OXIRGI, kulrang va alohida —
+     haqiqiy variantlar bilan adashtirilmasin. O'lchami boshqalardek. */
+  .opt.idk { margin-top:6px; border-style:dashed; border-color:#cbd5e1; background:#f8fafc; color:#475569; }
+  .opt.idk .k { background:#e2e8f0; color:#475569; }
+  .opt.idk:active, .opt.idk.sel { border-style:solid; border-color:#64748b; background:#f1f5f9; }
   /* Lug'at bloki */
   .words { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px; }
   .word { background:#f1f5f9; border:1px solid var(--line); border-radius:10px; padding:8px 12px; font-size:15px; font-weight:600; }
@@ -79,6 +85,15 @@
   .center { text-align:center; }
   .hidden { display:none; }
   @media (min-width:600px){ .wrap{padding-top:40px;} }
+  /* 360px telefonda 5 variant + "Bilmayman" gorizontal aylantirishsiz
+     sig'sin (2026-10-22) */
+  @media (max-width:400px){
+    .card { padding:16px; }
+    .q { font-size:17px; margin-bottom:12px; }
+    .opts { gap:8px; }
+    .opt { padding:11px 12px; font-size:15px; gap:10px; }
+    .opt.idk { margin-top:4px; }
+  }
   /* Baraban */
   .wheel { background:linear-gradient(180deg,#fff7ed,#fff); border:1px solid #fed7aa; border-radius:16px; padding:16px 12px 18px; margin:16px 0; }
   .wheel h2 { margin:0 0 4px; font-size:20px; }
@@ -106,6 +121,7 @@
       <div class="rule"><b>3</b><div><b>Reading</b> — 5 ta qisqa matn (10 savol).</div></div>
       <div class="rule"><b>4</b><div><b>Listening</b> — 10 ta yozuv. Ovozni tinglaysiz (naushnik tavsiya etiladi).</div></div>
       <div class="rule"><b>↕</b><div>Test moslashuvchan: to'g'ri javob bersangiz keyingisi qiyinroq, xato bo'lsa osonroq bo'ladi. Xatolar tabiiy — xavotirlanmang.</div></div>
+      <div class="rule"><b>?</b><div>Savolni o'qib chiqib javob bering. Javobni bilmasangiz, taxmin qilib bosmang — <b style="color:inherit">Bilmayman</b>ni tanlang. Shunda sizga mos guruh topiladi.</div></div>
       <div class="rule"><b>1×</b><div>Havola bir marta ishlaydi. Orqaga qaytib bo'lmaydi.</div></div>
     </div>
     <button class="btn" id="btn-start">Testni boshlash</button>
@@ -217,15 +233,28 @@
   }
 
   // ---- Savol turlari ------------------------------------------------
-  function optButtons(opts, onPick) {
+  // VARIANTLAR (2026-10-22): server 4 yoki 5 ta haqiqiy variant yuboradi
+  // (aralashtirilgan). Payloadda idk:true bo'lsa, ulardan keyin HAR DOIM
+  // oxirida alohida "Bilmayman" tugmasi chiqadi — qiymati -1, server uni
+  // xato deb hisoblaydi. idk kelmasa (eski server) — tugma chiqmaydi.
+  // Javob qanchalik tez bosilgani faqat serverda o'lchanadi; bu yerda
+  // hech qanday "tez bosdingiz" xabari ko'rsatilmaydi.
+  const KEYS = 'ABCDEFGH';
+  function hasIdk(q) { return !!(q && q.idk === true); }
+
+  function optButtons(opts, withIdk, onPick) {
     const box = document.createElement('div');
     box.className = 'opts';
-    [...opts, 'Bilmayman'].forEach((t, i) => {
-      const value = i === opts.length ? -1 : i;
+    const items = (opts || []).map((t, i) => ({ t: t, v: i, k: KEYS[i] || String(i + 1) }));
+    if (withIdk) items.push({ t: 'Bilmayman', v: -1, k: '?', idk: true });
+    items.forEach((it) => {
+      const value = it.v;
       const b = document.createElement('button');
-      b.className = 'opt';
-      b.innerHTML = '<span class="k">' + 'ABCDE'[i] + '</span><span></span>';
-      b.lastChild.textContent = t;
+      b.type = 'button';
+      b.className = it.idk ? 'opt idk' : 'opt';
+      b.innerHTML = '<span class="k"></span><span class="t"></span>';
+      b.firstChild.textContent = it.k;
+      b.lastChild.textContent = it.t;
       b.setAttribute('aria-pressed', 'false');
       b.onclick = () => {
         Array.from(box.children).forEach(x => {
@@ -274,7 +303,7 @@
     qt.className = 'q';
     qt.textContent = q.q;
     body.appendChild(qt);
-    body.appendChild(optButtons(q.opts, (i) => send({ qid: q.qid, choice: i })));
+    body.appendChild(optButtons(q.opts, hasIdk(q), (i) => send({ qid: q.qid, choice: i })));
     if (q.kind === 'listening') {
       const sb = document.createElement('div');
       sb.className = 'skipbox';
@@ -325,9 +354,13 @@
         o.textContent = (i + 1) + '. ' + w;
         sel.appendChild(o);
       });
-      const unknown = document.createElement('option');
-      unknown.value = '-1'; unknown.textContent = 'Bilmayman';
-      sel.appendChild(unknown);
+      // Har bir ta'rif uchun alohida "Bilmayman" (oxirgi qator) — faqat
+      // server idk:true yuborganda; qiymati -1.
+      if (hasIdk(q)) {
+        const unknown = document.createElement('option');
+        unknown.value = '-1'; unknown.textContent = 'Bilmayman';
+        sel.appendChild(unknown);
+      }
       row.appendChild(sel);
       body.appendChild(row);
     });
@@ -352,7 +385,7 @@
       t.className = 'rqt';
       t.textContent = (i + 1) + '. ' + rq.q;
       box.appendChild(t);
-      box.appendChild(optButtons(rq.opts, (k, b, grp) => {
+      box.appendChild(optButtons(rq.opts, hasIdk(q) || hasIdk(rq), (k, b, grp) => {
         Array.prototype.forEach.call(grp.children, (x) => x.classList.remove('sel'));
         b.classList.add('sel');
         grp.dataset.pick = String(k);

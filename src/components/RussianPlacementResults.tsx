@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { api } from '../lib/api';
 import { oralDirections, oralRubric } from '../lib/russianPlacement';
 import type { RussianPlacementResult } from '../lib/russianPlacement';
+import { GuessStats, GuessWarningChip } from './PlacementGuessStats';
 
 type Row = { id: number; lead_id: number; name: string; phone: string; date: string; result: RussianPlacementResult };
 
@@ -23,7 +24,9 @@ export default function RussianPlacementResults() {
       {error && <p role="alert">{error}</p>}
       {!busy && !error && !rows.length && <p>Hali natija yo‘q.</p>}
       {rows.map(r => <details key={r.id} className="rounded-xl border bg-white p-3 text-sm">
-        <summary className="cursor-pointer font-semibold">{r.name} · {r.result.score}/48 · {r.result.label}</summary>
+        <summary className="cursor-pointer font-semibold">{r.name} · {r.result.score}/48 · {r.result.label} <GuessWarningChip res={r.result} row={r} /></summary>
+        {/* 2026-10-22: "Bilmayman" va juda tez javoblar - eski yozuvlarda yo'q */}
+        <GuessStats res={r.result} row={r} className="mt-2" />
         <p className="my-2">+{r.phone} · {new Date(r.date).toLocaleString('uz-UZ', { timeZone: 'Asia/Tashkent' })}</p>
         <p>Filial: {r.result.recommendation.branch_name} · {r.result.allPassed ? 'Yakuniy og‘zaki tekshiruv' : `${r.result.month}-oy, ${r.result.lesson}-dars`}</p>
         <p>Qaytarish: {r.result.gaps.join(', ') || 'Asosiy bo‘shliq topilmadi.'}</p>

@@ -10224,6 +10224,15 @@ def pd_person(user_id: int, db: Session = Depends(get_db),
 #  muddati o'tgach qayta ishlamaydi. Sessiya serverda yuritiladi —
 #  javoblar brauzerda emas, shuning uchun sahifani yangilash yoki
 #  "orqaga" bosish savolni qaytarmaydi.
+#
+#  2026-10-22 — TAXMINAN BOSISHGA QARSHI (placement_guard.py):
+#  variantlar bankdagicha (4 yoki 5) beriladi, sahifa oxiriga
+#  "Bilmayman" qo'shadi (choice = -1, har doim xato, alohida sanaladi).
+#  Savol berilgandan o'qishga yetmaydigan tezlikda kelgan javob —
+#  to'g'ri bo'lsa ham XATO va "juda tez". Hisoblar faqat xodimlarga
+#  ko'rinadi (_pt_result), test topshiruvchiga — _pt_result_public.
+#  Tez, lekin kalitga mos javobda zina pastga TUSHMAYDI (held) — faqat
+#  tezlik kuchli o'quvchini A1 gacha sirg'antirmasin; ball/natijada xato.
 # =====================================================================
 import json as _pt_json          # noqa: E402
 import random as _pt_random      # noqa: E402
@@ -10238,6 +10247,9 @@ from pt_bank import PT_BANK, PT_LEVELS, PT_UNITS  # noqa: E402
 from pt_vocab_bank import VOCAB_BY_ID, VOCAB_BY_LEVEL  # noqa: E402
 from pt_read_bank import READ_BY_ID, READ_BY_LEVEL  # noqa: E402
 from pt_listen_bank import LISTEN_BY_ID, LISTEN_BY_LEVEL  # noqa: E402
+# 2026-10-22 — "Bilmayman" va "juda tez" himoyasi (uchala test uchun
+# umumiy). Batafsil: placement_guard.py boshidagi izoh.
+import placement_guard as _PG  # noqa: E402
 
 # 2026-09-11 — Jahongir: "grammar 30ta qolsin uzogi bilan grammar
 # savoli" + "ichiga reading va listening lar ham qosha olmaysanmi".
@@ -10369,8 +10381,14 @@ def _pt_next_d(d: int, ok: bool, step: int, answers: list):
 
 def _pt_serve(s, q):
     """Savolni yuboradi: variantlar aralashtiriladi, to'g'risi
-    serverda qoladi."""
-    order = list(range(4))
+    serverda qoladi.
+
+    2026-10-22: variantlar soni bankdagicha (4 yoki 5) — hammasi
+    aralashtiriladi. "Bilmayman"ni sahifa o'zi OXIRGI tugma qilib
+    qo'shadi ("idk": true) va uni choice = -1 bilan yuboradi.
+    cur_sent_at — savol berilgan SERVER vaqti: "juda tez" shundan
+    o'lchanadi."""
+    order = list(range(len(q["opts"])))
     _pt_random.shuffle(order)
     s.cur_qid = q["id"]
     s.cur_sent_at = _pt_now()
@@ -10382,7 +10400,38 @@ def _pt_serve(s, q):
             "section_label": _PT_SEC_LABEL["grammar"],
             "qid": q["id"], "no": len(asked), "total": _PT_N,
             "q": q["q"], "opts": [q["opts"][i] for i in order],
-            "secs": _PT_SECS}
+            "secs": _PT_SECS, "idk": True}
+
+
+def _pt_order(s, q) -> list:
+    """Joriy grammatika savolining aralashtirish tartibi. Eski
+    sessiyada (4 variant bilan berilgan) saqlangan tartib o'zgarmaydi:
+    bank 5-variantni OXIRIGA qo'shadi, eski indekslar o'z joyida."""
+    n = len(q["opts"])
+    try:
+        order = [int(x) for x in (s.cur_shuffle or "").split(",") if x != ""]
+    except (TypeError, ValueError):
+        order = []
+    if not order or any(not (0 <= i < n) for i in order):
+        order = list(range(n))
+    return order
+
+
+def _pt_elapsed_ms(sent):
+    """Savol berilgandan beri o'tgan vaqt (ms) — SERVER soati bo'yicha.
+    Berilgan vaqt saqlanmagan bo'lsa (eski sessiya) — None: unda
+    "juda tez" qoidasi qo'llanmaydi."""
+    if sent is None:
+        return None
+    if isinstance(sent, str):
+        try:
+            sent = _pt_dt.fromisoformat(sent)
+        except (ValueError, TypeError):
+            return None
+    try:
+        return (_pt_now() - sent).total_seconds() * 1000.0
+    except TypeError:
+        return None
 
 
 def _pt_finish(s):
@@ -10478,11 +10527,13 @@ def _pt_sec_secs(sec: str, item) -> int:
 
 
 def _pt_sec_payload(sec: str, item, cur: dict, no: int, left: int) -> dict:
-    """Mijozga ketadigan savol. To'g'ri javob HECH QACHON qo'shilmaydi."""
+    """Mijozga ketadigan savol. To'g'ri javob HECH QACHON qo'shilmaydi.
+    "idk": true — sahifa har savolga (lug'atda har ta'rifga) oxirgi
+    "Bilmayman" tanlovini qo'shadi, u -1 bo'lib keladi (2026-10-22)."""
     base = {"kind": sec, "qid": item["id"], "no": no,
             "total": _PT_SEC_N[sec], "section": sec,
             "section_label": _PT_SEC_LABEL[sec], "secs": left,
-            "full_secs": _pt_sec_secs(sec, item)}
+            "full_secs": _pt_sec_secs(sec, item), "idk": True}
     if sec == "vocab":
         w = cur["w"]
         d = cur["d"]
@@ -10548,42 +10599,78 @@ def _pt_choice_matches(order, choice, expected):
 
 
 def _pt_sec_grade(sec: str, item, cur: dict, payload: dict):
-    """(olingan ball, eng ko'p ball). Vaqt tugagan bo'lsa — 0."""
+    """(olingan ball, eng ko'p ball, kechikdimi, bilmayman, juda tez).
+    Vaqt tugagan bo'lsa — 0 ball, bilmayman/juda tez sanalmaydi.
+
+    2026-10-22 — "juda tez" (vaqt cur["sent"] dan, SERVER soati):
+      * lug'at: ekran birdan yuboriladi — ekran minimumi (ta'riflar
+        minimumlari yig'indisi, 10 s gacha). Undan tez bo'lsa har
+        haqiqiy tanlov "juda tez" va XATO;
+      * reading: 1-savol matn bilan birga o'qiladi (matnli minimum),
+        keyingilari oldingisidan keyin bitta savol qoidasi bilan —
+        ya'ni minimumlar ketma-ket qo'shilib boradi;
+      * listening: bitta savol qoidasi va yozuvning kamida yarmi
+        (sonlar — roles.PLACEMENT_MIN_*).
+    "Bilmayman" (-1) — har doim xato, alohida sanaladi, tez bo'lsa
+    ham "juda tez" emas. cur["sent"] yo'q (eski sessiya) — tezlik
+    tekshirilmaydi."""
     mx = 3 if sec == "vocab" else (len(item.get("qs", [])) if sec == "reading"
                                    else 1)
     full = _pt_sec_secs(sec, item)
+    el = _pt_elapsed_ms(cur.get("sent"))
+    if el is not None and el / 1000.0 > full + _PT_GRACE:
+        return 0, mx, True, 0, 0
+    picks = payload.get("picks")
+    picks = picks if isinstance(picks, list) else []
+
+    def _pick(i):
+        return picks[i] if i < len(picks) else None
+
+    got = idk = fast = 0
     try:
-        sent = _pt_dt.fromisoformat(cur.get("sent") or "")
-        late = (_pt_now() - sent).total_seconds() > full + _PT_GRACE
-    except (ValueError, TypeError):
-        late = False
-    if late:
-        return 0, mx, True
-    got = 0
-    if sec == "vocab":
-        picks = payload.get("picks") or []
-        for j, dj in enumerate(cur["d"]):
-            try:
-                k = picks[j]
-                if _pt_choice_matches(cur["w"], k, item["defs"][dj][1]):
-                    got += 1
-            except (TypeError, ValueError, IndexError):
-                pass
-    elif sec == "reading":
-        picks = payload.get("picks") or []
-        for i, q in enumerate(item["qs"]):
-            try:
-                if _pt_choice_matches(cur["o"][i], picks[i], q["a"]):
-                    got += 1
-            except (TypeError, ValueError, IndexError):
-                pass
-    else:
-        try:
-            if _pt_choice_matches(cur["o"], payload.get("choice"), item["a"]):
-                got = 1
-        except (TypeError, ValueError, IndexError):
-            got = 0
-    return got, mx, False
+        if sec == "vocab":
+            words = [item["words"][i] for i in cur["w"]]
+            defs = [item["defs"][j][0] for j in cur["d"]]
+            too_fast = _PG.is_fast(
+                el, _PG.cap(_PG.vocab_screen_min_ms(defs, words), full))
+            for j, dj in enumerate(cur["d"]):
+                k = _pick(j)
+                if _PG.is_idk(k):
+                    idk += 1
+                elif _PG.is_real_choice(k, len(cur["w"])):
+                    if too_fast:
+                        fast += 1
+                    elif _pt_choice_matches(cur["w"], k, item["defs"][dj][1]):
+                        got += 1
+        elif sec == "reading":
+            need = 0
+            for i, q in enumerate(item["qs"]):
+                order = cur["o"][i]
+                shown = [q["opts"][k] for k in order]
+                need += (_PG.passage_min_ms(q["q"], shown, item["text"])
+                         if i == 0 else _PG.single_min_ms(q["q"], shown))
+                k = _pick(i)
+                if _PG.is_idk(k):
+                    idk += 1
+                elif _PG.is_real_choice(k, len(order)):
+                    if _PG.is_fast(el, _PG.cap(need, full)):
+                        fast += 1
+                    elif _pt_choice_matches(order, k, q["a"]):
+                        got += 1
+        else:
+            choice = payload.get("choice")
+            shown = [item["opts"][k] for k in cur["o"]]
+            if _PG.is_idk(choice):
+                idk = 1
+            elif _PG.is_real_choice(choice, len(cur["o"])):
+                if _PG.is_fast(el, _PG.cap(_PG.listening_min_ms(item, shown),
+                                           full)):
+                    fast = 1
+                elif _pt_choice_matches(cur["o"], choice, item["a"]):
+                    got = 1
+    except (TypeError, ValueError, IndexError, KeyError):
+        pass                      # buzilgan holat — sanalganicha qoladi
+    return got, mx, False, idk, fast
 
 
 def _pt_sec_next_li(li: int, got: int, mx: int) -> int:
@@ -10669,7 +10756,7 @@ def _pt_break(db, s, sec_done: dict, nxt: str) -> dict:
         _pt_all_done(s)
         _pt_apply_to_lead(db, s)
         db.commit()
-        return {"status": "done", "result": _pt_result(s)}
+        return {"status": "done", "result": _pt_result_public(s)}
     s.sec = nxt
     s.status = "running"
     s.finished_at = None
@@ -10709,11 +10796,23 @@ def _pt_sec_answer(db, s, payload: dict) -> dict:
         qid = 0
     if qid and qid != cur["id"]:
         return _pt_state_dict(s)       # eski savol — hozirgisini beramiz
-    got, mx, late = _pt_sec_grade(sec, item, cur, payload)
+    got, mx, late, idk, fast = _pt_sec_grade(sec, item, cur, payload)
     done = sst.setdefault("done", [])
+    # idk / fast — shu ekrandagi "Bilmayman" va "juda tez" javoblar
+    # soni (2026-10-22). Eski yozuvlarda yo'q — 0 deb o'qiladi.
     done.append({"id": cur["id"], "li": int(cur["li"]), "score": got,
-                 "max": mx, "t": bool(late)})
-    li = _pt_sec_next_li(int(cur["li"]), got, mx)
+                 "max": mx, "t": bool(late), "idk": idk, "fast": fast})
+    li0 = int(cur["li"])
+    li = _pt_sec_next_li(li0, got, mx)
+    if fast:
+        # 2026-10-22: tez javoblar ballda XATO, lekin zinani faqat
+        # tezlik pastga tushirmasin (grammatikadagi "held" bilan bir
+        # xil): kalitga mos tez javoblarni to'g'ri deb olsak zina
+        # qayerga borardi — undan pastga tushmaydi, tepaga ham
+        # chiqmaydi. Kalit bo'yicha qayta baholash vaqtsiz (sent'siz).
+        got_key = _pt_sec_grade(sec, item, {k: v for k, v in cur.items()
+                                            if k != "sent"}, payload)[0]
+        li = max(li, min(li0, _pt_sec_next_li(li0, got_key, mx)))
     sst["li"] = li
     sst.pop("cur", None)
     used = {a["id"] for a in done}
@@ -10760,7 +10859,7 @@ def _pt_state_dict(s) -> dict:
            "secs": _PT_SECS, "answered": len(_pt_load(s)[1]),
            "section": s.sec or "grammar"}
     if s.status == "done":
-        out["result"] = _pt_result(s)
+        out["result"] = _pt_result_public(s)
         out["finished_at"] = (s.finished_at.isoformat()
                               if s.finished_at else None)
         return out
@@ -10769,7 +10868,7 @@ def _pt_state_dict(s) -> dict:
     sec = s.sec or "grammar"
     if sec == "grammar" and s.cur_qid:
         q = _PT_BY_ID[s.cur_qid]
-        order = [int(x) for x in (s.cur_shuffle or "0,1,2,3").split(",")]
+        order = _pt_order(s, q)
         left = _PT_SECS
         if s.cur_sent_at:
             left = max(0, _PT_SECS
@@ -10780,7 +10879,8 @@ def _pt_state_dict(s) -> dict:
                            "section_label": _PT_SEC_LABEL["grammar"],
                            "q": q["q"],
                            "opts": [q["opts"][i] for i in order],
-                           "secs": left, "full_secs": _PT_SECS}
+                           "secs": left, "full_secs": _PT_SECS,
+                           "idk": True}
     elif sec in _PT_BANKS:
         sst = _pt_sec_state(s).get(sec) or {}
         cur = sst.get("cur")
@@ -10928,14 +11028,47 @@ def _pt_result(s) -> dict:
     # soniga mos kelmasligi mumkin (100% dan oshib ketmasin)
     grammar_pct = (round(sum(1 for a in _g_ans if a.get("ok")) * 100 / _g_n)
                    if _g_n else 0)
+    # "Bilmayman" va "juda tez" (2026-10-22) — har bo'limda va umumiy.
+    # Birlik: grammatikada savol, lug'atda ta'rif, readingda savol,
+    # listeningda savol.
+    # Deploydan oldingi javoblarda "fast" kaliti yo'q: vaqt o'lchanmagan,
+    # "Bilmayman" ham yozilmagan (eski sahifada bor edi, lekin tanlov
+    # saqlanmagan). Ularni 0 deb ko'rsatsak "toza" bo'lib ko'rinardi —
+    # shuning uchun o'lchanmagan bo'lim idk/fast = None, butun sessiya
+    # o'lchanmagan bo'lsa timed = False ("—", nemis/rus bilan bir xil).
+    _secs = {_k: (st.get(_k) or {}).get("done") or []
+             for _k in ("vocab", "reading", "listening")}
+
+    def _measured(rows):
+        return any("fast" in x for x in rows)
+
+    _timed = _measured(_g_ans) or any(_measured(v) for v in _secs.values())
+
+    def _cnt(rows, key, per_row):
+        # o'lchanmagan (eski) bo'lim — None; bo'sh bo'lim — 0
+        if not _timed or (rows and not _measured(rows)):
+            return None
+        return sum(per_row(x, key) for x in rows)
+
+    _bool = lambda x, k: 1 if x.get(k) else 0          # noqa: E731
+    _int = lambda x, k: int(x.get(k) or 0)              # noqa: E731
+    _gi, _gf = _cnt(_g_ans, "idk", _bool), _cnt(_g_ans, "fast", _bool)
+    _units = _g_n if _gf is not None else 0
+    _idk, _fast = _gi or 0, _gf or 0
     skills = [{"key": "grammar", "label": _PT_SEC_LABEL["grammar"],
                "level": lv, "n": _g_n, "pct": grammar_pct,
-               "done": True, "skipped": False}]
+               "done": True, "skipped": False,
+               "idk": _gi, "fast": _gf}]
     for _k in ("vocab", "reading", "listening"):
         _sst = st.get(_k) or {}
-        _done = _sst.get("done") or []
+        _done = _secs[_k]
         _sk = bool(_sst.get("skipped"))
         _mx = sum(float(x.get("max") or 0) for x in _done)
+        _si, _sf = _cnt(_done, "idk", _int), _cnt(_done, "fast", _int)
+        if _sf is not None:
+            _units += int(_mx)
+            _idk += _si
+            _fast += _sf
         skills.append({
             "key": _k, "label": _PT_SEC_LABEL[_k],
             "level": _sst.get("level") or (None if _sk else
@@ -10943,12 +11076,18 @@ def _pt_result(s) -> dict:
             "pct": (round(sum(float(x.get("score") or 0) for x in _done)
                           * 100 / _mx) if _mx else None),
             "n": len(_done), "total": _PT_SEC_N[_k],
-            "done": len(_done) >= _PT_SEC_N[_k], "skipped": _sk})
+            "done": len(_done) >= _PT_SEC_N[_k], "skipped": _sk,
+            "idk": _si, "fast": _sf})
     _li = [PT_LEVELS.index(x["level"]) for x in skills
            if x.get("level") in PT_LEVELS]
     overall = PT_LEVELS[int(round(sum(_li) / len(_li)))] if _li else lv
     topics = _pt_topics(s)
+    _guard = _PG.summary(_idk, _fast, _units)
+    if not _timed:
+        _guard.update(idk=None, fast=None, timed=False,
+                      guard_text=_PG.guard_text(None, None))
     return {
+        **_guard,
         "level": lv, "unit": unit, "topic": topic,
         "score": int(s.score or 0), "total": len(_pt_load(s)[1]) or _PT_N,
         "ability": s.ability,
@@ -10974,6 +11113,13 @@ def _pt_result(s) -> dict:
                  "ma'lumot uchun. Speaking va Writing sinov darsda "
                  "tekshiriladi."),
     }
+
+
+def _pt_result_public(s) -> dict:
+    """Test topshiruvchiga ko'rinadigan natija: "juda tez" hisoblari va
+    "taxminan bosilgan" ogohlantirishi OLIB TASHLANADI — bu faqat
+    xodimlar uchun (2026-10-22). "Bilmayman" soni qoladi."""
+    return _PG.public(_pt_result(s))
 
 
 def _pt_out(s, db=None) -> dict:
@@ -11159,7 +11305,7 @@ def pt_start(token: str, payload: dict = Body(default={}),
                 _pt_all_done(s)
                 _pt_apply_to_lead(db, s)
                 db.commit()
-                return {"status": "done", "result": _pt_result(s)}
+                return {"status": "done", "result": _pt_result_public(s)}
             db.commit()
             return {"status": "running", "name": s.name, "question": q}
     if payload.get("name") and not s.name:
@@ -11196,32 +11342,63 @@ def pt_answer(token: str, payload: dict = Body(...),
         # eski savolga javob — hozirgi savolni qaytaramiz
         return pt_state(token, db)
     q = _PT_BY_ID[qid]
-    order = [int(x) for x in (s.cur_shuffle or "0,1,2,3").split(",")]
+    order = _pt_order(s, q)
     choice = payload.get("choice")
-    secs = int((_pt_now() - s.cur_sent_at).total_seconds()) if s.cur_sent_at else 0
+    el_ms = _pt_elapsed_ms(s.cur_sent_at)
+    secs = int(el_ms / 1000.0) if el_ms is not None else 0
     timed_out = secs > _PT_SECS + _PT_GRACE or choice is None
-    ok = False
+    ok = idk = fast = held = False
     if not timed_out:
         try:
             ok = _pt_choice_matches(order, choice, q["a"])
         except (TypeError, ValueError, IndexError):
             ok = False
+        # 2026-10-22: "Bilmayman" (-1) — xato, alohida sanaladi, zina
+        # xatodagidek pastga tushadi. Savolni o'qishga yetmaydigan
+        # darajada tez kelgan haqiqiy variant — kalitga mos bo'lsa ham
+        # XATO va "juda tez".
+        idk = _PG.is_idk(choice)
+        if _PG.is_real_choice(choice, len(order)):
+            shown = [q["opts"][i] for i in order]
+            fast = _PG.is_fast(el_ms, _PG.cap(_PG.single_min_ms(q["q"], shown),
+                                              _PT_SECS))
+            if fast:
+                # Tez, lekin kalitga mos — ballda va natijada XATO, ammo
+                # zina shu pog'onada QOLADI (held): faqat tezlik zinani
+                # pastga tushirmasin. Aks holda kuchli o'quvchi oson
+                # savollarni tez bosib, A1 gacha "sirg'alib" tushardi
+                # (oson savol — yana tezroq — yana pastga). Tez va xato
+                # javob — oddiy xatodek pastga tushadi.
+                held = ok
+                ok = False
     asked, answers = _pt_load(s)
-    answers.append({"qid": qid, "d": int(s.cur_d or 0), "ok": bool(ok),
-                    "secs": min(secs, _PT_SECS + _PT_GRACE),
-                    "t": bool(timed_out)})
+    rec = {"qid": qid, "d": int(s.cur_d or 0), "ok": bool(ok),
+           "secs": min(secs, _PT_SECS + _PT_GRACE),
+           "t": bool(timed_out), "idk": bool(idk), "fast": bool(fast)}
+    if held:
+        rec["held"] = True
+    answers.append(rec)
     s.answers = _pt_json.dumps(answers)
-    nd, step = _pt_next_d(int(s.cur_d or 0), ok, int(s.step or 6), answers)
+    if held:
+        nd, step = int(s.cur_d or 0), int(s.step or 6)
+    else:
+        # held javoblar yo'nalish o'zgarishiga (qadam kichrayishiga)
+        # qo'shilmaydi — zina ularda joyidan qimirlamagan.
+        nd, step = _pt_next_d(int(s.cur_d or 0), ok, int(s.step or 6),
+                              [a for a in answers if not a.get("held")])
     s.step = step
     if len(answers) >= _PT_N:
         return _pt_after_grammar(db, s)
-    nq, d = _pt_pick(nd, set(asked), up=ok)
+    nq, d = _pt_pick(nd, set(asked), up=ok or held)
     if nq is None:
         return _pt_after_grammar(db, s)
     s.cur_d = d
     qd = _pt_serve(s, nq)
     db.commit()
-    return {"status": "running", "question": qd, "last_ok": ok}
+    # "last_ok" endi qaytarilmaydi (2026-10-22): test davomida hech
+    # qanday baho ko'rsatilmaydi — aks holda "tez bosilgani uchun
+    # xato" bo'lgani bilinib qolardi. Sahifa uni ishlatmagan.
+    return {"status": "running", "question": qd}
 
 
 def _pt_apply_to_lead(db, s) -> None:
@@ -11239,6 +11416,11 @@ def _pt_apply_to_lead(db, s) -> None:
            if x.get("key") != "grammar" and x.get("level")]
     if _sk:
         tag += " · " + ", ".join(_sk)
+    # "Bilmayman" / "juda tez" (2026-10-22) — xodim lidni ko'rganda
+    # natijaga qanchalik ishonish mumkinligini bilsin.
+    if r.get("idk") or r.get("fast"):
+        tag += " · " + _PG.guard_text(r.get("idk"), r.get("fast"),
+                                      r.get("guess_warning"))
     note = lead.note or ""
     if "[Diagnostika]" in note:
         lines = [ln for ln in note.split("\n") if "[Diagnostika]" not in ln]
@@ -11809,8 +11991,14 @@ def pt_export(days: int = 30, branch_id: int | None = None,
             "level": r.get("level"), "unit": r.get("unit"),
             "overall": r.get("overall"), "score": r.get("score"),
             "total": r.get("total"),
+            # 2026-10-22: "Bilmayman" / "juda tez" hisoblari. Deploydan
+            # oldingi sessiyada o'lchanmagan: null va timed=false.
+            "idk": r.get("idk"), "fast": r.get("fast"),
+            "timed": r.get("timed", True) is not False,
+            "guess_warning": bool(r.get("guess_warning")),
             "skills": [{"key": x["key"], "level": x.get("level"),
-                        "pct": x.get("pct"), "n": x.get("n")}
+                        "pct": x.get("pct"), "n": x.get("n"),
+                        "idk": x.get("idk"), "fast": x.get("fast")}
                        for x in r.get("skills") or []],
             "topics": [{"level": t["level"], "unit": t["unit"],
                         "topic": t["topic"], "ok": t["ok"], "n": t["n"],

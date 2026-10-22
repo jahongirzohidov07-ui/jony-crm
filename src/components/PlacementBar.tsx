@@ -1,5 +1,6 @@
 import GermanPlacementResults from './GermanPlacementResults';
 import RussianPlacementResults from './RussianPlacementResults';
+import { GuessStats, GuessWarningChip } from './PlacementGuessStats';
 import { useEffect, useState } from "react";
 import { formatPhone } from "./PhoneInput";
 import { X, Copy, Send, Play, Link as LinkIcon, GraduationCap, Trash2 } from "lucide-react";
@@ -47,6 +48,8 @@ export function PlacementBadge({ lead }: { lead: Any }) {
               className="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 rounded px-1.5 py-0.5 text-[11px] font-semibold">
           <GraduationCap size={11} /> {p.level} · U{p.unit}
         </span>
+        {/* 2026-10-22: tez bosilgan javoblar ko'p bo'lsa — belgi */}
+        <GuessWarningChip res={p} iconOnly />
         <WheelBadge lead={lead} />
       </>
     );
@@ -162,6 +165,7 @@ function ResultRow({ r, onDelete }: { r: Any; onDelete: () => void }) {
             {res.book} · U{res.unit} · {res.score}/{res.total}
           </button>
         )}
+        {res && <GuessWarningChip res={res} row={r} />}
         {res && r.token && (
           <a href={`/placement-report.html?t=${encodeURIComponent(r.token)}`} target="_blank" rel="noopener"
              className="rounded border border-indigo-200 px-2 py-0.5 text-xs text-indigo-700 hover:bg-indigo-50">
@@ -173,6 +177,10 @@ function ResultRow({ r, onDelete }: { r: Any; onDelete: () => void }) {
       </div>
       {more && res && (
         <div className="mt-2 rounded-lg bg-slate-50 p-2 text-xs text-slate-700">
+          {/* "Bilmayman" va juda tez javoblar — umumiy va bo'limlar
+              bo'yicha (2026-10-22). Deploydan oldingi sessiyada vaqt
+              o'lchanmagan (timed=false) — "—" va "eski test" izohi. */}
+          <GuessStats res={res} row={r} className="mb-1.5" />
           <p className="font-medium">{res.advice}</p>
           <p className="text-slate-500">Unit mavzusi: {res.topic}</p>
           {(res.topics || []).length > 0 && (

@@ -11037,9 +11037,45 @@ def _pt_public(db, token: str):
     return s
 
 
+def _pt_contacts(db, s) -> list:
+    """Hisobotning 2-betidagi reklama bloki uchun filial kontaktlari
+    (2026-10-22, Jahongir: "Jony Academy logosi va kontaktlar tursin,
+    bizni tayyor reklamamiz bo'lsin"). Manba — botdagi FILIAL_KONTAKT,
+    bitta joyda. Lidning filiali birinchi va "mine" belgisi bilan."""
+    try:
+        from academy_bot import FILIAL_KONTAKT
+    except Exception:  # noqa: BLE001 — reklama bloki ixtiyoriy
+        return []
+    mine = ""
+    try:
+        bid = getattr(s, "branch_id", None)
+        if bid:
+            br = db.query(models.Branch).get(bid)
+            mine = (br.name or "").lower() if br else ""
+    except Exception:  # noqa: BLE001
+        mine = ""
+    out = []
+    for name, c in FILIAL_KONTAKT.items():
+        key = name.split()[0].lower()[:5]
+        out.append({"branch": name, "phones": list(c.get("phones") or []),
+                    "telegram": list(c.get("usernames") or []),
+                    "mine": bool(mine) and key in mine})
+    out.sort(key=lambda x: not x["mine"])
+    return out
+
+
 @app.get("/api/public/placement/{token}")
 def pt_state(token: str, db: Session = Depends(get_db)):
-    return _pt_state_dict(_pt_public(db, token))
+    s = _pt_public(db, token)
+    d = _pt_state_dict(s)
+    if s.status == "done":
+        d["contacts"] = _pt_contacts(db, s)
+        try:
+            from academy_bot import KURSLAR
+            d["courses"] = list(KURSLAR)
+        except Exception:  # noqa: BLE001
+            d["courses"] = []
+    return d
 
 
 @app.post("/api/public/placement/{token}/start")

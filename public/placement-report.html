@@ -110,6 +110,46 @@
   .foot .site { font-family:var(--head); font-weight:800; color:#fff; background:var(--brand); border-radius:99px; padding:6px 12px; font-size:12px; }
   .note { font-size:10px; color:var(--muted); padding:0 34px 10px; line-height:1.45; }
 
+  /* ---------- 2-BET: English Journey + reklama ---------- */
+  .p2h { display:flex; justify-content:space-between; align-items:center; padding:14px 30px; background:var(--navy); color:#fff; }
+  .p2n { font-family:var(--head); font-weight:700; font-size:12px; color:#C7DBF7; }
+  .jrw { padding:0 22px; }
+  .jrw .ej { margin:12px 0 10px; padding:16px 16px 12px; border-radius:18px; }
+  .jrw .ej-t { font-size:22px; }
+  .jrw .ej-s { margin-bottom:10px; }
+  .jrw .ej-tg { margin-bottom:10px; }
+  .jrw .ej-tg button { padding:6px; }
+  .jrw .ej-hero { margin-bottom:10px; }
+  .jrw .ej-h { padding:10px 12px; }
+  .jrw .ej-h .n { font-size:32px; margin:2px 0 4px; }
+  .jrw .ej-now { margin:0 0 8px; }
+  .jrw .ej-now div { padding:6px; }
+  .jrw .ej-now b { font-size:16px; }
+  .jrw .ej-r { padding-bottom:7px; gap:10px; }
+  .jrw .ej-r:not(:last-child):after { left:18px; top:38px; }
+  .jrw .ej-dot { width:38px; height:38px; font-size:12.5px; }
+  .jrw .ej-ch { margin-top:4px; }
+  .jrw .ej-ch i { padding:3px 7px; font-size:11px; }
+  .jrw .ej-f { margin-top:2px; }
+  .ad { margin:0 22px 12px; border-radius:18px; border:1px solid var(--sky); background:linear-gradient(180deg,#fff,var(--ice)); padding:12px 16px; }
+  .adtop { display:flex; align-items:center; gap:12px; }
+  .adtop img { width:46px; height:46px; border-radius:12px; box-shadow:0 6px 16px rgba(26,111,228,.3); }
+  .adt { font-family:var(--head); font-weight:800; font-size:20px; letter-spacing:.06em; color:var(--navy); }
+  .adt span { color:var(--brand); }
+  .ads { font-size:11.5px; color:var(--muted); font-weight:600; }
+  .adbot { margin-left:auto; text-align:right; font-size:11px; color:var(--muted); font-weight:600; }
+  .adbot b { display:block; font-family:var(--head); font-size:15px; }
+  .ad a { color:var(--brand); text-decoration:none; }
+  .adc { display:flex; flex-wrap:wrap; gap:6px; margin:9px 0; }
+  .adc span { font-family:var(--head); font-weight:700; font-size:11.5px; color:#fff; background:linear-gradient(135deg,#7C3AED,#1A6FE4); border-radius:99px; padding:4px 11px; }
+  .adgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .adbr { background:#fff; border:1px solid var(--line); border-radius:12px; padding:8px 10px; font-size:11.5px; line-height:1.6; }
+  .adbr.mine { border-color:var(--gold); box-shadow:0 0 0 2px rgba(245,184,61,.35); }
+  .adbr .h { display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:2px; }
+  .adbr .h b { font-family:var(--head); font-size:13px; color:var(--navy); }
+  .adbr .h em { font-style:normal; font-size:9.5px; font-weight:800; color:#92400E; background:#FEF3C7; border-radius:99px; padding:2px 7px; }
+  .adbr .ph a { color:var(--ink); font-weight:700; }
+
   .state { max-width:560px; margin:60px auto; background:#fff; border-radius:16px; padding:24px; text-align:center; font-family:var(--body); }
 
   /* Faqat telefon EKRANI uchun: chop etishda A4 kengligi (794px) bu
@@ -121,6 +161,11 @@
     .herogrid { grid-template-columns:1fr; justify-items:center; text-align:center; }
     .herogrid > div:first-child { order:2; }
     .skills { grid-template-columns:repeat(2,1fr); }
+    .adgrid { grid-template-columns:1fr; }
+    .adtop { flex-wrap:wrap; }
+    .adbot { margin-left:0; text-align:left; width:100%; }
+    .jrw, .ad { padding-left:10px; padding-right:10px; }
+    .ad { margin-left:10px; margin-right:10px; }
     .topics { grid-template-columns:1fr; }
     .sum { grid-template-columns:1fr; }
     .foot { flex-direction:column; text-align:center; padding:14px 18px; }
@@ -129,7 +174,8 @@
   @media print {
     body { background:#fff; }
     .actions { display:none; }
-    .sheet { margin:0; box-shadow:none; width:210mm; height:297mm; }
+    .sheet { margin:0; box-shadow:none; width:210mm; height:297mm; break-after:page; page-break-after:always; }
+    .sheet:last-child { break-after:auto; page-break-after:auto; }
   }
 </style>
 </head>
@@ -178,6 +224,30 @@
       + '<div class="pc">' + clamp(pct) + '% grammatika</div></div></div>';
   }
 
+  // Reklama bloki: logo + kurslar + filial kontaktlari (serverdan).
+  const fmtPhone = (p) => {
+    const m = String(p).replace(/\D/g, '').match(/^998(\d{2})(\d{3})(\d{2})(\d{2})$/);
+    return m ? '+998 ' + m[1] + ' ' + m[2] + ' ' + m[3] + ' ' + m[4] : String(p);
+  };
+  function adBlock(d) {
+    const cs = d.contacts || [];
+    const courses = (d.courses && d.courses.length) ? d.courses : ['Ingliz tili'];
+    const cards = cs.map((c) =>
+      '<div class="adbr' + (c.mine ? ' mine' : '') + '">'
+      + '<div class="h"><b>' + esc(c.branch) + '</b>' + (c.mine ? '<em>Sizning filialingiz</em>' : '') + '</div>'
+      + (c.phones || []).map((p) => '<div class="ph">\u{1F4DE} <a href="tel:' + esc(p) + '">' + esc(fmtPhone(p)) + '</a></div>').join('')
+      + (c.telegram || []).map((u) => '<div class="tg">✈️ <a href="https://t.me/' + esc(String(u).replace('@', '')) + '">' + esc(u) + '</a></div>').join('')
+      + '</div>').join('');
+    return '<section class="ad">'
+      + '<div class="adtop"><img src="/favicon.png" alt=""><div>'
+      +   '<div class="adt">JONY <span>ACADEMY</span></div>'
+      +   '<div class="ads">O\'quv markazi · Step 1 dan IELTS gacha</div></div>'
+      +   '<div class="adbot">\u{1F4F2} Ro\'yxatdan o\'tish:<b><a href="https://t.me/JonyAcademybot">@JonyAcademybot</a></b></div></div>'
+      + '<div class="adc">' + courses.map((c) => '<span>' + esc(c) + '</span>').join('') + '</div>'
+      + (cards ? '<div class="adgrid">' + cards + '</div>' : '')
+      + '</section>';
+  }
+
   function render(d) {
     const r = d.result;
     const idx = LADDER.findIndex((x) => x[0] === r.level);
@@ -222,7 +292,6 @@
       +     '<div class="advice"><span>🎯</span><div><b>Tavsiya:</b> ' + esc(r.advice) + '</div></div>'
       +   '</div>' + gauge(r.level, r.grammar_pct) + '</div>'
       + '</section>'
-      + '<section id="jr" style="padding:6px 28px 0"></section>'
       + '<section class="body">'
       +   '<div><div class="sec"><h2>Ko\'nikmalar</h2><i></i><span>daraja va to\'g\'ri javoblar ulushi</span></div><div class="skills">' + skills + '</div></div>'
       +   '<div style="padding-top:14px"><div class="sec"><h2>Daraja zinapoyasi</h2><i></i><span>Step 1 dan IELTS gacha</span></div><div class="ladder">' + ladder + '</div></div>'
@@ -236,7 +305,20 @@
       + '<div class="note">Test adaptiv: har bir javobdan keyin savol qiyinlashadi yoki osonlashadi, shuning uchun natija shaxsiy darajangizni ko\'rsatadi. Speaking va Writing sinov darsida baholanadi.</div>'
       + '<footer class="foot"><div><b>Jony Academy</b><br>Ingliz tili — Step 1 dan IELTS gacha</div>'
       +   '<div style="text-align:center">Guruhga yozilish uchun administratorimiz<br>siz bilan bog\'lanadi</div>'
-      +   '<span class="site">jonyos.uz</span></footer>'
+      +   '<span class="site">1 / 2</span></footer>'
+      + '</div>'
+      // 2-BET (2026-10-22, Jahongir: "mavzular kesimida foiz qolsin, u
+      // ham 2 ta bet bo'lsin umumiy" + "Jony Academy logosi va
+      // kontaktlar tursin, bizni tayyor reklamamiz bo'lsin"):
+      // English Journey + reklama bloki (logo, kurslar, filial kontaktlari).
+      + '<div class="sheet s2">'
+      +   '<div class="p2h"><div class="brand"><img src="/favicon.png" alt="">JONY ACADEMY</div>'
+      +   '<div class="p2n">' + esc(d.name || '') + (d.name ? ' · ' : '') + esc(r.level) + '</div></div>'
+      +   '<section id="jr" class="jrw"></section>'
+      +   adBlock(d)
+      +   '<footer class="foot"><div><b>Jony Academy</b><br>Ingliz tili — Step 1 dan IELTS gacha</div>'
+      +   '<div style="text-align:center">Natijangiz bilan administratorimizga murojaat qiling —<br>sizga mos guruhni tanlab beramiz</div>'
+      +   '<span class="site">2 / 2</span></footer>'
       + '</div>';
     if (window.renderJourney) window.renderJourney(document.getElementById('jr'), r.journey);
     document.getElementById('actions').hidden = false;

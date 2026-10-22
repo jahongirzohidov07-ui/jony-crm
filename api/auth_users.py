@@ -142,7 +142,13 @@ def login(payload: schemas.LoginRequest, request: Request,
         import common as _cm
         _cm._ensure_month_charges(db, budget_s=5.0)
     except Exception:
-        pass
+        # Fon ishi yiqilsa sessiya "rollback kerak" holatida qoladi va
+        # pastdagi user.role o'qilishi PendingRollbackError bilan
+        # loginni 500 ga aylantirardi (2026-10-22). Login buzilmasin.
+        try:
+            db.rollback()
+        except Exception:
+            pass
     # STANDART PAROL — MAJBURIY ALMASHTIRISH (2026-09-06).
     # Login = telefon raqami (ochiq ma'lumot), parol esa hisob
     # ochilganda "jonyjony" bo'ladi. Xodim uni almashtirmaguncha

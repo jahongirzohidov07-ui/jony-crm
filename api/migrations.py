@@ -358,6 +358,19 @@ MIGRATIONS = [
         "CREATE INDEX IF NOT EXISTS ix_contents_brand_id "
         "ON contents (brand_id)",
     ]),
+
+    # 2026-10-22: to'lov/lid o'chirilganda bog'langan yozuv qoladi,
+    # havolasi NULL bo'ladi (models.detach_refs). Uch ustun NOT NULL
+    # edi — Postgres'da bo'shatamiz. SQLite'da ALTER COLUMN yo'q;
+    # u yerda jadvallar models.py dan (nullable) yaratiladi.
+    ("0037_fk_detach_nullable", [
+        ("postgresql", "ALTER TABLE payment_fix_requests "
+                       "ALTER COLUMN payment_id DROP NOT NULL"),
+        ("postgresql", "ALTER TABLE german_placement_results "
+                       "ALTER COLUMN lead_id DROP NOT NULL"),
+        ("postgresql", "ALTER TABLE russian_placement_results "
+                       "ALTER COLUMN lead_id DROP NOT NULL"),
+    ]),
 ]
 
 
@@ -365,12 +378,18 @@ def run(db) -> list:
     """Qo'llanmagan migratsiyalarni tartib bilan bajaradi.
     Qaytaradi: [(versiya, xato_matni_yoki_None), ...]"""
     applied = {m.version for m in db.query(models.SchemaMigration).all()}
+    dialect = db.get_bind().dialect.name
     results = []
     for version, statements in MIGRATIONS:
         if version in applied:
             continue
         err = None
         for stmt in statements:
+            # ("postgresql", "SQL") — faqat shu bazada bajariladi
+            if isinstance(stmt, tuple):
+                if stmt[0] != dialect:
+                    continue
+                stmt = stmt[1]
             try:
                 db.execute(text(stmt))
                 db.commit()

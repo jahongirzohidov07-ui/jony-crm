@@ -103,8 +103,11 @@ def counts():
 
 
 print("=== 0. MIGRATSIYA 0036_smm_brands ===")
-ck("oxirgi migratsiya", migrations.MIGRATIONS[-1][0], "0036_smm_brands")
-ck("shtampda 0036", "0036_smm_brands" in common.SCHEMA_STAMP, True)
+# 0037 (2026-10-22) keyin qo'shildi — 0036 endi oxirgi emas
+ck("0036 ro'yxatda", any(v == "0036_smm_brands"
+                         for v, _s in migrations.MIGRATIONS), True)
+ck("shtampda oxirgi migratsiya",
+   migrations.MIGRATIONS[-1][0] in common.SCHEMA_STAMP, True)
 ck("yangi baza: contents.brand_id bor", "brand_id" in cols("contents"), True)
 ck("yangi baza: jadvallar bor",
    [t for t in ("smm_brands", "smm_brand_members")
@@ -128,7 +131,9 @@ with eng_old.begin() as cx:
     cx.execute(text("INSERT INTO contents (title, status) "
                     "VALUES ('Eski post 0', 'idea')"))
 with _S(eng_old) as dbo:
-    for v, _st in migrations.MIGRATIONS[:-1]:
+    for v, _st in migrations.MIGRATIONS:
+        if v == "0036_smm_brands":
+            continue
         dbo.add(models.SchemaMigration(version=v))
     dbo.commit()
 

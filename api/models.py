@@ -583,7 +583,7 @@ class GermanPlacementResult(Base):
     id = Column(Integer, primary_key=True)
     attempt_id = Column(String(64), nullable=False, unique=True, index=True)
     payload_hash = Column(String(64), nullable=False)
-    lead_id = Column(Integer, ForeignKey("leads.id"), nullable=False, index=True)
+    lead_id = Column(Integer, ForeignKey("leads.id"), nullable=True, index=True)  # lid o'chsa NULL (2026-10-22)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=False, index=True)
     full_name = Column(String(120), nullable=False)
     phone = Column(String(20), nullable=False)
@@ -3843,8 +3843,10 @@ class PaymentFixRequest(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     public_id = Column(String, unique=True, index=True)
+    # nullable (2026-10-22): to'lov o'chirilsa so'rov tarixda qoladi,
+    # havolasi bo'shaydi (pastdagi detach_refs).
     payment_id = Column(Integer, ForeignKey("payments.id"),
-                        nullable=False, index=True)
+                        nullable=True, index=True)
     student_id = Column(Integer, ForeignKey("students.id"), index=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), index=True)
 
@@ -4917,7 +4919,7 @@ class RussianPlacementResult(Base):
     id = Column(Integer, primary_key=True)
     attempt_id = Column(String(64), nullable=False, unique=True, index=True)
     payload_hash = Column(String(64), nullable=False)
-    lead_id = Column(Integer, ForeignKey("leads.id"), nullable=False, index=True)
+    lead_id = Column(Integer, ForeignKey("leads.id"), nullable=True, index=True)  # lid o'chsa NULL (2026-10-22)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=False, index=True)
     full_name = Column(String(120), nullable=False)
     phone = Column(String(20), nullable=False)
@@ -5194,3 +5196,88 @@ class WordbankCertUpload(Base):
     branch_id_snap = Column(Integer, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================================
+#  O'CHIRILAYOTGAN TO'LOV / LIDGA BOG'LANGAN YOZUVLAR (2026-10-22)
+#
+#  Prod loglari: "update or delete on table payments violates foreign
+#  key constraint payment_fix_requests_payment_id_fkey" (to'lov 18631)
+#  va "... leads ... wheel_spins_lead_id_fkey" (lid 516). To'lovni
+#  tuzatish so'rovi ("o'chirish") tasdiqlanganda to'lovga SHU so'rovning
+#  o'zi bog'langan edi; lid o'chirilganda unga g'ildirak aylanishi
+#  bog'langan edi. Postgres bunday qatorni o'chirmaydi — 500.
+#
+#  Har bir o'chirish joyini alohida tuzatsak, keyingi yangi joy yana
+#  unutadi. Shuning uchun qoida BITTA joyda: Payment yoki Lead
+#  o'chirilishidan OLDIN (db.delete ham, query(...).delete() ham) unga
+#  ishora qiluvchi hamma ustun NULL qilinadi — yozuvlar (so'rov tarixi,
+#  g'ildirak, xabar, test natijasi) qoladi, faqat havola bo'shaydi.
+#  Ustunlar metadata'dan olinadi: yangi FK qo'shilsa ham o'zi qamraladi
+#  (u nullable bo'lishi shart). Kutilayotgan to'lov so'rovi esa
+#  "rad etildi" bo'ladi — tuzatadigan yozuv qolmadi.
+# =====================================================================
+from sqlalchemy import event as _sa_event, select as _sa_select, \
+    update as _sa_update  # noqa: E402
+from sqlalchemy.orm import Session as _SaSession  # noqa: E402
+
+_DETACH_PARENTS = (Payment, Lead)
+
+
+def _fk_children(parent_table):
+    """parent_table.id ga ishora qiluvchi barcha ustunlar."""
+    return [fk.parent for t in Base.metadata.sorted_tables
+            for fk in t.foreign_keys
+            if fk.column.table is parent_table and fk.column.name == "id"]
+
+
+def detach_refs(conn, parent_table, ids, keep_fix_ids=()):
+    """ids o'chirilishidan oldin ularga bog'langan qatorlarni uzadi."""
+    ids = sorted({int(i) for i in ids if i})
+    if not ids:
+        return
+    if parent_table is Payment.__table__:
+        t = PaymentFixRequest.__table__
+        q = _sa_update(t).where(t.c.payment_id.in_(ids),
+                                t.c.status == "pending")
+        if keep_fix_ids:
+            q = q.where(t.c.id.notin_(list(keep_fix_ids)))
+        conn.execute(q.values(
+            status="rejected", decided_by="tizim",
+            decided_at=datetime.utcnow(),
+            decision_note="To'lov yozuvi o'chirildi — so'rov yopildi"))
+    for col in _fk_children(parent_table):
+        conn.execute(_sa_update(col.table).where(col.in_(ids))
+                     .values({col.name: None}))
+
+
+@_sa_event.listens_for(_SaSession, "before_flush")
+def _detach_before_flush(session, _ctx, _instances):
+    gone = {}
+    for o in session.deleted:
+        if isinstance(o, _DETACH_PARENTS) and o.id:
+            gone.setdefault(o.__table__, []).append(o.id)
+    if not gone:
+        return
+    # Shu flush'da o'zgarayotgan so'rov (masalan, hozir tasdiqlanayotgani)
+    # "rad etildi" qilinmaydi — uning holatini chaqirgan kod yozadi.
+    keep = [o.id for o in session.dirty
+            if isinstance(o, PaymentFixRequest) and o.id]
+    conn = session.connection()
+    for table, ids in gone.items():
+        detach_refs(conn, table, ids, keep)
+
+
+@_sa_event.listens_for(_SaSession, "do_orm_execute")
+def _detach_before_bulk_delete(state):
+    if not state.is_delete:
+        return
+    m = state.bind_mapper
+    table = getattr(m, "local_table", None)
+    if not any(table is p.__table__ for p in _DETACH_PARENTS):
+        return
+    sel = _sa_select(table.c.id)
+    if state.statement.whereclause is not None:
+        sel = sel.where(state.statement.whereclause)
+    conn = state.session.connection()
+    detach_refs(conn, table, [r[0] for r in conn.execute(sel)])

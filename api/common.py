@@ -7140,7 +7140,7 @@ def _ensure_month_charges(db: Session, budget_s: float = 8.0):
             if not got:
                 return          # boshqa nusxa allaqachon ishlayapti
         except Exception:
-            pass
+            db.rollback()       # sessiya keyingi so'rovlarga toza qolsin
 
     try:
         group_ids = [gid for (gid,) in
@@ -7217,7 +7217,7 @@ def _ensure_month_charges(db: Session, budget_s: float = 8.0):
                 db.execute(text("SELECT pg_advisory_unlock(917201)"))
                 db.commit()
             except Exception:
-                pass
+                db.rollback()
 
     # Do'kondan olingan chegirmalar shu oy hisobiga tushsin (2026-08-15)
     try:

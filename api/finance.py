@@ -1093,7 +1093,8 @@ def list_payment_fixes(
     for r in rows:
         st = db.query(models.Student).get(r.student_id) \
             if r.student_id else None
-        p = db.query(models.Payment).get(r.payment_id)
+        # payment_id NULL — to'lov o'chirilgan (models.detach_refs)
+        p = db.query(models.Payment).get(r.payment_id)             if r.payment_id else None
         out.append({
             "id": r.id, "public_id": r.public_id,
             "payment_id": r.payment_id,
@@ -1137,7 +1138,7 @@ def approve_payment_fix(
     if (user.role == roles.BRANCH_MANAGER
             and not _in_user_branches(db, user, r.branch_id, null_ok=True)):
         raise HTTPException(403, "Bu so'rov boshqa filialga tegishli")
-    p = db.query(models.Payment).get(r.payment_id)
+    p = db.query(models.Payment).get(r.payment_id) if r.payment_id else None
     if not p:
         r.status = "rejected"
         r.decided_by = user.full_name

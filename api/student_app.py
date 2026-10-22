@@ -71,7 +71,7 @@ def _mask(full_name: str) -> str:
     return f"{parts[0]} {parts[1][0]}."
 
 
-def _streak_days(db: Session, student_id: int) -> int:
+def _streak_days(db: Session, student_id: int, *, today=None) -> int:
     """Ketma-ket necha kun mashq qilgan (bugundan orqaga).
 
     Bugun hali o'ynamagan bo'lsa ham kechagi ketma-ketlik saqlanadi —
@@ -84,7 +84,7 @@ def _streak_days(db: Session, student_id: int) -> int:
     days = [r[0] for r in rows if r[0]]
     if not days:
         return 0
-    today = date.today()
+    today = today or roles.local_today()
     if days[0] < today - timedelta(days=1):
         return 0
     streak = 0
@@ -160,7 +160,7 @@ def _award_week_prizes(db: Session):
     Cron yo'q (serverless) — reyting sahifasi ochilganda tekshiriladi.
     Har hafta uchun bitta yozuv (source="rank", ref_id=hafta boshi),
     shuning uchun ikki marta berilmaydi. Oxirgi 8 hafta qaraladi."""
-    today = date.today()
+    today = roles.local_today()
     cur_week = today - timedelta(days=today.weekday())
     first = _RANK_PRIZE_FROM - timedelta(days=_RANK_PRIZE_FROM.weekday())
     w = max(first, cur_week - timedelta(days=7 * 8))
@@ -183,8 +183,8 @@ def _award_week_prizes(db: Session):
                            models.XpTransaction.created_at <= hi,
                            models.Student.status.in_(("active", "trial")))
                    .group_by(models.XpTransaction.student_id)
-                   .order_by(func.sum(models.XpTransaction.amount)
-                             .desc())
+                   .order_by(func.sum(models.XpTransaction.amount).desc(),
+                             models.XpTransaction.student_id.asc())
                    .first())
             if row and float(row[1] or 0) > 0:
                 db.add(models.CoinEntry(
@@ -217,7 +217,7 @@ def _award_week_prizes(db: Session):
 
 DAILY_TASKS = [
     # (kalit, sarlavha, izoh, maqsad, taxminiy daqiqa, yo'l)
-    ("vocab", "10 ta yangi so'z", "Lug'at mashqi", 10, 5, "/student/vocab"),
+    ("vocab", "10 ta to'g'ri javob", "Lug'at mashqi", 10, 5, "/student/vocab"),
     ("grammar", "5 ta grammatika savoli", "Grammatika", 5, 4,
      "/student/grammar"),
     ("skill", "5 ta ko'nikma mashqi", "Listening yoki Reading", 5, 6,
@@ -1688,9 +1688,9 @@ def _badge_counters(db: Session, s) -> dict:
         if qid in solved:
             t[1] += 1
     gram_done = sum(1 for v in topics.values() if v[0] and v[1] >= v[0])
+    # Cancellations append negative rows; include them like _recalc_gamification.
     xp = (db.query(func.coalesce(func.sum(models.XpTransaction.amount), 0))
-          .filter(models.XpTransaction.student_id == s.id,
-                  models.XpTransaction.is_reversal == 0).scalar() or 0)
+          .filter(models.XpTransaction.student_id == s.id).scalar() or 0)
     lessons = (db.query(func.count(models.Attendance.id))
                .filter(models.Attendance.student_id == s.id,
                        models.Attendance.present == 1).scalar() or 0)
@@ -1704,7 +1704,7 @@ def _badge_counters(db: Session, s) -> dict:
         "streak": _award_and_get_streak(db, s.id),
         "vocab": int(vocab),
         "grammar_topics": int(gram_done),
-        "xp": int(round(float(xp))),
+        "xp": int(max(0, float(xp))),
         "lessons": int(lessons),
         "exams": int(exams),
     }
@@ -1712,12 +1712,16 @@ def _badge_counters(db: Session, s) -> dict:
 
 def _badges(db: Session, s) -> list:
     """Yutuqlar ro'yxati — ochilgani va yaqin maqsad bilan."""
+    from student_reward_path import BADGE_METRICS
     c = _badge_counters(db, s)
     out = []
     for key, label, hint, metric, target, icon, tone in roles.BADGES:
         have = int(c.get(metric, 0))
         out.append({
             "key": key, "label": label, "hint": hint,
+            "metric": metric,
+            "category": BADGE_METRICS[metric][0],
+            "unit": BADGE_METRICS[metric][1],
             "icon": icon, "tone": tone,
             "have": min(have, target), "target": target,
             "done": have >= target,
@@ -1728,6 +1732,16 @@ def _badges(db: Session, s) -> list:
     # o'zgarmasin, lekin ochilganlar tepada tursin.
     out.sort(key=lambda b: (not b["done"], -b["percent"]))
     return out
+
+
+@router.get("/api/student/reward-path")
+def student_reward_path(db: Session = Depends(get_db),
+                        user=Depends(require_role(roles.STUDENT))):
+    """Own-student reward guidance; never awards or recalculates on read."""
+    from student_reward_path import reward_path
+    s = _me(db, user)
+    with db.no_autoflush:
+        return reward_path(db, s, _streak_days(db, s.id, today=roles.local_today()))
 
 
 @router.get("/api/student/achievements")
@@ -1745,8 +1759,11 @@ def student_achievements(db: Session = Depends(get_db),
     s = _me(db, user)
     badges = _badges(db, s)
     streak = _award_and_get_streak(db, s.id)
+    from student_reward_path import streak_reward_statuses
+    statuses = streak_reward_statuses(db, s.id, streak)
     rewards = [{
         "days": d, "coin": coin,
+        **statuses[d],
         "done": streak >= d,
         "left": max(0, d - streak),
         "percent": min(100, round(streak * 100 / d)),
@@ -3537,7 +3554,7 @@ def student_leaderboard(scope: str = "group", period: str = "week",
     if period not in ("all", "week"):
         raise HTTPException(400, "period: all yoki week")
 
-    today = date.today()
+    today = roles.local_today()
     week_start = today - timedelta(days=today.weekday())
 
     def totals(since: date | None, until: date | None = None):
@@ -3562,7 +3579,8 @@ def student_leaderboard(scope: str = "group", period: str = "week",
             q = q.filter(models.XpTransaction.created_at <= hi)
         return (q.group_by(models.Student.id, models.Student.full_name,
                            models.Student.photo)
-                .order_by(func.sum(models.XpTransaction.amount).desc())
+                .order_by(func.sum(models.XpTransaction.amount).desc(),
+                          models.Student.id.asc())
                 .all())
 
     if scope == "group" and not s.group_id:

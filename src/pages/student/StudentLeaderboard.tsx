@@ -6,6 +6,7 @@ import { ArrowDown, ArrowUp, Clock, Crown, Gift, Info } from "lucide-react";
 import { StudentCoinIcon as CoinIcon } from "../../components/StudentIcon";
 import { JsaLogo, JSA } from "../../components/Jsa";
 import { api } from "../../lib/api";
+import { leaderboardStanding } from "../../lib/studentLeaderboard";
 import { fmtNum, type StudentHome as Home } from "../../lib/studentApi";
 import { WordBoard } from "../../components/wordbank/WordBoard";
 import { useLearningLanguage } from "../../lib/lang";
@@ -40,7 +41,7 @@ type League = { name: string; icon: string; color: string } | null;
 
 type Board = {
   scope: string; period: string; prize_coin: number;
-  podium: Row[]; rows: Row[]; me: Row | null;
+  podium: Row[]; rows: Row[]; me: (Omit<Row, "rank"> & { rank: number | null }) | null;
   /** 2026-08-25: o'z ligangiz reyting sahifasida ham ko'rinadi. */
   league?: League; next_league?: League;
   league_to_next?: number; league_percent?: number;
@@ -59,7 +60,7 @@ function daysLeftInWeek(): number {
   return d === 0 ? 1 : 8 - d;
 }
 
-function Avatar({ row, size, ring }: { row: Row; size: number; ring: string }) {
+function Avatar({ row, size, ring }: { row: Pick<Row, "name" | "photo">; size: number; ring: string }) {
   return (
     <div
       className={`rounded-full overflow-hidden border-4 ${ring} bg-brand-600 flex items-center justify-center shrink-0`}
@@ -140,6 +141,7 @@ export default function StudentLeaderboard() {
       .catch((e) => setErr(e instanceof Error ? e.message : "Xatolik"));
   }, [scope, period, view]);
 
+  const standing = leaderboardStanding(d?.me?.rank, d?.to_top10);
   const card = { background: JSA.card, borderColor: JSA.cardBorder };
   const podium = d?.podium || [];
   const p1 = podium[0]; const p2 = podium[1]; const p3 = podium[2];
@@ -209,12 +211,17 @@ export default function StudentLeaderboard() {
             {period === "week" ? "Haftalik XP bo'yicha" : "Umumiy XP bo'yicha"}
           </p>
         </div>
-        <div className="text-right shrink-0">
-          <span className="inline-flex items-center gap-2 rounded-2xl px-3.5 py-2 border border-amber-500/50 text-amber-300 text-sm font-bold"
-                style={{ background: "#1A1A38" }}>
-            <Gift size={15} />
-            Sovrin: {d?.prize_coin ?? 50} Coin
-          </span>
+        <div className="min-w-0 max-w-full flex flex-wrap items-center gap-2 text-left">
+          {period === "week" && d?.period === "week" &&
+            Number.isFinite(d.prize_coin) && d.prize_coin > 0 && (
+            <span className="inline-flex min-w-0 max-w-full items-center gap-2 rounded-2xl px-3.5 py-2 border border-amber-500/50 text-amber-300 text-sm font-bold"
+                  style={{ background: "#1A1A38" }}>
+              <Gift size={15} className="shrink-0" />
+              <span className="min-w-0 whitespace-normal break-words">
+                Umumiy haftalik 1-o‘rin: {fmtNum(d.prize_coin)} coin
+              </span>
+            </span>
+          )}
           {period === "week" && (
             <p className="text-[13px] text-slate-300 mt-2 inline-flex items-center gap-1.5">
               <Clock size={13} /> {daysLeftInWeek()} kun qoldi
@@ -374,14 +381,13 @@ export default function StudentLeaderboard() {
           <div className="rounded-2xl border border-slate-100 bg-slate-50/60 p-3">
             <div className="flex items-center gap-2.5">
               <span className="text-[24px] font-extrabold text-brand-600 w-7 text-center shrink-0">
-                {d.me.rank ?? "—"}
+                {standing.rank ?? "—"}
               </span>
               <Avatar row={d.me} size={44} ring="border-white" />
               <p className="text-[13px] text-slate-600 leading-snug flex-1 min-w-0">
-                {typeof d.to_top10 === "number" && d.to_top10 > 0 ? (
-                  <>Top 10 gacha yana <b>{fmtNum(d.to_top10)} XP</b></>
-                ) : (
-                  <>Siz eng yaxshi 10 talikdasiz</>
+                {standing.message}
+                {standing.rank !== null && standing.gap !== null && (
+                  <> yana <b>{fmtNum(standing.gap)} XP</b></>
                 )}
               </p>
               <b className="text-[17px] text-brand-600 shrink-0">
@@ -389,29 +395,28 @@ export default function StudentLeaderboard() {
               </b>
               <Link to="/student/games"
                 className="px-3.5 py-2.5 rounded-xl bg-brand-600 text-white text-[13px] font-bold shrink-0">
-                Mashq qilish
+                {standing.action}
               </Link>
             </div>
           </div>
         </div>
       )}
 
-      {/* ------------------------------------------ KEYINGI SOVRIN */}
-      {d && !d.hint && d.me && typeof d.to_top10 === "number" && d.to_top10 > 0 && (
+      {/* ------------------------------------------ KEYINGI XP MAQSADI */}
+      {d && !d.hint && d.me && standing.gap !== null && (
         <div className="rounded-3xl border p-4 mt-3 flex items-center gap-3"
              style={card}>
-          <span className="text-[30px] shrink-0">🎁</span>
+          <span className="text-[30px] shrink-0">🎯</span>
           <div className="min-w-0 flex-1">
-            <p className="text-[15px] font-bold text-white">Keyingi sovrin</p>
+            <p className="text-[15px] font-bold text-white">10-o'rindagi XP ga yetish</p>
             <div className="h-2 rounded-full bg-[#26326B] mt-2 overflow-hidden">
               <div className="h-full bg-brand-500 rounded-full"
                    style={{ width: `${Math.min(95, Math.round(
-                     (d.me.points / (d.me.points + d.to_top10 || 1)) * 100))}%` }} />
+                     (Math.max(0, d.me.points) / (Math.max(0, d.me.points) + standing.gap || 1)) * 100))}%` }} />
             </div>
           </div>
           <p className="text-sm text-slate-300 shrink-0">
-            Yana {fmtNum(d.to_top10)} XP —{" "}
-            <b className="text-amber-400">+10 Coin</b>
+            Yana {fmtNum(standing.gap)} XP
           </p>
         </div>
       )}
@@ -452,7 +457,10 @@ export default function StudentLeaderboard() {
       {d && !d.hint && (
         <p className="text-[13px] text-slate-400 flex items-center gap-2 mt-4 px-1">
           <Info size={14} className="shrink-0" />
-          Reyting barcha mashqlardan yig'ilgan XP asosida hisoblanadi.
+          <span>
+            Reyting barcha mashqlardan yig'ilgan XP asosida hisoblanadi.
+            XP miqdori teng bo‘lsa, o‘quvchi ID raqami kichikroq bo‘lgan o‘quvchi oldinda turadi.
+          </span>
         </p>
       )}
       </>)}

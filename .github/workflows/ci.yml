@@ -16,6 +16,9 @@ jobs:
           python-version: "3.11"
       - name: Install deps
         run: pip install -r requirements.txt
+      - name: Student reward guidance tests
+        working-directory: api
+        run: python test_student_reward_path.py
       - name: Import smoke test (api/)
         working-directory: api
         env:
@@ -89,6 +92,8 @@ jobs:
         run: node --test scripts/test-course-missions.cjs
       - name: Contextual practice choice tests
         run: node --test scripts/test-course-practice-choice.cjs
+      - name: Student ranking and reward guidance
+        run: node --test scripts/test-student-leaderboard.cjs scripts/test-student-reward-goal.cjs scripts/test-student-reward-path.cjs
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks

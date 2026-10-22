@@ -1,3 +1,5 @@
+import StudentRewardPath, { REWARD_UNITS } from "../../components/StudentRewardPath";
+import StudentRewardGoal from "../../components/StudentRewardGoal";
 import { StudentLoading } from "../../components/StudentLoading";
 import { JsaLogo } from "../../components/Jsa";
 import { StudentImage, StudentIcon, type StudentIconName } from "../../components/StudentIcon";
@@ -46,6 +48,7 @@ const TONE: Record<string, string> = {
 type Badge = {
   key: string; label: string; hint: string; icon: string; tone: string;
   have: number; target: number; done: boolean; percent: number; left: number;
+  metric?: string; category?: string; unit?: string;
 };
 
 type Ach = {
@@ -54,7 +57,7 @@ type Ach = {
   done: number;
   total: number;
   streak_rewards: { days: number; coin: number; done: boolean;
-                    left: number; percent: number }[];
+                    left: number; percent: number; status?: string; status_label?: string }[];
   next: Badge | null;
 };
 
@@ -63,6 +66,8 @@ const BADGE_ICON: Record<string, StudentIconName> = {
   flame: "streak", book: "vocabulary", check: "mission", star: "xp",
   calendar: "level", award: "certificate",
 };
+
+const BADGE_CATEGORY: Record<string, string> = { xp: "Faollik", vocabulary: "Lug‘at mashqi", grammar: "Grammatika mashqi", streak: "Muntazamlik", attendance: "Davomat", exams: "Imtihon ishtiroki" };
 
 const BADGE_TONE: Record<string, string> = {
   amber: "bg-amber-100 text-amber-600",
@@ -217,14 +222,6 @@ export default function StudentShop() {
       (!cat || r.category === cat) &&
       (!q.trim() || r.name.toLowerCase().includes(q.trim().toLowerCase()))
   );
-
-  // Keyingi sovrin: balansdan qimmatroq eng arzoni - dizayndagi
-  // "Yana 60 coin — yangi sovrin" chizig'i shundan chiqadi.
-  const goal = d.next_goal;
-  const goalLeft = goal ? Math.max(0, goal.cost - d.available) : 0;
-  const goalPct = goal && goal.cost > 0
-    ? Math.min(100, Math.round((d.available / goal.cost) * 100))
-    : 100;
 
   /* ------------------------------------------------- mahsulot karta */
   const card = (r: RewardItem) => {
@@ -387,19 +384,6 @@ export default function StudentShop() {
                   {d.held} coin so'ralgan sovg'aga band qilingan
                 </p>
               )}
-              <div className="mt-5">
-                <p className="text-[14px] text-white/90">
-                  {goal
-                    ? `Yana ${goalLeft} coin — ${goal.name}`
-                    : "Barcha sovrinlar sizga yetadi"}
-                </p>
-                <div className="mt-2 h-2 rounded-full bg-white/30 w-[62%] overflow-hidden">
-                  <div
-                    className="h-full rounded-full"
-                    style={{ width: `${goalPct}%`, background: "#F5C518" }}
-                  />
-                </div>
-              </div>
             </div>
           </div>
         )}
@@ -407,31 +391,9 @@ export default function StudentShop() {
         {/* ================================================== DO'KON */}
         {view === "shop" && (
           <>
-            {/* promo blok */}
-            <div
-              className="student-shop-promo mt-4 rounded-[18px] px-5 py-4 flex items-center gap-2"
-              style={{ background: "#EBF2FE" }}
-            >
-              <div className="min-w-0 flex-1">
-                <p className="text-[17px] font-bold text-slate-900 leading-snug">
-                  Coinlaringizni sovringa aylantiring
-                </p>
-                <p className="text-[13px] text-slate-500 mt-1.5 leading-snug">
-                  Mashqlarni bajaring va ko'proq coin oling
-                </p>
-              </div>
-              <StudentImage
-                src="/shop/gift.png"
-                alt=""
-                className="w-[92px] shrink-0 -my-1"
-              />
-              <button
-                onClick={() => setView("badges")}
-                className="shrink-0 bg-brand-600 text-white rounded-xl px-4 py-3 text-[14px] font-semibold"
-              >
-                Coin yig'ish
-              </button>
-            </div>
+            <StudentRewardGoal key={d.student_id} data={d} onRequest={setAsk}/>
+            <StudentRewardPath key={`path-${d.student_id}`} studentId={d.student_id} onHistory={() => setView("history")}/>
+            <button type="button" onClick={() => setView("badges")} className="mt-3 min-h-11 rounded-xl bg-white/10 px-4 text-sm font-semibold text-white">Yutuqlarimni ko‘rish</button>
 
             {/* qidiruv */}
             <div
@@ -656,7 +618,7 @@ export default function StudentShop() {
               <div className="flex items-center gap-2 mb-3">
                 <Flame size={18} className="text-orange-500" />
                 <p className="text-sm font-bold text-slate-900 flex-1">
-                  Uzluksiz mashq sovrinlari
+                  Uzluksiz lug‘at mashqi sovrinlari
                 </p>
                 <span className="text-sm font-bold text-orange-500">
                   {ach.streak} kun
@@ -667,17 +629,18 @@ export default function StudentShop() {
                   <div key={r.days} className="flex items-center gap-2.5">
                     <span
                       className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                        r.done
+                        r.status === "awarded"
                           ? "bg-emerald-500 text-white"
                           : "bg-slate-100 text-slate-400"
                       }`}
                     >
-                      {r.done ? <Check size={15} strokeWidth={3} /> : <Lock size={13} />}
+                      {r.status === "awarded" ? <Check size={15} strokeWidth={3} /> : r.done ? <Clock size={13}/> : <Lock size={13} />}
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-slate-800">
                         {r.days} kun ketma-ket
                       </p>
+                      <p className="mt-1 text-xs text-slate-600">{r.status_label || (r.done ? "Shart bajarilgan — coin tarixini tekshiring" : "Shart bajarilmoqda")}</p>
                       <div className="h-1.5 rounded-full bg-slate-100 mt-1 overflow-hidden">
                         <div
                           className="h-full bg-orange-400 rounded-full"
@@ -693,7 +656,7 @@ export default function StudentShop() {
                 ))}
               </div>
               <p className="text-[11px] text-slate-400 mt-3">
-                Sovrin ochilgach administrator coinni hisobingizga qo'shadi.
+                Lug‘at mashqi zanjiri sharti bajarilganda tizim avtomatik hisoblaydi. «Coin berilgan» holati hisobdagi yozuv bilan tasdiqlanadi.
               </p>
             </div>
 
@@ -701,7 +664,7 @@ export default function StudentShop() {
               <div className="bg-brand-50 border border-brand-200 rounded-2xl p-3.5 flex items-center gap-3">
                 <Target size={18} className="text-brand-600 shrink-0" />
                 <p className="text-sm text-blue-900 flex-1">
-                  Keyingi yutuq: <b>{ach.next.label}</b> — yana {ach.next.left} ta
+                  Keyingi yutuq: <b>{ach.next.label}</b> — yana {ach.next.left} {REWARD_UNITS[ach.next.unit || ""] || "ta"}
                 </p>
               </div>
             )}
@@ -714,6 +677,7 @@ export default function StudentShop() {
               </span>
             </div>
 
+            <p className="rounded-xl bg-white/10 p-3 text-sm text-slate-200">Bu belgilar qayd etilgan faollik va mashq natijalarini ko‘rsatadi. XP til darajasi emas; to‘g‘ri javoblar soni alohida so‘zlar soniga teng bo‘lmasligi mumkin.</p>
             <div className="grid grid-cols-2 gap-2.5">
               {ach.badges.map((b) => {
                 const badgeIcon = BADGE_ICON[b.icon] || "trophy";
@@ -739,6 +703,7 @@ export default function StudentShop() {
                     >
                       {b.label}
                     </p>
+                    {b.category && <p className="mt-1 text-[11px] font-semibold text-indigo-600">{BADGE_CATEGORY[b.category] || "Qayd etilgan natija"}</p>}
                     <p className="text-[12px] text-slate-600 mt-0.5 leading-snug">
                       {b.hint}
                     </p>
@@ -751,7 +716,7 @@ export default function StudentShop() {
                           />
                         </div>
                         <p className="text-[11px] text-slate-400 mt-1">
-                          {b.have}/{b.target}
+                          {b.have}/{b.target} {REWARD_UNITS[b.unit || ""] || ""}
                         </p>
                       </>
                     )}

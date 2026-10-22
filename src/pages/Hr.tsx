@@ -144,6 +144,59 @@ const GROUPS: {
     tabs: ["rubric", "nps", "penalty"] },
 ];
 
+/* RANGLI 3D TUGMALAR (2026-10-22, Jahongir: "rangli va 3d knopka
+   bo'lsin"). Har guruhning o'z rangi; pastdagi qalin "qirra" - soya,
+   bosilganda tugma cho'kadi. Tanlangan guruh to'liq rangda, qolganlari
+   och tusda. Tailwind sinflari to'liq yozilgan - bo'laklab yig'ilsa
+   JIT ularni topolmaydi. */
+const GROUP_THEME: Record<GroupKey, {
+  on: string; off: string; badgeOn: string; badgeOff: string;
+  iconOff: string; hintOff: string; tabOn: string;
+}> = {
+  home: {
+    on: "bg-gradient-to-b from-sky-400 to-blue-600 text-white border-transparent shadow-[0_5px_0_0_#1e3a8a]",
+    off: "bg-gradient-to-b from-sky-50 to-sky-100 text-blue-900 border-sky-300 shadow-[0_5px_0_0_#7dd3fc] hover:brightness-[1.03]",
+    badgeOn: "bg-white/25 text-white", badgeOff: "bg-sky-100 text-sky-700",
+    iconOff: "text-sky-500", hintOff: "text-sky-800/70",
+    tabOn: "bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow-[0_3px_0_0_#1e3a8a]",
+  },
+  hiring: {
+    on: "bg-gradient-to-b from-violet-400 to-purple-600 text-white border-transparent shadow-[0_5px_0_0_#4c1d95]",
+    off: "bg-gradient-to-b from-violet-50 to-violet-100 text-purple-900 border-violet-300 shadow-[0_5px_0_0_#c4b5fd] hover:brightness-[1.03]",
+    badgeOn: "bg-white/25 text-white", badgeOff: "bg-violet-100 text-violet-700",
+    iconOff: "text-violet-500", hintOff: "text-violet-800/70",
+    tabOn: "bg-gradient-to-b from-violet-400 to-purple-600 text-white shadow-[0_3px_0_0_#4c1d95]",
+  },
+  people: {
+    on: "bg-gradient-to-b from-emerald-400 to-teal-600 text-white border-transparent shadow-[0_5px_0_0_#134e4a]",
+    off: "bg-gradient-to-b from-emerald-50 to-emerald-100 text-teal-900 border-emerald-300 shadow-[0_5px_0_0_#6ee7b7] hover:brightness-[1.03]",
+    badgeOn: "bg-white/25 text-white", badgeOff: "bg-emerald-100 text-emerald-700",
+    iconOff: "text-emerald-500", hintOff: "text-emerald-800/70",
+    tabOn: "bg-gradient-to-b from-emerald-400 to-teal-600 text-white shadow-[0_3px_0_0_#134e4a]",
+  },
+  growth: {
+    on: "bg-gradient-to-b from-amber-300 to-orange-500 text-white border-transparent shadow-[0_5px_0_0_#9a3412]",
+    off: "bg-gradient-to-b from-amber-50 to-amber-100 text-orange-900 border-amber-300 shadow-[0_5px_0_0_#fcd34d] hover:brightness-[1.03]",
+    badgeOn: "bg-white/25 text-white", badgeOff: "bg-amber-100 text-amber-800",
+    iconOff: "text-amber-500", hintOff: "text-amber-800/70",
+    tabOn: "bg-gradient-to-b from-amber-300 to-orange-500 text-white shadow-[0_3px_0_0_#9a3412]",
+  },
+  quality: {
+    on: "bg-gradient-to-b from-rose-400 to-pink-600 text-white border-transparent shadow-[0_5px_0_0_#831843]",
+    off: "bg-gradient-to-b from-rose-50 to-rose-100 text-rose-900 border-rose-300 shadow-[0_5px_0_0_#fda4af] hover:brightness-[1.03]",
+    badgeOn: "bg-white/25 text-white", badgeOff: "bg-rose-100 text-rose-700",
+    iconOff: "text-rose-500", hintOff: "text-rose-800/70",
+    tabOn: "bg-gradient-to-b from-rose-400 to-pink-600 text-white shadow-[0_3px_0_0_#831843]",
+  },
+  other: {
+    on: "bg-gradient-to-b from-slate-500 to-slate-700 text-white border-transparent shadow-[0_5px_0_0_#0f172a]",
+    off: "bg-gradient-to-b from-slate-50 to-slate-100 text-slate-800 border-slate-300 shadow-[0_5px_0_0_#cbd5e1] hover:brightness-[1.03]",
+    badgeOn: "bg-white/25 text-white", badgeOff: "bg-slate-100 text-slate-600",
+    iconOff: "text-slate-400", hintOff: "text-slate-500",
+    tabOn: "bg-gradient-to-b from-slate-500 to-slate-700 text-white shadow-[0_3px_0_0_#0f172a]",
+  },
+};
+
 function groupsFor(tabs: { key: Tab; label: string }[]) {
   const label = new Map(tabs.map((t) => [t.key, t.label]));
   const placed = new Set<Tab>();
@@ -1566,31 +1619,33 @@ export default function Hr() {
       </p>
 
       {groups.length > 1 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mb-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-x-2.5 gap-y-3.5 mb-5">
           {groups.map((g) => {
             const on = g.key === activeGroup.key;
+            const th = GROUP_THEME[g.key];
             const Icon = g.icon;
             return (
               <button
                 key={g.key}
                 onClick={() => pick(g.items[0].key)}
-                className={`text-left rounded-xl border px-3 py-2.5 transition ${
-                  on
-                    ? "border-brand-400 bg-brand-50 shadow-sm"
-                    : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
-                }`}
+                aria-pressed={on}
+                className={`text-left rounded-2xl border px-3 py-2.5 select-none transition-all duration-100 hover:-translate-y-0.5 active:translate-y-[4px] active:shadow-none ${
+                  on ? th.on : th.off}`}
               >
-                <span className={`flex items-center gap-2 text-sm font-semibold ${
-                  on ? "text-brand-700" : "text-slate-800"}`}>
-                  <Icon size={16} className={on ? "text-brand-600" : "text-slate-400"} />
-                  {g.label}
-                  <span className={`ml-auto text-[11px] font-medium rounded-full px-1.5 ${
-                    on ? "bg-brand-100 text-brand-700" : "bg-slate-100 text-slate-500"}`}>
+                <span className="flex items-center gap-2 text-sm font-bold">
+                  <span className={`grid place-items-center w-7 h-7 rounded-lg shrink-0 ${
+                    on ? "bg-white/20" : "bg-white shadow-sm"}`}>
+                    <Icon size={16} className={on ? "text-white" : th.iconOff} />
+                  </span>
+                  <span className="truncate">{g.label}</span>
+                  <span className={`ml-auto text-[11px] font-semibold rounded-full px-1.5 ${
+                    on ? th.badgeOn : th.badgeOff}`}>
                     {g.items.length}
                   </span>
                 </span>
                 {g.hint && (
-                  <span className="hidden sm:block text-[11px] text-slate-500 mt-0.5 truncate">
+                  <span className={`hidden sm:block text-[11px] mt-1 truncate ${
+                    on ? "text-white/85" : th.hintOff}`}>
                     {g.hint}
                   </span>
                 )}
@@ -1600,15 +1655,15 @@ export default function Hr() {
         </div>
       )}
 
-      <div className="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto">
+      <div className="flex gap-2 mb-5 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {activeGroup.items.map((t) => (
           <button
             key={t.key}
             onClick={() => pick(t.key)}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition ${
+            className={`px-3.5 py-1.5 rounded-xl text-sm font-semibold whitespace-nowrap select-none transition-all duration-100 active:translate-y-[3px] active:shadow-none ${
               activeTab === t.key
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
+                ? GROUP_THEME[activeGroup.key].tabOn
+                : "bg-white text-slate-600 border border-slate-200 shadow-[0_3px_0_0_#e2e8f0] hover:text-slate-900 hover:-translate-y-px"
             }`}
           >
             {t.label}

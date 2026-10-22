@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   AlertTriangle, FileText, Plane, LogOut, Info, X, Users, Briefcase,
   UserPlus, CalendarCheck, Target, Timer,
@@ -28,6 +29,15 @@ const TONE: Record<string, string> = {
 const PALETTE = ["#6366f1", "#0ea5e9", "#10b981", "#f59e0b", "#f43f5e",
                  "#8b5cf6", "#14b8a6", "#f97316", "#06b6d4", "#84cc16",
                  "#ec4899", "#64748b"];
+
+// Karta bosilsa — tegishli HR tabiga (2026-10-22, Jahongir: "statistika
+// ustiga bossa shu bo'limga borsin")
+const KPI_TO: Record<string, string> = {
+  staff: "/hr?tab=staff", vacancies: "/hr?tab=hrvacancies",
+  pipeline: "/hr?tab=ats", interviews: "/hr?tab=calendar",
+  on_leave: "/hr?tab=lifecycle", pips: "/hr?tab=lifecycle",
+  offboarding: "/hr?tab=lifecycle", tth: "/hr?tab=funnel",
+};
 
 const KPI: Record<string, { icon: Any; grad: string; tint: string }> = {
   staff: { icon: Users, grad: "from-indigo-500 to-blue-600", tint: "from-indigo-50" },
@@ -258,9 +268,11 @@ export function HrOverviewTab() {
           const k = KPI[c.key] || KPI.staff;
           const Icon = k.icon;
           return (
-            <div
+            <Link
               key={c.key}
-              className={`relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br ${k.tint} to-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_-14px_rgba(15,23,42,0.18)]`}
+              to={KPI_TO[c.key] || "/hr"}
+              title="Bo'limga o'tish"
+              className={`block relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br ${k.tint} to-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_-14px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-[0_14px_30px_-16px_rgba(79,70,229,0.45)]`}
             >
               <div className="flex items-start justify-between gap-2">
                 <p className="text-xs font-medium text-slate-500 leading-snug">{c.label}</p>
@@ -271,7 +283,7 @@ export function HrOverviewTab() {
               <p className="font-[family-name:var(--font-display)] text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
                 {c.value}
               </p>
-            </div>
+            </Link>
           );
         })}
       </div>

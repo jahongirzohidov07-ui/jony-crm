@@ -60,6 +60,29 @@ ACCESS = {
 }
 
 
+# KARTA BOSILSA — SHU BO'LIMGA (2026-10-22, Jahongir: "statistika
+# ustiga bossa shu bo'limga borsin"). Har bo'limning sahifasi; ba'zi
+# kartalar kerakli filtr/tab bilan ochiladi.
+HOME = {
+    "hr": "/hr", "timetable": "/timetable", "support": "/support-schedule",
+    "students": "/students", "groups": "/groups", "teachers": "/teachers",
+    "library": "/library", "development": "/development", "users": "/users",
+    "namunali": "/namunali", "audit": "/audit", "inventory": "/inventory",
+    "events": "/events",
+}
+LINKS = {
+    ("students", "active"): "/students?status=active",
+    ("students", "trial"): "/students?status=trial",
+    ("students", "frozen"): "/students?status=frozen",
+    ("hr", "staff"): "/hr?tab=staff",
+    ("hr", "vac"): "/hr?tab=hrvacancies",
+    ("hr", "apps"): "/hr?tab=ats",
+    ("hr", "turn"): "/hr?tab=exited",
+    ("users", "left"): "/hr?tab=exited",
+    ("users", "bday"): "/events",
+}
+
+
 # ------------------------------------------------------------ yordamchi
 def card(key, label, value, icon=None, tone=None, hint=None):
     return {"key": key, "label": label, "value": value, "icon": icon,
@@ -695,4 +718,6 @@ def section_insights(section: str, branch_id: int | None = None,
         import traceback
         traceback.print_exc()
         return {"cards": [], "charts": []}
-    return {"cards": cards, "charts": charts}
+    for c in cards:
+        c.setdefault("to", LINKS.get((section, c["key"]), HOME.get(section)))
+    return {"cards": cards, "charts": charts, "home": HOME.get(section)}

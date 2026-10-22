@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
   CartesianGrid, Legend, PieChart, Pie,
@@ -23,6 +24,8 @@ import { api } from "../lib/api";
    mumkin — tanlov shu brauzerda eslab qolinadi. */
 
 type Card = {
+  /** Bosilsa qayerga o'tadi (server beradi) */
+  to?: string | null;
   key: string; label: string; value: string | number; hint?: string;
   tone?: string; icon?: string;
 };
@@ -33,7 +36,7 @@ type Chart = {
   rows: Row[]; series?: { key: string; label: string; color?: string }[];
   span?: 1 | 2; unit?: string;
 };
-type Insights = { cards: Card[]; charts: Chart[] };
+type Insights = { cards: Card[]; charts: Chart[]; home?: string | null };
 
 const PALETTE = ["#6366f1", "#0ea5e9", "#10b981", "#f59e0b", "#f43f5e",
                  "#8b5cf6", "#14b8a6", "#f97316", "#06b6d4", "#84cc16",
@@ -168,6 +171,7 @@ export function SectionInsights({
     try { return localStorage.getItem(storeKey) !== "0"; } catch { return true; }
   });
   const [d, setD] = useState<Insights | null | false>(null);
+  const location = useLocation();
 
   useEffect(() => {
     let alive = true;
@@ -185,6 +189,10 @@ export function SectionInsights({
   };
 
   if (d === false) return null;   // ruxsat yo'q yoki xato — sahifa ishlayveradi
+
+  // O'z sahifasida bo'limga havola kerak emas (Dashboard'da kerak)
+  const here = location.pathname + location.search;
+  const home = d && d.home && d.home !== location.pathname ? d.home : null;
 
   return (
     <section className="mb-6">
@@ -214,9 +222,14 @@ export function SectionInsights({
                 {d.cards.map((c, i) => {
                   const t = TONES[c.tone || TONE_ORDER[i % TONE_ORDER.length]] || TONES.indigo;
                   const Icon = ICONS[c.icon || ""] || Activity;
+                  // Bosilsa — shu bo'limga (o'z sahifasidagi bir xil
+                  // manzilga havola qo'yilmaydi)
+                  const href = c.to && c.to !== here ? c.to : null;
+                  const Box = (href ? Link : "div") as React.ElementType;
                   return (
-                    <div key={c.key}
-                      className={`relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br ${t.tint} to-white p-4 ${SHADOW}`}>
+                    <Box key={c.key} {...(href ? { to: href, title: "Bo'limga o'tish" } : {})}
+                      className={`relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br ${t.tint} to-white p-4 ${SHADOW} ${
+                        href ? "block transition hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-[0_14px_30px_-16px_rgba(79,70,229,0.45)]" : ""}`}>
                       <div className="flex items-start justify-between gap-2">
                         <p className="min-w-0 text-xs font-medium text-slate-500 leading-snug [overflow-wrap:anywhere] hyphens-auto" lang="uz">{c.label}</p>
                         <span className={`grid place-items-center w-9 h-9 rounded-xl bg-gradient-to-br ${t.grad} text-white shadow-md shrink-0`}>
@@ -227,7 +240,7 @@ export function SectionInsights({
                         {c.value}
                       </p>
                       {c.hint && <p className="text-[11px] text-slate-500 mt-0.5 truncate">{c.hint}</p>}
-                    </div>
+                    </Box>
                   );
                 })}
               </div>
@@ -238,7 +251,13 @@ export function SectionInsights({
                   <div key={c.key}
                     className={`bg-white border border-slate-200/80 rounded-2xl p-5 ${SHADOW} ${
                       c.span === 2 ? "lg:col-span-2" : ""}`}>
-                    <h3 className="text-[15px] font-bold text-slate-900">{c.title}</h3>
+                    <h3 className="text-[15px] font-bold text-slate-900 flex items-center gap-2">
+                      {home ? (
+                        <Link to={home} className="hover:text-indigo-700 transition">
+                          {c.title} <span className="text-indigo-500">→</span>
+                        </Link>
+                      ) : c.title}
+                    </h3>
                     {c.sub && <p className="text-xs text-slate-500 mt-0.5">{c.sub}</p>}
                     <div className="mt-4"><ChartBody c={c} /></div>
                   </div>

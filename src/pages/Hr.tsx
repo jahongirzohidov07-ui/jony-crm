@@ -1598,6 +1598,11 @@ export default function Hr() {
     _hrTab && TABS.some((t) => t.key === _hrTab)
       ? (_hrTab as Tab) : "overview");
   const [branches, setBranches] = useState<Branch[]>([]);
+  // Havola bosilsa (?tab= o'zgaradi, masalan statistika kartasidan) —
+  // tab ham almashadi (2026-10-22)
+  useEffect(() => {
+    if (_hrTab && TABS.some((t) => t.key === _hrTab)) setTab(_hrTab as Tab);
+  }, [_hrTab]);
 
   useEffect(() => {
     api.get<Branch[]>("/branches").then(setBranches).catch(() => setBranches([]));

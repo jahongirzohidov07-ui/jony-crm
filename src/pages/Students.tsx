@@ -347,6 +347,12 @@ export default function Students() {
   const [statusF, setStatusF] = useState(
     ["active", "trial", "frozen", "archived"].includes(_urlStatus)
       ? _urlStatus : "");
+  // Statistika kartasi shu sahifada bosilsa (?status= o'zgaradi) —
+  // filtr ham o'zgaradi (2026-10-22)
+  useEffect(() => {
+    if (["active", "trial", "frozen", "archived"].includes(_urlStatus))
+      setStatusF(_urlStatus);
+  }, [_urlStatus]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [showImport, setShowImport] = useState(false);

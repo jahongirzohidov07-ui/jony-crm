@@ -1,3 +1,4 @@
+import { notifyRewardPracticeWrite } from "./rewardPracticeEvents";
 import { pushToast } from "./toast";
 import { clearWritingDrafts } from "./studentWritingDrafts";
 
@@ -235,11 +236,14 @@ async function request<T>(
   }
   // ---- YOZUV so'rovi: bajarilgach kesh tozalanadi ----
   if (!isGet) {
+    let result: T;
     try {
-      return await doRequest<T>(path, options);
+      result = await doRequest<T>(path, options);
     } finally {
       invalidate();
     }
+    notifyRewardPracticeWrite(path);
+    return result;
   }
   return doRequest<T>(path, options);
 }

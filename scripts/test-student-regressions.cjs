@@ -12,17 +12,17 @@ function storage() {
 function environment() {
   const sessionStorage = storage(), localStorage = storage(), pending = [];
   const modules = new Map();
-  const window = { location: { href: '' } };
+  const events = []; const window = { location: { href: '' }, dispatchEvent: event => events.push(event.type) };
   function load(name) {
     if (modules.has(name)) return modules.get(name);
     const source = readFileSync(join(__dirname, '../src/lib', name + '.ts'), 'utf8');
     const code = ts.transpileModule(source, {compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
     const exports = {};
-    vm.runInNewContext(code, {exports, require: name => name === './toast' ? {pushToast(){}} : load(name.replace('./','')), sessionStorage, localStorage, window, Date, Promise, setTimeout, clearTimeout, fetch: (url, options) => new Promise(resolve => pending.push({url,options,reply:(data,status=200) => resolve({ok:status<400,status,headers:{get:()=>null},json:async()=>data})}))});
+    vm.runInNewContext(code, {exports, require: name => name === './toast' ? {pushToast(){}} : load(name.replace('./','')), sessionStorage, localStorage, window, Event, Date, Promise, setTimeout, clearTimeout, fetch: (url, options) => new Promise(resolve => pending.push({url,options,reply:(data,status=200) => resolve({ok:status<400,status,headers:{get:()=>null},json:async()=>data})}))});
     modules.set(name,exports);
     return exports;
   }
-  return { load, pending, sessionStorage, localStorage, window, reload: () => modules.clear() };
+  return { load, pending, sessionStorage, localStorage, window, events, reload: () => modules.clear() };
 }
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
@@ -135,4 +135,19 @@ test('notification state ignores legacy shared timestamp and tolerates corrupt o
   n.markNotificationsRead(1,feed.items);
   assert.equal(n.hasUnreadNotifications(feed),false);
   assert.equal(n.hasUnreadNotifications({...feed,student_id:2}),true);
+});
+
+
+test('reward context refresh follows confirmed answer writes, never reads or failed writes', async () => {
+  const e=environment(), {api}=e.load('api');
+  const read=api.fresh('/student/reward-path'); await tick(); e.pending[0].reply({sources:[]}); await read;
+  assert.deepEqual(e.events,[]);
+  const answer=api.post('/student/course-practice/answer',{answer:'sample'}); await tick();
+  assert.deepEqual(e.events,[]); e.pending[1].reply({correct:true}); await answer;
+  assert.deepEqual(e.events,['jony:reward-practice-updated']);
+  const failed=api.post('/student/vocab/answer',{answer:'sample'}); const rejection=assert.rejects(failed); await tick();
+  e.pending[2].reply({detail:'Rejected'},400); await rejection;
+  assert.equal(e.events.length,1);
+  const position=api.post('/student/course-practice/position',{lesson:2}); await tick(); e.pending[3].reply({ok:true}); await position;
+  assert.equal(e.events.length,1);
 });

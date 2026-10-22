@@ -93,7 +93,7 @@ jobs:
       - name: Contextual practice choice tests
         run: node --test scripts/test-course-practice-choice.cjs
       - name: Student ranking and reward guidance
-        run: node --test scripts/test-student-leaderboard.cjs scripts/test-student-reward-goal.cjs scripts/test-student-reward-path.cjs
+        run: node --test scripts/test-student-leaderboard.cjs scripts/test-student-reward-goal.cjs scripts/test-student-reward-path.cjs scripts/test-student-reward-practice.cjs scripts/test-student-reward-context.cjs
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks

@@ -87,61 +87,16 @@ function HBars({ rows, colors = PALETTE, unit = "" }: {
   );
 }
 
-/** HR umumiy ko'rinishi: barcha fazalarning signallari bitta ekranda. */
-export function HrOverviewTab() {
-  const [d, setD] = useState<Any>(null);
-  useEffect(() => {
-    api.get<Any>("/hr/overview").then(setD).catch(() => {});
-  }, []);
-  if (!d) return <p className="text-sm text-slate-400 py-6">Yuklanmoqda…</p>;
-  const ch = d.charts || {};
+/** HR grafiklari bloki — "Umumiy holat" va "HR analitika" ikkalasida
+ *  (2026-10-22, Jahongir: "barchart bo'lmabdiku" — analitika tabida
+ *  grafik faqat nomzod bo'lsa chiqardi). ch — /hr/overview "charts". */
+export function HrCharts({ ch, rejects }: { ch: Any; rejects: Any[] }) {
   const funnel = (ch.funnel || []) as Any[];
   const FUNNEL_COLORS = ["#6366f1", "#0ea5e9", "#06b6d4", "#14b8a6",
                          "#10b981", "#22c55e", "#f43f5e"];
-
+  const d = { reject_reasons: rejects };
   return (
-    <div className="space-y-5">
-      {d.alerts.length > 0 && (
-        <div className="space-y-1.5">
-          {d.alerts.map((a: Any, i: number) => (
-            <p
-              key={i}
-              className={`text-sm rounded-xl px-3.5 py-2.5 border flex items-center gap-2 font-medium ${
-                a.tone === "red"
-                  ? "bg-gradient-to-r from-red-50 to-white border-red-200 text-red-800"
-                  : "bg-gradient-to-r from-amber-50 to-white border-amber-200 text-amber-800"
-              }`}
-            >
-              <AlertTriangle size={15} className="shrink-0" />
-              {a.text}
-            </p>
-          ))}
-        </div>
-      )}
-
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        {d.cards.map((c: Any) => {
-          const k = KPI[c.key] || KPI.staff;
-          const Icon = k.icon;
-          return (
-            <div
-              key={c.key}
-              className={`relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br ${k.tint} to-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_-14px_rgba(15,23,42,0.18)]`}
-            >
-              <div className="flex items-start justify-between gap-2">
-                <p className="text-xs font-medium text-slate-500 leading-snug">{c.label}</p>
-                <span className={`grid place-items-center w-9 h-9 rounded-xl bg-gradient-to-br ${k.grad} text-white shadow-md shrink-0`}>
-                  <Icon size={17} />
-                </span>
-              </div>
-              <p className="font-[family-name:var(--font-display)] text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
-                {c.value}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-
+    <>
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
         <Panel className="xl:col-span-2" title="Kelgan va ketgan xodimlar"
                sub="Oxirgi 6 oy — oyma-oy">
@@ -251,6 +206,78 @@ export function HrOverviewTab() {
                  colors={["#f43f5e", "#f97316", "#f59e0b", "#ec4899", "#8b5cf6", "#64748b"]} />
         </Panel>
       </div>
+    </>
+  );
+}
+
+/** "HR analitika" uchun: /hr/overview dan faqat grafiklar. */
+export function HrStaffCharts() {
+  const [d, setD] = useState<Any>(null);
+  useEffect(() => {
+    api.get<Any>("/hr/overview").then(setD).catch(() => setD(false));
+  }, []);
+  if (d === false) return null;
+  if (!d) return <div className="h-64 rounded-2xl bg-slate-100 animate-pulse" />;
+  return (
+    <div className="space-y-5">
+      <HrCharts ch={d.charts || {}} rejects={d.reject_reasons || []} />
+    </div>
+  );
+}
+
+/** HR umumiy ko'rinishi: barcha fazalarning signallari bitta ekranda. */
+export function HrOverviewTab() {
+  const [d, setD] = useState<Any>(null);
+  useEffect(() => {
+    api.get<Any>("/hr/overview").then(setD).catch(() => {});
+  }, []);
+  if (!d) return <p className="text-sm text-slate-400 py-6">Yuklanmoqda…</p>;
+  const ch = d.charts || {};
+
+  return (
+    <div className="space-y-5">
+      {d.alerts.length > 0 && (
+        <div className="space-y-1.5">
+          {d.alerts.map((a: Any, i: number) => (
+            <p
+              key={i}
+              className={`text-sm rounded-xl px-3.5 py-2.5 border flex items-center gap-2 font-medium ${
+                a.tone === "red"
+                  ? "bg-gradient-to-r from-red-50 to-white border-red-200 text-red-800"
+                  : "bg-gradient-to-r from-amber-50 to-white border-amber-200 text-amber-800"
+              }`}
+            >
+              <AlertTriangle size={15} className="shrink-0" />
+              {a.text}
+            </p>
+          ))}
+        </div>
+      )}
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {d.cards.map((c: Any) => {
+          const k = KPI[c.key] || KPI.staff;
+          const Icon = k.icon;
+          return (
+            <div
+              key={c.key}
+              className={`relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br ${k.tint} to-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_-14px_rgba(15,23,42,0.18)]`}
+            >
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-xs font-medium text-slate-500 leading-snug">{c.label}</p>
+                <span className={`grid place-items-center w-9 h-9 rounded-xl bg-gradient-to-br ${k.grad} text-white shadow-md shrink-0`}>
+                  <Icon size={17} />
+                </span>
+              </div>
+              <p className="font-[family-name:var(--font-display)] text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
+                {c.value}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+
+      <HrCharts ch={ch} rejects={d.reject_reasons || []} />
 
       <p className="text-xs text-slate-500 flex items-start gap-1.5">
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />

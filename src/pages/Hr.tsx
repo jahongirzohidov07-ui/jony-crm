@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, Cell,
+  Tooltip, Cell, Legend,
 } from "recharts";
 import {
   api, type Vacancy, type Candidate, type HrFunnel, type Branch,
@@ -17,7 +17,9 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { AtsBoard } from "../components/AtsBoard";
-import { HrOverviewTab, HrLifecycleTab } from "../components/HrLifecycle";
+import {
+  HrOverviewTab, HrLifecycleTab, HrStaffCharts,
+} from "../components/HrLifecycle";
 import {
   HR_ACCESS, HR_CANDIDATE_VIEW, can, ALL_ROLES, roleLabel,
   EXAMINER_PENALTY_SET, SUPPORT_PENALTY_SET, BLACKLIST_VIEW,
@@ -290,10 +292,23 @@ function FunnelTab() {
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
   if (!data) return null;
 
+  // Xodimlar grafiklari (kelgan/ketgan, lavozim, filial, manba) —
+  // nomzod bo'lmasa ham doim ko'rinadi (2026-10-22, Jahongir:
+  // "barchart bo'lmabdiku")
+  const staffCharts = (
+    <div className="mb-6">
+      <p className="font-[family-name:var(--font-display)] text-lg font-extrabold text-slate-900 mb-3">
+        Xodimlar statistikasi
+      </p>
+      <HrStaffCharts />
+    </div>
+  );
+
   if (data.total === 0) {
     return (
       <div>
         {monthPicker}
+        {staffCharts}
         <HrVacancyReport months={months} />
         <p className="text-sm text-slate-400 py-10 text-center">
           Bu davrda nomzod kiritilmagan. "Nomzodlar" bo'limidan qo'shing —
@@ -309,9 +324,13 @@ function FunnelTab() {
     color: stageColor(s.stage),
   }));
 
+  const SRC_COLORS = ["#6366f1", "#0ea5e9", "#10b981", "#f59e0b",
+                      "#f43f5e", "#8b5cf6", "#14b8a6", "#f97316"];
+
   return (
     <div>
       {monthPicker}
+      {staffCharts}
 
       {/* Vakansiya kesimi: necha kunda yopildi, nechta nomzoddan nechtasi olindi */}
       <HrVacancyReport months={months} />
@@ -340,17 +359,22 @@ function FunnelTab() {
           Nomzodlar qaysi bosqichda to'xtab qolyapti
         </p>
         <ResponsiveContainer width="100%" height={280}>
-          <BarChart data={chart} layout="vertical" margin={{ left: 40 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
-            <XAxis type="number" tick={{ fontSize: 12, fill: "#64748b" }} />
+          <BarChart data={chart} layout="vertical" margin={{ left: 40, right: 28 }}>
+            <CartesianGrid stroke="#eef2f7" horizontal={false} />
+            <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: "#94a3b8" }}
+                   axisLine={false} tickLine={false} />
             <YAxis
               type="category"
               dataKey="name"
               width={130}
-              tick={{ fontSize: 11, fill: "#64748b" }}
+              tick={{ fontSize: 12, fill: "#475569" }}
+              axisLine={false}
+              tickLine={false}
             />
-            <Tooltip />
-            <Bar dataKey="Yetgan" radius={[0, 4, 4, 0]} isAnimationActive={false}>
+            <Tooltip cursor={{ fill: "rgba(99,102,241,0.06)" }}
+                     contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 12 }} />
+            <Bar dataKey="Yetgan" radius={[0, 8, 8, 0]} barSize={20} isAnimationActive={false}
+                 label={{ position: "right", fontSize: 12, fill: "#0f172a", fontWeight: 700 }}>
               {chart.map((c, i) => (
                 <Cell key={i} fill={c.color} />
               ))}
@@ -408,7 +432,28 @@ function FunnelTab() {
         <p className="text-xs text-slate-400 mb-3">
           Qaysi manba haqiqiy xodim beryapti — reklama byudjetini shunga qarab bo'ling
         </p>
-        <table className="w-full text-sm">
+        {data.sources.length > 0 && (
+          <ResponsiveContainer width="100%" height={Math.max(160, data.sources.length * 40 + 30)}>
+            <BarChart data={data.sources} layout="vertical" margin={{ left: 10, right: 28 }}>
+              <CartesianGrid stroke="#eef2f7" horizontal={false} />
+              <XAxis type="number" allowDecimals={false} axisLine={false} tickLine={false}
+                     tick={{ fontSize: 12, fill: "#94a3b8" }} />
+              <YAxis type="category" dataKey="label" width={140} axisLine={false} tickLine={false}
+                     tick={{ fontSize: 12, fill: "#475569" }} />
+              <Tooltip cursor={{ fill: "rgba(99,102,241,0.06)" }}
+                       contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 12 }} />
+              <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+              <Bar dataKey="total" name="Nomzod" radius={[0, 8, 8, 0]} barSize={14} isAnimationActive={false}>
+                {data.sources.map((_, i) => (
+                  <Cell key={i} fill={SRC_COLORS[i % SRC_COLORS.length]} />
+                ))}
+              </Bar>
+              <Bar dataKey="hired" name="Ishga olindi" fill="#10b981" radius={[0, 8, 8, 0]}
+                   barSize={14} isAnimationActive={false} />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
+        <table className="w-full text-sm mt-3">
           <thead>
             <tr className="text-xs text-slate-500 border-b border-slate-100">
               <th className="text-left py-2">Manba</th>

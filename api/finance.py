@@ -1853,6 +1853,31 @@ def discounts_overview(
         "can_approve": user.role in roles.DISCOUNT_APPROVE,
     }
 
+@router.get("/api/discounts/staff-options")
+def discount_staff_options(
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*roles.DISCOUNT_REQUEST)),
+):
+    """"XODIM FARZANDI" chegirmasi uchun xodim tanlash (2026-10-22,
+    Jahongir: "xodimlarga va qarindoshlariga chegirma bo'lganda hamma
+    xodimlar ham chiqmayabdi admin ro'yxatida").
+
+    Ilgari forma umumiy /api/users ni ishlatardi — u faqat rahbar/HR
+    uchun ochiq va filial bo'yicha cheklangan: admin va sotuv menejeri
+    ro'yxatni umuman olmasdi, filial rahbari faqat o'z filialini
+    ko'rardi. Xodim esa istalgan filialda ishlashi mumkin — shuning
+    uchun bu yerda BARCHA filiallarning FAOL xodimlari, faqat ism,
+    lavozim va filial (telefon va boshqa ma'lumotlarsiz)."""
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    rows = (db.query(models.User)
+            .filter(models.User.is_active == 1,
+                    models.User.role.notin_((roles.STUDENT, roles.PARENT,
+                                             roles.OBSERVER)))
+            .order_by(models.User.full_name).all())
+    return [{"id": u.id, "full_name": u.full_name, "role": u.role,
+             "branch": bnames.get(u.branch_id)} for u in rows]
+
+
 @router.post("/api/discounts")
 def create_discount(
     payload: schemas.DiscountCreate,

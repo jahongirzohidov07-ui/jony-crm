@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Percent, Plus, X, Check, Ban, ShieldCheck } from "lucide-react";
 import {
-  api, type StudentDiscounts, type User,
+  api, type StudentDiscounts,
 } from "../lib/api";
 import { formatSom, formatDate } from "../lib/format";
 import { roleLabel } from "../lib/roles";
+
+type StaffOpt = { id: number; full_name: string; role: string;
+                  branch?: string | null };
 
 const STATUS_TONE: Record<string, string> = {
   pending: "bg-amber-100 text-amber-700",
@@ -380,7 +383,7 @@ function DiscountForm({
     useState<{ id: number; full_name: string } | null>(null);
   const [pickStaff, setPickStaff] =
     useState<{ id: number; full_name: string } | null>(null);
-  const [staff, setStaff] = useState<User[]>([]);
+  const [staff, setStaff] = useState<StaffOpt[]>([]);
   // 2026-08-14, Jahongir: oila a'zosi BOSHQA FILIALDA o'qiyotgan
   // bo'lishi mumkin — shu belgi qo'yilsa boshqa filiallardan qidiradi.
   const [otherBranch, setOtherBranch] = useState(false);
@@ -402,7 +405,10 @@ function DiscountForm({
 
   useEffect(() => {
     if (kind === "staff_child" && staff.length === 0)
-      api.get<User[]>("/users").then(setStaff).catch(() => {});
+      // Barcha filiallarning faol xodimlari (2026-10-22) — umumiy
+      // /users admin va sotuv menejeriga yopiq, filial bo'yicha cheklangan
+      api.get<StaffOpt[]>("/discounts/staff-options")
+        .then(setStaff).catch(() => {});
   }, [kind]);
 
   const searchStudents = async (q: string) => {
@@ -424,7 +430,8 @@ function DiscountForm({
     return staff
       .filter((x) => (x.full_name || "").toLowerCase().includes(needle))
       .map((x) => ({ id: x.id, full_name: x.full_name,
-                     sub: roleLabel(x.role) }));
+                     sub: [roleLabel(x.role), x.branch].filter(Boolean)
+                       .join(" · ") }));
   };
 
   const hint = ALL_KINDS.find((t) => t.key === kind)?.hint;

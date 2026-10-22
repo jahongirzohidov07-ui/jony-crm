@@ -2624,6 +2624,91 @@ def hr_overview(db: Session = Depends(get_db),
             for k, v in sorted(reasons.items(), key=lambda x: -x[1])],
         "hint": ("Bitta ekran: yollash, hujjatlar, ta'til, performance "
                  "va ketish signallari. Qizil — bugun qilinadigan ish."),
+        "charts": _hr_overview_charts(db, today),
+    }
+
+
+def _hr_overview_charts(db: Session, today) -> dict:
+    """HR DASHBOARD GRAFIKLARI (2026-10-22, Jahongir: "hr dashboard ham
+    professional, statistika va barchartlar qo'shib ber rangli").
+
+    Faqat sanoq — ism, telefon, oylik yo'q. Butun tashkilot bo'yicha
+    (overview o'zi ham shunday)."""
+    ext = tuple(roles.EXTERNAL_ROLES)
+    staff = (db.query(models.User)
+             .filter(models.User.role.notin_(ext)).all())
+    active = [u for u in staff if u.is_active]
+
+    by_role: dict = {}
+    for u in active:
+        by_role[u.role] = by_role.get(u.role, 0) + 1
+    bnames = {b.id: b.name for b in db.query(models.Branch).all()}
+    by_branch: dict = {}
+    for u in active:
+        k = bnames.get(u.branch_id, "Filialsiz")
+        by_branch[k] = by_branch.get(k, 0) + 1
+
+    # KELGAN VA KETGAN — oxirgi 6 oy. Kelgan: ishga kirgan sana (yo'q
+    # bo'lsa akkaunt ochilgan kun). Ketgan: ketish jarayonining oxirgi
+    # kuni yoki ustoz kartasidagi ketgan sana (bir odam ikki marta
+    # sanalmaydi).
+    months = []
+    y, m = today.year, today.month
+    for _ in range(6):
+        months.append((y, m))
+        y, m = (y, m - 1) if m > 1 else (y - 1, 12)
+    months.reverse()
+    keyset = {f"{y}-{m:02d}" for y, m in months}
+    hires = {k: 0 for k in keyset}
+    exits = {k: 0 for k in keyset}
+    for u in staff:
+        d = u.hired_date or (u.created_at.date() if u.created_at else None)
+        if d and f"{d.year}-{d.month:02d}" in hires:
+            hires[f"{d.year}-{d.month:02d}"] += 1
+    left_users = set()
+    for o in db.query(models.Offboarding).all():
+        d = o.last_day or (o.created_at.date() if o.created_at else None)
+        if d and f"{d.year}-{d.month:02d}" in exits and o.completed:
+            exits[f"{d.year}-{d.month:02d}"] += 1
+            left_users.add(o.user_id)
+    for t in db.query(models.Teacher).filter(
+            models.Teacher.left_date.isnot(None)).all():
+        d = t.left_date
+        if (f"{d.year}-{d.month:02d}" in exits
+                and not (t.user_id and t.user_id in left_users)):
+            exits[f"{d.year}-{d.month:02d}"] += 1
+    oy = ["", "Yan", "Fev", "Mar", "Apr", "May", "Iyun", "Iyul", "Avg",
+          "Sen", "Okt", "Noy", "Dek"]
+    flow = [{"month": f"{oy[m]} {str(y)[2:]}",
+             "hired": hires[f"{y}-{m:02d}"],
+             "left": exits[f"{y}-{m:02d}"]} for y, m in months]
+    left_6m = sum(exits.values())
+    turnover = (round(100.0 * left_6m / len(active), 1)
+                if active else None)
+
+    cands = db.query(models.Candidate).all()
+    stage_n: dict = {}
+    src_n: dict = {}
+    for c in cands:
+        stage_n[c.stage] = stage_n.get(c.stage, 0) + 1
+        src_n[c.source or "other"] = src_n.get(c.source or "other", 0) + 1
+
+    return {
+        "by_role": sorted(
+            [{"label": roles.UZ_LABELS.get(k, k), "value": v}
+             for k, v in by_role.items()], key=lambda x: -x["value"]),
+        "by_branch": sorted(
+            [{"label": k, "value": v} for k, v in by_branch.items()],
+            key=lambda x: -x["value"]),
+        "flow": flow,
+        "turnover_6m": turnover,
+        "hired_6m": sum(hires.values()),
+        "left_6m": left_6m,
+        "funnel": [{"label": lbl, "value": stage_n.get(k, 0), "key": k}
+                   for k, lbl in roles.CANDIDATE_STAGES],
+        "sources": sorted(
+            [{"label": roles.CANDIDATE_SOURCE_LABELS.get(k, k), "value": v}
+             for k, v in src_n.items()], key=lambda x: -x["value"]),
     }
 
 

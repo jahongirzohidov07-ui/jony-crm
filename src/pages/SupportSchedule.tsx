@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useState } from "react";
 import { SupportLoadBlock } from "../components/HrCore";
 import { useAuth as useAuthSL } from "../lib/AuthContext";
@@ -79,6 +80,8 @@ export default function SupportSchedule() {
         Qaysi support qachon band — guruhlari va o'zi belgilagan vaqtlari
         bir qarashda
       </p>
+
+      <SectionInsights section="support" />
 
       {/* Yuklama paneli — support manager, HR va rahbariyatga
           (2026-08-12). Supportning o'ziga ko'rinmaydi. */}

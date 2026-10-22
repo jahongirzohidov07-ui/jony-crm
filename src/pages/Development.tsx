@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useRef, useState, useCallback } from "react";
 import {
   GraduationCap, Play, CheckCircle2, X, BarChart3, Lock,
@@ -102,6 +103,8 @@ export default function Development() {
       <p className="text-sm text-slate-500 mb-5">
         Videolarni shu yerda ko'rasiz — ko'rgan qismingiz o'zi belgilanadi
       </p>
+
+      <SectionInsights section="development" />
 
       {/* MASHQ (2026-09-25, Jahongir: "shaxsiy rivojlanish degan
           joyiga qo'shib ber"). Ruxsati bo'lmagan xodimga

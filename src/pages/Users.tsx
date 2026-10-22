@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useState } from "react";
 import { Plus, X, Pencil } from "lucide-react";
 import { api, type User, type Branch, type Teacher } from "../lib/api";
@@ -529,6 +530,8 @@ export function StaffTab() {
           </button>
         )}
       </div>
+
+      <SectionInsights section="users" />
 
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <input

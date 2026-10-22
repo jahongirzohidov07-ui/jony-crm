@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Plus, Search, X, Download, Pencil, FileUp, Undo2, AlertTriangle,
@@ -469,6 +470,8 @@ export default function Students() {
           )}
         </div>
       </div>
+
+      <SectionInsights section="students" />
 
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <div className="relative max-w-sm flex-1 min-w-[12rem]">

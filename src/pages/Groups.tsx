@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Plus, X, Pencil, Search , Trash2, Archive as ArchiveIcon } from "lucide-react";
@@ -642,6 +643,8 @@ export default function Groups() {
           </div>
         )}
       </div>
+
+      <SectionInsights section="groups" />
 
       <div className="flex flex-wrap items-center gap-2 mb-5">
         <div className="relative">

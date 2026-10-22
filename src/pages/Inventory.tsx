@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useState } from "react";
 import {
   Package, Plus, X, Trash2, Wrench, AlertTriangle, Shield,
@@ -44,6 +45,8 @@ export default function Inventory() {
       <p className="text-sm text-slate-500 mb-5">
         Har bir jihozda inventar raqami va mas'ul xodim bor
       </p>
+
+      <SectionInsights section="inventory" />
 
       <div className="flex items-center gap-2 mb-5">
         {[

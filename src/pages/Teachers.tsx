@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useState } from "react";
 import { formatPhone } from "../components/PhoneInput";
 import { TeacherOverviewModal, SupportGroupsModal, TeacherGroupsModal } from "../components/TeacherOverview";
@@ -591,6 +592,8 @@ export default function Teachers() {
           </div>
         )}
       </div>
+
+      <SectionInsights section="teachers" />
 
       <div className="flex flex-wrap items-center gap-2 mb-4">
         <input

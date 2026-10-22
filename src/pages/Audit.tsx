@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { tab3d } from "../lib/tabs3d";
 import ExamMonthlyReport from "../components/ExamMonthlyReport";
 import { useEffect, useState } from "react";
@@ -783,6 +784,8 @@ export default function Audit() {
         Nazorat bo'limi: o'zgarishlar tarixi va imtihonlar. Examiner
         to'g'ridan-to'g'ri asoschiga bo'ysunadi.
       </p>
+
+      <SectionInsights section="audit" />
 
       <div className="flex items-center gap-2 mb-5">
         <div className="flex gap-2 overflow-x-auto pt-0.5 pb-2 px-0.5">

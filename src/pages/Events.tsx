@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useMemo, useState } from "react";
 import { formatPhone } from "../components/PhoneInput";
 import { PartyPopper, Cake, Copy, Check, Plus, Pencil, Trash2, X, CalendarDays } from "lucide-react";
@@ -113,6 +114,8 @@ export default function Events() {
           <p className="text-sm text-slate-500">Tug'ilgan kunlar va markaz tadbirlari</p>
         </div>
       </div>
+
+      <SectionInsights section="events" />
 
       <div className="inline-flex rounded-lg border border-slate-200 bg-white p-1" role="tablist">
         {([["birthdays", "Tug'ilgan kunlar"], ["events", "Tadbirlar rejasi"]] as const).map(([k, lbl]) => (

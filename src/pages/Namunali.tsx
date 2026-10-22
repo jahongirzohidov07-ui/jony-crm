@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { tab3d } from "../lib/tabs3d";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import {
@@ -284,6 +285,8 @@ export default function Namunali() {
         Qoidabuzarlik uchun ball ayiriladi, bir oyda takrorlansa jarima
         oshib boradi.
       </p>
+
+      <SectionInsights section="namunali" />
 
       {/* ---- Bo'limlar ---- */}
       {d?.sections?.length === 1 && (

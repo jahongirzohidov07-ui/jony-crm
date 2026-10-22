@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useState } from "react";
 import { BookOpen } from "lucide-react";
 import { api, type LibraryList } from "../lib/api";
@@ -70,6 +71,8 @@ export default function Library() {
         Onboarding va o'sish uchun majburiy kitob-videolar. Ko'rgan
         foizingizni o'zingiz belgilaysiz, "topshirdi"ni rahbar qo'yadi.
       </p>
+
+      <SectionInsights section="library" />
 
       {canManage && <div className="mb-5">
         <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm"

@@ -173,6 +173,7 @@ import wordbank_certs as _r_wordbank_certs
 # 2026-10-17: SMM brendlari — Marhabo uchta loyihani yuritadi (Jony
 # Academy, Jony School, Jahongir Zoxidovning shaxsiy brendi)
 import smm_brands as _r_smm_brands
+import insights as _r_insights
 
 app.include_router(_r_academic.router)
 app.include_router(_r_advisor.router)
@@ -244,6 +245,7 @@ app.include_router(_r_wordbank_certs.router)
 import course_collaboration
 app.include_router(course_collaboration.router)
 app.include_router(_r_smm_brands.router)
+app.include_router(_r_insights.router)
 
 # ---- Fon vazifalari: dastlabki ma'lumotlarni urug'lantirish (idempotent) ----
 try:

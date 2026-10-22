@@ -1,3 +1,4 @@
+import { SectionInsights } from "../components/SectionInsights";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -136,6 +137,8 @@ export default function TimetableGrid() {
       <p className="text-sm text-slate-500 mb-4">
         Qaysi xona, qaysi soat, qaysi guruh — bir qarashda
       </p>
+
+      <SectionInsights section="timetable" />
 
       {/* --- Kun tanlash --- */}
       <div className="flex flex-wrap items-center gap-1.5 mb-4">

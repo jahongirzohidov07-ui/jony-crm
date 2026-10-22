@@ -23,7 +23,11 @@ export default function StudentCoursePractice() {
   return <Course key={language} language={language}/>;
 }
 function Course({ language }: { language: string }) {
-  const [params, setParams] = useSearchParams();
+  const [params, setRawParams] = useSearchParams();
+  function setParams(next: Record<string, string>, options?: {replace?: boolean}) {
+    const source = params.get("reward_source");
+    setRawParams({...next, ...(source ? {reward_source: source} : {})}, options);
+  }
   const drafts = useRef<Drafts>(new Map());
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [listLoading, setListLoading] = useState(true);

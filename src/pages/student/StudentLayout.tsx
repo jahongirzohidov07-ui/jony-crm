@@ -1,3 +1,4 @@
+import RewardPracticeContext from "../../components/RewardPracticeContext";
 import "../../student-design.css";
 import { studentTabFor } from "../../lib/studentNavigation";
 import { useEffect, useState } from "react";
@@ -106,7 +107,7 @@ export default function StudentLayout() {
           Internet yo'q — offline mashqlarni ochish →
         </Link>
       )}
-      <main className="student-content" id="student-content"><Outlet /></main>
+      <main className="student-content" id="student-content"><RewardPracticeContext key={user.full_name}/><Outlet /></main>
       <nav aria-label="Asosiy menyu" className="student-nav fixed bottom-0 inset-x-0 z-40 border-t">
         <div className="max-w-md mx-auto grid grid-cols-5 pt-1.5 pb-1">
           {TABS.map((t) => (

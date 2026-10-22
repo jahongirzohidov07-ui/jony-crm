@@ -3073,18 +3073,18 @@ REDEEM_STATUS_TONE = {k: t for k, _, t in REDEEM_STATUSES}
 #  o'lchov: streak | vocab | grammar_topics | xp | lessons | exams
 # =====================================================================
 BADGES = [
-    ("streak_7",    "Bir hafta uzluksiz", "7 kun ketma-ket mashq",
+    ("streak_7",    "Bir hafta uzluksiz", "7 kun ketma-ket lug'at mashqi",
      "streak", 7, "flame", "amber"),
-    ("streak_14",   "Ikki hafta uzluksiz", "14 kun ketma-ket mashq",
+    ("streak_14",   "Ikki hafta uzluksiz", "14 kun ketma-ket lug'at mashqi",
      "streak", 14, "flame", "orange"),
-    ("streak_30",   "Bir oy uzluksiz", "30 kun ketma-ket mashq",
+    ("streak_30",   "Bir oy uzluksiz", "30 kun ketma-ket lug'at mashqi",
      "streak", 30, "flame", "red"),
 
-    ("vocab_100",   "Yuz so'z", "100 ta so'zni to'g'ri bildingiz",
+    ("vocab_100",   "100 ta to'g'ri javob", "Lug'at mashqlarida 100 ta to'g'ri javob",
      "vocab", 100, "book", "emerald"),
-    ("vocab_500",   "Besh yuz so'z", "500 ta to'g'ri javob",
+    ("vocab_500",   "500 ta to'g'ri javob", "Lug'at mashqlarida 500 ta to'g'ri javob",
      "vocab", 500, "book", "teal"),
-    ("vocab_1000",  "Ming so'z", "1000 ta to'g'ri javob",
+    ("vocab_1000",  "1000 ta to'g'ri javob", "Lug'at mashqlarida 1000 ta to'g'ri javob",
      "vocab", 1000, "book", "violet"),
 
     ("gram_1",      "Birinchi mavzu", "1 ta grammatika mavzusi yopildi",
@@ -3092,7 +3092,7 @@ BADGES = [
     ("gram_10",     "O'n mavzu", "10 ta grammatika mavzusi yopildi",
      "grammar_topics", 10, "check", "violet"),
 
-    ("xp_500",      "500 XP", "Birinchi darajani yakunladingiz",
+    ("xp_500",      "500 XP", "500 XP to'pladingiz",
      "xp", 500, "star", "amber"),
     ("xp_2500",     "2 500 XP", "Jiddiy yo'l bosdingiz",
      "xp", 2500, "star", "violet"),

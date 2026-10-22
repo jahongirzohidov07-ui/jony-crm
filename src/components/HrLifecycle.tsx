@@ -232,7 +232,6 @@ export function HrOverviewTab() {
     api.get<Any>("/hr/overview").then(setD).catch(() => {});
   }, []);
   if (!d) return <p className="text-sm text-slate-400 py-6">Yuklanmoqda…</p>;
-  const ch = d.charts || {};
 
   return (
     <div className="space-y-5">
@@ -277,7 +276,8 @@ export function HrOverviewTab() {
         })}
       </div>
 
-      <HrCharts ch={ch} rejects={d.reject_reasons || []} />
+      {/* Grafiklar endi HR sahifasi tepasidagi "Statistika" blokida
+          (SectionInsights section="hr") — bu yerda takrorlanmaydi */}
 
       <p className="text-xs text-slate-500 flex items-start gap-1.5">
         <Info size={13} className="text-slate-400 shrink-0 mt-0.5" />

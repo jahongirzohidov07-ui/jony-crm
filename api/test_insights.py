@@ -97,7 +97,7 @@ def tok(u):
     return {"Authorization": "Bearer " + r.json()["access_token"]}
 
 
-SECTIONS = ["timetable", "support", "students", "groups", "teachers",
+SECTIONS = ["hr", "timetable", "support", "students", "groups", "teachers",
             "library", "users", "namunali", "audit", "inventory", "events",
             "development"]
 A = tok("asos")

@@ -212,7 +212,7 @@ export function SectionInsights({ section, params = "" }: {
                     <div key={c.key}
                       className={`relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br ${t.tint} to-white p-4 ${SHADOW}`}>
                       <div className="flex items-start justify-between gap-2">
-                        <p className="min-w-0 text-xs font-medium text-slate-500 leading-snug">{c.label}</p>
+                        <p className="min-w-0 text-xs font-medium text-slate-500 leading-snug [overflow-wrap:anywhere] hyphens-auto" lang="uz">{c.label}</p>
                         <span className={`grid place-items-center w-9 h-9 rounded-xl bg-gradient-to-br ${t.grad} text-white shadow-md shrink-0`}>
                           <Icon size={17} />
                         </span>

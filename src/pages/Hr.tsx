@@ -17,9 +17,8 @@ import {
 } from "../lib/api";
 import { useAuth } from "../lib/AuthContext";
 import { AtsBoard } from "../components/AtsBoard";
-import {
-  HrOverviewTab, HrLifecycleTab, HrStaffCharts,
-} from "../components/HrLifecycle";
+import { HrOverviewTab, HrLifecycleTab } from "../components/HrLifecycle";
+import { SectionInsights } from "../components/SectionInsights";
 import {
   HR_ACCESS, HR_CANDIDATE_VIEW, can, ALL_ROLES, roleLabel,
   EXAMINER_PENALTY_SET, SUPPORT_PENALTY_SET, BLACKLIST_VIEW,
@@ -292,23 +291,10 @@ function FunnelTab() {
   if (loading) return <p className="text-sm text-slate-400 py-8">Yuklanmoqda...</p>;
   if (!data) return null;
 
-  // Xodimlar grafiklari (kelgan/ketgan, lavozim, filial, manba) —
-  // nomzod bo'lmasa ham doim ko'rinadi (2026-10-22, Jahongir:
-  // "barchart bo'lmabdiku")
-  const staffCharts = (
-    <div className="mb-6">
-      <p className="font-[family-name:var(--font-display)] text-lg font-extrabold text-slate-900 mb-3">
-        Xodimlar statistikasi
-      </p>
-      <HrStaffCharts />
-    </div>
-  );
-
   if (data.total === 0) {
     return (
       <div>
         {monthPicker}
-        {staffCharts}
         <HrVacancyReport months={months} />
         <p className="text-sm text-slate-400 py-10 text-center">
           Bu davrda nomzod kiritilmagan. "Nomzodlar" bo'limidan qo'shing —
@@ -330,7 +316,6 @@ function FunnelTab() {
   return (
     <div>
       {monthPicker}
-      {staffCharts}
 
       {/* Vakansiya kesimi: necha kunda yopildi, nechta nomzoddan nechtasi olindi */}
       <HrVacancyReport months={months} />
@@ -1715,6 +1700,11 @@ export default function Hr() {
           </button>
         ))}
       </div>
+
+      {/* HR STATISTIKASI (2026-10-22, Jahongir: "barchart HR dashboardida
+          ham bo'lsin") — boshqa bo'limlardagidek, har tab boshida;
+          yig'ib qo'yish mumkin. Faqat to'liq HR huquqi borlarga. */}
+      {fullHr && <SectionInsights section="hr" />}
 
       {activeTab === "overview" && <HrOverviewTab />}
       {activeTab === "ats" && <AtsBoard />}

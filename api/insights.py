@@ -43,6 +43,7 @@ MANAGERS = [roles.FOUNDER, roles.BRANCH_MANAGER, roles.HR_MANAGER,
             roles.ACADEMIC_HEAD, roles.HEAD_SUPPORT]
 
 ACCESS = {
+    "hr": list(roles.HR_FULL),
     "timetable": STAFF,
     "support": roles.FULL_ACCESS + [roles.HEAD_SUPPORT, roles.ACADEMIC_HEAD,
                                     roles.HR_MANAGER],
@@ -619,7 +620,53 @@ def _development(db, user, bid, today):
                      "done", "topic", None, "title", "videolar")
 
 
+def _hr(db, user, bid, today):
+    """HR sahifasi tepasidagi statistika (2026-10-22, Jahongir: "barchart
+    HR dashboardida ham bo'lsin"). Raqamlar /hr/overview bilan bir xil
+    manbadan — hr._hr_overview_charts (butun tashkilot)."""
+    import hr as _hr_mod
+    ch = _hr_mod._hr_overview_charts(db, today)
+    open_vac = 0
+    if hasattr(roles, "VACANCY_OPEN_STATES"):
+        open_vac = db.query(models.Vacancy).filter(
+            models.Vacancy.status.in_(tuple(roles.VACANCY_OPEN_STATES))).count()
+    open_apps = db.query(models.CandidateApplication).filter(
+        models.CandidateApplication.stage.notin_(
+            tuple(roles.APPLICATION_CLOSED))).count()
+    staff = sum(r["value"] for r in ch["by_role"])
+    reasons = Counter(a.reject_reason for a in db.query(
+        models.CandidateApplication).filter(
+            models.CandidateApplication.stage == "rejected",
+            models.CandidateApplication.reject_reason.isnot(None)).all())
+    return [
+        card("staff", "Faol xodimlar", staff, "staff", "indigo"),
+        card("vac", "Ochiq vakansiyalar", open_vac, "briefcase", "violet"),
+        card("apps", "Ochiq arizalar", open_apps, "new", "sky"),
+        card("turn", "Kadrlar almashinuvi",
+             f"{num(ch['turnover_6m'])}%" if ch["turnover_6m"] is not None
+             else "—",
+             "trend", "rose",
+             hint=f"6 oy: kelgan {ch['hired_6m']}, ketgan {ch['left_6m']}"),
+    ], [
+        chart("flow", "Kelgan va ketgan xodimlar",
+              [{"label": f["month"], "hired": f["hired"], "left": f["left"]}
+               for f in ch["flow"]], "grouped", "Oxirgi 6 oy", span=2,
+              series=[{"key": "hired", "label": "Kelgan", "color": "#10b981"},
+                      {"key": "left", "label": "Ketgan", "color": "#f43f5e"}]),
+        chart("role", "Xodimlar lavozim bo'yicha", ch["by_role"]),
+        chart("branch", "Xodimlar filial bo'yicha", ch["by_branch"]),
+        chart("funnel", "Ishga olish voronkasi",
+              [{"label": f["label"], "value": f["value"]} for f in ch["funnel"]],
+              sub="Nomzodlar qaysi bosqichda"),
+        chart("sources", "Nomzodlar qayerdan keladi", ch["sources"], "donut"),
+        chart("reject", "Rad etish sabablari",
+              top(reasons, roles.REJECT_LABELS), sub="Nega odam topilmayapti",
+              span=2),
+    ]
+
+
 BUILDERS = {
+    "hr": _hr,
     "students": _students, "groups": _groups, "teachers": _teachers,
     "timetable": _timetable, "support": _support, "users": _users,
     "namunali": _namunali, "audit": _audit, "inventory": _inventory,

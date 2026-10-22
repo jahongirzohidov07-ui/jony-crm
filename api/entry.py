@@ -1173,6 +1173,41 @@ def _check_teacher_load_soft(db, teacher_id, group_id):
 
 M._check_teacher_load = _check_teacher_load_soft
 
+# KUNLIK DARS CHEGARASI HAM (2026-10-22, Jahongir: "HRga ruxsat ber
+# ustoz chegarasidan ortiq guruh biriktirish uchun"). Guruhlar soni
+# chegarasi yuqorida "warn" edi, lekin _check_schedule ichidagi
+# "Dushanba kuni ustozda N ta dars bo'ladi — chegara M ta" ham
+# teacher_overload kaliti bilan "block" bo'lib qolgan edi — uni HR ham,
+# asoschi ham o'tkaza olmasdi. Endi guruh ochish/tahrirlashda u ham
+# "warn"; ruxsati yo'qlarni pastdagi _teacher_limit_guard to'xtatadi.
+# Ustoz to'qnashuvi (teacher_clash) va qayta tayyorlash — block'ligicha.
+import groups_lessons as _GL
+
+_orig_check_schedule = _GL._check_schedule
+
+
+def _check_schedule_soft(db, **kw):
+    problems = _orig_check_schedule(db, **kw)
+    for p in problems:
+        if (p.get("key") == "teacher_overload"
+                and "chegara" in p.get("message", "")):
+            p["severity"] = "warn"
+    return problems
+
+
+_GL._check_schedule = _check_schedule_soft
+
+
+def _daily_overload(db, teacher_id, group_id, lesson_days, lesson_time):
+    """Kunlik dars chegarasidan oshish muammolari (bo'lmasa — [])."""
+    if not teacher_id or not lesson_days or not lesson_time:
+        return []
+    return [p for p in _orig_check_schedule(
+                db, group_id=group_id, teacher_id=teacher_id, room_id=None,
+                lesson_days=lesson_days, lesson_time=lesson_time)
+            if p.get("key") == "teacher_overload"
+            and "kuni ustozda" in p.get("message", "")]
+
 
 def _own_partner_branch(db: Session, user, branch_id) -> bool:
     """Xodimning ASOSIY ish joyi hamkor markaz (Stetch) va guruh ham
@@ -1188,7 +1223,8 @@ def _own_partner_branch(db: Session, user, branch_id) -> bool:
 
 
 def _teacher_limit_guard(db: Session, teacher_id, group_id, user,
-                         branch_id=None):
+                         branch_id=None, lesson_days=None,
+                         lesson_time=None):
     """Chegaradan oshganda RUXSATI YO'Q rollarga qattiq taqiq.
 
     Ruxsati borlar (roles.GROUP_LIMIT_OVERRIDE — asoschi va HR
@@ -1204,6 +1240,8 @@ def _teacher_limit_guard(db: Session, teacher_id, group_id, user,
         return
     problems = [p for p in _orig_check_teacher_load(db, teacher_id, group_id)
                 if p.get("key") == "teacher_overload"]
+    problems += _daily_overload(db, teacher_id, group_id, lesson_days,
+                                lesson_time)
     if problems:
         for p in problems:
             p["severity"] = "block"
@@ -1222,7 +1260,9 @@ if _orig_create_group is not None:
                         db: Session = Depends(get_db),
                         user=Depends(require_role(*roles.GROUP_MANAGE, roles.ADMINISTRATOR, roles.SALES_MANAGER))):
         _teacher_limit_guard(db, payload.teacher_id, None, user,
-                             payload.branch_id or user.branch_id)
+                             payload.branch_id or user.branch_id,
+                             lesson_days=payload.lesson_days,
+                             lesson_time=payload.lesson_time)
         return _orig_create_group(payload=payload, force=force,
                                   db=db, user=user)
 
@@ -1238,6 +1278,26 @@ if _orig_update_group is not None:
         fields = payload.model_dump(exclude_unset=True)
         if "teacher_id" in fields and fields.get("teacher_id"):
             _teacher_limit_guard(db, fields["teacher_id"], group_id, user)
+        # Ustoz, kunlar yoki vaqt o'zgarsa — kunlik chegara ham
+        # (ruxsati yo'qlar kun/vaqtni o'zgartirib chetlab o'tolmasin)
+        if any(k in fields for k in ("teacher_id", "lesson_days",
+                                     "lesson_time")):
+            g = db.query(models.Group).get(group_id)
+            if g is not None:
+                tid = fields.get("teacher_id", g.teacher_id)
+                if tid and not _has_role(user, roles.GROUP_LIMIT_OVERRIDE) \
+                        and not _own_partner_branch(db, user, g.branch_id):
+                    daily = _daily_overload(
+                        db, tid, group_id,
+                        fields.get("lesson_days", g.lesson_days),
+                        fields.get("lesson_time", g.lesson_time))
+                    if daily:
+                        for p in daily:
+                            p["severity"] = "block"
+                        raise HTTPException(400, {
+                            "message": "Mumkin emas: " + daily[0]["message"],
+                            "problems": daily,
+                        })
         return _orig_update_group(group_id=group_id, payload=payload,
                                   force=force, db=db, user=user)
 

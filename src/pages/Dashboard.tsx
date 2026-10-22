@@ -51,6 +51,8 @@ import { useAuth } from "../lib/AuthContext";
 import Plan from "./Plan";
 import { PLAN_VIEW } from "../lib/roles";
 import Ceo from "./Ceo";
+import { SectionInsights } from "../components/SectionInsights";
+import { HrOverviewTab } from "../components/HrLifecycle";
 import { exportSheetsToExcel } from "../lib/exportXlsx";
 
 const BRAND = "#0d9488";
@@ -524,6 +526,24 @@ export default function Dashboard() {
 
       {/* Har bir xodim avval O'Z ishini ko'radi */}
       <MyPanel onLoaded={setShowGeneral} />
+
+      {/* HR MENEJER — TO'LIQ VAZIYAT (2026-10-22, Jahongir: "dashboarddan
+          to'liq ma'lumot olishim kerak vaziyat haqida deyarli hech narsa
+          yo'q"). Umumiy (moliya/o'quvchi) bloklari HR'ga yashirin — uning
+          o'rniga HR, xodimlar, o'qituvchilar va intizom holati. Har blok
+          yig'iladi; raqamlar bo'limlardagi bilan bir xil manbadan. */}
+      {user?.role === "hr_manager" && (
+        <div className="mt-6 space-y-2">
+          <h2 className="font-[family-name:var(--font-display)] text-lg font-extrabold text-slate-900 mb-3">
+            Vaziyat
+          </h2>
+          <div className="mb-6"><HrOverviewTab /></div>
+          <SectionInsights section="hr" title="HR statistikasi" />
+          <SectionInsights section="users" title="Xodimlar" />
+          <SectionInsights section="teachers" title="O'qituvchilar" />
+          <SectionInsights section="namunali" title="Intizom (Na'munali xodim)" />
+        </div>
+      )}
 
       {stats && showGeneral && (
         <>

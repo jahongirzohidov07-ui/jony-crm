@@ -644,7 +644,9 @@ export default function Groups() {
         )}
       </div>
 
-      <SectionInsights section="groups" />
+      {/* 2026-10-22, Jahongir: "guruhlar bo'limida barchartni olib
+          tashla" — faqat ko'rsatkich kartalari qoladi */}
+      <SectionInsights section="groups" charts={false} />
 
       <div className="flex flex-wrap items-center gap-2 mb-5">
         <div className="relative">

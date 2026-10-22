@@ -154,8 +154,14 @@ function ChartBody({ c }: { c: Chart }) {
   );
 }
 
-export function SectionInsights({ section, params = "" }: {
+export function SectionInsights({
+  section, params = "", charts = true, title = "Statistika",
+}: {
   section: string; params?: string;
+  /** Blok sarlavhasi — bitta sahifada bir nechta blok bo'lsa (Dashboard) */
+  title?: string;
+  /** false — faqat kartalar, grafiksiz (2026-10-22, Guruhlar bo'limi) */
+  charts?: boolean;
 }) {
   const storeKey = `jony_insights_open_${section}`;
   const [open, setOpen] = useState<boolean>(() => {
@@ -188,7 +194,7 @@ export function SectionInsights({ section, params = "" }: {
           <BarChart3 size={15} />
         </span>
         <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold text-slate-900">
-          Statistika
+          {title}
         </span>
         <ChevronDown size={16} className={`transition-transform ${open ? "" : "-rotate-90"}`} />
         <span className="text-xs">{open ? "Yashirish" : "Ko'rsatish"}</span>
@@ -226,7 +232,7 @@ export function SectionInsights({ section, params = "" }: {
                 })}
               </div>
             )}
-            {d.charts.length > 0 && (
+            {charts && d.charts.length > 0 && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {d.charts.map((c) => (
                   <div key={c.key}

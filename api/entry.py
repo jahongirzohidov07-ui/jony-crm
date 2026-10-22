@@ -10769,6 +10769,79 @@ def _pt_topics(s) -> list:
             for _k, p in sorted(agg.items())]
 
 
+# ENGLISH JOURNEY (2026-10-22, Jahongir: "qancha vaqtdan keyin taxminan
+# qaysi darajaga yetadi ... qachon 6.0 yoki 7.0 olishi mumkinligini ...
+# darslar soni, oy, nechta so'z, nechta grammar mavzu ... IELTS
+# intensivedagi mavzulardan lug'atdan kelib chiqsang bo'ladi").
+# O'lchov chizg'ichi — IELTS Intensive dasturi: 8 oy, 192 dars, 27 modul /
+# 411 grammatika mavzusi, 4000 so'z (noldan B2 gacha). Har daraja
+# chizg'ichdagi dars oralig'iga to'g'ri keladi; 6.0 dan keyingi 6.5 va
+# 7.0 IELTS Foundation/Graduation bosqichlari (akademik lug'at).
+# Bu TAXMIN: muntazam qatnashish va uy vazifasi sharti bilan.
+_PT_RULER = {  # daraja -> (boshlanish darsi, tugash darsi)
+    "A1": (0, 48), "A2": (48, 96), "B1": (96, 144),
+    "B1+": (144, 192), "B2": (192, 240), "C1": (240, 288)}
+# (IELTS ball, CEFR, chizg'ichdagi dars, jami so'z, jami grammatika mavzusi)
+_PT_MILESTONES = [
+    ("3.0", "A1", 48, 1000, 122),
+    ("4.0", "A2", 96, 2000, 217),
+    ("5.0", "B1", 144, 3000, 317),
+    ("5.5", "B1+", 168, 3500, 365),
+    ("6.0", "B2", 192, 4000, 411),
+    ("6.5", "B2+", 240, 5000, 411),
+    ("7.0", "C1", 288, 6000, 411),
+]
+_PT_PACE = {"std": 12, "int": 24}  # oyiga dars: oddiy guruh / intensive
+_PT_UZ_MON = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul",
+              "avgust", "sentabr", "oktabr", "noyabr", "dekabr"]
+
+
+def _pt_interp(pos: float, idx: int) -> int:
+    """Chizg'ichdagi `pos` darsda taxminan nechta so'z (idx=3) yoki
+    grammatika mavzusi (idx=4) o'tilgan bo'ladi — chiziqli."""
+    prev_l, prev_v = 0, 0
+    for m in _PT_MILESTONES:
+        if pos <= m[2]:
+            span = m[2] - prev_l
+            return int(round(prev_v + (m[idx] - prev_v) * (pos - prev_l) / span)) if span else m[idx]
+        prev_l, prev_v = m[2], m[idx]
+    return _PT_MILESTONES[-1][idx]
+
+
+def _pt_journey(lv, unit, when=None) -> dict:
+    import math as _m
+    a, b = _PT_RULER.get(lv, _PT_RULER["A1"])
+    u = max(1, min(12, int(unit or 1)))
+    pos = a + (b - a) * (u - 1) / 12.0
+    when = when or _pt_now()
+    y0, m0 = when.year, when.month
+
+    def _date(months):
+        k = m0 - 1 + months
+        return {"y": y0 + k // 12, "m": k % 12 + 1,
+                "label": f"{y0 + k // 12}-yil {_PT_UZ_MON[k % 12]}"}
+
+    w_now, g_now = _pt_interp(pos, 3), _pt_interp(pos, 4)
+    out = []
+    for band, cefr, at, words, gram in _PT_MILESTONES:
+        left = max(0, int(round(at - pos)))
+        row = {"band": band, "cefr": cefr, "done": left == 0,
+               "lessons": left, "words_total": words,
+               "words_new": max(0, words - w_now),
+               "grammar_total": gram, "grammar_new": max(0, gram - g_now)}
+        for k, pace in _PT_PACE.items():
+            mo = _m.ceil(left / pace) if left else 0
+            row["months_" + k] = mo
+            row["date_" + k] = _date(mo)["label"] if left else None
+        out.append(row)
+    return {"position": round(pos), "words_now": w_now, "grammar_now": g_now,
+            "start": {"level": lv, "unit": u}, "from": f"{y0}-{m0:02d}",
+            "pace": _PT_PACE, "milestones": out,
+            "source": "IELTS Intensive: 192 dars · 411 grammatika mavzusi · 4000 so'z",
+            "disclaimer": ("Taxminiy hisob: darslarga muntazam qatnashish va "
+                           "uy vazifalarini bajarish sharti bilan.")}
+
+
 def _pt_result(s) -> dict:
     try:
         per = _pt_json.loads(s.per_level or "{}")
@@ -10825,6 +10898,8 @@ def _pt_result(s) -> dict:
         "overall": overall,
         "overall_label": _pt_step_label(overall),
         "grammar_pct": grammar_pct,
+        "journey": _pt_journey(lv, unit, getattr(s, "finished_at", None)
+                               or getattr(s, "created_at", None)),
         "topics": topics,
         "strong": [t for t in topics if t["n"] >= 2 and t["pct"] >= 75],
         "weak": [t for t in topics if t["pct"] < 50],

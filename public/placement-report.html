@@ -140,6 +140,7 @@
 </div>
 <div id="root"><div class="state">Yuklanmoqda...</div></div>
 
+<script src="/journey.js"></script>
 <script>
 (function () {
   const token = new URLSearchParams(location.search).get('t') || '';
@@ -221,6 +222,7 @@
       +     '<div class="advice"><span>🎯</span><div><b>Tavsiya:</b> ' + esc(r.advice) + '</div></div>'
       +   '</div>' + gauge(r.level, r.grammar_pct) + '</div>'
       + '</section>'
+      + '<section id="jr" style="padding:6px 28px 0"></section>'
       + '<section class="body">'
       +   '<div><div class="sec"><h2>Ko\'nikmalar</h2><i></i><span>daraja va to\'g\'ri javoblar ulushi</span></div><div class="skills">' + skills + '</div></div>'
       +   '<div style="padding-top:14px"><div class="sec"><h2>Daraja zinapoyasi</h2><i></i><span>Step 1 dan IELTS gacha</span></div><div class="ladder">' + ladder + '</div></div>'
@@ -236,6 +238,7 @@
       +   '<div style="text-align:center">Guruhga yozilish uchun administratorimiz<br>siz bilan bog\'lanadi</div>'
       +   '<span class="site">jonyos.uz</span></footer>'
       + '</div>';
+    if (window.renderJourney) window.renderJourney(document.getElementById('jr'), r.journey);
     document.getElementById('actions').hidden = false;
     document.title = (d.name ? d.name + ' — ' : '') + 'ingliz tili darajasi · Jony Academy';
   }

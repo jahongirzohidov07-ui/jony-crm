@@ -3,7 +3,8 @@ import { formatPhone } from "../components/PhoneInput";
 import { useSearchParams } from "react-router-dom";
 import {
   Plus, Trash2, Pencil, Users, UserCheck, Clock, Briefcase, X,
-  ClipboardList,
+  ClipboardList, LayoutDashboard, UserPlus, GraduationCap, ShieldCheck,
+  MoreHorizontal,
 } from "lucide-react";
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -77,9 +78,9 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "funnel", label: "HR analitika" },
   { key: "workforce", label: "Shtat rejasi" },
   { key: "requests", label: "Xodim so'rovlari" },
-  { key: "hrvacancies", label: "Vakansiyalar (yangi)" },
+  { key: "hrvacancies", label: "Vakansiyalar" },
   { key: "candidates", label: "Nomzodlar" },
-  { key: "vacancies", label: "Vakansiyalar" },
+  { key: "vacancies", label: "Vakansiyalar (eski ko'rinish)" },
   { key: "staff", label: "Xodimlar" },
   { key: "calendar", label: "Kalendar" },
   { key: "rubric", label: "Dars baholash" },
@@ -110,6 +111,54 @@ const TABS: { key: Tab; label: string }[] = [
   // 2026-09-16, Jahongir: "o'quv markaz qora ro'yxatini shakllantir"
   { key: "blacklist", label: "Qora ro'yxat" },
 ];
+
+/* BO'LIMLAR (2026-10-22, Jahongir: "hr bo'limi juda tartibsz shuni
+   chiroyli qilib tartibla lekin hech narsa yo'qolmasin"). 25 ta tab
+   bitta qatorda turardi — endi 5 ta guruh, har birining ichida o'z
+   tablari. Tablar o'zi, ularning ichidagi narsalar va ?tab= havolalari
+   o'zgarmagan. Guruhga kiritilmay qolgan yangi tab "Boshqa" ga tushadi
+   — hech qachon yo'qolib qolmaydi. */
+type GroupKey = "home" | "hiring" | "people" | "growth" | "quality" | "other";
+
+const GROUPS: {
+  key: GroupKey; label: string; hint: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  tabs: Tab[];
+}[] = [
+  { key: "home", label: "Umumiy", icon: LayoutDashboard,
+    hint: "Holat, analitika va kalendar",
+    tabs: ["overview", "funnel", "calendar"] },
+  { key: "hiring", label: "Ishga olish", icon: UserPlus,
+    hint: "Vakansiya, nomzod, suhbat, shtat",
+    tabs: ["ats", "candidates", "hrvacancies", "requests", "workforce",
+           "vacancies", "blacklist"] },
+  { key: "people", label: "Xodimlar", icon: Users,
+    hint: "Ro'yxat, davomat, oylik, arxiv",
+    tabs: ["staff", "lifecycle", "examiners", "solo", "attendance",
+           "payroll", "dates", "exited"] },
+  { key: "growth", label: "O'qitish", icon: GraduationCap,
+    hint: "Onboarding, kutubxona, mashqlar",
+    tabs: ["onbsteps", "library", "checklist", "drill"] },
+  { key: "quality", label: "Sifat va intizom", icon: ShieldCheck,
+    hint: "Dars baholash, NPS, jarima",
+    tabs: ["rubric", "nps", "penalty"] },
+];
+
+function groupsFor(tabs: { key: Tab; label: string }[]) {
+  const label = new Map(tabs.map((t) => [t.key, t.label]));
+  const placed = new Set<Tab>();
+  const out = GROUPS.map((g) => {
+    const items = g.tabs.filter((k) => label.has(k))
+      .map((k) => ({ key: k, label: label.get(k)! }));
+    items.forEach((t) => placed.add(t.key));
+    return { ...g, items };
+  });
+  const rest = tabs.filter((t) => !placed.has(t.key));
+  if (rest.length)
+    out.push({ key: "other", label: "Boshqa", icon: MoreHorizontal,
+               hint: "", tabs: [], items: rest });
+  return out.filter((g) => g.items.length > 0);
+}
 
 /** Nomzod formasidagi maydon: SAVOL doim tepada turadi (2026-09-16,
  *  Jahongir: "katakda nima so'ralgani ham tursin tepada") — qiymat
@@ -1460,7 +1509,7 @@ function VacanciesTab({ branches }: { branches: Branch[] }) {
 // ---------------------------------------------------------------- Sahifa
 export default function Hr() {
   const { user } = useAuth();
-  const [spHr] = useSearchParams();
+  const [spHr, setSpHr] = useSearchParams();
   const _hrTab = spHr.get("tab");
   const [tab, setTab] = useState<Tab>(
     _hrTab && TABS.some((t) => t.key === _hrTab)
@@ -1494,6 +1543,17 @@ export default function Hr() {
   const activeTab = visibleTabs.some((t) => t.key === tab)
     ? tab
     : visibleTabs[0].key;
+  const groups = groupsFor(visibleTabs);
+  const activeGroup = groups.find((g) =>
+    g.items.some((t) => t.key === activeTab)) ?? groups[0];
+  // Tanlangan tab manzilda turadi — sahifa yangilansa yoki havola
+  // yuborilsa o'sha joy ochiladi
+  const pick = (t: Tab) => {
+    setTab(t);
+    const sp = new URLSearchParams(spHr);
+    sp.set("tab", t);
+    setSpHr(sp, { replace: true });
+  };
 
   return (
     <div>
@@ -1501,15 +1561,50 @@ export default function Hr() {
         <Briefcase size={18} className="text-slate-400" />
         <h1 className="text-xl font-semibold text-slate-900">HR</h1>
       </div>
-      <p className="text-sm text-slate-500 mb-5">
-        Vakansiyalar, nomzodlar va ishga olish voronkasi
+      <p className="text-sm text-slate-500 mb-4">
+        Ishga olish, xodimlar, o'qitish va sifat — bir joyda
       </p>
 
+      {groups.length > 1 && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mb-3">
+          {groups.map((g) => {
+            const on = g.key === activeGroup.key;
+            const Icon = g.icon;
+            return (
+              <button
+                key={g.key}
+                onClick={() => pick(g.items[0].key)}
+                className={`text-left rounded-xl border px-3 py-2.5 transition ${
+                  on
+                    ? "border-brand-400 bg-brand-50 shadow-sm"
+                    : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                }`}
+              >
+                <span className={`flex items-center gap-2 text-sm font-semibold ${
+                  on ? "text-brand-700" : "text-slate-800"}`}>
+                  <Icon size={16} className={on ? "text-brand-600" : "text-slate-400"} />
+                  {g.label}
+                  <span className={`ml-auto text-[11px] font-medium rounded-full px-1.5 ${
+                    on ? "bg-brand-100 text-brand-700" : "bg-slate-100 text-slate-500"}`}>
+                    {g.items.length}
+                  </span>
+                </span>
+                {g.hint && (
+                  <span className="hidden sm:block text-[11px] text-slate-500 mt-0.5 truncate">
+                    {g.hint}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       <div className="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto">
-        {visibleTabs.map((t) => (
+        {activeGroup.items.map((t) => (
           <button
             key={t.key}
-            onClick={() => setTab(t.key)}
+            onClick={() => pick(t.key)}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition ${
               activeTab === t.key
                 ? "border-brand-600 text-brand-700"

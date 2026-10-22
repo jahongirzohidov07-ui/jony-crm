@@ -133,7 +133,7 @@ def answer(body):
 print("\n=== 3. GRAMMATIKA 30 TA, KEYIN TANAFFUS ===")
 d = start()
 ck("birinchi savol grammatika", d["question"]["kind"], "grammar")
-ck("jami 30", d["question"]["total"], 30)
+ck("jami grammatika", d["question"]["total"], E._PT_N)
 ck("to'g'ri javob yuborilmaydi",
    any(k in d["question"] for k in ("a", "answer", "correct")), False)
 
@@ -142,9 +142,9 @@ while d.get("status") == "running" and d.get("question", {}).get(
         "kind") == "grammar":
     n += 1
     d = answer({"qid": d["question"]["qid"], "choice": 0})
-    if n > 40:
+    if n > E._PT_N + 10:
         break
-ck("grammatika savollari soni", n, 30)
+ck("grammatika savollari soni", n, E._PT_N)
 ck("keyin tanaffus", d.get("status"), "break")
 ck("tanaffusda savol YO'Q", "question" in d, False)
 ck("grammatika natijasi bor", bool(d["section_done"].get("level")), True)
@@ -228,7 +228,7 @@ ck("lug'at darajasi natijada",
    [x["level"] for x in r["skills"] if x["key"] == "vocab"], ["C1"])
 ck("4 ta ko'nikma", len(r["skills"]), 4)
 ck("umumiy daraja bor", r["overall"] in E.PT_LEVELS, True)
-ck("grammatika soni 30", r["total"], 30)
+ck("grammatika soni", r["total"], E._PT_N)
 
 print("\n=== 8. TUGAGACH QAYTA JAVOB BERIB BO'LMAYDI ===")
 rr = client.post(P + "/answer", json={"choice": 0})
@@ -250,7 +250,7 @@ def a2(body):
 
 d = client.post(P2 + "/start", json={}).json()
 guard = 0
-while d.get("status") in ("running", "break") and guard < 120:
+while d.get("status") in ("running", "break") and guard < 200:
     guard += 1
     if d.get("status") == "break":
         d = client.post(P2 + "/start", json={}).json()
@@ -268,7 +268,11 @@ ck("hamma ko'nikmada daraja bor",
    all(x["level"] in E.PT_LEVELS for x in r2["skills"]), True)
 ck("listening o'tkazib yuborilmagan",
    [x["skipped"] for x in r2["skills"] if x["key"] == "listening"], [False])
-ck("jami savol 30+10+5+6 = 51 qadam", guard, 51 + 3)
+_steps = E._PT_N + sum(E._PT_SEC_N.values())
+ck("jami qadam 50+10+5+10 = 75 (+3 tanaffus)", guard, _steps + 3)
+_qs = (E._PT_N + E._PT_SEC_N["vocab"] * 3 + E._PT_SEC_N["reading"] * 2
+       + E._PT_SEC_N["listening"])
+ck("jami savollar 100", _qs, 100)
 
 print("\n=== 10. ESKI SESSIYA BUZILMAYDI ===")
 db = SessionLocal()

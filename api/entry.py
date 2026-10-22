@@ -10189,7 +10189,11 @@ from pt_listen_bank import LISTEN_BY_ID, LISTEN_BY_LEVEL  # noqa: E402
 # BO'LIMLAR TARTIBI ATAYLAB SHUNDAY: grammatika BIRINCHI. Lid testni
 # yarmida tashlab ketsa ham guruhga joylashtirish uchun kerak bo'lgan
 # hamma narsa (daraja + unit) qo'lda bo'ladi.
-_PT_N = 30                     # grammatika savollari soni
+# 2026-10-22 — Jahongir: "savollar sonini 100 taga oshir yanada aniqroq
+# bo'lsin". Jami 100: grammatika 50 + lug'at 10 blok×3 + reading 5
+# matn×2 + listening 10. Grammatika 30→50 (aniqlik ~80%→~85%),
+# listening 6→10 (bank 30 ta, qo'shni darajalardan ham oladi).
+_PT_N = 50                     # grammatika savollari soni
 _PT_SECS = 30                  # bir savolga soniya
 _PT_GRACE = 4                  # tarmoq kechikishi uchun qo'shimcha
 _PT_TTL_H = 48                 # havola amal qilish muddati
@@ -10210,7 +10214,7 @@ _PT_ROLES = list(dict.fromkeys(list(roles.LEAD_ACCESS)))
 _PT_SECTIONS = ("grammar", "vocab", "reading", "listening")
 _PT_SEC_LABEL = {"grammar": "Grammatika", "vocab": "Lug'at",
                  "reading": "Reading", "listening": "Listening"}
-_PT_SEC_N = {"vocab": 10, "reading": 5, "listening": 6}
+_PT_SEC_N = {"vocab": 10, "reading": 5, "listening": 10}
 _PT_VOCAB_SECS = 60
 _PT_LISTEN_SECS = 90
 _PT_LISTEN_PLAYS = 2

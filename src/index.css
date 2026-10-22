@@ -13,7 +13,33 @@
   --color-brand-500: #3882e8;
   --color-brand-600: #1a6fe4;
   --color-brand-700: #165cbe;
-  --font-sans: "Segoe UI", system-ui, sans-serif;
+  /* 2026-10-22, Jahongir: "yozuvlar ham arzondek ko'rinyabdi biroz
+     qimmat uslub va dizayn ber". Inter — matn, Manrope — sarlavhalar.
+     Shrift yuklanmasa (internet sekin) eski Segoe UI ga qaytadi. */
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Manrope", "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+/* Sarlavhalar: Manrope, biroz zich harf oralig'i — "qimmat" ko'rinish */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+/* Jadvaldagi raqamlar bir xil kenglikda — ustunlar tekis turadi */
+table {
+  font-variant-numeric: tabular-nums;
+}
+/* O'quvchi ilovasi tasdiqlangan dizaynda qoladi (2026-09) — u yerga
+   yangi shrift tegmaydi */
+.student-app {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-feature-settings: normal;
+}
+.student-app :is(h1, h2, h3, h4) {
+  font-family: inherit;
+}
+.student-app :is(h2, h3, h4) {
+  letter-spacing: normal;
 }
 
 /* iPHONE MUAMMOLARI (2026-08-10, Jahongir xabar berdi):
@@ -41,6 +67,11 @@ html {
 body {
   margin: 0;
   font-family: var(--font-sans);
+  /* Inter: bir qavatli "a" va ochiq raqamlar — tozaroq o'qiladi */
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   background-color: #f6f8fa;
   color: #0f172a;
   overscroll-behavior-y: none;

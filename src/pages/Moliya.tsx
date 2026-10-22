@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import {
   Download, Plus, X, Trash2, Pencil,
@@ -1556,17 +1557,13 @@ export default function Moliya() {
           (2026-10-02) — faqat asoschi; qolmasa karta ko'rinmaydi. */}
       {founderLike(user?.role) && <LessonRefundsReview />}
 
-      <div className="flex gap-1 mb-6 border-b border-slate-200">
+      <div className="flex gap-2 mb-6 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {TABS.map((t) => (
           <button
             key={t.key}
             data-guide={"ftab-" + t.key}
             onClick={() => setTab(t.key)}
-            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition ${
-              tab === t.key
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === t.key, "emerald")}
           >
             {t.label}
           </button>

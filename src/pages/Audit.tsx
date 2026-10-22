@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import ExamMonthlyReport from "../components/ExamMonthlyReport";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -783,17 +784,13 @@ export default function Audit() {
         to'g'ridan-to'g'ri asoschiga bo'ysunadi.
       </p>
 
-      <div className="flex items-center gap-2 border-b border-slate-200 mb-5">
-        <div className="flex gap-1 overflow-x-auto">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="flex gap-2 overflow-x-auto pt-0.5 pb-2 px-0.5">
           {tabs.filter((t) => t.show).map((t) => (
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition ${
-                tab === t.key
-                  ? "border-brand-600 text-brand-700"
-                  : "border-transparent text-slate-500 hover:text-slate-700"
-              }`}
+              className={tab3d(tab === t.key, "rose")}
             >
               {t.label}
             </button>

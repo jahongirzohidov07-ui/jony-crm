@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import { formatPhone } from "./PhoneInput";
 import {
@@ -425,7 +426,7 @@ function AppModal({
         )}
         {err && <p className="text-sm text-red-600 mb-2">{err}</p>}
 
-        <div className="flex gap-1 border-b border-slate-200 mb-4">
+        <div className="flex gap-2 mb-4 overflow-x-auto pt-0.5 pb-2 px-0.5">
           {[
             { key: "main", label: "Tarix va suhbatlar" },
             { key: "score", label: "Baholash varaqasi" },
@@ -434,11 +435,7 @@ function AppModal({
             <button
               key={t.key}
               onClick={() => setTab(t.key as Any)}
-              className={`px-3 py-2 text-sm border-b-2 -mb-px ${
-                tab === t.key
-                  ? "border-brand-600 text-brand-700 font-medium"
-                  : "border-transparent text-slate-500"
-              }`}
+              className={tab3d(tab === t.key, "violet")}
             >
               {t.label}
             </button>

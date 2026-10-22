@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ClipboardCheck, Check, Hand, FlaskConical } from "lucide-react";
@@ -307,17 +308,13 @@ export default function ExamsHub() {
         buyurtmalar va savollar bazasi.
       </p>
 
-      <div className="flex items-end gap-4 border-b border-slate-200 mb-4">
-        <div className="flex gap-1 overflow-x-auto">
+      <div className="flex items-end gap-4 mb-4">
+        <div className="flex gap-2 overflow-x-auto pt-0.5 pb-2 px-0.5">
           {visible.map((t) => (
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              className={`px-3 py-2 text-sm whitespace-nowrap border-b-2 -mb-px transition ${
-                tab === t.key
-                  ? "border-brand-600 text-brand-700 font-medium"
-                  : "border-transparent text-slate-500 hover:text-slate-700"
-              }`}
+              className={tab3d(tab === t.key, "indigo")}
             >
               {t.label}
             </button>

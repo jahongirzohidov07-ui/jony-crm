@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -349,17 +350,13 @@ export default function GroupDetail() {
         />
 
         <div className="w-full lg:flex-1 min-w-0 bg-white rounded-xl border border-slate-200 p-3 sm:p-5">
-          <div className="flex gap-1 mb-5 border-b border-slate-200 overflow-x-auto">
+          <div className="flex gap-2 mb-5 overflow-x-auto pt-0.5 pb-2 px-0.5">
             {GROUP_TABS.map((tb) => (
               <button
                 key={tb.key}
                 data-guide={"gtab-" + tb.key}
                 onClick={() => setTab(tb.key)}
-                className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition whitespace-nowrap ${
-                  tab === tb.key
-                    ? "border-brand-600 text-brand-700"
-                    : "border-transparent text-slate-500 hover:text-slate-700"
-                }`}
+                className={tab3d(tab === tb.key, "teal")}
               >
                 {tb.label}
               </button>

@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import {
   CalendarClock, Info, X, ArrowRight, UserCheck, AlertTriangle,
@@ -32,7 +33,7 @@ export default function MySchedule() {
         Darsni ko'chirish va o'rinbosar ustoz
       </p>
 
-      <div className="flex gap-1 border-b border-slate-200 mb-5">
+      <div className="flex gap-2 mb-5 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {([
           ["move", "Dars ko'chirish"],
           ["cover", "O'rinbosar"],
@@ -40,11 +41,7 @@ export default function MySchedule() {
           <button
             key={k}
             onClick={() => setTab(k)}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition ${
-              tab === k
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === k, "blue")}
           >
             {label}
           </button>

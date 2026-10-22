@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import {
   GraduationCap, TrendingUp, AlertTriangle, BookOpen, Headphones,
@@ -132,7 +133,7 @@ function TeacherPath() {
         </div>
       )}
 
-      <div className="flex gap-1 border-b border-slate-200 mb-5">
+      <div className="flex gap-2 mb-5 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {(
           [
             ["yol", "Daraja yo'li"],
@@ -143,11 +144,7 @@ function TeacherPath() {
           <button
             key={k}
             onClick={() => setTab(k)}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px ${
-              tab === k
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === k, "cyan")}
           >
             {l}
           </button>
@@ -499,7 +496,7 @@ function SupportPath() {
         </div>
       )}
 
-      <div className="flex gap-1 border-b border-slate-200 mb-5">
+      <div className="flex gap-2 mb-5 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {(
           [
             ["yol", "Daraja yo'li"],
@@ -509,11 +506,7 @@ function SupportPath() {
           <button
             key={k}
             onClick={() => setTab(k)}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px ${
-              tab === k
-                ? "border-sky-600 text-sky-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === k, "cyan")}
           >
             {l}
           </button>

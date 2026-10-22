@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import ExamMonthlyReport from "../components/ExamMonthlyReport";
 import FreezeLosses from "../components/FreezeLosses";
 import { useEffect, useState } from "react";
@@ -1222,16 +1223,12 @@ export default function Reports() {
           : "Oyliklar, ustoz intizomi, sotuv voronkasi va adminlar KPI'si"}
       </p>
 
-      <div className="flex gap-1 mb-6 border-b border-slate-200">
+      <div className="flex gap-2 mb-6 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition ${
-              tab === t.key
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === t.key, "cyan")}
           >
             {t.label}
           </button>

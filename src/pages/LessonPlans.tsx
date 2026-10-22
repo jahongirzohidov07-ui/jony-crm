@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { BookOpen, Gamepad2, ArrowLeft, ChevronDown, ChevronUp, ChevronRight, Headphones, FileText, Download,
@@ -382,10 +383,10 @@ function LessonView({ course, no }: { course: string; no: number }) {
         </button>
       )}
 
-      <div className="flex gap-1 border-b border-slate-200 mb-4 overflow-x-auto">
+      <div className="flex gap-2 mb-4 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {tabs.map((t) => (
           <button key={t.key} onClick={() => setTab(t.key)}
-                  className={`px-3 py-2 text-sm whitespace-nowrap border-b-2 -mb-px ${active === t.key ? "border-brand-600 text-brand-700 font-medium" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
+                  className={tab3d(active === t.key, "teal")}>
             {t.label}
           </button>
         ))}

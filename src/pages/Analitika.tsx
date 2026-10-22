@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import { AcademicTab } from "../components/AcademicTab";
 import { TrendingUp, Users, GraduationCap, PieChart as PieIcon } from "lucide-react";
@@ -1653,16 +1654,12 @@ export default function Analitika() {
           : "Qaror qabul qilish uchun kerak bo'ladigan ko'rsatkichlar"}
       </p>
 
-      <div className="flex gap-1 mb-6 border-b border-slate-200 overflow-x-auto">
+      <div className="flex gap-2 mb-6 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {visibleTabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px transition whitespace-nowrap ${
-              tab === t.key
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === t.key, "violet")}
           >
             {t.label}
           </button>

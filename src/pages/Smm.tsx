@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import {
   Megaphone, AlertTriangle, Plus, X, Info, Calendar,
@@ -133,16 +134,12 @@ export default function Smm() {
         Reja → joylash → natija
       </p>
 
-      <div className="flex gap-1 border-b border-slate-200 mb-2 overflow-x-auto">
+      <div className="flex gap-2 mb-2 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {primary.map((t) => (
           <button
             key={t.key}
             onClick={() => { setTab(t.key); setMore(false); }}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition ${
-              tab === t.key
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === t.key, "violet")}
           >
             {label(t)}
           </button>
@@ -150,11 +147,7 @@ export default function Smm() {
         {extra.length > 0 && (
           <button
             onClick={() => setMore((v) => !v)}
-            className={`ml-auto px-3 py-2.5 text-sm border-b-2 -mb-px whitespace-nowrap ${
-              extraActive
-                ? "border-brand-600 text-brand-700 font-medium"
-                : "border-transparent text-slate-400 hover:text-slate-600"
-            }`}
+            className={`ml-auto ${tab3d(extraActive, "violet")}`}
             title="Kam ishlatiladigan bo'limlar: taqvim, g'oyalar, so'rovlar, hisobot, media, brend kitob..."
           >
             {extraActive ? label(extra.find((t) => t.key === tab)!) : "Boshqa"} {more ? "▴" : "▾"}
@@ -1727,7 +1720,7 @@ function ContentCard({ id, onClose }: { id: number; onClose: () => void }) {
         </div>
 
         {/* Tablar */}
-        <div className="flex gap-1 px-5 border-b border-slate-100">
+        <div className="flex gap-2 px-5 pt-2 pb-3 border-b border-slate-100 overflow-x-auto">
           {(
             [
               ["brief", "Brief"],
@@ -1739,11 +1732,7 @@ function ContentCard({ id, onClose }: { id: number; onClose: () => void }) {
             <button
               key={k}
               onClick={() => setTab(k)}
-              className={`px-3 py-2.5 text-sm font-medium border-b-2 -mb-px ${
-                tab === k
-                  ? "border-brand-600 text-brand-700"
-                  : "border-transparent text-slate-500 hover:text-slate-700"
-              }`}
+              className={tab3d(tab === k, "violet")}
             >
               {l}
             </button>

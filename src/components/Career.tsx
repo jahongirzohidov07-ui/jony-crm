@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import {
   TrendingUp, TrendingDown, AlertTriangle, Check, Info, X,
@@ -580,7 +581,7 @@ export function CareerCard({
               </button>
             </div>
 
-            <div className="flex gap-1 px-5 border-b border-slate-100">
+            <div className="flex gap-2 px-5 pt-2 pb-3 border-b border-slate-100 overflow-x-auto">
               {(
                 [
                   ["holat", "Holat"],
@@ -592,11 +593,7 @@ export function CareerCard({
                 <button
                   key={k}
                   onClick={() => setTab(k)}
-                  className={`px-3 py-2.5 text-sm font-medium border-b-2 -mb-px ${
-                    tab === k
-                      ? "border-brand-600 text-brand-700"
-                      : "border-transparent text-slate-500 hover:text-slate-700"
-                  }`}
+                  className={tab3d(tab === k, "emerald")}
                 >
                   {l}
                 </button>

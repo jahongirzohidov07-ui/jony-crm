@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import {
   Megaphone, TrendingUp, Users, Target, RefreshCw, Camera as Instagram, Send,
@@ -985,16 +986,12 @@ export default function Marketing() {
         Voronka, kanallar samaradorligi va ijtimoiy tarmoqlar
       </p>
 
-      <div className="flex gap-1 border-b border-slate-200 mb-5 overflow-x-auto">
+      <div className="flex gap-2 mb-5 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {TABS.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition ${
-              tab === t.key
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === t.key, "orange")}
           >
             {t.label}
           </button>

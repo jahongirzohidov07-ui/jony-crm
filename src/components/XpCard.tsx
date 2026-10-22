@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useEffect, useState } from "react";
 import { Flame, Info, RotateCcw } from "lucide-react";
 import {
@@ -159,7 +160,7 @@ export function XpCard({
         ))}
       </div>
 
-      <div className="flex gap-1 border-b border-slate-200 mb-4">
+      <div className="flex gap-2 mb-4 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {(
           [
             ["umumiy", "Umumiy"],
@@ -170,11 +171,7 @@ export function XpCard({
           <button
             key={k}
             onClick={() => setTab(k)}
-            className={`px-3 py-2 text-sm font-medium border-b-2 -mb-px ${
-              tab === k
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={tab3d(tab === k, "amber")}
           >
             {l}
           </button>

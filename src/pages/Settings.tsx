@@ -1,3 +1,4 @@
+import { tab3d } from "../lib/tabs3d";
 import { useState } from "react";
 import { Settings as SettingsIcon, Building2, ShieldCheck, Database, Stethoscope, BookOpen, CalendarOff, Bot } from "lucide-react";
 import Branches from "./Branches";
@@ -55,16 +56,12 @@ export default function Settings() {
       <p className="text-sm text-slate-500 mb-4">
         Filiallar, rollar va tizim sozlamalari — bir joyda
       </p>
-      <div className="flex items-center gap-1 border-b border-slate-200">
+      <div className="flex items-center gap-2 overflow-x-auto pt-0.5 pb-2 px-0.5">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition ${
-              tab === t.key
-                ? "border-brand-600 text-brand-700"
-                : "border-transparent text-slate-500 hover:text-slate-700"
-            }`}
+            className={`flex items-center gap-1.5 ${tab3d(tab === t.key, "slate")}`}
           >
             <t.icon size={14} />
             {t.label}

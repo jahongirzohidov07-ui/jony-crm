@@ -379,25 +379,25 @@ export default function StudentLeaderboard() {
             Sizning o'rningiz
           </p>
           <div className="rounded-2xl border border-slate-100 bg-slate-50/60 p-3">
-            <div className="flex items-center gap-2.5">
-              <span className="text-[24px] font-extrabold text-brand-600 w-7 text-center shrink-0">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="text-[24px] font-extrabold text-brand-600 min-w-7 text-center shrink-0">
                 {standing.rank ?? "—"}
               </span>
               <Avatar row={d.me} size={44} ring="border-white" />
-              <p className="text-[13px] text-slate-600 leading-snug flex-1 min-w-0">
-                {standing.message}
-                {standing.rank !== null && standing.gap !== null && (
-                  <> yana <b>{fmtNum(standing.gap)} XP</b></>
-                )}
-              </p>
-              <b className="text-[17px] text-brand-600 shrink-0">
+              <b className="ml-auto text-[17px] text-brand-600">
                 {fmtNum(d.me.points)} XP
               </b>
-              <Link to="/student/games"
-                className="px-3.5 py-2.5 rounded-xl bg-brand-600 text-white text-[13px] font-bold shrink-0">
-                {standing.action}
-              </Link>
             </div>
+            <p className="mt-3 w-full min-w-0 break-words text-[13px] text-slate-600 leading-snug">
+              {standing.message}
+              {standing.rank !== null && standing.gap !== null && (
+                <> yana <b>{fmtNum(standing.gap)} XP</b></>
+              )}
+            </p>
+            <Link to="/student/games"
+              className="mt-3 flex min-h-11 w-full items-center justify-center rounded-xl bg-brand-600 px-3.5 py-2.5 text-center text-[13px] font-bold text-white">
+              {standing.action}
+            </Link>
           </div>
         </div>
       )}

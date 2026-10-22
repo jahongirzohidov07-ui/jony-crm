@@ -22,7 +22,7 @@ export default function StudentRewardGoal({ data, onRequest }: { data: MyCoins; 
         {!reward && <option value="">Sovrinni tanlang</option>}
         {choices.map(r => <option key={r.id} value={r.id}>{r.name} · {r.cost} coin{!r.in_stock ? " · hozir tugagan" : ""}</option>)}
       </select>
-      <p role="status" className="mt-2 text-xs text-slate-500">{storageFailed ? "Tanlov hozir ishlaydi, lekin qurilmaga saqlanmadi. Qayta kirganda yana tanlang." : "Tanlov shu qurilmada, sizning hisobingiz uchun saqlanadi."}</p>
+      <p role="status" className="mt-2 text-xs text-slate-500">{storageFailed ? "Tanlov hozir ishlaydi, lekin qurilmaga saqlanmadi. Qayta kirganda yana tanlang." : selected === null ? "Bu tavsiya etilgan sovrin. Boshqa sovrinni tanlasangiz, tanlov shu qurilmada hisobingiz uchun saqlanadi." : "Tanlov shu qurilmada, sizning hisobingiz uchun saqlanadi."}</p>
       {unavailableSelection && <p className="mt-2 text-sm text-amber-700">Oldingi tanlagan sovriningiz endi ro‘yxatda yo‘q. Boshqa sovrin tanlang.</p>}
       {reward && <div className="mt-4 rounded-xl bg-indigo-50 p-3">
         <p className="font-bold break-words">{reward.name}</p>

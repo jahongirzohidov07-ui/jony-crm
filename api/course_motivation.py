@@ -725,7 +725,7 @@ def submit_review(db, student, language, qid, answer):
         earned = reward(db, student, language, "master:" + qid, "correction", 2, 0, qid)
     elif correct:
         earned = reward(db, student, language, f"recall:{qid}:{state['stage']}",
-                        "delayed_recall", 8, 1, qid)
+                        "delayed_recall", 8, 0, qid)
         state["stage"] += 1
     delay = REVIEW_INTERVALS[min(state["stage"], len(REVIEW_INTERVALS) - 1)] if correct and not correction else 1
     state["due"] = (local_day() + timedelta(days=delay)).isoformat()

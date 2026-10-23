@@ -111,3 +111,13 @@ test("async launcher disables duplicates, exposes error/retry, and navigates onl
  cleanup();resolve({language:"en",units:[unit("Unit 5")]});await last;
  assert.equal(navigated.length,1,"unmounted or language-switched launcher cannot navigate");
 });
+
+
+test("daily six reward opens actual bundle and only supported languages",()=>{
+ for(const language of ["en","de"]) {
+  const p=plan(source("daily-six:2026-10-23"),language);
+  assert.equal(p.href,"/student/course-practice?view=daily-six&reward_source=daily-six%3A2026-10-23");
+ }
+ for(const language of ["ru","ko"]) assert.equal(plan(source("daily-six:2026-10-23"),language).kind,"unavailable");
+ assert.equal(plan(source("daily-six:2026-10-23","awarded"),"en"),null);
+});

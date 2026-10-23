@@ -4,6 +4,8 @@ const ANSWER_PATHS = new Set([
   "/student/course-practice/answer", "/student/course-practice/motivation/review",
   "/student/course-practice/motivation/challenge", "/student/course-practice/motivation/claim",
   "/student/course-practice/speaking",
+  "/student/course-practice/daily-six/answer",
+  "/student/course-practice/daily-six/speaking",
 ]);
 export function isRewardPracticeWrite(path: string): boolean {
   return ANSWER_PATHS.has(path.split("?")[0]);

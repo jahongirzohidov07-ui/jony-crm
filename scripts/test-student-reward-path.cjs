@@ -12,3 +12,14 @@ test('staff reward without a request never says approval pending',()=>{const htm
 test('streak route stays vocabulary, no invented XP conversion',()=>{const html=render({...base,id:'streak:7',title:'7 kun',coins:1,have:2,target:7,unit:'days',href:'/student/vocab',action_label:'Lug‘at mashqi'});assert.match(html,/yana 5 kun/);assert.match(html,/Lug‘at mashqini boshlash/);assert.doesNotMatch(html,/href="\/student\/vocab"/);assert.doesNotMatch(html,/117 XP|coin.*kun.*kafolat/);});
 
 test('non-English paths never recommend unavailable English wordbank, including expanded cards',()=>{const sources=[base,{...base,id:'wordbank:1'}];assert.equal(exp.sourcesForLanguage(sources,'en').length,2);for(const language of ['de','ru','ko']) assert.equal(exp.sourcesForLanguage(sources,language).length,1);});
+
+
+test('daily six presents remaining verified skills and preserves coin evidence',()=>{
+ const daily={...base,id:'daily-six:2026-10-23',title:'Kunlik 6 qadam',coins:1,have:4,target:6,unit:'skills'};
+ const html=render(daily);
+ assert.match(html,/yana 2 qadam/);
+ assert.match(html,/view=daily-six/);
+ assert.doesNotMatch(html,/Coin berilgan · tarixda/);
+ for(const lang of ['en','de']) assert.equal(exp.sourcesForLanguage([daily],lang).length,1);
+ for(const lang of ['ru','ko']) assert.equal(exp.sourcesForLanguage([daily],lang).length,0);
+});

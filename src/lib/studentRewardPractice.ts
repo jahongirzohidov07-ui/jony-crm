@@ -8,10 +8,15 @@ export type RewardPracticePlan =
 export function rewardPracticePlan(source: PracticeSource, language = "en"): RewardPracticePlan {
   if (source.status !== "in_progress" && source.status !== "eligible") return null;
   const family = source.id.split(":")[0];
-  if (!["league", "streak", "wordbank"].includes(family) || !source.id.split(":")[1]) {
+  if (!["league", "streak", "wordbank", "daily-six"].includes(family) || !source.id.split(":")[1]) {
     return { kind: "unavailable", message: "Bu shart uchun to‘g‘ridan-to‘g‘ri mashq hozir mavjud emas." };
   }
   const query = new URLSearchParams({ reward_source: source.id });
+  if (family === "daily-six") {
+    return language === "en" || language === "de"
+      ? { kind: "link", href: `/student/course-practice?view=daily-six&${query}`, label: "Kunlik 6 qadamni davom ettirish" }
+      : { kind: "unavailable", message: "Kunlik 6 qadam ingliz va nemis tillarida mavjud." };
+  }
   if (family === "wordbank") {
     return language === "en"
       ? { kind: "link", href: `/student/words/practice?${query}`, label: "Moslashtirilgan so‘z mashqini boshlash" }

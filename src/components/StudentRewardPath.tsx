@@ -12,9 +12,9 @@ export type RewardSource = {
 };
 export type RewardPathData = { student_id: number; sources: RewardSource[]; note: string };
 export function sourcesForLanguage(sources: RewardSource[], language: string) {
-  return sources.filter(s => language === "en" || !s.id.startsWith("wordbank:"));
+  return sources.filter(s => (language === "en" || !s.id.startsWith("wordbank:")) && (["en", "de"].includes(language) || !s.id.startsWith("daily-six:")));
 }
-export const REWARD_UNITS: Record<string,string> = {xp:"XP", days:"kun", correct_answers:"ta to‘g‘ri javob", topics:"mavzu", lessons:"dars", exams:"imtihon", verified_words:"tasdiqlangan so‘z"};
+export const REWARD_UNITS: Record<string,string> = {skills:"qadam", xp:"XP", days:"kun", correct_answers:"ta to‘g‘ri javob", topics:"mavzu", lessons:"dars", exams:"imtihon", verified_words:"tasdiqlangan so‘z"};
 const STATUS: Record<RewardSource["status"],string> = {
   in_progress: "Shartni bajarish davom etmoqda",
   eligible: "Shart bajarilgan · coin berilgani hali tasdiqlanmagan",

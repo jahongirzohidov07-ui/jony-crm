@@ -1,5 +1,6 @@
 import CourseCollaboration from "../../components/CourseCollaboration";
 import Answer, { type Question, type Result, type Drafts } from "../../components/CourseAnswer";
+import CourseDailySix from "../../components/CourseDailySix";
 import CourseDailySession from "../../components/CourseDailySession";
 import { CourseMotivation, CourseCheckpoint, type CheckpointStatus, type PlanStep } from "../../components/CourseMotivation";
 import CoursePortfolio from "../../components/CoursePortfolio";
@@ -45,7 +46,11 @@ function Course({ language }: { language: string }) {
   const [motivationVersion, setMotivationVersion] = useState(0);
   const [section, setSection] = useState(params.get("section") || "all");
   const initialView = params.get("view");
-  const [view, setView] = useState(params.get("action") === "review" ? "today" : initialView && ["today", "lesson", "journey", "portfolio", "pair", "session"].includes(initialView) ? initialView : (params.has("lesson") || params.has("section")) ? "lesson" : "today");
+  const [view, setView] = useState(params.get("action") === "review" ? "today" : initialView && ["today", "lesson", "journey", "portfolio", "pair", "session", "daily-six"].includes(initialView) ? initialView : (params.has("lesson") || params.has("section")) ? "lesson" : "today");
+  useEffect(() => {
+    const routeView = params.get("view");
+    if (routeView && ["today", "lesson", "journey", "portfolio", "pair", "session", "daily-six"].includes(routeView)) setView(routeView);
+  }, [params]);
   const [portfolioEntry, setPortfolioEntry] = useState<string | undefined>();
   const viewHeading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { viewHeading.current?.focus({preventScroll: true}); }, [view]);
@@ -88,6 +93,7 @@ function Course({ language }: { language: string }) {
   const sections = detail?.sections || [];
   const skills = [...new Set(sections.map(s => s.skill))];
   const shown = skills.includes(section) ? section : "all";
+  if (view === "daily-six") return <CourseDailySix key={language} language={language} onExit={() => {setParams({view:"today"}, {replace:true}); setView("today"); refreshProgress();}}/>;
   if (view === "session") return <CourseDailySession key={language} language={language} onAnswerSaved={(lesson,id) => {drafts.current.delete(`${language}:${lesson}:${id}`); if(alive.current) setReload(n=>n+1);}} onExit={() => {setParams({view:"today"}, {replace:true}); setView("today"); refreshProgress();}} onLesson={(n,questionId) => {setParams({view:"lesson",lesson:String(n),...(questionId?{question:questionId}:{})}, {replace:true}); setTargetQuestion(questionId||null); setSection("all"); setSelected(n); setView("lesson"); refreshProgress();}}/>;
   return <main className="mx-auto max-w-2xl space-y-4 p-4 pb-24 text-slate-900">
     <Link to="/student" className="inline-flex items-center gap-2 text-sm text-sky-700"><ArrowLeft size={16}/>Bosh sahifa</Link>

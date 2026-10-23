@@ -84,7 +84,7 @@ export default function CourseDailySix({language, onExit}: {language: string; on
     } finally {if (request === generation.current) {lock.current = false; setBusy(false);}}
   }
   const current = plan?.skills.find(s => s.skill === skill);
-  return <main className="mx-auto w-full min-w-0 max-w-2xl space-y-4 p-4 pb-24 text-slate-900" aria-label="Kunlik olti könikma">
+  return <main className="mx-auto w-full min-w-0 max-w-2xl space-y-4 rounded-3xl bg-slate-50 p-4 pb-24 text-slate-900" aria-label="Kunlik olti könikma">
     <button className={button} onClick={onExit}>← Rejaga qaytiş</button>
     <header className="space-y-2 rounded-2xl bg-sky-950 p-4 text-white">
       <h1 className="text-xl font-bold">Kunlik 6 qadam</h1>

@@ -91,3 +91,8 @@ for (const [language,lessons] of Object.entries(output)) console.log(language+':
 
 // Keep the canonical weekly tasks available in the serverless API bundle (src is excluded).
 fs.copyFileSync(path.join(root, 'src/data/course-weekly-missions.json'), path.join(root, 'api/course_weekly_missions.json'));
+
+// Daily six needs the same German words as the course, including in serverless builds.
+const dailyGerman = [1,2,3].flatMap(n => read('german/vocabulary-'+n)).map(({id,week,word,meaning,example}) => ({id,week,word,meaning,example}));
+if (dailyGerman.length !== 2400 || new Set(dailyGerman.map(w=>w.id)).size !== 2400) throw Error('Invalid daily German vocabulary coverage');
+fs.writeFileSync(path.join(root,'api/student_daily_six_german_words.json'),JSON.stringify(dailyGerman));

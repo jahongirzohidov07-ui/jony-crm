@@ -8,7 +8,7 @@ import { REWARD_UNITS, type RewardPathData, type RewardSource } from "./StudentR
 
 type Snapshot = { coins: MyCoins; source: RewardSource | null };
 export function validRewardSource(value: string | null): value is string {
-  return !!value && /^(league|streak|wordbank):[a-zA-Z0-9_-]{1,64}$/.test(value);
+  return !!value && /^(league|streak|wordbank|daily-six):[a-zA-Z0-9_-]{1,64}$/.test(value);
 }
 export default function RewardPracticeContext() {
   const {pathname, search} = useLocation();

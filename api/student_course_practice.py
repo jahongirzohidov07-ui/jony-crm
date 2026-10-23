@@ -15,6 +15,7 @@ import course_motivation as motivation
 import course_themes
 import course_portfolio
 import course_pace
+import student_daily_six
 from course_session_summary import SessionSummary, session_summary
 from auth import require_role
 from database import get_db
@@ -320,6 +321,7 @@ def motivation_claim(body: ClaimIn, db: Session = Depends(get_db), student=Depen
 # Static portfolio routes must precede the numeric lesson catch-all.
 router.include_router(course_portfolio.make_router(_student, _lesson))
 router.include_router(course_pace.make_router(_student, _lesson))
+router.include_router(student_daily_six.make_router(_student))
 
 
 @router.get("/session-summary", response_model=SessionSummary)

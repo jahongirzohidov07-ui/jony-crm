@@ -126,7 +126,7 @@ class MotivationTests(unittest.TestCase):
         for delay in (3, 7, 14, 14):
             self.assertEqual(len(self.get_motivation()["review"]), 1)
             result = self.review(q, q["expected"][0]).json()
-            self.assertEqual(result["reward"], {"xp": 8, "coins": 1, "reason": "delayed_recall"})
+            self.assertEqual(result["reward"], {"xp": 8, "coins": 0, "reason": "delayed_recall"})
             self.assertEqual(self.review(q, q["expected"][0]).json()["reward"], motivation.ZERO)
             self.time.return_value += timedelta(days=delay)
         self.assertEqual(self.get_motivation()["review"], [])
@@ -328,7 +328,7 @@ class MotivationTests(unittest.TestCase):
             self.assertEqual(sorted(r["reward"]["xp"] for r in replies), [0, 15])
             with sessions() as db:
                 self.assertEqual(db.query(models.XpTransaction).count(), 3)
-                self.assertEqual(db.query(func.sum(models.CoinEntry.amount)).scalar(), 3)
+                self.assertEqual(db.query(func.sum(models.CoinEntry.amount)).scalar(), 2)
                 self.assertEqual(db.query(models.StudentGamification).one().lifetime_xp, 25)
             engine.dispose()
 

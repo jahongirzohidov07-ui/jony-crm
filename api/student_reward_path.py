@@ -32,7 +32,19 @@ def reward_path(db, student, streak):
     last = db.query(func.max(models.VocabAttempt.date)).filter(
         models.VocabAttempt.student_id == sid).scalar()
     tag = f'[{(last - timedelta(days=streak - 1)).isoformat()}]' if last and streak else None
-    sources = []
+    # Reading the reward path must not initialize a plan or issue a reward.
+    from student_daily_six import reward_status
+    daily = reward_status(db, student)
+    sources = [_source(
+        f"daily-six:{daily['day']}", 'Kunlik 6 qadam',
+        "Lug‘at, grammatika, reading, listening, writing va speaking. "
+        "Oltala qadam tekshiruvdan o‘tsa, Toshkent kuni bo‘yicha bir marta 1 coin. "
+        "Tugallanmagan bo‘lsa ham olingan XP saqlanadi. Ustoz coinlari alohida.",
+        1, daily['completed_steps'], 6, 'skills',
+        'awarded' if daily['awarded'] else 'eligible' if daily['completed_steps'] == 6 else 'in_progress',
+        '/student/course-practice?view=daily-six', 'Kunlik 6 qadam')]
+    if daily.get('reward_eligible') is False:
+        sources = []
     for days, coins in roles.STREAK_REWARDS:
         paid = tag and any(e.source == 'streak' and e.ref_id == days
                            and tag in (e.note or '') for e in entries)

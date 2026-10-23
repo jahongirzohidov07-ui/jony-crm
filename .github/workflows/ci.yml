@@ -47,6 +47,7 @@ jobs:
           python test_student_identity.py
           python test_student_course_practice.py
           python test_course_motivation.py
+          python test_student_daily_six.py
           python test_course_learning_evidence.py
           python test_course_plan_measurement.py
           python test_course_session_summary.py
@@ -94,6 +95,8 @@ jobs:
         run: node --test scripts/test-course-practice-choice.cjs
       - name: Student ranking and reward guidance
         run: node --test scripts/test-student-leaderboard.cjs scripts/test-student-reward-goal.cjs scripts/test-student-reward-path.cjs scripts/test-student-reward-practice.cjs scripts/test-student-reward-context.cjs
+      - name: Daily six skills tests
+        run: node --test scripts/test-course-daily-six.cjs
       - name: Student regression tests
         run: node --test scripts/test-student-regressions.cjs
       - name: Intensive curriculum and exercise checks

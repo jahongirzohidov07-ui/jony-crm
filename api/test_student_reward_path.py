@@ -69,6 +69,25 @@ class RewardPathTest(unittest.TestCase):
                         date=roles.local_today() - timedelta(days=i), game='test', correct=1))
         self.db.commit()
 
+    def test_daily_six_read_only_unstarted_and_verified_ledger_status(self):
+        statements = []
+        def capture(conn, cursor, statement, parameters, context, many):
+            statements.append(statement.strip().upper())
+        event.listen(self.engine, 'before_cursor_execute', capture)
+        try:
+            result = self.sources(self.get())
+        finally:
+            event.remove(self.engine, 'before_cursor_execute', capture)
+        daily = next(s for k, s in result.items() if k.startswith('daily-six:'))
+        self.assertEqual((daily['have'], daily['target'], daily['coins']), (0, 6, 1))
+        self.assertEqual(daily['status'], 'in_progress')
+        self.assertEqual(daily['href'], '/student/course-practice?view=daily-six')
+        self.assertFalse(any(sql.startswith(('INSERT', 'UPDATE', 'DELETE')) for sql in statements))
+        for paid, expected in [(False, 'eligible'), (True, 'awarded')]:
+            with patch('student_daily_six.reward_status', return_value={
+                'day': '2026-10-23', 'completed_steps': 6, 'awarded': paid}):
+                self.assertEqual(self.sources(self.get())['daily-six:2026-10-23']['status'], expected)
+
     def test_auth_and_student_isolation(self):
         self.assertEqual(self.client.get('/api/student/reward-path').status_code, 401)
         self.streak(1)
@@ -243,12 +262,13 @@ class RewardPathTest(unittest.TestCase):
             if metric == 'streak':
                 self.assertIn("lug'at mashqi", hint)
 
-    def test_manual_is_not_pending_and_daily_coins_not_promised(self):
+    def test_manual_is_not_pending_and_daily_coin_requires_six_skills(self):
         rows = self.sources(self.get())
         self.assertEqual(rows['manual']['status'], 'manual_review')
         self.assertIsNone(rows['manual']['coins'])
         self.assertEqual(rows['manual']['award_mode'], 'staff')
-        self.assertFalse(any(k.startswith('daily') for k in rows))
+        daily = next(v for k, v in rows.items() if k.startswith('daily-six:'))
+        self.assertEqual((daily['coins'], daily['target'], daily['have'], daily['status']), (1, 6, 0, 'in_progress'))
         for row in rows.values():
             self.assertEqual(set(row) - {'practice_href'}, {'id', 'title', 'description', 'coins', 'have',
                 'target', 'unit', 'status', 'award_mode', 'href', 'action_label'})

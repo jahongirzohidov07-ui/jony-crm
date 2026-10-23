@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ComponentProps } from "react";
 import { Link } from "react-router-dom";
 import { CheckCircle2, Flag, Sparkles, Users } from "lucide-react";
 import { api } from "../lib/api";
@@ -16,7 +16,18 @@ export function RewardFeedback({reward}: {reward?: LearningReward}) {
   return <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-indigo-800"><Sparkles size={16}/>{reward.xp > 0 ? `+${reward.xp} XP` : "Bu safar qo‘shimcha XP yo‘q"}{reward.coins > 0 && ` · +${reward.coins} tanga`}<span className="font-normal">{rewardLabels[reward.reason] || "Foydali qadam"}</span></p>;
 }
 export type CheckpointStatus = {week: number; passed: boolean; available: boolean};
-export function CourseMotivation({language, refresh = 0, compact = false, onCheckpoints, onAction, onPair, initialReview = false}: {language: string; refresh?: number; compact?: boolean; onCheckpoints?: (states: CheckpointStatus[]) => void; onAction?: (step: PlanStep) => void; onPair?: () => void; initialReview?: boolean}) {
+export function CourseMotivation(props: ComponentProps<typeof CourseMotivationContent>) {
+  return <div className="space-y-3">
+    {(props.language === "en" || props.language === "de") && <Link to="/student/course-practice?view=daily-six" className="block min-h-11 rounded-2xl border-2 border-emerald-600 bg-emerald-50 p-4 text-emerald-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700">
+      <span className="flex items-center justify-between gap-2 font-bold"><span>Kunlik 6 qadam</span><span className="shrink-0 rounded-full bg-emerald-800 px-3 py-1 text-sm text-white">+1 tanga</span></span>
+      <span className="mt-2 block text-sm">10 luğat · 5 grammatika · 3 öqiş · 3 tinglaş · yoziş · gapiriş</span>
+      <span className="mt-1 block text-xs">6 könikma tasdiqlansa, Toşkent kuni böyiça bir marta. Olingan XP saqlanadi; kunlik XP chegarasi bor. Ustoz coinlari alohida.</span>
+      <span className="mt-2 block font-semibold">Kunlik rejani oçiş →</span>
+    </Link>}
+    <CourseMotivationContent {...props}/>
+  </div>;
+}
+function CourseMotivationContent({language, refresh = 0, compact = false, onCheckpoints, onAction, onPair, initialReview = false}: {language: string; refresh?: number; compact?: boolean; onCheckpoints?: (states: CheckpointStatus[]) => void; onAction?: (step: PlanStep) => void; onPair?: () => void; initialReview?: boolean}) {
   const [data, setData] = useState<Motivation | null>(null);
   const [error, setError] = useState("");
   const [revision, setRevision] = useState(0);

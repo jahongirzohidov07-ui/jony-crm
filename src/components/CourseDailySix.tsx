@@ -149,9 +149,22 @@ function DailySixAnswer({plan, question: q, index, speaking, busy, checkDay, onS
     window.speechSynthesis?.cancel();
   }
   useEffect(() => {active.current = true; return () => {active.current = false; stopSpeech();};}, []);
+  function finishMic() {
+    if (timer.current) clearTimeout(timer.current);
+    const rec = recognition.current;
+    // Native services may never send onend after stop (offline/provider failure).
+    timer.current = setTimeout(() => {
+      stopSpeech(); setListening(false);
+      setSpeechError("Ovozni taniş javob bermadi. Saqlangan matn özgarmadi; qayta urinib köring.");
+    }, 8000);
+    try {rec?.stop();} catch {
+      stopSpeech(); setListening(false);
+      setSpeechError("Mikrofonni töxtatib bölmadi. Qayta urinib köring.");
+    }
+  }
   function startMic() {
     if (!checkDay() || busy || accepted) return;
-    if (speakingNow.current) {recognition.current?.stop(); return;}
+    if (speakingNow.current) {finishMic(); return;}
     const SR = (window as SpeechWindow).SpeechRecognition || (window as SpeechWindow).webkitSpeechRecognition;
     if (!SR) {setSpeechError("Ovozni taniş bu qurilmada mavjud emas. Jony Student ilovasini yangilang yoki Chrome orqali oçing."); return;}
     stopSpeech(); const request = speechGeneration.current;
@@ -164,11 +177,11 @@ function DailySixAnswer({plan, question: q, index, speaking, busy, checkDay, onS
       const text = Array.from(event.results).filter(r => r.isFinal !== false).map(r => r[0].transcript).join(" ").trim();
       if (!text) setSpeechError("Ovoz eşitilmadi. Qayta gapiring.");
       else if (text.length > 1000) setSpeechError("Javob juda uzun. Qisqaroq gapiring.");
-      else change(text);
+      else {setSpeechError(""); change(text);}
     };
-    rec.onerror = event => {if (!current()) return; const messages: Record<string, string> = {"not-allowed": "Mikrofonga ruxsat bering.", "audio-capture": "Mikrofon topilmadi.", "no-speech": "Ovoz eşitilmadi. Qayta gapiring.", network: "Ovozni taniş xizmati ulanmayapti. Internetni tekşiring."}; if (event.error !== "aborted") setSpeechError(messages[event.error] || "Ovozni aniqlab bölmadi. Qayta urinib köring."); setListening(false); speakingNow.current = false;};
+    rec.onerror = event => {if (!current()) return; const messages: Record<string, string> = {"not-allowed": "Mikrofonga ruxsat bering.", "audio-capture": "Mikrofon topilmadi.", "no-speech": "Ovoz eşitilmadi. Qayta gapiring.", network: "Ovozni taniş xizmati ulanmayapti. Internetni tekşiring."}; if (event.error !== "aborted") setSpeechError(messages[event.error] || "Ovozni aniqlab bölmadi. Qayta urinib köring."); stopSpeech(); setListening(false);};
     rec.onend = () => {if (timer.current) clearTimeout(timer.current); if (current()) {setListening(false); speakingNow.current = false;}};
-    setSpeechError(""); setListening(true); speakingNow.current = true; rec.start(); timer.current = setTimeout(() => {try {rec.stop();} catch { /* stopped */ }}, 60000);} catch {stopSpeech(); setListening(false); setSpeechError("Mikrofonni işga tuşirib bölmadi.");}
+    setSpeechError(""); setListening(true); speakingNow.current = true; rec.start(); if (speakingNow.current) timer.current = setTimeout(finishMic, 60000);} catch {stopSpeech(); setListening(false); setSpeechError("Mikrofonni işga tuşirib bölmadi.");}
   }
   async function submit() {
     if (sending || !checkDay()) return;

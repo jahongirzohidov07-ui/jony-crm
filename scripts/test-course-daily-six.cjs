@@ -9,7 +9,7 @@ const source = fs.readFileSync(path.join(root, 'src/components/CourseDailySix.ts
 const deferred = () => {let resolve, reject; const promise = new Promise((a,b) => {resolve=a;reject=b;}); return {promise,resolve,reject};};
 const tick = async () => {await Promise.resolve(); await Promise.resolve();};
 function harness() {
-  let slots=[], cursor=0, effects=[], pending=[], day='2026-10-23', reads=[], writes=[], draft=new Map(), listeners={};
+  let slots=[], cursor=0, effects=[], pending=[], day='2026-10-23', reads=[], writes=[], draft=new Map(), listeners={}, timers=new Map(), timerSeq=0;
   class ApiError extends Error {constructor(message,status) {super(message);this.status=status;}}
   const react={useState(initial) {const i=cursor++; if (!(i in slots)) slots[i]=typeof initial==='function'?initial():initial;return [slots[i],v=>{slots[i]=typeof v==='function'?v(slots[i]):v;}];},useRef(initial) {const i=cursor++;return slots[i]??(slots[i]={current:initial});},useEffect(fn,deps) {const i=cursor++;const prior=effects[i];if(!prior||deps.some((v,j)=>v!==prior.deps[j]))pending.push(()=>{prior?.cleanup?.();effects[i]={deps,cleanup:fn()};});}};
   const window={setInterval:()=>1,addEventListener:(k,fn)=>listeners[k]=fn,removeEventListener:()=>{},speechSynthesis:{cancel(){}}};
@@ -18,8 +18,8 @@ function harness() {
   const exports={};
   const imports={'react':react,'react/jsx-runtime':{jsx:(type,props)=>({type,props}),jsxs:(type,props)=>({type,props}),Fragment:'fragment'},'react-router-dom':{Link:'a'},'../lib/api':{api,ApiError},'../lib/studentWritingDrafts':{readWritingDraft:(k,id)=>({text:draft.get(k+id)||''}),saveWritingDraft:(k,id,v)=>draft.set(k+id,v.text),removeWritingDraft:(k,id)=>draft.delete(k+id)},'../lib/courseQuestionInteraction':{getCourseQuestionChoices:q=>(q.options||[]).map(value=>({label:value,value}))}};
   const code=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
-  vm.runInNewContext(code,{exports,require:name=>imports[name]||require(name),window,document,Error,Intl:{DateTimeFormat:class {format(){return day;}}},Date,setTimeout:()=>1,clearTimeout(){},clearInterval(){}});
-  return {exports,reads,writes,draft,window,ApiError,listeners,setDay(v){day=v;},render(Component=exports.default,props={language:'en',onExit(){}}) {cursor=0; const tree=Component(props);pending.splice(0).forEach(fn=>fn());return tree;},unmount(){effects.forEach(e=>e?.cleanup?.());},reset(){effects.forEach(e=>e?.cleanup?.());slots=[];effects=[];pending=[];}};
+  vm.runInNewContext(code,{exports,require:name=>imports[name]||require(name),window,document,Error,Intl:{DateTimeFormat:class {format(){return day;}}},Date,setTimeout:(fn)=>{const id=++timerSeq;timers.set(id,fn);return id;},clearTimeout(id){timers.delete(id);},clearInterval(){}});
+  return {exports,reads,writes,draft,window,ApiError,listeners,timers,setDay(v){day=v;},render(Component=exports.default,props={language:'en',onExit(){}}) {cursor=0; const tree=Component(props);pending.splice(0).forEach(fn=>fn());return tree;},unmount(){effects.forEach(e=>e?.cleanup?.());},reset(){effects.forEach(e=>e?.cleanup?.());slots=[];effects=[];pending=[];}};
 }
 function nodes(tree,predicate) {if(!tree||typeof tree!=='object')return [];const children=[tree.props?.children].flat(Infinity);return [...(predicate(tree)?[tree]:[]),...children.flatMap(child=>nodes(child,predicate))];}
 const text = tree => typeof tree==='string'||typeof tree==='number'?String(tree):tree&&typeof tree==='object'?[tree.props?.children].flat(Infinity).map(text).join(' '):'';
@@ -146,3 +146,44 @@ for (const language of ['en', 'de']) {
     } finally {course.close(); daily.unmount();}
   });
 }
+
+async function speakingHarness() {
+  const h=harness();let tree=await loaded(h);find(tree,'Gapiriş').props.onClick();
+  const child=children(h.render())[0];h.reset();let rec;
+  h.window.SpeechRecognition=class {constructor(){rec=this;}start(){}stop(){}abort(){this.aborted=true;}};
+  const render=()=>h.render(child.type,child.props);
+  find(render(),'Mikrofonga').props.onClick();
+  return {h,rec,render};
+}
+test('speech stop has a bounded fallback when native provider never ends',async()=>{
+  const {h,rec,render}=await speakingHarness();
+  find(render(),'Mikrofonni töxtatiş').props.onClick();
+  assert.equal(h.timers.size,1);
+  [...h.timers.values()][0]();
+  assert.equal(rec.aborted,true);
+  assert.match(text(render()),/Ovozni taniş javob bermadi/);
+  assert.ok(find(render(),'Mikrofonga'));
+});
+test('speech error detaches late results and permits a clean restart',async()=>{
+  const {h,rec,render}=await speakingHarness();const late=rec.onresult;
+  rec.onerror({error:'network'});
+  late({results:[{isFinal:true,0:{transcript:'late incorrect answer'}}]});
+  assert.doesNotMatch(text(render()),/late incorrect answer/);
+  assert.equal(h.timers.size,0);
+  assert.equal(rec.aborted,true);
+  assert.ok(find(render(),'Mikrofonga'));
+});
+test('native stop throwing does not leave listening UI stuck',async()=>{
+  const {rec,render}=await speakingHarness();rec.stop=()=>{throw Error('service gone');};
+  assert.doesNotThrow(()=>find(render(),'Mikrofonni töxtatiş').props.onClick());
+  assert.match(text(render()),/Mikrofonni töxtatib bölmadi/);
+});
+
+test('final transcript arriving after stop is preserved and watchdog cancelled on end',async()=>{
+  const {h,rec,render}=await speakingHarness();
+  find(render(),'Mikrofonni töxtatiş').props.onClick();
+  rec.onresult({results:[{isFinal:true,0:{transcript:'I read quietly.'}}]});rec.onend();
+  assert.equal(h.timers.size,0);
+  assert.match(text(render()),/I read quietly/);
+  assert.equal(find(render(),'Tekşiriş').props.disabled,false);
+});

@@ -202,6 +202,26 @@ class DailySixTests(unittest.TestCase):
         self.ai_grade.side_effect=no_lock
         self.assertTrue(self.answer(q)['correct'])
 
+    def test_transient_failure_retry_awards_once_and_preserves_progress(self):
+        self.plan()
+        q = self.state()['skills'][-2]['questions'][0]
+        self.ai_grade.side_effect = daily.writing_ai.WritingAIError('ai_error')
+        with self.assertLogs(daily.logger, level='WARNING') as logs:
+            failed = self.client.post(BASE+'/answer', json=self.body(q))
+        self.assertEqual(failed.status_code, 503)
+        self.assertIn('code=provider_ai_error', logs.output[0])
+        self.assertEqual(self.plan()['answers'], {})
+        self.assertEqual(self.db.query(models.XpTransaction).count(), 0)
+        self.assertEqual(self.db.query(models.SkillAttempt).count(), 0)
+        self.ai_grade.side_effect = self.good_verdict
+        accepted = self.answer(q)
+        self.assertTrue(accepted['correct'])
+        self.assertEqual(accepted['reward']['xp'], 2)
+        self.assertEqual(self.answer(q)['reward'], motivation.ZERO)
+        self.assertEqual(self.ai_grade.call_count, 2)  # one explicit retry, never an automatic retry
+        self.assertEqual(self.db.query(models.SkillAttempt).count(), 1)
+        self.assertEqual(self.db.query(models.CoinEntry).count(), 0)
+
     def test_semantic_rejection_cached_and_limit_bounded(self):
         self.plan()
         q=self.state()['skills'][-1]['questions'][0]
@@ -281,6 +301,82 @@ class DailySixTests(unittest.TestCase):
                     self.assertEqual(db.query(models.CoinEntry).count(),1)
                     self.assertEqual(db.query(models.SkillAttempt).count(),1)
             finally: engine.dispose()
+
+
+class DailySixEvaluatorDiagnosticsTests(unittest.TestCase):
+    def evaluate(self, provider, language='en', skill='speaking'):
+        plan = dict(language=language, level='A1', lesson=2)
+        question = dict(mode='audio' if skill == 'speaking' else 'text',
+                        prompt='Mime walk; replace Pip/Sara cards with it/she; choose slowly/quietly.')
+        with patch.object(daily.writing_ai, '_call', provider):
+            return daily.evaluate(plan, {'skill': skill}, question, 'She can walk slowly and quietly.')
+
+    def test_failure_codes_are_distinct_private_and_single_call(self):
+        from unittest.mock import Mock
+        answer = 'She can walk slowly and quietly.'
+        good = dict(relevant=True, language_ok=True, task_met=True, meaningful=True,
+                    evidence=[answer], feedback='ok')
+        cases = [
+            ('provider_no_key', daily.writing_ai.WritingAIError('no_key')),
+            ('provider_rate_limit', daily.writing_ai.WritingAIError('rate_limit')),
+            ('provider_ai_error', daily.writing_ai.WritingAIError('SECRET_KEY_PRIVATE')),
+            ('invalid_json', 'SECRET_RAW_PRIVATE'),
+            ('invalid_schema', json.dumps(dict(good, relevant='yes'))),
+            ('invalid_evidence', json.dumps(dict(good, evidence=['SECRET_QUOTE_PRIVATE']))),
+            ('invalid_evidence', json.dumps(dict(good, evidence=[]))),
+        ]
+        for code, value in cases:
+            with self.subTest(code=code):
+                provider = Mock(side_effect=value) if isinstance(value, Exception) else Mock(return_value=value)
+                with self.assertLogs(daily.logger, level='WARNING') as logs:
+                    with self.assertRaises(daily.HTTPException) as error:
+                        self.evaluate(provider)
+                self.assertEqual(error.exception.status_code, 503)
+                self.assertEqual(provider.call_count, 1)
+                entry = ' '.join(logs.output)
+                self.assertIn('code='+code, entry)
+                self.assertIn('elapsed_ms=', entry)
+                for private in ('SECRET_', answer, 'Pip', 'Sara'):
+                    self.assertNotIn(private, entry)
+
+    def test_retained_provider_causes_are_classified_without_secret_text(self):
+        import httpx
+        request = httpx.Request('POST', 'https://example.invalid/?key=SECRET')
+        cases = [('provider_timeout', httpx.ReadTimeout('SECRET', request=request)),
+                 ('provider_transport', httpx.ConnectError('SECRET', request=request))]
+        for status, code in ((401, 'provider_auth'), (403, 'provider_auth'),
+                             (429, 'provider_rate_limit'), (503, 'provider_upstream_5xx'),
+                             (400, 'provider_http_error')):
+            cases.append((code, httpx.HTTPStatusError('SECRET', request=request,
+                          response=httpx.Response(status, request=request))))
+        for expected, cause in cases:
+            error = daily.writing_ai.WritingAIError('ai_error')
+            error.__context__ = cause
+            self.assertEqual(daily._provider_failure_code(error), expected)
+        error = daily.writing_ai.WritingAIError('ai_error')
+        error.__context__ = error
+        self.assertEqual(daily._provider_failure_code(error), 'provider_ai_error')
+
+    def test_bilingual_productive_rubric_excludes_unobservable_actions(self):
+        # Contract test only: mocked verdicts cannot prove actual model accuracy.
+        for language in ('en', 'de'):
+            for skill in ('writing', 'speaking'):
+                for accepted in (True, False):
+                    with self.subTest(language=language, skill=skill, accepted=accepted):
+                        def provider(system, text):
+                            self.assertIn('exclude them from task_met', system)
+                            self.assertIn('Do not guess unseen teacher actions or card contents', system)
+                            self.assertIn('merely naming the topic is insufficient', system)
+                            self.assertIn('never pronunciation/fluency', system)
+                            self.assertIn('"language": "'+language+'"', system)
+                            answer = json.loads(text)['student_answer']
+                            return json.dumps(dict(relevant=True, language_ok=True, task_met=accepted,
+                                                   meaningful=True, evidence=[answer], feedback='specific feedback'))
+                        with self.assertLogs(daily.logger, level='INFO') as logs:
+                            result = self.evaluate(provider, language, skill)
+                        self.assertEqual(result['correct'], accepted)
+                        self.assertEqual(result['assessment'], skill+'_semantics' if skill=='writing' else 'transcript_semantics')
+                        self.assertIn('outcome='+('accepted' if accepted else 'rejected'), logs.output[0])
 
 
 if __name__=='__main__': unittest.main(verbosity=2)

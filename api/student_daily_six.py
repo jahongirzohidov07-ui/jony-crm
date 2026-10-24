@@ -6,6 +6,8 @@ is not cryptographically verified and no pronunciation claim is made.
 import copy
 import hashlib
 import json
+import logging
+import time
 import random
 import re
 from functools import lru_cache
@@ -23,6 +25,7 @@ from database import get_db
 
 SKILLS = {"vocabulary": 10, "grammar": 5, "reading": 3, "listening": 3, "writing": 1, "speaking": 1}
 COIN_SOURCE = "daily_six"
+logger = logging.getLogger(__name__)
 
 
 def plan_key(student_id, day):
@@ -163,6 +166,32 @@ class AnswerIn(BaseModel):
         return value.strip()
 
 
+def _provider_failure_code(error):
+    """Classify retained causes without reading/logging exception messages."""
+    import httpx
+    allowed = {"no_key", "rate_limit", "ai_error", "bad_reply", "shape"}
+    code = "provider_" + (error.code if error.code in allowed else "ai_error")
+    cause = error
+    for _ in range(4):  # bounded even for cyclic exception chains
+        if isinstance(cause, httpx.TimeoutException):
+            return "provider_timeout"
+        if isinstance(cause, httpx.HTTPStatusError):
+            status = cause.response.status_code
+            if status in (401, 403):
+                return "provider_auth"
+            if status == 429:
+                return "provider_rate_limit"
+            if 500 <= status <= 599:
+                return "provider_upstream_5xx"
+            return "provider_http_error"
+        if isinstance(cause, httpx.TransportError):
+            return "provider_transport"
+        cause = cause.__cause__ or cause.__context__
+        if cause is None:
+            break
+    return code
+
+
 def evaluate(plan, section, question, answer):
     skill = section["skill"]
     if question["mode"] == "exact":
@@ -190,6 +219,11 @@ def evaluate(plan, section, question, answer):
         "Daily writing is 3–5 sentences unless the canonical task asks for foundation labels; ignore longer original word counts. "
         "Short speaking may use a few taught words and need not satisfy original long length demands. "
         "For speaking assess ONLY transcript meaning, never pronunciation/fluency or proof of audio. "
+        "Classroom prompts may mention miming, gestures, pointing, teacher demonstrations, or physical cards. "
+        "Those nonverbal actions cannot be observed in a transcript: exclude them from task_met, never claim to observe them, "
+        "and assess only the verbal language objectives the learner can demonstrate with the supplied text. "
+        "Equivalent spoken examples or descriptions may demonstrate those objectives without classroom props. "
+        "Do not guess unseen teacher actions or card contents. Retain the verbal objectives: merely naming the topic is insufficient. "
         "Return ONLY JSON with exactly: relevant:boolean, language_ok:boolean, task_met:boolean, "
         "meaningful:boolean, evidence:[one or two exact short quotes from student answer], feedback:nonempty string. "
         "task_met requires the core canonical objectives and understandable language, not just mentioning the topic. "
@@ -197,21 +231,40 @@ def evaluate(plan, section, question, answer):
         "Give specific correction feedback in Uzbek if any criterion fails. No score or reward fields. Canonical task:\n"
         + json.dumps(canonical, ensure_ascii=False)
     )
+    started = time.monotonic()
+    stage = "provider"
     try:
-        verdict = json.loads(writing_ai._call(system, json.dumps({"student_answer": answer}, ensure_ascii=False)))
+        raw = writing_ai._call(system, json.dumps({"student_answer": answer}, ensure_ascii=False))
+        stage = "json"
+        verdict = json.loads(raw)
+        stage = "schema"
         flags = ("relevant", "language_ok", "task_met", "meaningful")
         if (not isinstance(verdict, dict) or set(verdict) != {*flags, "evidence", "feedback"}
                 or any(type(verdict[k]) is not bool for k in flags)
                 or not isinstance(verdict["feedback"], str) or not verdict["feedback"].strip()
                 or len(verdict["feedback"]) > 1800
-                or not isinstance(verdict["evidence"], list) or len(verdict["evidence"]) > 3
-                or any(not isinstance(e, str) or not e.strip() or e not in answer for e in verdict["evidence"])):
-            raise ValueError("Invalid evaluator schema/evidence")
+                or not isinstance(verdict["evidence"], list) or len(verdict["evidence"]) > 3):
+            raise ValueError("Invalid evaluator schema")
+        stage = "evidence"
+        if any(not isinstance(e, str) or not e.strip() or e not in answer for e in verdict["evidence"]):
+            raise ValueError("Invalid evaluator evidence")
         passed = all(verdict[k] for k in flags)
         if passed and not verdict["evidence"]:
             raise ValueError("Missing evidence")
-    except (writing_ai.WritingAIError, ValueError, TypeError, KeyError):
+    except (writing_ai.WritingAIError, ValueError, TypeError, KeyError) as error:
+        # Never log the answer, prompt, raw provider response, IDs, or exception
+        # text: provider exceptions can contain API keys and learner content.
+        code = "invalid_" + stage
+        if isinstance(error, writing_ai.WritingAIError):
+            code = _provider_failure_code(error)
+        logger.warning("daily_six_ai outcome=unavailable code=%s skill=%s language=%s elapsed_ms=%d",
+                       code, skill, plan["language"], int((time.monotonic() - started) * 1000))
+        # No hidden retries or lenient fallback: only an actual validated verdict
+        # can grant progress. The client can explicitly resubmit its saved draft.
         raise HTTPException(503, "Baholash vaqtincha ishlamayapti. Natijalaringiz saqlangan; javobni qayta yuboring.") from None
+    logger.info("daily_six_ai outcome=%s skill=%s language=%s elapsed_ms=%d",
+                "accepted" if passed else "rejected", skill, plan["language"],
+                int((time.monotonic() - started) * 1000))
     return {"correct": passed, "explanation": verdict["feedback"].strip(), "assessment": assessment,
             "criteria": {k: verdict[k] for k in flags}, "evidence": verdict["evidence"]}
 

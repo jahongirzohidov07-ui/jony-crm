@@ -30,7 +30,10 @@ type Item = {
   minutes: number;
   required: boolean;
   percent: number;
+  /** HR "o'tdi" qo'ygan (ptichka faqat shunda) */
   done: boolean;
+  /** O'zi oxirigacha ko'rdi — HR tasdig'ini kutmoqda */
+  watched?: boolean;
   resume: number;
 };
 type MyPd = {
@@ -185,6 +188,11 @@ export default function Development() {
                   <p className="text-sm font-medium text-slate-900 truncate">
                     {it.title}
                   </p>
+                  {it.watched && !it.done && (
+                    <p className="text-[11px] text-amber-600">
+                      Ko'rib bo'ldingiz — HR tasdig'i kutilmoqda
+                    </p>
+                  )}
                   <div className="flex items-center gap-2 mt-1">
                     <div className="h-1.5 flex-1 bg-slate-100 rounded-full overflow-hidden">
                       <div

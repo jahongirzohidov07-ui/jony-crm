@@ -9776,6 +9776,11 @@ if getattr(models, "PdVideo", None) is None:
         # HR qo'lda belgilagan bo'lsa — kim (2026-10-10, Jahongir:
         # "videoni ko'rmasa ham o'tdi o'tmadi belgilay olay")
         marked_by = Column(String)
+        # HR TASDIG'I (2026-10-24, Jahongir: "ko'rib bo'lsa 100% bo'lsin,
+        # lekin ptichka bo'lmasin — HR ptichka qilsin faqat"). done =
+        # o'zi ko'rib bo'ldi (statistika), hr_passed = HR "o'tdi" dedi.
+        hr_passed = Column(Integer)          # None = HR hali tegmagan
+        hr_at = Column(DateTime)
         first_at = Column(DateTime, default=_dt.utcnow)
         last_at = Column(DateTime, default=_dt.utcnow, onupdate=_dt.utcnow)
 
@@ -9841,6 +9846,18 @@ def _pd_hhmm(sec: int) -> str:
     return f"{sec} soniya"
 
 
+def _pd_hr_ok(w) -> bool:
+    """"O'tdi" belgisi — FAQAT HR qo'yadi (2026-10-24). Eski yozuvlar:
+    HR qo'lda belgilagani (marked_by bor) hisobga o'tadi, pleyer o'zi
+    qo'ygani esa yo'q."""
+    if w is None:
+        return False
+    hp = getattr(w, "hr_passed", None)
+    if hp is not None:
+        return bool(hp)
+    return bool(getattr(w, "done", 0) and getattr(w, "marked_by", None))
+
+
 def _pd_video_out(v, w=None) -> dict:
     return {
         "id": v.id, "title": v.title, "description": v.description or "",
@@ -9851,7 +9868,9 @@ def _pd_video_out(v, w=None) -> dict:
         "order_no": v.order_no or 0,
         "target_roles": [x for x in (v.target_roles or "").split(",") if x],
         "percent": int(getattr(w, "percent", 0) or 0),
-        "done": bool(getattr(w, "done", 0)),
+        # Ptichka — HR tasdig'i; watched — o'zi oxirigacha ko'rdi
+        "done": _pd_hr_ok(w),
+        "watched": bool(getattr(w, "done", 0)),
         "resume": int(getattr(w, "max_pos", 0) or 0),
     }
 
@@ -9946,11 +9965,11 @@ def pd_beat(video_id: int, payload: dict = Body(...),
     w.max_pos = max(int(w.max_pos or 0), pos)
     w.last_pos = pos
     if w.percent >= _PD_DONE and not w.done:
-        w.done = 1
+        w.done = 1                  # ko'rib bo'ldi — "o'tdi" emas
         w.done_at = _dt.utcnow()
-        w.marked_by = None          # o'zi ko'rib o'tdi — qo'lda emas
     db.commit()
-    return {"percent": w.percent, "done": bool(w.done),
+    return {"percent": w.percent, "done": _pd_hr_ok(w),
+            "watched": bool(w.done),
             "seconds": int(w.seconds or 0)}
 
 
@@ -9994,8 +10013,9 @@ def pd_mark(video_id: int, target_id: int, payload: dict = Body(...),
                  marks="0" * _pd_buckets(v.duration))
         db.add(w)
     ok = bool(payload.get("passed"))
-    w.done = 1 if ok else 0
-    w.done_at = _dt.utcnow() if ok else None
+    # Ko'rish (done, foiz) o'zgarmaydi — faqat HR tasdig'i
+    w.hr_passed = 1 if ok else 0
+    w.hr_at = _dt.utcnow() if ok else None
     w.marked_by = user.full_name
     db.commit()
     audit.log(db, user, entity="user", action="update", entity_id=u.id,

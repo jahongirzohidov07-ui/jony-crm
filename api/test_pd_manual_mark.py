@@ -67,6 +67,24 @@ db = SessionLocal()
 ck("auditda", db.query(models.AuditLog).filter(
     models.AuditLog.field == "Video: Metodika 1").count(), 2)
 db.close()
+# 2026-10-24: o'zi oxirigacha ko'rsa — 100%, lekin "o'tdi" EMAS
+c.put(f"/api/pd/{VID}/people/{SUP}", headers=H, json={"passed": False})
+_db = SessionLocal()
+_w = _db.query(models.PdWatch).filter_by(video_id=VID, user_id=SUP).first()
+_w.percent, _w.done, _w.hr_passed, _w.marked_by = 100, 1, None, None
+_db.commit(); _db.close()
+col, ce, row = cell()
+ck("100% ko'rdi, lekin ptichka yo'q", (ce["passed"], ce["percent"]), (False, 100))
+Hs = {"Authorization": "Bearer " + c.post("/api/auth/login", json={
+    "username": "sup", "password": "x"}).json()["access_token"]}
+my = c.get("/api/pd/my", headers=Hs).json()["items"][0]
+ck("xodimda ham ptichka yo'q, ko'rgani bor", (my["done"], my["watched"]), (False, True))
+c.put(f"/api/pd/{VID}/people/{SUP}", headers=H, json={"passed": True})
+col, ce, row = cell()
+ck("HR bosdi — ptichka", ce["passed"], True)
+my = c.get("/api/pd/my", headers=Hs).json()["items"][0]
+ck("xodimda ham ptichka", my["done"], True)
+
 # Tartib: o'tganlar tepada
 db = SessionLocal()
 db.add(models.User(username="sup2", password_hash=hash_password("x"),

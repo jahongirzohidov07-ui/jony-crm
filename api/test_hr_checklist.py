@@ -82,8 +82,11 @@ opt = LI(title="Qo'shimcha havola", kind="link", url="https://y",
          required=0, active=1)
 db.add_all([v1, v2, v3, bk, opt]); db.commit()
 # Ali videoni ko'rib bo'lgan, Vali yarmini
+# 2026-10-24: "o'tdi" faqat HR tasdig'i bilan — Ali ko'rib bo'lgan va
+# HR tasdiqlagan
 db.add(PdW(video_id=v1.id, user_id=s1.id, percent=100, done=1,
-           done_at=datetime(2026, 9, 20, 10, 0)))
+           done_at=datetime(2026, 9, 19, 10, 0), hr_passed=1,
+           hr_at=datetime(2026, 9, 20, 10, 0), marked_by="HR"))
 db.add(PdW(video_id=v1.id, user_id=s2.id, percent=50, done=0))
 # Vali kitobni 70% o'qigan (o'zi yozgan), HR hali belgilamagan
 db.add(LP(item_id=bk.id, user_id=s2.id, percent=70, passed=0))

@@ -71,6 +71,18 @@ def _people(db: Session, role: str, user, branch_id: Optional[int]) -> list:
     return us
 
 
+def _pd_hr_ok(w) -> bool:
+    """Video "o'tdi" — FAQAT HR qo'yadi (2026-10-24). entry._pd_hr_ok
+    bilan bir xil (entry'ni bu yerdan import qilmaymiz — u ikki marta
+    bajarilib qolishi mumkin)."""
+    if w is None:
+        return False
+    hp = getattr(w, "hr_passed", None)
+    if hp is not None:
+        return bool(hp)
+    return bool(getattr(w, "done", 0) and getattr(w, "marked_by", None))
+
+
 @router.get("/api/hr/checklist")
 def hr_checklist(role: str = roles.SUPPORT_TEACHER,
                  branch_id: Optional[int] = None,
@@ -135,10 +147,12 @@ def hr_checklist(role: str = roles.SUPPORT_TEACHER,
         for c in cols:
             if c["source"] == "pd":
                 w = pdw.get((u.id, c["id"]))
-                ok = bool(w is not None and w.done)
+                # "O'tdi" — faqat HR (2026-10-24); foiz — haqiqiy ko'rish
+                ok = _pd_hr_ok(w)
                 pct = int(getattr(w, "percent", 0) or 0)
-                at = (w.done_at.strftime("%d.%m.%Y")
-                      if ok and getattr(w, "done_at", None) else None)
+                _at = (getattr(w, "hr_at", None) or getattr(w, "done_at", None)
+                       if w is not None else None)
+                at = _at.strftime("%d.%m.%Y") if ok and _at else None
                 by = getattr(w, "marked_by", None) if ok else None
             else:
                 p = lpr.get((u.id, c["id"]))

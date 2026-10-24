@@ -1578,6 +1578,91 @@ def get_observation(
         raise HTTPException(403, "Bu ma'lumot sizga ko'rinmaydi")
     return _observation_out(db, o, full=True)
 
+# DARS BAHOSINI TAHRIRLASH (2026-10-24, Jahongir: "o'qituvchini eski
+# darsini baholanganini edit qilish mumkin bo'lsin hr uchun").
+# Kim: HR, asoschi/rahbariyat, o'quv bo'limi rahbari. Ballar yaratishdagi
+# kabi SERVERDA qayta hisoblanadi (mezon balidan oshmaydi). Jadval
+# (rubric) va kim baholagani o'zgarmaydi; eski va yangi natija auditga.
+OBSERVATION_EDIT = list(dict.fromkeys(
+    list(roles.GRADE_ADMIN) + [roles.HR_MANAGER]))
+
+
+@router.put("/api/observations/{oid}")
+def update_observation(
+    oid: int,
+    payload: dict,
+    db: Session = Depends(get_db),
+    user=Depends(require_role(*OBSERVATION_EDIT)),
+):
+    o = db.query(models.LessonObservation).get(oid)
+    if not o:
+        raise HTTPException(404, "Topilmadi")
+    items = {c.id: c for c in _criteria(db, o.rubric_key)}
+    max_total = round(sum(c.points or 0 for c in items.values()), 1)
+    old_pct = o.percent
+
+    if payload.get("scores") is not None:
+        given = {}
+        for s_ in payload.get("scores") or []:
+            try:
+                cid = int(s_.get("criterion_id"))
+            except (TypeError, ValueError):
+                continue
+            c = items.get(cid)
+            if not c:
+                continue
+            fact = max(0.0, min(float(s_.get("fact") or 0),
+                                float(c.points or 0)))
+            given[cid] = (fact, s_.get("note"))
+        existing = {sc.criterion_id: sc for sc in o.scores}
+        for cid, (fact, note) in given.items():
+            sc = existing.get(cid)
+            if sc is None:
+                o.scores.append(models.ObservationScore(
+                    criterion_id=cid, fact=fact, note=note))
+            else:
+                sc.fact = fact
+                if note is not None:
+                    sc.note = note
+        db.flush()
+        total = round(sum(sc.fact or 0 for sc in o.scores
+                          if sc.criterion_id in items), 1)
+        percent = round(total / max_total * 100, 1) if max_total else 0.0
+        o.total, o.max_total, o.percent = total, max_total, percent
+        o.band = roles.rubric_band(percent)[0]
+    for f in ("strengths", "weaknesses", "note"):
+        if f in payload:
+            setattr(o, f, (str(payload.get(f) or "").strip() or None))
+    if payload.get("date"):
+        try:
+            o.date = date.fromisoformat(str(payload["date"])[:10])
+        except ValueError:
+            raise HTTPException(400, "Sana noto'g'ri")
+    db.commit()
+
+    who = (o.teacher.full_name if o.teacher else None) or "—"
+    audit.log(db, user, entity="teacher", action="update",
+              entity_id=o.teacher_id, entity_label=who,
+              field=f"Dars bahosi ({o.date.isoformat() if o.date else ''})",
+              old_value=f"{old_pct}%", new_value=f"{o.percent}%",
+              note=f"Baholagan: {o.observer or '—'}; tahrirladi: "
+                   f"{user.full_name}", commit=True)
+    if o.teacher_id:
+        _refresh_skill_score(db, o.teacher_id)
+        db.commit()
+    if o.candidate_id:
+        cand = db.query(models.Candidate).get(o.candidate_id)
+        if cand:
+            last = (db.query(models.LessonObservation)
+                    .filter(models.LessonObservation.candidate_id
+                            == o.candidate_id)
+                    .order_by(models.LessonObservation.id.desc()).first())
+            if last and last.id == o.id:
+                cand.trial_score = o.percent
+                db.commit()
+    return _observation_out(db, o, full=True)
+
+
 @router.delete("/api/observations/{oid}")
 def delete_observation(
     oid: int,

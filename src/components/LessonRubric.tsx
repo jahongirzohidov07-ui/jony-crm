@@ -6,6 +6,11 @@ import {
 } from "../lib/api";
 import { formatDate } from "../lib/format";
 import { exportSheetsToExcel } from "../lib/exportXlsx";
+import { useAuth } from "../lib/AuthContext";
+
+/** Eski dars bahosini tahrirlash (2026-10-24, Jahongir: "hr uchun") —
+ *  server bilan bir xil ro'yxat (gamification.OBSERVATION_EDIT) */
+const OBS_EDIT_ROLES = ["founder", "branch_manager", "academic_head", "hr_manager"];
 
 const TONE: Record<string, string> = {
   emerald: "bg-emerald-100 text-emerald-700",
@@ -27,20 +32,25 @@ export function ObservationForm({
   candidateId,
   onClose,
   onSaved,
+  edit,
 }: {
   rubricKey?: string;
   teacherId?: number;
   candidateId?: number;
   onClose: () => void;
   onSaved?: () => void;
+  /** Berilsa — shu baholash TAHRIRLANADI (yangisi yaratilmaydi) */
+  edit?: ObservationRow;
 }) {
   const [d, setD] = useState<RubricList | null>(null);
-  const [key, setKey] = useState(rubricKey || "main_lesson");
-  const [facts, setFacts] = useState<Record<number, number>>({});
-  const [strengths, setStrengths] = useState("");
-  const [weaknesses, setWeaknesses] = useState("");
-  const [note, setNote] = useState("");
-  const [day, setDay] = useState(new Date().toISOString().slice(0, 10));
+  const [key, setKey] = useState(edit?.rubric_key || rubricKey || "main_lesson");
+  const [facts, setFacts] = useState<Record<number, number>>(() =>
+    Object.fromEntries((edit?.scores || []).map((x) => [x.criterion_id, x.fact])));
+  const [strengths, setStrengths] = useState(edit?.strengths || "");
+  const [weaknesses, setWeaknesses] = useState(edit?.weaknesses || "");
+  const [note, setNote] = useState(edit?.note || "");
+  const [day, setDay] = useState(
+    edit?.date?.slice(0, 10) || new Date().toISOString().slice(0, 10));
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState("");
   const [done, setDone] = useState<{
@@ -89,6 +99,19 @@ export function ObservationForm({
     setSaving(true);
     setErr("");
     try {
+      const scores = rubric.criteria.map((c) => ({
+        criterion_id: c.id,
+        fact: facts[c.id] ?? 0,
+      }));
+      if (edit) {
+        const u = await api.put<ObservationRow>(`/observations/${edit.id}`, {
+          date: day, strengths, weaknesses, note, scores,
+        });
+        setDone({ total: u.total, percent: u.percent, band_label: u.band_label,
+                  passed: u.percent >= d!.pass_score });
+        onSaved?.();
+        return;
+      }
       const r = await api.post<{
         total: number; percent: number; band_label: string; passed: boolean;
       }>("/observations", {
@@ -160,10 +183,12 @@ export function ObservationForm({
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
               <ClipboardCheck size={16} className="text-slate-400" />
-              <h2 className="font-semibold text-slate-900">Dars baholash</h2>
+              <h2 className="font-semibold text-slate-900">
+                {edit ? "Baholashni tahrirlash" : "Dars baholash"}
+              </h2>
             </div>
             <div className="flex flex-wrap gap-1.5">
-              {d.rows.map((r) => (
+              {d.rows.filter((r) => !edit || r.key === key).map((r) => (
                 <button
                   key={r.key}
                   onClick={() => {
@@ -365,7 +390,10 @@ export function ObservationList({
   const [rows, setRows] = useState<ObservationRow[]>([]);
   const [open, setOpen] = useState(false);
   const [detail, setDetail] = useState<ObservationRow | null>(null);
+  const [editRow, setEditRow] = useState<ObservationRow | null>(null);
   const [xls, setXls] = useState(false);
+  const { user } = useAuth();
+  const canEdit = OBS_EDIT_ROLES.includes(user?.role || "");
 
   function load() {
     const q = teacherId
@@ -508,7 +536,17 @@ export function ObservationList({
         />
       )}
       {detail && (
-        <DetailModal row={detail} onClose={() => setDetail(null)} />
+        <DetailModal row={detail} onClose={() => setDetail(null)}
+          onEdit={canEdit ? () => { setEditRow(detail); setDetail(null); } : undefined} />
+      )}
+      {editRow && (
+        <ObservationForm
+          edit={editRow}
+          teacherId={editRow.teacher_id ?? undefined}
+          candidateId={editRow.candidate_id ?? undefined}
+          onClose={() => setEditRow(null)}
+          onSaved={load}
+        />
       )}
     </div>
   );
@@ -517,9 +555,11 @@ export function ObservationList({
 function DetailModal({
   row,
   onClose,
+  onEdit,
 }: {
   row: ObservationRow;
   onClose: () => void;
+  onEdit?: () => void;
 }) {
   return (
     <div className="fixed inset-0 bg-slate-900/40 flex items-start justify-center z-50 px-4 py-6 overflow-y-auto">
@@ -543,6 +583,15 @@ function DetailModal({
               {row.percent}% · {row.band_label}
             </span>
           </div>
+          {onEdit && (
+            <button
+              onClick={onEdit}
+              title="Baholashni tahrirlash"
+              className="ml-3 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 hover:border-brand-300"
+            >
+              <Pencil size={13} /> Tahrirlash
+            </button>
+          )}
           <button
             onClick={onClose}
             className="text-slate-400 hover:text-slate-600 ml-3"
